@@ -149,13 +149,19 @@ Namespace Query
         ''' <returns></returns>
         Public Function QueryByMz(mz As Double) As BlockNode()
             Dim ions As IonIndex() = mzIndex.QueryByMz(mz).ToArray
-            Dim result = ions _
-                .Select(Function(d) tree(d.node)) _
-                .GroupBy(Function(d) d.Id) _
-                .Select(Function(g)
-                            Return g.First
-                        End Function) _
-                .ToArray
+            Dim result As BlockNode()
+
+            If ions.Length = 0 Then
+                Return {}
+            Else
+                result = ions _
+                    .Select(Function(d) tree(d.node)) _
+                    .GroupBy(Function(d) d.Id) _
+                    .Select(Function(g)
+                                Return g.First
+                            End Function) _
+                    .ToArray
+            End If
 
             Return result
         End Function

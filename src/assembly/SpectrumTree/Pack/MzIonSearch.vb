@@ -1,4 +1,5 @@
-﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+﻿Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.Query
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm
 
@@ -8,6 +9,12 @@ Namespace PackLib
 
         ReadOnly mzIndex As BlockSearchFunction(Of IonIndex)
         ReadOnly da As Tolerance
+
+        Public ReadOnly Property IsEmpty As Boolean
+            Get
+                Return mzIndex.size = 0
+            End Get
+        End Property
 
         Sub New(mz As IEnumerable(Of IonIndex), da As Tolerance)
             Me.da = da
@@ -22,6 +29,7 @@ Namespace PackLib
             )
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
             Return $"{mzIndex.Keys.Length} ions m/z index key information, mzdiff: {da.ToString}"
         End Function

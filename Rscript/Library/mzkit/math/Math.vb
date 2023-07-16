@@ -57,7 +57,9 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MGF
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
@@ -383,6 +385,15 @@ Module MzMath
         }
     End Function
 
+    ''' <summary>
+    ''' Do evaluate the spectra cosine similarity score
+    ''' </summary>
+    ''' <param name="query"></param>
+    ''' <param name="ref"></param>
+    ''' <param name="tolerance"></param>
+    ''' <param name="intocutoff"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("cosine")>
     <RApiReturn(GetType(AlignmentOutput))>
     Public Function cosine(query As LibraryMatrix, ref As LibraryMatrix,
@@ -449,7 +460,7 @@ Module MzMath
     ''' <summary>
     ''' get all nodes from the spectrum tree cluster result
     ''' </summary>
-    ''' <param name="tree"></param>
+    ''' <param name="tree">the spectra molecule networking tree</param>
     ''' <returns></returns>
     <ExportAPI("cluster.nodes")>
     Public Function GetClusters(tree As SpectrumTreeCluster) As SpectrumCluster()
@@ -457,7 +468,7 @@ Module MzMath
     End Function
 
     ''' <summary>
-    ''' data pre-processing helper
+    ''' data pre-processing helper, make the spectra ion data unique
     ''' </summary>
     ''' <param name="ions"></param>
     ''' <param name="eq#"></param>
@@ -527,6 +538,7 @@ Module MzMath
     ''' + a library matrix data 
     ''' + or a dataframe object which should contains at least ``mz`` and ``intensity`` columns.
     ''' + or just a m/z vector
+    ''' + also could be a mzpack data object
     ''' 
     ''' </param>
     ''' <returns>
@@ -534,7 +546,8 @@ Module MzMath
     ''' </returns>
     <ExportAPI("centroid")>
     <RApiReturn(GetType(PeakMs2), GetType(LibraryMatrix), GetType(Double))>
-    Public Function centroid(<RRawVectorArgument> ions As Object,
+    Public Function centroid(<RRawVectorArgument>
+                             ions As Object,
                              Optional tolerance As Object = "da:0.1",
                              Optional intoCutoff As Double = 0.05,
                              Optional parallel As Boolean = False,
@@ -598,6 +611,8 @@ Module MzMath
                 .ToArray
 
             Return ms2Peak
+        ElseIf inputType Is GetType(mzPack) Then
+            Return DirectCast(ions, mzPack).CentroidMzPack(errors, threshold)
         ElseIf inputType Is GetType(LibraryMatrix) Then
             Dim ms2 As LibraryMatrix = DirectCast(ions, LibraryMatrix)
 
@@ -607,40 +622,7 @@ Module MzMath
 
             Return ms2
         ElseIf inputType Is GetType(dataframe) Then
-            Dim mz As Double()
-            Dim into As Double()
-            Dim data As dataframe = DirectCast(ions, dataframe)
-
-            If data.hasName("mz") Then
-                mz = CLRVector.asNumeric(data!mz)
-            ElseIf data.hasName("m/z") Then
-                mz = CLRVector.asNumeric(data("m/z"))
-            Else
-                Return Internal.debug.stop("mz column in dataframe should be 'mz' or 'm/z'!", env)
-            End If
-
-            If data.hasName("into") Then
-                into = CLRVector.asNumeric(data!into)
-            ElseIf data.hasName("intensity") Then
-                into = CLRVector.asNumeric(data!intensity)
-            Else
-                Return Internal.debug.stop("intensity column in dataframe should be 'into' or 'intensity'!", env)
-            End If
-
-            Dim ms2 As New LibraryMatrix With {
-                .centroid = False,
-                .name = "MS-matrix from dataframe",
-                .ms2 = mz _
-                    .Select(Function(mzi, i)
-                                Return New ms2 With {
-                                    .mz = mzi,
-                                    .intensity = into(i)
-                                }
-                            End Function) _
-                    .ToArray
-            }
-
-            Return ms2.CentroidMode(errors, threshold)
+            Return DirectCast(ions, dataframe).centroidDataframe(errors, threshold, env)
         ElseIf inputType Is GetType(ScanMS1) Then
             Dim scan1 As ScanMS1 = DirectCast(ions, ScanMS1)
             Dim msdata As ms2() = scan1 _
@@ -662,6 +644,46 @@ Module MzMath
         Else
             Return Internal.debug.stop(New InvalidCastException(inputType.FullName), env)
         End If
+    End Function
+
+    <Extension>
+    Private Function centroidDataframe(data As dataframe,
+                                       errors As Tolerance,
+                                       threshold As LowAbundanceTrimming,
+                                       env As Environment) As Object
+
+        Dim mz As Double(), into As Double()
+
+        If data.hasName("mz") Then
+            mz = CLRVector.asNumeric(data!mz)
+        ElseIf data.hasName("m/z") Then
+            mz = CLRVector.asNumeric(data("m/z"))
+        Else
+            Return Internal.debug.stop("mz column in dataframe should be 'mz' or 'm/z'!", env)
+        End If
+
+        If data.hasName("into") Then
+            into = CLRVector.asNumeric(data!into)
+        ElseIf data.hasName("intensity") Then
+            into = CLRVector.asNumeric(data!intensity)
+        Else
+            Return Internal.debug.stop("intensity column in dataframe should be 'into' or 'intensity'!", env)
+        End If
+
+        Dim ms2 As New LibraryMatrix With {
+            .centroid = False,
+            .name = "MS-matrix from dataframe",
+            .ms2 = mz _
+                .Select(Function(mzi, i)
+                            Return New ms2 With {
+                                .mz = mzi,
+                                .intensity = into(i)
+                            }
+                        End Function) _
+                .ToArray
+        }
+
+        Return ms2.CentroidMode(errors, threshold)
     End Function
 
     ''' <summary>

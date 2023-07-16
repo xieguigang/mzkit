@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>data pre-processing helper, make the spectra ion data unique</title>
+    <title>search the target query spectra against a reference mzpack data file</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <style rel="stylesheet" type="text/css">
@@ -143,12 +143,12 @@
 
         <table style="width: 100%;">
             <tr>
-                <td>ions.unique {math}</td>
+                <td>search {data}</td>
                 <td style="text-align: right;">R Documentation</td>
             </tr>
         </table>
 
-        <h2>data pre-processing helper, make the spectra ion data unique</h2>
+        <h2>search the target query spectra against a reference mzpack data file</h2>
 
         <h3>Description</h3>
 
@@ -157,54 +157,25 @@
         <h3>Usage</h3>
 
         <div style="width: 100%; padding-left: 3%; color: black;">
-            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>ions.unique</strong>(<i>ions</i>,
-    <i>eq</i> = 0.85,
-    <i>gt</i> = 0.6,
-    <i>mzwidth</i> = <span style='color: brown;'><strong>"da:0.1"</strong></span>,
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>search</strong>(<i>q</i>, <i>refer</i>,
     <i>tolerance</i> = <span style='color: brown;'><strong>"da:0.3"</strong></span>,
-    <i>precursor</i> = <span style='color: brown;'><strong>"ppm:20"</strong></span>,
-    <i>rtwidth</i> = 5,
-    <i>trim</i> = <span style='color: brown;'><strong>"0.05"</strong></span>);</code></pre>
+    <i>intocutoff</i> = 0.05,
+    <i>similarity.cutoff</i> = 0.3);</code></pre>
         </div>
 
         <h3>Arguments</h3>
 
         <table>
             
-<dt>ions</dt>
-<dd><p><p>-</p></p></dd>
+<dt>q</dt>
+<dd><p><p>The target spectra data, mz and into data fields must <br />
+ be included inside if this parameter value is a dataframe.</p></p></dd>
 
 
-<dt>eq#</dt>
-<dd><p><p>-</p></p></dd>
-
-
-<dt>gt#</dt>
-<dd><p><p>-</p></p></dd>
-
-
-<dt>mzwidth$</dt>
-<dd><p><p>-</p></p></dd>
-
-
-<dt>tolerance$</dt>
-<dd><p><p>-</p></p></dd>
-
-
-<dt>precursor$</dt>
-<dd><p><p>-</p></p></dd>
-
-
-<dt>rtwidth#</dt>
-<dd><p><p>-</p></p></dd>
-
-
-<dt>trim$</dt>
-<dd><p><p>-</p></p></dd>
-
-
-<dt>env</dt>
-<dd><p><p>-</p></p></dd>
+<dt>refer</dt>
+<dd><p><p>A mzpack data object that contains the reference <br />
+ spectrum dataset. The spectra dataset inside this mzpack data object<br />
+ must be already been centroid processed!</p></p></dd>
 
         </table>
 
@@ -216,11 +187,11 @@
 
         <h3>Value</h3>
 
-        this function returns data object of type <i>any</i> kind.
+        this function returns data object of type <a href="/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/Xml/AlignmentOutput.html">AlignmentOutput</a>.
 
         <hr />
-        <div style="text-align: center;">[Package <em>math</em> version 1.0.0.0 <a
-                href="../math.html">Index</a>]
+        <div style="text-align: center;">[Package <em>data</em> version 1.0.0.0 <a
+                href="../data.html">Index</a>]
         </div>
     </div>
 </body>

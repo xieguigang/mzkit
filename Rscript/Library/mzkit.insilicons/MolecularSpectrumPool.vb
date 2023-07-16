@@ -1,8 +1,10 @@
 ﻿
 Imports System.Runtime.CompilerServices
-Imports BioNovoGene.Analytical.MassSpectrometry.Math.MoleculeNetworking.PoolData
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.BioDeep.MassSpectrometry.MoleculeNetworking.PoolData
+Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp
@@ -10,6 +12,10 @@ Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 
+''' <summary>
+''' Spectrum clustering/inference via molecule networking method, 
+''' this api module is working with the biodeep public cloud service
+''' </summary>
 <Package("spectrumPool")>
 Public Module MolecularSpectrumPool
 
@@ -42,15 +48,80 @@ Public Module MolecularSpectrumPool
     End Function
 
     ''' <summary>
+    ''' Create a spectrum inference protocol workflow
+    ''' </summary>
+    ''' <param name="url"></param>
+    ''' <param name="model_id"></param>
+    ''' <returns></returns>
+    <ExportAPI("load_infer")>
+    Public Function openInferTool(url As String, model_id As String,
+                                  Optional ms1diff As String = "da:0.3",
+                                  Optional ms2diff As String = "da:0.3",
+                                  Optional intocutoff As Double = 0.05) As DIAInfer
+
+        Dim tree As New HttpTreeFs(url, model_id)
+        Dim dia As New DIAInfer(tree, ms1diff, ms2diff, intocutoff)
+
+        Return dia
+    End Function
+
+    ''' <summary>
+    ''' Infer and make annotation to a specific cluster
+    ''' </summary>
+    ''' <param name="dia"></param>
+    ''' <param name="cluster_id"></param>
+    ''' <returns></returns>
+    <ExportAPI("infer")>
+    Public Function inferReferenceSpectrum(dia As DIAInfer, cluster_id As String,
+                                           Optional reference_id As String() = Nothing,
+                                           Optional formula As String() = Nothing,
+                                           Optional name As String() = Nothing) As PeakMs2()
+
+        If reference_id.IsNullOrEmpty OrElse formula.IsNullOrEmpty Then
+            Return dia.InferCluster(cluster_id).ToArray
+        Else
+            If name.IsNullOrEmpty Then
+                name = formula
+            End If
+
+            Dim tuples = reference_id _
+                .Select(Function(biodeep_id, i)
+                            Return New NamedValue(Of String)(biodeep_id, formula(i), name(i))
+                        End Function) _
+                .ToArray
+            Dim result = dia.InferCluster(cluster_id, reference:=tuples).ToArray
+
+            Return result
+        End If
+    End Function
+
+    ''' <summary>
     ''' open the spectrum pool from a given resource link
     ''' </summary>
     ''' <param name="link">
     ''' the resource string to the spectrum pool
     ''' </param>
+    ''' <param name="score_overrides">
+    ''' WARNING: this optional parameter will overrides the mode score 
+    ''' level when this parameter has a positive numeric value in 
+    ''' range ``(0,1]``. it is dangers to overrides the score parameter
+    ''' in the exists model.
+    ''' </param>
     ''' <returns></returns>
     <ExportAPI("openPool")>
-    Public Function openPool(link As String, Optional model_id As String = Nothing) As SpectrumPool
-        Return SpectrumPool.Open(link, model_id:=model_id)
+    Public Function openPool(link As String,
+                             Optional model_id As String = Nothing,
+                             Optional score_overrides As Double? = Nothing,
+                             Optional env As Environment = Nothing) As SpectrumPool
+
+        If score_overrides IsNot Nothing AndAlso
+            score_overrides > 0 AndAlso
+            score_overrides < 1 Then
+
+            Call env.AddMessage($"NOTICE: the score level of the spectrum graph model has been overrides to {score_overrides}!", MSG_TYPES.WRN)
+        End If
+
+        Return SpectrumPool.Open(link, model_id:=model_id, score:=score_overrides)
     End Function
 
     ''' <summary>

@@ -112,6 +112,13 @@ Namespace PoolData
             Me.m_depth = Val((cluster_data!depth).ToString)
         End Sub
 
+        ''' <summary>
+        ''' get metabolite ion data from a specific spectrum cluster
+        ''' </summary>
+        ''' <param name="url_get"></param>
+        ''' <param name="hash_index"></param>
+        ''' <param name="model_id"></param>
+        ''' <returns></returns>
         Public Shared Iterator Function FetchClusterData(url_get As String,
                                                          hash_index As String,
                                                          model_id As String) As IEnumerable(Of Metadata)
@@ -128,7 +135,7 @@ Namespace PoolData
             Dim array As Array = info!metabolites
 
             For i As Integer = 0 To array.Length - 1
-                Yield castMetaData(array(i))
+                Yield ParseMetadata(array(i))
             Next
         End Function
 
@@ -145,7 +152,8 @@ Namespace PoolData
                 .rt = Val(fetch!rt),
                 .sample_source = fetch!biosample,
                 .source_file = fetch!filename,
-                .instrument = fetch!instrument
+                .instrument = fetch!instrument,
+                .project = fetch!project
             }
         End Function
 

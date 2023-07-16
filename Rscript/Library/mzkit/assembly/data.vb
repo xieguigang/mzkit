@@ -1,60 +1,60 @@
 ﻿#Region "Microsoft.VisualBasic::8237c73033635fccfa321469e5ac3805, mzkit\Rscript\Library\mzkit\assembly\data.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 589
-    '    Code Lines: 423
-    ' Comment Lines: 81
-    '   Blank Lines: 85
-    '     File Size: 22.55 KB
+' Summaries:
 
 
-    ' Module data
-    ' 
-    '     Function: createPeakMs2, getIntensity, getIonsSummaryTable, getMSMSTable, getRawXICSet
-    '               getScantime, getXICPoints, libraryMatrix, LibraryTable, linearMatrix
-    '               makeROInames, nfragments, rawXIC, readMatrix, RtSlice
-    '               TICTable, toString, unionPeaks, XIC, XICGroups
-    '               XICTable
-    ' 
-    '     Sub: Main
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 589
+'    Code Lines: 423
+' Comment Lines: 81
+'   Blank Lines: 85
+'     File Size: 22.55 KB
+
+
+' Module data
+' 
+'     Function: createPeakMs2, getIntensity, getIonsSummaryTable, getMSMSTable, getRawXICSet
+'               getScantime, getXICPoints, libraryMatrix, LibraryTable, linearMatrix
+'               makeROInames, nfragments, rawXIC, readMatrix, RtSlice
+'               TICTable, toString, unionPeaks, XIC, XICGroups
+'               XICTable
+' 
+'     Sub: Main
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -64,6 +64,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv
@@ -73,7 +74,6 @@ Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
-Imports SMRUCC.Rsharp.Runtime.Internal.Invokes
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports REnv = SMRUCC.Rsharp.Runtime
@@ -170,6 +170,20 @@ Module data
         End If
     End Function
 
+    ''' <summary>
+    ''' Union and merge the given multiple spectrum data into one single spectrum
+    ''' </summary>
+    ''' <param name="peaks">A collection of the spectrum object that going to merge into single one</param>
+    ''' <param name="matrix">
+    ''' this parameter will affects the data type of the value returns of this function:
+    ''' 
+    ''' 1. default false, returns a peak ms2 data object
+    ''' 2. true, returns a library matrix data object
+    ''' </param>
+    ''' <param name="massDiff">the mass error for merge two spectra peak</param>
+    ''' <returns>
+    ''' a single ms spectrum data object, its data type depeneds on the <paramref name="matrix"/> parameter.
+    ''' </returns>
     <ExportAPI("unionPeaks")>
     <RApiReturn(GetType(PeakMs2), GetType(LibraryMatrix))>
     Public Function unionPeaks(peaks As PeakMs2(),
@@ -227,6 +241,60 @@ Module data
         Else
             Return Message.InCompatibleType(GetType(LibraryMatrix), matrix.GetType, env)
         End If
+    End Function
+
+    ''' <summary>
+    ''' search the target query spectra against a reference mzpack data file
+    ''' </summary>
+    ''' <param name="q">The target spectra data, mz and into data fields must 
+    ''' be included inside if this parameter value is a dataframe.</param>
+    ''' <param name="refer">A mzpack data object that contains the reference 
+    ''' spectrum dataset. The spectra dataset inside this mzpack data object
+    ''' must be already been centroid processed!</param>
+    ''' <returns></returns>
+    <ExportAPI("search")>
+    <RApiReturn(GetType(AlignmentOutput))>
+    Public Function simpleSearch(q As Object, refer As mzPack,
+                                 Optional tolerance As Object = "da:0.3",
+                                 Optional intocutoff As Double = 0.05,
+                                 Optional similarity_cutoff As Double = 0.3,
+                                 Optional env As Environment = Nothing) As Object
+
+        Dim mzErr = Math.getTolerance(tolerance, env)
+        Dim spectra = getSpectrum(q, env)
+
+        If mzErr Like GetType(Message) Then
+            Return mzErr.TryCast(Of Message)
+        ElseIf spectra Like GetType(Message) Then
+            Return spectra.TryCast(Of Message)
+        ElseIf refer Is Nothing OrElse refer.MS Is Nothing Then
+            Return Internal.debug.stop("the required reference data should not be nothing!", env)
+        End If
+
+        Dim mzdiff As Tolerance = mzErr.TryCast(Of Tolerance)
+        Dim cutoff As New RelativeIntensityCutoff(intocutoff)
+        Dim query As LibraryMatrix = spectra.TryCast(Of LibraryMatrix).CentroidMode(mzdiff, cutoff)
+        Dim cos As New CosAlignment(mzdiff, cutoff)
+        Dim alignments As AlignmentOutput() = refer.MS _
+            .AsParallel _
+            .Select(Function(ms1)
+                        Return ms1.products _
+                            .SafeQuery _
+                            .Select(Function(scan2)
+                                        Dim align As AlignmentOutput = cos.CreateAlignment(query.ms2, scan2.GetMs.ToArray)
+
+                                        align.query = New Meta With {.id = query.name}
+                                        align.reference = New Meta With {.id = scan2.scan_id}
+
+                                        Return align
+                                    End Function)
+                    End Function) _
+            .IteratesALL _
+            .OrderByDescending(Function(a) (a.forward + a.reverse + a.jaccard + a.entropy) / 4) _
+            .Where(Function(a) (a.forward + a.reverse + a.jaccard + a.entropy) / 4 > similarity_cutoff) _
+            .ToArray
+
+        Return alignments
     End Function
 
     ''' <summary>

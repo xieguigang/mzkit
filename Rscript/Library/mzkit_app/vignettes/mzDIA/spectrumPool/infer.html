@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>data pre-processing helper, make the spectra ion data unique</title>
+    <title>Infer and make annotation to a specific cluster</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <style rel="stylesheet" type="text/css">
@@ -143,12 +143,12 @@
 
         <table style="width: 100%;">
             <tr>
-                <td>ions.unique {math}</td>
+                <td>infer {spectrumPool}</td>
                 <td style="text-align: right;">R Documentation</td>
             </tr>
         </table>
 
-        <h2>data pre-processing helper, make the spectra ion data unique</h2>
+        <h2>Infer and make annotation to a specific cluster</h2>
 
         <h3>Description</h3>
 
@@ -157,53 +157,21 @@
         <h3>Usage</h3>
 
         <div style="width: 100%; padding-left: 3%; color: black;">
-            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>ions.unique</strong>(<i>ions</i>,
-    <i>eq</i> = 0.85,
-    <i>gt</i> = 0.6,
-    <i>mzwidth</i> = <span style='color: brown;'><strong>"da:0.1"</strong></span>,
-    <i>tolerance</i> = <span style='color: brown;'><strong>"da:0.3"</strong></span>,
-    <i>precursor</i> = <span style='color: brown;'><strong>"ppm:20"</strong></span>,
-    <i>rtwidth</i> = 5,
-    <i>trim</i> = <span style='color: brown;'><strong>"0.05"</strong></span>);</code></pre>
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>infer</strong>(<i>dia</i>, <i>cluster.id</i>,
+    <i>reference.id</i> = <span style='color: blue;'>NULL</span>,
+    <i>formula</i> = <span style='color: blue;'>NULL</span>,
+    <i>name</i> = <span style='color: blue;'>NULL</span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
 
         <table>
             
-<dt>ions</dt>
+<dt>dia</dt>
 <dd><p><p>-</p></p></dd>
 
 
-<dt>eq#</dt>
-<dd><p><p>-</p></p></dd>
-
-
-<dt>gt#</dt>
-<dd><p><p>-</p></p></dd>
-
-
-<dt>mzwidth$</dt>
-<dd><p><p>-</p></p></dd>
-
-
-<dt>tolerance$</dt>
-<dd><p><p>-</p></p></dd>
-
-
-<dt>precursor$</dt>
-<dd><p><p>-</p></p></dd>
-
-
-<dt>rtwidth#</dt>
-<dd><p><p>-</p></p></dd>
-
-
-<dt>trim$</dt>
-<dd><p><p>-</p></p></dd>
-
-
-<dt>env</dt>
+<dt>cluster.id</dt>
 <dd><p><p>-</p></p></dd>
 
         </table>
@@ -216,11 +184,11 @@
 
         <h3>Value</h3>
 
-        this function returns data object of type <i>any</i> kind.
+        this function returns data object of type <a href="/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/PeakMs2[].html">PeakMs2[]</a>.
 
         <hr />
-        <div style="text-align: center;">[Package <em>math</em> version 1.0.0.0 <a
-                href="../math.html">Index</a>]
+        <div style="text-align: center;">[Package <em>spectrumPool</em> version 1.0.0.0 <a
+                href="../spectrumPool.html">Index</a>]
         </div>
     </div>
 </body>

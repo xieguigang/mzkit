@@ -123,8 +123,39 @@ declare namespace data {
    */
    function scan_time(ticks: any, env?: object): number;
    /**
-     * @param matrix default value Is ``false``.
-     * @param massDiff default value Is ``0.1``.
+    * search the target query spectra against a reference mzpack data file
+    * 
+    * 
+     * @param q The target spectra data, mz and into data fields must 
+     *  be included inside if this parameter value is a dataframe.
+     * @param refer A mzpack data object that contains the reference 
+     *  spectrum dataset. The spectra dataset inside this mzpack data object
+     *  must be already been centroid processed!
+     * @param tolerance 
+     * + default value Is ``'da:0.3'``.
+     * @param intocutoff 
+     * + default value Is ``0.05``.
+     * @param similarity_cutoff 
+     * + default value Is ``0.3``.
+     * @param env 
+     * + default value Is ``null``.
+   */
+   function search(q: any, refer: object, tolerance?: any, intocutoff?: number, similarity_cutoff?: number, env?: object): object;
+   /**
+    * Union and merge the given multiple spectrum data into one single spectrum
+    * 
+    * 
+     * @param peaks A collection of the spectrum object that going to merge into single one
+     * @param matrix this parameter will affects the data type of the value returns of this function:
+     *  
+     *  1. default false, returns a peak ms2 data object
+     *  2. true, returns a library matrix data object
+     * 
+     * + default value Is ``false``.
+     * @param massDiff the mass error for merge two spectra peak
+     * 
+     * + default value Is ``0.1``.
+     * @return a single ms spectrum data object, its data type depeneds on the **`matrix`** parameter.
    */
    function unionPeaks(peaks: object, matrix?: boolean, massDiff?: number): object|object;
    /**

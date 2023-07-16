@@ -82,6 +82,10 @@ Namespace Spectra.Xml
             End Get
         End Property
 
+        ''' <summary>
+        ''' the min value of <see cref="forward"/> and <see cref="reverse"/>
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property cosine As Double
             Get
                 Return stdNum.Min(forward, reverse)
