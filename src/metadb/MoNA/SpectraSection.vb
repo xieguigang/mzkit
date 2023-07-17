@@ -114,6 +114,18 @@ Public Class SpectraSection : Inherits MetaInfo
         End Get
     End Property
 
+    Public ReadOnly Property libtype As Integer
+        Get
+            If SpectraInfo.precursor_type.StringEmpty Then
+                Return 1
+            ElseIf SpectraInfo.precursor_type.Last = "+"c Then
+                Return 1
+            Else
+                Return -1
+            End If
+        End Get
+    End Property
+
     Sub New()
     End Sub
 
