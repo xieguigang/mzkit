@@ -70,6 +70,10 @@ Imports BioNovoGene.BioDeep.Chemistry.MetaLib.Models
 
 Public Class SpectraSection : Inherits MetaInfo
 
+    ''' <summary>
+    ''' The reference spectrum data
+    ''' </summary>
+    ''' <returns></returns>
     Public Property SpectraInfo As SpectraInfo
 
     ''' <summary>
@@ -138,7 +142,7 @@ Public Class SpectraInfo
             .activation = ionization,
             .collisionEnergy = Val(collision_energy.Match("\d+(\.\d+)?")),
             .intensity = MassPeaks.Sum(Function(a) a.intensity),
-            .lib_guid = If(id, $""),
+            .lib_guid = If(id, $"M{mz.ToString("F0")}T{retention_time}, m/z={mz} {precursor_type}"),
             .mz = mz,
             .mzInto = MassPeaks,
             .precursor_type = precursor_type,
