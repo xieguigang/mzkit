@@ -108,6 +108,12 @@ Public Class SpectraSection : Inherits MetaInfo
         End Get
     End Property
 
+    Public ReadOnly Property GetSpectrumPeaks As PeakMs2
+        Get
+            Return SpectraInfo.ToPeaksMs2(id:=ID)
+        End Get
+    End Property
+
     Sub New()
     End Sub
 
