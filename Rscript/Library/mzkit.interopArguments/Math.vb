@@ -106,7 +106,7 @@ Module Math
     End Function
 
     ''' <summary>
-    ''' 
+    ''' Get a set of <see cref="MzCalculator"/> based on the parameter value
     ''' </summary>
     ''' <param name="adducts">
     ''' should be a collection of <see cref="MzCalculator"/> or 
