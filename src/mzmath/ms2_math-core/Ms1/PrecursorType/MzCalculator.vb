@@ -127,6 +127,11 @@ Namespace Ms1.PrecursorType
             Me.mode = mode
         End Sub
 
+        ''' <summary>
+        ''' Evaluate the exact mass from m/z based on current precursor adducts data
+        ''' </summary>
+        ''' <param name="precursorMZ#"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function CalcMass(precursorMZ#) As Double
             Return (ReverseMass(precursorMZ, M, charge, adducts))
