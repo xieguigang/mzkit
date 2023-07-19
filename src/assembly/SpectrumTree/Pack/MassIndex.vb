@@ -5,6 +5,9 @@ Namespace PackLib
     ''' <summary>
     ''' A metabolite its spectrum data index
     ''' </summary>
+    ''' <remarks>
+    ''' A tree node of a specific metabolite reference to multiple spectrum data
+    ''' </remarks>
     Public Class MassIndex
 
         ''' <summary>
