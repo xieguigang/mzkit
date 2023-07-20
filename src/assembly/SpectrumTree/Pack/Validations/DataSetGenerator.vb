@@ -3,7 +3,9 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.Tree
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.Distributions
 
 Namespace PackLib.Validation
 
@@ -38,7 +40,37 @@ Namespace PackLib.Validation
         End Function
 
         Public Iterator Function GetPeaktable() As IEnumerable(Of Peaktable)
+            Dim metabo = ions.GroupBy(Function(a) a.Name).ToArray
+            Dim i As i32 = 1
 
+            For Each mset In metabo
+                Dim mzset = mset.GroupBy(Function(a) a.Value.mz, offsets:=0.65)
+
+                For Each ion In mzset
+                    Dim rt As Double() = ion.Select(Function(a) a.Value.scan_time).TabulateBin
+                    Dim mz As Double() = ion.Select(Function(a) a.Value.mz).ToArray
+
+                    Yield New Peaktable With {
+                        .annotation = mset.Key,
+                        .index = ++i,
+                        .mz = mz.Average,
+                        .name = mset.Key,
+                        .maxo = 0,
+                        .energy = "NA",
+                        .intb = 0,
+                        .into = 0,
+                        .ionization = "CID",
+                        .mzmax = mz.Max,
+                        .mzmin = mz.Min,
+                        .rt = rt.Average,
+                        .rtmax = rt.Max,
+                        .rtmin = rt.Min,
+                        .sample = "NA",
+                        .scan = .index,
+                        .sn = 999
+                    }
+                Next
+            Next
         End Function
 
         Private Iterator Function CreateOneDataSet() As IEnumerable(Of ScanMS1)
@@ -50,7 +82,7 @@ Namespace PackLib.Validation
             Dim ion As ms1_scan
 
             For Each id As String In libnames
-                Dim data = libs.GetSpectrum(id)
+                Dim data As BlockNode = libs.GetSpectrum(id)
 
                 If data.rt >= args.rtmin AndAlso data.rt <= args.rtmax Then
                     ion = New ms1_scan With {
@@ -60,7 +92,7 @@ Namespace PackLib.Validation
                     }
 
                     Call spectrums.Add(data)
-                    Call ions.Add(New NamedValue(Of ms1_scan)("", ion))
+                    Call ions.Add(New NamedValue(Of ms1_scan)(data.Id, ion))
                 End If
             Next
 
