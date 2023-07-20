@@ -45,6 +45,7 @@ Namespace PackLib.Validation
 
             For Each mset In metabo
                 Dim mzset = mset.GroupBy(Function(a) a.Value.mz, offsets:=0.65)
+                Dim n As i32 = 1
 
                 For Each ion In mzset
                     Dim rt As Double() = ion.Select(Function(a) a.Value.scan_time).TabulateBin
@@ -52,9 +53,9 @@ Namespace PackLib.Validation
 
                     Yield New Peaktable With {
                         .annotation = mset.Key,
+                        .name = mset.Key & $"_{++n}",
                         .index = ++i,
                         .mz = mz.Average,
-                        .name = mset.Key,
                         .maxo = 0,
                         .energy = "NA",
                         .intb = 0,
