@@ -6,7 +6,8 @@ Public Class IndexEmit
     ReadOnly no_arg As ConstructorInfo
     ReadOnly mass_arg As ConstructorInfo
     ReadOnly type As Type
-    ReadOnly [delegate] As Type
+
+    Public ReadOnly Property [delegate] As Type
 
     Sub New(schema As Type)
         no_arg = ParseNoArgument(schema)

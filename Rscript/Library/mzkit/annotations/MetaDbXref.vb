@@ -150,11 +150,14 @@ Module MetaDbXref
             Return massList
         End If
 
-        Dim newf As Object = New IndexEmit(schema).CreateActivator
+        Dim enumerator As Type = GetType(IEnumerable(Of )).MakeGenericType(schema)
+        Dim activator As New IndexEmit(schema)
+        Dim newf As Object = activator.CreateActivator
         Dim argv As Object() = {
             massList, newf, mzdiff.TryCast(Of Tolerance)
         }
-        Dim engine As Object = Activator.CreateInstance(searchEngine, argv)
+        Dim ctor = DelegateFactory.Contructor(searchEngine, enumerator, activator.delegate, GetType(Tolerance))
+        Dim engine As Object = ctor(argv)
 
         Return engine
     End Function
