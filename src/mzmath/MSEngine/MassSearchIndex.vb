@@ -5,7 +5,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Algorithm
 ''' <summary>
 ''' A simple implements of mass search index
 ''' </summary>
-Public Class MassSearchIndex(Of T As {New, IExactMassProvider})
+Public Class MassSearchIndex(Of T As IExactMassProvider)
 
     ''' <summary>
     ''' mass tolerance value for match sample mz and threocal mz

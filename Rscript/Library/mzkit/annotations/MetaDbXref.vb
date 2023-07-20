@@ -59,6 +59,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.Annotations
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.BioDeep.Chemistry
 Imports BioNovoGene.BioDeep.Chemoinformatics
@@ -73,6 +74,7 @@ Imports Microsoft.VisualBasic.Emit.Delegates
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
+Imports SMRUCC.Rsharp.Interpreter
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
@@ -107,6 +109,61 @@ Module MetaDbXref
         }
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="massSet"></param>
+    ''' <param name="type"></param>
+    ''' <param name="tolerance"></param>
+    ''' <param name="env"></param>
+    ''' <returns>A simple mass index search engine object instance</returns>
+    <ExportAPI("mass_search.index")>
+    <RApiReturn(GetType(MassSearchIndex(Of )))>
+    Public Function CreateMassSearchIndex(<RRawVectorArgument>
+                                          massSet As Object,
+                                          type As Object,
+                                          Optional tolerance As Object = "da:0.01",
+                                          Optional env As Environment = Nothing) As Object
+
+        Dim indexVal As RType = env.globalEnvironment.GetType(type)
+        Dim mzdiff = Math.getTolerance(tolerance, env, [default]:="da:0.01")
+
+        If type Is Nothing Then
+            Return Internal.debug.stop("the required type information could not be nothing!", env)
+        End If
+        If indexVal Is Nothing Then
+            Return Internal.debug.stop({$"the given type information({type}) could not be resolve in current runtime session!"}, env)
+        End If
+        If Not indexVal.raw.ImplementInterface(Of IExactMassProvider) Then
+            Return Internal.debug.stop($"the given type information({type}) should implements the interface of '{GetType(IExactMassProvider).GetType.FullName}'!", env)
+        End If
+        If mzdiff Like GetType(Message) Then
+            Return mzdiff.TryCast(Of Message)
+        End If
+
+        Dim schema As Type = indexVal.raw
+        Dim searchEngine As Type = GetType(MassSearchIndex(Of )).MakeGenericType(schema)
+        Dim massList = REnv.asVector(massSet, schema, env)
+
+        If Program.isException(massList) Then
+            Return massList
+        End If
+
+        Dim newf As Object = Nothing
+        Dim argv As Object() = {
+            massList, newf, mzdiff.TryCast(Of Tolerance)
+        }
+        Dim engine As Object = Activator.CreateInstance(searchEngine, argv)
+
+        Return engine
+    End Function
+
+    ''' <summary>
+    ''' verify that the given cas registry number is correct or not
+    ''' </summary>
+    ''' <param name="num"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("verify_cas_number")>
     Public Function VerifyCASNumber(<RRawVectorArgument> num As Object, Optional env As Environment = Nothing) As Object
         Return SMRUCC.Rsharp.EvaluateFramework(Of String, Boolean)(env, num, AddressOf CASNumber.Verify)
