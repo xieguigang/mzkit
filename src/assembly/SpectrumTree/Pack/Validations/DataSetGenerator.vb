@@ -29,7 +29,7 @@ Namespace PackLib.Validation
         Public Iterator Function ExportRawDatas() As IEnumerable(Of NamedCollection(Of ScanMS1))
             For i As Integer = 0 To args.RawFiles
                 Yield New NamedCollection(Of ScanMS1) With {
-                    .name = i,
+                    .name = $"{args.rawname}_{i + 1}",
                     .value = CreateOneDataSet() _
                         .OrderBy(Function(si) si.rt) _
                         .ToArray
@@ -37,7 +37,7 @@ Namespace PackLib.Validation
             Next
         End Function
 
-        Public Function GetPeaktable() As Peaktable
+        Public Iterator Function GetPeaktable() As IEnumerable(Of Peaktable)
 
         End Function
 

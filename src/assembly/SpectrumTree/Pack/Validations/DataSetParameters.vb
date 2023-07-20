@@ -8,5 +8,11 @@
         Public Property rtmin As Double
         Public Property rtmax As Double
 
+        ''' <summary>
+        ''' The raw file base name
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property rawname As String
+
     End Class
 End Namespace
