@@ -149,7 +149,7 @@ Module MetaDbXref
             Return massList
         End If
 
-        Dim newf As Object = Nothing
+        Dim newf As Object = New IndexEmit(schema).CreateActivator
         Dim argv As Object() = {
             massList, newf, mzdiff.TryCast(Of Tolerance)
         }
