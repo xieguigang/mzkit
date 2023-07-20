@@ -1,63 +1,63 @@
 ﻿#Region "Microsoft.VisualBasic::8e139a499b199cb7e993ba789e0ed05e, mzkit\src\mzmath\MSEngine\MSSearch.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 227
-    '    Code Lines: 133
-    ' Comment Lines: 64
-    '   Blank Lines: 30
-    '     File Size: 8.61 KB
+' Summaries:
 
 
-    ' Class MSSearch
-    ' 
-    '     Properties: Calculators, Metadata
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: CreateIndex, GetAnnotation, GetCompound, GetDbXref, GetMetadata
-    '               MSetAnnotation, QueryByMz, ToString
-    '     Structure IonIndex
-    ' 
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 227
+'    Code Lines: 133
+' Comment Lines: 64
+'   Blank Lines: 30
+'     File Size: 8.61 KB
+
+
+' Class MSSearch
+' 
+'     Properties: Calculators, Metadata
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Function: CreateIndex, GetAnnotation, GetCompound, GetDbXref, GetMetadata
+'               MSetAnnotation, QueryByMz, ToString
+'     Structure IonIndex
+' 
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -65,7 +65,6 @@ Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.Annotations
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
-Imports Microsoft.VisualBasic.ComponentModel.Algorithm
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Linq
 
@@ -73,22 +72,26 @@ Imports Microsoft.VisualBasic.Linq
 
 Public Class MSSearch(Of Compound As {IReadOnlyId, ICompoundNameProvider, IExactMassProvider, IFormulaProvider}) : Implements IMzQuery
 
-    Friend Structure IonIndex
+    Friend Structure IonIndex : Implements IExactMassProvider
 
-        Dim mz As Double
         Dim precursor As String
         Dim compound As Compound
 
+        Public ReadOnly Property mz As Double Implements IExactMassProvider.ExactMass
+
+        Sub New(mz As Double)
+            Me.mz = mz
+        End Sub
+
+        Public Overrides Function ToString() As String
+            Return $"[{mz.ToString("F4")}] {compound.ToString}"
+        End Function
     End Structure
 
     ReadOnly precursorTypes As MzCalculator()
-    ''' <summary>
-    ''' mass tolerance value for match sample mz and threocal mz
-    ''' </summary>
-    ReadOnly tolerance As Tolerance
-    ReadOnly mzIndex As BlockSearchFunction(Of IonIndex)
     ReadOnly score As Func(Of Compound, Double)
     ReadOnly xrefs As Func(Of Compound, Dictionary(Of String, String))
+    ReadOnly mzIndex As MassSearchIndex(Of IonIndex)
 
     ''' <summary>
     ''' index by unique id
@@ -123,7 +126,6 @@ Public Class MSSearch(Of Compound As {IReadOnlyId, ICompoundNameProvider, IExact
             Optional score As Func(Of Compound, Double) = Nothing,
             Optional xrefs As Func(Of Compound, Dictionary(Of String, String)) = Nothing)
 
-        Me.tolerance = tolerance
         Me.precursorTypes = precursorTypes
         Me.xrefs = xrefs
         Me.score = If(score, New Func(Of Compound, Double)(Function() 0.0))
@@ -134,45 +136,34 @@ Public Class MSSearch(Of Compound As {IReadOnlyId, ICompoundNameProvider, IExact
                               Return cgroup.First
                           End Function)
 
-        Dim mzset = Me.index _
-            .Values _
-            .Select(Function(c)
-                        Return precursorTypes _
-                            .Select(Function(t)
-                                        Return New IonIndex With {
-                                            .compound = c,
-                                            .mz = t.CalcMZ(c.ExactMass),
-                                            .precursor = t.ToString
-                                        }
-                                    End Function)
-                    End Function) _
+        Me.mzIndex = loadIndex(Me.index, precursorTypes, tolerance)
+    End Sub
+
+    Private Shared Function loadIndex(index As Dictionary(Of String, Compound),
+                                      precursorTypes As MzCalculator(),
+                                      tolerance As Tolerance) As MassSearchIndex(Of IonIndex)
+
+        Dim mzset As IonIndex() = index.Values _
+            .Select(Function(c) DoEvalMz(c, precursorTypes)) _
             .IteratesALL _
             .Where(Function(i) i.mz > 0) _
             .ToArray
 
-        ' 20220512
-        '
-        ' too small tolerance error will cause too much elements to
-        ' sort
-        ' and then will cause the error of 
-        ' Stack overflow.
-        ' Repeat 3075 times: 
-        ' --------------------------------
-        '   at Microsoft.VisualBasic.ComponentModel.Algorithm.QuickSortFunction
-        '
-        ' pipeline has been test for MS-imaging data analysis
-        '
-        Me.mzIndex = New BlockSearchFunction(Of IonIndex)(
-            data:=mzset,
-            eval:=Function(m) m.mz,
-            tolerance:=1,
-            factor:=3
-        )
-    End Sub
+        Return New MassSearchIndex(Of IonIndex)(mzset, Function(mz) New IonIndex(mz), tolerance)
+    End Function
+
+    Private Shared Iterator Function DoEvalMz(c As Compound, precursorTypes As MzCalculator()) As IEnumerable(Of IonIndex)
+        For Each t As MzCalculator In precursorTypes
+            Yield New IonIndex(mz:=t.CalcMZ(c.ExactMass)) With {
+                .compound = c,
+                .precursor = t.ToString
+            }
+        Next
+    End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overrides Function ToString() As String
-        Return $"{index.Count} unique compounds, tree with mzdiff: {tolerance} (precursors: {precursorTypes.JoinBy("; ")})"
+        Return $"{index.Count} unique compounds, tree with mzdiff: {mzIndex.ToString} (precursors: {precursorTypes.JoinBy("; ")})"
     End Function
 
     ''' <summary>
@@ -205,10 +196,8 @@ Public Class MSSearch(Of Compound As {IReadOnlyId, ICompoundNameProvider, IExact
     ''' the query score is zero from this function
     ''' </remarks>
     Public Iterator Function QueryByMz(mz As Double) As IEnumerable(Of MzQuery) Implements IMzQuery.QueryByMz
-        Dim query As New IonIndex With {.mz = mz}
         Dim result As Compound() = mzIndex _
-            .Search(query) _
-            .Where(Function(d) tolerance(d.mz, mz)) _
+            .QueryByMass(mz) _
             .Select(Function(d) d.compound) _
             .GroupBy(Function(d) d.Identity) _
             .Select(Function(g)
@@ -216,7 +205,7 @@ Public Class MSSearch(Of Compound As {IReadOnlyId, ICompoundNameProvider, IExact
                     End Function) _
             .ToArray
 
-        For Each cpd As Compound In result.SafeQuery
+        For Each cpd As Compound In result
             Dim minppm = precursorTypes _
                 .Select(Function(type, i)
                             Dim mzhit As Double = type.CalcMZ(cpd.ExactMass)
