@@ -56,6 +56,22 @@ declare namespace metadb {
      * @param env default value Is ``null``.
    */
    function load_asQueryHits(x: object, env?: object): object;
+   module mass_search {
+      /**
+       * 
+       * 
+        * @param massSet -
+        * @param type -
+        * @param tolerance -
+        * 
+        * + default value Is ``'da:0.01'``.
+        * @param env -
+        * 
+        * + default value Is ``null``.
+        * @return A simple mass index search engine object instance
+      */
+      function index(massSet: any, type: any, tolerance?: any, env?: object): object;
+   }
    /**
     * a generic function for handle ms1 search
     * 
@@ -139,7 +155,13 @@ declare namespace metadb {
    */
    function uniqueFeatures(query: object, uniqueByScore?: boolean, scoreFactors?: object, format?: string, removesZERO?: boolean, verbose?: boolean, env?: object): object;
    /**
-     * @param env default value Is ``null``.
+    * verify that the given cas registry number is correct or not
+    * 
+    * 
+     * @param num -
+     * @param env -
+     * 
+     * + default value Is ``null``.
    */
    function verify_cas_number(num: any, env?: object): any;
 }
