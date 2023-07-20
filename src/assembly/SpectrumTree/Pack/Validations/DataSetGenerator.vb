@@ -14,7 +14,7 @@ Namespace PackLib.Validation
 
         ReadOnly libs As SpectrumReader
         ReadOnly args As DataSetParameters
-        ReadOnly ions As New List(Of ms1_scan)
+        ReadOnly ions As New List(Of NamedValue(Of ms1_scan))
 
         Sub New(libs As SpectrumReader, args As DataSetParameters)
             Me.libs = libs
@@ -37,23 +37,30 @@ Namespace PackLib.Validation
             Next
         End Function
 
+        Public Function GetPeaktable() As Peaktable
+
+        End Function
+
         Private Iterator Function CreateOneDataSet() As IEnumerable(Of ScanMS1)
             Dim libnames As String() = libs.ListAllSpectrumId _
                 .Shuffles _
                 .Take(args.AverageNumberOfSpectrum) _
                 .ToArray
             Dim spectrums As New List(Of BlockNode)
+            Dim ion As ms1_scan
 
             For Each id As String In libnames
                 Dim data = libs.GetSpectrum(id)
 
                 If data.rt >= args.rtmin AndAlso data.rt <= args.rtmax Then
-                    Call spectrums.Add(data)
-                    Call ions.Add(New ms1_scan With {
+                    ion = New ms1_scan With {
                         .mz = data.mz.First,
                         .scan_time = data.rt,
                         .intensity = data.centroid.Sum(Function(s) s.intensity)
-                    })
+                    }
+
+                    Call spectrums.Add(data)
+                    Call ions.Add(New NamedValue(Of ms1_scan)("", ion))
                 End If
             Next
 
