@@ -18,9 +18,18 @@ Public Class MassSearchIndex(Of T As IExactMassProvider) : Implements IMassSearc
     ''' </summary>
     ReadOnly tolerance As Tolerance
     ReadOnly massIndex As BlockSearchFunction(Of T)
-    ReadOnly activator As Func(Of Double, T)
+    ReadOnly activator As Func(Of Double, Object)
 
-    Sub New(mass As IEnumerable(Of T), activator As Func(Of Double, T), tolerance As Tolerance)
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="mass"></param>
+    ''' <param name="activator">
+    ''' returns object due to the reason of reflection not working
+    ''' well on build a dynamics delegate type
+    ''' </param>
+    ''' <param name="tolerance"></param>
+    Sub New(mass As IEnumerable(Of T), activator As Func(Of Double, Object), tolerance As Tolerance)
         ' 20220512
         '
         ' too small tolerance error will cause too much elements to

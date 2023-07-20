@@ -1,5 +1,6 @@
 ﻿Imports System.Reflection
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.Annotations
+Imports Microsoft.VisualBasic.Emit.Delegates
 
 Public Class IndexEmit
 
@@ -13,7 +14,7 @@ Public Class IndexEmit
         no_arg = ParseNoArgument(schema)
         mass_arg = ParseMassArgument(schema)
         type = schema
-        [delegate] = GetType(Func(Of,  )).MakeGenericType(GetType(Double), schema)
+        [delegate] = GetType(Func(Of,  )).MakeGenericType(GetType(Double), GetType(Object))
     End Sub
 
     Private Shared Function ParseNoArgument(schema As Type) As ConstructorInfo
@@ -42,12 +43,13 @@ Public Class IndexEmit
         Dim writeMap As InterfaceMapping = type.GetInterfaceMap(GetType(IExactMassProvider))
         Dim target = writeMap.TargetMethods(0)
         ' get_xxx
-        Dim delp As PropertyInfo = type.GetProperty(target.Name.Substring(4))
+        Dim set_prop As String = target.Name.Substring(4)
+        Dim set_func = DelegateFactory.PropertySet(type, set_prop)
         Dim del As Func(Of Double, Object) =
             Function(m As Double)
                 Dim obj As IExactMassProvider = Activator.CreateInstance(type)
-                delp.SetValue(obj, m)
-                Return delp
+                Call set_func(obj, m)
+                Return obj
             End Function
 
         Return del
