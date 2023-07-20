@@ -6,11 +6,13 @@ Public Class IndexEmit
     ReadOnly no_arg As ConstructorInfo
     ReadOnly mass_arg As ConstructorInfo
     ReadOnly type As Type
+    ReadOnly [delegate] As Type
 
     Sub New(schema As Type)
         no_arg = ParseNoArgument(schema)
         mass_arg = ParseMassArgument(schema)
         type = schema
+        [delegate] = GetType(Func(Of,  )).MakeGenericType(GetType(Double), schema)
     End Sub
 
     Private Shared Function ParseNoArgument(schema As Type) As ConstructorInfo
@@ -37,17 +39,26 @@ Public Class IndexEmit
 
     Private Function delegate_no_argument() As Object
         Dim writeMap As InterfaceMapping = type.GetInterfaceMap(GetType(IExactMassProvider))
+        Dim target = writeMap.TargetMethods(0)
+        ' get_xxx
+        Dim delp As PropertyInfo = type.GetProperty(target.Name.Substring(4))
+        Dim del As Func(Of Double, Object) =
+            Function(m As Double)
+                Dim obj As IExactMassProvider = Activator.CreateInstance(type)
+                delp.SetValue(obj, m)
+                Return delp
+            End Function
 
-        Return Function()
-                   Dim obj As IExactMassProvider = Activator.CreateInstance(type)
-
-               End Function
+        Return del
     End Function
 
     Private Function delegate_mass_argument() As Object
-        Return Function(mass As Double)
-                   Return Activator.CreateInstance(type, mass)
-               End Function
+        Dim del As Func(Of Double, Object) =
+            Function(mass As Double)
+                Return Activator.CreateInstance(type, mass)
+            End Function
+
+        Return del
     End Function
 
     Public Function CreateActivator() As Object

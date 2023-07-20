@@ -72,6 +72,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Emit.Delegates
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
 Imports SMRUCC.Rsharp.Interpreter
@@ -156,6 +157,11 @@ Module MetaDbXref
         Dim engine As Object = Activator.CreateInstance(searchEngine, argv)
 
         Return engine
+    End Function
+
+    <ExportAPI("queryByMass")>
+    Public Function QueryByMass(search As IMassSearch, mass As Double) As Object
+        Return search.QueryByMass(mass).ToArray(Of Object)
     End Function
 
     ''' <summary>

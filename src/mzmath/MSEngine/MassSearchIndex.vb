@@ -1,11 +1,17 @@
-﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+﻿Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.Annotations
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm
+Public Interface IMassSearch
+
+    Function QueryByMass(mass As Double) As IEnumerable
+
+End Interface
 
 ''' <summary>
 ''' A simple implements of mass search index
 ''' </summary>
-Public Class MassSearchIndex(Of T As IExactMassProvider)
+Public Class MassSearchIndex(Of T As IExactMassProvider) : Implements IMassSearch
 
     ''' <summary>
     ''' mass tolerance value for match sample mz and threocal mz
@@ -50,5 +56,10 @@ Public Class MassSearchIndex(Of T As IExactMassProvider)
 
     Public Overrides Function ToString() As String
         Return tolerance.ToString
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Private Function IMassSearch_QueryByMass(mass As Double) As IEnumerable Implements IMassSearch.QueryByMass
+        Return QueryByMass(mass)
     End Function
 End Class
