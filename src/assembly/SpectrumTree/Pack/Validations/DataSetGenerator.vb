@@ -107,12 +107,12 @@ Namespace PackLib.Validation
             For Each id As String In libnames
                 Dim data As BlockNode = libs.GetSpectrum(id)
 
-                If idRange.Count > 0 AndAlso Not data.Id Like idRange Then
-                    Continue For
-                ElseIf data.mz.IsNullOrEmpty Then
+                If data.mz.IsNullOrEmpty Then
                     ' no precursor mz data?
                     Continue For
                 ElseIf Not hashIndex.ContainsKey(id) Then
+                    Continue For
+                ElseIf idRange.Count > 0 AndAlso Not hashIndex(id) Like idRange Then
                     Continue For
                 End If
 
