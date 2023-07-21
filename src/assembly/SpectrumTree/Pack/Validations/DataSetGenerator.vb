@@ -95,6 +95,9 @@ Namespace PackLib.Validation
 
                 If idRange.Count > 0 AndAlso Not data.Id Like idRange Then
                     Continue For
+                ElseIf data.mz.IsNullOrEmpty Then
+                    ' no precursor mz data?
+                    Continue For
                 End If
 
                 If data.rt >= args.rtmin AndAlso data.rt <= args.rtmax Then
