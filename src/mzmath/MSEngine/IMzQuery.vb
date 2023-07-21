@@ -56,8 +56,6 @@
 
 #End Region
 
-Imports Microsoft.VisualBasic.ComponentModel.Collection
-
 Public Interface IMzQuery
 
     Function QueryByMz(mz As Double) As IEnumerable(Of MzQuery)
