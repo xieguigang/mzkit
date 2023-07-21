@@ -3,6 +3,7 @@
 Metabolite annotation database search engine
 
 + [mass_search.index](metadb/mass_search.index.1) 
++ [queryByMass](metadb/queryByMass.1) 
 + [verify_cas_number](metadb/verify_cas_number.1) verify that the given cas registry number is correct or not
 + [parseLipidName](metadb/parseLipidName.1) 
 + [annotationStream](metadb/annotationStream.1) 

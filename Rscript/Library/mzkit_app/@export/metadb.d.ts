@@ -113,6 +113,9 @@ declare namespace metadb {
    */
    function precursorIon(ion: string): object;
    /**
+   */
+   function queryByMass(search: object, mass: number): any;
+   /**
     * Found the best matched mz value with the target **`exactMass`**
     * 
     * 
