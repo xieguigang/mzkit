@@ -20,9 +20,23 @@ Namespace PackLib.Validation
         ReadOnly ions As New List(Of NamedValue(Of ms1_scan))
         ReadOnly idRange As New Index(Of String)
 
+        ''' <summary>
+        ''' id mapping of spectrum id to the metabolite mass id
+        ''' </summary>
+        ReadOnly hashIndex As Dictionary(Of String, String)
+
         Sub New(libs As SpectrumReader, args As DataSetParameters)
             Me.libs = libs
             Me.args = args
+            Me.hashIndex = New Dictionary(Of String, String)
+
+            For Each mass As MassIndex In libs.LoadMass
+                Dim metaboId As String = mass.name.Split("|"c).First
+
+                For Each id As String In mass.spectrum.Select(Function(i) CStr(i))
+                    Call hashIndex.Add(id, metaboId)
+                Next
+            Next
         End Sub
 
         Public Function Initial() As DataSetGenerator
@@ -98,6 +112,8 @@ Namespace PackLib.Validation
                 ElseIf data.mz.IsNullOrEmpty Then
                     ' no precursor mz data?
                     Continue For
+                ElseIf Not hashIndex.ContainsKey(id) Then
+                    Continue For
                 End If
 
                 If data.rt >= args.rtmin AndAlso data.rt <= args.rtmax Then
@@ -108,7 +124,7 @@ Namespace PackLib.Validation
                     }
 
                     Call spectrums.Add(data)
-                    Call ions.Add(New NamedValue(Of ms1_scan)(data.Id, ion))
+                    Call ions.Add(New NamedValue(Of ms1_scan)(hashIndex(id), ion))
                 End If
             Next
 
