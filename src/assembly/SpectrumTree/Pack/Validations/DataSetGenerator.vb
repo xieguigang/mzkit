@@ -2,6 +2,7 @@
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.Tree
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math
@@ -17,6 +18,7 @@ Namespace PackLib.Validation
         ReadOnly libs As SpectrumReader
         ReadOnly args As DataSetParameters
         ReadOnly ions As New List(Of NamedValue(Of ms1_scan))
+        ReadOnly idRange As New Index(Of String)
 
         Sub New(libs As SpectrumReader, args As DataSetParameters)
             Me.libs = libs
@@ -24,7 +26,13 @@ Namespace PackLib.Validation
         End Sub
 
         Public Function Initial() As DataSetGenerator
-            ions.Clear()
+            Call ions.Clear()
+            Call idRange.Clear()
+
+            If Not args.IdRange.IsNullOrEmpty Then
+                Call idRange.AddList(args.IdRange)
+            End If
+
             Return Me
         End Function
 
@@ -84,6 +92,10 @@ Namespace PackLib.Validation
 
             For Each id As String In libnames
                 Dim data As BlockNode = libs.GetSpectrum(id)
+
+                If idRange.Count > 0 AndAlso Not data.Id Like idRange Then
+                    Continue For
+                End If
 
                 If data.rt >= args.rtmin AndAlso data.rt <= args.rtmax Then
                     ion = New ms1_scan With {

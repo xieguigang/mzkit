@@ -13,6 +13,7 @@
         ''' </summary>
         ''' <returns></returns>
         Public Property rawname As String
+        Public Property IdRange As String()
 
     End Class
 End Namespace
