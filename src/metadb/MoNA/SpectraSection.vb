@@ -131,6 +131,11 @@ Public Class SpectraSection : Inherits MetaInfo
 
     Sub New(metadata As MetaData)
         Me.meta = metadata
+        Me.ID = metadata.accession
+        Me.name = metadata.name
+        Me.IUPACName = metadata.name
+        Me.formula = If(metadata.molecular_formula, metadata.derivative_formula)
+        Me.exact_mass = metadata.exact_mass
     End Sub
 End Class
 
