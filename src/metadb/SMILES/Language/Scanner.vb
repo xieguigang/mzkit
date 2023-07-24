@@ -184,12 +184,9 @@ Namespace Language
                         (Char.IsLower(c) AndAlso Char.IsNumber(buf.Last))) OrElse
                         (Char.IsLower(c) AndAlso Char.IsLower(buf.GetChar(0))) Then
 
-                        If buf = 1 AndAlso buf(Scan0) = "["c Then
+                        If buf(Scan0) = "["c Then
                             openIonStack = True
                             Call Debug.WriteLine("[")
-                        ElseIf buf(0) = "["c Then
-                            openIonStack = True
-                            Call Debug.WriteLine("-")
                         Else
                             Yield MeasureElement(New String(buf.PopAllChars))
                         End If

@@ -142,6 +142,7 @@ Public Class Atom
         Yield New Atom("SO4", -2)
         Yield New Atom("CO3", -2)
         Yield New Atom("NH4", 1)
+        Yield New Atom("NH2", 1)
         Yield New Atom("SO3", -2)
         Yield New Atom("MnO4", -1)
         Yield New Atom("HCO3", -1)
