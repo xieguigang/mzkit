@@ -56,7 +56,7 @@ Namespace Embedding
             Dim sgv As Double() = (vk / v0) ^ (1 / kappa)
 
             For i As Integer = 0 To links.Length - 1
-                Dim t = links(i).Key.Split("|"c)
+                Dim t As String() = links(i).Key.Split("|"c)
                 Dim gv As New Dictionary(Of String, String())
 
                 For Each v As ChemicalElement In links(i) _

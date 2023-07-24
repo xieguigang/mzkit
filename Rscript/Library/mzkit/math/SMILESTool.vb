@@ -9,6 +9,7 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Serialization.Bencoding
 Imports SMRUCC.Rsharp.Runtime
 Imports list = SMRUCC.Rsharp.Runtime.Internal.Object.list
 Imports RDataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
@@ -83,6 +84,24 @@ Module SMILESTool
                 {"ion_charge", ionCharge},
                 {"links", links},
                 {"connected", partners}
+            }
+        }
+    End Function
+
+    <ExportAPI("links")>
+    Public Function atomLinks(SMILES As ChemicalFormula, Optional kappa As Double = 1) As RDataframe
+        Dim links As AtomLink() = SMILES.GraphEmbedding(kappa).ToArray
+        Dim atom1 As String() = links.Select(Function(l) l.atom1).ToArray
+        Dim atom2 As String() = links.Select(Function(l) l.atom2).ToArray
+        Dim weight As Double() = links.Select(Function(l) l.score).ToArray
+        Dim vertex As String() = links.Select(Function(l) l.vertex.ToBEncodeString)
+
+        Return New RDataframe With {
+            .columns = New Dictionary(Of String, Array) From {
+                {"atom1", atom1},
+                {"atom2", atom2},
+                {"weight", weight},
+                {"vertex", vertex}
             }
         }
     End Function
