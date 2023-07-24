@@ -605,7 +605,7 @@ Module FormulaTools
     ''' get atoms table from the SMILES structure data
     ''' </summary>
     ''' <param name="SMILES"></param>
-    ''' <returns></returns>
+    ''' <returns>A molecular graph represents in dataframe object</returns>
     <ExportAPI("atoms")>
     Public Function atomGroups(SMILES As ChemicalFormula) As RDataframe
         Dim elements As ChemicalElement() = SMILES.AllElements _
