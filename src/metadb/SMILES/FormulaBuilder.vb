@@ -67,12 +67,17 @@ Public Class FormulaBuilder
     Dim composition As New Dictionary(Of String, Integer)
     Dim visited As New Index(Of String)
     Dim atomProfile As Dictionary(Of String, Atom)
+    Dim atomGroups As Dictionary(Of String, Atom)
 
     Sub New(graph As ChemicalFormula)
         Me.graph = graph
         Me.atomProfile = Atom _
             .DefaultElements _
             .ToDictionary(Function(a) a.label)
+        Me.atomGroups = Atom.DefaultAtomGroups _
+            .ToDictionary(Function(a)
+                              Return a.GetIonLabel
+                          End Function)
     End Sub
 
     Public Function GetComposition(ByRef empirical As String) As Dictionary(Of String, Integer)
@@ -106,6 +111,8 @@ Public Class FormulaBuilder
 
                 If atomProfile.ContainsKey(element.elementName) Then
                     Call Push(atomProfile(element.elementName), element)
+                ElseIf atomGroups.ContainsKey(element.elementName) Then
+                    Call Push(atomGroups(element.elementName), element)
                 Else
                     Throw New NotImplementedException(element.elementName)
                 End If
