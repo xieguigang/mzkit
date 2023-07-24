@@ -258,6 +258,17 @@ Namespace Language
             End If
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="str"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' Atoms in aromatic rings are specified by lower case letters, e.g., 
+        ''' 
+        ''' 1. aliphatic carbon is represented by the capital letter C, 
+        ''' 2. aromatic carbon by lower case c.
+        ''' </remarks>
         Private Function MeasureElement(str As String) As Token
             Dim ring As Integer? = Nothing
 
@@ -279,13 +290,15 @@ Namespace Language
                 Case "."
                     Return New Token(ElementTypes.Disconnected, str)
                 Case Else
-
                     If Layout2D.atomMaxCharges.ContainsKey(str) Then
                         Return New Token(ElementTypes.Element, str) With {
-                        .ring = ring
-                    }
+                            .ring = ring
+                        }
                     ElseIf str.IsPattern("\d+") Then
                         Return New Token(ElementTypes.None, str)
+                    ElseIf str = "c" Then
+                        ' aromatic carbon by lower case c.
+                        Return New Token(ElementTypes.Element, "C")
                     Else
                         Throw New NotImplementedException(str)
                     End If
