@@ -37,7 +37,7 @@ Namespace Embedding
         <Extension>
         Public Iterator Function GraphEmbedding(g As ChemicalFormula,
                                                 Optional kappa As Double = 1,
-                                                Optional normalizeSize As Boolean = True) As IEnumerable(Of AtomLink)
+                                                Optional normalizeSize As Boolean = False) As IEnumerable(Of AtomLink)
             Dim links = g.AllBonds _
                 .GroupBy(Function(l)
                              Return New String() {l.U.group, l.V.group} _
