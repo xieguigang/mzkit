@@ -35,7 +35,9 @@ Namespace Embedding
         End Function
 
         <Extension>
-        Public Iterator Function GraphEmbedding(g As ChemicalFormula, Optional kappa As Double = 1) As IEnumerable(Of AtomLink)
+        Public Iterator Function GraphEmbedding(g As ChemicalFormula,
+                                                Optional kappa As Double = 1,
+                                                Optional normalizeSize As Boolean = True) As IEnumerable(Of AtomLink)
             Dim links = g.AllBonds _
                 .GroupBy(Function(l)
                              Return New String() {l.U.group, l.V.group} _
@@ -48,10 +50,15 @@ Namespace Embedding
 
             For i As Integer = 0 To links.Length - 1
                 Dim group As IGrouping(Of String, ChemicalKey) = links(i)
+                Dim keys As New Vector(group.Select(Function(a) CDbl(a.bond)))
 
                 v0.Array(i) = group.Count
-                vk.Array(i) = (-kappa * New Vector(group.Select(Function(a) CDbl(a.bond)))).Exp().Sum
+                vk.Array(i) = (-kappa * keys).Exp().Sum
             Next
+
+            If normalizeSize Then
+                v0 /= g.AllElements.Count
+            End If
 
             Dim sgv As Double() = (vk / v0) ^ (1 / kappa)
 

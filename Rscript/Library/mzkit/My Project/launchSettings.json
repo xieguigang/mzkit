@@ -6,7 +6,7 @@
     "run_exe": {
       "commandName": "Executable",
       "executablePath": "\\GCModeller\\src\\R-sharp\\App\\net6.0\\R#.exe",
-      "commandLineArgs": "D:\\biodeep\\biodeepdb_v3\\biodeepdb_v3\\test\\local_mass_index.R --attach \"\\mzkit\\Rscript\\Library\\mzkit_app\" --debug"
+      "commandLineArgs": "\\biodeep\\web\\sample_pool\\test\\create_smiles_graph_data.R --attach \"\\mzkit\\Rscript\\Library\\mzkit_app\" --debug"
     }
   }
 }

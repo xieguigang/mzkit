@@ -89,8 +89,11 @@ Module SMILESTool
     End Function
 
     <ExportAPI("links")>
-    Public Function atomLinks(SMILES As ChemicalFormula, Optional kappa As Double = 1) As RDataframe
-        Dim links As AtomLink() = SMILES.GraphEmbedding(kappa).ToArray
+    Public Function atomLinks(SMILES As ChemicalFormula,
+                              Optional kappa As Double = 1,
+                              Optional normalize_size As Boolean = True) As RDataframe
+
+        Dim links As AtomLink() = SMILES.GraphEmbedding(kappa, normalize_size).ToArray
         Dim atom1 As String() = links.Select(Function(l) l.atom1).ToArray
         Dim atom2 As String() = links.Select(Function(l) l.atom2).ToArray
         Dim weight As Double() = links.Select(Function(l) l.score).ToArray
