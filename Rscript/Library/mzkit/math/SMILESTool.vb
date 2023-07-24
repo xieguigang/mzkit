@@ -1,6 +1,5 @@
 ﻿
 Imports System.Runtime.CompilerServices
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.BioDeep.Chemoinformatics
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
@@ -11,7 +10,7 @@ Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
-Imports SMRUCC.Rsharp.Runtime.Internal.Object
+Imports list = SMRUCC.Rsharp.Runtime.Internal.Object.list
 Imports RDataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
 
 <Package("SMILES", Category:=APICategories.UtilityTools)>
@@ -22,7 +21,7 @@ Module SMILESTool
     End Sub
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Private Function atoms_table(smiles As ChemicalFormula, args As List, env As Environment) As RDataframe
+    Private Function atoms_table(smiles As ChemicalFormula, args As list, env As Environment) As RDataframe
         Return atomGroups(smiles)
     End Function
 
