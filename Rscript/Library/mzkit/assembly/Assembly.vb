@@ -229,16 +229,26 @@ Module Assembly
     ''' <returns></returns>
     <ExportAPI("mgf.ion_peaks")>
     <RApiReturn(GetType(PeakMs2))>
-    Public Function IonPeaks(<RRawVectorArgument> ions As Object, Optional env As Environment = Nothing) As Object
+    Public Function IonPeaks(<RRawVectorArgument>
+                             ions As Object,
+                             Optional lazy As Boolean = True,
+                             Optional env As Environment = Nothing) As Object
+
         Dim pipeline As pipeline = pipeline.TryCreatePipeline(Of Ions)(ions, env)
 
         If pipeline.isError Then
             Return pipeline.getError
         End If
 
-        Return pipeline.populates(Of Ions)(env) _
-            .IonPeaks _
-            .DoCall(AddressOf pipeline.CreateFromPopulator)
+        If lazy Then
+            Return pipeline.populates(Of Ions)(env) _
+                .IonPeaks _
+                .DoCall(AddressOf pipeline.CreateFromPopulator)
+        Else
+            Return pipeline.populates(Of Ions)(env) _
+                .IonPeaks _
+                .ToArray
+        End If
     End Function
 
     <ExportAPI("open.xml_seek")>
