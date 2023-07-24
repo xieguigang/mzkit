@@ -97,7 +97,9 @@ Module SMILESTool
         Dim atom1 As String() = links.Select(Function(l) l.atom1).ToArray
         Dim atom2 As String() = links.Select(Function(l) l.atom2).ToArray
         Dim weight As Double() = links.Select(Function(l) l.score).ToArray
-        Dim vertex As String() = links.Select(Function(l) l.vertex.ToBEncodeString)
+        Dim vertex As String() = links _
+            .Select(Function(l) l.vertex.ToBEncodeString) _
+            .ToArray
 
         Return New RDataframe With {
             .columns = New Dictionary(Of String, Array) From {
