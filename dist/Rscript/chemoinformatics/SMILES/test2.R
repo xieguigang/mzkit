@@ -6,4 +6,4 @@ const debug = "C(C=4)(=O)c(c3OC4c(c5)ccc(c5)O)c(O)cc(c3)OC(C(O)1)OC(COC(C2O)OCC2
 const g = SMILES::parse(debug);
 
 print(as.formula(g));
-print(SMILES::links(smiles));
+print(SMILES::links(g));

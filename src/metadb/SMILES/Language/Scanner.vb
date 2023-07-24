@@ -178,19 +178,21 @@ Namespace Language
 
                 Yield New Token(ElementTypes.Key, c)
             Else
-                If Char.IsLetter(c) AndAlso buf > 0 AndAlso
-                    (Char.IsUpper(c) OrElse
-                    (Char.IsLower(c) AndAlso Char.IsNumber(buf.Last))) OrElse
-                    (Char.IsLower(c) AndAlso Char.IsLower(buf.GetChar(0))) Then  ' handling the parser for token like 'c3OC4c', 'ccc'
+                If Char.IsLetter(c) AndAlso (buf > 0) Then
+                    ' handling the parser for token like 'c3OC4c', 'ccc'
+                    If (Char.IsUpper(c) OrElse
+                        (Char.IsLower(c) AndAlso Char.IsNumber(buf.Last))) OrElse
+                        (Char.IsLower(c) AndAlso Char.IsLower(buf.GetChar(0))) Then
 
-                    If buf = 1 AndAlso buf(Scan0) = "["c Then
-                        openIonStack = True
-                        Call Debug.WriteLine("[")
-                    ElseIf buf(0) = "["c Then
-                        openIonStack = True
-                        Call Debug.WriteLine("-")
-                    Else
-                        Yield MeasureElement(New String(buf.PopAllChars))
+                        If buf = 1 AndAlso buf(Scan0) = "["c Then
+                            openIonStack = True
+                            Call Debug.WriteLine("[")
+                        ElseIf buf(0) = "["c Then
+                            openIonStack = True
+                            Call Debug.WriteLine("-")
+                        Else
+                            Yield MeasureElement(New String(buf.PopAllChars))
+                        End If
                     End If
                 ElseIf c = "]"c Then
                     buf += c
