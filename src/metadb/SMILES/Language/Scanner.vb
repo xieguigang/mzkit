@@ -178,7 +178,10 @@ Namespace Language
 
                 Yield New Token(ElementTypes.Key, c)
             Else
-                If Char.IsLetter(c) AndAlso Char.IsUpper(c) AndAlso buf > 0 Then
+                If Char.IsLetter(c) AndAlso
+                    ((Char.IsUpper(c) AndAlso buf > 0) OrElse
+                    (Char.IsLower(c) AndAlso buf > 0 AndAlso Char.IsNumber(buf.Last))) Then  ' handling the parser for token like 'c3OC4c'
+
                     If buf = 1 AndAlso buf(Scan0) = "["c Then
                         openIonStack = True
                         Call Debug.WriteLine("[")
