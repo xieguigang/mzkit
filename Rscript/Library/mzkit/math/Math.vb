@@ -419,6 +419,21 @@ Module MzMath
         Return align
     End Function
 
+    <ExportAPI("cosine.pairwise")>
+    Public Function cosine_pairwise(<RRawVectorArgument> query As Object, <RRawVectorArgument> ref As Object,
+                                    Optional tolerance As Object = "da:0.3",
+                                    Optional intocutoff As Double = 0.05,
+                                    Optional env As Environment = Nothing) As Object
+
+        Dim mzErr = Math.getTolerance(tolerance, env)
+
+        If mzErr Like GetType(Message) Then
+            Return mzErr.TryCast(Of Message)
+        End If
+
+        Dim q = 
+    End Function
+
     ''' <summary>
     ''' create spectrum tree cluster based on the spectrum to spectrum similarity comparison.
     ''' </summary>

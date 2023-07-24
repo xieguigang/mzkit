@@ -23,6 +23,7 @@ declare namespace formula {
     * 
     * 
      * @param SMILES -
+     * @return A molecular graph represents in dataframe object
    */
    function atoms(SMILES: object): object;
    /**
