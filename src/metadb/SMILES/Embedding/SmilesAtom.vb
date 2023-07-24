@@ -9,6 +9,6 @@
         Public Property group As String
         Public Property ion_charge As Integer
         Public Property links As Integer
-        Public Property connected As String
+        Public Property connected As String()
     End Class
 End Namespace
