@@ -405,12 +405,20 @@ Module MzMath
 
         If mzErr Like GetType(Message) Then
             Return mzErr.TryCast(Of Message)
+        Else
+            Return cosine(query, ref, mzErr.TryCast(Of Tolerance), New RelativeIntensityCutoff(intocutoff))
         End If
+    End Function
 
-        query = query.CentroidMode(mzErr.TryCast(Of Tolerance), New RelativeIntensityCutoff(intocutoff))
-        ref = ref.CentroidMode(mzErr.TryCast(Of Tolerance), New RelativeIntensityCutoff(intocutoff))
+    Private Function cosine(query As LibraryMatrix,
+                            ref As LibraryMatrix,
+                            mzErr As Tolerance,
+                            intocutoff As RelativeIntensityCutoff) As AlignmentOutput
 
-        Dim cos As New CosAlignment(mzErr, New RelativeIntensityCutoff(intocutoff))
+        query = query.CentroidMode(mzErr, intocutoff)
+        ref = ref.CentroidMode(mzErr, intocutoff)
+
+        Dim cos As New CosAlignment(mzErr, intocutoff)
         Dim align As AlignmentOutput = cos.CreateAlignment(query.ms2, ref.ms2)
 
         align.query = New Meta With {.id = query.name}
@@ -431,7 +439,29 @@ Module MzMath
             Return mzErr.TryCast(Of Message)
         End If
 
-        Dim q = 
+        Dim q = ObjectSet.GetObjectSet(query, env).Select(Function(a) getSpectrum(a, env)).ToArray
+        Dim s = ObjectSet.GetObjectSet(ref, env).Select(Function(a) getSpectrum(a, env)).ToArray
+
+        ' check for error
+        For Each item_sp In q.JoinIterates(s)
+            If item_sp Like GetType(Message) Then
+                Return item_sp.TryCast(Of Message)
+            End If
+        Next
+
+        Dim par = q.AsParallel _
+            .Select(Iterator Function(qi) As IEnumerable(Of AlignmentOutput)
+                        Dim qsp As LibraryMatrix = qi.TryCast(Of LibraryMatrix)
+                        Dim cutoff As New RelativeIntensityCutoff(intocutoff)
+
+                        For Each si In s
+                            Yield cosine(qsp, si.TryCast(Of LibraryMatrix), mzErr.TryCast(Of Tolerance), cutoff)
+                        Next
+                    End Function) _
+            .IteratesALL _
+            .ToArray
+
+        Return par
     End Function
 
     ''' <summary>
