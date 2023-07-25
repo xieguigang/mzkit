@@ -314,6 +314,8 @@ Namespace Language
                     Return New Token(ElementTypes.Close, str)
                 Case "."
                     Return New Token(ElementTypes.Disconnected, str)
+                Case ""
+                    Return New Token(ElementTypes.None, str)
                 Case Else
                     If Layout2D.atomMaxCharges.ContainsKey(str) Then
                         Return New Token(ElementTypes.Element, str) With {
@@ -324,7 +326,7 @@ Namespace Language
                     ElseIf str = "c" Then
                         ' aromatic carbon by lower case c.
                         Return New Token(ElementTypes.Element, "C")
-                    Else
+                    ElseIf str.Last = "c"c Then
                         Dim xxx As New MultipleTokens
 
                         ' example like token string: Oc
@@ -336,6 +338,8 @@ Namespace Language
                         Next
 
                         Return xxx
+                    Else
+                        Throw New NotImplementedException(str)
                     End If
             End Select
         End Function
