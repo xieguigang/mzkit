@@ -97,6 +97,8 @@ Module SMILESTool
         Dim atom1 As String() = links.Select(Function(l) l.atom1).ToArray
         Dim atom2 As String() = links.Select(Function(l) l.atom2).ToArray
         Dim weight As Double() = links.Select(Function(l) l.score).ToArray
+        Dim vk As Double() = links.Select(Function(l) l.vk).ToArray
+        Dim v0 As Double() = links.Select(Function(l) l.v0).ToArray
         Dim vertex As String() = links _
             .Select(Function(l) l.vertex.ToBEncodeString) _
             .ToArray
@@ -106,6 +108,8 @@ Module SMILESTool
                 {"atom1", atom1},
                 {"atom2", atom2},
                 {"weight", weight},
+                {"vk", vk},
+                {"v0", v0},
                 {"vertex", vertex}
             }
         }

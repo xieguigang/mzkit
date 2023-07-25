@@ -84,7 +84,9 @@ Namespace Embedding
                     .atom1 = t(0),
                     .atom2 = t(1),
                     .score = sgv(i),
-                    .vertex = gv
+                    .vertex = gv,
+                    .vk = vk(i),
+                    .v0 = v0(i)
                 }
             Next
         End Function
