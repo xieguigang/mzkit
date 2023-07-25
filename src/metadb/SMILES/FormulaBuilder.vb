@@ -130,7 +130,7 @@ Public Class FormulaBuilder
                            Into Sum(CInt(key.bond))
 
         Call Push(atom.label)
-        Call Push("H", atom.maxKeys - n)
+        Call Push("H", If(element.hydrogen > 0, element.hydrogen, atom.maxKeys - n))
     End Sub
 
     ''' <summary>
