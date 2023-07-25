@@ -53,6 +53,7 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Text.Parser
 
 Namespace Language
@@ -136,6 +137,8 @@ Namespace Language
         '
         ' C[C@H]1CCCCO1 or O1CCCC[C@@H]1C
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <DebuggerStepThrough>
         Sub New(SMILES As String)
             ' removes all of the structure related information
             Me.SMILES = SMILES _
@@ -282,6 +285,9 @@ Namespace Language
             If str.IsPattern("[A-Za-z]+\d+") Then
                 ' removes number
                 ring = Integer.Parse(str.Match("\d+"))
+                str = str.Match("[a-zA-Z]+")
+            ElseIf str.IsPattern("\d+[A-Za-z]+") Then
+                ' 0C unsure how to parse it
                 str = str.Match("[a-zA-Z]+")
             End If
 
