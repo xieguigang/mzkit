@@ -54,6 +54,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Text.Parser
 
 Namespace Language
@@ -317,16 +318,18 @@ Namespace Language
                 Case ""
                     Return New Token(ElementTypes.None, str)
                 Case Else
+                    Static aromatic As Index(Of String) = {"c", "o", "n"}
+
                     If Layout2D.atomMaxCharges.ContainsKey(str) Then
                         Return New Token(ElementTypes.Element, str) With {
                             .ring = ring
                         }
                     ElseIf str.IsPattern("\d+") Then
                         Return New Token(ElementTypes.None, str)
-                    ElseIf str = "c" Then
+                    ElseIf str Like aromatic Then
                         ' aromatic carbon by lower case c.
-                        Return New Token(ElementTypes.Element, "C")
-                    ElseIf str.Last = "c"c Then
+                        Return New Token(ElementTypes.Element, str.ToUpper)
+                    ElseIf str.Last Like aromatic Then
                         Dim xxx As New MultipleTokens
 
                         ' example like token string: Oc
