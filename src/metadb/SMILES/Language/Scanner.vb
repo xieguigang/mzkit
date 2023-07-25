@@ -152,6 +152,22 @@ Namespace Language
         ''' </summary>
         ''' <returns></returns>
         Public Iterator Function GetTokens() As IEnumerable(Of Token)
+            For Each t As Token In GetTokensInternal()
+                If TypeOf t Is MultipleTokens Then
+                    For Each ti As Token In DirectCast(t, MultipleTokens).Multiple
+                        Yield ti
+                    Next
+                Else
+                    Yield t
+                End If
+            Next
+        End Function
+
+        ''' <summary>
+        ''' Parse SMILES tokens
+        ''' </summary>
+        ''' <returns></returns>
+        Private Iterator Function GetTokensInternal() As IEnumerable(Of Token)
             Do While Not SMILES.EndRead
                 For Each t As Token In WalkChar(++SMILES)
                     Yield t
@@ -309,7 +325,17 @@ Namespace Language
                         ' aromatic carbon by lower case c.
                         Return New Token(ElementTypes.Element, "C")
                     Else
-                        Throw New NotImplementedException(str)
+                        Dim xxx As New MultipleTokens
+
+                        ' example like token string: Oc
+                        ' its name pattern has pass the test of multiple character atom element label,
+                        ' example as Oc is the same string pattern as Cu/Au/Li
+                        ' but Oc actually be composed by two element O and C aromatic carbon
+                        For Each c As Char In str
+                            Call xxx.Multiple.Add(MeasureElement(c))
+                        Next
+
+                        Return xxx
                     End If
             End Select
         End Function
