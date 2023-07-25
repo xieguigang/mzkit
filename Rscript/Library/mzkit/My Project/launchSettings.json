@@ -6,7 +6,7 @@
     "run_exe": {
       "commandName": "Executable",
       "executablePath": "\\GCModeller\\src\\R-sharp\\App\\net6.0\\R#.exe",
-      "commandLineArgs": "E:\\biodeep\\otcml-2023\\bundles\\verify\\export.R --attach \"\\mzkit\\Rscript\\Library\\mzkit_app\" --debug0"
+      "commandLineArgs": "\\mzkit\\dist\\Rscript\\chemoinformatics\\SMILES\\test_parser.R --attach \"\\mzkit\\Rscript\\Library\\mzkit_app\" --debug"
     }
   }
 }

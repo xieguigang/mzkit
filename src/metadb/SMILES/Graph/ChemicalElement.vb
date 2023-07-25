@@ -1,60 +1,60 @@
 ﻿#Region "Microsoft.VisualBasic::076876942d03a612aac707b99a11419e, mzkit\src\metadb\SMILES\Graph\ChemicalElement.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 132
-    '    Code Lines: 84
-    ' Comment Lines: 34
-    '   Blank Lines: 14
-    '     File Size: 4.42 KB
+' Summaries:
 
 
-    ' Class ChemicalElement
-    ' 
-    '     Properties: charge, coordinate, elementName, group, Keys
-    ' 
-    '     Constructor: (+2 Overloads) Sub New
-    ' 
-    '     Function: GetConnection
-    ' 
-    '     Sub: (+2 Overloads) SetAtomGroups
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 132
+'    Code Lines: 84
+' Comment Lines: 34
+'   Blank Lines: 14
+'     File Size: 4.42 KB
+
+
+' Class ChemicalElement
+' 
+'     Properties: charge, coordinate, elementName, group, Keys
+' 
+'     Constructor: (+2 Overloads) Sub New
+' 
+'     Function: GetConnection
+' 
+'     Sub: (+2 Overloads) SetAtomGroups
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -97,6 +97,11 @@ Public Class ChemicalElement : Inherits Node
     ''' </summary>
     ''' <returns></returns>
     Public Property charge As Integer
+    ''' <summary>
+    ''' The number of the hydrogen of current atom group it has
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property hydrogen As Integer = 0
 
     Sub New()
     End Sub
@@ -135,6 +140,10 @@ Public Class ChemicalElement : Inherits Node
         Next
     End Function
 
+    ''' <summary>
+    ''' Set atom group label based on the chemical keys
+    ''' </summary>
+    ''' <param name="formula"></param>
     Public Shared Sub SetAtomGroups(formula As ChemicalFormula)
         ' build connection edges
         For Each atom As ChemicalElement In formula.vertex
@@ -147,13 +156,25 @@ Public Class ChemicalElement : Inherits Node
         Next
     End Sub
 
+    Private Sub setAtomLabel(label As String, nH As Integer)
+        Dim atom As ChemicalElement = Me
+
+        atom.group = label
+        atom.hydrogen = nH
+    End Sub
+
+    ''' <summary>
+    ''' Set atom group label based on the chemical keys
+    ''' </summary>
+    ''' <param name="atom"></param>
+    ''' <param name="keys"></param>
     Private Shared Sub SetAtomGroups(atom As ChemicalElement, keys As Integer)
         Select Case atom.elementName
             Case "C"
                 Select Case keys
-                    Case 1 : atom.group = "-CH3"
-                    Case 2 : atom.group = "-CH2-"
-                    Case 3 : atom.group = "-CH="
+                    Case 1 : atom.setAtomLabel("-CH3", 3)
+                    Case 2 : atom.setAtomLabel("-CH2-", 2)
+                    Case 3 : atom.setAtomLabel("-CH=", 1)
                     Case Else
                         atom.group = "C"
                 End Select
@@ -161,21 +182,40 @@ Public Class ChemicalElement : Inherits Node
                 Select Case keys
                     Case 1
                         If atom.charge = 0 Then
-                            atom.group = "-OH"
+                            atom.setAtomLabel("-OH", 1)
                         Else
                             ' an ion with negative charge value
                             ' [O-]
-                            atom.group = "[O-]-"
+                            atom.setAtomLabel("[O-]-", 0)
                         End If
                     Case Else
                         atom.group = "-O-"
                 End Select
             Case "N"
+                Dim n As Integer
+
                 ' N -3
                 Select Case keys
-                    Case 1 : If atom.charge = 0 Then atom.group = "-NH2" Else atom.group = $"[-NH{3 - atom.charge}]{atom.charge}+"
-                    Case 2 : If atom.charge = 0 Then atom.group = "-NH-" Else atom.group = $"[-NH{2 - atom.charge}-]{atom.charge}+"
-                    Case 3 : If atom.charge = 0 Then atom.group = "-N=" Else atom.group = $"[-N=]{atom.charge}+"
+                    Case 1
+                        If atom.charge = 0 Then
+                            atom.setAtomLabel("-NH2", 2)
+                        Else
+                            n = 3 - atom.charge
+                            atom.setAtomLabel($"[-NH{n}]{atom.charge}+", n)
+                        End If
+                    Case 2
+                        If atom.charge = 0 Then
+                            atom.setAtomLabel("-NH-", 1)
+                        Else
+                            n = 2 - atom.charge
+                            atom.setAtomLabel($"[-NH{n}-]{atom.charge}+", n)
+                        End If
+                    Case 3
+                        If atom.charge = 0 Then
+                            atom.group = "-N="
+                        Else
+                            atom.group = $"[-N=]{atom.charge}+"
+                        End If
                     Case Else
                         atom.group = "N"
                 End Select

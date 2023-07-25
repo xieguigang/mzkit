@@ -58,7 +58,6 @@
 
 #End Region
 
-Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.AtomGroups
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
@@ -69,7 +68,6 @@ Imports BioNovoGene.BioDeep.Chemoinformatics
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.IsotopicPatterns
 Imports BioNovoGene.BioDeep.Chemoinformatics.SDF
-Imports BioNovoGene.BioDeep.Chemoinformatics.SMILES
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal
 Imports Microsoft.VisualBasic.CommandLine.Reflection
@@ -102,13 +100,7 @@ Module FormulaTools
         Call REnv.AttachConsoleFormatter(Of FormulaComposition())(AddressOf printFormulas)
 
         Call Internal.Object.Converts.makeDataframe.addHandler(GetType(FormulaComposition()), AddressOf getFormulaResult)
-        Call Internal.Object.Converts.makeDataframe.addHandler(GetType(ChemicalFormula), AddressOf atoms_table)
     End Sub
-
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Private Function atoms_table(smiles As ChemicalFormula, args As list, env As Environment) As RDataframe
-        Return atomGroups(smiles)
-    End Function
 
     Private Function getFormulaResult(formulas As FormulaComposition(), args As list, env As Environment) As RDataframe
         Dim candidates As New RDataframe With {
@@ -565,78 +557,6 @@ Module FormulaTools
         Next
 
         Return matrix.ToArray
-    End Function
-
-    ''' <summary>
-    ''' Parse the SMILES molecule structre string
-    ''' </summary>
-    ''' <param name="SMILES"></param>
-    ''' <param name="strict"></param>
-    ''' <returns>
-    ''' A chemical graph object that could be used for build formula or structure analysis
-    ''' </returns>
-    ''' <remarks>
-    ''' SMILES denotes a molecular structure as a graph with optional chiral 
-    ''' indications. This is essentially the two-dimensional picture chemists
-    ''' draw to describe a molecule. SMILES describing only the labeled
-    ''' molecular graph (i.e. atoms and bonds, but no chiral or isotopic 
-    ''' information) are known as generic SMILES.
-    ''' </remarks>
-    ''' 
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <ExportAPI("parse_SMILES")>
-    Public Function parseSMILES(SMILES As String, Optional strict As Boolean = True) As ChemicalFormula
-        Return ParseChain.ParseGraph(SMILES, strict)
-    End Function
-
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <ExportAPI("as.formula")>
-    Public Function asFormula(SMILES As ChemicalFormula, Optional canonical As Boolean = True) As Formula
-        Return SMILES.GetFormula(canonical)
-    End Function
-
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <ExportAPI("as.graph")>
-    Public Function asGraph(smiles As ChemicalFormula) As NetworkGraph
-        Return smiles.AsGraph
-    End Function
-
-    ''' <summary>
-    ''' get atoms table from the SMILES structure data
-    ''' </summary>
-    ''' <param name="SMILES"></param>
-    ''' <returns>A molecular graph represents in dataframe object</returns>
-    <ExportAPI("atoms")>
-    Public Function atomGroups(SMILES As ChemicalFormula) As RDataframe
-        Dim elements As ChemicalElement() = SMILES.AllElements _
-            .OrderBy(Function(a) a.label.Match("\d+").ParseInteger) _
-            .ToArray
-        Dim atoms As String() = elements.Select(Function(e) e.elementName).ToArray
-        Dim groups As String() = elements.Select(Function(e) e.group).ToArray
-        Dim links As Integer() = elements.Select(Function(e) e.Keys).ToArray
-        Dim rowKeys As String() = elements.Select(Function(e) e.label).ToArray
-        Dim ionCharge As Integer() = elements.Select(Function(e) e.charge).ToArray
-        Dim partners As String() = elements _
-            .Select(Function(e)
-                        Return ChemicalElement _
-                            .GetConnection(SMILES, e) _
-                            .Select(Function(atom)
-                                        Return $"{CInt(atom.keys)}({atom.Item2.group})"
-                                    End Function) _
-                            .JoinBy("; ")
-                    End Function) _
-            .ToArray
-
-        Return New RDataframe With {
-            .rownames = rowKeys,
-            .columns = New Dictionary(Of String, Array) From {
-                {"atom", atoms},
-                {"group", groups},
-                {"ion_charge", ionCharge},
-                {"links", links},
-                {"connected", partners}
-            }
-        }
     End Function
 
     <ExportAPI("isotope_distribution")>
