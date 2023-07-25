@@ -119,6 +119,11 @@ Public Class FormulaBuilder
         End Select
     End Sub
 
+    ''' <summary>
+    ''' add target element group into the target chemical formula data
+    ''' </summary>
+    ''' <param name="atom"></param>
+    ''' <param name="element"></param>
     Private Sub Push(atom As Atom, element As ChemicalElement)
         Dim n As Integer = Aggregate key As ChemicalKey
                            In graph.FindKeys(element.label)
@@ -128,6 +133,11 @@ Public Class FormulaBuilder
         Call Push("H", atom.maxKeys - n)
     End Sub
 
+    ''' <summary>
+    ''' Add n elements into the target chemical formula composition data
+    ''' </summary>
+    ''' <param name="element"></param>
+    ''' <param name="n"></param>
     Private Sub Push(element As String, Optional n As Integer = 1)
         If Not composition.ContainsKey(element) Then
             composition.Add(element, 0)
