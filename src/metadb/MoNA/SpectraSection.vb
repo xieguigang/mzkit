@@ -164,7 +164,11 @@ Public Class SpectraInfo
             .mz = mz,
             .mzInto = MassPeaks,
             .precursor_type = precursor_type,
-            .rt = Val(retention_time)
+            .rt = Val(retention_time),
+            .meta = New Dictionary(Of String, String) From {
+                {NameOf(instrument), instrument},
+                {NameOf(fragmentation_mode), fragmentation_mode}
+            }
         }
     End Function
 End Class
