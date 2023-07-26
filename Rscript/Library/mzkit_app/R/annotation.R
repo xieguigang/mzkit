@@ -48,12 +48,12 @@ const kegg_compounds = function(precursors = ["[M]+", "[M+H]+", "[M+H-H2O]+"],
             GCModeller::kegg_compounds(rawList = TRUE);
         } else {
             # read messagepack repository data file
-            repository::load.compounds(repofile, rawList = TRUE);
+            kegg.library(repofile);
         }
     }
 
-    keggSet
-    |> kegg.library()
-    |> annotationSet()
-    ;
+    keggSet |> annotationSet(
+        precursors = precursors, 
+        mzdiff = mzdiff
+    );
 }
