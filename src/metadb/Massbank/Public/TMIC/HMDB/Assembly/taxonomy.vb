@@ -112,15 +112,11 @@ Namespace TMIC.HMDB
     ''' <summary>
     ''' Metabolite compound chemical structure classification
     ''' </summary>
-    Public Class taxonomy : Implements ICompoundClass
+    Public Class taxonomy : Inherits CompoundClass
+        Implements ICompoundClass
 
         Public Property description As String
         Public Property direct_parent As String
-        Public Property kingdom As String Implements ICompoundClass.kingdom
-        Public Property super_class As String Implements ICompoundClass.super_class
-        Public Property [class] As String Implements ICompoundClass.class
-        Public Property sub_class As String Implements ICompoundClass.sub_class
-        Public Property molecular_framework As String Implements ICompoundClass.molecular_framework
         Public Property alternative_parents As alternative_parents
         Public Property substituents As substituents
         Public Property external_descriptors As external_descriptors

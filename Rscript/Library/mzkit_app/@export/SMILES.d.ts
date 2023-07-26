@@ -25,7 +25,7 @@ declare namespace SMILES {
    */
    function atoms(SMILES: object): object;
    /**
-     * @param kappa default value Is ``1``.
+     * @param kappa default value Is ``2``.
      * @param normalize_size default value Is ``false``.
    */
    function links(SMILES: object, kappa?: number, normalize_size?: boolean): object;

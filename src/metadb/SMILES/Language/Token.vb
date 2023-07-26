@@ -77,4 +77,13 @@ Namespace Language
             End If
         End Function
     End Class
+
+    Friend Class MultipleTokens : Inherits Token
+
+        Friend ReadOnly Multiple As New List(Of Token)
+
+        Public Sub New()
+            MyBase.New(ElementTypes.None, "XXX")
+        End Sub
+    End Class
 End Namespace
