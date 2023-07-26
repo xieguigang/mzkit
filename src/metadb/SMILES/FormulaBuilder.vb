@@ -67,12 +67,17 @@ Public Class FormulaBuilder
     Dim composition As New Dictionary(Of String, Integer)
     Dim visited As New Index(Of String)
     Dim atomProfile As Dictionary(Of String, Atom)
+    Dim atomGroups As Dictionary(Of String, Atom)
 
     Sub New(graph As ChemicalFormula)
         Me.graph = graph
         Me.atomProfile = Atom _
             .DefaultElements _
             .ToDictionary(Function(a) a.label)
+        Me.atomGroups = Atom.DefaultAtomGroups _
+            .ToDictionary(Function(a)
+                              Return a.GetIonLabel
+                          End Function)
     End Sub
 
     Public Function GetComposition(ByRef empirical As String) As Dictionary(Of String, Integer)
@@ -106,21 +111,33 @@ Public Class FormulaBuilder
 
                 If atomProfile.ContainsKey(element.elementName) Then
                     Call Push(atomProfile(element.elementName), element)
+                ElseIf atomGroups.ContainsKey(element.elementName) Then
+                    Call Push(atomGroups(element.elementName), element)
                 Else
                     Throw New NotImplementedException(element.elementName)
                 End If
         End Select
     End Sub
 
+    ''' <summary>
+    ''' add target element group into the target chemical formula data
+    ''' </summary>
+    ''' <param name="atom"></param>
+    ''' <param name="element"></param>
     Private Sub Push(atom As Atom, element As ChemicalElement)
         Dim n As Integer = Aggregate key As ChemicalKey
                            In graph.FindKeys(element.label)
                            Into Sum(CInt(key.bond))
 
         Call Push(atom.label)
-        Call Push("H", atom.maxKeys - n)
+        Call Push("H", If(element.hydrogen > 0, element.hydrogen, atom.maxKeys - n))
     End Sub
 
+    ''' <summary>
+    ''' Add n elements into the target chemical formula composition data
+    ''' </summary>
+    ''' <param name="element"></param>
+    ''' <param name="n"></param>
     Private Sub Push(element As String, Optional n As Integer = 1)
         If Not composition.ContainsKey(element) Then
             composition.Add(element, 0)

@@ -1,4 +1,6 @@
-﻿Imports Microsoft.VisualBasic.Serialization.JSON
+﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.Annotations
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace PackLib
 
@@ -8,14 +10,14 @@ Namespace PackLib
     ''' <remarks>
     ''' A tree node of a specific metabolite reference to multiple spectrum data
     ''' </remarks>
-    Public Class MassIndex
+    Public Class MassIndex : Implements INamedValue, IExactMassProvider
 
         ''' <summary>
         ''' the unique reference of current metabolite spectrum cluster
         ''' </summary>
         ''' <returns></returns>
-        Public Property name As String
-        Public Property exactMass As Double
+        Public Property name As String Implements INamedValue.Key
+        Public Property exactMass As Double Implements IExactMassProvider.ExactMass
         Public Property formula As String
         ''' <summary>
         ''' the pointer to the spectrum data in the library file

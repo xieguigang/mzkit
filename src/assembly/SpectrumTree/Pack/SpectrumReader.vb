@@ -74,6 +74,11 @@ Namespace PackLib
             End If
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetAllLibNames() As IEnumerable(Of String)
+            Return libnames.AsEnumerable
+        End Function
+
         ''' <summary>
         ''' populate all spectrum which the exact mass+adducts matched 
         ''' the m/z query input.
@@ -101,7 +106,23 @@ Namespace PackLib
             Next
         End Function
 
-        Private Function GetSpectrum(key As String) As BlockNode
+        Public Iterator Function ListAllSpectrumId() As IEnumerable(Of String)
+            Dim ls = DirectCast(file.GetObject("/spectrum/"), StreamGroup) _
+              .ListFiles(safe:=True) _
+              .Where(Function(f) TypeOf f Is StreamBlock) _
+              .Select(Function(f) DirectCast(f, StreamBlock))
+
+            For Each file As StreamBlock In ls
+                Yield file.referencePath.FileName.BaseName
+            Next
+        End Function
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="key">An integer pointer in string type</param>
+        ''' <returns></returns>
+        Public Function GetSpectrum(key As String) As BlockNode
             If Not spectrum.ContainsKey(key) Then
                 Dim path As String = $"/spectrum/{key.Last}/{key}.dat"
                 Dim file As Stream = Me.file.OpenBlock(path)
@@ -138,6 +159,11 @@ Namespace PackLib
             }
         End Function
 
+        ''' <summary>
+        ''' Load all asspciated spectrum data inside target <paramref name="mass"/> index
+        ''' </summary>
+        ''' <param name="mass"></param>
+        ''' <returns></returns>
         Public Iterator Function GetSpectrum(mass As MassIndex) As IEnumerable(Of PeakMs2)
             For Each i As Integer In mass.spectrum
                 Dim node As BlockNode = GetSpectrum(key:=i.ToString)
