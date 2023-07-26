@@ -1,6 +1,8 @@
 imports "assembly" from "mzkit";
 imports "math" from "mzkit";
 
+require(GCModeller);
+
 #' Hello, world!
 #'
 #' This is an example function named 'hello' 
@@ -16,7 +18,7 @@ imports "math" from "mzkit";
 #'   Check Package:             'Ctrl + Shift + E'
 #'   Test Package:              'Ctrl + Shift + T'
 #' 
-let .onLoad = function() {
+const .onLoad = function() {
   cat("\n");
 
   print(description(package = "mzkit")$title);
