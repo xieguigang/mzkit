@@ -31,7 +31,7 @@ const lipidmaps_repo = function(repofile = system.file("data/LIPIDMAPS.msgpack",
 #' 
 const kegg_compounds = function(precursors = ["[M]+", "[M+H]+", "[M+H-H2O]+"], 
                                 mzdiff     = "ppm:20", 
-                                repofile   = system.file("data/KEGG_compounds.msgpack", package = "mzkit"), 
+                                repofile   = "KEGG_compounds.msgpack", 
                                 strict     = FALSE) {
 
     if (is.null(repofile) || !file.exists(repofile)) {
