@@ -182,6 +182,13 @@ Namespace MZWork
             Me.numOfScan2 = ms2.Count
         End Sub
 
+        ''' <summary>
+        ''' the mzpack will has no MS scan data if the source file is missing
+        ''' </summary>
+        ''' <param name="reload"></param>
+        ''' <param name="verbose"></param>
+        ''' <param name="strict"></param>
+        ''' <returns></returns>
         Public Function LoadMzpack(reload As Action(Of String, String),
                                    Optional verbose As Boolean = True,
                                    Optional strict As Boolean = True) As Raw
