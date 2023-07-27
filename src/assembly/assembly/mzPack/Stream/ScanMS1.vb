@@ -122,6 +122,25 @@ Namespace mzData.mzWebCache
             End If
         End Function
 
+        ''' <summary>
+        ''' Populate all ms1 point inside current ms1 scan object, without id
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <returns></returns>
+        Public Iterator Function GetMs1Scans(Of T As {New, IMs1Scan})() As IEnumerable(Of T)
+            For i As Integer = 0 To mz.Length - 1
+                Yield New T With {
+                    .mz = mz(i),
+                    .intensity = into(i),
+                    .rt = rt
+                }
+            Next
+        End Function
+
+        ''' <summary>
+        ''' Populate all ms1 point inside current ms1 scan object
+        ''' </summary>
+        ''' <returns></returns>
         Public Iterator Function GetMs1Scans() As IEnumerable(Of ms1_scan)
             For i As Integer = 0 To mz.Length - 1
                 Yield New ms1_scan With {

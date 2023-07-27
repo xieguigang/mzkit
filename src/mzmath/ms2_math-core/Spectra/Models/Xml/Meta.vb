@@ -63,6 +63,7 @@ Namespace Spectra.Xml
     ''' [id, mz, rt, intensity]
     ''' </summary>
     Public Class Meta : Inherits ms1_scan
+        Implements IMs1Scan
 
         <XmlText>
         Public Property id As String
