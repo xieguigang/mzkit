@@ -52,6 +52,18 @@ declare namespace metadb {
      * + default value Is ``null``.
    */
    function getMetadata(engine: any, uniqueId: object, env?: object): any;
+   module has {
+      /**
+       * Check the formula string has metal ion inside?
+       * 
+       * 
+        * @param formula -
+        * @param env -
+        * 
+        * + default value Is ``null``.
+      */
+      function metal_ion(formula: any, env?: object): any;
+   }
    /**
      * @param env default value Is ``null``.
    */

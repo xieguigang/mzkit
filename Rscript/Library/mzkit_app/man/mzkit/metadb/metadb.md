@@ -13,6 +13,7 @@ Metabolite annotation database search engine
 + [searchMz](metadb/searchMz.1) Found the best matched mz value with the target **`exactMass`**
 + [getMetadata](metadb/getMetadata.1) get metabolite annotation metadata by a set of given unique reference id
 + [excludeFeatures](metadb/excludeFeatures.1) removes all of the annotation result which is not 
++ [has.metal_ion](metadb/has.metal_ion.1) Check the formula string has metal ion inside?
 + [uniqueFeatures](metadb/uniqueFeatures.1) unique of the peak annotation features
 + [cbind.metainfo](metadb/cbind.metainfo.1) 
 + [load_asQueryHits](metadb/load_asQueryHits.1) 

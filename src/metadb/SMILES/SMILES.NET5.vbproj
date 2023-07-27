@@ -92,8 +92,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="images\**" />
     <Compile Remove="test\**" />
+    <EmbeddedResource Remove="images\**" />
     <EmbeddedResource Remove="test\**" />
+    <None Remove="images\**" />
     <None Remove="test\**" />
     <None Include="..\..\..\.pkg\Flask.png">
       <Pack>True</Pack>

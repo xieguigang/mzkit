@@ -84,7 +84,10 @@ Public Module MetalIons
         "Si", "Zr", "Ru", "Se", "Nd",
         "Sb", "I", "Re", "Er", "Tc",
         "Gd", "Te", "La", "Rb", "Lu",
-        "Ho", "W", "Ga", "Br"
+        "Ho", "W", "Ga", "Br", "Y", "U",
+        "Ti", "Th", "Ta", "Rh", "Pu", "Pt",
+        "Po", "Pd", "Os", "Nb", "K", "Hf",
+        "Bi", "Ge", "Cl", "Ac", "B"
     } _
     .Distinct _
     .ToArray
