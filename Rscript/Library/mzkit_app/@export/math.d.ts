@@ -48,23 +48,14 @@ declare namespace math {
       */
       function nodes(tree: object): object;
    }
-   /**
-    * Do evaluate the spectra cosine similarity score
-    * 
-    * 
-     * @param query -
-     * @param ref -
-     * @param tolerance -
-     * 
-     * + default value Is ``'da:0.3'``.
-     * @param intocutoff -
-     * 
-     * + default value Is ``0.05``.
-     * @param env -
-     * 
-     * + default value Is ``null``.
-   */
-   function cosine(query: object, ref: object, tolerance?: any, intocutoff?: number, env?: object): object;
+   module cosine {
+      /**
+        * @param tolerance default value Is ``'da:0.3'``.
+        * @param intocutoff default value Is ``0.05``.
+        * @param env default value Is ``null``.
+      */
+      function pairwise(query: any, ref: any, tolerance?: any, intocutoff?: number, env?: object): any;
+   }
    /**
     * returns all precursor types for a given libtype
     * 

@@ -27,18 +27,33 @@ const lipidmaps_repo = function(repofile = system.file("data/LIPIDMAPS.msgpack",
     }
 }
 
+#' Load the kegg database for the annotation
+#' 
 const kegg_compounds = function(precursors = ["[M]+", "[M+H]+", "[M+H-H2O]+"], 
                                 mzdiff     = "ppm:20", 
-                                repofile   = system.file("data/KEGG_compounds.msgpack", package = "mzkit")) {
+                                repofile   = "KEGG_compounds.msgpack", 
+                                strict     = FALSE) {
 
-    if (!file.exists(repofile)) {
-        stop(`no repository data file at location: ${repofile}!`);
-    } else {
-        # read messagepack repository data file
-        #
-        repofile
-        |> kegg.library()
-        |> annotationSet()
-        ;        
+    if (is.null(repofile) || !file.exists(repofile)) {
+        if (strict) {
+            stop(`no repository data file at location: ${repofile}!`);
+        } else {
+            repofile = NULL;
+            warning(`the given kegg compound repository file '${repofile}' could not be found, use the default kegg compound data repository from GCModeller package.`);
+        }        
+    } 
+
+    let keggSet = {
+        if (is.null(repofile)) {
+            GCModeller::kegg_compounds(rawList = TRUE);
+        } else {
+            # read messagepack repository data file
+            kegg.library(repofile);
+        }
     }
+
+    keggSet |> annotationSet(
+        precursors = precursors, 
+        mzdiff = mzdiff
+    );
 }

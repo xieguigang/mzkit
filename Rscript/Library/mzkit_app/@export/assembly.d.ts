@@ -27,11 +27,13 @@ declare namespace assembly {
        * 
        * 
         * @param ions a vector of mgf @``T:BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MGF.Ions`` from the ``read.mgf`` function or other data source.
+        * @param lazy 
+        * + default value Is ``true``.
         * @param env -
         * 
         * + default value Is ``null``.
       */
-      function ion_peaks(ions: any, env?: object): object;
+      function ion_peaks(ions: any, lazy?: boolean, env?: object): object;
    }
    module ms1 {
       /**
