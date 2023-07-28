@@ -106,10 +106,10 @@ SOFTWARE.
 <div style="page-break-after:always;"></div>
 <div style="font-size: 2em;">Product Screenshots</div>
 
-![](docs/manual/main.png)
-![](docs/manual/Targeted.PNG)
-![](docs/manual/BPC_overlay.PNG)
-![](docs/manual/ms-imaging1.PNG)
+![](https://mzkit.org/assets/images/screens/slide_viewer.PNG?caption=View+pathological+section+slide+via+MZKit.)
+![](https://raw.githubusercontent.com/xieguigang/mzkit_win32/main/screenshot.jpg)
+![](https://mzkit.org/assets/images/screens/LCMS-viewer.PNG?caption=LCMS+data+visualization+in+3d+viewer)
+![](https://mzkit.org/assets/images/screens/Chemoinformatics.PNG?caption=Molecular+structure+drawing+in+MZKit)
 
 <div style="page-break-after:always;"></div>
 
