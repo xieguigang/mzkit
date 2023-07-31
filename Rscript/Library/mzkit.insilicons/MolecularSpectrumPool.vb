@@ -75,7 +75,18 @@ Public Module MolecularSpectrumPool
     ''' </summary>
     ''' <param name="dia"></param>
     ''' <param name="cluster_id"></param>
+    ''' <param name="reference_id">
+    ''' the spectrum reference id, if this parameter is missing, then 
+    ''' the spectrum inference will be based on the reference cluster hits
+    ''' annotation result
+    ''' </param>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' workflow for reference id inference: the alignment should be perfermance
+    ''' at first for the cluster spectrum and the reference specturm, and then
+    ''' get the reference id list as candidates, then finally use this function
+    ''' for the inference analysis.
+    ''' </remarks>
     <ExportAPI("infer")>
     Public Function inferReferenceSpectrum(dia As DIAInfer, cluster_id As String,
                                            Optional reference_id As String() = Nothing,

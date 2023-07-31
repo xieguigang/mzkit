@@ -28,6 +28,14 @@ Namespace PoolData
             Me.intocutoff = New RelativeIntensityCutoff(intocutoff)
         End Sub
 
+        ''' <summary>
+        ''' Infer the cluster spectrum result based on the alignment result
+        ''' </summary>
+        ''' <param name="cluster_id"></param>
+        ''' <param name="reference">
+        ''' the alignment candidates
+        ''' </param>
+        ''' <returns></returns>
         Public Function InferCluster(cluster_id As String, reference As NamedValue(Of String)()) As IEnumerable(Of PeakMs2)
             Dim candidates = reference.GroupBy(Function(i) i.Name).ToArray
             Dim cache As New Dictionary(Of String, PeakMs2)
@@ -36,9 +44,22 @@ Namespace PoolData
             Return InferCluster(ions_all, candidates,
                                 getFormula:=Function(f) f.First.Value,
                                 getBiodeepID:=Function(f) f.Key,
-                                getName:=Function(f) f.First.Description)
+                                getName:=Function(f)
+                                             Return f.First.Description
+                                         End Function)
         End Function
 
+        ''' <summary>
+        ''' A common method for create the reference inference method 
+        ''' based on a given set of the reference candidates
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="ions_all"></param>
+        ''' <param name="reference"></param>
+        ''' <param name="getFormula"></param>
+        ''' <param name="getBiodeepID"></param>
+        ''' <param name="getName"></param>
+        ''' <returns></returns>
         Private Iterator Function InferCluster(Of T)(ions_all As Metadata(),
                                                      reference As IEnumerable(Of T),
                                                      getFormula As Func(Of T, String),
@@ -121,6 +142,13 @@ Namespace PoolData
             Next
         End Function
 
+        ''' <summary>
+        ''' Get the union representive spectrum based on a given collection
+        ''' of the spectrum in current cluster
+        ''' </summary>
+        ''' <param name="ions"></param>
+        ''' <param name="cache"></param>
+        ''' <returns></returns>
         Private Function GetUnionSpectra(ions As IEnumerable(Of Metadata), cache As Dictionary(Of String, PeakMs2)) As IEnumerable(Of ms2)
             Dim all_spectrums As PeakMs2() = ions _
                 .Select(Function(a)
