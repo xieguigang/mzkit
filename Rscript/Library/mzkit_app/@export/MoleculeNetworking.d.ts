@@ -103,9 +103,20 @@ declare namespace MoleculeNetworking {
    */
    function representative(tree: object, mzdiff?: any, env?: object): object;
    /**
-     * @param rtwin default value Is ``30``.
-     * @param wrap_peaks default value Is ``false``.
-     * @param env default value Is ``null``.
+    * Split each cluster data into multiple parts by a givne rt window
+    * 
+    * > This function works for the small molecular networking analysis
+    * 
+     * @param clusters -
+     * @param rtwin -
+     * 
+     * + default value Is ``30``.
+     * @param wrap_peaks -
+     * 
+     * + default value Is ``false``.
+     * @param env -
+     * 
+     * + default value Is ``null``.
    */
    function splitClusterRT(clusters: any, rtwin?: number, wrap_peaks?: boolean, env?: object): any;
    /**
