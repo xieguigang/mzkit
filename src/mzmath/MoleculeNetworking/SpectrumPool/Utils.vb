@@ -7,6 +7,19 @@ Namespace PoolData
 
         Public Const unknown As String = NameOf(unknown)
 
+        ''' <summary>
+        ''' The conserved guid is generated via the md5 hashcode of contents:
+        ''' 
+        ''' 1. mz(F4):into
+        ''' 2. mz1(F4)
+        ''' 3. rt(F2)
+        ''' 4. biosample
+        ''' 5. organism
+        ''' 6. instrument
+        ''' 7. precursor_type
+        ''' </summary>
+        ''' <param name="spectral"></param>
+        ''' <returns></returns>
         Public Shared Function ConservedGuid(spectral As PeakMs2) As String
             Dim desc As ms2() = spectral.mzInto _
                 .OrderByDescending(Function(mzi) mzi.intensity) _

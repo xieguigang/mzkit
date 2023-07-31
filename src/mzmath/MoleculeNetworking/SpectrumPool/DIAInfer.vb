@@ -85,6 +85,11 @@ Namespace PoolData
             Next
         End Function
 
+        ''' <summary>
+        ''' infer the spectrum based on the reference annotation of the cluster hits
+        ''' </summary>
+        ''' <param name="cluster_id"></param>
+        ''' <returns></returns>
         Public Function InferCluster(cluster_id As String) As IEnumerable(Of PeakMs2)
             Dim ions_all As Metadata() = GetAllClusterMetadata(cluster_id).ToArray
             Dim reference = ions_all _

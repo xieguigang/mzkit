@@ -36,6 +36,11 @@ Public Module MolecularSpectrumPool
         Return SpectrumPool.Create(link, level, split:=split, name:=name, desc:=desc)
     End Function
 
+    ''' <summary>
+    ''' get model id from the spectrum cluster graph model
+    ''' </summary>
+    ''' <param name="pool"></param>
+    ''' <returns></returns>
     <ExportAPI("model_id")>
     Public Function GetModelId(pool As SpectrumPool) As String
         Dim fs = pool.GetFileSystem
@@ -99,7 +104,11 @@ Public Module MolecularSpectrumPool
     ''' open the spectrum pool from a given resource link
     ''' </summary>
     ''' <param name="link">
-    ''' the resource string to the spectrum pool
+    ''' the resource string to the spectrum pool, this resource string could be
+    ''' a local file or a remote cloud services endpoint
+    ''' </param>
+    ''' <param name="model_id">
+    ''' the model id, this parameter works for open the model in the cloud service
     ''' </param>
     ''' <param name="score_overrides">
     ''' WARNING: this optional parameter will overrides the mode score 
@@ -129,6 +138,10 @@ Public Module MolecularSpectrumPool
     ''' </summary>
     ''' <param name="pool"></param>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' this function works for the spectrum clustering pool in local file,
+    ''' do nothing when running upon based on a cloud service.
+    ''' </remarks>
     <ExportAPI("closePool")>
     Public Function closePool(pool As SpectrumPool) As Object
         Call pool.Dispose()
@@ -180,7 +193,17 @@ Public Module MolecularSpectrumPool
     ''' </summary>
     ''' <param name="spectral"></param>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' the conserved guid is generated based on the md5 hashcode of contents:
     ''' 
+    ''' 1. mz(F4):into
+    ''' 2. mz1(F4)
+    ''' 3. rt(F2)
+    ''' 4. biosample
+    ''' 5. organism
+    ''' 6. instrument
+    ''' 7. precursor_type
+    ''' </remarks>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <ExportAPI("conservedGuid")>
     <RApiReturn(GetType(String))>
@@ -188,6 +211,13 @@ Public Module MolecularSpectrumPool
         Return env.EvaluateFramework(Of PeakMs2, String)(spectral, AddressOf Utils.ConservedGuid)
     End Function
 
+    ''' <summary>
+    ''' generate and set conserved guid for each spectrum data
+    ''' </summary>
+    ''' <param name="spectral"></param>
+    ''' <param name="prefix"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("set_conservedGuid")>
     Public Function SetConservedGuid(<RRawVectorArgument>
                                      spectral As Object,
@@ -284,6 +314,10 @@ Public Module MolecularSpectrumPool
     ''' </summary>
     ''' <param name="pool"></param>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' this function works for the spectrum molecular networking pool in a local file,
+    ''' do nothing when running upon a cloud service
+    ''' </remarks>
     <ExportAPI("commit")>
     Public Function commit(pool As SpectrumPool) As Object
         Call pool.Commit()
