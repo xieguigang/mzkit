@@ -171,6 +171,17 @@ Module MoleculeNetworking
         Return ions.Tree(mzdiff, intocutoff, equals)
     End Function
 
+    ''' <summary>
+    ''' Split each cluster data into multiple parts by a givne rt window
+    ''' </summary>
+    ''' <param name="clusters"></param>
+    ''' <param name="rtwin"></param>
+    ''' <param name="wrap_peaks"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' This function works for the small molecular networking analysis
+    ''' </remarks>
     <ExportAPI("splitClusterRT")>
     Public Function splitClusterRT(<RRawVectorArgument>
                                    clusters As Object,
