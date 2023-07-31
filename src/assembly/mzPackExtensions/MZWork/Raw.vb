@@ -170,12 +170,25 @@ Namespace MZWork
                                   Return m2.scan_id
                               End Function)
 
-            Me.rtmin = Aggregate m1 As ScanMS1 In ms1.Values Into Min(m1.rt)
-            Me.rtmax = Aggregate m1 As ScanMS1 In ms1.Values Into Max(m1.rt)
+            If ms1.Count > 0 Then
+                Me.rtmin = Aggregate m1 As ScanMS1 In ms1.Values Into Min(m1.rt)
+                Me.rtmax = Aggregate m1 As ScanMS1 In ms1.Values Into Max(m1.rt)
+            Else
+                Me.rtmin = 0
+                Me.rtmax = 1400
+            End If
+
             Me.numOfScan1 = ms1.Count
             Me.numOfScan2 = ms2.Count
         End Sub
 
+        ''' <summary>
+        ''' the mzpack will has no MS scan data if the source file is missing
+        ''' </summary>
+        ''' <param name="reload"></param>
+        ''' <param name="verbose"></param>
+        ''' <param name="strict"></param>
+        ''' <returns></returns>
         Public Function LoadMzpack(reload As Action(Of String, String),
                                    Optional verbose As Boolean = True,
                                    Optional strict As Boolean = True) As Raw

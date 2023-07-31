@@ -75,6 +75,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
+Imports SMRUCC.Rsharp
 Imports SMRUCC.Rsharp.Interpreter
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
@@ -724,6 +725,17 @@ Module MetaDbXref
         Next
 
         Return sublist
+    End Function
+
+    ''' <summary>
+    ''' Check the formula string has metal ion inside?
+    ''' </summary>
+    ''' <param name="formula"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("has.metal_ion")>
+    Public Function TestMetaIon(<RRawVectorArgument> formula As Object, Optional env As Environment = Nothing) As Object
+        Return env.EvaluateFramework(Of String, Boolean)(formula, Function(f) MetalIons.HasMetalIon(f))
     End Function
 
     ''' <summary>

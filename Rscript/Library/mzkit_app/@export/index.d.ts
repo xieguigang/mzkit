@@ -73,9 +73,10 @@ declare namespace mzkit {
    /**
      * @param precursors default value Is ``["[M]+", "[M+H]+", "[M+H-H2O]+"]``.
      * @param mzdiff default value Is ``ppm:20``.
-     * @param repofile default value Is ``Call "system.file"("data/KEGG_compounds.msgpack", "package" <- "mzkit")``.
+     * @param repofile default value Is ``KEGG_compounds.msgpack``.
+     * @param strict default value Is ``false``.
    */
-   function kegg_compounds(precursors?: any, mzdiff?: any, repofile?: any): object;
+   function kegg_compounds(precursors?: any, mzdiff?: any, repofile?: any, strict?: any): object;
    /**
      * @param cache default value Is ``./graph_kb``.
    */
