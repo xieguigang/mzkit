@@ -121,7 +121,7 @@ Public Class PixelData : Implements IMSIPixel, IPoint2D, HeatMapPixel
             Call file.Write(data.Select(Function(i) i.level).ToArray)
             Call file.Write(data.Select(Function(i) i.mz).ToArray)
 
-            Dim tags As String() = data.Select(Function(i) i.sampleTag).ToArray
+            Dim tags As String() = data.Select(Function(i) If(i.sampleTag, "")).ToArray
 
             If tags.Distinct.Count = 1 Then
                 Call file.Write(-1)
