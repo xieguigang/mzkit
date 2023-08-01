@@ -68,16 +68,37 @@ Namespace Query
         ''' </summary>
         ReadOnly mzSet As JaccardSet()
         ReadOnly cutoff As Double
+        ReadOnly filter_complex_adducts As Boolean
 
-        Sub New(ref As IEnumerable(Of JaccardSet), cutoff As Double)
+        Sub New(ref As IEnumerable(Of JaccardSet), cutoff As Double, Optional filter_complex_adducts As Boolean = False)
             Call MyBase.New
 
             Me.mzSet = ref.ToArray
             Me.cutoff = cutoff
+            Me.filter_complex_adducts = filter_complex_adducts
         End Sub
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="centroid">the ms2 spectrum</param>
+        ''' <param name="mz1">the precursor m/z</param>
+        ''' <returns></returns>
         Public Overrides Iterator Function Search(centroid() As ms2, mz1 As Double) As IEnumerable(Of ClusterHit)
             Dim query As Double() = centroid.Select(Function(i) i.mz).ToArray
+
+            If query.Length = 0 Then
+                Return
+            End If
+            If filter_complex_adducts Then
+                ' 20230801
+                ' current precursor has very complex adducts?
+                ' skip of current result
+                If query.Max - mz1 > 0.3 Then
+                    Return
+                End If
+            End If
+
             Dim subset = mzSet.Where(Function(i) da(mz1, i.mz1)).ToArray
             Dim jaccard = subset _
                 .Select(Function(i)
