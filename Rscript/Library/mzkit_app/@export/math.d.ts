@@ -105,8 +105,17 @@ declare namespace math {
    */
    function jaccard(query: number, ref: number, tolerance?: any, env?: object): any;
    /**
-     * @param tolerance default value Is ``'da:0.3'``.
-     * @param env default value Is ``null``.
+    * search spectrum via the jaccard index method
+    * 
+    * 
+     * @param query -
+     * @param ref -
+     * @param tolerance -
+     * 
+     * + default value Is ``'da:0.3'``.
+     * @param env -
+     * 
+     * + default value Is ``null``.
    */
    function jaccardSet(query: number, ref: number, tolerance?: any, env?: object): any;
    /**

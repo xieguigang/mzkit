@@ -8,7 +8,7 @@ mass spectrometry data math toolkit
 + [spectrum.compares](math/spectrum.compares.1) create a delegate function pointer that apply for compares spectrums theirs similarity.
 + [jaccard](math/jaccard.1) 
 + [spectral_entropy](math/spectral_entropy.1) Search spectra with entropy similarity
-+ [jaccardSet](math/jaccardSet.1) 
++ [jaccardSet](math/jaccardSet.1) search spectrum via the jaccard index method
 + [cosine](math/cosine.1) Do evaluate the spectra cosine similarity score
 + [cosine.pairwise](math/cosine.pairwise.1) 
 + [spectrum_tree.cluster](math/spectrum_tree.cluster.1) create spectrum tree cluster based on the spectrum to spectrum similarity comparison.

@@ -64,6 +64,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.Query
 Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.Tree
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Data.IO.MessagePack.Constants
 Imports Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.MetaData
@@ -239,7 +240,7 @@ Module ReferenceTreePkg
     End Function
 
     ''' <summary>
-    ''' construct a fragment set library for run spectrum search in jaccard matches
+    ''' construct a fragment set library for run spectrum search in jaccard index matches method
     ''' </summary>
     ''' <param name="libname"></param>
     ''' <param name="mz"></param>
@@ -254,6 +255,7 @@ Module ReferenceTreePkg
                                      mzset As String(),
                                      Optional rt As Double() = Nothing,
                                      Optional cutoff As Double = 0.1,
+                                     Optional filter_complex_adducts As Boolean = False,
                                      Optional env As Environment = Nothing) As JaccardSearch
 
         Dim dataset As JaccardSet() = libname _
@@ -276,7 +278,7 @@ Module ReferenceTreePkg
 
         Call println($"Do jaccard match with cutoff value: {cutoff}!")
 
-        Return New JaccardSearch(dataset, cutoff)
+        Return New JaccardSearch(dataset, cutoff, filter_complex_adducts)
     End Function
 
     ''' <summary>
