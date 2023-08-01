@@ -62,6 +62,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.GraphTheory.GridGraph
 Imports Microsoft.VisualBasic.DataMining.DensityQuery
+Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Quantile
@@ -75,10 +76,13 @@ Public Module Extensions
     ''' reset sample position
     ''' </summary>
     ''' <param name="raw"></param>
+    ''' <param name="padding">
+    ''' Add padding around the slide sample data
+    ''' </param>
     ''' <returns></returns>
     <Extension>
-    Public Function Reset(raw As mzPack) As mzPack
-        Dim rect As Rectangle = raw.Shape
+    Public Function Reset(raw As mzPack, padding As Padding) As mzPack
+        Dim rect As RectangleF = raw.Shape
         Dim scans As New List(Of ScanMS1)
         Dim pos As Point
         Dim meta As Dictionary(Of String, String)
@@ -86,8 +90,8 @@ Public Module Extensions
         For Each scan As ScanMS1 In raw.MS
             pos = scan.GetMSIPixel
             pos = New Point With {
-                .X = pos.X - rect.Left,
-                .Y = pos.Y - rect.Top
+                .X = pos.X - rect.Left + padding.Left,
+                .Y = pos.Y - rect.Top + padding.Top
             }
             meta = New Dictionary(Of String, String)(scan.meta)
             meta("x") = pos.X.ToString
@@ -105,6 +109,10 @@ Public Module Extensions
             }
         Next
 
+        meta = raw.metadata
+        meta("width") = rect.Width + padding.Left + padding.Right
+        meta("height") = rect.Height + padding.Top + padding.Bottom
+
         Return New mzPack With {
             .Application = FileApplicationClass.MSImaging,
             .Chromatogram = raw.Chromatogram,
@@ -113,7 +121,7 @@ Public Module Extensions
             .source = $"reset({raw.source})",
             .Thumbnail = Nothing,
             .Annotations = raw.Annotations,
-            .metadata = raw.metadata
+            .metadata = meta
         }
     End Function
 
@@ -126,18 +134,10 @@ Public Module Extensions
     ''' location and size
     ''' </returns>
     <Extension>
-    Public Function Shape(raw As mzPack) As Rectangle
+    Public Function Shape(raw As mzPack) As RectangleF
         Dim allPixels As Point() = raw.MS.Select(Function(scan) scan.GetMSIPixel).ToArray
-        Dim top = Aggregate pt As Point In allPixels Into Min(pt.Y)
-        Dim left = Aggregate pt As Point In allPixels Into Min(pt.X)
-        Dim right = Aggregate pt As Point In allPixels Into Max(pt.X)
-        Dim bottom = Aggregate pt As Point In allPixels Into Max(pt.Y)
-        Dim rect As New Rectangle With {
-            .X = left,
-            .Y = top,
-            .Width = right - left,
-            .Height = bottom - top
-        }
+        Dim polygonShape As New Polygon2D(allPixels)
+        Dim rect = polygonShape.GetRectangle
 
         Return rect
     End Function
@@ -165,7 +165,7 @@ Public Module Extensions
     End Function
 
     ''' <summary>
-    ''' Add padding around the slide sample data
+    ''' 
     ''' </summary>
     ''' <param name="slide"></param>
     ''' <param name="padding"></param>
@@ -300,7 +300,9 @@ Public Module Extensions
             .MS = scans.ToArray,
             .Scanners = MSI.Scanners,
             .source = MSI.source,
-            .Thumbnail = MSI.Thumbnail
+            .Thumbnail = MSI.Thumbnail,
+            .Annotations = MSI.Annotations,
+            .metadata = MSI.metadata
         }
     End Function
 End Module
