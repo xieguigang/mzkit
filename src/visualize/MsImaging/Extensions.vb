@@ -111,7 +111,9 @@ Public Module Extensions
             .MS = scans.ToArray,
             .Scanners = raw.Scanners,
             .source = $"reset({raw.source})",
-            .Thumbnail = Nothing
+            .Thumbnail = Nothing,
+            .Annotations = raw.Annotations,
+            .metadata = raw.metadata
         }
     End Function
 
@@ -119,7 +121,10 @@ Public Module Extensions
     ''' get pixels boundary of the MSImaging
     ''' </summary>
     ''' <param name="raw"></param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' return a bounding box of current slide sample, includes
+    ''' location and size
+    ''' </returns>
     <Extension>
     Public Function Shape(raw As mzPack) As Rectangle
         Dim allPixels As Point() = raw.MS.Select(Function(scan) scan.GetMSIPixel).ToArray
@@ -159,24 +164,34 @@ Public Module Extensions
                             End Function)
     End Function
 
+    ''' <summary>
+    ''' Add padding around the slide sample data
+    ''' </summary>
+    ''' <param name="slide"></param>
+    ''' <param name="padding"></param>
+    ''' <returns></returns>
     <Extension>
-    Public Function PixelScanPadding(raw As mzPack, padding As Padding) As mzPack
-        Dim dims As Size = PixelReader.ReadDimensions(raw.MS.Select(Function(scan) scan.GetMSIPixel))
-        Dim paddingData As ScanMS1() = raw.MS.PixelScanPadding(padding, dims).ToArray
+    Public Function PixelScanPadding(slide As mzPack, padding As Padding) As mzPack
+        Dim dims As Size = PixelReader.ReadDimensions(slide.MS.Select(Function(scan) scan.GetMSIPixel))
+        Dim paddingData As ScanMS1() = slide.MS.PixelScanPadding(padding, dims).ToArray
 
         Return New mzPack With {
             .MS = paddingData,
             .Application = FileApplicationClass.MSImaging,
-            .Chromatogram = raw.Chromatogram,
-            .Scanners = raw.Scanners,
-            .source = raw.source,
-            .Thumbnail = raw.Thumbnail,
-            .metadata = raw.metadata
+            .Chromatogram = slide.Chromatogram,
+            .Scanners = slide.Scanners,
+            .source = slide.source,
+            .Thumbnail = slide.Thumbnail,
+            .metadata = slide.metadata,
+            .Annotations = slide.Annotations
         }
     End Function
 
     <Extension>
-    Private Iterator Function PixelScanPadding(raw As IEnumerable(Of ScanMS1), padding As Padding, dims As Size) As IEnumerable(Of ScanMS1)
+    Private Iterator Function PixelScanPadding(raw As IEnumerable(Of ScanMS1),
+                                               padding As Padding,
+                                               dims As Size) As IEnumerable(Of ScanMS1)
+
         Dim marginRight As Integer = dims.Width - padding.Right
         Dim marginLeft As Integer = padding.Left
         Dim marginTop As Integer = padding.Top
