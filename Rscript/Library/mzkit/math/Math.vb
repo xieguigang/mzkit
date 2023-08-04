@@ -363,6 +363,14 @@ Module MzMath
         End If
     End Function
 
+    ''' <summary>
+    ''' search spectrum via the jaccard index method
+    ''' </summary>
+    ''' <param name="query"></param>
+    ''' <param name="ref"></param>
+    ''' <param name="tolerance"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("jaccardSet")>
     Public Function jaccardSet(query As Double(), ref As Double(),
                                Optional tolerance As Object = "da:0.3",

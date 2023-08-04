@@ -58,7 +58,7 @@ declare namespace spectrumTree {
    */
    function get_testSample(packlib: object, n?: object, rtmax?: number, source_name?: string): object;
    /**
-    * construct a fragment set library for run spectrum search in jaccard matches
+    * construct a fragment set library for run spectrum search in jaccard index matches method
     * 
     * 
      * @param libname -
@@ -70,11 +70,13 @@ declare namespace spectrumTree {
      * @param cutoff -
      * 
      * + default value Is ``0.1``.
+     * @param filter_complex_adducts 
+     * + default value Is ``false``.
      * @param env -
      * 
      * + default value Is ``null``.
    */
-   function jaccardSet(libname: string, mz: number, mzset: string, rt?: number, cutoff?: number, env?: object): object;
+   function jaccardSet(libname: string, mz: number, mzset: string, rt?: number, cutoff?: number, filter_complex_adducts?: boolean, env?: object): object;
    /**
     * create new reference spectrum database
     * 
