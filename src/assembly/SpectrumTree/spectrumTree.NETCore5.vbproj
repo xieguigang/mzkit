@@ -7,7 +7,7 @@
     <Configurations>Debug;Release;LipidSearch;mzkit_win32;Rsharp_app_release</Configurations>
     <AssemblyName>BioNovoGene.Analytical.MassSpectrometry.SpectrumTree</AssemblyName>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Title>Spectrum Tree Reference Library</Title>
+    <Title>Spectrum tree reference library</Title>
     <Product>MZKit</Product>
     <Company>PANOMIX</Company>
     <Authors>xieguigang &lt;gg.xie@bionovogene.com&gt;</Authors>
@@ -15,6 +15,8 @@
     <PackageIcon>Flask.png</PackageIcon>
     <PackageProjectUrl>https://mzkit.org</PackageProjectUrl>
     <Copyright>Copyright (c) PANOMIX 2023, All Rights Reserved.</Copyright>
+    <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
+    <Description>Spectrum tree reference library for run metabolite annotation workflow</Description>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

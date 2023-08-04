@@ -1,4 +1,5 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports System.Runtime.InteropServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
 Imports Microsoft.VisualBasic.Math.Statistics.Hypothesis
@@ -128,6 +129,68 @@ Namespace PoolData
             End If
         End Sub
 
+        ''' <summary>
+        ''' add the spectrum into current cluster node directly
+        ''' </summary>
+        ''' <param name="spectrum"></param>
+        ''' <param name="nodeId">
+        ''' the target cluster node id
+        ''' </param>
+        Public Shared Sub DirectPush(spectrum As PeakMs2, fs As PoolFs, pool As MetadataProxy, root As PeakMs2)
+            Dim score As AlignmentOutput = fs.GetScore(spectrum, root)
+            Dim PIScore As Double
+            Dim pval As Double
+
+            Call eval_score(score, PIScore, pval)
+            Call DirectPush(pool, fs, spectrum, PIScore, score, pval)
+        End Sub
+
+        ''' <summary>
+        ''' add the spectrum into current cluster node directly
+        ''' </summary>
+        ''' <param name="spectrum"></param>
+        ''' <param name="nodeId">
+        ''' the target cluster node id
+        ''' </param>
+        ''' 
+        Public Shared Sub DirectPush(spectrum As PeakMs2, fs As PoolFs, nodeId As Integer)
+            Dim pool = fs.LoadMetadata(nodeId)
+            Dim root = fs.ReadSpectrum(pool(pool.RootId))
+
+            Call DirectPush(spectrum, fs, pool, root)
+        End Sub
+
+        ''' <summary>
+        ''' add the spectrum into current cluster node directly
+        ''' </summary>
+        ''' <param name="spectrum"></param>
+        ''' <param name="PIScore"></param>
+        ''' <param name="score"></param>
+        ''' <param name="pval"></param>
+        Public Shared Sub DirectPush(pool As MetadataProxy,
+                                     fs As PoolFs,
+                                     spectrum As PeakMs2,
+                                     PIScore As Double,
+                                     score As AlignmentOutput,
+                                     pval As Double)
+            ' in current class node
+            pool.Add(spectrum.lib_guid, fs.WriteSpectrum(spectrum))
+            pool.Add(spectrum.lib_guid, PIScore, score, pval)
+        End Sub
+
+        Public Shared Sub eval_score(score As AlignmentOutput, <Out> ByRef PIScore As Double, <Out> ByRef pval As Double)
+            Static zero As Double() = New Double() {.0, .0, .0, .0}
+
+            PIScore = score.forward *
+                    score.reverse *
+                    score.jaccard *
+                    score.entropy
+
+            pval = t.Test(New Double() {
+                score.forward, score.reverse, score.jaccard, score.entropy + 0.000000000000001
+            }, zero, Hypothesis.TwoSided).Pvalue
+        End Sub
+
         Private Sub AddInternal(spectrum As PeakMs2)
             Dim score As AlignmentOutput
             Dim PIScore As Double
@@ -143,22 +206,12 @@ Namespace PoolData
                 pval = 0
                 VBDebugger.EchoLine($"create_root@{ToString()}: {spectrum.lib_guid}")
             Else
-                Static zero As Double() = New Double() {.0, .0, .0, .0}
-
                 score = fs.GetScore(spectrum, representative)
-                PIScore = score.forward *
-                    score.reverse *
-                    score.jaccard *
-                    score.entropy
-                pval = t.Test(New Double() {
-                    score.forward, score.reverse, score.jaccard, score.entropy + 0.000000000000001
-                }, zero, Hypothesis.TwoSided).Pvalue
+                eval_score(score, PIScore, pval)
             End If
 
             If score Is Nothing OrElse PIScore > fs.level Then
-                ' in current class node
-                metadata.Add(spectrum.lib_guid, fs.WriteSpectrum(spectrum))
-                metadata.Add(spectrum.lib_guid, PIScore, score, pval)
+                Call DirectPush(metadata, fs, spectrum, PIScore, score, pval)
 
                 If is_root Then
                     metadata.SetRootId(metadata(spectrum.lib_guid).block.position)

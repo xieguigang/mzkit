@@ -120,6 +120,19 @@ Namespace PoolData
             Return meta
         End Function
 
+        ''' <summary>
+        ''' spectrum metadata was parsed from the <see cref="PeakMs2.meta"/>:
+        ''' 
+        ''' 1. name
+        ''' 2. organism
+        ''' 3. biosample
+        ''' 4. biodeep_id
+        ''' 5. formula
+        ''' 6. instrument
+        ''' 7. project
+        ''' </summary>
+        ''' <param name="spectral"></param>
+        ''' <returns></returns>
         Public Shared Function GetMetadata(spectral As PeakMs2) As Metadata
             Dim name As String = spectral.meta.TryGetValue("name")
 
@@ -163,5 +176,14 @@ Namespace PoolData
             Call spectrumPool.Dispose()
             Call fs.Dispose()
         End Sub
+
+        ''' <summary>
+        ''' not working for local mode
+        ''' </summary>
+        ''' <param name="id"></param>
+        ''' <returns></returns>
+        Public Overrides Function LoadMetadata(id As Integer) As MetadataProxy
+            Throw New NotImplementedException()
+        End Function
     End Class
 End Namespace

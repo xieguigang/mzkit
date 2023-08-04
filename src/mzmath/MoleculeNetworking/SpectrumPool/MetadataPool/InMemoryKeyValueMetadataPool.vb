@@ -6,7 +6,8 @@ Namespace PoolData
     Public Class InMemoryKeyValueMetadataPool : Inherits MetadataProxy
 
         Dim data As Dictionary(Of String, Metadata)
-        Dim rootId As String
+
+        Dim m_rootId As String
         Dim m_depth As Integer
 
         Default Public Overrides ReadOnly Property GetById(id As String) As Metadata
@@ -28,6 +29,12 @@ Namespace PoolData
             End Get
         End Property
 
+        Public Overrides ReadOnly Property RootId As String
+            Get
+                Return m_rootId
+            End Get
+        End Property
+
         Sub New(data As Dictionary(Of String, Metadata), depth As Integer)
             Me.data = data
             Me.m_depth = depth
@@ -43,7 +50,7 @@ Namespace PoolData
         End Function
 
         Public Overrides Sub SetRootId(hashcode As String)
-            rootId = hashcode
+            m_rootId = hashcode
         End Sub
 
         Public Overrides Sub Add(id As String, score As Double, align As AlignmentOutput, pval As Double)

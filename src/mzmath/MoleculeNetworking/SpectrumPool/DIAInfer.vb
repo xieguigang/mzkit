@@ -31,22 +31,39 @@ Namespace PoolData
         ''' <summary>
         ''' Infer the cluster spectrum result based on the alignment result
         ''' </summary>
-        ''' <param name="cluster_id"></param>
+        ''' <param name="cluster_id">An integer cluster id in the biodeep database</param>
         ''' <param name="reference">
         ''' the alignment candidates
         ''' </param>
         ''' <returns></returns>
-        Public Function InferCluster(cluster_id As String, reference As NamedValue(Of String)()) As IEnumerable(Of PeakMs2)
+        Public Iterator Function InferCluster(cluster_id As String,
+                                              reference As NamedValue(Of String)(),
+                                              Optional push_cluster As Boolean = True) As IEnumerable(Of PeakMs2)
+
             Dim candidates = reference.GroupBy(Function(i) i.Name).ToArray
             Dim cache As New Dictionary(Of String, PeakMs2)
             Dim ions_all = GetAllClusterMetadata(cluster_id).ToArray
+            Dim result As IEnumerable(Of PeakMs2) = InferCluster(
+                ions_all, candidates,
+                getFormula:=Function(f) f.First.Value,
+                getBiodeepID:=Function(f) f.Key,
+                getName:=Function(f)
+                             Return f.First.Description
+                         End Function)
 
-            Return InferCluster(ions_all, candidates,
-                                getFormula:=Function(f) f.First.Value,
-                                getBiodeepID:=Function(f) f.Key,
-                                getName:=Function(f)
-                                             Return f.First.Description
-                                         End Function)
+            If push_cluster Then
+                Dim pool As MetadataProxy = Me.pool.LoadMetadata(id:=Integer.Parse(cluster_id))
+                Dim root = Me.pool.ReadSpectrum(pool(pool.RootId))
+
+                For Each inferDIA As PeakMs2 In result
+                    Call SpectrumPool.DirectPush(inferDIA, Me.pool, pool, root)
+                    Yield inferDIA
+                Next
+            Else
+                For Each inferDIA As PeakMs2 In result
+                    Yield inferDIA
+                Next
+            End If
         End Function
 
         ''' <summary>
@@ -54,12 +71,18 @@ Namespace PoolData
         ''' based on a given set of the reference candidates
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
-        ''' <param name="ions_all"></param>
+        ''' <param name="ions_all">
+        ''' All of the spectrum ion information that exists in current
+        ''' spectrum cluster node
+        ''' </param>
         ''' <param name="reference"></param>
         ''' <param name="getFormula"></param>
         ''' <param name="getBiodeepID"></param>
         ''' <param name="getName"></param>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' + the <see cref="PeakMs2.lib_guid"/> should be the metabolite biodeep id
+        ''' + the metadata is generated via function <see cref="TreeFs.GetMetadata(PeakMs2)"/>
+        ''' </returns>
         Private Iterator Function InferCluster(Of T)(ions_all As Metadata(),
                                                      reference As IEnumerable(Of T),
                                                      getFormula As Func(Of T, String),
@@ -68,10 +91,14 @@ Namespace PoolData
 
             Dim cache As New Dictionary(Of String, PeakMs2)
 
+            ' all of the reference spectrum that exists in current 
+            ' cluster node should be filter out at first
+            ' or it may affects the generated spectrum data
             ions_all = ions_all _
-                .Where(Function(a) a.project <> "Reference Annotation") _
+                .Where(Function(a) a.project <> ReferenceProjectId) _
                 .ToArray
 
+            ' loops for each metabolite reference data
             For Each refer As T In reference
                 Dim formula As String = getFormula(refer)
                 Dim exact_mass As Double = FormulaScanner.EvaluateExactMass(formula)
@@ -100,21 +127,33 @@ Namespace PoolData
                     .precursor_type = "[M]",
                     .intensity = selects.Length,
                     .meta = New Dictionary(Of String, String) From {
-                        {"organism", selects.Select(Function(a) a.organism).Distinct.JoinBy("; ")}
+                        {"name", getName(refer)},
+                        {"organism", selects.Select(Function(a) a.organism).Distinct.JoinBy("; ")},
+                        {"biosample", "DIA"},
+                        {"biodeep_id", getBiodeepID(refer)},
+                        {"formula", formula},
+                        {"instrument", "MZKit DIA"},
+                        {"project", ReferenceProjectId}
                     }
                 }
             Next
         End Function
+
+        Public Const ReferenceProjectId As String = "Reference Annotation"
 
         ''' <summary>
         ''' infer the spectrum based on the reference annotation of the cluster hits
         ''' </summary>
         ''' <param name="cluster_id"></param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' this method required of reference spectrum has already 
+        ''' been push into current cluster node
+        ''' </remarks>
         Public Function InferCluster(cluster_id As String) As IEnumerable(Of PeakMs2)
             Dim ions_all As Metadata() = GetAllClusterMetadata(cluster_id).ToArray
             Dim reference = ions_all _
-                .Where(Function(a) a.project = "Reference Annotation") _
+                .Where(Function(a) a.project = ReferenceProjectId) _
                 .GroupBy(Function(a) a.biodeep_id) _
                 .ToDictionary(Function(a) a.Key,
                               Function(a)
