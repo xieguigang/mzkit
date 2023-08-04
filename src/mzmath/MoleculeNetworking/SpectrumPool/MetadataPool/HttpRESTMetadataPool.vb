@@ -142,7 +142,7 @@ Namespace PoolData
             Dim json As String = url.GET
             Dim obj As Restful = Restful.ParseJSON(json)
 
-            If obj.code = 404 Then
+            If obj.code <> 0 Then
                 Throw New MissingMemberException($"No cluster which its id is: '{cluster_id}'!")
             Else
                 Me.cluster_data = obj.info
