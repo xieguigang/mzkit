@@ -134,6 +134,17 @@ Namespace PoolData
         Sub New(http As HttpTreeFs, cluster_id As Integer)
             Me.New(http)
 
+            Dim url As String = $"{http.base}/get/cluster/?id={cluster_id}&model_id={http.model_id}"
+            Dim json As String = url.GET
+            Dim obj As Restful = Restful.ParseJSON(json)
+
+            If obj.code = 404 Then
+                Throw New MissingMemberException($"No cluster which its id is: '{cluster_id}'!")
+            Else
+                Me.cluster_data = obj.info
+                Me.m_depth = Val((cluster_data!depth).ToString)
+                Me.hash_index = CStr(cluster_data!hash_index)
+            End If
         End Sub
 
         ''' <summary>
