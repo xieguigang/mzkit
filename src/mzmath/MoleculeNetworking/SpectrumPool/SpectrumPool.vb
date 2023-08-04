@@ -136,10 +136,8 @@ Namespace PoolData
         ''' <param name="nodeId">
         ''' the target cluster node id
         ''' </param>
-        Public Shared Sub DirectPush(spectrum As PeakMs2, fs As PoolFs, nodeId As Integer)
-            Dim pool As MetadataProxy = fs.LoadMetadata(nodeId)
-            Dim representative = fs.ReadSpectrum(pool(pool.RootId))
-            Dim score As AlignmentOutput = fs.GetScore(spectrum, representative)
+        Public Shared Sub DirectPush(spectrum As PeakMs2, fs As PoolFs, pool As MetadataProxy, root As PeakMs2)
+            Dim score As AlignmentOutput = fs.GetScore(spectrum, root)
             Dim PIScore As Double
             Dim pval As Double
 
@@ -151,10 +149,30 @@ Namespace PoolData
         ''' add the spectrum into current cluster node directly
         ''' </summary>
         ''' <param name="spectrum"></param>
+        ''' <param name="nodeId">
+        ''' the target cluster node id
+        ''' </param>
+        ''' 
+        Public Shared Sub DirectPush(spectrum As PeakMs2, fs As PoolFs, nodeId As Integer)
+            Dim pool = fs.LoadMetadata(nodeId)
+            Dim root = fs.ReadSpectrum(pool(pool.RootId))
+
+            Call DirectPush(spectrum, fs, pool, root)
+        End Sub
+
+        ''' <summary>
+        ''' add the spectrum into current cluster node directly
+        ''' </summary>
+        ''' <param name="spectrum"></param>
         ''' <param name="PIScore"></param>
         ''' <param name="score"></param>
         ''' <param name="pval"></param>
-        Public Shared Sub DirectPush(pool As MetadataProxy, fs As PoolFs, spectrum As PeakMs2, PIScore As Double, score As AlignmentOutput, pval As Double)
+        Public Shared Sub DirectPush(pool As MetadataProxy,
+                                     fs As PoolFs,
+                                     spectrum As PeakMs2,
+                                     PIScore As Double,
+                                     score As AlignmentOutput,
+                                     pval As Double)
             ' in current class node
             pool.Add(spectrum.lib_guid, fs.WriteSpectrum(spectrum))
             pool.Add(spectrum.lib_guid, PIScore, score, pval)

@@ -194,6 +194,10 @@ Namespace PoolData
             End If
         End Function
 
+        Public Overrides Function LoadMetadata(id As Integer) As MetadataProxy
+            Return New HttpRESTMetadataPool(Me, id)
+        End Function
+
         Public Overrides Function LoadMetadata(path As String) As MetadataProxy
             Dim key As String = ClusterHashIndex(path)
 
@@ -213,7 +217,7 @@ Namespace PoolData
                 Return Nothing
             End If
 
-            Return metadata_pool(key).RootSpectrumId
+            Return metadata_pool(key).RootId
         End Function
 
         ''' <summary>

@@ -22,10 +22,10 @@ Namespace PoolData
         Dim url_setScore As String
         Dim hash_index As String
         Dim cluster_data As JavaScriptObject
-        Dim rootId As String
         Dim model_id As String
 
         Dim m_depth As Integer = 0
+        Dim m_rootId As String = Nothing
 
         ''' <summary>
         ''' the cluster id in the database
@@ -37,19 +37,23 @@ Namespace PoolData
             End Get
         End Property
 
-        Public ReadOnly Property RootSpectrumId As String
+        ''' <summary>
+        ''' the root spectrum id of current cluster
+        ''' </summary>
+        ''' <returns></returns>
+        Public Overrides ReadOnly Property RootId As String
             Get
-                If rootId.StringEmpty Then
+                If m_rootId.StringEmpty Then
                     Dim root = cluster_data!root
 
                     If root Is Nothing Then
                         Return Nothing
                     Else
-                        rootId = CStr(root)
+                        m_rootId = CStr(root)
                     End If
                 End If
 
-                Return rootId
+                Return m_rootId
             End Get
         End Property
 
@@ -241,10 +245,10 @@ Namespace PoolData
         End Function
 
         Public Overrides Sub SetRootId(hashcode As String)
-            rootId = hashcode
-
             Dim args As New NameValueCollection
 
+            m_rootId = hashcode
+            ' build url parameters
             args.Add("path_hash", hash_index)
             args.Add("id", hashcode)
 

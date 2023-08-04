@@ -47,6 +47,13 @@ Namespace PoolData
         Public MustOverride Function FindRootId(path As String) As String
         Public MustOverride Sub SetRootId(path As String, id As String)
         Public MustOverride Function ReadSpectrum(p As Metadata) As PeakMs2
+
+        ''' <summary>
+        ''' save the target <paramref name="spectral"/> data into data pool, 
+        ''' and then get the related metadata inside the data pool
+        ''' </summary>
+        ''' <param name="spectral"></param>
+        ''' <returns></returns>
         Public MustOverride Function WriteSpectrum(spectral As PeakMs2) As Metadata
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

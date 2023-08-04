@@ -37,9 +37,9 @@ Namespace PoolData
         ''' the alignment candidates
         ''' </param>
         ''' <returns></returns>
-        Public Function InferCluster(cluster_id As String,
-                                     reference As NamedValue(Of String)(),
-                                     Optional push_cluster As Boolean = True) As IEnumerable(Of PeakMs2)
+        Public Iterator Function InferCluster(cluster_id As String,
+                                              reference As NamedValue(Of String)(),
+                                              Optional push_cluster As Boolean = True) As IEnumerable(Of PeakMs2)
 
             Dim candidates = reference.GroupBy(Function(i) i.Name).ToArray
             Dim cache As New Dictionary(Of String, PeakMs2)
@@ -53,10 +53,18 @@ Namespace PoolData
                          End Function)
 
             If push_cluster Then
+                Dim pool As MetadataProxy = Me.pool.LoadMetadata(id:=Integer.Parse(cluster_id))
+                Dim root = Me.pool.ReadSpectrum(pool(pool.RootId))
 
+                For Each inferDIA As PeakMs2 In result
+                    Call SpectrumPool.DirectPush(inferDIA, Me.pool, pool, root)
+                    Yield inferDIA
+                Next
+            Else
+                For Each inferDIA As PeakMs2 In result
+                    Yield inferDIA
+                Next
             End If
-
-            Return result
         End Function
 
         ''' <summary>
@@ -74,6 +82,7 @@ Namespace PoolData
         ''' <param name="getName"></param>
         ''' <returns>
         ''' + the <see cref="PeakMs2.lib_guid"/> should be the metabolite biodeep id
+        ''' + the metadata is generated via function <see cref="TreeFs.GetMetadata(PeakMs2)"/>
         ''' </returns>
         Private Iterator Function InferCluster(Of T)(ions_all As Metadata(),
                                                      reference As IEnumerable(Of T),
@@ -119,7 +128,13 @@ Namespace PoolData
                     .precursor_type = "[M]",
                     .intensity = selects.Length,
                     .meta = New Dictionary(Of String, String) From {
-                        {"organism", selects.Select(Function(a) a.organism).Distinct.JoinBy("; ")}
+                        {"name", getName(refer)},
+                        {"organism", selects.Select(Function(a) a.organism).Distinct.JoinBy("; ")},
+                        {"biosample", "DIA"},
+                        {"biodeep_id", getBiodeepID(refer)},
+                        {"formula", formula},
+                        {"instrument", "MZKit DIA"},
+                        {"project", ReferenceProjectId}
                     }
                 }
             Next
