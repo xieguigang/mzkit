@@ -10,6 +10,7 @@ Namespace PoolData
         Default Public MustOverride ReadOnly Property GetById(id As String) As Metadata
         Public MustOverride ReadOnly Property AllClusterMembers As IEnumerable(Of Metadata)
         Public MustOverride ReadOnly Property Depth As Integer
+        Public MustOverride ReadOnly Property RootId As String
 
         Public MustOverride Sub Add(id As String, metadata As Metadata)
 

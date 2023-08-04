@@ -42,6 +42,7 @@ Namespace PoolData
         Public MustOverride Function CheckExists(spectral As PeakMs2) As Boolean
         Public MustOverride Function GetTreeChilds(path As String) As IEnumerable(Of String)
         Public MustOverride Function LoadMetadata(path As String) As MetadataProxy
+        Public MustOverride Function LoadMetadata(id As Integer) As MetadataProxy
         Public MustOverride Sub CommitMetadata(path As String, data As MetadataProxy)
         Public MustOverride Function FindRootId(path As String) As String
         Public MustOverride Sub SetRootId(path As String, id As String)
