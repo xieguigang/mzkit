@@ -237,6 +237,9 @@ Namespace PoolData
 
             If result.code = 0 Then
                 local_cache(id) = metadata
+            Else
+                Call VBDebugger.EchoLine(result.debug)
+                Call VBDebugger.EchoLine(result.info)
             End If
         End Sub
 
@@ -261,7 +264,7 @@ Namespace PoolData
 
         Public Overrides Sub Add(id As String, score As Double, align As AlignmentOutput, pval As Double)
             Dim payload As New NameValueCollection
-            Dim metadata = local_cache(id)
+            Dim metadata As Metadata = local_cache(id)
 
             If align Is Nothing Then
                 ' config for root
