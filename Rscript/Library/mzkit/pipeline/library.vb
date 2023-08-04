@@ -64,6 +64,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree
 Imports BioNovoGene.BioDeep.Chemistry.MetaLib.Models
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
@@ -174,6 +175,44 @@ Module library
         }
     End Function
 
+    <Extension>
+    Private Function ionsFromPeaktable(df As dataframe, env As Environment) As [Variant](Of Message, xcms2())
+        Dim id As String()
+        Dim println = env.WriteLineHandler
+
+        Call println("get data frame object for the ms1 ions features(with data fields):")
+        Call println(df.colnames)
+
+        If Not df.rownames Is Nothing Then
+            id = df.rownames
+        ElseIf df.hasName("xcms_id") Then
+            id = CLRVector.asCharacter(df("xcms_id"))
+        ElseIf df.hasName("ID") Then
+            id = CLRVector.asCharacter(df("ID"))
+        Else
+            Return Internal.debug.stop({
+                "missing the unique id of the ms1 ions in your dataframe!",
+                "required_one_of_field: xcms_id, ID"
+            }, env)
+        End If
+
+        Dim mz As Double() = CLRVector.asNumeric(df("mz"))
+        Dim rt As Double() = CLRVector.asNumeric(df("rt"))
+
+        Call println("get ms1 features unique id collection:")
+        Call println(id)
+
+        Return id _
+            .Select(Function(xcms_id, i)
+                        Return New xcms2 With {
+                            .ID = xcms_id,
+                            .mz = mz(i),
+                            .rt = rt(i)
+                        }
+                    End Function) _
+            .ToArray
+    End Function
+
     ''' <summary>
     ''' Check the ms1 parent ion is generated via the in-source fragment or not
     ''' </summary>
@@ -200,40 +239,13 @@ Module library
         Dim println = env.WriteLineHandler
 
         If TypeOf ms1 Is dataframe Then
-            Dim id As String()
-            Dim df As dataframe = DirectCast(ms1, dataframe)
+            Dim pull = DirectCast(ms1, dataframe).ionsFromPeaktable(env)
 
-            Call println("get data frame object for the ms1 ions features(with data fields):")
-            Call println(df.colnames)
-
-            If Not df.rownames Is Nothing Then
-                id = df.rownames
-            ElseIf df.hasName("xcms_id") Then
-                id = CLRVector.asCharacter(df("xcms_id"))
-            ElseIf df.hasName("ID") Then
-                id = CLRVector.asCharacter(df("ID"))
+            If pull Like GetType(Message) Then
+                Return pull.TryCast(Of Message)
             Else
-                Return Internal.debug.stop({
-                    "missing the unique id of the ms1 ions in your dataframe!",
-                    "required_one_of_field: xcms_id, ID"
-                }, env)
+                xcmsPeaks = pull.TryCast(Of xcms2())
             End If
-
-            Dim mz As Double() = CLRVector.asNumeric(df("mz"))
-            Dim rt As Double() = CLRVector.asNumeric(df("rt"))
-
-            Call println("get ms1 features unique id collection:")
-            Call println(id)
-
-            xcmsPeaks = id _
-                .Select(Function(xcms_id, i)
-                            Return New xcms2 With {
-                                .ID = xcms_id,
-                                .mz = mz(i),
-                                .rt = rt(i)
-                            }
-                        End Function) _
-                .ToArray
         Else
             Dim ms1data = pipeline.TryCreatePipeline(Of xcms2)(ms1, env)
 
