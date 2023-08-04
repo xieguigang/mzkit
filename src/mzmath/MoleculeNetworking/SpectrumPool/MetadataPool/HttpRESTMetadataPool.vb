@@ -82,14 +82,15 @@ Namespace PoolData
             End Get
         End Property
 
+        ''' <summary>
+        ''' open existed or create new cluster node
+        ''' </summary>
+        ''' <param name="http"></param>
+        ''' <param name="path"></param>
+        ''' <param name="parentId"></param>
         Sub New(http As HttpTreeFs, path As String, parentId As Long)
+            Me.New(http)
             Me.hash_index = HttpTreeFs.ClusterHashIndex(path)
-            Me.url_get = $"{http.base}/get/metadata/"
-            Me.url_put = $"{http.base}/set/metadata/?model_id={http.model_id}"
-            Me.url_setRoot = $"{http.base}/set/root/?model_id={http.model_id}"
-            Me.url_setScore = $"{http.base}/set/score/?model_id={http.model_id}"
-            Me.model_id = http.model_id
-            Me.local_cache = New Dictionary(Of String, Metadata)
 
             Dim url As String = $"{http.base}/get/cluster/?path_hash={hash_index}&model_id={http.model_id}"
             Dim json As String = url.GET
@@ -110,6 +111,29 @@ Namespace PoolData
 
             Me.cluster_data = obj.info
             Me.m_depth = Val((cluster_data!depth).ToString)
+        End Sub
+
+        ''' <summary>
+        ''' common pathway for initialize the cluster node data pool
+        ''' </summary>
+        ''' <param name="http"></param>
+        Private Sub New(http As HttpTreeFs)
+            Me.url_get = $"{http.base}/get/metadata/"
+            Me.url_put = $"{http.base}/set/metadata/?model_id={http.model_id}"
+            Me.url_setRoot = $"{http.base}/set/root/?model_id={http.model_id}"
+            Me.url_setScore = $"{http.base}/set/score/?model_id={http.model_id}"
+            Me.model_id = http.model_id
+            Me.local_cache = New Dictionary(Of String, Metadata)
+        End Sub
+
+        ''' <summary>
+        ''' open existsed cluster node
+        ''' </summary>
+        ''' <param name="http"></param>
+        ''' <param name="cluster_id"></param>
+        Sub New(http As HttpTreeFs, cluster_id As Integer)
+            Me.New(http)
+
         End Sub
 
         ''' <summary>

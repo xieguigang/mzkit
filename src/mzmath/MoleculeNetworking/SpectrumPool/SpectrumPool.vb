@@ -136,8 +136,8 @@ Namespace PoolData
         ''' <param name="PIScore"></param>
         ''' <param name="score"></param>
         ''' <param name="pval"></param>
-        Public Sub DirectPush(spectrum As PeakMs2)
-            Dim score = fs.GetScore(spectrum, representative)
+        Public Shared Sub DirectPush(spectrum As PeakMs2, fs As PoolFs, nodeId As Integer)
+            Dim score As AlignmentOutput = fs.GetScore(spectrum, representative)
             Dim PIScore As Double
             Dim pval As Double
 
@@ -152,10 +152,10 @@ Namespace PoolData
         ''' <param name="PIScore"></param>
         ''' <param name="score"></param>
         ''' <param name="pval"></param>
-        Public Sub DirectPush(spectrum As PeakMs2, PIScore As Double, score As AlignmentOutput, pval As Double)
+        Public Shared Sub DirectPush(pool As MetadataProxy, fs As PoolFs, spectrum As PeakMs2, PIScore As Double, score As AlignmentOutput, pval As Double)
             ' in current class node
-            metadata.Add(spectrum.lib_guid, fs.WriteSpectrum(spectrum))
-            metadata.Add(spectrum.lib_guid, PIScore, score, pval)
+            pool.Add(spectrum.lib_guid, fs.WriteSpectrum(spectrum))
+            pool.Add(spectrum.lib_guid, PIScore, score, pval)
         End Sub
 
         Public Shared Sub eval_score(score As AlignmentOutput, <Out> ByRef PIScore As Double, <Out> ByRef pval As Double)
@@ -191,7 +191,7 @@ Namespace PoolData
             End If
 
             If score Is Nothing OrElse PIScore > fs.level Then
-                Call DirectPush(spectrum, PIScore, score, pval)
+                Call DirectPush(metadata, fs, spectrum, PIScore, score, pval)
 
                 If is_root Then
                     metadata.SetRootId(metadata(spectrum.lib_guid).block.position)
