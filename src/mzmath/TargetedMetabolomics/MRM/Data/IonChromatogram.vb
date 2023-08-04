@@ -79,7 +79,7 @@ Namespace MRM.Data
         <DebuggerStepThrough>
         Public Function GetTimeWindow(winsize As Double) As DoubleRange
             If hasRTwin Then
-                Return {
+                Return New Double() {
                     ion.target.rt - winsize,
                     ion.target.rt + winsize
                 }

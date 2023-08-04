@@ -85,7 +85,7 @@ Namespace Reader
 
         Dim matrix As Grid(Of InMemoryVectorPixel)
 
-        Sub New(pixels As IEnumerable(Of PixelData))
+        Sub New(pixels As IEnumerable(Of PixelData), Optional dims As Size? = Nothing)
             Me.matrix = pixels _
                 .GroupBy(Function(i) $"{i.x},{i.y}") _
                 .Select(Function(i)
@@ -96,7 +96,12 @@ Namespace Reader
                         End Function) _
                 .DoCall(AddressOf Grid(Of InMemoryVectorPixel).Create)
             Me.pixels = pixels
-            Me.dimension = New Size(matrix.width, matrix.height)
+
+            If dims Is Nothing Then
+                Me.dimension = New Size(matrix.width, matrix.height)
+            Else
+                Me.dimension = dims
+            End If
         End Sub
 
         Protected Overrides Sub release()
