@@ -6,7 +6,6 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.MoleculeNetworking
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Math.Distributions
-Imports Microsoft.VisualBasic.Math.Statistics.Hypothesis.Mantel
 
 Namespace PoolData
 
