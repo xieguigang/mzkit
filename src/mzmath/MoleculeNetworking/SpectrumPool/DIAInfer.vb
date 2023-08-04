@@ -55,9 +55,18 @@ Namespace PoolData
             If push_cluster Then
                 Dim pool As MetadataProxy = Me.pool.LoadMetadata(id:=Integer.Parse(cluster_id))
                 Dim root = Me.pool.ReadSpectrum(pool(pool.RootId))
+                Dim biodeep_id As String
 
                 For Each inferDIA As PeakMs2 In result
-                    Call SpectrumPool.DirectPush(inferDIA, Me.pool, pool, root)
+                    ' the unique lib guid is required in the database
+                    ' due to the reason of lib guid at here is biodeep id
+                    ' so we needs change it to lib guid temporary
+                    ' and then changed back at last after post to database pool
+                    biodeep_id = inferDIA.lib_guid
+                    inferDIA.lib_guid = Utils.ConservedGuid(inferDIA)
+                    SpectrumPool.DirectPush(inferDIA, Me.pool, pool, root)
+                    inferDIA.lib_guid = biodeep_id
+
                     Yield inferDIA
                 Next
             Else
