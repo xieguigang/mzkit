@@ -22,9 +22,10 @@ Namespace PoolData
                 Optional ms2diff As String = "da:0.3",
                 Optional intocutoff As Double = 0.05)
 
-            Me.pool = pool
-            Me.da = Tolerance.ParseScript(ms1diff)
             Me.ms2diff = Tolerance.ParseScript(ms2diff)
+            Me.pool = pool
+            Me.pool.SetScore(0.3, intocutoff)
+            Me.da = Tolerance.ParseScript(ms1diff)
             Me.intocutoff = New RelativeIntensityCutoff(intocutoff)
         End Sub
 
