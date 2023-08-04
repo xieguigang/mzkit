@@ -63,11 +63,11 @@ Namespace PoolData
                     ' so we needs change it to lib guid temporary
                     ' and then changed back at last after post to database pool
                     biodeep_spectral = Protocols.MakeCopy(inferDIA)
-                    biodeep_spectral.lib_guid = Utils.ConservedGuid(inferDIA)
                     biodeep_spectral.meta("organism") = ReferenceProjectId
                     biodeep_spectral.file = ReferenceProjectId
+                    biodeep_spectral.lib_guid = Utils.ConservedGuid(biodeep_spectral)
 
-                    SpectrumPool.DirectPush(inferDIA, Me.pool, pool, root)
+                    SpectrumPool.DirectPush(biodeep_spectral, Me.pool, pool, root)
 
                     Yield inferDIA
                 Next
@@ -211,6 +211,7 @@ Namespace PoolData
 
                             Return cache(key)
                         End Function) _
+                .Where(Function(a) Not a Is Nothing) _
                 .ToArray
             Dim union = NetworkingNode.UnionRepresentative(all_spectrums, ms2diff, intocutoff)
 
