@@ -235,7 +235,7 @@ Namespace PoolData
 
             Dim result = Restful.ParseJSON(url_put.POST(payload))
 
-            If result.code = 0 Then
+            If result.code <= 0 Then
                 local_cache(id) = metadata
             Else
                 Call VBDebugger.EchoLine(result.debug)
