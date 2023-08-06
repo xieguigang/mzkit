@@ -158,7 +158,7 @@ Namespace Blender
         Dim raster As RasterPixel()
         Dim intensityRange As DoubleRange
         Dim xy As Dictionary(Of Integer, Dictionary(Of Integer, Double))
-        Dim byteRange As DoubleRange = {8, 255}
+        Dim byteRange As DoubleRange = New Double() {8, 255}
 
         Sub New(gauss As Integer, sigma As Integer, channel As PixelData())
             Me.raster = New HeatMapRaster(Of PixelData)(gauss, sigma) _

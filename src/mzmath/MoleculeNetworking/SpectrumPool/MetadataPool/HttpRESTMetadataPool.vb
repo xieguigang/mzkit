@@ -22,10 +22,10 @@ Namespace PoolData
         Dim url_setScore As String
         Dim hash_index As String
         Dim cluster_data As JavaScriptObject
-        Dim rootId As String
         Dim model_id As String
 
         Dim m_depth As Integer = 0
+        Dim m_rootId As String = Nothing
 
         ''' <summary>
         ''' the cluster id in the database
@@ -37,19 +37,23 @@ Namespace PoolData
             End Get
         End Property
 
-        Public ReadOnly Property RootSpectrumId As String
+        ''' <summary>
+        ''' the root spectrum id of current cluster
+        ''' </summary>
+        ''' <returns></returns>
+        Public Overrides ReadOnly Property RootId As String
             Get
-                If rootId.StringEmpty Then
+                If m_rootId.StringEmpty Then
                     Dim root = cluster_data!root
 
                     If root Is Nothing Then
                         Return Nothing
                     Else
-                        rootId = CStr(root)
+                        m_rootId = CStr(root)
                     End If
                 End If
 
-                Return rootId
+                Return m_rootId
             End Get
         End Property
 
@@ -82,14 +86,15 @@ Namespace PoolData
             End Get
         End Property
 
+        ''' <summary>
+        ''' open existed or create new cluster node
+        ''' </summary>
+        ''' <param name="http"></param>
+        ''' <param name="path"></param>
+        ''' <param name="parentId"></param>
         Sub New(http As HttpTreeFs, path As String, parentId As Long)
+            Me.New(http)
             Me.hash_index = HttpTreeFs.ClusterHashIndex(path)
-            Me.url_get = $"{http.base}/get/metadata/"
-            Me.url_put = $"{http.base}/set/metadata/?model_id={http.model_id}"
-            Me.url_setRoot = $"{http.base}/set/root/?model_id={http.model_id}"
-            Me.url_setScore = $"{http.base}/set/score/?model_id={http.model_id}"
-            Me.model_id = http.model_id
-            Me.local_cache = New Dictionary(Of String, Metadata)
 
             Dim url As String = $"{http.base}/get/cluster/?path_hash={hash_index}&model_id={http.model_id}"
             Dim json As String = url.GET
@@ -110,6 +115,40 @@ Namespace PoolData
 
             Me.cluster_data = obj.info
             Me.m_depth = Val((cluster_data!depth).ToString)
+        End Sub
+
+        ''' <summary>
+        ''' common pathway for initialize the cluster node data pool
+        ''' </summary>
+        ''' <param name="http"></param>
+        Private Sub New(http As HttpTreeFs)
+            Me.url_get = $"{http.base}/get/metadata/"
+            Me.url_put = $"{http.base}/set/metadata/?model_id={http.model_id}"
+            Me.url_setRoot = $"{http.base}/set/root/?model_id={http.model_id}"
+            Me.url_setScore = $"{http.base}/set/score/?model_id={http.model_id}"
+            Me.model_id = http.model_id
+            Me.local_cache = New Dictionary(Of String, Metadata)
+        End Sub
+
+        ''' <summary>
+        ''' open existsed cluster node
+        ''' </summary>
+        ''' <param name="http"></param>
+        ''' <param name="cluster_id"></param>
+        Sub New(http As HttpTreeFs, cluster_id As Integer)
+            Me.New(http)
+
+            Dim url As String = $"{http.base}/get/cluster/?id={cluster_id}&model_id={http.model_id}"
+            Dim json As String = url.GET
+            Dim obj As Restful = Restful.ParseJSON(json)
+
+            If obj.code = 404 Then
+                Throw New MissingMemberException($"No cluster which its id is: '{cluster_id}'!")
+            Else
+                Me.cluster_data = obj.info
+                Me.m_depth = Val((cluster_data!depth).ToString)
+                Me.hash_index = CStr(cluster_data!hash_index)
+            End If
         End Sub
 
         ''' <summary>
@@ -206,10 +245,10 @@ Namespace PoolData
         End Function
 
         Public Overrides Sub SetRootId(hashcode As String)
-            rootId = hashcode
-
             Dim args As New NameValueCollection
 
+            m_rootId = hashcode
+            ' build url parameters
             args.Add("path_hash", hash_index)
             args.Add("id", hashcode)
 

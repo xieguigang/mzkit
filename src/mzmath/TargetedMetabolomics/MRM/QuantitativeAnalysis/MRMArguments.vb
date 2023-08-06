@@ -122,7 +122,7 @@ Namespace MRM
                 baselineQuantile:=0.65,
                 integratorTicks:=5000,
                 peakAreaMethod:=PeakAreaMethods.NetPeakSum,
-                peakwidth:={8, 30},
+                peakwidth:=New Double() {8, 30},
                 sn_threshold:=3
             )
         End Function

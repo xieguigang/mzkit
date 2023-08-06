@@ -235,7 +235,7 @@ Public Class TICplot : Inherits Plot
 
             If theme.drawLabels Then
                 Dim data As New MzGroup With {.mz = 0, .XIC = chromatogram}
-                Dim peaks = data.GetPeakGroups({5, 60}).ToArray
+                Dim peaks = data.GetPeakGroups(New Double() {5, 60}).ToArray
 
                 peakTimes += From ROI As PeakFeature
                              In peaks

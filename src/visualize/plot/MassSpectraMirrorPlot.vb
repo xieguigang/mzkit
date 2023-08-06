@@ -148,7 +148,7 @@ Public Module MassSpectra
             queryName:=query.name,
             subjectName:=ref.name,
             xrange:=mzRange,
-            yrange:={0, 100},
+            yrange:=New Double() {0, 100},
             size:=size, padding:=margin,
             xlab:=xlab,
             ylab:=ylab,

@@ -12,6 +12,7 @@
 	  <Authors>xieguigang &lt;gg.xie@bionovogene.com&gt;</Authors>
 	  <Company>PANOMIX</Company>
 	  <UseApplicationFramework>True</UseApplicationFramework>
+	  <Description>Molecular Networking Generator for library data inference</Description>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0|AnyCPU'">
