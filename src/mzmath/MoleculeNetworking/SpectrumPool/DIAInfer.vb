@@ -22,9 +22,10 @@ Namespace PoolData
                 Optional ms2diff As String = "da:0.3",
                 Optional intocutoff As Double = 0.05)
 
-            Me.pool = pool
-            Me.da = Tolerance.ParseScript(ms1diff)
             Me.ms2diff = Tolerance.ParseScript(ms2diff)
+            Me.pool = pool
+            Me.pool.SetScore(0.3, intocutoff)
+            Me.da = Tolerance.ParseScript(ms1diff)
             Me.intocutoff = New RelativeIntensityCutoff(intocutoff)
         End Sub
 
@@ -54,9 +55,20 @@ Namespace PoolData
             If push_cluster Then
                 Dim pool As MetadataProxy = Me.pool.LoadMetadata(id:=Integer.Parse(cluster_id))
                 Dim root = Me.pool.ReadSpectrum(pool(pool.RootId))
+                Dim biodeep_spectral As PeakMs2
 
                 For Each inferDIA As PeakMs2 In result
-                    Call SpectrumPool.DirectPush(inferDIA, Me.pool, pool, root)
+                    ' the unique lib guid is required in the database
+                    ' due to the reason of lib guid at here is biodeep id
+                    ' so we needs change it to lib guid temporary
+                    ' and then changed back at last after post to database pool
+                    biodeep_spectral = Protocols.MakeCopy(inferDIA)
+                    biodeep_spectral.meta("organism") = ReferenceProjectId
+                    biodeep_spectral.file = ReferenceProjectId
+                    biodeep_spectral.lib_guid = Utils.ConservedGuid(biodeep_spectral)
+
+                    SpectrumPool.DirectPush(biodeep_spectral, Me.pool, pool, root)
+
                     Yield inferDIA
                 Next
             Else
@@ -199,6 +211,7 @@ Namespace PoolData
 
                             Return cache(key)
                         End Function) _
+                .Where(Function(a) Not a Is Nothing) _
                 .ToArray
             Dim union = NetworkingNode.UnionRepresentative(all_spectrums, ms2diff, intocutoff)
 

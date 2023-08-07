@@ -14,7 +14,11 @@ Namespace PoolData
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function ParseJSON(json As WebResponseResult) As Restful
-            Return ParseJSON(json.html)
+            If json Is Nothing Then
+                Return New Restful With {.code = -1, .info = Nothing}
+            Else
+                Return ParseJSON(json.html)
+            End If
         End Function
 
         Public Shared Function ParseJSON(json As String) As Restful

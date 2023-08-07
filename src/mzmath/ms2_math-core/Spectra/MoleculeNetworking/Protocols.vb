@@ -57,6 +57,7 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
@@ -180,20 +181,34 @@ Namespace Spectra.MoleculeNetworking
         ''' <param name="raw"></param>
         ''' <returns></returns>
         Private Function centroid(raw As PeakMs2) As PeakMs2
+            raw = MakeCopy(raw)
+            raw.mzInto = raw.mzInto _
+                .Centroid(ms2_tolerance, intoCutoff) _
+                .ToArray
+
+            Return raw
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function MakeCopy(raw As PeakMs2) As PeakMs2
             Return New PeakMs2 With {
                 .activation = raw.activation,
                 .file = raw.file,
                 .collisionEnergy = raw.collisionEnergy,
                 .lib_guid = raw.lib_guid,
-                .meta = If(raw.meta Is Nothing, New Dictionary(Of String, String), New Dictionary(Of String, String)(raw.meta)),
+                .meta = If(raw.meta Is Nothing,
+                    New Dictionary(Of String, String),
+                    New Dictionary(Of String, String)(raw.meta)
+                 ),
                 .mz = raw.mz,
-                .mzInto = raw.mzInto.Centroid(ms2_tolerance, intoCutoff).ToArray,
+                .mzInto = raw.mzInto,
                 .precursor_type = raw.precursor_type,
                 .rt = raw.rt,
                 .scan = raw.scan
             }
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Function centroidlized(raw As IEnumerable(Of PeakMs2)) As PeakMs2()
             Return raw _
                 .AsParallel _

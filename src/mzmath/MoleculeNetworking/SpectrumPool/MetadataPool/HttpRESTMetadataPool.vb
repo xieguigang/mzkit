@@ -142,7 +142,7 @@ Namespace PoolData
             Dim json As String = url.GET
             Dim obj As Restful = Restful.ParseJSON(json)
 
-            If obj.code = 404 Then
+            If obj.code <> 0 Then
                 Throw New MissingMemberException($"No cluster which its id is: '{cluster_id}'!")
             Else
                 Me.cluster_data = obj.info
@@ -235,8 +235,11 @@ Namespace PoolData
 
             Dim result = Restful.ParseJSON(url_put.POST(payload))
 
-            If result.code = 0 Then
+            If result.code <= 0 Then
                 local_cache(id) = metadata
+            Else
+                Call VBDebugger.EchoLine(result.debug)
+                Call VBDebugger.EchoLine(result.info)
             End If
         End Sub
 
@@ -261,7 +264,7 @@ Namespace PoolData
 
         Public Overrides Sub Add(id As String, score As Double, align As AlignmentOutput, pval As Double)
             Dim payload As New NameValueCollection
-            Dim metadata = local_cache(id)
+            Dim metadata As Metadata = local_cache(id)
 
             If align Is Nothing Then
                 ' config for root
