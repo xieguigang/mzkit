@@ -66,9 +66,15 @@ Namespace PoolData
                     biodeep_spectral.meta("organism") = ReferenceProjectId
                     biodeep_spectral.file = ReferenceProjectId
                     biodeep_spectral.lib_guid = Utils.ConservedGuid(biodeep_spectral)
-
+#If DEBUG Then
                     SpectrumPool.DirectPush(biodeep_spectral, Me.pool, pool, root)
-
+#Else
+                    Try
+                        SpectrumPool.DirectPush(biodeep_spectral, Me.pool, pool, root)
+                    Catch ex As Exception
+                        Call ex.Message.Warning
+                    End Try
+#End If
                     Yield inferDIA
                 Next
             Else
