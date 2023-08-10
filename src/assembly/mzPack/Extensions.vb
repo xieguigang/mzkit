@@ -65,7 +65,8 @@ Imports Microsoft.VisualBasic.Linq
 <HideModuleName>
 Public Module Extensions
 
-    Public Function GetApplication(file As Stream) As FileApplicationClass
+    <Extension>
+    Public Function GetMSApplication(file As Stream) As FileApplicationClass
         Dim ver As Integer = GetFormatVersion(file)
 
         If ver = 1 Then
