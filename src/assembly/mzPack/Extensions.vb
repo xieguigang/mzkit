@@ -1,54 +1,54 @@
 ﻿#Region "Microsoft.VisualBasic::f16b4579cf283b1af4e515036956340b, mzkit\src\assembly\mzPack\Extensions.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 104
-    '    Code Lines: 75
-    ' Comment Lines: 15
-    '   Blank Lines: 14
-    '     File Size: 3.90 KB
+' Summaries:
 
 
-    ' Module Extensions
-    ' 
-    '     Function: GetAllCentroidScanMs1, GetFormatVersion, MassCalibration
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 104
+'    Code Lines: 75
+' Comment Lines: 15
+'   Blank Lines: 14
+'     File Size: 3.90 KB
+
+
+' Module Extensions
+' 
+'     Function: GetAllCentroidScanMs1, GetFormatVersion, MassCalibration
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -59,14 +59,28 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Math.LinearAlgebra
-Imports stdVec = Microsoft.VisualBasic.Math.LinearAlgebra.Vector
 
 <HideModuleName>
 Public Module Extensions
+
+    <Extension>
+    Public Function GetMSApplication(file As Stream) As FileApplicationClass
+        Dim ver As Integer = GetFormatVersion(file)
+
+        If ver = 1 Then
+            ' i'm not sure for version 1
+            ' due to the reason of no class attribute in the raw data file
+            Return FileApplicationClass.LCMS
+        Else
+            ' version 2 has the tag attribute about the file class
+            Dim pack = New StreamPack(file, [readonly]:=True)
+            Dim application As FileApplicationClass = mzStream.SafeParseClassType(pack)
+
+            Return application
+        End If
+    End Function
 
     ''' <summary>
     ''' get of the mzpack file reader format version number

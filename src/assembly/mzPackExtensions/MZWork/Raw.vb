@@ -126,6 +126,10 @@ Namespace MZWork
             End Get
         End Property
 
+        ''' <summary>
+        ''' the cache of the mzpack data file is exists in the temp storage or not?
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property cacheFileExists As Boolean
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
