@@ -78,6 +78,7 @@ Imports any = Microsoft.VisualBasic.Scripting
 Imports asciiA = Microsoft.VisualBasic.Text.ASCII
 Imports stdNum = System.Math
 Imports Microsoft.VisualBasic.Text.Xml.Models
+Imports System.Runtime.CompilerServices
 
 ''' <summary>
 ''' v2 mzPack format in HDS stream file
@@ -377,24 +378,34 @@ Public Class mzStream : Implements IMzPackReader
         Return annos
     End Function
 
-    Private Function safeParseClassType() As FileApplicationClass
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Shared Function SafeParseClassType(pack As StreamPack) As FileApplicationClass
         Return Strings _
             .Trim(pack.ReadText("/.etc/app.cls")) _
             .Trim(asciiA.TAB, asciiA.CR, asciiA.LF) _
             .DoCall(Function(str)
-                        If str.StringEmpty Then
-                            Return FileApplicationClass.LCMS
-                        Else
-                            Dim app As FileApplicationClass = Nothing
-                            Dim test As Boolean = [Enum].TryParse(str, app)
-
-                            If test Then
-                                Return app
-                            Else
-                                Return FileApplicationClass.LCMS
-                            End If
-                        End If
+                        Return SafeParseClassType(str)
                     End Function)
+    End Function
+
+    Public Shared Function SafeParseClassType(str As String) As FileApplicationClass
+        If str.StringEmpty Then
+            Return FileApplicationClass.LCMS
+        Else
+            Dim app As FileApplicationClass = Nothing
+            Dim test As Boolean = [Enum].TryParse(str, app)
+
+            If test Then
+                Return app
+            Else
+                Return FileApplicationClass.LCMS
+            End If
+        End If
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Private Function safeParseClassType() As FileApplicationClass
+        Return SafeParseClassType(pack)
     End Function
 
     Protected Overridable Sub Dispose(disposing As Boolean)
