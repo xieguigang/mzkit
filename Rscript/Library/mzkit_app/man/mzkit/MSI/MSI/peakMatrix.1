@@ -1,12 +1,36 @@
 .\" man page create by R# package system.
 .TH MSI 1 2000-Jan "peakMatrix" "peakMatrix"
 .SH NAME
-peakMatrix \- 
+peakMatrix \- Extract the ion data matrix
 .SH SYNOPSIS
 \fIpeakMatrix(\fBraw\fR as <generic> mzPack, 
 \fBtopN\fR as integer = 3, 
 \fBmzError\fR as any = "da:0.05", 
+\fBionSet\fR as list = \fB<NULL>\fR, 
 [\fB<Environment>\fR]);\fR
+.SH DESCRIPTION
+.PP
+Extract the ion data matrix
+.PP
+.SH OPTIONS
+.PP
+\fBraw\fB \fR\- -. 
+.PP
+.PP
+\fBtopN\fB \fR\- -. 
+.PP
+.PP
+\fBionSet\fB \fR\- 
+ A tuple list of the ion dataset range, the tuple list object should 
+ be in data format of [unique_id => mz]
+. 
+.PP
+.PP
+\fBmzError\fB \fR\- -. 
+.PP
+.PP
+\fBenv\fB \fR\- -. 
+.PP
 .SH SEE ALSO
 MSI
 .SH FILES

@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>peakMatrix</title>
+    <title>Extract the ion data matrix</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <style rel="stylesheet" type="text/css">
@@ -148,24 +148,45 @@
             </tr>
         </table>
 
-        <h2>peakMatrix</h2>
+        <h2>Extract the ion data matrix</h2>
 
         <h3>Description</h3>
 
-        peakMatrix
+        
 
         <h3>Usage</h3>
 
         <div style="width: 100%; padding-left: 3%; color: black;">
             <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>peakMatrix</strong>(<i>raw</i>,
     <i>topN</i> = 3,
-    <i>mzError</i> = <span style='color: brown;'><strong>"da:0.05"</strong></span>);</code></pre>
+    <i>mzError</i> = <span style='color: brown;'><strong>"da:0.05"</strong></span>,
+    <i>ionSet</i> = <span style='color: blue;'>NULL</span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
 
         <table>
             
+<dt>raw</dt>
+<dd><p><p>-</p></p></dd>
+
+
+<dt>topN</dt>
+<dd><p><p>-</p></p></dd>
+
+
+<dt>ionSet</dt>
+<dd><p><p>A tuple list of the ion dataset range, the tuple list object should <br />
+ be in data format of [unique_id => mz]</p></p></dd>
+
+
+<dt>mzError</dt>
+<dd><p><p>-</p></p></dd>
+
+
+<dt>env</dt>
+<dd><p><p>-</p></p></dd>
+
         </table>
 
 
