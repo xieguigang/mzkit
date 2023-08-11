@@ -1,55 +1,55 @@
 ﻿#Region "Microsoft.VisualBasic::070951941072d44d921539945862df2c, mzkit\src\assembly\Comprehensive\MsImaging\PeakMatrix.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 68
-    '    Code Lines: 59
-    ' Comment Lines: 0
-    '   Blank Lines: 9
-    '     File Size: 2.98 KB
+' Summaries:
 
 
-    '     Module PeakMatrix
-    ' 
-    '         Function: AlignMzPeaks, TopIonsPeakMatrix
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 68
+'    Code Lines: 59
+' Comment Lines: 0
+'   Blank Lines: 9
+'     File Size: 2.98 KB
+
+
+'     Module PeakMatrix
+' 
+'         Function: AlignMzPeaks, TopIonsPeakMatrix
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -57,8 +57,10 @@ Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports Microsoft.VisualBasic.ComponentModel.Algorithm
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Linq
+Imports std = System.Math
 
 Namespace MsImaging
 
@@ -100,6 +102,45 @@ Namespace MsImaging
                     .Properties = vec
                 }
             Next
+        End Function
+
+        <Extension>
+        Public Function SelectivePeakMatrix(raw As mzPack,
+                                            ions As Dictionary(Of String, Double),
+                                            Optional tolerance As String = "da:0.05") As IEnumerable(Of DataSet)
+
+            Dim mzErr As Tolerance = Ms1.Tolerance.ParseScript(tolerance)
+            Dim mzIndex As New BlockSearchFunction(Of KeyValuePair(Of String, Double))(
+                data:=ions,
+                eval:=Function(i) i.Value,
+                tolerance:=0.5,
+                fuzzy:=True
+            )
+            Dim topPeaks = raw.MS _
+                .AsParallel _
+                .Select(Function(scan)
+                            Dim pid As String = $"{scan.meta!x},{scan.meta!y}"
+                            Dim topIons As ms2() = scan _
+                                .GetMs _
+                                .ToArray _
+                                .Centroid(mzErr, New RelativeIntensityCutoff(0)) _
+                                .Where(Function(mzi)
+                                           Dim q = mzIndex.Search(New KeyValuePair(Of String, Double)(Nothing, mzi.mz)).ToArray
+                                           Dim min = q.OrderBy(Function(i) std.Abs(i.Value - mzi.mz)).FirstOrDefault
+
+                                           If min.Value <= 0 Then
+                                               Return False
+                                           Else
+                                               Return std.Abs(min.Value - mzi.mz) <= mzErr.DeltaTolerance
+                                           End If
+                                       End Function) _
+                                .ToArray
+
+                            Return (pid, topIons)
+                        End Function) _
+                .ToArray
+
+            Return topPeaks.AlignMzPeaks(mzErr, 0, Function(i) i.topIons, Function(pixel) pixel.pid)
         End Function
 
         ''' <summary>
