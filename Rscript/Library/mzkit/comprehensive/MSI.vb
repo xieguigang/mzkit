@@ -683,11 +683,11 @@ Module MSI
             ions = ionSet.AsGeneric(Of Double)(env)
 
             Return raw _
-                .SelectivePeakMatrix(ions, err.TryCast(Of Tolerance).GetScript) _
+                .SelectivePeakMatrix(ions, err.TryCast(Of Tolerance)) _
                 .ToArray
         Else
             Return raw _
-                .TopIonsPeakMatrix(topN, err.TryCast(Of Tolerance).GetScript) _
+                .TopIonsPeakMatrix(topN, err.TryCast(Of Tolerance)) _
                 .ToArray
         End If
     End Function
