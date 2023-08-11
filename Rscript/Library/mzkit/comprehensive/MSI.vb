@@ -653,6 +653,14 @@ Module MSI
             .DoCall(AddressOf MSISummary.FromPixels)
     End Function
 
+    ''' <summary>
+    ''' Extract the ion data matrix
+    ''' </summary>
+    ''' <param name="raw"></param>
+    ''' <param name="topN"></param>
+    ''' <param name="mzError"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("peakMatrix")>
     Public Function PeakMatrix(raw As mzPack,
                                Optional topN As Integer = 3,

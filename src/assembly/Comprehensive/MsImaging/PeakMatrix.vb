@@ -102,6 +102,13 @@ Namespace MsImaging
             Next
         End Function
 
+        ''' <summary>
+        ''' Extract the ion peak data as data matrix from a given MSI raw data file
+        ''' </summary>
+        ''' <param name="raw"></param>
+        ''' <param name="topN"></param>
+        ''' <param name="tolerance"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function TopIonsPeakMatrix(raw As mzPack,
                                           Optional topN As Integer = 3,
