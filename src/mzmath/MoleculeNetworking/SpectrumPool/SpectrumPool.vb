@@ -133,9 +133,6 @@ Namespace PoolData
         ''' add the spectrum into current cluster node directly
         ''' </summary>
         ''' <param name="spectrum"></param>
-        ''' <param name="nodeId">
-        ''' the target cluster node id
-        ''' </param>
         Public Shared Sub DirectPush(spectrum As PeakMs2, fs As PoolFs, pool As MetadataProxy, root As PeakMs2)
             Dim score As AlignmentOutput = fs.GetScore(spectrum, root)
             Dim PIScore As Double

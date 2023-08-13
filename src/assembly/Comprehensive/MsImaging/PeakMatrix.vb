@@ -1,68 +1,68 @@
 ﻿#Region "Microsoft.VisualBasic::070951941072d44d921539945862df2c, mzkit\src\assembly\Comprehensive\MsImaging\PeakMatrix.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 68
-    '    Code Lines: 59
-    ' Comment Lines: 0
-    '   Blank Lines: 9
-    '     File Size: 2.98 KB
+' Summaries:
 
 
-    '     Module PeakMatrix
-    ' 
-    '         Function: AlignMzPeaks, TopIonsPeakMatrix
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 68
+'    Code Lines: 59
+' Comment Lines: 0
+'   Blank Lines: 9
+'     File Size: 2.98 KB
+
+
+'     Module PeakMatrix
+' 
+'         Function: AlignMzPeaks, TopIonsPeakMatrix
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Linq
 
 Namespace MsImaging
 
-    Public Module PeakMatrix
+    Public Module PeakMatrix2
 
         <Extension>
         Public Iterator Function AlignMzPeaks(Of T)(raw As T(),
@@ -103,28 +103,18 @@ Namespace MsImaging
         End Function
 
         <Extension>
-        Public Function TopIonsPeakMatrix(raw As mzPack,
-                                          Optional topN As Integer = 3,
-                                          Optional tolerance As String = "da:0.05") As IEnumerable(Of DataSet)
+        Public Function SelectivePeakMatrix(raw As mzPack, ions As Dictionary(Of String, Double), mzErr As Tolerance) As IEnumerable(Of DataSet)
+            Dim m = PeakMatrix.CreateMatrix(raw, mzErr.DeltaTolerance, 0, mzSet:=ions.Values.ToArray)
+            Dim ds As IEnumerable(Of DataSet) = m.ExportSpatial(Of DataSet)
+            Return ds
+        End Function
 
-            Dim mzErr As Tolerance = Ms1.Tolerance.ParseScript(tolerance)
-            Dim topPeaks = raw.MS _
-                .AsParallel _
-                .Select(Function(scan)
-                            Dim pid As String = $"{scan.meta!x},{scan.meta!y}"
-                            Dim topIons As ms2() = scan _
-                                .GetMs _
-                                .ToArray _
-                                .Centroid(mzErr, New RelativeIntensityCutoff(0)) _
-                                .OrderByDescending(Function(i) i.intensity) _
-                                .Take(topN) _
-                                .ToArray
-
-                            Return (pid, topIons)
-                        End Function) _
-                .ToArray
-
-            Return topPeaks.AlignMzPeaks(mzErr, 0, Function(i) i.topIons, Function(pixel) pixel.pid)
+        <Extension>
+        Public Function TopIonsPeakMatrix(raw As mzPack, topN As Integer, mzErr As Tolerance) As IEnumerable(Of DataSet)
+            Dim topIons As Double() = raw.GetMzIndex(mzdiff:=mzErr.DeltaTolerance, topN:=topN)
+            Dim m = PeakMatrix.CreateMatrix(raw, mzErr.DeltaTolerance, 0, mzSet:=topIons)
+            Dim ds As IEnumerable(Of DataSet) = m.ExportSpatial(Of DataSet)
+            Return ds
         End Function
     End Module
 End Namespace

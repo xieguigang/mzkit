@@ -653,21 +653,43 @@ Module MSI
             .DoCall(AddressOf MSISummary.FromPixels)
     End Function
 
+    ''' <summary>
+    ''' Extract the ion data matrix
+    ''' </summary>
+    ''' <param name="raw"></param>
+    ''' <param name="topN"></param>
+    ''' <param name="ionSet">
+    ''' A tuple list of the ion dataset range, the tuple list object should 
+    ''' be in data format of [unique_id => mz]
+    ''' </param>
+    ''' <param name="mzError"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("peakMatrix")>
     Public Function PeakMatrix(raw As mzPack,
                                Optional topN As Integer = 3,
                                Optional mzError As Object = "da:0.05",
+                               Optional ionSet As list = Nothing,
                                Optional env As Environment = Nothing) As Object
 
         Dim err = Math.getTolerance(mzError, env)
+        Dim ions As Dictionary(Of String, Double) = Nothing
 
         If err Like GetType(Message) Then
             Return err.TryCast(Of Message)
         End If
 
-        Return raw _
-            .TopIonsPeakMatrix(topN, err.TryCast(Of Tolerance).GetScript) _
-            .ToArray
+        If Not ionSet Is Nothing Then
+            ions = ionSet.AsGeneric(Of Double)(env)
+
+            Return raw _
+                .SelectivePeakMatrix(ions, err.TryCast(Of Tolerance)) _
+                .ToArray
+        Else
+            Return raw _
+                .TopIonsPeakMatrix(topN, err.TryCast(Of Tolerance)) _
+                .ToArray
+        End If
     End Function
 
     ''' <summary>

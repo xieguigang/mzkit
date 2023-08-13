@@ -17,7 +17,7 @@ MS-Imaging data handler
 + [ions_jointmatrix](MSI/ions_jointmatrix.1) 
 + [scans2D](MSI/scans2D.1) combine each row scan raw data files as the pixels 2D matrix
 + [scanMatrix](MSI/scanMatrix.1) combine each row scan summary vector as the pixels 2D matrix
-+ [peakMatrix](MSI/peakMatrix.1) 
++ [peakMatrix](MSI/peakMatrix.1) Extract the ion data matrix
 + [peakSamples](MSI/peakSamples.1) split the raw MSI 2D data into multiple parts with given resolution parts
 + [pixelIons](MSI/pixelIons.1) get number of ions in each pixel scans
 + [getMatrixIons](MSI/getMatrixIons.1) 

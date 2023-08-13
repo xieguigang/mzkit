@@ -150,6 +150,7 @@
 		<ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj" />
 		<ProjectReference Include="..\..\mzmath\ms2_math-core\mzmath-netcore5.vbproj" />
 		<ProjectReference Include="..\..\mzmath\mz_deco\deconv.NET5.vbproj" />
+		<ProjectReference Include="..\..\mzmath\SingleCells\SingleCells.vbproj" />
 		<ProjectReference Include="..\assembly\assembly-netcore5.vbproj" />
 		<ProjectReference Include="..\mzPack\mzpack.NET5.vbproj" />
 		
