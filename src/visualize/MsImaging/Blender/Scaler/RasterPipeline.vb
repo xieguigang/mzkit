@@ -106,6 +106,10 @@ Namespace Blender.Scaler
             Return pipeline.JoinBy(" -> ")
         End Function
 
+        Public Shared Function Parse(configs As IEnumerable(Of String)) As RasterPipeline
+
+        End Function
+
         Public Iterator Function GetEnumerator() As IEnumerator(Of Scaler) Implements IEnumerable(Of Scaler).GetEnumerator
             For Each scaler As Scaler In pipeline
                 Yield scaler

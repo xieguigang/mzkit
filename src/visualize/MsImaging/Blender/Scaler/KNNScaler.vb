@@ -60,8 +60,8 @@ Namespace Blender.Scaler
 
     Public Class KNNScaler : Inherits Scaler
 
-        ReadOnly k As Integer
-        ReadOnly q As Double
+        Public Property k As Integer
+        Public Property q As Double
 
         Public Sub New(Optional k As Integer = 3, Optional q As Double = 0.65)
             Me.k = k
