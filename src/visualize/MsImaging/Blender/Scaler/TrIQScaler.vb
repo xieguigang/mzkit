@@ -70,8 +70,12 @@ Namespace Blender.Scaler
         <Description("The TrIQ threshold.")>
         Public Property threshold As Double
 
-        Sub New(Optional threshold As Double = 0.999)
+        Sub New(threshold As Double)
             Me.threshold = threshold
+        End Sub
+
+        Sub New()
+            Call Me.New(0.8)
         End Sub
 
         Public Overrides Function DoIntensityScale(into() As Double) As Double()

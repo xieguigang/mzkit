@@ -62,10 +62,14 @@ Namespace Blender.Scaler
 
     Public Class LogScaler : Inherits Scaler
 
-        ReadOnly base As Double = stdNum.E
+        Public Property base As Double = stdNum.E
 
-        Sub New(Optional base As Double = stdNum.E)
+        Sub New(base As Double)
             Me.base = base
+        End Sub
+
+        Sub New()
+            Call Me.New(base:=stdNum.E)
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

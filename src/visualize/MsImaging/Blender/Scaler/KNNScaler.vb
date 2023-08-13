@@ -63,9 +63,13 @@ Namespace Blender.Scaler
         Public Property k As Integer
         Public Property q As Double
 
-        Public Sub New(Optional k As Integer = 3, Optional q As Double = 0.65)
+        Public Sub New(k As Integer, q As Double)
             Me.k = k
             Me.q = q
+        End Sub
+
+        Sub New()
+            Call Me.New(k:=3, q:=0.65)
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

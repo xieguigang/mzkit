@@ -67,8 +67,12 @@ Namespace Blender.Scaler
         <Description("The density cutoff that treate some pixel as the noise pixels.")>
         Public Property q As Double
 
-        Sub New(Optional q As Double = 0.01)
+        Sub New(q As Double)
             Me.q = q
+        End Sub
+
+        Sub New()
+            Call Me.New(q:=0.01)
         End Sub
 
         Public Overrides Function DoIntensityScale(layer As SingleIonLayer) As SingleIonLayer
