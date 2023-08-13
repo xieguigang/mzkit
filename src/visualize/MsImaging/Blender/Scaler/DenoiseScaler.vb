@@ -84,7 +84,7 @@ Namespace Blender.Scaler
         End Function
 
         Public Overrides Function ToScript() As String
-            Return $"denoise(q:={q})"
+            Return $"denoise({q})"
         End Function
     End Class
 End Namespace

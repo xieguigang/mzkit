@@ -74,7 +74,7 @@ Namespace Blender.Scaler
         End Function
 
         Public Overrides Function ToScript() As String
-            Return $"knn_fill(k：={k})"
+            Return $"knn_fill({k},{q})"
         End Function
     End Class
 End Namespace
