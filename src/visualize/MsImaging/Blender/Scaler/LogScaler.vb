@@ -69,7 +69,7 @@ Namespace Blender.Scaler
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Protected Overrides Function DoIntensityScale(into() As Double) As Double()
+        Public Overrides Function DoIntensityScale(into() As Double) As Double()
             Return New Vector(into).Log(base)
         End Function
 

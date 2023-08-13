@@ -74,7 +74,7 @@ Namespace Blender.Scaler
             Me.threshold = threshold
         End Sub
 
-        Protected Overrides Function DoIntensityScale(into() As Double) As Double()
+        Public Overrides Function DoIntensityScale(into() As Double) As Double()
             Dim q As Double = TrIQ.FindThreshold(into, threshold)
             Dim v As New Vector(into)
 
