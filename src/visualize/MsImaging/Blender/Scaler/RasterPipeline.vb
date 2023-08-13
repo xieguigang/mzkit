@@ -107,7 +107,13 @@ Namespace Blender.Scaler
         End Function
 
         Public Shared Function Parse(configs As IEnumerable(Of String)) As RasterPipeline
+            Dim filter As New RasterPipeline
 
+            For Each line As String In configs
+                Call filter.Add(Scaler.Parse(line))
+            Next
+
+            Return filter
         End Function
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of Scaler) Implements IEnumerable(Of Scaler).GetEnumerator

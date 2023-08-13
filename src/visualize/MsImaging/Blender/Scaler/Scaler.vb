@@ -108,6 +108,26 @@ Namespace Blender.Scaler
             Return New RasterPipeline From {Me, [next]}
         End Function
 
+        Public Shared Function Parse(line As String) As Scaler
+            line = Strings.Trim(line).ToLower
+
+            Dim config = line.GetTagValue("(", trim:=True)
+            Dim pars = config.Value _
+                .Trim(")"c) _
+                .Split(","c) _
+                .Select(AddressOf Val) _
+                .ToArray
+
+            Select Case config.Name
+                Case "soften" : Return New SoftenScaler
+                Case "denoise" : Return New DenoiseScaler(pars.ElementAtOrDefault(0, 0.01))
+                Case "triq" : Return New TrIQScaler(pars.ElementAtOrDefault(0, 0.65))
+                Case "knn_fill" : Return New KNNScaler(pars.ElementAtOrDefault(0, 3), pars.ElementAtOrDefault(1, 0.65))
+                Case Else
+                    Throw New NotImplementedException(config.Name)
+            End Select
+        End Function
+
     End Class
 
 End Namespace
