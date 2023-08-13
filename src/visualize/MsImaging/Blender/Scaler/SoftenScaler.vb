@@ -126,7 +126,7 @@ Namespace Blender.Scaler
             }
         End Function
 
-        Public Overrides Function ToString() As String
+        Public Overrides Function ToScript() As String
             Return "soften()"
         End Function
     End Class

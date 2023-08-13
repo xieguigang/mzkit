@@ -99,6 +99,10 @@ Namespace Blender.Scaler
         End Function
 
         Public Overrides Function ToString() As String
+            Return ToScript()
+        End Function
+
+        Public Function ToScript() As String Implements Scaler.LayerScaler.ToScript
             Return pipeline.JoinBy(" -> ")
         End Function
 

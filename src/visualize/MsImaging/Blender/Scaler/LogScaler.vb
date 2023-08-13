@@ -73,7 +73,7 @@ Namespace Blender.Scaler
             Return New Vector(into).Log(base)
         End Function
 
-        Public Overrides Function ToString() As String
+        Public Overrides Function ToScript() As String
             Return $"log({base.ToString("F4")})"
         End Function
     End Class
