@@ -100,7 +100,7 @@ Namespace Blender.Scaler
             Return ToScript()
         End Function
 
-        Protected Overridable Function DoIntensityScale(into As Double()) As Double()
+        Public Overridable Function DoIntensityScale(into As Double()) As Double()
             Throw New NotImplementedException
         End Function
 
