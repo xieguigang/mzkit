@@ -64,6 +64,7 @@ Namespace Blender.Scaler
 
         Public Interface LayerScaler
             Function DoIntensityScale(layer As SingleIonLayer) As SingleIonLayer
+            Function ToScript() As String
         End Interface
 
         Public Overridable Function DoIntensityScale(layer As SingleIonLayer) As SingleIonLayer Implements LayerScaler.DoIntensityScale
@@ -91,6 +92,12 @@ Namespace Blender.Scaler
                 .IonMz = layer.IonMz,
                 .MSILayer = pixels
             }
+        End Function
+
+        Public MustOverride Function ToScript() As String Implements LayerScaler.ToScript
+
+        Public Overrides Function ToString() As String
+            Return ToScript()
         End Function
 
         Protected Overridable Function DoIntensityScale(into As Double()) As Double()
