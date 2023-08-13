@@ -81,6 +81,14 @@ Namespace Blender.Scaler
             Return Me
         End Function
 
+        Public Function DoIntensityScale(into As Double()) As Double()
+            For Each shader As Scaler In pipeline
+                into = shader.DoIntensityScale(into)
+            Next
+
+            Return into
+        End Function
+
         Public Function DoIntensityScale(pixels As IEnumerable(Of PixelData), dimSize As Size) As PixelData()
             Return DoIntensityScale(New SingleIonLayer With {.DimensionSize = dimSize, .IonMz = -1, .MSILayer = pixels.ToArray})
         End Function

@@ -101,7 +101,7 @@ Namespace Blender.Scaler
         End Function
 
         Public Overridable Function DoIntensityScale(into As Double()) As Double()
-            Throw New NotImplementedException
+            Return into
         End Function
 
         Public Function [Then]([next] As Scaler) As RasterPipeline
