@@ -152,6 +152,9 @@ Public Module mzStreamWriter
         Return scan_id.Replace("\", "/").Replace("/", "_")
     End Function
 
+    ''' <summary>
+    ''' the attribute tag name for indicate the sample source in ms1 scan
+    ''' </summary>
     Public Const SampleMetaName As String = "sample"
 
     <Extension>

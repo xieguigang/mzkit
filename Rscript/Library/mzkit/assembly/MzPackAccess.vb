@@ -87,11 +87,33 @@ Module MzPackAccess
     ''' <param name="mzpack"></param>
     ''' <returns></returns>
     <ExportAPI("getSampleTags")>
-    Public Function getSampleTags(mzpack As String) As String()
-        Dim file As New StreamPack(mzpack)
-        Dim data As String() = mzStream.GetSampleTags(file)
+    <RApiReturn(TypeCodes.string)>
+    Public Function getSampleTags(mzpack As Object, Optional env As Environment = Nothing) As Object
+        If mzpack Is Nothing Then
+            Return Nothing
+        End If
 
-        Return data
+        If TypeOf mzpack Is mzPack Then
+            Return DirectCast(mzpack, mzPack).MS _
+                .Select(Function(ms1) ms1.meta.TryGetValue(mzStreamWriter.SampleMetaName)) _
+                .Where(Function(si) Not si.StringEmpty) _
+                .Distinct _
+                .ToArray
+        End If
+
+        If TypeOf mzpack Is String Then
+            Dim file As New StreamPack(DirectCast(mzpack, String))
+            Dim data As String() = mzStream.GetSampleTags(file)
+
+            Return data
+        ElseIf TypeOf mzpack Is Stream Then
+            Dim file As New StreamPack(DirectCast(mzpack, Stream))
+            Dim data As String() = mzStream.GetSampleTags(file)
+
+            Return data
+        Else
+            Return Message.InCompatibleType(GetType(Stream), mzpack.GetType, env)
+        End If
     End Function
 
     ''' <summary>
