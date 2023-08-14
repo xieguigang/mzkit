@@ -29,8 +29,13 @@
         code {
             color: rgb(194, 42, 42);
             background: inherit;
-            font-style:italic;
+            font-style: italic;
             font-weight: bold;
+        }
+
+        pre code {
+            color: rgb(54, 54, 54);
+            font-style: normal;
         }
 
         body {
@@ -160,7 +165,7 @@
             <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>plotNetworkClusterHistogram</strong>(<i>mn</i>,
     <i>size</i> = <span style='color: brown;'><strong>"2700,2000"</strong></span>,
     <i>padding</i> = <span style='color: brown;'><strong>"padding:100px 300px 200px 200px;"</strong></span>,
-    <i>dpi</i> = 300);</code></pre>
+    <i>dpi</i> = <span style='color: green;'>300</span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
@@ -197,6 +202,10 @@
         <h3>Value</h3>
 
         this function returns data object of type <i>any</i> kind.
+
+        <h3 style="display: none;">Examples</h3>
+
+        
 
         <hr />
         <div style="text-align: center;">[Package <em>visual</em> version 1.0.0.0 <a

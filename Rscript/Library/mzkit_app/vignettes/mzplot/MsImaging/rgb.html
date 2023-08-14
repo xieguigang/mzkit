@@ -29,8 +29,13 @@
         code {
             color: rgb(194, 42, 42);
             background: inherit;
-            font-style:italic;
+            font-style: italic;
             font-weight: bold;
+        }
+
+        pre code {
+            color: rgb(54, 54, 54);
+            font-style: normal;
         }
 
         body {
@@ -160,8 +165,8 @@
             <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>rgb</strong>(<i>viewer</i>, <i>r</i>, <i>g</i>, <i>b</i>,
     <i>background</i> = <span style='color: #000000;'><strong>"black"</strong></span>,
     <i>tolerance</i> = <span style='color: brown;'><strong>"da:0.1"</strong></span>,
-    <i>maxCut</i> = 0.75,
-    <i>TrIQ</i> = <span style='color: blue;'>TRUE</span>,
+    <i>maxCut</i> = <span style='color: green;'>0.75</span>,
+    <i>TrIQ</i> = <span style='color: blue !important;'>TRUE</span>,
     <i>pixelSize</i> = [5,5]);</code></pre>
         </div>
 
@@ -203,6 +208,10 @@
         <h3>Value</h3>
 
         this function returns data object of type <a href="/clr/System/Drawing/Bitmap.html">Bitmap</a>.
+
+        <h3 style="display: none;">Examples</h3>
+
+        
 
         <hr />
         <div style="text-align: center;">[Package <em>MsImaging</em> version 1.0.0.0 <a

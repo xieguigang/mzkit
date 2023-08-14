@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>show all ms1 scan id in a mzpack data object or</title>
+    <title>Get object list inside the MS packdata</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <style rel="stylesheet" type="text/css">
@@ -29,8 +29,13 @@
         code {
             color: rgb(194, 42, 42);
             background: inherit;
-            font-style:italic;
+            font-style: italic;
             font-weight: bold;
+        }
+
+        pre code {
+            color: rgb(54, 54, 54);
+            font-style: normal;
         }
 
         body {
@@ -148,11 +153,11 @@
             </tr>
         </table>
 
-        <h2>show all ms1 scan id in a mzpack data object or</h2>
+        <h2>Get object list inside the MS packdata</h2>
 
         <h3>Description</h3>
 
-        <p>show all raw data file names in a mzwork data <br /> package.</p>
+        
 
         <h3>Usage</h3>
 
@@ -174,14 +179,23 @@
         </table>
 
 
-        <h3 style="display: none;">Details</h3>
+        <h3 style="display: block;">Details</h3>
 
-        
+        <p>show all ms1 scan id in a mzpack data object or <br />
+ show all raw data file names in a mzwork data <br />
+ package.</p>
 
 
         <h3>Value</h3>
 
         this function returns data object of type string.
+
+        <h3 style="display: block;">Examples</h3>
+
+        <pre><code>let rawdata = open.mzpack(file = "./rawdata.mzPack");
+ let scan_id = mzPack::ls(mzpack = rawdata);
+ 
+ print(scan_id);</code></pre>
 
         <hr />
         <div style="text-align: center;">[Package <em>mzPack</em> version 1.0.0.0 <a

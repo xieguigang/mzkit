@@ -29,8 +29,13 @@
         code {
             color: rgb(194, 42, 42);
             background: inherit;
-            font-style:italic;
+            font-style: italic;
             font-weight: bold;
+        }
+
+        pre code {
+            color: rgb(54, 54, 54);
+            font-style: normal;
         }
 
         body {
@@ -158,8 +163,8 @@
 
         <div style="width: 100%; padding-left: 3%; color: black;">
             <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>get_testSample</strong>(<i>packlib</i>,
-    <i>n</i> = 30,
-    <i>rtmax</i> = 840,
+    <i>n</i> = <span style='color: green;'>30</span>,
+    <i>rtmax</i> = <span style='color: green;'>840</span>,
     <i>source.name</i> = <span style='color: brown;'><strong>"get_testSample"</strong></span>);</code></pre>
         </div>
 
@@ -189,6 +194,10 @@
         <h3>Value</h3>
 
         this function returns data object of type list. the list data also has some specificied data fields: <code>peaktable, rawdata</code>.
+
+        <h3 style="display: none;">Examples</h3>
+
+        
 
         <hr />
         <div style="text-align: center;">[Package <em>spectrumTree</em> version 1.0.0.0 <a

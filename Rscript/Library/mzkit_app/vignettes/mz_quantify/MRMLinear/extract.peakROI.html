@@ -29,8 +29,13 @@
         code {
             color: rgb(194, 42, 42);
             background: inherit;
-            font-style:italic;
+            font-style: italic;
             font-weight: bold;
+        }
+
+        pre code {
+            color: rgb(54, 54, 54);
+            font-style: normal;
         }
 
         body {
@@ -159,17 +164,17 @@
         <div style="width: 100%; padding-left: 3%; color: black;">
             <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>extract.peakROI</strong>(<i>mzML</i>, <i>ionpairs</i>,
     <i>tolerance</i> = <span style='color: brown;'><strong>"ppm:20"</strong></span>,
-    <i>timeWindowSize</i> = 5,
-    <i>baselineQuantile</i> = 0.65,
-    <i>integratorTicks</i> = 5000,
+    <i>timeWindowSize</i> = <span style='color: green;'>5</span>,
+    <i>baselineQuantile</i> = <span style='color: green;'>0.65</span>,
+    <i>integratorTicks</i> = <span style='color: green;'>5000</span>,
     <i>peakAreaMethod</i> = NetPeakSum,
-    <i>angleThreshold</i> = 5,
+    <i>angleThreshold</i> = <span style='color: green;'>5</span>,
     <i>peakwidth</i> = <span style='color: brown;'><strong>"8,30"</strong></span>,
-    <i>rtshift</i> = <span style='color: blue;'>NULL</span>,
-    <i>bsplineDensity</i> = 100,
-    <i>bsplineDegree</i> = 2,
-    <i>sn.threshold</i> = 3,
-    <i>TPAFactors</i> = <span style='color: blue;'>NULL</span>);</code></pre>
+    <i>rtshift</i> = <span style='color: blue !important;'>NULL</span>,
+    <i>bsplineDensity</i> = <span style='color: green;'>100</span>,
+    <i>bsplineDegree</i> = <span style='color: green;'>2</span>,
+    <i>sn.threshold</i> = <span style='color: green;'>3</span>,
+    <i>TPAFactors</i> = <span style='color: blue !important;'>NULL</span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
@@ -187,6 +192,10 @@
         <h3>Value</h3>
 
         this function returns data object of type <a href="/clr/BioNovoGene/Analytical/MassSpectrometry/Math/LinearQuantitative/IonTPA.html">IonTPA</a>.
+
+        <h3 style="display: none;">Examples</h3>
+
+        
 
         <hr />
         <div style="text-align: center;">[Package <em>MRMLinear</em> version 1.0.0.0 <a

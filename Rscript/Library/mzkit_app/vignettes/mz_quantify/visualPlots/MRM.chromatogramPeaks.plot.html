@@ -29,8 +29,13 @@
         code {
             color: rgb(194, 42, 42);
             background: inherit;
-            font-style:italic;
+            font-style: italic;
             font-weight: bold;
+        }
+
+        pre code {
+            color: rgb(54, 54, 54);
+            font-style: normal;
         }
 
         body {
@@ -161,11 +166,11 @@
     <i>title</i> = <span style='color: brown;'><strong>"MRM Chromatogram Peak Plot"</strong></span>,
     <i>size</i> = <span style='color: brown;'><strong>"2200,1600"</strong></span>,
     <i>padding</i> = <span style='color: brown;'><strong>"padding: 200px 80px 150px 200px"</strong></span>,
-    <i>fill</i> = <span style='color: blue;'>TRUE</span>,
+    <i>fill</i> = <span style='color: blue !important;'>TRUE</span>,
     <i>gridFill</i> = <span style='color: #FAFAFA;'><strong>"rgb(250,250,250)"</strong></span>,
     <i>lineStyle</i> = <span style='color: brown;'><strong>"stroke: black; stroke-width: 2px; stroke-dash: solid;"</strong></span>,
-    <i>relativeTimeScale</i> = <span style='color: blue;'>NULL</span>,
-    <i>parallel</i> = <span style='color: blue;'>FALSE</span>);</code></pre>
+    <i>relativeTimeScale</i> = <span style='color: blue !important;'>NULL</span>,
+    <i>parallel</i> = <span style='color: blue !important;'>FALSE</span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
@@ -183,6 +188,10 @@
         <h3>Value</h3>
 
         this function returns data object of type <a href="/clr/Microsoft/VisualBasic/Imaging/Driver/GraphicsData.html">GraphicsData</a>.
+
+        <h3 style="display: none;">Examples</h3>
+
+        
 
         <hr />
         <div style="text-align: center;">[Package <em>visualPlots</em> version 1.0.0.0 <a
