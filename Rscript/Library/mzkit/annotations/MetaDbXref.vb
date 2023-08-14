@@ -258,6 +258,24 @@ Module MetaDbXref
         }
     End Function
 
+    ''' <summary>
+    ''' Construct a basic metabolite annotation data collection
+    ''' </summary>
+    ''' <param name="id">the unique reference id of the metabolite collection</param>
+    ''' <param name="name">common names</param>
+    ''' <param name="formula">metabolite molecular formula data collection</param>
+    ''' <param name="env"></param>
+    ''' <remarks>
+    ''' the exact mass will be evaluated based on the input <paramref name="formula"/> data.
+    ''' </remarks>
+    ''' <returns></returns>
+    ''' <example>
+    ''' annotationStream(
+    '''     id = ["met1","met2","met3"],
+    '''     name = ["name1", "name2", "name3"],
+    '''     formula = ["CH3OH","CH3OOOOOH","CH4NH4"]
+    ''' );
+    ''' </example>
     <ExportAPI("annotationStream")>
     <RApiReturn(GetType(MetaboliteAnnotation))>
     Public Function AnnotationStream(id As String(),
@@ -281,6 +299,52 @@ Module MetaDbXref
         End If
     End Function
 
+    ''' <summary>
+    ''' Create the metabolite annotation data collection based on a given set of the compound annotation data
+    ''' </summary>
+    ''' <param name="compounds"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("annotationStream.compounds")>
+    <RApiReturn(GetType(MetaboliteAnnotation))>
+    Public Function AnnotationStream(<RRawVectorArgument> compounds As Object, Optional env As Environment = Nothing) As Object
+        Dim metabolites As pipeline = pipeline.TryCreatePipeline(Of LipidMaps.MetaData)(compounds, env, suppress:=True)
+
+        If Not metabolites.isError Then
+            Return metabolites.populates(Of LipidMaps.MetaData)(env) _
+                .Select(Function(a) a.GetAnnotation) _
+                .ToArray
+        End If
+
+        metabolites = pipeline.TryCreatePipeline(Of Compound)(compounds, env, suppress:=True)
+
+        If Not metabolites.isError Then
+            Return metabolites.populates(Of Compound)(env) _
+                .Select(Function(c)
+                            Return New MetaboliteAnnotation With {
+                                .CommonName = c.commonNames.FirstOrDefault([default]:=c.entry),
+                                .ExactMass = FormulaScanner.EvaluateExactMass(c.formula),
+                                .Formula = c.formula,
+                                .Id = c.entry
+                            }
+                        End Function) _
+                .ToArray
+        End If
+
+        metabolites = pipeline.TryCreatePipeline(Of MetaboliteAnnotation)(compounds, env, suppress:=True)
+
+        If Not metabolites.isError Then
+            Return metabolites.populates(Of MetaboliteAnnotation)(env).ToArray
+        End If
+
+        Return metabolites.getError
+    End Function
+
+    ''' <summary>
+    ''' parse the precursor type calculator
+    ''' </summary>
+    ''' <param name="ion">A precursor type string, example as ``[M+H]``.</param>
+    ''' <returns></returns>
     <ExportAPI("precursorIon")>
     Public Function ParsePrecursorIon(ion As String) As MzCalculator
         Return ParseMzCalculator(ion, ion.Last)
