@@ -62,18 +62,22 @@ Namespace Blender.Scaler
 
     Public Class LogScaler : Inherits Scaler
 
-        ReadOnly base As Double = stdNum.E
+        Public Property base As Double = stdNum.E
 
-        Sub New(Optional base As Double = stdNum.E)
+        Sub New(base As Double)
             Me.base = base
         End Sub
 
+        Sub New()
+            Call Me.New(base:=stdNum.E)
+        End Sub
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Protected Overrides Function DoIntensityScale(into() As Double) As Double()
+        Public Overrides Function DoIntensityScale(into() As Double) As Double()
             Return New Vector(into).Log(base)
         End Function
 
-        Public Overrides Function ToString() As String
+        Public Overrides Function ToScript() As String
             Return $"log({base.ToString("F4")})"
         End Function
     End Class

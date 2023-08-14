@@ -64,6 +64,7 @@ Namespace Blender.Scaler
 
         Public Interface LayerScaler
             Function DoIntensityScale(layer As SingleIonLayer) As SingleIonLayer
+            Function ToScript() As String
         End Interface
 
         Public Overridable Function DoIntensityScale(layer As SingleIonLayer) As SingleIonLayer Implements LayerScaler.DoIntensityScale
@@ -93,12 +94,39 @@ Namespace Blender.Scaler
             }
         End Function
 
-        Protected Overridable Function DoIntensityScale(into As Double()) As Double()
-            Throw New NotImplementedException
+        Public MustOverride Function ToScript() As String Implements LayerScaler.ToScript
+
+        Public Overrides Function ToString() As String
+            Return ToScript()
+        End Function
+
+        Public Overridable Function DoIntensityScale(into As Double()) As Double()
+            Return into
         End Function
 
         Public Function [Then]([next] As Scaler) As RasterPipeline
             Return New RasterPipeline From {Me, [next]}
+        End Function
+
+        Public Shared Function Parse(line As String) As Scaler
+            line = Strings.Trim(line).ToLower
+
+            Dim config = line.GetTagValue("(", trim:=True)
+            Dim pars = config.Value _
+                .Trim(")"c) _
+                .Split(","c) _
+                .Select(AddressOf Val) _
+                .ToArray
+
+            Select Case config.Name
+                Case "soften" : Return New SoftenScaler
+                Case "denoise" : Return New DenoiseScaler(pars.ElementAtOrDefault(0, 0.01))
+                Case "triq" : Return New TrIQScaler(pars.ElementAtOrDefault(0, 0.65))
+                Case "knn_fill" : Return New KNNScaler(pars.ElementAtOrDefault(0, 3), pars.ElementAtOrDefault(1, 0.65))
+                Case "log" : Return New LogScaler(pars.ElementAtOrDefault(0, System.Math.E))
+                Case Else
+                    Throw New NotImplementedException(config.Name)
+            End Select
         End Function
 
     End Class
