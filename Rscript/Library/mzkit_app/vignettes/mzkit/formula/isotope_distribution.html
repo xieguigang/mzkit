@@ -29,8 +29,13 @@
         code {
             color: rgb(194, 42, 42);
             background: inherit;
-            font-style:italic;
+            font-style: italic;
             font-weight: bold;
+        }
+
+        pre code {
+            color: rgb(54, 54, 54);
+            font-style: normal;
         }
 
         body {
@@ -158,11 +163,11 @@
 
         <div style="width: 100%; padding-left: 3%; color: black;">
             <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>isotope_distribution</strong>(<i>formula</i>,
-    <i>prob.threshold</i> = 0.001,
-    <i>fwhm</i> = 0.1,
-    <i>pad.left</i> = 3,
-    <i>pad.right</i> = 3,
-    <i>interpolate.grid</i> = 0.005);</code></pre>
+    <i>prob.threshold</i> = <span style='color: green;'>0.001</span>,
+    <i>fwhm</i> = <span style='color: green;'>0.1</span>,
+    <i>pad.left</i> = <span style='color: green;'>3</span>,
+    <i>pad.right</i> = <span style='color: green;'>3</span>,
+    <i>interpolate.grid</i> = <span style='color: green;'>0.005</span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
@@ -180,6 +185,10 @@
         <h3>Value</h3>
 
         this function returns data object of type <a href="/clr/BioNovoGene/BioDeep/Chemoinformatics/Formula/IsotopicPatterns/IsotopeDistribution.html">IsotopeDistribution</a>.
+
+        <h3 style="display: none;">Examples</h3>
+
+        
 
         <hr />
         <div style="text-align: center;">[Package <em>formula</em> version 1.0.0.0 <a

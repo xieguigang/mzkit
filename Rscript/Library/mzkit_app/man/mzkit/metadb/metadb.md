@@ -6,8 +6,9 @@ Metabolite annotation database search engine
 + [queryByMass](metadb/queryByMass.1) 
 + [verify_cas_number](metadb/verify_cas_number.1) verify that the given cas registry number is correct or not
 + [parseLipidName](metadb/parseLipidName.1) 
-+ [annotationStream](metadb/annotationStream.1) 
-+ [precursorIon](metadb/precursorIon.1) 
++ [annotationStream](metadb/annotationStream.1) Construct a basic metabolite annotation data collection
++ [annotationStream.compounds](metadb/annotationStream.compounds.1) Construct a basic metabolite annotation data collection
++ [precursorIon](metadb/precursorIon.1) parse the precursor type calculator
 + [ms1_handler](metadb/ms1_handler.1) a generic function for handle ms1 search
 + [ms1_search](metadb/ms1_search.1) get duplictaed raw annotation results.
 + [searchMz](metadb/searchMz.1) Found the best matched mz value with the target **`exactMass`**

@@ -29,8 +29,13 @@
         code {
             color: rgb(194, 42, 42);
             background: inherit;
-            font-style:italic;
+            font-style: italic;
             font-weight: bold;
+        }
+
+        pre code {
+            color: rgb(54, 54, 54);
+            font-style: normal;
         }
 
         body {
@@ -160,17 +165,17 @@
             <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>wiff.scans</strong>(<i>wiffConverts</i>, <i>ions</i>,
     <i>peakAreaMethod</i> = NetPeakSum,
     <i>tolerance</i> = <span style='color: brown;'><strong>"ppm:20"</strong></span>,
-    <i>angleThreshold</i> = 5,
-    <i>baselineQuantile</i> = 0.65,
-    <i>removesWiffName</i> = <span style='color: blue;'>TRUE</span>,
-    <i>timeWindowSize</i> = 5,
-    <i>rtshifts</i> = <span style='color: blue;'>NULL</span>,
-    <i>bsplineDensity</i> = 100,
-    <i>bsplineDegree</i> = 2,
-    <i>resolution</i> = 3000,
+    <i>angleThreshold</i> = <span style='color: green;'>5</span>,
+    <i>baselineQuantile</i> = <span style='color: green;'>0.65</span>,
+    <i>removesWiffName</i> = <span style='color: blue !important;'>TRUE</span>,
+    <i>timeWindowSize</i> = <span style='color: green;'>5</span>,
+    <i>rtshifts</i> = <span style='color: blue !important;'>NULL</span>,
+    <i>bsplineDensity</i> = <span style='color: green;'>100</span>,
+    <i>bsplineDegree</i> = <span style='color: green;'>2</span>,
+    <i>resolution</i> = <span style='color: green;'>3000</span>,
     <i>peakwidth</i> = <span style='color: brown;'><strong>"8,30"</strong></span>,
-    <i>TPAFactors</i> = <span style='color: blue;'>NULL</span>,
-    <i>sn.threshold</i> = 3);</code></pre>
+    <i>TPAFactors</i> = <span style='color: blue !important;'>NULL</span>,
+    <i>sn.threshold</i> = <span style='color: green;'>3</span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
@@ -188,6 +193,10 @@
         <h3>Value</h3>
 
         this function returns data object of type <a href="/clr/Microsoft/VisualBasic/Data/csv/IO/DataSet.html">DataSet</a>.
+
+        <h3 style="display: none;">Examples</h3>
+
+        
 
         <hr />
         <div style="text-align: center;">[Package <em>MRMLinear</em> version 1.0.0.0 <a

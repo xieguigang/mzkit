@@ -29,8 +29,13 @@
         code {
             color: rgb(194, 42, 42);
             background: inherit;
-            font-style:italic;
+            font-style: italic;
             font-weight: bold;
+        }
+
+        pre code {
+            color: rgb(54, 54, 54);
+            font-style: normal;
         }
 
         body {
@@ -158,13 +163,13 @@
 
         <div style="width: 100%; padding-left: 3%; color: black;">
             <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>mass_spectrum.plot</strong>(<i>spectrum</i>,
-    <i>alignment</i> = <span style='color: blue;'>NULL</span>,
+    <i>alignment</i> = <span style='color: blue !important;'>NULL</span>,
     <i>title</i> = <span style='color: brown;'><strong>"Mass Spectrum Plot"</strong></span>,
-    <i>showLegend</i> = <span style='color: blue;'>TRUE</span>,
-    <i>showGrid</i> = <span style='color: blue;'>TRUE</span>,
+    <i>showLegend</i> = <span style='color: blue !important;'>TRUE</span>,
+    <i>showGrid</i> = <span style='color: blue !important;'>TRUE</span>,
     <i>tagXFormat</i> = <span style='color: brown;'><strong>"F2"</strong></span>,
-    <i>intoCutoff</i> = 0.3,
-    <i>bar.width</i> = 8,
+    <i>intoCutoff</i> = <span style='color: green;'>0.3</span>,
+    <i>bar.width</i> = <span style='color: green;'>8</span>,
     <i>legend.layout</i> = ["top-right","title","bottom"]);</code></pre>
         </div>
 
@@ -205,6 +210,10 @@
         <h3>Value</h3>
 
         this function returns data object of type <a href="/clr/Microsoft/VisualBasic/Imaging/Driver/GraphicsData.html">GraphicsData</a>.
+
+        <h3 style="display: none;">Examples</h3>
+
+        
 
         <hr />
         <div style="text-align: center;">[Package <em>visual</em> version 1.0.0.0 <a

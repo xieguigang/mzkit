@@ -99,6 +99,17 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader
 <Package("mzweb")>
 Module MzWeb
 
+    ''' <summary>
+    ''' load the xcms cache dataset
+    ''' </summary>
+    ''' <param name="file"></param>
+    ''' <param name="env"></param>
+    ''' <returns>
+    ''' this function get a set of the spectrum peak ms2 data from the given R dataset
+    ''' </returns>
+    ''' <example>
+    ''' loadXcmsRData(file = "./data_sample.RData");
+    ''' </example>
     <ExportAPI("loadXcmsRData")>
     <RApiReturn(GetType(PeakMs2))>
     Public Function loadXcmsRData(<RRawVectorArgument> file As Object, Optional env As Environment = Nothing) As Object
@@ -115,7 +126,7 @@ Module MzWeb
     End Function
 
     ''' <summary>
-    ''' 
+    ''' open a mzpack data file lazy reader
     ''' </summary>
     ''' <param name="file">
     ''' the file path to the mzpack data file
@@ -126,6 +137,17 @@ Module MzWeb
         Return MzPackAccess.open_mzpack(file, env)
     End Function
 
+    ''' <summary>
+    ''' Get TIC from the mzpack layer reader
+    ''' </summary>
+    ''' <param name="mzpack"></param>
+    ''' <returns></returns>
+    ''' <example>
+    ''' let rawdata = mzweb::open(file = "./LCMS-rawdata.mzPack");
+    ''' let tic = mzweb::TIC(rawdata);
+    ''' 
+    ''' plot(tic);
+    ''' </example>
     <ExportAPI("TIC")>
     Public Function TIC(mzpack As IMzPackReader) As ChromatogramTick()
         Dim keys As String() = mzpack.EnumerateIndex.ToArray
@@ -153,7 +175,14 @@ Module MzWeb
     ''' the scan data object that reads from the mzXML/mzML/mzPack raw data file
     ''' </param>
     ''' <param name="env"></param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' the chromatogram data wrapper of TIC/BPC
+    ''' </returns>
+    ''' <example>
+    ''' let rawdata = mzweb::open.mzpack(file = "./lcms-rawdata.mzPack");
+    ''' let chromatogram = rawdata |> load.chromatogram();
+    ''' 
+    ''' </example>
     <ExportAPI("load.chromatogram")>
     <RApiReturn(GetType(Chromatogram))>
     Public Function GetChromatogram(scans As Object, Optional env As Environment = Nothing) As Object
@@ -247,7 +276,17 @@ Module MzWeb
     ''' <param name="scans"></param>
     ''' <param name="file"></param>
     ''' <param name="env"></param>
+    ''' <remarks>
+    ''' this method used for create ascii text package data for the biodeep
+    ''' web application js code to read the ms rawdata.
+    ''' </remarks>
     ''' <returns></returns>
+    ''' <example>
+    ''' let rawdata = open.mzpack(file = "./rawdata.mzPack");
+    ''' let ms1 = [rawdata]::MS;
+    ''' 
+    ''' write.text_cache(ms1, file = "./msdata.txt");
+    ''' </example>
     <ExportAPI("write.text_cache")>
     Public Function writeStream(scans As pipeline,
                                 Optional file As Object = Nothing,
@@ -314,6 +353,12 @@ Module MzWeb
         End Using
     End Function
 
+    ''' <summary>
+    ''' Write the ms2 spectrum collection into binary cache file
+    ''' </summary>
+    ''' <param name="ions"></param>
+    ''' <param name="file"></param>
+    ''' <returns></returns>
     <ExportAPI("write.cache")>
     Public Function writeCache(ions As PeakMs2(), file As String) As Boolean
         Using buffer As New BinaryDataWriter(file.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False)) With {
@@ -494,6 +539,11 @@ Module MzWeb
     ''' </summary>
     ''' <param name="mzpack"></param>
     ''' <returns></returns>
+    ''' <example>
+    ''' let rawdata = open.mzpack(file = "./rawdata.mzPack");
+    ''' let ms1 = rawdata |> ms1_scans();
+    ''' 
+    ''' </example>
     <ExportAPI("ms1_scans")>
     Public Function Ms1ScanPoints(mzpack As mzPack) As ms1_scan()
         Return mzpack.GetAllScanMs1.ToArray

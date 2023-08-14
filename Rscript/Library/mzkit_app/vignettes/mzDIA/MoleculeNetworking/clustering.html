@@ -29,8 +29,13 @@
         code {
             color: rgb(194, 42, 42);
             background: inherit;
-            font-style:italic;
+            font-style: italic;
             font-weight: bold;
+        }
+
+        pre code {
+            color: rgb(54, 54, 54);
+            font-style: normal;
         }
 
         body {
@@ -160,9 +165,9 @@
             <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>clustering</strong>(<i>ions</i>,
     <i>mzdiff1</i> = <span style='color: brown;'><strong>"da:0.1"</strong></span>,
     <i>mzdiff2</i> = <span style='color: brown;'><strong>"da:0.3"</strong></span>,
-    <i>intocutoff</i> = 0.05,
-    <i>tree.identical</i> = 0.8,
-    <i>tree.right</i> = 0.01);</code></pre>
+    <i>intocutoff</i> = <span style='color: green;'>0.05</span>,
+    <i>tree.identical</i> = <span style='color: green;'>0.8</span>,
+    <i>tree.right</i> = <span style='color: green;'>0.01</span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
@@ -216,6 +221,10 @@
         <h3>Value</h3>
 
         this function returns data object of type list. the list data also has some specificied data fields: <code>graph, clusters, matrix, cluster.raw</code>.
+
+        <h3 style="display: none;">Examples</h3>
+
+        
 
         <hr />
         <div style="text-align: center;">[Package <em>MoleculeNetworking</em> version 1.0.0.0 <a

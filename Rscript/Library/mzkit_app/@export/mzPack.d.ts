@@ -25,13 +25,16 @@ declare namespace mzPack {
     * 
     * 
      * @param mzpack -
+     * @param env 
+     * + default value Is ``null``.
    */
-   function getSampleTags(mzpack: string): string;
+   function getSampleTags(mzpack: any, env?: object): string;
    /**
-    * show all ms1 scan id in a mzpack data object or 
-    *  show all raw data file names in a mzwork data 
-    *  package.
+    * Get object list inside the MS packdata
     * 
+    * > show all ms1 scan id in a mzpack data object or 
+    * >  show all raw data file names in a mzwork data 
+    * >  package.
     * 
      * @param mzpack -
      * @param env -

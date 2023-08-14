@@ -63,6 +63,7 @@
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.Annotations
 Imports BioNovoGene.BioDeep.Chemoinformatics
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports BioNovoGene.BioDeep.Chemoinformatics.SDF
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Data.IO.MessagePack.Serialization
@@ -74,6 +75,10 @@ Namespace LipidMaps
     ''' </summary>
     Public Class MetaData : Implements IExactMassProvider, IReadOnlyId, ICompoundNameProvider, IFormulaProvider
 
+        ''' <summary>
+        ''' The lipidmaps unique reference id
+        ''' </summary>
+        ''' <returns></returns>
         <MessagePackMember(0, NilImplication:=NilImplication.MemberDefault)> Public Property LM_ID As String Implements IReadOnlyId.Identity
         <MessagePackMember(1, NilImplication:=NilImplication.MemberDefault)> Public Property NAME As String Implements ICompoundNameProvider.CommonName
         <MessagePackMember(2, NilImplication:=NilImplication.MemberDefault)> Public Property PUBCHEM_SUBSTANCE_URL As String
@@ -174,6 +179,15 @@ Namespace LipidMaps
         ''' <returns></returns>
         Public Overrides Function ToString() As String
             Return $"[{CATEGORY}] {SYSTEMATIC_NAME}"
+        End Function
+
+        Public Function GetAnnotation() As MetaboliteAnnotation
+            Return New MetaboliteAnnotation With {
+                .CommonName = NAME,
+                .ExactMass = FormulaScanner.EvaluateExactMass(FORMULA),
+                .Formula = FORMULA,
+                .Id = Me.LM_ID
+            }
         End Function
     End Class
 End Namespace

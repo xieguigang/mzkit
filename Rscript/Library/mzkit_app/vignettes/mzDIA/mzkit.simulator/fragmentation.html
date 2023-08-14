@@ -29,8 +29,13 @@
         code {
             color: rgb(194, 42, 42);
             background: inherit;
-            font-style:italic;
+            font-style: italic;
             font-weight: bold;
+        }
+
+        pre code {
+            color: rgb(54, 54, 54);
+            font-style: normal;
         }
 
         body {
@@ -158,8 +163,8 @@
 
         <div style="width: 100%; padding-left: 3%; color: black;">
             <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>fragmentation</strong>(<i>mol</i>, <i>energy</i>,
-    <i>nIntervals</i> = 1000,
-    <i>precision</i> = 4);</code></pre>
+    <i>nIntervals</i> = <span style='color: green;'>1000</span>,
+    <i>precision</i> = <span style='color: green;'>4</span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
@@ -177,6 +182,10 @@
         <h3>Value</h3>
 
         this function returns data object of type <a href="/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/LibraryMatrix.html">LibraryMatrix</a>.
+
+        <h3 style="display: none;">Examples</h3>
+
+        
 
         <hr />
         <div style="text-align: center;">[Package <em>mzkit.simulator</em> version 1.0.0.0 <a

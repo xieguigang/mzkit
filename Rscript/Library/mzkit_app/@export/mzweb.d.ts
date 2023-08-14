@@ -41,6 +41,7 @@ declare namespace mzweb {
         * @param env -
         * 
         * + default value Is ``null``.
+        * @return the chromatogram data wrapper of TIC/BPC
       */
       function chromatogram(scans: any, env?: object): object;
       /**
@@ -57,7 +58,14 @@ declare namespace mzweb {
       function stream(scans: object, mzErr?: string, env?: object): object;
    }
    /**
-     * @param env default value Is ``null``.
+    * load the xcms cache dataset
+    * 
+    * 
+     * @param file -
+     * @param env -
+     * 
+     * + default value Is ``null``.
+     * @return this function get a set of the spectrum peak ms2 data from the given R dataset
    */
    function loadXcmsRData(file: any, env?: object): object;
    /**
@@ -201,6 +209,10 @@ declare namespace mzweb {
    */
    function setThumbnail(mzpack: object, thumb: any, env?: object): object;
    /**
+    * Get TIC from the mzpack layer reader
+    * 
+    * 
+     * @param mzpack -
    */
    function TIC(mzpack: object): object;
    module write {
@@ -235,6 +247,8 @@ declare namespace mzweb {
       /**
        * write ASCII text format of mzweb stream
        * 
+       * > this method used for create ascii text package data for the biodeep
+       * >  web application js code to read the ms rawdata.
        * 
         * @param scans -
         * @param file -

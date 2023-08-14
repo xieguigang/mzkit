@@ -29,8 +29,13 @@
         code {
             color: rgb(194, 42, 42);
             background: inherit;
-            font-style:italic;
+            font-style: italic;
             font-weight: bold;
+        }
+
+        pre code {
+            color: rgb(54, 54, 54);
+            font-style: normal;
         }
 
         body {
@@ -158,8 +163,8 @@
 
         <div style="width: 100%; padding-left: 3%; color: black;">
             <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>report.dataset</strong>(<i>standardCurve</i>, <i>samples</i>,
-    <i>QC.dataset</i> = <span style='color: blue;'>NULL</span>,
-    <i>ionsRaw</i> = <span style='color: blue;'>NULL</span>);</code></pre>
+    <i>QC.dataset</i> = <span style='color: blue !important;'>NULL</span>,
+    <i>ionsRaw</i> = <span style='color: blue !important;'>NULL</span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
@@ -177,6 +182,10 @@
         <h3>Value</h3>
 
         this function returns data object in these one of the listed data types: <a href="/clr/mzkit/LinearDataSet.html">LinearDataSet</a>, <a href="/clr/mzkit/QCData.html">QCData</a>.
+
+        <h3 style="display: none;">Examples</h3>
+
+        
 
         <hr />
         <div style="text-align: center;">[Package <em>Linears</em> version 1.0.0.0 <a
