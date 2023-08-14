@@ -130,6 +130,12 @@ Module MSI
     ''' </summary>
     ''' <param name="raw"></param>
     ''' <returns></returns>
+    ''' <example>
+    ''' let rawdata = open.mzpack(file = "./rawdata.mzPack");
+    ''' let msi_data = msi_metadata(rawdata);
+    ''' 
+    ''' str(as.list(as.object(msi_data)$GetMetadata()));
+    ''' </example>
     <ExportAPI("msi_metadata")>
     Public Function GetMSIMetadata(raw As mzPack) As Metadata
         Return raw.GetMSIMetadata

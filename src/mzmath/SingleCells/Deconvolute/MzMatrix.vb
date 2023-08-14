@@ -89,6 +89,11 @@ Namespace Deconvolute
         ''' <returns></returns>
         Public Property matrix As PixelData()
 
+        ''' <summary>
+        ''' Create a dataset matrix of spatial spot id or single cell id in rows and ions mz features in columns. 
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <returns></returns>
         Public Iterator Function ExportSpatial(Of T As {New, INamedValue, DynamicPropertyBase(Of Double)})() As IEnumerable(Of T)
             Dim mzId As String() = mz _
                 .Select(Function(mzi) mzi.ToString("F4")) _

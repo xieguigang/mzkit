@@ -64,6 +64,16 @@ Namespace MsImaging
 
     Public Module PeakMatrix2
 
+        ''' <summary>
+        ''' Create a dataset matrix of spot xy id in rows and ions mz features in columns
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="raw"></param>
+        ''' <param name="mzErr"></param>
+        ''' <param name="cutoff"></param>
+        ''' <param name="getPeaks"></param>
+        ''' <param name="getSampleId"></param>
+        ''' <returns></returns>
         <Extension>
         Public Iterator Function AlignMzPeaks(Of T)(raw As T(),
                                                     mzErr As Tolerance,
@@ -102,6 +112,16 @@ Namespace MsImaging
             Next
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="raw"></param>
+        ''' <param name="ions"></param>
+        ''' <param name="mzErr"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' <see cref="MzMatrix.ExportSpatial(Of T)()"/>
+        ''' </remarks>
         <Extension>
         Public Function SelectivePeakMatrix(raw As mzPack, ions As Dictionary(Of String, Double), mzErr As Tolerance) As IEnumerable(Of DataSet)
             Dim m = PeakMatrix.CreateMatrix(raw, mzErr.DeltaTolerance, 0, mzSet:=ions.Values.ToArray)
@@ -109,6 +129,16 @@ Namespace MsImaging
             Return ds
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="raw"></param>
+        ''' <param name="topN"></param>
+        ''' <param name="mzErr"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' <see cref="MzMatrix.ExportSpatial(Of T)()"/>
+        ''' </remarks>
         <Extension>
         Public Function TopIonsPeakMatrix(raw As mzPack, topN As Integer, mzErr As Tolerance) As IEnumerable(Of DataSet)
             Dim topIons As Double() = raw.GetMzIndex(mzdiff:=mzErr.DeltaTolerance, topN:=topN)
