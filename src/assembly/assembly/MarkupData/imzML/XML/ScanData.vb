@@ -102,6 +102,9 @@ Namespace MarkupData.imzML
 
     End Interface
 
+    ''' <summary>
+    ''' the MSI pixel data spot model of [x,z,intensity]
+    ''' </summary>
     Public Class PixelScanIntensity : Implements IMSIPixel, RasterPixel
 
         ''' <summary>
