@@ -81,10 +81,11 @@ Namespace LipidMaps
             If index.ContainsKey(id) Then
                 Dim lipid As MetaData = index(id)
                 Dim [class] As New CompoundClass With {
-                    .kingdom = lipid.CATEGORY,
-                    .super_class = lipid.MAIN_CLASS,
-                    .[class] = lipid.SUB_CLASS,
-                    .sub_class = lipid.CLASS_LEVEL4
+                    .kingdom = "Lipids",
+                    .super_class = lipid.CATEGORY,
+                    .[class] = lipid.MAIN_CLASS,
+                    .sub_class = lipid.SUB_CLASS,
+                    .molecular_framework = lipid.CLASS_LEVEL4
                 }
 
                 Return [class]
