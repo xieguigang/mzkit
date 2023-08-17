@@ -233,7 +233,11 @@ Module Massbank
     ''' <returns></returns>
     ''' <example>
     ''' # gsea background model
-    ''' let background = read.lipidmaps(file = "./lipidmaps.sdf", gsea.background = TRUE);
+    ''' let background = read.lipidmaps(
+    '''     file = "./lipidmaps.msgpack", 
+    '''     gsea.background = TRUE, 
+    '''     category.model = FALSE
+    ''' );
     ''' </example>
     <ExportAPI("read.lipidmaps")>
     <RApiReturn(GetType(LipidMaps.MetaData), GetType(Background), GetType(LipidMapsCategory))>
@@ -284,7 +288,7 @@ Module Massbank
     ''' let lipids = dataset |> as.lipidmaps();
     ''' 
     ''' # create annotation helper
-    ''' let class = lipid.names(lipids);
+    ''' let lipidnames = lipid.names(lipids);
     ''' </example>
     <ExportAPI("lipid.names")>
     <RApiReturn(GetType(CompoundNameReader))>
@@ -341,7 +345,9 @@ Module Massbank
     Public Function toLipidMaps(<RRawVectorArgument>
                                 sdf As Object,
                                 Optional asList As Boolean = False,
+                                Optional lazy As Boolean = True,
                                 Optional env As Environment = Nothing) As Object
+
         Dim sdfStream As pipeline = pipeline.TryCreatePipeline(Of SDF)(sdf, env)
 
         If sdfStream.isError Then
@@ -358,9 +364,13 @@ Module Massbank
                                   End Function)
             }
         Else
-            Return sdfStream.populates(Of SDF)(env) _
-                .CreateMeta _
-                .DoCall(AddressOf pipeline.CreateFromPopulator)
+            Dim stream = sdfStream.populates(Of SDF)(env).CreateMeta
+
+            If lazy Then
+                Return stream.DoCall(AddressOf pipeline.CreateFromPopulator)
+            Else
+                Return stream.ToArray
+            End If
         End If
     End Function
 
