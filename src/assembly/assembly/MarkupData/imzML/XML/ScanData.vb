@@ -115,6 +115,15 @@ Namespace MarkupData.imzML
         Public Property x As Integer Implements IMSIPixel.x, RasterPixel.X
         Public Property y As Integer Implements IMSIPixel.y, RasterPixel.Y
 
+        Sub New()
+        End Sub
+
+        Sub New(x As Integer, y As Integer, intensity As Double)
+            Me.x = x
+            Me.y = y
+            Me.totalIon = intensity
+        End Sub
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetPoint() As Point
             Return New Point(x, y)
