@@ -62,6 +62,7 @@ Imports System.Text.RegularExpressions
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MSP
 Imports BioNovoGene.BioDeep.Chemistry
 Imports BioNovoGene.BioDeep.Chemistry.LipidMaps
+Imports BioNovoGene.BioDeep.Chemistry.MetaLib.Models
 Imports BioNovoGene.BioDeep.Chemistry.TMIC
 Imports BioNovoGene.BioDeep.Chemoinformatics
 Imports BioNovoGene.BioDeep.Chemoinformatics.NaturalProduct
@@ -269,6 +270,58 @@ Module Massbank
     <ExportAPI("lipid_profiles")>
     Public Function lipidProfiles(categry As LipidMapsCategory, enrich As EnrichmentResult()) As Object
         Return categry.CreateEnrichmentProfiles(enrich)
+    End Function
+
+    ''' <summary>
+    ''' Create lipid name helper for annotation
+    ''' </summary>
+    ''' <param name="lipidmaps"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    ''' <example>
+    ''' # cast sdf dataset to lipidmaps data object
+    ''' let dataset = read.SDF(file = "./example.sdf", lazy = FALSE);
+    ''' let lipids = dataset |> as.lipidmaps();
+    ''' 
+    ''' # create annotation helper
+    ''' let class = lipid.names(lipids);
+    ''' </example>
+    <ExportAPI("lipid.names")>
+    <RApiReturn(GetType(CompoundNameReader))>
+    Public Function lipidNameReader(<RRawVectorArgument> lipidmaps As Object, Optional env As Environment = Nothing) As Object
+        Dim lipids As pipeline = pipeline.TryCreatePipeline(Of LipidMaps.MetaData)(lipidmaps, env)
+
+        If lipids.isError Then
+            Return lipids.getError
+        Else
+            Return New LipidMaps.LipidNameReader(lipids.populates(Of LipidMaps.MetaData)(env))
+        End If
+    End Function
+
+    ''' <summary>
+    ''' Create lipid class helper for annotation
+    ''' </summary>
+    ''' <param name="lipidmaps"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    ''' <example>
+    ''' # cast sdf dataset to lipidmaps data object
+    ''' let dataset = read.SDF(file = "./example.sdf", lazy = FALSE);
+    ''' let lipids = dataset |> as.lipidmaps();
+    ''' 
+    ''' # create annotation helper
+    ''' let class = lipid.class(lipids);
+    ''' </example>
+    <ExportAPI("lipid.class")>
+    <RApiReturn(GetType(ClassReader))>
+    Public Function lipidClassReader(<RRawVectorArgument> lipidmaps As Object, Optional env As Environment = Nothing) As Object
+        Dim lipids As pipeline = pipeline.TryCreatePipeline(Of LipidMaps.MetaData)(lipidmaps, env)
+
+        If lipids.isError Then
+            Return lipids.getError
+        Else
+            Return New LipidMaps.LipidClassReader(lipids.populates(Of LipidMaps.MetaData)(env))
+        End If
     End Function
 
     ''' <summary>
