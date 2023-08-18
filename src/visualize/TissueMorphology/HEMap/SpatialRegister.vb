@@ -36,7 +36,30 @@ Public Class SpatialRegister
         Dim rotation As Single = buf!rotation
         Dim offset As String = buf!offset
         Dim spot_number As Integer = buf!spot_number
+        Dim heatmap As doubles = buf.getDataVariable("heatmap")
+        Dim x As doubles = buf.getDataVariable("x")
+        Dim y As doubles = buf.getDataVariable("y")
+        Dim x0 As integers = buf.getDataVariable("x0")
+        Dim y0 As integers = buf.getDataVariable("y0")
+        Dim img As longs = buf.getDataVariable("img")
+        Dim img_size As Size = CStr(buf!img_size).SizeParser
+        Dim bitmap As Bitmap = New Bitmap(img_size.Width, img_size.Height)
+        Dim image As BitmapBuffer = BitmapBuffer.FromBitmap(bitmap)
+        Dim mappings As SpotMap() = heatmap _
+            .Select(Function(s, i)
+                        Return New SpotMap With {
+                            .heatmap = s,
+                            .STX = x(i),
+                            .STY = y(i),
+                            .spotXY = {x0(i), y0(i)},
+                            .flag = 1,
+                            .physicalXY = .spotXY
+                        }
+                    End Function) _
+            .ToArray
 
+        Call image.WriteARGBStream(img.Select(Function(l) CUInt(l)).ToArray)
+        Call image.Dispose()
         Call file.Close()
 
         Return New SpatialRegister With {
@@ -46,7 +69,9 @@ Public Class SpatialRegister
             .offset = any.CTypeDynamic(offset, GetType(PointF)),
             .rotation = rotation,
             .spotColor = spot_color,
-            .viewSize = view_size.SizeParser
+            .viewSize = view_size.SizeParser,
+            .HEstain = bitmap,
+            .mappings = mappings
         }
     End Function
 
@@ -59,13 +84,14 @@ Public Class SpatialRegister
         Dim rotation As New attribute("rotation", _rotation.ToString, CDFDataTypes.FLOAT)
         Dim offset As New attribute("offset", $"{_offset.X},{_offset.Y}")
         Dim spot_number As New attribute("spot_number", mappings.Length.ToString, CDFDataTypes.INT)
+        Dim img_size As New attribute("img_size", $"{HEstain.Width},{HEstain.Height}")
 
         Dim mapping_dims As New Dimension("mapping_size", mappings.Length)
         Dim img As BitmapBuffer = BitmapBuffer.FromBitmap(HEstain)
         Dim stream As UInteger() = img.GetARGBStream
         Dim image_size As New Dimension("HEstain_image", stream.Length)
 
-        Call buf.GlobalAttributes(view_size, msi_scale, spot_color, label, mirror, rotation, offset, spot_number)
+        Call buf.GlobalAttributes(view_size, msi_scale, spot_color, label, mirror, rotation, offset, spot_number, img_size)
 
         Call buf.AddVariable("heatmap", New doubles(mappings.Select(Function(si) CDbl(si.heatmap))), mapping_dims)
         Call buf.AddVariable("x", New doubles(mappings.Select(Function(si) si.STX)), mapping_dims)
