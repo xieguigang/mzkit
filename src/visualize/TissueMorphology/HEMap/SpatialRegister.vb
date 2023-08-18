@@ -5,6 +5,7 @@ Imports Microsoft.VisualBasic.DataStorage.netCDF
 Imports Microsoft.VisualBasic.DataStorage.netCDF.Components
 Imports Microsoft.VisualBasic.DataStorage.netCDF.Data
 Imports Microsoft.VisualBasic.DataStorage.netCDF.DataVector
+Imports Microsoft.VisualBasic.Imaging.BitmapImage
 
 Public Class SpatialRegister
 
@@ -33,10 +34,11 @@ Public Class SpatialRegister
         Dim rotation As New attribute("rotation", _rotation.ToString, CDFDataTypes.FLOAT)
         Dim offset As New attribute("offset", $"{_offset.X},{_offset.Y}")
         Dim spot_number As New attribute("spot_number", mappings.Length.ToString, CDFDataTypes.INT)
-        Dim img As New MemoryStream
         Dim mapping_dims As New Dimension("mapping_size", mappings.Length)
+        Dim img As BitmapBuffer = BitmapBuffer.FromBitmap(HEstain)
+        Dim stream As UInteger() = img.GetARGBStream
+        Dim image_size As New Dimension("HEstain_image", stream.Length)
 
-        Call HEstain.Save(img, ImageFormat.Png)
         Call buf.GlobalAttributes(view_size, msi_scale, spot_color, label, mirror, rotation, offset, spot_number)
 
         Call buf.AddVariable("heatmap", New doubles(mappings.Select(Function(si) CDbl(si.heatmap))), mapping_dims)
@@ -44,5 +46,6 @@ Public Class SpatialRegister
         Call buf.AddVariable("y", New doubles(mappings.Select(Function(si) si.STY)), mapping_dims)
         Call buf.AddVariable("x0", New integers(mappings.Select(Function(si) si.spotXY(0))), mapping_dims)
         Call buf.AddVariable("y0", New integers(mappings.Select(Function(si) si.spotXY(1))), mapping_dims)
+        Call buf.AddVariable("img", New longs(stream), image_size)
     End Sub
 End Class
