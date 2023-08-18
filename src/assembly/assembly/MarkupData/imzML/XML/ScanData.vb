@@ -102,6 +102,9 @@ Namespace MarkupData.imzML
 
     End Interface
 
+    ''' <summary>
+    ''' the MSI pixel data spot model of [x,z,intensity]
+    ''' </summary>
     Public Class PixelScanIntensity : Implements IMSIPixel, RasterPixel
 
         ''' <summary>
@@ -111,6 +114,15 @@ Namespace MarkupData.imzML
         Public Property totalIon As Double Implements IMSIPixel.intensity
         Public Property x As Integer Implements IMSIPixel.x, RasterPixel.X
         Public Property y As Integer Implements IMSIPixel.y, RasterPixel.Y
+
+        Sub New()
+        End Sub
+
+        Sub New(x As Integer, y As Integer, intensity As Double)
+            Me.x = x
+            Me.y = y
+            Me.totalIon = intensity
+        End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetPoint() As Point
