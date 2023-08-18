@@ -1,11 +1,12 @@
 ﻿Imports System.Drawing
-Imports System.Drawing.Imaging
 Imports System.IO
 Imports Microsoft.VisualBasic.DataStorage.netCDF
 Imports Microsoft.VisualBasic.DataStorage.netCDF.Components
 Imports Microsoft.VisualBasic.DataStorage.netCDF.Data
 Imports Microsoft.VisualBasic.DataStorage.netCDF.DataVector
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
+Imports Microsoft.VisualBasic.Scripting.Runtime
+Imports any = Microsoft.VisualBasic.Scripting
 
 Public Class SpatialRegister
 
@@ -25,6 +26,30 @@ Public Class SpatialRegister
         End Using
     End Sub
 
+    Public Shared Function ParseFile(file As Stream) As SpatialRegister
+        Dim buf As New netCDFReader(file)
+        Dim view_size As String = buf!view_size
+        Dim msi_scale As String = buf!msi_scale
+        Dim spot_color As String = buf!spot_color
+        Dim label As String = buf!label
+        Dim mirror As String = buf!mirror
+        Dim rotation As Single = buf!rotation
+        Dim offset As String = buf!offset
+        Dim spot_number As Integer = buf!spot_number
+
+        Call file.Close()
+
+        Return New SpatialRegister With {
+            .label = label,
+            .mirror = mirror.ParseBoolean,
+            .MSIscale = msi_scale.SizeParser,
+            .offset = any.CTypeDynamic(offset, GetType(PointF)),
+            .rotation = rotation,
+            .spotColor = spot_color,
+            .viewSize = view_size.SizeParser
+        }
+    End Function
+
     Private Sub Save(buf As CDFWriter)
         Dim view_size As New attribute("view_size", $"{viewSize.Width},{viewSize.Height}")
         Dim msi_scale As New attribute("msi_scale", $"{MSIscale.Width},{MSIscale.Height}")
@@ -34,6 +59,7 @@ Public Class SpatialRegister
         Dim rotation As New attribute("rotation", _rotation.ToString, CDFDataTypes.FLOAT)
         Dim offset As New attribute("offset", $"{_offset.X},{_offset.Y}")
         Dim spot_number As New attribute("spot_number", mappings.Length.ToString, CDFDataTypes.INT)
+
         Dim mapping_dims As New Dimension("mapping_size", mappings.Length)
         Dim img As BitmapBuffer = BitmapBuffer.FromBitmap(HEstain)
         Dim stream As UInteger() = img.GetARGBStream
