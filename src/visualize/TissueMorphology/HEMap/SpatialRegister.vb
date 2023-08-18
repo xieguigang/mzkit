@@ -19,6 +19,7 @@ Public Class SpatialRegister
     Public Property spotColor As String
     Public Property viewSize As Size
     Public Property MSIscale As Size
+    Public Property MSIdims As Size
 
     Public Sub Save(file As Stream)
         Using buf As New CDFWriter(file)
@@ -36,6 +37,7 @@ Public Class SpatialRegister
         Dim rotation As Single = buf!rotation
         Dim offset As String = buf!offset
         Dim spot_number As Integer = buf!spot_number
+        Dim msi_dims As String = buf!msi_dims
         Dim heatmap As doubles = buf.getDataVariable("heatmap")
         Dim x As doubles = buf.getDataVariable("x")
         Dim y As doubles = buf.getDataVariable("y")
@@ -71,7 +73,8 @@ Public Class SpatialRegister
             .spotColor = spot_color,
             .viewSize = view_size.SizeParser,
             .HEstain = bitmap,
-            .mappings = mappings
+            .mappings = mappings,
+            .MSIdims = msi_dims.SizeParser
         }
     End Function
 
@@ -85,13 +88,21 @@ Public Class SpatialRegister
         Dim offset As New attribute("offset", $"{_offset.X},{_offset.Y}")
         Dim spot_number As New attribute("spot_number", mappings.Length.ToString, CDFDataTypes.INT)
         Dim img_size As New attribute("img_size", $"{HEstain.Width},{HEstain.Height}")
+        Dim msi_dims As New attribute("msi_dims", $"{MSIdims.Width},{MSIdims.Height}")
 
         Dim mapping_dims As New Dimension("mapping_size", mappings.Length)
         Dim img As BitmapBuffer = BitmapBuffer.FromBitmap(HEstain)
         Dim stream As UInteger() = img.GetARGBStream
         Dim image_size As New Dimension("HEstain_image", stream.Length)
 
-        Call buf.GlobalAttributes(view_size, msi_scale, spot_color, label, mirror, rotation, offset, spot_number, img_size)
+        Call buf.GlobalAttributes(
+            view_size, msi_scale,
+            spot_color, label,
+            mirror, rotation,
+            offset, spot_number,
+            img_size,
+            msi_dims
+        )
 
         Call buf.AddVariable("heatmap", New doubles(mappings.Select(Function(si) CDbl(si.heatmap))), mapping_dims)
         Call buf.AddVariable("x", New doubles(mappings.Select(Function(si) si.STX)), mapping_dims)
