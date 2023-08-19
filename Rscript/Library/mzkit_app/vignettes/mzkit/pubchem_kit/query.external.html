@@ -29,8 +29,13 @@
         code {
             color: rgb(194, 42, 42);
             background: inherit;
-            font-style:italic;
+            font-style: italic;
             font-weight: bold;
+        }
+
+        pre code {
+            color: rgb(54, 54, 54);
+            font-style: normal;
         }
 
         body {
@@ -159,7 +164,7 @@
         <div style="width: 100%; padding-left: 3%; color: black;">
             <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>query.external</strong>(<i>cid</i>,
     <i>cache</i> = <span style='color: brown;'><strong>"./pubchem/"</strong></span>,
-    <i>interval</i> = -1);</code></pre>
+    <i>interval</i> = <span style='color: green;'>-1</span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
@@ -188,6 +193,10 @@
         <h3>Value</h3>
 
         this function returns data object of type list.
+
+        <h3 style="display: none;">Examples</h3>
+
+        
 
         <hr />
         <div style="text-align: center;">[Package <em>pubchem_kit</em> version 1.0.0.0 <a

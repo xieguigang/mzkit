@@ -1,60 +1,61 @@
 ﻿#Region "Microsoft.VisualBasic::5b68614dd78aa5bb23387afc3d2c6e08, mzkit\src\mzmath\SingleCells\Deconvolute\Math.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 104
-    '    Code Lines: 60
-    ' Comment Lines: 31
-    '   Blank Lines: 13
-    '     File Size: 4.00 KB
+' Summaries:
 
 
-    '     Module Math
-    ' 
-    '         Function: DeconvoluteScan, (+3 Overloads) GetMzIndex
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 104
+'    Code Lines: 60
+' Comment Lines: 31
+'   Blank Lines: 13
+'     File Size: 4.00 KB
+
+
+'     Module Math
+' 
+'         Function: DeconvoluteScan, (+3 Overloads) GetMzIndex
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
@@ -65,6 +66,30 @@ Imports stdNum = System.Math
 Namespace Deconvolute
 
     Public Module Math
+
+        ''' <summary>
+        ''' get a m/z vector for run matrix deconvolution by pick top N ions in each pixel
+        ''' </summary>
+        ''' <param name="raw"></param>
+        ''' <param name="topN"></param>
+        ''' <returns></returns>
+        ''' 
+        <Extension>
+        Public Function GetMzIndex(raw As mzPack, mzdiff As Double, topN As Integer) As Double()
+            Dim scanMz As New List(Of Double)
+            Dim top As IEnumerable(Of ms2)
+
+            For Each x As ScanMS1 In raw.MS
+                top = x.GetMs _
+                    .OrderByDescending(Function(i) i.intensity) _
+                    .Take(topN)
+                scanMz.AddRange(top.Select(Function(mzi) mzi.mz))
+            Next
+
+            ' just pick the top intensity ion, 
+            ' no frequency filter
+            Return GetMzIndex(scanMz, mzdiff, freq:=0.0)
+        End Function
 
         ''' <summary>
         ''' get a m/z vector for run matrix deconvolution

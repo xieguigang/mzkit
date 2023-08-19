@@ -29,8 +29,13 @@
         code {
             color: rgb(194, 42, 42);
             background: inherit;
-            font-style:italic;
+            font-style: italic;
             font-weight: bold;
+        }
+
+        pre code {
+            color: rgb(54, 54, 54);
+            font-style: normal;
         }
 
         body {
@@ -158,7 +163,8 @@
 
         <div style="width: 100%; padding-left: 3%; color: black;">
             <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>read.SDF</strong>(<i>file</i>,
-    <i>parseStruct</i> = <span style='color: blue;'>TRUE</span>);</code></pre>
+    <i>parseStruct</i> = <span style='color: blue !important;'>TRUE</span>,
+    <i>lazy</i> = <span style='color: blue !important;'>TRUE</span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
@@ -166,7 +172,11 @@
         <table>
             
 <dt>file</dt>
-<dd><p><p>-</p></p></dd>
+<dd><p><p>the file path of the target sdf file</p></p></dd>
+
+
+<dt>parseStruct</dt>
+<dd><p><p>Andalso parse the molecular structure data inside the metabolite annotation data?</p></p></dd>
 
 
 <dt>env</dt>
@@ -182,7 +192,11 @@
 
         <h3>Value</h3>
 
-        this function returns data object of type <a href="/clr/SMRUCC/Rsharp/Runtime/Internal/Object/pipeline.html">pipeline</a>.
+        this function returns data object of type <a href="/clr/BioNovoGene/BioDeep/Chemoinformatics/SDF/SDF.html">SDF</a>.
+
+        <h3 style="display: block;">Examples</h3>
+
+        <pre><code>let dataset = read.SDF(file = "./example.sdf", lazy = FALSE);</code></pre>
 
         <hr />
         <div style="text-align: center;">[Package <em>massbank</em> version 1.0.0.0 <a

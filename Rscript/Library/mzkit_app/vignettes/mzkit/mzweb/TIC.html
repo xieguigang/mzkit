@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>TIC</title>
+    <title>Get TIC from the mzpack layer reader</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <style rel="stylesheet" type="text/css">
@@ -29,8 +29,13 @@
         code {
             color: rgb(194, 42, 42);
             background: inherit;
-            font-style:italic;
+            font-style: italic;
             font-weight: bold;
+        }
+
+        pre code {
+            color: rgb(54, 54, 54);
+            font-style: normal;
         }
 
         body {
@@ -148,11 +153,11 @@
             </tr>
         </table>
 
-        <h2>TIC</h2>
+        <h2>Get TIC from the mzpack layer reader</h2>
 
         <h3>Description</h3>
 
-        TIC
+        
 
         <h3>Usage</h3>
 
@@ -164,6 +169,9 @@
 
         <table>
             
+<dt>mzpack</dt>
+<dd><p><p>-</p></p></dd>
+
         </table>
 
 
@@ -175,6 +183,13 @@
         <h3>Value</h3>
 
         this function returns data object of type <a href="/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Chromatogram/ChromatogramTick[].html">ChromatogramTick[]</a>.
+
+        <h3 style="display: block;">Examples</h3>
+
+        <pre><code>let rawdata = mzweb::open(file = "./LCMS-rawdata.mzPack");
+ let tic = mzweb::TIC(rawdata);
+ 
+ plot(tic);</code></pre>
 
         <hr />
         <div style="text-align: center;">[Package <em>mzweb</em> version 1.0.0.0 <a

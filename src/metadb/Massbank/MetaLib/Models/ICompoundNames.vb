@@ -60,4 +60,10 @@ Namespace MetaLib.Models
         Function GetSynonym() As IEnumerable(Of String)
 
     End Interface
+
+    Public MustInherit Class CompoundNameReader
+
+        Public MustOverride Function GetName(id As String) As String
+
+    End Class
 End Namespace

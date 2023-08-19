@@ -81,6 +81,14 @@ Namespace Blender.Scaler
             Return Me
         End Function
 
+        Public Function DoIntensityScale(into As Double()) As Double()
+            For Each shader As Scaler In pipeline
+                into = shader.DoIntensityScale(into)
+            Next
+
+            Return into
+        End Function
+
         Public Function DoIntensityScale(pixels As IEnumerable(Of PixelData), dimSize As Size) As PixelData()
             Return DoIntensityScale(New SingleIonLayer With {.DimensionSize = dimSize, .IonMz = -1, .MSILayer = pixels.ToArray})
         End Function
@@ -99,7 +107,21 @@ Namespace Blender.Scaler
         End Function
 
         Public Overrides Function ToString() As String
+            Return ToScript()
+        End Function
+
+        Public Function ToScript() As String Implements Scaler.LayerScaler.ToScript
             Return pipeline.JoinBy(" -> ")
+        End Function
+
+        Public Shared Function Parse(configs As IEnumerable(Of String)) As RasterPipeline
+            Dim filter As New RasterPipeline
+
+            For Each line As String In configs
+                Call filter.Add(Scaler.Parse(line))
+            Next
+
+            Return filter
         End Function
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of Scaler) Implements IEnumerable(Of Scaler).GetEnumerator

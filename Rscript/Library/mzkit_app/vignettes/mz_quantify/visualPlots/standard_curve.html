@@ -29,8 +29,13 @@
         code {
             color: rgb(194, 42, 42);
             background: inherit;
-            font-style:italic;
+            font-style: italic;
             font-weight: bold;
+        }
+
+        pre code {
+            color: rgb(54, 54, 54);
+            font-style: normal;
         }
 
         body {
@@ -159,14 +164,14 @@
         <div style="width: 100%; padding-left: 3%; color: black;">
             <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>standard_curve</strong>(<i>model</i>,
     <i>title</i> = <span style='color: brown;'><strong>""</strong></span>,
-    <i>samples</i> = <span style='color: blue;'>NULL</span>,
+    <i>samples</i> = <span style='color: blue !important;'>NULL</span>,
     <i>size</i> = <span style='color: brown;'><strong>"1600,1200"</strong></span>,
     <i>margin</i> = <span style='color: brown;'><strong>"padding: 200px 100px 150px 150px"</strong></span>,
     <i>factorFormat</i> = <span style='color: brown;'><strong>"G4"</strong></span>,
     <i>sampleLabelFont</i> = <span style='color: brown;'><strong>"font-style: normal; font-size: 16; font-family: Segoe UI;"</strong></span>,
-    <i>labelerIterations</i> = 1000,
+    <i>labelerIterations</i> = <span style='color: green;'>1000</span>,
     <i>gridFill</i> = <span style='color: #D3D3D3;'><strong>"LightGray"</strong></span>,
-    <i>reverse</i> = <span style='color: blue;'>FALSE</span>);</code></pre>
+    <i>reverse</i> = <span style='color: blue !important;'>FALSE</span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
@@ -184,6 +189,10 @@
         <h3>Value</h3>
 
         this function returns data object of type <a href="/clr/Microsoft/VisualBasic/Imaging/Driver/GraphicsData.html">GraphicsData</a>.
+
+        <h3 style="display: none;">Examples</h3>
+
+        
 
         <hr />
         <div style="text-align: center;">[Package <em>visualPlots</em> version 1.0.0.0 <a

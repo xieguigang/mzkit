@@ -29,8 +29,13 @@
         code {
             color: rgb(194, 42, 42);
             background: inherit;
-            font-style:italic;
+            font-style: italic;
             font-weight: bold;
+        }
+
+        pre code {
+            color: rgb(54, 54, 54);
+            font-style: normal;
         }
 
         body {
@@ -158,10 +163,10 @@
 
         <div style="width: 100%; padding-left: 3%; color: black;">
             <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>peakROI</strong>(<i>chromatogram</i>,
-    <i>baselineQuantile</i> = 0.65,
-    <i>angleThreshold</i> = 5,
+    <i>baselineQuantile</i> = <span style='color: green;'>0.65</span>,
+    <i>angleThreshold</i> = <span style='color: green;'>5</span>,
     <i>peakwidth</i> = <span style='color: brown;'><strong>"8,30"</strong></span>,
-    <i>sn.threshold</i> = 3);</code></pre>
+    <i>sn.threshold</i> = <span style='color: green;'>3</span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
@@ -179,6 +184,10 @@
         <h3>Value</h3>
 
         this function returns data object of type <a href="/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Chromatogram/ROI.html">ROI</a>.
+
+        <h3 style="display: none;">Examples</h3>
+
+        
 
         <hr />
         <div style="text-align: center;">[Package <em>MRMLinear</em> version 1.0.0.0 <a

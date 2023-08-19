@@ -65,6 +65,7 @@ Imports Microsoft.VisualBasic.ApplicationServices.Application
 
 Imports System.Drawing
 Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports Microsoft.VisualBasic.CommandLine.InteropService.Pipeline
@@ -74,11 +75,10 @@ Imports Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.Text.Xml.Models
 Imports any = Microsoft.VisualBasic.Scripting
 Imports asciiA = Microsoft.VisualBasic.Text.ASCII
 Imports stdNum = System.Math
-Imports Microsoft.VisualBasic.Text.Xml.Models
-Imports System.Runtime.CompilerServices
 
 ''' <summary>
 ''' v2 mzPack format in HDS stream file

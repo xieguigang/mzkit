@@ -1,12 +1,33 @@
 .\" man page create by R# package system.
 .TH METADB 1 2000-Jan "annotationStream" "annotationStream"
 .SH NAME
-annotationStream \- 
+annotationStream \- Construct a basic metabolite annotation data collection
 .SH SYNOPSIS
 \fIannotationStream(\fBid\fR as string, 
 \fBname\fR as string, 
 \fBformula\fR as string, 
 [\fB<Environment>\fR]);\fR
+.SH DESCRIPTION
+.PP
+Construct a basic metabolite annotation data collection
+.PP
+.SH OPTIONS
+.PP
+\fBid\fB \fR\- the unique reference id of the metabolite collection. 
+.PP
+.PP
+\fBname\fB \fR\- common names. 
+.PP
+.PP
+\fBformula\fB \fR\- metabolite molecular formula data collection. 
+.PP
+.PP
+\fBenv\fB \fR\- -. 
+.PP
+.SH DETAILS
+.PP
+the exact mass will be evaluated based on the input **`formula`** data.
+.PP
 .SH SEE ALSO
 metadb
 .SH FILES

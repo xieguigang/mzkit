@@ -29,8 +29,13 @@
         code {
             color: rgb(194, 42, 42);
             background: inherit;
-            font-style:italic;
+            font-style: italic;
             font-weight: bold;
+        }
+
+        pre code {
+            color: rgb(54, 54, 54);
+            font-style: normal;
         }
 
         body {
@@ -158,11 +163,11 @@
 
         <div style="width: 100%; padding-left: 3%; color: black;">
             <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>peakList_annotation</strong>(<i>background</i>, <i>candidates</i>,
-    <i>minhit</i> = 3,
-    <i>permutation</i> = 100,
-    <i>modelSize</i> = -1,
-    <i>pinned</i> = <span style='color: blue;'>NULL</span>,
-    <i>ignore.topology</i> = <span style='color: blue;'>FALSE</span>);</code></pre>
+    <i>minhit</i> = <span style='color: green;'>3</span>,
+    <i>permutation</i> = <span style='color: green;'>100</span>,
+    <i>modelSize</i> = <span style='color: green;'>-1</span>,
+    <i>pinned</i> = <span style='color: blue !important;'>NULL</span>,
+    <i>ignore.topology</i> = <span style='color: blue !important;'>FALSE</span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
@@ -203,6 +208,10 @@
         <h3>Value</h3>
 
         this function returns data object of type <a href="/clr/BioNovoGene/BioDeep/MSEngine/Mummichog/ActivityEnrichment.html">ActivityEnrichment</a>.
+
+        <h3 style="display: none;">Examples</h3>
+
+        
 
         <hr />
         <div style="text-align: center;">[Package <em>Mummichog</em> version 1.0.0.0 <a

@@ -60,6 +60,10 @@ Namespace Blender.Scaler
 
     Public Class SoftenScaler : Inherits Scaler
 
+        Sub New()
+
+        End Sub
+
         Private Iterator Function PopulateRectangle(img As Grid(Of PixelData), x As Integer, y As Integer) As IEnumerable(Of Double)
             ' A  B  C  D
             ' E  F  G  H
@@ -126,7 +130,7 @@ Namespace Blender.Scaler
             }
         End Function
 
-        Public Overrides Function ToString() As String
+        Public Overrides Function ToScript() As String
             Return "soften()"
         End Function
     End Class

@@ -17,11 +17,13 @@ declare namespace massbank {
         * @param sdf a sequence of sdf molecular data which can be read from the ``read.SDF`` function.
         * @param asList 
         * + default value Is ``false``.
+        * @param lazy 
+        * + default value Is ``true``.
         * @param env -
         * 
         * + default value Is ``null``.
       */
-      function lipidmaps(sdf: any, asList?: boolean, env?: object): any;
+      function lipidmaps(sdf: any, asList?: boolean, lazy?: boolean, env?: object): any;
    }
    module chebi {
       module secondary2main {
@@ -51,8 +53,28 @@ declare namespace massbank {
    }
    module lipid {
       /**
+       * Create lipid class helper for annotation
+       * 
+       * 
+        * @param lipidmaps -
+        * @param env -
+        * 
+        * + default value Is ``null``.
+      */
+      function class(lipidmaps: any, env?: object): object;
+      /**
       */
       function nameMaps(lipidmaps: object): object;
+      /**
+       * Create lipid name helper for annotation
+       * 
+       * 
+        * @param lipidmaps -
+        * @param env -
+        * 
+        * + default value Is ``null``.
+      */
+      function names(lipidmaps: any, env?: object): object;
    }
    /**
    */
@@ -62,6 +84,10 @@ declare namespace massbank {
    function lipid_profiles(categry: object, enrich: object): any;
    module mona {
       /**
+       * Extract the annotation metadata from the MONA comment data
+       * 
+       * 
+        * @param msp A metabolite data which is parse from the MONA msp dataset
       */
       function msp_metadata(msp: object): any;
    }
@@ -105,14 +131,17 @@ declare namespace massbank {
        * read metabolite data in a given sdf data file.
        * 
        * 
-        * @param file -
-        * @param parseStruct 
+        * @param file the file path of the target sdf file
+        * @param parseStruct Andalso parse the molecular structure data inside the metabolite annotation data?
+        * 
+        * + default value Is ``true``.
+        * @param lazy 
         * + default value Is ``true``.
         * @param env -
         * 
         * + default value Is ``null``.
       */
-      function SDF(file: string, parseStruct?: boolean, env?: object): object;
+      function SDF(file: string, parseStruct?: boolean, lazy?: boolean, env?: object): object;
    }
    module save {
       /**
@@ -142,6 +171,7 @@ declare namespace massbank {
       /**
        * save lipidmaps data repository.
        * 
+       * > save the lipidmaps data object into file in messagepack format
        * 
         * @param lipidmaps -
         * @param file -

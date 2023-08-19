@@ -63,6 +63,7 @@
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.Annotations
 Imports BioNovoGene.BioDeep.Chemoinformatics
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports BioNovoGene.BioDeep.Chemoinformatics.SDF
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Data.IO.MessagePack.Serialization
@@ -72,8 +73,12 @@ Namespace LipidMaps
     ''' <summary>
     ''' 物质的注释信息
     ''' </summary>
-    Public Class MetaData : Implements IExactMassProvider, IReadOnlyId, ICompoundNameProvider, IFormulaProvider
+    Public Class MetaData : Implements IExactMassProvider, IReadOnlyId, ICompoundNameProvider, IFormulaProvider ', ICompoundClass
 
+        ''' <summary>
+        ''' The lipidmaps unique reference id
+        ''' </summary>
+        ''' <returns></returns>
         <MessagePackMember(0, NilImplication:=NilImplication.MemberDefault)> Public Property LM_ID As String Implements IReadOnlyId.Identity
         <MessagePackMember(1, NilImplication:=NilImplication.MemberDefault)> Public Property NAME As String Implements ICompoundNameProvider.CommonName
         <MessagePackMember(2, NilImplication:=NilImplication.MemberDefault)> Public Property PUBCHEM_SUBSTANCE_URL As String
@@ -83,9 +88,9 @@ Namespace LipidMaps
         <MessagePackMember(6, NilImplication:=NilImplication.MemberDefault)> Public Property SYSTEMATIC_NAME As String
         <MessagePackMember(7, NilImplication:=NilImplication.MemberDefault)> Public Property SYNONYMS As String()
         <MessagePackMember(8, NilImplication:=NilImplication.MemberDefault)> Public Property ABBREVIATION As String
-        <MessagePackMember(9, NilImplication:=NilImplication.MemberDefault)> Public Property CATEGORY As String
-        <MessagePackMember(10, NilImplication:=NilImplication.MemberDefault)> Public Property MAIN_CLASS As String
-        <MessagePackMember(11, NilImplication:=NilImplication.MemberDefault)> Public Property SUB_CLASS As String
+        <MessagePackMember(9, NilImplication:=NilImplication.MemberDefault)> Public Property CATEGORY As String 'Implements ICompoundClass.kingdom
+        <MessagePackMember(10, NilImplication:=NilImplication.MemberDefault)> Public Property MAIN_CLASS As String 'Implements ICompoundClass.super_class
+        <MessagePackMember(11, NilImplication:=NilImplication.MemberDefault)> Public Property SUB_CLASS As String 'Implements ICompoundClass.class
         <MessagePackMember(12, NilImplication:=NilImplication.MemberDefault)> Public Property EXACT_MASS As Double Implements IExactMassProvider.ExactMass
         <MessagePackMember(13, NilImplication:=NilImplication.MemberDefault)> Public Property FORMULA As String Implements IFormulaProvider.Formula
         <MessagePackMember(14, NilImplication:=NilImplication.MemberDefault)> Public Property LIPIDBANK_ID As String
@@ -108,7 +113,7 @@ Namespace LipidMaps
         <MessagePackMember(23, NilImplication:=NilImplication.MemberDefault)> Public Property INCHI As String
         <MessagePackMember(24, NilImplication:=NilImplication.MemberDefault)> Public Property SMILES As String
         <MessagePackMember(25, NilImplication:=NilImplication.MemberDefault)> Public Property STATUS As String
-        <MessagePackMember(26, NilImplication:=NilImplication.MemberDefault)> Public Property CLASS_LEVEL4 As String
+        <MessagePackMember(26, NilImplication:=NilImplication.MemberDefault)> Public Property CLASS_LEVEL4 As String 'Implements ICompoundClass.sub_class
         <MessagePackMember(27, NilImplication:=NilImplication.MemberDefault)> Public Property METABOLOMICS_ID As String
 
 
@@ -174,6 +179,15 @@ Namespace LipidMaps
         ''' <returns></returns>
         Public Overrides Function ToString() As String
             Return $"[{CATEGORY}] {SYSTEMATIC_NAME}"
+        End Function
+
+        Public Function GetAnnotation() As MetaboliteAnnotation
+            Return New MetaboliteAnnotation With {
+                .CommonName = NAME,
+                .ExactMass = FormulaScanner.EvaluateExactMass(FORMULA),
+                .Formula = FORMULA,
+                .Id = Me.LM_ID
+            }
         End Function
     End Class
 End Namespace

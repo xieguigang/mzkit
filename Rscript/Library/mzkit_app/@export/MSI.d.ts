@@ -98,11 +98,25 @@ declare namespace MSI {
       function imzML(file: string): any;
    }
    /**
-     * @param topN default value Is ``3``.
-     * @param mzError default value Is ``'da:0.05'``.
-     * @param env default value Is ``null``.
+    * Extract the ion data matrix
+    * 
+    * 
+     * @param raw -
+     * @param topN -
+     * 
+     * + default value Is ``3``.
+     * @param mzError -
+     * 
+     * + default value Is ``'da:0.05'``.
+     * @param ionSet A tuple list of the ion dataset range, the tuple list object should 
+     *  be in data format of [unique_id => mz]
+     * 
+     * + default value Is ``null``.
+     * @param env -
+     * 
+     * + default value Is ``null``.
    */
-   function peakMatrix(raw: object, topN?: object, mzError?: any, env?: object): any;
+   function peakMatrix(raw: object, topN?: object, mzError?: any, ionSet?: object, env?: object): any;
    /**
     * split the raw MSI 2D data into multiple parts with given resolution parts
     * 

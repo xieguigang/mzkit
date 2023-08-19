@@ -29,8 +29,13 @@
         code {
             color: rgb(194, 42, 42);
             background: inherit;
-            font-style:italic;
+            font-style: italic;
             font-weight: bold;
+        }
+
+        pre code {
+            color: rgb(54, 54, 54);
+            font-style: normal;
         }
 
         body {
@@ -158,12 +163,12 @@
 
         <div style="width: 100%; padding-left: 3%; color: black;">
             <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>plot.UV_signals</strong>(<i>timeSignals</i>,
-    <i>is.spectrum</i> = <span style='color: blue;'>FALSE</span>,
+    <i>is.spectrum</i> = <span style='color: blue !important;'>FALSE</span>,
     <i>size</i> = <span style='color: brown;'><strong>"1600,1200"</strong></span>,
     <i>padding</i> = <span style='color: brown;'><strong>"padding:100px 100px 100px 100px;"</strong></span>,
     <i>colorSet</i> = <span style='color: brown;'><strong>"Set1:c8"</strong></span>,
-    <i>pt.size</i> = 8,
-    <i>line.width</i> = 5);</code></pre>
+    <i>pt.size</i> = <span style='color: green;'>8</span>,
+    <i>line.width</i> = <span style='color: green;'>5</span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
@@ -212,6 +217,10 @@
         <h3>Value</h3>
 
         this function returns data object of type <a href="/clr/Microsoft/VisualBasic/Imaging/Driver/GraphicsData.html">GraphicsData</a>.
+
+        <h3 style="display: none;">Examples</h3>
+
+        
 
         <hr />
         <div style="text-align: center;">[Package <em>visual</em> version 1.0.0.0 <a

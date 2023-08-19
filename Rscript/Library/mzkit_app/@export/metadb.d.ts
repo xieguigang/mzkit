@@ -9,10 +9,18 @@
  * 
 */
 declare namespace metadb {
-   /**
-     * @param env default value Is ``null``.
-   */
-   function annotationStream(id: string, name: string, formula: string, env?: object): object;
+   module annotationStream {
+      /**
+       * Construct a basic metabolite annotation data collection
+       * 
+       * > the exact mass will be evaluated based on the input **`formula`** data.
+       * 
+        * @param env -
+        * 
+        * + default value Is ``null``.
+      */
+      function compounds(compounds: any, env?: object): object;
+   }
    module cbind {
       /**
         * @param env default value Is ``null``.
@@ -122,6 +130,10 @@ declare namespace metadb {
    */
    function parseLipidName(name: any, keepsRaw?: boolean, env?: object): any;
    /**
+    * parse the precursor type calculator
+    * 
+    * 
+     * @param ion A precursor type string, example as ``[M+H]``.
    */
    function precursorIon(ion: string): object;
    /**

@@ -66,6 +66,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
+Imports Microsoft.VisualBasic.Emit.Delegates
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp
@@ -86,12 +87,40 @@ Module MzPackAccess
     ''' </summary>
     ''' <param name="mzpack"></param>
     ''' <returns></returns>
+    ''' <example>
+    ''' let rawdata = open.mzpack(file = "./rawdata.mzPack");
+    ''' let tags = mzPack::getSampleTags(rawdata);
+    ''' 
+    ''' print(tags);
+    ''' </example>
     <ExportAPI("getSampleTags")>
-    Public Function getSampleTags(mzpack As String) As String()
-        Dim file As New StreamPack(mzpack)
-        Dim data As String() = mzStream.GetSampleTags(file)
+    <RApiReturn(TypeCodes.string)>
+    Public Function getSampleTags(mzpack As Object, Optional env As Environment = Nothing) As Object
+        If mzpack Is Nothing Then
+            Return Nothing
+        End If
 
-        Return data
+        If TypeOf mzpack Is mzPack Then
+            Return DirectCast(mzpack, mzPack).MS _
+                .Select(Function(ms1) ms1.meta.TryGetValue(mzStreamWriter.SampleMetaName)) _
+                .Where(Function(si) Not si.StringEmpty) _
+                .Distinct _
+                .ToArray
+        End If
+
+        If TypeOf mzpack Is String Then
+            Dim file As New StreamPack(DirectCast(mzpack, String))
+            Dim data As String() = mzStream.GetSampleTags(file)
+
+            Return data
+        ElseIf TypeOf mzpack Is Stream Then
+            Dim file As New StreamPack(DirectCast(mzpack, Stream))
+            Dim data As String() = mzStream.GetSampleTags(file)
+
+            Return data
+        Else
+            Return Message.InCompatibleType(GetType(Stream), mzpack.GetType, env)
+        End If
     End Function
 
     ''' <summary>
@@ -233,12 +262,21 @@ Module MzPackAccess
     End Function
 
     ''' <summary>
-    ''' show all ms1 scan id in a mzpack data object or 
-    ''' show all raw data file names in a mzwork data 
-    ''' package.
+    ''' Get object list inside the MS packdata
     ''' </summary>
     ''' <param name="mzpack"></param>
     ''' <param name="env"></param>
+    ''' <remarks>
+    ''' show all ms1 scan id in a mzpack data object or 
+    ''' show all raw data file names in a mzwork data 
+    ''' package.
+    ''' </remarks>
+    ''' <example>
+    ''' let rawdata = open.mzpack(file = "./rawdata.mzPack");
+    ''' let scan_id = mzPack::ls(mzpack = rawdata);
+    ''' 
+    ''' print(scan_id);
+    ''' </example>
     ''' <returns></returns>
     <ExportAPI("ls")>
     <RApiReturn(GetType(String))>
@@ -249,8 +287,8 @@ Module MzPackAccess
             Return DirectCast(mzpack, mzPack).MS _
                 .Select(Function(m) m.scan_id) _
                 .ToArray
-        ElseIf TypeOf mzpack Is mzPackReader Then
-            Return DirectCast(mzpack, mzPackReader) _
+        ElseIf mzpack.GetType.ImplementInterface(Of IMzPackReader) Then
+            Return DirectCast(mzpack, IMzPackReader) _
                 .EnumerateIndex _
                 .ToArray
         ElseIf TypeOf mzpack Is WorkspaceAccess Then
@@ -266,8 +304,18 @@ Module MzPackAccess
     ''' <param name="mzpack">A mzpack data lazy reader object that created via ``mzpack`` function.</param>
     ''' <param name="index">the scan id of the target ms1 scan data</param>
     ''' <returns></returns>
+    ''' <example>
+    ''' let rawdata = open.mzpack(file = "./rawdata.mzPack");
+    ''' let scan_id = mzPack::ls(mzpack = rawdata);
+    ''' 
+    ''' print(scan_id);
+    ''' 
+    ''' for(id in scan_id) {
+    '''     str(mzPack::metadata(rawdata, id));
+    ''' }
+    ''' </example>
     <ExportAPI("metadata")>
-    Public Function GetMetaData(mzpack As mzPackReader, index As String) As list
+    Public Function GetMetaData(mzpack As IMzPackReader, index As String) As list
         Return New list(mzpack.GetMetadata(index))
     End Function
 
@@ -277,8 +325,18 @@ Module MzPackAccess
     ''' <param name="mzpack">A mzpack data lazy reader object that created via ``mzpack`` function.</param>
     ''' <param name="index">the scan id of the target ms1 scan data</param>
     ''' <returns></returns>
+    ''' <example>
+    ''' let rawdata = open.mzpack(file = "./rawdata.mzPack");
+    ''' let scan_id = mzPack::ls(mzpack = rawdata);
+    ''' 
+    ''' print(scan_id);
+    ''' 
+    ''' for(id in scan_id) {
+    '''     str(mzPack::scaninfo(rawdata, id));
+    ''' }
+    ''' </example>
     <ExportAPI("scaninfo")>
-    Public Function scanInfo(mzpack As mzPackReader, index As String) As list
+    Public Function scanInfo(mzpack As IMzPackReader, index As String) As list
         Dim scan As ScanMS1 = mzpack.ReadScan(index, skipProducts:=True)
         Dim info As New list With {
             .slots = New Dictionary(Of String, Object) From {

@@ -29,8 +29,13 @@
         code {
             color: rgb(194, 42, 42);
             background: inherit;
-            font-style:italic;
+            font-style: italic;
             font-weight: bold;
+        }
+
+        pre code {
+            color: rgb(54, 54, 54);
+            font-style: normal;
         }
 
         body {
@@ -158,7 +163,7 @@
 
         <div style="width: 100%; padding-left: 3%; color: black;">
             <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>write.text_cache</strong>(<i>scans</i>,
-    <i>file</i> = <span style='color: blue;'>NULL</span>);</code></pre>
+    <i>file</i> = <span style='color: blue !important;'>NULL</span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
@@ -179,14 +184,22 @@
         </table>
 
 
-        <h3 style="display: none;">Details</h3>
+        <h3 style="display: block;">Details</h3>
 
-        
+        <p>this method used for create ascii text package data for the biodeep<br />
+ web application js code to read the ms rawdata.</p>
 
 
         <h3>Value</h3>
 
         this function returns data object of type <i>any</i> kind.
+
+        <h3 style="display: block;">Examples</h3>
+
+        <pre><code>let rawdata = open.mzpack(file = "./rawdata.mzPack");
+ let ms1 = [rawdata]::MS;
+ 
+ write.text_cache(ms1, file = "./msdata.txt");</code></pre>
 
         <hr />
         <div style="text-align: center;">[Package <em>mzweb</em> version 1.0.0.0 <a
