@@ -194,9 +194,14 @@
 
         this function returns data object in these one of the listed data types: <a href="/clr/BioNovoGene/BioDeep/Chemistry/LipidMaps/MetaData.html">MetaData</a>, <a href="/clr/SMRUCC/genomics/Analysis/HTS/GSEA/Background.html">Background</a>, <a href="/clr/BioNovoGene/BioDeep/Chemistry/LipidMaps/LipidMapsCategory.html">LipidMapsCategory</a>.
 
-        <h3 style="display: none;">Examples</h3>
+        <h3 style="display: block;">Examples</h3>
 
-        
+        <pre><code># gsea background model
+ let background = read.lipidmaps(
+     file = "./lipidmaps.msgpack", 
+     gsea.background = TRUE, 
+     category.model = FALSE
+ );</code></pre>
 
         <hr />
         <div style="text-align: center;">[Package <em>massbank</em> version 1.0.0.0 <a

@@ -216,7 +216,10 @@ Module library
     ''' <summary>
     ''' Check the ms1 parent ion is generated via the in-source fragment or not
     ''' </summary>
-    ''' <param name="ms1">the ms1 peaktable dataset, it could be a xcms peaktable object dataframe, a collection of ms1 scan with unique id tagged.</param>
+    ''' <param name="ms1">
+    ''' the ms1 peaktable dataset, it could be a xcms peaktable object dataframe, 
+    ''' a collection of ms1 scan with unique id tagged.
+    ''' </param>
     ''' <param name="ms2">
     ''' the ms2 products list
     ''' </param>

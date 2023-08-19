@@ -67,4 +67,10 @@ Namespace MetaLib.Models
         Property molecular_framework As String
 
     End Interface
+
+    Public MustInherit Class ClassReader
+
+        Public MustOverride Function GetClass(id As String) As CompoundClass
+
+    End Class
 End Namespace

@@ -1,58 +1,58 @@
 ﻿#Region "Microsoft.VisualBasic::4e8e3aed3e1241d8361086ce5b2ba8c5, mzkit\Rscript\Library\mzkit\annotations\Massbank.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 484
-    '    Code Lines: 353
-    ' Comment Lines: 65
-    '   Blank Lines: 66
-    '     File Size: 19.98 KB
+' Summaries:
 
 
-    ' Module Massbank
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: castToClassProfiles, chebiSecondary2Main, createIdMapping, createLipidMapTable, GlycosylNameSolver
-    '               GlycosylTokens, hmdbSecondary2Main, KEGGPathwayCoverages, lipidnameMapping, lipidProfiles
-    '               name2, ParseChebiEntity, readLipidMapsRepo, readMoNA, readSDF
-    '               saveIDMapping, toLipidMaps, writeLipidMapsRepo
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 484
+'    Code Lines: 353
+' Comment Lines: 65
+'   Blank Lines: 66
+'     File Size: 19.98 KB
+
+
+' Module Massbank
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Function: castToClassProfiles, chebiSecondary2Main, createIdMapping, createLipidMapTable, GlycosylNameSolver
+'               GlycosylTokens, hmdbSecondary2Main, KEGGPathwayCoverages, lipidnameMapping, lipidProfiles
+'               name2, ParseChebiEntity, readLipidMapsRepo, readMoNA, readSDF
+'               saveIDMapping, toLipidMaps, writeLipidMapsRepo
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -62,6 +62,7 @@ Imports System.Text.RegularExpressions
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MSP
 Imports BioNovoGene.BioDeep.Chemistry
 Imports BioNovoGene.BioDeep.Chemistry.LipidMaps
+Imports BioNovoGene.BioDeep.Chemistry.MetaLib.Models
 Imports BioNovoGene.BioDeep.Chemistry.TMIC
 Imports BioNovoGene.BioDeep.Chemoinformatics
 Imports BioNovoGene.BioDeep.Chemoinformatics.NaturalProduct
@@ -114,6 +115,11 @@ Module Massbank
         Return table
     End Function
 
+    ''' <summary>
+    ''' Extract the annotation metadata from the MONA comment data
+    ''' </summary>
+    ''' <param name="msp">A metabolite data which is parse from the MONA msp dataset</param>
+    ''' <returns></returns>
     <ExportAPI("mona.msp_metadata")>
     Public Function monaMSP(msp As MspData) As Object
         Return msp.GetMetadata
@@ -159,18 +165,32 @@ Module Massbank
     ''' <summary>
     ''' read metabolite data in a given sdf data file.
     ''' </summary>
-    ''' <param name="file"></param>
+    ''' <param name="file">the file path of the target sdf file</param>
+    ''' <param name="parseStruct">
+    ''' Andalso parse the molecular structure data inside the metabolite annotation data?
+    ''' </param>
     ''' <param name="env"></param>
     ''' <returns></returns>
+    ''' <example>
+    ''' let dataset = read.SDF(file = "./example.sdf", lazy = FALSE);
+    ''' </example>
     <ExportAPI("read.SDF")>
+    <RApiReturn(GetType(SDF))>
     Public Function readSDF(file As String,
                             Optional parseStruct As Boolean = True,
-                            Optional env As Environment = Nothing) As pipeline
+                            Optional lazy As Boolean = True,
+                            Optional env As Environment = Nothing) As Object
 
         If Not file.FileExists Then
             Return Internal.debug.stop({$"the required file is not exists on your file system!", $"file: {file}"}, env)
         Else
-            Return SDF.IterateParser(file, parseStruct).DoCall(AddressOf pipeline.CreateFromPopulator)
+            Dim readStream = SDF.IterateParser(file, parseStruct)
+
+            If lazy Then
+                Return readStream.DoCall(AddressOf pipeline.CreateFromPopulator)
+            Else
+                Return readStream.ToArray
+            End If
         End If
     End Function
 
@@ -181,8 +201,15 @@ Module Massbank
     ''' <param name="file"></param>
     ''' <param name="env"></param>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' save the lipidmaps data object into file in messagepack format
+    ''' </remarks>
     <ExportAPI("write.lipidmaps")>
-    Public Function writeLipidMapsRepo(<RRawVectorArgument> lipidmaps As Object, file As Object, Optional env As Environment = Nothing) As Object
+    Public Function writeLipidMapsRepo(<RRawVectorArgument>
+                                       lipidmaps As Object,
+                                       file As Object,
+                                       Optional env As Environment = Nothing) As Object
+
         Dim lipidstream As pipeline = pipeline.TryCreatePipeline(Of LipidMaps.MetaData)(lipidmaps, env)
         Dim output = GetFileStream(file, IO.FileAccess.Write, env)
 
@@ -204,6 +231,14 @@ Module Massbank
     ''' and also cast the lipidmaps metabolite metadata to the gsea background model?
     ''' </param>
     ''' <returns></returns>
+    ''' <example>
+    ''' # gsea background model
+    ''' let background = read.lipidmaps(
+    '''     file = "./lipidmaps.msgpack", 
+    '''     gsea.background = TRUE, 
+    '''     category.model = FALSE
+    ''' );
+    ''' </example>
     <ExportAPI("read.lipidmaps")>
     <RApiReturn(GetType(LipidMaps.MetaData), GetType(Background), GetType(LipidMapsCategory))>
     Public Function readLipidMapsRepo(<RRawVectorArgument>
@@ -242,6 +277,58 @@ Module Massbank
     End Function
 
     ''' <summary>
+    ''' Create lipid name helper for annotation
+    ''' </summary>
+    ''' <param name="lipidmaps"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    ''' <example>
+    ''' # cast sdf dataset to lipidmaps data object
+    ''' let dataset = read.SDF(file = "./example.sdf", lazy = FALSE);
+    ''' let lipids = dataset |> as.lipidmaps();
+    ''' 
+    ''' # create annotation helper
+    ''' let lipidnames = lipid.names(lipids);
+    ''' </example>
+    <ExportAPI("lipid.names")>
+    <RApiReturn(GetType(CompoundNameReader))>
+    Public Function lipidNameReader(<RRawVectorArgument> lipidmaps As Object, Optional env As Environment = Nothing) As Object
+        Dim lipids As pipeline = pipeline.TryCreatePipeline(Of LipidMaps.MetaData)(lipidmaps, env)
+
+        If lipids.isError Then
+            Return lipids.getError
+        Else
+            Return New LipidMaps.LipidNameReader(lipids.populates(Of LipidMaps.MetaData)(env))
+        End If
+    End Function
+
+    ''' <summary>
+    ''' Create lipid class helper for annotation
+    ''' </summary>
+    ''' <param name="lipidmaps"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    ''' <example>
+    ''' # cast sdf dataset to lipidmaps data object
+    ''' let dataset = read.SDF(file = "./example.sdf", lazy = FALSE);
+    ''' let lipids = dataset |> as.lipidmaps();
+    ''' 
+    ''' # create annotation helper
+    ''' let class = lipid.class(lipids);
+    ''' </example>
+    <ExportAPI("lipid.class")>
+    <RApiReturn(GetType(ClassReader))>
+    Public Function lipidClassReader(<RRawVectorArgument> lipidmaps As Object, Optional env As Environment = Nothing) As Object
+        Dim lipids As pipeline = pipeline.TryCreatePipeline(Of LipidMaps.MetaData)(lipidmaps, env)
+
+        If lipids.isError Then
+            Return lipids.getError
+        Else
+            Return New LipidMaps.LipidClassReader(lipids.populates(Of LipidMaps.MetaData)(env))
+        End If
+    End Function
+
+    ''' <summary>
     ''' populate lipidmaps meta data objects from the loaded sdf data stream
     ''' </summary>
     ''' <param name="sdf">
@@ -249,11 +336,18 @@ Module Massbank
     ''' </param>
     ''' <param name="env"></param>
     ''' <returns></returns>
+    ''' <example>
+    ''' # cast sdf dataset to lipidmaps data object
+    ''' let dataset = read.SDF(file = "./example.sdf", lazy = FALSE);
+    ''' let lipids = dataset |> as.lipidmaps();
+    ''' </example>
     <ExportAPI("as.lipidmaps")>
     Public Function toLipidMaps(<RRawVectorArgument>
                                 sdf As Object,
                                 Optional asList As Boolean = False,
+                                Optional lazy As Boolean = True,
                                 Optional env As Environment = Nothing) As Object
+
         Dim sdfStream As pipeline = pipeline.TryCreatePipeline(Of SDF)(sdf, env)
 
         If sdfStream.isError Then
@@ -270,9 +364,13 @@ Module Massbank
                                   End Function)
             }
         Else
-            Return sdfStream.populates(Of SDF)(env) _
-                .CreateMeta _
-                .DoCall(AddressOf pipeline.CreateFromPopulator)
+            Dim stream = sdfStream.populates(Of SDF)(env).CreateMeta
+
+            If lazy Then
+                Return stream.DoCall(AddressOf pipeline.CreateFromPopulator)
+            Else
+                Return stream.ToArray
+            End If
         End If
     End Function
 

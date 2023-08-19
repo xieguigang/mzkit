@@ -82,6 +82,11 @@ Public Module MspReader
         }
     End Function
 
+    ''' <summary>
+    ''' Extract the metadata from the MONA comment data
+    ''' </summary>
+    ''' <param name="spectrum"></param>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function GetMetadata(spectrum As MspData) As MetaData
