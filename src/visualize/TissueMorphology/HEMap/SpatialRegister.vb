@@ -39,7 +39,13 @@ Namespace HEMap
             End Using
         End Sub
 
-        Public Shared Function ParseFile(file As Stream) As SpatialRegister
+        ''' <summary>
+        ''' Close the given <paramref name="file"/> automatically in this function if the parameter
+        ''' value of <paramref name="leaveOpen"/> is set FALSE by default.
+        ''' </summary>
+        ''' <param name="file"></param>
+        ''' <returns></returns>
+        Public Shared Function ParseFile(file As Stream, Optional leaveOpen As Boolean = False) As SpatialRegister
             Dim buf As New netCDFReader(file)
             Dim view_size As String = buf!view_size
             Dim msi_scale As String = buf!msi_scale
@@ -74,7 +80,10 @@ Namespace HEMap
 
             Call image.WriteARGBStream(img.Select(Function(l) CUInt(l)).ToArray)
             Call image.Dispose()
-            Call file.Close()
+
+            If Not leaveOpen Then
+                Call file.Close()
+            End If
 
             Return New SpatialRegister With {
                 .label = label,
