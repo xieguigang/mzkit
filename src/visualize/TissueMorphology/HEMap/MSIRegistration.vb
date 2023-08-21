@@ -1,7 +1,13 @@
-﻿Namespace HEMap
+﻿Imports System.Drawing
+Imports System.Runtime.CompilerServices
 
-    Public Module Module1
+Namespace HEMap
 
+    Public Module MSIRegistration
 
+        <Extension>
+        Public Function SpatialTranslation(register As SpatialRegister, MSI As PointF()) As PointF()
+
+        End Function
     End Module
 End Namespace
