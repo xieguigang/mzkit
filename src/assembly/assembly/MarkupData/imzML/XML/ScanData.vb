@@ -129,6 +129,10 @@ Namespace MarkupData.imzML
             Return New Point(x, y)
         End Function
 
+        Public Overrides Function ToString() As String
+            Return $"({x},{y}) {totalIon}"
+        End Function
+
         Public Shared Function GetBuffer(summary As PixelScanIntensity()) As Byte()
             Using buf As New MemoryStream, file As New BinaryDataWriter(buf)
                 Call file.Write(summary.Length)
