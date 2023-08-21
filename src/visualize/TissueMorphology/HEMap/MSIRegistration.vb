@@ -18,7 +18,9 @@ Namespace HEMap
         ''' <returns></returns>
         <Extension>
         Public Function SpatialTranslation(register As SpatialRegister, MSI As PointF()) As PointF()
-            Dim newPolygon As New Polygon2D(MSI.Rotate(register.rotation.ToRadians))
+            Dim shape As New Polygon2D(MSI)
+            Dim original_offset As PointF = shape.GetRectangle.Location
+            Dim newPolygon As New Polygon2D((shape - original_offset).AsEnumerable.Rotate(-register.rotation.ToRadians))
             Dim y As Double() = newPolygon.ypoints
             Dim newDims As Size = newPolygon.GetSize
             Dim dx As New DoubleRange(newPolygon.xpoints)
