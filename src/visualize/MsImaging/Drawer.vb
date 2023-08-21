@@ -173,6 +173,7 @@ Public Class Drawer : Implements IDisposable
                                               Optional colorSet$ = "Jet",
                                               Optional pixelDrawer As Boolean = True,
                                               Optional mapLevels As Integer = 25,
+                                              Optional background As String = "black",
                                               Optional driver As Drivers = Drivers.Default) As GraphicsData
 
         Dim pixels As PixelData() = layer _
@@ -184,13 +185,17 @@ Public Class Drawer : Implements IDisposable
                         }
                     End Function) _
             .ToArray
-        Dim engine As Renderer = If(pixelDrawer, New PixelRender(heatmapRender:=False), New RectangleRender(driver, heatmapRender:=False))
+        Dim engine As Renderer = If(
+            pixelDrawer,
+            New PixelRender(heatmapRender:=False),
+            New RectangleRender(driver, heatmapRender:=False)
+        )
 
         Return engine.RenderPixels(
             pixels:=pixels,
             dimension:=dimension,
             colorSet:=colorSet,
-            defaultFill:="black",
+            defaultFill:=background,
             mapLevels:=mapLevels
         )
     End Function
