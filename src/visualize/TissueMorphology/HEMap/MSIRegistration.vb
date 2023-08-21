@@ -9,6 +9,12 @@ Namespace HEMap
 
     Public Module MSIRegistration
 
+        ''' <summary>
+        ''' Apply the spatial mapping between the MSI/HEstain
+        ''' </summary>
+        ''' <param name="register"></param>
+        ''' <param name="MSI"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function SpatialTranslation(register As SpatialRegister, MSI As PointF()) As PointF()
             Dim newPolygon As New Polygon2D(MSI.Rotate(register.rotation))
