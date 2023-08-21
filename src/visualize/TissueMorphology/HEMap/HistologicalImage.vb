@@ -62,101 +62,104 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Linq
 
-''' <summary>
-''' helper module for processing haematoxylin and eosin staining image
-''' </summary>
-Public Module HistologicalImage
+Namespace HEMap
 
     ''' <summary>
-    ''' convert to gray scale
+    ''' helper module for processing haematoxylin and eosin staining image
     ''' </summary>
-    ''' <param name="HE"></param>
-    ''' <returns></returns>
-    <Extension>
-    Public Function MonoScale(HE As Image) As Image
-        Return HE.Grayscale
-    End Function
+    Public Module HistologicalImage
 
-    <Extension>
-    Public Function HeatMap(HE As Image,
+        ''' <summary>
+        ''' convert to gray scale
+        ''' </summary>
+        ''' <param name="HE"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function MonoScale(HE As Image) As Image
+            Return HE.Grayscale
+        End Function
+
+        <Extension>
+        Public Function HeatMap(HE As Image,
                             Optional scale As ScalerPalette = ScalerPalette.turbo,
                             Optional mapLevels As Integer = 64) As GraphicsData
 
-        Return HE.Image2DMap(
+            Return HE.Image2DMap(
             scaleName:=scale.Description,
             mapLevels:=mapLevels
         )
-    End Function
+        End Function
 
-    ''' <summary>
-    ''' 
-    ''' </summary>
-    ''' <param name="target"></param>
-    ''' <param name="colors"></param>
-    ''' <param name="gridSize"></param>
-    ''' <param name="tolerance">
-    ''' the color channel tolerance, [0, 255]
-    ''' </param>
-    ''' <param name="densityGrid"></param>
-    ''' <returns></returns>
-    Public Iterator Function GridScan(target As Image,
-                                      Optional colors As String() = Nothing,
-                                      Optional gridSize As Integer = 25,
-                                      Optional tolerance As Integer = 15,
-                                      Optional densityGrid As Integer = 5) As IEnumerable(Of Cell)
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="target"></param>
+        ''' <param name="colors"></param>
+        ''' <param name="gridSize"></param>
+        ''' <param name="tolerance">
+        ''' the color channel tolerance, [0, 255]
+        ''' </param>
+        ''' <param name="densityGrid"></param>
+        ''' <returns></returns>
+        Public Iterator Function GridScan(target As Image,
+                                          Optional colors As String() = Nothing,
+                                          Optional gridSize As Integer = 25,
+                                          Optional tolerance As Integer = 15,
+                                          Optional densityGrid As Integer = 5) As IEnumerable(Of Cell)
 
-        Dim A As Double = gridSize ^ 2
-        Dim sx, sy As Integer
-        Dim colorData As New Dictionary(Of String, Color)
+            Dim A As Double = gridSize ^ 2
+            Dim sx, sy As Integer
+            Dim colorData As New Dictionary(Of String, Color)
 
-        If Not colors Is Nothing Then
-            For Each cl As String In colors
-                Call colorData.Add(cl, cl.TranslateColor)
-            Next
-        End If
-
-        Using bitmap As BitmapBuffer = BitmapBuffer.FromImage(target)
-            For i As Integer = 1 To bitmap.Width Step gridSize
-                For j As Integer = 1 To bitmap.Height Step gridSize
-                    Dim block As Color()() = bitmap _
-                        .GetPixel(New Rectangle(i, j, gridSize - 1, gridSize - 1)) _
-                        .ToArray
-                    Dim r = block.IteratesALL.Select(Function(c) CDbl(c.R)).Average
-                    Dim g = block.IteratesALL.Select(Function(c) CDbl(c.G)).Average
-                    Dim b = block.IteratesALL.Select(Function(c) CDbl(c.B)).Average
-                    Dim matrix As Grid(Of Color) = block _
-                        .Select(Function(row, y)
-                                    Return row.Select(Function(c, x) (c, x, y))
-                                End Function) _
-                        .IteratesALL _
-                        .DoCall(AddressOf Grid(Of Color).Create)
-                    Dim black As [Object] = [Object].Eval(matrix, Color.Black, gridSize, tolerance, densityGrid)
-                    Dim cell As New Cell With {
-                        .X = i,
-                        .Y = j,
-                        .B = b,
-                        .G = g,
-                        .R = r,
-                        .Black = black,
-                        .ScaleX = sx,
-                        .ScaleY = sy
-                    }
-
-                    If Not colors Is Nothing Then
-                        For Each cl As String In colors
-                            cell.layers(cl) = [Object].Eval(matrix, colorData(cl), gridSize, tolerance, densityGrid)
-                        Next
-                    End If
-
-                    sy += 1
-
-                    Yield cell
+            If Not colors Is Nothing Then
+                For Each cl As String In colors
+                    Call colorData.Add(cl, cl.TranslateColor)
                 Next
+            End If
 
-                sy = 0
-                sx += 1
-            Next
-        End Using
-    End Function
+            Using bitmap As BitmapBuffer = BitmapBuffer.FromImage(target)
+                For i As Integer = 1 To bitmap.Width Step gridSize
+                    For j As Integer = 1 To bitmap.Height Step gridSize
+                        Dim block As Color()() = bitmap _
+                            .GetPixel(New Rectangle(i, j, gridSize - 1, gridSize - 1)) _
+                            .ToArray
+                        Dim r = block.IteratesALL.Select(Function(c) CDbl(c.R)).Average
+                        Dim g = block.IteratesALL.Select(Function(c) CDbl(c.G)).Average
+                        Dim b = block.IteratesALL.Select(Function(c) CDbl(c.B)).Average
+                        Dim matrix As Grid(Of Color) = block _
+                            .Select(Function(row, y)
+                                        Return row.Select(Function(c, x) (c, x, y))
+                                    End Function) _
+                            .IteratesALL _
+                            .DoCall(AddressOf Grid(Of Color).Create)
+                        Dim black As [Object] = [Object].Eval(matrix, Color.Black, gridSize, tolerance, densityGrid)
+                        Dim cell As New Cell With {
+                            .X = i,
+                            .Y = j,
+                            .B = b,
+                            .G = g,
+                            .R = r,
+                            .Black = black,
+                            .ScaleX = sx,
+                            .ScaleY = sy
+                        }
 
-End Module
+                        If Not colors Is Nothing Then
+                            For Each cl As String In colors
+                                cell.layers(cl) = [Object].Eval(matrix, colorData(cl), gridSize, tolerance, densityGrid)
+                            Next
+                        End If
+
+                        sy += 1
+
+                        Yield cell
+                    Next
+
+                    sy = 0
+                    sx += 1
+                Next
+            End Using
+        End Function
+
+    End Module
+End Namespace

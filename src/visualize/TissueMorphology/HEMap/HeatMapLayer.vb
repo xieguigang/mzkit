@@ -65,71 +65,74 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D.HeatMap
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Distributions
 
-Public Module HeatMapLayer
+Namespace HEMap
 
-    <Extension>
-    Public Function GetHeatMapLayer(grid As Cell(),
-                                    Optional heatmap As Layers = Layers.Density,
-                                    Optional channel As String = "black") As PixelData()
+    Public Module HeatMapLayer
 
-        Dim objs As (obj As [Object], cell As Cell)() = Nothing
-        Dim project =
-            Function(selector As Func(Of [Object], Double))
-                Return objs _
-                    .Where(Function(i) i.obj IsNot Nothing) _
-                    .Select(Function(i)
-                                Return New PixelData With {
-                                    .Scale = selector(i.obj),
-                                    .X = i.cell.ScaleX,
-                                    .Y = i.cell.ScaleY
-                                }
-                            End Function) _
-                    .ToArray
-            End Function
+        <Extension>
+        Public Function GetHeatMapLayer(grid As Cell(),
+                                        Optional heatmap As Layers = Layers.Density,
+                                        Optional channel As String = "black") As PixelData()
 
-        Select Case Strings.LCase(channel)
-            Case "black"
-                objs = grid.Select(Function(i) (i.Black, i)).ToArray
-            Case Else
-                objs = grid _
-                    .Select(Function(i)
-                                If i.layers.ContainsKey(channel) Then
-                                    Return (i.layers(channel), i)
-                                Else
-                                    Return Nothing
-                                End If
-                            End Function) _
-                    .ToArray
-        End Select
+            Dim objs As (obj As [Object], cell As Cell)() = Nothing
+            Dim project =
+                Function(selector As Func(Of [Object], Double))
+                    Return objs _
+                        .Where(Function(i) i.obj IsNot Nothing) _
+                        .Select(Function(i)
+                                    Return New PixelData With {
+                                        .Scale = selector(i.obj),
+                                        .X = i.cell.ScaleX,
+                                        .Y = i.cell.ScaleY
+                                    }
+                                End Function) _
+                        .ToArray
+                End Function
 
-        Select Case heatmap
-            Case Layers.Pixels : Return project(Function(i) i.Pixels)
-            Case Layers.Density : Return project(Function(i) i.Density)
-            Case Layers.Ratio : Return project(Function(i) i.Ratio)
-            Case Else
-                Throw New NotImplementedException(heatmap.Description)
-        End Select
-    End Function
+            Select Case Strings.LCase(channel)
+                Case "black"
+                    objs = grid.Select(Function(i) (i.Black, i)).ToArray
+                Case Else
+                    objs = grid _
+                        .Select(Function(i)
+                                    If i.layers.ContainsKey(channel) Then
+                                        Return (i.layers(channel), i)
+                                    Else
+                                        Return Nothing
+                                    End If
+                                End Function) _
+                        .ToArray
+            End Select
 
-    <Extension>
-    Public Function RSD(layer As PixelData(),
-                        Optional nbags As Integer = 300,
-                        Optional nsamples As Integer = 32) As Double()
+            Select Case heatmap
+                Case Layers.Pixels : Return project(Function(i) i.Pixels)
+                Case Layers.Density : Return project(Function(i) i.Density)
+                Case Layers.Ratio : Return project(Function(i) i.Ratio)
+                Case Else
+                    Throw New NotImplementedException(heatmap.Description)
+            End Select
+        End Function
 
-        Dim sampling = Bootstraping.Samples(layer, N:=nsamples, bags:=nbags).ToArray
-        Dim rsdVals As Double() = sampling _
-            .Select(Function(bag)
-                        Return bag.value.Select(Function(a) a.Scale).RSD
-                    End Function) _
-            .ToArray
+        <Extension>
+        Public Function RSD(layer As PixelData(),
+                            Optional nbags As Integer = 300,
+                            Optional nsamples As Integer = 32) As Double()
 
-        Return rsdVals
-    End Function
+            Dim sampling = Bootstraping.Samples(layer, N:=nsamples, bags:=nbags).ToArray
+            Dim rsdVals As Double() = sampling _
+                .Select(Function(bag)
+                            Return bag.value.Select(Function(a) a.Scale).RSD
+                        End Function) _
+                .ToArray
 
-End Module
+            Return rsdVals
+        End Function
 
-Public Enum Layers
-    Pixels
-    Density
-    Ratio
-End Enum
+    End Module
+
+    Public Enum Layers
+        Pixels
+        Density
+        Ratio
+    End Enum
+End Namespace

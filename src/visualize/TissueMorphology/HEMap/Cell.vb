@@ -53,49 +53,52 @@
 
 #End Region
 
-Public Class Cell
+Namespace HEMap
 
-    ''' <summary>
-    ''' the location X of the grid
-    ''' </summary>
-    ''' <returns></returns>
-    Public Property X As Integer
-    ''' <summary>
-    ''' the location Y of the grid
-    ''' </summary>
-    ''' <returns></returns>
-    Public Property Y As Integer
+    Public Class Cell
 
-    Public Property ScaleX As Integer
-    Public Property ScaleY As Integer
+        ''' <summary>
+        ''' the location X of the grid
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property X As Integer
+        ''' <summary>
+        ''' the location Y of the grid
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Y As Integer
 
-    ''' <summary>
-    ''' average value of Red channel
-    ''' </summary>
-    ''' <returns></returns>
-    Public Property R As Double
-    ''' <summary>
-    ''' average value of Green channel
-    ''' </summary>
-    ''' <returns></returns>
-    Public Property G As Double
-    ''' <summary>
-    ''' average value of Blue channel
-    ''' </summary>
-    ''' <returns></returns>
-    Public Property B As Double
-    ''' <summary>
-    ''' 
-    ''' </summary>
-    ''' <returns></returns>
-    Public Property Black As [Object]
+        Public Property ScaleX As Integer
+        Public Property ScaleY As Integer
 
-    Public Property layers As New Dictionary(Of String, [Object])
+        ''' <summary>
+        ''' average value of Red channel
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property R As Double
+        ''' <summary>
+        ''' average value of Green channel
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property G As Double
+        ''' <summary>
+        ''' average value of Blue channel
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property B As Double
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Black As [Object]
 
-    Public ReadOnly Property isBlack As Boolean
-        Get
-            Return Black.Ratio > 0.975
-        End Get
-    End Property
+        Public Property layers As New Dictionary(Of String, [Object])
 
-End Class
+        Public ReadOnly Property isBlack As Boolean
+            Get
+                Return Black.Ratio > 0.975
+            End Get
+        End Property
+
+    End Class
+End Namespace

@@ -61,42 +61,44 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
-''' <summary>
-''' layer object data
-''' </summary>
-Public Class [Object]
+Namespace HEMap
 
-    Public Property Pixels As Integer
-    Public Property Density As Double
-    Public Property Ratio As Double
+    ''' <summary>
+    ''' layer object data
+    ''' </summary>
+    Public Class [Object]
 
-    Public Shared Function Eval(rect As Grid(Of Color),
-                                target As Color,
-                                gridSize As Integer,
-                                Optional tolerance As Integer = 5,
-                                Optional densityGrid As Integer = 5) As [Object]
+        Public Property Pixels As Integer
+        Public Property Density As Double
+        Public Property Ratio As Double
 
-        Dim hits As New List(Of Integer)
-        Dim A As Double = densityGrid ^ 2
+        Public Shared Function Eval(rect As Grid(Of Color),
+                                    target As Color,
+                                    gridSize As Integer,
+                                    Optional tolerance As Integer = 5,
+                                    Optional densityGrid As Integer = 5) As [Object]
 
-        rect = rect _
-            .Cells _
-            .Where(Function(c)
-                       Return c.data.Equals(target, tolerance:=tolerance)
-                   End Function) _
-            .DoCall(AddressOf Grid(Of Color).CreateReadOnly)
+            Dim hits As New List(Of Integer)
+            Dim A As Double = densityGrid ^ 2
 
-        For x As Integer = 1 To gridSize Step densityGrid
-            For y As Integer = 1 To gridSize Step densityGrid
-                hits.Add(rect.Query(x, y, densityGrid).Count)
+            rect = rect _
+                .Cells _
+                .Where(Function(c)
+                           Return c.data.Equals(target, tolerance:=tolerance)
+                       End Function) _
+                .DoCall(AddressOf Grid(Of Color).CreateReadOnly)
+
+            For x As Integer = 1 To gridSize Step densityGrid
+                For y As Integer = 1 To gridSize Step densityGrid
+                    Call hits.Add(rect.Query(x, y, densityGrid).Count)
+                Next
             Next
-        Next
 
-        Return New [Object] With {
-            .Pixels = rect.Cells.Count,
-            .Density = (New Vector(integers:=hits) / A).Average,
-            .Ratio = .Pixels / (gridSize ^ 2)
-        }
-    End Function
-
-End Class
+            Return New [Object] With {
+                .Pixels = rect.Cells.Count,
+                .Density = (New Vector(integers:=hits) / A).Average,
+                .Ratio = .Pixels / (gridSize ^ 2)
+            }
+        End Function
+    End Class
+End Namespace
