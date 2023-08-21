@@ -81,13 +81,13 @@ Namespace HEMap
 
         <Extension>
         Public Function HeatMap(HE As Image,
-                            Optional scale As ScalerPalette = ScalerPalette.turbo,
-                            Optional mapLevels As Integer = 64) As GraphicsData
+                                Optional scale As ScalerPalette = ScalerPalette.turbo,
+                                Optional mapLevels As Integer = 64) As GraphicsData
 
             Return HE.Image2DMap(
-            scaleName:=scale.Description,
-            mapLevels:=mapLevels
-        )
+                scaleName:=scale.Description,
+                mapLevels:=mapLevels
+            )
         End Function
 
         ''' <summary>
@@ -123,34 +123,12 @@ Namespace HEMap
                         Dim block As Color()() = bitmap _
                             .GetPixel(New Rectangle(i, j, gridSize - 1, gridSize - 1)) _
                             .ToArray
-                        Dim r = block.IteratesALL.Select(Function(c) CDbl(c.R)).Average
-                        Dim g = block.IteratesALL.Select(Function(c) CDbl(c.G)).Average
-                        Dim b = block.IteratesALL.Select(Function(c) CDbl(c.B)).Average
-                        Dim matrix As Grid(Of Color) = block _
-                            .Select(Function(row, y)
-                                        Return row.Select(Function(c, x) (c, x, y))
-                                    End Function) _
-                            .IteratesALL _
-                            .DoCall(AddressOf Grid(Of Color).Create)
-                        Dim black As [Object] = [Object].Eval(matrix, Color.Black, gridSize, tolerance, densityGrid)
-                        Dim cell As New Cell With {
-                            .X = i,
-                            .Y = j,
-                            .B = b,
-                            .G = g,
-                            .R = r,
-                            .Black = black,
-                            .ScaleX = sx,
-                            .ScaleY = sy
-                        }
-
-                        If Not colors Is Nothing Then
-                            For Each cl As String In colors
-                                cell.layers(cl) = [Object].Eval(matrix, colorData(cl), gridSize, tolerance, densityGrid)
-                            Next
-                        End If
-
-                        sy += 1
+                        Dim cell As Cell = block.CellEvaluation(
+                            sx, sy,
+                            i, j,
+                            gridSize, tolerance, densityGrid,
+                            colors, colorData
+                        )
 
                         Yield cell
                     Next
@@ -161,5 +139,48 @@ Namespace HEMap
             End Using
         End Function
 
+        <Extension>
+        Private Function CellEvaluation(block As Color()(),
+                                        ByRef sx As Integer,
+                                        ByRef sy As Integer,
+                                        i As Integer,
+                                        j As Integer,
+                                        gridSize As Integer,
+                                        tolerance As Integer,
+                                        densityGrid As Integer,
+                                        colors As String(),
+                                        colorData As Dictionary(Of String, Color)) As Cell
+
+            Dim r = block.IteratesALL.Select(Function(c) CDbl(c.R)).Average
+            Dim g = block.IteratesALL.Select(Function(c) CDbl(c.G)).Average
+            Dim b = block.IteratesALL.Select(Function(c) CDbl(c.B)).Average
+            Dim matrix As Grid(Of Color) = block _
+                .Select(Function(row, y)
+                            Return row.Select(Function(c, x) (c, x, y))
+                        End Function) _
+                .IteratesALL _
+                .DoCall(AddressOf Grid(Of Color).Create)
+            Dim black As [Object] = [Object].Eval(matrix, Color.Black, gridSize, tolerance, densityGrid)
+            Dim cell As New Cell With {
+                .X = i,
+                .Y = j,
+                .B = b,
+                .G = g,
+                .R = r,
+                .Black = black,
+                .ScaleX = sx,
+                .ScaleY = sy
+            }
+
+            If Not colors Is Nothing Then
+                For Each cl As String In colors
+                    cell.layers(cl) = [Object].Eval(matrix, colorData(cl), gridSize, tolerance, densityGrid)
+                Next
+            End If
+
+            sy += 1
+
+            Return cell
+        End Function
     End Module
 End Namespace
