@@ -5,6 +5,7 @@ Imports Microsoft.VisualBasic.DataStorage.netCDF.Components
 Imports Microsoft.VisualBasic.DataStorage.netCDF.Data
 Imports Microsoft.VisualBasic.DataStorage.netCDF.DataVector
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
+Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports any = Microsoft.VisualBasic.Scripting
 
@@ -15,6 +16,11 @@ Namespace HEMap
         Public Property HEstain As Image
         Public Property mappings As SpotMap()
         Public Property offset As PointF
+
+        ''' <summary>
+        ''' angle data in unit angle, not radius, required translation via method <see cref="Trigonometric.ToRadians"/>
+        ''' </summary>
+        ''' <returns></returns>
         Public Property rotation As Double
         Public Property mirror As Boolean
         Public Property label As String

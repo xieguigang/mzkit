@@ -4,6 +4,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math
 
 Namespace HEMap
 
@@ -17,7 +18,7 @@ Namespace HEMap
         ''' <returns></returns>
         <Extension>
         Public Function SpatialTranslation(register As SpatialRegister, MSI As PointF()) As PointF()
-            Dim newPolygon As New Polygon2D(MSI.Rotate(register.rotation))
+            Dim newPolygon As New Polygon2D(MSI.Rotate(register.rotation.ToRadians))
             Dim y As Double() = newPolygon.ypoints
             Dim newDims As Size = newPolygon.GetSize
             Dim dx As New DoubleRange(newPolygon.xpoints)
