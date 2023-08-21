@@ -19,8 +19,18 @@ Namespace HEMap
         Public Property mirror As Boolean
         Public Property label As String
         Public Property spotColor As String
+
+        ''' <summary>
+        ''' the new dimension size of the MSI data
+        ''' </summary>
+        ''' <returns></returns>
         Public Property viewSize As Size
         Public Property MSIscale As Size
+
+        ''' <summary>
+        ''' dimension value of the MSI raw scans size
+        ''' </summary>
+        ''' <returns></returns>
         Public Property MSIdims As Size
 
         Public Sub Save(file As Stream)
