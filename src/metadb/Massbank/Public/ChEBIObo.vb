@@ -46,7 +46,8 @@ Public Module ChEBIObo
                 .DrugBank = xref("DrugBank").JoinBy(", "),
                 .Wikipedia = xref("Wikipedia").JoinBy(", "),
                 .HMDB = xref("HMDB").JoinBy(", "),
-                .KNApSAcK = xref("KNApSAcK").JoinBy(", ")
+                .KNApSAcK = xref("KNApSAcK").JoinBy(", "),
+                .lipidmaps = xref("LIPID_MAPS_instance").JoinBy(", ")
             }
         }
     End Function
