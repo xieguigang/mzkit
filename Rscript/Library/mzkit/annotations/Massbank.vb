@@ -640,7 +640,7 @@ Module Massbank
         Return New GlycosylNameSolver(custom)
     End Function
 
-    <ExportAPI("parseChEBIEntity")>
+    <ExportAPI("parse.ChEBI_entity")>
     <RApiReturn(GetType(ChEBIEntity))>
     Public Function ParseChebiEntity(xml As String) As Object
         Dim data = REST.ParsingRESTData(xml)
@@ -652,8 +652,15 @@ Module Massbank
         End If
     End Function
 
-    <ExportAPI("chebi_compounds")>
-    Public Function ExtractChebiCompounds(chebi As OBOFile) As MetaLib
-
+    ''' <summary>
+    ''' extract the chebi annotation data from the chebi ontology data
+    ''' </summary>
+    ''' <param name="chebi"></param>
+    ''' <returns></returns>
+    <ExportAPI("extract_chebi_compounds")>
+    Public Function ExtractChebiCompounds(chebi As OBOFile) As MetaInfo()
+        Return chebi _
+            .DoCall(AddressOf ChEBIObo.ImportsMetabolites) _
+            .ToArray
     End Function
 End Module
