@@ -96,6 +96,8 @@ Namespace MetaLib.Models
         Public Property lipidmaps As String
         Public Property MeSH As String
         Public Property ChemIDplus As String
+        Public Property MetaCyc As String
+        Public Property KNApSAcK As String
         ''' <summary>
         ''' Multiple CAS id may exists
         ''' </summary>
