@@ -78,6 +78,7 @@ Imports SMRUCC.genomics.Assembly.ELIXIR.EBI.ChEBI.WebServices
 Imports SMRUCC.genomics.Assembly.ELIXIR.EBI.ChEBI.XML
 Imports SMRUCC.genomics.ComponentModel.Annotation
 Imports SMRUCC.genomics.ComponentModel.DBLinkBuilder
+Imports SMRUCC.genomics.foundation.OBO_Foundry.IO.Models
 Imports SMRUCC.Rsharp
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
@@ -649,5 +650,10 @@ Module Massbank
         Else
             Return data
         End If
+    End Function
+
+    <ExportAPI("chebi_compounds")>
+    Public Function ExtractChebiCompounds(chebi As OBOFile) As MetaLib
+
     End Function
 End Module

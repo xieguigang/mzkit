@@ -210,6 +210,7 @@
 		<ProjectReference Include="..\..\..\..\GCModeller\src\GCModeller\analysis\HTS_matrix\HTS_matrix-netcore5.vbproj" />
 		<ProjectReference Include="..\..\..\..\GCModeller\src\GCModeller\annotations\GSEA\GSEA\gsea-netcore5.vbproj" />
 		<ProjectReference Include="..\..\..\..\GCModeller\src\GCModeller\core\Bio.Assembly\biocore-netcore5.vbproj" />
+		<ProjectReference Include="..\..\..\..\GCModeller\src\GCModeller\foundation\OBO_Foundry\obo_foundry-netcore5.vbproj" />
 		<ProjectReference Include="..\..\..\..\GCModeller\src\GCModeller\models\Networks\KEGG\KEGGNetwork.NET5.vbproj" />
 		<ProjectReference Include="..\..\..\..\GCModeller\src\R-sharp\R#\Rsharp-netcore5.vbproj" />
 		<ProjectReference Include="..\..\..\..\GCModeller\src\R-sharp\studio\RData\RData.NET5.vbproj" />
