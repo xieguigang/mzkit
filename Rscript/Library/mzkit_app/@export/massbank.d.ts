@@ -32,6 +32,13 @@ declare namespace massbank {
          function mapping(repository: string): object;
       }
    }
+   /**
+    * extract the chebi annotation data from the chebi ontology data
+    * 
+    * 
+     * @param chebi -
+   */
+   function extract_chebi_compounds(chebi: object): object;
    module glycosyl {
       /**
         * @param rules default value Is ``null``.
@@ -91,9 +98,11 @@ declare namespace massbank {
       */
       function msp_metadata(msp: object): any;
    }
-   /**
-   */
-   function parseChEBIEntity(xml: string): object;
+   module parse {
+      /**
+      */
+      function ChEBI_entity(xml: string): object;
+   }
    module read {
       /**
        * read lipidmaps messagepack repository file
