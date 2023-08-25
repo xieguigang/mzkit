@@ -78,6 +78,7 @@ Imports SMRUCC.genomics.Assembly.ELIXIR.EBI.ChEBI.WebServices
 Imports SMRUCC.genomics.Assembly.ELIXIR.EBI.ChEBI.XML
 Imports SMRUCC.genomics.ComponentModel.Annotation
 Imports SMRUCC.genomics.ComponentModel.DBLinkBuilder
+Imports SMRUCC.genomics.foundation.OBO_Foundry.IO.Models
 Imports SMRUCC.Rsharp
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
@@ -639,7 +640,7 @@ Module Massbank
         Return New GlycosylNameSolver(custom)
     End Function
 
-    <ExportAPI("parseChEBIEntity")>
+    <ExportAPI("parse.ChEBI_entity")>
     <RApiReturn(GetType(ChEBIEntity))>
     Public Function ParseChebiEntity(xml As String) As Object
         Dim data = REST.ParsingRESTData(xml)
@@ -649,5 +650,17 @@ Module Massbank
         Else
             Return data
         End If
+    End Function
+
+    ''' <summary>
+    ''' extract the chebi annotation data from the chebi ontology data
+    ''' </summary>
+    ''' <param name="chebi"></param>
+    ''' <returns></returns>
+    <ExportAPI("extract_chebi_compounds")>
+    Public Function ExtractChebiCompounds(chebi As OBOFile) As MetaInfo()
+        Return chebi _
+            .DoCall(AddressOf ChEBIObo.ImportsMetabolites) _
+            .ToArray
     End Function
 End Module
