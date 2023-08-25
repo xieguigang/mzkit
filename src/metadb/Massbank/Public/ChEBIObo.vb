@@ -3,6 +3,7 @@ Imports BioNovoGene.BioDeep.Chemistry.MetaLib.Models
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text.Parser
+Imports Microsoft.VisualBasic.Text.Xml.Models
 Imports SMRUCC.genomics.foundation.OBO_Foundry.IO.Models
 Imports metadata = BioNovoGene.BioDeep.Chemistry.MetaLib.Models.MetaInfo
 
@@ -28,27 +29,36 @@ Public Module ChEBIObo
         Dim xref = obo_data(RawTerm.Key_xref).ParseXref
 
         Return New metadata With {
-            .description = def,
+            .description = Strings.Trim(def).Trim(""""c, " "c),
             .ID = id,
             .name = name,
             .synonym = synonym,
             .IUPACName = name,
-            .formula = properties("http://purl.obolibrary.org/obo/chebi/formula").FirstOrDefault?.text,
+            .formula = properties.SafeGetString("http://purl.obolibrary.org/obo/chebi/formula"),
             .exact_mass = FormulaScanner.EvaluateExactMass(.formula),
             .xref = New xref With {
-                .CAS = xref("CAS"),
+                .CAS = xref.TryGetValue("CAS"),
                 .chebi = id,
-                .KEGG = xref("KEGG").JoinBy(", "),
-                .InChI = properties("http://purl.obolibrary.org/obo/chebi/inchi").FirstOrDefault?.text,
-                .InChIkey = properties("http://purl.obolibrary.org/obo/chebi/inchikey").FirstOrDefault?.text,
-                .SMILES = properties("http://purl.obolibrary.org/obo/chebi/smiles").FirstOrDefault?.text,
-                .MetaCyc = xref("MetaCyc").JoinBy(", "),
-                .DrugBank = xref("DrugBank").JoinBy(", "),
-                .Wikipedia = xref("Wikipedia").JoinBy(", "),
-                .HMDB = xref("HMDB").JoinBy(", "),
-                .KNApSAcK = xref("KNApSAcK").JoinBy(", "),
-                .lipidmaps = xref("LIPID_MAPS_instance").JoinBy(", ")
+                .KEGG = xref.TryGetValue("KEGG").JoinBy(", "),
+                .InChI = properties.SafeGetString("http://purl.obolibrary.org/obo/chebi/inchi"),
+                .InChIkey = properties.SafeGetString("http://purl.obolibrary.org/obo/chebi/inchikey"),
+                .SMILES = properties.SafeGetString("http://purl.obolibrary.org/obo/chebi/smiles"),
+                .MetaCyc = xref.TryGetValue("MetaCyc").JoinBy(", "),
+                .DrugBank = xref.TryGetValue("DrugBank").JoinBy(", "),
+                .Wikipedia = xref.TryGetValue("Wikipedia").JoinBy(", "),
+                .HMDB = xref.TryGetValue("HMDB").JoinBy(", "),
+                .KNApSAcK = xref.TryGetValue("KNApSAcK").JoinBy(", "),
+                .lipidmaps = xref.TryGetValue("LIPID_MAPS_instance").JoinBy(", ")
             }
         }
+    End Function
+
+    <Extension>
+    Private Function SafeGetString(properties As Dictionary(Of String, NamedValue()), key As String) As String
+        If properties.ContainsKey(key) Then
+            Return properties(key).First.text
+        Else
+            Return Nothing
+        End If
     End Function
 End Module
