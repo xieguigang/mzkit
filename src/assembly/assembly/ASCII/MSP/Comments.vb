@@ -55,8 +55,8 @@
 
 Imports System.Collections.Specialized
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.CommandLine.Parsers
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Text.Parser
 
 Namespace ASCII.MSP
 
@@ -75,7 +75,7 @@ Namespace ASCII.MSP
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function ToTable(comments$) As NameValueCollection
-            Dim meta As NameValueCollection = CLIParser.GetTokens(comments).ToTable
+            Dim meta As NameValueCollection = DelimiterParser.GetTokens(comments).ToTable
 
             If (meta.Count = 0 OrElse (meta.Count = 1 AndAlso meta.AllKeys.First.StringEmpty)) AndAlso Not comments.StringEmpty Then
                 meta.Add("Comment", comments)
