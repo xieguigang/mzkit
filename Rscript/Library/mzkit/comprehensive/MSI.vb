@@ -430,6 +430,16 @@ Module MSI
     ''' Fetch MSI summary data
     ''' </summary>
     ''' <param name="raw"></param>
+    ''' <param name="as_vector">
+    ''' returns the raw vector of <see cref="iPixelIntensity"/> if set this
+    ''' parameter value to value TRUE, or its wrapper object <see cref="MSISummary"/> 
+    ''' if set this parameter value to FALSE by default.
+    ''' </param>
+    ''' <param name="dims">
+    ''' overrides the MSI data its scan dimension value? This parameter value is
+    ''' a numeric vector with two integer element that represents the dimension
+    ''' of the MSI data(width and height)
+    ''' </param>
     ''' <returns></returns>
     <ExportAPI("MSI_summary")>
     <RApiReturn(GetType(MSISummary), GetType(iPixelIntensity))>
