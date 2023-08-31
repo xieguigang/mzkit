@@ -216,8 +216,10 @@ declare namespace MsImaging {
      * @param data -
      * @param x -
      * @param y -
+     * @param env 
+     * + default value Is ``null``.
    */
-   function pixel(data: object, x: object, y: object): object;
+   function pixel(data: any, x: object, y: object, env?: object): object;
    module read {
       /**
        * open the existed mzImage cache file

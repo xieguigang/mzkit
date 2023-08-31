@@ -84,9 +84,15 @@ declare namespace MSI {
      * + default value Is ``null``.
      * @param y 
      * + default value Is ``null``.
-     * @param as_vector 
+     * @param as_vector returns the raw vector of @``T:BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML.iPixelIntensity`` if set this
+     *  parameter value to value TRUE, or its wrapper object @``T:BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML.MSISummary`` 
+     *  if set this parameter value to FALSE by default.
+     * 
      * + default value Is ``false``.
-     * @param dims 
+     * @param dims overrides the MSI data its scan dimension value? This parameter value is
+     *  a numeric vector with two integer element that represents the dimension
+     *  of the MSI data(width and height)
+     * 
      * + default value Is ``null``.
      * @param env 
      * + default value Is ``null``.
