@@ -459,13 +459,31 @@ Module MsImaging
     ''' <returns></returns>
     <ExportAPI("pixel")>
     <RApiReturn(GetType(ibdPixel))>
-    Public Function GetPixel(data As Object, x As Integer, y As Integer, Optional env As Environment = Nothing) As Object
-        If TypeOf data Is XICReader Then
-            Return DirectCast(data, XICReader).GetPixel(x, y)
-        ElseIf TypeOf data Is MSISummary Then
-            Return DirectCast(data, MSISummary).GetPixel(x, y)
+    Public Function GetPixel(data As Object, x As Integer(), y As Integer(), Optional env As Environment = Nothing) As Object
+        If x.Length = 1 AndAlso y.Length = 1 Then
+            If TypeOf data Is XICReader Then
+                Return DirectCast(data, XICReader).GetPixel(x(0), y(0))
+            ElseIf TypeOf data Is MSISummary Then
+                Return DirectCast(data, MSISummary).GetPixel(x(0), y(0))
+            Else
+                Return Message.InCompatibleType(GetType(XICReader), data.GetType, env)
+            End If
         Else
-            Return Message.InCompatibleType(GetType(XICReader), data.GetType, env)
+            If TypeOf data Is XICReader Then
+                With DirectCast(data, XICReader)
+                    Return x _
+                        .Select(Function(xi, i) .GetPixel(xi, y(i))) _
+                        .ToArray
+                End With
+            ElseIf TypeOf data Is MSISummary Then
+                With DirectCast(data, MSISummary)
+                    Return x _
+                        .Select(Function(xi, i) .GetPixel(xi, y(i))) _
+                        .ToArray
+                End With
+            Else
+                Return Message.InCompatibleType(GetType(XICReader), data.GetType, env)
+            End If
         End If
     End Function
 
