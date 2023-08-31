@@ -21,3 +21,5 @@ mass spectrometry data math toolkit
 + [defaultPrecursors](math/defaultPrecursors.1) returns all precursor types for a given libtype
 + [toMS](math/toMS.1) 
 + [xcms_id](math/xcms_id.1) makes xcms_id format liked ROI unique id
++ [mz_index](math/mz_index.1) 
++ [intensity_vec](math/intensity_vec.1) 

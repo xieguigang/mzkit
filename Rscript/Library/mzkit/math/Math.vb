@@ -68,10 +68,12 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
+Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.IsotopicPatterns
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.Algorithm
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -105,6 +107,26 @@ Module MzMath
 
         Call ExactMass.SetExactMassParser(Function(f) FormulaScanner.EvaluateExactMass(f))
     End Sub
+
+    <ROperator("+")>
+    Public Function union(x As LibraryMatrix, y As LibraryMatrix) As LibraryMatrix
+        If x Is Nothing Then
+            Return y
+        ElseIf y Is Nothing Then
+            Return x
+        ElseIf x Is Nothing AndAlso y Is Nothing Then
+            Return Nothing
+        End If
+
+        Dim ms2 As ms2() = x.ms2.JoinIterates(y.ms2).ToArray
+        Dim ms As New LibraryMatrix With {
+            .ms2 = ms2,
+            .centroid = False,
+            .name = $"union({If(x.name, x.GetHashCode)},{If(y.name, y.GetHashCode)})"
+        }
+
+        Return ms
+    End Function
 
     Private Function getPrecursorTable(list As PrecursorInfo(), args As list, env As Environment) As dataframe
         Dim precursor_type As String() = list.Select(Function(i) i.precursor_type).ToArray
@@ -855,5 +877,15 @@ Module MzMath
         Dim uniques As String() = base.makeNames(allId, unique:=True, allow_:=True)
 
         Return uniques
+    End Function
+
+    <ExportAPI("mz_index")>
+    Public Function CreateMzIndex(mz As Double()) As BlockSearchFunction(Of (mz As Double, Integer))
+        Return mz.CreateMzIndex
+    End Function
+
+    <ExportAPI("intensity_vec")>
+    Public Function alignIntensity(ms As LibraryMatrix, mzSet As BlockSearchFunction(Of (mz As Double, Integer))) As Double()
+        Return ms.DeconvoluteMS(mzSet.size, mzSet)
     End Function
 End Module
