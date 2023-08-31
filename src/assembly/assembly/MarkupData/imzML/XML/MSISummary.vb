@@ -67,6 +67,7 @@
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Linq
 
@@ -90,6 +91,18 @@ Namespace MarkupData.imzML
         ''' </summary>
         ''' <returns></returns>
         Public Property size As Size
+
+        Public ReadOnly Property x As Double()
+            Get
+                Return New DoubleRange(rowScans.IteratesALL.Select(Function(p) p.x)).MinMax
+            End Get
+        End Property
+
+        Public ReadOnly Property y As Double()
+            Get
+                Return New DoubleRange(rowScans.Select(Function(r) r(0).y)).MinMax
+            End Get
+        End Property
 
         Public Function GetPixel(x As Integer, y As Integer) As iPixelIntensity
             Dim yscan = rowScans.Where(Function(r) r(0).y = y).FirstOrDefault

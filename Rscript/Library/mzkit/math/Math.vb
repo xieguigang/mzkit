@@ -110,12 +110,14 @@ Module MzMath
 
     <ROperator("+")>
     Public Function union(x As LibraryMatrix, y As LibraryMatrix) As LibraryMatrix
+        If x Is Nothing AndAlso y Is Nothing Then
+            Return Nothing
+        End If
+
         If x Is Nothing Then
             Return y
         ElseIf y Is Nothing Then
             Return x
-        ElseIf x Is Nothing AndAlso y Is Nothing Then
-            Return Nothing
         End If
 
         Dim ms2 As ms2() = x.ms2.JoinIterates(y.ms2).ToArray
