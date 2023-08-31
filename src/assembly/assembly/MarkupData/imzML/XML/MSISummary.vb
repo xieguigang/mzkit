@@ -77,12 +77,29 @@ Namespace MarkupData.imzML
     ''' </summary>
     Public Class MSISummary
 
+        ''' <summary>
+        ''' [x,y]
+        ''' </summary>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' data is group by y at first and then order by x
+        ''' </remarks>
         Public Property rowScans As iPixelIntensity()()
         ''' <summary>
         ''' the MALDI scan dimension size
         ''' </summary>
         ''' <returns></returns>
         Public Property size As Size
+
+        Public Function GetPixel(x As Integer, y As Integer) As iPixelIntensity
+            Dim yscan = rowScans.Where(Function(r) r(0).y = y).FirstOrDefault
+
+            If yscan Is Nothing Then
+                Return Nothing
+            Else
+                Return yscan.Where(Function(p) p.x = x).FirstOrDefault
+            End If
+        End Function
 
         Public Shared Function FromPixels(pixels As IEnumerable(Of iPixelIntensity), Optional dims As Size? = Nothing) As MSISummary
             Dim matrix2D As iPixelIntensity()() = pixels _
