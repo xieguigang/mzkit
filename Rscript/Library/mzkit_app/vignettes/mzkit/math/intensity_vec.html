@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Fetch MSI summary data</title>
+    <title>intensity_vec</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <style rel="stylesheet" type="text/css">
@@ -148,46 +148,27 @@
 
         <table style="width: 100%;">
             <tr>
-                <td>MSI_summary {MSI}</td>
+                <td>intensity_vec {math}</td>
                 <td style="text-align: right;">R Documentation</td>
             </tr>
         </table>
 
-        <h2>Fetch MSI summary data</h2>
+        <h2>intensity_vec</h2>
 
         <h3>Description</h3>
 
-        
+        intensity_vec
 
         <h3>Usage</h3>
 
         <div style="width: 100%; padding-left: 3%; color: black;">
-            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>MSI_summary</strong>(<i>raw</i>,
-    <i>x</i> = <span style='color: blue !important;'>NULL</span>,
-    <i>y</i> = <span style='color: blue !important;'>NULL</span>,
-    <i>as.vector</i> = <span style='color: blue !important;'>FALSE</span>,
-    <i>dims</i> = <span style='color: blue !important;'>NULL</span>);</code></pre>
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>intensity_vec</strong>(<i>ms</i>, <i>mzSet</i>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
 
         <table>
             
-<dt>raw</dt>
-<dd><p><p>-</p></p></dd>
-
-
-<dt>as.vector</dt>
-<dd><p><p>returns the raw vector of @<code>T:BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML.iPixelIntensity</code> if set this<br />
- parameter value to value TRUE, or its wrapper object @<code>T:BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML.MSISummary</code> <br />
- if set this parameter value to FALSE by default.</p></p></dd>
-
-
-<dt>dims</dt>
-<dd><p><p>overrides the MSI data its scan dimension value? This parameter value is<br />
- a numeric vector with two integer element that represents the dimension<br />
- of the MSI data(width and height)</p></p></dd>
-
         </table>
 
 
@@ -198,15 +179,15 @@
 
         <h3>Value</h3>
 
-        this function returns data object in these one of the listed data types: <a href="/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/MarkupData/imzML/MSISummary.html">MSISummary</a>, <a href="/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/MarkupData/imzML/iPixelIntensity.html">iPixelIntensity</a>.
+        this function returns data object of type double.
 
         <h3 style="display: none;">Examples</h3>
 
         
 
         <hr />
-        <div style="text-align: center;">[Package <em>MSI</em> version 1.0.0.0 <a
-                href="../MSI.html">Index</a>]
+        <div style="text-align: center;">[Package <em>math</em> version 1.0.0.0 <a
+                href="../math.html">Index</a>]
         </div>
     </div>
 </body>

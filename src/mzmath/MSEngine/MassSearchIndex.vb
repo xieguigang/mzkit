@@ -2,8 +2,14 @@
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.Annotations
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm
+
 Public Interface IMassSearch
 
+    ''' <summary>
+    ''' Provides a mass value and then populate all related metabolite reference data
+    ''' </summary>
+    ''' <param name="mass"></param>
+    ''' <returns></returns>
     Function QueryByMass(mass As Double) As IEnumerable
 
 End Interface
@@ -28,7 +34,9 @@ Public Class MassSearchIndex(Of T As IExactMassProvider) : Implements IMassSearc
     ''' returns object due to the reason of reflection not working
     ''' well on build a dynamics delegate type
     ''' </param>
-    ''' <param name="tolerance"></param>
+    ''' <param name="tolerance">
+    ''' tolerance used for filter mass hit, not the tolerance of build search index
+    ''' </param>
     Sub New(mass As IEnumerable(Of T), activator As Func(Of Double, Object), tolerance As Tolerance)
         ' 20220512
         '

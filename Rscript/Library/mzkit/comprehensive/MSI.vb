@@ -426,22 +426,52 @@ Module MSI
         Return pixels
     End Function
 
+    Private Function GetXySpatialFilter(x As Integer(), y As Integer()) As Func(Of Integer, Integer, Boolean)
+        If x.IsNullOrEmpty AndAlso y.IsNullOrEmpty Then
+            Return Function(xi, yi) True
+        ElseIf x.IsNullOrEmpty Then
+            Dim yindex As Index(Of Integer) = y.Indexing
+            ' filter y
+            Return Function(xi, yi) yi Like yindex
+        ElseIf y.IsNullOrEmpty Then
+            Dim xindex As Index(Of Integer) = x.Indexing
+            ' filter x
+            Return Function(xi, yi) xi Like xindex
+        Else
+            ' filter xy
+            Dim pixels As Index(Of String) = x _
+                .Select(Function(xi, i) $"{xi},{y(i)}") _
+                .Indexing
+
+            Return Function(xi, yi) $"{xi},{yi}" Like pixels
+        End If
+    End Function
+
     ''' <summary>
     ''' Fetch MSI summary data
     ''' </summary>
     ''' <param name="raw"></param>
+    ''' <param name="as_vector">
+    ''' returns the raw vector of <see cref="iPixelIntensity"/> if set this
+    ''' parameter value to value TRUE, or its wrapper object <see cref="MSISummary"/> 
+    ''' if set this parameter value to FALSE by default.
+    ''' </param>
+    ''' <param name="dims">
+    ''' overrides the MSI data its scan dimension value? This parameter value is
+    ''' a numeric vector with two integer element that represents the dimension
+    ''' of the MSI data(width and height)
+    ''' </param>
     ''' <returns></returns>
     <ExportAPI("MSI_summary")>
     <RApiReturn(GetType(MSISummary), GetType(iPixelIntensity))>
     Public Function MSI_summary(raw As mzPack,
-                                Optional x As Long() = Nothing,
-                                Optional y As Long() = Nothing,
+                                Optional x As Integer() = Nothing,
+                                Optional y As Integer() = Nothing,
                                 Optional as_vector As Boolean = False,
                                 <RRawVectorArgument>
                                 Optional dims As Object = Nothing,
                                 Optional env As Environment = Nothing) As Object
 
-        Dim filter As Func(Of Long, Long, Boolean)
         Dim dimSize = InteropArgumentHelper.getSize(dims, env, [default]:="0,0")
         Dim dimsVal As Size? = Nothing
 
@@ -451,40 +481,7 @@ Module MSI
             dimsVal = raw.GetMSIMetadata.GetDimension
         End If
 
-        If x.IsNullOrEmpty AndAlso y.IsNullOrEmpty Then
-            filter = Function(xi, yi) True
-        ElseIf x.IsNullOrEmpty Then
-            Dim yindex As Index(Of Long) = y.Indexing
-            ' filter y
-            filter = Function(xi, yi) yi Like yindex
-        ElseIf y.IsNullOrEmpty Then
-            Dim xindex As Index(Of Long) = x.Indexing
-            ' filter x
-            filter = Function(xi, yi) xi Like xindex
-        Else
-            ' filter xy
-            Dim pixels As Index(Of String) = x _
-                .Select(Function(xi, i) $"{xi},{y(i)}") _
-                .Indexing
-
-            filter = Function(xi, yi) $"{xi},{yi}" Like pixels
-        End If
-
-        Dim pixelFilter As IEnumerable(Of iPixelIntensity) =
-            From p As ScanMS1
-            In raw.MS
-            Let xi As Long = Long.Parse(p.meta("x"))
-            Let yi As Long = Long.Parse(p.meta("y"))
-            Where Not p.into.IsNullOrEmpty
-            Where filter(xi, yi)
-            Select New iPixelIntensity With {
-                .x = xi,
-                .y = yi,
-                .average = p.into.Average,
-                .basePeakIntensity = p.into.Max,
-                .totalIon = p.into.Sum,
-                .basePeakMz = p.mz(which.Max(p.into))
-            }
+        Dim pixelFilter As IEnumerable(Of iPixelIntensity) = raw.Summary(filter:=GetXySpatialFilter(x, y))
 
         If Not (x.IsNullOrEmpty OrElse y.IsNullOrEmpty) Then
             Dim pixels As Index(Of String) = x _
