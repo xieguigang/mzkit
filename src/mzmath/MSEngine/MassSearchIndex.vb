@@ -2,8 +2,14 @@
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.Annotations
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm
+
 Public Interface IMassSearch
 
+    ''' <summary>
+    ''' Provides a mass value and then populate all related metabolite reference data
+    ''' </summary>
+    ''' <param name="mass"></param>
+    ''' <returns></returns>
     Function QueryByMass(mass As Double) As IEnumerable
 
 End Interface
