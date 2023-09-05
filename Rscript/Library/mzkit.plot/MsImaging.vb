@@ -1001,14 +1001,25 @@ Module MsImaging
     ''' <returns></returns>
     <ExportAPI("as.pixels")>
     <RApiReturn(GetType(String), GetType(Point2D))>
-    Public Function asPixels(layer As SingleIonLayer, Optional character As Boolean = True) As Object
+    Public Function asPixels(layer As Object, Optional character As Boolean = True, Optional env As Environment = Nothing) As Object
+        If TypeOf layer Is SingleIonLayer Then
+            Return DirectCast(layer, SingleIonLayer).MSILayer.asPixels(character)
+        ElseIf TypeOf layer Is MSISummary Then
+            Return DirectCast(layer, MSISummary).rowScans.IteratesALL.asPixels(character)
+        Else
+            Return Message.InCompatibleType(GetType(SingleIonLayer), layer.GetType, env)
+        End If
+    End Function
+
+    <Extension>
+    Private Function asPixels(Of T As RasterPixel)(ps As IEnumerable(Of T), character As Boolean) As Object
         If character Then
-            Return layer.MSILayer _
-                .Select(Function(p) $"{p.x},{p.y}") _
+            Return ps _
+                .Select(Function(p) $"{p.X},{p.Y}") _
                 .ToArray
         Else
-            Return layer.MSILayer _
-                .Select(Function(p) New Point2D(p.x, p.y)) _
+            Return ps _
+                .Select(Function(p) New Point2D(p.X, p.Y)) _
                 .ToArray
         End If
     End Function
