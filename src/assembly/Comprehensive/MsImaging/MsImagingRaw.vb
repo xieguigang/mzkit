@@ -64,6 +64,7 @@ Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.Math.Statistics.Linq
 Imports Microsoft.VisualBasic.Scripting.Expressions
 
 Namespace MsImaging
@@ -92,7 +93,9 @@ Namespace MsImaging
                        .basePeakIntensity = p.into.Max,
                        .totalIon = p.into.Sum,
                        .basePeakMz = p.mz(which.Max(p.into)),
-                       .numIons = p.size
+                       .numIons = p.size,
+                       .min = p.into.Min,
+                       .median = p.into.Median
                    }
         End Function
 

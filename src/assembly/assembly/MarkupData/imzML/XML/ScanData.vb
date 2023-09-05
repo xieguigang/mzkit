@@ -186,6 +186,16 @@ Namespace MarkupData.imzML
         ''' <returns></returns>
         Public Property basePeakMz As Double
         ''' <summary>
+        ''' the min intensity value of current spot
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property min As Double
+        ''' <summary>
+        ''' the 50% quantile intensity of current spot
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property median As Double
+        ''' <summary>
         ''' the number of the ions in current spot
         ''' </summary>
         ''' <returns></returns>
