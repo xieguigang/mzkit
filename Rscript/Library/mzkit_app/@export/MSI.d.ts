@@ -214,6 +214,17 @@ declare namespace MSI {
       function scans(raw: string, y?: object, correction?: object, env?: object): any;
    }
    /**
+    * scale the spatial matrix
+    * 
+    * 
+     * @param m -
+     * @param factor -
+     * @param env -
+     * 
+     * + default value Is ``null``.
+   */
+   function scale(m: object, factor: any, env?: object): any;
+   /**
     * combine each row scan summary vector as the pixels 2D matrix
     * 
     * 

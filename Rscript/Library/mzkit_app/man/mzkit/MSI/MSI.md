@@ -2,6 +2,7 @@
 
 MS-Imaging data handler
 
++ [scale](MSI/scale.1) scale the spatial matrix
 + [msi_metadata](MSI/msi_metadata.1) get ms-imaging metadata
 + [as.layer](MSI/as.layer.1) cast the pixel collection to a ion imaging layer data
 + [splice](MSI/splice.1) split the raw 2D MSI data into multiple parts with given parts
