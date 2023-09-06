@@ -28,8 +28,10 @@ declare namespace MsImaging {
         *  when this parameter value is set to TRUE
         * 
         * + default value Is ``true``.
+        * @param env 
+        * + default value Is ``null``.
       */
-      function pixels(layer: object, character?: boolean): string|object;
+      function pixels(layer: any, character?: boolean, env?: object): string|object;
    }
    /**
     * test of a given MSI layer is target?

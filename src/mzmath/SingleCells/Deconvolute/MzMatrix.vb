@@ -115,23 +115,27 @@ Namespace Deconvolute
             Next
         End Function
 
+        ''' <summary>
+        ''' Export a table file of the spatial pixel spot in rows and ions m/z features in columns 
+        ''' </summary>
+        ''' <param name="file"></param>
+        ''' <returns></returns>
         Public Function ExportCsvSheet(file As Stream) As Boolean
-            Using text As New StreamWriter(file, Encodings.ASCII.CodePage) With {
+            Dim text As New StreamWriter(file, Encodings.ASCII.CodePage) With {
                 .NewLine = vbLf
             }
-                Call text.WriteLine("Pixels," & mz.JoinBy(","))
+            Call text.WriteLine("Pixels," & mz.JoinBy(","))
 
-                For Each pixelLine As String In matrix _
-                    .AsParallel _
-                    .Select(Function(pixel)
-                                Return $"""{pixel.X},{pixel.Y}"",{pixel.intensity.JoinBy(",")}"
-                            End Function)
+            For Each pixelLine As String In matrix _
+                .AsParallel _
+                .Select(Function(pixel)
+                            Return $"""{pixel.X},{pixel.Y}"",{pixel.intensity.JoinBy(",")}"
+                        End Function)
 
-                    Call text.WriteLine(pixelLine)
-                Next
+                Call text.WriteLine(pixelLine)
+            Next
 
-                Call text.Flush()
-            End Using
+            Call text.Flush()
 
             Return True
         End Function
