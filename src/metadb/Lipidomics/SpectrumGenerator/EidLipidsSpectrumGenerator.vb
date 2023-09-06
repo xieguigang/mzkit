@@ -8,7 +8,7 @@ Imports System.Linq
 
 
 Public Class EidLipidSpectrumGenerator
-        Public Function GetClassEidFragmentSpectrum(ByVal lipid As Lipid, ByVal adduct As AdductIon) As List(Of SpectrumPeak)
+        Public Function GetClassEidFragmentSpectrum(lipid As Lipid, adduct As AdductIon) As List(Of SpectrumPeak)
             Dim spectrum = New List(Of SpectrumPeak)()
 
             Select Case lipid.LipidClass
@@ -52,14 +52,14 @@ Public Class EidLipidSpectrumGenerator
             Return spectrum
         End Function
 
-        Private Shared Function doublebondPositions(ByVal chain As IChain) As List(Of Integer)
+        Private Shared Function doublebondPositions(chain As IChain) As List(Of Integer)
             Dim bondPositions = New List(Of Integer)()
             Dim dbPosition = chain.DoubleBond.Bonds
             bondPositions.AddRange(From bond In dbPosition Select bond.Position)
             Return bondPositions
         End Function
 
-        Private Shared Function EidSpecificSpectrum(ByVal lipid As Lipid, ByVal adduct As AdductIon, ByVal nlMass As Double, ByVal intensity As Double) As SpectrumPeak()
+        Private Shared Function EidSpecificSpectrum(lipid As Lipid, adduct As AdductIon, nlMass As Double, intensity As Double) As SpectrumPeak()
             Dim spectrum = New List(Of SpectrumPeak)()
             Dim chains As SeparatedChains = Nothing
 

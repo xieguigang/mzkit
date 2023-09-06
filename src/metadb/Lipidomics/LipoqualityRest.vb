@@ -7,7 +7,7 @@ Public NotInheritable Class LipoqualityRest
     Private Sub New()
     End Sub
 
-    Public Shared Sub GoToLQDB(ByVal query As MoleculeMsReference, ByVal lipidName As String, <Out> ByRef [error] As String)
+    Public Shared Sub GoToLQDB(query As MoleculeMsReference, lipidName As String, <Out> ByRef [error] As String)
         [error] = String.Empty
         Dim lipidinfo = LipoqualityDatabaseManagerUtility.ConvertMsdialLipidnameToLipidAnnotation(query, lipidName)
         If lipidinfo Is Nothing Then
@@ -30,7 +30,7 @@ Public NotInheritable Class LipoqualityRest
         End Try
     End Sub
 
-    Private Shared Function getLqUrl(ByVal lipidinfo As LipoqualityAnnotation) As String
+    Private Shared Function getLqUrl(lipidinfo As LipoqualityAnnotation) As String
         Select Case lipidinfo.LipidClass
 
                 'Glycerolipid

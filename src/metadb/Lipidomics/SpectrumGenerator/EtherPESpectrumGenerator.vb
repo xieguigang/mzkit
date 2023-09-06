@@ -27,14 +27,14 @@ Public Class EtherPESpectrumGenerator
             spectrumGenerator = New SpectrumPeakGenerator()
         End Sub
 
-        Public Sub New(ByVal peakGenerator As ISpectrumPeakGenerator)
+        Public Sub New(peakGenerator As ISpectrumPeakGenerator)
             spectrumGenerator = If(peakGenerator, CSharpImpl.__Throw(Of ISpectrumPeakGenerator)(New ArgumentNullException(NameOf(peakGenerator))))
         End Sub
 
         Private ReadOnly spectrumGenerator As ISpectrumPeakGenerator
 
 
-        Public Function CanGenerate(ByVal lipid As ILipid, ByVal adduct As AdductIon) As Boolean Implements ILipidSpectrumGenerator.CanGenerate
+        Public Function CanGenerate(lipid As ILipid, adduct As AdductIon) As Boolean Implements ILipidSpectrumGenerator.CanGenerate
             If lipid.LipidClass = LbmClass.EtherPE Then
                 If Equals(adduct.AdductIonName, "[M+H]+") OrElse Equals(adduct.AdductIonName, "[M+Na]+") Then
                     Return True
@@ -43,7 +43,7 @@ Public Class EtherPESpectrumGenerator
             Return False
         End Function
 
-        Public Function Generate(ByVal lipid As Lipid, ByVal adduct As AdductIon, ByVal Optional molecule As IMoleculeProperty = Nothing) As IMSScanProperty Implements ILipidSpectrumGenerator.Generate
+        Public Function Generate(lipid As Lipid, adduct As AdductIon, Optional molecule As IMoleculeProperty = Nothing) As IMSScanProperty Implements ILipidSpectrumGenerator.Generate
             Dim spectrum = New List(Of SpectrumPeak)()
             spectrum.AddRange(GetEtherPESpectrum(lipid, adduct))
             lipid.Chains.ApplyToChain(1, Sub(chain) spectrum.AddRange(GetSn1PositionSpectrum(lipid, chain, adduct)))
@@ -66,7 +66,7 @@ Public Class EtherPESpectrumGenerator
             Return CreateReference(lipid, adduct, spectrum, molecule)
         End Function
 
-        Private Function CreateReference(ByVal lipid As ILipid, ByVal adduct As AdductIon, ByVal spectrum As List(Of SpectrumPeak), ByVal molecule As IMoleculeProperty) As MoleculeMsReference
+        Private Function CreateReference(lipid As ILipid, adduct As AdductIon, spectrum As List(Of SpectrumPeak), molecule As IMoleculeProperty) As MoleculeMsReference
             Return New MoleculeMsReference With {
     .PrecursorMz = adduct.ConvertToMz(lipid.Mass),
     .IonMode = adduct.IonMode,
@@ -82,7 +82,7 @@ Public Class EtherPESpectrumGenerator
 }
         End Function
 
-        Private Function GetEtherPESpectrum(ByVal lipid As ILipid, ByVal adduct As AdductIon) As SpectrumPeak()
+        Private Function GetEtherPESpectrum(lipid As ILipid, adduct As AdductIon) As SpectrumPeak()
             Dim spectrum = New List(Of SpectrumPeak) From {
     New SpectrumPeak(adduct.ConvertToMz(lipid.Mass), 999R, "Precursor") With {
         .SpectrumComment = SpectrumComment.precursor
@@ -118,7 +118,7 @@ Public Class EtherPESpectrumGenerator
             Return spectrum.ToArray()
         End Function
 
-        Private Function GetEtherPEPSpectrum(ByVal lipid As ILipid, ByVal alkylChain As IChain, ByVal acylChain As IChain, ByVal adduct As AdductIon) As SpectrumPeak()
+        Private Function GetEtherPEPSpectrum(lipid As ILipid, alkylChain As IChain, acylChain As IChain, adduct As AdductIon) As SpectrumPeak()
             Dim spectrum = New List(Of SpectrumPeak) From {
     New SpectrumPeak(adduct.ConvertToMz(lipid.Mass - alkylChain.Mass + HydrogenMass), 30R, $"-{alkylChain}") With {
         .SpectrumComment = SpectrumComment.acylchain
@@ -145,7 +145,7 @@ Public Class EtherPESpectrumGenerator
             Return spectrum.ToArray()
         End Function
 
-        Private Function GetEtherPEOSpectrum(ByVal lipid As ILipid, ByVal alkylChain As IChain, ByVal acylChain As IChain, ByVal adduct As AdductIon) As SpectrumPeak()
+        Private Function GetEtherPEOSpectrum(lipid As ILipid, alkylChain As IChain, acylChain As IChain, adduct As AdductIon) As SpectrumPeak()
             Dim spectrum = New List(Of SpectrumPeak) From {
     New SpectrumPeak(adduct.ConvertToMz(lipid.Mass - alkylChain.Mass + HydrogenMass), 50R, $"-{alkylChain}") With {
         .SpectrumComment = SpectrumComment.acylchain
@@ -171,7 +171,7 @@ Public Class EtherPESpectrumGenerator
             Return spectrum.ToArray()
         End Function
 
-        Private Function GetSn1PositionSpectrum(ByVal lipid As ILipid, ByVal chain As IChain, ByVal adduct As AdductIon) As SpectrumPeak()
+        Private Function GetSn1PositionSpectrum(lipid As ILipid, chain As IChain, adduct As AdductIon) As SpectrumPeak()
             Return {New SpectrumPeak(adduct.ConvertToMz(lipid.Mass - chain.Mass - OxygenMass - CH2), 50R, "-CH2(Sn1)") With {
 .SpectrumComment = SpectrumComment.snposition
 'new SpectrumPeak(adduct.ConvertToMz(lipid.Mass - chain.Mass - C2H8NO4P - MassDiffDictionary.OxygenMass - CH2), 50d, "- Header -CH2(Sn1)") { SpectrumComment = SpectrumComment.snposition },

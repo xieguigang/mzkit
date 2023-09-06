@@ -2,14 +2,14 @@
 
 
 Public Interface IChainGenerator
-        Function Generate(ByVal chain As AcylChain) As IEnumerable(Of IChain)
+        Function Generate(chain As AcylChain) As IEnumerable(Of IChain)
 
-        Function Generate(ByVal chain As AlkylChain) As IEnumerable(Of IChain)
+        Function Generate(chain As AlkylChain) As IEnumerable(Of IChain)
 
-        Function Generate(ByVal chain As SphingoChain) As IEnumerable(Of IChain)
+        Function Generate(chain As SphingoChain) As IEnumerable(Of IChain)
 
-        Function CarbonIsValid(ByVal carbon As Integer) As Boolean
+        Function CarbonIsValid(carbon As Integer) As Boolean
 
-        Function DoubleBondIsValid(ByVal carbon As Integer, ByVal doubleBond As Integer) As Boolean
+        Function DoubleBondIsValid(carbon As Integer, doubleBond As Integer) As Boolean
     End Interface
 

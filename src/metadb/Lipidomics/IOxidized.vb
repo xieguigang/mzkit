@@ -13,17 +13,17 @@ Public Interface IOxidized
 
         ReadOnly Property Oxidises As ReadOnlyCollection(Of Integer)
 
-        Function Includes(ByVal oxidized As IOxidized) As Boolean
+        Function Includes(oxidized As IOxidized) As Boolean
     End Interface
 
     Public NotInheritable Class Oxidized
         Implements IOxidized
-        Public Sub New(ByVal count As Integer, ByVal oxidises As IList(Of Integer))
+        Public Sub New(count As Integer, oxidises As IList(Of Integer))
             Me.Count = count
             Me.Oxidises = New ReadOnlyCollection(Of Integer)(oxidises)
         End Sub
 
-        Public Sub New(ByVal count As Integer, ParamArray oxidises As Integer())
+        Public Sub New(count As Integer, ParamArray oxidises As Integer())
             Me.Count = count
             Me.Oxidises = New ReadOnlyCollection(Of Integer)(oxidises)
         End Sub
@@ -62,7 +62,7 @@ Public Interface IOxidized
             Return New Oxidized(oxidises.Length, oxidises)
         End Function
 
-        Public Function Accept(Of TResult)(ByVal visitor As IAcyclicVisitor, ByVal decomposer As IAcyclicDecomposer(Of TResult)) As TResult Implements IVisitableElement.Accept
+        Public Function Accept(Of TResult)(visitor As IAcyclicVisitor, decomposer As IAcyclicDecomposer(Of TResult)) As TResult Implements IVisitableElement.Accept
             Dim concrete As IDecomposer(Of TResult, Oxidized) = Nothing
 
             If CSharpImpl.__Assign(concrete, TryCast(decomposer, IDecomposer(Of TResult, Oxidized))) IsNot Nothing Then
@@ -71,11 +71,11 @@ Public Interface IOxidized
             Return Nothing
         End Function
 
-        Public Function Includes(ByVal oxidized As IOxidized) As Boolean Implements IOxidized.Includes
+        Public Function Includes(oxidized As IOxidized) As Boolean Implements IOxidized.Includes
             Return Count = oxidized.Count AndAlso DecidedCount <= oxidized.DecidedCount AndAlso Oxidises.All(New Func(Of Integer, Boolean)(AddressOf oxidized.Oxidises.Contains))
         End Function
 
-        Public Function Equals(ByVal other As IOxidized) As Boolean Implements IEquatable(Of IOxidized).Equals
+        Public Function Equals(other As IOxidized) As Boolean Implements IEquatable(Of IOxidized).Equals
             Return Count = other.Count AndAlso DecidedCount = other.DecidedCount AndAlso Oxidises.All(Function(ox) other.Oxidises.Any(New Func(Of Integer, Boolean)(AddressOf ox.Equals)))
         End Function
 

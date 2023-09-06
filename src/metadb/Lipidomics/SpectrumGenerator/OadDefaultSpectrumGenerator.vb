@@ -14,18 +14,18 @@ Public Class OadDefaultSpectrumGenerator
         spectrumGenerator = New OadSpectrumPeakGenerator()
     End Sub
 
-    Public Sub New(ByVal spectrumGenerator As IOadSpectrumPeakGenerator)
+    Public Sub New(spectrumGenerator As IOadSpectrumPeakGenerator)
         Me.spectrumGenerator = If(spectrumGenerator, CSharpImpl.__Throw(Of IOadSpectrumPeakGenerator)(New ArgumentNullException(NameOf(spectrumGenerator))))
     End Sub
 
-    Public Function CanGenerate(ByVal lipid As ILipid, ByVal adduct As AdductIon) As Boolean Implements ILipidSpectrumGenerator.CanGenerate
+    Public Function CanGenerate(lipid As ILipid, adduct As AdductIon) As Boolean Implements ILipidSpectrumGenerator.CanGenerate
         If Equals(adduct.AdductIonName, "[M+H]+") OrElse Equals(adduct.AdductIonName, "[M+Na]+") OrElse Equals(adduct.AdductIonName, "[M+NH4]+") OrElse Equals(adduct.AdductIonName, "[M+H-H2O]+") OrElse Equals(adduct.AdductIonName, "[M-H2O+H]+") OrElse Equals(adduct.AdductIonName, "[M-H]-") OrElse Equals(adduct.AdductIonName, "[M+HCOO]-") OrElse Equals(adduct.AdductIonName, "[M+CH3COO]-") Then
             Return True
         End If
         Return False
     End Function
 
-    Public Function Generate(ByVal lipid As Lipid, ByVal adduct As AdductIon, ByVal Optional molecule As IMoleculeProperty = Nothing) As IMSScanProperty Implements ILipidSpectrumGenerator.Generate
+    Public Function Generate(lipid As Lipid, adduct As AdductIon, Optional molecule As IMoleculeProperty = Nothing) As IMSScanProperty Implements ILipidSpectrumGenerator.Generate
         Dim oadLipidSpectrumGenerator = New OadLipidSpectrumGenerator()
         Dim abundance = 40.0
 
@@ -55,7 +55,7 @@ Public Class OadDefaultSpectrumGenerator
         Return CreateReference(lipid, adduct, spectrum, molecule)
     End Function
 
-    Private Function CreateReference(ByVal lipid As ILipid, ByVal adduct As AdductIon, ByVal spectrum As List(Of SpectrumPeak), ByVal molecule As IMoleculeProperty) As MoleculeMsReference
+    Private Function CreateReference(lipid As ILipid, adduct As AdductIon, spectrum As List(Of SpectrumPeak), molecule As IMoleculeProperty) As MoleculeMsReference
         Return New MoleculeMsReference With {
     .PrecursorMz = adduct.ConvertToMz(lipid.Mass),
     .IonMode = adduct.IonMode,
@@ -74,7 +74,7 @@ Public Class OadDefaultSpectrumGenerator
     Private Shared ReadOnly comparer As IEqualityComparer(Of SpectrumPeak) = New SpectrumEqualityComparer()
 
     Private ReadOnly map As Dictionary(Of LbmClass, List(Of ILipidSpectrumGenerator)) = New Dictionary(Of LbmClass, List(Of ILipidSpectrumGenerator))()
-    Public Sub Add(ByVal lipidClass As LbmClass, ByVal generator As ILipidSpectrumGenerator)
+    Public Sub Add(lipidClass As LbmClass, generator As ILipidSpectrumGenerator)
         If Not map.ContainsKey(lipidClass) Then
             map.Add(lipidClass, New List(Of ILipidSpectrumGenerator)())
         End If

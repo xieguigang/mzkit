@@ -22,7 +22,7 @@ Public Class CLLipidParser
 
     Private Shared ReadOnly SkeltonSub As Double = {CarbonMass * 9, HydrogenMass * 14, OxygenMass * 15, PhosphorusMass * 2}.Sum()
 
-    Public Function Parse(ByVal lipidStr As String) As ILipid Implements ILipidParser.Parse
+    Public Function Parse(lipidStr As String) As ILipid Implements ILipidParser.Parse
         Dim match = patternField.Match(lipidStr)
         If match.Success Then
             Dim group = match.Groups

@@ -12,7 +12,7 @@ Public Interface IChain
         ReadOnly Property OxidizedCount As Integer
         ReadOnly Property Mass As Double
 
-        Function Includes(ByVal chain As IChain) As Boolean
-        Function GetCandidates(ByVal generator As IChainGenerator) As IEnumerable(Of IChain)
+        Function Includes(chain As IChain) As Boolean
+        Function GetCandidates(generator As IChainGenerator) As IEnumerable(Of IChain)
     End Interface
 

@@ -10,7 +10,7 @@ Public Module SpectrumGeneratorUtility
     Private ReadOnly CH2 As Double = {HydrogenMass * 2, CarbonMass}.Sum()
 
     <Obsolete>
-    Public Function GetAcylDoubleBondSpectrum(ByVal lipid As ILipid, ByVal acylChain As AcylChain, ByVal adduct As AdductIon, ByVal Optional NLMass As Double = 0.0, ByVal Optional abundance As Double = 50.0) As IEnumerable(Of SpectrumPeak)
+    Public Function GetAcylDoubleBondSpectrum(lipid As ILipid, acylChain As AcylChain, adduct As AdductIon, Optional NLMass As Double = 0.0, Optional abundance As Double = 50.0) As IEnumerable(Of SpectrumPeak)
         If acylChain.DoubleBond.UnDecidedCount <> 0 OrElse acylChain.CarbonCount = 0 Then
             Return Enumerable.Empty(Of SpectrumPeak)()
         End If
@@ -41,7 +41,7 @@ Public Module SpectrumGeneratorUtility
     End Function
 
     <Obsolete>
-    Public Function GetAlkylDoubleBondSpectrum(ByVal lipid As ILipid, ByVal alkylChain As AlkylChain, ByVal adduct As AdductIon, ByVal Optional NLMass As Double = 0.0, ByVal Optional abundance As Double = 50.0) As IEnumerable(Of SpectrumPeak)
+    Public Function GetAlkylDoubleBondSpectrum(lipid As ILipid, alkylChain As AlkylChain, adduct As AdductIon, Optional NLMass As Double = 0.0, Optional abundance As Double = 50.0) As IEnumerable(Of SpectrumPeak)
         Dim chainLoss = lipid.Mass - alkylChain.Mass - NLMass
         Dim diffs = New Double(alkylChain.CarbonCount - 1) {}
         For i = 0 To alkylChain.CarbonCount - 1

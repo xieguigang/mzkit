@@ -9,7 +9,7 @@ Public Class FacadeLipidSpectrumGenerator
         Implements ILipidSpectrumGenerator
         Private ReadOnly map As Dictionary(Of LbmClass, List(Of ILipidSpectrumGenerator)) = New Dictionary(Of LbmClass, List(Of ILipidSpectrumGenerator))()
 
-        Public Function CanGenerate(ByVal lipid As ILipid, ByVal adduct As AdductIon) As Boolean Implements ILipidSpectrumGenerator.CanGenerate
+        Public Function CanGenerate(lipid As ILipid, adduct As AdductIon) As Boolean Implements ILipidSpectrumGenerator.CanGenerate
             Dim generators As List(Of ILipidSpectrumGenerator) = Nothing
 
             If map.TryGetValue(lipid.LipidClass, generators) Then
@@ -18,7 +18,7 @@ Public Class FacadeLipidSpectrumGenerator
             Return False
         End Function
 
-        Public Function Generate(ByVal lipid As Lipid, ByVal adduct As AdductIon, ByVal Optional molecule As IMoleculeProperty = Nothing) As IMSScanProperty Implements ILipidSpectrumGenerator.Generate
+        Public Function Generate(lipid As Lipid, adduct As AdductIon, Optional molecule As IMoleculeProperty = Nothing) As IMSScanProperty Implements ILipidSpectrumGenerator.Generate
             Dim generators As List(Of ILipidSpectrumGenerator) = Nothing
 
             If map.TryGetValue(lipid.LipidClass, generators) Then
@@ -28,14 +28,14 @@ Public Class FacadeLipidSpectrumGenerator
             Return Nothing
         End Function
 
-        Public Sub Add(ByVal lipidClass As LbmClass, ByVal generator As ILipidSpectrumGenerator)
+        Public Sub Add(lipidClass As LbmClass, generator As ILipidSpectrumGenerator)
             If Not map.ContainsKey(lipidClass) Then
                 map.Add(lipidClass, New List(Of ILipidSpectrumGenerator)())
             End If
             map(lipidClass).Add(generator)
         End Sub
 
-        Public Sub Remove(ByVal lipidClass As LbmClass, ByVal generator As ILipidSpectrumGenerator)
+        Public Sub Remove(lipidClass As LbmClass, generator As ILipidSpectrumGenerator)
             If map.ContainsKey(lipidClass) Then
                 map(lipidClass).Remove(generator)
             End If

@@ -2,10 +2,10 @@
 
 
 Public Interface ITotalChainVariationGenerator
-        Function Separate(ByVal chain As TotalChain) As IEnumerable(Of ITotalChain)
+        Function Separate(chain As TotalChain) As IEnumerable(Of ITotalChain)
 
-        Function Permutate(ByVal chains As MolecularSpeciesLevelChains) As IEnumerable(Of ITotalChain)
+        Function Permutate(chains As MolecularSpeciesLevelChains) As IEnumerable(Of ITotalChain)
 
-        Function Product(ByVal chains As PositionLevelChains) As IEnumerable(Of ITotalChain)
+        Function Product(chains As PositionLevelChains) As IEnumerable(Of ITotalChain)
     End Interface
 

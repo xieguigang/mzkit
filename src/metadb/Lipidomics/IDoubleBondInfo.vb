@@ -7,7 +7,7 @@ Public Interface IDoubleBondInfo
         ReadOnly Property Position As Integer
         ReadOnly Property State As DoubleBondState
         ReadOnly Property Determined As Boolean
-        Function Includes(ByVal info As IDoubleBondInfo) As Boolean
+        Function Includes(info As IDoubleBondInfo) As Boolean
     End Interface
 
     Public Enum DoubleBondState
@@ -21,7 +21,7 @@ Public Interface IDoubleBondInfo
         Private Shared ReadOnly CACHE As Dictionary(Of (Integer, DoubleBondState), DoubleBondInfo) = New Dictionary(Of (Integer, DoubleBondState), DoubleBondInfo)()
         Private Shared ReadOnly LOCKOBJ As Object = New Object()
 
-        Public Shared Function Create(ByVal position As Integer, ByVal Optional state As DoubleBondState = DoubleBondState.Unknown) As DoubleBondInfo
+        Public Shared Function Create(position As Integer, Optional state As DoubleBondState = DoubleBondState.Unknown) As DoubleBondInfo
             Dim info As DoubleBondInfo
             SyncLock LOCKOBJ
                 If Not CACHE.TryGetValue((position, state), info) Then
@@ -31,7 +31,7 @@ Public Interface IDoubleBondInfo
             Return info
         End Function
 
-        Private Sub New(ByVal position As Integer, ByVal state As DoubleBondState)
+        Private Sub New(position As Integer, state As DoubleBondState)
             Me.Position = position
             Me.State = state
         End Sub
@@ -45,11 +45,11 @@ Public Interface IDoubleBondInfo
             End Get
         End Property
 
-        Public Shared Function E(ByVal position As Integer) As DoubleBondInfo
+        Public Shared Function E(position As Integer) As DoubleBondInfo
             Return Create(position, DoubleBondState.E)
         End Function
 
-        Public Shared Function Z(ByVal position As Integer) As DoubleBondInfo
+        Public Shared Function Z(position As Integer) As DoubleBondInfo
             Return Create(position, DoubleBondState.Z)
         End Function
 
@@ -62,7 +62,7 @@ Public Interface IDoubleBondInfo
             End Select
         End Function
 
-        Public Overrides Function Equals(ByVal obj As Object) As Boolean
+        Public Overrides Function Equals(obj As Object) As Boolean
             Dim info As DoubleBondInfo = Nothing
             Return CSharpImpl.__Assign(info, TryCast(obj, DoubleBondInfo)) IsNot Nothing AndAlso Position = info.Position AndAlso State = info.State
         End Function
@@ -71,11 +71,11 @@ Public Interface IDoubleBondInfo
             Return (Position, State).GetHashCode()
         End Function
 
-        Public Function Includes(ByVal info As IDoubleBondInfo) As Boolean Implements IDoubleBondInfo.Includes
+        Public Function Includes(info As IDoubleBondInfo) As Boolean Implements IDoubleBondInfo.Includes
             Return Position = info.Position AndAlso (State = DoubleBondState.Unknown OrElse State = info.State)
         End Function
 
-    Public Overloads Function Equals(ByVal other As IDoubleBondInfo) As Boolean Implements IEquatable(Of IDoubleBondInfo).Equals
+    Public Overloads Function Equals(other As IDoubleBondInfo) As Boolean Implements IEquatable(Of IDoubleBondInfo).Equals
         Return Position = other.Position AndAlso State = other.State
     End Function
 End Class

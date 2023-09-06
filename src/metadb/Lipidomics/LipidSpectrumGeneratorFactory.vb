@@ -8,14 +8,14 @@ Imports System.Linq
 
 
 Public Class LipidSpectrumGeneratorFactory
-        Public Function Create(ByVal lipidClass As LbmClass, ByVal adduct As AdductIon, ByVal rules As ISpectrumGenerationRule()) As ILipidSpectrumGenerator
+        Public Function Create(lipidClass As LbmClass, adduct As AdductIon, rules As ISpectrumGenerationRule()) As ILipidSpectrumGenerator
             Return New RuleBaseSpectrumGenerator(lipidClass, adduct, rules)
         End Function
     End Class
 
     Friend Class RuleBaseSpectrumGenerator
         Implements ILipidSpectrumGenerator
-        Public Sub New(ByVal lipidClass As LbmClass, ByVal adduct As AdductIon, ByVal rules As ISpectrumGenerationRule())
+        Public Sub New(lipidClass As LbmClass, adduct As AdductIon, rules As ISpectrumGenerationRule())
             Me.LipidClass = lipidClass
             Me.Adduct = adduct
             Me.Rules = rules
@@ -25,11 +25,11 @@ Public Class LipidSpectrumGeneratorFactory
         Public ReadOnly Property Adduct As AdductIon
         Public ReadOnly Property Rules As ISpectrumGenerationRule()
 
-        Public Function CanGenerate(ByVal lipid As ILipid, ByVal adduct As AdductIon) As Boolean Implements ILipidSpectrumGenerator.CanGenerate
+        Public Function CanGenerate(lipid As ILipid, adduct As AdductIon) As Boolean Implements ILipidSpectrumGenerator.CanGenerate
             Return lipid.LipidClass = LipidClass AndAlso Equals(adduct.AdductIonName, adduct.AdductIonName)
         End Function
 
-        Public Function Generate(ByVal lipid As Lipid, ByVal adduct As AdductIon, ByVal Optional molecule As IMoleculeProperty = Nothing) As IMSScanProperty Implements ILipidSpectrumGenerator.Generate
+        Public Function Generate(lipid As Lipid, adduct As AdductIon, Optional molecule As IMoleculeProperty = Nothing) As IMSScanProperty Implements ILipidSpectrumGenerator.Generate
             If Not CanGenerate(lipid, adduct) Then
                 Return Nothing
             End If
@@ -54,12 +54,12 @@ Public Class LipidSpectrumGeneratorFactory
     End Class
 
     Public Interface ISpectrumGenerationRule
-        Function Create(ByVal lipid As ILipid, ByVal adduct As AdductIon) As SpectrumPeak()
+        Function Create(lipid As ILipid, adduct As AdductIon) As SpectrumPeak()
     End Interface
 
     Public Class MzVariableRule
         Implements ISpectrumGenerationRule
-        Public Sub New(ByVal mz As IMzVariable, ByVal intensity As Double, ByVal comment As String)
+        Public Sub New(mz As IMzVariable, intensity As Double, comment As String)
             Me.Mz = mz
             Me.Intensity = intensity
             Me.Comment = comment
@@ -69,31 +69,31 @@ Public Class LipidSpectrumGeneratorFactory
         Public ReadOnly Property Intensity As Double
         Public ReadOnly Property Comment As String
 
-        Public Function Create(ByVal lipid As ILipid, ByVal adduct As AdductIon) As SpectrumPeak() Implements ISpectrumGenerationRule.Create
+        Public Function Create(lipid As ILipid, adduct As AdductIon) As SpectrumPeak() Implements ISpectrumGenerationRule.Create
             Return Mz.Evaluate(lipid, adduct).[Select](Function(mz) New SpectrumPeak(mz, Intensity, Comment)).ToArray()
         End Function
     End Class
 
     Public Interface IMzVariable
-        Function Evaluate(ByVal lipid As ILipid, ByVal adduct As AdductIon) As IEnumerable(Of Double)
+        Function Evaluate(lipid As ILipid, adduct As AdductIon) As IEnumerable(Of Double)
     End Interface
 
     Public Class EmptyMz
         Implements IMzVariable
-        Public Function Evaluate(ByVal lipid As ILipid, ByVal adduct As AdductIon) As IEnumerable(Of Double) Implements IMzVariable.Evaluate
+        Public Function Evaluate(lipid As ILipid, adduct As AdductIon) As IEnumerable(Of Double) Implements IMzVariable.Evaluate
             Return Enumerable.Empty(Of Double)()
         End Function
     End Class
 
     Public Class ConstantMz
         Implements IMzVariable
-        Public Sub New(ByVal exactMass As Double)
+        Public Sub New(exactMass As Double)
             Me.ExactMass = exactMass
         End Sub
 
         Public ReadOnly Property ExactMass As Double
 
-        Public Iterator Function Evaluate(ByVal lipid As ILipid, ByVal adduct As AdductIon) As IEnumerable(Of Double) Implements IMzVariable.Evaluate
+        Public Iterator Function Evaluate(lipid As ILipid, adduct As AdductIon) As IEnumerable(Of Double) Implements IMzVariable.Evaluate
             Yield ExactMass
         End Function
 
@@ -104,7 +104,7 @@ Public Class LipidSpectrumGeneratorFactory
 
     Public Class PrecursorMz
         Implements IMzVariable
-        Public Iterator Function Evaluate(ByVal lipid As ILipid, ByVal adduct As AdductIon) As IEnumerable(Of Double) Implements IMzVariable.Evaluate
+        Public Iterator Function Evaluate(lipid As ILipid, adduct As AdductIon) As IEnumerable(Of Double) Implements IMzVariable.Evaluate
             Yield adduct.ConvertToMz(lipid.Mass)
         End Function
 
@@ -115,7 +115,7 @@ Public Class LipidSpectrumGeneratorFactory
 
     Public Class MolecularLevelChains
         Implements IMzVariable
-        Public Function Evaluate(ByVal lipid As ILipid, ByVal adduct As AdductIon) As IEnumerable(Of Double) Implements IMzVariable.Evaluate
+        Public Function Evaluate(lipid As ILipid, adduct As AdductIon) As IEnumerable(Of Double) Implements IMzVariable.Evaluate
             Dim lipid_ As Lipid = Nothing, chains As SeparatedChains = Nothing
 
             If CSharpImpl.__Assign(lipid_, TryCast(lipid, Lipid)) IsNot Nothing AndAlso CSharpImpl.__Assign(chains, TryCast(lipid_.Chains, SeparatedChains)) IsNot Nothing Then
@@ -135,13 +135,13 @@ Public Class LipidSpectrumGeneratorFactory
 
     Public Class PositionChainMz
         Implements IMzVariable
-        Public Sub New(ByVal position As Integer)
+        Public Sub New(position As Integer)
             Me.Position = position
         End Sub
 
         Public ReadOnly Property Position As Integer
 
-        Public Iterator Function Evaluate(ByVal lipid As ILipid, ByVal adduct As AdductIon) As IEnumerable(Of Double) Implements IMzVariable.Evaluate
+        Public Iterator Function Evaluate(lipid As ILipid, adduct As AdductIon) As IEnumerable(Of Double) Implements IMzVariable.Evaluate
             Dim lipid_ As Lipid = Nothing, chains As PositionLevelChains = Nothing
 
             If CSharpImpl.__Assign(lipid_, TryCast(lipid, Lipid)) IsNot Nothing AndAlso CSharpImpl.__Assign(chains, TryCast(lipid_.Chains, PositionLevelChains)) IsNot Nothing AndAlso chains.ChainCount >= Position Then
@@ -161,13 +161,13 @@ Public Class LipidSpectrumGeneratorFactory
 
     Public Class ChainDesorptionMz
         Implements IMzVariable
-        Public Sub New(ByVal position As Integer)
+        Public Sub New(position As Integer)
             Me.Position = position
         End Sub
 
         Public ReadOnly Property Position As Integer
 
-        Public Function Evaluate(ByVal lipid As ILipid, ByVal adduct As AdductIon) As IEnumerable(Of Double) Implements IMzVariable.Evaluate
+        Public Function Evaluate(lipid As ILipid, adduct As AdductIon) As IEnumerable(Of Double) Implements IMzVariable.Evaluate
             Dim lipid_ As Lipid = Nothing, chains As SeparatedChains = Nothing
 
             If CSharpImpl.__Assign(lipid_, TryCast(lipid, Lipid)) IsNot Nothing AndAlso CSharpImpl.__Assign(chains, TryCast(lipid_.Chains, SeparatedChains)) IsNot Nothing AndAlso chains.ChainCount >= Position Then
@@ -176,7 +176,7 @@ Public Class LipidSpectrumGeneratorFactory
             Return Enumerable.Empty(Of Double)()
         End Function
 
-        Private Function CreateSpectrum(ByVal chain As IChain) As IEnumerable(Of Double)
+        Private Function CreateSpectrum(chain As IChain) As IEnumerable(Of Double)
             If chain.CarbonCount = 0 OrElse chain.DoubleBond.UnDecidedCount <> 0 OrElse chain.Oxidized.UnDecidedCount <> 0 Then
                 Return New Double(-1) {}
             End If
@@ -213,7 +213,7 @@ Public Class LipidSpectrumGeneratorFactory
 
     Public Class LossMz
         Implements IMzVariable
-        Public Sub New(ByVal left As IMzVariable, ByVal right As IMzVariable)
+        Public Sub New(left As IMzVariable, right As IMzVariable)
             Me.Left = left
             Me.Right = right
         End Sub
@@ -221,14 +221,14 @@ Public Class LipidSpectrumGeneratorFactory
         Public ReadOnly Property Left As IMzVariable
         Public ReadOnly Property Right As IMzVariable
 
-        Public Function Evaluate(ByVal lipid As ILipid, ByVal adduct As AdductIon) As IEnumerable(Of Double) Implements IMzVariable.Evaluate
+        Public Function Evaluate(lipid As ILipid, adduct As AdductIon) As IEnumerable(Of Double) Implements IMzVariable.Evaluate
             Return Left.Evaluate(lipid, adduct).SelectMany(Function(__) Right.Evaluate(lipid, adduct), Function(left, right) left - right)
         End Function
     End Class
 
     Public Class MzVariableProxy
         Implements IMzVariable
-        Public Sub New(ByVal mz As IMzVariable)
+        Public Sub New(mz As IMzVariable)
             Me.Mz = mz
         End Sub
 
@@ -239,7 +239,7 @@ Public Class LipidSpectrumGeneratorFactory
         Private lipid As ILipid
         Private adduct As AdductIon
 
-    Public Function Evaluate(ByVal lipid As ILipid, ByVal adduct As AdductIon) As IEnumerable(Of Double) Implements IMzVariable.Evaluate
+    Public Function Evaluate(lipid As ILipid, adduct As AdductIon) As IEnumerable(Of Double) Implements IMzVariable.Evaluate
         If lipid Is Me.lipid AndAlso adduct Is Me.adduct Then
             Return cache
         End If

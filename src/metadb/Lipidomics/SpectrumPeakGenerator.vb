@@ -9,7 +9,7 @@ Public Class SpectrumPeakGenerator
     Implements ISpectrumPeakGenerator
     Private Shared ReadOnly CH2 As Double = {HydrogenMass * 2, CarbonMass}.Sum()
 
-    Private Function GetDoubleBondSpectrum(ByVal lipid As ILipid, ByVal chain As IChain, ByVal adduct As AdductIon, ByVal nlMass As Double, ByVal abundance As Double) As IEnumerable(Of SpectrumPeak)
+    Private Function GetDoubleBondSpectrum(lipid As ILipid, chain As IChain, adduct As AdductIon, nlMass As Double, abundance As Double) As IEnumerable(Of SpectrumPeak)
         If chain.DoubleBond.UnDecidedCount <> 0 OrElse chain.CarbonCount = 0 OrElse chain.Oxidized.UnDecidedCount <> 0 Then
             Return Enumerable.Empty(Of SpectrumPeak)()
         End If
@@ -147,15 +147,15 @@ Public Class SpectrumPeakGenerator
         Return peaks
     End Function
 
-    Public Function GetAcylDoubleBondSpectrum(ByVal lipid As ILipid, ByVal acylChain As AcylChain, ByVal adduct As AdductIon, ByVal nlMass As Double, ByVal abundance As Double) As IEnumerable(Of SpectrumPeak) Implements ISpectrumPeakGenerator.GetAcylDoubleBondSpectrum
+    Public Function GetAcylDoubleBondSpectrum(lipid As ILipid, acylChain As AcylChain, adduct As AdductIon, nlMass As Double, abundance As Double) As IEnumerable(Of SpectrumPeak) Implements ISpectrumPeakGenerator.GetAcylDoubleBondSpectrum
         Return GetDoubleBondSpectrum(lipid, acylChain, adduct, nlMass - OxygenMass + HydrogenMass * 2, abundance)
     End Function
 
-    Public Function GetAlkylDoubleBondSpectrum(ByVal lipid As ILipid, ByVal acylChain As AlkylChain, ByVal adduct As AdductIon, ByVal nlMass As Double, ByVal abundance As Double) As IEnumerable(Of SpectrumPeak) Implements ISpectrumPeakGenerator.GetAlkylDoubleBondSpectrum
+    Public Function GetAlkylDoubleBondSpectrum(lipid As ILipid, acylChain As AlkylChain, adduct As AdductIon, nlMass As Double, abundance As Double) As IEnumerable(Of SpectrumPeak) Implements ISpectrumPeakGenerator.GetAlkylDoubleBondSpectrum
         Return GetDoubleBondSpectrum(lipid, acylChain, adduct, nlMass, abundance)
     End Function
 
-    Public Function GetSphingoDoubleBondSpectrum(ByVal lipid As ILipid, ByVal sphingo As SphingoChain, ByVal adduct As AdductIon, ByVal nlMass As Double, ByVal abundance As Double) As IEnumerable(Of SpectrumPeak) Implements ISpectrumPeakGenerator.GetSphingoDoubleBondSpectrum
+    Public Function GetSphingoDoubleBondSpectrum(lipid As ILipid, sphingo As SphingoChain, adduct As AdductIon, nlMass As Double, abundance As Double) As IEnumerable(Of SpectrumPeak) Implements ISpectrumPeakGenerator.GetSphingoDoubleBondSpectrum
         If sphingo.DoubleBond.UnDecidedCount <> 0 OrElse sphingo.CarbonCount = 0 OrElse sphingo.Oxidized.UnDecidedCount <> 0 Then
             Return Enumerable.Empty(Of SpectrumPeak)()
         End If

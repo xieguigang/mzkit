@@ -5,22 +5,22 @@ Imports System.Linq
 
 Public Class Omega3nChainGenerator
     Implements IChainGenerator
-    Public Function CarbonIsValid(ByVal carbon As Integer) As Boolean Implements IChainGenerator.CarbonIsValid
+    Public Function CarbonIsValid(carbon As Integer) As Boolean Implements IChainGenerator.CarbonIsValid
         Return True
     End Function
 
-    Public Function DoubleBondIsValid(ByVal carbon As Integer, ByVal doubleBond As Integer) As Boolean Implements IChainGenerator.DoubleBondIsValid
+    Public Function DoubleBondIsValid(carbon As Integer, doubleBond As Integer) As Boolean Implements IChainGenerator.DoubleBondIsValid
         Return carbon >= doubleBond * 3 + 3 AndAlso doubleBond >= 0
     End Function
 
     Private Shared ReadOnly eariestPositionOfOx As Integer = 2
-    Public Function Generate(ByVal chain As AcylChain) As IEnumerable(Of IChain) Implements IChainGenerator.Generate
+    Public Function Generate(chain As AcylChain) As IEnumerable(Of IChain) Implements IChainGenerator.Generate
         Dim bs = EnumerateDoubleBond(chain.CarbonCount, chain.DoubleBond)
         Dim os = EnumerateOxidized(chain.CarbonCount, chain.Oxidized, eariestPositionOfOx, chain.CarbonCount - 1).ToArray()
         Return bs.SelectMany(Function(__) os, Function(b, o) New AcylChain(chain.CarbonCount, b, o))
     End Function
 
-    Public Function Generate(ByVal chain As AlkylChain) As IEnumerable(Of IChain) Implements IChainGenerator.Generate
+    Public Function Generate(chain As AlkylChain) As IEnumerable(Of IChain) Implements IChainGenerator.Generate
         Dim bs As IEnumerable(Of IDoubleBond)
         If chain.IsPlasmalogen Then
             bs = EnumerateDoubleBondInPlasmalogen(chain.CarbonCount, chain.DoubleBond)
@@ -32,13 +32,13 @@ Public Class Omega3nChainGenerator
     End Function
 
     Private Shared ReadOnly eariestPositionOfOxInSphingosine As Integer = 4
-    Public Function Generate(ByVal chain As SphingoChain) As IEnumerable(Of IChain) Implements IChainGenerator.Generate
+    Public Function Generate(chain As SphingoChain) As IEnumerable(Of IChain) Implements IChainGenerator.Generate
         Dim bs = EnumerateDoubleBondInSphingosine(chain.CarbonCount, chain.DoubleBond)
         Dim os = EnumerateOxidized(chain.CarbonCount, chain.Oxidized, eariestPositionOfOxInSphingosine, chain.CarbonCount - 1).ToArray()
         Return bs.SelectMany(Function(__) os, Function(b, o) New SphingoChain(chain.CarbonCount, b, o))
     End Function
 
-    Private Function EnumerateDoubleBond(ByVal carbon As Integer, ByVal doubleBond As IDoubleBond) As IEnumerable(Of IDoubleBond)
+    Private Function EnumerateDoubleBond(carbon As Integer, doubleBond As IDoubleBond) As IEnumerable(Of IDoubleBond)
         If doubleBond.UnDecidedCount = 0 Then
             Return [Return](doubleBond)
         End If
@@ -61,7 +61,7 @@ Public Class Omega3nChainGenerator
         Return result
     End Function
 
-    Private Function InnerEnumerateDoubleBond(ByVal carbon As Integer, ByVal doubleBond As IDoubleBond) As IEnumerable(Of IDoubleBond)
+    Private Function InnerEnumerateDoubleBond(carbon As Integer, doubleBond As IDoubleBond) As IEnumerable(Of IDoubleBond)
         Dim [set] = New HashSet(Of Integer)(doubleBond.Bonds.[Select](Function(bond) bond.Position))
         For i = 0 To doubleBond.UnDecidedCount - 1
             [set].Add(carbon - i * 3)
@@ -69,7 +69,7 @@ Public Class Omega3nChainGenerator
         Return GenerateDoubleBonds([set], SetToBitArray(carbon, doubleBond), carbon - doubleBond.UnDecidedCount * 3, carbon)
     End Function
 
-    Private Function EnumerateDoubleBondInEther(ByVal carbon As Integer, ByVal doubleBond As IDoubleBond) As IEnumerable(Of IDoubleBond)
+    Private Function EnumerateDoubleBondInEther(carbon As Integer, doubleBond As IDoubleBond) As IEnumerable(Of IDoubleBond)
         If doubleBond.UnDecidedCount = 0 Then
             Return [Return](doubleBond)
         End If
@@ -79,7 +79,7 @@ Public Class Omega3nChainGenerator
         Return InnerEnumerateDoubleBondInEther(carbon, doubleBond)
     End Function
 
-    Private Function InnerEnumerateDoubleBondInEther(ByVal carbon As Integer, ByVal doubleBond As IDoubleBond) As IEnumerable(Of IDoubleBond)
+    Private Function InnerEnumerateDoubleBondInEther(carbon As Integer, doubleBond As IDoubleBond) As IEnumerable(Of IDoubleBond)
         Dim [set] = New HashSet(Of Integer)(doubleBond.Bonds.[Select](Function(bond) bond.Position))
         For i = 0 To doubleBond.UnDecidedCount - 1
             [set].Add(carbon - i * 3)
@@ -98,7 +98,7 @@ Public Class Omega3nChainGenerator
         Return result
     End Function
 
-    Private Function EnumerateDoubleBondInPlasmalogen(ByVal carbon As Integer, ByVal doubleBond As IDoubleBond) As IEnumerable(Of IDoubleBond)
+    Private Function EnumerateDoubleBondInPlasmalogen(carbon As Integer, doubleBond As IDoubleBond) As IEnumerable(Of IDoubleBond)
         If doubleBond.UnDecidedCount = 0 Then
             Return [Return](doubleBond)
         End If
@@ -108,7 +108,7 @@ Public Class Omega3nChainGenerator
         Return InnerEnumerateDoubleBondInPlasmalogen(carbon, doubleBond)
     End Function
 
-    Private Function InnerEnumerateDoubleBondInPlasmalogen(ByVal carbon As Integer, ByVal doubleBond As IDoubleBond) As IEnumerable(Of IDoubleBond)
+    Private Function InnerEnumerateDoubleBondInPlasmalogen(carbon As Integer, doubleBond As IDoubleBond) As IEnumerable(Of IDoubleBond)
         Dim [set] = New HashSet(Of Integer)(doubleBond.Bonds.[Select](Function(bond) bond.Position))
         For i = 0 To doubleBond.UnDecidedCount - 1
             [set].Add(carbon - i * 3)
@@ -116,14 +116,14 @@ Public Class Omega3nChainGenerator
         Return GenerateDoubleBonds([set], SetToBitArray(carbon, doubleBond), carbon - doubleBond.UnDecidedCount * 3, carbon)
     End Function
 
-    Private Function EnumerateDoubleBondInSphingosine(ByVal carbon As Integer, ByVal doubleBond As IDoubleBond) As IEnumerable(Of IDoubleBond)
+    Private Function EnumerateDoubleBondInSphingosine(carbon As Integer, doubleBond As IDoubleBond) As IEnumerable(Of IDoubleBond)
         If doubleBond.UnDecidedCount = 0 Then
             Return {doubleBond}
         End If
         Return GenerateDoubleBondsForSphingosine(doubleBond, carbon)
     End Function
 
-    Private Iterator Function GenerateDoubleBonds(ByVal [set] As HashSet(Of Integer), ByVal sup As HashSet(Of Integer), ByVal nextHead As Integer, ByVal prevTail As Integer) As IEnumerable(Of IDoubleBond)
+    Private Iterator Function GenerateDoubleBonds([set] As HashSet(Of Integer), sup As HashSet(Of Integer), nextHead As Integer, prevTail As Integer) As IEnumerable(Of IDoubleBond)
         If nextHead = prevTail Then
             If [set].IsSupersetOf(sup) Then
                 Yield BitArrayToBond([set])
@@ -146,7 +146,7 @@ Public Class Omega3nChainGenerator
         End While
     End Function
 
-    Private Function GenerateDoubleBondsForSphingosine(ByVal doubleBond As IDoubleBond, ByVal length As Integer) As IEnumerable(Of IDoubleBond)
+    Private Function GenerateDoubleBondsForSphingosine(doubleBond As IDoubleBond, length As Integer) As IEnumerable(Of IDoubleBond)
         Dim sets = New HashSet(Of Integer)(doubleBond.Bonds.[Select](Function(b) b.Position))
 
         Dim blank = 3
@@ -190,7 +190,7 @@ Public Class Omega3nChainGenerator
         Return result
     End Function
 
-    Private Function SetToBitArray(ByVal length As Integer, ByVal doubleBond As IDoubleBond) As HashSet(Of Integer)
+    Private Function SetToBitArray(length As Integer, doubleBond As IDoubleBond) As HashSet(Of Integer)
         If doubleBond.DecidedCount = 0 Then
             Return New HashSet(Of Integer)()
         End If
@@ -201,7 +201,7 @@ Public Class Omega3nChainGenerator
         Return result
     End Function
 
-    Private Function BitArrayToBond(ByVal arr As HashSet(Of Integer)) As IDoubleBond
+    Private Function BitArrayToBond(arr As HashSet(Of Integer)) As IDoubleBond
         Dim bonds = New List(Of IDoubleBondInfo)()
         For Each v In arr.OrderBy(Function(v) v)
             bonds.Add(DoubleBondInfo.Create(v))
@@ -209,7 +209,7 @@ Public Class Omega3nChainGenerator
         Return New DoubleBond(bonds.Count, bonds)
     End Function
 
-    Private Function EnumerateOxidized(ByVal carbon As Integer, ByVal oxidized As IOxidized, ByVal begin As Integer, ByVal [end] As Integer) As IEnumerable(Of IOxidized)
+    Private Function EnumerateOxidized(carbon As Integer, oxidized As IOxidized, begin As Integer, [end] As Integer) As IEnumerable(Of IOxidized)
         If oxidized.UnDecidedCount = 0 Then
             Return [Return](oxidized)
         End If

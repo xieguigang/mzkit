@@ -6,12 +6,12 @@ Imports System.Linq
 
 Public Class TotalChainVariationGenerator
     Implements ITotalChainVariationGenerator
-    Public Sub New(ByVal chainGenerator As IChainGenerator, ByVal minLength As Integer)
+    Public Sub New(chainGenerator As IChainGenerator, minLength As Integer)
         Me.MinLength = minLength
         Me.chainGenerator = chainGenerator
     End Sub
 
-    Public Sub New(ByVal Optional minLength As Integer = 6, ByVal Optional begin As Integer = 3, ByVal Optional [end] As Integer = 3, ByVal Optional skip As Integer = 3)
+    Public Sub New(Optional minLength As Integer = 6, Optional begin As Integer = 3, Optional [end] As Integer = 3, Optional skip As Integer = 3)
         Me.New(New ChainGenerator(begin, [end], skip), minLength)
 
     End Sub
@@ -20,12 +20,12 @@ Public Class TotalChainVariationGenerator
 
     Private ReadOnly chainGenerator As IChainGenerator
 
-    Public Function Separate(ByVal chain As TotalChain) As IEnumerable(Of ITotalChain) Implements ITotalChainVariationGenerator.Separate
+    Public Function Separate(chain As TotalChain) As IEnumerable(Of ITotalChain) Implements ITotalChainVariationGenerator.Separate
         Return InternalSeparate(chain).SelectMany(New Func(Of ChainSet, IEnumerable(Of ITotalChain))(AddressOf ListingCandidates))
     End Function
 
     Friend Class ChainCandidate
-        Public Sub New(ByVal chainCount As Integer, ByVal carbonCount As Integer, ByVal doubleBondCount As Integer, ByVal oxidizedCount As Integer, ByVal minimumOxidizedCount As Integer)
+        Public Sub New(chainCount As Integer, carbonCount As Integer, doubleBondCount As Integer, oxidizedCount As Integer, minimumOxidizedCount As Integer)
             Me.ChainCount = chainCount
             Me.CarbonCount = carbonCount
             Me.DoubleBondCount = doubleBondCount
@@ -45,7 +45,7 @@ Public Class TotalChainVariationGenerator
     End Class
 
     Friend Class ChainSet
-        Public Sub New(ByVal acylCandidate As ChainCandidate, ByVal alkylCandidate As ChainCandidate, ByVal sphingoCandidate As ChainCandidate)
+        Public Sub New(acylCandidate As ChainCandidate, alkylCandidate As ChainCandidate, sphingoCandidate As ChainCandidate)
             Me.AcylCandidate = acylCandidate
             Me.AlkylCandidate = alkylCandidate
             Me.SphingoCandidate = sphingoCandidate
@@ -57,7 +57,7 @@ Public Class TotalChainVariationGenerator
     End Class
 
     ' TODO: refactoring
-    Private Function ListingCandidates(ByVal candidates As ChainSet) As IEnumerable(Of ITotalChain)
+    Private Function ListingCandidates(candidates As ChainSet) As IEnumerable(Of ITotalChain)
         If candidates.SphingoCandidate.ChainCount > 0 Then
             Dim sphingos = RecurseGenerate(candidates.SphingoCandidate, New Func(Of Integer, Integer, Integer, SphingoChain)(AddressOf CreateSphingoChain)).ToArray()
             Dim acyls = RecurseGenerate(candidates.AcylCandidate, New Func(Of Integer, Integer, Integer, AcylChain)(AddressOf CreateAcylChain)).ToArray()
@@ -70,7 +70,7 @@ Public Class TotalChainVariationGenerator
         End If
     End Function
 
-    Private Function InternalSeparate(ByVal chains As TotalChain) As IEnumerable(Of ChainSet)
+    Private Function InternalSeparate(chains As TotalChain) As IEnumerable(Of ChainSet)
         Dim minAcylCarbonMinAlkylCarbonMinSphingoCarbon As (minAcylCarbon As Integer, minAlkylCarbon As Integer, minSphingoCarbon As Integer) = Nothing
         minAcylCarbonMinAlkylCarbonMinSphingoCarbon = (MinLength * chains.AcylChainCount, MinLength * chains.AlkylChainCount, MinLength * chains.SphingoChainCount)
         Dim carbonRemain = chains.CarbonCount - minAcylCarbon - minAlkylCarbon - minSphingoCarbon
@@ -98,38 +98,38 @@ Public Class TotalChainVariationGenerator
         Return From cs In css From dbs In dbss From oxs In oxss Select New ChainSet(New ChainCandidate(chains.AcylChainCount, cs(0), dbs(0), oxs(0), 0), New ChainCandidate(chains.AlkylChainCount, cs(1), dbs(1), oxs(1), 0), New ChainCandidate(chains.SphingoChainCount, cs(2), dbs(2), oxs(2), 2))
     End Function
 
-    Private Function Distribute(ByVal count As Integer, ByVal acylMin As Integer, ByVal acylMax As Integer, ByVal alkylMin As Integer, ByVal alkylMax As Integer, ByVal sphingoMin As Integer, ByVal sphingoMax As Integer) As IEnumerable(Of Integer())
+    Private Function Distribute(count As Integer, acylMin As Integer, acylMax As Integer, alkylMin As Integer, alkylMax As Integer, sphingoMin As Integer, sphingoMax As Integer) As IEnumerable(Of Integer())
         Return From i In Enumerable.Range(acylMin, acylMax - acylMin + 1) Where count - i <= alkylMax + sphingoMax From j In Enumerable.Range(alkylMin, alkylMax - alkylMin + 1) Let k = count - i - j Where sphingoMin <= k AndAlso k <= sphingoMax Select {i, j, k}
     End Function
 
-    Public Function Permutate(ByVal chains As MolecularSpeciesLevelChains) As IEnumerable(Of ITotalChain) Implements ITotalChainVariationGenerator.Permutate
+    Public Function Permutate(chains As MolecularSpeciesLevelChains) As IEnumerable(Of ITotalChain) Implements ITotalChainVariationGenerator.Permutate
         Return Permutations(chains.GetDeterminedChains()).[Select](Of IChain(), ITotalChain)(Function([set]) New PositionLevelChains([set])).Distinct(ChainsComparer)
     End Function
 
-    Public Function Product(ByVal chains As PositionLevelChains) As IEnumerable(Of ITotalChain) Implements ITotalChainVariationGenerator.Product
+    Public Function Product(chains As PositionLevelChains) As IEnumerable(Of ITotalChain) Implements ITotalChainVariationGenerator.Product
         If chains.GetDeterminedChains().All(Function(chain) chain.DoubleBond.UnDecidedCount = 0 AndAlso chain.Oxidized.UnDecidedCount = 0) Then
             Return Enumerable.Empty(Of ITotalChain)()
         End If
         Return CartesianProduct(chains.GetDeterminedChains().[Select](Function(c) c.GetCandidates(chainGenerator).ToArray()).ToArray()).[Select](Function([set]) New PositionLevelChains([set])).Distinct(ChainsComparer)
     End Function
 
-    Private Function CarbonNumberValid(ByVal curCarbon As Integer) As Boolean
+    Private Function CarbonNumberValid(curCarbon As Integer) As Boolean
         Return curCarbon >= MinLength AndAlso chainGenerator.CarbonIsValid(curCarbon)
     End Function
 
-    Private Function DoubleBondIsValid(ByVal carbon As Integer, ByVal db As Integer) As Boolean
+    Private Function DoubleBondIsValid(carbon As Integer, db As Integer) As Boolean
         Return chainGenerator.DoubleBondIsValid(carbon, db)
     End Function
 
-    Private Function IsLexicographicOrder(ByVal prevCarbon As Integer, ByVal prevDb As Integer, ByVal curCarbon As Integer, ByVal curDb As Integer) As Boolean
+    Private Function IsLexicographicOrder(prevCarbon As Integer, prevDb As Integer, curCarbon As Integer, curDb As Integer) As Boolean
         Return (prevCarbon, prevDb).CompareTo((curCarbon, curDb)) <= 0
     End Function
 
-    Private Function IsLexicographicOrder(ByVal prevCarbon As Integer, ByVal prevDb As Integer, ByVal prevOx As Integer, ByVal curCarbon As Integer, ByVal curDb As Integer, ByVal curOx As Integer) As Boolean
+    Private Function IsLexicographicOrder(prevCarbon As Integer, prevDb As Integer, prevOx As Integer, curCarbon As Integer, curDb As Integer, curOx As Integer) As Boolean
         Return (prevCarbon, prevDb, prevOx).CompareTo((curCarbon, curDb, curOx)) <= 0
     End Function
 
-    Private Function RecurseGenerate(Of T)(ByVal candidate As ChainCandidate, ByVal create As Func(Of Integer, Integer, Integer, T)) As IEnumerable(Of T())
+    Private Function RecurseGenerate(Of T)(candidate As ChainCandidate, create As Func(Of Integer, Integer, Integer, T)) As IEnumerable(Of T())
         If candidate.ChainCount = 0 Then
             If candidate.CarbonCount = 0 AndAlso candidate.DoubleBondCount = 0 AndAlso candidate.OxidizedCount = 0 Then
                 Return {New T(-1) {}}
@@ -178,17 +178,17 @@ Public Class TotalChainVariationGenerator
         End Function
 
     Private ReadOnly _sphingoCache As ConcurrentDictionary(Of (Integer, Integer, Integer), SphingoChain) = New ConcurrentDictionary(Of (Integer, Integer, Integer), SphingoChain)()
-    Private Function CreateSphingoChain(ByVal carbon As Integer, ByVal db As Integer, ByVal ox As Integer) As SphingoChain
+    Private Function CreateSphingoChain(carbon As Integer, db As Integer, ox As Integer) As SphingoChain
         Return _sphingoCache.GetOrAdd((carbon, db, ox), Function(triple) New SphingoChain(triple.Item1, New DoubleBond(triple.Item2), New Oxidized(triple.Item3, 1, 3)))
     End Function
 
     Private ReadOnly _acylCache As ConcurrentDictionary(Of (Integer, Integer, Integer), AcylChain) = New ConcurrentDictionary(Of (Integer, Integer, Integer), AcylChain)()
-    Private Function CreateAcylChain(ByVal carbon As Integer, ByVal db As Integer, ByVal ox As Integer) As AcylChain
+    Private Function CreateAcylChain(carbon As Integer, db As Integer, ox As Integer) As AcylChain
         Return _acylCache.GetOrAdd((carbon, db, ox), Function(triple) New AcylChain(triple.Item1, New DoubleBond(triple.Item2), New Oxidized(triple.Item3)))
     End Function
 
     Private ReadOnly _alkylCache As ConcurrentDictionary(Of (Integer, Integer, Integer), AlkylChain) = New ConcurrentDictionary(Of (Integer, Integer, Integer), AlkylChain)()
-    Private Function CreateAlkylChain(ByVal carbon As Integer, ByVal db As Integer, ByVal ox As Integer) As AlkylChain
+    Private Function CreateAlkylChain(carbon As Integer, db As Integer, ox As Integer) As AlkylChain
         Return _alkylCache.GetOrAdd((carbon, db, ox), Function(triple) New AlkylChain(triple.Item1, New DoubleBond(triple.Item2), New Oxidized(triple.Item3)))
     End Function
 
@@ -196,11 +196,11 @@ Public Class TotalChainVariationGenerator
 
     Friend Class PositionLevelChainEqualityCompaerer
         Implements IEqualityComparer(Of ITotalChain)
-        Public Function Equals(ByVal x As ITotalChain, ByVal y As ITotalChain) As Boolean Implements IEqualityComparer(Of ITotalChain).Equals
+        Public Function Equals(x As ITotalChain, y As ITotalChain) As Boolean Implements IEqualityComparer(Of ITotalChain).Equals
             Return Equals(x.ToString(), y.ToString())
         End Function
 
-        Public Function GetHashCode(ByVal obj As ITotalChain) As Integer Implements IEqualityComparer(Of ITotalChain).GetHashCode
+        Public Function GetHashCode(obj As ITotalChain) As Integer Implements IEqualityComparer(Of ITotalChain).GetHashCode
             Return obj.ToString().GetHashCode()
         End Function
     End Class

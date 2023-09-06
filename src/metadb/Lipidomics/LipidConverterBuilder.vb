@@ -14,31 +14,31 @@ Friend NotInheritable Class LipidConverterBuilder
             Return New LipidAnnotationLevelConverter(chainsVisitor)
         End Function
 
-        Private Sub SetChainsState(ByVal state As ChainsIndeterminateState) Implements ILipidomicsVisitorBuilder.SetChainsState
+        Private Sub SetChainsState(state As ChainsIndeterminateState) Implements ILipidomicsVisitorBuilder.SetChainsState
             _chainsIndeterminate = state
         End Sub
 
-        Private Sub SetAcylDoubleBond(ByVal state As DoubleBondIndeterminateState) Implements ILipidomicsVisitorBuilder.SetAcylDoubleBond
+        Private Sub SetAcylDoubleBond(state As DoubleBondIndeterminateState) Implements ILipidomicsVisitorBuilder.SetAcylDoubleBond
             _acylDoubleBondState = state
         End Sub
 
-        Private Sub SetAcylOxidized(ByVal state As OxidizedIndeterminateState) Implements ILipidomicsVisitorBuilder.SetAcylOxidized
+        Private Sub SetAcylOxidized(state As OxidizedIndeterminateState) Implements ILipidomicsVisitorBuilder.SetAcylOxidized
             _acylOxidizedState = state
         End Sub
 
-        Private Sub SetAlkylDoubleBond(ByVal state As DoubleBondIndeterminateState) Implements ILipidomicsVisitorBuilder.SetAlkylDoubleBond
+        Private Sub SetAlkylDoubleBond(state As DoubleBondIndeterminateState) Implements ILipidomicsVisitorBuilder.SetAlkylDoubleBond
             _alkylDoubleBondState = state
         End Sub
 
-        Private Sub SetAlkylOxidized(ByVal state As OxidizedIndeterminateState) Implements ILipidomicsVisitorBuilder.SetAlkylOxidized
+        Private Sub SetAlkylOxidized(state As OxidizedIndeterminateState) Implements ILipidomicsVisitorBuilder.SetAlkylOxidized
             _alkylOxidizedState = state
         End Sub
 
-        Private Sub SetSphingoDoubleBond(ByVal state As DoubleBondIndeterminateState) Implements ILipidomicsVisitorBuilder.SetSphingoDoubleBond
+        Private Sub SetSphingoDoubleBond(state As DoubleBondIndeterminateState) Implements ILipidomicsVisitorBuilder.SetSphingoDoubleBond
             _sphingosineDoubleBondState = state
         End Sub
 
-        Private Sub SetSphingoOxidized(ByVal state As OxidizedIndeterminateState) Implements ILipidomicsVisitorBuilder.SetSphingoOxidized
+        Private Sub SetSphingoOxidized(state As OxidizedIndeterminateState) Implements ILipidomicsVisitorBuilder.SetSphingoOxidized
             _sphingosineOxidizedState = state
         End Sub
     End Class

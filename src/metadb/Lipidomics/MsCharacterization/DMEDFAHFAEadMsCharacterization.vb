@@ -6,7 +6,7 @@ Imports System.Collections.Generic
 Imports System.Linq
 
 Friend Class DMEDFAHFAEadMsCharacterization
-    Public Shared Function Characterize(ByVal scan As IMSScanProperty, ByVal molecule As ILipid, ByVal reference As MoleculeMsReference, ByVal tolerance As Single, ByVal mzBegin As Single, ByVal mzEnd As Single) As (ILipid, Double())
+    Public Shared Function Characterize(scan As IMSScanProperty, molecule As ILipid, reference As MoleculeMsReference, tolerance As Single, mzBegin As Single, mzEnd As Single) As (ILipid, Double())
         Dim snPositionMzValues = reference.Spectrum.Where(Function(n) n.SpectrumComment = SpectrumComment.snposition).ToList()
         Dim dions4position As List(Of DiagnosticIon) = Nothing
         If Not snPositionMzValues.IsEmptyOrNull() Then

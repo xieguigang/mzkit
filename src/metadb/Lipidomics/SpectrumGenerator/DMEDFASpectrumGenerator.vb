@@ -25,13 +25,13 @@ Public Class DMEDFASpectrumGenerator
         spectrumGenerator = New SpectrumPeakGenerator()
     End Sub
 
-    Public Sub New(ByVal spectrumGenerator As ISpectrumPeakGenerator)
+    Public Sub New(spectrumGenerator As ISpectrumPeakGenerator)
         Me.spectrumGenerator = If(spectrumGenerator, CSharpImpl.__Throw(Of ISpectrumPeakGenerator)(New ArgumentNullException(NameOf(spectrumGenerator))))
     End Sub
 
     Private ReadOnly spectrumGenerator As ISpectrumPeakGenerator
 
-    Public Function CanGenerate(ByVal lipid As ILipid, ByVal adduct As AdductIon) As Boolean Implements ILipidSpectrumGenerator.CanGenerate
+    Public Function CanGenerate(lipid As ILipid, adduct As AdductIon) As Boolean Implements ILipidSpectrumGenerator.CanGenerate
         If lipid.LipidClass = LbmClass.DMEDFA OrElse lipid.LipidClass = LbmClass.DMEDOxFA Then
             If Equals(adduct.AdductIonName, "[M+H]+") Then
                 Return True
@@ -40,7 +40,7 @@ Public Class DMEDFASpectrumGenerator
         Return False
     End Function
 
-    Public Function Generate(ByVal lipid As Lipid, ByVal adduct As AdductIon, ByVal Optional molecule As IMoleculeProperty = Nothing) As IMSScanProperty Implements ILipidSpectrumGenerator.Generate
+    Public Function Generate(lipid As Lipid, adduct As AdductIon, Optional molecule As IMoleculeProperty = Nothing) As IMSScanProperty Implements ILipidSpectrumGenerator.Generate
         Dim nlMass = 0.0
         Dim spectrum = New List(Of SpectrumPeak)()
         spectrum.AddRange(GetDMEDFASpectrum(lipid, adduct))
@@ -53,7 +53,7 @@ Public Class DMEDFASpectrumGenerator
         Return CreateReference(lipid, adduct, spectrum, molecule)
     End Function
 
-    Private Function CreateReference(ByVal lipid As ILipid, ByVal adduct As AdductIon, ByVal spectrum As List(Of SpectrumPeak), ByVal molecule As IMoleculeProperty) As MoleculeMsReference
+    Private Function CreateReference(lipid As ILipid, adduct As AdductIon, spectrum As List(Of SpectrumPeak), molecule As IMoleculeProperty) As MoleculeMsReference
         Return New MoleculeMsReference With {
     .PrecursorMz = adduct.ConvertToMz(lipid.Mass),
     .IonMode = adduct.IonMode,
@@ -68,7 +68,7 @@ Public Class DMEDFASpectrumGenerator
     .Charge = adduct.ChargeNumber
 }
     End Function
-    Private Function GetDMEDFASpectrum(ByVal lipid As ILipid, ByVal adduct As AdductIon) As SpectrumPeak()
+    Private Function GetDMEDFASpectrum(lipid As ILipid, adduct As AdductIon) As SpectrumPeak()
         Dim spectrum = New List(Of SpectrumPeak) From {
     New SpectrumPeak(adduct.ConvertToMz(lipid.Mass), 999.0R, "Precursor(DMED derv.)") With {
         .SpectrumComment = SpectrumComment.precursor
@@ -85,7 +85,7 @@ Public Class DMEDFASpectrumGenerator
         Return spectrum.ToArray()
     End Function
 
-    Private Function GetAcylDoubleBondSpectrum(ByVal lipid As ILipid, ByVal acylChains As IEnumerable(Of AcylChain), ByVal adduct As AdductIon, ByVal Optional nlMass As Double = 0.0) As IEnumerable(Of SpectrumPeak)
+    Private Function GetAcylDoubleBondSpectrum(lipid As ILipid, acylChains As IEnumerable(Of AcylChain), adduct As AdductIon, Optional nlMass As Double = 0.0) As IEnumerable(Of SpectrumPeak)
         nlMass = 0.0
         Dim spectrum = New List(Of SpectrumPeak)()
         Dim acylChain = acylChains.ToList()

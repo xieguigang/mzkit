@@ -69,7 +69,7 @@ Public Class LipidMsCharacterizationResult
             CERAMIDE_POSITION_LEVEL = builder.Create()
         End Sub
 
-        Public Function GetDefaultCharacterizationResultForAlkylAcylGlycerols(ByVal molecule As ILipid, ByVal result As LipidMsCharacterizationResult) As (ILipid, Double())
+        Public Function GetDefaultCharacterizationResultForAlkylAcylGlycerols(molecule As ILipid, result As LipidMsCharacterizationResult) As (ILipid, Double())
             Dim converter As IVisitor(Of ILipid, ILipid)
             If Not result.IsChainIonsExisted Then ' chain existed expected: PC O-36:2
                 converter = SPECIES_LEVEL
@@ -85,7 +85,7 @@ Public Class LipidMsCharacterizationResult
             Return (molecule.Accept(converter, IdentityDecomposer(Of ILipid, ILipid).Instance), New Double(1) {result.TotalScore, result.TotalMatchedIonCount})
         End Function
 
-        Public Function GetDefaultCharacterizationResultForCeramides(ByVal molecule As ILipid, ByVal result As LipidMsCharacterizationResult) As (ILipid, Double())
+        Public Function GetDefaultCharacterizationResultForCeramides(molecule As ILipid, result As LipidMsCharacterizationResult) As (ILipid, Double())
             Dim converter As IVisitor(Of ILipid, ILipid)
             If Not result.IsChainIonsExisted Then ' chain cannot determine
                 converter = SPECIES_LEVEL
@@ -97,7 +97,7 @@ Public Class LipidMsCharacterizationResult
             Return (molecule.Accept(converter, IdentityDecomposer(Of ILipid, ILipid).Instance), New Double(1) {result.TotalScore, result.TotalMatchedIonCount})
         End Function
 
-        Public Function GetDefaultCharacterizationResultForGlycerophospholipid(ByVal molecule As ILipid, ByVal result As LipidMsCharacterizationResult) As (ILipid, Double())
+        Public Function GetDefaultCharacterizationResultForGlycerophospholipid(molecule As ILipid, result As LipidMsCharacterizationResult) As (ILipid, Double())
             Dim converter As IVisitor(Of ILipid, ILipid)
             If Not result.IsChainIonsExisted Then ' chain existed expected: PC 36:2
                 converter = SPECIES_LEVEL
@@ -113,7 +113,7 @@ Public Class LipidMsCharacterizationResult
             Return (molecule.Accept(converter, IdentityDecomposer(Of ILipid, ILipid).Instance), New Double(1) {result.TotalScore, result.TotalMatchedIonCount})
         End Function
 
-        Public Function GetDefaultCharacterizationResultForTriacylGlycerols(ByVal molecule As ILipid, ByVal result As LipidMsCharacterizationResult) As (ILipid, Double())
+        Public Function GetDefaultCharacterizationResultForTriacylGlycerols(molecule As ILipid, result As LipidMsCharacterizationResult) As (ILipid, Double())
             Dim converter As IVisitor(Of ILipid, ILipid)
             If Not result.IsChainIonsExisted Then ' chain existed expected: TG 52:3
                 converter = SPECIES_LEVEL
@@ -129,7 +129,7 @@ Public Class LipidMsCharacterizationResult
             Return (molecule.Accept(converter, IdentityDecomposer(Of ILipid, ILipid).Instance), New Double(1) {result.TotalScore, result.TotalMatchedIonCount})
         End Function
 
-        Public Function GetDefaultCharacterizationResultForSingleAcylChainLipid(ByVal molecule As ILipid, ByVal result As LipidMsCharacterizationResult) As (ILipid, Double()) ' CAR, steroidal ether etc.
+        Public Function GetDefaultCharacterizationResultForSingleAcylChainLipid(molecule As ILipid, result As LipidMsCharacterizationResult) As (ILipid, Double()) ' CAR, steroidal ether etc.
             Dim converter = SPECIES_LEVEL
             If result.IsDoubleBondIonsExisted Then
                 converter = MOLECULAR_SPECIES_AND_DOUBLEBOND_LEVEL
@@ -140,7 +140,7 @@ Public Class LipidMsCharacterizationResult
             Return (molecule.Accept(converter, IdentityDecomposer(Of ILipid, ILipid).Instance), New Double(1) {result.TotalScore, result.TotalMatchedIonCount})
         End Function
 
-        Public Function GetMatchedCoefficient(ByVal peaks As List(Of SpectrumPeak)) As Double
+        Public Function GetMatchedCoefficient(peaks As List(Of SpectrumPeak)) As Double
             Dim sum1 As Double = 0, sum2 As Double = 0, mean1 As Double = 0, mean2 As Double = 0, covariance As Double = 0, sqrt1 As Double = 0, sqrt2 As Double = 0, counter As Double = 0
             For i = 0 To peaks.Count - 1
                 If Not peaks(i).IsMatched Then Continue For
@@ -165,7 +165,7 @@ Public Class LipidMsCharacterizationResult
             End If
         End Function
 
-        Public Function IsDiagnosticFragmentsExist(ByVal spectrum As IReadOnlyList(Of SpectrumPeak), ByVal refSpectrum As IReadOnlyList(Of SpectrumPeak), ByVal mzTolerance As Double) As Boolean
+        Public Function IsDiagnosticFragmentsExist(spectrum As IReadOnlyList(Of SpectrumPeak), refSpectrum As IReadOnlyList(Of SpectrumPeak), mzTolerance As Double) As Boolean
             Dim isAllExisted = True
             If refSpectrum.IsEmptyOrNull() Then Return True
             For Each refpeak In refSpectrum
@@ -177,7 +177,7 @@ Public Class LipidMsCharacterizationResult
             Return isAllExisted
         End Function
 
-        Public Function IsDiagnosticFragmentsExist(ByVal spectrum As IReadOnlyList(Of SpectrumPeak), ByVal dIons As IReadOnlyList(Of DiagnosticIon)) As Boolean
+        Public Function IsDiagnosticFragmentsExist(spectrum As IReadOnlyList(Of SpectrumPeak), dIons As IReadOnlyList(Of DiagnosticIon)) As Boolean
             Dim missedCounter = 0
             Dim isAllExisted = True
             If dIons.IsEmptyOrNull() Then Return True
@@ -197,7 +197,7 @@ Public Class LipidMsCharacterizationResult
             Return isAllExisted
         End Function
 
-        Public Function IsDiagnosticFragmentExist(ByVal spectrum As IReadOnlyList(Of SpectrumPeak), ByVal mzTolerance As Double, ByVal diagnosticMz As Double, ByVal threshold As Double) As Boolean
+        Public Function IsDiagnosticFragmentExist(spectrum As IReadOnlyList(Of SpectrumPeak), mzTolerance As Double, diagnosticMz As Double, threshold As Double) As Boolean
             For i = 0 To spectrum.Count - 1
                 Dim mz = spectrum(i).Mass
                 Dim intensity = spectrum(i).Intensity ' should be normalized by max intensity to 100
@@ -209,7 +209,7 @@ Public Class LipidMsCharacterizationResult
             Return False
         End Function
 
-        Public Function IsDiagnosticFragmentExist_ResolutionUsed4Intensity(ByVal spectrum As IReadOnlyList(Of SpectrumPeak), ByVal mzTolerance As Double, ByVal diagnosticMz As Double, ByVal threshold As Double) As Boolean
+        Public Function IsDiagnosticFragmentExist_ResolutionUsed4Intensity(spectrum As IReadOnlyList(Of SpectrumPeak), mzTolerance As Double, diagnosticMz As Double, threshold As Double) As Boolean
             For i = 0 To spectrum.Count - 1
                 Dim mz = spectrum(i).Mass
                 Dim intensity = spectrum(i).Resolution ' should be normalized by max intensity to 100
@@ -221,7 +221,7 @@ Public Class LipidMsCharacterizationResult
             Return False
         End Function
 
-        Public Function CountDetectedIons(ByVal exp_spectrum As List(Of SpectrumPeak), ByVal ref_spectrum As List(Of SpectrumPeak), ByVal tolerance As Double) As Integer
+        Public Function CountDetectedIons(exp_spectrum As List(Of SpectrumPeak), ref_spectrum As List(Of SpectrumPeak), tolerance As Double) As Integer
             Dim ionDetectedCounter = 0
             For Each ion In ref_spectrum
                 If IsDiagnosticFragmentExist(exp_spectrum, tolerance, ion.Mass, ion.Intensity * 0.0001) Then
@@ -233,7 +233,7 @@ Public Class LipidMsCharacterizationResult
     End Module
 
     Public Module OadMsCharacterizationUtility
-        Public Function GetDefaultScore(ByVal scan As IMSScanProperty, ByVal reference As MoleculeMsReference, ByVal tolerance As Single, ByVal mzBegin As Single, ByVal mzEnd As Single, ByVal classIonCutoff As Double, ByVal chainIonCutoff As Double, ByVal positionIonCutoff As Double, ByVal doublebondIonCutoff As Double) As LipidMsCharacterizationResult
+        Public Function GetDefaultScore(scan As IMSScanProperty, reference As MoleculeMsReference, tolerance As Single, mzBegin As Single, mzEnd As Single, classIonCutoff As Double, chainIonCutoff As Double, positionIonCutoff As Double, doublebondIonCutoff As Double) As LipidMsCharacterizationResult
 
             Dim exp_spectrum = scan.Spectrum
             Dim ref_spectrum = reference.Spectrum
@@ -309,7 +309,7 @@ Public Class LipidMsCharacterizationResult
     End Module
 
     Public Module EieioMsCharacterizationUtility
-        Public Function GetDefaultScore(ByVal scan As IMSScanProperty, ByVal reference As MoleculeMsReference, ByVal tolerance As Single, ByVal mzBegin As Single, ByVal mzEnd As Single, ByVal classIonCutoff As Double, ByVal chainIonCutoff As Double, ByVal positionIonCutoff As Double, ByVal doublebondIonCutoff As Double, ByVal Optional dIons4class As IReadOnlyList(Of DiagnosticIon) = Nothing, ByVal Optional dIons4chain As IReadOnlyList(Of DiagnosticIon) = Nothing, ByVal Optional dIons4position As IReadOnlyList(Of DiagnosticIon) = Nothing, ByVal Optional dIons4db As IReadOnlyList(Of DiagnosticIon) = Nothing) As LipidMsCharacterizationResult
+        Public Function GetDefaultScore(scan As IMSScanProperty, reference As MoleculeMsReference, tolerance As Single, mzBegin As Single, mzEnd As Single, classIonCutoff As Double, chainIonCutoff As Double, positionIonCutoff As Double, doublebondIonCutoff As Double, Optional dIons4class As IReadOnlyList(Of DiagnosticIon) = Nothing, Optional dIons4chain As IReadOnlyList(Of DiagnosticIon) = Nothing, Optional dIons4position As IReadOnlyList(Of DiagnosticIon) = Nothing, Optional dIons4db As IReadOnlyList(Of DiagnosticIon) = Nothing) As LipidMsCharacterizationResult
 
             Dim exp_spectrum = scan.Spectrum
             Dim ref_spectrum = reference.Spectrum

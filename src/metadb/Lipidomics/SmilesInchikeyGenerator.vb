@@ -5,7 +5,7 @@ Imports NCDK.Graphs.InChI
 Imports System.Linq
 
 Public Class SmilesInchikeyGenerator
-    Public Shared Function Generate(ByVal lipid As Lipid) As SmilesInchikey
+    Public Shared Function Generate(lipid As Lipid) As SmilesInchikey
         Dim plChains As PositionLevelChains = Nothing
 
         If CSharpImpl.__Assign(plChains, TryCast(lipid.Chains, PositionLevelChains)) IsNot Nothing Then
@@ -49,7 +49,7 @@ Public Class SmilesInchikeyGenerator
         End If
         Return Nothing
     End Function
-    Public Function ChainSmilesGen(ByVal chain As IChain) As String
+    Public Function ChainSmilesGen(chain As IChain) As String
         Dim doubleBond = chain.DoubleBond
         Dim oxidized = chain.Oxidized
 

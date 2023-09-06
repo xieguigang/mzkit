@@ -6,7 +6,7 @@ Imports System.Linq
 
 Public Class AcylChain
     Implements IChain
-    Public Sub New(ByVal carbonCount As Integer, ByVal doubleBond As IDoubleBond, ByVal oxidized As IOxidized)
+    Public Sub New(carbonCount As Integer, doubleBond As IDoubleBond, oxidized As IOxidized)
         Me.CarbonCount = carbonCount
         Me.DoubleBond = If(doubleBond, CSharpImpl.__Throw(Of IDoubleBond)(New ArgumentNullException(NameOf(doubleBond))))
         Me.Oxidized = If(oxidized, CSharpImpl.__Throw(Of IOxidized)(New ArgumentNullException(NameOf(oxidized))))
@@ -36,7 +36,7 @@ Public Class AcylChain
         End Get
     End Property
 
-    Public Function GetCandidates(ByVal generator As IChainGenerator) As IEnumerable(Of IChain) Implements IChain.GetCandidates
+    Public Function GetCandidates(generator As IChainGenerator) As IEnumerable(Of IChain) Implements IChain.GetCandidates
         Return generator.Generate(Me)
     End Function
 
@@ -44,7 +44,7 @@ Public Class AcylChain
         Return $"{CarbonCount}:{FormatDoubleBond(DoubleBond)}{Oxidized}"
     End Function
 
-    Private Shared Function FormatDoubleBond(ByVal doubleBond As IDoubleBond) As String
+    Private Shared Function FormatDoubleBond(doubleBond As IDoubleBond) As String
         If doubleBond.DecidedCount >= 1 Then
             Return $"{doubleBond.Count}({String.Join(",", doubleBond.Bonds)})"
         Else
@@ -52,14 +52,14 @@ Public Class AcylChain
         End If
     End Function
 
-    Private Shared Function CalculateAcylMass(ByVal carbon As Integer, ByVal doubleBond As Integer, ByVal oxidize As Integer) As Double
+    Private Shared Function CalculateAcylMass(carbon As Integer, doubleBond As Integer, oxidize As Integer) As Double
         If carbon = 0 AndAlso doubleBond = 0 AndAlso oxidize = 0 Then
             Return HydrogenMass
         End If
         Return carbon * CarbonMass + (2 * carbon - 2 * doubleBond - 1) * HydrogenMass + (1 + oxidize) * OxygenMass
     End Function
 
-    Public Function Accept(Of TResult)(ByVal visitor As IAcyclicVisitor, ByVal decomposer As IAcyclicDecomposer(Of TResult)) As TResult Implements IVisitableElement.Accept
+    Public Function Accept(Of TResult)(visitor As IAcyclicVisitor, decomposer As IAcyclicDecomposer(Of TResult)) As TResult Implements IVisitableElement.Accept
         Dim concrete As IDecomposer(Of TResult, AcylChain) = Nothing
 
         If CSharpImpl.__Assign(concrete, TryCast(decomposer, IDecomposer(Of TResult, AcylChain))) IsNot Nothing Then
@@ -68,11 +68,11 @@ Public Class AcylChain
         Return Nothing
     End Function
 
-    Public Function Includes(ByVal chain As IChain) As Boolean Implements IChain.Includes
+    Public Function Includes(chain As IChain) As Boolean Implements IChain.Includes
         Return TypeOf chain Is AcylChain AndAlso chain.CarbonCount = CarbonCount AndAlso chain.DoubleBondCount = DoubleBondCount AndAlso chain.OxidizedCount = OxidizedCount AndAlso DoubleBond.Includes(chain.DoubleBond) AndAlso Oxidized.Includes(chain.Oxidized)
     End Function
 
-    Public Function Equals(ByVal other As IChain) As Boolean Implements IEquatable(Of IChain).Equals
+    Public Function Equals(other As IChain) As Boolean Implements IEquatable(Of IChain).Equals
         Return TypeOf other Is AcylChain AndAlso CarbonCount = other.CarbonCount AndAlso DoubleBond.Equals(other.DoubleBond) AndAlso Oxidized.Equals(other.Oxidized)
     End Function
 
@@ -82,7 +82,7 @@ Public Class AcylChain
             target = value
             Return value
         End Function <Obsolete("Please refactor calling code to use normal throw statements")>
-            Shared Function __Throw(Of T)(ByVal e As Exception) As T
+            Shared Function __Throw(Of T)(e As Exception) As T
             Throw e
         End Function
     End Class
@@ -90,7 +90,7 @@ End Class
 
 Public Class AlkylChain
     Implements IChain
-    Public Sub New(ByVal carbonCount As Integer, ByVal doubleBond As IDoubleBond, ByVal oxidized As IOxidized)
+    Public Sub New(carbonCount As Integer, doubleBond As IDoubleBond, oxidized As IOxidized)
         Me.CarbonCount = carbonCount
         Me.DoubleBond = If(doubleBond, CSharpImpl.__Throw(Of IDoubleBond)(New ArgumentNullException(NameOf(doubleBond))))
         Me.Oxidized = If(oxidized, CSharpImpl.__Throw(Of IOxidized)(New ArgumentNullException(NameOf(oxidized))))
@@ -119,11 +119,11 @@ Public Class AlkylChain
         End Get
     End Property
 
-    Private Shared Function CalculateAlkylMass(ByVal carbon As Integer, ByVal doubleBond As Integer, ByVal oxidize As Integer) As Double
+    Private Shared Function CalculateAlkylMass(carbon As Integer, doubleBond As Integer, oxidize As Integer) As Double
         Return carbon * CarbonMass + (2 * carbon - 2 * doubleBond + 1) * HydrogenMass + oxidize * OxygenMass
     End Function
 
-    Public Function GetCandidates(ByVal generator As IChainGenerator) As IEnumerable(Of IChain) Implements IChain.GetCandidates
+    Public Function GetCandidates(generator As IChainGenerator) As IEnumerable(Of IChain) Implements IChain.GetCandidates
         Return generator.Generate(Me)
     End Function
 
@@ -141,7 +141,7 @@ Public Class AlkylChain
         End Get
     End Property
 
-    Private Shared Function FormatDoubleBond(ByVal doubleBond As IDoubleBond) As String
+    Private Shared Function FormatDoubleBond(doubleBond As IDoubleBond) As String
         If doubleBond.DecidedCount >= 1 Then
             Return $"{doubleBond.Count}({String.Join(",", doubleBond.Bonds)})"
         Else
@@ -149,7 +149,7 @@ Public Class AlkylChain
         End If
     End Function
 
-    Private Shared Function FormatDoubleBondWhenPlasmalogen(ByVal doubleBond As IDoubleBond) As String
+    Private Shared Function FormatDoubleBondWhenPlasmalogen(doubleBond As IDoubleBond) As String
         If doubleBond.DecidedCount > 1 Then
             Return $"{doubleBond.Count - 1}({String.Join(",", doubleBond.Bonds.Where(Function(b) b.Position <> 1))})"
         ElseIf doubleBond.DecidedCount = 1 Then
@@ -159,7 +159,7 @@ Public Class AlkylChain
         End If
     End Function
 
-    Public Function Accept(Of TResult)(ByVal visitor As IAcyclicVisitor, ByVal decomposer As IAcyclicDecomposer(Of TResult)) As TResult Implements IVisitableElement.Accept
+    Public Function Accept(Of TResult)(visitor As IAcyclicVisitor, decomposer As IAcyclicDecomposer(Of TResult)) As TResult Implements IVisitableElement.Accept
         Dim concrete As IDecomposer(Of TResult, AlkylChain) = Nothing
 
         If CSharpImpl.__Assign(concrete, TryCast(decomposer, IDecomposer(Of TResult, AlkylChain))) IsNot Nothing Then
@@ -168,11 +168,11 @@ Public Class AlkylChain
         Return Nothing
     End Function
 
-    Public Function Includes(ByVal chain As IChain) As Boolean Implements IChain.Includes
+    Public Function Includes(chain As IChain) As Boolean Implements IChain.Includes
         Return TypeOf chain Is AlkylChain AndAlso chain.CarbonCount = CarbonCount AndAlso chain.DoubleBondCount = DoubleBondCount AndAlso chain.OxidizedCount = OxidizedCount AndAlso DoubleBond.Includes(chain.DoubleBond) AndAlso Oxidized.Includes(chain.Oxidized)
     End Function
 
-    Public Function Equals(ByVal other As IChain) As Boolean Implements IEquatable(Of IChain).Equals
+    Public Function Equals(other As IChain) As Boolean Implements IEquatable(Of IChain).Equals
         Return TypeOf other Is AlkylChain AndAlso CarbonCount = other.CarbonCount AndAlso DoubleBond.Equals(other.DoubleBond) AndAlso Oxidized.Equals(other.Oxidized)
     End Function
 
@@ -182,7 +182,7 @@ Public Class AlkylChain
             target = value
             Return value
         End Function <Obsolete("Please refactor calling code to use normal throw statements")>
-            Shared Function __Throw(Of T)(ByVal e As Exception) As T
+            Shared Function __Throw(Of T)(e As Exception) As T
             Throw e
         End Function
     End Class
@@ -190,7 +190,7 @@ End Class
 
 Public Class SphingoChain
     Implements IChain
-    Public Sub New(ByVal carbonCount As Integer, ByVal doubleBond As IDoubleBond, ByVal oxidized As IOxidized)
+    Public Sub New(carbonCount As Integer, doubleBond As IDoubleBond, oxidized As IOxidized)
         If oxidized Is Nothing Then
             Throw New ArgumentNullException(NameOf(oxidized))
         End If
@@ -230,15 +230,15 @@ Public Class SphingoChain
         End Get
     End Property
 
-    Private Shared Function CalculateSphingosineMass(ByVal carbon As Integer, ByVal doubleBond As Integer, ByVal oxidize As Integer) As Double
+    Private Shared Function CalculateSphingosineMass(carbon As Integer, doubleBond As Integer, oxidize As Integer) As Double
         Return carbon * CarbonMass + (2 * carbon - 2 * doubleBond + 2) * HydrogenMass + oxidize * OxygenMass + NitrogenMass
     End Function
 
-    Public Function GetCandidates(ByVal generator As IChainGenerator) As IEnumerable(Of IChain) Implements IChain.GetCandidates
+    Public Function GetCandidates(generator As IChainGenerator) As IEnumerable(Of IChain) Implements IChain.GetCandidates
         Return generator.Generate(Me)
     End Function
 
-    Public Function Accept(Of TResult)(ByVal visitor As IAcyclicVisitor, ByVal decomposer As IAcyclicDecomposer(Of TResult)) As TResult Implements IVisitableElement.Accept
+    Public Function Accept(Of TResult)(visitor As IAcyclicVisitor, decomposer As IAcyclicDecomposer(Of TResult)) As TResult Implements IVisitableElement.Accept
         Dim concrete As IDecomposer(Of TResult, SphingoChain) = Nothing
 
         If CSharpImpl.__Assign(concrete, TryCast(decomposer, IDecomposer(Of TResult, SphingoChain))) IsNot Nothing Then
@@ -253,11 +253,11 @@ Public Class SphingoChain
         'return $"{CarbonCount}:{DoubleBond}{OxidizedcountString}";
     End Function
 
-    Public Function Includes(ByVal chain As IChain) As Boolean Implements IChain.Includes
+    Public Function Includes(chain As IChain) As Boolean Implements IChain.Includes
         Return TypeOf chain Is SphingoChain AndAlso chain.CarbonCount = CarbonCount AndAlso chain.DoubleBondCount = DoubleBondCount AndAlso chain.OxidizedCount = OxidizedCount AndAlso DoubleBond.Includes(chain.DoubleBond) AndAlso Oxidized.Includes(chain.Oxidized)
     End Function
 
-    Public Function Equals(ByVal other As IChain) As Boolean Implements IEquatable(Of IChain).Equals
+    Public Function Equals(other As IChain) As Boolean Implements IEquatable(Of IChain).Equals
         Return TypeOf other Is SphingoChain AndAlso CarbonCount = other.CarbonCount AndAlso DoubleBond.Equals(other.DoubleBond) AndAlso Oxidized.Equals(other.Oxidized)
     End Function
 End Class

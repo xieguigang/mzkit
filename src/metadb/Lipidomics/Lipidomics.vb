@@ -62,12 +62,12 @@ Public Class LipidMolecule
         End Sub
 
         ' test query spectrum
-        Public Shared Function ReadTestSpectrum(ByVal input As String) As RawData
+        Public Shared Function ReadTestSpectrum(input As String) As RawData
             Return RawDataParcer.RawDataFileReader(input, New AnalysisParamOfMsfinder())
         End Function
 
         ' ref molecules must be sorted by mz before using this program
-        Public Shared Function Characterize(ByVal queryMz As Double, ByVal queryRt As Double, ByVal msScanProp As IMSScanProperty, ByVal RefMolecules As List(Of LipidMolecule), ByVal ionMode As IonMode, ByVal ms1tol As Double, ByVal ms2tol As Double) As LipidMolecule
+        Public Shared Function Characterize(queryMz As Double, queryRt As Double, msScanProp As IMSScanProperty, RefMolecules As List(Of LipidMolecule), ionMode As IonMode, ms1tol As Double, ms2tol As Double) As LipidMolecule
 
             Dim startID = GetDatabaseStartIndex(queryMz, ms1tol, RefMolecules)
             Dim molecules = New List(Of LipidMolecule)()
@@ -561,7 +561,7 @@ Public Class LipidMolecule
         ''' 1. normalized spectrum where maximum intensity is normalized to 100
         ''' 2. ordered as higher intensity -> lower intensity
         ''' </summary>
-        Public Shared Function ConvertToRequiredSpectrumFormat(ByVal peaks As List(Of SpectrumPeak)) As List(Of SpectrumPeak)
+        Public Shared Function ConvertToRequiredSpectrumFormat(peaks As List(Of SpectrumPeak)) As List(Of SpectrumPeak)
             Dim spectrum = New List(Of SpectrumPeak)()
             Dim maxintensity = peaks.Max(Function(n) n.Intensity)
             For Each peak In peaks
@@ -573,7 +573,7 @@ Public Class LipidMolecule
             Return spectrum.OrderByDescending(Function(n) n.Intensity).ToList()
         End Function
 
-        Public Shared Function GetDatabaseStartIndex(ByVal mz As Double, ByVal tolerance As Double, ByVal molecules As List(Of LipidMolecule)) As Integer
+        Public Shared Function GetDatabaseStartIndex(mz As Double, tolerance As Double, molecules As List(Of LipidMolecule)) As Integer
             Dim targetMass = mz - tolerance
             Dim startIndex = 0, endIndex = molecules.Count - 1
             If targetMass > molecules(endIndex).Mz Then Return endIndex
@@ -596,7 +596,7 @@ Public Class LipidMolecule
         End Sub
 
         '[0] Name [1] m/z [2] adduct
-        Public Shared Function ReadLibrary(ByVal file As String) As List(Of LipidMolecule)
+        Public Shared Function ReadLibrary(file As String) As List(Of LipidMolecule)
             Dim molecules = New List(Of LipidMolecule)()
             Using sr = New StreamReader(file, Encoding.ASCII)
                 sr.ReadLine() ' header pathed
@@ -675,7 +675,7 @@ Public Class LipidMolecule
             Return molecules.OrderBy(Function(n) n.Mz).ToList()
         End Function
 
-        Private Shared Function getLipidClassEnum(ByVal lipidClass As String) As LbmClass
+        Private Shared Function getLipidClassEnum(lipidClass As String) As LbmClass
             For Each lipid In System.Enum.GetValues(GetType(LbmClass)).Cast(Of LbmClass)()
                 If Equals(lipid.ToString(), lipidClass) Then
                     Return lipid

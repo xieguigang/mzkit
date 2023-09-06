@@ -3,13 +3,13 @@ Imports System.Linq
 
 
 Public Interface ILipidGenerator
-        Function CanGenerate(ByVal lipid As ILipid) As Boolean
-        Function Generate(ByVal lipid As Lipid) As IEnumerable(Of ILipid)
+        Function CanGenerate(lipid As ILipid) As Boolean
+        Function Generate(lipid As Lipid) As IEnumerable(Of ILipid)
     End Interface
 
     Public Class LipidGenerator
         Implements ILipidGenerator
-        Public Sub New(ByVal totalChainGenerator As ITotalChainVariationGenerator)
+        Public Sub New(totalChainGenerator As ITotalChainVariationGenerator)
             Me.totalChainGenerator = totalChainGenerator
         End Sub
 
@@ -20,11 +20,11 @@ Public Interface ILipidGenerator
 
         Private ReadOnly totalChainGenerator As ITotalChainVariationGenerator
 
-        Public Function CanGenerate(ByVal lipid As ILipid) As Boolean Implements ILipidGenerator.CanGenerate
+        Public Function CanGenerate(lipid As ILipid) As Boolean Implements ILipidGenerator.CanGenerate
             Return lipid.ChainCount >= 1
         End Function
 
-        Public Function Generate(ByVal lipid As Lipid) As IEnumerable(Of ILipid) Implements ILipidGenerator.Generate
+        Public Function Generate(lipid As Lipid) As IEnumerable(Of ILipid) Implements ILipidGenerator.Generate
             Return lipid.Chains.GetCandidateSets(totalChainGenerator).[Select](Function(chains) New Lipid(lipid.LipidClass, lipid.Mass, chains))
         End Function
     End Class

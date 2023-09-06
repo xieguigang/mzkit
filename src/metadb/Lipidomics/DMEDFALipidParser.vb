@@ -13,7 +13,7 @@ Public Class DMEDFALipidParser
         Public Shared ReadOnly Pattern As String = $"^DMEDFA\s*(?<sn>{chainsParser.Pattern})$"
         Private Shared ReadOnly patternField As Regex = New Regex(Pattern, RegexOptions.Compiled)
 
-        Public Function Parse(ByVal lipidStr As String) As ILipid Implements ILipidParser.Parse
+        Public Function Parse(lipidStr As String) As ILipid Implements ILipidParser.Parse
             Dim match = patternField.Match(lipidStr)
             If match.Success Then
                 Dim group = match.Groups

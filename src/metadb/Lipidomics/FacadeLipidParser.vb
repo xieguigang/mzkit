@@ -7,7 +7,7 @@ Public Class FacadeLipidParser
 
         Public ReadOnly Property Target As String = String.Empty Implements ILipidParser.Target
 
-        Public Function Parse(ByVal lipidStr As String) As ILipid Implements ILipidParser.Parse
+        Public Function Parse(lipidStr As String) As ILipid Implements ILipidParser.Parse
             Dim key = lipidStr.Split()(0)
             Dim parsers As List(Of ILipidParser) = Nothing, lipid As ILipid = Nothing
 
@@ -22,14 +22,14 @@ Public Class FacadeLipidParser
             Return Nothing
         End Function
 
-        Public Sub Add(ByVal parser As ILipidParser)
+        Public Sub Add(parser As ILipidParser)
             If Not map.ContainsKey(parser.Target) Then
                 map.Add(parser.Target, New List(Of ILipidParser)())
             End If
             map(parser.Target).Add(parser)
         End Sub
 
-        Public Sub Remove(ByVal parser As ILipidParser)
+        Public Sub Remove(parser As ILipidParser)
             If map.ContainsKey(parser.Target) Then
                 map(parser.Target).Remove(parser)
             End If

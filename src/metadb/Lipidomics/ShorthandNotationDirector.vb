@@ -2,7 +2,7 @@
 Public NotInheritable Class ShorthandNotationDirector
     Private ReadOnly _builder As ILipidomicsVisitorBuilder
 
-    Public Sub New(ByVal builder As ILipidomicsVisitorBuilder)
+    Public Sub New(builder As ILipidomicsVisitorBuilder)
         _builder = builder
         builder.SetAcylOxidized(OxidizedIndeterminateState.Identity)
         builder.SetAcylDoubleBond(DoubleBondIndeterminateState.Identity)

@@ -19,7 +19,7 @@ Imports System.Runtime.CompilerServices
 
     Public Module LipidDescriptionExtensions
         <Extension()>
-        Public Function Has(ByVal description As LipidDescription, ByVal other As LipidDescription) As Boolean
+        Public Function Has(description As LipidDescription, other As LipidDescription) As Boolean
             Return (description And other) <> LipidDescription.None
         End Function
     End Module
@@ -34,15 +34,15 @@ Imports System.Runtime.CompilerServices
         ReadOnly Property ChainCount As Integer
         ReadOnly Property Chains As ITotalChain
 
-        Function Includes(ByVal lipid As ILipid) As Boolean
+        Function Includes(lipid As ILipid) As Boolean
 
-        Function Generate(ByVal generator As ILipidGenerator) As IEnumerable(Of ILipid)
-        Function GenerateSpectrum(ByVal generator As ILipidSpectrumGenerator, ByVal adduct As AdductIon, ByVal Optional molecule As IMoleculeProperty = Nothing) As IMSScanProperty
+        Function Generate(generator As ILipidGenerator) As IEnumerable(Of ILipid)
+        Function GenerateSpectrum(generator As ILipidSpectrumGenerator, adduct As AdductIon, Optional molecule As IMoleculeProperty = Nothing) As IMSScanProperty
     End Interface
 
     Public Class Lipid
         Implements ILipid
-        Public Sub New(ByVal lipidClass As LbmClass, ByVal mass As Double, ByVal chains As ITotalChain)
+        Public Sub New(lipidClass As LbmClass, mass As Double, chains As ITotalChain)
             Me.LipidClass = lipidClass
             Me.Mass = mass
             AnnotationLevel = GetAnnotationLevel(chains)
@@ -67,7 +67,7 @@ Imports System.Runtime.CompilerServices
         End Property
         Public ReadOnly Property Chains As ITotalChain Implements ILipid.Chains
 
-        Public Function Includes(ByVal lipid As ILipid) As Boolean Implements ILipid.Includes
+        Public Function Includes(lipid As ILipid) As Boolean Implements ILipid.Includes
             If LipidClass <> lipid.LipidClass OrElse Math.Abs(Mass - lipid.Mass) >= 1e-6 OrElse (Description And lipid.Description) <> Description OrElse AnnotationLevel > lipid.AnnotationLevel Then
                 Return False
             End If
@@ -75,11 +75,11 @@ Imports System.Runtime.CompilerServices
             Return Chains.Includes(lipid.Chains)
         End Function
 
-        Public Function Generate(ByVal generator As ILipidGenerator) As IEnumerable(Of ILipid) Implements ILipid.Generate
+        Public Function Generate(generator As ILipidGenerator) As IEnumerable(Of ILipid) Implements ILipid.Generate
             Return generator.Generate(Me)
         End Function
 
-        Public Function GenerateSpectrum(ByVal generator As ILipidSpectrumGenerator, ByVal adduct As AdductIon, ByVal Optional molecule As IMoleculeProperty = Nothing) As IMSScanProperty Implements ILipid.GenerateSpectrum
+        Public Function GenerateSpectrum(generator As ILipidSpectrumGenerator, adduct As AdductIon, Optional molecule As IMoleculeProperty = Nothing) As IMSScanProperty Implements ILipid.GenerateSpectrum
             Return generator.Generate(Me, adduct, molecule)
         End Function
 
@@ -88,7 +88,7 @@ Imports System.Runtime.CompilerServices
             Return $"{LipidClassDictionary.Default.LbmItems(LipidClass).DisplayName} {Chains}"
         End Function
 
-        Private Shared Function GetAnnotationLevel(ByVal chains As ITotalChain) As Integer
+        Private Shared Function GetAnnotationLevel(chains As ITotalChain) As Integer
                         ''' Cannot convert SwitchStatementSyntax, System.InvalidCastException: Unable to cast object of type 'Microsoft.CodeAnalysis.VisualBasic.Syntax.EmptyStatementSyntax' to type 'Microsoft.CodeAnalysis.VisualBasic.Syntax.CaseClauseSyntax'.
 '''    在 System.Linq.Enumerable.<CastIterator>d__97`1.MoveNext()
 '''    在 Microsoft.CodeAnalysis.VisualBasic.SyntaxFactory.SeparatedList[TNode](IEnumerable`1 nodes)
@@ -115,11 +115,11 @@ Imports System.Runtime.CompilerServices
 ''' 
         End Function
 
-        Public Function Equals(ByVal other As ILipid) As Boolean Implements IEquatable(Of ILipid).Equals
+        Public Function Equals(other As ILipid) As Boolean Implements IEquatable(Of ILipid).Equals
             Return LipidClass = other.LipidClass AndAlso AnnotationLevel = other.AnnotationLevel AndAlso Description = other.Description AndAlso Chains.Equals(other.Chains)
         End Function
 
-        Public Function Accept(Of TResult)(ByVal visitor As IAcyclicVisitor, ByVal decomposer As IAcyclicDecomposer(Of TResult)) As TResult Implements IVisitableElement.Accept
+        Public Function Accept(Of TResult)(visitor As IAcyclicVisitor, decomposer As IAcyclicDecomposer(Of TResult)) As TResult Implements IVisitableElement.Accept
             Dim decomposer_ As IDecomposer(Of TResult, ILipid) = Nothing
 
             If CSharpImpl.__Assign(decomposer_, TryCast(decomposer, IDecomposer(Of TResult, ILipid))) IsNot Nothing Then

@@ -5,7 +5,7 @@ Imports System.Linq
 
 Public Class ChainGenerator
     Implements IChainGenerator
-    Public Sub New(ByVal Optional begin As Integer = 3, ByVal Optional [end] As Integer = 3, ByVal Optional skip As Integer = 3)
+    Public Sub New(Optional begin As Integer = 3, Optional [end] As Integer = 3, Optional skip As Integer = 3)
         Me.Begin = begin
         Me.End = [end]
         Me.Skip = skip
@@ -15,25 +15,25 @@ Public Class ChainGenerator
     Public ReadOnly Property [End] As Integer ' if end is 3 and number of carbon is 18, last double bond is 15-16 at latest.
     Public ReadOnly Property Skip As Integer ' if skip is 3 and 6-7 is double bond, next one is 9-10 at the earliest.
 
-    Public Function Generate(ByVal chain As AcylChain) As IEnumerable(Of IChain) Implements IChainGenerator.Generate
+    Public Function Generate(chain As AcylChain) As IEnumerable(Of IChain) Implements IChainGenerator.Generate
         Dim bs = EnumerateBonds(chain.CarbonCount, chain.DoubleBond).ToArray()
         Dim os = EnumerateOxidized(chain.CarbonCount, chain.Oxidized, 2).ToArray()
         Return bs.SelectMany(Function(__) os, Function(b, o) New AcylChain(chain.CarbonCount, b, o))
     End Function
 
-    Public Function Generate(ByVal chain As AlkylChain) As IEnumerable(Of IChain) Implements IChainGenerator.Generate
+    Public Function Generate(chain As AlkylChain) As IEnumerable(Of IChain) Implements IChainGenerator.Generate
         Dim bs = EnumerateBonds(chain.CarbonCount, chain.DoubleBond).ToArray()
         Dim os = EnumerateOxidized(chain.CarbonCount, chain.Oxidized, 2).ToArray()
         Return bs.SelectMany(Function(__) os, Function(b, o) New AlkylChain(chain.CarbonCount, b, o))
     End Function
 
-    Public Function Generate(ByVal chain As SphingoChain) As IEnumerable(Of IChain) Implements IChainGenerator.Generate
+    Public Function Generate(chain As SphingoChain) As IEnumerable(Of IChain) Implements IChainGenerator.Generate
         Dim bs = EnumerateBonds(chain.CarbonCount, chain.DoubleBond).ToArray()
         Dim os = EnumerateOxidized(chain.CarbonCount, chain.Oxidized, 4).ToArray()
         Return bs.SelectMany(Function(__) os, Function(b, o) New SphingoChain(chain.CarbonCount, b, o))
     End Function
 
-    Private Function EnumerateBonds(ByVal carbon As Integer, ByVal doubleBond As IDoubleBond) As IEnumerable(Of IDoubleBond)
+    Private Function EnumerateBonds(carbon As Integer, doubleBond As IDoubleBond) As IEnumerable(Of IDoubleBond)
         If doubleBond.UnDecidedCount = 0 Then
             Return [Return](doubleBond)
         End If
@@ -74,7 +74,7 @@ Public Class ChainGenerator
             Return rec(Begin, New List(Of IDoubleBondInfo)(doubleBond.UnDecidedCount))
     End Function
 
-    Private Function EnumerateOxidized(ByVal carbon As Integer, ByVal oxidized As IOxidized, ByVal begin As Integer) As IEnumerable(Of IOxidized)
+    Private Function EnumerateOxidized(carbon As Integer, oxidized As IOxidized, begin As Integer) As IEnumerable(Of IOxidized)
         If oxidized.UnDecidedCount = 0 Then
             Return [Return](oxidized)
         End If
@@ -106,11 +106,11 @@ Public Class ChainGenerator
             Return rec(begin, New List(Of Integer)(oxidized.UnDecidedCount))
     End Function
 
-    Public Function CarbonIsValid(ByVal carbon As Integer) As Boolean Implements IChainGenerator.CarbonIsValid
+    Public Function CarbonIsValid(carbon As Integer) As Boolean Implements IChainGenerator.CarbonIsValid
         Return True
     End Function
 
-    Public Function DoubleBondIsValid(ByVal carbon As Integer, ByVal db As Integer) As Boolean Implements IChainGenerator.DoubleBondIsValid
+    Public Function DoubleBondIsValid(carbon As Integer, db As Integer) As Boolean Implements IChainGenerator.DoubleBondIsValid
         Return db = 0 OrElse carbon >= Begin + Skip * (db - 1) + [End]
     End Function
 End Class

@@ -11,12 +11,12 @@ Public NotInheritable Class OxidizedIndeterminateState
     Private ReadOnly _state As State
     Private ReadOnly _positions As Integer()
 
-    Private Sub New(ByVal state As State, ByVal positions As Integer())
+    Private Sub New(state As State, positions As Integer())
         _state = state
         _positions = positions
     End Sub
 
-    Public Function Indeterminate(ByVal infos As IReadOnlyCollection(Of Integer)) As IReadOnlyCollection(Of Integer)
+    Public Function Indeterminate(infos As IReadOnlyCollection(Of Integer)) As IReadOnlyCollection(Of Integer)
         If infos Is Nothing Then
             Throw New ArgumentNullException(NameOf(infos))
         End If
@@ -36,7 +36,7 @@ Public NotInheritable Class OxidizedIndeterminateState
         Return infos
     End Function
 
-    Public Function Include(ByVal position As Integer) As OxidizedIndeterminateState
+    Public Function Include(position As Integer) As OxidizedIndeterminateState
         Select Case _state
             Case State.PositionInclude
                 If _positions Is Nothing Then
@@ -52,7 +52,7 @@ Public NotInheritable Class OxidizedIndeterminateState
         Return Me
     End Function
 
-    Public Function Exclude(ByVal position As Integer) As OxidizedIndeterminateState
+    Public Function Exclude(position As Integer) As OxidizedIndeterminateState
         Select Case _state
             Case State.PositionInclude
                 If _positions IsNot Nothing AndAlso _positions.Contains(position) Then
@@ -90,11 +90,11 @@ Public NotInheritable Class OxidizedIndeterminateState
         Implements IVisitor(Of IOxidized, IOxidized)
         Private ReadOnly _state As OxidizedIndeterminateState
 
-        Public Sub New(ByVal state As OxidizedIndeterminateState)
+        Public Sub New(state As OxidizedIndeterminateState)
             _state = state
         End Sub
 
-        Private Function Visit(ByVal item As IOxidized) As IOxidized Implements IVisitor(Of IOxidized, IOxidized).Visit
+        Private Function Visit(item As IOxidized) As IOxidized Implements IVisitor(Of IOxidized, IOxidized).Visit
             Dim ox = _state.Indeterminate(item.Oxidises)
             Return New Oxidized(item.Count, If(TryCast(ox, IList(Of Integer)), ox.ToArray()))
         End Function

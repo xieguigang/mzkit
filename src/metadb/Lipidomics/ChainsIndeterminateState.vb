@@ -9,7 +9,7 @@ Public NotInheritable Class ChainsIndeterminateState
     Private ReadOnly _state As State
     Private ReadOnly _impl As IIndeterminate
 
-    Private Sub New(ByVal state As State)
+    Private Sub New(state As State)
         Select Case state
             Case State.SpeciesLevel
                 _impl = New SpeciesLevelIndeterminate()
@@ -18,11 +18,11 @@ Public NotInheritable Class ChainsIndeterminateState
         End Select
     End Sub
 
-    Public Function Indeterminate(ByVal chains As ITotalChain) As ITotalChain
+    Public Function Indeterminate(chains As ITotalChain) As ITotalChain
         Return If(_impl?.Indeterminate(chains), chains)
     End Function
 
-    Private Function Visit(ByVal item As ITotalChain) As ITotalChain Implements IVisitor(Of ITotalChain, ITotalChain).Visit
+    Private Function Visit(item As ITotalChain) As ITotalChain Implements IVisitor(Of ITotalChain, ITotalChain).Visit
         Return Indeterminate(item)
     End Function
 
@@ -34,12 +34,12 @@ Public NotInheritable Class ChainsIndeterminateState
     End Enum
 
     Friend Interface IIndeterminate
-        Function Indeterminate(ByVal chains As ITotalChain) As ITotalChain
+        Function Indeterminate(chains As ITotalChain) As ITotalChain
     End Interface
 
     Friend NotInheritable Class SpeciesLevelIndeterminate
         Implements IIndeterminate
-        Public Function Indeterminate(ByVal chains As ITotalChain) As ITotalChain Implements IIndeterminate.Indeterminate
+        Public Function Indeterminate(chains As ITotalChain) As ITotalChain Implements IIndeterminate.Indeterminate
             If (chains.Description And (LipidDescription.Chain Or LipidDescription.SnPosition)) > 0 Then
                 Return New TotalChain(chains.CarbonCount, chains.DoubleBondCount, chains.OxidizedCount, chains.AcylChainCount, chains.AlkylChainCount, chains.SphingoChainCount)
             End If
@@ -49,7 +49,7 @@ Public NotInheritable Class ChainsIndeterminateState
 
     Friend NotInheritable Class MolecularSpeciesLevelIndeterminate
         Implements IIndeterminate
-        Public Function Indeterminate(ByVal chains As ITotalChain) As ITotalChain Implements IIndeterminate.Indeterminate
+        Public Function Indeterminate(chains As ITotalChain) As ITotalChain Implements IIndeterminate.Indeterminate
             Dim sc As SeparatedChains = Nothing
 
             If chains.Description.HasFlag(LipidDescription.SnPosition) AndAlso CSharpImpl.__Assign(sc, TryCast(chains, SeparatedChains)) IsNot Nothing Then

@@ -16,7 +16,7 @@ Public Class Hex2CerLipidParser
         'public static readonly string CeramideClassPattern = @"\d+:(?<d>\d+).*?\(?((?<sp>\d+)OH,?)+\)?/\d+:\d+.*?(;?(?<h>\(?((?<ab>\d+)OH,?)+\)?|((?<oxnum>\d+)?O)))?";
         'private static readonly Regex ceramideClassPattern = new Regex(CeramideClassPattern, RegexOptions.Compiled);
 
-        Public Function Parse(ByVal lipidStr As String) As ILipid Implements ILipidParser.Parse
+        Public Function Parse(lipidStr As String) As ILipid Implements ILipidParser.Parse
             Dim match = patternField.Match(lipidStr)
             If match.Success Then
                 Dim group = match.Groups

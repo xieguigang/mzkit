@@ -23,20 +23,20 @@ Public Interface ITotalChain
     ''' </summary>
     ''' <paramname="position">1-indexed position</param>
     ''' <returns>IChain if the specified position chain is determined; otherwise, null.</returns>
-    Function GetChainByPosition(ByVal position As Integer) As IChain
+    Function GetChainByPosition(position As Integer) As IChain
     ''' <summary>
     ''' This method returns an array of lipid chains with confirmed structures.
     ''' It only includes the chains that have their structures determined, and there is no guarantee that the position and index will match.
     ''' </summary>
     ''' <returns>IChain[]</returns>
     Function GetDeterminedChains() As IChain()
-    Function Includes(ByVal chains As ITotalChain) As Boolean
-    Function GetCandidateSets(ByVal totalChainGenerator As ITotalChainVariationGenerator) As IEnumerable(Of ITotalChain)
+    Function Includes(chains As ITotalChain) As Boolean
+    Function GetCandidateSets(totalChainGenerator As ITotalChainVariationGenerator) As IEnumerable(Of ITotalChain)
 End Interface
 
 Public Module TotalChainExtension
         <Extension()>
-        Public Function GetChains(ByVal lipid As LipidMolecule) As ITotalChain
+        Public Function GetChains(lipid As LipidMolecule) As ITotalChain
             Dim prop = LipidClassDictionary.Default.LbmItems(lipid.LipidClass)
             Select Case lipid.AnnotationLevel
                 Case 1
@@ -48,7 +48,7 @@ Public Module TotalChainExtension
             Return Nothing
         End Function
 
-        Private Function GetEachChains(ByVal lipid As LipidMolecule, ByVal prop As LipidClassProperty) As IChain()
+        Private Function GetEachChains(lipid As LipidMolecule, prop As LipidClassProperty) As IChain()
             Dim chains = New IChain(prop.TotalChain - 1) {}
             If prop.TotalChain >= 1 Then
                 If prop.SphingoChain >= 1 Then
@@ -73,12 +73,12 @@ Public Module TotalChainExtension
         End Function
 
         <Extension()>
-        Public Function GetTypedChains(Of T As IChain)(ByVal chain As ITotalChain) As IEnumerable(Of T)
+        Public Function GetTypedChains(Of T As IChain)(chain As ITotalChain) As IEnumerable(Of T)
             Return chain.GetDeterminedChains().OfType(Of T)()
         End Function
 
         <Extension()>
-        Public Function Deconstruct(Of tT As IChain, tU As IChain)(ByVal chain As ITotalChain) As (tT, tU)
+        Public Function Deconstruct(Of tT As IChain, tU As IChain)(chain As ITotalChain) As (tT, tU)
             If chain.ChainCount <> 2 OrElse GetType(tT) Is GetType(tU) Then
                 Return Nothing
             End If
@@ -91,7 +91,7 @@ Public Module TotalChainExtension
         End Function
 
         <Extension()>
-        Public Sub ApplyToChain(ByVal chains As ITotalChain, ByVal position As Integer, ByVal action As Action(Of IChain))
+        Public Sub ApplyToChain(chains As ITotalChain, position As Integer, action As Action(Of IChain))
             Dim chain = chains.GetChainByPosition(position)
             If chain IsNot Nothing Then
                 action?.Invoke(chain)
@@ -99,7 +99,7 @@ Public Module TotalChainExtension
         End Sub
 
     <Extension()>
-    Public Sub ApplyToChain(Of T As IChain)(ByVal chains As ITotalChain, ByVal position As Integer, ByVal action As Action(Of T))
+    Public Sub ApplyToChain(Of T As IChain)(chains As ITotalChain, position As Integer, action As Action(Of T))
         Dim chain = chains.GetChainByPosition(position)
         Dim c As T = Nothing
 

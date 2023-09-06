@@ -8,7 +8,7 @@ Imports System.Linq
 
 Public Class EidSpecificSpectrumGenerator
         Private Shared ReadOnly CH2 As Double = {HydrogenMass * 2, CarbonMass}.Sum()
-        Public Shared Function EidSpecificSpectrumGen(ByVal lipid As ILipid, ByVal chain As IChain, ByVal adduct As AdductIon, ByVal nlMass As Double, ByVal intensity As Double) As SpectrumPeak()
+        Public Shared Function EidSpecificSpectrumGen(lipid As ILipid, chain As IChain, adduct As AdductIon, nlMass As Double, intensity As Double) As SpectrumPeak()
             Dim peaks = New List(Of SpectrumPeak)()
             If chain.GetType() Is GetType(AcylChain) Then
                 nlMass = nlMass - OxygenMass + HydrogenMass * 2

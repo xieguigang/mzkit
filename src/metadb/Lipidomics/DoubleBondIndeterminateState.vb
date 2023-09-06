@@ -12,12 +12,12 @@ Public NotInheritable Class DoubleBondIndeterminateState
         Private ReadOnly _state As State
         Private ReadOnly _positions As Integer()
 
-        Private Sub New(ByVal state As State, ByVal positions As Integer())
+        Private Sub New(state As State, positions As Integer())
             _state = state
             _positions = positions
         End Sub
 
-        Public Function Indeterminate(ByVal infos As IReadOnlyCollection(Of IDoubleBondInfo)) As IReadOnlyCollection(Of IDoubleBondInfo)
+        Public Function Indeterminate(infos As IReadOnlyCollection(Of IDoubleBondInfo)) As IReadOnlyCollection(Of IDoubleBondInfo)
             If infos Is Nothing Then
                 Throw New ArgumentNullException(NameOf(infos))
             End If
@@ -50,7 +50,7 @@ Public NotInheritable Class DoubleBondIndeterminateState
             Return infos
         End Function
 
-        Public Function Include(ByVal position As Integer) As DoubleBondIndeterminateState
+        Public Function Include(position As Integer) As DoubleBondIndeterminateState
             Select Case _state
                 Case State.PositionInclude, State.CisTransIsomerInclude
                     If _positions Is Nothing Then
@@ -67,7 +67,7 @@ Public NotInheritable Class DoubleBondIndeterminateState
             Return Me
         End Function
 
-        Public Function Exclude(ByVal position As Integer) As DoubleBondIndeterminateState
+        Public Function Exclude(position As Integer) As DoubleBondIndeterminateState
             Select Case _state
                 Case State.PositionInclude, State.CisTransIsomerInclude
                     If _positions IsNot Nothing AndAlso _positions.Contains(position) Then
@@ -116,11 +116,11 @@ Public NotInheritable Class DoubleBondIndeterminateState
             Implements IVisitor(Of IDoubleBond, IDoubleBond)
             Private ReadOnly _state As DoubleBondIndeterminateState
 
-            Public Sub New(ByVal state As DoubleBondIndeterminateState)
+            Public Sub New(state As DoubleBondIndeterminateState)
                 _state = state
             End Sub
 
-            Private Function Visit(ByVal item As IDoubleBond) As IDoubleBond Implements IVisitor(Of IDoubleBond, IDoubleBond).Visit
+            Private Function Visit(item As IDoubleBond) As IDoubleBond Implements IVisitor(Of IDoubleBond, IDoubleBond).Visit
                 Return item.Indeterminate(_state)
             End Function
         End Class

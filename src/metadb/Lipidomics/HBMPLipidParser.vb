@@ -19,7 +19,7 @@ Public Class HBMPLipidParser
 
     Private Shared ReadOnly Skelton As Double = {CarbonMass * 6, HydrogenMass * 12, OxygenMass * 8, PhosphorusMass}.Sum()
 
-    Public Function Parse(ByVal lipidStr As String) As ILipid Implements ILipidParser.Parse
+    Public Function Parse(lipidStr As String) As ILipid Implements ILipidParser.Parse
         Dim match = patternField.Match(lipidStr)
         If match.Success Then
             Dim group = match.Groups

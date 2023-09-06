@@ -5,7 +5,7 @@ Imports System.Collections.Generic
 
 Public Class TotalChain
     Implements ITotalChain
-    Public Sub New(ByVal carbonCount As Integer, ByVal doubleBondCount As Integer, ByVal oxidizedCount As Integer, ByVal acylChainCount As Integer, ByVal alkylChainCount As Integer, ByVal sphingoChainCount As Integer)
+    Public Sub New(carbonCount As Integer, doubleBondCount As Integer, oxidizedCount As Integer, acylChainCount As Integer, alkylChainCount As Integer, sphingoChainCount As Integer)
         Me.CarbonCount = carbonCount
         Me.DoubleBondCount = doubleBondCount
         Me.OxidizedCount = oxidizedCount
@@ -35,7 +35,7 @@ Public Class TotalChain
         End Get
     End Property
 
-    Private Shared Function CalculateSubLevelMass(ByVal carbon As Integer, ByVal doubleBond As Integer, ByVal oxidize As Integer, ByVal chain As Integer, ByVal acyl As Integer, ByVal alkyl As Integer, ByVal sphingo As Integer) As Double
+    Private Shared Function CalculateSubLevelMass(carbon As Integer, doubleBond As Integer, oxidize As Integer, chain As Integer, acyl As Integer, alkyl As Integer, sphingo As Integer) As Double
         Dim carbonGain = carbon * CarbonMass
         Dim hydrogenGain = (2 * carbon - 2 * doubleBond + chain) * HydrogenMass
         Dim oxygenGain = oxidize * OxygenMass
@@ -52,7 +52,7 @@ Public Class TotalChain
 
     Private Shared ReadOnly SphingoGain As Double = NitrogenMass + HydrogenMass
 
-    Private Function GetChainByPosition(ByVal position As Integer) As IChain Implements ITotalChain.GetChainByPosition
+    Private Function GetChainByPosition(position As Integer) As IChain Implements ITotalChain.GetChainByPosition
         Return Nothing
     End Function
 
@@ -60,11 +60,11 @@ Public Class TotalChain
         Return Array.Empty(Of IChain)()
     End Function
 
-    Private Function Includes(ByVal chains As ITotalChain) As Boolean Implements ITotalChain.Includes
+    Private Function Includes(chains As ITotalChain) As Boolean Implements ITotalChain.Includes
         Return CarbonCount = chains.CarbonCount AndAlso DoubleBondCount = chains.DoubleBondCount AndAlso OxidizedCount = chains.OxidizedCount
     End Function
 
-    Private Function GetCandidateSets(ByVal totalChainGenerator As ITotalChainVariationGenerator) As IEnumerable(Of ITotalChain) Implements ITotalChain.GetCandidateSets
+    Private Function GetCandidateSets(totalChainGenerator As ITotalChainVariationGenerator) As IEnumerable(Of ITotalChain) Implements ITotalChain.GetCandidateSets
         Return totalChainGenerator.Separate(Me)
     End Function
 
@@ -72,7 +72,7 @@ Public Class TotalChain
         Return String.Format("{0}{1}:{2}{3}", EtherSymbol(AlkylChainCount), CarbonCount, DoubleBondCount, OxidizeSymbol(OxidizedCount))
     End Function
 
-    Private Shared Function EtherSymbol(ByVal ether As Integer) As String
+    Private Shared Function EtherSymbol(ether As Integer) As String
         Select Case ether
             Case 0
                 Return ""
@@ -85,7 +85,7 @@ Public Class TotalChain
         End Select
     End Function
 
-    Private Shared Function OxidizeSymbol(ByVal oxidize As Integer) As String
+    Private Shared Function OxidizeSymbol(oxidize As Integer) As String
         If oxidize = 0 Then
             Return ""
         End If
@@ -95,12 +95,12 @@ Public Class TotalChain
         Return $";{oxidize}O"
     End Function
 
-    Public Function Equals(ByVal other As ITotalChain) As Boolean Implements IEquatable(Of ITotalChain).Equals
+    Public Function Equals(other As ITotalChain) As Boolean Implements IEquatable(Of ITotalChain).Equals
         Dim tChains As TotalChain = Nothing
         Return CSharpImpl.__Assign(tChains, TryCast(other, TotalChain)) IsNot Nothing AndAlso ChainCount = other.ChainCount AndAlso CarbonCount = other.CarbonCount AndAlso DoubleBondCount = other.DoubleBondCount AndAlso OxidizedCount = other.OxidizedCount AndAlso Description = other.Description AndAlso AcylChainCount = tChains.AcylChainCount AndAlso AlkylChainCount = tChains.AlkylChainCount AndAlso SphingoChainCount = tChains.SphingoChainCount
     End Function
 
-    Public Function Accept(Of TResult)(ByVal visitor As IAcyclicVisitor, ByVal decomposer As IAcyclicDecomposer(Of TResult)) As TResult Implements IVisitableElement.Accept
+    Public Function Accept(Of TResult)(visitor As IAcyclicVisitor, decomposer As IAcyclicDecomposer(Of TResult)) As TResult Implements IVisitableElement.Accept
         Dim decomposer_ As IDecomposer(Of TResult, TotalChain) = Nothing
 
         If CSharpImpl.__Assign(decomposer_, TryCast(decomposer, IDecomposer(Of TResult, TotalChain))) IsNot Nothing Then

@@ -10,7 +10,7 @@ Public Class AcylChainParser
     Public Shared ReadOnly Pattern As String = $"{CarbonPattern}:{DoubleBondPattern}({OxidizedPattern})?"
     Private Shared ReadOnly patternField As Regex = New Regex(Pattern, RegexOptions.Compiled)
 
-    Public Function Parse(ByVal chainStr As String) As IChain
+    Public Function Parse(chainStr As String) As IChain
         Dim match = patternField.Match(chainStr)
         If match.Success Then
             Dim groups = match.Groups
@@ -22,7 +22,7 @@ Public Class AcylChainParser
         Return Nothing
     End Function
 
-    Private Function ParseDoubleBond(ByVal groups As GroupCollection) As DoubleBond
+    Private Function ParseDoubleBond(groups As GroupCollection) As DoubleBond
         Dim dbnum = Integer.Parse(groups("db").Value)
         If groups("dbpos").Success Then
             Return New DoubleBond(dbnum, groups("dbpos").Captures.Cast(Of Capture)().[Select](Function(c) ParseDoubleBondInfo(c.Value)).ToArray())
@@ -30,7 +30,7 @@ Public Class AcylChainParser
         Return New DoubleBond(dbnum)
     End Function
 
-    Private Function ParseDoubleBondInfo(ByVal bond As String) As DoubleBondInfo
+    Private Function ParseDoubleBondInfo(bond As String) As DoubleBondInfo
         Select Case bond(bond.Length - 1)
             Case "E"c
                 Return DoubleBondInfo.E(Integer.Parse(bond.TrimEnd("E"c)))
@@ -41,7 +41,7 @@ Public Class AcylChainParser
         End Select
     End Function
 
-    Private Function ParseOxidized(ByVal groups As GroupCollection) As Oxidized
+    Private Function ParseOxidized(groups As GroupCollection) As Oxidized
         If groups("oxpos").Success Then
             Dim oxpos = groups("oxpos").Captures.Cast(Of Capture)().[Select](Function(c) Integer.Parse(c.Value)).ToArray()
             Return New Oxidized(oxpos.Length, oxpos)

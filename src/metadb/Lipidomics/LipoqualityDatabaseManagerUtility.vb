@@ -6,7 +6,7 @@ Public NotInheritable Class LipoqualityDatabaseManagerUtility
     Private Sub New()
     End Sub
 
-    Public Shared Function ConvertMsdialLipidnameToLipidAnnotation(ByVal query As MoleculeMsReference, ByVal metaboliteName As String) As LipoqualityAnnotation
+    Public Shared Function ConvertMsdialLipidnameToLipidAnnotation(query As MoleculeMsReference, metaboliteName As String) As LipoqualityAnnotation
         Dim lipidannotation = New LipoqualityAnnotation()
 
         Select Case query.CompoundClass
@@ -186,7 +186,7 @@ Public NotInheritable Class LipoqualityDatabaseManagerUtility
     '    lipidannotation.Formula = query.Formula;
     '}
 
-    Private Shared Sub setSingleAcylChainsLipidAnnotation(ByVal lipidannotation As LipoqualityAnnotation, ByVal query As MoleculeMsReference, ByVal metabolitename As String)
+    Private Shared Sub setSingleAcylChainsLipidAnnotation(lipidannotation As LipoqualityAnnotation, query As MoleculeMsReference, metabolitename As String)
         Dim name = metabolitename
         Dim nameArray = metabolitename.Split(";"c).ToArray()
 
@@ -209,7 +209,7 @@ Public NotInheritable Class LipoqualityDatabaseManagerUtility
         lipidannotation.Formula = query.Formula.FormulaString
     End Sub
 
-    Private Shared Sub setDoubleAcylChainsLipidAnnotation(ByVal lipidannotation As LipoqualityAnnotation, ByVal query As MoleculeMsReference, ByVal metabolitename As String)
+    Private Shared Sub setDoubleAcylChainsLipidAnnotation(lipidannotation As LipoqualityAnnotation, query As MoleculeMsReference, metabolitename As String)
 
         Dim nameArray = metabolitename.Split(";"c).ToArray()
         Dim lipidSuperClass = ConvertMsdialClassDefinitionToSuperClass(query.CompoundClass)
@@ -252,7 +252,7 @@ Public NotInheritable Class LipoqualityDatabaseManagerUtility
         End If
     End Sub
 
-    Private Shared Sub setTripleAcylChainsLipidAnnotation(ByVal lipidannotation As LipoqualityAnnotation, ByVal query As MoleculeMsReference, ByVal metabolitename As String)
+    Private Shared Sub setTripleAcylChainsLipidAnnotation(lipidannotation As LipoqualityAnnotation, query As MoleculeMsReference, metabolitename As String)
 
         Dim nameArray = metabolitename.Split(";"c).ToArray()
         Dim totalLipidInfo = nameArray(0).Trim()
@@ -297,7 +297,7 @@ Public NotInheritable Class LipoqualityDatabaseManagerUtility
         End If
     End Sub
 
-    Private Shared Sub setQuadAcylChainsLipidAnnotation(ByVal lipidannotation As LipoqualityAnnotation, ByVal query As MoleculeMsReference, ByVal metabolitename As String)
+    Private Shared Sub setQuadAcylChainsLipidAnnotation(lipidannotation As LipoqualityAnnotation, query As MoleculeMsReference, metabolitename As String)
 
         Dim nameArray = metabolitename.Split(";"c).ToArray()
         Dim totalLipidInfo = nameArray(0).Trim()
@@ -405,7 +405,7 @@ Public NotInheritable Class LipoqualityDatabaseManagerUtility
     '    lipidannotation.Formula = query.Formula;
     '}
 
-    Private Shared Function getLipidChainsInformation(ByVal detailLipidInfo As String) As List(Of String)
+    Private Shared Function getLipidChainsInformation(detailLipidInfo As String) As List(Of String)
         Dim chains = New List(Of String)()
         Dim acylArray As String() = Nothing
 
@@ -433,7 +433,7 @@ Public NotInheritable Class LipoqualityDatabaseManagerUtility
         Return chains
     End Function
 
-    Public Shared Function ConvertMsdialClassDefinitionToTraditionalClassDefinition(ByVal lipidclass As String) As String
+    Public Shared Function ConvertMsdialClassDefinitionToTraditionalClassDefinition(lipidclass As String) As String
         Select Case lipidclass
             Case "MAG"
                 Return "MAG"
@@ -617,7 +617,7 @@ Public NotInheritable Class LipoqualityDatabaseManagerUtility
         End Select
     End Function
 
-    Public Shared Function ConvertMsdialClassDefinitionToSuperClass(ByVal lipidclass As String) As String
+    Public Shared Function ConvertMsdialClassDefinitionToSuperClass(lipidclass As String) As String
         Select Case lipidclass
             Case "MAG"
                 Return "Glycerolipid"

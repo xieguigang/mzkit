@@ -6,7 +6,7 @@ Imports System.Reflection
 
 
 Public Class LipidClassProperty
-        Public Sub New(ByVal [class] As LbmClass, ByVal displayName As String, ByVal acylChain As Integer, ByVal alkylChain As Integer, ByVal sphingoChain As Integer)
+        Public Sub New([class] As LbmClass, displayName As String, acylChain As Integer, alkylChain As Integer, sphingoChain As Integer)
             Me.Class = [class]
             Me.DisplayName = displayName
             Me.AcylChain = acylChain

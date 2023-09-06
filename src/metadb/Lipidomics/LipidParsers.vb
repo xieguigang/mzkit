@@ -19,7 +19,7 @@ Public Class PCLipidParser
 
         Private Shared ReadOnly Skelton As Double = {CarbonMass * 8, HydrogenMass * 18, OxygenMass * 6, NitrogenMass, PhosphorusMass}.Sum()
 
-        Public Function Parse(ByVal lipidStr As String) As ILipid Implements ILipidParser.Parse
+        Public Function Parse(lipidStr As String) As ILipid Implements ILipidParser.Parse
             Dim match = patternField.Match(lipidStr)
             If match.Success Then
                 Dim group = match.Groups
@@ -43,7 +43,7 @@ Public Class PCLipidParser
 
         Private Shared ReadOnly Skelton As Double = {CarbonMass * 5, HydrogenMass * 12, OxygenMass * 6, NitrogenMass, PhosphorusMass}.Sum()
 
-        Public Function Parse(ByVal lipidStr As String) As ILipid Implements ILipidParser.Parse
+        Public Function Parse(lipidStr As String) As ILipid Implements ILipidParser.Parse
             Dim match = patternField.Match(lipidStr)
             If match.Success Then
                 Dim group = match.Groups
@@ -67,7 +67,7 @@ Public Class PCLipidParser
 
         Private Shared ReadOnly Skelton As Double = {CarbonMass * 3, HydrogenMass * 7, OxygenMass * 6, PhosphorusMass}.Sum()
 
-        Public Function Parse(ByVal lipidStr As String) As ILipid Implements ILipidParser.Parse
+        Public Function Parse(lipidStr As String) As ILipid Implements ILipidParser.Parse
             Dim match = patternField.Match(lipidStr)
             If match.Success Then
                 Dim group = match.Groups
@@ -88,7 +88,7 @@ Public Class PCLipidParser
 
         Private Shared ReadOnly Skelton As Double = {CarbonMass * 6, HydrogenMass * 13, OxygenMass * 8, PhosphorusMass}.Sum()
 
-        Public Function Parse(ByVal lipidStr As String) As ILipid Implements ILipidParser.Parse
+        Public Function Parse(lipidStr As String) As ILipid Implements ILipidParser.Parse
             Dim match = patternField.Match(lipidStr)
             If match.Success Then
                 Dim group = match.Groups
@@ -112,7 +112,7 @@ Public Class PCLipidParser
 
         Private Shared ReadOnly Skelton As Double = {CarbonMass * 9, HydrogenMass * 17, OxygenMass * 11, PhosphorusMass}.Sum()
 
-        Public Function Parse(ByVal lipidStr As String) As ILipid Implements ILipidParser.Parse
+        Public Function Parse(lipidStr As String) As ILipid Implements ILipidParser.Parse
             Dim match = patternField.Match(lipidStr)
             If match.Success Then
                 Dim group = match.Groups
@@ -136,7 +136,7 @@ Public Class PCLipidParser
 
         Private Shared ReadOnly Skelton As Double = {CarbonMass * 6, HydrogenMass * 12, OxygenMass * 8, NitrogenMass, PhosphorusMass}.Sum()
 
-        Public Function Parse(ByVal lipidStr As String) As ILipid Implements ILipidParser.Parse
+        Public Function Parse(lipidStr As String) As ILipid Implements ILipidParser.Parse
             Dim match = patternField.Match(lipidStr)
             If match.Success Then
                 Dim group = match.Groups
@@ -160,7 +160,7 @@ Public Class PCLipidParser
 
         Private Shared ReadOnly Skelton As Double = {CarbonMass * 8, HydrogenMass * 18, OxygenMass * 6, NitrogenMass, PhosphorusMass}.Sum()
 
-        Public Function Parse(ByVal lipidStr As String) As ILipid Implements ILipidParser.Parse
+        Public Function Parse(lipidStr As String) As ILipid Implements ILipidParser.Parse
             Dim match = patternField.Match(lipidStr)
             If match.Success Then
                 Dim group = match.Groups
@@ -181,7 +181,7 @@ Public Class PCLipidParser
 
         Private Shared ReadOnly Skelton As Double = {CarbonMass * 5, HydrogenMass * 12, OxygenMass * 6, NitrogenMass, PhosphorusMass}.Sum()
 
-        Public Function Parse(ByVal lipidStr As String) As ILipid Implements ILipidParser.Parse
+        Public Function Parse(lipidStr As String) As ILipid Implements ILipidParser.Parse
             Dim match = patternField.Match(lipidStr)
             If match.Success Then
                 Dim group = match.Groups
@@ -202,7 +202,7 @@ Public Class PCLipidParser
 
         Private Shared ReadOnly Skelton As Double = {CarbonMass * 6, HydrogenMass * 13, OxygenMass * 8, PhosphorusMass}.Sum()
 
-        Public Function Parse(ByVal lipidStr As String) As ILipid Implements ILipidParser.Parse
+        Public Function Parse(lipidStr As String) As ILipid Implements ILipidParser.Parse
             Dim match = patternField.Match(lipidStr)
             If match.Success Then
                 Dim group = match.Groups
@@ -223,7 +223,7 @@ Public Class PCLipidParser
 
         Private Shared ReadOnly Skelton As Double = {CarbonMass * 9, HydrogenMass * 17, OxygenMass * 11, PhosphorusMass}.Sum()
 
-        Public Function Parse(ByVal lipidStr As String) As ILipid Implements ILipidParser.Parse
+        Public Function Parse(lipidStr As String) As ILipid Implements ILipidParser.Parse
             Dim match = patternField.Match(lipidStr)
             If match.Success Then
                 Dim group = match.Groups
@@ -244,7 +244,7 @@ Public Class PCLipidParser
 
         Private Shared ReadOnly Skelton As Double = {CarbonMass * 6, HydrogenMass * 12, OxygenMass * 8, NitrogenMass, PhosphorusMass}.Sum()
 
-        Public Function Parse(ByVal lipidStr As String) As ILipid Implements ILipidParser.Parse
+        Public Function Parse(lipidStr As String) As ILipid Implements ILipidParser.Parse
             Dim match = patternField.Match(lipidStr)
             If match.Success Then
                 Dim group = match.Groups
@@ -265,7 +265,7 @@ Public Class PCLipidParser
 
         Private Shared ReadOnly Skelton As Double = {CarbonMass * 3, HydrogenMass * 5, OxygenMass * 3}.Sum()
 
-        Public Function Parse(ByVal lipidStr As String) As ILipid Implements ILipidParser.Parse
+        Public Function Parse(lipidStr As String) As ILipid Implements ILipidParser.Parse
             Dim match = patternField.Match(lipidStr)
             If match.Success Then
                 Dim group = match.Groups
@@ -289,7 +289,7 @@ Public Class PCLipidParser
 
         Private Shared ReadOnly Skelton As Double = {CarbonMass * 3, HydrogenMass * 6, OxygenMass * 3}.Sum()
 
-        Public Function Parse(ByVal lipidStr As String) As ILipid Implements ILipidParser.Parse
+        Public Function Parse(lipidStr As String) As ILipid Implements ILipidParser.Parse
             Dim match = patternField.Match(lipidStr)
             If match.Success Then
                 Dim group = match.Groups
@@ -310,7 +310,7 @@ Public Class PCLipidParser
 
         Private Shared ReadOnly Skelton As Double = {CarbonMass * 3, HydrogenMass * 6, OxygenMass * 3}.Sum()
 
-        Public Function Parse(ByVal lipidStr As String) As ILipid Implements ILipidParser.Parse
+        Public Function Parse(lipidStr As String) As ILipid Implements ILipidParser.Parse
             Dim match = patternField.Match(lipidStr)
             If match.Success Then
                 Dim group = match.Groups
@@ -331,7 +331,7 @@ Public Class PCLipidParser
 
         Private Shared ReadOnly Skelton As Double = {CarbonMass * 7, HydrogenMass * 14, OxygenMass * 3, NitrogenMass * 1}.Sum()
 
-        Public Function Parse(ByVal lipidStr As String) As ILipid Implements ILipidParser.Parse
+        Public Function Parse(lipidStr As String) As ILipid Implements ILipidParser.Parse
             Dim match = patternField.Match(lipidStr)
             If match.Success Then
                 Dim group = match.Groups
@@ -352,7 +352,7 @@ Public Class PCLipidParser
 
         Private Shared ReadOnly Skelton As Double = {CarbonMass * 10, HydrogenMass * 19, OxygenMass * 5, NitrogenMass * 1}.Sum()
 
-        Public Function Parse(ByVal lipidStr As String) As ILipid Implements ILipidParser.Parse
+        Public Function Parse(lipidStr As String) As ILipid Implements ILipidParser.Parse
             Dim match = patternField.Match(lipidStr)
             If match.Success Then
                 Dim group = match.Groups
@@ -373,7 +373,7 @@ Public Class PCLipidParser
 
         Private Shared ReadOnly Skelton As Double = {CarbonMass * 10, HydrogenMass * 19, OxygenMass * 5, NitrogenMass * 1}.Sum()
 
-        Public Function Parse(ByVal lipidStr As String) As ILipid Implements ILipidParser.Parse
+        Public Function Parse(lipidStr As String) As ILipid Implements ILipidParser.Parse
             Dim match = patternField.Match(lipidStr)
             If match.Success Then
                 Dim group = match.Groups
@@ -394,7 +394,7 @@ Public Class PCLipidParser
 
         Private Shared ReadOnly Skelton As Double = {CarbonMass * 10, HydrogenMass * 19, OxygenMass * 5, NitrogenMass * 1}.Sum()
 
-        Public Function Parse(ByVal lipidStr As String) As ILipid Implements ILipidParser.Parse
+        Public Function Parse(lipidStr As String) As ILipid Implements ILipidParser.Parse
             Dim match = patternField.Match(lipidStr)
             If match.Success Then
                 Dim group = match.Groups
@@ -415,7 +415,7 @@ Public Class PCLipidParser
 
         Private Shared ReadOnly Skelton As Double = {CarbonMass * 10, HydrogenMass * 19, OxygenMass * 5, NitrogenMass * 1}.Sum()
 
-        Public Function Parse(ByVal lipidStr As String) As ILipid Implements ILipidParser.Parse
+        Public Function Parse(lipidStr As String) As ILipid Implements ILipidParser.Parse
             Dim match = patternField.Match(lipidStr)
             If match.Success Then
                 Dim group = match.Groups
@@ -436,7 +436,7 @@ Public Class PCLipidParser
 
         Private Shared ReadOnly Skelton As Double = {CarbonMass * 8, HydrogenMass * 18, OxygenMass * 6, NitrogenMass, PhosphorusMass}.Sum()
 
-        Public Function Parse(ByVal lipidStr As String) As ILipid Implements ILipidParser.Parse
+        Public Function Parse(lipidStr As String) As ILipid Implements ILipidParser.Parse
             Dim match = patternField.Match(lipidStr)
             If match.Success Then
                 Dim group = match.Groups
@@ -457,7 +457,7 @@ Public Class PCLipidParser
 
         Private Shared ReadOnly Skelton As Double = {CarbonMass * 8, HydrogenMass * 18, OxygenMass * 6, NitrogenMass, PhosphorusMass}.Sum()
 
-        Public Function Parse(ByVal lipidStr As String) As ILipid Implements ILipidParser.Parse
+        Public Function Parse(lipidStr As String) As ILipid Implements ILipidParser.Parse
             Dim match = patternField.Match(lipidStr)
             If match.Success Then
                 Dim group = match.Groups
@@ -478,7 +478,7 @@ Public Class PCLipidParser
 
         Private Shared ReadOnly Skelton As Double = {CarbonMass * 5, HydrogenMass * 12, OxygenMass * 6, NitrogenMass, PhosphorusMass}.Sum()
 
-        Public Function Parse(ByVal lipidStr As String) As ILipid Implements ILipidParser.Parse
+        Public Function Parse(lipidStr As String) As ILipid Implements ILipidParser.Parse
             Dim match = patternField.Match(lipidStr)
             If match.Success Then
                 Dim group = match.Groups
@@ -499,7 +499,7 @@ Public Class PCLipidParser
 
         Private Shared ReadOnly Skelton As Double = {CarbonMass * 5, HydrogenMass * 12, OxygenMass * 6, NitrogenMass, PhosphorusMass}.Sum()
 
-        Public Function Parse(ByVal lipidStr As String) As ILipid Implements ILipidParser.Parse
+        Public Function Parse(lipidStr As String) As ILipid Implements ILipidParser.Parse
             Dim match = patternField.Match(lipidStr)
             If match.Success Then
                 Dim group = match.Groups
@@ -520,7 +520,7 @@ Public Class PCLipidParser
 
         Private Shared ReadOnly Skelton As Double = {CarbonMass * 6, HydrogenMass * 13, OxygenMass * 8, PhosphorusMass}.Sum()
 
-        Public Function Parse(ByVal lipidStr As String) As ILipid Implements ILipidParser.Parse
+        Public Function Parse(lipidStr As String) As ILipid Implements ILipidParser.Parse
             Dim match = patternField.Match(lipidStr)
             If match.Success Then
                 Dim group = match.Groups
@@ -541,7 +541,7 @@ Public Class PCLipidParser
 
         Private Shared ReadOnly Skelton As Double = {CarbonMass * 23, HydrogenMass * 37, OxygenMass * 18, NitrogenMass * 1}.Sum()
 
-        Public Function Parse(ByVal lipidStr As String) As ILipid Implements ILipidParser.Parse
+        Public Function Parse(lipidStr As String) As ILipid Implements ILipidParser.Parse
             Dim match = patternField.Match(lipidStr)
             If match.Success Then
                 Dim group = match.Groups
@@ -562,7 +562,7 @@ Public Class PCLipidParser
 
         Private Shared ReadOnly Skelton As Double = {CarbonMass * 6, HydrogenMass * 10, OxygenMass * 8, SulfurMass * 1}.Sum()
 
-        Public Function Parse(ByVal lipidStr As String) As ILipid Implements ILipidParser.Parse
+        Public Function Parse(lipidStr As String) As ILipid Implements ILipidParser.Parse
             Dim match = patternField.Match(lipidStr)
             If match.Success Then
                 Dim group = match.Groups
@@ -583,7 +583,7 @@ Public Class PCLipidParser
 
         Private Shared ReadOnly Skelton As Double = {CarbonMass * 5, HydrogenMass * 12, OxygenMass * 3, NitrogenMass * 1, PhosphorusMass}.Sum()
 
-        Public Function Parse(ByVal lipidStr As String) As ILipid Implements ILipidParser.Parse
+        Public Function Parse(lipidStr As String) As ILipid Implements ILipidParser.Parse
             Dim match = patternField.Match(lipidStr)
             If match.Success Then
                 Dim group = match.Groups
@@ -604,7 +604,7 @@ Public Class PCLipidParser
 
         Private Shared ReadOnly Skelton As Double = {CarbonMass * 8, HydrogenMass * (18 - 5), Hydrogen2Mass * 5, OxygenMass * 6, NitrogenMass, PhosphorusMass}.Sum()
 
-        Public Function Parse(ByVal lipidStr As String) As ILipid Implements ILipidParser.Parse
+        Public Function Parse(lipidStr As String) As ILipid Implements ILipidParser.Parse
             Dim match = patternField.Match(lipidStr)
             If match.Success Then
                 Dim group = match.Groups
@@ -625,7 +625,7 @@ Public Class PCLipidParser
 
         Private Shared ReadOnly Skelton As Double = {CarbonMass * 5, HydrogenMass * (12 - 5), Hydrogen2Mass * 5, OxygenMass * 6, NitrogenMass, PhosphorusMass}.Sum()
 
-        Public Function Parse(ByVal lipidStr As String) As ILipid Implements ILipidParser.Parse
+        Public Function Parse(lipidStr As String) As ILipid Implements ILipidParser.Parse
             Dim match = patternField.Match(lipidStr)
             If match.Success Then
                 Dim group = match.Groups
@@ -646,7 +646,7 @@ Public Class PCLipidParser
 
         Private Shared ReadOnly Skelton As Double = {CarbonMass * 6, HydrogenMass * (13 - 5), Hydrogen2Mass * 5, OxygenMass * 8, PhosphorusMass}.Sum()
 
-        Public Function Parse(ByVal lipidStr As String) As ILipid Implements ILipidParser.Parse
+        Public Function Parse(lipidStr As String) As ILipid Implements ILipidParser.Parse
             Dim match = patternField.Match(lipidStr)
             If match.Success Then
                 Dim group = match.Groups
@@ -667,7 +667,7 @@ Public Class PCLipidParser
 
         Private Shared ReadOnly Skelton As Double = {CarbonMass * 9, HydrogenMass * (17 - 5), Hydrogen2Mass * 5, OxygenMass * 11, PhosphorusMass}.Sum()
 
-        Public Function Parse(ByVal lipidStr As String) As ILipid Implements ILipidParser.Parse
+        Public Function Parse(lipidStr As String) As ILipid Implements ILipidParser.Parse
             Dim match = patternField.Match(lipidStr)
             If match.Success Then
                 Dim group = match.Groups
@@ -688,7 +688,7 @@ Public Class PCLipidParser
 
         Private Shared ReadOnly Skelton As Double = {CarbonMass * 6, HydrogenMass * (12 - 5), Hydrogen2Mass * 5, OxygenMass * 8, NitrogenMass, PhosphorusMass}.Sum()
 
-        Public Function Parse(ByVal lipidStr As String) As ILipid Implements ILipidParser.Parse
+        Public Function Parse(lipidStr As String) As ILipid Implements ILipidParser.Parse
             Dim match = patternField.Match(lipidStr)
             If match.Success Then
                 Dim group = match.Groups
@@ -709,7 +709,7 @@ Public Class PCLipidParser
 
         Private Shared ReadOnly Skelton As Double = {CarbonMass * 8, HydrogenMass * (18 - 5), Hydrogen2Mass * 5, OxygenMass * 6, NitrogenMass, PhosphorusMass}.Sum()
 
-        Public Function Parse(ByVal lipidStr As String) As ILipid Implements ILipidParser.Parse
+        Public Function Parse(lipidStr As String) As ILipid Implements ILipidParser.Parse
             Dim match = patternField.Match(lipidStr)
             If match.Success Then
                 Dim group = match.Groups
@@ -730,7 +730,7 @@ Public Class PCLipidParser
 
         Private Shared ReadOnly Skelton As Double = {CarbonMass * 5, HydrogenMass * (12 - 5), Hydrogen2Mass * 5, OxygenMass * 6, NitrogenMass, PhosphorusMass}.Sum()
 
-        Public Function Parse(ByVal lipidStr As String) As ILipid Implements ILipidParser.Parse
+        Public Function Parse(lipidStr As String) As ILipid Implements ILipidParser.Parse
             Dim match = patternField.Match(lipidStr)
             If match.Success Then
                 Dim group = match.Groups
@@ -751,7 +751,7 @@ Public Class PCLipidParser
 
         Private Shared ReadOnly Skelton As Double = {CarbonMass * 6, HydrogenMass * (13 - 5), Hydrogen2Mass * 5, OxygenMass * 8, PhosphorusMass}.Sum()
 
-        Public Function Parse(ByVal lipidStr As String) As ILipid Implements ILipidParser.Parse
+        Public Function Parse(lipidStr As String) As ILipid Implements ILipidParser.Parse
             Dim match = patternField.Match(lipidStr)
             If match.Success Then
                 Dim group = match.Groups
@@ -772,7 +772,7 @@ Public Class PCLipidParser
 
         Private Shared ReadOnly Skelton As Double = {CarbonMass * 9, HydrogenMass * (17 - 5), Hydrogen2Mass * 5, OxygenMass * 11, PhosphorusMass}.Sum()
 
-        Public Function Parse(ByVal lipidStr As String) As ILipid Implements ILipidParser.Parse
+        Public Function Parse(lipidStr As String) As ILipid Implements ILipidParser.Parse
             Dim match = patternField.Match(lipidStr)
             If match.Success Then
                 Dim group = match.Groups
@@ -793,7 +793,7 @@ Public Class PCLipidParser
 
         Private Shared ReadOnly Skelton As Double = {CarbonMass * 6, HydrogenMass * (12 - 5), Hydrogen2Mass * 5, OxygenMass * 8, NitrogenMass, PhosphorusMass}.Sum()
 
-        Public Function Parse(ByVal lipidStr As String) As ILipid Implements ILipidParser.Parse
+        Public Function Parse(lipidStr As String) As ILipid Implements ILipidParser.Parse
             Dim match = patternField.Match(lipidStr)
             If match.Success Then
                 Dim group = match.Groups
@@ -814,7 +814,7 @@ Public Class PCLipidParser
 
         Private Shared ReadOnly Skelton As Double = {CarbonMass * 3, HydrogenMass * (5 - 5), Hydrogen2Mass * 5, OxygenMass * 3}.Sum()
 
-        Public Function Parse(ByVal lipidStr As String) As ILipid Implements ILipidParser.Parse
+        Public Function Parse(lipidStr As String) As ILipid Implements ILipidParser.Parse
             Dim match = patternField.Match(lipidStr)
             If match.Success Then
                 Dim group = match.Groups
@@ -835,7 +835,7 @@ Public Class PCLipidParser
 
         Private Shared ReadOnly Skelton As Double = {CarbonMass * 3, HydrogenMass * (6 - 5), Hydrogen2Mass * 5, OxygenMass * 3}.Sum()
 
-        Public Function Parse(ByVal lipidStr As String) As ILipid Implements ILipidParser.Parse
+        Public Function Parse(lipidStr As String) As ILipid Implements ILipidParser.Parse
             Dim match = patternField.Match(lipidStr)
             If match.Success Then
                 Dim group = match.Groups
@@ -856,7 +856,7 @@ Public Class PCLipidParser
 
         Private Shared ReadOnly Skelton As Double = {CarbonMass * 5, HydrogenMass * (12 - 9), Hydrogen2Mass * 9, OxygenMass * 3, NitrogenMass * 1, PhosphorusMass}.Sum()
 
-        Public Function Parse(ByVal lipidStr As String) As ILipid Implements ILipidParser.Parse
+        Public Function Parse(lipidStr As String) As ILipid Implements ILipidParser.Parse
             Dim match = patternField.Match(lipidStr)
             If match.Success Then
                 Dim group = match.Groups
@@ -877,7 +877,7 @@ Public Class PCLipidParser
 
         Private Shared ReadOnly Skelton As Double = {CarbonMass * 27, HydrogenMass * 45, OxygenMass * 1}.Sum()
 
-        Public Function Parse(ByVal lipidStr As String) As ILipid Implements ILipidParser.Parse
+        Public Function Parse(lipidStr As String) As ILipid Implements ILipidParser.Parse
             Dim match = patternField.Match(lipidStr)
             If match.Success Then
                 Dim group = match.Groups
@@ -898,7 +898,7 @@ Public Class PCLipidParser
 
         Private Shared ReadOnly Skelton As Double = {CarbonMass * 27, HydrogenMass * (45 - 7), Hydrogen2Mass * 7, OxygenMass * 1}.Sum()
 
-        Public Function Parse(ByVal lipidStr As String) As ILipid Implements ILipidParser.Parse
+        Public Function Parse(lipidStr As String) As ILipid Implements ILipidParser.Parse
             Dim match = patternField.Match(lipidStr)
             If match.Success Then
                 Dim group = match.Groups

@@ -14,7 +14,7 @@ Public NotInheritable Class LipidMsmsCharacterizationUtility
     End Sub
 
     ' 
-    Public Shared Function returnAnnotationResult(ByVal lipidHeader As String, ByVal lbmClass As LbmClass, ByVal hydrogenString As String, ByVal theoreticalMz As Double, ByVal adduct As AdductIon, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal totalOxidized As Integer, ByVal candidates As List(Of LipidMolecule), ByVal acylCountInMolecule As Integer) As LipidMolecule
+    Public Shared Function returnAnnotationResult(lipidHeader As String, lbmClass As LbmClass, hydrogenString As String, theoreticalMz As Double, adduct As AdductIon, totalCarbon As Integer, totalDoubleBond As Integer, totalOxidized As Integer, candidates As List(Of LipidMolecule), acylCountInMolecule As Integer) As LipidMolecule
         If candidates Is Nothing OrElse candidates.Count = 0 Then
             Dim annotationlevel = 1
             If acylCountInMolecule = 1 Then annotationlevel = 2
@@ -30,7 +30,7 @@ Public NotInheritable Class LipidMsmsCharacterizationUtility
         End If
     End Function
 
-    Public Shared Function isDiagnosticFragmentExist(ByVal spectrum As List(Of SpectrumPeak), ByVal ms2Tolerance As Double, ByVal diagnosticMz As Double, ByVal threshold As Double) As Boolean
+    Public Shared Function isDiagnosticFragmentExist(spectrum As List(Of SpectrumPeak), ms2Tolerance As Double, diagnosticMz As Double, threshold As Double) As Boolean
         For i = 0 To spectrum.Count - 1
             Dim mz = spectrum(i).Mass
             Dim intensity = spectrum(i).Intensity ' should be normalized by max intensity to 100
@@ -42,7 +42,7 @@ Public NotInheritable Class LipidMsmsCharacterizationUtility
         Return False
     End Function
 
-    Public Shared Function isFragment1GreaterThanFragment2(ByVal spectrum As List(Of SpectrumPeak), ByVal ms2Tolerance As Double, ByVal fragment1 As Double, ByVal fragment2 As Double) As Boolean
+    Public Shared Function isFragment1GreaterThanFragment2(spectrum As List(Of SpectrumPeak), ms2Tolerance As Double, fragment1 As Double, fragment2 As Double) As Boolean
         Dim frag1intensity = 0.0
         Dim frag2intensity = 0.0
         For i = 0 To spectrum.Count - 1
@@ -64,7 +64,7 @@ Public NotInheritable Class LipidMsmsCharacterizationUtility
         End If
     End Function
 
-    Public Shared Function isPeakFoundWithACritetion(ByVal spectrum As List(Of SpectrumPeak), ByVal beginMz As Double, ByVal endMz As Double, ByVal threshold As Double) As Boolean
+    Public Shared Function isPeakFoundWithACritetion(spectrum As List(Of SpectrumPeak), beginMz As Double, endMz As Double, threshold As Double) As Boolean
         For i = 0 To spectrum.Count - 1
             Dim mz = spectrum(i).Mass
             Dim intensity = spectrum(i).Intensity ' should be normalized by max intensity to 100
@@ -77,7 +77,7 @@ Public NotInheritable Class LipidMsmsCharacterizationUtility
     End Function
 
 
-    Public Shared Function getCeramideMoleculeObjAsLevel2(ByVal lipidClass As String, ByVal lbmClass As LbmClass, ByVal hydroxyString As String, ByVal sphCarbon As Integer, ByVal sphDouble As Integer, ByVal acylCarbon As Integer, ByVal acylDouble As Integer, ByVal score As Double) As LipidMolecule 'd: 2*OH, t: 3*OH
+    Public Shared Function getCeramideMoleculeObjAsLevel2(lipidClass As String, lbmClass As LbmClass, hydroxyString As String, sphCarbon As Integer, sphDouble As Integer, acylCarbon As Integer, acylDouble As Integer, score As Double) As LipidMolecule 'd: 2*OH, t: 3*OH
 
         Dim hydroxyString1 = hydroxyString
         Select Case hydroxyString
@@ -116,7 +116,7 @@ Public NotInheritable Class LipidMsmsCharacterizationUtility
 }
     End Function
 
-    Public Shared Function getNacylphospholipidMoleculeObjAsLevel2(ByVal lipidClass As String, ByVal lbmClass As LbmClass, ByVal sn1Carbon As Integer, ByVal sn1Double As Integer, ByVal sn2Carbon As Integer, ByVal sn2Double As Integer, ByVal score As Double) As LipidMolecule
+    Public Shared Function getNacylphospholipidMoleculeObjAsLevel2(lipidClass As String, lbmClass As LbmClass, sn1Carbon As Integer, sn1Double As Integer, sn2Carbon As Integer, sn2Double As Integer, score As Double) As LipidMolecule
         Dim lipidHeader = ""
         If lbmClass = lbmClass.LNAPE Then
             lipidHeader = "LPE-N"
@@ -151,7 +151,7 @@ Public NotInheritable Class LipidMsmsCharacterizationUtility
     End Function
 
 
-    Public Shared Function getPhospholipidMoleculeObjAsLevel2(ByVal lipidClass As String, ByVal lbmClass As LbmClass, ByVal sn1Carbon As Integer, ByVal sn1Double As Integer, ByVal sn2Carbon As Integer, ByVal sn2Double As Integer, ByVal score As Double) As LipidMolecule
+    Public Shared Function getPhospholipidMoleculeObjAsLevel2(lipidClass As String, lbmClass As LbmClass, sn1Carbon As Integer, sn1Double As Integer, sn2Carbon As Integer, sn2Double As Integer, score As Double) As LipidMolecule
 
         Dim totalCarbon = sn1Carbon + sn2Carbon
         Dim totalDB = sn1Double + sn2Double
@@ -191,7 +191,7 @@ Public NotInheritable Class LipidMsmsCharacterizationUtility
 .Sn2AcylChainString = sn2ChainString
 }
     End Function
-    Public Shared Function getEtherPhospholipidMoleculeObjAsLevel2(ByVal lipidClass As String, ByVal lbmClass As LbmClass, ByVal sn1Carbon As Integer, ByVal sn1Double As Integer, ByVal sn2Carbon As Integer, ByVal sn2Double As Integer, ByVal score As Double, ByVal chainSuffix As String) As LipidMolecule
+    Public Shared Function getEtherPhospholipidMoleculeObjAsLevel2(lipidClass As String, lbmClass As LbmClass, sn1Carbon As Integer, sn1Double As Integer, sn2Carbon As Integer, sn2Double As Integer, score As Double, chainSuffix As String) As LipidMolecule
         Dim chainPrefix = chainSuffix
         Select Case chainSuffix
             Case "e"
@@ -237,7 +237,7 @@ Public NotInheritable Class LipidMsmsCharacterizationUtility
 }
     End Function
 
-    Public Shared Function getEtherOxPxMoleculeObjAsLevel2(ByVal lipidClass As String, ByVal lbmClass As LbmClass, ByVal sn1Carbon As Integer, ByVal sn1Double As Integer, ByVal sn2Carbon As Integer, ByVal sn2Double As Integer, ByVal sn1Oxydized As Integer, ByVal sn2Oxydized As Integer, ByVal score As Double, ByVal chainSuffix As String) As LipidMolecule
+    Public Shared Function getEtherOxPxMoleculeObjAsLevel2(lipidClass As String, lbmClass As LbmClass, sn1Carbon As Integer, sn1Double As Integer, sn2Carbon As Integer, sn2Double As Integer, sn1Oxydized As Integer, sn2Oxydized As Integer, score As Double, chainSuffix As String) As LipidMolecule
         Dim chainPrefix = chainSuffix
         Select Case chainSuffix
             Case "e"
@@ -299,7 +299,7 @@ Public NotInheritable Class LipidMsmsCharacterizationUtility
     End Function
 
 
-    Public Shared Function getOxydizedPhospholipidMoleculeObjAsLevel2(ByVal lipidClass As String, ByVal lbmClass As LbmClass, ByVal sn1Carbon As Integer, ByVal sn1Double As Integer, ByVal sn2Carbon As Integer, ByVal sn2Double As Integer, ByVal sn1Oxydized As Integer, ByVal sn2Oxydized As Integer, ByVal score As Double) As LipidMolecule
+    Public Shared Function getOxydizedPhospholipidMoleculeObjAsLevel2(lipidClass As String, lbmClass As LbmClass, sn1Carbon As Integer, sn1Double As Integer, sn2Carbon As Integer, sn2Double As Integer, sn1Oxydized As Integer, sn2Oxydized As Integer, score As Double) As LipidMolecule
         Dim totalCarbon = sn1Carbon + sn2Carbon
         Dim totalDB = sn1Double + sn2Double
         Dim totalOxidized = sn1Oxydized + sn2Oxydized
@@ -357,7 +357,7 @@ Public NotInheritable Class LipidMsmsCharacterizationUtility
 .Sn2AcylChainString = sn2ChainString
 }
     End Function
-    Public Shared Function getOxydizedPhospholipidMoleculeObjAsLevel1(ByVal lipidClass As String, ByVal lbmClass As LbmClass, ByVal totalCarbon As Integer, ByVal totalDB As Integer, ByVal totalOxidized As Integer, ByVal score As Double) As LipidMolecule
+    Public Shared Function getOxydizedPhospholipidMoleculeObjAsLevel1(lipidClass As String, lbmClass As LbmClass, totalCarbon As Integer, totalDB As Integer, totalOxidized As Integer, score As Double) As LipidMolecule
         Dim totalString = totalCarbon.ToString() & ":" & totalDB.ToString()
         Dim totalName = lipidClass & " " & totalString
         Dim totalOxidizedString = If(totalOxidized > 1, ";O" & totalOxidized.ToString(), ";O")
@@ -376,7 +376,7 @@ Public NotInheritable Class LipidMsmsCharacterizationUtility
 }
     End Function
 
-    Public Shared Function getSingleacylchainMoleculeObjAsLevel2(ByVal lipidClass As String, ByVal lbmClass As LbmClass, ByVal sn1Carbon As Integer, ByVal sn1Double As Integer, ByVal score As Double) As LipidMolecule
+    Public Shared Function getSingleacylchainMoleculeObjAsLevel2(lipidClass As String, lbmClass As LbmClass, sn1Carbon As Integer, sn1Double As Integer, score As Double) As LipidMolecule
 
         Dim totalCarbon = sn1Carbon
         Dim totalDB = sn1Double
@@ -408,7 +408,7 @@ Public NotInheritable Class LipidMsmsCharacterizationUtility
 }
     End Function
 
-    Public Shared Function getSingleacyloxMoleculeObjAsLevel1(ByVal lipidClass As String, ByVal lbmClass As LbmClass, ByVal sn1Carbon As Integer, ByVal sn1Double As Integer, ByVal totalOxidized As Integer, ByVal score As Double) As LipidMolecule
+    Public Shared Function getSingleacyloxMoleculeObjAsLevel1(lipidClass As String, lbmClass As LbmClass, sn1Carbon As Integer, sn1Double As Integer, totalOxidized As Integer, score As Double) As LipidMolecule
         Dim totalString = sn1Carbon.ToString() & ":" & sn1Double.ToString()
         'var totalName = lipidClass + " " + totalString + "+" + totalOxidized + "O";
         Dim totalOxidizedString = If(totalOxidized > 1, ";O" & totalOxidized.ToString(), ";O")
@@ -430,7 +430,7 @@ Public NotInheritable Class LipidMsmsCharacterizationUtility
 }
     End Function
 
-    Public Shared Function getSingleacylchainwithsuffixMoleculeObjAsLevel2(ByVal lipidClass As String, ByVal lbmClass As LbmClass, ByVal sn1Carbon As Integer, ByVal sn1Double As Integer, ByVal score As Double, ByVal chainSuffix As String) As LipidMolecule
+    Public Shared Function getSingleacylchainwithsuffixMoleculeObjAsLevel2(lipidClass As String, lbmClass As LbmClass, sn1Carbon As Integer, sn1Double As Integer, score As Double, chainSuffix As String) As LipidMolecule
 
         Dim totalCarbon = sn1Carbon
         Dim totalDB = sn1Double
@@ -455,7 +455,7 @@ Public NotInheritable Class LipidMsmsCharacterizationUtility
 }
     End Function
 
-    Public Shared Function getTriacylglycerolMoleculeObjAsLevel2(ByVal lipidClass As String, ByVal lbmClass As LbmClass, ByVal sn1Carbon As Integer, ByVal sn1Double As Integer, ByVal sn2Carbon As Integer, ByVal sn2Double As Integer, ByVal sn3Carbon As Integer, ByVal sn3Double As Integer, ByVal score As Double) As LipidMolecule
+    Public Shared Function getTriacylglycerolMoleculeObjAsLevel2(lipidClass As String, lbmClass As LbmClass, sn1Carbon As Integer, sn1Double As Integer, sn2Carbon As Integer, sn2Double As Integer, sn3Carbon As Integer, sn3Double As Integer, score As Double) As LipidMolecule
 
         Dim totalCarbon = sn1Carbon + sn2Carbon + sn3Carbon
         Dim totalDB = sn1Double + sn2Double + sn3Double
@@ -503,7 +503,7 @@ Public NotInheritable Class LipidMsmsCharacterizationUtility
 }
     End Function
     'add MT
-    Public Shared Function getEthertagMoleculeObjAsLevel2(ByVal lipidClass As String, ByVal lbmClass As LbmClass, ByVal sn1Carbon As Integer, ByVal sn1Double As Integer, ByVal sn2Carbon As Integer, ByVal sn2Double As Integer, ByVal sn3Carbon As Integer, ByVal sn3Double As Integer, ByVal score As Double) As LipidMolecule
+    Public Shared Function getEthertagMoleculeObjAsLevel2(lipidClass As String, lbmClass As LbmClass, sn1Carbon As Integer, sn1Double As Integer, sn2Carbon As Integer, sn2Double As Integer, sn3Carbon As Integer, sn3Double As Integer, score As Double) As LipidMolecule
         Dim etherPrefix = "O-"
         Dim totalCarbon = sn1Carbon + sn2Carbon + sn3Carbon
         Dim totalDB = sn1Double + sn2Double + sn3Double
@@ -563,7 +563,7 @@ Public NotInheritable Class LipidMsmsCharacterizationUtility
 
 
 
-    Public Shared Function getEsterceramideMoleculeObjAsLevel2(ByVal lipidClass As String, ByVal lbmClass As LbmClass, ByVal hydroxyString As String, ByVal sphCarbon As Integer, ByVal sphDouble As Integer, ByVal acylCarbon As Integer, ByVal acylDouble As Integer, ByVal esterCarbon As Integer, ByVal esterDouble As Integer, ByVal score As Double) As LipidMolecule 'd: 2*OH, t: 3*OH   Cer-EOS, EODS, EBDS, Hexcer-EOS
+    Public Shared Function getEsterceramideMoleculeObjAsLevel2(lipidClass As String, lbmClass As LbmClass, hydroxyString As String, sphCarbon As Integer, sphDouble As Integer, acylCarbon As Integer, acylDouble As Integer, esterCarbon As Integer, esterDouble As Integer, score As Double) As LipidMolecule 'd: 2*OH, t: 3*OH   Cer-EOS, EODS, EBDS, Hexcer-EOS
         Dim sphHydroxyCount = 0
         Select Case hydroxyString
             Case "m"
@@ -620,7 +620,7 @@ Public NotInheritable Class LipidMsmsCharacterizationUtility
 }
     End Function
 
-    Public Shared Function getEsterceramideMoleculeObjAsLevel2_0(ByVal lipidClass As String, ByVal lbmClass As LbmClass, ByVal hydroxyString As String, ByVal cerCarbon As Integer, ByVal cerDouble As Integer, ByVal esterCarbon As Integer, ByVal esterDouble As Integer, ByVal score As Double) As LipidMolecule 'd: 2*OH, t: 3*OH
+    Public Shared Function getEsterceramideMoleculeObjAsLevel2_0(lipidClass As String, lbmClass As LbmClass, hydroxyString As String, cerCarbon As Integer, cerDouble As Integer, esterCarbon As Integer, esterDouble As Integer, score As Double) As LipidMolecule 'd: 2*OH, t: 3*OH
         Dim sphHydroxyCount = 0
         Select Case hydroxyString
             Case "m"
@@ -662,7 +662,7 @@ Public NotInheritable Class LipidMsmsCharacterizationUtility
 }
     End Function
 
-    Public Shared Function getEsterceramideMoleculeObjAsLevel2_1(ByVal lipidClass As String, ByVal lbmClass As LbmClass, ByVal hydroxyString As String, ByVal sphCarbon As Integer, ByVal sphDouble As Integer, ByVal acylCarbon As Integer, ByVal acylDouble As Integer, ByVal score As Double) As LipidMolecule 'd: 2*OH, t: 3*OH
+    Public Shared Function getEsterceramideMoleculeObjAsLevel2_1(lipidClass As String, lbmClass As LbmClass, hydroxyString As String, sphCarbon As Integer, sphDouble As Integer, acylCarbon As Integer, acylDouble As Integer, score As Double) As LipidMolecule 'd: 2*OH, t: 3*OH
         Dim sphHydroxyCount = 0
         Select Case hydroxyString
             Case "m"
@@ -703,7 +703,7 @@ Public NotInheritable Class LipidMsmsCharacterizationUtility
     End Function
 
 
-    Public Shared Function getAcylhexceramideMoleculeObjAsLevel2(ByVal lipidClass As String, ByVal lbmClass As LbmClass, ByVal hydroxyString As String, ByVal sphCarbon As Integer, ByVal sphDouble As Integer, ByVal acylCarbon As Integer, ByVal acylDouble As Integer, ByVal esterCarbon As Integer, ByVal esterDouble As Integer, ByVal score As Double, ByVal acylOxidizedCount As Integer) As LipidMolecule 'd: 2*OH, t: 3*OH    AHexCer (O-16:0)18:1;O2/24:0;O
+    Public Shared Function getAcylhexceramideMoleculeObjAsLevel2(lipidClass As String, lbmClass As LbmClass, hydroxyString As String, sphCarbon As Integer, sphDouble As Integer, acylCarbon As Integer, acylDouble As Integer, esterCarbon As Integer, esterDouble As Integer, score As Double, acylOxidizedCount As Integer) As LipidMolecule 'd: 2*OH, t: 3*OH    AHexCer (O-16:0)18:1;O2/24:0;O
         Dim sphHydroxyCount = 0
         Select Case hydroxyString
             Case "m"
@@ -748,7 +748,7 @@ Public NotInheritable Class LipidMsmsCharacterizationUtility
 }
     End Function
 
-    Public Shared Function getAcylhexceramideMoleculeObjAsLevel2_0(ByVal lipidClass As String, ByVal lbmClass As LbmClass, ByVal hydroxyString As String, ByVal ceramideCarbon As Integer, ByVal ceramideDouble As Integer, ByVal esterCarbon As Integer, ByVal esterDouble As Integer, ByVal score As Double, ByVal acylOxidizedCount As Integer) As LipidMolecule 'd: 2*OH, t: 3*OH  AHexCer (O-16:0)42:1;O3
+    Public Shared Function getAcylhexceramideMoleculeObjAsLevel2_0(lipidClass As String, lbmClass As LbmClass, hydroxyString As String, ceramideCarbon As Integer, ceramideDouble As Integer, esterCarbon As Integer, esterDouble As Integer, score As Double, acylOxidizedCount As Integer) As LipidMolecule 'd: 2*OH, t: 3*OH  AHexCer (O-16:0)42:1;O3
         Dim sphHydroxyCount = 0
         Select Case hydroxyString
             Case "m"
@@ -788,7 +788,7 @@ Public NotInheritable Class LipidMsmsCharacterizationUtility
 }
     End Function
 
-    Public Shared Function getAcylhexceramideMoleculeObjAsLevel2_1(ByVal lipidClass As String, ByVal lbmClass As LbmClass, ByVal hydroxyString As String, ByVal sphCarbon As Integer, ByVal sphDouble As Integer, ByVal acylCarbon As Integer, ByVal acylDouble As Integer, ByVal score As Double, ByVal acylOxidizedCount As Integer) As LipidMolecule 'd: 2*OH, t: 3*OH    AHexCer 58:1;O3
+    Public Shared Function getAcylhexceramideMoleculeObjAsLevel2_1(lipidClass As String, lbmClass As LbmClass, hydroxyString As String, sphCarbon As Integer, sphDouble As Integer, acylCarbon As Integer, acylDouble As Integer, score As Double, acylOxidizedCount As Integer) As LipidMolecule 'd: 2*OH, t: 3*OH    AHexCer 58:1;O3
         Dim sphHydroxyCount = 0
         Select Case hydroxyString
             Case "m"
@@ -828,7 +828,7 @@ Public NotInheritable Class LipidMsmsCharacterizationUtility
 }
     End Function
 
-    Public Shared Function getAsmMoleculeObjAsLevel2(ByVal lipidClass As String, ByVal lbmClass As LbmClass, ByVal hydroxyString As String, ByVal sphCarbon As Integer, ByVal sphDouble As Integer, ByVal acylCarbon As Integer, ByVal acylDouble As Integer, ByVal esterCarbon As Integer, ByVal esterDouble As Integer, ByVal score As Double) As LipidMolecule 'd: 2*OH, t: 3*OH   ASM neg
+    Public Shared Function getAsmMoleculeObjAsLevel2(lipidClass As String, lbmClass As LbmClass, hydroxyString As String, sphCarbon As Integer, sphDouble As Integer, acylCarbon As Integer, acylDouble As Integer, esterCarbon As Integer, esterDouble As Integer, score As Double) As LipidMolecule 'd: 2*OH, t: 3*OH   ASM neg
         Dim sphHydroxyCount = 0
         Select Case hydroxyString
             Case "m"
@@ -873,7 +873,7 @@ Public NotInheritable Class LipidMsmsCharacterizationUtility
 }
     End Function
 
-    Public Shared Function getAsmMoleculeObjAsLevel2_0(ByVal lipidClass As String, ByVal lbmClass As LbmClass, ByVal hydroxyString As String, ByVal cerCarbon As Integer, ByVal cerDouble As Integer, ByVal esterCarbon As Integer, ByVal esterDouble As Integer, ByVal score As Double) As LipidMolecule 'd: 2*OH, t: 3*OH   ASM neg
+    Public Shared Function getAsmMoleculeObjAsLevel2_0(lipidClass As String, lbmClass As LbmClass, hydroxyString As String, cerCarbon As Integer, cerDouble As Integer, esterCarbon As Integer, esterDouble As Integer, score As Double) As LipidMolecule 'd: 2*OH, t: 3*OH   ASM neg
         Dim sphHydroxyCount = 0
         Select Case hydroxyString
             Case "m"
@@ -917,7 +917,7 @@ Public NotInheritable Class LipidMsmsCharacterizationUtility
     End Function
 
 
-    Public Shared Function getAcylglycerolMoleculeObjAsLevel2(ByVal lipidClass As String, ByVal lbmClass As LbmClass, ByVal sn1Carbon As Integer, ByVal sn1Double As Integer, ByVal sn2Carbon As Integer, ByVal sn2Double As Integer, ByVal sn3Carbon As Integer, ByVal sn3Double As Integer, ByVal score As Double) As LipidMolecule
+    Public Shared Function getAcylglycerolMoleculeObjAsLevel2(lipidClass As String, lbmClass As LbmClass, sn1Carbon As Integer, sn1Double As Integer, sn2Carbon As Integer, sn2Double As Integer, sn3Carbon As Integer, sn3Double As Integer, score As Double) As LipidMolecule
 
         Dim totalCarbon = sn1Carbon + sn2Carbon + sn3Carbon
         Dim totalDB = sn1Double + sn2Double + sn3Double
@@ -962,7 +962,7 @@ Public NotInheritable Class LipidMsmsCharacterizationUtility
 }
     End Function
 
-    Public Shared Function getAdggaMoleculeObjAsLevel2(ByVal lipidClass As String, ByVal lbmClass As LbmClass, ByVal sn1Carbon As Integer, ByVal sn1Double As Integer, ByVal sn2Carbon As Integer, ByVal sn2Double As Integer, ByVal sn3Carbon As Integer, ByVal sn3Double As Integer, ByVal score As Double) As LipidMolecule
+    Public Shared Function getAdggaMoleculeObjAsLevel2(lipidClass As String, lbmClass As LbmClass, sn1Carbon As Integer, sn1Double As Integer, sn2Carbon As Integer, sn2Double As Integer, sn3Carbon As Integer, sn3Double As Integer, score As Double) As LipidMolecule
         Dim totalCarbon = sn1Carbon + sn2Carbon + sn3Carbon
         Dim totalDB = sn1Double + sn2Double + sn3Double
         Dim totalString = totalCarbon.ToString() & ":" & totalDB.ToString()
@@ -1008,7 +1008,7 @@ Public NotInheritable Class LipidMsmsCharacterizationUtility
 
 
 
-    Public Shared Function getDiacylglycerolMoleculeObjAsLevel2(ByVal lipidClass As String, ByVal lbmClass As LbmClass, ByVal sn1Carbon As Integer, ByVal sn1Double As Integer, ByVal sn2Carbon As Integer, ByVal sn2Double As Integer, ByVal score As Double) As LipidMolecule
+    Public Shared Function getDiacylglycerolMoleculeObjAsLevel2(lipidClass As String, lbmClass As LbmClass, sn1Carbon As Integer, sn1Double As Integer, sn2Carbon As Integer, sn2Double As Integer, score As Double) As LipidMolecule
 
         Dim totalCarbon = sn1Carbon + sn2Carbon
         Dim totalDB = sn1Double + sn2Double
@@ -1048,7 +1048,7 @@ Public NotInheritable Class LipidMsmsCharacterizationUtility
 }
     End Function
 
-    Public Shared Function getCardiolipinMoleculeObjAsLevel2_0(ByVal lipidClass As String, ByVal lbmClass As LbmClass, ByVal sn1_2Carbon As Integer, ByVal sn1_2Double As Integer, ByVal sn3_4Carbon As Integer, ByVal sn3_4Double As Integer, ByVal score As Double) As LipidMolecule
+    Public Shared Function getCardiolipinMoleculeObjAsLevel2_0(lipidClass As String, lbmClass As LbmClass, sn1_2Carbon As Integer, sn1_2Double As Integer, sn3_4Carbon As Integer, sn3_4Double As Integer, score As Double) As LipidMolecule
 
         Dim totalCarbon = sn1_2Carbon + sn3_4Carbon
         Dim totalDB = sn1_2Double + sn3_4Double
@@ -1090,7 +1090,7 @@ Public NotInheritable Class LipidMsmsCharacterizationUtility
 }
     End Function
 
-    Public Shared Function getCardiolipinMoleculeObjAsLevel2_1(ByVal lipidClass As String, ByVal lbmClass As LbmClass, ByVal sn1Carbon As Integer, ByVal sn2Carbon As Integer, ByVal sn3Carbon As Integer, ByVal sn4Carbon As Integer, ByVal sn1Double As Integer, ByVal sn2Double As Integer, ByVal sn3Double As Integer, ByVal sn4Double As Integer, ByVal score As Double) As LipidMolecule
+    Public Shared Function getCardiolipinMoleculeObjAsLevel2_1(lipidClass As String, lbmClass As LbmClass, sn1Carbon As Integer, sn2Carbon As Integer, sn3Carbon As Integer, sn4Carbon As Integer, sn1Double As Integer, sn2Double As Integer, sn3Double As Integer, sn4Double As Integer, score As Double) As LipidMolecule
 
         Dim totalCarbon = sn1Carbon + sn2Carbon + sn3Carbon + sn4Carbon
         Dim totalDB = sn1Double + sn2Double + sn3Double + sn4Double
@@ -1148,7 +1148,7 @@ Public NotInheritable Class LipidMsmsCharacterizationUtility
 
 }
         End Function
-    Public Shared Function getCardiolipinMoleculeObjAsLevel2_2(ByVal lipidClass As String, ByVal lbmClass As LbmClass, ByVal sn1Carbon As Integer, ByVal sn2Carbon As Integer, ByVal sn3Carbon As Integer, ByVal sn4Carbon As Integer, ByVal sn1Double As Integer, ByVal sn2Double As Integer, ByVal sn3Double As Integer, ByVal sn4Double As Integer, ByVal score As Double) As LipidMolecule
+    Public Shared Function getCardiolipinMoleculeObjAsLevel2_2(lipidClass As String, lbmClass As LbmClass, sn1Carbon As Integer, sn2Carbon As Integer, sn3Carbon As Integer, sn4Carbon As Integer, sn1Double As Integer, sn2Double As Integer, sn3Double As Integer, sn4Double As Integer, score As Double) As LipidMolecule
 
         Dim totalCarbon = sn1Carbon + sn2Carbon + sn3Carbon + sn4Carbon
         Dim totalDB = sn1Double + sn2Double + sn3Double + sn4Double
@@ -1220,7 +1220,7 @@ Public NotInheritable Class LipidMsmsCharacterizationUtility
 }
         End Function
 
-    Public Shared Function getLysocardiolipinMoleculeObjAsLevel2(ByVal lipidClass As String, ByVal lbmClass As LbmClass, ByVal sn1Carbon As Integer, ByVal sn2Carbon As Integer, ByVal sn3Carbon As Integer, ByVal sn1Double As Integer, ByVal sn2Double As Integer, ByVal sn3Double As Integer, ByVal score As Double) As LipidMolecule
+    Public Shared Function getLysocardiolipinMoleculeObjAsLevel2(lipidClass As String, lbmClass As LbmClass, sn1Carbon As Integer, sn2Carbon As Integer, sn3Carbon As Integer, sn1Double As Integer, sn2Double As Integer, sn3Double As Integer, score As Double) As LipidMolecule
 
         Dim totalCarbon = sn1Carbon + sn2Carbon + sn3Carbon
         Dim totalDB = sn1Double + sn2Double + sn3Double
@@ -1269,7 +1269,7 @@ Public NotInheritable Class LipidMsmsCharacterizationUtility
 }
         End Function
 
-    Public Shared Function getFahfaMoleculeObjAsLevel2_0(ByVal lipidClass As String, ByVal lbmClass As LbmClass, ByVal sn1Carbon As Integer, ByVal sn1Double As Integer, ByVal sn2Carbon As Integer, ByVal sn2Double As Integer, ByVal score As Double) As LipidMolecule
+    Public Shared Function getFahfaMoleculeObjAsLevel2_0(lipidClass As String, lbmClass As LbmClass, sn1Carbon As Integer, sn1Double As Integer, sn2Carbon As Integer, sn2Double As Integer, score As Double) As LipidMolecule
 
         Dim totalCarbon = sn1Carbon + sn2Carbon
         Dim totalDB = sn1Double + sn2Double
@@ -1311,7 +1311,7 @@ Public NotInheritable Class LipidMsmsCharacterizationUtility
 }
     End Function
 
-    Public Shared Function getFahfamideMoleculeObjAsLevel2(ByVal lipidClass As String, ByVal lbmClass As LbmClass, ByVal surfix As String, ByVal sn1Carbon As Integer, ByVal sn1Double As Integer, ByVal sn2Carbon As Integer, ByVal sn2Double As Integer, ByVal score As Double) As LipidMolecule
+    Public Shared Function getFahfamideMoleculeObjAsLevel2(lipidClass As String, lbmClass As LbmClass, surfix As String, sn1Carbon As Integer, sn1Double As Integer, sn2Carbon As Integer, sn2Double As Integer, score As Double) As LipidMolecule
 
         Dim totalCarbon = sn1Carbon + sn2Carbon
         Dim totalDB = sn1Double + sn2Double + 1
@@ -1351,7 +1351,7 @@ Public NotInheritable Class LipidMsmsCharacterizationUtility
 }
     End Function
 
-    Public Shared Function getSteroidalEtherMoleculeObj(ByVal lipidClass As String, ByVal lbmClass As LbmClass, ByVal steroidString As String, ByVal steroidalModificationClass As String, ByVal totalCarbon As Integer, ByVal totalDB As Integer) As LipidMolecule
+    Public Shared Function getSteroidalEtherMoleculeObj(lipidClass As String, lbmClass As LbmClass, steroidString As String, steroidalModificationClass As String, totalCarbon As Integer, totalDB As Integer) As LipidMolecule
         Dim totalString = String.Empty
         Dim annotationLevel = 2
 
@@ -1375,7 +1375,7 @@ Public NotInheritable Class LipidMsmsCharacterizationUtility
 
     End Function
 
-    Public Shared Function getWaxEsterObjAsLevel2_0(ByVal lipidClass As String, ByVal lbmClass As LbmClass, ByVal sn1Carbon As Integer, ByVal sn1Double As Integer, ByVal sn2Carbon As Integer, ByVal sn2Double As Integer, ByVal score As Double) As LipidMolecule
+    Public Shared Function getWaxEsterObjAsLevel2_0(lipidClass As String, lbmClass As LbmClass, sn1Carbon As Integer, sn1Double As Integer, sn2Carbon As Integer, sn2Double As Integer, score As Double) As LipidMolecule
 
         Dim totalCarbon = sn1Carbon + sn2Carbon
         Dim totalDB = sn1Double + sn2Double
@@ -1408,7 +1408,7 @@ Public NotInheritable Class LipidMsmsCharacterizationUtility
     End Function
 
     ' Cer-Ax, Cer-Bx etc
-    Public Shared Function getCeramideoxMoleculeObjAsLevel2(ByVal lipidClass As String, ByVal lbmClass As LbmClass, ByVal hydroxyString As String, ByVal sphCarbon As Integer, ByVal sphDouble As Integer, ByVal acylCarbon As Integer, ByVal acylDouble As Integer, ByVal acylOxidized As Integer, ByVal score As Double) As LipidMolecule
+    Public Shared Function getCeramideoxMoleculeObjAsLevel2(lipidClass As String, lbmClass As LbmClass, hydroxyString As String, sphCarbon As Integer, sphDouble As Integer, acylCarbon As Integer, acylDouble As Integer, acylOxidized As Integer, score As Double) As LipidMolecule
         Dim sphHydroxyCount = 0
         Dim sphHydroxyString = ""
         Select Case hydroxyString
@@ -1461,7 +1461,7 @@ Public NotInheritable Class LipidMsmsCharacterizationUtility
 }
     End Function
 
-    Public Shared Function getAlphaOxfaMoleculeObjAsLevel1(ByVal lipidClass As String, ByVal lbmClass As LbmClass, ByVal totalCarbon As Integer, ByVal totalDB As Integer, ByVal totalOxidized As Integer, ByVal score As Double) As LipidMolecule
+    Public Shared Function getAlphaOxfaMoleculeObjAsLevel1(lipidClass As String, lbmClass As LbmClass, totalCarbon As Integer, totalDB As Integer, totalOxidized As Integer, score As Double) As LipidMolecule
         Dim totalString = totalCarbon.ToString() & ":" & totalDB.ToString() & "(2OH)"
         Dim totalName = lipidClass & " " & totalString
 
@@ -1482,7 +1482,7 @@ Public NotInheritable Class LipidMsmsCharacterizationUtility
 
     End Function
 
-    Public Shared Function getOxTriacylglycerolMoleculeObjAsLevel2(ByVal lipidClass As String, ByVal lbmClass As LbmClass, ByVal sn1Carbon As Integer, ByVal sn1Double As Integer, ByVal sn2Carbon As Integer, ByVal sn2Double As Integer, ByVal sn3Carbon As Integer, ByVal sn3Double As Integer, ByVal totalOxidized As Integer, ByVal score As Double) As LipidMolecule
+    Public Shared Function getOxTriacylglycerolMoleculeObjAsLevel2(lipidClass As String, lbmClass As LbmClass, sn1Carbon As Integer, sn1Double As Integer, sn2Carbon As Integer, sn2Double As Integer, sn3Carbon As Integer, sn3Double As Integer, totalOxidized As Integer, score As Double) As LipidMolecule
 
         Dim totalCarbon = sn1Carbon + sn2Carbon + sn3Carbon
         Dim totalDB = sn1Double + sn2Double + sn3Double
@@ -1530,7 +1530,7 @@ Public NotInheritable Class LipidMsmsCharacterizationUtility
 }
     End Function
 
-    Public Shared Function getFahfaTriacylglycerolMoleculeObjAsLevel2(ByVal lipidClass As String, ByVal lbmClass As LbmClass, ByVal sn1Carbon As Integer, ByVal sn1Double As Integer, ByVal sn2Carbon As Integer, ByVal sn2Double As Integer, ByVal sn3Carbon As Integer, ByVal sn3Double As Integer, ByVal sn4Carbon As Integer, ByVal sn4Double As Integer, ByVal totalOxidized As Integer, ByVal score As Double) As LipidMolecule
+    Public Shared Function getFahfaTriacylglycerolMoleculeObjAsLevel2(lipidClass As String, lbmClass As LbmClass, sn1Carbon As Integer, sn1Double As Integer, sn2Carbon As Integer, sn2Double As Integer, sn3Carbon As Integer, sn3Double As Integer, sn4Carbon As Integer, sn4Double As Integer, totalOxidized As Integer, score As Double) As LipidMolecule
 
         Dim totalCarbon = sn1Carbon + sn2Carbon + sn3Carbon + sn4Carbon
         Dim totalDB = sn1Double + sn2Double + sn3Double + sn4Double + 1
@@ -1587,7 +1587,7 @@ Public NotInheritable Class LipidMsmsCharacterizationUtility
 
 
 
-    Public Shared Function getLipidAnnotaionAsSubLevel(ByVal lipidClass As String, ByVal lbmClass As LbmClass, ByVal hydroxyString As String, ByVal totalCarbon As Integer, ByVal totalDB As Integer, ByVal totalOxygen As Integer, ByVal annotationLevel As Integer) As LipidMolecule 'd: 2*OH, t: 3*OH, string.empty: 0*OH
+    Public Shared Function getLipidAnnotaionAsSubLevel(lipidClass As String, lbmClass As LbmClass, hydroxyString As String, totalCarbon As Integer, totalDB As Integer, totalOxygen As Integer, annotationLevel As Integer) As LipidMolecule 'd: 2*OH, t: 3*OH, string.empty: 0*OH
 
 
         Dim totalOxygenString = If(totalOxygen = 0, String.Empty, If(totalOxygen = 1, ";O", ";O" & totalOxygen.ToString()))
@@ -1625,7 +1625,7 @@ Public NotInheritable Class LipidMsmsCharacterizationUtility
 .TotalChainString = totalString
 }
     End Function
-    Public Shared Function returnAnnotationNoChainResult(ByVal lipidHeader As String, ByVal lbmClass As LbmClass, ByVal hydrogenString As String, ByVal theoreticalMz As Double, ByVal adduct As AdductIon, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal totalOxidized As Integer, ByVal candidates As List(Of LipidMolecule), ByVal acylCountInMolecule As Integer) As LipidMolecule
+    Public Shared Function returnAnnotationNoChainResult(lipidHeader As String, lbmClass As LbmClass, hydrogenString As String, theoreticalMz As Double, adduct As AdductIon, totalCarbon As Integer, totalDoubleBond As Integer, totalOxidized As Integer, candidates As List(Of LipidMolecule), acylCountInMolecule As Integer) As LipidMolecule
         Return New LipidMolecule() With {
 .LipidClass = lbmClass,
 .AnnotationLevel = 2,
@@ -1638,7 +1638,7 @@ Public NotInheritable Class LipidMsmsCharacterizationUtility
 
 
 
-    Public Shared Sub countFragmentExistence(ByVal spectrum As List(Of SpectrumPeak), ByVal queries As List(Of SpectrumPeak), ByVal ms2Tolerance As Double, <Out> ByRef foundCount As Integer, <Out> ByRef averageIntensity As Double)
+    Public Shared Sub countFragmentExistence(spectrum As List(Of SpectrumPeak), queries As List(Of SpectrumPeak), ms2Tolerance As Double, <Out> ByRef foundCount As Integer, <Out> ByRef averageIntensity As Double)
         foundCount = 0
         averageIntensity = 0.0
         For Each query In queries
@@ -1655,17 +1655,17 @@ Public NotInheritable Class LipidMsmsCharacterizationUtility
         averageIntensity /= queries.Count
     End Sub
 
-    Public Shared Function acylCainMass(ByVal carbon As Integer, ByVal dbBond As Integer) As Double
+    Public Shared Function acylCainMass(carbon As Integer, dbBond As Integer) As Double
         Dim hydrogenMass = (carbon * 2 - 1 - dbBond * 2) * MassDiffDictionary.HydrogenMass
         Return CarbonMass * carbon + hydrogenMass + OxygenMass
     End Function
 
     Private Const Electron As Double = 0.00054858026
-    Public Shared Function fattyacidProductIon(ByVal carbon As Integer, ByVal dbBond As Integer) As Double
+    Public Shared Function fattyacidProductIon(carbon As Integer, dbBond As Integer) As Double
         Dim hydrogenMass = (carbon * 2 - 1 - dbBond * 2) * MassDiffDictionary.HydrogenMass
         Return CarbonMass * carbon + hydrogenMass + OxygenMass * 2.0 + Electron
     End Function
-    Public Shared Function SphingoChainMass(ByVal carbon As Integer, ByVal dbBond As Integer) As Double
+    Public Shared Function SphingoChainMass(carbon As Integer, dbBond As Integer) As Double
         Dim hydrogenMass = (carbon * 2 - dbBond * 2) * MassDiffDictionary.HydrogenMass
         Return CarbonMass * carbon + hydrogenMass + OxygenMass * 2 + NitrogenMass
     End Function
@@ -1684,7 +1684,7 @@ Public NotInheritable Class LipidMsmsCharacterization
     ' spectrum should be centroided, purified by absolute- and relative abundance cut off values
     ' spectrum must be ordered by intensity
     ' spectrum should be ObservableColllection<double[]> 0: m/z, 1: intensity
-    Public Shared Function JudgeIfPhosphatidylcholine(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSnCarbon As Integer, ByVal maxSnCarbon As Integer, ByVal minSnDoubleBond As Integer, ByVal maxSnDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfPhosphatidylcholine(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSnCarbon As Integer, maxSnCarbon As Integer, minSnDoubleBond As Integer, maxSnDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
 
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
@@ -1884,7 +1884,7 @@ Public NotInheritable Class LipidMsmsCharacterization
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfPhosphatidylethanolamine(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSnCarbon As Integer, ByVal maxSnCarbon As Integer, ByVal minSnDoubleBond As Integer, ByVal maxSnDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PE 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfPhosphatidylethanolamine(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSnCarbon As Integer, maxSnCarbon As Integer, minSnDoubleBond As Integer, maxSnDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PE 46:6, totalCarbon = 46 and totalDoubleBond = 6
 
         Dim spectrum = msScanProp.Spectrum
 
@@ -2046,7 +2046,7 @@ Public NotInheritable Class LipidMsmsCharacterization
     End Function
 
 
-    Public Shared Function JudgeIfPhosphatidylserine(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSnCarbon As Integer, ByVal maxSnCarbon As Integer, ByVal minSnDoubleBond As Integer, ByVal maxSnDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PS 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfPhosphatidylserine(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSnCarbon As Integer, maxSnCarbon As Integer, minSnDoubleBond As Integer, maxSnDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PS 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
@@ -2183,7 +2183,7 @@ Public NotInheritable Class LipidMsmsCharacterization
         End If
         Return Nothing
     End Function
-    Public Shared Function JudgeIfPhosphatidylThreonine(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSnCarbon As Integer, ByVal maxSnCarbon As Integer, ByVal minSnDoubleBond As Integer, ByVal maxSnDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PS 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfPhosphatidylThreonine(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSnCarbon As Integer, maxSnCarbon As Integer, minSnDoubleBond As Integer, maxSnDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PS 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
@@ -2297,7 +2297,7 @@ Public NotInheritable Class LipidMsmsCharacterization
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfPhosphatidylglycerol(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSnCarbon As Integer, ByVal maxSnCarbon As Integer, ByVal minSnDoubleBond As Integer, ByVal maxSnDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PS 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfPhosphatidylglycerol(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSnCarbon As Integer, maxSnCarbon As Integer, minSnDoubleBond As Integer, maxSnDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PS 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
@@ -2415,7 +2415,7 @@ Public NotInheritable Class LipidMsmsCharacterization
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfBismonoacylglycerophosphate(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSnCarbon As Integer, ByVal maxSnCarbon As Integer, ByVal minSnDoubleBond As Integer, ByVal maxSnDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PS 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfBismonoacylglycerophosphate(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSnCarbon As Integer, maxSnCarbon As Integer, minSnDoubleBond As Integer, maxSnDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PS 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
@@ -2475,7 +2475,7 @@ Public NotInheritable Class LipidMsmsCharacterization
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfPhosphatidylinositol(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSnCarbon As Integer, ByVal maxSnCarbon As Integer, ByVal minSnDoubleBond As Integer, ByVal maxSnDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PS 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfPhosphatidylinositol(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSnCarbon As Integer, maxSnCarbon As Integer, minSnDoubleBond As Integer, maxSnDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PS 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
@@ -2595,7 +2595,7 @@ Public NotInheritable Class LipidMsmsCharacterization
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfNacylphosphatidylserine(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSnCarbon As Integer, ByVal maxSnCarbon As Integer, ByVal minSnDoubleBond As Integer, ByVal maxSnDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PE 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfNacylphosphatidylserine(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSnCarbon As Integer, maxSnCarbon As Integer, minSnDoubleBond As Integer, maxSnDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PE 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
@@ -2705,7 +2705,7 @@ Public NotInheritable Class LipidMsmsCharacterization
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfNacylphosphatidylethanolamine(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSnCarbon As Integer, ByVal maxSnCarbon As Integer, ByVal minSnDoubleBond As Integer, ByVal maxSnDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PE 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfNacylphosphatidylethanolamine(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSnCarbon As Integer, maxSnCarbon As Integer, minSnDoubleBond As Integer, maxSnDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PE 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
@@ -2820,7 +2820,7 @@ Public NotInheritable Class LipidMsmsCharacterization
     End Function
 
 
-    Public Shared Function JudgeIfSphingomyelin(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSphCarbon As Integer, ByVal maxSphCarbon As Integer, ByVal minSphDoubleBond As Integer, ByVal maxSphDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfSphingomyelin(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSphCarbon As Integer, maxSphCarbon As Integer, minSphDoubleBond As Integer, maxSphDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSphCarbon > totalCarbon Then maxSphCarbon = totalCarbon
@@ -2985,7 +2985,7 @@ Public NotInheritable Class LipidMsmsCharacterization
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfSphingomyelinPhyto(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSphCarbon As Integer, ByVal maxSphCarbon As Integer, ByVal minSphDoubleBond As Integer, ByVal maxSphDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfSphingomyelinPhyto(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSphCarbon As Integer, maxSphCarbon As Integer, minSphDoubleBond As Integer, maxSphDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSphCarbon > totalCarbon Then maxSphCarbon = totalCarbon
@@ -3022,7 +3022,7 @@ Public NotInheritable Class LipidMsmsCharacterization
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfTriacylglycerol(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSn1Carbon As Integer, ByVal maxSn1Carbon As Integer, ByVal minSn1DoubleBond As Integer, ByVal maxSn1DoubleBond As Integer, ByVal minSn2Carbon As Integer, ByVal maxSn2Carbon As Integer, ByVal minSn2DoubleBond As Integer, ByVal maxSn2DoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PS 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfTriacylglycerol(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSn1Carbon As Integer, maxSn1Carbon As Integer, minSn1DoubleBond As Integer, maxSn1DoubleBond As Integer, minSn2Carbon As Integer, maxSn2Carbon As Integer, minSn2DoubleBond As Integer, maxSn2DoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PS 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSn1Carbon > totalCarbon Then maxSn1Carbon = totalCarbon
@@ -3183,7 +3183,7 @@ Public NotInheritable Class LipidMsmsCharacterization
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfAcylcarnitine(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Single, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule
+    Public Shared Function JudgeIfAcylcarnitine(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Single, totalCarbon As Integer, totalDoubleBond As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
@@ -3236,7 +3236,7 @@ Public NotInheritable Class LipidMsmsCharacterization
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfCholesterylEster(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Single, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule
+    Public Shared Function JudgeIfCholesterylEster(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Single, totalCarbon As Integer, totalDoubleBond As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
@@ -3276,7 +3276,7 @@ Public NotInheritable Class LipidMsmsCharacterization
     End Function
 
     'add MT
-    Public Shared Function JudgeIfDag(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSn1Carbon As Integer, ByVal maxSn1Carbon As Integer, ByVal minSn1DoubleBond As Integer, ByVal maxSn1DoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PS 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfDag(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSn1Carbon As Integer, maxSn1Carbon As Integer, minSn1DoubleBond As Integer, maxSn1DoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PS 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSn1Carbon > totalCarbon Then maxSn1Carbon = totalCarbon
@@ -3402,7 +3402,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfMag(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSn1Carbon As Integer, ByVal maxSn1Carbon As Integer, ByVal minSn1DoubleBond As Integer, ByVal maxSn1DoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PS 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfMag(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSn1Carbon As Integer, maxSn1Carbon As Integer, minSn1DoubleBond As Integer, maxSn1DoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PS 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSn1Carbon > totalCarbon Then maxSn1Carbon = totalCarbon
@@ -3431,7 +3431,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfLysopc(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSnCarbon As Integer, ByVal maxSnCarbon As Integer, ByVal minSnDoubleBond As Integer, ByVal maxSnDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' 
+    Public Shared Function JudgeIfLysopc(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSnCarbon As Integer, maxSnCarbon As Integer, minSnDoubleBond As Integer, maxSnDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' 
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
@@ -3534,7 +3534,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfLysope(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSnCarbon As Integer, ByVal maxSnCarbon As Integer, ByVal minSnDoubleBond As Integer, ByVal maxSnDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' 
+    Public Shared Function JudgeIfLysope(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSnCarbon As Integer, maxSnCarbon As Integer, minSnDoubleBond As Integer, maxSnDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' 
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
@@ -3633,7 +3633,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfEtherpc(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSnCarbon As Integer, ByVal maxSnCarbon As Integer, ByVal minSnDoubleBond As Integer, ByVal maxSnDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfEtherpc(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSnCarbon As Integer, maxSnCarbon As Integer, minSnDoubleBond As Integer, maxSnDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
@@ -3755,7 +3755,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfEtherpe(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSnCarbon As Integer, ByVal maxSnCarbon As Integer, ByVal minSnDoubleBond As Integer, ByVal maxSnDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PE 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfEtherpe(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSnCarbon As Integer, maxSnCarbon As Integer, minSnDoubleBond As Integer, maxSnDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PE 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
@@ -3893,7 +3893,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfEtheroxpc(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSnCarbon As Integer, ByVal maxSnCarbon As Integer, ByVal minSnDoubleBond As Integer, ByVal maxSnDoubleBond As Integer, ByVal adduct As AdductIon, ByVal TotalOxidized As Integer, ByVal sn1MaxOxidized As Integer, ByVal sn2MaxOxidized As Integer) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfEtheroxpc(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSnCarbon As Integer, maxSnCarbon As Integer, minSnDoubleBond As Integer, maxSnDoubleBond As Integer, adduct As AdductIon, TotalOxidized As Integer, sn1MaxOxidized As Integer, sn2MaxOxidized As Integer) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
@@ -3994,7 +3994,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfEtheroxpe(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSnCarbon As Integer, ByVal maxSnCarbon As Integer, ByVal minSnDoubleBond As Integer, ByVal maxSnDoubleBond As Integer, ByVal adduct As AdductIon, ByVal TotalOxidized As Integer, ByVal sn1MaxOxidized As Integer, ByVal sn2MaxOxidized As Integer) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfEtheroxpe(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSnCarbon As Integer, maxSnCarbon As Integer, minSnDoubleBond As Integer, maxSnDoubleBond As Integer, adduct As AdductIon, TotalOxidized As Integer, sn1MaxOxidized As Integer, sn2MaxOxidized As Integer) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
@@ -4096,7 +4096,7 @@ New SpectrumPeak() With {
 
 
 
-    Public Shared Function JudgeIfEtherlysopc(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSnCarbon As Integer, ByVal maxSnCarbon As Integer, ByVal minSnDoubleBond As Integer, ByVal maxSnDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' 
+    Public Shared Function JudgeIfEtherlysopc(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSnCarbon As Integer, maxSnCarbon As Integer, minSnDoubleBond As Integer, maxSnDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' 
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
@@ -4145,7 +4145,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfEtherlysope(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSnCarbon As Integer, ByVal maxSnCarbon As Integer, ByVal minSnDoubleBond As Integer, ByVal maxSnDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' 
+    Public Shared Function JudgeIfEtherlysope(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSnCarbon As Integer, maxSnCarbon As Integer, minSnDoubleBond As Integer, maxSnDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' 
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
@@ -4213,7 +4213,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfOxpc(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSnCarbon As Integer, ByVal maxSnCarbon As Integer, ByVal minSnDoubleBond As Integer, ByVal maxSnDoubleBond As Integer, ByVal adduct As AdductIon, ByVal TotalOxidized As Integer, ByVal sn1MaxOxidized As Integer, ByVal sn2MaxOxidized As Integer) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfOxpc(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSnCarbon As Integer, maxSnCarbon As Integer, minSnDoubleBond As Integer, maxSnDoubleBond As Integer, adduct As AdductIon, TotalOxidized As Integer, sn1MaxOxidized As Integer, sn2MaxOxidized As Integer) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
@@ -4312,7 +4312,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfOxpe(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSnCarbon As Integer, ByVal maxSnCarbon As Integer, ByVal minSnDoubleBond As Integer, ByVal maxSnDoubleBond As Integer, ByVal adduct As AdductIon, ByVal TotalOxidized As Integer, ByVal sn1MaxOxidized As Integer, ByVal sn2MaxOxidized As Integer) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfOxpe(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSnCarbon As Integer, maxSnCarbon As Integer, minSnDoubleBond As Integer, maxSnDoubleBond As Integer, adduct As AdductIon, TotalOxidized As Integer, sn1MaxOxidized As Integer, sn2MaxOxidized As Integer) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
@@ -4429,7 +4429,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfOxpg(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSnCarbon As Integer, ByVal maxSnCarbon As Integer, ByVal minSnDoubleBond As Integer, ByVal maxSnDoubleBond As Integer, ByVal adduct As AdductIon, ByVal TotalOxidized As Integer, ByVal sn1MaxOxidized As Integer, ByVal sn2MaxOxidized As Integer) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfOxpg(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSnCarbon As Integer, maxSnCarbon As Integer, minSnDoubleBond As Integer, maxSnDoubleBond As Integer, adduct As AdductIon, TotalOxidized As Integer, sn1MaxOxidized As Integer, sn2MaxOxidized As Integer) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
@@ -4550,7 +4550,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfOxpi(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSnCarbon As Integer, ByVal maxSnCarbon As Integer, ByVal minSnDoubleBond As Integer, ByVal maxSnDoubleBond As Integer, ByVal adduct As AdductIon, ByVal TotalOxidized As Integer, ByVal sn1MaxOxidized As Integer, ByVal sn2MaxOxidized As Integer) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfOxpi(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSnCarbon As Integer, maxSnCarbon As Integer, minSnDoubleBond As Integer, maxSnDoubleBond As Integer, adduct As AdductIon, TotalOxidized As Integer, sn1MaxOxidized As Integer, sn2MaxOxidized As Integer) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
@@ -4663,7 +4663,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfOxps(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSnCarbon As Integer, ByVal maxSnCarbon As Integer, ByVal minSnDoubleBond As Integer, ByVal maxSnDoubleBond As Integer, ByVal adduct As AdductIon, ByVal TotalOxidized As Integer, ByVal sn1MaxOxidized As Integer, ByVal sn2MaxOxidized As Integer) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfOxps(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSnCarbon As Integer, maxSnCarbon As Integer, minSnDoubleBond As Integer, maxSnDoubleBond As Integer, adduct As AdductIon, TotalOxidized As Integer, sn1MaxOxidized As Integer, sn2MaxOxidized As Integer) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
@@ -4775,7 +4775,7 @@ New SpectrumPeak() With {
 
 
 
-    Public Shared Function JudgeIfMgdg(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSnCarbon As Integer, ByVal maxSnCarbon As Integer, ByVal minSnDoubleBond As Integer, ByVal maxSnDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfMgdg(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSnCarbon As Integer, maxSnCarbon As Integer, minSnDoubleBond As Integer, maxSnDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
@@ -4918,7 +4918,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfDgdg(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSnCarbon As Integer, ByVal maxSnCarbon As Integer, ByVal minSnDoubleBond As Integer, ByVal maxSnDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfDgdg(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSnCarbon As Integer, maxSnCarbon As Integer, minSnDoubleBond As Integer, maxSnDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
@@ -5065,7 +5065,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfEthermgdg(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSnCarbon As Integer, ByVal maxSnCarbon As Integer, ByVal minSnDoubleBond As Integer, ByVal maxSnDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfEthermgdg(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSnCarbon As Integer, maxSnCarbon As Integer, minSnDoubleBond As Integer, maxSnDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
@@ -5204,7 +5204,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfMgmg(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfMgmg(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
@@ -5249,7 +5249,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfDgmg(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfDgmg(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
@@ -5294,7 +5294,7 @@ New SpectrumPeak() With {
     End Function
 
 
-    Public Shared Function JudgeIfEtherDAG(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSnCarbon As Integer, ByVal maxSnCarbon As Integer, ByVal minSnDoubleBond As Integer, ByVal maxSnDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfEtherDAG(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSnCarbon As Integer, maxSnCarbon As Integer, minSnDoubleBond As Integer, maxSnDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
@@ -5344,7 +5344,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfEtherdgdg(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSnCarbon As Integer, ByVal maxSnCarbon As Integer, ByVal minSnDoubleBond As Integer, ByVal maxSnDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfEtherdgdg(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSnCarbon As Integer, maxSnCarbon As Integer, minSnDoubleBond As Integer, maxSnDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
@@ -5481,7 +5481,7 @@ New SpectrumPeak() With {
     End Function
 
 
-    Public Shared Function JudgeIfPhosphatidicacid(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSnCarbon As Integer, ByVal maxSnCarbon As Integer, ByVal minSnDoubleBond As Integer, ByVal maxSnDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PE 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfPhosphatidicacid(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSnCarbon As Integer, maxSnCarbon As Integer, minSnDoubleBond As Integer, maxSnDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PE 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
@@ -5551,7 +5551,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfLysopa(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSnCarbon As Integer, ByVal maxSnCarbon As Integer, ByVal minSnDoubleBond As Integer, ByVal maxSnDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PE 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfLysopa(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSnCarbon As Integer, maxSnCarbon As Integer, minSnDoubleBond As Integer, maxSnDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PE 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
@@ -5623,7 +5623,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfLysopg(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSnCarbon As Integer, ByVal maxSnCarbon As Integer, ByVal minSnDoubleBond As Integer, ByVal maxSnDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PE 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfLysopg(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSnCarbon As Integer, maxSnCarbon As Integer, minSnDoubleBond As Integer, maxSnDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PE 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
@@ -5665,7 +5665,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfLysopi(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSnCarbon As Integer, ByVal maxSnCarbon As Integer, ByVal minSnDoubleBond As Integer, ByVal maxSnDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PE 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfLysopi(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSnCarbon As Integer, maxSnCarbon As Integer, minSnDoubleBond As Integer, maxSnDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PE 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
@@ -5708,7 +5708,7 @@ New SpectrumPeak() With {
         End If
         Return Nothing
     End Function
-    Public Shared Function JudgeIfLysops(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSnCarbon As Integer, ByVal maxSnCarbon As Integer, ByVal minSnDoubleBond As Integer, ByVal maxSnDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PE 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfLysops(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSnCarbon As Integer, maxSnCarbon As Integer, minSnDoubleBond As Integer, maxSnDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PE 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
@@ -5748,7 +5748,7 @@ New SpectrumPeak() With {
         End If
         Return Nothing
     End Function
-    Public Shared Function JudgeIfEthertag(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSn1Carbon As Integer, ByVal maxSn1Carbon As Integer, ByVal minSn1DoubleBond As Integer, ByVal maxSn1DoubleBond As Integer, ByVal minSn2Carbon As Integer, ByVal maxSn2Carbon As Integer, ByVal minSn2DoubleBond As Integer, ByVal maxSn2DoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PS 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfEthertag(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSn1Carbon As Integer, maxSn1Carbon As Integer, minSn1DoubleBond As Integer, maxSn1DoubleBond As Integer, minSn2Carbon As Integer, maxSn2Carbon As Integer, minSn2DoubleBond As Integer, maxSn2DoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PS 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSn1Carbon > totalCarbon Then maxSn1Carbon = totalCarbon
@@ -5913,7 +5913,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfDgts(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSnCarbon As Integer, ByVal maxSnCarbon As Integer, ByVal minSnDoubleBond As Integer, ByVal maxSnDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfDgts(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSnCarbon As Integer, maxSnCarbon As Integer, minSnDoubleBond As Integer, maxSnDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
@@ -6074,7 +6074,7 @@ New SpectrumPeak() With {
 
 
 
-    Public Shared Function JudgeIfLdgts(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSnCarbon As Integer, ByVal maxSnCarbon As Integer, ByVal minSnDoubleBond As Integer, ByVal maxSnDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfLdgts(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSnCarbon As Integer, maxSnCarbon As Integer, minSnDoubleBond As Integer, maxSnDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
@@ -6164,7 +6164,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfDgcc(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSnCarbon As Integer, ByVal maxSnCarbon As Integer, ByVal minSnDoubleBond As Integer, ByVal maxSnDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfDgcc(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSnCarbon As Integer, maxSnCarbon As Integer, minSnDoubleBond As Integer, maxSnDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
@@ -6241,7 +6241,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfLdgcc(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSnCarbon As Integer, ByVal maxSnCarbon As Integer, ByVal minSnDoubleBond As Integer, ByVal maxSnDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfLdgcc(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSnCarbon As Integer, maxSnCarbon As Integer, minSnDoubleBond As Integer, maxSnDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
@@ -6277,7 +6277,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfGlcadg(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSnCarbon As Integer, ByVal maxSnCarbon As Integer, ByVal minSnDoubleBond As Integer, ByVal maxSnDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PS 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfGlcadg(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSnCarbon As Integer, maxSnCarbon As Integer, minSnDoubleBond As Integer, maxSnDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PS 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
@@ -6374,7 +6374,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfAcylglcadg(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSn1Carbon As Integer, ByVal maxSn1Carbon As Integer, ByVal minSn1DoubleBond As Integer, ByVal maxSn1DoubleBond As Integer, ByVal minSn2Carbon As Integer, ByVal maxSn2Carbon As Integer, ByVal minSn2DoubleBond As Integer, ByVal maxSn2DoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule
+    Public Shared Function JudgeIfAcylglcadg(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSn1Carbon As Integer, maxSn1Carbon As Integer, minSn1DoubleBond As Integer, maxSn1DoubleBond As Integer, minSn2Carbon As Integer, maxSn2Carbon As Integer, minSn2DoubleBond As Integer, maxSn2DoubleBond As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSn1Carbon > totalCarbon Then maxSn1Carbon = totalCarbon
@@ -6502,7 +6502,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfSqdg(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSnCarbon As Integer, ByVal maxSnCarbon As Integer, ByVal minSnDoubleBond As Integer, ByVal maxSnDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PS 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfSqdg(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSnCarbon As Integer, maxSnCarbon As Integer, minSnDoubleBond As Integer, maxSnDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PS 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
@@ -6615,7 +6615,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfPetoh(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSnCarbon As Integer, ByVal maxSnCarbon As Integer, ByVal minSnDoubleBond As Integer, ByVal maxSnDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PE 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfPetoh(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSnCarbon As Integer, maxSnCarbon As Integer, minSnDoubleBond As Integer, maxSnDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PE 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
@@ -6712,7 +6712,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfPmeoh(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSnCarbon As Integer, ByVal maxSnCarbon As Integer, ByVal minSnDoubleBond As Integer, ByVal maxSnDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PE 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfPmeoh(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSnCarbon As Integer, maxSnCarbon As Integer, minSnDoubleBond As Integer, maxSnDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PE 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
@@ -6812,7 +6812,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfPbtoh(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSnCarbon As Integer, ByVal maxSnCarbon As Integer, ByVal minSnDoubleBond As Integer, ByVal maxSnDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PE 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfPbtoh(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSnCarbon As Integer, maxSnCarbon As Integer, minSnDoubleBond As Integer, maxSnDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PE 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
@@ -6909,7 +6909,7 @@ New SpectrumPeak() With {
     End Function
 
 
-    Public Shared Function JudgeIfHemiismonoacylglycerophosphate(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSn1Carbon As Integer, ByVal maxSn1Carbon As Integer, ByVal minSn1DoubleBond As Integer, ByVal maxSn1DoubleBond As Integer, ByVal minSn2Carbon As Integer, ByVal maxSn2Carbon As Integer, ByVal minSn2DoubleBond As Integer, ByVal maxSn2DoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PS 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfHemiismonoacylglycerophosphate(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSn1Carbon As Integer, maxSn1Carbon As Integer, minSn1DoubleBond As Integer, maxSn1DoubleBond As Integer, minSn2Carbon As Integer, maxSn2Carbon As Integer, minSn2DoubleBond As Integer, maxSn2DoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PS 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSn1Carbon > totalCarbon Then maxSn1Carbon = totalCarbon
@@ -7053,7 +7053,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfCardiolipin(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSn1Carbon As Integer, ByVal maxSn1Carbon As Integer, ByVal minSn1DoubleBond As Integer, ByVal maxSn1DoubleBond As Integer, ByVal minSn2Carbon As Integer, ByVal maxSn2Carbon As Integer, ByVal minSn2DoubleBond As Integer, ByVal maxSn2DoubleBond As Integer, ByVal minSn3Carbon As Integer, ByVal maxSn3Carbon As Integer, ByVal minSn3DoubleBond As Integer, ByVal maxSn3DoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule
+    Public Shared Function JudgeIfCardiolipin(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSn1Carbon As Integer, maxSn1Carbon As Integer, minSn1DoubleBond As Integer, maxSn1DoubleBond As Integer, minSn2Carbon As Integer, maxSn2Carbon As Integer, minSn2DoubleBond As Integer, maxSn2DoubleBond As Integer, minSn3Carbon As Integer, maxSn3Carbon As Integer, minSn3DoubleBond As Integer, maxSn3DoubleBond As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
 
@@ -7334,7 +7334,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfCardiolipin(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSnCarbon As Integer, ByVal maxSnCarbon As Integer, ByVal minSnDoubleBond As Integer, ByVal maxSnDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule
+    Public Shared Function JudgeIfCardiolipin(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSnCarbon As Integer, maxSnCarbon As Integer, minSnDoubleBond As Integer, maxSnDoubleBond As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
 
@@ -7410,7 +7410,7 @@ New SpectrumPeak() With {
 
 
 
-    Public Shared Function JudgeIfLysocardiolipin(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSn1Carbon As Integer, ByVal maxSn1Carbon As Integer, ByVal minSn1DoubleBond As Integer, ByVal maxSn1DoubleBond As Integer, ByVal minSn2Carbon As Integer, ByVal maxSn2Carbon As Integer, ByVal minSn2DoubleBond As Integer, ByVal maxSn2DoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule
+    Public Shared Function JudgeIfLysocardiolipin(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSn1Carbon As Integer, maxSn1Carbon As Integer, minSn1DoubleBond As Integer, maxSn1DoubleBond As Integer, minSn2Carbon As Integer, maxSn2Carbon As Integer, minSn2DoubleBond As Integer, maxSn2DoubleBond As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSn1Carbon > totalCarbon Then maxSn1Carbon = totalCarbon
@@ -7509,7 +7509,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfDilysocardiolipin(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSnCarbon As Integer, ByVal maxSnCarbon As Integer, ByVal minSnDoubleBond As Integer, ByVal maxSnDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule
+    Public Shared Function JudgeIfDilysocardiolipin(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSnCarbon As Integer, maxSnCarbon As Integer, minSnDoubleBond As Integer, maxSnDoubleBond As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
@@ -7569,7 +7569,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfFattyacid(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSnCarbon As Integer, ByVal maxSnCarbon As Integer, ByVal minSnDoubleBond As Integer, ByVal maxSnDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule
+    Public Shared Function JudgeIfFattyacid(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSnCarbon As Integer, maxSnCarbon As Integer, minSnDoubleBond As Integer, maxSnDoubleBond As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
@@ -7590,7 +7590,7 @@ New SpectrumPeak() With {
         End If
         Return Nothing
     End Function
-    Public Shared Function JudgeIfDmedFattyacid(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSnCarbon As Integer, ByVal maxSnCarbon As Integer, ByVal minSnDoubleBond As Integer, ByVal maxSnDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule
+    Public Shared Function JudgeIfDmedFattyacid(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSnCarbon As Integer, maxSnCarbon As Integer, minSnDoubleBond As Integer, maxSnDoubleBond As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
@@ -7612,7 +7612,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfOxfattyacid(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSnCarbon As Integer, ByVal maxSnCarbon As Integer, ByVal minSnDoubleBond As Integer, ByVal maxSnDoubleBond As Integer, ByVal adduct As AdductIon, ByVal totalOxidized As Integer) As LipidMolecule
+    Public Shared Function JudgeIfOxfattyacid(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSnCarbon As Integer, maxSnCarbon As Integer, minSnDoubleBond As Integer, maxSnDoubleBond As Integer, adduct As AdductIon, totalOxidized As Integer) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
@@ -7666,7 +7666,7 @@ New SpectrumPeak() With {
         End If
         Return Nothing
     End Function
-    Public Shared Function JudgeIfDmedOxfattyacid(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSnCarbon As Integer, ByVal maxSnCarbon As Integer, ByVal minSnDoubleBond As Integer, ByVal maxSnDoubleBond As Integer, ByVal adduct As AdductIon, ByVal totalOxidized As Integer) As LipidMolecule
+    Public Shared Function JudgeIfDmedOxfattyacid(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSnCarbon As Integer, maxSnCarbon As Integer, minSnDoubleBond As Integer, maxSnDoubleBond As Integer, adduct As AdductIon, totalOxidized As Integer) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
@@ -7720,7 +7720,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfFahfa(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSnCarbon As Integer, ByVal maxSnCarbon As Integer, ByVal minSnDoubleBond As Integer, ByVal maxSnDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule
+    Public Shared Function JudgeIfFahfa(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSnCarbon As Integer, maxSnCarbon As Integer, minSnDoubleBond As Integer, maxSnDoubleBond As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
@@ -7793,7 +7793,7 @@ New SpectrumPeak() With {
         End If
         Return Nothing
     End Function
-    Public Shared Function JudgeIfFahfaDMED(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSnCarbon As Integer, ByVal maxSnCarbon As Integer, ByVal minSnDoubleBond As Integer, ByVal maxSnDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule
+    Public Shared Function JudgeIfFahfaDMED(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSnCarbon As Integer, maxSnCarbon As Integer, minSnDoubleBond As Integer, maxSnDoubleBond As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
@@ -7849,7 +7849,7 @@ New SpectrumPeak() With {
     End Function
 
     '''''''''''' ceramide section
-    Public Shared Function JudgeIfCeramidens(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSphCarbon As Integer, ByVal maxSphCarbon As Integer, ByVal minSphDoubleBond As Integer, ByVal maxSphDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfCeramidens(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSphCarbon As Integer, maxSphCarbon As Integer, minSphDoubleBond As Integer, maxSphDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSphCarbon > totalCarbon Then maxSphCarbon = totalCarbon
@@ -8036,7 +8036,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfCeramidePhosphate(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSphCarbon As Integer, ByVal maxSphCarbon As Integer, ByVal minSphDoubleBond As Integer, ByVal maxSphDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfCeramidePhosphate(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSphCarbon As Integer, maxSphCarbon As Integer, minSphDoubleBond As Integer, maxSphDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSphCarbon > totalCarbon Then maxSphCarbon = totalCarbon
@@ -8099,7 +8099,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfCeramidends(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSphCarbon As Integer, ByVal maxSphCarbon As Integer, ByVal minSphDoubleBond As Integer, ByVal maxSphDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfCeramidends(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSphCarbon As Integer, maxSphCarbon As Integer, minSphDoubleBond As Integer, maxSphDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSphCarbon > totalCarbon Then maxSphCarbon = totalCarbon
@@ -8280,7 +8280,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfHexceramidens(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSphCarbon As Integer, ByVal maxSphCarbon As Integer, ByVal minSphDoubleBond As Integer, ByVal maxSphDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfHexceramidens(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSphCarbon As Integer, maxSphCarbon As Integer, minSphDoubleBond As Integer, maxSphDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSphCarbon > totalCarbon Then maxSphCarbon = totalCarbon
@@ -8453,7 +8453,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfHexceramideo(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSphCarbon As Integer, ByVal maxSphCarbon As Integer, ByVal minSphDoubleBond As Integer, ByVal maxSphDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfHexceramideo(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSphCarbon As Integer, maxSphCarbon As Integer, minSphDoubleBond As Integer, maxSphDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSphCarbon > totalCarbon Then maxSphCarbon = totalCarbon
@@ -8626,7 +8626,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfHexceramidends(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSphCarbon As Integer, ByVal maxSphCarbon As Integer, ByVal minSphDoubleBond As Integer, ByVal maxSphDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfHexceramidends(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSphCarbon As Integer, maxSphCarbon As Integer, minSphDoubleBond As Integer, maxSphDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSphCarbon > totalCarbon Then maxSphCarbon = totalCarbon
@@ -8791,7 +8791,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfCeramideo(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSphCarbon As Integer, ByVal maxSphCarbon As Integer, ByVal minSphDoubleBond As Integer, ByVal maxSphDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfCeramideo(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSphCarbon As Integer, maxSphCarbon As Integer, minSphDoubleBond As Integer, maxSphDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSphCarbon > totalCarbon Then maxSphCarbon = totalCarbon
@@ -8970,7 +8970,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfCeramidedos(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSphCarbon As Integer, ByVal maxSphCarbon As Integer, ByVal minSphDoubleBond As Integer, ByVal maxSphDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfCeramidedos(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSphCarbon As Integer, maxSphCarbon As Integer, minSphDoubleBond As Integer, maxSphDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSphCarbon > totalCarbon Then maxSphCarbon = totalCarbon
@@ -9032,7 +9032,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfHexhexceramidens(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSphCarbon As Integer, ByVal maxSphCarbon As Integer, ByVal minSphDoubleBond As Integer, ByVal maxSphDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfHexhexceramidens(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSphCarbon As Integer, maxSphCarbon As Integer, minSphDoubleBond As Integer, maxSphDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         'if (maxSphCarbon > totalCarbon) maxSphCarbon = totalCarbon;
@@ -9150,7 +9150,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfHexhexhexceramidens(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSphCarbon As Integer, ByVal maxSphCarbon As Integer, ByVal minSphDoubleBond As Integer, ByVal maxSphDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfHexhexhexceramidens(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSphCarbon As Integer, maxSphCarbon As Integer, minSphDoubleBond As Integer, maxSphDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSphCarbon > totalCarbon Then maxSphCarbon = totalCarbon
@@ -9266,7 +9266,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfCeramideap(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSphCarbon As Integer, ByVal maxSphCarbon As Integer, ByVal minSphDoubleBond As Integer, ByVal maxSphDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfCeramideap(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSphCarbon As Integer, maxSphCarbon As Integer, minSphDoubleBond As Integer, maxSphDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSphCarbon > totalCarbon Then maxSphCarbon = totalCarbon
@@ -9430,7 +9430,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfHexceramideap(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSphCarbon As Integer, ByVal maxSphCarbon As Integer, ByVal minSphDoubleBond As Integer, ByVal maxSphDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfHexceramideap(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSphCarbon As Integer, maxSphCarbon As Integer, minSphDoubleBond As Integer, maxSphDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSphCarbon > totalCarbon Then maxSphCarbon = totalCarbon
@@ -9605,7 +9605,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfCeramideas(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSphCarbon As Integer, ByVal maxSphCarbon As Integer, ByVal minSphDoubleBond As Integer, ByVal maxSphDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfCeramideas(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSphCarbon As Integer, maxSphCarbon As Integer, minSphDoubleBond As Integer, maxSphDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSphCarbon > totalCarbon Then maxSphCarbon = totalCarbon
@@ -9700,7 +9700,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfCeramideads(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSphCarbon As Integer, ByVal maxSphCarbon As Integer, ByVal minSphDoubleBond As Integer, ByVal maxSphDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfCeramideads(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSphCarbon As Integer, maxSphCarbon As Integer, minSphDoubleBond As Integer, maxSphDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSphCarbon > totalCarbon Then maxSphCarbon = totalCarbon
@@ -9801,7 +9801,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfCeramidebs(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSphCarbon As Integer, ByVal maxSphCarbon As Integer, ByVal minSphDoubleBond As Integer, ByVal maxSphDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfCeramidebs(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSphCarbon As Integer, maxSphCarbon As Integer, minSphDoubleBond As Integer, maxSphDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSphCarbon > totalCarbon Then maxSphCarbon = totalCarbon
@@ -9883,7 +9883,7 @@ New SpectrumPeak() With {
         End If
         Return Nothing
     End Function
-    Public Shared Function JudgeIfCeramidebds(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSphCarbon As Integer, ByVal maxSphCarbon As Integer, ByVal minSphDoubleBond As Integer, ByVal maxSphDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfCeramidebds(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSphCarbon As Integer, maxSphCarbon As Integer, minSphDoubleBond As Integer, maxSphDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSphCarbon > totalCarbon Then maxSphCarbon = totalCarbon
@@ -9986,7 +9986,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfCeramidenp(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSphCarbon As Integer, ByVal maxSphCarbon As Integer, ByVal minSphDoubleBond As Integer, ByVal maxSphDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfCeramidenp(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSphCarbon As Integer, maxSphCarbon As Integer, minSphDoubleBond As Integer, maxSphDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSphCarbon > totalCarbon Then maxSphCarbon = totalCarbon
@@ -10157,7 +10157,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfCeramideeos(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSphCarbon As Integer, ByVal maxSphCarbon As Integer, ByVal minSphDoubleBond As Integer, ByVal maxSphDoubleBond As Integer, ByVal minOmegaacylCarbon As Integer, ByVal maxOmegaacylCarbon As Integer, ByVal minOmegaacylDoubleBond As Integer, ByVal maxOmegaacylDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfCeramideeos(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSphCarbon As Integer, maxSphCarbon As Integer, minSphDoubleBond As Integer, maxSphDoubleBond As Integer, minOmegaacylCarbon As Integer, maxOmegaacylCarbon As Integer, minOmegaacylDoubleBond As Integer, maxOmegaacylDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSphCarbon > totalCarbon Then maxSphCarbon = totalCarbon
@@ -10373,7 +10373,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfCeramideeods(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSphCarbon As Integer, ByVal maxSphCarbon As Integer, ByVal minSphDoubleBond As Integer, ByVal maxSphDoubleBond As Integer, ByVal minOmegaacylCarbon As Integer, ByVal maxOmegaacylCarbon As Integer, ByVal minOmegaacylDoubleBond As Integer, ByVal maxOmegaacylDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfCeramideeods(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSphCarbon As Integer, maxSphCarbon As Integer, minSphDoubleBond As Integer, maxSphDoubleBond As Integer, minOmegaacylCarbon As Integer, maxOmegaacylCarbon As Integer, minOmegaacylDoubleBond As Integer, maxOmegaacylDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSphCarbon > totalCarbon Then maxSphCarbon = totalCarbon
@@ -10472,7 +10472,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfHexceramideeos(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSphCarbon As Integer, ByVal maxSphCarbon As Integer, ByVal minSphDoubleBond As Integer, ByVal maxSphDoubleBond As Integer, ByVal minOmegaacylCarbon As Integer, ByVal maxOmegaacylCarbon As Integer, ByVal minOmegaacylDoubleBond As Integer, ByVal maxOmegaacylDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' In positive, HexCer-EOS d18:1/34:0: In negative, HexCer-EOS d38:1-O-18:2
+    Public Shared Function JudgeIfHexceramideeos(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSphCarbon As Integer, maxSphCarbon As Integer, minSphDoubleBond As Integer, maxSphDoubleBond As Integer, minOmegaacylCarbon As Integer, maxOmegaacylCarbon As Integer, minOmegaacylDoubleBond As Integer, maxOmegaacylDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' In positive, HexCer-EOS d18:1/34:0: In negative, HexCer-EOS d38:1-O-18:2
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSphCarbon > totalCarbon Then maxSphCarbon = totalCarbon
@@ -10690,7 +10690,7 @@ New SpectrumPeak() With {
 
 
 
-    Public Shared Function JudgeIfCeramideos(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSphCarbon As Integer, ByVal maxSphCarbon As Integer, ByVal minSphDoubleBond As Integer, ByVal maxSphDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfCeramideos(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSphCarbon As Integer, maxSphCarbon As Integer, minSphDoubleBond As Integer, maxSphDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSphCarbon > totalCarbon Then maxSphCarbon = totalCarbon
@@ -10771,7 +10771,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfAcylsm(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSphCarbon As Integer, ByVal maxSphCarbon As Integer, ByVal minSphDoubleBond As Integer, ByVal maxSphDoubleBond As Integer, ByVal minExtAcylCarbon As Integer, ByVal maxExtAcylCarbon As Integer, ByVal minExtAcylDoubleBond As Integer, ByVal maxExtAcylDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfAcylsm(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSphCarbon As Integer, maxSphCarbon As Integer, minSphDoubleBond As Integer, maxSphDoubleBond As Integer, minExtAcylCarbon As Integer, maxExtAcylCarbon As Integer, minExtAcylDoubleBond As Integer, maxExtAcylDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSphCarbon > totalCarbon Then maxSphCarbon = totalCarbon
@@ -10901,7 +10901,7 @@ New SpectrumPeak() With {
     End Function
 
 
-    Public Shared Function JudgeIfAcylcerbds(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSphCarbon As Integer, ByVal maxSphCarbon As Integer, ByVal minSphDoubleBond As Integer, ByVal maxSphDoubleBond As Integer, ByVal minExtAcylCarbon As Integer, ByVal maxExtAcylCarbon As Integer, ByVal minExtAcylDoubleBond As Integer, ByVal maxExtAcylDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfAcylcerbds(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSphCarbon As Integer, maxSphCarbon As Integer, minSphDoubleBond As Integer, maxSphDoubleBond As Integer, minExtAcylCarbon As Integer, maxExtAcylCarbon As Integer, minExtAcylDoubleBond As Integer, maxExtAcylDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSphCarbon > totalCarbon Then maxSphCarbon = totalCarbon
@@ -10980,7 +10980,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfAcylhexcer(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal totalOxidized As Integer, ByVal minExtAcylCarbon As Integer, ByVal maxExtAcylCarbon As Integer, ByVal minExtAcylDoubleBond As Integer, ByVal maxExtAcylDoubleBond As Integer, ByVal minSphCarbon As Integer, ByVal maxSphCarbon As Integer, ByVal minSphDoubleBond As Integer, ByVal maxSphDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfAcylhexcer(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, totalOxidized As Integer, minExtAcylCarbon As Integer, maxExtAcylCarbon As Integer, minExtAcylDoubleBond As Integer, maxExtAcylDoubleBond As Integer, minSphCarbon As Integer, maxSphCarbon As Integer, minSphDoubleBond As Integer, maxSphDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSphCarbon > totalCarbon Then maxSphCarbon = totalCarbon
@@ -11186,7 +11186,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfAshexcer(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal totalOxidized As Integer, ByVal minExtAcylCarbon As Integer, ByVal maxExtAcylCarbon As Integer, ByVal minExtAcylDoubleBond As Integer, ByVal maxExtAcylDoubleBond As Integer, ByVal minSphCarbon As Integer, ByVal maxSphCarbon As Integer, ByVal minSphDoubleBond As Integer, ByVal maxSphDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfAshexcer(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, totalOxidized As Integer, minExtAcylCarbon As Integer, maxExtAcylCarbon As Integer, minExtAcylDoubleBond As Integer, maxExtAcylDoubleBond As Integer, minSphCarbon As Integer, maxSphCarbon As Integer, minSphDoubleBond As Integer, maxSphDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSphCarbon > totalCarbon Then maxSphCarbon = totalCarbon
@@ -11356,7 +11356,7 @@ New SpectrumPeak() With {
         End If
         Return Nothing
     End Function
-    Public Shared Function JudgeIfShexcer(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSphCarbon As Integer, ByVal maxSphCarbon As Integer, ByVal minSphDoubleBond As Integer, ByVal maxSphDoubleBond As Integer, ByVal adduct As AdductIon, ByVal totalOxidized As Integer) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfShexcer(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSphCarbon As Integer, maxSphCarbon As Integer, minSphDoubleBond As Integer, maxSphDoubleBond As Integer, adduct As AdductIon, totalOxidized As Integer) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSphCarbon > totalCarbon Then maxSphCarbon = totalCarbon
@@ -11495,7 +11495,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfGm3(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSphCarbon As Integer, ByVal maxSphCarbon As Integer, ByVal minSphDoubleBond As Integer, ByVal maxSphDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfGm3(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSphCarbon As Integer, maxSphCarbon As Integer, minSphDoubleBond As Integer, maxSphDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSphCarbon > totalCarbon Then maxSphCarbon = totalCarbon
@@ -11584,7 +11584,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfGD1a(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSphCarbon As Integer, ByVal maxSphCarbon As Integer, ByVal minSphDoubleBond As Integer, ByVal maxSphDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfGD1a(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSphCarbon As Integer, maxSphCarbon As Integer, minSphDoubleBond As Integer, maxSphDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSphCarbon > totalCarbon Then maxSphCarbon = totalCarbon
@@ -11650,7 +11650,7 @@ New SpectrumPeak() With {
         End If
         Return Nothing
     End Function
-    Public Shared Function JudgeIfGD1b(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSphCarbon As Integer, ByVal maxSphCarbon As Integer, ByVal minSphDoubleBond As Integer, ByVal maxSphDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfGD1b(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSphCarbon As Integer, maxSphCarbon As Integer, minSphDoubleBond As Integer, maxSphDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSphCarbon > totalCarbon Then maxSphCarbon = totalCarbon
@@ -11717,7 +11717,7 @@ New SpectrumPeak() With {
         End If
         Return Nothing
     End Function
-    Public Shared Function JudgeIfGD2(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSphCarbon As Integer, ByVal maxSphCarbon As Integer, ByVal minSphDoubleBond As Integer, ByVal maxSphDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfGD2(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSphCarbon As Integer, maxSphCarbon As Integer, minSphDoubleBond As Integer, maxSphDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSphCarbon > totalCarbon Then maxSphCarbon = totalCarbon
@@ -11741,7 +11741,7 @@ New SpectrumPeak() With {
         End If
         Return Nothing
     End Function
-    Public Shared Function JudgeIfGD3(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSphCarbon As Integer, ByVal maxSphCarbon As Integer, ByVal minSphDoubleBond As Integer, ByVal maxSphDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfGD3(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSphCarbon As Integer, maxSphCarbon As Integer, minSphDoubleBond As Integer, maxSphDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSphCarbon > totalCarbon Then maxSphCarbon = totalCarbon
@@ -11766,7 +11766,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfGM1(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSphCarbon As Integer, ByVal maxSphCarbon As Integer, ByVal minSphDoubleBond As Integer, ByVal maxSphDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfGM1(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSphCarbon As Integer, maxSphCarbon As Integer, minSphDoubleBond As Integer, maxSphDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSphCarbon > totalCarbon Then maxSphCarbon = totalCarbon
@@ -11834,7 +11834,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfGT1b(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSphCarbon As Integer, ByVal maxSphCarbon As Integer, ByVal minSphDoubleBond As Integer, ByVal maxSphDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfGT1b(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSphCarbon As Integer, maxSphCarbon As Integer, minSphDoubleBond As Integer, maxSphDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSphCarbon > totalCarbon Then maxSphCarbon = totalCarbon
@@ -11904,7 +11904,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfGQ1b(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSphCarbon As Integer, ByVal maxSphCarbon As Integer, ByVal minSphDoubleBond As Integer, ByVal maxSphDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfGQ1b(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSphCarbon As Integer, maxSphCarbon As Integer, minSphDoubleBond As Integer, maxSphDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSphCarbon > totalCarbon Then maxSphCarbon = totalCarbon
@@ -11974,7 +11974,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfNGcGM3(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSphCarbon As Integer, ByVal maxSphCarbon As Integer, ByVal minSphDoubleBond As Integer, ByVal maxSphDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfNGcGM3(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSphCarbon As Integer, maxSphCarbon As Integer, minSphDoubleBond As Integer, maxSphDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSphCarbon > totalCarbon Then maxSphCarbon = totalCarbon
@@ -12042,7 +12042,7 @@ New SpectrumPeak() With {
     End Function
 
 
-    Public Shared Function JudgeIfSphinganine(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Single, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule
+    Public Shared Function JudgeIfSphinganine(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Single, totalCarbon As Integer, totalDoubleBond As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
@@ -12096,7 +12096,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfSphingosine(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Single, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule
+    Public Shared Function JudgeIfSphingosine(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Single, totalCarbon As Integer, totalDoubleBond As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
@@ -12149,7 +12149,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfPhytosphingosine(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Single, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule
+    Public Shared Function JudgeIfPhytosphingosine(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Single, totalCarbon As Integer, totalDoubleBond As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
@@ -12206,7 +12206,7 @@ New SpectrumPeak() With {
 
 
     'add 10/04/19
-    Public Shared Function JudgeIfEtherpi(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSnCarbon As Integer, ByVal maxSnCarbon As Integer, ByVal minSnDoubleBond As Integer, ByVal maxSnDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PE 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfEtherpi(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSnCarbon As Integer, maxSnCarbon As Integer, minSnDoubleBond As Integer, maxSnDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PE 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
@@ -12259,7 +12259,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfEtherps(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSnCarbon As Integer, ByVal maxSnCarbon As Integer, ByVal minSnDoubleBond As Integer, ByVal maxSnDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PE 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfEtherps(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSnCarbon As Integer, maxSnCarbon As Integer, minSnDoubleBond As Integer, maxSnDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PE 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
@@ -12309,7 +12309,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfPecermide(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSphCarbon As Integer, ByVal maxSphCarbon As Integer, ByVal minSphDoubleBond As Integer, ByVal maxSphDoubleBond As Integer, ByVal adduct As AdductIon, ByVal totalOxidized As Integer) As LipidMolecule ' If the candidate PE 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfPecermide(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSphCarbon As Integer, maxSphCarbon As Integer, minSphDoubleBond As Integer, maxSphDoubleBond As Integer, adduct As AdductIon, totalOxidized As Integer) As LipidMolecule ' If the candidate PE 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSphCarbon > totalCarbon Then maxSphCarbon = totalCarbon
@@ -12378,7 +12378,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfPicermide(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSphCarbon As Integer, ByVal maxSphCarbon As Integer, ByVal minSphDoubleBond As Integer, ByVal maxSphDoubleBond As Integer, ByVal adduct As AdductIon, ByVal totalOxdyzed As Integer) As LipidMolecule ' If the candidate PE 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfPicermide(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSphCarbon As Integer, maxSphCarbon As Integer, minSphDoubleBond As Integer, maxSphDoubleBond As Integer, adduct As AdductIon, totalOxdyzed As Integer) As LipidMolecule ' If the candidate PE 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSphCarbon > totalCarbon Then maxSphCarbon = totalCarbon
@@ -12492,7 +12492,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfDcae(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Single, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal adduct As AdductIon, ByVal totalOxidized As Integer) As LipidMolecule
+    Public Shared Function JudgeIfDcae(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Single, totalCarbon As Integer, totalDoubleBond As Integer, adduct As AdductIon, totalOxidized As Integer) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If adduct.IonMode = IonMode.Negative Then ' Negative ion mode 
@@ -12529,7 +12529,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfGdcae(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Single, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal adduct As AdductIon, ByVal totalOxidized As Integer) As LipidMolecule
+    Public Shared Function JudgeIfGdcae(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Single, totalCarbon As Integer, totalDoubleBond As Integer, adduct As AdductIon, totalOxidized As Integer) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If adduct.IonMode = IonMode.Negative Then ' Negative ion mode 
@@ -12565,7 +12565,7 @@ New SpectrumPeak() With {
 
         Return Nothing
     End Function
-    Public Shared Function JudgeIfGlcae(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Single, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal adduct As AdductIon, ByVal totalOxidized As Integer) As LipidMolecule
+    Public Shared Function JudgeIfGlcae(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Single, totalCarbon As Integer, totalDoubleBond As Integer, adduct As AdductIon, totalOxidized As Integer) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If adduct.IonMode = IonMode.Negative Then ' Negative ion mode 
@@ -12601,7 +12601,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfTdcae(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Single, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal adduct As AdductIon, ByVal totalOxidized As Integer) As LipidMolecule
+    Public Shared Function JudgeIfTdcae(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Single, totalCarbon As Integer, totalDoubleBond As Integer, adduct As AdductIon, totalOxidized As Integer) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If adduct.IonMode = IonMode.Negative Then ' Negative ion mode 
@@ -12637,7 +12637,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfTlcae(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Single, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal adduct As AdductIon, ByVal totalOxidized As Integer) As LipidMolecule
+    Public Shared Function JudgeIfTlcae(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Single, totalCarbon As Integer, totalDoubleBond As Integer, adduct As AdductIon, totalOxidized As Integer) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If adduct.IonMode = IonMode.Negative Then ' Negative ion mode 
@@ -12673,7 +12673,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfLcae(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Single, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal adduct As AdductIon, ByVal totalOxidized As Integer) As LipidMolecule
+    Public Shared Function JudgeIfLcae(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Single, totalCarbon As Integer, totalDoubleBond As Integer, adduct As AdductIon, totalOxidized As Integer) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If adduct.IonMode = IonMode.Negative Then ' Negative ion mode 
@@ -12709,7 +12709,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfKlcae(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Single, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal adduct As AdductIon, ByVal totalOxidized As Integer) As LipidMolecule
+    Public Shared Function JudgeIfKlcae(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Single, totalCarbon As Integer, totalDoubleBond As Integer, adduct As AdductIon, totalOxidized As Integer) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If adduct.IonMode = IonMode.Negative Then ' Negative ion mode 
@@ -12752,7 +12752,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfKdcae(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Single, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal adduct As AdductIon, ByVal totalOxidized As Integer) As LipidMolecule
+    Public Shared Function JudgeIfKdcae(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Single, totalCarbon As Integer, totalDoubleBond As Integer, adduct As AdductIon, totalOxidized As Integer) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If adduct.IonMode = IonMode.Negative Then ' Negative ion mode 
@@ -12789,7 +12789,7 @@ New SpectrumPeak() With {
     End Function
 
 
-    Public Shared Function JudgeIfAnandamide(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Single, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule
+    Public Shared Function JudgeIfAnandamide(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Single, totalCarbon As Integer, totalDoubleBond As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If adduct.IonMode = IonMode.Positive Then ' Positive ion mode 
@@ -12830,7 +12830,7 @@ New SpectrumPeak() With {
         End If
         Return Nothing
     End Function
-    Public Shared Function JudgeIfGpnae(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Single, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule
+    Public Shared Function JudgeIfGpnae(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Single, totalCarbon As Integer, totalDoubleBond As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If adduct.IonMode = IonMode.Positive Then ' Positive ion mode 
@@ -12880,7 +12880,7 @@ New SpectrumPeak() With {
     End Function
 
 
-    Public Shared Function JudgeIfFahfamidegly(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSnCarbon As Integer, ByVal maxSnCarbon As Integer, ByVal minSnDoubleBond As Integer, ByVal maxSnDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PE 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfFahfamidegly(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSnCarbon As Integer, maxSnCarbon As Integer, minSnDoubleBond As Integer, maxSnDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PE 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
@@ -13003,7 +13003,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfFahfamideglyser(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSnCarbon As Integer, ByVal maxSnCarbon As Integer, ByVal minSnDoubleBond As Integer, ByVal maxSnDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PE 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfFahfamideglyser(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSnCarbon As Integer, maxSnCarbon As Integer, minSnDoubleBond As Integer, maxSnDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PE 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
@@ -13129,7 +13129,7 @@ New SpectrumPeak() With {
 
 
 
-    Public Shared Function JudgeIfSulfonolipid(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSnCarbon As Integer, ByVal maxSnCarbon As Integer, ByVal minSnDoubleBond As Integer, ByVal maxSnDoubleBond As Integer, ByVal adduct As AdductIon, ByVal totalOxidized As Integer) As LipidMolecule ' If the candidate PE 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfSulfonolipid(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSnCarbon As Integer, maxSnCarbon As Integer, minSnDoubleBond As Integer, maxSnDoubleBond As Integer, adduct As AdductIon, totalOxidized As Integer) As LipidMolecule ' If the candidate PE 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
@@ -13291,7 +13291,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfEtherpg(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSnCarbon As Integer, ByVal maxSnCarbon As Integer, ByVal minSnDoubleBond As Integer, ByVal maxSnDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PS 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfEtherpg(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSnCarbon As Integer, maxSnCarbon As Integer, minSnDoubleBond As Integer, maxSnDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PS 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
@@ -13349,7 +13349,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfEtherlysopg(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSnCarbon As Integer, ByVal maxSnCarbon As Integer, ByVal minSnDoubleBond As Integer, ByVal maxSnDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' 
+    Public Shared Function JudgeIfEtherlysopg(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSnCarbon As Integer, maxSnCarbon As Integer, minSnDoubleBond As Integer, maxSnDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' 
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
@@ -13372,7 +13372,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfCoenzymeq(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' 
+    Public Shared Function JudgeIfCoenzymeq(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' 
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
@@ -13405,7 +13405,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfVitaminEmolecules(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' 
+    Public Shared Function JudgeIfVitaminEmolecules(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' 
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
@@ -13432,7 +13432,7 @@ New SpectrumPeak() With {
         End If
         Return Nothing
     End Function
-    Public Shared Function JudgeIfVitaminDmolecules(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' 
+    Public Shared Function JudgeIfVitaminDmolecules(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' 
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
@@ -13462,7 +13462,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfSterolHexoside(ByVal lipidname As String, ByVal lipidclass As LbmClass, ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule
+    Public Shared Function JudgeIfSterolHexoside(lipidname As String, lipidclass As LbmClass, msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
@@ -13499,7 +13499,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfSterolSulfate(ByVal lipidname As String, ByVal lipidclass As LbmClass, ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule
+    Public Shared Function JudgeIfSterolSulfate(lipidname As String, lipidclass As LbmClass, msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
@@ -13531,7 +13531,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfVitaminaestermolecules(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule
+    Public Shared Function JudgeIfVitaminaestermolecules(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
@@ -13562,7 +13562,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfFahfamideorn(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSnCarbon As Integer, ByVal maxSnCarbon As Integer, ByVal minSnDoubleBond As Integer, ByVal maxSnDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PE 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfFahfamideorn(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSnCarbon As Integer, maxSnCarbon As Integer, minSnDoubleBond As Integer, maxSnDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PE 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
@@ -13622,7 +13622,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfBrseSpecies(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Single, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule
+    Public Shared Function JudgeIfBrseSpecies(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Single, totalCarbon As Integer, totalDoubleBond As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If adduct.IonMode = IonMode.Positive Then ' Positive ion mode 
@@ -13645,7 +13645,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfCaseSpecies(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Single, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule
+    Public Shared Function JudgeIfCaseSpecies(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Single, totalCarbon As Integer, totalDoubleBond As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If adduct.IonMode = IonMode.Positive Then ' Positive ion mode 
@@ -13670,7 +13670,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfSiseSpecies(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Single, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule
+    Public Shared Function JudgeIfSiseSpecies(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Single, totalCarbon As Integer, totalDoubleBond As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If adduct.IonMode = IonMode.Positive Then ' Positive ion mode 
@@ -13693,7 +13693,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfStseSpecies(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Single, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule
+    Public Shared Function JudgeIfStseSpecies(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Single, totalCarbon As Integer, totalDoubleBond As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If adduct.IonMode = IonMode.Positive Then ' Positive ion mode 
@@ -13716,7 +13716,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfErgoSESpecies(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Single, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule
+    Public Shared Function JudgeIfErgoSESpecies(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Single, totalCarbon As Integer, totalDoubleBond As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If adduct.IonMode = IonMode.Positive Then ' Positive ion mode 
@@ -13738,7 +13738,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfDehydroErgoSESpecies(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Single, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule
+    Public Shared Function JudgeIfDehydroErgoSESpecies(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Single, totalCarbon As Integer, totalDoubleBond As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If adduct.IonMode = IonMode.Positive Then ' Positive ion mode 
@@ -13761,7 +13761,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfDesmosterolSpecies(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Single, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule
+    Public Shared Function JudgeIfDesmosterolSpecies(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Single, totalCarbon As Integer, totalDoubleBond As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If adduct.IonMode = IonMode.Positive Then ' Positive ion mode 
@@ -13785,7 +13785,7 @@ New SpectrumPeak() With {
     End Function
 
 
-    Public Shared Function JudgeIfAhexbrseSpecies(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Single, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule
+    Public Shared Function JudgeIfAhexbrseSpecies(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Single, totalCarbon As Integer, totalDoubleBond As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If adduct.IonMode = IonMode.Positive Then ' Positive ion mode 
@@ -13827,7 +13827,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfAhexcaseSpecies(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Single, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule
+    Public Shared Function JudgeIfAhexcaseSpecies(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Single, totalCarbon As Integer, totalDoubleBond As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If adduct.IonMode = IonMode.Positive Then ' Positive ion mode 
@@ -13869,7 +13869,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfAhexceSpecies(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Single, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule
+    Public Shared Function JudgeIfAhexceSpecies(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Single, totalCarbon As Integer, totalDoubleBond As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If adduct.IonMode = IonMode.Positive Then ' Positive ion mode 
@@ -13911,7 +13911,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfAhexsiseSpecies(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Single, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule
+    Public Shared Function JudgeIfAhexsiseSpecies(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Single, totalCarbon As Integer, totalDoubleBond As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If adduct.IonMode = IonMode.Positive Then ' Positive ion mode 
@@ -13953,7 +13953,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfAhexstseSpecies(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Single, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule
+    Public Shared Function JudgeIfAhexstseSpecies(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Single, totalCarbon As Integer, totalDoubleBond As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If adduct.IonMode = IonMode.Positive Then ' Positive ion mode 
@@ -13995,7 +13995,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfSmgdg(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSnCarbon As Integer, ByVal maxSnCarbon As Integer, ByVal minSnDoubleBond As Integer, ByVal maxSnDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule
+    Public Shared Function JudgeIfSmgdg(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSnCarbon As Integer, maxSnCarbon As Integer, minSnDoubleBond As Integer, maxSnDoubleBond As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
@@ -14059,7 +14059,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfEtherSmgdg(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSnCarbon As Integer, ByVal maxSnCarbon As Integer, ByVal minSnDoubleBond As Integer, ByVal maxSnDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule
+    Public Shared Function JudgeIfEtherSmgdg(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSnCarbon As Integer, maxSnCarbon As Integer, minSnDoubleBond As Integer, maxSnDoubleBond As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
@@ -14154,7 +14154,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfnoChainSterol(ByVal lipidname As String, ByVal lipidclass As LbmClass, ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule
+    Public Shared Function JudgeIfnoChainSterol(lipidname As String, lipidclass As LbmClass, msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
@@ -14195,7 +14195,7 @@ New SpectrumPeak() With {
 
     ' yeast lipid add 20200714
 
-    Public Shared Function JudgeIfMonoMethylPE(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSnCarbon As Integer, ByVal maxSnCarbon As Integer, ByVal minSnDoubleBond As Integer, ByVal maxSnDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PE 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfMonoMethylPE(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSnCarbon As Integer, maxSnCarbon As Integer, minSnDoubleBond As Integer, maxSnDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PE 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
@@ -14296,7 +14296,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfDiMethylPE(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSnCarbon As Integer, ByVal maxSnCarbon As Integer, ByVal minSnDoubleBond As Integer, ByVal maxSnDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PE 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfDiMethylPE(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSnCarbon As Integer, maxSnCarbon As Integer, minSnDoubleBond As Integer, maxSnDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PE 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
@@ -14397,7 +14397,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfMipc(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSphCarbon As Integer, ByVal maxSphCarbon As Integer, ByVal minSphDoubleBond As Integer, ByVal maxSphDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfMipc(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSphCarbon As Integer, maxSphCarbon As Integer, minSphDoubleBond As Integer, maxSphDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSphCarbon > totalCarbon Then maxSphCarbon = totalCarbon
@@ -14490,7 +14490,7 @@ New SpectrumPeak() With {
     End Function
 
     'add 20200812
-    Public Shared Function JudgeIfOxTriacylglycerol(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSn1Carbon As Integer, ByVal maxSn1Carbon As Integer, ByVal minSn1DoubleBond As Integer, ByVal maxSn1DoubleBond As Integer, ByVal minSn2Carbon As Integer, ByVal maxSn2Carbon As Integer, ByVal minSn2DoubleBond As Integer, ByVal maxSn2DoubleBond As Integer, ByVal totalOxidized As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PS 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfOxTriacylglycerol(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSn1Carbon As Integer, maxSn1Carbon As Integer, minSn1DoubleBond As Integer, maxSn1DoubleBond As Integer, minSn2Carbon As Integer, maxSn2Carbon As Integer, minSn2DoubleBond As Integer, maxSn2DoubleBond As Integer, totalOxidized As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PS 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSn1Carbon > totalCarbon Then maxSn1Carbon = totalCarbon
@@ -14571,7 +14571,7 @@ New SpectrumPeak() With {
     End Function
 
     'add 20200812 // TG 8:0_8:0_8:0;1O(FA 12:0)
-    Public Shared Function JudgeIfFahfaTriacylglycerol(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSn1Carbon As Integer, ByVal maxSn1Carbon As Integer, ByVal minSn1DoubleBond As Integer, ByVal maxSn1DoubleBond As Integer, ByVal minSn2Carbon As Integer, ByVal maxSn2Carbon As Integer, ByVal minSn2DoubleBond As Integer, ByVal maxSn2DoubleBond As Integer, ByVal minSn3Carbon As Integer, ByVal maxSn3Carbon As Integer, ByVal minSn3DoubleBond As Integer, ByVal maxSn3DoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PS 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfFahfaTriacylglycerol(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSn1Carbon As Integer, maxSn1Carbon As Integer, minSn1DoubleBond As Integer, maxSn1DoubleBond As Integer, minSn2Carbon As Integer, maxSn2Carbon As Integer, minSn2DoubleBond As Integer, maxSn2DoubleBond As Integer, minSn3Carbon As Integer, maxSn3Carbon As Integer, minSn3DoubleBond As Integer, maxSn3DoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PS 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSn1Carbon > totalCarbon Then maxSn1Carbon = totalCarbon
@@ -14665,7 +14665,7 @@ New SpectrumPeak() With {
     End Function
 
     ' add20200818
-    Public Shared Function JudgeIfNAcylGlySerOxFa(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal totalOxidized As Integer, ByVal adduct As AdductIon) As LipidMolecule
+    Public Shared Function JudgeIfNAcylGlySerOxFa(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, totalOxidized As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If adduct.IonMode = IonMode.Positive Then ' Positive ion mode 
@@ -14700,7 +14700,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfNAcylGlyOxFa(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal totalOxidized As Integer, ByVal adduct As AdductIon) As LipidMolecule
+    Public Shared Function JudgeIfNAcylGlyOxFa(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, totalOxidized As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If adduct.IonMode = IonMode.Positive Then ' Positive ion mode 
@@ -14734,7 +14734,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfNAcylOrnOxFa(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal totalOxidized As Integer, ByVal adduct As AdductIon) As LipidMolecule
+    Public Shared Function JudgeIfNAcylOrnOxFa(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, totalOxidized As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If adduct.IonMode = IonMode.Positive Then ' Positive ion mode 
@@ -14756,7 +14756,7 @@ New SpectrumPeak() With {
 
 
     ' add 20211026
-    Public Shared Function JudgeIfSteroidWithLpa(ByVal lipidname As String, ByVal lipidclass As LbmClass, ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule
+    Public Shared Function JudgeIfSteroidWithLpa(lipidname As String, lipidclass As LbmClass, msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         Dim LPHex = New Dictionary(Of String, String)() From {
@@ -14799,7 +14799,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfSteroidWithPa(ByVal lipidname As String, ByVal lipidclass As LbmClass, ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSnCarbon As Integer, ByVal maxSnCarbon As Integer, ByVal minSnDoubleBond As Integer, ByVal maxSnDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule
+    Public Shared Function JudgeIfSteroidWithPa(lipidname As String, lipidclass As LbmClass, msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSnCarbon As Integer, maxSnCarbon As Integer, minSnDoubleBond As Integer, maxSnDoubleBond As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
@@ -14875,7 +14875,7 @@ New SpectrumPeak() With {
     End Function
 
     ' add 20220201
-    Public Shared Function JudgeIfSpeSpecies(ByVal lipidname As String, ByVal lipidclass As LbmClass, ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule
+    Public Shared Function JudgeIfSpeSpecies(lipidname As String, lipidclass As LbmClass, msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
@@ -14911,7 +14911,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
     '  add 20220322
-    Public Shared Function JudgeIfNAcylTauFa(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal totalOxidized As Integer, ByVal adduct As AdductIon) As LipidMolecule
+    Public Shared Function JudgeIfNAcylTauFa(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, totalOxidized As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If adduct.IonMode = IonMode.Positive Then ' Positive ion mode 
@@ -14946,7 +14946,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfNAcylPheFa(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal totalOxidized As Integer, ByVal adduct As AdductIon) As LipidMolecule
+    Public Shared Function JudgeIfNAcylPheFa(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, totalOxidized As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If adduct.IonMode = IonMode.Positive Then ' Positive ion mode 
@@ -14987,7 +14987,7 @@ New SpectrumPeak() With {
     End Function
 
     'add 20230407
-    Public Shared Function JudgeIfPhosphatidylcholineD5(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSnCarbon As Integer, ByVal maxSnCarbon As Integer, ByVal minSnDoubleBond As Integer, ByVal maxSnDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfPhosphatidylcholineD5(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSnCarbon As Integer, maxSnCarbon As Integer, minSnDoubleBond As Integer, maxSnDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
@@ -15154,7 +15154,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfPhosphatidylethanolamineD5(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSnCarbon As Integer, ByVal maxSnCarbon As Integer, ByVal minSnDoubleBond As Integer, ByVal maxSnDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PE 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfPhosphatidylethanolamineD5(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSnCarbon As Integer, maxSnCarbon As Integer, minSnDoubleBond As Integer, maxSnDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PE 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
@@ -15299,7 +15299,7 @@ New SpectrumPeak() With {
     End Function
 
 
-    Public Shared Function JudgeIfPhosphatidylserineD5(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSnCarbon As Integer, ByVal maxSnCarbon As Integer, ByVal minSnDoubleBond As Integer, ByVal maxSnDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PS 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfPhosphatidylserineD5(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSnCarbon As Integer, maxSnCarbon As Integer, minSnDoubleBond As Integer, maxSnDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PS 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
@@ -15421,7 +15421,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfPhosphatidylglycerolD5(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSnCarbon As Integer, ByVal maxSnCarbon As Integer, ByVal minSnDoubleBond As Integer, ByVal maxSnDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PS 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfPhosphatidylglycerolD5(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSnCarbon As Integer, maxSnCarbon As Integer, minSnDoubleBond As Integer, maxSnDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PS 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
@@ -15527,7 +15527,7 @@ New SpectrumPeak() With {
         End If
         Return Nothing
     End Function
-    Public Shared Function JudgeIfPhosphatidylinositolD5(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSnCarbon As Integer, ByVal maxSnCarbon As Integer, ByVal minSnDoubleBond As Integer, ByVal maxSnDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PS 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfPhosphatidylinositolD5(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSnCarbon As Integer, maxSnCarbon As Integer, minSnDoubleBond As Integer, maxSnDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PS 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
@@ -15637,7 +15637,7 @@ New SpectrumPeak() With {
         End If
         Return Nothing
     End Function
-    Public Shared Function JudgeIfLysopcD5(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSnCarbon As Integer, ByVal maxSnCarbon As Integer, ByVal minSnDoubleBond As Integer, ByVal maxSnDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' 
+    Public Shared Function JudgeIfLysopcD5(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSnCarbon As Integer, maxSnCarbon As Integer, minSnDoubleBond As Integer, maxSnDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' 
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
@@ -15729,7 +15729,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfLysopeD5(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSnCarbon As Integer, ByVal maxSnCarbon As Integer, ByVal minSnDoubleBond As Integer, ByVal maxSnDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' 
+    Public Shared Function JudgeIfLysopeD5(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSnCarbon As Integer, maxSnCarbon As Integer, minSnDoubleBond As Integer, maxSnDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' 
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
@@ -15819,7 +15819,7 @@ New SpectrumPeak() With {
         End If
         Return Nothing
     End Function
-    Public Shared Function JudgeIfLysopgD5(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSnCarbon As Integer, ByVal maxSnCarbon As Integer, ByVal minSnDoubleBond As Integer, ByVal maxSnDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PE 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfLysopgD5(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSnCarbon As Integer, maxSnCarbon As Integer, minSnDoubleBond As Integer, maxSnDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PE 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
@@ -15861,7 +15861,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 
-    Public Shared Function JudgeIfLysopiD5(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSnCarbon As Integer, ByVal maxSnCarbon As Integer, ByVal minSnDoubleBond As Integer, ByVal maxSnDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PE 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfLysopiD5(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSnCarbon As Integer, maxSnCarbon As Integer, minSnDoubleBond As Integer, maxSnDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PE 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
@@ -15904,7 +15904,7 @@ New SpectrumPeak() With {
         End If
         Return Nothing
     End Function
-    Public Shared Function JudgeIfLysopsD5(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSnCarbon As Integer, ByVal maxSnCarbon As Integer, ByVal minSnDoubleBond As Integer, ByVal maxSnDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PE 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfLysopsD5(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSnCarbon As Integer, maxSnCarbon As Integer, minSnDoubleBond As Integer, maxSnDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PE 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
@@ -15944,7 +15944,7 @@ New SpectrumPeak() With {
         End If
         Return Nothing
     End Function
-    Public Shared Function JudgeIfDagD5(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSn1Carbon As Integer, ByVal maxSn1Carbon As Integer, ByVal minSn1DoubleBond As Integer, ByVal maxSn1DoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PS 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfDagD5(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSn1Carbon As Integer, maxSn1Carbon As Integer, minSn1DoubleBond As Integer, maxSn1DoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PS 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSn1Carbon > totalCarbon Then maxSn1Carbon = totalCarbon
@@ -16006,7 +16006,7 @@ New SpectrumPeak() With {
         End If
         Return Nothing
     End Function
-    Public Shared Function JudgeIfTriacylglycerolD5(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSn1Carbon As Integer, ByVal maxSn1Carbon As Integer, ByVal minSn1DoubleBond As Integer, ByVal maxSn1DoubleBond As Integer, ByVal minSn2Carbon As Integer, ByVal maxSn2Carbon As Integer, ByVal minSn2DoubleBond As Integer, ByVal maxSn2DoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PS 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfTriacylglycerolD5(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSn1Carbon As Integer, maxSn1Carbon As Integer, minSn1DoubleBond As Integer, maxSn1DoubleBond As Integer, minSn2Carbon As Integer, maxSn2Carbon As Integer, minSn2DoubleBond As Integer, maxSn2DoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PS 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSn1Carbon > totalCarbon Then maxSn1Carbon = totalCarbon
@@ -16152,7 +16152,7 @@ New SpectrumPeak() With {
         End If
         Return Nothing
     End Function
-    Public Shared Function JudgeIfSphingomyelinD9(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSphCarbon As Integer, ByVal maxSphCarbon As Integer, ByVal minSphDoubleBond As Integer, ByVal maxSphDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfSphingomyelinD9(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSphCarbon As Integer, maxSphCarbon As Integer, minSphDoubleBond As Integer, maxSphDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSphCarbon > totalCarbon Then maxSphCarbon = totalCarbon
@@ -16260,7 +16260,7 @@ New SpectrumPeak() With {
         End If
         Return Nothing
     End Function
-    Public Shared Function JudgeIfCeramidensD7(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSphCarbon As Integer, ByVal maxSphCarbon As Integer, ByVal minSphDoubleBond As Integer, ByVal maxSphDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfCeramidensD7(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSphCarbon As Integer, maxSphCarbon As Integer, minSphDoubleBond As Integer, maxSphDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSphCarbon > totalCarbon Then maxSphCarbon = totalCarbon
@@ -16430,7 +16430,7 @@ New SpectrumPeak() With {
         End If
         Return Nothing
     End Function
-    Public Shared Function JudgeIfCholesterylEsterD7(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Single, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule
+    Public Shared Function JudgeIfCholesterylEsterD7(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Single, totalCarbon As Integer, totalDoubleBond As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
@@ -16462,7 +16462,7 @@ New SpectrumPeak() With {
     End Function
 
     '20230424
-    Public Shared Function JudgeIfBetaMethylPhosphatidylcholine(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal minSnCarbon As Integer, ByVal maxSnCarbon As Integer, ByVal minSnDoubleBond As Integer, ByVal maxSnDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
+    Public Shared Function JudgeIfBetaMethylPhosphatidylcholine(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, minSnCarbon As Integer, maxSnCarbon As Integer, minSnDoubleBond As Integer, maxSnDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
@@ -16616,7 +16616,7 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
     '20230612
-    Public Shared Function JudgeIfWaxEster(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal totalOxidized As Integer, ByVal minSnCarbon As Integer, ByVal maxSnCarbon As Integer, ByVal minSnDoubleBond As Integer, ByVal maxSnDoubleBond As Integer, ByVal adduct As AdductIon) As LipidMolecule
+    Public Shared Function JudgeIfWaxEster(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, totalOxidized As Integer, minSnCarbon As Integer, maxSnCarbon As Integer, minSnDoubleBond As Integer, maxSnDoubleBond As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If adduct.IonMode = IonMode.Positive Then ' Positive ion mode 
@@ -16663,7 +16663,7 @@ New SpectrumPeak() With {
         End If
         Return Nothing
     End Function
-    Public Shared Function JudgeIfNAcylTryA(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal totalOxidized As Integer, ByVal adduct As AdductIon) As LipidMolecule
+    Public Shared Function JudgeIfNAcylTryA(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, totalOxidized As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If adduct.IonMode = IonMode.Positive Then ' Positive ion mode 
@@ -16682,7 +16682,7 @@ New SpectrumPeak() With {
         End If
         Return Nothing
     End Function
-    Public Shared Function JudgeIfNAcyl5HT(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal totalOxidized As Integer, ByVal adduct As AdductIon) As LipidMolecule
+    Public Shared Function JudgeIfNAcyl5HT(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, totalOxidized As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If adduct.IonMode = IonMode.Positive Then ' Positive ion mode 
@@ -16701,7 +16701,7 @@ New SpectrumPeak() With {
         End If
         Return Nothing
     End Function
-    Public Shared Function JudgeIfNAcylAla(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal totalOxidized As Integer, ByVal adduct As AdductIon) As LipidMolecule
+    Public Shared Function JudgeIfNAcylAla(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, totalOxidized As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If adduct.IonMode = IonMode.Positive Then ' Positive ion mode 
@@ -16720,7 +16720,7 @@ New SpectrumPeak() With {
         End If
         Return Nothing
     End Function
-    Public Shared Function JudgeIfNAcylGln(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal totalOxidized As Integer, ByVal adduct As AdductIon) As LipidMolecule
+    Public Shared Function JudgeIfNAcylGln(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, totalOxidized As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If adduct.IonMode = IonMode.Positive Then ' Positive ion mode 
@@ -16739,7 +16739,7 @@ New SpectrumPeak() With {
         End If
         Return Nothing
     End Function
-    Public Shared Function JudgeIfNAcylLeu(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal totalOxidized As Integer, ByVal adduct As AdductIon) As LipidMolecule
+    Public Shared Function JudgeIfNAcylLeu(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, totalOxidized As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If adduct.IonMode = IonMode.Positive Then ' Positive ion mode 
@@ -16758,7 +16758,7 @@ New SpectrumPeak() With {
         End If
         Return Nothing
     End Function
-    Public Shared Function JudgeIfNAcylVal(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal totalOxidized As Integer, ByVal adduct As AdductIon) As LipidMolecule
+    Public Shared Function JudgeIfNAcylVal(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, totalOxidized As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If adduct.IonMode = IonMode.Positive Then ' Positive ion mode 
@@ -16777,7 +16777,7 @@ New SpectrumPeak() With {
         End If
         Return Nothing
     End Function
-    Public Shared Function JudgeIfNAcylSer(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal totalOxidized As Integer, ByVal adduct As AdductIon) As LipidMolecule
+    Public Shared Function JudgeIfNAcylSer(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, totalOxidized As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If adduct.IonMode = IonMode.Positive Then ' Positive ion mode 
@@ -16796,7 +16796,7 @@ New SpectrumPeak() With {
         End If
         Return Nothing
     End Function
-    Public Shared Function JudgeIfBismelpa(ByVal msScanProp As IMSScanProperty, ByVal ms2Tolerance As Double, ByVal theoreticalMz As Double, ByVal totalCarbon As Integer, ByVal totalDoubleBond As Integer, ByVal totalOxidized As Integer, ByVal adduct As AdductIon) As LipidMolecule
+    Public Shared Function JudgeIfBismelpa(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, totalOxidized As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If adduct.IonMode = IonMode.Positive Then ' Positive ion mode 

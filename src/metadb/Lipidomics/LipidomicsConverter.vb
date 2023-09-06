@@ -448,7 +448,7 @@ Public Module LipidomicsConverter
         '    return molecule;
         '}
 
-        Public Function ConvertMsdialLipidnameToLipidMoleculeObjectVS2(ByVal query As MoleculeMsReference) As LipidMolecule
+        Public Function ConvertMsdialLipidnameToLipidMoleculeObjectVS2(query As MoleculeMsReference) As LipidMolecule
             Dim molecule = New LipidMolecule()
             Dim lipidclass = query.CompoundClass
 
@@ -483,7 +483,7 @@ Public Module LipidomicsConverter
             Return molecule
         End Function
 
-        Public Function ConvertMsdialLipidnameToLipidMoleculeObjectVS2(ByVal lipidname As String, ByVal ontology As String) As LipidMolecule
+        Public Function ConvertMsdialLipidnameToLipidMoleculeObjectVS2(lipidname As String, ontology As String) As LipidMolecule
             Dim molecule = New LipidMolecule()
             Dim lipidclass = ontology
 
@@ -2415,7 +2415,7 @@ Public Module LipidomicsConverter
         '}
 
         ' now for Cholesterol and CholesterolSulfate
-        Public Sub SetSingleLipidStructure(ByVal molecule As LipidMolecule, ByVal query As MoleculeMsReference)
+        Public Sub SetSingleLipidStructure(molecule As LipidMolecule, query As MoleculeMsReference)
 
             Dim lipidinfo = query.Name
             SetBasicMoleculerProperties(molecule, query)
@@ -2430,7 +2430,7 @@ Public Module LipidomicsConverter
             molecule.Sn1DoubleBondCount = 0
         End Sub
 
-        Public Sub SetSingleLipidStructure(ByVal molecule As LipidMolecule, ByVal lipidname As String, ByVal ontology As String)
+        Public Sub SetSingleLipidStructure(molecule As LipidMolecule, lipidname As String, ontology As String)
 
             molecule.LipidName = lipidname
             molecule.SublevelLipidName = lipidname
@@ -2442,7 +2442,7 @@ Public Module LipidomicsConverter
             molecule.Sn1DoubleBondCount = 0
         End Sub
 
-        Public Sub SetCoqMolecule(ByVal molecule As LipidMolecule, ByVal query As MoleculeMsReference)
+        Public Sub SetCoqMolecule(molecule As LipidMolecule, query As MoleculeMsReference)
 
             SetBasicMoleculerProperties(molecule, query)
 
@@ -2461,7 +2461,7 @@ Public Module LipidomicsConverter
             molecule.Sn1DoubleBondCount = 0
         End Sub
 
-        Public Sub SetCoqMolecule(ByVal molecule As LipidMolecule, ByVal lipidname As String, ByVal ontology As String)
+        Public Sub SetCoqMolecule(molecule As LipidMolecule, lipidname As String, ontology As String)
 
             Dim carbonCountString = lipidname.Substring(3) ' CoQ3 -> 3
             Dim carbonCount = 0
@@ -2546,7 +2546,7 @@ Public Module LipidomicsConverter
         '    molecule.Sn1Oxidizedount = sn1OxidizedCount;
         '}
 
-        Public Sub SetLipidAcylChainProperties(ByVal molecule As LipidMolecule, ByVal query As MoleculeMsReference)
+        Public Sub SetLipidAcylChainProperties(molecule As LipidMolecule, query As MoleculeMsReference)
             Dim lipidname = query.Name.Trim() ' e.g. ST 28:2;O;Hex;PA 12:0_12:0, SE 28:2/8:0
             Dim chainStrings = acylChainStringSeparatorVS2(lipidname)
             Dim ontology = query.CompoundClass
@@ -2570,7 +2570,7 @@ Public Module LipidomicsConverter
             Return
         End Sub
 
-        Public Sub SetLipidAcylChainProperties(ByVal molecule As LipidMolecule, ByVal lipidname As String, ByVal ontology As String)
+        Public Sub SetLipidAcylChainProperties(molecule As LipidMolecule, lipidname As String, ontology As String)
             Dim chainStrings = acylChainStringSeparatorVS2(lipidname)
             If chainStrings Is Nothing Then Return
             Select Case chainStrings.Count()
@@ -2588,7 +2588,7 @@ Public Module LipidomicsConverter
         End Sub
 
 
-        Public Sub SetBasicMoleculerProperties(ByVal molecule As LipidMolecule, ByVal query As MoleculeMsReference)
+        Public Sub SetBasicMoleculerProperties(molecule As LipidMolecule, query As MoleculeMsReference)
             ' var lipidclass = ConvertMsdialClassDefinitionToLbmClassEnumVS2(query.CompoundClass);
             molecule.Mz = CSng(query.PrecursorMz)
             molecule.Smiles = query.SMILES
@@ -2602,7 +2602,7 @@ Public Module LipidomicsConverter
             ' molecule.LipidClass = lipidclass;
         End Sub
 
-        Private Sub setMonoAcylChainProperty(ByVal molecule As LipidMolecule, ByVal lipidname As String, ByVal ontology As String, ByVal chainStrings As List(Of String))
+        Private Sub setMonoAcylChainProperty(molecule As LipidMolecule, lipidname As String, ontology As String, chainStrings As List(Of String))
             If chainStrings.Count <> 1 Then Return
             Dim lipidclass = ConvertMsdialClassDefinitionToLbmClassEnumVS2(ontology)
             Dim sn1CarbonCount, sn1DoubleBond, sn1OxidizedCount As Integer
@@ -2737,7 +2737,7 @@ Public Module LipidomicsConverter
         '    molecule.Sn2Oxidizedount = sn2OxidizedCount;
         '}
 
-        Private Sub setDiAcylChainProperty(ByVal molecule As LipidMolecule, ByVal lipidname As String, ByVal ontology As String, ByVal chainStrings As List(Of String)) ' e.g. SM 18:1;2O/30:1, PE 16:0_18:0;O, MGDG 2:0_2:0, ST 28:2;O;Hex;PA 12:0_12:0
+        Private Sub setDiAcylChainProperty(molecule As LipidMolecule, lipidname As String, ontology As String, chainStrings As List(Of String)) ' e.g. SM 18:1;2O/30:1, PE 16:0_18:0;O, MGDG 2:0_2:0, ST 28:2;O;Hex;PA 12:0_12:0
 
             If chainStrings.Count <> 2 Then Return
             Dim lipidclass = ConvertMsdialClassDefinitionToLbmClassEnumVS2(ontology)
@@ -2774,7 +2774,7 @@ Public Module LipidomicsConverter
             molecule.Sn2Oxidizedount = sn2OxidizedCount
         End Sub
 
-        Private Function getTotalChainString(ByVal carbon As Integer, ByVal rdb As Integer, ByVal oxidized As Integer, ByVal lipidclass As LbmClass, ByVal chainPrefix As String, ByVal acylChainCount As Integer) As String
+        Private Function getTotalChainString(carbon As Integer, rdb As Integer, oxidized As Integer, lipidclass As LbmClass, chainPrefix As String, acylChainCount As Integer) As String
             Dim rdbString = rdb.ToString()
 
             If lipidclass = LbmClass.Cer_EODS OrElse lipidclass = LbmClass.Cer_EBDS OrElse lipidclass = LbmClass.ASM OrElse lipidclass = LbmClass.FAHFA OrElse lipidclass = LbmClass.NAGly OrElse lipidclass = LbmClass.NAGlySer OrElse lipidclass = LbmClass.NAGlySer OrElse lipidclass = LbmClass.TG_EST OrElse lipidclass = LbmClass.DMEDFAHFA Then
@@ -2912,7 +2912,7 @@ Public Module LipidomicsConverter
         '    molecule.Sn3Oxidizedount = sn3OxidizedCount;
         '}
 
-        Private Sub setTriAcylChainProperty(ByVal molecule As LipidMolecule, ByVal lipidname As String, ByVal ontology As String, ByVal chainStrings As List(Of String))
+        Private Sub setTriAcylChainProperty(molecule As LipidMolecule, lipidname As String, ontology As String, chainStrings As List(Of String))
 
             If chainStrings.Count <> 3 Then Return
 
@@ -2962,7 +2962,7 @@ Public Module LipidomicsConverter
             molecule.Sn3Oxidizedount = sn3OxidizedCount
         End Sub
 
-        Private Sub setTetraAcylChainProperty(ByVal molecule As LipidMolecule, ByVal lipidname As String, ByVal ontology As String, ByVal chainStrings As List(Of String))
+        Private Sub setTetraAcylChainProperty(molecule As LipidMolecule, lipidname As String, ontology As String, chainStrings As List(Of String))
 
             If chainStrings.Count <> 4 Then Return
 
@@ -3015,7 +3015,7 @@ Public Module LipidomicsConverter
             molecule.Sn4Oxidizedount = sn4OxidizedCount
         End Sub
 
-        Public Function GetLipidHeaderString(ByVal lipidname As String) As String
+        Public Function GetLipidHeaderString(lipidname As String) As String
             Dim lipidHeader = lipidname.Split(" "c)(0)
             If Equals(lipidHeader, "SE") OrElse Equals(lipidHeader, "ST") OrElse Equals(lipidHeader, "SG") OrElse Equals(lipidHeader, "BA") OrElse Equals(lipidHeader, "ASG") Then
                 Dim dummyString = String.Empty
@@ -3226,7 +3226,7 @@ Public Module LipidomicsConverter
         '    molecule.Sn4Oxidizedount = sn4OxidizedCount;
         '}
 
-        Private Sub setChainPropertiesVS2(ByVal chainString As String, <Out> ByRef carbonCount As Integer, <Out> ByRef doubleBondCount As Integer, <Out> ByRef oxidizedCount As Integer)
+        Private Sub setChainPropertiesVS2(chainString As String, <Out> ByRef carbonCount As Integer, <Out> ByRef doubleBondCount As Integer, <Out> ByRef oxidizedCount As Integer)
 
             carbonCount = 0
             doubleBondCount = 0
@@ -3449,7 +3449,7 @@ Public Module LipidomicsConverter
         '    return chains;
         '}
 
-        Private Function acylChainStringSeparatorVS2(ByVal moleculeString As String) As List(Of String)
+        Private Function acylChainStringSeparatorVS2(moleculeString As String) As List(Of String)
 
             If moleculeString.Split(" "c).Length = 1 Then Return Nothing
 
@@ -3538,7 +3538,7 @@ Public Module LipidomicsConverter
             Return chains
         End Function
 
-        Public Sub RetrieveSterolHeaderChainStrings(ByVal moleculeString As String, <Out> ByRef headerString As String, <Out> ByRef chainString As String)
+        Public Sub RetrieveSterolHeaderChainStrings(moleculeString As String, <Out> ByRef headerString As String, <Out> ByRef chainString As String)
 
             headerString = String.Empty
             chainString = String.Empty
@@ -3690,7 +3690,7 @@ Public Module LipidomicsConverter
         '    }
         '}
 
-        Public Function ConvertLbmClassEnumToMsdialClassDefinitionVS2(ByVal lipidclass As LbmClass) As String
+        Public Function ConvertLbmClassEnumToMsdialClassDefinitionVS2(lipidclass As LbmClass) As String
             Select Case lipidclass
                 Case LbmClass.MG
                     Return "MG"
@@ -4297,7 +4297,7 @@ Public Module LipidomicsConverter
         '    }
         '}
 
-        Public Function ConvertMsdialClassDefinitionToLbmClassEnumVS2(ByVal lipidclass As String) As LbmClass
+        Public Function ConvertMsdialClassDefinitionToLbmClassEnumVS2(lipidclass As String) As LbmClass
             Select Case lipidclass
                 Case "MG"
                     Return LbmClass.MG
@@ -4983,7 +4983,7 @@ Public Module LipidomicsConverter
         '    }
         '}
 
-        Public Function ConvertMsdialClassDefinitionToSuperClassVS2(ByVal lipidclass As String) As String
+        Public Function ConvertMsdialClassDefinitionToSuperClassVS2(lipidclass As String) As String
 
             ' 
              *  FattyAcyls [FA]

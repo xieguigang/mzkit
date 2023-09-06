@@ -14,7 +14,7 @@ Public Class SeparatedChains
     ''' <paramname="chains"></param>
     ''' <paramname="description"></param>
     ''' <exceptioncref="ArgumentException"></exception>
-    Public Sub New(ByVal chains As IChain(), ByVal description As LipidDescription)
+    Public Sub New(chains As IChain(), description As LipidDescription)
         If chains.Length = 0 Then
             Throw New ArgumentException(NameOf(chains))
         End If
@@ -33,7 +33,7 @@ Public Class SeparatedChains
     ''' <paramname="chains"></param>
     ''' <paramname="description"></param>
     ''' <exceptioncref="ArgumentException"></exception>
-    Public Sub New(ByVal chains As (IChain, Integer)(), ByVal description As LipidDescription)
+    Public Sub New(chains As (IChain, Integer)(), description As LipidDescription)
         If chains.Length = 0 Then
             Throw New ArgumentException(NameOf(chains))
         End If
@@ -46,7 +46,7 @@ Public Class SeparatedChains
         Me.Description = description
     End Sub
 
-    Private Function GetChainByPosition(ByVal position As Integer) As IChain Implements ITotalChain.GetChainByPosition
+    Private Function GetChainByPosition(position As Integer) As IChain Implements ITotalChain.GetChainByPosition
         Return _chains.FirstOrDefault(Function(c) c.Position = position)?.Chain
     End Function
 
@@ -96,7 +96,7 @@ Public Class SeparatedChains
         End Get
     End Property
 
-    Private Function GetCandidateSets(ByVal totalChainGenerator As ITotalChainVariationGenerator) As IEnumerable(Of ITotalChain) Implements ITotalChain.GetCandidateSets
+    Private Function GetCandidateSets(totalChainGenerator As ITotalChainVariationGenerator) As IEnumerable(Of ITotalChain) Implements ITotalChain.GetCandidateSets
         Dim gc = New GenerateChain(_chains.Length, _decided)
         Dim indetermined = _undecided.[Select](Function(c) c.Chain).ToArray()
         If indetermined.Length > 0 Then
@@ -123,7 +123,7 @@ Public Class SeparatedChains
         Return String.Concat(CType(Enumerable.Select(Of ChainInformation, Global.System.[String])(box, CType(Function(c) CStr(c.Chain.ToString() & If(c.Position < 0, "_", "/")), Func(Of ChainInformation, String))), IEnumerable(Of String))).TrimEnd("_"c, "/"c)
     End Function
 
-    Private Function Includes(ByVal chains As ITotalChain) As Boolean Implements ITotalChain.Includes
+    Private Function Includes(chains As ITotalChain) As Boolean Implements ITotalChain.Includes
         If chains.ChainCount <> ChainCount Then
             Return False
         End If
@@ -154,7 +154,7 @@ Public Class SeparatedChains
         Return True
     End Function
 
-    Public Overridable Function Equals(ByVal other As ITotalChain) As Boolean Implements IEquatable(Of ITotalChain).Equals
+    Public Overridable Function Equals(other As ITotalChain) As Boolean Implements IEquatable(Of ITotalChain).Equals
         If other.ChainCount <> ChainCount Then
             Return False
         End If
@@ -185,7 +185,7 @@ Public Class SeparatedChains
         Return True
     End Function
 
-    Public Overridable Function Accept(Of TResult)(ByVal visitor As IAcyclicVisitor, ByVal decomposer As IAcyclicDecomposer(Of TResult)) As TResult Implements IVisitableElement.Accept
+    Public Overridable Function Accept(Of TResult)(visitor As IAcyclicVisitor, decomposer As IAcyclicDecomposer(Of TResult)) As TResult Implements IVisitableElement.Accept
         Dim decomposer_ As IDecomposer(Of TResult, SeparatedChains) = Nothing
 
         If CSharpImpl.__Assign(decomposer_, TryCast(decomposer, IDecomposer(Of TResult, SeparatedChains))) IsNot Nothing Then
@@ -195,12 +195,12 @@ Public Class SeparatedChains
     End Function
 
     Friend Class ChainInformation
-        Public Sub New(ByVal chain As IChain, ByVal position As Integer)
+        Public Sub New(chain As IChain, position As Integer)
             Me.Chain = chain
             Me.Position = position
         End Sub
 
-        Public Sub New(ByVal chain As IChain)
+        Public Sub New(chain As IChain)
             Me.New(chain, -1)
 
         End Sub
@@ -218,7 +218,7 @@ Public Class SeparatedChains
         Private ReadOnly _box As IChain()
         Private ReadOnly _remains As List(Of Integer)
 
-        Public Sub New(ByVal length As Integer, ByVal determined As IEnumerable(Of ChainInformation))
+        Public Sub New(length As Integer, determined As IEnumerable(Of ChainInformation))
             _box = New IChain(length + 1 - 1) {}
             _remains = Enumerable.Range(1, length).ToList()
             For Each d In determined
@@ -227,7 +227,7 @@ Public Class SeparatedChains
             Next
         End Sub
 
-        Public Function Apply(ByVal chains As IEnumerable(Of IChain)) As IChain()
+        Public Function Apply(chains As IEnumerable(Of IChain)) As IChain()
             Dim result = _box.ToArray()
             For Each iC In _remains.Zip(chains, Function(i, c) (i, c))
                 Dim i = iC.Item1

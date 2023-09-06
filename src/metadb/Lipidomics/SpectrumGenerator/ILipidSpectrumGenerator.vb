@@ -3,7 +3,7 @@ Imports CompMs.Common.Interfaces
 
 
 Public Interface ILipidSpectrumGenerator
-        Function CanGenerate(ByVal lipid As ILipid, ByVal adduct As AdductIon) As Boolean
-        Function Generate(ByVal lipid As Lipid, ByVal adduct As AdductIon, ByVal Optional molecule As IMoleculeProperty = Nothing) As IMSScanProperty
+        Function CanGenerate(lipid As ILipid, adduct As AdductIon) As Boolean
+        Function Generate(lipid As Lipid, adduct As AdductIon, Optional molecule As IMoleculeProperty = Nothing) As IMSScanProperty
     End Interface
 

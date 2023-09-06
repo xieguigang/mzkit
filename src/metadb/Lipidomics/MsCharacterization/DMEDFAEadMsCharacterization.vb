@@ -2,7 +2,7 @@
 Imports CompMs.Common.Interfaces
 
 Friend Class DMEDFAEadMsCharacterization
-    Public Shared Function Characterize(ByVal scan As IMSScanProperty, ByVal molecule As ILipid, ByVal reference As MoleculeMsReference, ByVal tolerance As Single, ByVal mzBegin As Single, ByVal mzEnd As Single) As (ILipid, Double())
+    Public Shared Function Characterize(scan As IMSScanProperty, molecule As ILipid, reference As MoleculeMsReference, tolerance As Single, mzBegin As Single, mzEnd As Single) As (ILipid, Double())
 
         Dim defaultResult = EieioMsCharacterizationUtility.GetDefaultScore(scan, reference, tolerance, mzBegin, mzEnd, 1, 1, 0, 0.5)
         Return GetDefaultCharacterizationResultForSingleAcylChainLipid(molecule, defaultResult)

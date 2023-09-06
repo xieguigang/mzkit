@@ -14,7 +14,7 @@ Public Class CeramideLipidParser
 
     Private Shared ReadOnly ceramideClassPatternField As Regex = New Regex(CeramideClassPattern, RegexOptions.Compiled)
 
-    Public Function Parse(ByVal lipidStr As String) As ILipid Implements ILipidParser.Parse
+    Public Function Parse(lipidStr As String) As ILipid Implements ILipidParser.Parse
         Dim match = patternField.Match(lipidStr)
         If match.Success Then
             Dim group = match.Groups

@@ -14,15 +14,15 @@ Friend Class ChainShorthandNotation
             _chainVisitor = builder.Create()
         End Sub
 
-        Public Function Visit(ByVal item As AcylChain) As AcylChain Implements IVisitor(Of AcylChain, AcylChain).Visit
+        Public Function Visit(item As AcylChain) As AcylChain Implements IVisitor(Of AcylChain, AcylChain).Visit
             Return CType(_chainVisitor, IVisitor(Of AcylChain, AcylChain)).Visit(item)
         End Function
 
-        Public Function Visit(ByVal item As AlkylChain) As AlkylChain Implements IVisitor(Of AlkylChain, AlkylChain).Visit
+        Public Function Visit(item As AlkylChain) As AlkylChain Implements IVisitor(Of AlkylChain, AlkylChain).Visit
             Return CType(_chainVisitor, IVisitor(Of AlkylChain, AlkylChain)).Visit(item)
         End Function
 
-        Public Function Visit(ByVal item As SphingoChain) As SphingoChain Implements IVisitor(Of SphingoChain, SphingoChain).Visit
+        Public Function Visit(item As SphingoChain) As SphingoChain Implements IVisitor(Of SphingoChain, SphingoChain).Visit
             Return CType(_chainVisitor, IVisitor(Of SphingoChain, SphingoChain)).Visit(item)
         End Function
     End Class

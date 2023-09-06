@@ -9,7 +9,7 @@ Public NotInheritable Class LipidMassLibraryGenerator
         Private Sub New()
         End Sub
 
-        Public Shared Sub Integrate(ByVal inputfolder As String, ByVal output As String)
+        Public Shared Sub Integrate(inputfolder As String, output As String)
             Dim files = Directory.GetFiles(inputfolder, "*.txt", SearchOption.TopDirectoryOnly)
             Using sw = New StreamWriter(output, False, Encoding.ASCII)
                 sw.WriteLine("Name" & Microsoft.VisualBasic.Constants.vbTab & "MZ" & Microsoft.VisualBasic.Constants.vbTab & "Adduct")
@@ -24,7 +24,7 @@ Public NotInheritable Class LipidMassLibraryGenerator
             End Using
         End Sub
 
-        Public Shared Sub Run(ByVal outputfolder As String, ByVal lipidclass As LbmClass, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer, ByVal maxOxygen As Integer)
+        Public Shared Sub Run(outputfolder As String, lipidclass As LbmClass, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer, maxOxygen As Integer)
 
             Select Case lipidclass
                 Case LbmClass.PC
@@ -260,42 +260,42 @@ Public NotInheritable Class LipidMassLibraryGenerator
         End Sub
 
 
-        Private Shared Sub generatePsSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generatePsSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "PS" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C6H12NO8P")
             commonGlycerolipidsGenerator(filepath, "PS", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 2)
         End Sub
 
-        Private Shared Sub generatePeSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generatePeSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "PE" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C5H12NO6P")
             commonGlycerolipidsGenerator(filepath, "PE", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 2)
         End Sub
 
-        Private Shared Sub generatePcSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generatePcSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "PC" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C8H18NO6P")
             commonGlycerolipidsGenerator(filepath, "PC", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 2)
         End Sub
 
-        Private Shared Sub generatePiSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generatePiSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "PI" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C9H17O11P")
             commonGlycerolipidsGenerator(filepath, "PI", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 2)
         End Sub
 
-        Private Shared Sub generatePgSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generatePgSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "PG" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C6H13O8P")
             commonGlycerolipidsGenerator(filepath, "PG", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 2)
         End Sub
 
-        Private Shared Sub generateTagSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generateTagSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "TAG" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C3H5O3")
@@ -303,168 +303,168 @@ Public NotInheritable Class LipidMassLibraryGenerator
         End Sub
 
 
-        Private Shared Sub generateLnapeSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generateLnapeSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "LNAPE" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C5H12NO6P")
             commonGlycerolipidsGenerator(filepath, "LNAPE", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 2)
         End Sub
         'add
-        Private Shared Sub generateDagSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generateDagSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "DAG" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C3H6O3")
             commonGlycerolipidsGenerator(filepath, "DAG", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 2)
         End Sub
-        Private Shared Sub generateMagSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generateMagSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "MAG" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C3H7O3")
             commonGlycerolipidsGenerator(filepath, "MAG", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1)
         End Sub
-        Private Shared Sub generateFaSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generateFaSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "FA" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("HO")
             commonGlycerolipidsGenerator(filepath, "FA", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1)
         End Sub
-        Private Shared Sub generateFahfaSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generateFahfaSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "FAHFA" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("HO")
             fahfaGenerator(filepath, "FAHFA", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
         End Sub
 
-        Private Shared Sub generateLpcSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generateLpcSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "LPC" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C8H19NO6P")
             commonGlycerolipidsGenerator(filepath, "LPC", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1)
         End Sub
-        Private Shared Sub generateLpeSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generateLpeSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "LPE" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C5H13NO6P")
             commonGlycerolipidsGenerator(filepath, "LPE", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1)
         End Sub
-        Private Shared Sub generateLpgSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generateLpgSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "LPG" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C6H14O8P")
             commonGlycerolipidsGenerator(filepath, "LPG", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1)
         End Sub
-        Private Shared Sub generateLpiSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generateLpiSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "LPI" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C9H18O11P")
             commonGlycerolipidsGenerator(filepath, "LPI", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1)
         End Sub
-        Private Shared Sub generateLpsSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generateLpsSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "LPS" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C6H13NO8P")
             commonGlycerolipidsGenerator(filepath, "LPS", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1)
         End Sub
-        Private Shared Sub generateLpaSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generateLpaSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "LPA" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C3H8O6P")
             commonGlycerolipidsGenerator(filepath, "LPA", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1)
         End Sub
-        Private Shared Sub generatePaSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generatePaSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "PA" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C3H7O6P")
             commonGlycerolipidsGenerator(filepath, "PA", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 2)
         End Sub
-        Private Shared Sub generateMgdgSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generateMgdgSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "MGDG" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C9H16O8")
             commonGlycerolipidsGenerator(filepath, "MGDG", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 2)
         End Sub
-        Private Shared Sub generateSqdgSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generateSqdgSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "SQDG" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C9H16O10S")
             commonGlycerolipidsGenerator(filepath, "SQDG", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 2)
         End Sub
-        Private Shared Sub generateDgdgSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generateDgdgSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "DGDG" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C15H26O13")
             commonGlycerolipidsGenerator(filepath, "DGDG", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 2)
         End Sub
-        Private Shared Sub generateDgtsSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generateDgtsSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "DGTS" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C10H19NO5")
             commonGlycerolipidsGenerator(filepath, "DGTS", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 2)
         End Sub
-        Private Shared Sub generateLdgtsSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generateLdgtsSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "LDGTS" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C10H20NO5")
             commonGlycerolipidsGenerator(filepath, "LDGTS", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1)
         End Sub
-        Private Shared Sub generateHbmpSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generateHbmpSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "HBMP" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C6H12O8P")
             commonGlycerolipidsGenerator(filepath, "HBMP", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 3)
         End Sub
-        Private Shared Sub generateBmpSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generateBmpSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "BMP" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C6H13O8P")
             commonGlycerolipidsGenerator(filepath, "BMP", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 2)
         End Sub
-        Private Shared Sub generateAcarSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generateAcarSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "ACar" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C7H15O3N")
             commonGlycerolipidsGenerator(filepath, "ACar", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1)
         End Sub
-        Private Shared Sub generateGlcadgSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generateGlcadgSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "GlcADG" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C9H14O9")
             commonGlycerolipidsGenerator(filepath, "GlcADG", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 2)
         End Sub
-        Private Shared Sub generateAcylglcadgSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generateAcylglcadgSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "AcylGlcADG" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C9H13O9")
             commonGlycerolipidsGenerator(filepath, "AcylGlcADG", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 3)
         End Sub
-        Private Shared Sub generateClSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generateClSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "CL" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C9H18O13P2")
             commonGlycerolipidsGenerator(filepath, "CL", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 4)
         End Sub
-        Private Shared Sub generateCeSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generateCeSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "CE" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C27H45O")
             commonGlycerolipidsGenerator(filepath, "CE", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1)
         End Sub
 
-        Private Shared Sub generateEtherpeSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generateEtherpeSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "EtherPE" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C5H12NO6P")
             commonGlycerolipidsEtherGenerator(filepath, "EtherPE", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 2, 1)
         End Sub
 
-        Private Shared Sub generateEtherpcSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generateEtherpcSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "EtherPC" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C8H18NO6P")
             commonGlycerolipidsEtherGenerator(filepath, "EtherPC", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 2, 1)
         End Sub
         ' ceramide
-        Private Shared Sub generateSmSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generateSmSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "SM" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C5H13NO3P")
@@ -473,7 +473,7 @@ Public NotInheritable Class LipidMassLibraryGenerator
             commonCeramideGenerator(filepath, "SM", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
         End Sub
         'add MT
-        Private Shared Sub generateCerapSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generateCerapSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "Cer_AP" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("H")
@@ -481,7 +481,7 @@ Public NotInheritable Class LipidMassLibraryGenerator
             Dim acylHydroxyCount = 1
             commonCeramideGenerator(filepath, "Cer_AP", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
         End Sub
-        Private Shared Sub generateCeradsSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generateCeradsSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "Cer_ADS" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("H")
@@ -489,7 +489,7 @@ Public NotInheritable Class LipidMassLibraryGenerator
             Dim acylHydroxyCount = 1
             commonCeramideGenerator(filepath, "Cer_ADS", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
         End Sub
-        Private Shared Sub generateCerasSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generateCerasSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "Cer_AS" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("H")
@@ -497,7 +497,7 @@ Public NotInheritable Class LipidMassLibraryGenerator
             Dim acylHydroxyCount = 1
             commonCeramideGenerator(filepath, "Cer_AS", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
         End Sub
-        Private Shared Sub generateCernpSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generateCernpSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "Cer_NP" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("H")
@@ -505,7 +505,7 @@ Public NotInheritable Class LipidMassLibraryGenerator
             Dim acylHydroxyCount = 0
             commonCeramideGenerator(filepath, "Cer_NP", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
         End Sub
-        Private Shared Sub generateCerndsSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generateCerndsSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "Cer_NDS" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("H")
@@ -513,7 +513,7 @@ Public NotInheritable Class LipidMassLibraryGenerator
             Dim acylHydroxyCount = 0
             commonCeramideGenerator(filepath, "Cer_NDS", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
         End Sub
-        Private Shared Sub generateCernsSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generateCernsSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "Cer_NS" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("H")
@@ -521,7 +521,7 @@ Public NotInheritable Class LipidMassLibraryGenerator
             Dim acylHydroxyCount = 0
             commonCeramideGenerator(filepath, "Cer_NS", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
         End Sub
-        Private Shared Sub generateCerbdsSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generateCerbdsSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "Cer_BDS" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("H")
@@ -529,7 +529,7 @@ Public NotInheritable Class LipidMassLibraryGenerator
             Dim acylHydroxyCount = 1
             commonCeramideGenerator(filepath, "Cer_BDS", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
         End Sub
-        Private Shared Sub generateCerbsSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generateCerbsSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "Cer_BS" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("H")
@@ -537,7 +537,7 @@ Public NotInheritable Class LipidMassLibraryGenerator
             Dim acylHydroxyCount = 1
             commonCeramideGenerator(filepath, "Cer_BS", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
         End Sub
-        Private Shared Sub generateHexcerapSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generateHexcerapSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "HexCer_AP" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C6H11O5")
@@ -545,7 +545,7 @@ Public NotInheritable Class LipidMassLibraryGenerator
             Dim acylHydroxyCount = 1
             commonCeramideGenerator(filepath, "HexCer_AP", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
         End Sub
-        Private Shared Sub generateHexcerndsSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generateHexcerndsSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "HexCer_NDS" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C6H11O5")
@@ -553,7 +553,7 @@ Public NotInheritable Class LipidMassLibraryGenerator
             Dim acylHydroxyCount = 0
             commonCeramideGenerator(filepath, "HexCer_NDS", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
         End Sub
-        Private Shared Sub generateHexcernsSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generateHexcernsSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "HexCer_NS" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C6H11O5")
@@ -561,7 +561,7 @@ Public NotInheritable Class LipidMassLibraryGenerator
             Dim acylHydroxyCount = 0
             commonCeramideGenerator(filepath, "HexCer_NS", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
         End Sub
-        Private Shared Sub generateCereodsSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generateCereodsSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "Cer_EODS" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("H")
@@ -569,7 +569,7 @@ Public NotInheritable Class LipidMassLibraryGenerator
             Dim acylHydroxyCount = 1
             commonCeramideEsterGenerator(filepath, "Cer_EODS", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
         End Sub
-        Private Shared Sub generateCereosSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generateCereosSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "Cer_EOS" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("H")
@@ -577,7 +577,7 @@ Public NotInheritable Class LipidMassLibraryGenerator
             Dim acylHydroxyCount = 1
             commonCeramideEsterGenerator(filepath, "Cer_EOS", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
         End Sub
-        Private Shared Sub generateHexcereosSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generateHexcereosSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "HexCer_EOS" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C6H11O5")
@@ -587,49 +587,49 @@ Public NotInheritable Class LipidMassLibraryGenerator
         End Sub
 
         '
-        Private Shared Sub generateOxfaSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer, ByVal maxOxygen As Integer)
+        Private Shared Sub generateOxfaSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer, maxOxygen As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "OxFA" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("HO")
             Dim acylCount = 1
             commonGlycerolipidsOxGenerator(filepath, "OxFA", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, maxOxygen, acylCount)
         End Sub
-        Private Shared Sub generateOxpcSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer, ByVal maxOxygen As Integer)
+        Private Shared Sub generateOxpcSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer, maxOxygen As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "OxPC" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C8H18NO6P")
             Dim acylCount = 2
             commonGlycerolipidsOxGenerator(filepath, "OxPC", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, maxOxygen, acylCount)
         End Sub
-        Private Shared Sub generateOxpeSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer, ByVal maxOxygen As Integer)
+        Private Shared Sub generateOxpeSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer, maxOxygen As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "OxPE" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C5H12NO6P")
             Dim acylCount = 2
             commonGlycerolipidsOxGenerator(filepath, "OxPE", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, maxOxygen, acylCount)
         End Sub
-        Private Shared Sub generateOxpgSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer, ByVal maxOxygen As Integer)
+        Private Shared Sub generateOxpgSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer, maxOxygen As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "OxPG" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C6H13O8P")
             Dim acylCount = 2
             commonGlycerolipidsOxGenerator(filepath, "OxPG", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, maxOxygen, acylCount)
         End Sub
-        Private Shared Sub generateOxpiSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer, ByVal maxOxygen As Integer)
+        Private Shared Sub generateOxpiSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer, maxOxygen As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "OxPI" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C9H17O11P")
             Dim acylCount = 2
             commonGlycerolipidsOxGenerator(filepath, "OxPI", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, maxOxygen, acylCount)
         End Sub
-        Private Shared Sub generateOxpsSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer, ByVal maxOxygen As Integer)
+        Private Shared Sub generateOxpsSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer, maxOxygen As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "OxPS" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C6H12NO8P")
             Dim acylCount = 2
             commonGlycerolipidsOxGenerator(filepath, "OxPS", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, maxOxygen, acylCount)
         End Sub
-        Private Shared Sub generateOxpcEtherSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer, ByVal maxOxygen As Integer)
+        Private Shared Sub generateOxpcEtherSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer, maxOxygen As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "EtherOxPC" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C8H18NO6P")
@@ -637,7 +637,7 @@ Public NotInheritable Class LipidMassLibraryGenerator
             Dim etherCount = 1
             commonGlycerolipidsOxEtherGenerator(filepath, "EtherOxPC", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, maxOxygen, acylCount, etherCount)
         End Sub
-        Private Shared Sub generateOxpeEtherSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer, ByVal maxOxygen As Integer)
+        Private Shared Sub generateOxpeEtherSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer, maxOxygen As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "EtherOxPE" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C5H12NO6P")
@@ -646,25 +646,25 @@ Public NotInheritable Class LipidMassLibraryGenerator
             commonGlycerolipidsOxEtherGenerator(filepath, "EtherOxPE", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, maxOxygen, acylCount, etherCount)
         End Sub
         'others
-        Private Shared Sub generatePetohSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generatePetohSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "PEtOH" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C5H11O6P")
             commonGlycerolipidsGenerator(filepath, "PEtOH", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 2)
         End Sub
-        Private Shared Sub generatePmeohSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generatePmeohSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "PMeOH" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C4H9O6P")
             commonGlycerolipidsGenerator(filepath, "PMeOH", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 2)
         End Sub
-        Private Shared Sub generatePbtohSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generatePbtohSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "PBtOH" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C7H15O6P")
             commonGlycerolipidsGenerator(filepath, "PBtOH", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 2)
         End Sub
-        Private Shared Sub generateGm3Species(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generateGm3Species(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "GM3" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C23H38NO18")
@@ -672,7 +672,7 @@ Public NotInheritable Class LipidMassLibraryGenerator
             Dim acylHydroxyCount = 0
             commonCeramideGenerator(filepath, "GM3", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
         End Sub
-        Private Shared Sub generateShexcerSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generateShexcerSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "SHexCer" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C6H11O8S")
@@ -680,26 +680,26 @@ Public NotInheritable Class LipidMassLibraryGenerator
             Dim acylHydroxyCount = 0
             commonCeramideGenerator(filepath, "SHexCer", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
         End Sub
-        Private Shared Sub generateLnapsSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generateLnapsSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "LNAPS" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C6H12NO8P")
             commonGlycerolipidsGenerator(filepath, "LNAPS", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 2)
         End Sub
-        Private Shared Sub generateEtherlpeSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generateEtherlpeSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "EtherLPE" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C5H13NO6P")
             commonGlycerolipidsEtherGenerator(filepath, "EtherLPE", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1, 1)
         End Sub
 
-        Private Shared Sub generateEtherlpcSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generateEtherlpcSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "EtherLPC" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C8H19NO6P")
             commonGlycerolipidsEtherGenerator(filepath, "EtherLPC", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1, 1)
         End Sub
-        Private Shared Sub generateHexhexcernsSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generateHexhexcernsSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "HexHexCer_NS" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C12H21O10")
@@ -707,7 +707,7 @@ Public NotInheritable Class LipidMassLibraryGenerator
             Dim acylHydroxyCount = 0
             commonCeramideGenerator(filepath, "HexHexCer_NS", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
         End Sub
-        Private Shared Sub generateHexhexhexcernsSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generateHexhexhexcernsSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "HexHexHexCer_NS" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C18H31O15")
@@ -715,7 +715,7 @@ Public NotInheritable Class LipidMassLibraryGenerator
             Dim acylHydroxyCount = 0
             commonCeramideGenerator(filepath, "HexHexHexCer_NS", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
         End Sub
-        Private Shared Sub generateAcylcerbdsSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generateAcylcerbdsSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "AcylCer_BDS" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("H")
@@ -723,7 +723,7 @@ Public NotInheritable Class LipidMassLibraryGenerator
             Dim acylHydroxyCount = 1
             commonCeramideEsterGenerator(filepath, "AcylCer_BDS", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
         End Sub
-        Private Shared Sub generateAcylhexcerasSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generateAcylhexcerasSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "AcylHexCer" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C6H11O5")
@@ -731,7 +731,7 @@ Public NotInheritable Class LipidMassLibraryGenerator
             Dim acylHydroxyCount = 1
             commonCeramideEsterGenerator(filepath, "AcylHexCer", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
         End Sub
-        Private Shared Sub generateAcylsmSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generateAcylsmSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "AcylSM" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C5H13NO3P")
@@ -739,7 +739,7 @@ Public NotInheritable Class LipidMassLibraryGenerator
             Dim acylHydroxyCount = 0
             commonCeramideEsterGenerator(filepath, "AcylSM", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
         End Sub
-        Private Shared Sub generateCerosSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generateCerosSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "Cer_OS" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("H")
@@ -747,53 +747,53 @@ Public NotInheritable Class LipidMassLibraryGenerator
             Dim acylHydroxyCount = 1
             commonCeramideGenerator(filepath, "Cer_OS", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
         End Sub
-        Private Shared Sub generateLclSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generateLclSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "LCL" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C9H19O13P2")
             commonGlycerolipidsGenerator(filepath, "LCL", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 3)
         End Sub
-        Private Shared Sub generateDlclSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generateDlclSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "DLCL" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C9H20O13P2")
             commonGlycerolipidsGenerator(filepath, "DLCL", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 2)
         End Sub
-        Private Shared Sub generatePhytosphingosineSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generatePhytosphingosineSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "Phytosphingosine" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("H")
             Dim hydroxyCount = 3
             commonSphingosineGenerator(filepath, "Phytosphingosine", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, hydroxyCount)
         End Sub
-        Private Shared Sub generateSphingosineSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generateSphingosineSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "Sphingosine" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("H")
             Dim hydroxyCount = 2
             commonSphingosineGenerator(filepath, "Sphingosine", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, hydroxyCount)
         End Sub
-        Private Shared Sub generateSphinganineSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generateSphinganineSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "Sphinganine" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("H")
             Dim hydroxyCount = 2
             commonSphingosineGenerator(filepath, "Sphinganine", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, hydroxyCount)
         End Sub
-        Private Shared Sub generateEthermgdgSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generateEthermgdgSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "EtherMGDG" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C9H16O8")
             commonGlycerolipidsEtherGenerator(filepath, "EtherMGDG", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 2, 1)
         End Sub
-        Private Shared Sub generateEtherdgdgSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generateEtherdgdgSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "EtherDGDG" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C15H26O13")
             commonGlycerolipidsEtherGenerator(filepath, "EtherDGDG", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 2, 1)
         End Sub
 
-        Private Shared Sub generateEthertagSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generateEthertagSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "EtherTAG" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C3H5O3")
@@ -801,19 +801,19 @@ Public NotInheritable Class LipidMassLibraryGenerator
         End Sub
 
         ' add 10/04/19
-        Private Shared Sub generateEtherpiSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generateEtherpiSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "EtherPI" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C9H17O11P")
             commonGlycerolipidsEtherGenerator(filepath, "EtherPI", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 2, 1)
         End Sub
-        Private Shared Sub generateEtherpsSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generateEtherpsSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "EtherPS" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C6H12NO8P")
             commonGlycerolipidsEtherGenerator(filepath, "EtherPS", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 2, 1)
         End Sub
-        Private Shared Sub generatePetceramideSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generatePetceramideSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "PE-Cer(t)" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C2H7NO3P")
@@ -821,7 +821,7 @@ Public NotInheritable Class LipidMassLibraryGenerator
             Dim acylHydroxyCount = 0
             commonCeramideGenerator(filepath, "PE_Cer", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
         End Sub
-        Private Shared Sub generatePedceramideSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generatePedceramideSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "PE-Cer(d)" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C2H7NO3P")
@@ -831,80 +831,80 @@ Public NotInheritable Class LipidMassLibraryGenerator
         End Sub
 
         ''' add 13/05/19
-        Private Shared Sub generateDcaesSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generateDcaesSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "DCAE" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C24H39O4")
             commonGlycerolipidsGenerator(filepath, "DCAE", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1)
         End Sub
-        Private Shared Sub generateGdcaesSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generateGdcaesSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "GDCAE" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C26H42NO5")
             commonGlycerolipidsGenerator(filepath, "GDCAE", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1)
         End Sub
-        Private Shared Sub generateGlcaesSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generateGlcaesSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "GLCAE" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C26H42NO4")
             commonGlycerolipidsGenerator(filepath, "GLCAE", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1)
         End Sub
-        Private Shared Sub generateTdcaesSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generateTdcaesSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "TDCAE" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C26H44NO6S")
             commonGlycerolipidsGenerator(filepath, "TDCAE", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1)
         End Sub
-        Private Shared Sub generateTlcaesSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generateTlcaesSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "TLCAE" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C26H44NO5S")
             commonGlycerolipidsGenerator(filepath, "TLCAE", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1)
         End Sub
 
-        Private Shared Sub generateAnandamideSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generateAnandamideSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "Anandamide" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C2H6NO")
             commonGlycerolipidsGenerator(filepath, "NAE", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1)
         End Sub
 
-        Private Shared Sub generateFAHFAmideGlySpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generateFAHFAmideGlySpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "FAHFAmide(Gly)" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C2H4NO2")
             fahfaGenerator(filepath, "NAAG", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
         End Sub
 
-        Private Shared Sub generateFAHFAmideGlySerSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generateFAHFAmideGlySerSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "FAHFAmide(GlySer)" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C5H9N2O4")
             fahfaGenerator(filepath, "NAAGS", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
         End Sub
 
-        Private Shared Sub generateSulfonolipidSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer, ByVal oxygenCount As Integer)
+        Private Shared Sub generateSulfonolipidSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer, oxygenCount As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "Sulfonolipid" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("SO3H")
             commonSulfonolipidGenerator(filepath, "SL", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, oxygenCount)
         End Sub
 
-        Private Shared Sub generateEtherpgSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generateEtherpgSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "EtherPG" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C6H13O8P")
             commonGlycerolipidsEtherGenerator(filepath, "EtherPG", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 2, 1)
         End Sub
 
-        Private Shared Sub generateEtherlpgSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generateEtherlpgSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "EtherLPG" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C6H15O7P")
             commonGlycerolipidsEtherGenerator(filepath, "EtherLPG", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 2, 1)
         End Sub
 
-        Private Shared Sub generatePiceramideDihydroxySpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer, ByVal maxOxydized As Integer)
+        Private Shared Sub generatePiceramideDihydroxySpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer, maxOxydized As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "PI-Cer(d)" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C6H12O8P")
@@ -912,7 +912,7 @@ Public NotInheritable Class LipidMassLibraryGenerator
             Dim acylHydroxyCount = 0
             commonCeramideGenerator(filepath, "PI_Cer", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
         End Sub
-        Private Shared Sub generatePiceramideTrihydroxySpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer, ByVal maxOxydized As Integer)
+        Private Shared Sub generatePiceramideTrihydroxySpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer, maxOxydized As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "PI-Cer(t)" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C6H12O8P")
@@ -920,7 +920,7 @@ Public NotInheritable Class LipidMassLibraryGenerator
             Dim acylHydroxyCount = 0
             commonCeramideGenerator(filepath, "PI_Cer", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
         End Sub
-        Private Shared Sub generatePiceramideOxDihydroxySpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer, ByVal maxOxydized As Integer)
+        Private Shared Sub generatePiceramideOxDihydroxySpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer, maxOxydized As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "PI-Cer(d_O)" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C6H12O8P")
@@ -928,7 +928,7 @@ Public NotInheritable Class LipidMassLibraryGenerator
             Dim acylHydroxyCount = 1
             commonCeramideOxGenerator(filepath, "PI_Cer", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
         End Sub
-        Private Shared Sub generateShexcerOxSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generateShexcerOxSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "SHexCerO" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C6H11O8S")
@@ -936,7 +936,7 @@ Public NotInheritable Class LipidMassLibraryGenerator
             Dim acylHydroxyCount = 1
             commonCeramideOxGenerator(filepath, "SHexCer", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
         End Sub
-        Private Shared Sub generateCoenzymeqSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minRepeatCount As Integer, ByVal maxRepeatCount As Integer)
+        Private Shared Sub generateCoenzymeqSpecies(outputfolder As String, adduct As AdductIon, minRepeatCount As Integer, maxRepeatCount As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "CoQ" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C9H10O4")
@@ -944,7 +944,7 @@ Public NotInheritable Class LipidMassLibraryGenerator
             commonCoenzymeqlipidsGenerator(filepath, "CoQ", headerFormula, adduct, minRepeatCount, maxRepeatCount, additionalFormula)
         End Sub
 
-        Private Shared Sub generateVitaminESpecies(ByVal outputfolder As String, ByVal adduct As AdductIon)
+        Private Shared Sub generateVitaminESpecies(outputfolder As String, adduct As AdductIon)
             Dim adductString = adduct.AdductIonName
             If Equals(adductString.Substring(adductString.Length - 1, 1), "-") Then
                 Dim filepath = outputfolder & "\" & "VitaminE" & "_" & adductString & ".txt"
@@ -952,7 +952,7 @@ Public NotInheritable Class LipidMassLibraryGenerator
                 commonSinglemoleculeGenerator(filepath, "Vitamin", formula, adduct)
             End If
         End Sub
-        Private Shared Sub generateVitaminDSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon)
+        Private Shared Sub generateVitaminDSpecies(outputfolder As String, adduct As AdductIon)
             Dim adductString = adduct.AdductIonName
             If Equals(adductString, "[M+H]+") Then
                 Dim filepath = outputfolder & "\" & "VitaminD" & "_" & adductString & ".txt"
@@ -960,7 +960,7 @@ Public NotInheritable Class LipidMassLibraryGenerator
                 commonSinglemoleculeGenerator(filepath, "Vitamin", formula, adduct)
             End If
         End Sub
-        Private Shared Sub generateVitaminASpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generateVitaminASpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             If Equals(adductString.Substring(adductString.Length - 1, 1), "+") Then
                 Dim filepath = outputfolder & "\" & "VitaminA" & "_" & adductString & ".txt"
@@ -969,65 +969,65 @@ Public NotInheritable Class LipidMassLibraryGenerator
             End If
         End Sub
 
-        Private Shared Sub generateFAHFAmideOrnSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generateFAHFAmideOrnSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "FAHFAmide(Orn)" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C5H11N2O2")
             fahfaGenerator(filepath, "NAAO", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
         End Sub
 
-        Private Shared Sub generateBrseSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generateBrseSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "BRSE" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C28H45O")
             commonGlycerolipidsGenerator(filepath, "BRSE", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1)
         End Sub
-        Private Shared Sub generateCaseSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generateCaseSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "CASE" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C28H47O")
             commonGlycerolipidsGenerator(filepath, "CASE", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1)
         End Sub
-        Private Shared Sub generateSiseSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generateSiseSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "SISE" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C29H49O")
             commonGlycerolipidsGenerator(filepath, "SISE", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1)
         End Sub
 
-        Private Shared Sub generateStseSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generateStseSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "STSE" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C29H47O")
             commonGlycerolipidsGenerator(filepath, "STSE", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1)
         End Sub
 
-        Private Shared Sub generateAhexbrseSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generateAhexbrseSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "AHexBRSE" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C34H55O6")
             commonGlycerolipidsGenerator(filepath, "AHexBRSE", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1)
         End Sub
 
-        Private Shared Sub generateAhexcaseSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generateAhexcaseSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "AHexCASE" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C34H57O6")
             commonGlycerolipidsGenerator(filepath, "AHexCASE", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1)
         End Sub
-        Private Shared Sub generateAhexceSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generateAhexceSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "AHexCE" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C33H55O6")
             commonGlycerolipidsGenerator(filepath, "AHexCE", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1)
         End Sub
-        Private Shared Sub generateAhexsiseSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generateAhexsiseSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "AHexSISE" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C35H59O6")
             commonGlycerolipidsGenerator(filepath, "AHexSISE", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1)
         End Sub
-        Private Shared Sub generateAhexstseSpecies(ByVal outputfolder As String, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub generateAhexstseSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Dim adductString = adduct.AdductIonName
             Dim filepath = outputfolder & "\" & "AHexSTSE" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C35H57O6")
@@ -1036,7 +1036,7 @@ Public NotInheritable Class LipidMassLibraryGenerator
 
 
 
-        Private Shared Sub commonGlycerolipidsOxGenerator(ByVal filepath As String, ByVal classString As String, ByVal headerFormula As Formula, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer, ByVal maxOxygen As Integer, ByVal acylCount As Integer)
+        Private Shared Sub commonGlycerolipidsOxGenerator(filepath As String, classString As String, headerFormula As Formula, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer, maxOxygen As Integer, acylCount As Integer)
 
             Using sw = New StreamWriter(filepath, False, Encoding.ASCII)
                 writeHeader(sw)
@@ -1068,7 +1068,7 @@ Public NotInheritable Class LipidMassLibraryGenerator
                 Next
             End Using
         End Sub
-        Private Shared Sub commonGlycerolipidsOxEtherGenerator(ByVal filepath As String, ByVal classString As String, ByVal headerFormula As Formula, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer, ByVal maxOxygen As Integer, ByVal acylCount As Integer, ByVal etherCount As Integer)
+        Private Shared Sub commonGlycerolipidsOxEtherGenerator(filepath As String, classString As String, headerFormula As Formula, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer, maxOxygen As Integer, acylCount As Integer, etherCount As Integer)
 
             Using sw = New StreamWriter(filepath, False, Encoding.ASCII)
                 writeHeader(sw)
@@ -1102,7 +1102,7 @@ Public NotInheritable Class LipidMassLibraryGenerator
         End Sub
 
 
-        Private Shared Sub fahfaGenerator(ByVal filepath As String, ByVal classString As String, ByVal headerFormula As Formula, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer)
+        Private Shared Sub fahfaGenerator(filepath As String, classString As String, headerFormula As Formula, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
             Using sw = New StreamWriter(filepath, False, Encoding.ASCII)
                 writeHeader(sw)
                 For i = minCarbonCount To maxCarbonCount
@@ -1127,7 +1127,7 @@ Public NotInheritable Class LipidMassLibraryGenerator
         End Sub
 
 
-        Private Shared Sub commonCeramideGenerator(ByVal filepath As String, ByVal classString As String, ByVal headerFormula As Formula, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer, ByVal sphingoHydroxyCount As Integer, ByVal acylHydroxyCount As Integer)
+        Private Shared Sub commonCeramideGenerator(filepath As String, classString As String, headerFormula As Formula, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer, sphingoHydroxyCount As Integer, acylHydroxyCount As Integer)
 
             Dim hydroHeader = "d"
             If sphingoHydroxyCount = 3 Then hydroHeader = "t"
@@ -1154,7 +1154,7 @@ Public NotInheritable Class LipidMassLibraryGenerator
             End Using
         End Sub
 
-        Private Shared Sub commonGlycerolipidsGenerator(ByVal filepath As String, ByVal classString As String, ByVal headerFormula As Formula, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer, ByVal acylCount As Integer)
+        Private Shared Sub commonGlycerolipidsGenerator(filepath As String, classString As String, headerFormula As Formula, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer, acylCount As Integer)
 
             Using sw = New StreamWriter(filepath, False, Encoding.ASCII)
                 writeHeader(sw)
@@ -1178,7 +1178,7 @@ Public NotInheritable Class LipidMassLibraryGenerator
             End Using
         End Sub
         'add MT
-        Private Shared Sub commonGlycerolipidsEtherGenerator(ByVal filepath As String, ByVal classString As String, ByVal headerFormula As Formula, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer, ByVal acylCount As Integer, ByVal etherCount As Integer)
+        Private Shared Sub commonGlycerolipidsEtherGenerator(filepath As String, classString As String, headerFormula As Formula, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer, acylCount As Integer, etherCount As Integer)
 
             Using sw = New StreamWriter(filepath, False, Encoding.ASCII)
                 writeHeader(sw)
@@ -1201,7 +1201,7 @@ Public NotInheritable Class LipidMassLibraryGenerator
                 Next
             End Using
         End Sub
-        Private Shared Sub commonCeramideEsterGenerator(ByVal filepath As String, ByVal classString As String, ByVal headerFormula As Formula, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer, ByVal sphingoHydroxyCount As Integer, ByVal acylHydroxyCount As Integer)
+        Private Shared Sub commonCeramideEsterGenerator(filepath As String, classString As String, headerFormula As Formula, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer, sphingoHydroxyCount As Integer, acylHydroxyCount As Integer)
             Dim hydroHeader = "d"
             If sphingoHydroxyCount = 3 Then hydroHeader = "t"
             Using sw = New StreamWriter(filepath, False, Encoding.ASCII)
@@ -1226,7 +1226,7 @@ Public NotInheritable Class LipidMassLibraryGenerator
                 Next
             End Using
         End Sub
-        Private Shared Sub commonSphingosineGenerator(ByVal filepath As String, ByVal classString As String, ByVal headerFormula As Formula, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer, ByVal HydroxyCount As Integer)
+        Private Shared Sub commonSphingosineGenerator(filepath As String, classString As String, headerFormula As Formula, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer, HydroxyCount As Integer)
 
             Using sw = New StreamWriter(filepath, False, Encoding.ASCII)
                 writeHeader(sw)
@@ -1251,7 +1251,7 @@ Public NotInheritable Class LipidMassLibraryGenerator
             End Using
         End Sub
 
-        Private Shared Sub commonSulfonolipidGenerator(ByVal filepath As String, ByVal classString As String, ByVal headerFormula As Formula, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer, ByVal acylHydroxyCount As Integer)
+        Private Shared Sub commonSulfonolipidGenerator(filepath As String, classString As String, headerFormula As Formula, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer, acylHydroxyCount As Integer)
 
             Dim hydroHeader = "m"
             Using sw = New StreamWriter(filepath, False, Encoding.ASCII)
@@ -1282,7 +1282,7 @@ Public NotInheritable Class LipidMassLibraryGenerator
             End Using
         End Sub
 
-        Private Shared Sub commonCeramideOxGenerator(ByVal filepath As String, ByVal classString As String, ByVal headerFormula As Formula, ByVal adduct As AdductIon, ByVal minCarbonCount As Integer, ByVal maxCarbonCount As Integer, ByVal minDoubleBond As Integer, ByVal maxDoubleBond As Integer, ByVal sphingoHydroxyCount As Integer, ByVal acylHydroxyCount As Integer)
+        Private Shared Sub commonCeramideOxGenerator(filepath As String, classString As String, headerFormula As Formula, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer, sphingoHydroxyCount As Integer, acylHydroxyCount As Integer)
 
             Dim hydroHeader = "d"
             If sphingoHydroxyCount = 3 Then hydroHeader = "t"
@@ -1315,7 +1315,7 @@ Public NotInheritable Class LipidMassLibraryGenerator
             End Using
         End Sub
 
-        Private Shared Sub commonCoenzymeqlipidsGenerator(ByVal filepath As String, ByVal classString As String, ByVal headerFormula As Formula, ByVal adduct As AdductIon, ByVal minRepeatCount As Integer, ByVal maxRepeatCount As Integer, ByVal additionalFormula As Formula)
+        Private Shared Sub commonCoenzymeqlipidsGenerator(filepath As String, classString As String, headerFormula As Formula, adduct As AdductIon, minRepeatCount As Integer, maxRepeatCount As Integer, additionalFormula As Formula)
 
             Using sw = New StreamWriter(filepath, False, Encoding.ASCII)
                 writeHeader(sw)
@@ -1335,7 +1335,7 @@ Public NotInheritable Class LipidMassLibraryGenerator
             End Using
         End Sub
 
-        Private Shared Sub commonSinglemoleculeGenerator(ByVal filepath As String, ByVal classString As String, ByVal headerFormula As Formula, ByVal adduct As AdductIon)
+        Private Shared Sub commonSinglemoleculeGenerator(filepath As String, classString As String, headerFormula As Formula, adduct As AdductIon)
             Using sw = New StreamWriter(filepath, False, Encoding.ASCII)
                 writeHeader(sw)
                 Dim totalCarbon = headerFormula.Cnum
@@ -1353,11 +1353,11 @@ Public NotInheritable Class LipidMassLibraryGenerator
         End Sub
 
 
-        Private Shared Sub writeHeader(ByVal sw As StreamWriter)
+        Private Shared Sub writeHeader(sw As StreamWriter)
             sw.WriteLine("Name" & Microsoft.VisualBasic.Constants.vbTab & "Mz" & Microsoft.VisualBasic.Constants.vbTab & "Adduct")
         End Sub
 
-        Private Shared Function isPracticalDoubleBondSize(ByVal carbon As Integer, ByVal doublebond As Integer) As Boolean
+        Private Shared Function isPracticalDoubleBondSize(carbon As Integer, doublebond As Integer) As Boolean
             If doublebond = 0 Then
                 Return True
             ElseIf carbon / doublebond < 3.5 Then

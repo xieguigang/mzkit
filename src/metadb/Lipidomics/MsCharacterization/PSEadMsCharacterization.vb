@@ -3,7 +3,7 @@ Imports CompMs.Common.Interfaces
 
 
 Public Module PSEadMsCharacterization
-        Public Function Characterize(ByVal scan As IMSScanProperty, ByVal molecule As ILipid, ByVal reference As MoleculeMsReference, ByVal tolerance As Single, ByVal mzBegin As Single, ByVal mzEnd As Single) As (ILipid, Double())
+        Public Function Characterize(scan As IMSScanProperty, molecule As ILipid, reference As MoleculeMsReference, tolerance As Single, mzBegin As Single, mzEnd As Single) As (ILipid, Double())
             Dim class_cutoff = 3
             Dim chain_cutoff = 2
             Dim position_cutoff = 1

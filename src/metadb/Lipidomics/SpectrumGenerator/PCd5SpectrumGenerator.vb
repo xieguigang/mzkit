@@ -25,13 +25,13 @@ Public Class PCd5SpectrumGenerator
         spectrumGenerator = New SpectrumPeakGenerator()
     End Sub
 
-    Public Sub New(ByVal spectrumGenerator As ISpectrumPeakGenerator)
+    Public Sub New(spectrumGenerator As ISpectrumPeakGenerator)
         Me.spectrumGenerator = If(spectrumGenerator, CSharpImpl.__Throw(Of ISpectrumPeakGenerator)(New ArgumentNullException(NameOf(spectrumGenerator))))
     End Sub
 
     Private ReadOnly spectrumGenerator As ISpectrumPeakGenerator
 
-    Public Function CanGenerate(ByVal lipid As ILipid, ByVal adduct As AdductIon) As Boolean Implements ILipidSpectrumGenerator.CanGenerate
+    Public Function CanGenerate(lipid As ILipid, adduct As AdductIon) As Boolean Implements ILipidSpectrumGenerator.CanGenerate
         If lipid.LipidClass = LbmClass.PC_d5 Then
             If Equals(adduct.AdductIonName, "[M+H]+") OrElse Equals(adduct.AdductIonName, "[M+Na]+") Then
                 Return True
@@ -40,7 +40,7 @@ Public Class PCd5SpectrumGenerator
         Return False
     End Function
 
-    Public Function Generate(ByVal lipid As Lipid, ByVal adduct As AdductIon, ByVal Optional molecule As IMoleculeProperty = Nothing) As IMSScanProperty Implements ILipidSpectrumGenerator.Generate
+    Public Function Generate(lipid As Lipid, adduct As AdductIon, Optional molecule As IMoleculeProperty = Nothing) As IMSScanProperty Implements ILipidSpectrumGenerator.Generate
         Dim spectrum = New List(Of SpectrumPeak)()
         spectrum.AddRange(GetPCSpectrum(lipid, adduct))
         If lipid.Description.Has(LipidDescription.Chain) Then
@@ -52,7 +52,7 @@ Public Class PCd5SpectrumGenerator
         Return CreateReference(lipid, adduct, spectrum, molecule)
     End Function
 
-    Private Function CreateReference(ByVal lipid As ILipid, ByVal adduct As AdductIon, ByVal spectrum As List(Of SpectrumPeak), ByVal molecule As IMoleculeProperty) As MoleculeMsReference
+    Private Function CreateReference(lipid As ILipid, adduct As AdductIon, spectrum As List(Of SpectrumPeak), molecule As IMoleculeProperty) As MoleculeMsReference
         Return New MoleculeMsReference With {
 .PrecursorMz = adduct.ConvertToMz(lipid.Mass),
 .IonMode = adduct.IonMode,
@@ -68,7 +68,7 @@ Public Class PCd5SpectrumGenerator
 }
     End Function
 
-    Private Function GetPCSpectrum(ByVal lipid As ILipid, ByVal adduct As AdductIon) As SpectrumPeak()
+    Private Function GetPCSpectrum(lipid As ILipid, adduct As AdductIon) As SpectrumPeak()
         Dim spectrum = New List(Of SpectrumPeak) From {
 New SpectrumPeak(adduct.ConvertToMz(lipid.Mass), 999.0R, "Precursor") With {
     .SpectrumComment = SpectrumComment.precursor
@@ -100,11 +100,11 @@ New SpectrumPeak(adduct.ConvertToMz(lipid.Mass) / 2, 150.0R, "[Precursor]2+") Wi
         Return spectrum.ToArray()
     End Function
 
-    Private Function GetAcylLevelSpectrum(ByVal lipid As ILipid, ByVal acylChains As IEnumerable(Of IChain), ByVal adduct As AdductIon) As IEnumerable(Of SpectrumPeak)
+    Private Function GetAcylLevelSpectrum(lipid As ILipid, acylChains As IEnumerable(Of IChain), adduct As AdductIon) As IEnumerable(Of SpectrumPeak)
         Return acylChains.SelectMany(Function(acylChain) GetAcylLevelSpectrum(lipid, acylChain, adduct))
     End Function
 
-    Private Function GetAcylLevelSpectrum(ByVal lipid As ILipid, ByVal acylChain As IChain, ByVal adduct As AdductIon) As SpectrumPeak()
+    Private Function GetAcylLevelSpectrum(lipid As ILipid, acylChain As IChain, adduct As AdductIon) As SpectrumPeak()
         Dim lipidMass = lipid.Mass
         Dim chainMass = acylChain.Mass - HydrogenMass
         Return {New SpectrumPeak(adduct.ConvertToMz(lipidMass - chainMass), 50.0R, $"-{acylChain}") With {
@@ -114,7 +114,7 @@ New SpectrumPeak(adduct.ConvertToMz(lipid.Mass) / 2, 150.0R, "[Precursor]2+") Wi
 }}
     End Function
 
-    Private Function GetAcylPositionSpectrum(ByVal lipid As ILipid, ByVal acylChain As IChain, ByVal adduct As AdductIon) As SpectrumPeak()
+    Private Function GetAcylPositionSpectrum(lipid As ILipid, acylChain As IChain, adduct As AdductIon) As SpectrumPeak()
         Dim lipidMass = lipid.Mass
         Dim chainMass = acylChain.Mass
         Return {New SpectrumPeak(adduct.ConvertToMz(lipidMass - chainMass - OxygenMass - CD2), 50.0R, "-CD2(Sn1)") With {
@@ -122,7 +122,7 @@ New SpectrumPeak(adduct.ConvertToMz(lipid.Mass) / 2, 150.0R, "[Precursor]2+") Wi
 }}
     End Function
 
-    Private Function GetAcylDoubleBondSpectrum(ByVal lipid As ILipid, ByVal acylChains As IEnumerable(Of AcylChain), ByVal adduct As AdductIon) As IEnumerable(Of SpectrumPeak)
+    Private Function GetAcylDoubleBondSpectrum(lipid As ILipid, acylChains As IEnumerable(Of AcylChain), adduct As AdductIon) As IEnumerable(Of SpectrumPeak)
         Return acylChains.SelectMany(Function(acylChain) spectrumGenerator.GetAcylDoubleBondSpectrum(lipid, acylChain, adduct, 0R, 10.0R))
     End Function
 

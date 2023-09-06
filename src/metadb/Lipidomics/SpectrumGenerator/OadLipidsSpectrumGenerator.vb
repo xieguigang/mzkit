@@ -8,7 +8,7 @@ Imports System.Linq
 
 
 Public Class OadLipidSpectrumGenerator
-        Public Function GetClassFragmentSpectrum(ByVal lipid As ILipid, ByVal adduct As AdductIon) As OadClassFragment
+        Public Function GetClassFragmentSpectrum(lipid As ILipid, adduct As AdductIon) As OadClassFragment
             Dim spectrum = New List(Of SpectrumPeak)()
             Dim nlMass = 0.0
             Dim alkyl As AlkylChain = Nothing, acyl As AcylChain = Nothing, plChains As PositionLevelChains = Nothing, tgChains As PositionLevelChains = Nothing, dgChains As PositionLevelChains = Nothing

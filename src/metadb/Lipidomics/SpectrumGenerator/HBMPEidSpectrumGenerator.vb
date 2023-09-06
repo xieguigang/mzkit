@@ -27,13 +27,13 @@ Imports System.Linq
             spectrumGenerator = New SpectrumPeakGenerator()
         End Sub
 
-        Public Sub New(ByVal spectrumGenerator As ISpectrumPeakGenerator)
+        Public Sub New(spectrumGenerator As ISpectrumPeakGenerator)
             Me.spectrumGenerator = If(spectrumGenerator, CSharpImpl.__Throw(Of ISpectrumPeakGenerator)(New ArgumentNullException(NameOf(spectrumGenerator))))
         End Sub
 
         Private ReadOnly spectrumGenerator As ISpectrumPeakGenerator
 
-        Public Function CanGenerate(ByVal lipid As ILipid, ByVal adduct As AdductIon) As Boolean Implements ILipidSpectrumGenerator.CanGenerate
+        Public Function CanGenerate(lipid As ILipid, adduct As AdductIon) As Boolean Implements ILipidSpectrumGenerator.CanGenerate
             If lipid.LipidClass = LbmClass.HBMP Then
                 If Equals(adduct.AdductIonName, "[M+H]+") OrElse Equals(adduct.AdductIonName, "[M+NH4]+") Then
                     Return True
@@ -41,7 +41,7 @@ Imports System.Linq
             End If
             Return False
         End Function
-        Public Function Generate(ByVal lipid As Lipid, ByVal adduct As AdductIon, ByVal Optional molecule As IMoleculeProperty = Nothing) As IMSScanProperty Implements ILipidSpectrumGenerator.Generate
+        Public Function Generate(lipid As Lipid, adduct As AdductIon, Optional molecule As IMoleculeProperty = Nothing) As IMSScanProperty Implements ILipidSpectrumGenerator.Generate
             'var nlMass = adduct.AdductIonName == "[M+NH4]+" ? adduct.AdductIonAccurateMass + H2O : H2O;
             Dim spectrum = New List(Of SpectrumPeak)()
             spectrum.AddRange(GetHBMPSpectrum(lipid, adduct))
@@ -57,7 +57,7 @@ Imports System.Linq
             Return CreateReference(lipid, adduct, spectrum, molecule)
         End Function
 
-        Private Function CreateReference(ByVal lipid As ILipid, ByVal adduct As AdductIon, ByVal spectrum As List(Of SpectrumPeak), ByVal molecule As IMoleculeProperty) As MoleculeMsReference
+        Private Function CreateReference(lipid As ILipid, adduct As AdductIon, spectrum As List(Of SpectrumPeak), molecule As IMoleculeProperty) As MoleculeMsReference
             Return New MoleculeMsReference With {
     .PrecursorMz = adduct.ConvertToMz(lipid.Mass),
     .IonMode = adduct.IonMode,
@@ -72,7 +72,7 @@ Imports System.Linq
     .Charge = adduct.ChargeNumber
 }
         End Function
-        Private Function GetHBMPSpectrum(ByVal lipid As ILipid, ByVal adduct As AdductIon) As SpectrumPeak()
+        Private Function GetHBMPSpectrum(lipid As ILipid, adduct As AdductIon) As SpectrumPeak()
             Dim adductmass = If(Equals(adduct.AdductIonName, "[M+NH4]+"), ProtonMass, adduct.AdductIonAccurateMass)
             Dim spectrum = New List(Of SpectrumPeak) From {
     New SpectrumPeak(adduct.ConvertToMz(lipid.Mass), 999R, "Precursor") With {
@@ -106,7 +106,7 @@ Imports System.Linq
             Return spectrum.ToArray()
         End Function
 
-        Private Function GetAcylDoubleBondSpectrum(ByVal lipid As ILipid, ByVal acylChains As IEnumerable(Of AcylChain), ByVal adduct As AdductIon, ByVal Optional nlMass As Double = 0.0) As IEnumerable(Of SpectrumPeak)
+        Private Function GetAcylDoubleBondSpectrum(lipid As ILipid, acylChains As IEnumerable(Of AcylChain), adduct As AdductIon, Optional nlMass As Double = 0.0) As IEnumerable(Of SpectrumPeak)
             Dim spectrum = New List(Of SpectrumPeak)()
             Dim chains = acylChains.ToList()
             nlMass = chains(0).Mass + C3H9O6P - HydrogenMass + adduct.AdductIonAccurateMass - ProtonMass
@@ -117,7 +117,7 @@ Imports System.Linq
             Return spectrum.ToArray()
         End Function
 
-        Private Function GetAcylLevelSpectrum(ByVal lipid As ILipid, ByVal acylChain As IChain, ByVal adduct As AdductIon) As SpectrumPeak()
+        Private Function GetAcylLevelSpectrum(lipid As ILipid, acylChain As IChain, adduct As AdductIon) As SpectrumPeak()
             Dim lipidMass = lipid.Mass
             Dim chainMass = acylChain.Mass - HydrogenMass
             Dim adductmass = If(Equals(adduct.AdductIonName, "[M+NH4]+"), ProtonMass, adduct.AdductIonAccurateMass)
@@ -139,7 +139,7 @@ Imports System.Linq
             Return spectrum.ToArray()
         End Function
 
-        Private Function GetLysoAcylLevelSpectrum(ByVal lipid As ILipid, ByVal acylChain As IChain, ByVal adduct As AdductIon) As SpectrumPeak()
+        Private Function GetLysoAcylLevelSpectrum(lipid As ILipid, acylChain As IChain, adduct As AdductIon) As SpectrumPeak()
             Dim lipidMass = lipid.Mass
             Dim chainMass = acylChain.Mass - HydrogenMass
             Dim adductmass = If(Equals(adduct.AdductIonName, "[M+NH4]+"), ProtonMass, adduct.AdductIonAccurateMass)
@@ -165,7 +165,7 @@ Imports System.Linq
         End Function
 
 
-        Private Function GetAcylPositionSpectrum(ByVal lipid As ILipid, ByVal acylChain As IChain, ByVal adduct As AdductIon) As SpectrumPeak()
+        Private Function GetAcylPositionSpectrum(lipid As ILipid, acylChain As IChain, adduct As AdductIon) As SpectrumPeak()
             Dim adductmass = If(Equals(adduct.AdductIonName, "[M+NH4]+"), ProtonMass, adduct.AdductIonAccurateMass)
             Dim lipidMass = lipid.Mass + adductmass
             Dim chainMass = acylChain.Mass - HydrogenMass
@@ -178,7 +178,7 @@ Imports System.Linq
             Return spectrum.ToArray()
         End Function
 
-        Private Shared Function EidSpecificSpectrum(ByVal lipid As Lipid, ByVal adduct As AdductIon, ByVal nlMass As Double, ByVal intensity As Double) As SpectrumPeak()
+        Private Shared Function EidSpecificSpectrum(lipid As Lipid, adduct As AdductIon, nlMass As Double, intensity As Double) As SpectrumPeak()
             Dim spectrum = New List(Of SpectrumPeak)()
             Dim sn23 As IChain = Nothing
 

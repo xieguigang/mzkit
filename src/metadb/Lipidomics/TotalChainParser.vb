@@ -17,26 +17,26 @@ Public Class TotalChainParser
 
     Private ReadOnly HasSphingosine As Boolean
 
-    Public Shared Function BuildParser(ByVal chainCount As Integer) As TotalChainParser
+    Public Shared Function BuildParser(chainCount As Integer) As TotalChainParser
         Return New TotalChainParser(chainCount, chainCount, False, False, False)
     End Function
 
-    Public Shared Function BuildSpeciesLevelParser(ByVal chainCount As Integer, ByVal capacity As Integer) As TotalChainParser
+    Public Shared Function BuildSpeciesLevelParser(chainCount As Integer, capacity As Integer) As TotalChainParser
         Return New TotalChainParser(chainCount, capacity, False, False, True)
     End Function
 
-    Public Shared Function BuildEtherParser(ByVal chainCount As Integer) As TotalChainParser
+    Public Shared Function BuildEtherParser(chainCount As Integer) As TotalChainParser
         Return New TotalChainParser(chainCount, chainCount, False, True, False)
     End Function
-    Public Shared Function BuildLysoEtherParser(ByVal chainCount As Integer, ByVal capacity As Integer) As TotalChainParser
+    Public Shared Function BuildLysoEtherParser(chainCount As Integer, capacity As Integer) As TotalChainParser
         Return New TotalChainParser(chainCount, capacity, False, True, True)
     End Function
 
-    Public Shared Function BuildCeramideParser(ByVal chainCount As Integer) As TotalChainParser
+    Public Shared Function BuildCeramideParser(chainCount As Integer) As TotalChainParser
         Return New TotalChainParser(chainCount, chainCount, True, False, False)
     End Function
 
-    Private Sub New(ByVal chainCount As Integer, ByVal capacity As Integer, ByVal hasSphingosine As Boolean, ByVal hasEther As Boolean, ByVal atLeastSpeciesLevel As Boolean)
+    Private Sub New(chainCount As Integer, capacity As Integer, hasSphingosine As Boolean, hasEther As Boolean, atLeastSpeciesLevel As Boolean)
         Me.ChainCount = chainCount
         Me.Capacity = capacity
         Dim submolecularLevelPattern = If(hasEther, $"(?<TotalChain>(?<plasm>[de]?[OP]-)?{CarbonPattern}:{DoubleBondPattern}({OxidizedPattern})?)", $"(?<TotalChain>{CarbonPattern}:{DoubleBondPattern}({OxidizedPattern})?)")
@@ -62,7 +62,7 @@ Public Class TotalChainParser
 
     Private ReadOnly Expression As Regex
 
-    Public Function Parse(ByVal lipidStr As String) As ITotalChain
+    Public Function Parse(lipidStr As String) As ITotalChain
         Dim match = Expression.Match(lipidStr)
         If match.Success Then
             Dim groups = match.Groups
@@ -85,7 +85,7 @@ Public Class TotalChainParser
         Return Nothing
     End Function
 
-    Private Function ParsePositionLevelChains(ByVal groups As GroupCollection) As PositionLevelChains
+    Private Function ParsePositionLevelChains(groups As GroupCollection) As PositionLevelChains
         Dim matches = groups("Chain").Captures.Cast(Of Capture)().ToArray()
         Dim sphingo As IChain = Nothing
         If HasSphingosine Then
@@ -98,11 +98,11 @@ Public Class TotalChainParser
 
     End Function
 
-    Private Function ParseMolecularSpeciesLevelChains(ByVal groups As GroupCollection) As MolecularSpeciesLevelChains
+    Private Function ParseMolecularSpeciesLevelChains(groups As GroupCollection) As MolecularSpeciesLevelChains
         Return New MolecularSpeciesLevelChains(groups("Chain").Captures.Cast(Of Capture)().[Select](Function(c) If(AlkylParser.Parse(c.Value), AcylParser.Parse(c.Value))).ToArray())
     End Function
 
-    Private Function ParseTotalChains(ByVal groups As GroupCollection, ByVal chainCount As Integer) As TotalChain
+    Private Function ParseTotalChains(groups As GroupCollection, chainCount As Integer) As TotalChain
         Dim carbon = Integer.Parse(groups("carbon").Value)
         Dim db = Integer.Parse(groups("db").Value)
         Dim ox = If(Not groups("ox").Success, 0, If(Not groups("oxnum").Success, 1, Integer.Parse(groups("oxnum").Value)))

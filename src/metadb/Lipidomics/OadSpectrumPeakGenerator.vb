@@ -13,7 +13,7 @@ Public Class OadSpectrumPeakGenerator
         Private Shared ReadOnly Electron As Double = 0.00054858026
 
 
-        Private Function GetOadDoubleBondSpectrum(ByVal lipid As ILipid, ByVal chain As IChain, ByVal adduct As AdductIon, ByVal nlMass As Double, ByVal abundance As Double, ByVal oadId As String()) As IEnumerable(Of SpectrumPeak)
+        Private Function GetOadDoubleBondSpectrum(lipid As ILipid, chain As IChain, adduct As AdductIon, nlMass As Double, abundance As Double, oadId As String()) As IEnumerable(Of SpectrumPeak)
             If chain.DoubleBond.UnDecidedCount <> 0 OrElse chain.CarbonCount = 0 Then
                 Return Enumerable.Empty(Of SpectrumPeak)()
             End If
@@ -54,7 +54,7 @@ Public Class OadSpectrumPeakGenerator
             Return peaks
         End Function
 
-        Private Function DoubleBondSpectrum(ByVal bond As Integer, ByVal diffs As Double(), ByVal chain As IChain, ByVal adduct As AdductIon, ByVal chainLoss As Double, ByVal abundance As Double, ByVal oadId As String()) As List(Of SpectrumPeak)
+        Private Function DoubleBondSpectrum(bond As Integer, diffs As Double(), chain As IChain, adduct As AdductIon, chainLoss As Double, abundance As Double, oadId As String()) As List(Of SpectrumPeak)
             Dim OadPeaks = DoubleBondSpectrumWithId(bond, diffs, chain, adduct, chainLoss, abundance)
             Return OadPeaks.Where(Function(p) oadId.Contains(p.OadId)).[Select](Function(p) p.spectrum).ToList()
         End Function
@@ -164,7 +164,7 @@ Public Class OadSpectrumPeakGenerator
         '    return peaks;
         '}
 
-        Private Function DoubleBondSpectrumWithId(ByVal bond As Integer, ByVal diffs As Double(), ByVal chain As IChain, ByVal adduct As AdductIon, ByVal chainLoss As Double, ByVal abundance As Double) As List(Of OadFragmentPeaks)
+        Private Function DoubleBondSpectrumWithId(bond As Integer, diffs As Double(), chain As IChain, adduct As AdductIon, chainLoss As Double, abundance As Double) As List(Of OadFragmentPeaks)
             Dim OadPeaks = New List(Of OadFragmentPeaks)()
             Dim speccomment = SpectrumComment.doublebond
             Dim factor = 1.0
@@ -296,7 +296,7 @@ Public Class OadSpectrumPeakGenerator
             Return OadPeaks
         End Function
 
-        Private Function SphingoDoubleBondSpectrumWithId(ByVal bond As Integer, ByVal diffs As Double(), ByVal sphingo As IChain, ByVal adduct As AdductIon, ByVal chainLoss As Double, ByVal abundance As Double) As List(Of OadFragmentPeaks)
+        Private Function SphingoDoubleBondSpectrumWithId(bond As Integer, diffs As Double(), sphingo As IChain, adduct As AdductIon, chainLoss As Double, abundance As Double) As List(Of OadFragmentPeaks)
             Dim OadPeaks = New List(Of OadFragmentPeaks)()
             Dim speccomment = SpectrumComment.doublebond
             Dim factor = 1.0
@@ -325,15 +325,15 @@ Public Class OadSpectrumPeakGenerator
             Return OadPeaks
         End Function
 
-        Public Function GetAcylDoubleBondSpectrum(ByVal lipid As ILipid, ByVal acylChain As AcylChain, ByVal adduct As AdductIon, ByVal nlMass As Double, ByVal abundance As Double, ByVal oadId As String()) As IEnumerable(Of SpectrumPeak) Implements IOadSpectrumPeakGenerator.GetAcylDoubleBondSpectrum
+        Public Function GetAcylDoubleBondSpectrum(lipid As ILipid, acylChain As AcylChain, adduct As AdductIon, nlMass As Double, abundance As Double, oadId As String()) As IEnumerable(Of SpectrumPeak) Implements IOadSpectrumPeakGenerator.GetAcylDoubleBondSpectrum
             Return GetOadDoubleBondSpectrum(lipid, acylChain, adduct, nlMass - OxygenMass + HydrogenMass * 2, abundance, oadId)
         End Function
 
-        Public Function GetAlkylDoubleBondSpectrum(ByVal lipid As ILipid, ByVal acylChain As AlkylChain, ByVal adduct As AdductIon, ByVal nlMass As Double, ByVal abundance As Double, ByVal oadId As String()) As IEnumerable(Of SpectrumPeak) Implements IOadSpectrumPeakGenerator.GetAlkylDoubleBondSpectrum
+        Public Function GetAlkylDoubleBondSpectrum(lipid As ILipid, acylChain As AlkylChain, adduct As AdductIon, nlMass As Double, abundance As Double, oadId As String()) As IEnumerable(Of SpectrumPeak) Implements IOadSpectrumPeakGenerator.GetAlkylDoubleBondSpectrum
             Return GetOadDoubleBondSpectrum(lipid, acylChain, adduct, nlMass, abundance, oadId)
         End Function
 
-        Public Function GetSphingoDoubleBondSpectrum(ByVal lipid As ILipid, ByVal sphingo As SphingoChain, ByVal adduct As AdductIon, ByVal nlMass As Double, ByVal abundance As Double, ByVal oadId As String()) As IEnumerable(Of SpectrumPeak) Implements IOadSpectrumPeakGenerator.GetSphingoDoubleBondSpectrum
+        Public Function GetSphingoDoubleBondSpectrum(lipid As ILipid, sphingo As SphingoChain, adduct As AdductIon, nlMass As Double, abundance As Double, oadId As String()) As IEnumerable(Of SpectrumPeak) Implements IOadSpectrumPeakGenerator.GetSphingoDoubleBondSpectrum
             If sphingo.DoubleBond.UnDecidedCount <> 0 OrElse sphingo.CarbonCount = 0 Then
                 Return Enumerable.Empty(Of SpectrumPeak)()
             End If

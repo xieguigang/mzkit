@@ -6,31 +6,31 @@ Public NotInheritable Class OadDefaultCharacterization
         Private Sub New()
         End Sub
 
-        Public Shared Function Characterize4AlkylAcylGlycerols(ByVal scan As IMSScanProperty, ByVal molecule As ILipid, ByVal reference As MoleculeMsReference, ByVal tolerance As Single, ByVal mzBegin As Single, ByVal mzEnd As Single) As (ILipid, Double())
+        Public Shared Function Characterize4AlkylAcylGlycerols(scan As IMSScanProperty, molecule As ILipid, reference As MoleculeMsReference, tolerance As Single, mzBegin As Single, mzEnd As Single) As (ILipid, Double())
 
             Dim defaultResult = OadMsCharacterizationUtility.GetDefaultScore(scan, reference, tolerance, mzBegin, mzEnd, 1, 0, 1, 0.5)
             Return GetDefaultCharacterizationResultForAlkylAcylGlycerols(molecule, defaultResult)
         End Function
 
-        Public Shared Function Characterize4Ceramides(ByVal scan As IMSScanProperty, ByVal molecule As ILipid, ByVal reference As MoleculeMsReference, ByVal tolerance As Single, ByVal mzBegin As Single, ByVal mzEnd As Single) As (ILipid, Double())
+        Public Shared Function Characterize4Ceramides(scan As IMSScanProperty, molecule As ILipid, reference As MoleculeMsReference, tolerance As Single, mzBegin As Single, mzEnd As Single) As (ILipid, Double())
 
             Dim defaultResult = OadMsCharacterizationUtility.GetDefaultScore(scan, reference, tolerance, mzBegin, mzEnd, 1, 0, 0, 0.5)
             Return GetDefaultCharacterizationResultForCeramides(molecule, defaultResult)
         End Function
 
-        Public Shared Function Characterize4DiacylGlycerols(ByVal scan As IMSScanProperty, ByVal molecule As ILipid, ByVal reference As MoleculeMsReference, ByVal tolerance As Single, ByVal mzBegin As Single, ByVal mzEnd As Single) As (ILipid, Double())
+        Public Shared Function Characterize4DiacylGlycerols(scan As IMSScanProperty, molecule As ILipid, reference As MoleculeMsReference, tolerance As Single, mzBegin As Single, mzEnd As Single) As (ILipid, Double())
 
             Dim defaultResult = OadMsCharacterizationUtility.GetDefaultScore(scan, reference, tolerance, mzBegin, mzEnd, 1, 0, 1, 0.5)
             Return GetDefaultCharacterizationResultForGlycerophospholipid(molecule, defaultResult)
         End Function
 
-        Public Shared Function Characterize4TriacylGlycerols(ByVal scan As IMSScanProperty, ByVal molecule As ILipid, ByVal reference As MoleculeMsReference, ByVal tolerance As Single, ByVal mzBegin As Single, ByVal mzEnd As Single) As (ILipid, Double())
+        Public Shared Function Characterize4TriacylGlycerols(scan As IMSScanProperty, molecule As ILipid, reference As MoleculeMsReference, tolerance As Single, mzBegin As Single, mzEnd As Single) As (ILipid, Double())
 
             Dim defaultResult = OadMsCharacterizationUtility.GetDefaultScore(scan, reference, tolerance, mzBegin, mzEnd, 1, 0, 1, 0.5)
             Return GetDefaultCharacterizationResultForTriacylGlycerols(molecule, defaultResult)
         End Function
 
-        Public Shared Function Characterize4SingleAcylChainLiipid(ByVal scan As IMSScanProperty, ByVal molecule As ILipid, ByVal reference As MoleculeMsReference, ByVal tolerance As Single, ByVal mzBegin As Single, ByVal mzEnd As Single) As (ILipid, Double())
+        Public Shared Function Characterize4SingleAcylChainLiipid(scan As IMSScanProperty, molecule As ILipid, reference As MoleculeMsReference, tolerance As Single, mzBegin As Single, mzEnd As Single) As (ILipid, Double())
 
             Dim defaultResult = OadMsCharacterizationUtility.GetDefaultScore(scan, reference, tolerance, mzBegin, mzEnd, 1, 0, 0, 0.5)
             Return GetDefaultCharacterizationResultForSingleAcylChainLipid(molecule, defaultResult)
