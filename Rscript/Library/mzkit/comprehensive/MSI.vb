@@ -126,6 +126,32 @@ Module MSI
     End Function
 
     ''' <summary>
+    ''' scale the spatial matrix
+    ''' </summary>
+    ''' <param name="m"></param>
+    ''' <param name="factor"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("scale")>
+    Public Function scale(m As rDataframe, <RRawVectorArgument> factor As Object, Optional env As Environment = Nothing) As Object
+        Dim f As Double() = CLRVector.asNumeric(factor)
+        Dim v As Double()
+        Dim cols As String() = m.colnames
+        Dim name As String
+
+        m = New rDataframe(m)
+
+        For i As Integer = 0 To cols.Length - 1
+            name = cols(i)
+            v = CLRVector.asNumeric(m.columns(name))
+            v = SIMD.Multiply.f64_scalar_op_multiply_f64(f(i), v)
+            m.columns(name) = v
+        Next
+
+        Return m
+    End Function
+
+    ''' <summary>
     ''' get ms-imaging metadata
     ''' </summary>
     ''' <param name="raw"></param>
