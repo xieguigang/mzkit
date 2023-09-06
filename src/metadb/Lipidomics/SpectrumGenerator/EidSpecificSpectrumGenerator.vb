@@ -1,10 +1,4 @@
-﻿Imports CompMs.Common.Components
-Imports CompMs.Common.DataObj.Property
-Imports CompMs.Common.FormulaGenerator.DataObj
-Imports System
-Imports System.Collections.Generic
-Imports System.Linq
-
+﻿Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.ElementsExactMass
 
 Public Class EidSpecificSpectrumGenerator
         Private Shared ReadOnly CH2 As Double = {HydrogenMass * 2, CarbonMass}.Sum()

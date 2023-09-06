@@ -1,4 +1,5 @@
 ﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.ElementsExactMass
 Imports std = System.Math
 
 Public NotInheritable Class LipidEieioMsmsCharacterization
