@@ -113,6 +113,10 @@ Namespace Formula
             Return New Isotope With {.Mass = mass, .Prob = prob, .NumNeutrons = num}
         End Function
 
+        ''' <summary>
+        ''' A in-memory database for the element mass
+        ''' </summary>
+        ''' <returns></returns>
         Private Shared Iterator Function MemoryPopulateElements() As IEnumerable(Of Element)
             Yield New Element With {.symbol = "H", .name = "Hydrogen", .charge = 1, .isotopic = H, .isotopes = {Isotope(1.0078250321, 0.999885, 1), Isotope(2.014101778, 0.000115, 2)}}
             Yield New Element With {.symbol = "D", .name = "Deuterium", .charge = 1, .isotopic = 2.014101778, .isotopes = {Isotope(2.014101778, 0.000115, 2)}}
