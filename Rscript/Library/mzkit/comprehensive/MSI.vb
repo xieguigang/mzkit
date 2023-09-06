@@ -77,6 +77,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Data.GraphTheory.GridGraph
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
@@ -844,6 +845,68 @@ Module MSI
         Next
 
         Return convolution
+    End Function
+
+    ''' <summary>
+    ''' pack the matrix file as the MSI mzpack
+    ''' </summary>
+    ''' <param name="file">
+    ''' the file resource reference to the csv table file, and the
+    ''' csv file should be in format of ion peaks features in column
+    ''' and spatial spot id in rows
+    ''' </param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("pack_matrix")>
+    Public Function packMatrix(<RRawVectorArgument> file As Object, Optional env As Environment = Nothing) As Object
+        Dim buf = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Read, env)
+
+        If buf Like GetType(Message) Then
+            Return buf.TryCast(Of Message)
+        End If
+
+        Dim read As New StreamReader(buf.TryCast(Of Stream))
+        Dim ionsMz As Double() = RowObject.TryParse(read.ReadLine) _
+            .Skip(1) _
+            .Select(Function(si) Val(si)) _
+            .ToArray
+        Dim line As Value(Of String) = ""
+        Dim scans As New List(Of ScanMS1)
+        Dim ti As Double = 0
+
+        Do While (line = read.ReadLine) IsNot Nothing
+            Dim t As String() = Tokenizer.CharsParser(line).ToArray
+            Dim xy As Integer() = t(0) _
+                .Split(","c) _
+                .Select(Function(si) Integer.Parse(si)) _
+                .ToArray
+            Dim v As Double() = t _
+                .Skip(1) _
+                .Select(Function(si) Val(si)) _
+                .ToArray
+
+            ti += 1.98
+
+            Call scans.Add(New ScanMS1 With {
+                .BPC = v.Max,
+                .into = v,
+                .meta = New Dictionary(Of String, String) From {
+                    {"x", xy(0)},
+                    {"y", xy(1)}
+                },
+                .mz = ionsMz,
+                .products = Nothing,
+                .rt = ti,
+                .TIC = v.Sum,
+                .scan_id = $"[MS1] [{xy(0)},{xy(1)}] totalIons={ .TIC} basePeak={ .BPC} basepeak_m/z={ionsMz(which.Max(v))}"
+            })
+        Loop
+
+        Return New mzPack With {
+            .MS = scans.ToArray,
+            .source = NameOf(packMatrix),
+            .Application = FileApplicationClass.MSImaging
+        }
     End Function
 End Module
 
