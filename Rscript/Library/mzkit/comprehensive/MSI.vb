@@ -150,6 +150,7 @@ Module MSI
         For i As Integer = 0 To cols.Length - 1
             name = cols(i)
             v = CLRVector.asNumeric(m.columns(name))
+            v = SIMD.Divide.f64_op_divide_f64_scalar(v, v.Sum)
             v = SIMD.Multiply.f64_scalar_op_multiply_f64(f(i), v)
             m.columns(name) = v
         Next
