@@ -1001,7 +1001,10 @@ Module MsImaging
     ''' <returns></returns>
     <ExportAPI("as.pixels")>
     <RApiReturn(GetType(String), GetType(Point2D))>
-    Public Function asPixels(layer As Object, Optional character As Boolean = True, Optional env As Environment = Nothing) As Object
+    Public Function asPixels(layer As Object,
+                             Optional character As Boolean = True,
+                             Optional env As Environment = Nothing) As Object
+
         If TypeOf layer Is SingleIonLayer Then
             Return DirectCast(layer, SingleIonLayer).MSILayer.asPixels(character)
         ElseIf TypeOf layer Is MSISummary Then
