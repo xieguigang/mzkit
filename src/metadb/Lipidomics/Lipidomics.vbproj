@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>BioNovoGene.Analytical.MassSpectrometry.Lipidomics</RootNamespace>
+    <TargetFrameworks>net6.0;net6.0-windows;net48</TargetFrameworks>
+    <UseApplicationFramework>True</UseApplicationFramework>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Title>Lipidomics Annotation Workflow</Title>
+    <Description>Lipidomics annotation code module port from MS-DIAL</Description>
+    <Copyright>MS-DIAL; PANOMIX</Copyright>
+    <IncludeSymbols>True</IncludeSymbols>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <AssemblyName>BioNovoGene.Analytical.MassSpectrometry.Lipidomics</AssemblyName>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+    <DebugType>full</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+    <Optimize>False</Optimize>
+    <DebugType>full</DebugType>
+  </PropertyGroup>
+
+</Project>
