@@ -1,9 +1,4 @@
-﻿Imports CompMs.Common.DataStructure
-Imports CompMs.Common.FormulaGenerator.DataObj
-Imports System
-Imports System.Collections.Generic
-
-Public Class TotalChain
+﻿Public Class TotalChain
     Implements ITotalChain
     Public Sub New(carbonCount As Integer, doubleBondCount As Integer, oxidizedCount As Integer, acylChainCount As Integer, alkylChainCount As Integer, sphingoChainCount As Integer)
         Me.CarbonCount = carbonCount

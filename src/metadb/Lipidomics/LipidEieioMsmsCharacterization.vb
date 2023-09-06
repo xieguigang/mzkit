@@ -28,11 +28,11 @@ Public NotInheritable Class LipidEieioMsmsCharacterization
                 Dim mz = spectrum(i).Mass
                 Dim intensity = spectrum(i).Intensity ' should be normalized by max intensity to 100
 
-                If intensity > frag1intensity AndAlso Math.Abs(mz - fragment1) < ms2Tolerance Then
+                If intensity > frag1intensity AndAlso std.Abs(mz - fragment1) < ms2Tolerance Then
                     frag1intensity = intensity
                 End If
 
-                If intensity > frag2intensity AndAlso Math.Abs(mz - fragment2) < ms2Tolerance Then
+                If intensity > frag2intensity AndAlso std.Abs(mz - fragment2) < ms2Tolerance Then
                     frag2intensity = intensity
                 End If
             Next
@@ -1042,10 +1042,10 @@ Public NotInheritable Class LipidEieioMsmsCharacterization
                         Dim mz = spectrum(i).Mass
                         Dim intensity = spectrum(i).Intensity
 
-                        If intensity > threshold AndAlso Math.Abs(mz - diagnosticMz) < ms2Tolerance Then
+                        If intensity > threshold AndAlso std.Abs(mz - diagnosticMz) < ms2Tolerance Then
                             diagnosticMzExist = mz
                             diagnosticMzIntensity = intensity
-                        ElseIf intensity > threshold AndAlso Math.Abs(mz - diagnosticMz2) < ms2Tolerance Then
+                        ElseIf intensity > threshold AndAlso std.Abs(mz - diagnosticMz2) < ms2Tolerance Then
                             diagnosticMzExist2 = mz
                             diagnosticMzIntensity2 = intensity
                         End If
@@ -2808,10 +2808,10 @@ Public NotInheritable Class LipidEieioMsmsCharacterization
                         Dim mz = spectrum(i).Mass
                         Dim intensity = spectrum(i).Intensity
 
-                        If intensity > threshold AndAlso Math.Abs(mz - diagnosticMz) < ms2Tolerance Then
+                        If intensity > threshold AndAlso std.Abs(mz - diagnosticMz) < ms2Tolerance Then
                             diagnosticMzExist = mz
                             diagnosticMzIntensity = intensity
-                        ElseIf intensity > threshold AndAlso Math.Abs(mz - diagnosticMz2) < ms2Tolerance Then
+                        ElseIf intensity > threshold AndAlso std.Abs(mz - diagnosticMz2) < ms2Tolerance Then
                             diagnosticMzExist2 = mz
                             diagnosticMzIntensity2 = intensity
                         End If

@@ -202,7 +202,7 @@ Public Class LipidMsCharacterizationResult
                 Dim mz = spectrum(i).Mass
                 Dim intensity = spectrum(i).Intensity ' should be normalized by max intensity to 100
 
-                If intensity > threshold AndAlso Math.Abs(mz - diagnosticMz) < mzTolerance Then
+                If intensity > threshold AndAlso std.Abs(mz - diagnosticMz) < mzTolerance Then
                     Return True
                 End If
             Next
@@ -214,7 +214,7 @@ Public Class LipidMsCharacterizationResult
                 Dim mz = spectrum(i).Mass
                 Dim intensity = spectrum(i).Resolution ' should be normalized by max intensity to 100
 
-                If intensity > threshold AndAlso Math.Abs(mz - diagnosticMz) < mzTolerance Then
+                If intensity > threshold AndAlso std.Abs(mz - diagnosticMz) < mzTolerance Then
                     Return True
                 End If
             Next

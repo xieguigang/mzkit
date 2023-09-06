@@ -68,7 +68,7 @@ Imports System.Runtime.CompilerServices
         Public ReadOnly Property Chains As ITotalChain Implements ILipid.Chains
 
         Public Function Includes(lipid As ILipid) As Boolean Implements ILipid.Includes
-            If LipidClass <> lipid.LipidClass OrElse Math.Abs(Mass - lipid.Mass) >= 1e-6 OrElse (Description And lipid.Description) <> Description OrElse AnnotationLevel > lipid.AnnotationLevel Then
+            If LipidClass <> lipid.LipidClass OrElse std.Abs(Mass - lipid.Mass) >= 1e-6 OrElse (Description And lipid.Description) <> Description OrElse AnnotationLevel > lipid.AnnotationLevel Then
                 Return False
             End If
 

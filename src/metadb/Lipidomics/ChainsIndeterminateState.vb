@@ -57,13 +57,5 @@ Public NotInheritable Class ChainsIndeterminateState
             End If
             Return chains
         End Function
-
-        Private Class CSharpImpl
-            <Obsolete("Please refactor calling code to use normal Visual Basic assignment")>
-            Shared Function __Assign(Of T)(ByRef target As T, value As T) As T
-                target = value
-                Return value
-            End Function
-        End Class
     End Class
 End Class

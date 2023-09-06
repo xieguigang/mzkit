@@ -1,13 +1,6 @@
-﻿Imports CompMs.Common.Components
-Imports CompMs.Common.DataObj.Property
-Imports CompMs.Common.Enum
-Imports CompMs.Common.FormulaGenerator.DataObj
-Imports CompMs.Common.Interfaces
-Imports System
-Imports System.Collections.Generic
-Imports System.Linq
-Imports System.Runtime.InteropServices
-
+﻿Imports System.Runtime.InteropServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
+Imports std = System.Math
 
 Public NotInheritable Class LipidMsmsCharacterizationUtility
     Private Sub New()
@@ -35,7 +28,7 @@ Public NotInheritable Class LipidMsmsCharacterizationUtility
             Dim mz = spectrum(i).Mass
             Dim intensity = spectrum(i).Intensity ' should be normalized by max intensity to 100
 
-            If intensity > threshold AndAlso Math.Abs(mz - diagnosticMz) < ms2Tolerance Then
+            If intensity > threshold AndAlso std.Abs(mz - diagnosticMz) < ms2Tolerance Then
                 Return True
             End If
         Next
@@ -49,11 +42,11 @@ Public NotInheritable Class LipidMsmsCharacterizationUtility
             Dim mz = spectrum(i).Mass
             Dim intensity = spectrum(i).Intensity ' should be normalized by max intensity to 100
 
-            If intensity > frag1intensity AndAlso Math.Abs(mz - fragment1) < ms2Tolerance Then
+            If intensity > frag1intensity AndAlso std.Abs(mz - fragment1) < ms2Tolerance Then
                 frag1intensity = intensity
             End If
 
-            If intensity > frag2intensity AndAlso Math.Abs(mz - fragment2) < ms2Tolerance Then
+            If intensity > frag2intensity AndAlso std.Abs(mz - fragment2) < ms2Tolerance Then
                 frag2intensity = intensity
             End If
         Next
@@ -1645,7 +1638,7 @@ Public NotInheritable Class LipidMsmsCharacterizationUtility
             For Each peak In spectrum
                 Dim mz = peak.Mass
                 Dim intensity = peak.Intensity ' relative intensity
-                If query.Intensity < intensity AndAlso Math.Abs(query.Mass - mz) < ms2Tolerance Then
+                If query.Intensity < intensity AndAlso std.Abs(query.Mass - mz) < ms2Tolerance Then
                     foundCount += 1
                     averageIntensity += intensity
                     Exit For
@@ -2420,7 +2413,7 @@ Public NotInheritable Class LipidMsmsCharacterization
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
         If maxSnDoubleBond > totalDoubleBond Then maxSnDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+NH4]+") Then
                 ' seek -189.040227 (C3H8O6P+NH4)
                 Dim threshold = 0.01
@@ -3468,10 +3461,10 @@ New SpectrumPeak() With {
                     Dim mz = spectrum(i).Mass
                     Dim intensity = spectrum(i).Intensity
 
-                    If intensity > threshold AndAlso Math.Abs(mz - diagnosticMz) < ms2Tolerance Then
+                    If intensity > threshold AndAlso std.Abs(mz - diagnosticMz) < ms2Tolerance Then
                         diagnosticMzExist = mz
                         diagnosticMzIntensity = intensity
-                    ElseIf intensity > threshold AndAlso Math.Abs(mz - diagnosticMz2) < ms2Tolerance Then
+                    ElseIf intensity > threshold AndAlso std.Abs(mz - diagnosticMz2) < ms2Tolerance Then
                         diagnosticMzExist2 = mz
                         diagnosticMzIntensity2 = intensity
                     End If
@@ -15663,10 +15656,10 @@ New SpectrumPeak() With {
                     Dim mz = spectrum(i).Mass
                     Dim intensity = spectrum(i).Intensity
 
-                    If intensity > threshold AndAlso Math.Abs(mz - diagnosticMz) < ms2Tolerance Then
+                    If intensity > threshold AndAlso std.Abs(mz - diagnosticMz) < ms2Tolerance Then
                         diagnosticMzExist = mz
                         diagnosticMzIntensity = intensity
-                    ElseIf intensity > threshold AndAlso Math.Abs(mz - diagnosticMz2) < ms2Tolerance Then
+                    ElseIf intensity > threshold AndAlso std.Abs(mz - diagnosticMz2) < ms2Tolerance Then
                         diagnosticMzExist2 = mz
                         diagnosticMzIntensity2 = intensity
                     End If

@@ -85,38 +85,31 @@ Public Class SmilesInchikeyGenerator
         Return chainSmiles
     End Function
 
-    Private Class CSharpImpl
-        <Obsolete("Please refactor calling code to use normal Visual Basic assignment")>
-        Shared Function __Assign(Of T)(ByRef target As T, value As T) As T
-            target = value
-            Return value
-        End Function
-    End Class
 End Class
 Public Class SmilesInchikey
-        Private smilesField As String
-        Private inchikeyField As String
+    Private smilesField As String
+    Private inchikeyField As String
 
-        Public Sub New()
-            smilesField = Nothing
-            inchikeyField = Nothing
-        End Sub
-        Public Property Smiles As String
-        Public Property InchiKey As String
-    End Class
-    Public NotInheritable Class SmilesLipidHeader
-        Private Sub New()
-        End Sub
+    Public Sub New()
+        smilesField = Nothing
+        inchikeyField = Nothing
+    End Sub
+    Public Property Smiles As String
+    Public Property InchiKey As String
+End Class
+Public NotInheritable Class SmilesLipidHeader
+    Private Sub New()
+    End Sub
 
-        Public Shared HeaderDictionary As Dictionary(Of String, String) = New Dictionary(Of String, String)() From {
-    {"PC", "C(O%10)C(O%20)COP([O-])(=O)OCC[N+](C)(C)C."},
-    {"PA", "C(O%10)C(O%20)COP(O)(O)=O."},
-    {"PE", "C(O%10)C(O%20)COP(O)(=O)OCCN."},
-    {"PG", "C(O)(CO)COP(O)(=O)OCC(O%20)C(O%10)."},
-    {"PI", "C(O%10)C(O%20)COP(O)(=O)OC1C(O)C(O)C(O)C(O)C1O."},
-    {"PS", "C(N)(COP(O)(=O)OCC(O%20)C(O%10))C(O)=O."},
-    {"PEtOH", "C(O%10)C(O%20)COP(O)(OCC)=O."},
-    {"PMeOH", "C(O%10)C(O%20)COP(O)(OC)=O."},
+    Public Shared HeaderDictionary As Dictionary(Of String, String) = New Dictionary(Of String, String)() From {
+{"PC", "C(O%10)C(O%20)COP([O-])(=O)OCC[N+](C)(C)C."},
+{"PA", "C(O%10)C(O%20)COP(O)(O)=O."},
+{"PE", "C(O%10)C(O%20)COP(O)(=O)OCCN."},
+{"PG", "C(O)(CO)COP(O)(=O)OCC(O%20)C(O%10)."},
+{"PI", "C(O%10)C(O%20)COP(O)(=O)OC1C(O)C(O)C(O)C(O)C1O."},
+{"PS", "C(N)(COP(O)(=O)OCC(O%20)C(O%10))C(O)=O."},
+{"PEtOH", "C(O%10)C(O%20)COP(O)(OCC)=O."},
+{"PMeOH", "C(O%10)C(O%20)COP(O)(OC)=O."},
 
     '{"LPC", "C(O%10)C(O)COP([O-])(=O)OCC[N+](C)(C)C."},
     '''{"LPCSN1", "C(O%10)C(O)COP([O-])(=O)OCC[N+](C)(C)C."},

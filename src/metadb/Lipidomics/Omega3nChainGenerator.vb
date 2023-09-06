@@ -1,9 +1,4 @@
-﻿Imports CompMs.Common.Extension
-Imports System
-Imports System.Collections.Generic
-Imports System.Linq
-
-Public Class Omega3nChainGenerator
+﻿Public Class Omega3nChainGenerator
     Implements IChainGenerator
     Public Function CarbonIsValid(carbon As Integer) As Boolean Implements IChainGenerator.CarbonIsValid
         Return True
@@ -229,7 +224,7 @@ Public Class Omega3nChainGenerator
                         continue;
                     }
                     infos.Add(j);
-                    foreach(var res In rec(j + 1, infos)) {
+                    ForEach(var res In rec(j + 1, infos)) {
                         yield return res;
                     }
                     infos.RemoveAt(infos.Count - 1);
