@@ -1,21 +1,23 @@
 .\" man page create by R# package system.
 .TH MSI 1 2000-Jan "scale" "scale"
 .SH NAME
-scale \- scale the spatial matrix
+scale \- scale the spatial matrix by column
 .SH SYNOPSIS
 \fIscale(\fBm\fR as <generic> dataframe, 
 \fBfactor\fR as any, 
 [\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
-scale the spatial matrix
+scale the spatial matrix by column
 .PP
 .SH OPTIONS
 .PP
 \fBm\fB \fR\- -. 
 .PP
 .PP
-\fBfactor\fB \fR\- -. 
+\fBfactor\fB \fR\- the size of this numeric vector should be equals to the 
+ ncol of the given dataframe input **`m`**.
+. 
 .PP
 .PP
 \fBenv\fB \fR\- -. 

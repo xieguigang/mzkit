@@ -214,11 +214,12 @@ declare namespace MSI {
       function scans(raw: string, y?: object, correction?: object, env?: object): any;
    }
    /**
-    * scale the spatial matrix
+    * scale the spatial matrix by column
     * 
     * 
      * @param m -
-     * @param factor -
+     * @param factor the size of this numeric vector should be equals to the 
+     *  ncol of the given dataframe input **`m`**.
      * @param env -
      * 
      * + default value Is ``null``.
