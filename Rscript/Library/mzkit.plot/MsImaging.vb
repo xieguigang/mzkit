@@ -686,6 +686,13 @@ Module MsImaging
         End If
     End Function
 
+    ''' <summary>
+    ''' Get intensity data vector from a given MS-imaging layer
+    ''' </summary>
+    ''' <param name="layer"></param>
+    ''' <param name="summary"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("intensity")>
     <RApiReturn(GetType(Double))>
     Public Function GetIntensityData(layer As Object,
