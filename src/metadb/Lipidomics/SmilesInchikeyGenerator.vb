@@ -4,97 +4,96 @@ Imports NCDK.Smiles
 Imports NCDK.Graphs.InChI
 Imports System.Linq
 
-Namespace CompMs.Common.Lipidomics
-    Public Class SmilesInchikeyGenerator
-        Public Shared Function Generate(ByVal lipid As Lipid) As SmilesInchikey
-            Dim plChains As PositionLevelChains = Nothing
+Public Class SmilesInchikeyGenerator
+    Public Shared Function Generate(ByVal lipid As Lipid) As SmilesInchikey
+        Dim plChains As PositionLevelChains = Nothing
 
-            If CSharpImpl.__Assign(plChains, TryCast(lipid.Chains, PositionLevelChains)) IsNot Nothing Then
-                Dim smilesHeaderDict = SmilesLipidHeader.HeaderDictionary
-                Dim headerSmiles = smilesHeaderDict(lipid.LipidClass.ToString())
-                If Equals(headerSmiles, Nothing) Then Return Nothing
+        If CSharpImpl.__Assign(plChains, TryCast(lipid.Chains, PositionLevelChains)) IsNot Nothing Then
+            Dim smilesHeaderDict = SmilesLipidHeader.HeaderDictionary
+            Dim headerSmiles = smilesHeaderDict(lipid.LipidClass.ToString())
+            If Equals(headerSmiles, Nothing) Then Return Nothing
 
-                Dim chainList = New List(Of String)()
-                Dim jointPosition = 10
+            Dim chainList = New List(Of String)()
+            Dim jointPosition = 10
 
-                For Each chain In lipid.Chains.GetDeterminedChains()
-                    Dim oxidized = chain.Oxidized
-                    Dim doubleBond = chain.DoubleBond
-                    If oxidized.UnDecidedCount > 0 OrElse doubleBond.UnDecidedCount > 0 Then
-                        Return Nothing
-                    End If
-                    Dim smilesInchikeyGenerator = New SmilesInchikeyGenerator()
-                    Dim chainSmiles = smilesInchikeyGenerator.ChainSmilesGen(chain)
-                    If TypeOf chain Is SphingoChain Then
-                        chainSmiles = chainSmiles.Remove(0, 5).Insert(1, "%" & jointPosition.ToString())
-                    Else
-                        chainSmiles = chainSmiles.Insert(1, "%" & jointPosition.ToString())
-                    End If
-                    chainList.Add(chainSmiles)
-                    jointPosition = jointPosition + 10
-                Next
-
-                Dim rawSmiles = headerSmiles & String.Join(".", chainList)
-
-                Dim SmilesParser = New SmilesParser()
-                Dim SmilesGenerator = New SmilesGenerator(SmiFlavors.StereoCisTrans)
-                Dim iAtomContainer = SmilesParser.ParseSmiles(rawSmiles)
-                Dim smiles = SmilesGenerator.Create(iAtomContainer)
-                Dim InChIGeneratorFactory = New InChIGeneratorFactory()
-                Dim InChIKey = InChIGeneratorFactory.GetInChIGenerator(iAtomContainer).GetInChIKey()
-
-                Return New SmilesInchikey() With {
-                    .Smiles = smiles,
-                    .InchiKey = InChIKey
-                }
-            End If
-            Return Nothing
-        End Function
-        Public Function ChainSmilesGen(ByVal chain As IChain) As String
-            Dim doubleBond = chain.DoubleBond
-            Dim oxidized = chain.Oxidized
-
-            If doubleBond.UnDecidedCount > 0 Then
-                Return Nothing
-            End If
-            If Equals(chain.CarbonCount.ToString() & ":" & chain.DoubleBondCount.ToString(), "0:0") Then
-                Return "H"
-            End If
-
-            Dim chainSmiles = ""
-            For i = 1 To chain.CarbonCount + 1 - 1
-                chainSmiles = chainSmiles & "C"
-                If oxidized.Oxidises.Contains(i) Then
-                    chainSmiles = chainSmiles & "(O)"
+            For Each chain In lipid.Chains.GetDeterminedChains()
+                Dim oxidized = chain.Oxidized
+                Dim doubleBond = chain.DoubleBond
+                If oxidized.UnDecidedCount > 0 OrElse doubleBond.UnDecidedCount > 0 Then
+                    Return Nothing
                 End If
-
-                If doubleBond.Bonds.Any(Function(n) i = n.Position) Then
-                    Dim item = doubleBond.Bonds.Where(Function(n) i = n.Position).ToArray()
-                    'chainSmiles = chainSmiles + "=";
-                    chainSmiles = chainSmiles & item(0).State.ToString().ToUpper()(0).ToString()
+                Dim smilesInchikeyGenerator = New SmilesInchikeyGenerator()
+                Dim chainSmiles = smilesInchikeyGenerator.ChainSmilesGen(chain)
+                If TypeOf chain Is SphingoChain Then
+                    chainSmiles = chainSmiles.Remove(0, 5).Insert(1, "%" & jointPosition.ToString())
+                Else
+                    chainSmiles = chainSmiles.Insert(1, "%" & jointPosition.ToString())
                 End If
+                chainList.Add(chainSmiles)
+                jointPosition = jointPosition + 10
             Next
 
-            If TypeOf chain Is AcylChain Then
-                chainSmiles = chainSmiles.Insert(1, "(=O)")
+            Dim rawSmiles = headerSmiles & String.Join(".", chainList)
+
+            Dim SmilesParser = New SmilesParser()
+            Dim SmilesGenerator = New SmilesGenerator(SmiFlavors.StereoCisTrans)
+            Dim iAtomContainer = SmilesParser.ParseSmiles(rawSmiles)
+            Dim smiles = SmilesGenerator.Create(iAtomContainer)
+            Dim InChIGeneratorFactory = New InChIGeneratorFactory()
+            Dim InChIKey = InChIGeneratorFactory.GetInChIGenerator(iAtomContainer).GetInChIKey()
+
+            Return New SmilesInchikey() With {
+                .Smiles = smiles,
+                .InchiKey = InChIKey
+            }
+        End If
+        Return Nothing
+    End Function
+    Public Function ChainSmilesGen(ByVal chain As IChain) As String
+        Dim doubleBond = chain.DoubleBond
+        Dim oxidized = chain.Oxidized
+
+        If doubleBond.UnDecidedCount > 0 Then
+            Return Nothing
+        End If
+        If Equals(chain.CarbonCount.ToString() & ":" & chain.DoubleBondCount.ToString(), "0:0") Then
+            Return "H"
+        End If
+
+        Dim chainSmiles = ""
+        For i = 1 To chain.CarbonCount + 1 - 1
+            chainSmiles = chainSmiles & "C"
+            If oxidized.Oxidises.Contains(i) Then
+                chainSmiles = chainSmiles & "(O)"
             End If
 
-            chainSmiles = chainSmiles.Replace("CEC", "\C=C\")
-            chainSmiles = chainSmiles.Replace("CZC", "/C=C\")
-            chainSmiles = chainSmiles.Replace("CUC", "C=C")
+            If doubleBond.Bonds.Any(Function(n) i = n.Position) Then
+                Dim item = doubleBond.Bonds.Where(Function(n) i = n.Position).ToArray()
+                'chainSmiles = chainSmiles + "=";
+                chainSmiles = chainSmiles & item(0).State.ToString().ToUpper()(0).ToString()
+            End If
+        Next
 
-            Return chainSmiles
+        If TypeOf chain Is AcylChain Then
+            chainSmiles = chainSmiles.Insert(1, "(=O)")
+        End If
+
+        chainSmiles = chainSmiles.Replace("CEC", "\C=C\")
+        chainSmiles = chainSmiles.Replace("CZC", "/C=C\")
+        chainSmiles = chainSmiles.Replace("CUC", "C=C")
+
+        Return chainSmiles
+    End Function
+
+    Private Class CSharpImpl
+        <Obsolete("Please refactor calling code to use normal Visual Basic assignment")>
+        Shared Function __Assign(Of T)(ByRef target As T, value As T) As T
+            target = value
+            Return value
         End Function
-
-        Private Class CSharpImpl
-            <Obsolete("Please refactor calling code to use normal Visual Basic assignment")>
-            Shared Function __Assign(Of T)(ByRef target As T, value As T) As T
-                target = value
-                Return value
-            End Function
-        End Class
     End Class
-    Public Class SmilesInchikey
+End Class
+Public Class SmilesInchikey
         Private smilesField As String
         Private inchikeyField As String
 
@@ -339,4 +338,3 @@ Namespace CompMs.Common.Lipidomics
 }
     End Class
 
-End Namespace

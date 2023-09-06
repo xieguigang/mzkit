@@ -1,8 +1,8 @@
 ﻿Imports CompMs.Common.Components
 Imports CompMs.Common.Interfaces
 
-Namespace CompMs.Common.Lipidomics
-    Public Module PSEadMsCharacterization
+
+Public Module PSEadMsCharacterization
         Public Function Characterize(ByVal scan As IMSScanProperty, ByVal molecule As ILipid, ByVal reference As MoleculeMsReference, ByVal tolerance As Single, ByVal mzBegin As Single, ByVal mzEnd As Single) As (ILipid, Double())
             Dim class_cutoff = 3
             Dim chain_cutoff = 2
@@ -23,4 +23,4 @@ Namespace CompMs.Common.Lipidomics
             Return GetDefaultCharacterizationResultForGlycerophospholipid(molecule, defaultResult)
         End Function
     End Module
-End Namespace
+

@@ -10,9 +10,9 @@ Imports System.IO
 Imports System.Linq
 Imports System.Text
 
-Namespace CompMs.Common.Lipidomics
 
-    Public Class LipidMolecule
+
+Public Class LipidMolecule
 
         Public Property LipidName As String
         Public Property SublevelLipidName As String
@@ -684,4 +684,4 @@ Namespace CompMs.Common.Lipidomics
             Return LbmClass.Undefined
         End Function
     End Class
-End Namespace
+

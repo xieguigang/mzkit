@@ -5,8 +5,8 @@ Imports System
 Imports System.Collections.Generic
 Imports System.Linq
 
-Namespace CompMs.Common.Lipidomics
-    Public Class EidDefaultSpectrumGenerator
+
+Public Class EidDefaultSpectrumGenerator
         Implements ILipidSpectrumGenerator
         Private ReadOnly spectrumGenerator As ISpectrumPeakGenerator
         Public Sub New()
@@ -50,12 +50,6 @@ Namespace CompMs.Common.Lipidomics
 
         Private Shared ReadOnly comparer As IEqualityComparer(Of SpectrumPeak) = New SpectrumEqualityComparer()
 
-        Private Class CSharpImpl
-            <Obsolete("Please refactor calling code to use normal throw statements")>
-            Shared Function __Throw(Of T)(ByVal e As Exception) As T
-                Throw e
-            End Function
-        End Class
 
-    End Class
-End Namespace
+End Class
+

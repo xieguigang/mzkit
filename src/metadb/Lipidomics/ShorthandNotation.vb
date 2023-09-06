@@ -1,7 +1,7 @@
 ﻿Imports CompMs.Common.DataStructure
 
-Namespace CompMs.Common.Lipidomics
-    Friend Class ChainShorthandNotation
+
+Friend Class ChainShorthandNotation
         Implements IVisitor(Of AcylChain, AcylChain), IVisitor(Of AlkylChain, AlkylChain), IVisitor(Of SphingoChain, SphingoChain)
         Private ReadOnly _chainVisitor As ChainVisitor
 
@@ -26,4 +26,4 @@ Namespace CompMs.Common.Lipidomics
             Return CType(_chainVisitor, IVisitor(Of SphingoChain, SphingoChain)).Visit(item)
         End Function
     End Class
-End Namespace
+

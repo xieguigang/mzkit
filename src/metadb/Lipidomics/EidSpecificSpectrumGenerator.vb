@@ -5,8 +5,8 @@ Imports System
 Imports System.Collections.Generic
 Imports System.Linq
 
-Namespace CompMs.Common.Lipidomics
-    Public Class EidSpecificSpectrumGenerator
+
+Public Class EidSpecificSpectrumGenerator
         Private Shared ReadOnly CH2 As Double = {HydrogenMass * 2, CarbonMass}.Sum()
         Public Shared Function EidSpecificSpectrumGen(ByVal lipid As ILipid, ByVal chain As IChain, ByVal adduct As AdductIon, ByVal nlMass As Double, ByVal intensity As Double) As SpectrumPeak()
             Dim peaks = New List(Of SpectrumPeak)()
@@ -83,4 +83,4 @@ Namespace CompMs.Common.Lipidomics
             Return peaks.ToArray()
         End Function
     End Class
-End Namespace
+

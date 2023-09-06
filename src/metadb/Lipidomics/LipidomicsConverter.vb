@@ -5,8 +5,8 @@ Imports System.Linq
 Imports System.Text.RegularExpressions
 Imports System.Runtime.InteropServices
 
-Namespace CompMs.Common.Lipidomics
-    Public Module LipidomicsConverter
+
+Public Module LipidomicsConverter
 
         'public static LipidMolecule ConvertMsdialLipidnameToLipidMoleculeObject(MoleculeMsReference query) {
         '    var molecule = new LipidMolecule();
@@ -5508,4 +5508,4 @@ Namespace CompMs.Common.Lipidomics
             End Select
         End Function
     End Module
-End Namespace
+

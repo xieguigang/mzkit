@@ -4,8 +4,8 @@ Imports System.Collections.Generic
 Imports System.Collections.ObjectModel
 Imports System.Linq
 
-Namespace CompMs.Common.Lipidomics
-    Public Interface IDoubleBond
+
+Public Interface IDoubleBond
         Inherits IVisitableElement, IEquatable(Of IDoubleBond)
         ReadOnly Property Count As Integer
         ReadOnly Property DecidedCount As Integer
@@ -102,12 +102,5 @@ Namespace CompMs.Common.Lipidomics
             Return Count = other.Count AndAlso DecidedCount = other.DecidedCount AndAlso Bonds.All(Function(bond) other.Bonds.Any(New Func(Of IDoubleBondInfo, Boolean)(AddressOf bond.Equals)))
         End Function
 
-        Private Class CSharpImpl
-            <Obsolete("Please refactor calling code to use normal Visual Basic assignment")>
-            Shared Function __Assign(Of T)(ByRef target As T, value As T) As T
-                target = value
-                Return value
-            End Function
-        End Class
-    End Class
-End Namespace
+End Class
+

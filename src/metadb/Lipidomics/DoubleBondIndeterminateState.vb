@@ -3,8 +3,8 @@ Imports System
 Imports System.Collections.Generic
 Imports System.Linq
 
-Namespace CompMs.Common.Lipidomics
-    Public NotInheritable Class DoubleBondIndeterminateState
+
+Public NotInheritable Class DoubleBondIndeterminateState
         Public Shared ReadOnly Property AllPositions As DoubleBondIndeterminateState = New DoubleBondIndeterminateState(State.PositionExclude, Nothing)
         Public Shared ReadOnly Property AllCisTransIsomers As DoubleBondIndeterminateState = New DoubleBondIndeterminateState(State.CisTransIsomerExclude, Nothing)
         Public Shared ReadOnly Property Identity As DoubleBondIndeterminateState = New DoubleBondIndeterminateState(State.None, Nothing)
@@ -125,4 +125,4 @@ Namespace CompMs.Common.Lipidomics
             End Function
         End Class
     End Class
-End Namespace
+

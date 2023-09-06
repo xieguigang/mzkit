@@ -6,8 +6,8 @@ Imports CompMs.Common.Interfaces
 Imports System.Collections.Generic
 Imports System.Linq
 
-Namespace CompMs.Common.Lipidomics
-    Public Class LipidSpectrumGeneratorFactory
+
+Public Class LipidSpectrumGeneratorFactory
         Public Function Create(ByVal lipidClass As LbmClass, ByVal adduct As AdductIon, ByVal rules As ISpectrumGenerationRule()) As ILipidSpectrumGenerator
             Return New RuleBaseSpectrumGenerator(lipidClass, adduct, rules)
         End Function
@@ -239,21 +239,13 @@ Namespace CompMs.Common.Lipidomics
         Private lipid As ILipid
         Private adduct As AdductIon
 
-        Public Function Evaluate(ByVal lipid As ILipid, ByVal adduct As AdductIon) As IEnumerable(Of Double) Implements IMzVariable.Evaluate
-            If lipid Is Me.lipid AndAlso adduct Is Me.adduct Then
-                Return cache
-            End If
-            Me.lipid = lipid
-            Me.adduct = adduct
-            Return CSharpImpl.__Assign(cache, Mz.Evaluate(lipid, adduct).ToArray())
-        End Function
+    Public Function Evaluate(ByVal lipid As ILipid, ByVal adduct As AdductIon) As IEnumerable(Of Double) Implements IMzVariable.Evaluate
+        If lipid Is Me.lipid AndAlso adduct Is Me.adduct Then
+            Return cache
+        End If
+        Me.lipid = lipid
+        Me.adduct = adduct
+        Return CSharpImpl.__Assign(cache, Mz.Evaluate(lipid, adduct).ToArray())
+    End Function
+End Class
 
-        Private Class CSharpImpl
-            <Obsolete("Please refactor calling code to use normal Visual Basic assignment")>
-            Shared Function __Assign(Of T)(ByRef target As T, value As T) As T
-                target = value
-                Return value
-            End Function
-        End Class
-    End Class
-End Namespace

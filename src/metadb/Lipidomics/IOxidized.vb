@@ -4,8 +4,8 @@ Imports System.Collections.Generic
 Imports System.Collections.ObjectModel
 Imports System.Linq
 
-Namespace CompMs.Common.Lipidomics
-    Public Interface IOxidized
+
+Public Interface IOxidized
         Inherits IVisitableElement, IEquatable(Of IOxidized)
         ReadOnly Property Count As Integer
         ReadOnly Property DecidedCount As Integer
@@ -79,12 +79,5 @@ Namespace CompMs.Common.Lipidomics
             Return Count = other.Count AndAlso DecidedCount = other.DecidedCount AndAlso Oxidises.All(Function(ox) other.Oxidises.Any(New Func(Of Integer, Boolean)(AddressOf ox.Equals)))
         End Function
 
-        Private Class CSharpImpl
-            <Obsolete("Please refactor calling code to use normal Visual Basic assignment")>
-            Shared Function __Assign(Of T)(ByRef target As T, value As T) As T
-                target = value
-                Return value
-            End Function
-        End Class
-    End Class
-End Namespace
+End Class
+

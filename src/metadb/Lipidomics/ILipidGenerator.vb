@@ -1,8 +1,8 @@
 ﻿Imports System.Collections.Generic
 Imports System.Linq
 
-Namespace CompMs.Common.Lipidomics
-    Public Interface ILipidGenerator
+
+Public Interface ILipidGenerator
         Function CanGenerate(ByVal lipid As ILipid) As Boolean
         Function Generate(ByVal lipid As Lipid) As IEnumerable(Of ILipid)
     End Interface
@@ -29,4 +29,4 @@ Namespace CompMs.Common.Lipidomics
         End Function
     End Class
 
-End Namespace
+

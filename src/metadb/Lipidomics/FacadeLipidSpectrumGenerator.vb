@@ -4,8 +4,8 @@ Imports CompMs.Common.Interfaces
 Imports System.Collections.Generic
 Imports System.Linq
 
-Namespace CompMs.Common.Lipidomics
-    Public Class FacadeLipidSpectrumGenerator
+
+Public Class FacadeLipidSpectrumGenerator
         Implements ILipidSpectrumGenerator
         Private ReadOnly map As Dictionary(Of LbmClass, List(Of ILipidSpectrumGenerator)) = New Dictionary(Of LbmClass, List(Of ILipidSpectrumGenerator))()
 
@@ -189,4 +189,4 @@ Namespace CompMs.Common.Lipidomics
         Private Shared eidlipidgeneratorField As ILipidSpectrumGenerator
 
     End Class
-End Namespace
+

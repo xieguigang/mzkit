@@ -4,8 +4,7 @@ Imports CompMs.Common.FormulaGenerator.DataObj
 Imports System.Collections.Generic
 Imports System.Linq
 
-Namespace CompMs.Common.Lipidomics
-    Public Class OadSpectrumPeakGenerator
+Public Class OadSpectrumPeakGenerator
         Implements IOadSpectrumPeakGenerator
         Private Shared ReadOnly CH2 As Double = {HydrogenMass * 2, CarbonMass}.Sum()
 
@@ -372,4 +371,3 @@ Namespace CompMs.Common.Lipidomics
         Public Property spectrum As SpectrumPeak
     End Class
 
-End Namespace

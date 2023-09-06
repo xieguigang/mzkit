@@ -1,8 +1,8 @@
 ﻿Imports CompMs.Common.Components
 Imports CompMs.Common.Interfaces
 
-Namespace CompMs.Common.Lipidomics
-    Public NotInheritable Class OadDefaultCharacterization
+
+Public NotInheritable Class OadDefaultCharacterization
         Private Sub New()
         End Sub
 
@@ -37,4 +37,4 @@ Namespace CompMs.Common.Lipidomics
         End Function
 
     End Class
-End Namespace
+

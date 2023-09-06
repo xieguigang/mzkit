@@ -2,8 +2,8 @@
 Imports System.Collections.Generic
 Imports System.Linq
 
-Namespace CompMs.Common.Lipidomics
-    Public Class MolecularSpeciesLevelChains
+
+Public Class MolecularSpeciesLevelChains
         Inherits SeparatedChains
         Implements ITotalChain
         Private Shared ReadOnly CHAIN_COMPARER As ChainComparer = New ChainComparer()
@@ -96,12 +96,5 @@ Namespace CompMs.Common.Lipidomics
             End Function
         End Class
 
-        Private Class CSharpImpl
-            <Obsolete("Please refactor calling code to use normal Visual Basic assignment")>
-            Shared Function __Assign(Of T)(ByRef target As T, value As T) As T
-                target = value
-                Return value
-            End Function
-        End Class
-    End Class
-End Namespace
+End Class
+

@@ -1,7 +1,7 @@
 ﻿Imports System.Collections.Generic
 
-Namespace CompMs.Common.Lipidomics
-    Public Interface IChainGenerator
+
+Public Interface IChainGenerator
         Function Generate(ByVal chain As AcylChain) As IEnumerable(Of IChain)
 
         Function Generate(ByVal chain As AlkylChain) As IEnumerable(Of IChain)
@@ -12,4 +12,4 @@ Namespace CompMs.Common.Lipidomics
 
         Function DoubleBondIsValid(ByVal carbon As Integer, ByVal doubleBond As Integer) As Boolean
     End Interface
-End Namespace
+

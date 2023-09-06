@@ -4,8 +4,8 @@ Imports CompMs.Common.FormulaGenerator.Parser
 Imports System.IO
 Imports System.Text
 
-Namespace CompMs.Common.Lipidomics
-    Public NotInheritable Class LipidMassLibraryGenerator
+
+Public NotInheritable Class LipidMassLibraryGenerator
         Private Sub New()
         End Sub
 
@@ -1367,4 +1367,4 @@ Namespace CompMs.Common.Lipidomics
             End If
         End Function
     End Class
-End Namespace
+

@@ -1,7 +1,7 @@
 ﻿Imports System.Collections.Generic
 
-Namespace CompMs.Common.Lipidomics
-    Public Class ShortHandGenerator
+
+Public Class ShortHandGenerator
         Implements ITotalChainVariationGenerator
         Public Iterator Function Permutate(ByVal chains As MolecularSpeciesLevelChains) As IEnumerable(Of ITotalChain) Implements ITotalChainVariationGenerator.Permutate
             Yield [Short](chains)
@@ -19,4 +19,4 @@ Namespace CompMs.Common.Lipidomics
             Yield chain
         End Function
     End Class
-End Namespace
+

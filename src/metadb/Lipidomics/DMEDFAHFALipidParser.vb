@@ -3,8 +3,8 @@ Imports CompMs.Common.FormulaGenerator.DataObj
 Imports System.Linq
 Imports System.Text.RegularExpressions
 
-Namespace CompMs.Common.Lipidomics
-    Public Class DMEDFAHFALipidParser
+
+Public Class DMEDFAHFALipidParser
         Implements ILipidParser
         Private Shared ReadOnly C4N2H10 As Double = {CarbonMass * 4, NitrogenMass * 2, HydrogenMass * 10}.Sum()
         Public ReadOnly Property Target As String = "DMEDFAHFA" Implements ILipidParser.Target
@@ -23,4 +23,4 @@ Namespace CompMs.Common.Lipidomics
             Return Nothing
         End Function
     End Class
-End Namespace
+

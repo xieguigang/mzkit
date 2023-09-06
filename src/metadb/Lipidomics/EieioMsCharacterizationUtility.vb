@@ -7,9 +7,9 @@ Imports System
 Imports System.Collections.Generic
 Imports System.Linq
 
-Namespace CompMs.Common.Lipidomics
 
-    Public Class LipidMsCharacterizationResult
+
+Public Class LipidMsCharacterizationResult
         Public Property ClassIonsDetected As Integer
         Public Property ChainIonsDetected As Integer
         Public Property PositionIonsDetected As Integer
@@ -404,4 +404,4 @@ Namespace CompMs.Common.Lipidomics
         End Function
 
     End Module
-End Namespace
+

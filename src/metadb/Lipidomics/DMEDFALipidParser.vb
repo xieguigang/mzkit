@@ -3,8 +3,8 @@ Imports CompMs.Common.FormulaGenerator.DataObj
 Imports System.Linq
 Imports System.Text.RegularExpressions
 
-Namespace CompMs.Common.Lipidomics
-    Public Class DMEDFALipidParser
+
+Public Class DMEDFALipidParser
         Implements ILipidParser
         Private Shared ReadOnly Skelton As Double = {CarbonMass * 4, NitrogenMass * 2, HydrogenMass * 11}.Sum()
         Public ReadOnly Property Target As String = "DMEDFA" Implements ILipidParser.Target
@@ -24,4 +24,4 @@ Namespace CompMs.Common.Lipidomics
         End Function
 
     End Class
-End Namespace
+

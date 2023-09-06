@@ -1,12 +1,10 @@
 ﻿Imports CompMs.Common.Components
 Imports CompMs.Common.Interfaces
 
-Namespace CompMs.Common.Lipidomics
-    Friend Class MGEadMsCharacterization
-        Public Shared Function Characterize(ByVal scan As IMSScanProperty, ByVal molecule As ILipid, ByVal reference As MoleculeMsReference, ByVal tolerance As Single, ByVal mzBegin As Single, ByVal mzEnd As Single) As (ILipid, Double())
+Friend Class MGEadMsCharacterization
+    Public Shared Function Characterize(ByVal scan As IMSScanProperty, ByVal molecule As ILipid, ByVal reference As MoleculeMsReference, ByVal tolerance As Single, ByVal mzBegin As Single, ByVal mzEnd As Single) As (ILipid, Double())
 
-            Dim defaultResult = EieioMsCharacterizationUtility.GetDefaultScore(scan, reference, tolerance, mzBegin, mzEnd, 2, 1, 1, 2) ' doublebond position cannot be determined
-            Return GetDefaultCharacterizationResultForGlycerophospholipid(molecule, defaultResult)
-        End Function
-    End Class
-End Namespace
+        Dim defaultResult = EieioMsCharacterizationUtility.GetDefaultScore(scan, reference, tolerance, mzBegin, mzEnd, 2, 1, 1, 2) ' doublebond position cannot be determined
+        Return GetDefaultCharacterizationResultForGlycerophospholipid(molecule, defaultResult)
+    End Function
+End Class

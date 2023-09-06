@@ -2,8 +2,8 @@
 Imports System
 Imports System.Collections.Generic
 
-Namespace CompMs.Common.Lipidomics
-    Public Interface IChain
+
+Public Interface IChain
         Inherits IVisitableElement, IEquatable(Of IChain)
         ReadOnly Property CarbonCount As Integer
         ReadOnly Property DoubleBond As IDoubleBond
@@ -15,4 +15,4 @@ Namespace CompMs.Common.Lipidomics
         Function Includes(ByVal chain As IChain) As Boolean
         Function GetCandidates(ByVal generator As IChainGenerator) As IEnumerable(Of IChain)
     End Interface
-End Namespace
+

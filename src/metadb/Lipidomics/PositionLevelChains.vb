@@ -2,8 +2,8 @@
 Imports System.Collections.Generic
 Imports System.Linq
 
-Namespace CompMs.Common.Lipidomics
-    Public Class PositionLevelChains
+
+Public Class PositionLevelChains
         Inherits SeparatedChains
         Implements ITotalChain
         Private ReadOnly _chains As IChain()
@@ -47,12 +47,5 @@ Namespace CompMs.Common.Lipidomics
             Return Nothing
         End Function
 
-        Private Class CSharpImpl
-            <Obsolete("Please refactor calling code to use normal Visual Basic assignment")>
-            Shared Function __Assign(Of T)(ByRef target As T, value As T) As T
-                target = value
-                Return value
-            End Function
-        End Class
-    End Class
-End Namespace
+End Class
+

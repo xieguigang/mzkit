@@ -6,8 +6,8 @@ Imports System
 Imports System.Collections.Generic
 Imports System.Linq
 
-Namespace CompMs.Common.Lipidomics
-    Public Class OadLipidSpectrumGenerator
+
+Public Class OadLipidSpectrumGenerator
         Public Function GetClassFragmentSpectrum(ByVal lipid As ILipid, ByVal adduct As AdductIon) As OadClassFragment
             Dim spectrum = New List(Of SpectrumPeak)()
             Dim nlMass = 0.0
@@ -169,13 +169,6 @@ Namespace CompMs.Common.Lipidomics
         Private Shared ReadOnly C3H8NO6P As Double = {CarbonMass * 3, HydrogenMass * 8, NitrogenMass, OxygenMass * 6, PhosphorusMass}.Sum() ' PS Header
         Private Shared ReadOnly C6H13O9P As Double = {CarbonMass * 6, HydrogenMass * 13, OxygenMass * 9, PhosphorusMass}.Sum() ' PI Header
 
-        Private Class CSharpImpl
-            <Obsolete("Please refactor calling code to use normal Visual Basic assignment")>
-            Shared Function __Assign(Of T)(ByRef target As T, value As T) As T
-                target = value
-                Return value
-            End Function
-        End Class
 
-    End Class
-End Namespace
+End Class
+

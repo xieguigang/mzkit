@@ -2,8 +2,8 @@
 Imports CompMs.Common.Enum
 Imports System.Collections.Generic
 
-Namespace CompMs.Common.Lipidomics
-    Public Class LipoqualityAnnotation
+
+Public Class LipoqualityAnnotation
         Public Property Mz As Single
         Public Property Rt As Single
         Public Property AveragedIntensity As Single
@@ -24,4 +24,4 @@ Namespace CompMs.Common.Lipidomics
         Public Property Formula As String = String.Empty
         Public Property Intensities As List(Of Double) = New List(Of Double)()
     End Class
-End Namespace
+

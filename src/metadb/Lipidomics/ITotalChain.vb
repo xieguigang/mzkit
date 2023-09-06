@@ -4,38 +4,37 @@ Imports System.Collections.Generic
 Imports System.Linq
 Imports System.Runtime.CompilerServices
 
-Namespace CompMs.Common.Lipidomics
-    Public Interface ITotalChain
-        Inherits IEquatable(Of ITotalChain), IVisitableElement
-        ReadOnly Property CarbonCount As Integer
-        ReadOnly Property DoubleBondCount As Integer
-        ReadOnly Property OxidizedCount As Integer
-        ReadOnly Property ChainCount As Integer
-        ReadOnly Property AcylChainCount As Integer
-        ReadOnly Property AlkylChainCount As Integer
-        ReadOnly Property SphingoChainCount As Integer
-        ReadOnly Property Mass As Double
-        ReadOnly Property Description As LipidDescription
+Public Interface ITotalChain
+    Inherits IEquatable(Of ITotalChain), IVisitableElement
+    ReadOnly Property CarbonCount As Integer
+    ReadOnly Property DoubleBondCount As Integer
+    ReadOnly Property OxidizedCount As Integer
+    ReadOnly Property ChainCount As Integer
+    ReadOnly Property AcylChainCount As Integer
+    ReadOnly Property AlkylChainCount As Integer
+    ReadOnly Property SphingoChainCount As Integer
+    ReadOnly Property Mass As Double
+    ReadOnly Property Description As LipidDescription
 
-        ''' <summary>
-        ''' Retrieve the determined chain by position.
-        ''' The position here refers to a specific order defined for each lipid class.
-        ''' It may not necessarily match the commonly used sn-position for lipids.
-        ''' </summary>
-        ''' <paramname="position">1-indexed position</param>
-        ''' <returns>IChain if the specified position chain is determined; otherwise, null.</returns>
-        Function GetChainByPosition(ByVal position As Integer) As IChain
-        ''' <summary>
-        ''' This method returns an array of lipid chains with confirmed structures.
-        ''' It only includes the chains that have their structures determined, and there is no guarantee that the position and index will match.
-        ''' </summary>
-        ''' <returns>IChain[]</returns>
-        Function GetDeterminedChains() As IChain()
-        Function Includes(ByVal chains As ITotalChain) As Boolean
-        Function GetCandidateSets(ByVal totalChainGenerator As ITotalChainVariationGenerator) As IEnumerable(Of ITotalChain)
-    End Interface
+    ''' <summary>
+    ''' Retrieve the determined chain by position.
+    ''' The position here refers to a specific order defined for each lipid class.
+    ''' It may not necessarily match the commonly used sn-position for lipids.
+    ''' </summary>
+    ''' <paramname="position">1-indexed position</param>
+    ''' <returns>IChain if the specified position chain is determined; otherwise, null.</returns>
+    Function GetChainByPosition(ByVal position As Integer) As IChain
+    ''' <summary>
+    ''' This method returns an array of lipid chains with confirmed structures.
+    ''' It only includes the chains that have their structures determined, and there is no guarantee that the position and index will match.
+    ''' </summary>
+    ''' <returns>IChain[]</returns>
+    Function GetDeterminedChains() As IChain()
+    Function Includes(ByVal chains As ITotalChain) As Boolean
+    Function GetCandidateSets(ByVal totalChainGenerator As ITotalChainVariationGenerator) As IEnumerable(Of ITotalChain)
+End Interface
 
-    Public Module TotalChainExtension
+Public Module TotalChainExtension
         <Extension()>
         Public Function GetChains(ByVal lipid As LipidMolecule) As ITotalChain
             Dim prop = LipidClassDictionary.Default.LbmItems(lipid.LipidClass)
@@ -99,22 +98,14 @@ Namespace CompMs.Common.Lipidomics
             End If
         End Sub
 
-        <Extension()>
-        Public Sub ApplyToChain(Of T As IChain)(ByVal chains As ITotalChain, ByVal position As Integer, ByVal action As Action(Of T))
-            Dim chain = chains.GetChainByPosition(position)
-            Dim c As T = Nothing
+    <Extension()>
+    Public Sub ApplyToChain(Of T As IChain)(ByVal chains As ITotalChain, ByVal position As Integer, ByVal action As Action(Of T))
+        Dim chain = chains.GetChainByPosition(position)
+        Dim c As T = Nothing
 
-            If CSharpImpl.__Assign(c, TryCast(chain, T)) IsNot Nothing Then
-                action?.Invoke(c)
-            End If
-        End Sub
+        If CSharpImpl.__Assign(c, TryCast(chain, T)) IsNot Nothing Then
+            action?.Invoke(c)
+        End If
+    End Sub
+End Module
 
-        Private Class CSharpImpl
-            <Obsolete("Please refactor calling code to use normal Visual Basic assignment")>
-            Shared Function __Assign(Of T)(ByRef target As T, value As T) As T
-                target = value
-                Return value
-            End Function
-        End Class
-    End Module
-End Namespace

@@ -1,8 +1,8 @@
 ﻿Imports System
 Imports System.Collections.Generic
 
-Namespace CompMs.Common.Lipidomics
-    Public Interface IDoubleBondInfo
+
+Public Interface IDoubleBondInfo
         Inherits IEquatable(Of IDoubleBondInfo)
         ReadOnly Property Position As Integer
         ReadOnly Property State As DoubleBondState
@@ -75,16 +75,8 @@ Namespace CompMs.Common.Lipidomics
             Return Position = info.Position AndAlso (State = DoubleBondState.Unknown OrElse State = info.State)
         End Function
 
-        Public Overloads Function Equals(ByVal other As IDoubleBondInfo) As Boolean Implements IEquatable(Of IDoubleBondInfo).Equals
-            Return Position = other.Position AndAlso State = other.State
-        End Function
+    Public Overloads Function Equals(ByVal other As IDoubleBondInfo) As Boolean Implements IEquatable(Of IDoubleBondInfo).Equals
+        Return Position = other.Position AndAlso State = other.State
+    End Function
+End Class
 
-        Private Class CSharpImpl
-            <Obsolete("Please refactor calling code to use normal Visual Basic assignment")>
-            Shared Function __Assign(Of T)(ByRef target As T, value As T) As T
-                target = value
-                Return value
-            End Function
-        End Class
-    End Class
-End Namespace

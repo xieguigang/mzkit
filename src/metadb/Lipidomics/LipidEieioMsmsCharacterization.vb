@@ -7,8 +7,8 @@ Imports CompMs.Common.Interfaces
 Imports System
 Imports System.Collections.Generic
 
-Namespace CompMs.Common.Lipidomics
-    Public NotInheritable Class LipidEieioMsmsCharacterization
+
+Public NotInheritable Class LipidEieioMsmsCharacterization
         Private Sub New()
         End Sub
 
@@ -3574,4 +3574,4 @@ Namespace CompMs.Common.Lipidomics
         End Function
 
     End Class
-End Namespace
+

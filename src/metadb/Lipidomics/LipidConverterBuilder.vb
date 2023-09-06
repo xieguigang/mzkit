@@ -1,5 +1,5 @@
-﻿Namespace CompMs.Common.Lipidomics
-    Friend NotInheritable Class LipidConverterBuilder
+﻿
+Friend NotInheritable Class LipidConverterBuilder
         Implements ILipidomicsVisitorBuilder
         Private _acylDoubleBondState, _alkylDoubleBondState, _sphingosineDoubleBondState As DoubleBondIndeterminateState
         Private _acylOxidizedState, _alkylOxidizedState, _sphingosineOxidizedState As OxidizedIndeterminateState
@@ -42,4 +42,4 @@
             _sphingosineOxidizedState = state
         End Sub
     End Class
-End Namespace
+

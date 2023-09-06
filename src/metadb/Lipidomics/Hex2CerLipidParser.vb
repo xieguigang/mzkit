@@ -3,8 +3,8 @@ Imports CompMs.Common.FormulaGenerator.DataObj
 Imports System.Linq
 Imports System.Text.RegularExpressions
 
-Namespace CompMs.Common.Lipidomics
-    Public Class Hex2CerLipidParser
+
+Public Class Hex2CerLipidParser
         Implements ILipidParser
         Public ReadOnly Property Target As String = "Hex2Cer" Implements ILipidParser.Target
 
@@ -26,4 +26,3 @@ Namespace CompMs.Common.Lipidomics
             Return Nothing
         End Function
     End Class
-End Namespace

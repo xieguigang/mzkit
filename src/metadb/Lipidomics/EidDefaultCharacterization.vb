@@ -1,8 +1,8 @@
 ﻿Imports CompMs.Common.Components
 Imports CompMs.Common.Interfaces
 
-Namespace CompMs.Common.Lipidomics
-    Public NotInheritable Class EidDefaultCharacterization
+
+Public NotInheritable Class EidDefaultCharacterization
         Private Sub New()
         End Sub
 
@@ -43,4 +43,4 @@ Namespace CompMs.Common.Lipidomics
             Return GetDefaultCharacterizationResultForTriacylGlycerols(molecule, defaultResult)
         End Function
     End Class
-End Namespace
+

@@ -7,8 +7,8 @@ Imports System
 Imports System.Collections.Generic
 Imports System.Linq
 
-Namespace CompMs.Common.Lipidomics
-    Public Class PSEidSpectrumGenerator
+
+Public Class PSEidSpectrumGenerator
         Implements ILipidSpectrumGenerator
 
         Private Shared ReadOnly C3H8NO6P As Double = {CarbonMass * 3, HydrogenMass * 8, NitrogenMass, OxygenMass * 6, PhosphorusMass}.Sum()
@@ -151,15 +151,5 @@ Namespace CompMs.Common.Lipidomics
 
         Private Shared ReadOnly comparer As IEqualityComparer(Of SpectrumPeak) = New SpectrumEqualityComparer()
 
-        Private Class CSharpImpl
-            <Obsolete("Please refactor calling code to use normal Visual Basic assignment")>
-            Shared Function __Assign(Of T)(ByRef target As T, value As T) As T
-                target = value
-                Return value
-            End Function <Obsolete("Please refactor calling code to use normal throw statements")>
-            Shared Function __Throw(Of T)(ByVal e As Exception) As T
-                Throw e
-            End Function
-        End Class
-    End Class
-End Namespace
+End Class
+
