@@ -885,6 +885,12 @@ Module MSI
                 .Select(Function(si) Val(si)) _
                 .ToArray
 
+            For i As Integer = 0 To v.Length - 1
+                If v(i) < 0 Then
+                    v(i) = 0
+                End If
+            Next
+
             ti += 1.98
 
             Call scans.Add(New ScanMS1 With {
