@@ -141,6 +141,10 @@ Module MSI
         Dim cols As String() = m.colnames
         Dim name As String
 
+        If f.Length <> cols.Length Then
+            Return Internal.debug.stop($"the dimension of the factor vector({f.Length}) is not matched with the dataframe columns({cols.Length})!", env)
+        End If
+
         m = New rDataframe(m)
 
         For i As Integer = 0 To cols.Length - 1
