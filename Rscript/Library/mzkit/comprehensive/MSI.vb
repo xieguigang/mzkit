@@ -126,10 +126,12 @@ Module MSI
     End Function
 
     ''' <summary>
-    ''' scale the spatial matrix
+    ''' scale the spatial matrix by column
     ''' </summary>
     ''' <param name="m"></param>
-    ''' <param name="factor"></param>
+    ''' <param name="factor">the size of this numeric vector should be equals to the 
+    ''' ncol of the given dataframe input <paramref name="m"/>.
+    ''' </param>
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("scale")>
