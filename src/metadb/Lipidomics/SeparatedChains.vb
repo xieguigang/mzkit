@@ -1,8 +1,4 @@
-﻿Imports CompMs.Common.DataStructure
-Imports CompMs.Common.Utility
-Imports System
-Imports System.Collections.Generic
-Imports System.Linq
+﻿Imports std = System.Math
 
 Public Class SeparatedChains
     Implements ITotalChain
@@ -117,7 +113,7 @@ Public Class SeparatedChains
                 Threading.Interlocked.Increment(idx)
             End While
             If idx < box.Length Then
-                box(Math.Min(Threading.Interlocked.Increment(idx), idx - 1)) = c
+                box(std.Min(Threading.Interlocked.Increment(idx), idx - 1)) = c
             End If
         Next
         Return String.Concat(CType(Enumerable.Select(Of ChainInformation, Global.System.[String])(box, CType(Function(c) CStr(c.Chain.ToString() & If(c.Position < 0, "_", "/")), Func(Of ChainInformation, String))), IEnumerable(Of String))).TrimEnd("_"c, "/"c)

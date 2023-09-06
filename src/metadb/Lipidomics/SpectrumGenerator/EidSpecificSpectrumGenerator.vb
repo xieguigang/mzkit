@@ -33,7 +33,7 @@ Public Class EidSpecificSpectrumGenerator
                     If dbPosition = 1 Then Continue For
                     Dim intArray = {0.5, 0.5, 0.5, 0.7, 1, 0.7, 0.5}
 
-                    For i = dbPosition - 1 - 2 To Math.Min(diffs.Length, dbPosition - 1 + 5) - 1
+                    For i = dbPosition - 1 - 2 To std.Min(diffs.Length, dbPosition - 1 + 5) - 1
                         If i <= 0 Then Continue For
                         Dim n = i - (dbPosition - 1 - 2)
                         Dim diffMass = If(i = dbPosition - 1, diffs(i), If(i >= dbPosition - 1, diffs(i) + HydrogenMass, diffs(i) - HydrogenMass))

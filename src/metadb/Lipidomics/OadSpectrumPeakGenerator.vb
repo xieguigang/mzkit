@@ -60,7 +60,7 @@
     '    var dbPeakHigher = chainLoss + diffs[bond] + MassDiffDictionary.HydrogenMass + MassDiffDictionary.OxygenMass;
     '    var dbPeak = chainLoss + diffs[bond - 1];
     '    var dbPeakLower = chainLoss + diffs[bond - 2] + MassDiffDictionary.HydrogenMass;
-    '    if (adduct.IonMode == IonMode.Positive)
+    '    if (adduct.IonMode == IonModes.Positive)
     '    {
     '        peaks.Add(new SpectrumPeak(adduct.ConvertToMz(dbPeakHigher + MassDiffDictionary.HydrogenMass), (factor * abundance * 0.3), $"{chain} C{bond} +C +O +H OAD01") { SpectrumComment = speccomment });
     '        peaks.Add(new SpectrumPeak(adduct.ConvertToMz(dbPeakHigher), (factor * abundance), $"{chain} C{bond} +O OAD02") { SpectrumComment = speccomment | SpectrumComment.doublebond_high });
@@ -106,7 +106,7 @@
     '        }
     '        peaks.Add(new SpectrumPeak(adduct.ConvertToMz(dbPeakHigher + MassDiffDictionary.HydrogenMass * 2), (factor * abundance * 0.2), $"{chain} C{bond} +C +O +H OAD01+H") { SpectrumComment = speccomment });
     '    }
-    '    else if (adduct.IonMode == IonMode.Negative)
+    '    else if (adduct.IonMode == IonModes.Negative)
     '    {
     '        //add 20230330
     '        peaks.Add(new SpectrumPeak(adduct.ConvertToMz(dbPeakHigher + MassDiffDictionary.HydrogenMass), (factor * abundance * 0.2), $"{chain} C{bond} +C +O +H OAD01") { SpectrumComment = speccomment });

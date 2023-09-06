@@ -1683,7 +1683,7 @@ Public NotInheritable Class LipidMsmsCharacterization
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
         If maxSnDoubleBond > totalDoubleBond Then maxSnDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+H]+") Then
                 ' seek 184.07332 (C5H15NO4P)
                 Dim threshold = 10.0
@@ -1884,7 +1884,7 @@ Public NotInheritable Class LipidMsmsCharacterization
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
         If maxSnDoubleBond > totalDoubleBond Then maxSnDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+H]+") Then
                 ' seek -141.019094261 (C2H8NO4P)
                 Dim threshold = 10.0
@@ -2044,7 +2044,7 @@ Public NotInheritable Class LipidMsmsCharacterization
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
         If maxSnDoubleBond > totalDoubleBond Then maxSnDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+H]+") Then
                 ' seek -185.008927 (C3H8NO6P)
                 Dim threshold = 10.0
@@ -2181,7 +2181,7 @@ Public NotInheritable Class LipidMsmsCharacterization
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
         If maxSnDoubleBond > totalDoubleBond Then maxSnDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+H]+") Then
                 ' seek -185.008927 (C4H10NO6P)
                 Dim threshold = 20.0
@@ -2295,7 +2295,7 @@ Public NotInheritable Class LipidMsmsCharacterization
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
         If maxSnDoubleBond > totalDoubleBond Then maxSnDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+NH4]+") Then
                 ' seek -189.040227 (C3H8O6P+NH4)
                 Dim threshold = 10.0
@@ -2473,7 +2473,7 @@ Public NotInheritable Class LipidMsmsCharacterization
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
         If maxSnDoubleBond > totalDoubleBond Then maxSnDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+NH4]+") Then
                 ' seek -277.056272 (C6H12O9P+NH4)
                 Dim threshold = 10.0
@@ -2593,7 +2593,7 @@ Public NotInheritable Class LipidMsmsCharacterization
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
         If maxSnDoubleBond > totalDoubleBond Then maxSnDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+H]+") Then ''' not found in lipidDbProject-Pos
                 ' check [M-C2H8NO4P+H]+  
                 Dim threshold = 1
@@ -2703,7 +2703,7 @@ Public NotInheritable Class LipidMsmsCharacterization
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
         If maxSnDoubleBond > totalDoubleBond Then maxSnDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode  //// not found in lipidDbProject-Pos
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode  //// not found in lipidDbProject-Pos
             If Equals(adduct.AdductIonName, "[M+H]+") Then
                 ''' check -141.019094261 (C2H8NO4P)
                 'var threshold = 1.0;
@@ -2818,7 +2818,7 @@ Public NotInheritable Class LipidMsmsCharacterization
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSphCarbon > totalCarbon Then maxSphCarbon = totalCarbon
         If maxSphDoubleBond > totalDoubleBond Then maxSphDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+H]+") Then
                 ' seek 184.07332 (C5H15NO4P)
                 Dim threshold = 10.0
@@ -2983,7 +2983,7 @@ Public NotInheritable Class LipidMsmsCharacterization
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSphCarbon > totalCarbon Then maxSphCarbon = totalCarbon
         If maxSphDoubleBond > totalDoubleBond Then maxSphDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+H]+") Then
                 ' seek 184.07332 (C5H15NO4P)
                 Dim threshold = 30.0
@@ -3022,7 +3022,7 @@ Public NotInheritable Class LipidMsmsCharacterization
         If maxSn1DoubleBond > totalDoubleBond Then maxSn1DoubleBond = totalDoubleBond
         If maxSn2Carbon > totalCarbon Then maxSn2Carbon = totalCarbon
         If maxSn2DoubleBond > totalDoubleBond Then maxSn2DoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+NH4]+") Then
                 ' seek -17.026549 (NH3)
                 Dim threshold = 1.0
@@ -3036,8 +3036,8 @@ Public NotInheritable Class LipidMsmsCharacterization
 
                         Dim remainCarbon = totalCarbon - sn1Carbon
                         Dim remainDouble = totalDoubleBond - sn1Double
-                        Dim carbonLimit = Math.Min(remainCarbon, maxSn2Carbon)
-                        Dim doubleLimit = Math.Min(remainDouble, maxSn2DoubleBond)
+                        Dim carbonLimit = std.Min(remainCarbon, maxSn2Carbon)
+                        Dim doubleLimit = std.Min(remainDouble, maxSn2DoubleBond)
 
                         For sn2Carbon = minSn2Carbon To carbonLimit
                             For sn2Double = minSn2DoubleBond To doubleLimit
@@ -3093,8 +3093,8 @@ Public NotInheritable Class LipidMsmsCharacterization
                         Dim diagnosticMz = theoreticalMz ' - 22.9892207 + MassDiffDictionary.HydrogenMass; //if want to choose [M+H]+
                         Dim remainCarbon = totalCarbon - sn1Carbon
                         Dim remainDouble = totalDoubleBond - sn1Double
-                        Dim carbonLimit = Math.Min(remainCarbon, maxSn2Carbon)
-                        Dim doubleLimit = Math.Min(remainDouble, maxSn2DoubleBond)
+                        Dim carbonLimit = std.Min(remainCarbon, maxSn2Carbon)
+                        Dim doubleLimit = std.Min(remainDouble, maxSn2DoubleBond)
 
                         For sn2Carbon = minSn2Carbon To carbonLimit
                             For sn2Double = minSn2DoubleBond To doubleLimit
@@ -3179,7 +3179,7 @@ Public NotInheritable Class LipidMsmsCharacterization
     Public Shared Function JudgeIfAcylcarnitine(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Single, totalCarbon As Integer, totalDoubleBond As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+H]+") OrElse Equals(adduct.AdductIonName, "[M]+") Then
                 ' seek 85.028405821 (C4H5O2+)
                 Dim threshold = 5.0
@@ -3232,7 +3232,7 @@ Public NotInheritable Class LipidMsmsCharacterization
     Public Shared Function JudgeIfCholesterylEster(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Single, totalCarbon As Integer, totalDoubleBond As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+NH4]+") Then
                 ' seek 369.3515778691 (C27H45+)
                 Dim threshold = 30.0
@@ -3275,7 +3275,7 @@ Public NotInheritable Class LipidMsmsCharacterization
         If maxSn1Carbon > totalCarbon Then maxSn1Carbon = totalCarbon
         If maxSn1DoubleBond > totalDoubleBond Then maxSn1DoubleBond = totalDoubleBond
         If totalCarbon > 52 Then Return Nothing ' currently, very large DAG is excluded.
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+NH4]+") Then
                 ' seek -17.026549 (NH3)
                 Dim threshold = 1.0
@@ -3400,7 +3400,7 @@ New SpectrumPeak() With {
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSn1Carbon > totalCarbon Then maxSn1Carbon = totalCarbon
         If maxSn1DoubleBond > totalDoubleBond Then maxSn1DoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+NH4]+") Then
                 ' seek -17.026549 (NH3)
                 Dim threshold = 5
@@ -3429,7 +3429,7 @@ New SpectrumPeak() With {
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
         If maxSnDoubleBond > totalDoubleBond Then maxSnDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+H]+") Then
                 If totalCarbon > 28 Then Return Nothing '  currently carbon > 28 is recognized as EtherPC
                 ' seek 184.07332 (C5H15NO4P)
@@ -3532,7 +3532,7 @@ New SpectrumPeak() With {
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
         If maxSnDoubleBond > totalDoubleBond Then maxSnDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+H]+") Then
                 If totalCarbon > 28 Then Return Nothing '  currently carbon > 28 is recognized as EtherPE
 
@@ -3631,7 +3631,7 @@ New SpectrumPeak() With {
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
         If maxSnDoubleBond > totalDoubleBond Then maxSnDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+H]+") Then
                 ' seek 184.07332 (C5H15NO4P)
                 Dim threshold = 10.0
@@ -3753,7 +3753,7 @@ New SpectrumPeak() With {
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
         If maxSnDoubleBond > totalDoubleBond Then maxSnDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+H]+") Then
                 ' seek -141.019094261 (C2H8NO4P)
                 Dim threshold = 0.5
@@ -3894,7 +3894,7 @@ New SpectrumPeak() With {
         If sn1MaxOxidized > TotalOxidized Then sn1MaxOxidized = TotalOxidized
         If sn2MaxOxidized > TotalOxidized Then sn2MaxOxidized = TotalOxidized
 
-        If adduct.IonMode = IonMode.Negative Then '  
+        If adduct.IonMode = IonModes.Negative Then '  
             If Equals(adduct.AdductIonName, "[M+FA-H]-") OrElse Equals(adduct.AdductIonName, "[M+Hac-H]-") OrElse Equals(adduct.AdductIonName, "[M+HCOO]-") OrElse Equals(adduct.AdductIonName, "[M+CH3COO]-") Then
                 ' seek [M-CH3]-
                 Dim threshold = 10.0
@@ -3995,7 +3995,7 @@ New SpectrumPeak() With {
         If sn1MaxOxidized > TotalOxidized Then sn1MaxOxidized = TotalOxidized
         If sn2MaxOxidized > TotalOxidized Then sn2MaxOxidized = TotalOxidized
 
-        If adduct.IonMode = IonMode.Negative Then '  
+        If adduct.IonMode = IonModes.Negative Then '  
             If Equals(adduct.AdductIonName, "[M-H]-") Then
                 ' seek C5H11NO5P-
                 Dim threshold = 5.0
@@ -4094,7 +4094,7 @@ New SpectrumPeak() With {
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
         If maxSnDoubleBond > totalDoubleBond Then maxSnDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+H]+") Then
                 ' seek 184.07332 (C5H15NO4P), 104.10699 (C5H12N+), 124.99982 (C2H5O4P + H+)
                 Dim threshold = 20.0
@@ -4143,7 +4143,7 @@ New SpectrumPeak() With {
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
         If maxSnDoubleBond > totalDoubleBond Then maxSnDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+H]+") Then
                 Dim EtherFrag = "e"
                 ' case LPE P-
@@ -4214,7 +4214,7 @@ New SpectrumPeak() With {
         If sn1MaxOxidized > TotalOxidized Then sn1MaxOxidized = TotalOxidized
         If sn2MaxOxidized > TotalOxidized Then sn2MaxOxidized = TotalOxidized
 
-        If adduct.IonMode = IonMode.Negative Then '  
+        If adduct.IonMode = IonModes.Negative Then '  
             If Equals(adduct.AdductIonName, "[M+FA-H]-") OrElse Equals(adduct.AdductIonName, "[M+Hac-H]-") OrElse Equals(adduct.AdductIonName, "[M+HCOO]-") OrElse Equals(adduct.AdductIonName, "[M+CH3COO]-") Then
                 ' seek [M-CH3]-
                 Dim threshold = 5.0
@@ -4248,10 +4248,10 @@ New SpectrumPeak() With {
 
                             Dim sn1 = LipidMsmsCharacterizationUtility.fattyacidProductIon(sn1Carbon, sn1Double) + OxygenMass * sn1Oxidized
                             Dim sn1_H2Oloss = sn1 - H2O
-                            Dim sn1_xH2Oloss = sn1 - H2O * Math.Min(sn1Oxidized, 2)
+                            Dim sn1_xH2Oloss = sn1 - H2O * std.Min(sn1Oxidized, 2)
                             Dim sn2 = LipidMsmsCharacterizationUtility.fattyacidProductIon(sn2Carbon, sn2Double) + OxygenMass * sn2Oxidized
                             Dim sn2_H2Oloss = sn2 - H2O
-                            Dim sn2_xH2Oloss = sn2 - H2O * Math.Min(TotalOxidized - sn1Oxidized, 2)
+                            Dim sn2_xH2Oloss = sn2 - H2O * std.Min(TotalOxidized - sn1Oxidized, 2)
 
                             Dim query1 = New List(Of SpectrumPeak) From {
                                 New SpectrumPeak() With {
@@ -4313,7 +4313,7 @@ New SpectrumPeak() With {
         If sn1MaxOxidized > TotalOxidized Then sn1MaxOxidized = TotalOxidized
         If sn2MaxOxidized > TotalOxidized Then sn2MaxOxidized = TotalOxidized
 
-        If adduct.IonMode = IonMode.Negative Then ' 
+        If adduct.IonMode = IonModes.Negative Then ' 
             If Equals(adduct.AdductIonName, "[M-H]-") Then
                 ' seek C5H11NO5P-
                 Dim threshold = 0.1
@@ -4345,10 +4345,10 @@ New SpectrumPeak() With {
                             End If
                             Dim sn1 = LipidMsmsCharacterizationUtility.fattyacidProductIon(sn1Carbon, sn1Double) + OxygenMass * sn1Oxidized
                             Dim sn1_H2Oloss = sn1 - H2O
-                            Dim sn1_xH2Oloss = sn1 - H2O * Math.Min(sn1Oxidized, 2)
+                            Dim sn1_xH2Oloss = sn1 - H2O * std.Min(sn1Oxidized, 2)
                             Dim sn2 = LipidMsmsCharacterizationUtility.fattyacidProductIon(sn2Carbon, sn2Double) + OxygenMass * sn2Oxidized
                             Dim sn2_H2Oloss = sn2 - H2O
-                            Dim sn2_xH2Oloss = sn2 - H2O * Math.Min(TotalOxidized - sn1Oxidized, 2)
+                            Dim sn2_xH2Oloss = sn2 - H2O * std.Min(TotalOxidized - sn1Oxidized, 2)
 
                             Dim query1 = New List(Of SpectrumPeak) From {
                                 New SpectrumPeak() With {
@@ -4430,7 +4430,7 @@ New SpectrumPeak() With {
         If sn1MaxOxidized > TotalOxidized Then sn1MaxOxidized = TotalOxidized
         If sn2MaxOxidized > TotalOxidized Then sn2MaxOxidized = TotalOxidized
 
-        If adduct.IonMode = IonMode.Negative Then ' 
+        If adduct.IonMode = IonModes.Negative Then ' 
             If Equals(adduct.AdductIonName, "[M-H]-") Then
                 ' seek C3H6O5P-
                 Dim threshold = 0.01
@@ -4466,10 +4466,10 @@ New SpectrumPeak() With {
 
                             Dim sn1 = LipidMsmsCharacterizationUtility.fattyacidProductIon(sn1Carbon, sn1Double) + OxygenMass * sn1Oxidized
                             Dim sn1_H2Oloss = sn1 - H2O
-                            Dim sn1_xH2Oloss = sn1 - H2O * Math.Min(sn1Oxidized, 2)
+                            Dim sn1_xH2Oloss = sn1 - H2O * std.Min(sn1Oxidized, 2)
                             Dim sn2 = LipidMsmsCharacterizationUtility.fattyacidProductIon(sn2Carbon, sn2Double) + OxygenMass * sn2Oxidized
                             Dim sn2_H2Oloss = sn2 - H2O
-                            Dim sn2_xH2Oloss = sn2 - H2O * Math.Min(TotalOxidized - sn1Oxidized, 2)
+                            Dim sn2_xH2Oloss = sn2 - H2O * std.Min(TotalOxidized - sn1Oxidized, 2)
 
                             Dim query1 = New List(Of SpectrumPeak) From {
                                 New SpectrumPeak() With {
@@ -4551,7 +4551,7 @@ New SpectrumPeak() With {
         If sn1MaxOxidized > TotalOxidized Then sn1MaxOxidized = TotalOxidized
         If sn2MaxOxidized > TotalOxidized Then sn2MaxOxidized = TotalOxidized
 
-        If adduct.IonMode = IonMode.Negative Then ' 
+        If adduct.IonMode = IonModes.Negative Then ' 
             If Equals(adduct.AdductIonName, "[M-H]-") Then
                 ' seek 241.01188(C6H10O8P-) and 297.037548(C9H14O9P-)
                 Dim threshold = 0.01
@@ -4580,10 +4580,10 @@ New SpectrumPeak() With {
 
                             Dim sn1 = LipidMsmsCharacterizationUtility.fattyacidProductIon(sn1Carbon, sn1Double) + OxygenMass * sn1Oxidized
                             Dim sn1_H2Oloss = sn1 - H2O
-                            Dim sn1_xH2Oloss = sn1 - H2O * Math.Min(sn1Oxidized, 2)
+                            Dim sn1_xH2Oloss = sn1 - H2O * std.Min(sn1Oxidized, 2)
                             Dim sn2 = LipidMsmsCharacterizationUtility.fattyacidProductIon(sn2Carbon, sn2Double) + OxygenMass * sn2Oxidized
                             Dim sn2_H2Oloss = sn2 - H2O
-                            Dim sn2_xH2Oloss = sn2 - H2O * Math.Min(TotalOxidized - sn1Oxidized, 2)
+                            Dim sn2_xH2Oloss = sn2 - H2O * std.Min(TotalOxidized - sn1Oxidized, 2)
 
                             Dim query1 = New List(Of SpectrumPeak) From {
                                 New SpectrumPeak() With {
@@ -4664,7 +4664,7 @@ New SpectrumPeak() With {
         If sn1MaxOxidized > TotalOxidized Then sn1MaxOxidized = TotalOxidized
         If sn2MaxOxidized > TotalOxidized Then sn2MaxOxidized = TotalOxidized
 
-        If adduct.IonMode = IonMode.Negative Then ' 
+        If adduct.IonMode = IonModes.Negative Then ' 
             If Equals(adduct.AdductIonName, "[M-H]-") Then
                 ' seek C3H5NO2 loss
                 Dim threshold = 1.0
@@ -4690,10 +4690,10 @@ New SpectrumPeak() With {
 
                             Dim sn1 = LipidMsmsCharacterizationUtility.fattyacidProductIon(sn1Carbon, sn1Double) + OxygenMass * sn1Oxidized
                             Dim sn1_H2Oloss = sn1 - H2O
-                            Dim sn1_xH2Oloss = sn1 - H2O * Math.Min(sn1Oxidized, 2)
+                            Dim sn1_xH2Oloss = sn1 - H2O * std.Min(sn1Oxidized, 2)
                             Dim sn2 = LipidMsmsCharacterizationUtility.fattyacidProductIon(sn2Carbon, sn2Double) + OxygenMass * sn2Oxidized
                             Dim sn2_H2Oloss = sn2 - H2O
-                            Dim sn2_xH2Oloss = sn2 - H2O * Math.Min(TotalOxidized - sn1Oxidized, 2)
+                            Dim sn2_xH2Oloss = sn2 - H2O * std.Min(TotalOxidized - sn1Oxidized, 2)
 
                             Dim query1 = New List(Of SpectrumPeak) From {
                                 New SpectrumPeak() With {
@@ -4773,7 +4773,7 @@ New SpectrumPeak() With {
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
         If maxSnDoubleBond > totalDoubleBond Then maxSnDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+NH4]+") Then
                 ' seek [M+H-C6H12O6]+
                 Dim threshold = 10
@@ -4916,7 +4916,7 @@ New SpectrumPeak() With {
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
         If maxSnDoubleBond > totalDoubleBond Then maxSnDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+NH4]+") Then
                 ' from here, acyl level annotation is executed.
                 Dim candidates = New List(Of LipidMolecule)()
@@ -5063,7 +5063,7 @@ New SpectrumPeak() With {
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
         If maxSnDoubleBond > totalDoubleBond Then maxSnDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+NH4]+") Then
                 ' seek [M+H-C6H12O6]+
                 Dim threshold = 5
@@ -5200,7 +5200,7 @@ New SpectrumPeak() With {
     Public Shared Function JudgeIfMgmg(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+NH4]+") Then
                 ' seek [M+H-C6H12O6]+
                 Dim threshold = 10
@@ -5245,7 +5245,7 @@ New SpectrumPeak() With {
     Public Shared Function JudgeIfDgmg(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' If the candidate PC 46:6, totalCarbon = 46 and totalDoubleBond = 6
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+NH4]+") Then
                 Dim candidates = New List(Of LipidMolecule)()
                 ' exclude unknown element
@@ -5292,7 +5292,7 @@ New SpectrumPeak() With {
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
         If maxSnDoubleBond > totalDoubleBond Then maxSnDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+NH4]+") Then
 
                 ' from here, acyl level annotation is executed.
@@ -5342,7 +5342,7 @@ New SpectrumPeak() With {
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
         If maxSnDoubleBond > totalDoubleBond Then maxSnDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+NH4]+") Then ' not found in lipidDbProject-Pos
                 ' seek -17.026549 (NH3)
                 Dim diagnosticMz = theoreticalMz - 17.026549
@@ -5479,7 +5479,7 @@ New SpectrumPeak() With {
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
         If maxSnDoubleBond > totalDoubleBond Then maxSnDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Negative Then 'negative ion mode only
+        If adduct.IonMode = IonModes.Negative Then 'negative ion mode only
             If Equals(adduct.AdductIonName, "[M-H]-") Then
                 ' seek C3H6O5P-
                 Dim threshold = 1.0
@@ -5549,7 +5549,7 @@ New SpectrumPeak() With {
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
         If maxSnDoubleBond > totalDoubleBond Then maxSnDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Negative Then 'negative ion mode only
+        If adduct.IonMode = IonModes.Negative Then 'negative ion mode only
             If Equals(adduct.AdductIonName, "[M-H]-") Then
                 ' seek C3H6O5P-
                 Dim threshold = 1.0
@@ -5621,7 +5621,7 @@ New SpectrumPeak() With {
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
         If maxSnDoubleBond > totalDoubleBond Then maxSnDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Negative Then 'negative ion mode only
+        If adduct.IonMode = IonModes.Negative Then 'negative ion mode only
             If Equals(adduct.AdductIonName, "[M-H]-") Then
                 ' seek C3H6O5P-
 
@@ -5642,7 +5642,7 @@ New SpectrumPeak() With {
                 'candidates.Add(molecule);
                 Return LipidMsmsCharacterizationUtility.returnAnnotationResult("LPG", LbmClass.LPG, "", theoreticalMz, adduct, totalCarbon, totalDoubleBond, 0, candidates, 1)
             End If
-        ElseIf adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        ElseIf adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+H]+") Then
                 ' seek Header loss (MG+ + chain Acyl) 
                 Dim threshold = 5.0
@@ -5663,7 +5663,7 @@ New SpectrumPeak() With {
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
         If maxSnDoubleBond > totalDoubleBond Then maxSnDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Negative Then 'negative ion mode only
+        If adduct.IonMode = IonModes.Negative Then 'negative ion mode only
             If Equals(adduct.AdductIonName, "[M-H]-") Then
                 ' seek C3H6O5P-
 
@@ -5687,7 +5687,7 @@ New SpectrumPeak() With {
                 'candidates.Add(molecule);
                 Return LipidMsmsCharacterizationUtility.returnAnnotationResult("LPI", LbmClass.LPI, "", theoreticalMz, adduct, totalCarbon, totalDoubleBond, 0, candidates, 1)
             End If
-        ElseIf adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        ElseIf adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+H]+") Then
                 ' seek Header loss (MG+ + chain Acyl) 
                 Dim threshold = 5.0
@@ -5706,7 +5706,7 @@ New SpectrumPeak() With {
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
         If maxSnDoubleBond > totalDoubleBond Then maxSnDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Negative Then 'negative ion mode only
+        If adduct.IonMode = IonModes.Negative Then 'negative ion mode only
             If Equals(adduct.AdductIonName, "[M-H]-") Then
                 ' seek C3H6O5P-
 
@@ -5727,7 +5727,7 @@ New SpectrumPeak() With {
                 'candidates.Add(molecule);
                 Return LipidMsmsCharacterizationUtility.returnAnnotationResult("LPS", LbmClass.LPS, "", theoreticalMz, adduct, totalCarbon, totalDoubleBond, 0, candidates, 1)
             End If
-        ElseIf adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        ElseIf adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+H]+") Then
                 ' seek Header loss (MG+ + chain Acyl) 
                 Dim threshold = 5.0
@@ -5748,7 +5748,7 @@ New SpectrumPeak() With {
         If maxSn1DoubleBond > totalDoubleBond Then maxSn1DoubleBond = totalDoubleBond
         If maxSn2Carbon > totalCarbon Then maxSn2Carbon = totalCarbon
         If maxSn2DoubleBond > totalDoubleBond Then maxSn2DoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+NH4]+") Then
                 ' seek -17.026549 (NH3)
                 Dim threshold = 1.0
@@ -5761,8 +5761,8 @@ New SpectrumPeak() With {
                     For sn1Double = minSn1DoubleBond To maxSn1DoubleBond
                         Dim remainCarbon = totalCarbon - sn1Carbon
                         Dim remainDouble = totalDoubleBond - sn1Double
-                        Dim carbonLimit = Math.Min(remainCarbon, maxSn2Carbon)
-                        Dim doubleLimit = Math.Min(remainDouble, maxSn2DoubleBond)
+                        Dim carbonLimit = std.Min(remainCarbon, maxSn2Carbon)
+                        Dim doubleLimit = std.Min(remainDouble, maxSn2DoubleBond)
 
                         For sn2Carbon = minSn2Carbon To carbonLimit
                             For sn2Double = minSn2DoubleBond To doubleLimit
@@ -5830,8 +5830,8 @@ New SpectrumPeak() With {
                         Dim diagnosticMz = theoreticalMz ' - 22.9892207 + MassDiffDictionary.HydrogenMass; //if want to choose [M+H]+
                         Dim remainCarbon = totalCarbon - sn1Carbon
                         Dim remainDouble = totalDoubleBond - sn1Double
-                        Dim carbonLimit = Math.Min(remainCarbon, maxSn2Carbon)
-                        Dim doubleLimit = Math.Min(remainDouble, maxSn2DoubleBond)
+                        Dim carbonLimit = std.Min(remainCarbon, maxSn2Carbon)
+                        Dim doubleLimit = std.Min(remainDouble, maxSn2DoubleBond)
 
                         For sn2Carbon = minSn2Carbon To carbonLimit
                             For sn2Double = minSn2DoubleBond To doubleLimit
@@ -5911,7 +5911,7 @@ New SpectrumPeak() With {
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
         If maxSnDoubleBond > totalDoubleBond Then maxSnDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+H]+") Then
                 ' seek 144.10191 (C7H14NO2+)
                 Dim threshold = 1.0
@@ -6018,7 +6018,7 @@ New SpectrumPeak() With {
                 Next
                 Return LipidMsmsCharacterizationUtility.returnAnnotationResult("DGTS", LbmClass.DGTS, "", theoreticalMz, adduct, totalCarbon, totalDoubleBond, 0, candidates, 2)
             End If
-        ElseIf adduct.IonMode = IonMode.Negative Then
+        ElseIf adduct.IonMode = IonModes.Negative Then
             If Equals(adduct.AdductIonName, "[M+FA-H]-") OrElse Equals(adduct.AdductIonName, "[M+Hac-H]-") OrElse Equals(adduct.AdductIonName, "[M+HCOO]-") OrElse Equals(adduct.AdductIonName, "[M+CH3COO]-") Then
                 ' calc [M-H]- 
                 Dim diagnosticMz = If(Equals(adduct.AdductIonName, "[M+CH3COO]-") OrElse Equals(adduct.AdductIonName, "[M+Hac-H]-"), theoreticalMz - 60.02167792, theoreticalMz - 46.00602785)
@@ -6072,7 +6072,7 @@ New SpectrumPeak() With {
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
         If maxSnDoubleBond > totalDoubleBond Then maxSnDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+H]+") Then
                 ' seek 144.10191 (C7H14NO2+)
                 Dim threshold = 1.0
@@ -6117,7 +6117,7 @@ New SpectrumPeak() With {
                 Return LipidMsmsCharacterizationUtility.returnAnnotationResult("LDGTS", LbmClass.LDGTS, "", theoreticalMz, adduct, totalCarbon, totalDoubleBond, 0, candidates, 1)
 
             End If
-        ElseIf adduct.IonMode = IonMode.Negative Then
+        ElseIf adduct.IonMode = IonModes.Negative Then
             If Equals(adduct.AdductIonName, "[M+FA-H]-") OrElse Equals(adduct.AdductIonName, "[M+Hac-H]-") OrElse Equals(adduct.AdductIonName, "[M+HCOO]-") OrElse Equals(adduct.AdductIonName, "[M+CH3COO]-") Then
                 ' calc [M-H]- 
                 Dim diagnosticMz = If(Equals(adduct.AdductIonName, "[M+CH3COO]-") OrElse Equals(adduct.AdductIonName, "[M+Hac-H]-"), theoreticalMz - 60.02167792, theoreticalMz - 46.00602785)
@@ -6162,7 +6162,7 @@ New SpectrumPeak() With {
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
         If maxSnDoubleBond > totalDoubleBond Then maxSnDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+H]+") Then
                 ' seek 144.10191 (C7H14NO2+)
                 Dim threshold = 0.01
@@ -6239,7 +6239,7 @@ New SpectrumPeak() With {
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
         If maxSnDoubleBond > totalDoubleBond Then maxSnDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+H]+") Then
                 ' seek 144.10191 (C7H14NO2+)
                 Dim threshold = 1.0
@@ -6275,7 +6275,7 @@ New SpectrumPeak() With {
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
         If maxSnDoubleBond > totalDoubleBond Then maxSnDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+NH4]+") Then
                 Dim threshold = 5.0
                 Dim diagnosticMz = theoreticalMz - 17.026549 - 194.042652622 ' seek [M-194.042652]- (C6H10O7 + H+)
@@ -6374,7 +6374,7 @@ New SpectrumPeak() With {
         If maxSn1DoubleBond > totalDoubleBond Then maxSn1DoubleBond = totalDoubleBond
         If maxSn2Carbon > totalCarbon Then maxSn2Carbon = totalCarbon
         If maxSn2DoubleBond > totalDoubleBond Then maxSn2DoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+NH4]+") Then
 
                 ' from here, acyl level annotation is executed.
@@ -6384,8 +6384,8 @@ New SpectrumPeak() With {
 
                         Dim remainCarbon = totalCarbon - sn1Carbon
                         Dim remainDouble = totalDoubleBond - sn1Double
-                        Dim carbonLimit = Math.Min(remainCarbon, maxSn2Carbon)
-                        Dim doubleLimit = Math.Min(remainDouble, maxSn2DoubleBond)
+                        Dim carbonLimit = std.Min(remainCarbon, maxSn2Carbon)
+                        Dim doubleLimit = std.Min(remainDouble, maxSn2DoubleBond)
 
                         For sn2Carbon = minSn2Carbon To carbonLimit
                             For sn2Double = minSn2DoubleBond To doubleLimit
@@ -6444,8 +6444,8 @@ New SpectrumPeak() With {
                     For sn1Double = minSn1DoubleBond To maxSn1DoubleBond
                         Dim remainCarbon = totalCarbon - sn1Carbon
                         Dim remainDouble = totalDoubleBond - sn1Double
-                        Dim carbonLimit = Math.Min(remainCarbon, maxSn2Carbon)
-                        Dim doubleLimit = Math.Min(remainDouble, maxSn2DoubleBond)
+                        Dim carbonLimit = std.Min(remainCarbon, maxSn2Carbon)
+                        Dim doubleLimit = std.Min(remainDouble, maxSn2DoubleBond)
 
                         For sn2Carbon = minSn2Carbon To carbonLimit
                             For sn2Double = minSn2DoubleBond To doubleLimit
@@ -6500,7 +6500,7 @@ New SpectrumPeak() With {
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
         If maxSnDoubleBond > totalDoubleBond Then maxSnDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+NH4]+") Then ' not found in lipidDbProject-Pos
                 ' seek -17.026549 (NH3)
                 Dim diagnosticMz = theoreticalMz - 17.026549
@@ -6613,7 +6613,7 @@ New SpectrumPeak() With {
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
         If maxSnDoubleBond > totalDoubleBond Then maxSnDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+NH4]+") Then
                 ' seek -17.026549 (NH3)
                 Dim threshold = 1.0
@@ -6710,7 +6710,7 @@ New SpectrumPeak() With {
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
         If maxSnDoubleBond > totalDoubleBond Then maxSnDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+NH4]+") Then
                 ' seek -17.026549 (NH3)
                 Dim threshold = 1.0
@@ -6810,7 +6810,7 @@ New SpectrumPeak() With {
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
         If maxSnDoubleBond > totalDoubleBond Then maxSnDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+NH4]+") Then
                 ' seek 
                 ' seek -17.026549 (NH3)
@@ -6909,7 +6909,7 @@ New SpectrumPeak() With {
         If maxSn1DoubleBond > totalDoubleBond Then maxSn1DoubleBond = totalDoubleBond
         If maxSn2Carbon > totalCarbon Then maxSn2Carbon = totalCarbon
         If maxSn2DoubleBond > totalDoubleBond Then maxSn2DoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+NH4]+") Then
                 ' from here, acyl level annotation is executed.
                 Dim candidates = New List(Of LipidMolecule)()
@@ -6917,8 +6917,8 @@ New SpectrumPeak() With {
                     For sn1Double = minSn1DoubleBond To maxSn1DoubleBond
                         Dim remainCarbon = totalCarbon - sn1Carbon
                         Dim remainDouble = totalDoubleBond - sn1Double
-                        Dim carbonLimit = Math.Min(remainCarbon, maxSn2Carbon)
-                        Dim doubleLimit = Math.Min(remainDouble, maxSn2DoubleBond)
+                        Dim carbonLimit = std.Min(remainCarbon, maxSn2Carbon)
+                        Dim doubleLimit = std.Min(remainDouble, maxSn2DoubleBond)
 
                         For sn2Carbon = minSn2Carbon To carbonLimit
                             For sn2Double = minSn2DoubleBond To doubleLimit
@@ -6983,8 +6983,8 @@ New SpectrumPeak() With {
                     For sn1Double = minSn1DoubleBond To maxSn1DoubleBond
                         Dim remainCarbon = totalCarbon - sn1Carbon
                         Dim remainDouble = totalDoubleBond - sn1Double
-                        Dim carbonLimit = Math.Min(remainCarbon, maxSn2Carbon)
-                        Dim doubleLimit = Math.Min(remainDouble, maxSn2DoubleBond)
+                        Dim carbonLimit = std.Min(remainCarbon, maxSn2Carbon)
+                        Dim doubleLimit = std.Min(remainDouble, maxSn2DoubleBond)
 
                         For sn2Carbon = minSn2Carbon To carbonLimit
                             For sn2Double = minSn2DoubleBond To doubleLimit
@@ -7059,7 +7059,7 @@ New SpectrumPeak() With {
         Dim minSnDoubleBond1_2 = minSn1DoubleBond + minSn2DoubleBond
 
 
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+NH4]+") Then
                 ' seek -17.026549 (NH3)
                 Dim threshold = 1.0
@@ -7144,8 +7144,8 @@ New SpectrumPeak() With {
                     Dim averageIntensity2 = 0.0
                     LipidMsmsCharacterizationUtility.countFragmentExistence(spectrum, query2, ms2Tolerance, foundCount2, averageIntensity2)
 
-                    Dim carbonLimit = Math.Min(sn3_4Carbon, maxSn3Carbon)
-                    Dim doubleLimit = Math.Min(sn3_4Double, maxSn3DoubleBond)
+                    Dim carbonLimit = std.Min(sn3_4Carbon, maxSn3Carbon)
+                    Dim doubleLimit = std.Min(sn3_4Double, maxSn3DoubleBond)
 
                     If foundCount2 >= 1 Then
                         For sn3Carbon = minSn3Carbon To carbonLimit
@@ -7153,8 +7153,8 @@ New SpectrumPeak() With {
 
                                 Dim sn4Carbon = sn3_4Carbon - sn3Carbon
                                 Dim sn4Double = sn3_4Double - sn3Double
-                                Dim carbonLimit2 = Math.Min(sn1_2Carbon, maxSn1Carbon)
-                                Dim doubleLimit2 = Math.Min(sn1_2Double, maxSn1DoubleBond)
+                                Dim carbonLimit2 = std.Min(sn1_2Carbon, maxSn1Carbon)
+                                Dim doubleLimit2 = std.Min(sn1_2Double, maxSn1DoubleBond)
 
                                 For sn1Carbon = minSn1Carbon To carbonLimit2
                                     For sn1Double = minSn1DoubleBond To doubleLimit2
@@ -7246,16 +7246,16 @@ New SpectrumPeak() With {
                     Dim sn3_4Carbon = totalCarbon - sn1_2Carbon
                     Dim sn3_4Double = totalDoubleBond - sn1_2Double
 
-                    Dim carbonLimit = Math.Min(sn3_4Carbon, maxSn3Carbon)
-                    Dim doubleLimit = Math.Min(sn3_4Double, maxSn3DoubleBond)
+                    Dim carbonLimit = std.Min(sn3_4Carbon, maxSn3Carbon)
+                    Dim doubleLimit = std.Min(sn3_4Double, maxSn3DoubleBond)
 
                     For sn3Carbon = minSn3Carbon To carbonLimit
                         For sn3Double = minSn3DoubleBond To doubleLimit
 
                             Dim sn4Carbon = sn3_4Carbon - sn3Carbon
                             Dim sn4Double = sn3_4Double - sn3Double
-                            Dim carbonLimit2 = Math.Min(sn1_2Carbon, maxSn1Carbon)
-                            Dim doubleLimit2 = Math.Min(sn1_2Double, maxSn1DoubleBond)
+                            Dim carbonLimit2 = std.Min(sn1_2Carbon, maxSn1Carbon)
+                            Dim doubleLimit2 = std.Min(sn1_2Double, maxSn1DoubleBond)
 
                             For sn1Carbon = minSn1Carbon To carbonLimit2
                                 For sn1Double = minSn1DoubleBond To doubleLimit2
@@ -7340,7 +7340,7 @@ New SpectrumPeak() With {
         'if (max2SnDoubleBond > totalDoubleBond) max2SnDoubleBond = totalDoubleBond;
 
 
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+NH4]+") Then
                 ' seek -17.026549 (NH3)
                 Dim threshold = 1.0
@@ -7356,10 +7356,10 @@ New SpectrumPeak() With {
                     For sn1_2Double = minSnDoubleBond To maxSnDoubleBond
                         'var remainCarbon = totalCarbon - sn1_2Carbon;
                         'var remainDouble = totalDoubleBond - sn1_2Double;
-                        'var carbonLimit = Math.Min(remainCarbon, maxSnCarbon);
-                        'var doubleLimit = Math.Min(remainDouble, maxSnDoubleBond);
+                        'var carbonLimit = std.Min(remainCarbon, maxSnCarbon);
+                        'var doubleLimit = std.Min(remainDouble, maxSnDoubleBond);
 
-                        'var sn3_4Carbon = Math.Min(totalCarbon - sn1_2Carbon, maxSnCarbon);
+                        'var sn3_4Carbon = std.Min(totalCarbon - sn1_2Carbon, maxSnCarbon);
                         Dim sn3_4Carbon = totalCarbon - sn1_2Carbon
                         Dim sn3_4Double = totalDoubleBond - sn1_2Double
 
@@ -7411,7 +7411,7 @@ New SpectrumPeak() With {
         If maxSn2Carbon > totalCarbon Then maxSn2Carbon = totalCarbon
         If maxSn2DoubleBond > totalDoubleBond Then maxSn2DoubleBond = totalDoubleBond
 
-        If adduct.IonMode = IonMode.Negative Then
+        If adduct.IonMode = IonModes.Negative Then
             If Equals(adduct.AdductIonName, "[M-H]-") Then
                 ' seek 152.995836 (C3H6O5P-)
                 Dim threshold = 1.0
@@ -7425,8 +7425,8 @@ New SpectrumPeak() With {
 
                         Dim remainCarbon = totalCarbon - sn1Carbon
                         Dim remainDouble = totalDoubleBond - sn1Double
-                        Dim carbonLimit = Math.Min(remainCarbon, maxSn2Carbon)
-                        Dim doubleLimit = Math.Min(remainDouble, maxSn2DoubleBond)
+                        Dim carbonLimit = std.Min(remainCarbon, maxSn2Carbon)
+                        Dim doubleLimit = std.Min(remainDouble, maxSn2DoubleBond)
 
                         For sn2Carbon = minSn2Carbon To carbonLimit
                             For sn2Double = minSn2DoubleBond To doubleLimit
@@ -7508,7 +7508,7 @@ New SpectrumPeak() With {
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
         If maxSnDoubleBond > totalDoubleBond Then maxSnDoubleBond = totalDoubleBond
 
-        If adduct.IonMode = IonMode.Negative Then
+        If adduct.IonMode = IonModes.Negative Then
             If Equals(adduct.AdductIonName, "[M-H]-") Then
                 ' seek 152.995836 (C3H6O5P-)
                 Dim threshold = 1.0
@@ -7568,7 +7568,7 @@ New SpectrumPeak() With {
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
         If maxSnDoubleBond > totalDoubleBond Then maxSnDoubleBond = totalDoubleBond
 
-        If adduct.IonMode = IonMode.Negative Then
+        If adduct.IonMode = IonModes.Negative Then
             If Equals(adduct.AdductIonName, "[M-H]-") Then
                 Dim threshold = 5.0
                 Dim isClassIonFound = LipidMsmsCharacterizationUtility.isDiagnosticFragmentExist(spectrum, ms2Tolerance, theoreticalMz, threshold)
@@ -7589,7 +7589,7 @@ New SpectrumPeak() With {
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
         If maxSnDoubleBond > totalDoubleBond Then maxSnDoubleBond = totalDoubleBond
 
-        If adduct.IonMode = IonMode.Positive Then
+        If adduct.IonMode = IonModes.Positive Then
             If Equals(adduct.AdductIonName, "[M+H]+") Then
                 Dim threshold = 5.0
                 Dim isClassIonFound = LipidMsmsCharacterizationUtility.isDiagnosticFragmentExist(spectrum, ms2Tolerance, theoreticalMz, threshold)
@@ -7611,7 +7611,7 @@ New SpectrumPeak() With {
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
         If maxSnDoubleBond > totalDoubleBond Then maxSnDoubleBond = totalDoubleBond
 
-        If adduct.IonMode = IonMode.Negative Then
+        If adduct.IonMode = IonModes.Negative Then
             If Equals(adduct.AdductIonName, "[M-H]-") Then
                 Dim threshold = 1.0
                 Dim isClassIonFound = LipidMsmsCharacterizationUtility.isDiagnosticFragmentExist(spectrum, ms2Tolerance, theoreticalMz, threshold)
@@ -7665,7 +7665,7 @@ New SpectrumPeak() With {
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
         If maxSnDoubleBond > totalDoubleBond Then maxSnDoubleBond = totalDoubleBond
 
-        If adduct.IonMode = IonMode.Positive Then
+        If adduct.IonMode = IonModes.Positive Then
             If Equals(adduct.AdductIonName, "[M+H]+") Then
                 Dim threshold = 1.0
                 Dim isClassIonFound = LipidMsmsCharacterizationUtility.isDiagnosticFragmentExist(spectrum, ms2Tolerance, theoreticalMz, threshold)
@@ -7719,7 +7719,7 @@ New SpectrumPeak() With {
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
         If maxSnDoubleBond > totalDoubleBond Then maxSnDoubleBond = totalDoubleBond
 
-        If adduct.IonMode = IonMode.Negative Then
+        If adduct.IonMode = IonModes.Negative Then
             If Equals(adduct.AdductIonName, "[M-H]-") Then
                 ' from here, acyl level annotation is executed.
                 Dim candidates = New List(Of LipidMolecule)()
@@ -7791,7 +7791,7 @@ New SpectrumPeak() With {
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
         If maxSnDoubleBond > totalDoubleBond Then maxSnDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Positive Then
+        If adduct.IonMode = IonModes.Positive Then
             If Equals(adduct.AdductIonName, "[M+H]+") Then ' DEMD derv.
                 ' from here, acyl level annotation is executed.
                 Dim candidates = New List(Of LipidMolecule)()
@@ -7847,7 +7847,7 @@ New SpectrumPeak() With {
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSphCarbon > totalCarbon Then maxSphCarbon = totalCarbon
         If maxSphDoubleBond > totalDoubleBond Then maxSphDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             Dim adductform = adduct.AdductIonName
             If Equals(adductform, "[M+H]+") OrElse Equals(adductform, "[M+H-H2O]+") Then
                 ' seek -H2O
@@ -8034,7 +8034,7 @@ New SpectrumPeak() With {
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSphCarbon > totalCarbon Then maxSphCarbon = totalCarbon
         If maxSphDoubleBond > totalDoubleBond Then maxSphDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+H]+") Then
                 Dim diagnosticMz = theoreticalMz - 79.966333 - H2O
                 ' from here, acyl level annotation is executed.
@@ -8097,7 +8097,7 @@ New SpectrumPeak() With {
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSphCarbon > totalCarbon Then maxSphCarbon = totalCarbon
         If maxSphDoubleBond > totalDoubleBond Then maxSphDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             Dim adductform = adduct.AdductIonName
             If Equals(adductform, "[M+H]+") OrElse Equals(adductform, "[M+H-H2O]+") Then
                 ' seek -H2O
@@ -8278,7 +8278,7 @@ New SpectrumPeak() With {
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSphCarbon > totalCarbon Then maxSphCarbon = totalCarbon
         If maxSphDoubleBond > totalDoubleBond Then maxSphDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             Dim adductform = adduct.AdductIonName
             If Equals(adductform, "[M+H]+") OrElse Equals(adductform, "[M+H-H2O]+") Then
                 ' seek -H2O
@@ -8451,7 +8451,7 @@ New SpectrumPeak() With {
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSphCarbon > totalCarbon Then maxSphCarbon = totalCarbon
         If maxSphDoubleBond > totalDoubleBond Then maxSphDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             Dim adductform = adduct.AdductIonName
             If Equals(adductform, "[M+H]+") OrElse Equals(adductform, "[M+H-H2O]+") Then
                 ' seek -H2O
@@ -8624,7 +8624,7 @@ New SpectrumPeak() With {
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSphCarbon > totalCarbon Then maxSphCarbon = totalCarbon
         If maxSphDoubleBond > totalDoubleBond Then maxSphDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             Dim adductform = adduct.AdductIonName
             If Equals(adductform, "[M+H]+") OrElse Equals(adductform, "[M+H-H2O]+") Then
                 ' seek -H2O
@@ -8789,7 +8789,7 @@ New SpectrumPeak() With {
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSphCarbon > totalCarbon Then maxSphCarbon = totalCarbon
         If maxSphDoubleBond > totalDoubleBond Then maxSphDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             Dim adductform = adduct.AdductIonName
             If Equals(adductform, "[M+H]+") OrElse Equals(adductform, "[M+H-H2O]+") Then
                 ' seek -H2O
@@ -8887,7 +8887,7 @@ New SpectrumPeak() With {
 
                 Return LipidMsmsCharacterizationUtility.returnAnnotationResult(headerString, lbmClass, "d", theoreticalMz, adduct, totalCarbon, totalDoubleBond, 1, candidates, 2)
             End If
-        ElseIf adduct.IonMode = IonMode.Negative Then ' negative ion mode 
+        ElseIf adduct.IonMode = IonModes.Negative Then ' negative ion mode 
             If Equals(adduct.AdductIonName, "[M+FA-H]-") OrElse Equals(adduct.AdductIonName, "[M+Hac-H]-") OrElse Equals(adduct.AdductIonName, "[M+HCOO]-") OrElse Equals(adduct.AdductIonName, "[M+CH3COO]-") Then
                 ' calc [M-H]-
                 'var threshold = 10.0;
@@ -8968,7 +8968,7 @@ New SpectrumPeak() With {
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSphCarbon > totalCarbon Then maxSphCarbon = totalCarbon
         If maxSphDoubleBond > totalDoubleBond Then maxSphDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+H]+") Then
                 ' seek -H2O
                 Dim threshold = 5.0
@@ -9030,7 +9030,7 @@ New SpectrumPeak() With {
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         'if (maxSphCarbon > totalCarbon) maxSphCarbon = totalCarbon;
         'if (maxSphDoubleBond > totalDoubleBond) maxSphDoubleBond = totalDoubleBond;
-        If adduct.IonMode = IonMode.Negative Then ' negative ion mode 
+        If adduct.IonMode = IonModes.Negative Then ' negative ion mode 
             If Equals(adduct.AdductIonName, "[M+FA-H]-") OrElse Equals(adduct.AdductIonName, "[M+Hac-H]-") OrElse Equals(adduct.AdductIonName, "[M+HCOO]-") OrElse Equals(adduct.AdductIonName, "[M+CH3COO]-") Then
                 ' calc [M-H]-
                 Dim threshold1 = 10.0
@@ -9148,7 +9148,7 @@ New SpectrumPeak() With {
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSphCarbon > totalCarbon Then maxSphCarbon = totalCarbon
         If maxSphDoubleBond > totalDoubleBond Then maxSphDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Negative Then ' negative ion mode 
+        If adduct.IonMode = IonModes.Negative Then ' negative ion mode 
             If Equals(adduct.AdductIonName, "[M+FA-H]-") OrElse Equals(adduct.AdductIonName, "[M+Hac-H]-") OrElse Equals(adduct.AdductIonName, "[M+HCOO]-") OrElse Equals(adduct.AdductIonName, "[M+CH3COO]-") Then
                 ' calc [M-H]-
                 Dim threshold1 = 10.0
@@ -9264,7 +9264,7 @@ New SpectrumPeak() With {
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSphCarbon > totalCarbon Then maxSphCarbon = totalCarbon
         If maxSphDoubleBond > totalDoubleBond Then maxSphDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             Dim adductform = adduct.AdductIonName
             If Equals(adductform, "[M+H]+") OrElse Equals(adductform, "[M+H-H2O]+") Then
                 ' seek -H2O
@@ -9428,7 +9428,7 @@ New SpectrumPeak() With {
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSphCarbon > totalCarbon Then maxSphCarbon = totalCarbon
         If maxSphDoubleBond > totalDoubleBond Then maxSphDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             Dim adductform = adduct.AdductIonName
             If Equals(adductform, "[M+H]+") OrElse Equals(adductform, "[M+H-H2O]+") Then
                 ' seek -Hex(-C6H10O5)
@@ -9603,7 +9603,7 @@ New SpectrumPeak() With {
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSphCarbon > totalCarbon Then maxSphCarbon = totalCarbon
         If maxSphDoubleBond > totalDoubleBond Then maxSphDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Negative Then ' negative ion mode 
+        If adduct.IonMode = IonModes.Negative Then ' negative ion mode 
             If Equals(adduct.AdductIonName, "[M-H]-") OrElse Equals(adduct.AdductIonName, "[M+FA-H]-") OrElse Equals(adduct.AdductIonName, "[M+Hac-H]-") OrElse Equals(adduct.AdductIonName, "[M+HCOO]-") OrElse Equals(adduct.AdductIonName, "[M+CH3COO]-") Then
                 ' calc [M-H]-
                 'var threshold = 10.0;
@@ -9698,7 +9698,7 @@ New SpectrumPeak() With {
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSphCarbon > totalCarbon Then maxSphCarbon = totalCarbon
         If maxSphDoubleBond > totalDoubleBond Then maxSphDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Negative Then ' negative ion mode 
+        If adduct.IonMode = IonModes.Negative Then ' negative ion mode 
             If Equals(adduct.AdductIonName, "[M-H]-") OrElse Equals(adduct.AdductIonName, "[M+FA-H]-") OrElse Equals(adduct.AdductIonName, "[M+Hac-H]-") OrElse Equals(adduct.AdductIonName, "[M+HCOO]-") OrElse Equals(adduct.AdductIonName, "[M+CH3COO]-") Then
                 ' calc [M-H]-
                 'var threshold = 10.0;
@@ -9799,7 +9799,7 @@ New SpectrumPeak() With {
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSphCarbon > totalCarbon Then maxSphCarbon = totalCarbon
         If maxSphDoubleBond > totalDoubleBond Then maxSphDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Negative Then ' negative ion mode 
+        If adduct.IonMode = IonModes.Negative Then ' negative ion mode 
             If Equals(adduct.AdductIonName, "[M-H]-") OrElse Equals(adduct.AdductIonName, "[M+FA-H]-") OrElse Equals(adduct.AdductIonName, "[M+Hac-H]-") OrElse Equals(adduct.AdductIonName, "[M+HCOO]-") OrElse Equals(adduct.AdductIonName, "[M+CH3COO]-") Then
                 ' calc [M-H]-
                 'var threshold = 10.0;
@@ -9881,7 +9881,7 @@ New SpectrumPeak() With {
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSphCarbon > totalCarbon Then maxSphCarbon = totalCarbon
         If maxSphDoubleBond > totalDoubleBond Then maxSphDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Negative Then ' negative ion mode 
+        If adduct.IonMode = IonModes.Negative Then ' negative ion mode 
             If Equals(adduct.AdductIonName, "[M-H]-") OrElse Equals(adduct.AdductIonName, "[M+FA-H]-") OrElse Equals(adduct.AdductIonName, "[M+Hac-H]-") OrElse Equals(adduct.AdductIonName, "[M+HCOO]-") OrElse Equals(adduct.AdductIonName, "[M+CH3COO]-") Then
                 ' calc [M-H]-
                 'var threshold = 10.0;
@@ -9984,7 +9984,7 @@ New SpectrumPeak() With {
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSphCarbon > totalCarbon Then maxSphCarbon = totalCarbon
         If maxSphDoubleBond > totalDoubleBond Then maxSphDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             Dim adductform = adduct.AdductIonName
             If Equals(adductform, "[M+H]+") OrElse Equals(adductform, "[M+H-H2O]+") Then
                 ' seek -H2O
@@ -10072,7 +10072,7 @@ New SpectrumPeak() With {
                 Next
                 Return LipidMsmsCharacterizationUtility.returnAnnotationResult("Cer", LbmClass.Cer_NP, "t", theoreticalMz, adduct, totalCarbon, totalDoubleBond, 0, candidates, 2)
             End If
-        ElseIf adduct.IonMode = IonMode.Negative Then ' negative ion mode 
+        ElseIf adduct.IonMode = IonModes.Negative Then ' negative ion mode 
             If Equals(adduct.AdductIonName, "[M-H]-") OrElse Equals(adduct.AdductIonName, "[M+FA-H]-") OrElse Equals(adduct.AdductIonName, "[M+Hac-H]-") OrElse Equals(adduct.AdductIonName, "[M+HCOO]-") OrElse Equals(adduct.AdductIonName, "[M+CH3COO]-") Then
                 ' calc [M-H]-
                 'var threshold = 10.0;
@@ -10158,7 +10158,7 @@ New SpectrumPeak() With {
         If maxOmegaacylCarbon > totalCarbon Then maxOmegaacylCarbon = totalCarbon
         If maxOmegaacylDoubleBond > totalDoubleBond Then maxOmegaacylDoubleBond = totalDoubleBond
 
-        If adduct.IonMode = IonMode.Negative Then ' negative ion mode 
+        If adduct.IonMode = IonModes.Negative Then ' negative ion mode 
             If Equals(adduct.AdductIonName, "[M-H]-") OrElse Equals(adduct.AdductIonName, "[M+FA-H]-") OrElse Equals(adduct.AdductIonName, "[M+Hac-H]-") OrElse Equals(adduct.AdductIonName, "[M+HCOO]-") OrElse Equals(adduct.AdductIonName, "[M+CH3COO]-") Then
                 ' calc [M-H]-
                 'var threshold = 10.0;
@@ -10184,8 +10184,8 @@ New SpectrumPeak() With {
                     For sphDouble = minSphDoubleBond To maxSphDoubleBond
                         Dim remainCarbon = totalCarbon - sphCarbon
                         Dim remainDouble = totalDoubleBond - sphDouble
-                        Dim carbonLimit = Math.Min(remainCarbon, maxOmegaacylCarbon)
-                        Dim doubleLimit = Math.Min(remainDouble, maxOmegaacylDoubleBond)
+                        Dim carbonLimit = std.Min(remainCarbon, maxOmegaacylCarbon)
+                        Dim doubleLimit = std.Min(remainDouble, maxOmegaacylDoubleBond)
 
                         For acylCarbon = minOmegaacylCarbon To carbonLimit
                             For acylDouble = 0 To doubleLimit
@@ -10259,7 +10259,7 @@ New SpectrumPeak() With {
 
                 Return LipidMsmsCharacterizationUtility.returnAnnotationResult("Cer", LbmClass.Cer_EOS, "d", theoreticalMz, adduct, totalCarbon, totalDoubleBond, extraOxygen, candidates, 3)
             End If
-        ElseIf adduct.IonMode = IonMode.Positive Then
+        ElseIf adduct.IonMode = IonModes.Positive Then
             Dim adductform = adduct.AdductIonName
             If Equals(adductform, "[M+H]+") OrElse Equals(adductform, "[M+H-H2O]+") Then
                 ' seek -H2O
@@ -10371,7 +10371,7 @@ New SpectrumPeak() With {
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSphCarbon > totalCarbon Then maxSphCarbon = totalCarbon
         If maxSphDoubleBond > totalDoubleBond Then maxSphDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Negative Then ' negative ion mode 
+        If adduct.IonMode = IonModes.Negative Then ' negative ion mode 
             If Equals(adduct.AdductIonName, "[M-H]-") OrElse Equals(adduct.AdductIonName, "[M+FA-H]-") OrElse Equals(adduct.AdductIonName, "[M+Hac-H]-") OrElse Equals(adduct.AdductIonName, "[M+HCOO]-") OrElse Equals(adduct.AdductIonName, "[M+CH3COO]-") Then
                 ' calc [M-H]-
                 'var threshold = 10.0;
@@ -10391,8 +10391,8 @@ New SpectrumPeak() With {
 
                     Dim remainCarbon = totalCarbon - sphCarbon
                     Dim remainDouble = totalDoubleBond - sphDouble
-                    Dim carbonLimit = Math.Min(remainCarbon, maxOmegaacylCarbon)
-                    Dim doubleLimit = Math.Min(remainDouble, maxOmegaacylDoubleBond)
+                    Dim carbonLimit = std.Min(remainCarbon, maxOmegaacylCarbon)
+                    Dim doubleLimit = std.Min(remainDouble, maxOmegaacylDoubleBond)
                     For acylCarbon = minOmegaacylCarbon To carbonLimit
                         For acylDouble = 0 To doubleLimit
                             Dim terminalCarbon = totalCarbon - sphCarbon - acylCarbon
@@ -10473,7 +10473,7 @@ New SpectrumPeak() With {
         If maxOmegaacylCarbon > totalCarbon Then maxOmegaacylCarbon = totalCarbon
         If maxOmegaacylDoubleBond > totalDoubleBond Then maxOmegaacylDoubleBond = totalDoubleBond
 
-        If adduct.IonMode = IonMode.Negative Then ' negative ion mode 
+        If adduct.IonMode = IonModes.Negative Then ' negative ion mode 
             If Equals(adduct.AdductIonName, "[M-H]-") OrElse Equals(adduct.AdductIonName, "[M+FA-H]-") OrElse Equals(adduct.AdductIonName, "[M+Hac-H]-") OrElse Equals(adduct.AdductIonName, "[M+HCOO]-") OrElse Equals(adduct.AdductIonName, "[M+CH3COO]-") Then
                 ' calc [M-H]-
                 'var threshold = 10.0;
@@ -10497,8 +10497,8 @@ New SpectrumPeak() With {
                     For sphDouble = minSphDoubleBond To maxSphDoubleBond
                         Dim remainCarbon = totalCarbon - sphCarbon
                         Dim remainDouble = totalDoubleBond - sphDouble
-                        Dim carbonLimit = Math.Min(remainCarbon, maxOmegaacylCarbon)
-                        Dim doubleLimit = Math.Min(remainDouble, maxOmegaacylDoubleBond)
+                        Dim carbonLimit = std.Min(remainCarbon, maxOmegaacylCarbon)
+                        Dim doubleLimit = std.Min(remainDouble, maxOmegaacylDoubleBond)
 
                         For omegaAcylCarbon = minOmegaacylCarbon To carbonLimit
                             For omegaAcylDouble = 0 To doubleLimit
@@ -10578,7 +10578,7 @@ New SpectrumPeak() With {
 
                 Return LipidMsmsCharacterizationUtility.returnAnnotationResult("HexCer", LbmClass.HexCer_EOS, "d", theoreticalMz, adduct, totalCarbon, totalDoubleBond, extraOxygen, candidates, 3)
             End If
-        ElseIf adduct.IonMode = IonMode.Positive Then
+        ElseIf adduct.IonMode = IonModes.Positive Then
             Dim adductform = adduct.AdductIonName
             If Equals(adductform, "[M+H]+") OrElse Equals(adductform, "[M+H-H2O]+") Then
                 ' seek -Hex(-C6H10O5)
@@ -10688,7 +10688,7 @@ New SpectrumPeak() With {
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSphCarbon > totalCarbon Then maxSphCarbon = totalCarbon
         If maxSphDoubleBond > totalDoubleBond Then maxSphDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Negative Then ' negative ion mode 
+        If adduct.IonMode = IonModes.Negative Then ' negative ion mode 
             If Equals(adduct.AdductIonName, "[M+FA-H]-") OrElse Equals(adduct.AdductIonName, "[M+Hac-H]-") OrElse Equals(adduct.AdductIonName, "[M+HCOO]-") OrElse Equals(adduct.AdductIonName, "[M+CH3COO]-") Then
                 ' calc [M-H]-
                 'var threshold = 10.0;
@@ -10772,7 +10772,7 @@ New SpectrumPeak() With {
         If maxExtAcylCarbon > totalCarbon Then maxExtAcylCarbon = totalCarbon
         If maxExtAcylDoubleBond > totalDoubleBond Then maxExtAcylDoubleBond = totalDoubleBond
 
-        If adduct.IonMode = IonMode.Negative Then ' negative ion mode 
+        If adduct.IonMode = IonModes.Negative Then ' negative ion mode 
             If Equals(adduct.AdductIonName, "[M+FA-H]-") OrElse Equals(adduct.AdductIonName, "[M+Hac-H]-") OrElse Equals(adduct.AdductIonName, "[M+HCOO]-") OrElse Equals(adduct.AdductIonName, "[M+CH3COO]-") Then
                 ' seek [M-CH3]-
                 Dim threshold1 = 50.0
@@ -10796,8 +10796,8 @@ New SpectrumPeak() With {
                     For sphDouble = minSphDoubleBond To maxSphDoubleBond
                         Dim remainCarbon = totalCarbon - sphCarbon
                         Dim remainDouble = totalDoubleBond - sphDouble
-                        Dim carbonLimit = Math.Min(remainCarbon, maxSphCarbon)
-                        Dim doubleLimit = Math.Min(remainDouble, maxSphDoubleBond)
+                        Dim carbonLimit = std.Min(remainCarbon, maxSphCarbon)
+                        Dim doubleLimit = std.Min(remainDouble, maxSphDoubleBond)
 
                         For extCarbon = minExtAcylCarbon To carbonLimit
                             For extDouble = minExtAcylDoubleBond To doubleLimit
@@ -10850,7 +10850,7 @@ New SpectrumPeak() With {
 
                 Return LipidMsmsCharacterizationUtility.returnAnnotationResult("SM", LbmClass.ASM, "d", theoreticalMz, adduct, totalCarbon, totalDoubleBond, 0, candidates, 3)
             End If
-        ElseIf adduct.IonMode = IonMode.Positive Then
+        ElseIf adduct.IonMode = IonModes.Positive Then
             If Equals(adduct.AdductIonName, "[M+H]+") Then
                 Dim threshold1 = 50.0
                 Dim diagnosticMz1 = 184.073
@@ -10902,7 +10902,7 @@ New SpectrumPeak() With {
         If maxExtAcylCarbon > totalCarbon Then maxExtAcylCarbon = totalCarbon
         If maxExtAcylDoubleBond > totalDoubleBond Then maxExtAcylDoubleBond = totalDoubleBond
 
-        If adduct.IonMode = IonMode.Negative Then ' negative ion mode 
+        If adduct.IonMode = IonModes.Negative Then ' negative ion mode 
             If Equals(adduct.AdductIonName, "[M-H]-") OrElse Equals(adduct.AdductIonName, "[M+FA-H]-") OrElse Equals(adduct.AdductIonName, "[M+Hac-H]-") OrElse Equals(adduct.AdductIonName, "[M+HCOO]-") OrElse Equals(adduct.AdductIonName, "[M+CH3COO]-") Then
                 ' calc [M-H]-
                 Dim diagnosticMz = If(Equals(adduct.AdductIonName, "[M-H]-"), theoreticalMz, If(Equals(adduct.AdductIonName, "[M+CH3COO]-") OrElse Equals(adduct.AdductIonName, "[M+Hac-H]-"), theoreticalMz - HydrogenMass - 59.013864, theoreticalMz - HydrogenMass - 44.998214))
@@ -10920,8 +10920,8 @@ New SpectrumPeak() With {
                     For sphDouble = minSphDoubleBond To maxSphDoubleBond
                         Dim remainCarbon = totalCarbon - sphCarbon
                         Dim remainDouble = totalDoubleBond - sphDouble
-                        Dim carbonLimit = Math.Min(remainCarbon, maxSphCarbon)
-                        Dim doubleLimit = Math.Min(remainDouble, maxSphDoubleBond)
+                        Dim carbonLimit = std.Min(remainCarbon, maxSphCarbon)
+                        Dim doubleLimit = std.Min(remainDouble, maxSphDoubleBond)
 
                         For acylCarbon = minExtAcylCarbon To carbonLimit
                             For acylDB = minExtAcylDoubleBond To doubleLimit
@@ -10983,7 +10983,7 @@ New SpectrumPeak() With {
         Dim sphOxidized = 2
         Dim acylOxidized = totalOxidized - sphOxidized
 
-        If adduct.IonMode = IonMode.Negative Then ' negative ion mode 
+        If adduct.IonMode = IonModes.Negative Then ' negative ion mode 
             If Equals(adduct.AdductIonName, "[M-H]-") OrElse Equals(adduct.AdductIonName, "[M+FA-H]-") OrElse Equals(adduct.AdductIonName, "[M+Hac-H]-") OrElse Equals(adduct.AdductIonName, "[M+HCOO]-") OrElse Equals(adduct.AdductIonName, "[M+CH3COO]-") Then
                 ' calc [M-H]-
                 Dim diagnosticMz = If(Equals(adduct.AdductIonName, "[M-H]-"), theoreticalMz, If(Equals(adduct.AdductIonName, "[M+CH3COO]-") OrElse Equals(adduct.AdductIonName, "[M+Hac-H]-"), theoreticalMz - HydrogenMass - 59.013864, theoreticalMz - HydrogenMass - 44.998214))
@@ -11007,8 +11007,8 @@ New SpectrumPeak() With {
                     For sphDouble = minSphDoubleBond To maxSphDoubleBond
                         Dim remainCarbon = totalCarbon - sphCarbon
                         Dim remainDouble = totalDoubleBond - sphDouble
-                        'var carbonLimit = Math.Min(remainCarbon, maxExtAcylCarbon);   // use to Brute force calc
-                        'var doubleLimit = Math.Min(remainDouble, maxExtAcylDoubleBond); // use to Brute force calc
+                        'var carbonLimit = std.Min(remainCarbon, maxExtAcylCarbon);   // use to Brute force calc
+                        'var doubleLimit = std.Min(remainDouble, maxExtAcylDoubleBond); // use to Brute force calc
 
                         Dim carbonLimit = maxExtAcylCarbon
                         Dim doubleLimit = maxExtAcylDoubleBond
@@ -11074,7 +11074,7 @@ New SpectrumPeak() With {
                 If candidates.Count = 0 Then Return Nothing
                 Return LipidMsmsCharacterizationUtility.returnAnnotationResult("AHexCer", LbmClass.AHexCer, "d", theoreticalMz, adduct, totalCarbon, totalDoubleBond, 1, candidates, 3)
             End If
-        ElseIf adduct.IonMode = IonMode.Positive Then
+        ElseIf adduct.IonMode = IonModes.Positive Then
             Dim adductform = adduct.AdductIonName
             If Equals(adductform, "[M+H]+") OrElse Equals(adductform, "[M+H-H2O]+") Then
                 Dim candidates = New List(Of LipidMolecule)()
@@ -11188,7 +11188,7 @@ New SpectrumPeak() With {
         Dim acylOxidized = totalOxidized - sphOxidized
         Dim hydrogenString = "d"
         Dim queryExtAcylFoundCount As Integer = Nothing, queryExtAcylAverageInt As Double = Nothing, querySphFoundCount As Integer = Nothing, querySphAverageInt As Double = Nothing
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+H]+") Then
                 ' seek [M-SO3-H2O+H]+
                 Dim threshold = 1.0
@@ -11294,8 +11294,8 @@ New SpectrumPeak() With {
                     For sphDouble = minSphDoubleBond To maxSphDoubleBond
                         Dim remainCarbon = totalCarbon - sphCarbon
                         Dim remainDouble = totalDoubleBond - sphDouble
-                        'var carbonLimit = Math.Min(remainCarbon, maxExtAcylCarbon);   // use to Brute force calc
-                        'var doubleLimit = Math.Min(remainDouble, maxExtAcylDoubleBond); // use to Brute force calc
+                        'var carbonLimit = std.Min(remainCarbon, maxExtAcylCarbon);   // use to Brute force calc
+                        'var doubleLimit = std.Min(remainDouble, maxExtAcylDoubleBond); // use to Brute force calc
 
                         Dim carbonLimit = maxExtAcylCarbon
                         Dim doubleLimit = maxExtAcylDoubleBond
@@ -11354,7 +11354,7 @@ New SpectrumPeak() With {
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSphCarbon > totalCarbon Then maxSphCarbon = totalCarbon
         If maxSphDoubleBond > totalDoubleBond Then maxSphDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+H]+") OrElse Equals(adduct.AdductIonName, "[M+NH4]+") Then
                 Dim diagnosticMz = If(Equals(adduct.AdductIonName, "[M+NH4]+"), theoreticalMz - (NitrogenMass + HydrogenMass * 3), theoreticalMz)
                 ' seek [M-SO3-H2O+H]+
@@ -11493,7 +11493,7 @@ New SpectrumPeak() With {
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSphCarbon > totalCarbon Then maxSphCarbon = totalCarbon
         If maxSphDoubleBond > totalDoubleBond Then maxSphDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+H]+") OrElse Equals(adduct.AdductIonName, "[M+NH4]+") Then
                 ' calc [M+H]+
                 Dim diagnosticMz = If(Equals(adduct.AdductIonName, "[M+NH4]+"), theoreticalMz - 17.026549, theoreticalMz)
@@ -11582,7 +11582,7 @@ New SpectrumPeak() With {
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSphCarbon > totalCarbon Then maxSphCarbon = totalCarbon
         If maxSphDoubleBond > totalDoubleBond Then maxSphDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+2H]2+") OrElse Equals(adduct.AdductIonName, "[M+2NH4]2+") Then
                 ' seek [C25H40N2O18+H]+ (maybe higher than GD1b)
                 Dim threshold = 10.0
@@ -11648,7 +11648,7 @@ New SpectrumPeak() With {
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSphCarbon > totalCarbon Then maxSphCarbon = totalCarbon
         If maxSphDoubleBond > totalDoubleBond Then maxSphDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+2H]2+") OrElse Equals(adduct.AdductIonName, "[M+2NH4]2+") Then
                 ' seek [C14H23NO10+H]+ // 366 (maybe higher than GD1a)
                 Dim threshold = 10.0
@@ -11764,7 +11764,7 @@ New SpectrumPeak() With {
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSphCarbon > totalCarbon Then maxSphCarbon = totalCarbon
         If maxSphDoubleBond > totalDoubleBond Then maxSphDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+2H]2+") OrElse Equals(adduct.AdductIonName, "[M+2NH4]2+") OrElse Equals(adduct.AdductIonName, "[M+NH4]+") Then
                 ' seek [C14H23NO10+H]+ // 366 
                 Dim threshold = 5.0
@@ -11832,7 +11832,7 @@ New SpectrumPeak() With {
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSphCarbon > totalCarbon Then maxSphCarbon = totalCarbon
         If maxSphDoubleBond > totalDoubleBond Then maxSphDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+2H]2+") OrElse Equals(adduct.AdductIonName, "[M+2NH4]2+") Then
                 ' seek [C14H23NO10+H]+ // 366 
                 Dim threshold = 5.0
@@ -11902,7 +11902,7 @@ New SpectrumPeak() With {
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSphCarbon > totalCarbon Then maxSphCarbon = totalCarbon
         If maxSphDoubleBond > totalDoubleBond Then maxSphDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+2H]2+") OrElse Equals(adduct.AdductIonName, "[M+2NH4]2+") Then
                 ' seek [C14H23NO10+H]+ // 366 
                 Dim threshold = 5.0
@@ -11972,7 +11972,7 @@ New SpectrumPeak() With {
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSphCarbon > totalCarbon Then maxSphCarbon = totalCarbon
         If maxSphDoubleBond > totalDoubleBond Then maxSphDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+NH4]+") OrElse Equals(adduct.AdductIonName, "[M+H]+") Then
                 ' calc [M+H]+
                 Dim diagnosticMz = If(Equals(adduct.AdductIonName, "[M+NH4]+"), theoreticalMz - 17.026549, theoreticalMz)
@@ -12038,7 +12038,7 @@ New SpectrumPeak() With {
     Public Shared Function JudgeIfSphinganine(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Single, totalCarbon As Integer, totalDoubleBond As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+H]+") Then
                 ' seek -H2O 
                 Dim threshold1 = 5.0
@@ -12092,7 +12092,7 @@ New SpectrumPeak() With {
     Public Shared Function JudgeIfSphingosine(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Single, totalCarbon As Integer, totalDoubleBond As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+H]+") Then
                 ' seek -H2O 
                 Dim threshold1 = 10.0
@@ -12145,7 +12145,7 @@ New SpectrumPeak() With {
     Public Shared Function JudgeIfPhytosphingosine(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Single, totalCarbon As Integer, totalDoubleBond As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+H]+") Then
                 ' seek -H2O 
                 Dim threshold1 = 10.0
@@ -12204,7 +12204,7 @@ New SpectrumPeak() With {
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
         If maxSnDoubleBond > totalDoubleBond Then maxSnDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Negative Then
+        If adduct.IonMode = IonModes.Negative Then
             If Equals(adduct.AdductIonName, "[M-H]-") Then
                 ' seek C6H10O8P-
                 Dim threshold = 5.0
@@ -12257,7 +12257,7 @@ New SpectrumPeak() With {
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
         If maxSnDoubleBond > totalDoubleBond Then maxSnDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Negative Then
+        If adduct.IonMode = IonModes.Negative Then
             If Equals(adduct.AdductIonName, "[M-H]-") Then
                 ' seek C3H5NO2 loss
                 Dim threshold = 10.0
@@ -12307,7 +12307,7 @@ New SpectrumPeak() With {
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSphCarbon > totalCarbon Then maxSphCarbon = totalCarbon
         If maxSphDoubleBond > totalDoubleBond Then maxSphDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Negative Then
+        If adduct.IonMode = IonModes.Negative Then
             If Equals(adduct.AdductIonName, "[M-H]-") Then
                 ' seek [C2H8NO4P-H]-
                 Dim threshold = 5.0
@@ -12376,7 +12376,7 @@ New SpectrumPeak() With {
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSphCarbon > totalCarbon Then maxSphCarbon = totalCarbon
         If maxSphDoubleBond > totalDoubleBond Then maxSphDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Negative Then
+        If adduct.IonMode = IonModes.Negative Then
             If Equals(adduct.AdductIonName, "[M-H]-") Then
                 ' seek C6H10O8P-
                 Dim threshold = 5.0
@@ -12488,7 +12488,7 @@ New SpectrumPeak() With {
     Public Shared Function JudgeIfDcae(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Single, totalCarbon As Integer, totalDoubleBond As Integer, adduct As AdductIon, totalOxidized As Integer) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
-        If adduct.IonMode = IonMode.Negative Then ' Negative ion mode 
+        If adduct.IonMode = IonModes.Negative Then ' Negative ion mode 
             If Equals(adduct.AdductIonName, "[M-H]-") Then
                 ' seek 373.2748 [M-Acyl-H2O-H]-
                 Dim threshold1 = 0.1
@@ -12525,7 +12525,7 @@ New SpectrumPeak() With {
     Public Shared Function JudgeIfGdcae(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Single, totalCarbon As Integer, totalDoubleBond As Integer, adduct As AdductIon, totalOxidized As Integer) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
-        If adduct.IonMode = IonMode.Negative Then ' Negative ion mode 
+        If adduct.IonMode = IonModes.Negative Then ' Negative ion mode 
             If Equals(adduct.AdductIonName, "[M-H]-") Then
                 ' seek 430.29628  [M-Acyl-H2O-H]-
                 Dim threshold = 0.1
@@ -12561,7 +12561,7 @@ New SpectrumPeak() With {
     Public Shared Function JudgeIfGlcae(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Single, totalCarbon As Integer, totalDoubleBond As Integer, adduct As AdductIon, totalOxidized As Integer) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
-        If adduct.IonMode = IonMode.Negative Then ' Negative ion mode 
+        If adduct.IonMode = IonModes.Negative Then ' Negative ion mode 
             If Equals(adduct.AdductIonName, "[M-H]-") Then
                 ' seek 414.30137 [M-Acyl-H2O-H]-
                 Dim threshold = 0.1
@@ -12597,7 +12597,7 @@ New SpectrumPeak() With {
     Public Shared Function JudgeIfTdcae(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Single, totalCarbon As Integer, totalDoubleBond As Integer, adduct As AdductIon, totalOxidized As Integer) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
-        If adduct.IonMode = IonMode.Negative Then ' Negative ion mode 
+        If adduct.IonMode = IonModes.Negative Then ' Negative ion mode 
             If Equals(adduct.AdductIonName, "[M-H]-") Then
                 ' seek 480.27892 [M-Acyl-H2O-H]-
                 Dim threshold = 0.1
@@ -12633,7 +12633,7 @@ New SpectrumPeak() With {
     Public Shared Function JudgeIfTlcae(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Single, totalCarbon As Integer, totalDoubleBond As Integer, adduct As AdductIon, totalOxidized As Integer) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
-        If adduct.IonMode = IonMode.Negative Then ' Negative ion mode 
+        If adduct.IonMode = IonModes.Negative Then ' Negative ion mode 
             If Equals(adduct.AdductIonName, "[M-H]-") Then
                 ' seek 464.28400 [M-Acyl-H2O-H]-
                 Dim threshold = 0.1
@@ -12669,7 +12669,7 @@ New SpectrumPeak() With {
     Public Shared Function JudgeIfLcae(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Single, totalCarbon As Integer, totalDoubleBond As Integer, adduct As AdductIon, totalOxidized As Integer) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
-        If adduct.IonMode = IonMode.Negative Then ' Negative ion mode 
+        If adduct.IonMode = IonModes.Negative Then ' Negative ion mode 
             If Equals(adduct.AdductIonName, "[M-H]-") Then
                 ' seek 357.2799046 [M-Acyl-H2O-H]-
                 Dim threshold = 0.1
@@ -12705,7 +12705,7 @@ New SpectrumPeak() With {
     Public Shared Function JudgeIfKlcae(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Single, totalCarbon As Integer, totalDoubleBond As Integer, adduct As AdductIon, totalOxidized As Integer) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
-        If adduct.IonMode = IonMode.Negative Then ' Negative ion mode 
+        If adduct.IonMode = IonModes.Negative Then ' Negative ion mode 
             If Equals(adduct.AdductIonName, "[M-H]-") Then
                 ' seek 371.2591694 [M-Acyl-H2O-H]-
                 Dim threshold = 0.1
@@ -12748,7 +12748,7 @@ New SpectrumPeak() With {
     Public Shared Function JudgeIfKdcae(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Single, totalCarbon As Integer, totalDoubleBond As Integer, adduct As AdductIon, totalOxidized As Integer) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
-        If adduct.IonMode = IonMode.Negative Then ' Negative ion mode 
+        If adduct.IonMode = IonModes.Negative Then ' Negative ion mode 
             If Equals(adduct.AdductIonName, "[M-H]-") Then
                 ' seek 387.254084 [M-Acyl-H2O-H]-
                 Dim threshold = 0.1
@@ -12785,7 +12785,7 @@ New SpectrumPeak() With {
     Public Shared Function JudgeIfAnandamide(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Single, totalCarbon As Integer, totalDoubleBond As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
-        If adduct.IonMode = IonMode.Positive Then ' Positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' Positive ion mode 
             If Equals(adduct.AdductIonName, "[M+H]+") Then
                 ' seek -2H2O 
                 Dim threshold1 = 1.0
@@ -12826,7 +12826,7 @@ New SpectrumPeak() With {
     Public Shared Function JudgeIfGpnae(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Single, totalCarbon As Integer, totalDoubleBond As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
-        If adduct.IonMode = IonMode.Positive Then ' Positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' Positive ion mode 
             If Equals(adduct.AdductIonName, "[M+H]+") Then
                 Dim threshold = 10
                 Dim diagnosticMz = LipidMsmsCharacterizationUtility.acylCainMass(totalCarbon, totalDoubleBond) + 12 * 2 + HydrogenMass * 4 + NitrogenMass + Proton
@@ -12878,7 +12878,7 @@ New SpectrumPeak() With {
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
         If maxSnDoubleBond > totalDoubleBond Then maxSnDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+H]+") OrElse Equals(adduct.AdductIonName, "[M+NH4]+") Then
                 Dim diagnosticMz = If(Equals(adduct.AdductIonName, "[M+NH4]+"), theoreticalMz - (NitrogenMass + HydrogenMass * 3), theoreticalMz)
                 Dim candidates = New List(Of LipidMolecule)()
@@ -13001,7 +13001,7 @@ New SpectrumPeak() With {
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
         If maxSnDoubleBond > totalDoubleBond Then maxSnDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+NH4]+") Then
                 Dim diagnosticMz = theoreticalMz - (NitrogenMass + HydrogenMass * 3)
                 Dim candidates = New List(Of LipidMolecule)()
@@ -13127,7 +13127,7 @@ New SpectrumPeak() With {
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
         If maxSnDoubleBond > totalDoubleBond Then maxSnDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+H]+") OrElse Equals(adduct.AdductIonName, "[M+NH4]+") Then
                 Dim diagnosticMz = If(Equals(adduct.AdductIonName, "[M+NH4]+"), theoreticalMz - (NitrogenMass + HydrogenMass * 3), theoreticalMz)
                 Dim candidates = New List(Of LipidMolecule)()
@@ -13289,7 +13289,7 @@ New SpectrumPeak() With {
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
         If maxSnDoubleBond > totalDoubleBond Then maxSnDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Negative Then ' Negative ion mode 
+        If adduct.IonMode = IonModes.Negative Then ' Negative ion mode 
             If Equals(adduct.AdductIonName, "[M-H]-") Then
                 ' seek C3H7O5P-
                 Dim threshold = 0.01
@@ -13347,7 +13347,7 @@ New SpectrumPeak() With {
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
         If maxSnDoubleBond > totalDoubleBond Then maxSnDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Negative Then ' negative ion mode 
+        If adduct.IonMode = IonModes.Negative Then ' negative ion mode 
             If Equals(adduct.AdductIonName, "[M-H]-") Then
                 Dim diagnosticMz1 = 152.99583  ' seek C3H6O5P-
                 Dim threshold1 = 10.0
@@ -13368,7 +13368,7 @@ New SpectrumPeak() With {
     Public Shared Function JudgeIfCoenzymeq(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' 
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+H]+") OrElse Equals(adduct.AdductIonName, "[M+NH4]+") Then
                 Dim diagnosticMz1 = 197.0808164  ' seek [(C9H9O4)+CH3+H]+
                 Dim threshold1 = 10.0
@@ -13401,7 +13401,7 @@ New SpectrumPeak() With {
     Public Shared Function JudgeIfVitaminEmolecules(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' 
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M-H]-") OrElse Equals(adduct.AdductIonName, "[M+FA-H]-") OrElse Equals(adduct.AdductIonName, "[M+Hac-H]-") OrElse Equals(adduct.AdductIonName, "[M+HCOO]-") OrElse Equals(adduct.AdductIonName, "[M+CH3COO]-") Then
                 ' calc [M-H]-
                 'var threshold = 10.0;
@@ -13428,7 +13428,7 @@ New SpectrumPeak() With {
     Public Shared Function JudgeIfVitaminDmolecules(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, adduct As AdductIon) As LipidMolecule ' 
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+H]+") OrElse Equals(adduct.AdductIonName, "[M+Na]+") Then
                 ' calc [M+H]+
                 Dim diagnosticMz = If(Equals(adduct.AdductIonName, "[M+H]+"), theoreticalMz, theoreticalMz - 22.9892207)
@@ -13458,7 +13458,7 @@ New SpectrumPeak() With {
     Public Shared Function JudgeIfSterolHexoside(lipidname As String, lipidclass As LbmClass, msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+NH4]+") Then
                 ' calc [M+H]+
                 Dim diagnosticMz = theoreticalMz - 179.0561136
@@ -13495,7 +13495,7 @@ New SpectrumPeak() With {
     Public Shared Function JudgeIfSterolSulfate(lipidname As String, lipidclass As LbmClass, msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+NH4]+") Then
                 ' calc [M+H]+
                 Dim diagnosticMz = theoreticalMz - 96.960103266
@@ -13527,7 +13527,7 @@ New SpectrumPeak() With {
     Public Shared Function JudgeIfVitaminaestermolecules(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+H]+") OrElse Equals(adduct.AdductIonName, "[M+Na]+") Then
                 ' calc [M+H]+
                 Dim diagnosticMz = If(Equals(adduct.AdductIonName, "[M+H]+"), theoreticalMz, theoreticalMz - 22.9892207)
@@ -13560,7 +13560,7 @@ New SpectrumPeak() With {
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
         If maxSnDoubleBond > totalDoubleBond Then maxSnDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+H]+") Then
                 Dim candidates = New List(Of LipidMolecule)()
 
@@ -13618,7 +13618,7 @@ New SpectrumPeak() With {
     Public Shared Function JudgeIfBrseSpecies(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Single, totalCarbon As Integer, totalDoubleBond As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
-        If adduct.IonMode = IonMode.Positive Then ' Positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' Positive ion mode 
             If Equals(adduct.AdductIonName, "[M+NH4]+") Then
                 ' seek 381.35158  sterol structure (Brassica-sterol)
                 Dim threshold = 10
@@ -13641,7 +13641,7 @@ New SpectrumPeak() With {
     Public Shared Function JudgeIfCaseSpecies(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Single, totalCarbon As Integer, totalDoubleBond As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
-        If adduct.IonMode = IonMode.Positive Then ' Positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' Positive ion mode 
             If Equals(adduct.AdductIonName, "[M+NH4]+") Then
                 ' seek 383.36723  sterol structure (Campe-sterol)
                 Dim threshold = 60
@@ -13666,7 +13666,7 @@ New SpectrumPeak() With {
     Public Shared Function JudgeIfSiseSpecies(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Single, totalCarbon As Integer, totalDoubleBond As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
-        If adduct.IonMode = IonMode.Positive Then ' Positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' Positive ion mode 
             If Equals(adduct.AdductIonName, "[M+NH4]+") Then
                 ' seek 397.38288  sterol structure (Sito-sterol)
                 Dim threshold = 10
@@ -13689,7 +13689,7 @@ New SpectrumPeak() With {
     Public Shared Function JudgeIfStseSpecies(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Single, totalCarbon As Integer, totalDoubleBond As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
-        If adduct.IonMode = IonMode.Positive Then ' Positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' Positive ion mode 
             If Equals(adduct.AdductIonName, "[M+NH4]+") Then
                 ' seek 395.36723  sterol structure (Stigma-sterol)
                 Dim threshold = 10
@@ -13712,7 +13712,7 @@ New SpectrumPeak() With {
     Public Shared Function JudgeIfErgoSESpecies(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Single, totalCarbon As Integer, totalDoubleBond As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
-        If adduct.IonMode = IonMode.Positive Then ' Positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' Positive ion mode 
             If Equals(adduct.AdductIonName, "[M+H]+") OrElse Equals(adduct.AdductIonName, "[M+NH4]+") OrElse Equals(adduct.AdductIonName, "[M+Na]+") Then
                 ' seek 379.335928  sterol structure (Ergosterol)
                 Dim threshold = 50
@@ -13734,7 +13734,7 @@ New SpectrumPeak() With {
     Public Shared Function JudgeIfDehydroErgoSESpecies(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Single, totalCarbon As Integer, totalDoubleBond As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
-        If adduct.IonMode = IonMode.Positive Then ' Positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' Positive ion mode 
             If Equals(adduct.AdductIonName, "[M+H]+") OrElse Equals(adduct.AdductIonName, "[M+NH4]+") OrElse Equals(adduct.AdductIonName, "[M+Na]+") Then
                 ' seek  377.320278  sterol structure (Dehydroergosterol)
                 Dim threshold = 50
@@ -13757,7 +13757,7 @@ New SpectrumPeak() With {
     Public Shared Function JudgeIfDesmosterolSpecies(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Single, totalCarbon As Integer, totalDoubleBond As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
-        If adduct.IonMode = IonMode.Positive Then ' Positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' Positive ion mode 
             If Equals(adduct.AdductIonName, "[M+NH4]+") Then
                 ' seek 367.335928  sterol structure (Desmosterol - H2O)
                 Dim threshold = 10
@@ -13781,7 +13781,7 @@ New SpectrumPeak() With {
     Public Shared Function JudgeIfAhexbrseSpecies(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Single, totalCarbon As Integer, totalDoubleBond As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
-        If adduct.IonMode = IonMode.Positive Then ' Positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' Positive ion mode 
             If Equals(adduct.AdductIonName, "[M+NH4]+") Then
                 ' seek 381.35158  sterol structure (Brassica-sterol)
                 Dim threshold = 10
@@ -13823,7 +13823,7 @@ New SpectrumPeak() With {
     Public Shared Function JudgeIfAhexcaseSpecies(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Single, totalCarbon As Integer, totalDoubleBond As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
-        If adduct.IonMode = IonMode.Positive Then ' Positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' Positive ion mode 
             If Equals(adduct.AdductIonName, "[M+NH4]+") Then
                 ' seek 383.36723  sterol structure (Campe-sterol)
                 Dim threshold = 10
@@ -13865,7 +13865,7 @@ New SpectrumPeak() With {
     Public Shared Function JudgeIfAhexceSpecies(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Single, totalCarbon As Integer, totalDoubleBond As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
-        If adduct.IonMode = IonMode.Positive Then ' Positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' Positive ion mode 
             If Equals(adduct.AdductIonName, "[M+NH4]+") Then
                 ' seek 369.35158  sterol structure (Chole-sterol)
                 Dim threshold = 10
@@ -13907,7 +13907,7 @@ New SpectrumPeak() With {
     Public Shared Function JudgeIfAhexsiseSpecies(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Single, totalCarbon As Integer, totalDoubleBond As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
-        If adduct.IonMode = IonMode.Positive Then ' Positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' Positive ion mode 
             If Equals(adduct.AdductIonName, "[M+NH4]+") Then
                 ' seek 397.38288  sterol structure (Sito-sterol)
                 Dim threshold = 10
@@ -13949,7 +13949,7 @@ New SpectrumPeak() With {
     Public Shared Function JudgeIfAhexstseSpecies(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Single, totalCarbon As Integer, totalDoubleBond As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
-        If adduct.IonMode = IonMode.Positive Then ' Positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' Positive ion mode 
             If Equals(adduct.AdductIonName, "[M+NH4]+") Then
                 ' seek 395.36723  sterol structure (Stigma-sterol)
                 Dim threshold = 10
@@ -13993,7 +13993,7 @@ New SpectrumPeak() With {
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
         If maxSnDoubleBond > totalDoubleBond Then maxSnDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Negative Then ' negative ion mode 
+        If adduct.IonMode = IonModes.Negative Then ' negative ion mode 
             If Equals(adduct.AdductIonName, "[M-H]-") Then
                 ' seek [C6H9O8S]-
                 Dim threshold1 = 0.1
@@ -14057,7 +14057,7 @@ New SpectrumPeak() With {
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
         If maxSnDoubleBond > totalDoubleBond Then maxSnDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Negative Then ' negative ion mode 
+        If adduct.IonMode = IonModes.Negative Then ' negative ion mode 
             If Equals(adduct.AdductIonName, "[M-H]-") Then
                 ' seek 241.0024 [C6H9O8S]-
                 Dim threshold1 = 0.1
@@ -14150,7 +14150,7 @@ New SpectrumPeak() With {
     Public Shared Function JudgeIfnoChainSterol(lipidname As String, lipidclass As LbmClass, msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+H]+") OrElse Equals(adduct.AdductIonName, "[M+NH4]+") Then
                 ' calc [M+H-H2O]+
                 Dim diagnosticMz = If(Equals(adduct.AdductIonName, "[M+NH4]+"), theoreticalMz - 17.02600055, theoreticalMz)
@@ -14193,7 +14193,7 @@ New SpectrumPeak() With {
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
         If maxSnDoubleBond > totalDoubleBond Then maxSnDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+H]+") Then
                 ' seek NL of C3H10NO4P
                 Dim threshold = 30.0
@@ -14294,7 +14294,7 @@ New SpectrumPeak() With {
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
         If maxSnDoubleBond > totalDoubleBond Then maxSnDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+H]+") Then
                 ' seek NL of C4H12NO4P
                 Dim threshold = 30.0
@@ -14395,7 +14395,7 @@ New SpectrumPeak() With {
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSphCarbon > totalCarbon Then maxSphCarbon = totalCarbon
         If maxSphDoubleBond > totalDoubleBond Then maxSphDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+H]+") Then
                 ' seek header and H2O loss  
                 Dim threshold = 10.0
@@ -14490,7 +14490,7 @@ New SpectrumPeak() With {
         If maxSn1DoubleBond > totalDoubleBond Then maxSn1DoubleBond = totalDoubleBond
         If maxSn2Carbon > totalCarbon Then maxSn2Carbon = totalCarbon
         If maxSn2DoubleBond > totalDoubleBond Then maxSn2DoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+NH4]+") Then
                 ' seek -17.026549 (NH3)
                 Dim threshold = 1.0
@@ -14504,8 +14504,8 @@ New SpectrumPeak() With {
 
                         Dim remainCarbon = totalCarbon - sn1Carbon
                         Dim remainDouble = totalDoubleBond - sn1Double
-                        Dim carbonLimit = Math.Min(remainCarbon, maxSn2Carbon)
-                        Dim doubleLimit = Math.Min(remainDouble, maxSn2DoubleBond)
+                        Dim carbonLimit = std.Min(remainCarbon, maxSn2Carbon)
+                        Dim doubleLimit = std.Min(remainDouble, maxSn2DoubleBond)
 
                         For sn2Carbon = minSn2Carbon To carbonLimit
                             For sn2Double = minSn2DoubleBond To doubleLimit
@@ -14571,7 +14571,7 @@ New SpectrumPeak() With {
         If maxSn1DoubleBond > totalDoubleBond Then maxSn1DoubleBond = totalDoubleBond
         If maxSn2Carbon > totalCarbon Then maxSn2Carbon = totalCarbon
         If maxSn2DoubleBond > totalDoubleBond Then maxSn2DoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+NH4]+") Then
                 ' seek -17.026549 [M+H]+
                 Dim threshold = 1.0
@@ -14584,15 +14584,15 @@ New SpectrumPeak() With {
                     For sn1Double = minSn1DoubleBond To maxSn1DoubleBond
                         Dim remainCarbon = totalCarbon - sn1Carbon
                         Dim remainDouble = totalDoubleBond - sn1Double
-                        Dim carbonLimit = Math.Min(remainCarbon, maxSn2Carbon)
-                        Dim doubleLimit = Math.Min(remainDouble, maxSn2DoubleBond)
+                        Dim carbonLimit = std.Min(remainCarbon, maxSn2Carbon)
+                        Dim doubleLimit = std.Min(remainDouble, maxSn2DoubleBond)
 
                         For sn2Carbon = minSn2Carbon To carbonLimit
                             For sn2Double = minSn2DoubleBond To doubleLimit
                                 Dim remainCarbon2 = totalCarbon - sn1Carbon - sn2Carbon
                                 Dim remainDouble2 = totalDoubleBond - sn1Double - sn2Double
-                                Dim carbonLimit2 = Math.Min(remainCarbon2, maxSn3Carbon)
-                                Dim doubleLimit2 = Math.Min(remainDouble2, maxSn3DoubleBond)
+                                Dim carbonLimit2 = std.Min(remainCarbon2, maxSn3Carbon)
+                                Dim doubleLimit2 = std.Min(remainDouble2, maxSn3DoubleBond)
 
                                 For sn3Carbon = minSn3Carbon To carbonLimit2
                                     For sn3Double = minSn3DoubleBond To doubleLimit2
@@ -14661,7 +14661,7 @@ New SpectrumPeak() With {
     Public Shared Function JudgeIfNAcylGlySerOxFa(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, totalOxidized As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
-        If adduct.IonMode = IonMode.Positive Then ' Positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' Positive ion mode 
             If Equals(adduct.AdductIonName, "[M+H]+") Then
                 '  seek 145.06187(gly+ser-O) and 106.04987
                 Dim threshold = 80.0
@@ -14696,7 +14696,7 @@ New SpectrumPeak() With {
     Public Shared Function JudgeIfNAcylGlyOxFa(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, totalOxidized As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
-        If adduct.IonMode = IonMode.Positive Then ' Positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' Positive ion mode 
             If Equals(adduct.AdductIonName, "[M+H]+") Then
                 '  seek 76.039305(gly+)
                 Dim threshold = 10.0
@@ -14730,7 +14730,7 @@ New SpectrumPeak() With {
     Public Shared Function JudgeIfNAcylOrnOxFa(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, totalOxidized As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
-        If adduct.IonMode = IonMode.Positive Then ' Positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' Positive ion mode 
             If Equals(adduct.AdductIonName, "[M+H]+") Then
                 '  seek 76.039305 ([C4H7N+H]+ orn fragment)
                 Dim threshold = 10.0
@@ -14759,7 +14759,7 @@ New SpectrumPeak() With {
 {"SISLPHex", "SG 29:1;O;Hex;LPA"},
 {"STSLPHex", "SG 29:2;O;Hex;LPA"}
 }
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+NH4]+") Then
                 Dim candidates = New List(Of LipidMolecule)()
 
@@ -14804,7 +14804,7 @@ New SpectrumPeak() With {
 {"SISPHex", "SG 29:1;O;Hex;PA"},
 {"STSPHex", "SG 29:2;O;Hex;PA"}
 }
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+NH4]+") Then
                 Dim candidates = New List(Of LipidMolecule)()
 
@@ -14871,7 +14871,7 @@ New SpectrumPeak() With {
     Public Shared Function JudgeIfSpeSpecies(lipidname As String, lipidclass As LbmClass, msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+H]+") Then
                 ' C2H9NO4P+
                 Dim diagnosticMz = 142.02636999999999
@@ -14907,7 +14907,7 @@ New SpectrumPeak() With {
     Public Shared Function JudgeIfNAcylTauFa(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, totalOxidized As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
-        If adduct.IonMode = IonMode.Positive Then ' Positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' Positive ion mode 
             If Equals(adduct.AdductIonName, "[M+H]+") OrElse Equals(adduct.AdductIonName, "[M+NH4]+") Then
                 '  seek 126.02 (Taurine+ fragment)
                 Dim threshold = 50.0
@@ -14942,7 +14942,7 @@ New SpectrumPeak() With {
     Public Shared Function JudgeIfNAcylPheFa(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, totalOxidized As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
-        If adduct.IonMode = IonMode.Positive Then ' Positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' Positive ion mode 
             If Equals(adduct.AdductIonName, "[M+H]+") Then
                 '  seek 166.086  (phenylalanine fragment)
                 Dim threshold = 10.0
@@ -14985,7 +14985,7 @@ New SpectrumPeak() With {
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
         If maxSnDoubleBond > totalDoubleBond Then maxSnDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+H]+") Then
                 ' seek 184.07332 (C5H15NO4P)
                 Dim threshold = 10.0
@@ -15152,7 +15152,7 @@ New SpectrumPeak() With {
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
         If maxSnDoubleBond > totalDoubleBond Then maxSnDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+H]+") Then
                 ' seek -141.019094261 (C2H8NO4P)
                 Dim threshold = 10.0
@@ -15297,7 +15297,7 @@ New SpectrumPeak() With {
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
         If maxSnDoubleBond > totalDoubleBond Then maxSnDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+H]+") Then
                 ' seek -185.008927 (C3H8NO6P)
                 Dim threshold = 10.0
@@ -15419,7 +15419,7 @@ New SpectrumPeak() With {
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
         If maxSnDoubleBond > totalDoubleBond Then maxSnDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+NH4]+") Then
                 ' seek -189.040227 (C3H8O6P+NH4)
                 Dim threshold = 10.0
@@ -15525,7 +15525,7 @@ New SpectrumPeak() With {
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
         If maxSnDoubleBond > totalDoubleBond Then maxSnDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+NH4]+") Then
                 ' seek -277.056272 (C6H12O9P+NH4)
                 Dim threshold = 10.0
@@ -15635,7 +15635,7 @@ New SpectrumPeak() With {
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
         If maxSnDoubleBond > totalDoubleBond Then maxSnDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+H]+") Then
                 If totalCarbon > 28 Then Return Nothing '  currently carbon > 28 is recognized as EtherPC
                 ' seek 184.07332 (C5H15NO4P)
@@ -15727,7 +15727,7 @@ New SpectrumPeak() With {
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
         If maxSnDoubleBond > totalDoubleBond Then maxSnDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+H]+") Then
                 If totalCarbon > 28 Then Return Nothing '  currently carbon > 28 is recognized as EtherPE
 
@@ -15817,7 +15817,7 @@ New SpectrumPeak() With {
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
         If maxSnDoubleBond > totalDoubleBond Then maxSnDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Negative Then '
+        If adduct.IonMode = IonModes.Negative Then '
             If Equals(adduct.AdductIonName, "[M-H]-") Then
                 ' seek C3H6O5P-
 
@@ -15838,7 +15838,7 @@ New SpectrumPeak() With {
                 'candidates.Add(molecule);
                 Return LipidMsmsCharacterizationUtility.returnAnnotationResult("LPG_d5", LbmClass.LPG_d5, "", theoreticalMz, adduct, totalCarbon, totalDoubleBond, 0, candidates, 1)
             End If
-        ElseIf adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        ElseIf adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+H]+") Then
                 ' seek Header loss (MG+ + chain Acyl) 
                 Dim threshold = 5.0
@@ -15859,7 +15859,7 @@ New SpectrumPeak() With {
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
         If maxSnDoubleBond > totalDoubleBond Then maxSnDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Negative Then 'negative ion mode only
+        If adduct.IonMode = IonModes.Negative Then 'negative ion mode only
             If Equals(adduct.AdductIonName, "[M-H]-") Then
                 ' seek C3H6O5P-
 
@@ -15883,7 +15883,7 @@ New SpectrumPeak() With {
                 'candidates.Add(molecule);
                 Return LipidMsmsCharacterizationUtility.returnAnnotationResult("LPI_d5", LbmClass.LPI_d5, "", theoreticalMz, adduct, totalCarbon, totalDoubleBond, 0, candidates, 1)
             End If
-        ElseIf adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        ElseIf adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+H]+") Then
                 ' seek Header loss (MG+ + chain Acyl) 
                 Dim threshold = 5.0
@@ -15902,7 +15902,7 @@ New SpectrumPeak() With {
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
         If maxSnDoubleBond > totalDoubleBond Then maxSnDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Negative Then 'negative ion mode only
+        If adduct.IonMode = IonModes.Negative Then 'negative ion mode only
             If Equals(adduct.AdductIonName, "[M-H]-") Then
                 ' seek C3H6O5P-
 
@@ -15923,7 +15923,7 @@ New SpectrumPeak() With {
                 'candidates.Add(molecule);
                 Return LipidMsmsCharacterizationUtility.returnAnnotationResult("LPS_d5", LbmClass.LPS_d5, "", theoreticalMz, adduct, totalCarbon, totalDoubleBond, 0, candidates, 1)
             End If
-        ElseIf adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        ElseIf adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+H]+") Then
                 ' seek Header loss (MG+ + chain Acyl) 
                 Dim threshold = 5.0
@@ -15943,7 +15943,7 @@ New SpectrumPeak() With {
         If maxSn1Carbon > totalCarbon Then maxSn1Carbon = totalCarbon
         If maxSn1DoubleBond > totalDoubleBond Then maxSn1DoubleBond = totalDoubleBond
         If totalCarbon > 52 Then Return Nothing ' currently, very large DAG is excluded.
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+NH4]+") Then
                 ' seek -17.026549 (NH3)
                 Dim threshold = 1.0
@@ -16006,7 +16006,7 @@ New SpectrumPeak() With {
         If maxSn1DoubleBond > totalDoubleBond Then maxSn1DoubleBond = totalDoubleBond
         If maxSn2Carbon > totalCarbon Then maxSn2Carbon = totalCarbon
         If maxSn2DoubleBond > totalDoubleBond Then maxSn2DoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+NH4]+") Then
                 ' seek -17.026549 (NH3)
                 Dim threshold = 1.0
@@ -16020,8 +16020,8 @@ New SpectrumPeak() With {
 
                         Dim remainCarbon = totalCarbon - sn1Carbon
                         Dim remainDouble = totalDoubleBond - sn1Double
-                        Dim carbonLimit = Math.Min(remainCarbon, maxSn2Carbon)
-                        Dim doubleLimit = Math.Min(remainDouble, maxSn2DoubleBond)
+                        Dim carbonLimit = std.Min(remainCarbon, maxSn2Carbon)
+                        Dim doubleLimit = std.Min(remainDouble, maxSn2DoubleBond)
 
                         For sn2Carbon = minSn2Carbon To carbonLimit
                             For sn2Double = minSn2DoubleBond To doubleLimit
@@ -16071,8 +16071,8 @@ New SpectrumPeak() With {
                         Dim diagnosticMz = theoreticalMz ' - 22.9892207 + MassDiffDictionary.HydrogenMass; //if want to choose [M+H]+
                         Dim remainCarbon = totalCarbon - sn1Carbon
                         Dim remainDouble = totalDoubleBond - sn1Double
-                        Dim carbonLimit = Math.Min(remainCarbon, maxSn2Carbon)
-                        Dim doubleLimit = Math.Min(remainDouble, maxSn2DoubleBond)
+                        Dim carbonLimit = std.Min(remainCarbon, maxSn2Carbon)
+                        Dim doubleLimit = std.Min(remainDouble, maxSn2DoubleBond)
 
                         For sn2Carbon = minSn2Carbon To carbonLimit
                             For sn2Double = minSn2DoubleBond To doubleLimit
@@ -16150,7 +16150,7 @@ New SpectrumPeak() With {
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSphCarbon > totalCarbon Then maxSphCarbon = totalCarbon
         If maxSphDoubleBond > totalDoubleBond Then maxSphDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+H]+") Then
                 ' seek 184.07332 (C5H15NO4P) D9
                 Dim threshold = 30.0
@@ -16258,7 +16258,7 @@ New SpectrumPeak() With {
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSphCarbon > totalCarbon Then maxSphCarbon = totalCarbon
         If maxSphDoubleBond > totalDoubleBond Then maxSphDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             Dim adductform = adduct.AdductIonName
             If Equals(adductform, "[M+H]+") OrElse Equals(adductform, "[M+H-H2O]+") Then
                 ' seek -H2O
@@ -16426,7 +16426,7 @@ New SpectrumPeak() With {
     Public Shared Function JudgeIfCholesterylEsterD7(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Single, totalCarbon As Integer, totalDoubleBond As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+NH4]+") Then
                 ' seek 369.3515778691 (C27H45+)+ MassDiffDictionary.HydrogenMass*7
                 Dim threshold = 20.0
@@ -16460,7 +16460,7 @@ New SpectrumPeak() With {
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
         If maxSnDoubleBond > totalDoubleBond Then maxSnDoubleBond = totalDoubleBond
-        If adduct.IonMode = IonMode.Positive Then ' positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
             If Equals(adduct.AdductIonName, "[M+H]+") Then
                 ' seek 198 (C6H17NO4P)
                 Dim threshold = 10.0
@@ -16612,7 +16612,7 @@ New SpectrumPeak() With {
     Public Shared Function JudgeIfWaxEster(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, totalOxidized As Integer, minSnCarbon As Integer, maxSnCarbon As Integer, minSnDoubleBond As Integer, maxSnDoubleBond As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
-        If adduct.IonMode = IonMode.Positive Then ' Positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' Positive ion mode 
             If Equals(adduct.AdductIonName, "[M+NH4]+") Then
                 Dim candidates = New List(Of LipidMolecule)()
                 ' from here, acyl level annotation is executed.
@@ -16659,7 +16659,7 @@ New SpectrumPeak() With {
     Public Shared Function JudgeIfNAcylTryA(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, totalOxidized As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
-        If adduct.IonMode = IonMode.Positive Then ' Positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' Positive ion mode 
             If Equals(adduct.AdductIonName, "[M+H]+") Then
                 '  seek 144.081 (indole + C2H3)
                 Dim threshold = 20.0
@@ -16678,7 +16678,7 @@ New SpectrumPeak() With {
     Public Shared Function JudgeIfNAcyl5HT(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, totalOxidized As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
-        If adduct.IonMode = IonMode.Positive Then ' Positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' Positive ion mode 
             If Equals(adduct.AdductIonName, "[M+H]+") Then
                 '  seek 160.076 (5OH-indole + C2H3)
                 Dim threshold = 20.0
@@ -16697,7 +16697,7 @@ New SpectrumPeak() With {
     Public Shared Function JudgeIfNAcylAla(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, totalOxidized As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
-        If adduct.IonMode = IonMode.Positive Then ' Positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' Positive ion mode 
             If Equals(adduct.AdductIonName, "[M+H]+") Then
                 '  seek 90.055 (Ala)
                 Dim threshold = 20.0
@@ -16716,7 +16716,7 @@ New SpectrumPeak() With {
     Public Shared Function JudgeIfNAcylGln(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, totalOxidized As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
-        If adduct.IonMode = IonMode.Positive Then ' Positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' Positive ion mode 
             If Equals(adduct.AdductIonName, "[M+H]+") Then
                 '  seek 130.05 (Gln-NH3)
                 Dim threshold = 20.0
@@ -16735,7 +16735,7 @@ New SpectrumPeak() With {
     Public Shared Function JudgeIfNAcylLeu(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, totalOxidized As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
-        If adduct.IonMode = IonMode.Positive Then ' Positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' Positive ion mode 
             If Equals(adduct.AdductIonName, "[M+H]+") Then
                 '  seek 132.10 (Leu)
                 Dim threshold = 10.0
@@ -16754,7 +16754,7 @@ New SpectrumPeak() With {
     Public Shared Function JudgeIfNAcylVal(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, totalOxidized As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
-        If adduct.IonMode = IonMode.Positive Then ' Positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' Positive ion mode 
             If Equals(adduct.AdductIonName, "[M+H]+") Then
                 '  seek 118.09 (Val)
                 Dim threshold = 20.0
@@ -16773,7 +16773,7 @@ New SpectrumPeak() With {
     Public Shared Function JudgeIfNAcylSer(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, totalOxidized As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
-        If adduct.IonMode = IonMode.Positive Then ' Positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' Positive ion mode 
             If Equals(adduct.AdductIonName, "[M+H]+") Then
                 '  seek 106.05 (Ser)
                 Dim threshold = 20.0
@@ -16792,7 +16792,7 @@ New SpectrumPeak() With {
     Public Shared Function JudgeIfBismelpa(msScanProp As IMSScanProperty, ms2Tolerance As Double, theoreticalMz As Double, totalCarbon As Integer, totalDoubleBond As Integer, totalOxidized As Integer, adduct As AdductIon) As LipidMolecule
         Dim spectrum = msScanProp.Spectrum
         If spectrum Is Nothing OrElse spectrum.Count = 0 Then Return Nothing
-        If adduct.IonMode = IonMode.Positive Then ' Positive ion mode 
+        If adduct.IonMode = IonModes.Positive Then ' Positive ion mode 
             If Equals(adduct.AdductIonName, "[M+H]+") OrElse Equals(adduct.AdductIonName, "[M+NH4]+") Then
                 Dim diagnosticMz = If(Equals(adduct.AdductIonName, "[M+NH4]+"), theoreticalMz - (NitrogenMass + HydrogenMass * 3), theoreticalMz)
 

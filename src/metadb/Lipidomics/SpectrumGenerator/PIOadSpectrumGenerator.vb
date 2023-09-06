@@ -34,7 +34,7 @@ Public Class PIOadSpectrumGenerator
 
         Public Function Generate(lipid As Lipid, adduct As AdductIon, Optional molecule As IMoleculeProperty = Nothing) As IMSScanProperty Implements ILipidSpectrumGenerator.Generate
             Dim abundance = 30
-            Dim nlMass = If(adduct.IonMode = IonMode.Positive, C6H13O9P + NH3, 0.0)
+            Dim nlMass = If(adduct.IonMode = IonModes.Positive, C6H13O9P + NH3, 0.0)
             Dim spectrum = New List(Of SpectrumPeak)()
             spectrum.AddRange(GetPIOadSpectrum(lipid, adduct, nlMass))
             '"OAD05",
@@ -59,7 +59,7 @@ Public Class PIOadSpectrumGenerator
             '"OAD16",
             '"OAD17",
             '"OAD01+H"
-            Dim oadId = If(adduct.IonMode = IonMode.Positive, New String() {"OAD01", "OAD02", "OAD02+O", "OAD03", "OAD04", "OAD14", "OAD15", "OAD15+O", "OAD16", "OAD17", "OAD12+O", "OAD12+O+H", "OAD01+H"}, New String() {"OAD01", "OAD02", "OAD03", "OAD04", "OAD09", "OAD10", "OAD14", "OAD15", "OAD12+O", "OAD12+O+H", "OAD12+O+2H"})
+            Dim oadId = If(adduct.IonMode = IonModes.Positive, New String() {"OAD01", "OAD02", "OAD02+O", "OAD03", "OAD04", "OAD14", "OAD15", "OAD15+O", "OAD16", "OAD17", "OAD12+O", "OAD12+O+H", "OAD01+H"}, New String() {"OAD01", "OAD02", "OAD03", "OAD04", "OAD09", "OAD10", "OAD14", "OAD15", "OAD12+O", "OAD12+O+H", "OAD12+O+2H"})
 
             Dim plChains As PositionLevelChains = Nothing
 
