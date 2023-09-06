@@ -6,7 +6,7 @@
     "run_exe": {
       "commandName": "Executable",
       "executablePath": "\\GCModeller\\src\\R-sharp\\App\\net6.0\\R#.exe",
-      "commandLineArgs": "\\biodeep\\biodeep_pipeline\\biodeepMSMS_v5\\test\\dbStruct\\test_metlin.R --attach \"\\mzkit\\Rscript\\Library\\mzkit_app\" --debug0"
+      "commandLineArgs": "\\biodeep\\biodeepdb_v3\\spatial\\msi_conv\\07.mzpack.R --attach \"\\mzkit\\Rscript\\Library\\mzkit_app\" --debug0"
     }
   }
 }

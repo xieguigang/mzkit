@@ -63,6 +63,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.GraphTheory.GridGraph
 Imports Microsoft.VisualBasic.Data.IO
+Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.HeatMap
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports HeatMapPixel = Microsoft.VisualBasic.Imaging.Drawing2D.HeatMap.Pixel
@@ -75,10 +76,10 @@ Imports HeatMapPixel = Microsoft.VisualBasic.Imaging.Drawing2D.HeatMap.Pixel
 ''' <see cref="HeatMapPixel.Scale"/> value that could be used for 
 ''' create heatmap raster data.
 ''' </remarks>
-Public Class PixelData : Implements IMSIPixel, IPoint2D, HeatMapPixel
+Public Class PixelData : Implements IMSIPixel, IPoint2D, HeatMapPixel, RasterPixel
 
-    Public Property x As Integer Implements IMSIPixel.x, IPoint2D.X, HeatMapPixel.X
-    Public Property y As Integer Implements IMSIPixel.y, IPoint2D.Y, HeatMapPixel.Y
+    Public Property x As Integer Implements IMSIPixel.x, IPoint2D.X, RasterPixel.X
+    Public Property y As Integer Implements IMSIPixel.y, IPoint2D.Y, RasterPixel.Y
     Public Property intensity As Double Implements IMSIPixel.intensity, HeatMapPixel.Scale
     Public Property level As Double
 
