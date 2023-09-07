@@ -16,38 +16,38 @@ Namespace Ms1.PrecursorType
         Private ReadOnly k41_k39 As Double = 0.072167458
         Private ReadOnly ni60_ni58 As Double = 0.385196175
 
-        Public IronToMass As ReadOnlyDictionary(Of String, Double) = New ReadOnlyDictionary(Of String, Double)(New Dictionary(Of String, Double)() From {
-{"Be", 9.0121822},
-{"Mg", 23.9850417},
-{"Al", 26.98153863},
-{"Ca", 39.96259098},
-{"Sc", 44.9559119},
-{"Ti", 47.9479463},
-{"V", 50.9439595},
-{"Cr", 51.9405075},
-{"Mn", 54.9380451},
-{"Fe", 55.9349375},
-{"Cu", 62.9295975},
-{"Zn", 63.9291422},
-{"Ga", 68.9255736},
-{"Ge", 73.9211778},
-{"Se", 79.9165213},
-{"Kr", 83.911507},
-{"Rb", 84.911789738},
-{"Sr", 87.9056121},
-{"Zr", 89.9047044},
-{"Nb", 92.9063781},
-{"Mo", 97.9054082},
-{"Ru", 101.9043493},
-{"Pd", 105.903486},
-{"Ag", 106.905097},
-{"Cd", 113.9033585},
-{"In", 114.903878},
-{"Sn", 119.9021947},
-{"Sb", 120.9038157},
-{"Cs", 132.905451933},
-{"La", 138.9063533}
-})
+        Public IronToMass As New ReadOnlyDictionary(Of String, Double)(New Dictionary(Of String, Double)() From {
+            {"Be", 9.0121822},
+            {"Mg", 23.9850417},
+            {"Al", 26.98153863},
+            {"Ca", 39.96259098},
+            {"Sc", 44.9559119},
+            {"Ti", 47.9479463},
+            {"V", 50.9439595},
+            {"Cr", 51.9405075},
+            {"Mn", 54.9380451},
+            {"Fe", 55.9349375},
+            {"Cu", 62.9295975},
+            {"Zn", 63.9291422},
+            {"Ga", 68.9255736},
+            {"Ge", 73.9211778},
+            {"Se", 79.9165213},
+            {"Kr", 83.911507},
+            {"Rb", 84.911789738},
+            {"Sr", 87.9056121},
+            {"Zr", 89.9047044},
+            {"Nb", 92.9063781},
+            {"Mo", 97.9054082},
+            {"Ru", 101.9043493},
+            {"Pd", 105.903486},
+            {"Ag", 106.905097},
+            {"Cd", 113.9033585},
+            {"In", 114.903878},
+            {"Sn", 119.9021947},
+            {"Sb", 120.9038157},
+            {"Cs", 132.905451933},
+            {"La", 138.9063533}
+            })
 
         Public Function GetAdductContent(ByVal adduct As String) As String
             Dim trimedAdductName = adduct.Split("["c)(1).Split("]"c)(0).Trim()
@@ -73,42 +73,6 @@ Namespace Ms1.PrecursorType
                 End If
             Next
             Return contentString.Trim()
-        End Function
-
-        Public Function CalculateAccurateMassAndIsotopeRatio(ByVal adductName As String) As (Double, Double, Double)
-            adductName = adductName.Split("["c)(1).Split("]"c)(0).Trim()
-
-            If Not adductName.Contains("+"c) AndAlso Not adductName.Contains("-"c) Then
-                Return (0R, 0R, 0R)
-            End If
-
-            Dim equationNum = CountChar(adductName, "+"c) + CountChar(adductName, "-"c)
-            Dim formula = String.Empty
-            Dim accAccurateMass As Double = 0, accM1Intensity As Double = 0, accM2Intensity As Double = 0
-            Dim accurateMass As Double = Nothing, m1Intensity As Double = Nothing, m2Intensity As Double = Nothing, accurateMass As Double = Nothing, m1Intensity As Double = Nothing, m2Intensity As Double = Nothing
-            For i = adductName.Length - 1 To 0 Step -1
-                If adductName(i).Equals("+"c) Then
-                    (accurateMass, m1Intensity, m2Intensity) = CalculateAccurateMassAndIsotopeRatioOfMolecularFormula(formula)
-                    accAccurateMass += accurateMass
-                    accM1Intensity += m1Intensity
-                    accM2Intensity += m2Intensity
-
-                    formula = String.Empty
-                    equationNum -= 1
-                ElseIf adductName(i).Equals("-"c) Then
-                    (accurateMass, m1Intensity, m2Intensity) = CalculateAccurateMassAndIsotopeRatioOfMolecularFormula(formula)
-                    accAccurateMass -= accurateMass
-                    accM1Intensity -= m1Intensity
-                    accM2Intensity -= m2Intensity
-
-                    formula = String.Empty
-                    equationNum -= 1
-                Else
-                    formula = adductName(i).ToString() & formula
-                End If
-                If equationNum <= 0 Then Exit For
-            Next
-            Return (accAccurateMass, accM1Intensity, accM2Intensity)
         End Function
 
         Public Function CountChar(ByVal s As String, ByVal c As Char) As Integer
@@ -282,19 +246,19 @@ Namespace Ms1.PrecursorType
             Return False
         End Function
 
-        Public Function GetOrganicAdductFormulaAndMass(ByVal formula As String, ByVal multipliedNumber As Double) As (Formula, Double)
-            Dim formulaBean = New Formula()
+        Public Function GetOrganicAdductFormulaAndMass(ByVal formula As String, ByVal multipliedNumber As Double) As (Dictionary(Of String, Integer), Double)
+            Dim formulaBean = New Dictionary(Of String, Integer)
             Dim acurateMass = 0R
             Dim mc = Regex.Matches(formula, "C(?!a|d|e|l|o|r|s|u)([0-9]*)", RegexOptions.None)
             If mc.Count > 0 Then
                 If Equals(mc(0).Groups(1).Value, String.Empty) Then
                     acurateMass += 12.0 * multipliedNumber
-                    formulaBean.Cnum = CInt(multipliedNumber)
+                    formulaBean!C = CInt(multipliedNumber)
                 Else
                     Dim num As Double
                     If Double.TryParse(mc(0).Groups(1).Value, num) Then
                         acurateMass += num * 12.0 * multipliedNumber
-                        formulaBean.Cnum = CInt(num * multipliedNumber)
+                        formulaBean!C = CInt(num * multipliedNumber)
                     End If
                 End If
             End If
@@ -303,12 +267,12 @@ Namespace Ms1.PrecursorType
             If mc.Count > 0 Then
                 If Equals(mc(0).Groups(1).Value, String.Empty) Then
                     acurateMass += 1.00782503207 * multipliedNumber
-                    formulaBean.Hnum = CInt(multipliedNumber)
+                    formulaBean!H = CInt(multipliedNumber)
                 Else
                     Dim num As Double
                     If Double.TryParse(mc(0).Groups(1).Value, num) Then
                         acurateMass += num * 1.00782503207 * multipliedNumber
-                        formulaBean.Hnum = CInt(num * multipliedNumber)
+                        formulaBean!H = CInt(num * multipliedNumber)
                     End If
                 End If
             End If
@@ -317,12 +281,12 @@ Namespace Ms1.PrecursorType
             If mc.Count > 0 Then
                 If Equals(mc(0).Groups(1).Value, String.Empty) Then
                     acurateMass += 14.0030740048 * multipliedNumber
-                    formulaBean.Nnum = CInt(multipliedNumber)
+                    formulaBean!N = CInt(multipliedNumber)
                 Else
                     Dim num As Double
                     If Double.TryParse(mc(0).Groups(1).Value, num) Then
                         acurateMass += num * 14.0030740048 * multipliedNumber
-                        formulaBean.Nnum = CInt(num * multipliedNumber)
+                        formulaBean!N = CInt(num * multipliedNumber)
                     End If
                 End If
             End If
@@ -331,12 +295,12 @@ Namespace Ms1.PrecursorType
             If mc.Count > 0 Then
                 If Equals(mc(0).Groups(1).Value, String.Empty) Then
                     acurateMass += 15.99491461956 * multipliedNumber
-                    formulaBean.Onum = CInt(multipliedNumber)
+                    formulaBean!O = CInt(multipliedNumber)
                 Else
                     Dim num As Double
                     If Double.TryParse(mc(0).Groups(1).Value, num) Then
                         acurateMass += num * 15.99491461956 * multipliedNumber
-                        formulaBean.Onum = CInt(num * multipliedNumber)
+                        formulaBean!O = CInt(num * multipliedNumber)
                     End If
                 End If
             End If
@@ -345,12 +309,12 @@ Namespace Ms1.PrecursorType
             If mc.Count > 0 Then
                 If Equals(mc(0).Groups(1).Value, String.Empty) Then
                     acurateMass += 31.972071 * multipliedNumber
-                    formulaBean.Snum = CInt(multipliedNumber)
+                    formulaBean!S = CInt(multipliedNumber)
                 Else
                     Dim num As Double
                     If Double.TryParse(mc(0).Groups(1).Value, num) Then
                         acurateMass += num * 31.972071 * multipliedNumber
-                        formulaBean.Snum = CInt(num * multipliedNumber)
+                        formulaBean!S = CInt(num * multipliedNumber)
                     End If
                 End If
             End If
@@ -359,12 +323,12 @@ Namespace Ms1.PrecursorType
             If mc.Count > 0 Then
                 If Equals(mc(0).Groups(1).Value, String.Empty) Then
                     acurateMass += 78.9183371 * multipliedNumber
-                    formulaBean.Brnum = CInt(multipliedNumber)
+                    formulaBean!Br = CInt(multipliedNumber)
                 Else
                     Dim num As Double
                     If Double.TryParse(mc(0).Groups(1).Value, num) Then
                         acurateMass += num * 78.9183371 * multipliedNumber
-                        formulaBean.Brnum = CInt(num * multipliedNumber)
+                        formulaBean!Br = CInt(num * multipliedNumber)
                     End If
                 End If
             End If
@@ -373,12 +337,12 @@ Namespace Ms1.PrecursorType
             If mc.Count > 0 Then
                 If Equals(mc(0).Groups(1).Value, String.Empty) Then
                     acurateMass += 34.96885268 * multipliedNumber
-                    formulaBean.Clnum = CInt(multipliedNumber)
+                    formulaBean!Cl = CInt(multipliedNumber)
                 Else
                     Dim num As Double
                     If Double.TryParse(mc(0).Groups(1).Value, num) Then
                         acurateMass += num * 34.96885268 * multipliedNumber
-                        formulaBean.Clnum = CInt(num * multipliedNumber)
+                        formulaBean!Cl = CInt(num * multipliedNumber)
                     End If
                 End If
             End If
@@ -387,12 +351,12 @@ Namespace Ms1.PrecursorType
             If mc.Count > 0 Then
                 If Equals(mc(0).Groups(1).Value, String.Empty) Then
                     acurateMass += 18.99840322 * multipliedNumber
-                    formulaBean.Fnum = CInt(multipliedNumber)
+                    formulaBean!F = CInt(multipliedNumber)
                 Else
                     Dim num As Double
                     If Double.TryParse(mc(0).Groups(1).Value, num) Then
                         acurateMass += num * 18.99840322 * multipliedNumber
-                        formulaBean.Fnum = CInt(num * multipliedNumber)
+                        formulaBean!F = CInt(num * multipliedNumber)
                     End If
                 End If
             End If
@@ -401,12 +365,12 @@ Namespace Ms1.PrecursorType
             If mc.Count > 0 Then
                 If Equals(mc(0).Groups(1).Value, String.Empty) Then
                     acurateMass += 126.904473 * multipliedNumber
-                    formulaBean.Inum = CInt(multipliedNumber)
+                    formulaBean!I = CInt(multipliedNumber)
                 Else
                     Dim num As Double
                     If Double.TryParse(mc(0).Groups(1).Value, num) Then
                         acurateMass += num * 126.904473 * multipliedNumber
-                        formulaBean.Inum = CInt(num * multipliedNumber)
+                        formulaBean!I = CInt(num * multipliedNumber)
                     End If
                 End If
             End If
@@ -415,12 +379,12 @@ Namespace Ms1.PrecursorType
             If mc.Count > 0 Then
                 If Equals(mc(0).Groups(1).Value, String.Empty) Then
                     acurateMass += 30.97376163 * multipliedNumber
-                    formulaBean.Pnum = CInt(multipliedNumber)
+                    formulaBean!P = CInt(multipliedNumber)
                 Else
                     Dim num As Double
                     If Double.TryParse(mc(0).Groups(1).Value, num) Then
                         acurateMass += num * 30.97376163 * multipliedNumber
-                        formulaBean.Pnum = CInt(num + multipliedNumber)
+                        formulaBean!P = CInt(num + multipliedNumber)
                     End If
                 End If
             End If

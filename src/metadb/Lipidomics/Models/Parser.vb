@@ -31,11 +31,13 @@ Module Parser
     End Function
 
     Public Function CalculateAccurateMassAndIsotopeRatioOfMolecularFormula(ByVal rawFormula As String) As (Double, Double, Double)
-
         Dim formula As String = Nothing, multipliedNum As Double = Nothing
-            (formula, multipliedNum) = GetFormulaAndNumber(rawFormula)
+        Dim nil As (formula, multipliedNum) = GetFormulaAndNumber(rawFormula)
 
-            If String.IsNullOrWhiteSpace(formula) Then
+        formula = nil.formula
+        multipliedNum = nil.multipliedNum
+
+        If String.IsNullOrWhiteSpace(formula) Then
             Return (multipliedNum, 0, 0)
         End If
 
@@ -57,5 +59,41 @@ Module Parser
         Dim formulaBean As Formula = Nothing, organicAcurateMass As Double = Nothing
             (formulaBean, organicAcurateMass) = GetOrganicAdductFormulaAndMass(formula, multipliedNum)
             Return (organicAcurateMass, SevenGoldenRulesCheck.GetM1IsotopicAbundance(formulaBean), SevenGoldenRulesCheck.GetM2IsotopicAbundance(formulaBean))
+    End Function
+
+    Public Function CalculateAccurateMassAndIsotopeRatio(ByVal adductName As String) As (Double, Double, Double)
+        adductName = adductName.Split("["c)(1).Split("]"c)(0).Trim()
+
+        If Not adductName.Contains("+"c) AndAlso Not adductName.Contains("-"c) Then
+            Return (0R, 0R, 0R)
+        End If
+
+        Dim equationNum = CountChar(adductName, "+"c) + CountChar(adductName, "-"c)
+        Dim formula = String.Empty
+        Dim accAccurateMass As Double = 0, accM1Intensity As Double = 0, accM2Intensity As Double = 0
+        Dim accurateMass As Double = Nothing, m1Intensity As Double = Nothing, m2Intensity As Double = Nothing, accurateMass As Double = Nothing, m1Intensity As Double = Nothing, m2Intensity As Double = Nothing
+        For i = adductName.Length - 1 To 0 Step -1
+            If adductName(i).Equals("+"c) Then
+                    (accurateMass, m1Intensity, m2Intensity) = CalculateAccurateMassAndIsotopeRatioOfMolecularFormula(formula)
+                    accAccurateMass += accurateMass
+                accM1Intensity += m1Intensity
+                accM2Intensity += m2Intensity
+
+                formula = String.Empty
+                equationNum -= 1
+            ElseIf adductName(i).Equals("-"c) Then
+                    (accurateMass, m1Intensity, m2Intensity) = CalculateAccurateMassAndIsotopeRatioOfMolecularFormula(formula)
+                    accAccurateMass -= accurateMass
+                accM1Intensity -= m1Intensity
+                accM2Intensity -= m2Intensity
+
+                formula = String.Empty
+                equationNum -= 1
+            Else
+                formula = adductName(i).ToString() & formula
+            End If
+            If equationNum <= 0 Then Exit For
+        Next
+        Return (accAccurateMass, accM1Intensity, accM2Intensity)
     End Function
 End Module
