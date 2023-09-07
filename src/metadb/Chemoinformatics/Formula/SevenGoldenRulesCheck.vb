@@ -1,4 +1,5 @@
 ﻿Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.IsotopicPatterns
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
 Imports MassDiffDictionary = BioNovoGene.BioDeep.Chemoinformatics.Formula.ElementsExactMass
 
 Namespace Formula
