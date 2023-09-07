@@ -72,28 +72,27 @@ Public Class DGTSSpectrumGenerator
         Dim spectrum = New List(Of SpectrumPeak) From {
     New SpectrumPeak(adduct.ConvertToMz(lipid.Mass), 999.0R, "Precursor") With {
         .SpectrumComment = SpectrumComment.precursor
-    },
-    'new SpectrumPeak(adduct.ConvertToMz(C7H13NO2), 100d, "Header") { SpectrumComment = SpectrumComment.metaboliteclass},
-    New SpectrumPeak(adduct.ConvertToMz(lipid.Mass - CHO2), 200R, "Precursor - CO2") With {
+    },    'new SpectrumPeak(adduct.ConvertToMz(C7H13NO2), 100d, "Header") { SpectrumComment = SpectrumComment.metaboliteclass},
+    New SpectrumPeak(adduct.ConvertToMz(lipid.Mass - CHO2), 200.0R, "Precursor - CO2") With {
         .SpectrumComment = SpectrumComment.metaboliteclass
     },
-    New SpectrumPeak(adduct.ConvertToMz(C8H16NO3), 200R, "C8H16NO3") With {
+    New SpectrumPeak(adduct.ConvertToMz(C8H16NO3), 200.0R, "C8H16NO3") With {
         .SpectrumComment = SpectrumComment.metaboliteclass,
         .IsAbsolutelyRequiredFragmentForAnnotation = True
     },
-    New SpectrumPeak(adduct.ConvertToMz(C7H13NO2 - CH2), 200R, "Header - CH2") With {
+    New SpectrumPeak(adduct.ConvertToMz(C7H13NO2 - CH2), 200.0R, "Header - CH2") With {
         .SpectrumComment = SpectrumComment.metaboliteclass
     },  '130
-    New SpectrumPeak(adduct.ConvertToMz(Gly_C), 150R, "Gly-C") With {
+    New SpectrumPeak(adduct.ConvertToMz(Gly_C), 150.0R, "Gly-C") With {
         .SpectrumComment = SpectrumComment.metaboliteclass,
         .IsAbsolutelyRequiredFragmentForAnnotation = True
     },
-    New SpectrumPeak(adduct.ConvertToMz(Gly_O), 150R, "Gly-O") With {
+    New SpectrumPeak(adduct.ConvertToMz(Gly_O), 150.0R, "Gly-O") With {
         .SpectrumComment = SpectrumComment.metaboliteclass,
         .IsAbsolutelyRequiredFragmentForAnnotation = True
     }
 }
-            Return spectrum.ToArray()
+        Return spectrum.ToArray()
     End Function
 
     Private Function GetAcylLevelSpectrum(lipid As ILipid, acylChains As IEnumerable(Of IChain), adduct As AdductIon) As IEnumerable(Of SpectrumPeak)

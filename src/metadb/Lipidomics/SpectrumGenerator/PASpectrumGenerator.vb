@@ -1,7 +1,7 @@
 ﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
-Imports BioNovoGene.BioDeep.Chemistry.MetaLib
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.ElementsExactMass
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
+Imports BioNovoGene.BioDeep.MSEngine
 
 Public Class PASpectrumGenerator
     Implements ILipidSpectrumGenerator
@@ -53,7 +53,7 @@ Public Class PASpectrumGenerator
         Return New MoleculeMsReference With {
 .PrecursorMz = adduct.ConvertToMz(lipid.Mass),
 .IonMode = adduct.IonMode,
-.spectrum = spectrum,
+.Spectrum = spectrum,
 .Name = lipid.Name,
 .Formula = molecule?.Formula,
 .Ontology = molecule?.Ontology,
@@ -73,20 +73,19 @@ New SpectrumPeak(adduct.ConvertToMz(lipid.Mass), 999.0R, "Precursor") With {
 },
 New SpectrumPeak(lipid.Mass - H3PO4 + adductmass, 500.0R, "- Header") With {
     .SpectrumComment = SpectrumComment.metaboliteclass
-},
-    'new SpectrumPeak(H3PO4 - MassDiffDictionary.HydrogenMass + adductmass, 300d, "Header"),
-    New SpectrumPeak(C3H9O6P + adductmass, 150R, "C3H9O6P") With {
+},    'new SpectrumPeak(H3PO4 - MassDiffDictionary.HydrogenMass + adductmass, 300d, "Header"),
+    New SpectrumPeak(C3H9O6P + adductmass, 150.0R, "C3H9O6P") With {
         .SpectrumComment = SpectrumComment.metaboliteclass,
         .IsAbsolutelyRequiredFragmentForAnnotation = True
     },
-    New SpectrumPeak(Gly_C + adductmass, 100R, "Gly-C") With {
+    New SpectrumPeak(Gly_C + adductmass, 100.0R, "Gly-C") With {
         .SpectrumComment = SpectrumComment.metaboliteclass
     },
-    New SpectrumPeak(Gly_O + adductmass, 100R, "Gly-O") With {
+    New SpectrumPeak(Gly_O + adductmass, 100.0R, "Gly-O") With {
         .SpectrumComment = SpectrumComment.metaboliteclass
     }
 }
-            If Equals(adduct.AdductIonName, "[M+NH4]+") Then
+        If Equals(adduct.AdductIonName, "[M+NH4]+") Then
             spectrum.Add(New SpectrumPeak(lipid.Mass + ProtonMass, 200.0R, "[M+H]+"))
         End If
         Return spectrum.ToArray()

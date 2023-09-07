@@ -62,10 +62,9 @@ Public Class DGSpectrumGenerator
         Dim spectrum = New List(Of SpectrumPeak) From {
     New SpectrumPeak(adduct.ConvertToMz(lipid.Mass), 999.0R, "Precursor") With {
         .SpectrumComment = SpectrumComment.precursor
-    }
-'new SpectrumPeak(adduct.ConvertToMz(lipid.Mass)/2, 50d, $"[precursor]2+") { SpectrumComment = SpectrumComment.precursor },
+    }'new SpectrumPeak(adduct.ConvertToMz(lipid.Mass)/2, 50d, $"[precursor]2+") { SpectrumComment = SpectrumComment.precursor },
 }
-            If Equals(adduct.AdductIonName, "[M+NH4]+") Then
+        If Equals(adduct.AdductIonName, "[M+NH4]+") Then
             spectrum.AddRange({New SpectrumPeak(adduct.ConvertToMz(lipid.Mass) - H2O, 150.0R, "Precursor-H2O") With {
 .SpectrumComment = SpectrumComment.metaboliteclass
 }, New SpectrumPeak(lipid.Mass + ProtonMass, 150.0R, "[M+H]+") With {

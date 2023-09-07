@@ -68,10 +68,9 @@ New SpectrumPeak(adduct.ConvertToMz(lipid.Mass), 999.0R, "Precursor") With {
 .SpectrumComment = SpectrumComment.metaboliteclass,
 .IsAbsolutelyRequiredFragmentForAnnotation = True
 }, New SpectrumPeak(adduct.ConvertToMz(lipid.Mass) - H2O, 50.0R, "Precursor -H2O") With {
-.SpectrumComment = SpectrumComment.metaboliteclass
-'new SpectrumPeak(lipid.Mass+MassDiffDictionary.ProtonMass , 50d, "[M+H]+"){ SpectrumComment = SpectrumComment.metaboliteclass },
+.SpectrumComment = SpectrumComment.metaboliteclass'new SpectrumPeak(lipid.Mass+MassDiffDictionary.ProtonMass , 50d, "[M+H]+"){ SpectrumComment = SpectrumComment.metaboliteclass },
 }})
-            ElseIf Equals(adduct.AdductIonName, "[M+Na]+") Then
+        ElseIf Equals(adduct.AdductIonName, "[M+Na]+") Then
             spectrum.AddRange({New SpectrumPeak(skelton + massBalanceD7 - H2O, 500.0R, "skelton") With {
 .SpectrumComment = SpectrumComment.metaboliteclass,
 .IsAbsolutelyRequiredFragmentForAnnotation = True

@@ -134,9 +134,8 @@ New SpectrumPeak(sn1sn2mass + ProtonMass, 500.0R, $"[Sn1+Sn2+C3H3O2+H]+") With {
 New SpectrumPeak(sn3sn4mass + ProtonMass, 500.0R, $"[Sn3+Sn4+C3H3O2+H]+") With {
     .SpectrumComment = SpectrumComment.acylchain
 }
-
 }
-            spectrum.AddRange(acylChains.SelectMany(Function(acylChain) GetAcylLevelSpectrum(lipid, acylChain, adduct)))
+        spectrum.AddRange(acylChains.SelectMany(Function(acylChain) GetAcylLevelSpectrum(lipid, acylChain, adduct)))
 
         Return spectrum.ToArray()
     End Function
