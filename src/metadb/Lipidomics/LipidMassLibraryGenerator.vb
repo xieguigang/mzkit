@@ -1,9 +1,7 @@
-﻿Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
-Imports CompMs.Common.DataObj.Property
-Imports CompMs.Common.Enum
-Imports CompMs.Common.FormulaGenerator.Parser
-Imports System.IO
+﻿Imports System.IO
 Imports System.Text
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
+Imports BioNovoGene.BioDeep.MSEngine
 
 
 Public NotInheritable Class LipidMassLibraryGenerator
@@ -1037,7 +1035,7 @@ Public NotInheritable Class LipidMassLibraryGenerator
 
 
 
-    Private Shared Sub commonGlycerolipidsOxGenerator(filepath As String, classString As String, headerFormula As Formula, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer, maxOxygen As Integer, acylCount As Integer)
+    Private Shared Sub commonGlycerolipidsOxGenerator(filepath As String, classString As String, headerFormula As DerivatizationFormula, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer, maxOxygen As Integer, acylCount As Integer)
 
         Using sw = New StreamWriter(filepath, False, Encoding.ASCII)
             writeHeader(sw)
@@ -1056,8 +1054,8 @@ Public NotInheritable Class LipidMassLibraryGenerator
                             Dim totalChainHydrogen = totalChainCarbon * 2 - acylCount - totalChainDoubleBond * 2
                             Dim totalChainOxygen = acylCount + k
 
-                            Dim totalFormula = New Formula(headerFormula.Cnum + totalChainCarbon, headerFormula.Hnum + totalChainHydrogen, headerFormula.Nnum, headerFormula.Onum + totalChainOxygen, headerFormula.Pnum, headerFormula.Snum, 0, 0, 0, 0, 0)
-                            Dim mz = adduct.ConvertToMz(totalFormula.Mass)
+                            Dim totalFormula = New DerivatizationFormula(headerFormula!C + totalChainCarbon, headerFormula!H + totalChainHydrogen, headerFormula!N, headerFormula!O + totalChainOxygen, headerFormula!P, headerFormula!S, 0, 0, 0, 0, 0)
+                            Dim mz = adduct.ConvertToMz(totalFormula.ExactMass)
                             Dim lipidname = classString & " " & totalChainCarbon.ToString() & ":" & totalChainDoubleBond.ToString() & "+" & k.ToString() & "O"
 
                             sw.WriteLine(lipidname & Microsoft.VisualBasic.Constants.vbTab & mz.ToString() & Microsoft.VisualBasic.Constants.vbTab & adduct.AdductIonName)
@@ -1069,7 +1067,7 @@ Public NotInheritable Class LipidMassLibraryGenerator
             Next
         End Using
     End Sub
-    Private Shared Sub commonGlycerolipidsOxEtherGenerator(filepath As String, classString As String, headerFormula As Formula, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer, maxOxygen As Integer, acylCount As Integer, etherCount As Integer)
+    Private Shared Sub commonGlycerolipidsOxEtherGenerator(filepath As String, classString As String, headerFormula As DerivatizationFormula, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer, maxOxygen As Integer, acylCount As Integer, etherCount As Integer)
 
         Using sw = New StreamWriter(filepath, False, Encoding.ASCII)
             writeHeader(sw)
@@ -1088,8 +1086,8 @@ Public NotInheritable Class LipidMassLibraryGenerator
                             Dim totalChainHydrogen = totalChainCarbon * 2 - acylCount - totalChainDoubleBond * 2 + etherCount * 2
                             Dim totalChainOxygen = acylCount + k - 1
 
-                            Dim totalFormula = New Formula(headerFormula.Cnum + totalChainCarbon, headerFormula.Hnum + totalChainHydrogen, headerFormula.Nnum, headerFormula.Onum + totalChainOxygen, headerFormula.Pnum, headerFormula.Snum, 0, 0, 0, 0, 0)
-                            Dim mz = adduct.ConvertToMz(totalFormula.Mass)
+                            Dim totalFormula = New DerivatizationFormula(headerFormula!C + totalChainCarbon, headerFormula!H + totalChainHydrogen, headerFormula!N, headerFormula!O + totalChainOxygen, headerFormula!P, headerFormula!S, 0, 0, 0, 0, 0)
+                            Dim mz = adduct.ConvertToMz(totalFormula.ExactMass)
                             Dim lipidname = classString & " " & totalChainCarbon.ToString() & ":" & totalChainDoubleBond.ToString() & "e+" & k.ToString() & "O"
 
                             sw.WriteLine(lipidname & Microsoft.VisualBasic.Constants.vbTab & mz.ToString() & Microsoft.VisualBasic.Constants.vbTab & adduct.AdductIonName)
@@ -1103,7 +1101,7 @@ Public NotInheritable Class LipidMassLibraryGenerator
     End Sub
 
 
-    Private Shared Sub fahfaGenerator(filepath As String, classString As String, headerFormula As Formula, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+    Private Shared Sub fahfaGenerator(filepath As String, classString As String, headerFormula As DerivatizationFormula, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
         Using sw = New StreamWriter(filepath, False, Encoding.ASCII)
             writeHeader(sw)
             For i = minCarbonCount To maxCarbonCount
@@ -1115,8 +1113,8 @@ Public NotInheritable Class LipidMassLibraryGenerator
                         Dim totalChainHydrogen = totalChainCarbon * 2 - 2 * totalChainDoubleBond - 3 ' scafold FA
                         Dim totalChainOxygen = 3
 
-                        Dim totalFormula = New Formula(headerFormula.Cnum + totalChainCarbon, headerFormula.Hnum + totalChainHydrogen, headerFormula.Nnum, headerFormula.Onum + totalChainOxygen, headerFormula.Pnum, headerFormula.Snum, 0, 0, 0, 0, 0)
-                        Dim mz = adduct.ConvertToMz(totalFormula.Mass)
+                        Dim totalFormula = New DerivatizationFormula(headerFormula!C + totalChainCarbon, headerFormula!H + totalChainHydrogen, headerFormula!N, headerFormula!O + totalChainOxygen, headerFormula!P, headerFormula!S, 0, 0, 0, 0, 0)
+                        Dim mz = adduct.ConvertToMz(totalFormula.ExactMass)
                         Dim lipidname = classString & " " & totalChainCarbon.ToString() & ":" & totalChainDoubleBond.ToString()
 
 
@@ -1128,7 +1126,7 @@ Public NotInheritable Class LipidMassLibraryGenerator
     End Sub
 
 
-    Private Shared Sub commonCeramideGenerator(filepath As String, classString As String, headerFormula As Formula, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer, sphingoHydroxyCount As Integer, acylHydroxyCount As Integer)
+    Private Shared Sub commonCeramideGenerator(filepath As String, classString As String, headerFormula As DerivatizationFormula, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer, sphingoHydroxyCount As Integer, acylHydroxyCount As Integer)
 
         Dim hydroHeader = "d"
         If sphingoHydroxyCount = 3 Then hydroHeader = "t"
@@ -1144,8 +1142,8 @@ Public NotInheritable Class LipidMassLibraryGenerator
                         Dim totalChainOxygen = 1 + sphingoHydroxyCount + acylHydroxyCount
                         Dim totalNitrogenCount = 1
 
-                        Dim totalFormula = New Formula(headerFormula.Cnum + totalChainCarbon, headerFormula.Hnum + totalChainHydrogen, headerFormula.Nnum + totalNitrogenCount, headerFormula.Onum + totalChainOxygen, headerFormula.Pnum, headerFormula.Snum, 0, 0, 0, 0, 0)
-                        Dim mz = adduct.ConvertToMz(totalFormula.Mass)
+                        Dim totalFormula = New DerivatizationFormula(headerFormula!C + totalChainCarbon, headerFormula!H + totalChainHydrogen, headerFormula!N + totalNitrogenCount, headerFormula!O + totalChainOxygen, headerFormula!P, headerFormula!S, 0, 0, 0, 0, 0)
+                        Dim mz = adduct.ConvertToMz(totalFormula.ExactMass)
                         Dim lipidname = classString & " " & hydroHeader & totalChainCarbon.ToString() & ":" & totalChainDoubleBond.ToString()
 
                         sw.WriteLine(lipidname & Microsoft.VisualBasic.Constants.vbTab & mz.ToString() & Microsoft.VisualBasic.Constants.vbTab & adduct.AdductIonName)
@@ -1155,7 +1153,7 @@ Public NotInheritable Class LipidMassLibraryGenerator
         End Using
     End Sub
 
-    Private Shared Sub commonGlycerolipidsGenerator(filepath As String, classString As String, headerFormula As Formula, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer, acylCount As Integer)
+    Private Shared Sub commonGlycerolipidsGenerator(filepath As String, classString As String, headerFormula As DerivatizationFormula, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer, acylCount As Integer)
 
         Using sw = New StreamWriter(filepath, False, Encoding.ASCII)
             writeHeader(sw)
@@ -1168,8 +1166,8 @@ Public NotInheritable Class LipidMassLibraryGenerator
                         Dim totalChainHydrogen = totalChainCarbon * 2 - acylCount - totalChainDoubleBond * 2
                         Dim totalChainOxygen = acylCount
 
-                        Dim totalFormula = New Formula(headerFormula.Cnum + totalChainCarbon, headerFormula.Hnum + totalChainHydrogen, headerFormula.Nnum, headerFormula.Onum + totalChainOxygen, headerFormula.Pnum, headerFormula.Snum, 0, 0, 0, 0, 0)
-                        Dim mz = adduct.ConvertToMz(totalFormula.Mass)
+                        Dim totalFormula = New DerivatizationFormula(headerFormula!C + totalChainCarbon, headerFormula!H + totalChainHydrogen, headerFormula!N, headerFormula!O + totalChainOxygen, headerFormula!P, headerFormula!S, 0, 0, 0, 0, 0)
+                        Dim mz = adduct.ConvertToMz(totalFormula.ExactMass)
                         Dim lipidname = classString & " " & totalChainCarbon.ToString() & ":" & totalChainDoubleBond.ToString()
 
                         sw.WriteLine(lipidname & Microsoft.VisualBasic.Constants.vbTab & mz.ToString() & Microsoft.VisualBasic.Constants.vbTab & adduct.AdductIonName)
@@ -1179,7 +1177,7 @@ Public NotInheritable Class LipidMassLibraryGenerator
         End Using
     End Sub
     'add MT
-    Private Shared Sub commonGlycerolipidsEtherGenerator(filepath As String, classString As String, headerFormula As Formula, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer, acylCount As Integer, etherCount As Integer)
+    Private Shared Sub commonGlycerolipidsEtherGenerator(filepath As String, classString As String, headerFormula As DerivatizationFormula, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer, acylCount As Integer, etherCount As Integer)
 
         Using sw = New StreamWriter(filepath, False, Encoding.ASCII)
             writeHeader(sw)
@@ -1192,8 +1190,8 @@ Public NotInheritable Class LipidMassLibraryGenerator
                         Dim totalChainHydrogen = totalChainCarbon * 2 - acylCount - totalChainDoubleBond * 2 + etherCount * 2
                         Dim totalChainOxygen = acylCount - 1
 
-                        Dim totalFormula = New Formula(headerFormula.Cnum + totalChainCarbon, headerFormula.Hnum + totalChainHydrogen, headerFormula.Nnum, headerFormula.Onum + totalChainOxygen, headerFormula.Pnum, headerFormula.Snum, 0, 0, 0, 0, 0)
-                        Dim mz = adduct.ConvertToMz(totalFormula.Mass)
+                        Dim totalFormula = New DerivatizationFormula(headerFormula!C + totalChainCarbon, headerFormula!H + totalChainHydrogen, headerFormula!N, headerFormula!O + totalChainOxygen, headerFormula!P, headerFormula!S, 0, 0, 0, 0, 0)
+                        Dim mz = adduct.ConvertToMz(totalFormula.ExactMass)
                         Dim lipidname = classString & " " & totalChainCarbon.ToString() & ":" & totalChainDoubleBond.ToString() & "e"
 
                         sw.WriteLine(lipidname & Microsoft.VisualBasic.Constants.vbTab & mz.ToString() & Microsoft.VisualBasic.Constants.vbTab & adduct.AdductIonName)
@@ -1202,7 +1200,7 @@ Public NotInheritable Class LipidMassLibraryGenerator
             Next
         End Using
     End Sub
-    Private Shared Sub commonCeramideEsterGenerator(filepath As String, classString As String, headerFormula As Formula, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer, sphingoHydroxyCount As Integer, acylHydroxyCount As Integer)
+    Private Shared Sub commonCeramideEsterGenerator(filepath As String, classString As String, headerFormula As DerivatizationFormula, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer, sphingoHydroxyCount As Integer, acylHydroxyCount As Integer)
         Dim hydroHeader = "d"
         If sphingoHydroxyCount = 3 Then hydroHeader = "t"
         Using sw = New StreamWriter(filepath, False, Encoding.ASCII)
@@ -1217,8 +1215,8 @@ Public NotInheritable Class LipidMassLibraryGenerator
                         Dim totalChainOxygen = 2 + sphingoHydroxyCount + acylHydroxyCount
                         Dim totalNitrogenCount = 1
 
-                        Dim totalFormula = New Formula(headerFormula.Cnum + totalChainCarbon, headerFormula.Hnum + totalChainHydrogen, headerFormula.Nnum + totalNitrogenCount, headerFormula.Onum + totalChainOxygen, headerFormula.Pnum, headerFormula.Snum, 0, 0, 0, 0, 0)
-                        Dim mz = adduct.ConvertToMz(totalFormula.Mass)
+                        Dim totalFormula = New DerivatizationFormula(headerFormula!C + totalChainCarbon, headerFormula!H + totalChainHydrogen, headerFormula!N + totalNitrogenCount, headerFormula!O + totalChainOxygen, headerFormula!P, headerFormula!S, 0, 0, 0, 0, 0)
+                        Dim mz = adduct.ConvertToMz(totalFormula.ExactMass)
                         Dim lipidname = classString & " " & hydroHeader & totalChainCarbon.ToString() & ":" & totalChainDoubleBond.ToString()
 
                         sw.WriteLine(lipidname & Microsoft.VisualBasic.Constants.vbTab & mz.ToString() & Microsoft.VisualBasic.Constants.vbTab & adduct.AdductIonName)
@@ -1227,7 +1225,7 @@ Public NotInheritable Class LipidMassLibraryGenerator
             Next
         End Using
     End Sub
-    Private Shared Sub commonSphingosineGenerator(filepath As String, classString As String, headerFormula As Formula, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer, HydroxyCount As Integer)
+    Private Shared Sub commonSphingosineGenerator(filepath As String, classString As String, headerFormula As DerivatizationFormula, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer, HydroxyCount As Integer)
 
         Using sw = New StreamWriter(filepath, False, Encoding.ASCII)
             writeHeader(sw)
@@ -1241,8 +1239,8 @@ Public NotInheritable Class LipidMassLibraryGenerator
                         Dim totalChainOxygen = HydroxyCount
                         Dim totalNitrogenCount = 1
 
-                        Dim totalFormula = New Formula(headerFormula.Cnum + totalChainCarbon, headerFormula.Hnum + totalChainHydrogen, headerFormula.Nnum + totalNitrogenCount, headerFormula.Onum + totalChainOxygen, headerFormula.Pnum, headerFormula.Snum, 0, 0, 0, 0, 0)
-                        Dim mz = adduct.ConvertToMz(totalFormula.Mass)
+                        Dim totalFormula = New DerivatizationFormula(headerFormula!C + totalChainCarbon, headerFormula!H + totalChainHydrogen, headerFormula!N + totalNitrogenCount, headerFormula!O + totalChainOxygen, headerFormula!P, headerFormula!S, 0, 0, 0, 0, 0)
+                        Dim mz = adduct.ConvertToMz(totalFormula.ExactMass)
                         Dim lipidname = classString & " " & totalChainCarbon.ToString() & ":" & totalChainDoubleBond.ToString()
 
                         sw.WriteLine(lipidname & Microsoft.VisualBasic.Constants.vbTab & mz.ToString() & Microsoft.VisualBasic.Constants.vbTab & adduct.AdductIonName)
@@ -1252,7 +1250,7 @@ Public NotInheritable Class LipidMassLibraryGenerator
         End Using
     End Sub
 
-    Private Shared Sub commonSulfonolipidGenerator(filepath As String, classString As String, headerFormula As Formula, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer, acylHydroxyCount As Integer)
+    Private Shared Sub commonSulfonolipidGenerator(filepath As String, classString As String, headerFormula As DerivatizationFormula, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer, acylHydroxyCount As Integer)
 
         Dim hydroHeader = "m"
         Using sw = New StreamWriter(filepath, False, Encoding.ASCII)
@@ -1271,8 +1269,8 @@ Public NotInheritable Class LipidMassLibraryGenerator
 
                             totalString = If(k = 0, hydroHeader & totalChainCarbon.ToString() & ":" & totalChainDoubleBond.ToString(), hydroHeader & totalChainCarbon.ToString() & ":" & totalChainDoubleBond.ToString() & "+" & k.ToString() & "O")
 
-                            Dim totalFormula = New Formula(headerFormula.Cnum + totalChainCarbon, headerFormula.Hnum + totalChainHydrogen, headerFormula.Nnum + totalNitrogenCount, headerFormula.Onum + totalChainOxygen, headerFormula.Pnum, headerFormula.Snum, 0, 0, 0, 0, 0)
-                            Dim mz = adduct.ConvertToMz(totalFormula.Mass)
+                            Dim totalFormula = New DerivatizationFormula(headerFormula!C + totalChainCarbon, headerFormula!H + totalChainHydrogen, headerFormula!N + totalNitrogenCount, headerFormula!O + totalChainOxygen, headerFormula!P, headerFormula!S, 0, 0, 0, 0, 0)
+                            Dim mz = adduct.ConvertToMz(totalFormula.ExactMass)
                             Dim lipidname = classString & " " & totalString
 
                             sw.WriteLine(lipidname & Microsoft.VisualBasic.Constants.vbTab & mz.ToString() & Microsoft.VisualBasic.Constants.vbTab & adduct.AdductIonName)
@@ -1283,7 +1281,7 @@ Public NotInheritable Class LipidMassLibraryGenerator
         End Using
     End Sub
 
-    Private Shared Sub commonCeramideOxGenerator(filepath As String, classString As String, headerFormula As Formula, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer, sphingoHydroxyCount As Integer, acylHydroxyCount As Integer)
+    Private Shared Sub commonCeramideOxGenerator(filepath As String, classString As String, headerFormula As DerivatizationFormula, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer, sphingoHydroxyCount As Integer, acylHydroxyCount As Integer)
 
         Dim hydroHeader = "d"
         If sphingoHydroxyCount = 3 Then hydroHeader = "t"
@@ -1304,8 +1302,8 @@ Public NotInheritable Class LipidMassLibraryGenerator
 
                             totalString = If(k = 1, hydroHeader & totalChainCarbon.ToString() & ":" & totalChainDoubleBond.ToString() & "+" & "O", hydroHeader & totalChainCarbon.ToString() & ":" & totalChainDoubleBond.ToString() & "+" & k.ToString() & "O")
 
-                            Dim totalFormula = New Formula(headerFormula.Cnum + totalChainCarbon, headerFormula.Hnum + totalChainHydrogen, headerFormula.Nnum + totalNitrogenCount, headerFormula.Onum + totalChainOxygen, headerFormula.Pnum, headerFormula.Snum, 0, 0, 0, 0, 0)
-                            Dim mz = adduct.ConvertToMz(totalFormula.Mass)
+                            Dim totalFormula = New DerivatizationFormula(headerFormula!C + totalChainCarbon, headerFormula!H + totalChainHydrogen, headerFormula!N + totalNitrogenCount, headerFormula!O + totalChainOxygen, headerFormula!P, headerFormula!S, 0, 0, 0, 0, 0)
+                            Dim mz = adduct.ConvertToMz(totalFormula.ExactMass)
                             Dim lipidname = classString & " " & totalString
 
                             sw.WriteLine(lipidname & Microsoft.VisualBasic.Constants.vbTab & mz.ToString() & Microsoft.VisualBasic.Constants.vbTab & adduct.AdductIonName)
@@ -1316,18 +1314,18 @@ Public NotInheritable Class LipidMassLibraryGenerator
         End Using
     End Sub
 
-    Private Shared Sub commonCoenzymeqlipidsGenerator(filepath As String, classString As String, headerFormula As Formula, adduct As AdductIon, minRepeatCount As Integer, maxRepeatCount As Integer, additionalFormula As Formula)
+    Private Shared Sub commonCoenzymeqlipidsGenerator(filepath As String, classString As String, headerFormula As DerivatizationFormula, adduct As AdductIon, minRepeatCount As Integer, maxRepeatCount As Integer, additionalFormula As DerivatizationFormula)
 
         Using sw = New StreamWriter(filepath, False, Encoding.ASCII)
             writeHeader(sw)
             For i = minRepeatCount To maxRepeatCount
-                Dim totalCarbon = headerFormula.Cnum + additionalFormula.Cnum * i
-                Dim totalHydrogen = headerFormula.Hnum + additionalFormula.Hnum * i
-                Dim totalOxygen = headerFormula.Onum + additionalFormula.Onum * i
-                Dim totalNitrogen = headerFormula.Nnum + additionalFormula.Nnum * i
+                Dim totalCarbon = headerFormula!C + additionalFormula!C * i
+                Dim totalHydrogen = headerFormula!H + additionalFormula!H * i
+                Dim totalOxygen = headerFormula!O + additionalFormula!O * i
+                Dim totalNitrogen = headerFormula!N + additionalFormula!N * i
 
-                Dim totalFormula = New Formula(totalCarbon, totalHydrogen, totalNitrogen, totalOxygen, headerFormula.Pnum, headerFormula.Snum, 0, 0, 0, 0, 0)
-                Dim mz = adduct.ConvertToMz(totalFormula.Mass)
+                Dim totalFormula = New DerivatizationFormula(totalCarbon, totalHydrogen, totalNitrogen, totalOxygen, headerFormula!P, headerFormula!S, 0, 0, 0, 0, 0)
+                Dim mz = adduct.ConvertToMz(totalFormula.ExactMass)
                 Dim lipidname = classString
 
                 sw.WriteLine(lipidname & Microsoft.VisualBasic.Constants.vbTab & mz.ToString() & Microsoft.VisualBasic.Constants.vbTab & adduct.AdductIonName)
@@ -1336,16 +1334,16 @@ Public NotInheritable Class LipidMassLibraryGenerator
         End Using
     End Sub
 
-    Private Shared Sub commonSinglemoleculeGenerator(filepath As String, classString As String, headerFormula As Formula, adduct As AdductIon)
+    Private Shared Sub commonSinglemoleculeGenerator(filepath As String, classString As String, headerFormula As DerivatizationFormula, adduct As AdductIon)
         Using sw = New StreamWriter(filepath, False, Encoding.ASCII)
             writeHeader(sw)
-            Dim totalCarbon = headerFormula.Cnum
-            Dim totalHydrogen = headerFormula.Hnum
-            Dim totalOxygen = headerFormula.Onum
-            Dim totalNitrogen = headerFormula.Nnum
+            Dim totalCarbon = headerFormula!C
+            Dim totalHydrogen = headerFormula!H
+            Dim totalOxygen = headerFormula!O
+            Dim totalNitrogen = headerFormula!N
 
-            Dim totalFormula = New Formula(totalCarbon, totalHydrogen, totalNitrogen, totalOxygen, headerFormula.Pnum, headerFormula.Snum, 0, 0, 0, 0, 0)
-            Dim mz = adduct.ConvertToMz(totalFormula.Mass)
+            Dim totalFormula = New DerivatizationFormula(totalCarbon, totalHydrogen, totalNitrogen, totalOxygen, headerFormula!P, headerFormula!S, 0, 0, 0, 0, 0)
+            Dim mz = adduct.ConvertToMz(totalFormula.ExactMass)
             Dim lipidname = classString
 
             sw.WriteLine(lipidname & " " & Microsoft.VisualBasic.Constants.vbTab & mz.ToString() & Microsoft.VisualBasic.Constants.vbTab & adduct.AdductIonName)

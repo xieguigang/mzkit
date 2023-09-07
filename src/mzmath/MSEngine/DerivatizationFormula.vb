@@ -1,5 +1,4 @@
-﻿Imports System.Security.Claims
-Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
+﻿Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 
 Public Class DerivatizationFormula : Inherits Formula
 
