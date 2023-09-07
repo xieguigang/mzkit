@@ -19,13 +19,9 @@
 '  You should have received a copy of the GNU Lesser General Public
 '  License along with this library; if not, write to the Free Software
 '  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
-Imports System
-Imports System.Text
-Imports System.Collections.Generic
 Imports System.Security.Cryptography
-Imports System.Linq
+Imports System.Text
 Imports std = System.Math
-Imports System.Diagnostics
 
 Namespace Spectra.SplashID
     Public Class Splash
@@ -167,8 +163,8 @@ Namespace Spectra.SplashID
             ' build histogram
             Dim histogram As StringBuilder = New StringBuilder()
 
-            For Each bin In Enumerable.ToList(binnedIons).GetRange(0, length)
-                histogram.Append(INTENSITY_MAP.ElementAt(bin + EPSILON))
+            For Each bin As Double In Enumerable.ToList(binnedIons).GetRange(0, length)
+                histogram.Append(INTENSITY_MAP.ElementAt(CInt(bin + EPSILON)))
             Next
 
             Call Debug.WriteLine(String.Format("{1} block: {0}", histogram.ToString(), If(length = 10, "histogram", "similarity")))
