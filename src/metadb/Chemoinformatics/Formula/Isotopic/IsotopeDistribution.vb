@@ -59,7 +59,6 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Math.Statistics
 
 Namespace Formula.IsotopicPatterns
 
