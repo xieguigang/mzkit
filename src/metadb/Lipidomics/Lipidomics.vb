@@ -1,15 +1,8 @@
-﻿Imports CompMs.Common.Components
-Imports CompMs.Common.DataObj
-Imports CompMs.Common.DataObj.Property
-Imports CompMs.Common.Enum
-Imports CompMs.Common.FormulaGenerator.Parser
-Imports CompMs.Common.Interfaces
-Imports CompMs.Common.Parameter
-Imports System.Collections.Generic
-Imports System.IO
-Imports System.Linq
+﻿Imports System.IO
 Imports System.Text
-
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
 
 
 Public Class LipidMolecule
@@ -32,7 +25,7 @@ Public Class LipidMolecule
     Public Property Smiles As String
     Public Property Formula As String
     Public Property InChIKey As String
-    Public Property IonMode As IonMode
+    Public Property IonMode As IonModes
     Public Property LipidSubclass As String
     Public Property LipidCategory As String
     Public Property IsValidatedFormat As Boolean
@@ -69,13 +62,8 @@ Public NotInheritable Class LipidAnnotation
     Private Sub New()
     End Sub
 
-    ' test query spectrum
-    Public Shared Function ReadTestSpectrum(input As String) As RawData
-        Return RawDataParcer.RawDataFileReader(input, New AnalysisParamOfMsfinder())
-    End Function
-
     ' ref molecules must be sorted by mz before using this program
-    Public Shared Function Characterize(queryMz As Double, queryRt As Double, msScanProp As IMSScanProperty, RefMolecules As List(Of LipidMolecule), ionMode As IonMode, ms1tol As Double, ms2tol As Double) As LipidMolecule
+    Public Shared Function Characterize(queryMz As Double, queryRt As Double, msScanProp As IMSScanProperty, RefMolecules As List(Of LipidMolecule), ionMode As IonModes, ms1tol As Double, ms2tol As Double) As LipidMolecule
 
         Dim startID = GetDatabaseStartIndex(queryMz, ms1tol, RefMolecules)
         Dim molecules = New List(Of LipidMolecule)()

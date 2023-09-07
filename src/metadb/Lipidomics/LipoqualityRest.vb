@@ -1,6 +1,6 @@
 ﻿Imports System.ComponentModel
-Imports CompMs.Common.Components
 Imports System.Runtime.InteropServices
+Imports BioNovoGene.BioDeep.MSEngine
 
 Public NotInheritable Class LipoqualityRest
 

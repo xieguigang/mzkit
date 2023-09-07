@@ -1,6 +1,4 @@
-﻿Imports CompMs.Common.Components
-Imports System.Collections.Generic
-Imports System.Linq
+﻿Imports BioNovoGene.BioDeep.MSEngine
 
 Public NotInheritable Class LipoqualityDatabaseManagerUtility
     Private Sub New()
@@ -206,7 +204,7 @@ Public NotInheritable Class LipoqualityDatabaseManagerUtility
         lipidannotation.Sn1AcylChain = sn1AcylChain
         lipidannotation.Smiles = query.SMILES
         lipidannotation.Inchikey = query.InChIKey
-        lipidannotation.Formula = query.Formula.FormulaString
+        lipidannotation.Formula = query.Formula.EmpiricalFormula
     End Sub
 
     Private Shared Sub setDoubleAcylChainsLipidAnnotation(lipidannotation As LipoqualityAnnotation, query As MoleculeMsReference, metabolitename As String)
@@ -227,7 +225,7 @@ Public NotInheritable Class LipoqualityDatabaseManagerUtility
             lipidannotation.TotalChain = totalChain
             lipidannotation.Smiles = query.SMILES
             lipidannotation.Inchikey = query.InChIKey
-            lipidannotation.Formula = query.Formula.FormulaString
+            lipidannotation.Formula = query.Formula.EmpiricalFormula
 
         ElseIf nameArray.Length = 3 Then
 
@@ -248,7 +246,7 @@ Public NotInheritable Class LipoqualityDatabaseManagerUtility
             lipidannotation.Sn2AcylChain = sn2AcylChain
             lipidannotation.Smiles = query.SMILES
             lipidannotation.Inchikey = query.InChIKey
-            lipidannotation.Formula = query.Formula.FormulaString
+            lipidannotation.Formula = query.Formula.EmpiricalFormula
         End If
     End Sub
 
@@ -271,7 +269,7 @@ Public NotInheritable Class LipoqualityDatabaseManagerUtility
             lipidannotation.TotalChain = totalChain
             lipidannotation.Smiles = query.SMILES
             lipidannotation.Inchikey = query.InChIKey
-            lipidannotation.Formula = query.Formula.FormulaString
+            lipidannotation.Formula = query.Formula.EmpiricalFormula
         ElseIf nameArray.Length = 3 Then
 
             Dim detailLipidInfo = nameArray(1).Trim()
@@ -293,7 +291,7 @@ Public NotInheritable Class LipoqualityDatabaseManagerUtility
             lipidannotation.Sn3AcylChain = sn3AcylChain
             lipidannotation.Smiles = query.SMILES
             lipidannotation.Inchikey = query.InChIKey
-            lipidannotation.Formula = query.Formula.FormulaString
+            lipidannotation.Formula = query.Formula.EmpiricalFormula
         End If
     End Sub
 
@@ -316,7 +314,7 @@ Public NotInheritable Class LipoqualityDatabaseManagerUtility
             lipidannotation.TotalChain = totalChain
             lipidannotation.Smiles = query.SMILES
             lipidannotation.Inchikey = query.InChIKey
-            lipidannotation.Formula = query.Formula.FormulaString
+            lipidannotation.Formula = query.Formula.EmpiricalFormula
         ElseIf nameArray.Length = 3 Then
 
             Dim detailLipidInfo = nameArray(1).Trim()
@@ -340,7 +338,7 @@ Public NotInheritable Class LipoqualityDatabaseManagerUtility
             lipidannotation.Sn4AcylChain = sn4AcylChain
             lipidannotation.Smiles = query.SMILES
             lipidannotation.Inchikey = query.InChIKey
-            lipidannotation.Formula = query.Formula.FormulaString
+            lipidannotation.Formula = query.Formula.EmpiricalFormula
         End If
     End Sub
 
