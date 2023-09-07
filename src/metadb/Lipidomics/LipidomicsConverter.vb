@@ -4,7 +4,7 @@ Imports System.Collections.Generic
 Imports System.Linq
 Imports System.Text.RegularExpressions
 Imports System.Runtime.InteropServices
-
+Imports BioNovoGene.BioDeep.MSEngine
 
 Public Module LipidomicsConverter
 
@@ -452,19 +452,19 @@ Public Module LipidomicsConverter
         Dim molecule = New LipidMolecule()
         Dim lipidclass = query.CompoundClass
 
-            ' FattyAcyls [FA], Glycerolipids [GL], Glycerophospholipids [GP], Sphingolipids [SP]
-            *  SterolLipids [ST], PrenolLipids [PR], Saccharolipids [SL], Polyketides [PK]
-            
+        ' FattyAcyls [FA], Glycerolipids [GL], Glycerophospholipids [GP], Sphingolipids [SP]
+        '  SterolLipids [ST], PrenolLipids [PR], Saccharolipids [SL], Polyketides [PK]
 
-            Dim lipidcategory = ConvertMsdialClassDefinitionToSuperClassVS2(lipidclass)
+
+        Dim lipidcategory = ConvertMsdialClassDefinitionToSuperClassVS2(lipidclass)
         Dim lbmclass = ConvertMsdialClassDefinitionToLbmClassEnumVS2(lipidclass)
 
-        If Equals(lipidcategory, "FattyAcyls") OrElse Equals(lipidcategory, "Glycerolipids") OrElse Equals(lipidcategory, "Glycerophospholipids") OrElse Equals(lipidcategory, "Sphingolipids") OrElse lbmclass = lbmclass.VAE Then
+        If Equals(lipidcategory, "FattyAcyls") OrElse Equals(lipidcategory, "Glycerolipids") OrElse Equals(lipidcategory, "Glycerophospholipids") OrElse Equals(lipidcategory, "Sphingolipids") OrElse lbmclass = LbmClass.VAE Then
             SetLipidAcylChainProperties(molecule, query)
         ElseIf Equals(lipidcategory, "SterolLipids") OrElse Equals(lipidcategory, "PrenolLipids") Then
-            If lbmclass = lbmclass.Vitamin_D OrElse lbmclass = lbmclass.Vitamin_E OrElse lbmclass = lbmclass.SHex OrElse lbmclass = lbmclass.SSulfate OrElse lbmclass = lbmclass.BAHex OrElse lbmclass = lbmclass.BASulfate OrElse lbmclass = lbmclass.BileAcid OrElse Equals(query.Name, "Cholesterol") OrElse Equals(query.Name, "CholesterolSulfate") Then
+            If lbmclass = LbmClass.Vitamin_D OrElse lbmclass = LbmClass.Vitamin_E OrElse lbmclass = LbmClass.SHex OrElse lbmclass = LbmClass.SSulfate OrElse lbmclass = LbmClass.BAHex OrElse lbmclass = LbmClass.BASulfate OrElse lbmclass = LbmClass.BileAcid OrElse Equals(query.Name, "Cholesterol") OrElse Equals(query.Name, "CholesterolSulfate") Then
                 SetSingleLipidStructure(molecule, query)
-            ElseIf lbmclass = lbmclass.CoQ Then
+            ElseIf lbmclass = LbmClass.CoQ Then
                 SetCoqMolecule(molecule, query)
             Else
                 SetLipidAcylChainProperties(molecule, query)
@@ -487,20 +487,20 @@ Public Module LipidomicsConverter
         Dim molecule = New LipidMolecule()
         Dim lipidclass = ontology
 
-            ' FattyAcyls [FA], Glycerolipids [GL], Glycerophospholipids [GP], Sphingolipids [SP]
-            *  SterolLipids [ST], PrenolLipids [PR], Saccharolipids [SL], Polyketides [PK]
-            
+        ' FattyAcyls [FA], Glycerolipids [GL], Glycerophospholipids [GP], Sphingolipids [SP]
+        '  SterolLipids [ST], PrenolLipids [PR], Saccharolipids [SL], Polyketides [PK]
 
-            Dim lipidcategory = ConvertMsdialClassDefinitionToSuperClassVS2(lipidclass)
+
+        Dim lipidcategory = ConvertMsdialClassDefinitionToSuperClassVS2(lipidclass)
         Dim lbmclass = ConvertMsdialClassDefinitionToLbmClassEnumVS2(ontology)
 
         'Console.WriteLine(lipidcategory + "\t" + lbmclass.ToString() + "\t" + ontology);
-        If Equals(lipidcategory, "FattyAcyls") OrElse Equals(lipidcategory, "Glycerolipids") OrElse Equals(lipidcategory, "Glycerophospholipids") OrElse Equals(lipidcategory, "Sphingolipids") OrElse lbmclass = lbmclass.VAE Then
+        If Equals(lipidcategory, "FattyAcyls") OrElse Equals(lipidcategory, "Glycerolipids") OrElse Equals(lipidcategory, "Glycerophospholipids") OrElse Equals(lipidcategory, "Sphingolipids") OrElse lbmclass = LbmClass.VAE Then
             SetLipidAcylChainProperties(molecule, lipidname, ontology)
         ElseIf Equals(lipidcategory, "SterolLipids") OrElse Equals(lipidcategory, "PrenolLipids") Then
-            If lbmclass = lbmclass.Vitamin_D OrElse lbmclass = lbmclass.Vitamin_E OrElse lbmclass = lbmclass.SHex OrElse lbmclass = lbmclass.SSulfate OrElse lbmclass = lbmclass.BAHex OrElse lbmclass = lbmclass.BASulfate OrElse lbmclass = lbmclass.BileAcid OrElse Equals(lipidname, "Cholesterol") OrElse Equals(lipidname, "CholesterolSulfate") Then
+            If lbmclass = LbmClass.Vitamin_D OrElse lbmclass = LbmClass.Vitamin_E OrElse lbmclass = LbmClass.SHex OrElse lbmclass = LbmClass.SSulfate OrElse lbmclass = LbmClass.BAHex OrElse lbmclass = LbmClass.BASulfate OrElse lbmclass = LbmClass.BileAcid OrElse Equals(lipidname, "Cholesterol") OrElse Equals(lipidname, "CholesterolSulfate") Then
                 SetSingleLipidStructure(molecule, lipidname, ontology)
-            ElseIf lbmclass = lbmclass.CoQ Then
+            ElseIf lbmclass = LbmClass.CoQ Then
                 SetCoqMolecule(molecule, lipidname, ontology)
             Else
                 SetLipidAcylChainProperties(molecule, lipidname, ontology)
@@ -2593,7 +2593,7 @@ Public Module LipidomicsConverter
         molecule.Mz = CSng(query.PrecursorMz)
         molecule.Smiles = query.SMILES
         molecule.InChIKey = query.InChIKey
-        molecule.Formula = query.Formula.FormulaString
+        molecule.Formula = query.Formula.ToString
 
         'Console.WriteLine(query.Name + "\t" + query.AdductIonBean.AdductIonName);
 
@@ -4985,19 +4985,19 @@ Public Module LipidomicsConverter
 
     Public Function ConvertMsdialClassDefinitionToSuperClassVS2(lipidclass As String) As String
 
-            ' 
-             *  FattyAcyls [FA]
-             *  Glycerolipids [GL]
-             *  Glycerophospholipids [GP]
-             *  Sphingolipids [SP]
-             *  SterolLipids [ST]
-             *  PrenolLipids [PR]
-             *  Saccharolipids [SL]
-             *  Polyketides [PK]
-             * 
-             
+        ' 
+        '  FattyAcyls [FA]
+        '  Glycerolipids [GL]
+        '  Glycerophospholipids [GP]
+        '  Sphingolipids [SP]
+        '  SterolLipids [ST]
+        '  PrenolLipids [PR]
+        '  Saccharolipids [SL]
+        '  Polyketides [PK]
+        ' 
 
-            Select Case lipidclass
+
+        Select Case lipidclass
 
             Case "NAE"
                 Return "FattyAcyls"
