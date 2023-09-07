@@ -65,6 +65,12 @@ Namespace Ms1
     ''' </summary>
     Public Class PPMmethod : Inherits Tolerance
 
+        Public Overrides ReadOnly Property Type As MassToleranceType
+            Get
+                Return MassToleranceType.Ppm
+            End Get
+        End Property
+
         Sub New()
         End Sub
 

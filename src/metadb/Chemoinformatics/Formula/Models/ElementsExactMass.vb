@@ -2,6 +2,7 @@
 
     ''' <summary>
     ''' A in-memory database that place the most common used element mass data
+    ''' [Mass Diff Dictionary]
     ''' </summary>
     Public Module ElementsExactMass
 

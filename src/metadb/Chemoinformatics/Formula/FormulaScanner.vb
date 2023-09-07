@@ -84,6 +84,75 @@ Namespace Formula
             Call ExactMass.SetExactMassParser(Function(f) EvaluateExactMass(f))
         End Sub
 
+        Public Shared Function Convert2FormulaObjV2(ByVal formulaString As String) As Formula
+            ' Console.WriteLine(formulaString);
+            Dim dict = New Dictionary(Of String, Integer)() ' key: C, value: 3; key: H, value 4 etc..
+            Dim elemString = String.Empty
+            Dim numString = String.Empty
+
+            For i = 0 To formulaString.Length - 1
+                Dim elem = formulaString(i)
+                If elem = "["c Then  ' start element
+                    elemString = elem.ToString()
+                    numString = String.Empty
+                    Dim endflag = False
+                    For j = i + 1 To formulaString.Length - 1
+                        elem = formulaString(j)
+                        If elem = "]"c Then
+                            elemString += elem
+                            endflag = True
+                            Continue For
+                        End If
+                        If Not endflag Then
+                            elemString += elem
+                            Continue For
+                        End If
+                        If Char.IsNumber(elem) Then
+                            numString += elem
+                        ElseIf Char.IsUpper(elem) OrElse elem = "["c Then
+                            i = j - 1
+                            Exit For
+                        End If
+                    Next
+                    Dim num = If(Equals(numString, String.Empty), 1, Integer.Parse(numString))
+                    If dict.ContainsKey(elemString) Then
+                        dict(elemString) += num
+                    Else
+                        dict(elemString) = num
+                    End If
+                ElseIf Char.IsUpper(elem) Then ' start element
+                    elemString = elem.ToString()
+                    numString = String.Empty
+                    For j = i + 1 To formulaString.Length - 1
+                        elem = formulaString(j)
+                        If Char.IsWhiteSpace(elem) Then
+                            Continue For
+                        End If
+                        If Char.IsNumber(elem) Then
+                            numString += elem
+                        ElseIf elem = "["c Then
+                            i = j - 1
+                            Exit For
+                        ElseIf Not Char.IsUpper(elem) Then
+                            elemString += elem
+                        ElseIf Char.IsUpper(elem) Then
+                            i = j - 1
+                            Exit For
+                        End If
+                    Next
+                    Dim num = If(Equals(numString, String.Empty), 1, Integer.Parse(numString))
+                    If dict.ContainsKey(elemString) Then
+                        dict(elemString) += num
+                    Else
+                        dict(elemString) = num
+                    End If
+                End If
+            Next
+
+            Return New Formula(dict)
+        End Function
+
+
         ''' <summary>
         ''' 
         ''' </summary>

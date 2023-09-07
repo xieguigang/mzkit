@@ -66,6 +66,20 @@ Imports stdNum = System.Math
 Namespace Ms1
 
     ''' <summary>
+    ''' Type of the mass <see cref="Tolerance"/>
+    ''' </summary>
+    Public Enum MassToleranceType
+        ''' <summary>
+        ''' <see cref="DAmethod"/>
+        ''' </summary>
+        Da
+        ''' <summary>
+        ''' <see cref="PPMmethod"/>
+        ''' </summary>
+        Ppm
+    End Enum
+
+    ''' <summary>
     ''' The m/z tolerance methods.
     ''' (可以直接使用这个对象的索引属性来进行计算判断,索引属性表示两个``m/z``值之间是否相等)
     ''' </summary>
@@ -80,6 +94,8 @@ Namespace Ms1
                 Return Me
             End Get
         End Property
+
+        Public MustOverride ReadOnly Property Type As MassToleranceType
 
         Default Public ReadOnly Property IsEquals(mz1#, mz2#) As Boolean
             <MethodImpl(MethodImplOptions.AggressiveInlining)>

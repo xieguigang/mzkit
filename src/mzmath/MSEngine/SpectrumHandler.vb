@@ -1,17 +1,8 @@
-﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
-Imports CompMs.Common.Algorithm.IsotopeCalc
-Imports CompMs.Common.Algorithm.Scoring
-Imports CompMs.Common.Components
-Imports CompMs.Common.DataObj.Property
-Imports CompMs.Common.Enum
-Imports CompMs.Common.Extension
-Imports CompMs.Common.FormulaGenerator.DataObj
-Imports CompMs.Common.Parser
-Imports System
-Imports System.Collections.Generic
-Imports System.Linq
-
-
+﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.ElementsExactMass
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.IsotopicPatterns
+Imports MassDiffDictionary = BioNovoGene.BioDeep.Chemoinformatics.Formula.ElementsExactMass
 Public Class IsotopeTemp
     Public Property WeightNumber As Integer
     Public Property Mz As Double
@@ -353,7 +344,7 @@ Public NotInheritable Class SpectrumHandler
             'simulated profiles by alkane formula will be projected to the real abundances for the peaks of more than 800 Da
             Dim simulatedIsotopicPeaks As IsotopeProperty = Nothing
             Dim isIsotopeDetected = False
-            Dim iupac = IupacResourceParser.GetIupacCHData()
+            Dim iupac = New IupacDatabase
             If monoisotopicMass > 800 Then simulatedIsotopicPeaks = GetNominalIsotopeProperty(simulatedFormulaByAlkane, maxTraceNumber + 1, iupac)
 
             For j = 1 To maxTraceNumber

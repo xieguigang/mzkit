@@ -1,7 +1,7 @@
 ﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.BioDeep
 Imports BioNovoGene.BioDeep.MSEngine
 Imports std = System.Math
-
 Public Class LipidMsCharacterizationResult
     Public Property ClassIonsDetected As Integer
     Public Property ChainIonsDetected As Integer
@@ -234,12 +234,12 @@ Public Module OadMsCharacterizationUtility
 
         Dim result = New LipidMsCharacterizationResult()
 
-        Dim matchedpeaks = MsScanMatching.GetMachedSpectralPeaks(exp_spectrum, ref_spectrum, tolerance, mzBegin, mzEnd)
+        Dim matchedpeaks = MSEngine.MsScanMatching.GetMachedSpectralPeaks(exp_spectrum, ref_spectrum, tolerance, mzBegin, mzEnd)
 
         ' check lipid class ion's existence
         Dim classions = matchedpeaks.Where(Function(n) n.SpectrumComment.HasFlag(SpectrumComment.metaboliteclass)).ToList()
         Dim isClassMustIonsExisted = classions.All(Function(ion) Not ion.IsAbsolutelyRequiredFragmentForAnnotation OrElse ion.IsMatched)
-        Dim classionsDetected = classions.Count(Function(n) n.IsMatched)
+        Dim classionsDetected = classions.Where(Function(n) n.IsMatched).Count
         Dim isClassIonExisted = If(isClassMustIonsExisted AndAlso classionsDetected >= classIonCutoff, True, False)
 
         result.ClassIonsDetected = classionsDetected
@@ -249,7 +249,7 @@ Public Module OadMsCharacterizationUtility
         ' check lipid chain ion's existence
         Dim chainIons = matchedpeaks.Where(Function(n) n.SpectrumComment.HasFlag(SpectrumComment.acylchain)).ToList()
         Dim isChainMustIonsExisted = chainIons.All(Function(ion) Not ion.IsAbsolutelyRequiredFragmentForAnnotation OrElse ion.IsMatched)
-        Dim chainIonsDetected = chainIons.Count(Function(n) n.IsMatched)
+        Dim chainIonsDetected = chainIons.Where(Function(n) n.IsMatched).Count
         Dim isChainIonExisted = If(isChainMustIonsExisted AndAlso chainIonsDetected >= chainIonCutoff, True, False)
 
         result.ChainIonsDetected = chainIonsDetected
@@ -310,7 +310,7 @@ Public Module EieioMsCharacterizationUtility
 
         Dim result = New LipidMsCharacterizationResult()
 
-        Dim matchedpeaks = MsScanMatching.GetMachedSpectralPeaks(exp_spectrum, ref_spectrum, tolerance, mzBegin, mzEnd)
+        Dim matchedpeaks = MSEngine.MsScanMatching.GetMachedSpectralPeaks(exp_spectrum, ref_spectrum, tolerance, mzBegin, mzEnd)
 
         ' check lipid class ion's existence
         Dim classions = matchedpeaks.Where(Function(n) n.SpectrumComment.HasFlag(SpectrumComment.metaboliteclass)).ToList()
