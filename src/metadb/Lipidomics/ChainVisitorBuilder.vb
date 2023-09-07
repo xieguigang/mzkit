@@ -15,24 +15,24 @@ Friend NotInheritable Class ChainVisitorBuilder
     End Sub
 
     Private Sub SetAcylDoubleBond(state As DoubleBondIndeterminateState) Implements ILipidomicsVisitorBuilder.SetAcylDoubleBond
-        CSharpImpl.__Assign(_acylDoubleBondState, state)
+        _acylDoubleBondState = state
     End Sub
     Private Sub SetAcylOxidized(state As OxidizedIndeterminateState) Implements ILipidomicsVisitorBuilder.SetAcylOxidized
-        CSharpImpl.__Assign(_acylOxidizedState, state)
+        _acylOxidizedState = state
     End Sub
 
     Private Sub SetAlkylDoubleBond(state As DoubleBondIndeterminateState) Implements ILipidomicsVisitorBuilder.SetAlkylDoubleBond
-        CSharpImpl.__Assign(_alkylDoubleBondState, state)
+        _alkylDoubleBondState = state
     End Sub
     Private Sub SetAlkylOxidized(state As OxidizedIndeterminateState) Implements ILipidomicsVisitorBuilder.SetAlkylOxidized
-        CSharpImpl.__Assign(_alkylOxidizedState, state)
+        _alkylOxidizedState = state
     End Sub
 
     Private Sub SetSphingoDoubleBond(state As DoubleBondIndeterminateState) Implements ILipidomicsVisitorBuilder.SetSphingoDoubleBond
-        CSharpImpl.__Assign(_sphingoDoubleBondState, state)
+        _sphingoDoubleBondState = state
     End Sub
     Private Sub SetSphingoOxidized(state As OxidizedIndeterminateState) Implements ILipidomicsVisitorBuilder.SetSphingoOxidized
-        CSharpImpl.__Assign(_sphingoOxidizedState, state)
+        _sphingoOxidizedState = state
     End Sub
 
 End Class

@@ -1,7 +1,7 @@
 ﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
-Imports BioNovoGene.BioDeep.MSEngine
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.ElementsExactMass
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
+Imports BioNovoGene.BioDeep.MSEngine
 
 Public Class CeramidePhytoSphSpectrumGenerator
     Implements ILipidSpectrumGenerator
@@ -17,7 +17,7 @@ Public Class CeramidePhytoSphSpectrumGenerator
         spectrumGenerator = New SpectrumPeakGenerator()
     End Sub
     Public Sub New(spectrumGenerator As ISpectrumPeakGenerator)
-        Me.spectrumGenerator = If(spectrumGenerator, CSharpImpl.__Throw(Of ISpectrumPeakGenerator)(New ArgumentNullException(NameOf(spectrumGenerator))))
+        Me.spectrumGenerator = spectrumGenerator
     End Sub
 
     Private ReadOnly spectrumGenerator As ISpectrumPeakGenerator
@@ -35,15 +35,15 @@ Public Class CeramidePhytoSphSpectrumGenerator
         Dim spectrum = New List(Of SpectrumPeak)()
         Dim nlmass = 0.0
         spectrum.AddRange(GetCerNSSpectrum(lipid, adduct))
-        Dim sphingo As SphingoChain = Nothing
+        Dim sphingo As SphingoChain = TryCast(lipid.Chains.GetChainByPosition(1), SphingoChain)
 
-        If CSharpImpl.__Assign(sphingo, TryCast(lipid.Chains.GetChainByPosition(1), SphingoChain)) IsNot Nothing Then
+        If sphingo IsNot Nothing Then
             spectrum.AddRange(GetSphingoSpectrum(lipid, sphingo, adduct))
             spectrum.AddRange(spectrumGenerator.GetSphingoDoubleBondSpectrum(lipid, sphingo, adduct, nlmass, 30.0R))
         End If
-        Dim acyl As AcylChain = Nothing
+        Dim acyl As AcylChain = TryCast(lipid.Chains.GetChainByPosition(2), AcylChain)
 
-        If CSharpImpl.__Assign(acyl, TryCast(lipid.Chains.GetChainByPosition(2), AcylChain)) IsNot Nothing Then
+        If acyl IsNot Nothing Then
             spectrum.AddRange(GetAcylSpectrum(lipid, acyl, adduct))
             spectrum.AddRange(spectrumGenerator.GetAcylDoubleBondSpectrum(lipid, acyl, adduct, nlmass, 30.0R))
         End If
@@ -54,7 +54,7 @@ Public Class CeramidePhytoSphSpectrumGenerator
         Return New MoleculeMsReference With {
     .PrecursorMz = adduct.ConvertToMz(lipid.Mass),
     .IonMode = adduct.IonMode,
-    .spectrum = spectrum,
+    .Spectrum = spectrum,
     .Name = lipid.Name,
     .Formula = molecule?.Formula,
     .Ontology = molecule?.Ontology,

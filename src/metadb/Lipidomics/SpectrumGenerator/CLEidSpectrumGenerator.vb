@@ -1,7 +1,7 @@
 ﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
-Imports BioNovoGene.BioDeep.MSEngine
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.ElementsExactMass
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
+Imports BioNovoGene.BioDeep.MSEngine
 
 Public Class CLEidSpectrumGenerator
     Implements ILipidSpectrumGenerator
@@ -23,7 +23,7 @@ Public Class CLEidSpectrumGenerator
     End Sub
 
     Public Sub New(spectrumGenerator As ISpectrumPeakGenerator)
-        Me.spectrumGenerator = If(spectrumGenerator, CSharpImpl.__Throw(Of ISpectrumPeakGenerator)(New ArgumentNullException(NameOf(spectrumGenerator))))
+        Me.spectrumGenerator = spectrumGenerator
     End Sub
 
     Private ReadOnly spectrumGenerator As ISpectrumPeakGenerator
@@ -46,7 +46,12 @@ Public Class CLEidSpectrumGenerator
         If lipid.Description.Has(LipidDescription.Chain) Then
             spectrum.AddRange(GetAcylLevelSpectrum(lipid, lipid.Chains.GetDeterminedChains(), adduct))
 
-            If CSharpImpl.__Assign(c1, TryCast(lipid.Chains.GetChainByPosition(1), AcylChain)) IsNot Nothing AndAlso CSharpImpl.__Assign(c2, TryCast(lipid.Chains.GetChainByPosition(2), AcylChain)) IsNot Nothing AndAlso CSharpImpl.__Assign(c3, TryCast(lipid.Chains.GetChainByPosition(3), AcylChain)) IsNot Nothing AndAlso CSharpImpl.__Assign(c4, TryCast(lipid.Chains.GetChainByPosition(4), AcylChain)) IsNot Nothing Then
+            c1 = TryCast(lipid.Chains.GetChainByPosition(1), AcylChain)
+            c2 = TryCast(lipid.Chains.GetChainByPosition(2), AcylChain)
+            c3 = TryCast(lipid.Chains.GetChainByPosition(3), AcylChain)
+            c4 = TryCast(lipid.Chains.GetChainByPosition(4), AcylChain)
+
+            If c1 IsNot Nothing AndAlso c2 IsNot Nothing AndAlso c3 IsNot Nothing AndAlso c4 IsNot Nothing Then
                 Dim sn1sn2 = {c1, c2}
                 Dim sn3sn4mass = lipid.Mass - (c3.Mass + c4.Mass + C3H3O2 + HydrogenMass)
                 spectrum.AddRange(GetAcylDoubleBondSpectrum(lipid, sn1sn2.Where(Function(c) c.DoubleBond.UnDecidedCount = 0 AndAlso c.Oxidized.UnDecidedCount = 0), adduct, sn3sn4mass + nlMass))
@@ -66,7 +71,7 @@ Public Class CLEidSpectrumGenerator
         Return New MoleculeMsReference With {
 .PrecursorMz = adduct.ConvertToMz(lipid.Mass),
 .IonMode = adduct.IonMode,
-.spectrum = spectrum,
+.Spectrum = spectrum,
 .Name = lipid.Name,
 .Formula = molecule?.Formula,
 .Ontology = molecule?.Ontology,
@@ -179,9 +184,12 @@ New SpectrumPeak(lipidMass - chainMass - nlMass - CH2, 20.0R, "-CH2(Sn1)") With 
 
     Private Shared Function EidSpecificSpectrum(lipid As Lipid, adduct As AdductIon, nlMass As Double, intensity As Double) As SpectrumPeak()
         Dim spectrum = New List(Of SpectrumPeak)()
-        Dim c1 As IChain = Nothing, c2 As IChain = Nothing, c3 As IChain = Nothing, c4 As IChain = Nothing
+        Dim c1 As IChain = TryCast(lipid.Chains.GetChainByPosition(1), IChain)
+        Dim c2 As IChain = TryCast(lipid.Chains.GetChainByPosition(2), IChain)
+        Dim c3 As IChain = TryCast(lipid.Chains.GetChainByPosition(3), IChain)
+        Dim c4 As IChain = TryCast(lipid.Chains.GetChainByPosition(4), IChain)
 
-        If CSharpImpl.__Assign(c1, TryCast(lipid.Chains.GetChainByPosition(1), IChain)) IsNot Nothing AndAlso CSharpImpl.__Assign(c2, TryCast(lipid.Chains.GetChainByPosition(2), IChain)) IsNot Nothing AndAlso CSharpImpl.__Assign(c3, TryCast(lipid.Chains.GetChainByPosition(3), IChain)) IsNot Nothing AndAlso CSharpImpl.__Assign(c4, TryCast(lipid.Chains.GetChainByPosition(4), IChain)) IsNot Nothing Then
+        If c1 IsNot Nothing AndAlso c2 IsNot Nothing AndAlso c3 IsNot Nothing AndAlso c4 IsNot Nothing Then
             Dim sn1sn2mass = lipid.Mass - (c1.Mass + c2.Mass + C3H3O2 + HydrogenMass)
             Dim sn3sn4mass = lipid.Mass - (c3.Mass + c4.Mass + C3H3O2 + HydrogenMass)
             Dim sn1sn2 = {c1, c2}
