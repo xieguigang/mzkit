@@ -1,6 +1,6 @@
 ﻿Imports System.Runtime.InteropServices
-Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
-Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.Analytical.MassSpectrometry.std.Ms1.PrecursorType
+Imports BioNovoGene.Analytical.MassSpectrometry.std.Spectra
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.ElementsExactMass
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
 Imports std = System.Math
@@ -7074,7 +7074,7 @@ New SpectrumPeak() With {
 
                 ' maybe fatty acid product ion is not found in positive mode
 
-                For sn1_2Carbon As Integer = minSnCarbon1_2 To Math.Floor(totalCarbon / 2)
+                For sn1_2Carbon As Integer = minSnCarbon1_2 To std.Floor(totalCarbon / 2)
                     For sn1_2Double = minSnDoubleBond1_2 To maxSnDoubleBond1_2
 
                         Dim sn3_4Carbon = totalCarbon - sn1_2Carbon
@@ -7122,7 +7122,7 @@ New SpectrumPeak() With {
 
             ' from here, acyl level annotation is executed.
             Dim candidates = New List(Of LipidMolecule)()
-            For sn1_2Carbon As Integer = minSnCarbon1_2 To Math.Floor(totalCarbon / 2)
+            For sn1_2Carbon As Integer = minSnCarbon1_2 To std.Floor(totalCarbon / 2)
                 For sn1_2Double = minSnDoubleBond1_2 To maxSnDoubleBond1_2
 
                     Dim sn3_4Carbon = totalCarbon - sn1_2Carbon
@@ -7243,7 +7243,7 @@ New SpectrumPeak() With {
 
             ' from here, acyl level annotation is executed.
             Dim candidates = New List(Of LipidMolecule)()
-            For sn1_2Carbon As Integer = minSnCarbon1_2 To Math.Floor(totalCarbon / 2)
+            For sn1_2Carbon As Integer = minSnCarbon1_2 To std.Floor(totalCarbon / 2)
                 For sn1_2Double = minSnDoubleBond1_2 To maxSnDoubleBond1_2
 
                     Dim sn3_4Carbon = totalCarbon - sn1_2Carbon
@@ -13380,7 +13380,7 @@ New SpectrumPeak() With {
 
                 '
                 Dim candidates = New List(Of LipidMolecule)()
-                Dim coqSurfix = Math.Round((theoreticalMz - 182.057908802) / (12 * 5 + HydrogenMass * 8))
+                Dim coqSurfix = std.Round((theoreticalMz - 182.057908802) / (12 * 5 + HydrogenMass * 8))
 
                 Return LipidMsmsCharacterizationUtility.returnAnnotationNoChainResult("CoQ" & coqSurfix.ToString(), LbmClass.CoQ, "", theoreticalMz, adduct, totalCarbon, totalDoubleBond, 0, candidates, 1)
             ElseIf Equals(adduct.AdductIonName, "[M+Na]+") Then
@@ -13391,7 +13391,7 @@ New SpectrumPeak() With {
 
                 '
                 Dim candidates = New List(Of LipidMolecule)()
-                Dim coqSurfix = Math.Round((theoreticalMz - 182.057908802) / (12 * 5 + HydrogenMass * 8))
+                Dim coqSurfix = std.Round((theoreticalMz - 182.057908802) / (12 * 5 + HydrogenMass * 8))
 
                 Return LipidMsmsCharacterizationUtility.returnAnnotationNoChainResult("CoQ" & coqSurfix.ToString(), LbmClass.CoQ, "", theoreticalMz, adduct, totalCarbon, totalDoubleBond, 0, candidates, 1)
             End If
