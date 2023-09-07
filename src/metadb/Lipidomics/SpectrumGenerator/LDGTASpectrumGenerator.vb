@@ -1,7 +1,7 @@
 ﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
-Imports BioNovoGene.BioDeep.Chemistry.MetaLib
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.ElementsExactMass
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
+Imports BioNovoGene.BioDeep.MSEngine
 
 Public Class LDGTASpectrumGenerator
     Implements ILipidSpectrumGenerator
@@ -54,7 +54,7 @@ Public Class LDGTASpectrumGenerator
         Return New MoleculeMsReference With {
 .PrecursorMz = adduct.ConvertToMz(lipid.Mass),
 .IonMode = adduct.IonMode,
-.spectrum = spectrum,
+.Spectrum = spectrum,
 .Name = lipid.Name,
 .Formula = molecule?.Formula,
 .Ontology = molecule?.Ontology,
