@@ -18,6 +18,7 @@
 
 + MZKit® is a registered trademark of BioNovoGene Corporation, protected by copyright law and international treaties.
 + **RawFileReader reading tool. Copyright © 2016 by Thermo Fisher Scientific, Inc. All rights reserved.**
++ MS-DIAL was launched as a universal program for untargeted metabolomics that supports multiple instruments (GC/MS, GC/MS/MS, LC/MS, and LC/MS/MS) and MS vendors (Agilent, Bruker, LECO, Sciex, Shimadzu, Thermo, and Waters). Part of the spectrum algorithm in MZKit is developed based on the [MS-DIAL](http://prime.psc.riken.jp/compms/msdial/main.html) project. 
 
 ```
 MIT License
