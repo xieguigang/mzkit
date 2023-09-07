@@ -1,7 +1,5 @@
-﻿Imports CompMs.Common.Enum
-Imports CompMs.Common.FormulaGenerator.DataObj
-Imports System.Linq
-Imports System.Text.RegularExpressions
+﻿Imports System.Text.RegularExpressions
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.ElementsExactMass
 
 Public Class HexCerLipidParser
     Implements ILipidParser
