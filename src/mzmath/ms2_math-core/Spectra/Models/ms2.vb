@@ -73,7 +73,7 @@ Namespace Spectra
         Implements IComparable
 
         ''' <summary>
-        ''' Molecular fragment m/z
+        ''' Molecular fragment m/z.(or the mass value)
         ''' </summary>
         ''' <returns></returns>
         <DataFrameColumn(NameOf(mz))>

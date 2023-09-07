@@ -47,14 +47,9 @@
     ''' <remarks>
     ''' MS-DIAL model
     ''' </remarks>
-    Public Class SpectrumPeak
+    Public Class SpectrumPeak : Inherits ms2
         Implements ISpectrumPeak
 
-        Public Property Mass As Double Implements ISpectrumPeak.Mass
-
-        Public Property Intensity As Double Implements ISpectrumPeak.Intensity
-
-        Public Property Comment As String
 
         Public Property Resolution As Double
 
