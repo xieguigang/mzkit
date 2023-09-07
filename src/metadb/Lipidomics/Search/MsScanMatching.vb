@@ -9,7 +9,7 @@ Public NotInheritable Class MsScanMatching
     Private Sub New()
     End Sub
 
-    Public Shared Function CompareMS2LipidomicsScanProperties(ByVal scanProp As IMSScanProperty, ByVal refSpec As MoleculeMsReference, ByVal param As MsRefSearchParameterBase) As MsScanMatchResult
+    Public Shared Function CompareMS2LipidomicsScanProperties(scanProp As IMSScanProperty, refSpec As MoleculeMsReference, param As MsRefSearchParameterBase) As MsScanMatchResult
 
         Dim result = MSEngine.MsScanMatching.CompareBasicMSScanProperties(scanProp, refSpec, param, param.Ms2Tolerance, param.MassRangeBegin, param.MassRangeEnd)
         Dim matchedPeaksScores = GetLipidomicsMatchedPeaksScores(scanProp, refSpec, param.Ms2Tolerance, param.MassRangeBegin, param.MassRangeEnd)
@@ -39,13 +39,13 @@ Public NotInheritable Class MsScanMatching
     End Function
 
 
-    Public Shared Function GetOadBasedLipidomicsMatchedPeaksScores(ByVal scan As IMSScanProperty, ByVal reference As MoleculeMsReference, ByVal tolerance As Single, ByVal mzBegin As Single, ByVal mzEnd As Single) As Double()
+    Public Shared Function GetOadBasedLipidomicsMatchedPeaksScores(scan As IMSScanProperty, reference As MoleculeMsReference, tolerance As Single, mzBegin As Single, mzEnd As Single) As Double()
 
         Dim returnedObj = GetOadBasedLipidMoleculeAnnotationResult(scan, reference, tolerance, mzBegin, mzEnd)
         Return returnedObj.Item2
     End Function
 
-    Public Shared Function GetOadBasedLipidMoleculeAnnotationResult(ByVal scan As IMSScanProperty, ByVal reference As MoleculeMsReference, ByVal tolerance As Single, ByVal mzBegin As Single, ByVal mzEnd As Single) As (ILipid, Double())
+    Public Shared Function GetOadBasedLipidMoleculeAnnotationResult(scan As IMSScanProperty, reference As MoleculeMsReference, tolerance As Single, mzBegin As Single, mzEnd As Single) As (ILipid, Double())
         Dim lipid = FacadeLipidParser.Default.Parse(reference.Name)
         Select Case lipid.LipidClass
             Case LbmClass.PC, LbmClass.PE, LbmClass.PS, LbmClass.PG, LbmClass.PI, LbmClass.PA, LbmClass.DG, LbmClass.BMP, LbmClass.LPC, LbmClass.LPS, LbmClass.LPE, LbmClass.LPG, LbmClass.LPI, LbmClass.DGTA, LbmClass.DGTS, LbmClass.LDGTA, LbmClass.LDGTS, LbmClass.DMEDFAHFA
@@ -77,13 +77,13 @@ Public NotInheritable Class MsScanMatching
     End Function
 
 
-    Public Shared Function GetEidBasedLipidomicsMatchedPeaksScores(ByVal scan As IMSScanProperty, ByVal reference As MoleculeMsReference, ByVal tolerance As Single, ByVal mzBegin As Single, ByVal mzEnd As Single) As Double()
+    Public Shared Function GetEidBasedLipidomicsMatchedPeaksScores(scan As IMSScanProperty, reference As MoleculeMsReference, tolerance As Single, mzBegin As Single, mzEnd As Single) As Double()
 
         Dim returnedObj = GetEidBasedLipidMoleculeAnnotationResult(scan, reference, tolerance, mzBegin, mzEnd)
         Return returnedObj.Item2
     End Function
 
-    Public Shared Function GetEidBasedLipidMoleculeAnnotationResult(ByVal scan As IMSScanProperty, ByVal reference As MoleculeMsReference, ByVal tolerance As Single, ByVal mzBegin As Single, ByVal mzEnd As Single) As (ILipid, Double())
+    Public Shared Function GetEidBasedLipidMoleculeAnnotationResult(scan As IMSScanProperty, reference As MoleculeMsReference, tolerance As Single, mzBegin As Single, mzEnd As Single) As (ILipid, Double())
         Dim lipid = FacadeLipidParser.Default.Parse(reference.Name)
         Select Case lipid.LipidClass
             Case LbmClass.PC, LbmClass.PE, LbmClass.PS, LbmClass.PG, LbmClass.PI, LbmClass.PA, LbmClass.DG, LbmClass.BMP, LbmClass.LPC, LbmClass.LPS, LbmClass.LPE, LbmClass.LPG, LbmClass.LPI, LbmClass.DGTA, LbmClass.DGTS, LbmClass.LDGTA, LbmClass.LDGTS, LbmClass.DMEDFAHFA, LbmClass.PC_d5, LbmClass.PE_d5, LbmClass.PS_d5, LbmClass.PG_d5, LbmClass.PI_d5, LbmClass.LPC_d5, LbmClass.LPE_d5, LbmClass.LPS_d5, LbmClass.LPG_d5, LbmClass.LPI_d5, LbmClass.DG_d5
@@ -104,13 +104,13 @@ Public NotInheritable Class MsScanMatching
         End Select
     End Function
 
-    Public Shared Function GetEieioBasedLipidomicsMatchedPeaksScores(ByVal scan As IMSScanProperty, ByVal reference As MoleculeMsReference, ByVal tolerance As Single, ByVal mzBegin As Single, ByVal mzEnd As Single) As Double()
+    Public Shared Function GetEieioBasedLipidomicsMatchedPeaksScores(scan As IMSScanProperty, reference As MoleculeMsReference, tolerance As Single, mzBegin As Single, mzEnd As Single) As Double()
 
         Dim returnedObj = GetEieioBasedLipidMoleculeAnnotationResult(scan, reference, tolerance, mzBegin, mzEnd)
         Return returnedObj.Item2
     End Function
 
-    Public Shared Function GetEieioBasedLipidMoleculeAnnotationResult(ByVal scan As IMSScanProperty, ByVal reference As MoleculeMsReference, ByVal tolerance As Single, ByVal mzBegin As Single, ByVal mzEnd As Single) As (ILipid, Double())
+    Public Shared Function GetEieioBasedLipidMoleculeAnnotationResult(scan As IMSScanProperty, reference As MoleculeMsReference, tolerance As Single, mzBegin As Single, mzEnd As Single) As (ILipid, Double())
         Dim lipid = FacadeLipidParser.Default.Parse(reference.Name)
         Select Case lipid.LipidClass
             Case LbmClass.PC
@@ -221,7 +221,7 @@ Public NotInheritable Class MsScanMatching
     End Function
 
 
-    Public Shared Function GetLipidMoleculerSpeciesLevelAnnotationResultForEIEIO(ByVal msScanProp As IMSScanProperty, ByVal molecule As LipidMolecule, ByVal ms2tol As Double) As LipidMolecule
+    Public Shared Function GetLipidMoleculerSpeciesLevelAnnotationResultForEIEIO(msScanProp As IMSScanProperty, molecule As LipidMolecule, ms2tol As Double) As LipidMolecule
         Dim lipidclass = molecule.LipidClass
         Dim refMz = molecule.Mz
         Dim adduct = molecule.Adduct
@@ -803,7 +803,7 @@ Public NotInheritable Class MsScanMatching
         End Select
     End Function
 
-    Public Shared Function GetLipidMoleculeAnnotationResult(ByVal msScanProp As IMSScanProperty, ByVal molecule As LipidMolecule, ByVal ms2tol As Double) As LipidMolecule
+    Public Shared Function GetLipidMoleculeAnnotationResult(msScanProp As IMSScanProperty, molecule As LipidMolecule, ms2tol As Double) As LipidMolecule
 
         Dim lipidclass = molecule.LipidClass
         Dim refMz = molecule.Mz
@@ -1384,7 +1384,7 @@ Public NotInheritable Class MsScanMatching
     End Function
 
 
-    Public Shared Function GetLipidNameFromReference(ByVal reference As MoleculeMsReference) As String
+    Public Shared Function GetLipidNameFromReference(reference As MoleculeMsReference) As String
         Dim compClass = reference.CompoundClass
         Dim comment = reference.Comment
         If Not Equals(comment, "SPLASH") AndAlso Not Equals(compClass, "Unknown") AndAlso Not Equals(compClass, "Others") Then
@@ -1403,7 +1403,7 @@ Public NotInheritable Class MsScanMatching
         End If
     End Function
 
-    Public Shared Function GetRefinedLipidAnnotationLevel(ByVal msScanProp As IMSScanProperty, ByVal molMsRef As MoleculeMsReference, ByVal bin As Double, <Out> ByRef isLipidClassMatched As Boolean, <Out> ByRef isLipidChainMatched As Boolean, <Out> ByRef isLipidPositionMatched As Boolean, <Out> ByRef isOthers As Boolean) As String
+    Public Shared Function GetRefinedLipidAnnotationLevel(msScanProp As IMSScanProperty, molMsRef As MoleculeMsReference, bin As Double, <Out> ByRef isLipidClassMatched As Boolean, <Out> ByRef isLipidChainMatched As Boolean, <Out> ByRef isLipidPositionMatched As Boolean, <Out> ByRef isOthers As Boolean) As String
 
         isLipidClassMatched = False
         isLipidChainMatched = False
@@ -1483,7 +1483,7 @@ Public NotInheritable Class MsScanMatching
     ''' [0] The similarity score which is standadized from 0 (no similarity) to 1 (consistency) will be return.
     ''' [1] MatchedPeaksCount is also returned.
     ''' </returns>
-    Public Shared Function GetLipidomicsMatchedPeaksScores(ByVal msScanProp As IMSScanProperty, ByVal molMsRef As MoleculeMsReference, ByVal bin As Double, ByVal massBegin As Double, ByVal massEnd As Double) As Double()
+    Public Shared Function GetLipidomicsMatchedPeaksScores(msScanProp As IMSScanProperty, molMsRef As MoleculeMsReference, bin As Double, massBegin As Double, massEnd As Double) As Double()
 
         If Not MSEngine.MsScanMatching.IsComparedAvailable(msScanProp, molMsRef) Then Return New Double() {-1, -1}
 
@@ -1524,7 +1524,7 @@ Public NotInheritable Class MsScanMatching
         End If
     End Function
 
-    Public Shared Function GetLipidomicsMoleculerSpeciesLevelAnnotationPeaksScoresForEIEIO(ByVal msScanProp As IMSScanProperty, ByVal molMsRef As MoleculeMsReference, ByVal bin As Double, ByVal massBegin As Double, ByVal massEnd As Double) As Double()
+    Public Shared Function GetLipidomicsMoleculerSpeciesLevelAnnotationPeaksScoresForEIEIO(msScanProp As IMSScanProperty, molMsRef As MoleculeMsReference, bin As Double, massBegin As Double, massEnd As Double) As Double()
 
         If Not MSEngine.MsScanMatching.IsComparedAvailable(msScanProp, molMsRef) Then Return New Double() {-1, -1}
 
@@ -1566,7 +1566,7 @@ Public NotInheritable Class MsScanMatching
     End Function
 
 
-    Public Shared Function GetRefinedLipidAnnotationLevelForEIEIO(ByVal msScanProp As IMSScanProperty, ByVal molMsRef As MoleculeMsReference, ByVal bin As Double, <Out> ByRef isLipidClassMatched As Boolean, <Out> ByRef isLipidChainMatched As Boolean, <Out> ByRef isLipidPositionMatched As Boolean, <Out> ByRef isOthers As Boolean) As String
+    Public Shared Function GetRefinedLipidAnnotationLevelForEIEIO(msScanProp As IMSScanProperty, molMsRef As MoleculeMsReference, bin As Double, <Out> ByRef isLipidClassMatched As Boolean, <Out> ByRef isLipidChainMatched As Boolean, <Out> ByRef isLipidPositionMatched As Boolean, <Out> ByRef isOthers As Boolean) As String
 
         isLipidClassMatched = False
         isLipidChainMatched = False

@@ -11,7 +11,7 @@
         End Get
     End Property
 
-    Private Function Decompose(Of T As TElement)(ByVal visitor As IAcyclicVisitor, ByVal element As T) As TResult Implements IDecomposer(Of TResult, TElement).Decompose
+    Private Function Decompose(Of T As TElement)(visitor As IAcyclicVisitor, element As T) As TResult Implements IDecomposer(Of TResult, TElement).Decompose
         Dim vis As IVisitor(Of TResult, T) = TryCast(visitor, IVisitor(Of TResult, T))
 
         If vis IsNot Nothing Then

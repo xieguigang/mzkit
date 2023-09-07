@@ -13,7 +13,7 @@ End Class
 
 Public NotInheritable Class SpectrumHandler
 
-    Public Shared Function GetCombinedSpectrum(ByVal peaks1 As List(Of SpectrumPeak), ByVal peaks2 As List(Of SpectrumPeak), ByVal bin As Double) As List(Of SpectrumPeak)
+    Public Shared Function GetCombinedSpectrum(peaks1 As List(Of SpectrumPeak), peaks2 As List(Of SpectrumPeak), bin As Double) As List(Of SpectrumPeak)
 
         Dim peaks = New List(Of SpectrumPeak)()
         Dim range2Peaks = New Dictionary(Of Integer, List(Of SpectrumPeak))()
@@ -51,7 +51,7 @@ Public NotInheritable Class SpectrumHandler
         Return peaks
     End Function
 
-    Public Shared Function GetNormalizedPeaks(ByVal spectrum As List(Of SpectrumPeak), ByVal powFactor As Double, ByVal maxValue As Double) As List(Of SpectrumPeak)
+    Public Shared Function GetNormalizedPeaks(spectrum As List(Of SpectrumPeak), powFactor As Double, maxValue As Double) As List(Of SpectrumPeak)
         If spectrum.Count = 0 Then Return New List(Of SpectrumPeak)()
         Dim maxIntensity = Math.Pow(spectrum.Max(Function(n) n.Intensity), powFactor)
         Return spectrum.[Select](Function(n) New SpectrumPeak With {
@@ -60,7 +60,7 @@ Public NotInheritable Class SpectrumHandler
         }).ToList()
     End Function
 
-    Public Shared Function GetBinnedSpectrum(ByVal spectrum As List(Of SpectrumPeak), ByVal Optional delta As Double = 100, ByVal Optional maxPeaks As Integer = 12) As List(Of SpectrumPeak)
+    Public Shared Function GetBinnedSpectrum(spectrum As List(Of SpectrumPeak), Optional delta As Double = 100, Optional maxPeaks As Integer = 12) As List(Of SpectrumPeak)
 
         Dim peaks = New List(Of SpectrumPeak)()
         Dim range2Peaks = New Dictionary(Of Integer, List(Of SpectrumPeak))()
@@ -88,7 +88,7 @@ Public NotInheritable Class SpectrumHandler
         Return peaks
     End Function
 
-    Public Shared Function GetBinnedSpectrum(ByVal spectrum As List(Of SpectrumPeak), ByVal bin As Double) As List(Of SpectrumPeak)
+    Public Shared Function GetBinnedSpectrum(spectrum As List(Of SpectrumPeak), bin As Double) As List(Of SpectrumPeak)
         Dim peaks = New List(Of SpectrumPeak)()
         Dim range2Peaks = New Dictionary(Of Integer, List(Of SpectrumPeak))()
 
@@ -112,7 +112,7 @@ Public NotInheritable Class SpectrumHandler
         Return peaks
     End Function
 
-    Public Shared Function GetNormalizedPeak4SpectralEntropyCalc(ByVal peaklist As List(Of SpectrumPeak), ByVal precursorMz As Double, ByVal Optional ms2Tol As Double = 0.05, ByVal Optional relativeAbundanceCutOff As Double = 0.1, ByVal Optional absoluteAbundanceCutOff As Double = 3, ByVal Optional minMz As Double = 0, ByVal Optional maxMz As Double = 100000) As List(Of SpectrumPeak)
+    Public Shared Function GetNormalizedPeak4SpectralEntropyCalc(peaklist As List(Of SpectrumPeak), precursorMz As Double, Optional ms2Tol As Double = 0.05, Optional relativeAbundanceCutOff As Double = 0.1, Optional absoluteAbundanceCutOff As Double = 3, Optional minMz As Double = 0, Optional maxMz As Double = 100000) As List(Of SpectrumPeak)
         If peaklist Is Nothing OrElse peaklist.Count = 0 Then Return New List(Of SpectrumPeak)()
         Dim maxIntensity = peaklist.Max(Function(n) n.Intensity)
         Dim refinedPeaklist = New List(Of SpectrumPeak)()
@@ -133,7 +133,7 @@ Public NotInheritable Class SpectrumHandler
         }).ToList()
     End Function
 
-    Public Shared Function GetNormalizedPeak4SpectralEntropySimilarityCalc(ByVal peaklist As List(Of SpectrumPeak), ByVal precursorMz As Double, ByVal Optional ms2Tol As Double = 0.05, ByVal Optional relativeAbundanceCutOff As Double = 0.1, ByVal Optional absoluteAbundanceCutOff As Double = 3, ByVal Optional minMz As Double = 0, ByVal Optional maxMz As Double = 100000) As List(Of SpectrumPeak)
+    Public Shared Function GetNormalizedPeak4SpectralEntropySimilarityCalc(peaklist As List(Of SpectrumPeak), precursorMz As Double, Optional ms2Tol As Double = 0.05, Optional relativeAbundanceCutOff As Double = 0.1, Optional absoluteAbundanceCutOff As Double = 3, Optional minMz As Double = 0, Optional maxMz As Double = 100000) As List(Of SpectrumPeak)
         If peaklist Is Nothing OrElse peaklist.Count = 0 Then Return New List(Of SpectrumPeak)()
         Dim maxIntensity = peaklist.Max(Function(n) n.Intensity)
         Dim refinedPeaklist = New List(Of SpectrumPeak)()
@@ -161,7 +161,7 @@ Public NotInheritable Class SpectrumHandler
         }).ToList()
     End Function
 
-    Public Shared Function GetRefinedPeaklist(ByVal peaklist As List(Of SpectrumPeak), ByVal relativeAbundanceCutOff As Double, ByVal absoluteAbundanceCutOff As Double, ByVal minMz As Double, ByVal maxMz As Double, ByVal precursorMz As Double, ByVal ms2Tol As Double, ByVal massTolType As MassToleranceType, ByVal precursorCharge As Integer, ByVal Optional isBrClConsideredForIsotopes As Boolean = False, ByVal Optional isRemoveIsotopes As Boolean = False, ByVal Optional removeAfterPrecursor As Boolean = True) As List(Of SpectrumPeak)
+    Public Shared Function GetRefinedPeaklist(peaklist As List(Of SpectrumPeak), relativeAbundanceCutOff As Double, absoluteAbundanceCutOff As Double, minMz As Double, maxMz As Double, precursorMz As Double, ms2Tol As Double, massTolType As MassToleranceType, precursorCharge As Integer, Optional isBrClConsideredForIsotopes As Boolean = False, Optional isRemoveIsotopes As Boolean = False, Optional removeAfterPrecursor As Boolean = True) As List(Of SpectrumPeak)
         If peaklist Is Nothing OrElse peaklist.Count = 0 Then Return New List(Of SpectrumPeak)()
         Dim maxIntensity = peaklist.Max(Function(n) n.Intensity)
         Dim refinedPeaklist = New List(Of SpectrumPeak)()
@@ -191,7 +191,7 @@ Public NotInheritable Class SpectrumHandler
     ''' peak list must be sorted by m/z (ordering)
     ''' peak should be initialized by new Peak() { Mz = spec[0], Intensity = spec[1], Charge = 1, IsotopeFrag = false  }
     ''' </summary>
-    Public Shared Sub EstimateIsotopes(ByVal peaks As List(Of SpectrumPeak), ByVal mztolerance As Double, ByVal Optional isBrClConsideredForIsotopes As Boolean = False, ByVal Optional maxChargeNumber As Integer = 0)
+    Public Shared Sub EstimateIsotopes(peaks As List(Of SpectrumPeak), mztolerance As Double, Optional isBrClConsideredForIsotopes As Boolean = False, Optional maxChargeNumber As Integer = 0)
 
         Dim c13_c12Diff = C13_C12  '1.003355F;
         Dim br81_br79 = MassDiffDictionary.Br81_Br79 '1.9979535; also to be used for S34_S32 (1.9957959), Cl37_Cl35 (1.99704991)
@@ -386,7 +386,7 @@ Public NotInheritable Class SpectrumHandler
         Next
     End Sub
 
-    Private Shared Function getSimulatedFormulaByAlkane(ByVal mass As Double) As String
+    Private Shared Function getSimulatedFormulaByAlkane(mass As Double) As String
 
         Dim ch2Mass = 14.0
         Dim carbonCount = CInt(mass / ch2Mass)

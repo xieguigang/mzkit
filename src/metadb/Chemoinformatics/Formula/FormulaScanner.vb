@@ -84,7 +84,7 @@ Namespace Formula
             Call ExactMass.SetExactMassParser(Function(f) EvaluateExactMass(f))
         End Sub
 
-        Public Shared Function Convert2FormulaObjV2(ByVal formulaString As String) As Formula
+        Public Shared Function Convert2FormulaObjV2(formulaString As String) As Formula
             ' Console.WriteLine(formulaString);
             Dim dict = New Dictionary(Of String, Integer)() ' key: C, value: 3; key: H, value 4 etc..
             Dim elemString = String.Empty

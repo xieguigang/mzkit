@@ -161,4 +161,8 @@
     <Import Include="System.Data" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Spectra\Splash\" />
+  </ItemGroup>
+
 </Project>

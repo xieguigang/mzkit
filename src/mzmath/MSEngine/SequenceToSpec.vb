@@ -16,7 +16,7 @@ Public NotInheritable Class SequenceToSpec
     Private Shared H3PO4 As Double = 97.976895575
 
     Private Shared ReadOnly comparer As IEqualityComparer(Of SpectrumPeak) = New SpectrumEqualityComparer()
-    Public Shared Function Convert2SpecObj(ByVal peptide As Peptide, ByVal adduct As AdductIon, ByVal [cType] As CollisionType, ByVal Optional minMz As Double = 100, ByVal Optional maxMz As Double = 1000000) As MoleculeMsReference
+    Public Shared Function Convert2SpecObj(peptide As Peptide, adduct As AdductIon, [cType] As CollisionType, Optional minMz As Double = 100, Optional maxMz As Double = 1000000) As MoleculeMsReference
         Select Case [cType]
             Case CollisionType.CID
                 Return GetTheoreticalSpectrumByHCD(peptide, adduct)
@@ -27,7 +27,7 @@ Public NotInheritable Class SequenceToSpec
         End Select
     End Function
 
-    Public Shared Function Convert2SpecPeaks(ByVal peptide As Peptide, ByVal adduct As AdductIon, ByVal [cType] As CollisionType, ByVal Optional minMz As Double = 100, ByVal Optional maxMz As Double = 1000000) As List(Of SpectrumPeak)
+    Public Shared Function Convert2SpecPeaks(peptide As Peptide, adduct As AdductIon, [cType] As CollisionType, Optional minMz As Double = 100, Optional maxMz As Double = 1000000) As List(Of SpectrumPeak)
         Select Case [cType]
             Case CollisionType.CID
                 Return GetSpectrumPeaksByHCD(peptide, adduct, minMz, maxMz)
@@ -42,7 +42,7 @@ Public NotInheritable Class SequenceToSpec
         End Select
     End Function
 
-    Public Shared Function GetTheoreticalSpectrumByHCD(ByVal peptide As Peptide, ByVal adduct As AdductIon, ByVal Optional minMz As Double = 100, ByVal Optional maxMz As Double = 1000000) As MoleculeMsReference
+    Public Shared Function GetTheoreticalSpectrumByHCD(peptide As Peptide, adduct As AdductIon, Optional minMz As Double = 100, Optional maxMz As Double = 1000000) As MoleculeMsReference
 
         Dim msref = GetBasicMsRefProperty(peptide, adduct)
         Dim spectrumPeaks = GetSpectrumPeaksByHCD(peptide, adduct, minMz, maxMz)
@@ -51,7 +51,7 @@ Public NotInheritable Class SequenceToSpec
         Return msref
     End Function
 
-    Public Shared Function GetSpectrumPeaksByHCD(ByVal peptide As Peptide, ByVal adduct As AdductIon, ByVal Optional minMz As Double = 100, ByVal Optional maxMz As Double = 1000000) As List(Of SpectrumPeak)
+    Public Shared Function GetSpectrumPeaksByHCD(peptide As Peptide, adduct As AdductIon, Optional minMz As Double = 100, Optional maxMz As Double = 1000000) As List(Of SpectrumPeak)
 
         Dim sequence = peptide.SequenceObj
         Dim precursorMz = adduct.ConvertToMz(peptide.ExactMass)
@@ -175,7 +175,7 @@ Public NotInheritable Class SequenceToSpec
         Return spectrum
     End Function
 
-    Public Shared Function GetSpectrumPeaksByHotECD(ByVal peptide As Peptide, ByVal adduct As AdductIon, ByVal Optional minMz As Double = 100, ByVal Optional maxMz As Double = 1000000) As List(Of SpectrumPeak)
+    Public Shared Function GetSpectrumPeaksByHotECD(peptide As Peptide, adduct As AdductIon, Optional minMz As Double = 100, Optional maxMz As Double = 1000000) As List(Of SpectrumPeak)
 
         Dim sequence = peptide.SequenceObj
         Dim precursorMz = adduct.ConvertToMz(peptide.ExactMass)
@@ -313,7 +313,7 @@ Public NotInheritable Class SequenceToSpec
         Return spectrum
     End Function
 
-    Public Shared Function GetSpectrumPeaksByECD(ByVal peptide As Peptide, ByVal adduct As AdductIon, ByVal Optional minMz As Double = 100, ByVal Optional maxMz As Double = 1000000) As List(Of SpectrumPeak)
+    Public Shared Function GetSpectrumPeaksByECD(peptide As Peptide, adduct As AdductIon, Optional minMz As Double = 100, Optional maxMz As Double = 1000000) As List(Of SpectrumPeak)
 
         Dim sequence = peptide.SequenceObj
         Dim precursorMz = adduct.ConvertToMz(peptide.ExactMass)
@@ -421,7 +421,7 @@ Public NotInheritable Class SequenceToSpec
         Return spectrum
     End Function
 
-    Public Shared Function GetBasicMsRefProperty(ByVal peptide As Peptide, ByVal adduct As AdductIon) As MoleculeMsReference
+    Public Shared Function GetBasicMsRefProperty(peptide As Peptide, adduct As AdductIon) As MoleculeMsReference
         Dim precursorMz = adduct.ConvertToMz(peptide.ExactMass)
         Dim msref = New MoleculeMsReference() With {
             .PrecursorMz = precursorMz,

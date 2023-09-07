@@ -49,7 +49,7 @@ Public Class AminoAcid
 
     End Sub
 
-    Public Sub New(ByVal oneletter As Char)
+    Public Sub New(oneletter As Char)
         Dim char2formula = OneChar2FormulaString
         Dim char2string = OneChar2ThreeLetter
         Me.OneLetter = oneletter
@@ -57,13 +57,13 @@ Public Class AminoAcid
         Formula = FormulaScanner.Convert2FormulaObjV2(char2formula(oneletter))
     End Sub
 
-    Public Sub New(ByVal oneletter As Char, ByVal code As String, ByVal formula As Formula)
+    Public Sub New(oneletter As Char, code As String, formula As Formula)
         Me.OneLetter = oneletter
         ThreeLetters = code
         Me.Formula = formula
     End Sub
 
-    Public Sub New(ByVal aa As AminoAcid, ByVal modifiedCode As String, ByVal modifiedComposition As Formula)
+    Public Sub New(aa As AminoAcid, modifiedCode As String, modifiedComposition As Formula)
         OneLetter = aa.OneLetter
         ThreeLetters = aa.ThreeLetters
         Formula = aa.Formula
@@ -75,7 +75,7 @@ Public Class AminoAcid
         ModifiedFormula = modifiedComposition + aa.Formula
     End Sub
 
-    Public Sub New(ByVal aa As AminoAcid, ByVal modifiedCode As String, ByVal modifiedComposition As Formula, ByVal modifications As List(Of Modification))
+    Public Sub New(aa As AminoAcid, modifiedCode As String, modifiedComposition As Formula, modifications As List(Of Modification))
         OneLetter = aa.OneLetter
         ThreeLetters = aa.ThreeLetters
         Formula = aa.Formula
@@ -172,11 +172,11 @@ Public Class Peptide
         Return SequenceObj.Where(Function(n) n.IsModified()).Count
     End Function
 
-    Public Sub GenerateSequenceObj(ByVal proteinSeq As String, ByVal start As Integer, ByVal [end] As Integer, ByVal ResidueCodeIndexToModificationIndex As Dictionary(Of Integer, Integer), ByVal ID2Code As Dictionary(Of Integer, String), ByVal Code2AminoAcidObj As Dictionary(Of String, AminoAcid))
+    Public Sub GenerateSequenceObj(proteinSeq As String, start As Integer, [end] As Integer, ResidueCodeIndexToModificationIndex As Dictionary(Of Integer, Integer), ID2Code As Dictionary(Of Integer, String), Code2AminoAcidObj As Dictionary(Of String, AminoAcid))
         SequenceObj = GetSequenceObj(proteinSeq, start, [end], ResidueCodeIndexToModificationIndex, ID2Code, Code2AminoAcidObj)
     End Sub
 
-    Private Function GetSequenceObj(ByVal proteinSeq As String, ByVal start As Integer, ByVal [end] As Integer, ByVal ResidueCodeIndexToModificationIndex As Dictionary(Of Integer, Integer), ByVal iD2Code As Dictionary(Of Integer, String), ByVal code2AminoAcidObj As Dictionary(Of String, AminoAcid)) As List(Of AminoAcid)
+    Private Function GetSequenceObj(proteinSeq As String, start As Integer, [end] As Integer, ResidueCodeIndexToModificationIndex As Dictionary(Of Integer, Integer), iD2Code As Dictionary(Of Integer, String), code2AminoAcidObj As Dictionary(Of String, AminoAcid)) As List(Of AminoAcid)
         Dim sequence = New List(Of AminoAcid)()
         If std.Max(start, [end]) > proteinSeq.Length - 1 Then Return Nothing
         For i = start To [end]
@@ -212,11 +212,11 @@ Public Class PeptideMsReference
 
     Public Property CollisionType As CollisionType
 
-    Public Sub New(ByVal peptide As Peptide)
+    Public Sub New(peptide As Peptide)
         Me.Peptide = peptide
     End Sub
 
-    Public Sub New(ByVal peptide As Peptide, ByVal fs As Stream, ByVal seekPoint As Long, ByVal adduct As AdductIon, ByVal id As Integer, ByVal minMs2 As Single, ByVal maxMs2 As Single, ByVal type As CollisionType)
+    Public Sub New(peptide As Peptide, fs As Stream, seekPoint As Long, adduct As AdductIon, id As Integer, minMs2 As Single, maxMs2 As Single, type As CollisionType)
         Me.Peptide = peptide
         Me.Fs = fs
         SeekPoint2MS = seekPoint
@@ -240,7 +240,7 @@ Public Class PeptideMsReference
             End If
             Return cacheSpectrum
         End Get
-        Set(ByVal value As List(Of SpectrumPeak))
+        Set(value As List(Of SpectrumPeak))
             Throw New NotSupportedException()
         End Set
     End Property
@@ -253,7 +253,7 @@ Public Class PeptideMsReference
         Return SequenceToSpec.Convert2SpecPeaks(Peptide, AdductType, CollisionType, MinMs2, MaxMs2)
     End Function
 
-    Public Sub AddPeak(ByVal mass As Double, ByVal intensity As Double, ByVal Optional comment As String = Nothing) Implements IMSScanProperty.AddPeak
+    Public Sub AddPeak(mass As Double, intensity As Double, Optional comment As String = Nothing) Implements IMSScanProperty.AddPeak
 
     End Sub
 
@@ -267,7 +267,7 @@ Public Class PeptideMsReference
 
     Public Property AdductType As AdductIon Implements IIonProperty.AdductType
 
-    Public Sub SetAdductType(ByVal adduct As AdductIon) Implements IIonProperty.SetAdductType
+    Public Sub SetAdductType(adduct As AdductIon) Implements IIonProperty.SetAdductType
         AdductType = adduct
     End Sub
 

@@ -102,7 +102,7 @@ Namespace Ms1
             Return ppmd
         End Function
 
-        Public Shared Function ConvertPpmToMassAccuracy(ByVal exactMass As Double, ByVal ppm As Double) As Double
+        Public Shared Function ConvertPpmToMassAccuracy(exactMass As Double, ppm As Double) As Double
             Return ppm * exactMass / 1000000.0
         End Function
 

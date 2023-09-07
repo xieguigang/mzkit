@@ -17,7 +17,7 @@
 
     Public Module FormulaCalculateUtility
 
-        Public Function GetExactMass(ByVal element2count As Dictionary(Of String, Integer)) As Double
+        Public Function GetExactMass(element2count As Dictionary(Of String, Integer)) As Double
             Dim mass = 0.0
             Dim elem2mass = ElementDictionary.MassDict
             For Each pair In element2count
@@ -28,7 +28,7 @@
             Return mass
         End Function
 
-        Public Function GetExactMass(ByVal cnum As Integer, ByVal hnum As Integer, ByVal nnum As Integer, ByVal onum As Integer, ByVal pnum As Integer, ByVal snum As Integer, ByVal fnum As Integer, ByVal clnum As Integer, ByVal brnum As Integer, ByVal inum As Integer, ByVal sinum As Integer) As Double
+        Public Function GetExactMass(cnum As Integer, hnum As Integer, nnum As Integer, onum As Integer, pnum As Integer, snum As Integer, fnum As Integer, clnum As Integer, brnum As Integer, inum As Integer, sinum As Integer) As Double
             Dim mass = 0.0
 
             mass = hMass * hnum + cMass * cnum + nMass * nnum + oMass * onum + pMass * pnum + sMass * snum + fMass * fnum + clMass * clnum + brMass * brnum + siMass * sinum + iMass * inum
@@ -36,7 +36,7 @@
             Return mass
         End Function
 
-        Public Function GetExactMass(ByVal cnum As Integer, ByVal hnum As Integer, ByVal nnum As Integer, ByVal onum As Integer, ByVal pnum As Integer, ByVal snum As Integer, ByVal fnum As Integer, ByVal clnum As Integer, ByVal brnum As Integer, ByVal inum As Integer, ByVal sinum As Integer, ByVal cLabelMass As Double, ByVal hLabelMass As Double, ByVal nLabelMass As Double, ByVal oLabelMass As Double, ByVal pLabelMass As Double, ByVal sLabelMass As Double, ByVal fLabelMass As Double, ByVal clLabelMass As Double, ByVal brLabelMass As Double, ByVal iLabelMass As Double, ByVal siLabelMass As Double) As Double
+        Public Function GetExactMass(cnum As Integer, hnum As Integer, nnum As Integer, onum As Integer, pnum As Integer, snum As Integer, fnum As Integer, clnum As Integer, brnum As Integer, inum As Integer, sinum As Integer, cLabelMass As Double, hLabelMass As Double, nLabelMass As Double, oLabelMass As Double, pLabelMass As Double, sLabelMass As Double, fLabelMass As Double, clLabelMass As Double, brLabelMass As Double, iLabelMass As Double, siLabelMass As Double) As Double
             Dim mass = 0.0
             Dim cMass = AtomMass.cMass
             If cLabelMass > 0 Then cMass = cLabelMass
@@ -65,7 +65,7 @@
 
             Return mass
         End Function
-        Public Function GetExactMass(ByVal cnum As Integer, ByVal hnum As Integer, ByVal nnum As Integer, ByVal onum As Integer, ByVal pnum As Integer, ByVal snum As Integer, ByVal fnum As Integer, ByVal clnum As Integer, ByVal brnum As Integer, ByVal inum As Integer, ByVal sinum As Integer, ByVal c13num As Integer, ByVal h2num As Integer, ByVal n15num As Integer, ByVal o18num As Integer, ByVal s34num As Integer, ByVal cl37num As Integer, ByVal br81num As Integer, ByVal senum As Integer) As Double
+        Public Function GetExactMass(cnum As Integer, hnum As Integer, nnum As Integer, onum As Integer, pnum As Integer, snum As Integer, fnum As Integer, clnum As Integer, brnum As Integer, inum As Integer, sinum As Integer, c13num As Integer, h2num As Integer, n15num As Integer, o18num As Integer, s34num As Integer, cl37num As Integer, br81num As Integer, senum As Integer) As Double
             Dim mass = HydrogenMass * hnum + CarbonMass * cnum + NitrogenMass * nnum + OxygenMass * onum + PhosphorusMass * pnum + SulfurMass * snum + FluorideMass * fnum + ChlorideMass * clnum + BromineMass * brnum + SiliconMass * sinum + IodineMass * inum + Hydrogen2Mass * h2num + Carbon13Mass * c13num + Nitrogen15Mass * n15num + Oxygen18Mass * o18num + Sulfur34Mass * s34num + Chloride37Mass * cl37num + Bromine81Mass * br81num + SeleniumMass * senum
 
 
@@ -74,12 +74,12 @@
             Return mass
         End Function
 
-        Public Function GetExactMass(ByVal cnum As Integer, ByVal hnum As Integer, ByVal nnum As Integer, ByVal onum As Integer, ByVal pnum As Integer, ByVal snum As Integer, ByVal fnum As Integer, ByVal clnum As Integer, ByVal brnum As Integer, ByVal inum As Integer, ByVal sinum As Integer, ByVal c13num As Integer, ByVal h2num As Integer) As Double
+        Public Function GetExactMass(cnum As Integer, hnum As Integer, nnum As Integer, onum As Integer, pnum As Integer, snum As Integer, fnum As Integer, clnum As Integer, brnum As Integer, inum As Integer, sinum As Integer, c13num As Integer, h2num As Integer) As Double
             Dim mass = HydrogenMass * hnum + CarbonMass * cnum + NitrogenMass * nnum + OxygenMass * onum + PhosphorusMass * pnum + SulfurMass * snum + FluorideMass * fnum + ChlorideMass * clnum + BromineMass * brnum + SiliconMass * sinum + IodineMass * inum + Hydrogen2Mass * h2num + Carbon13Mass * c13num
             Return mass
         End Function
 
-        Public Function GetFormulaString(ByVal cnum As Integer, ByVal hnum As Integer, ByVal nnum As Integer, ByVal onum As Integer, ByVal pnum As Integer, ByVal snum As Integer, ByVal fnum As Integer, ByVal clnum As Integer, ByVal brnum As Integer, ByVal inum As Integer, ByVal sinum As Integer, ByVal Optional tmsCount As Integer = 0, ByVal Optional meoxCount As Integer = 0) As String
+        Public Function GetFormulaString(cnum As Integer, hnum As Integer, nnum As Integer, onum As Integer, pnum As Integer, snum As Integer, fnum As Integer, clnum As Integer, brnum As Integer, inum As Integer, sinum As Integer, Optional tmsCount As Integer = 0, Optional meoxCount As Integer = 0) As String
             Dim formulaString = String.Empty
             Dim lCNum = cnum - tmsCount * 3 - meoxCount
             Dim lHNum = hnum - tmsCount * 8 - meoxCount * 3
@@ -177,7 +177,7 @@
             Return formulaString
         End Function
 
-        Public Function GetFormulaString(ByVal cnum As Integer, ByVal hnum As Integer, ByVal nnum As Integer, ByVal onum As Integer, ByVal pnum As Integer, ByVal snum As Integer, ByVal fnum As Integer, ByVal clnum As Integer, ByVal brnum As Integer, ByVal inum As Integer, ByVal sinum As Integer, ByVal c13num As Integer, ByVal h2num As Integer, ByVal n15num As Integer, ByVal o18num As Integer, ByVal s34num As Integer, ByVal cl37num As Integer, ByVal br81num As Integer, ByVal senum As Integer) As String
+        Public Function GetFormulaString(cnum As Integer, hnum As Integer, nnum As Integer, onum As Integer, pnum As Integer, snum As Integer, fnum As Integer, clnum As Integer, brnum As Integer, inum As Integer, sinum As Integer, c13num As Integer, h2num As Integer, n15num As Integer, o18num As Integer, s34num As Integer, cl37num As Integer, br81num As Integer, senum As Integer) As String
             Dim formula = String.Empty
 
             formula += If(cnum = 1, "C", If(cnum > 1, "C" & cnum.ToString(), If(cnum < 0, "C(" & cnum.ToString() & ")", String.Empty)))
@@ -202,7 +202,7 @@
 
             Return formula
         End Function
-        Public Function GetFormulaString(ByVal cnum As Integer, ByVal hnum As Integer, ByVal nnum As Integer, ByVal onum As Integer, ByVal pnum As Integer, ByVal snum As Integer, ByVal fnum As Integer, ByVal clnum As Integer, ByVal brnum As Integer, ByVal inum As Integer, ByVal sinum As Integer, ByVal c13num As Integer, ByVal h2num As Integer, ByVal Optional tmsCount As Integer = 0, ByVal Optional meoxCount As Integer = 0) As String
+        Public Function GetFormulaString(cnum As Integer, hnum As Integer, nnum As Integer, onum As Integer, pnum As Integer, snum As Integer, fnum As Integer, clnum As Integer, brnum As Integer, inum As Integer, sinum As Integer, c13num As Integer, h2num As Integer, Optional tmsCount As Integer = 0, Optional meoxCount As Integer = 0) As String
             Dim formula = String.Empty
 
             formula += If(cnum = 1, "C", If(cnum > 1, "C" & cnum.ToString(), If(cnum < 0, "C(" & cnum.ToString() & ")", String.Empty)))
@@ -225,7 +225,7 @@
             Return formula
         End Function
 
-        Public Function GetFormulaString(ByVal element2count As Dictionary(Of String, Integer)) As String
+        Public Function GetFormulaString(element2count As Dictionary(Of String, Integer)) As String
             Dim formulastring = String.Empty
             Dim elem2order = ElementDictionary.HillOrder
             Dim atoms = New List(Of (Element As String, count As Integer, order As Integer))()
