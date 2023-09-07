@@ -29,7 +29,7 @@ Friend Class RuleBaseSpectrumGenerator
         If Not CanGenerate(lipid, adduct) Then
             Return Nothing
         End If
-        Dim spectrum = Rules.SelectMany(Function(rule) rule.Create(lipid, adduct)).GroupBy(Function(spec) spec, comparer).[Select](Function(specs) New SpectrumPeak(Enumerable.First(specs).mz, Enumerable.First(specs).Intensity, String.Join(", ", specs.[Select](Function(spec) spec.Annotation)))).OrderBy(Function(peak) peak.Mass).ToList()
+        Dim spectrum = Rules.SelectMany(Function(rule) rule.Create(lipid, adduct)).GroupBy(Function(spec) spec, comparer).[Select](Function(specs) New SpectrumPeak(Enumerable.First(specs).mz, Enumerable.First(specs).Intensity, String.Join(", ", specs.[Select](Function(spec) spec.Annotation)))).OrderBy(Function(peak) peak.mz).ToList()
 
         Return New MoleculeMsReference With {
 .PrecursorMz = adduct.ConvertToMz(lipid.Mass),
