@@ -1,12 +1,7 @@
 ﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
-Imports CompMs.Common.DataObj.Ion
-Imports CompMs.Common.DataObj.Property
-Imports CompMs.Common.Extension
-Imports CompMs.Common.Proteomics.Function
-Imports CompMs.Common.Proteomics.Parser
-Imports System.Collections.Generic
-Imports System.Linq
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
+Imports Microsoft.VisualBasic.Linq
+Imports SMRUCC.genomics.SequenceModel.Polypeptides
 
 Public Class ModificationContainer
     ' fixed modifications
@@ -131,7 +126,7 @@ Public Class ModificationContainer
     End Function
 
     Public Function GetAminoAcidDictionaryUsedInModificationProtocol() As Dictionary(Of String, AminoAcid)
-        Dim aaletters = AminoAcidLetters
+        Dim aaletters = AminoAcidObjUtility.AminoAcidLetters
         Dim dict = New Dictionary(Of String, AminoAcid)()
         Dim aminoacids = New List(Of AminoAcid)()
         For Each oneletter In aaletters ' initialize normal amino acids
@@ -245,7 +240,7 @@ Public NotInheritable Class ModificationUtility
         Dim dict = New Dictionary(Of String, Integer)()
         For Each [mod] In modseqence
             Dim formula = [mod].Composition
-            For Each pair In formula.Element2Count
+            For Each pair In formula.CountsByElement
                 If dict.ContainsKey(pair.Key) Then
                     dict(pair.Key) += pair.Value
                 Else
@@ -274,7 +269,7 @@ Public NotInheritable Class ModificationUtility
             modCodes.Add([mod].Title.Split("("c)(0).Trim())
 
             Dim formula = [mod].Composition
-            For Each pair In formula.Element2Count
+            For Each pair In formula.CountsByElement
                 If dict.ContainsKey(pair.Key) Then
                     dict(pair.Key) += pair.Value
                 Else
@@ -292,18 +287,6 @@ Public NotInheritable Class ModificationUtility
         End If
 
         Return (code, New Formula(dict))
-    End Function
-
-    Public Shared Function GetModificationContainer(ByVal selectedFixedModifications As List(Of String), ByVal selectedVariableModifications As List(Of String)) As ModificationContainer
-        Dim fParser = New ModificationsXmlRefParser()
-        fParser.Read()
-        Dim fixedMods = fParser.Modifications
-
-        Dim vParser = New ModificationsXmlRefParser()
-        vParser.Read()
-        Dim variableMods = vParser.Modifications
-
-        Return GetModificationContainer(fixedMods, variableMods, selectedFixedModifications, selectedVariableModifications)
     End Function
 
     Public Shared Function GetModificationContainer(ByVal fixedModifications As List(Of Modification), ByVal variableModifications As List(Of Modification), ByVal selectedFixedModifications As List(Of String), ByVal selectedVariableModifications As List(Of String)) As ModificationContainer
@@ -358,7 +341,7 @@ Public NotInheritable Class ModificationUtility
         Dim mPeptides = New List(Of Peptide)()
         For Each peptide In peptides
             Dim results = PeptideCalc.Sequence2Peptides(peptide, modContainer, maxNumberOfModificationsPerPeptide, minPeptideMass, maxPeptideMass)
-            For Each result In results.OrEmptyIfNull()
+            For Each result In results.SafeQuery
                 mPeptides.Add(result)
             Next
         Next
@@ -370,7 +353,7 @@ Public NotInheritable Class ModificationUtility
         For Each peptide In peptides
             If peptide.ExactMass > maxPeptideMass Then Continue For
             Dim results = PeptideCalc.Sequence2FastPeptides(peptide, modContainer, maxNumberOfModificationsPerPeptide, minPeptideMass, maxPeptideMass)
-            For Each result In results.OrEmptyIfNull()
+            For Each result In results.SafeQuery
                 mPeptides.Add(result)
             Next
         Next

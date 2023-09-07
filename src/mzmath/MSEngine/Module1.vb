@@ -1,9 +1,5 @@
-﻿Imports CompMs.Common.DataObj
-Imports CompMs.Common.DataObj.Property
-Imports CompMs.Common.Extension
-Imports CompMs.Common.Proteomics.DataObj
-Imports System.Collections.Generic
-Imports System.Linq
+﻿Imports SMRUCC.genomics.SequenceModel.Polypeptides
+Imports Microsoft.VisualBasic.ComponentModel.Ranges
 
 Public NotInheritable Class PeptideCalc
     Private Sub New()
@@ -256,7 +252,7 @@ Public NotInheritable Class PeptideCalc
                     .DatabaseOrigin = peptide.DatabaseOrigin,
                     .DatabaseOriginID = peptide.DatabaseOriginID,
                     .SequenceObj = result,
-                    .Position = New Range(peptide.Position.Start, peptide.Position.End),
+                    .Position = New intRange(peptide.Position.Start, peptide.Position.End),
                     .IsProteinCterminal = peptide.IsProteinCterminal,
                     .IsProteinNterminal = peptide.IsProteinNterminal
                 }
