@@ -170,8 +170,9 @@ Public Module FormulaStringParcer
         End If
 #End Region
 
-        Dim formula = New Formula(cnum, hnum, nnum, onum, pnum, snum, fnum, clnum, brnum, inum, sinum, 0, 0)
-        If formula.FormulaString.Length = formulaString.Length Then
+        Dim formula = New DerivatizationFormula(cnum, hnum, nnum, onum, pnum, snum, fnum, clnum, brnum, inum, sinum, 0, 0)
+
+        If formula.EmpiricalFormula.Length = formulaString.Length Then
             Return True
         Else
             Return False
@@ -195,7 +196,7 @@ Public Module FormulaStringParcer
             End If
         Next
 
-        Return New Formula(dict)
+        Return New DerivatizationFormula(dict)
     End Function
 
     Public Function Convert2FormulaObjV2(ByVal formulaString As String) As DerivatizationFormula
@@ -263,7 +264,7 @@ Public Module FormulaStringParcer
             End If
         Next
 
-        Return New Formula(dict)
+        Return New DerivatizationFormula(dict)
     End Function
 
     Friend Function Convert2FormulaObjV3(ByVal formulaString As String) As DerivatizationFormula
@@ -274,7 +275,10 @@ Public Module FormulaStringParcer
         Dim result = New Dictionary(Of String, Integer)()
         Dim element As String = Nothing, number As Integer = Nothing
 
-        For Each (element, number) In elements
+        For Each __ As (element$, number%) In elements
+            element = __.element
+            number = __.number
+
             If result.ContainsKey(element) Then
                 result(element) += number
             Else
@@ -331,7 +335,7 @@ Public Module FormulaStringParcer
         ' C2 -> C, 2 , [13C]2 -> [13C], 2
         Dim cleaned = New String(token.Where(Function(c) Not Char.IsWhiteSpace(c)).ToArray())
         Dim i = 0, j = 0
-        Dim result As Integer = Nothing, result As Integer = Nothing
+        Dim result As Integer = Nothing
         If Char.IsUpper(cleaned(i)) Then
             While j < cleaned.Length AndAlso Not Char.IsNumber(cleaned(j))
                 j += 1
