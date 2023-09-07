@@ -1,5 +1,6 @@
-﻿Imports SMRUCC.genomics.SequenceModel.Polypeptides
-Imports Microsoft.VisualBasic.ComponentModel.Ranges
+﻿Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports SMRUCC.genomics.SequenceModel.Polypeptides
 
 Public NotInheritable Class PeptideCalc
     Private Sub New()
@@ -64,7 +65,7 @@ Public NotInheritable Class PeptideCalc
 
     Public Shared Function Sequence2PeptideByFixedModifications(ByVal peptide As Peptide, ByVal container As ModificationContainer, ByVal Optional maxPeptideMass As Double = 4600) As Peptide
         Dim sequence = peptide.SequenceObj
-        If container.IsNullOrEmpty Then Return Sequence2Peptide(peptide)
+        If container.IsEmptyOrNull Then Return Sequence2Peptide(peptide)
 
         Dim isProteinNTerminal = peptide.IsProteinNterminal
         Dim isProteinCTerminal = peptide.IsProteinCterminal
@@ -77,8 +78,8 @@ Public NotInheritable Class PeptideCalc
 
         peptide.SequenceObj = aaSequence
         Dim formula = CalculatePeptideFormula(aaSequence)
-        If formula.Mass > maxPeptideMass Then Return Nothing
-        peptide.ExactMass = formula.Mass
+        If formula.ExactMass > maxPeptideMass Then Return Nothing
+        peptide.ExactMass = formula.ExactMass
 
         Return peptide
     End Function
@@ -153,7 +154,7 @@ Public NotInheritable Class PeptideCalc
     ''' <returns></returns>
     Public Shared Function Sequence2PeptidesByVariableModifications(ByVal peptide As Peptide, ByVal container As ModificationContainer, ByVal Optional maxNumberOfModificationsPerPeptide As Integer = 2, ByVal Optional minPeptideMass As Double = 300, ByVal Optional maxPeptideMass As Double = 4600) As List(Of Peptide)
         'var sequence = peptide.Sequence;
-        If container.IsNullOrEmpty Then Return New List(Of Peptide)() From {
+        If container.IsEmptyOrNull Then Return New List(Of Peptide)() From {
             Sequence2Peptide(peptide)
         }
 
@@ -167,15 +168,15 @@ Public NotInheritable Class PeptideCalc
                 .DatabaseOrigin = peptide.DatabaseOrigin,
                 .DatabaseOriginID = peptide.DatabaseOriginID,
                 .SequenceObj = result,
-                .Position = New Range(peptide.Position.Start, peptide.Position.End),
+                .Position = New IntRange(peptide.Position.Min, peptide.Position.Max),
                 .IsProteinCterminal = peptide.IsProteinCterminal,
                 .IsProteinNterminal = peptide.IsProteinNterminal
             }
             'nPep.SequenceObj = result;
             Dim formula = PeptideCalc.CalculatePeptideFormula(result)
-            If formula.Mass > maxPeptideMass Then Continue For
-            If formula.Mass < minPeptideMass Then Continue For
-            nPep.ExactMass = formula.Mass
+            If formula.ExactMass > maxPeptideMass Then Continue For
+            If formula.ExactMass < minPeptideMass Then Continue For
+            nPep.ExactMass = formula.ExactMass
             nPep.ResidueCodeIndexToModificationIndex = GetResidueCodeIndexToModificationIndexDictionary(nPep, container)
             peptides.Add(nPep)
         Next
@@ -185,7 +186,7 @@ Public NotInheritable Class PeptideCalc
 
     Public Shared Function Sequence2FastPeptidesByVariableModifications(ByVal peptide As Peptide, ByVal container As ModificationContainer, ByVal fixedModCount As Integer, ByVal Optional maxNumberOfModificationsPerPeptide As Integer = 2, ByVal Optional minPeptideMass As Double = 300, ByVal Optional maxPeptideMass As Double = 4600) As List(Of Peptide)
 
-        If container.IsNullOrEmpty Then Return New List(Of Peptide)() From {
+        If container.IsEmptyOrNull Then Return New List(Of Peptide)() From {
             Sequence2Peptide(peptide)
         }
         Dim seq = peptide.SequenceObj
@@ -252,14 +253,14 @@ Public NotInheritable Class PeptideCalc
                     .DatabaseOrigin = peptide.DatabaseOrigin,
                     .DatabaseOriginID = peptide.DatabaseOriginID,
                     .SequenceObj = result,
-                    .Position = New intRange(peptide.Position.Start, peptide.Position.End),
+                    .Position = New IntRange(peptide.Position.Min, peptide.Position.Max),
                     .IsProteinCterminal = peptide.IsProteinCterminal,
                     .IsProteinNterminal = peptide.IsProteinNterminal
                 }
 
                 Dim formula = CalculatePeptideFormula(result)
-                If formula.Mass > maxPeptideMass OrElse formula.Mass < minPeptideMass Then Continue For
-                nPep.ExactMass = formula.Mass
+                If formula.ExactMass > maxPeptideMass OrElse formula.ExactMass < minPeptideMass Then Continue For
+                nPep.ExactMass = formula.ExactMass
                 nPep.ResidueCodeIndexToModificationIndex = GetResidueCodeIndexToModificationIndexDictionary(nPep, container)
                 peptides.Add(nPep)
             Next
@@ -356,7 +357,7 @@ Public NotInheritable Class PeptideCalc
         Dim dict = New Dictionary(Of String, Integer)()
         For Each aa In aaSequence
             Dim formula = aa.GetFormula()
-            For Each pair In formula.Element2Count
+            For Each pair In formula.CountsByElement
                 If dict.ContainsKey(pair.Key) Then
                     dict(pair.Key) += pair.Value
                 Else
@@ -388,21 +389,21 @@ Public NotInheritable Class PeptideCalc
         Dim oxygen = 0
         Dim sulfur = 0
 
-        Dim char2formula = OneChar2Formula
+        Dim char2formula = AminoAcid.OneChar2Formula
         Dim offsetHydrogen = (sequence.Length - 1) * 2
         Dim offsetOxygen = sequence.Length - 1
 
         For i = 0 To sequence.Length - 1
             Dim aaChar = sequence(i)
             If char2formula.ContainsKey(aaChar) Then
-                carbon += char2formula(aaChar).Cnum
-                hydrogen += char2formula(aaChar).Hnum
-                nitrogen += char2formula(aaChar).Nnum
-                oxygen += char2formula(aaChar).Onum
-                sulfur += char2formula(aaChar).Snum
+                carbon += char2formula(aaChar)!C
+                hydrogen += char2formula(aaChar)!H
+                nitrogen += char2formula(aaChar)!N
+                oxygen += char2formula(aaChar)!O
+                sulfur += char2formula(aaChar)!S
             End If
         Next
 
-        Return New Formula(carbon, hydrogen - offsetHydrogen, nitrogen, oxygen - offsetOxygen, 0, sulfur, 0, 0, 0, 0, 0)
+        Return New DerivatizationFormula(carbon, hydrogen - offsetHydrogen, nitrogen, oxygen - offsetOxygen, 0, sulfur, 0, 0, 0, 0, 0)
     End Function
 End Class

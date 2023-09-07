@@ -416,7 +416,7 @@ Public Class ModificationProtocol
         Dim dict = New Dictionary(Of String, Integer)()
         For Each [mod] In ModSequence
             Dim formula = [mod].Composition
-            For Each pair In formula.Element2Count
+            For Each pair In formula.CountsByElement
                 If dict.ContainsKey(pair.Key) Then
                     dict(pair.Key) += pair.Value
                 Else
@@ -426,7 +426,7 @@ Public Class ModificationProtocol
         Next
         ModifiedComposition = New Formula(dict)
 
-        For Each pair In OriginalAA.Formula.Element2Count
+        For Each pair In OriginalAA.Formula.CountsByElement
             If dict.ContainsKey(pair.Key) Then
                 dict(pair.Key) += pair.Value
             Else
