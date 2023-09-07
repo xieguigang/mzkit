@@ -1,4 +1,7 @@
-﻿Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.ElementsExactMass
+﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.BioDeep.Chemistry.MetaLib
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.ElementsExactMass
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
 
 Public Class DGTASpectrumGenerator
     Implements ILipidSpectrumGenerator

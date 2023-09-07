@@ -1,11 +1,6 @@
-﻿Imports CompMs.Common.Components
-Imports CompMs.Common.DataObj.Property
-Imports CompMs.Common.FormulaGenerator.DataObj
-Imports CompMs.Common.Enum
-Imports System
-Imports System.Collections.Generic
-Imports System.Linq
-
+﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.ElementsExactMass
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
 
 Public Class OadLipidSpectrumGenerator
         Public Function GetClassFragmentSpectrum(lipid As ILipid, adduct As AdductIon) As OadClassFragment

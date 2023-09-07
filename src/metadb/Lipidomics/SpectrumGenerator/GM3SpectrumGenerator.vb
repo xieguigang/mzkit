@@ -1,4 +1,9 @@
-﻿Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.ElementsExactMass
+﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.BioDeep.Chemistry.MetaLib
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.ElementsExactMass
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
+
+
 Public Class GM3SpectrumGenerator
     Implements ILipidSpectrumGenerator
     Private Shared ReadOnly C11H15NO7 As Double = {CarbonMass * 11, HydrogenMass * 15, NitrogenMass, OxygenMass * 7}.Sum()

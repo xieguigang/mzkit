@@ -1,10 +1,6 @@
-﻿Imports CompMs.Common.Components
-Imports CompMs.Common.DataObj.Property
-Imports CompMs.Common.Interfaces
-Imports System
-Imports System.Collections.Generic
-Imports System.Linq
-
+﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.BioDeep.Chemistry.MetaLib
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
 
 Public Class EidDefaultSpectrumGenerator
         Implements ILipidSpectrumGenerator

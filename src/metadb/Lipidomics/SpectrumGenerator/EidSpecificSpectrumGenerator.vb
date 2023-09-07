@@ -1,4 +1,6 @@
-﻿Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.ElementsExactMass
+﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.ElementsExactMass
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
 
 Public Class EidSpecificSpectrumGenerator
         Private Shared ReadOnly CH2 As Double = {HydrogenMass * 2, CarbonMass}.Sum()

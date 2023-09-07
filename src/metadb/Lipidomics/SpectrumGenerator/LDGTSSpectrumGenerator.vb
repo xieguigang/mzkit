@@ -1,4 +1,8 @@
-﻿Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.ElementsExactMass
+﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.BioDeep.Chemistry.MetaLib
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.ElementsExactMass
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
+
 Public Class LDGTSSpectrumGenerator
     Implements ILipidSpectrumGenerator
     Private Shared ReadOnly C7H13NO2 As Double = {CarbonMass * 7, HydrogenMass * 13, NitrogenMass, OxygenMass * 2}.Sum()

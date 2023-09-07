@@ -1,11 +1,7 @@
-﻿Imports CompMs.Common.Components
-Imports CompMs.Common.DataObj.Property
-Imports CompMs.Common.FormulaGenerator.DataObj
-Imports CompMs.Common.Interfaces
-Imports System
-Imports System.Collections.Generic
-Imports System.Linq
-
+﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.BioDeep.Chemistry.MetaLib
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.ElementsExactMass
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
 Public Class TGOadSpectrumGenerator
     Implements ILipidSpectrumGenerator
     Private Shared ReadOnly NH3 As Double = {HydrogenMass * 3, NitrogenMass}.Sum()

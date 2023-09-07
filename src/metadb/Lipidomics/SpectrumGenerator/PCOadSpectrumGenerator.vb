@@ -1,11 +1,8 @@
-﻿Imports CompMs.Common.Components
-Imports CompMs.Common.DataObj.Property
-Imports CompMs.Common.Enum
-Imports CompMs.Common.FormulaGenerator.DataObj
-Imports CompMs.Common.Interfaces
-Imports System
-Imports System.Collections.Generic
-Imports System.Linq
+﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.BioDeep.Chemistry.MetaLib
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.ElementsExactMass
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
 
 Public Class PCOadSpectrumGenerator
     Implements ILipidSpectrumGenerator
@@ -122,7 +119,7 @@ Public Class PCOadSpectrumGenerator
         Return New MoleculeMsReference With {
     .PrecursorMz = adduct.ConvertToMz(lipid.Mass),
     .IonMode = adduct.IonMode,
-    .Spectrum = spectrum,
+    .spectrum = spectrum,
     .Name = lipid.Name,
     .Formula = molecule?.Formula,
     .Ontology = molecule?.Ontology,

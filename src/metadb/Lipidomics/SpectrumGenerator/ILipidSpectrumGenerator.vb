@@ -1,6 +1,6 @@
-﻿Imports CompMs.Common.DataObj.Property
-Imports CompMs.Common.Interfaces
-
+﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.BioDeep.Chemistry.MetaLib
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
 
 Public Interface ILipidSpectrumGenerator
         Function CanGenerate(lipid As ILipid, adduct As AdductIon) As Boolean

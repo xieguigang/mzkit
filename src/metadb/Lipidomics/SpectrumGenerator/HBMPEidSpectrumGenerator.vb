@@ -1,4 +1,8 @@
-﻿Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.ElementsExactMass
+﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.BioDeep.Chemistry.MetaLib
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.ElementsExactMass
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
+
     Public Class HBMPEidSpectrumGenerator
         Implements ILipidSpectrumGenerator
         'HBMP explain rule -> HBMP 1 chain(sn1)/2 chain(sn2,sn3)

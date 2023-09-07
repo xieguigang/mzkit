@@ -1,12 +1,7 @@
-﻿Imports CompMs.Common.Components
-Imports CompMs.Common.DataObj.Property
-Imports CompMs.Common.Enum
-Imports CompMs.Common.FormulaGenerator.DataObj
-Imports CompMs.Common.Interfaces
-Imports System
-Imports System.Collections.Generic
-Imports System.Linq
-
+﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.BioDeep.Chemistry.MetaLib
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.ElementsExactMass
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
 Public Class SMd9SpectrumGenerator
     Implements ILipidSpectrumGenerator
     Private Shared ReadOnly C5H5D9NO4P As Double = {CarbonMass * 5, HydrogenMass * 5, NitrogenMass, OxygenMass * 4, PhosphorusMass, Hydrogen2Mass * 9}.Sum()
