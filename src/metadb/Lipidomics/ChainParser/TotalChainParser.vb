@@ -88,7 +88,8 @@ Public Class TotalChainParser
         Dim matches = groups("Chain").Captures.Cast(Of Capture)().ToArray()
         Dim sphingo As IChain = Nothing
         If HasSphingosine Then
-            If CSharpImpl.__Assign(sphingo, TryCast(SphingoParser.Parse(matches(0).Value), IChain)) IsNot Nothing Then
+            sphingo = TryCast(SphingoParser.Parse(matches(0).Value), IChain)
+            If sphingo IsNot Nothing Then
                 Return New PositionLevelChains(matches.Skip(1).[Select](Function(c) If(AlkylParser.Parse(c.Value), AcylParser.Parse(c.Value))).Prepend(sphingo).ToArray())
             End If
             Return Nothing

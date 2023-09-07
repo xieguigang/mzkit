@@ -1,7 +1,4 @@
-﻿Imports CompMs.Common.DataStructure
-Imports System
-
-Friend NotInheritable Class ChainVisitor
+﻿Friend NotInheritable Class ChainVisitor
     Implements IVisitor(Of AcylChain, AcylChain), IVisitor(Of AlkylChain, AlkylChain), IVisitor(Of SphingoChain, SphingoChain)
     Private ReadOnly _acylVisitor As IVisitor(Of AcylChain, AcylChain)
     Private ReadOnly _alkylVisitor As IVisitor(Of AlkylChain, AlkylChain)
@@ -30,8 +27,8 @@ Friend NotInheritable Class AcylChainVisitor
     Private ReadOnly _oxidizedVisitor As IVisitor(Of IOxidized, IOxidized)
 
     Public Sub New(doubleBondVisitor As IVisitor(Of IDoubleBond, IDoubleBond), oxidizedVisitor As IVisitor(Of IOxidized, IOxidized))
-        _doubleBondVisitor = If(doubleBondVisitor, CSharpImpl.__Throw(Of IVisitor(Of IDoubleBond, IDoubleBond))(New ArgumentNullException(NameOf(doubleBondVisitor))))
-        _oxidizedVisitor = If(oxidizedVisitor, CSharpImpl.__Throw(Of IVisitor(Of IOxidized, IOxidized))(New ArgumentNullException(NameOf(oxidizedVisitor))))
+        _doubleBondVisitor = doubleBondVisitor
+        _oxidizedVisitor = oxidizedVisitor
     End Sub
 
     Public Function Visit(item As AcylChain) As AcylChain Implements IVisitor(Of AcylChain, AcylChain).Visit
@@ -51,8 +48,8 @@ Friend NotInheritable Class AlkylChainVisitor
     Private ReadOnly _oxidizedVisitor As IVisitor(Of IOxidized, IOxidized)
 
     Public Sub New(doubleBondVisitor As IVisitor(Of IDoubleBond, IDoubleBond), oxidizedVisitor As IVisitor(Of IOxidized, IOxidized))
-        _doubleBondVisitor = If(doubleBondVisitor, CSharpImpl.__Throw(Of IVisitor(Of IDoubleBond, IDoubleBond))(New ArgumentNullException(NameOf(doubleBondVisitor))))
-        _oxidizedVisitor = If(oxidizedVisitor, CSharpImpl.__Throw(Of IVisitor(Of IOxidized, IOxidized))(New ArgumentNullException(NameOf(oxidizedVisitor))))
+        _doubleBondVisitor = doubleBondVisitor
+        _oxidizedVisitor = oxidizedVisitor
     End Sub
 
     Public Function Visit(item As AlkylChain) As AlkylChain Implements IVisitor(Of AlkylChain, AlkylChain).Visit
@@ -72,8 +69,8 @@ Friend NotInheritable Class SphingosineChainVisitor
     Private ReadOnly _oxidizedVisitor As IVisitor(Of IOxidized, IOxidized)
 
     Public Sub New(doubleBondVisitor As IVisitor(Of IDoubleBond, IDoubleBond), oxidizedVisitor As IVisitor(Of IOxidized, IOxidized))
-        _doubleBondVisitor = If(doubleBondVisitor, CSharpImpl.__Throw(Of IVisitor(Of IDoubleBond, IDoubleBond))(New ArgumentNullException(NameOf(doubleBondVisitor))))
-        _oxidizedVisitor = If(oxidizedVisitor, CSharpImpl.__Throw(Of IVisitor(Of IOxidized, IOxidized))(New ArgumentNullException(NameOf(oxidizedVisitor))))
+        _doubleBondVisitor = doubleBondVisitor
+        _oxidizedVisitor = oxidizedVisitor
     End Sub
 
     Public Function Visit(item As SphingoChain) As SphingoChain Implements IVisitor(Of SphingoChain, SphingoChain).Visit

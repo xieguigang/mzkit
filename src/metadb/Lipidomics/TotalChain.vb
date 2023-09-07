@@ -1,5 +1,7 @@
-﻿Public Class TotalChain
-    Implements ITotalChain
+﻿Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.ElementsExactMass
+
+Public Class TotalChain : Implements ITotalChain
+
     Public Sub New(carbonCount As Integer, doubleBondCount As Integer, oxidizedCount As Integer, acylChainCount As Integer, alkylChainCount As Integer, sphingoChainCount As Integer)
         Me.CarbonCount = carbonCount
         Me.DoubleBondCount = doubleBondCount
@@ -90,15 +92,15 @@
         Return $";{oxidize}O"
     End Function
 
-    Public Function Equals(other As ITotalChain) As Boolean Implements IEquatable(Of ITotalChain).Equals
-        Dim tChains As TotalChain = Nothing
-        Return CSharpImpl.__Assign(tChains, TryCast(other, TotalChain)) IsNot Nothing AndAlso ChainCount = other.ChainCount AndAlso CarbonCount = other.CarbonCount AndAlso DoubleBondCount = other.DoubleBondCount AndAlso OxidizedCount = other.OxidizedCount AndAlso Description = other.Description AndAlso AcylChainCount = tChains.AcylChainCount AndAlso AlkylChainCount = tChains.AlkylChainCount AndAlso SphingoChainCount = tChains.SphingoChainCount
+    Public Overloads Function Equals(other As ITotalChain) As Boolean Implements IEquatable(Of ITotalChain).Equals
+        Dim tChains As TotalChain = TryCast(other, TotalChain)
+        Return tChains IsNot Nothing AndAlso ChainCount = other.ChainCount AndAlso CarbonCount = other.CarbonCount AndAlso DoubleBondCount = other.DoubleBondCount AndAlso OxidizedCount = other.OxidizedCount AndAlso Description = other.Description AndAlso AcylChainCount = tChains.AcylChainCount AndAlso AlkylChainCount = tChains.AlkylChainCount AndAlso SphingoChainCount = tChains.SphingoChainCount
     End Function
 
     Public Function Accept(Of TResult)(visitor As IAcyclicVisitor, decomposer As IAcyclicDecomposer(Of TResult)) As TResult Implements IVisitableElement.Accept
-        Dim decomposer_ As IDecomposer(Of TResult, TotalChain) = Nothing
+        Dim decomposer_ As IDecomposer(Of TResult, TotalChain) = TryCast(decomposer, IDecomposer(Of TResult, TotalChain))
 
-        If CSharpImpl.__Assign(decomposer_, TryCast(decomposer, IDecomposer(Of TResult, TotalChain))) IsNot Nothing Then
+        If decomposer_ IsNot Nothing Then
             Return decomposer_.Decompose(visitor, Me)
         End If
         Return Nothing

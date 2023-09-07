@@ -1,7 +1,7 @@
 ﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
-Imports BioNovoGene.BioDeep.Chemistry.MetaLib
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.ElementsExactMass
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
+Imports BioNovoGene.BioDeep.MSEngine
 
 Public Class SMOadSpectrumGenerator
     Implements ILipidSpectrumGenerator
@@ -23,7 +23,7 @@ Public Class SMOadSpectrumGenerator
     End Sub
 
     Public Sub New(spectrumGenerator As IOadSpectrumPeakGenerator)
-        Me.spectrumGenerator = If(spectrumGenerator, CSharpImpl.__Throw(Of IOadSpectrumPeakGenerator)(New ArgumentNullException(NameOf(spectrumGenerator))))
+        Me.spectrumGenerator = spectrumGenerator
     End Sub
 
     Public Function CanGenerate(lipid As ILipid, adduct As AdductIon) As Boolean Implements ILipidSpectrumGenerator.CanGenerate

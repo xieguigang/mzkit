@@ -39,9 +39,9 @@ Public Class TGOadSpectrumGenerator
         '"OAD13",
         Dim oadId = New String() {"OAD01", "OAD02", "OAD02+O", "OAD03", "OAD04", "OAD12", "OAD14", "OAD15", "OAD15+O", "OAD16", "OAD17", "OAD12+O", "OAD12+O+H", "OAD12+O+2H", "OAD01+H"}
 
-        Dim plChains As PositionLevelChains = Nothing
+        Dim plChains As PositionLevelChains = TryCast(lipid.Chains, PositionLevelChains)
 
-        If CSharpImpl.__Assign(plChains, TryCast(lipid.Chains, PositionLevelChains)) IsNot Nothing Then
+        If plChains IsNot Nothing Then
             For Each chain As AcylChain In lipid.Chains.GetDeterminedChains()
                 spectrum.AddRange(spectrumGenerator.GetAcylDoubleBondSpectrum(lipid, chain, adduct, nlMass, abundance, oadId))
             Next
@@ -58,8 +58,8 @@ Public Class TGOadSpectrumGenerator
             spectrum.AddRange({New SpectrumPeak(adduct.ConvertToMz(lipid.Mass), 999.0R, "Precursor") With {
 .SpectrumComment = SpectrumComment.precursor
 }})
-
-            If CSharpImpl.__Assign(Chains, TryCast(lipid.Chains, SeparatedChains)) IsNot Nothing Then
+            Chains = TryCast(lipid.Chains, SeparatedChains)
+            If Chains IsNot Nothing Then
                 For Each chain As AcylChain In lipid.Chains.GetDeterminedChains()
                     spectrum.AddRange({New SpectrumPeak(lipid.Mass - chain.Mass - OxygenMass, 50.0R, $"-{chain}") With {
 .SpectrumComment = SpectrumComment.acylchain'new SpectrumPeak(adduct.ConvertToMz(chain.Mass - MassDiffDictionary.HydrogenMass), 20d, $"{chain} Acyl+") { SpectrumComment = SpectrumComment.acylchain },'new SpectrumPeak(adduct.ConvertToMz(chain.Mass ), 5d, $"{chain} Acyl+ +H") { SpectrumComment = SpectrumComment.acylchain },
