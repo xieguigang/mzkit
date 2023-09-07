@@ -1,12 +1,6 @@
-﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
-Imports CompMs.Common.Components
-Imports CompMs.Common.DataObj.Property
-Imports CompMs.Common.Enum
-Imports CompMs.Common.Lipidomics
-Imports CompMs.Common.Proteomics.DataObj
-Imports System.Collections.Generic
-Imports System.Linq
 
 Public NotInheritable Class SequenceToSpec
     Private Sub New()

@@ -1,7 +1,7 @@
 ﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports std = System.Math
 
-Friend Class SpectrumEqualityComparer
+Public Class SpectrumEqualityComparer
     Implements IEqualityComparer(Of SpectrumPeak)
     Private Shared ReadOnly EPS As Double = 1000000.0
     Public Overloads Function Equals(x As SpectrumPeak, y As SpectrumPeak) As Boolean Implements IEqualityComparer(Of SpectrumPeak).Equals

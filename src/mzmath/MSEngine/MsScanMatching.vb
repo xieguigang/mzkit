@@ -1,5 +1,6 @@
 ﻿Imports System.Runtime.InteropServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.IsotopicPatterns
 Imports BioNovoGene.BioDeep.MSEngine
@@ -416,9 +417,9 @@ Public NotInheritable Class MsScanMatching
         Dim riSimilarity = GetGaussianSimilarity(scanProp.ChromXs.RI, refSpec.ChromXs.RI, param.RiTolerance, isRiMatch)
 
         Dim ms1Tol = param.Ms1Tolerance
-        Dim ppm = Math.Abs(PpmCalculator(500.0, 500.0 + ms1Tol))
+        Dim ppm = std.Abs(PPMmethod.PPM(500.0, 500.0 + ms1Tol))
         If scanProp.PrecursorMz > 500 Then
-            ms1Tol = CSng(ConvertPpmToMassAccuracy(scanProp.PrecursorMz, ppm))
+            ms1Tol = CSng(PPMmethod.ConvertPpmToMassAccuracy(scanProp.PrecursorMz, ppm))
         End If
         Dim ms1Similarity = GetGaussianSimilarity(scanProp.PrecursorMz, refSpec.PrecursorMz, ms1Tol, isMs1Match)
 
@@ -468,13 +469,13 @@ Public NotInheritable Class MsScanMatching
         Dim ratio1 As Double = 0, ratio2 As Double = 0
         If peaks1(0).RelativeAbundance <= 0 OrElse peaks2(0).RelativeAbundance <= 0 Then Return -1
 
-        Dim minimum = Math.Min(peaks1.Count, peaks2.Count)
+        Dim minimum = std.Min(peaks1.Count, peaks2.Count)
         For i = 1 To minimum - 1
             ratio1 = peaks1(i).RelativeAbundance / peaks1(0).RelativeAbundance
             ratio2 = peaks2(i).RelativeAbundance / peaks2(0).RelativeAbundance
 
             If ratio1 <= 1 AndAlso ratio2 <= 1 Then
-                similarity += Math.Abs(ratio1 - ratio2)
+                similarity += std.Abs(ratio1 - ratio2)
             Else
                 If ratio1 > ratio2 Then
                     similarity += 1 - ratio2 / ratio1
@@ -588,7 +589,7 @@ Public NotInheritable Class MsScanMatching
 
     Public Shared Function GetSpectralEntropy(ByVal peaks As List(Of SpectrumPeak)) As Double
         Dim sumIntensity = peaks.Sum(Function(n) n.Intensity)
-        Return -1 * peaks.Sum(Function(n) n.Intensity / sumIntensity * Math.Log(n.Intensity / sumIntensity, 2))
+        Return -1 * peaks.Sum(Function(n) n.Intensity / sumIntensity * std.Log(n.Intensity / sumIntensity, 2))
     End Function
 
     Public Shared Function GetModifiedDotProductScore(ByVal prop1 As IMSScanProperty, ByVal prop2 As IMSScanProperty, ByVal Optional massTolerance As Double = 0.05, ByVal Optional massToleranceType As MassToleranceType = MassToleranceType.Da) As Double()
@@ -606,7 +607,7 @@ Public NotInheritable Class MsScanMatching
         Dim product = matchedPeaks.Sum(Function(n) n.Intensity * n.MatchedIntensity)
         Dim scaler1 = matchedPeaks.Sum(Function(n) n.Intensity * n.Intensity)
         Dim scaler2 = matchedPeaks.Sum(Function(n) n.MatchedIntensity * n.MatchedIntensity)
-        Return New Double() {product / (Math.Sqrt(scaler1) * Math.Sqrt(scaler2)), matchedPeaks.Count}
+        Return New Double() {product / (std.Sqrt(scaler1) * std.Sqrt(scaler2)), matchedPeaks.Count}
     End Function
 
     Public Shared Function GetBonanzaScore(ByVal prop1 As IMSScanProperty, ByVal prop2 As IMSScanProperty, ByVal Optional massTolerance As Double = 0.05, ByVal Optional massToleranceType As MassToleranceType = MassToleranceType.Da) As Double()
@@ -649,15 +650,15 @@ Public NotInheritable Class MsScanMatching
             For j = 0 To ePeaks.Count - 1
                 Dim ePeak = ePeaks(j)
                 If ePeak.IsMatched = True Then Continue For
-                If Math.Abs(ePeak.Mass - rPeak.Mass) < massTol Then
-                    Dim intensityDiff = Math.Abs(ePeak.Intensity - rPeak.Intensity)
+                If std.Abs(ePeak.Mass - rPeak.Mass) < massTol Then
+                    Dim intensityDiff = std.Abs(ePeak.Intensity - rPeak.Intensity)
                     If intensityDiff < minIntensityDiff Then
                         minIntensityDiff = intensityDiff
                         minPeakID = j
                         isProduct = True
                     End If
-                ElseIf Math.Abs(precursorDiff + ePeak.Mass - rPeak.Mass) < massTol Then
-                    Dim intensityDiff = Math.Abs(ePeak.Intensity - rPeak.Intensity)
+                ElseIf std.Abs(precursorDiff + ePeak.Mass - rPeak.Mass) < massTol Then
+                    Dim intensityDiff = std.Abs(ePeak.Intensity - rPeak.Intensity)
                     If intensityDiff < minIntensityDiff Then
                         minIntensityDiff = intensityDiff
                         minPeakID = j
@@ -721,7 +722,7 @@ Public NotInheritable Class MsScanMatching
         Dim p = andromedaMaxPeak / andromedaDelta
         Dim q = 1 - p
         Dim n = peaks.Count
-        Dim k = peaks.Count(Function(spec) spec.IsMatched = True)
+        Dim k = peaks.Where(Function(spec) spec.IsMatched = True).Count
 
         Dim sum = 0.0
         For j = k To n
@@ -730,7 +731,7 @@ Public NotInheritable Class MsScanMatching
             Dim q_prob = std.Pow(q, n - j)
             sum += bc * p_prob * q_prob
         Next
-        Dim andromeda = -10.0 * Math.Log10(sum)
+        Dim andromeda = -10.0 * std.Log10(sum)
         Return If(andromeda < 0.000001, 0.000001, andromeda)
     End Function
 
@@ -779,8 +780,8 @@ Public NotInheritable Class MsScanMatching
 
     Public Shared Function GetMachedSpectralPeaks(ByVal peaks1 As List(Of SpectrumPeak), ByVal peaks2 As List(Of SpectrumPeak), ByVal bin As Double, ByVal massBegin As Double, ByVal massEnd As Double) As List(Of SpectrumPeak)
         If Not IsComparedAvailable(peaks1, peaks2) Then Return New List(Of SpectrumPeak)()
-        Dim minMz = Math.Max(peaks2(0).Mass, massBegin)
-        Dim maxMz = Math.Min(peaks2(peaks2.Count - 1).Mass, massEnd)
+        Dim minMz = std.Max(peaks2(0).Mass, massBegin)
+        Dim maxMz = std.Min(peaks2(peaks2.Count - 1).Mass, massEnd)
         Dim focusedMz = minMz
 
         Dim remaindIndexM = 0, remaindIndexL = 0
@@ -792,7 +793,7 @@ Public NotInheritable Class MsScanMatching
             For i = remaindIndexL To peaks2.Count - 1
                 If peaks2(i).Mass < focusedMz - bin Then
                     Continue For
-                ElseIf Math.Abs(focusedMz - peaks2(i).Mass) < bin Then
+                ElseIf std.Abs(focusedMz - peaks2(i).Mass) < bin Then
                     If maxRefIntensity < peaks2(i).Intensity Then
                         maxRefIntensity = peaks2(i).Intensity
                         maxRefID = i
@@ -813,7 +814,7 @@ Public NotInheritable Class MsScanMatching
             For i = remaindIndexM To peaks1.Count - 1
                 If peaks1(i).Mass < focusedMz - bin Then
                     Continue For
-                ElseIf Math.Abs(focusedMz - peaks1(i).Mass) < bin Then
+                ElseIf std.Abs(focusedMz - peaks1(i).Mass) < bin Then
                     sumintensity += peaks1(i).Intensity
                     spectrumPeak.IsMatched = True
                 Else
@@ -868,7 +869,7 @@ Public NotInheritable Class MsScanMatching
         If Not Equals(comment, "SPLASH") AndAlso Not Equals(compClass, "Unknown") AndAlso Not Equals(compClass, "Others") Then
             Dim molecule = ConvertMsdialLipidnameToLipidMoleculeObjectVS2(molMsRef)
             If molecule Is Nothing OrElse molecule.Adduct Is Nothing Then Return resultArray
-            If molecule.LipidClass = LbmClass.EtherPE AndAlso molMsRef.Spectrum.Count = 3 AndAlso msScanProp.IonMode = IonMode.Positive Then Return resultArray
+            If molecule.LipidClass = LbmClass.EtherPE AndAlso molMsRef.Spectrum.Count = 3 AndAlso msScanProp.IonMode = IonModes.Positive Then Return resultArray
 
             Dim result = GetLipidMoleculeAnnotationResult(msScanProp, molecule, bin)
             If result IsNot Nothing Then

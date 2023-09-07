@@ -1,24 +1,10 @@
 ﻿Imports System.IO
+Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
-
-Imports CompMs.Common.DataObj
-Imports CompMs.Common.DataObj.Property
-Imports CompMs.Common.Extension
-Imports CompMs.Common.Proteomics.Function
 Imports std = System.Math
-Imports System.Collections.Generic
-Imports System.Linq
-
-Imports CompMs.Common.DataObj.Property
-Imports CompMs.Common.Extension
-Imports CompMs.Common.FormulaGenerator.Function
-Imports CompMs.Common.FormulaGenerator.Parser
-Imports System.Collections.Generic
-Imports BioNovoGene.Analytical.MassSpectrometry.Math
-Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
-Imports BioNovoGene.BioDeep.MSEngine
 
 Public Class AminoAcid
 
@@ -111,7 +97,7 @@ Public Class Peptide
 
         Get
             If cacheSequence Is Nothing Then
-                cacheSequence = If(SequenceObj.IsEmptyOrNull(), String.Empty, String.Join("", SequenceObj.[Select](Function(n) n.OneLetter.ToString())))
+                cacheSequence = If(SequenceObj.IsNullOrEmpty, String.Empty, String.Join("", SequenceObj.[Select](Function(n) n.OneLetter.ToString())))
             End If
             Return cacheSequence
         End Get
@@ -122,17 +108,17 @@ Public Class Peptide
 
     Public ReadOnly Property ModifiedSequence As String
         Get
-            Return If(SequenceObj.IsEmptyOrNull(), String.Empty, String.Join("", SequenceObj.[Select](Function(n) n.Code())))
+            Return If(SequenceObj.IsNullOrEmpty, String.Empty, String.Join("", SequenceObj.[Select](Function(n) n.Code())))
         End Get
     End Property
 
-    Public Property Position As Range
+    Public Property Position As intRange
 
     Public Property ExactMass As Double
 
     Public ReadOnly Property Formula As Formula
         Get
-            Return If(SequenceObj.IsEmptyOrNull(), Nothing, PeptideCalc.CalculatePeptideFormula(SequenceObj))
+            Return If(SequenceObj.IsNullOrEmpty, Nothing, PeptideCalc.CalculatePeptideFormula(SequenceObj))
         End Get
     End Property
 
@@ -154,7 +140,7 @@ Public Class Peptide
 
     Public Function CountModifiedAminoAcids() As Integer
         If SequenceObj Is Nothing Then Return 0
-        Return SequenceObj.Count(Function(n) n.IsModified())
+        Return SequenceObj.Where(Function(n) n.IsModified()).Count
     End Function
 
     Public Sub GenerateSequenceObj(ByVal proteinSeq As String, ByVal start As Integer, ByVal [end] As Integer, ByVal ResidueCodeIndexToModificationIndex As Dictionary(Of Integer, Integer), ByVal ID2Code As Dictionary(Of Integer, String), ByVal Code2AminoAcidObj As Dictionary(Of String, AminoAcid))
@@ -231,13 +217,8 @@ Public Class PeptideMsReference
     End Property
 
 
-
     Private cacheSpectrum As List(Of SpectrumPeak) = Nothing
-    Private Function ReadSpectrum(ByVal fs As Stream, ByVal seekPoint As Long) As List(Of SpectrumPeak)
-        SyncLock fs
-            Return MsfPepFileParser.ReadSpectrumPeaks(fs, seekPoint)
-        End SyncLock
-    End Function
+
 
     Private Function ReadSpectrum() As List(Of SpectrumPeak)
         Return SequenceToSpec.Convert2SpecPeaks(Peptide, AdductType, CollisionType, MinMs2, MaxMs2)
