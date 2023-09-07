@@ -54,9 +54,9 @@ Public Class PCOadSpectrumGenerator
         '"OAD01+H" 
         Dim oadId = If(adduct.IonMode = IonModes.Positive, New String() {"OAD01", "OAD02", "OAD02+O", "OAD03", "OAD04", "OAD08", "OAD12", "OAD14", "OAD15", "OAD15+O", "OAD16", "OAD17", "OAD12+O", "OAD12+O+H", "OAD12+O+2H", "OAD01+H"}, New String() {"OAD01", "OAD02", "OAD03", "OAD04", "OAD05", "OAD10", "OAD13", "OAD15", "OAD16", "OAD12+O", "OAD12+O+H", "OAD12+O+2H"})
 
-        Dim plChains As PositionLevelChains = Nothing
+        Dim plChains As PositionLevelChains = TryCast(lipid.Chains, PositionLevelChains)
 
-        If CSharpImpl.__Assign(plChains, TryCast(lipid.Chains, PositionLevelChains)) IsNot Nothing Then
+        If plChains IsNot Nothing Then
             For Each chain As AcylChain In lipid.Chains.GetDeterminedChains()
                 spectrum.AddRange(spectrumGenerator.GetAcylDoubleBondSpectrum(lipid, chain, adduct, nlMass, abundance, oadId))
             Next
@@ -76,8 +76,8 @@ Public Class PCOadSpectrumGenerator
 .SpectrumComment = SpectrumComment.metaboliteclass,
 .IsAbsolutelyRequiredFragmentForAnnotation = True
 }})
-
-            If CSharpImpl.__Assign(Chains, TryCast(lipid.Chains, SeparatedChains)) IsNot Nothing Then
+            Chains = TryCast(lipid.Chains, SeparatedChains)
+            If Chains IsNot Nothing Then
                 For Each chain As AcylChain In lipid.Chains.GetDeterminedChains()
                     spectrum.AddRange({New SpectrumPeak(adduct.ConvertToMz(lipid.Mass - chain.Mass + HydrogenMass), 30.0R, $"-{chain}") With {
 .SpectrumComment = SpectrumComment.acylchain

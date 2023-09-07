@@ -10,7 +10,7 @@ Public Class OadDefaultSpectrumGenerator
     End Sub
 
     Public Sub New(spectrumGenerator As IOadSpectrumPeakGenerator)
-        Me.spectrumGenerator = If(spectrumGenerator, CSharpImpl.__Throw(Of IOadSpectrumPeakGenerator)(New ArgumentNullException(NameOf(spectrumGenerator))))
+        Me.spectrumGenerator = spectrumGenerator
     End Sub
 
     Public Function CanGenerate(lipid As ILipid, adduct As AdductIon) As Boolean Implements ILipidSpectrumGenerator.CanGenerate
@@ -30,18 +30,22 @@ Public Class OadDefaultSpectrumGenerator
         Dim oadId = New String() {"OAD01", "OAD02", "OAD02+O", "OAD03", "OAD04", "OAD05", "OAD06", "OAD07", "OAD08", "OAD09", "OAD10", "OAD11", "OAD12", "OAD13", "OAD14", "OAD15", "OAD15+O", "OAD16", "OAD17", "OAD12+O", "OAD12+O+H", "OAD12+O+2H", "OAD01+H"}
 
 
-        Dim plChains As PositionLevelChains = Nothing, acyl As AcylChain = Nothing, alkyl As AlkylChain = Nothing, sphingo As SphingoChain = Nothing
+        Dim plChains As PositionLevelChains = TryCast(lipid.Chains, PositionLevelChains)
+        Dim acyl As AcylChain = Nothing
+        Dim alkyl As AlkylChain = Nothing
+        Dim sphingo As SphingoChain = Nothing
 
-        If CSharpImpl.__Assign(plChains, TryCast(lipid.Chains, PositionLevelChains)) IsNot Nothing Then
+        If plChains IsNot Nothing Then
             For Each chain In lipid.Chains.GetDeterminedChains()
-
-                If CSharpImpl.__Assign(acyl, TryCast(chain, AcylChain)) IsNot Nothing Then
+                acyl = TryCast(chain, AcylChain)
+                alkyl = TryCast(chain, AlkylChain)
+                If acyl IsNot Nothing Then
                     spectrum.AddRange(spectrumGenerator.GetAcylDoubleBondSpectrum(lipid, acyl, adduct, nlMass, abundance, oadId))
-                ElseIf CSharpImpl.__Assign(alkyl, TryCast(chain, AlkylChain)) IsNot Nothing Then
+                ElseIf alkyl IsNot Nothing Then
                     spectrum.AddRange(spectrumGenerator.GetAlkylDoubleBondSpectrum(lipid, alkyl, adduct, nlMass, abundance, oadId))
                 End If
-
-                If CSharpImpl.__Assign(sphingo, TryCast(chain, SphingoChain)) IsNot Nothing Then
+                sphingo = TryCast(chain, SphingoChain)
+                If sphingo IsNot Nothing Then
                     spectrum.AddRange(spectrumGenerator.GetSphingoDoubleBondSpectrum(lipid, sphingo, adduct, nlMass, abundance, oadId))
                 End If
             Next
@@ -79,7 +83,7 @@ Public Class OadDefaultSpectrumGenerator
 End Class
 
 Public Class OadClassFragment
-        Public Property nlMass As Double
-        Public Property spectrum As List(Of SpectrumPeak)
-    End Class
+    Public Property nlMass As Double
+    Public Property spectrum As List(Of SpectrumPeak)
+End Class
 

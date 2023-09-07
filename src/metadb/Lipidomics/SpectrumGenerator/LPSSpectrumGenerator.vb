@@ -26,7 +26,7 @@ Public Class LPSSpectrumGenerator
     End Sub
 
     Public Sub New(spectrumGenerator As ISpectrumPeakGenerator)
-        Me.spectrumGenerator = If(spectrumGenerator, CSharpImpl.__Throw(Of ISpectrumPeakGenerator)(New ArgumentNullException(NameOf(spectrumGenerator))))
+        Me.spectrumGenerator = spectrumGenerator
     End Sub
 
     Private ReadOnly spectrumGenerator As ISpectrumPeakGenerator
@@ -56,7 +56,7 @@ Public Class LPSSpectrumGenerator
         Return New MoleculeMsReference With {
 .PrecursorMz = adduct.ConvertToMz(lipid.Mass),
 .IonMode = adduct.IonMode,
-.spectrum = spectrum,
+.Spectrum = spectrum,
 .Name = lipid.Name,
 .Formula = molecule?.Formula,
 .Ontology = molecule?.Ontology,
