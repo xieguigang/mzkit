@@ -1,6 +1,5 @@
 ﻿Imports System.Text.RegularExpressions
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.ElementsExactMass
-
 Public Class HexCerLipidParser
     Implements ILipidParser
     Public ReadOnly Property Target As String = "HexCer" Implements ILipidParser.Target

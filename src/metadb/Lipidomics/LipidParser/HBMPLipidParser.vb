@@ -1,6 +1,5 @@
 ﻿Imports System.Text.RegularExpressions
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.ElementsExactMass
-
 Public Class HBMPLipidParser
     Implements ILipidParser
     Public ReadOnly Property Target As String = "HBMP" Implements ILipidParser.Target

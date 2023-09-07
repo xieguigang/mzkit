@@ -1,5 +1,4 @@
-﻿Imports CompMs.Common.Enum
-Imports System.Text.RegularExpressions
+﻿Imports System.Text.RegularExpressions
 
 Public Class CeramideNsD7LipidParser
     Implements ILipidParser

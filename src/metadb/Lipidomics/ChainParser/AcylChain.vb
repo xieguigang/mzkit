@@ -71,17 +71,6 @@ Public Class AcylChain
     Public Function Equals(other As IChain) As Boolean Implements IEquatable(Of IChain).Equals
         Return TypeOf other Is AcylChain AndAlso CarbonCount = other.CarbonCount AndAlso DoubleBond.Equals(other.DoubleBond) AndAlso Oxidized.Equals(other.Oxidized)
     End Function
-
-    Private Class CSharpImpl
-        <Obsolete("Please refactor calling code to use normal Visual Basic assignment")>
-        Shared Function __Assign(Of T)(ByRef target As T, value As T) As T
-            target = value
-            Return value
-        End Function <Obsolete("Please refactor calling code to use normal throw statements")>
-            Shared Function __Throw(Of T)(e As Exception) As T
-            Throw e
-        End Function
-    End Class
 End Class
 
 Public Class AlkylChain
@@ -171,17 +160,6 @@ Public Class AlkylChain
     Public Function Equals(other As IChain) As Boolean Implements IEquatable(Of IChain).Equals
         Return TypeOf other Is AlkylChain AndAlso CarbonCount = other.CarbonCount AndAlso DoubleBond.Equals(other.DoubleBond) AndAlso Oxidized.Equals(other.Oxidized)
     End Function
-
-    Private Class CSharpImpl
-        <Obsolete("Please refactor calling code to use normal Visual Basic assignment")>
-        Shared Function __Assign(Of T)(ByRef target As T, value As T) As T
-            target = value
-            Return value
-        End Function <Obsolete("Please refactor calling code to use normal throw statements")>
-            Shared Function __Throw(Of T)(e As Exception) As T
-            Throw e
-        End Function
-    End Class
 End Class
 
 Public Class SphingoChain

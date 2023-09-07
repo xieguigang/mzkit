@@ -1,6 +1,5 @@
 ﻿Imports System.Text.RegularExpressions
-
-
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.ElementsExactMass
 Public Class DMEDFAHFALipidParser
         Implements ILipidParser
         Private Shared ReadOnly C4N2H10 As Double = {CarbonMass * 4, NitrogenMass * 2, HydrogenMass * 10}.Sum()
