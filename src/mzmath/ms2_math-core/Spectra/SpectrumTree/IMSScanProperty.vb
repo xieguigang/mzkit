@@ -3,6 +3,9 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 
 Namespace Spectra
 
+    ''' <summary>
+    ''' A spectrum object
+    ''' </summary>
     Public Interface IMSScanProperty
         Inherits IMSProperty
         Property ScanID As Integer
