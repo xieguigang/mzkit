@@ -7,8 +7,8 @@ Public Class SeparatedChains
     ''' <summary>
     ''' chains should contains at least 1 chain.
     ''' </summary>
-    ''' <paramname="chains"></param>
-    ''' <paramname="description"></param>
+    ''' <param name="chains"></param>
+    ''' <param name="description"></param>
     ''' <exceptioncref="ArgumentException"></exception>
     Public Sub New(chains As IChain(), description As LipidDescription)
         If chains.Length = 0 Then
@@ -26,8 +26,8 @@ Public Class SeparatedChains
     ''' <summary>
     ''' chains should contains at least 1 chain.
     ''' </summary>
-    ''' <paramname="chains"></param>
-    ''' <paramname="description"></param>
+    ''' <param name="chains"></param>
+    ''' <param name="description"></param>
     ''' <exceptioncref="ArgumentException"></exception>
     Public Sub New(chains As (IChain, Integer)(), description As LipidDescription)
         If chains.Length = 0 Then

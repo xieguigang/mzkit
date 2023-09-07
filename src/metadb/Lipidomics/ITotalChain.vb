@@ -17,7 +17,7 @@ Public Interface ITotalChain
     ''' The position here refers to a specific order defined for each lipid class.
     ''' It may not necessarily match the commonly used sn-position for lipids.
     ''' </summary>
-    ''' <paramname="position">1-indexed position</param>
+    ''' <param name="position">1-indexed position</param>
     ''' <returns>IChain if the specified position chain is determined; otherwise, null.</returns>
     Function GetChainByPosition(position As Integer) As IChain
     ''' <summary>
