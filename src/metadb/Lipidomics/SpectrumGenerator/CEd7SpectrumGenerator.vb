@@ -17,7 +17,7 @@ Public Class CEd7SpectrumGenerator
     End Sub
 
     Public Sub New(spectrumGenerator As ISpectrumPeakGenerator)
-        Me.spectrumGenerator = If(spectrumGenerator, CSharpImpl.__Throw(Of ISpectrumPeakGenerator)(New ArgumentNullException(NameOf(spectrumGenerator))))
+        Me.spectrumGenerator = spectrumGenerator
     End Sub
 
     Private ReadOnly spectrumGenerator As ISpectrumPeakGenerator
@@ -94,11 +94,4 @@ New SpectrumPeak(adduct.ConvertToMz(lipid.Mass), 999.0R, "Precursor") With {
     End Function
 
     Private Shared ReadOnly comparer As IEqualityComparer(Of SpectrumPeak) = New SpectrumEqualityComparer()
-
-    Private Class CSharpImpl
-        <Obsolete("Please refactor calling code to use normal throw statements")>
-        Shared Function __Throw(Of T)(e As Exception) As T
-            Throw e
-        End Function
-    End Class
 End Class

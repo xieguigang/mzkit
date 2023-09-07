@@ -26,7 +26,7 @@ Public Class LPCd5SpectrumGenerator
     End Sub
 
     Public Sub New(peakGenerator As ISpectrumPeakGenerator)
-        spectrumGenerator = If(peakGenerator, CSharpImpl.__Throw(Of ISpectrumPeakGenerator)(New ArgumentNullException(NameOf(peakGenerator))))
+        spectrumGenerator = peakGenerator
     End Sub
 
     Private ReadOnly spectrumGenerator As ISpectrumPeakGenerator
@@ -138,11 +138,4 @@ Public Class LPCd5SpectrumGenerator
 
 
     Private Shared ReadOnly comparer As IEqualityComparer(Of SpectrumPeak) = New SpectrumEqualityComparer()
-
-    Private Class CSharpImpl
-        <Obsolete("Please refactor calling code to use normal throw statements")>
-        Shared Function __Throw(Of T)(e As Exception) As T
-            Throw e
-        End Function
-    End Class
 End Class

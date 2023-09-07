@@ -15,7 +15,7 @@ Public Class DGOadSpectrumGenerator
     End Sub
 
     Public Sub New(spectrumGenerator As IOadSpectrumPeakGenerator)
-        Me.spectrumGenerator = If(spectrumGenerator, CSharpImpl.__Throw(Of IOadSpectrumPeakGenerator)(New ArgumentNullException(NameOf(spectrumGenerator))))
+        Me.spectrumGenerator = spectrumGenerator
     End Sub
 
     Public Function CanGenerate(lipid As ILipid, adduct As AdductIon) As Boolean Implements ILipidSpectrumGenerator.CanGenerate
@@ -65,9 +65,9 @@ Public Class DGOadSpectrumGenerator
         '"OAD01+H"
         Dim oadIdLossH2O = New String() {"OAD01", "OAD02", "OAD14", "OAD15", "OAD16"}
 
-        Dim plChains As PositionLevelChains = Nothing
+        Dim plChains As PositionLevelChains = TryCast(lipid.Chains, PositionLevelChains)
 
-        If CSharpImpl.__Assign(plChains, TryCast(lipid.Chains, PositionLevelChains)) IsNot Nothing Then
+        If plChains IsNot Nothing Then
             For Each chain As AcylChain In plChains.GetDeterminedChains()
                 spectrum.AddRange(spectrumGenerator.GetAcylDoubleBondSpectrum(lipid, chain, adduct, nlMass, abundance, oadId))
                 spectrum.AddRange(spectrumGenerator.GetAcylDoubleBondSpectrum(lipid, chain, adduct, NH3 + H2O, abundance, oadIdLossH2O))
@@ -89,8 +89,9 @@ Public Class DGOadSpectrumGenerator
 }, New SpectrumPeak(lipid.Mass - H2O + ProtonMass, 200.0R, "[M+H]+ -H2O") With {
 .SpectrumComment = SpectrumComment.metaboliteclass
 }})
+            Chains = TryCast(lipid.Chains, SeparatedChains)
 
-            If CSharpImpl.__Assign(Chains, TryCast(lipid.Chains, SeparatedChains)) IsNot Nothing Then
+            If Chains IsNot Nothing Then
                 For Each chain As AcylChain In Chains.GetDeterminedChains()
                     spectrum.AddRange({New SpectrumPeak(lipid.Mass - chain.Mass - OxygenMass - Electron, 50.0R, $"-{chain}") With {
 .SpectrumComment = SpectrumComment.acylchain'new SpectrumPeak(adduct.ConvertToMz(chain.Mass - MassDiffDictionary.HydrogenMass), 20d, $"{chain} Acyl+") { SpectrumComment = SpectrumComment.acylchain },'new SpectrumPeak(adduct.ConvertToMz(chain.Mass ), 5d, $"{chain} Acyl+ +H") { SpectrumComment = SpectrumComment.acylchain },

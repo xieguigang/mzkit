@@ -23,7 +23,7 @@ Public Class CLSpectrumGenerator
     End Sub
 
     Public Sub New(spectrumGenerator As ISpectrumPeakGenerator)
-        Me.spectrumGenerator = If(spectrumGenerator, CSharpImpl.__Throw(Of ISpectrumPeakGenerator)(New ArgumentNullException(NameOf(spectrumGenerator))))
+        Me.spectrumGenerator = spectrumGenerator
     End Sub
 
     Private ReadOnly spectrumGenerator As ISpectrumPeakGenerator
@@ -41,9 +41,12 @@ Public Class CLSpectrumGenerator
         Dim spectrum = New List(Of SpectrumPeak)()
         spectrum.AddRange(GetCLSpectrum(lipid, adduct))
 
-        Dim c1 As AcylChain = Nothing, c2 As AcylChain = Nothing, c3 As AcylChain = Nothing, c4 As AcylChain = Nothing
+        Dim c1 As AcylChain = TryCast(lipid.Chains.GetChainByPosition(1), AcylChain)
+        Dim c2 As AcylChain = TryCast(lipid.Chains.GetChainByPosition(2), AcylChain)
+        Dim c3 As AcylChain = TryCast(lipid.Chains.GetChainByPosition(3), AcylChain)
+        Dim c4 As AcylChain = TryCast(lipid.Chains.GetChainByPosition(4), AcylChain)
 
-        If CSharpImpl.__Assign(c1, TryCast(lipid.Chains.GetChainByPosition(1), AcylChain)) IsNot Nothing AndAlso CSharpImpl.__Assign(c2, TryCast(lipid.Chains.GetChainByPosition(2), AcylChain)) IsNot Nothing AndAlso CSharpImpl.__Assign(c3, TryCast(lipid.Chains.GetChainByPosition(3), AcylChain)) IsNot Nothing AndAlso CSharpImpl.__Assign(c4, TryCast(lipid.Chains.GetChainByPosition(4), AcylChain)) IsNot Nothing Then
+        If c1 IsNot Nothing AndAlso c2 IsNot Nothing AndAlso c3 IsNot Nothing AndAlso c4 IsNot Nothing Then
             Dim sn1sn2 = {c1, c2}
             Dim sn3sn4 = {c3, c4}
             spectrum.AddRange(GetAcylLevelSpectrum(lipid, lipid.Chains.GetDeterminedChains(), adduct, nlMass + H2O))

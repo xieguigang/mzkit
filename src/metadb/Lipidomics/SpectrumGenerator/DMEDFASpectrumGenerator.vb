@@ -3,8 +3,8 @@ Imports BioNovoGene.BioDeep.MSEngine
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.ElementsExactMass
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
 
-Public Class DMEDFASpectrumGenerator
-    Implements ILipidSpectrumGenerator ' DMEDFA and DMEDOxFA
+Public Class DMEDFASpectrumGenerator : Implements ILipidSpectrumGenerator ' DMEDFA and DMEDOxFA
+
 
     Private Shared ReadOnly CH2 As Double = {HydrogenMass * 2, CarbonMass}.Sum()
 
@@ -21,7 +21,7 @@ Public Class DMEDFASpectrumGenerator
     End Sub
 
     Public Sub New(spectrumGenerator As ISpectrumPeakGenerator)
-        Me.spectrumGenerator = If(spectrumGenerator, CSharpImpl.__Throw(Of ISpectrumPeakGenerator)(New ArgumentNullException(NameOf(spectrumGenerator))))
+        Me.spectrumGenerator = spectrumGenerator
     End Sub
 
     Private ReadOnly spectrumGenerator As ISpectrumPeakGenerator
@@ -39,9 +39,9 @@ Public Class DMEDFASpectrumGenerator
         Dim nlMass = 0.0
         Dim spectrum = New List(Of SpectrumPeak)()
         spectrum.AddRange(GetDMEDFASpectrum(lipid, adduct))
-        Dim plChains As PositionLevelChains = Nothing
+        Dim plChains As PositionLevelChains = TryCast(lipid.Chains, PositionLevelChains)
 
-        If CSharpImpl.__Assign(plChains, TryCast(lipid.Chains, PositionLevelChains)) IsNot Nothing Then 'TBC
+        If plChains IsNot Nothing Then 'TBC
             spectrum.AddRange(GetAcylDoubleBondSpectrum(lipid, plChains.GetTypedChains(Of AcylChain)(), adduct, nlMass))
         End If
         spectrum = spectrum.GroupBy(Function(spec) spec, comparer).[Select](Function(specs) New SpectrumPeak(Enumerable.First(specs).Mass, specs.Sum(Function(n) n.Intensity), String.Join(", ", specs.[Select](Function(spec) spec.Comment)), specs.Aggregate(SpectrumComment.none, Function(a, b) a Or b.SpectrumComment))).OrderBy(Function(peak) peak.Mass).ToList()

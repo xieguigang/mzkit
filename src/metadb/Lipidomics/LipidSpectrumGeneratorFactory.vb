@@ -112,21 +112,14 @@ End Class
 Public Class MolecularLevelChains
     Implements IMzVariable
     Public Function Evaluate(lipid As ILipid, adduct As AdductIon) As IEnumerable(Of Double) Implements IMzVariable.Evaluate
-        Dim lipid_ As Lipid = Nothing, chains As SeparatedChains = Nothing
+        Dim lipid_ As Lipid = TryCast(lipid, Lipid)
+        Dim chains As SeparatedChains = TryCast(lipid_.Chains, SeparatedChains)
 
-        If CSharpImpl.__Assign(lipid_, TryCast(lipid, Lipid)) IsNot Nothing AndAlso CSharpImpl.__Assign(chains, TryCast(lipid_.Chains, SeparatedChains)) IsNot Nothing Then
+        If lipid_ IsNot Nothing AndAlso chains IsNot Nothing Then
             Return lipid.Chains.GetDeterminedChains().[Select](Function(chain) chain.Mass)
         End If
         Return Enumerable.Empty(Of Double)()
     End Function
-
-    Private Class CSharpImpl
-        <Obsolete("Please refactor calling code to use normal Visual Basic assignment")>
-        Shared Function __Assign(Of T)(ByRef target As T, value As T) As T
-            target = value
-            Return value
-        End Function
-    End Class
 End Class
 
 Public Class PositionChainMz
@@ -138,21 +131,14 @@ Public Class PositionChainMz
     Public ReadOnly Property Position As Integer
 
     Public Iterator Function Evaluate(lipid As ILipid, adduct As AdductIon) As IEnumerable(Of Double) Implements IMzVariable.Evaluate
-        Dim lipid_ As Lipid = Nothing, chains As PositionLevelChains = Nothing
+        Dim lipid_ As Lipid = TryCast(lipid, Lipid)
+        Dim chains As PositionLevelChains = TryCast(lipid_.Chains, PositionLevelChains)
 
-        If CSharpImpl.__Assign(lipid_, TryCast(lipid, Lipid)) IsNot Nothing AndAlso CSharpImpl.__Assign(chains, TryCast(lipid_.Chains, PositionLevelChains)) IsNot Nothing AndAlso chains.ChainCount >= Position Then
+        If lipid_ IsNot Nothing AndAlso chains IsNot Nothing AndAlso chains.ChainCount >= Position Then
             Dim chain = lipid.Chains.GetChainByPosition(Position)
             Yield chain.Mass
         End If
     End Function
-
-    Private Class CSharpImpl
-        <Obsolete("Please refactor calling code to use normal Visual Basic assignment")>
-        Shared Function __Assign(Of T)(ByRef target As T, value As T) As T
-            target = value
-            Return value
-        End Function
-    End Class
 End Class
 
 Public Class ChainDesorptionMz
@@ -164,9 +150,10 @@ Public Class ChainDesorptionMz
     Public ReadOnly Property Position As Integer
 
     Public Function Evaluate(lipid As ILipid, adduct As AdductIon) As IEnumerable(Of Double) Implements IMzVariable.Evaluate
-        Dim lipid_ As Lipid = Nothing, chains As SeparatedChains = Nothing
+        Dim lipid_ As Lipid = TryCast(lipid, Lipid)
+        Dim chains As SeparatedChains = TryCast(lipid_.Chains, SeparatedChains)
 
-        If CSharpImpl.__Assign(lipid_, TryCast(lipid, Lipid)) IsNot Nothing AndAlso CSharpImpl.__Assign(chains, TryCast(lipid_.Chains, SeparatedChains)) IsNot Nothing AndAlso chains.ChainCount >= Position Then
+        If lipid_ IsNot Nothing AndAlso chains IsNot Nothing AndAlso chains.ChainCount >= Position Then
             Return CreateSpectrum(lipid.Chains.GetChainByPosition(Position))
         End If
         Return Enumerable.Empty(Of Double)()
@@ -187,9 +174,9 @@ Public Class ChainDesorptionMz
         For Each ox In chain.Oxidized.Oxidises
             diffs(ox - 1) += OxygenMass
         Next
-        Dim acylChain As AcylChain = Nothing
+        Dim acylChain As AcylChain = TryCast(chain, AcylChain)
 
-        If CSharpImpl.__Assign(acylChain, TryCast(chain, AcylChain)) IsNot Nothing Then
+        If acylChain IsNot Nothing Then
             diffs(0) += OxygenMass - HydrogenMass * 2
         End If
         For i = 1 To chain.CarbonCount - 1
@@ -233,7 +220,9 @@ Public Class MzVariableProxy
         End If
         Me.lipid = lipid
         Me.adduct = adduct
-        Return CSharpImpl.__Assign(cache, Mz.Evaluate(lipid, adduct).ToArray())
+        Me.cache = Mz.Evaluate(lipid, adduct).ToArray()
+
+        Return cache
     End Function
 End Class
 

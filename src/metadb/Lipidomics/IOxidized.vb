@@ -6,78 +6,78 @@ Imports System.Linq
 
 
 Public Interface IOxidized
-        Inherits IVisitableElement, IEquatable(Of IOxidized)
-        ReadOnly Property Count As Integer
-        ReadOnly Property DecidedCount As Integer
-        ReadOnly Property UnDecidedCount As Integer
+    Inherits IVisitableElement, IEquatable(Of IOxidized)
+    ReadOnly Property Count As Integer
+    ReadOnly Property DecidedCount As Integer
+    ReadOnly Property UnDecidedCount As Integer
 
-        ReadOnly Property Oxidises As ReadOnlyCollection(Of Integer)
+    ReadOnly Property Oxidises As ReadOnlyCollection(Of Integer)
 
-        Function Includes(oxidized As IOxidized) As Boolean
-    End Interface
+    Function Includes(oxidized As IOxidized) As Boolean
+End Interface
 
-    Public NotInheritable Class Oxidized
-        Implements IOxidized
-        Public Sub New(count As Integer, oxidises As IList(Of Integer))
-            Me.Count = count
-            Me.Oxidises = New ReadOnlyCollection(Of Integer)(oxidises)
-        End Sub
+Public NotInheritable Class Oxidized
+    Implements IOxidized
+    Public Sub New(count As Integer, oxidises As IList(Of Integer))
+        Me.Count = count
+        Me.Oxidises = New ReadOnlyCollection(Of Integer)(oxidises)
+    End Sub
 
-        Public Sub New(count As Integer, ParamArray oxidises As Integer())
-            Me.Count = count
-            Me.Oxidises = New ReadOnlyCollection(Of Integer)(oxidises)
-        End Sub
+    Public Sub New(count As Integer, ParamArray oxidises As Integer())
+        Me.Count = count
+        Me.Oxidises = New ReadOnlyCollection(Of Integer)(oxidises)
+    End Sub
 
-        Public ReadOnly Property Count As Integer Implements IOxidized.Count
+    Public ReadOnly Property Count As Integer Implements IOxidized.Count
 
-        Public ReadOnly Property DecidedCount As Integer Implements IOxidized.DecidedCount
-            Get
-                Return Oxidises.Count
-            End Get
-        End Property
+    Public ReadOnly Property DecidedCount As Integer Implements IOxidized.DecidedCount
+        Get
+            Return Oxidises.Count
+        End Get
+    End Property
 
-        Public ReadOnly Property UnDecidedCount As Integer Implements IOxidized.UnDecidedCount
-            Get
-                Return Count - DecidedCount
-            End Get
-        End Property
+    Public ReadOnly Property UnDecidedCount As Integer Implements IOxidized.UnDecidedCount
+        Get
+            Return Count - DecidedCount
+        End Get
+    End Property
 
-        Public ReadOnly Property Oxidises As ReadOnlyCollection(Of Integer) Implements IOxidized.Oxidises
+    Public ReadOnly Property Oxidises As ReadOnlyCollection(Of Integer) Implements IOxidized.Oxidises
 
-        Public Overrides Function ToString() As String
-            If Count = 0 Then
-                Return ""
-            ElseIf UnDecidedCount = 0 Then
-                ' return ";" + string.Join(",", Oxidises.Select(o => o.ToString() + "OH")); 
-                Return "(" & String.Join(",", Oxidises.[Select](Function(o) o.ToString() & "OH")) & ")" ' fix 20221201 MT
-            ElseIf Count = 1 Then
-                Return ";O"
-            Else
-                'return $";O{Count}";
-                Return $";O{Count}"
-            End If
-        End Function
+    Public Overrides Function ToString() As String
+        If Count = 0 Then
+            Return ""
+        ElseIf UnDecidedCount = 0 Then
+            ' return ";" + string.Join(",", Oxidises.Select(o => o.ToString() + "OH")); 
+            Return "(" & String.Join(",", Oxidises.[Select](Function(o) o.ToString() & "OH")) & ")" ' fix 20221201 MT
+        ElseIf Count = 1 Then
+            Return ";O"
+        Else
+            'return $";O{Count}";
+            Return $";O{Count}"
+        End If
+    End Function
 
-        Public Shared Function CreateFromPosition(ParamArray oxidises As Integer()) As Oxidized
-            Return New Oxidized(oxidises.Length, oxidises)
-        End Function
+    Public Shared Function CreateFromPosition(ParamArray oxidises As Integer()) As Oxidized
+        Return New Oxidized(oxidises.Length, oxidises)
+    End Function
 
-        Public Function Accept(Of TResult)(visitor As IAcyclicVisitor, decomposer As IAcyclicDecomposer(Of TResult)) As TResult Implements IVisitableElement.Accept
-            Dim concrete As IDecomposer(Of TResult, Oxidized) = Nothing
+    Public Function Accept(Of TResult)(visitor As IAcyclicVisitor, decomposer As IAcyclicDecomposer(Of TResult)) As TResult Implements IVisitableElement.Accept
+        Dim concrete As IDecomposer(Of TResult, Oxidized) = TryCast(decomposer, IDecomposer(Of TResult, Oxidized))
 
-            If CSharpImpl.__Assign(concrete, TryCast(decomposer, IDecomposer(Of TResult, Oxidized))) IsNot Nothing Then
-                Return concrete.Decompose(visitor, Me)
-            End If
-            Return Nothing
-        End Function
+        If concrete IsNot Nothing Then
+            Return concrete.Decompose(visitor, Me)
+        End If
+        Return Nothing
+    End Function
 
-        Public Function Includes(oxidized As IOxidized) As Boolean Implements IOxidized.Includes
-            Return Count = oxidized.Count AndAlso DecidedCount <= oxidized.DecidedCount AndAlso Oxidises.All(New Func(Of Integer, Boolean)(AddressOf oxidized.Oxidises.Contains))
-        End Function
+    Public Function Includes(oxidized As IOxidized) As Boolean Implements IOxidized.Includes
+        Return Count = oxidized.Count AndAlso DecidedCount <= oxidized.DecidedCount AndAlso Oxidises.All(New Func(Of Integer, Boolean)(AddressOf oxidized.Oxidises.Contains))
+    End Function
 
-        Public Function Equals(other As IOxidized) As Boolean Implements IEquatable(Of IOxidized).Equals
-            Return Count = other.Count AndAlso DecidedCount = other.DecidedCount AndAlso Oxidises.All(Function(ox) other.Oxidises.Any(New Func(Of Integer, Boolean)(AddressOf ox.Equals)))
-        End Function
+    Public Function Equals(other As IOxidized) As Boolean Implements IEquatable(Of IOxidized).Equals
+        Return Count = other.Count AndAlso DecidedCount = other.DecidedCount AndAlso Oxidises.All(Function(ox) other.Oxidises.Any(New Func(Of Integer, Boolean)(AddressOf ox.Equals)))
+    End Function
 
 End Class
 
