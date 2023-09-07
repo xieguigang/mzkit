@@ -1,46 +1,46 @@
 ﻿Public Class SmilesInchikeyGenerator
     Public Shared Function Generate(lipid As Lipid) As SmilesInchikey
-        Dim plChains As PositionLevelChains = TryCast(lipid.Chains, PositionLevelChains)
+        'Dim plChains As PositionLevelChains = TryCast(lipid.Chains, PositionLevelChains)
 
-        If plChains IsNot Nothing Then
-            Dim smilesHeaderDict = SmilesLipidHeader.HeaderDictionary
-            Dim headerSmiles = smilesHeaderDict(lipid.LipidClass.ToString())
-            If Equals(headerSmiles, Nothing) Then Return Nothing
+        'If plChains IsNot Nothing Then
+        '    Dim smilesHeaderDict = SmilesLipidHeader.HeaderDictionary
+        '    Dim headerSmiles = smilesHeaderDict(lipid.LipidClass.ToString())
+        '    If Equals(headerSmiles, Nothing) Then Return Nothing
 
-            Dim chainList = New List(Of String)()
-            Dim jointPosition = 10
+        '    Dim chainList = New List(Of String)()
+        '    Dim jointPosition = 10
 
-            For Each chain In lipid.Chains.GetDeterminedChains()
-                Dim oxidized = chain.Oxidized
-                Dim doubleBond = chain.DoubleBond
-                If oxidized.UnDecidedCount > 0 OrElse doubleBond.UnDecidedCount > 0 Then
-                    Return Nothing
-                End If
-                Dim smilesInchikeyGenerator = New SmilesInchikeyGenerator()
-                Dim chainSmiles = smilesInchikeyGenerator.ChainSmilesGen(chain)
-                If TypeOf chain Is SphingoChain Then
-                    chainSmiles = chainSmiles.Remove(0, 5).Insert(1, "%" & jointPosition.ToString())
-                Else
-                    chainSmiles = chainSmiles.Insert(1, "%" & jointPosition.ToString())
-                End If
-                chainList.Add(chainSmiles)
-                jointPosition = jointPosition + 10
-            Next
+        '    For Each chain In lipid.Chains.GetDeterminedChains()
+        '        Dim oxidized = chain.Oxidized
+        '        Dim doubleBond = chain.DoubleBond
+        '        If oxidized.UnDecidedCount > 0 OrElse doubleBond.UnDecidedCount > 0 Then
+        '            Return Nothing
+        '        End If
+        '        Dim smilesInchikeyGenerator = New SmilesInchikeyGenerator()
+        '        Dim chainSmiles = smilesInchikeyGenerator.ChainSmilesGen(chain)
+        '        If TypeOf chain Is SphingoChain Then
+        '            chainSmiles = chainSmiles.Remove(0, 5).Insert(1, "%" & jointPosition.ToString())
+        '        Else
+        '            chainSmiles = chainSmiles.Insert(1, "%" & jointPosition.ToString())
+        '        End If
+        '        chainList.Add(chainSmiles)
+        '        jointPosition = jointPosition + 10
+        '    Next
 
-            Dim rawSmiles = headerSmiles & String.Join(".", chainList)
+        '    Dim rawSmiles = headerSmiles & String.Join(".", chainList)
 
-            Dim SmilesParser = New SmilesParser()
-            Dim SmilesGenerator = New SmilesGenerator(SmiFlavors.StereoCisTrans)
-            Dim iAtomContainer = SmilesParser.ParseSmiles(rawSmiles)
-            Dim smiles = SmilesGenerator.Create(iAtomContainer)
-            Dim InChIGeneratorFactory = New InChIGeneratorFactory()
-            Dim InChIKey = InChIGeneratorFactory.GetInChIGenerator(iAtomContainer).GetInChIKey()
+        '    Dim SmilesParser = New SmilesParser()
+        '    Dim SmilesGenerator = New SmilesGenerator(SmiFlavors.StereoCisTrans)
+        '    Dim iAtomContainer = SmilesParser.ParseSmiles(rawSmiles)
+        '    Dim smiles = SmilesGenerator.Create(iAtomContainer)
+        '    Dim InChIGeneratorFactory = New InChIGeneratorFactory()
+        '    Dim InChIKey = InChIGeneratorFactory.GetInChIGenerator(iAtomContainer).GetInChIKey()
 
-            Return New SmilesInchikey() With {
-                .Smiles = smiles,
-                .InchiKey = InChIKey
-            }
-        End If
+        '    Return New SmilesInchikey() With {
+        '        .Smiles = smiles,
+        '        .InchiKey = InChIKey
+        '    }
+        'End If
         Return Nothing
     End Function
     Public Function ChainSmilesGen(chain As IChain) As String
