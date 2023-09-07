@@ -122,11 +122,19 @@ Namespace Formula
         ''' get element count by the given specific atom label
         ''' </summary>
         ''' <param name="atom"></param>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' this default property returns ZERO if the given 
+        ''' <paramref name="atom"/> is not found in current 
+        ''' formula
+        ''' </returns>
         Default Public ReadOnly Property GetAtomCount(atom As String) As Integer
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return CountsByElement.TryGetValue(atom)
+                If Not CountsByElement.ContainsKey(atom) Then
+                    Return 0
+                Else
+                    Return CountsByElement(atom)
+                End If
             End Get
         End Property
 
