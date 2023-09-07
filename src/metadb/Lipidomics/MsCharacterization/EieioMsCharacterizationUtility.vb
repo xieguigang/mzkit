@@ -1,12 +1,5 @@
-﻿Imports CompMs.Common.Algorithm.Scoring
-Imports CompMs.Common.Components
-Imports CompMs.Common.DataStructure
-Imports CompMs.Common.Extension
-Imports CompMs.Common.Interfaces
-Imports System
-Imports System.Collections.Generic
-Imports System.Linq
-
+﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.BioDeep.MSEngine
 
 
 Public Class LipidMsCharacterizationResult

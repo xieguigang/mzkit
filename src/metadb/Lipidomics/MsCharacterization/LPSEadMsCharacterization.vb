@@ -1,5 +1,5 @@
-﻿Imports CompMs.Common.Components
-Imports CompMs.Common.Interfaces
+﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.BioDeep.MSEngine
 
 
 Public Module LPSEadMsCharacterization

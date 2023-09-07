@@ -1,5 +1,6 @@
-﻿Imports CompMs.Common.Components
-Imports CompMs.Common.Interfaces
+﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.BioDeep.MSEngine
+
 
 Friend Class CEEadMsCharacterization
     Public Shared Function Characterize(scan As IMSScanProperty, molecule As ILipid, reference As MoleculeMsReference, tolerance As Single, mzBegin As Single, mzEnd As Single) As (ILipid, Double())
