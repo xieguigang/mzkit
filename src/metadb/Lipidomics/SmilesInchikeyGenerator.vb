@@ -61,8 +61,10 @@
                 chainSmiles = chainSmiles & "(O)"
             End If
 
-            If doubleBond.Bonds.Any(Function(n) i = n.Position) Then
-                Dim item = doubleBond.Bonds.Where(Function(n) i = n.Position).ToArray()
+            Dim idx = i
+
+            If doubleBond.Bonds.Any(Function(n) idx = n.Position) Then
+                Dim item = doubleBond.Bonds.Where(Function(n) idx = n.Position).ToArray()
                 'chainSmiles = chainSmiles + "=";
                 chainSmiles = chainSmiles & item(0).State.ToString().ToUpper()(0).ToString()
             End If

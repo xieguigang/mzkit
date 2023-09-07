@@ -68,7 +68,7 @@ Public Class AcylChain : Implements IChain
         Return TypeOf chain Is AcylChain AndAlso chain.CarbonCount = CarbonCount AndAlso chain.DoubleBondCount = DoubleBondCount AndAlso chain.OxidizedCount = OxidizedCount AndAlso DoubleBond.Includes(chain.DoubleBond) AndAlso Oxidized.Includes(chain.Oxidized)
     End Function
 
-    Public Function Equals(other As IChain) As Boolean Implements IEquatable(Of IChain).Equals
+    Public Overloads Function Equals(other As IChain) As Boolean Implements IEquatable(Of IChain).Equals
         Return TypeOf other Is AcylChain AndAlso CarbonCount = other.CarbonCount AndAlso DoubleBond.Equals(other.DoubleBond) AndAlso Oxidized.Equals(other.Oxidized)
     End Function
 End Class
@@ -157,7 +157,7 @@ Public Class AlkylChain
         Return TypeOf chain Is AlkylChain AndAlso chain.CarbonCount = CarbonCount AndAlso chain.DoubleBondCount = DoubleBondCount AndAlso chain.OxidizedCount = OxidizedCount AndAlso DoubleBond.Includes(chain.DoubleBond) AndAlso Oxidized.Includes(chain.Oxidized)
     End Function
 
-    Public Function Equals(other As IChain) As Boolean Implements IEquatable(Of IChain).Equals
+    Public Overloads Function Equals(other As IChain) As Boolean Implements IEquatable(Of IChain).Equals
         Return TypeOf other Is AlkylChain AndAlso CarbonCount = other.CarbonCount AndAlso DoubleBond.Equals(other.DoubleBond) AndAlso Oxidized.Equals(other.Oxidized)
     End Function
 End Class

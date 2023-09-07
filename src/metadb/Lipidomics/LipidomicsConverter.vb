@@ -1,9 +1,5 @@
-﻿Imports CompMs.Common.Components
-Imports CompMs.Common.Enum
-Imports System.Collections.Generic
-Imports System.Linq
+﻿Imports System.Runtime.InteropServices
 Imports System.Text.RegularExpressions
-Imports System.Runtime.InteropServices
 Imports BioNovoGene.BioDeep.MSEngine
 
 Public Module LipidomicsConverter

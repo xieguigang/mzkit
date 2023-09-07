@@ -1,8 +1,4 @@
-﻿Imports CompMs.Common.DataStructure
-Imports System
-Imports System.Collections.Generic
-Imports System.Collections.ObjectModel
-Imports System.Linq
+﻿Imports System.Collections.ObjectModel
 
 
 Public Interface IOxidized
@@ -75,7 +71,7 @@ Public NotInheritable Class Oxidized
         Return Count = oxidized.Count AndAlso DecidedCount <= oxidized.DecidedCount AndAlso Oxidises.All(New Func(Of Integer, Boolean)(AddressOf oxidized.Oxidises.Contains))
     End Function
 
-    Public Function Equals(other As IOxidized) As Boolean Implements IEquatable(Of IOxidized).Equals
+    Public Overloads Function Equals(other As IOxidized) As Boolean Implements IEquatable(Of IOxidized).Equals
         Return Count = other.Count AndAlso DecidedCount = other.DecidedCount AndAlso Oxidises.All(Function(ox) other.Oxidises.Any(New Func(Of Integer, Boolean)(AddressOf ox.Equals)))
     End Function
 

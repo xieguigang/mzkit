@@ -103,7 +103,7 @@ Public Class Lipid
         End Select
     End Function
 
-    Public Function Equals(other As ILipid) As Boolean Implements IEquatable(Of ILipid).Equals
+    Public Overloads Function Equals(other As ILipid) As Boolean Implements IEquatable(Of ILipid).Equals
         Return LipidClass = other.LipidClass AndAlso AnnotationLevel = other.AnnotationLevel AndAlso Description = other.Description AndAlso Chains.Equals(other.Chains)
     End Function
 
