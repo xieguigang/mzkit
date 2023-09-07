@@ -162,7 +162,7 @@ Public Module StandardMsCharacterizationUtility
         Dim isAllExisted = True
         If refSpectrum.IsNullOrEmpty Then Return True
         For Each refpeak In refSpectrum
-            If Not IsDiagnosticFragmentExist(spectrum, mzTolerance, refpeak.Mass, refpeak.Intensity * 0.01) Then
+            If Not IsDiagnosticFragmentExist(spectrum, mzTolerance, refpeak.mz, refpeak.Intensity * 0.01) Then
                 isAllExisted = False
                 Exit For
             End If
@@ -192,7 +192,7 @@ Public Module StandardMsCharacterizationUtility
 
     Public Function IsDiagnosticFragmentExist(spectrum As IReadOnlyList(Of SpectrumPeak), mzTolerance As Double, diagnosticMz As Double, threshold As Double) As Boolean
         For i = 0 To spectrum.Count - 1
-            Dim mz = spectrum(i).Mass
+            Dim mz = spectrum(i).mz
             Dim intensity = spectrum(i).Intensity ' should be normalized by max intensity to 100
 
             If intensity > threshold AndAlso std.Abs(mz - diagnosticMz) < mzTolerance Then
@@ -204,7 +204,7 @@ Public Module StandardMsCharacterizationUtility
 
     Public Function IsDiagnosticFragmentExist_ResolutionUsed4Intensity(spectrum As IReadOnlyList(Of SpectrumPeak), mzTolerance As Double, diagnosticMz As Double, threshold As Double) As Boolean
         For i = 0 To spectrum.Count - 1
-            Dim mz = spectrum(i).Mass
+            Dim mz = spectrum(i).mz
             Dim intensity = spectrum(i).Resolution ' should be normalized by max intensity to 100
 
             If intensity > threshold AndAlso std.Abs(mz - diagnosticMz) < mzTolerance Then
@@ -217,7 +217,7 @@ Public Module StandardMsCharacterizationUtility
     Public Function CountDetectedIons(exp_spectrum As List(Of SpectrumPeak), ref_spectrum As List(Of SpectrumPeak), tolerance As Double) As Integer
         Dim ionDetectedCounter = 0
         For Each ion In ref_spectrum
-            If IsDiagnosticFragmentExist(exp_spectrum, tolerance, ion.Mass, ion.Intensity * 0.0001) Then
+            If IsDiagnosticFragmentExist(exp_spectrum, tolerance, ion.mz, ion.Intensity * 0.0001) Then
                 ionDetectedCounter += 1
             End If
         Next
@@ -361,12 +361,12 @@ Public Module EieioMsCharacterizationUtility
         Dim doublebondIons_matched = doublebondIons.Where(Function(n) n.IsMatched).ToList()
 
         Dim doublebondHighIons = ref_spectrum.Where(Function(n) n.SpectrumComment.HasFlag(SpectrumComment.doublebond_high)).[Select](Function(n) New DiagnosticIon() With {
-.Mz = n.Mass,
+.Mz = n.mz,
 .IonAbundanceCutOff = 0.0000001,
 .MzTolerance = tolerance
 }).ToList()
         Dim doublebondHighAndLowIons = ref_spectrum.Where(Function(n) n.SpectrumComment.HasFlag(SpectrumComment.doublebond_high) OrElse n.SpectrumComment.HasFlag(SpectrumComment.doublebond_low)).[Select](Function(n) New DiagnosticIon() With {
-.Mz = n.Mass,
+.Mz = n.mz,
 .IonAbundanceCutOff = 0.0000001,
 .MzTolerance = tolerance
 }).ToList()

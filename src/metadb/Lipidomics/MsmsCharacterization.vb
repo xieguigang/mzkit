@@ -29,7 +29,7 @@ Public NotInheritable Class LipidMsmsCharacterizationUtility
 
     Public Shared Function isDiagnosticFragmentExist(spectrum As List(Of SpectrumPeak), ms2Tolerance As Double, diagnosticMz As Double, threshold As Double) As Boolean
         For i = 0 To spectrum.Count - 1
-            Dim mz = spectrum(i).Mass
+            Dim mz = spectrum(i).mz
             Dim intensity = spectrum(i).Intensity ' should be normalized by max intensity to 100
 
             If intensity > threshold AndAlso std.Abs(mz - diagnosticMz) < ms2Tolerance Then
@@ -43,7 +43,7 @@ Public NotInheritable Class LipidMsmsCharacterizationUtility
         Dim frag1intensity = 0.0
         Dim frag2intensity = 0.0
         For i = 0 To spectrum.Count - 1
-            Dim mz = spectrum(i).Mass
+            Dim mz = spectrum(i).mz
             Dim intensity = spectrum(i).Intensity ' should be normalized by max intensity to 100
 
             If intensity > frag1intensity AndAlso std.Abs(mz - fragment1) < ms2Tolerance Then
@@ -63,7 +63,7 @@ Public NotInheritable Class LipidMsmsCharacterizationUtility
 
     Public Shared Function isPeakFoundWithACritetion(spectrum As List(Of SpectrumPeak), beginMz As Double, endMz As Double, threshold As Double) As Boolean
         For i = 0 To spectrum.Count - 1
-            Dim mz = spectrum(i).Mass
+            Dim mz = spectrum(i).mz
             Dim intensity = spectrum(i).Intensity ' should be normalized by max intensity to 100
 
             If intensity > threshold AndAlso beginMz <= mz AndAlso mz <= endMz Then
@@ -1637,9 +1637,9 @@ Public NotInheritable Class LipidMsmsCharacterizationUtility
         averageIntensity = 0.0
         For Each query In queries
             For Each peak In spectrum
-                Dim mz = peak.Mass
+                Dim mz = peak.mz
                 Dim intensity = peak.Intensity ' relative intensity
-                If query.Intensity < intensity AndAlso std.Abs(query.Mass - mz) < ms2Tolerance Then
+                If query.Intensity < intensity AndAlso std.Abs(query.mz - mz) < ms2Tolerance Then
                     foundCount += 1
                     averageIntensity += intensity
                     Exit For
@@ -1729,19 +1729,19 @@ Public NotInheritable Class LipidMsmsCharacterization
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = nl_SN1,
+                                .mz = nl_SN1,
                                 .Intensity = 0.01
                             },
                             New SpectrumPeak() With {
-                                .Mass = nl_SN1_H2O,
+                                .mz = nl_SN1_H2O,
                                 .Intensity = 0.01
                             },
                             New SpectrumPeak() With {
-                                .Mass = nl_SN2,
+                                .mz = nl_SN2,
                                 .Intensity = 0.01
                             },
                             New SpectrumPeak() With {
-                                .Mass = nl_NS2_H2O,
+                                .mz = nl_NS2_H2O,
                                 .Intensity = 0.01
                             }
                         }
@@ -1791,11 +1791,11 @@ Public NotInheritable Class LipidMsmsCharacterization
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = nl_SN1,
+                                .mz = nl_SN1,
                                 .Intensity = 0.01
                             },
                             New SpectrumPeak() With {
-                                .Mass = nl_SN2,
+                                .mz = nl_SN2,
                                 .Intensity = 0.01
                             }
                         }
@@ -1845,11 +1845,11 @@ Public NotInheritable Class LipidMsmsCharacterization
 
                         Dim query = New List(Of SpectrumPeak) From {
                         New SpectrumPeak() With {
-                                .Mass = sn1,
+                                .mz = sn1,
                                 .Intensity = 1.0
                             },
                         New SpectrumPeak() With {
-                                .Mass = sn2,
+                                .mz = sn2,
                                 .Intensity = 1.0
                             }
                     }
@@ -1906,11 +1906,11 @@ Public NotInheritable Class LipidMsmsCharacterization
 
                         Dim query = New List(Of SpectrumPeak) From {
                         New SpectrumPeak() With {
-                                .Mass = sn1,
+                                .mz = sn1,
                                 .Intensity = 0.1
                             },
                         New SpectrumPeak() With {
-                                .Mass = sn2,
+                                .mz = sn2,
                                 .Intensity = 0.1
                             }
                     }
@@ -1957,11 +1957,11 @@ Public NotInheritable Class LipidMsmsCharacterization
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = sn1,
+                                .mz = sn1,
                                 .Intensity = 0.01
                             },
                             New SpectrumPeak() With {
-                                .Mass = sn2,
+                                .mz = sn2,
                                 .Intensity = 0.01
                             }
                         }
@@ -2011,11 +2011,11 @@ Public NotInheritable Class LipidMsmsCharacterization
 
                         Dim query = New List(Of SpectrumPeak) From {
                         New SpectrumPeak() With {
-                                .Mass = sn1,
+                                .mz = sn1,
                                 .Intensity = 1.0
                             },
                         New SpectrumPeak() With {
-                                .Mass = sn2,
+                                .mz = sn2,
                                 .Intensity = 1.0
                             }
                     }
@@ -2068,19 +2068,19 @@ Public NotInheritable Class LipidMsmsCharacterization
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = nl_SN1,
+                                .mz = nl_SN1,
                                 .Intensity = 0.01
                             },
                             New SpectrumPeak() With {
-                                .Mass = nl_SN1_H2O,
+                                .mz = nl_SN1_H2O,
                                 .Intensity = 0.01
                             },
                             New SpectrumPeak() With {
-                                .Mass = nl_SN2,
+                                .mz = nl_SN2,
                                 .Intensity = 0.01
                             },
                             New SpectrumPeak() With {
-                                .Mass = nl_NS2_H2O,
+                                .mz = nl_NS2_H2O,
                                 .Intensity = 0.01
                             }
                         }
@@ -2145,11 +2145,11 @@ Public NotInheritable Class LipidMsmsCharacterization
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = sn1,
+                                .mz = sn1,
                                 .Intensity = 1.0
                             },
                             New SpectrumPeak() With {
-                                .Mass = sn2,
+                                .mz = sn2,
                                 .Intensity = 1.0
                             }
                         }
@@ -2208,27 +2208,27 @@ Public NotInheritable Class LipidMsmsCharacterization
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = nl_SN1,
+                                .mz = nl_SN1,
                                 .Intensity = 0.01
                             },
                             New SpectrumPeak() With {
-                                .Mass = nl_SN1_H2O,
+                                .mz = nl_SN1_H2O,
                                 .Intensity = 0.01
                             },
                             New SpectrumPeak() With {
-                                .Mass = nl_SN2,
+                                .mz = nl_SN2,
                                 .Intensity = 0.01
                             },
                             New SpectrumPeak() With {
-                                .Mass = nl_NS2_H2O,
+                                .mz = nl_NS2_H2O,
                                 .Intensity = 0.01
                             },
                             New SpectrumPeak() With {
-                                .Mass = nl_HD_SN1,
+                                .mz = nl_HD_SN1,
                                 .Intensity = 0.01
                             },
                             New SpectrumPeak() With {
-                                .Mass = nl_HD_SN2,
+                                .mz = nl_HD_SN2,
                                 .Intensity = 0.01
                             }
                         }
@@ -2266,11 +2266,11 @@ Public NotInheritable Class LipidMsmsCharacterization
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = sn1,
+                                .mz = sn1,
                                 .Intensity = 1.0
                             },
                             New SpectrumPeak() With {
-                                .Mass = sn2,
+                                .mz = sn2,
                                 .Intensity = 1.0
                             }
                         }
@@ -2317,11 +2317,11 @@ Public NotInheritable Class LipidMsmsCharacterization
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = nl_SN1,
+                                .mz = nl_SN1,
                                 .Intensity = 0.01
                             },
                             New SpectrumPeak() With {
-                                .Mass = nl_SN2,
+                                .mz = nl_SN2,
                                 .Intensity = 0.01
                             }
                         }
@@ -2381,11 +2381,11 @@ Public NotInheritable Class LipidMsmsCharacterization
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = sn1,
+                                .mz = sn1,
                                 .Intensity = 1.0
                             },
                             New SpectrumPeak() With {
-                                .Mass = sn2,
+                                .mz = sn2,
                                 .Intensity = 1.0
                             }
                         }
@@ -2434,11 +2434,11 @@ Public NotInheritable Class LipidMsmsCharacterization
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = nl_SN1,
+                                .mz = nl_SN1,
                                 .Intensity = 10
                             },
                             New SpectrumPeak() With {
-                                .Mass = nl_SN2,
+                                .mz = nl_SN2,
                                 .Intensity = 10
                             }
                         }
@@ -2555,11 +2555,11 @@ Public NotInheritable Class LipidMsmsCharacterization
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = sn1,
+                                .mz = sn1,
                                 .Intensity = 0.01
                             },
                             New SpectrumPeak() With {
-                                .Mass = sn2,
+                                .mz = sn2,
                                 .Intensity = 0.01
                             }
                         }
@@ -2614,11 +2614,11 @@ Public NotInheritable Class LipidMsmsCharacterization
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = nl_SN1,
+                                .mz = nl_SN1,
                                 .Intensity = 0.01
                             },
                             New SpectrumPeak() With {
-                                .Mass = nl_SN1_H2O,
+                                .mz = nl_SN1_H2O,
                                 .Intensity = 0.01
                             }
                         }
@@ -2665,7 +2665,7 @@ Public NotInheritable Class LipidMsmsCharacterization
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = nl_SN2,
+                                .mz = nl_SN2,
                                 .Intensity = 30.0
                             }
                         }
@@ -2676,7 +2676,7 @@ Public NotInheritable Class LipidMsmsCharacterization
                         If foundCount = 1 Then
                             query = New List(Of SpectrumPeak) From {
                                 New SpectrumPeak() With {
-                                    .Mass = sn1,
+                                    .mz = sn1,
                                     .Intensity = 30.0
                                 }                                'new SpectrumPeak() { Mass = nl_SN1, Intensity = 10.0 }
                                 }
@@ -2779,15 +2779,15 @@ Public NotInheritable Class LipidMsmsCharacterization
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = sn1,
+                                .mz = sn1,
                                 .Intensity = 30.0
                             },
                             New SpectrumPeak() With {
-                                .Mass = nl_SN1,
+                                .mz = nl_SN1,
                                 .Intensity = 1
                             },
                             New SpectrumPeak() With {
-                                .Mass = nl_SN1_H2O,
+                                .mz = nl_SN1_H2O,
                                 .Intensity = 1
                             }
                         }
@@ -2841,7 +2841,7 @@ Public NotInheritable Class LipidMsmsCharacterization
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = sph1,
+                                .mz = sph1,
                                 .Intensity = 0.01
                             }
                         }
@@ -2946,7 +2946,7 @@ Public NotInheritable Class LipidMsmsCharacterization
                         Dim sphFragment = diagnosticMz1 - LipidMsmsCharacterizationUtility.acylCainMass(acylCarbon, acylDouble) + HydrogenMass
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = sphFragment,
+                                .mz = sphFragment,
                                 .Intensity = 0.01
                             }
                         }
@@ -3052,15 +3052,15 @@ Public NotInheritable Class LipidMsmsCharacterization
                                 Dim nl_SN3 = diagnosticMz - LipidMsmsCharacterizationUtility.acylCainMass(sn3Carbon, sn3Double) - H2O + HydrogenMass
                                 Dim query = New List(Of SpectrumPeak) From {
                                     New SpectrumPeak() With {
-                                        .Mass = nl_SN1,
+                                        .mz = nl_SN1,
                                         .Intensity = 5
                                     },
                                     New SpectrumPeak() With {
-                                        .Mass = nl_SN2,
+                                        .mz = nl_SN2,
                                         .Intensity = 5
                                     },
                                     New SpectrumPeak() With {
-                                        .Mass = nl_SN3,
+                                        .mz = nl_SN3,
                                         .Intensity = 5
                                     }
                                 }
@@ -3107,15 +3107,15 @@ Public NotInheritable Class LipidMsmsCharacterization
                                 Dim nl_SN3 = diagnosticMz - LipidMsmsCharacterizationUtility.acylCainMass(sn3Carbon, sn3Double) - H2O + HydrogenMass
                                 Dim query = New List(Of SpectrumPeak) From {
                                     New SpectrumPeak() With {
-                                        .Mass = nl_SN1,
+                                        .mz = nl_SN1,
                                         .Intensity = 0.1
                                     },
                                     New SpectrumPeak() With {
-                                        .Mass = nl_SN2,
+                                        .mz = nl_SN2,
                                         .Intensity = 0.1
                                     },
                                     New SpectrumPeak() With {
-                                        .Mass = nl_SN3,
+                                        .mz = nl_SN3,
                                         .Intensity = 0.1
                                     }
                                 }
@@ -3131,15 +3131,15 @@ Public NotInheritable Class LipidMsmsCharacterization
                                     Dim nl_SN3_H = diagnosticMzH - LipidMsmsCharacterizationUtility.acylCainMass(sn3Carbon, sn3Double) - H2O + HydrogenMass
                                     Dim query2 = New List(Of SpectrumPeak) From {
                                     New SpectrumPeak() With {
-                                            .Mass = nl_SN1_H,
+                                            .mz = nl_SN1_H,
                                             .Intensity = 0.1
                                         },
                                     New SpectrumPeak() With {
-                                            .Mass = nl_SN2_H,
+                                            .mz = nl_SN2_H,
                                             .Intensity = 0.1
                                         },
                                     New SpectrumPeak() With {
-                                            .Mass = nl_SN3_H,
+                                            .mz = nl_SN3_H,
                                             .Intensity = 0.1
                                         }
                                     }
@@ -3298,11 +3298,11 @@ Public NotInheritable Class LipidMsmsCharacterization
 
                         Dim query = New List(Of SpectrumPeak) From {
 New SpectrumPeak() With {
-    .Mass = nl_SN1,
+    .mz = nl_SN1,
     .Intensity = 5
 },
 New SpectrumPeak() With {
-    .Mass = nl_SN2,
+    .mz = nl_SN2,
     .Intensity = 5
 }
 }
@@ -3458,7 +3458,7 @@ New SpectrumPeak() With {
                 Dim diagnosticMzIntensity2 = 0.0
 
                 For i = 0 To spectrum.Count - 1
-                    Dim mz = spectrum(i).Mass
+                    Dim mz = spectrum(i).mz
                     Dim intensity = spectrum(i).Intensity
 
                     If intensity > threshold AndAlso std.Abs(mz - diagnosticMz) < ms2Tolerance Then
@@ -3653,7 +3653,7 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = acylLoss,
+                                .mz = acylLoss,
                                 .Intensity = 0.1
                             }
                          }
@@ -3715,7 +3715,7 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = sn2,
+                                .mz = sn2,
                                 .Intensity = 30.0
                             }    'new SpectrumPeak() { Mass = NL_sn2, Intensity = 0.1 },       'new SpectrumPeak() { Mass = NL_sn2AndWater, Intensity = 0.1 }
                             }
@@ -3775,11 +3775,11 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                                 New SpectrumPeak() With {
-                                .Mass = NL_sn1,
+                                .mz = NL_sn1,
                                 .Intensity = 1
                             },
                                 New SpectrumPeak() With {
-                                .Mass = sn1_rearrange,
+                                .mz = sn1_rearrange,
                                 .Intensity = 5
                             }
                             }
@@ -3849,11 +3849,11 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                         New SpectrumPeak() With {
-                                .Mass = sn2,
+                                .mz = sn2,
                                 .Intensity = 10.0
                             },
                         New SpectrumPeak() With {
-                                .Mass = NL_sn2,
+                                .mz = NL_sn2,
                                 .Intensity = 0.1
                             }
                     }
@@ -3939,7 +3939,7 @@ New SpectrumPeak() With {
 
                             Dim query1 = New List(Of SpectrumPeak) From {
                                 New SpectrumPeak() With {
-                                    .Mass = nl_sn2,
+                                    .mz = nl_sn2,
                                     .Intensity = 0.1
                                 }
                             }
@@ -3951,15 +3951,15 @@ New SpectrumPeak() With {
                             If foundCount1 = 1 Then
                                 Dim query = New List(Of SpectrumPeak) From {
                                 New SpectrumPeak() With {
-                                        .Mass = sn2,
+                                        .mz = sn2,
                                         .Intensity = 0.1
                                     },
                                 New SpectrumPeak() With {
-                                        .Mass = sn2_H2Oloss,
+                                        .mz = sn2_H2Oloss,
                                         .Intensity = 0.1
                                     },
                                 New SpectrumPeak() With {
-                                        .Mass = sn2_xH2Oloss,
+                                        .mz = sn2_xH2Oloss,
                                         .Intensity = 0.1
                                     }      'new SpectrumPeak() { Mass = NL_sn2, Intensity = 0.1 },          'new SpectrumPeak() { Mass = NL_sn2H2O, Intensity = 0.1 }
                                 }
@@ -4036,7 +4036,7 @@ New SpectrumPeak() With {
 
                             Dim query1 = New List(Of SpectrumPeak) From {
                                 New SpectrumPeak() With {
-                                    .Mass = nl_sn2,
+                                    .mz = nl_sn2,
                                     .Intensity = 0.1
                                 }
                             }
@@ -4048,15 +4048,15 @@ New SpectrumPeak() With {
                             If foundCount1 = 1 Then
                                 Dim query = New List(Of SpectrumPeak) From {
                                 New SpectrumPeak() With {
-                                        .Mass = sn2,
+                                        .mz = sn2,
                                         .Intensity = 0.1
                                     },
                                 New SpectrumPeak() With {
-                                        .Mass = sn2_H2Oloss,
+                                        .mz = sn2_H2Oloss,
                                         .Intensity = 0.1
                                     },
                                 New SpectrumPeak() With {
-                                        .Mass = sn2_xH2Oloss,
+                                        .mz = sn2_xH2Oloss,
                                         .Intensity = 0.1
                                     }                         'new SpectrumPeak() { Mass = nl_sn2, Intensity = 0.1 },              'new SpectrumPeak() { Mass = nl_sn2AndWater, Intensity = 0.1 }
                                 }
@@ -4249,7 +4249,7 @@ New SpectrumPeak() With {
 
                             Dim query1 = New List(Of SpectrumPeak) From {
                                 New SpectrumPeak() With {
-                                    .Mass = sn1,
+                                    .mz = sn1,
                                     .Intensity = 10
                                 }
                             }
@@ -4261,15 +4261,15 @@ New SpectrumPeak() With {
                             If foundCount1 = 1 Then
                                 Dim query = New List(Of SpectrumPeak) From {
                                 New SpectrumPeak() With {
-                                        .Mass = sn2,
+                                        .mz = sn2,
                                         .Intensity = 0.1
                                     },
                                 New SpectrumPeak() With {
-                                        .Mass = sn2_H2Oloss,
+                                        .mz = sn2_H2Oloss,
                                         .Intensity = 0.1
                                     },
                                 New SpectrumPeak() With {
-                                        .Mass = sn2_xH2Oloss,
+                                        .mz = sn2_xH2Oloss,
                                         .Intensity = 0.1
                                     }
                             }
@@ -4346,7 +4346,7 @@ New SpectrumPeak() With {
 
                             Dim query1 = New List(Of SpectrumPeak) From {
                                 New SpectrumPeak() With {
-                                    .Mass = sn1,
+                                    .mz = sn1,
                                     .Intensity = 10
                                 }
                             }
@@ -4358,15 +4358,15 @@ New SpectrumPeak() With {
                             If foundCount1 = 1 Then
                                 Dim query = New List(Of SpectrumPeak) From {
                                 New SpectrumPeak() With {
-                                        .Mass = sn2,
+                                        .mz = sn2,
                                         .Intensity = 0.1
                                     },
                                 New SpectrumPeak() With {
-                                        .Mass = sn2_H2Oloss,
+                                        .mz = sn2_H2Oloss,
                                         .Intensity = 0.1
                                     },
                                 New SpectrumPeak() With {
-                                        .Mass = sn2_xH2Oloss,
+                                        .mz = sn2_xH2Oloss,
                                         .Intensity = 0.1
                                     }
                             }
@@ -4467,7 +4467,7 @@ New SpectrumPeak() With {
 
                             Dim query1 = New List(Of SpectrumPeak) From {
                                 New SpectrumPeak() With {
-                                    .Mass = sn1,
+                                    .mz = sn1,
                                     .Intensity = 10
                                 }
                             }
@@ -4479,15 +4479,15 @@ New SpectrumPeak() With {
                             If foundCount1 = 1 Then
                                 Dim query = New List(Of SpectrumPeak) From {
                                 New SpectrumPeak() With {
-                                        .Mass = sn2,
+                                        .mz = sn2,
                                         .Intensity = 0.1
                                     },
                                 New SpectrumPeak() With {
-                                        .Mass = sn2_H2Oloss,
+                                        .mz = sn2_H2Oloss,
                                         .Intensity = 0.1
                                     },
                                 New SpectrumPeak() With {
-                                        .Mass = sn2_xH2Oloss,
+                                        .mz = sn2_xH2Oloss,
                                         .Intensity = 0.1
                                     }
                             }
@@ -4581,7 +4581,7 @@ New SpectrumPeak() With {
 
                             Dim query1 = New List(Of SpectrumPeak) From {
                                 New SpectrumPeak() With {
-                                    .Mass = sn1,
+                                    .mz = sn1,
                                     .Intensity = 10
                                 }
                             }
@@ -4593,15 +4593,15 @@ New SpectrumPeak() With {
                             If foundCount1 = 1 Then
                                 Dim query = New List(Of SpectrumPeak) From {
                                 New SpectrumPeak() With {
-                                        .Mass = sn2,
+                                        .mz = sn2,
                                         .Intensity = 0.1
                                     },
                                 New SpectrumPeak() With {
-                                        .Mass = sn2_H2Oloss,
+                                        .mz = sn2_H2Oloss,
                                         .Intensity = 0.1
                                     },
                                 New SpectrumPeak() With {
-                                        .Mass = sn2_xH2Oloss,
+                                        .mz = sn2_xH2Oloss,
                                         .Intensity = 0.1
                                     }
                             }
@@ -4691,7 +4691,7 @@ New SpectrumPeak() With {
 
                             Dim query1 = New List(Of SpectrumPeak) From {
                                 New SpectrumPeak() With {
-                                    .Mass = sn1,
+                                    .mz = sn1,
                                     .Intensity = 10
                                 }
                             }
@@ -4703,15 +4703,15 @@ New SpectrumPeak() With {
                             If foundCount1 = 1 Then
                                 Dim query = New List(Of SpectrumPeak) From {
                                 New SpectrumPeak() With {
-                                        .Mass = sn2,
+                                        .mz = sn2,
                                         .Intensity = 0.1
                                     },
                                 New SpectrumPeak() With {
-                                        .Mass = sn2_H2Oloss,
+                                        .mz = sn2_H2Oloss,
                                         .Intensity = 0.1
                                     },
                                 New SpectrumPeak() With {
-                                        .Mass = sn2_xH2Oloss,
+                                        .mz = sn2_xH2Oloss,
                                         .Intensity = 0.1
                                     }
                             }
@@ -4788,11 +4788,11 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = nl_SN1,
+                                .mz = nl_SN1,
                                 .Intensity = 10
                             },
                             New SpectrumPeak() With {
-                                .Mass = nl_SN2,
+                                .mz = nl_SN2,
                                 .Intensity = 10
                             }
                         }
@@ -4824,11 +4824,11 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = nl_SN1,
+                                .mz = nl_SN1,
                                 .Intensity = 0.1
                             },
                             New SpectrumPeak() With {
-                                .Mass = nl_SN2,
+                                .mz = nl_SN2,
                                 .Intensity = 0.1
                             }
                         }
@@ -4878,11 +4878,11 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                         New SpectrumPeak() With {
-                                .Mass = sn1,
+                                .mz = sn1,
                                 .Intensity = 5.0
                             },
                         New SpectrumPeak() With {
-                                .Mass = sn2,
+                                .mz = sn2,
                                 .Intensity = 5.0
                             }
                     }
@@ -4933,19 +4933,19 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = nl_SN1,
+                                .mz = nl_SN1,
                                 .Intensity = 1
                             },
                             New SpectrumPeak() With {
-                                .Mass = nl_SN2,
+                                .mz = nl_SN2,
                                 .Intensity = 1
                             },
                             New SpectrumPeak() With {
-                                .Mass = nl_SN1_H2O,
+                                .mz = nl_SN1_H2O,
                                 .Intensity = 1
                             },
                             New SpectrumPeak() With {
-                                .Mass = nl_SN2_H2O,
+                                .mz = nl_SN2_H2O,
                                 .Intensity = 1
                             }
                         }
@@ -4978,11 +4978,11 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = nl_SN1,
+                                .mz = nl_SN1,
                                 .Intensity = 0.1
                             },
                             New SpectrumPeak() With {
-                                .Mass = nl_SN2,
+                                .mz = nl_SN2,
                                 .Intensity = 0.1
                             }
                         }
@@ -5026,11 +5026,11 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                         New SpectrumPeak() With {
-                                .Mass = sn1,
+                                .mz = sn1,
                                 .Intensity = 5.0
                             },
                         New SpectrumPeak() With {
-                                .Mass = sn2,
+                                .mz = sn2,
                                 .Intensity = 5.0
                             }
                     }
@@ -5085,7 +5085,7 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = sn2Dmag,
+                                .mz = sn2Dmag,
                                 .Intensity = 30
                             }
                         }
@@ -5124,7 +5124,7 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = nl_SN1,
+                                .mz = nl_SN1,
                                 .Intensity = 10
                             }
                         }
@@ -5164,11 +5164,11 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                         New SpectrumPeak() With {
-                                .Mass = sn2,
+                                .mz = sn2,
                                 .Intensity = 10.0
                             },
                         New SpectrumPeak() With {
-                                .Mass = NL_sn2,
+                                .mz = NL_sn2,
                                 .Intensity = 5.0
                             }
                     }
@@ -5306,7 +5306,7 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = nl_SN1,
+                                .mz = nl_SN1,
                                 .Intensity = 80
                             }
                         }
@@ -5362,7 +5362,7 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = nl_SN1,
+                                .mz = nl_SN1,
                                 .Intensity = 10
                             }
                         }
@@ -5401,7 +5401,7 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = nl_SN1,
+                                .mz = nl_SN1,
                                 .Intensity = 10
                             }
                         }
@@ -5441,11 +5441,11 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = sn2,
+                                .mz = sn2,
                                 .Intensity = 10.0
                             },
                             New SpectrumPeak() With {
-                                .Mass = NL_sn2,
+                                .mz = NL_sn2,
                                 .Intensity = 5.0
                             }
                         }
@@ -5499,11 +5499,11 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = sn1,
+                                .mz = sn1,
                                 .Intensity = 0.01
                             },
                             New SpectrumPeak() With {
-                                .Mass = sn2,
+                                .mz = sn2,
                                 .Intensity = 0.01
                             }                 'new SpectrumPeak() { Mass = nl_SN1, Intensity = 0.01 },                     'new SpectrumPeak() { Mass = nl_SN1_H2O, Intensity = 0.01 },                  'new SpectrumPeak() { Mass = nl_SN2, Intensity = 0.01 },                        'new SpectrumPeak() { Mass = nl_NS2_H2O, Intensity = 0.01 }
                         }
@@ -5555,31 +5555,31 @@ New SpectrumPeak() With {
 
                 Dim query = New List(Of SpectrumPeak) From {
                                     New SpectrumPeak() With {
-                        .Mass = 255.2329539,
+                        .mz = 255.2329539,
                         .Intensity = 5
                     },    ' 16:0
                                     New SpectrumPeak() With {
-                        .Mass = 283.264254,
+                        .mz = 283.264254,
                         .Intensity = 5
                     },     ' 18:0
                                     New SpectrumPeak() With {
-                        .Mass = 281.2486039,
+                        .mz = 281.2486039,
                         .Intensity = 5
                     },    ' 18:1 
                                     New SpectrumPeak() With {
-                        .Mass = 279.2329539,
+                        .mz = 279.2329539,
                         .Intensity = 5
                     },     ' 18:2
                                     New SpectrumPeak() With {
-                        .Mass = 277.2173038,
+                        .mz = 277.2173038,
                         .Intensity = 5
                     },     ' 18:3,
                                     New SpectrumPeak() With {
-                        .Mass = 303.2329539,
+                        .mz = 303.2329539,
                         .Intensity = 5
                     },     ' 20:4,
                                     New SpectrumPeak() With {
-                        .Mass = 327.2329539,
+                        .mz = 327.2329539,
                         .Intensity = 5
                     }     ' 22:6,
                                 }
@@ -5766,15 +5766,15 @@ New SpectrumPeak() With {
                                 Dim nl_SN3 = diagnosticMz - LipidMsmsCharacterizationUtility.acylCainMass(sn3Carbon, sn3Double) - H2O + Proton
                                 Dim query = New List(Of SpectrumPeak) From {
                                     New SpectrumPeak() With {
-                                        .Mass = nl_SN1,
+                                        .mz = nl_SN1,
                                         .Intensity = 5
                                     },
                                     New SpectrumPeak() With {
-                                        .Mass = nl_SN2,
+                                        .mz = nl_SN2,
                                         .Intensity = 5
                                     },
                                     New SpectrumPeak() With {
-                                        .Mass = nl_SN3,
+                                        .mz = nl_SN3,
                                         .Intensity = 5
                                     }
                                 }
@@ -5835,11 +5835,11 @@ New SpectrumPeak() With {
                                 'new SpectrumPeak() { Mass = nl_SN1, Intensity = 0.1 },
                                 Dim query = New List(Of SpectrumPeak) From {
                                         New SpectrumPeak() With {
-                                            .Mass = nl_SN2,
+                                            .mz = nl_SN2,
                                             .Intensity = 1
                                         },
                                         New SpectrumPeak() With {
-                                            .Mass = nl_SN3,
+                                            .mz = nl_SN3,
                                             .Intensity = 1
                                         }
                                     }
@@ -5856,11 +5856,11 @@ New SpectrumPeak() With {
                                     'new SpectrumPeak() { Mass = nl_SN1_H, Intensity = 0.1 },
                                     Dim query2 = New List(Of SpectrumPeak) From {
                                                                                       New SpectrumPeak() With {
-                                                .Mass = nl_SN2_H,
+                                                .mz = nl_SN2_H,
                                                 .Intensity = 0.1
                                             },
                                             New SpectrumPeak() With {
-                                                .Mass = nl_SN3_H,
+                                                .mz = nl_SN3_H,
                                                 .Intensity = 0.1
                                             }
                                             }
@@ -5930,19 +5930,19 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = nl_SN1,
+                                .mz = nl_SN1,
                                 .Intensity = 0.01
                             },
                             New SpectrumPeak() With {
-                                .Mass = nl_SN1_H2O,
+                                .mz = nl_SN1_H2O,
                                 .Intensity = 0.01
                             },
                             New SpectrumPeak() With {
-                                .Mass = nl_SN2,
+                                .mz = nl_SN2,
                                 .Intensity = 0.01
                             },
                             New SpectrumPeak() With {
-                                .Mass = nl_NS2_H2O,
+                                .mz = nl_NS2_H2O,
                                 .Intensity = 0.01
                             }
                         }
@@ -5987,11 +5987,11 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = nl_SN1,
+                                .mz = nl_SN1,
                                 .Intensity = 0.01
                             },
                             New SpectrumPeak() With {
-                                .Mass = nl_SN2,
+                                .mz = nl_SN2,
                                 .Intensity = 0.01
                             }
                         }
@@ -6030,11 +6030,11 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = SN1,
+                                .mz = SN1,
                                 .Intensity = 0.01
                             },
                             New SpectrumPeak() With {
-                                .Mass = SN2,
+                                .mz = SN2,
                                 .Intensity = 0.01
                             }
                         }
@@ -6127,7 +6127,7 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = SN1,
+                                .mz = SN1,
                                 .Intensity = 0.01
                             }
                         }
@@ -6191,19 +6191,19 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = nl_SN1,
+                                .mz = nl_SN1,
                                 .Intensity = 0.01
                             },
                             New SpectrumPeak() With {
-                                .Mass = nl_SN1_H2O,
+                                .mz = nl_SN1_H2O,
                                 .Intensity = 0.01
                             },
                             New SpectrumPeak() With {
-                                .Mass = nl_SN2,
+                                .mz = nl_SN2,
                                 .Intensity = 0.01
                             },
                             New SpectrumPeak() With {
-                                .Mass = nl_NS2_H2O,
+                                .mz = nl_NS2_H2O,
                                 .Intensity = 0.01
                             }
                         }
@@ -6284,11 +6284,11 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = nl_SN1,
+                                .mz = nl_SN1,
                                 .Intensity = 10.0
                             },
                             New SpectrumPeak() With {
-                                .Mass = nl_SN2,
+                                .mz = nl_SN2,
                                 .Intensity = 10.0
                             }
                         }
@@ -6327,11 +6327,11 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = sn1,
+                                .mz = sn1,
                                 .Intensity = 5.0
                             },
                             New SpectrumPeak() With {
-                                .Mass = sn2,
+                                .mz = sn2,
                                 .Intensity = 5.0
                             }
                         }
@@ -6393,15 +6393,15 @@ New SpectrumPeak() With {
 
                                 Dim query = New List(Of SpectrumPeak) From {
                                     New SpectrumPeak() With {
-                                        .Mass = SN1Glc,
+                                        .mz = SN1Glc,
                                         .Intensity = 1
                                     },
                                     New SpectrumPeak() With {
-                                        .Mass = SN2Gly,
+                                        .mz = SN2Gly,
                                         .Intensity = 1
                                     },
                                     New SpectrumPeak() With {
-                                        .Mass = SN3Gly,
+                                        .mz = SN3Gly,
                                         .Intensity = 1
                                     }
                                 }
@@ -6449,15 +6449,15 @@ New SpectrumPeak() With {
 
                                 Dim query = New List(Of SpectrumPeak) From {
                                     New SpectrumPeak() With {
-                                        .Mass = sn1,
+                                        .mz = sn1,
                                         .Intensity = 1
                                     },
                                     New SpectrumPeak() With {
-                                        .Mass = sn2,
+                                        .mz = sn2,
                                         .Intensity = 1
                                     },
                                     New SpectrumPeak() With {
-                                        .Mass = sn3,
+                                        .mz = sn3,
                                         .Intensity = 1
                                     }
                                 }
@@ -6514,11 +6514,11 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = nl_SN1,
+                                .mz = nl_SN1,
                                 .Intensity = 10.0
                             },
                             New SpectrumPeak() With {
-                                .Mass = nl_SN2,
+                                .mz = nl_SN2,
                                 .Intensity = 10.0
                             }
                         }
@@ -6562,19 +6562,19 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = sn1,
+                                .mz = sn1,
                                 .Intensity = 0.1
                             },
                             New SpectrumPeak() With {
-                                .Mass = sn2,
+                                .mz = sn2,
                                 .Intensity = 0.1
                             },
                             New SpectrumPeak() With {
-                                .Mass = nl_SN1,
+                                .mz = nl_SN1,
                                 .Intensity = 0.1
                             },
                             New SpectrumPeak() With {
-                                .Mass = nl_SN2,
+                                .mz = nl_SN2,
                                 .Intensity = 0.1
                             }
                         }
@@ -6622,11 +6622,11 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                         New SpectrumPeak() With {
-                                .Mass = sn1,
+                                .mz = sn1,
                                 .Intensity = 0.1
                             },
                         New SpectrumPeak() With {
-                                .Mass = sn2,
+                                .mz = sn2,
                                 .Intensity = 0.1
                             }
                     }
@@ -6667,11 +6667,11 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                         New SpectrumPeak() With {
-                                .Mass = sn1,
+                                .mz = sn1,
                                 .Intensity = 5.0
                             },
                         New SpectrumPeak() With {
-                                .Mass = sn2,
+                                .mz = sn2,
                                 .Intensity = 5.0
                             }
                     }
@@ -6720,11 +6720,11 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                         New SpectrumPeak() With {
-                                .Mass = sn1,
+                                .mz = sn1,
                                 .Intensity = 0.1
                             },
                         New SpectrumPeak() With {
-                                .Mass = sn2,
+                                .mz = sn2,
                                 .Intensity = 0.1
                             }
                     }
@@ -6767,11 +6767,11 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                         New SpectrumPeak() With {
-                                .Mass = sn1,
+                                .mz = sn1,
                                 .Intensity = 5.0
                             },
                         New SpectrumPeak() With {
-                                .Mass = sn2,
+                                .mz = sn2,
                                 .Intensity = 5.0
                             }
                     }
@@ -6821,11 +6821,11 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                         New SpectrumPeak() With {
-                                .Mass = sn1,
+                                .mz = sn1,
                                 .Intensity = 0.1
                             },
                         New SpectrumPeak() With {
-                                .Mass = sn2,
+                                .mz = sn2,
                                 .Intensity = 0.1
                             }
                     }
@@ -6863,11 +6863,11 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                         New SpectrumPeak() With {
-                                .Mass = sn1,
+                                .mz = sn1,
                                 .Intensity = 5.0
                             },
                         New SpectrumPeak() With {
-                                .Mass = sn2,
+                                .mz = sn2,
                                 .Intensity = 5.0
                             }
                     }
@@ -6926,15 +6926,15 @@ New SpectrumPeak() With {
 
                                 Dim query = New List(Of SpectrumPeak) From {
                                     New SpectrumPeak() With {
-                                        .Mass = SN1Gly,
+                                        .mz = SN1Gly,
                                         .Intensity = 1.0
                                     },
                                     New SpectrumPeak() With {
-                                        .Mass = SN2Gly,
+                                        .mz = SN2Gly,
                                         .Intensity = 1.0
                                     },
                                     New SpectrumPeak() With {
-                                        .Mass = SN3Gly,
+                                        .mz = SN3Gly,
                                         .Intensity = 1.0
                                     }
                                 }
@@ -6989,15 +6989,15 @@ New SpectrumPeak() With {
 
                                 Dim query = New List(Of SpectrumPeak) From {
                                     New SpectrumPeak() With {
-                                        .Mass = sn1,
+                                        .mz = sn1,
                                         .Intensity = 0.1
                                     },
                                     New SpectrumPeak() With {
-                                        .Mass = sn2,
+                                        .mz = sn2,
                                         .Intensity = 0.1
                                     },
                                     New SpectrumPeak() With {
-                                        .Mass = sn3,
+                                        .mz = sn3,
                                         .Intensity = 0.1
                                     }
                                 }
@@ -7075,11 +7075,11 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
 New SpectrumPeak() With {
-    .Mass = SN1SN2Gly,
+    .mz = SN1SN2Gly,
     .Intensity = 50
 },
 New SpectrumPeak() With {
-    .Mass = SN3SN4Gly,
+    .mz = SN3SN4Gly,
     .Intensity = 50
 }
 }
@@ -7122,11 +7122,11 @@ New SpectrumPeak() With {
 
                     Dim query2 = New List(Of SpectrumPeak) From {
 New SpectrumPeak() With {
-.Mass = SN1_SN2,
+.mz = SN1_SN2,
 .Intensity = 1.0
 },
 New SpectrumPeak() With {
-.Mass = SN3_SN4,
+.mz = SN3_SN4,
 .Intensity = 1.0
 }
 }
@@ -7177,19 +7177,19 @@ New SpectrumPeak() With {
 
                                         Dim query = New List(Of SpectrumPeak) From {
 New SpectrumPeak() With {
-.Mass = SN1,
+.mz = SN1,
 .Intensity = 1
 },
 New SpectrumPeak() With {
-.Mass = SN2,
+.mz = SN2,
 .Intensity = 1
 },
 New SpectrumPeak() With {
-.Mass = SN3,
+.mz = SN3,
 .Intensity = 1
 },
 New SpectrumPeak() With {
-.Mass = SN4,
+.mz = SN4,
 .Intensity = 1
 }
 }
@@ -7276,19 +7276,19 @@ New SpectrumPeak() With {
 
                                     Dim query = New List(Of SpectrumPeak) From {
 New SpectrumPeak() With {
-.Mass = SN1,
+.mz = SN1,
 .Intensity = 1
 },
 New SpectrumPeak() With {
-.Mass = SN2,
+.mz = SN2,
 .Intensity = 1
 },
 New SpectrumPeak() With {
-.Mass = SN3,
+.mz = SN3,
 .Intensity = 1
 },
 New SpectrumPeak() With {
-.Mass = SN4,
+.mz = SN4,
 .Intensity = 1
 }
 }
@@ -7361,11 +7361,11 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
 New SpectrumPeak() With {
-    .Mass = SN1SN2Gly,
+    .mz = SN1SN2Gly,
     .Intensity = 1
 },
 New SpectrumPeak() With {
-    .Mass = SN3SN4Gly,
+    .mz = SN3SN4Gly,
     .Intensity = 1
 }
 }
@@ -7437,26 +7437,26 @@ New SpectrumPeak() With {
 
                                 Dim query = New List(Of SpectrumPeak) From {
 New SpectrumPeak() With {
-.Mass = SN1,
+.mz = SN1,
 .Intensity = 0.1
 },
 New SpectrumPeak() With {
-.Mass = SN2,
+.mz = SN2,
 .Intensity = 5
 },
 New SpectrumPeak() With {
-.Mass = SN3,
+.mz = SN3,
 .Intensity = 5
 }
 }
 
                                 Dim query2 = New List(Of SpectrumPeak) From {
 New SpectrumPeak() With {
-.Mass = SN1_PA,
+.mz = SN1_PA,
 .Intensity = 5
 },
 New SpectrumPeak() With {
-.Mass = SN2_SN3_PA,
+.mz = SN2_SN3_PA,
 .Intensity = 5
 }
 }
@@ -7523,11 +7523,11 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
 New SpectrumPeak() With {
-.Mass = SN1_PA,
+.mz = SN1_PA,
 .Intensity = 5.0
 },
 New SpectrumPeak() With {
-.Mass = SN2_PA,
+.mz = SN2_PA,
 .Intensity = 5.0
 }
 }
@@ -7617,11 +7617,11 @@ New SpectrumPeak() With {
                 Dim nl_H2O = theoreticalMz - H2O ' -H2O
                 Dim query = New List(Of SpectrumPeak) From {
 New SpectrumPeak() With {
-.Mass = alphaOHflag01,
+.mz = alphaOHflag01,
 .Intensity = 10.0
 },
 New SpectrumPeak() With {
-.Mass = nl_H2O,
+.mz = nl_H2O,
 .Intensity = 1.0
 }
 }
@@ -7732,17 +7732,17 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
 New SpectrumPeak() With {
-.Mass = NL_SN1,
+.mz = NL_SN1,
 .Intensity = 10.0
 },
 New SpectrumPeak() With {
-.Mass = NL_SN2,
+.mz = NL_SN2,
 .Intensity = 1.0
 }
 }
                         Dim query2 = New List(Of SpectrumPeak) From {
 New SpectrumPeak() With {
-.Mass = aahfaFrag1,
+.mz = aahfaFrag1,
 .Intensity = 10.0
 }
 }
@@ -7803,11 +7803,11 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
 New SpectrumPeak() With {
-.Mass = NL_SN1,
+.mz = NL_SN1,
 .Intensity = 0.5
 },
 New SpectrumPeak() With {
-.Mass = NL_SN1_header,
+.mz = NL_SN1_header,
 .Intensity = 5.0
 }
 }
@@ -7862,7 +7862,7 @@ New SpectrumPeak() With {
                         ' must query
                         Dim queryMust = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = sph2,
+                                .mz = sph2,
                                 .Intensity = 5
                             }
                         }
@@ -7873,11 +7873,11 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = sph1,
+                                .mz = sph1,
                                 .Intensity = 1
                             },
                             New SpectrumPeak() With {
-                                .Mass = sph3,
+                                .mz = sph3,
                                 .Intensity = 1
                             }
                         }
@@ -7923,7 +7923,7 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = sph3,
+                                .mz = sph3,
                                 .Intensity = 2
                             }
                         }
@@ -7982,15 +7982,15 @@ New SpectrumPeak() With {
                         '    sphChain_loss + " " + sphFragment + " " + acylFragment);
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = sphChain_loss,
+                                .mz = sphChain_loss,
                                 .Intensity = 5
                             },
                             New SpectrumPeak() With {
-                                .Mass = sphFragment,
+                                .mz = sphFragment,
                                 .Intensity = 1
                             },
                             New SpectrumPeak() With {
-                                .Mass = acylFragment,
+                                .mz = acylFragment,
                                 .Intensity = 1
                             }
                         }
@@ -8042,11 +8042,11 @@ New SpectrumPeak() With {
                         ' must query
                         Dim queryMust = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = diagnosticMz,
+                                .mz = diagnosticMz,
                                 .Intensity = 5
                             },
                             New SpectrumPeak() With {
-                                .Mass = sph2,
+                                .mz = sph2,
                                 .Intensity = 10
                             }
                         }
@@ -8113,7 +8113,7 @@ New SpectrumPeak() With {
                     ' must query
                     Dim queryMust = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                            .Mass = sph2,
+                            .mz = sph2,
                             .Intensity = 5
                         }
                         }
@@ -8124,11 +8124,11 @@ New SpectrumPeak() With {
 
                     Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                            .Mass = sph1,
+                            .mz = sph1,
                             .Intensity = 5
                         },
                             New SpectrumPeak() With {
-                            .Mass = sph3,
+                            .mz = sph3,
                             .Intensity = 5
                         }
                         }
@@ -8171,7 +8171,7 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = sph3,
+                                .mz = sph3,
                                 .Intensity = 1
                             }
                         }
@@ -8226,15 +8226,15 @@ New SpectrumPeak() With {
                     Dim acylFragment = LipidMsmsCharacterizationUtility.fattyacidProductIon(acylCarbon, acylDouble) - OxygenMass - 2 * HydrogenMass ' 
                     Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                            .Mass = sphChain_loss,
+                            .mz = sphChain_loss,
                             .Intensity = 5
                         },
                             New SpectrumPeak() With {
-                            .Mass = sphFragment,
+                            .mz = sphFragment,
                             .Intensity = 1
                         },
                             New SpectrumPeak() With {
-                            .Mass = acylFragment,
+                            .mz = acylFragment,
                             .Intensity = 1
                         }
                         }
@@ -8298,15 +8298,15 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = sph1,
+                                .mz = sph1,
                                 .Intensity = 5
                             },
                             New SpectrumPeak() With {
-                                .Mass = sph2,
+                                .mz = sph2,
                                 .Intensity = 10
                             },
                             New SpectrumPeak() With {
-                                .Mass = sph3,
+                                .mz = sph3,
                                 .Intensity = 5
                             }                          'new SpectrumPeak() { Mass = acylamide, Intensity = 0.01 }
                             }
@@ -8343,7 +8343,7 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = sph3,
+                                .mz = sph3,
                                 .Intensity = 1
                             }
                         }
@@ -8396,15 +8396,15 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = sphChain_loss,
+                                .mz = sphChain_loss,
                                 .Intensity = 0.1
                             },
                             New SpectrumPeak() With {
-                                .Mass = sphFragment,
+                                .mz = sphFragment,
                                 .Intensity = 0.1
                             },
                             New SpectrumPeak() With {
-                                .Mass = acylFragment,
+                                .mz = acylFragment,
                                 .Intensity = 0.1
                             }
                         }
@@ -8473,15 +8473,15 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = sph1,
+                                .mz = sph1,
                                 .Intensity = 1
                             },
                             New SpectrumPeak() With {
-                                .Mass = sph2,
+                                .mz = sph2,
                                 .Intensity = 1
                             },
                             New SpectrumPeak() With {
-                                .Mass = sph3,
+                                .mz = sph3,
                                 .Intensity = 1
                             }                            'new SpectrumPeak() { Mass = acylamide, Intensity = 0.01 }
                             }
@@ -8520,7 +8520,7 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = sph3,
+                                .mz = sph3,
                                 .Intensity = 1
                             }
                         }
@@ -8575,7 +8575,7 @@ New SpectrumPeak() With {
                         'Console.WriteLine("HexCer-O " + sphCarbon + ":" + sphDouble + "/" + acylCarbon + ":" + acylDouble + " " + acylFragment);
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = acylFragment,
+                                .mz = acylFragment,
                                 .Intensity = 0.1
                             }
                         }
@@ -8641,11 +8641,11 @@ New SpectrumPeak() With {
 
                     Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                            .Mass = sph1,
+                            .mz = sph1,
                             .Intensity = 5
                         },
                             New SpectrumPeak() With {
-                            .Mass = sph2,
+                            .mz = sph2,
                             .Intensity = 5
                         }                            'new SpectrumPeak() { Mass = acylamide, Intensity = 0.01 }
                             }
@@ -8681,7 +8681,7 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = sph3,
+                                .mz = sph3,
                                 .Intensity = 1
                             }
                         }
@@ -8734,15 +8734,15 @@ New SpectrumPeak() With {
 
                     Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                            .Mass = sphChain_loss,
+                            .mz = sphChain_loss,
                             .Intensity = 0.1
                         },
                             New SpectrumPeak() With {
-                            .Mass = sphFragment,
+                            .mz = sphFragment,
                             .Intensity = 0.1
                         },
                             New SpectrumPeak() With {
-                            .Mass = acylFragment,
+                            .mz = acylFragment,
                             .Intensity = 0.1
                         }
                         }
@@ -8798,15 +8798,15 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = sph1,
+                                .mz = sph1,
                                 .Intensity = 3
                             },
                             New SpectrumPeak() With {
-                                .Mass = sph2,
+                                .mz = sph2,
                                 .Intensity = 3
                             },
                             New SpectrumPeak() With {
-                                .Mass = sph3,
+                                .mz = sph3,
                                 .Intensity = 3
                             }                            'new SpectrumPeak() { Mass = acylamide, Intensity = 0.01 }
                             }
@@ -8849,7 +8849,7 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = sph3,
+                                .mz = sph3,
                                 .Intensity = 1
                             }
                         }
@@ -8918,15 +8918,15 @@ New SpectrumPeak() With {
                         Dim acylFragment = LipidMsmsCharacterizationUtility.fattyacidProductIon(acylCarbon, acylDouble) + OxygenMass
                         Dim query = New List(Of SpectrumPeak) From {
                                 New SpectrumPeak() With {
-                                .Mass = sphChain_loss,
+                                .mz = sphChain_loss,
                                 .Intensity = 0.1
                             },
                                 New SpectrumPeak() With {
-                                .Mass = sphFragment,
+                                .mz = sphFragment,
                                 .Intensity = 1
                             },
                                 New SpectrumPeak() With {
-                                .Mass = acylFragment,
+                                .mz = acylFragment,
                                 .Intensity = 1
                             }
                             }
@@ -8975,15 +8975,15 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = sph1,
+                                .mz = sph1,
                                 .Intensity = 1
                             },
                             New SpectrumPeak() With {
-                                .Mass = sph2,
+                                .mz = sph2,
                                 .Intensity = 1
                             },
                             New SpectrumPeak() With {
-                                .Mass = sph3,
+                                .mz = sph3,
                                 .Intensity = 1
                             }                            'new SpectrumPeak() { Mass = acylamide, Intensity = 0.01 }
                             }
@@ -9107,7 +9107,7 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = sph2,
+                                .mz = sph2,
                                 .Intensity = 1
                             }
                         }
@@ -9223,7 +9223,7 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = sph2,
+                                .mz = sph2,
                                 .Intensity = 1
                             }
                         }
@@ -9278,19 +9278,19 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = sph1,
+                                .mz = sph1,
                                 .Intensity = 5
                             },
                             New SpectrumPeak() With {
-                                .Mass = sph2,
+                                .mz = sph2,
                                 .Intensity = 5
                             },
                             New SpectrumPeak() With {
-                                .Mass = sph3,
+                                .mz = sph3,
                                 .Intensity = 10
                             },
                             New SpectrumPeak() With {
-                                .Mass = sph4,
+                                .mz = sph4,
                                 .Intensity = 5
                             }                        'new SpectrumPeak() { Mass = acylamide, Intensity = 0.01 }
                             }
@@ -9321,7 +9321,7 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = sph3,
+                                .mz = sph3,
                                 .Intensity = 1
                             }
                         }
@@ -9371,19 +9371,19 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = sphChain_loss,
+                                .mz = sphChain_loss,
                                 .Intensity = 1
                             },
                             New SpectrumPeak() With {
-                                .Mass = sphFragment,
+                                .mz = sphFragment,
                                 .Intensity = 0.1
                             },
                             New SpectrumPeak() With {
-                                .Mass = acylFragment1,
+                                .mz = acylFragment1,
                                 .Intensity = 0.01
                             },
                             New SpectrumPeak() With {
-                                .Mass = acylFragment2,
+                                .mz = acylFragment2,
                                 .Intensity = 0.01
                             }
                         }
@@ -9441,19 +9441,19 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = sph1,
+                                .mz = sph1,
                                 .Intensity = 1
                             },
                             New SpectrumPeak() With {
-                                .Mass = sph2,
+                                .mz = sph2,
                                 .Intensity = 1
                             },
                             New SpectrumPeak() With {
-                                .Mass = sph3,
+                                .mz = sph3,
                                 .Intensity = 1
                             },
                             New SpectrumPeak() With {
-                                .Mass = sph4,
+                                .mz = sph4,
                                 .Intensity = 1
                             }                          'new SpectrumPeak() { Mass = acylamide, Intensity = 0.01 }
                             }
@@ -9493,7 +9493,7 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = sph3,
+                                .mz = sph3,
                                 .Intensity = 1
                             }
                         }
@@ -9543,15 +9543,15 @@ New SpectrumPeak() With {
                         Dim acylFragment2 = LipidMsmsCharacterizationUtility.fattyacidProductIon(acylCarbon, acylDouble) - 12 - OxygenMass - 2 * HydrogenMass ' FA(+OH) -C -O -2H(may be not sure)
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = sphChain_loss,
+                                .mz = sphChain_loss,
                                 .Intensity = 1
                             },
                             New SpectrumPeak() With {
-                                .Mass = acylFragment1,
+                                .mz = acylFragment1,
                                 .Intensity = 0.1
                             },
                             New SpectrumPeak() With {
-                                .Mass = acylFragment2,
+                                .mz = acylFragment2,
                                 .Intensity = 0.1
                             }
                         }
@@ -9638,15 +9638,15 @@ New SpectrumPeak() With {
                         Dim acylFragment = LipidMsmsCharacterizationUtility.fattyacidProductIon(acylCarbon, acylDouble) - 12 - OxygenMass - 2 * HydrogenMass ' [FA-CO-3H]-
                         Dim query = New List(Of SpectrumPeak) From {
                                     New SpectrumPeak() With {
-                                .Mass = sphChain_loss,
+                                .mz = sphChain_loss,
                                 .Intensity = 0.5
                             },
                                     New SpectrumPeak() With {
-                                .Mass = sphFragment,
+                                .mz = sphFragment,
                                 .Intensity = 0.5
                             },
                                     New SpectrumPeak() With {
-                                .Mass = acylFragment,
+                                .mz = acylFragment,
                                 .Intensity = 0.5
                             }
                             }
@@ -9732,15 +9732,15 @@ New SpectrumPeak() With {
                     Dim acylFragment2 = LipidMsmsCharacterizationUtility.fattyacidProductIon(acylCarbon, acylDouble) - 2 * HydrogenMass - 12 - OxygenMass ' [FA-CO-3H]-
                     Dim query = New List(Of SpectrumPeak) From {
                                 New SpectrumPeak() With {
-                            .Mass = sph1,
+                            .mz = sph1,
                             .Intensity = 1
                         },
                                 New SpectrumPeak() With {
-                            .Mass = acylFragment,
+                            .mz = acylFragment,
                             .Intensity = 1
                         },
                                 New SpectrumPeak() With {
-                            .Mass = acylFragment2,
+                            .mz = acylFragment2,
                             .Intensity = 1
                         }
                             }
@@ -9827,11 +9827,11 @@ New SpectrumPeak() With {
                         Dim sphFragment = LipidMsmsCharacterizationUtility.SphingoChainMass(sphCarbon - 2, sphDouble) - OxygenMass - NitrogenMass - Proton ' [Sph-C2H7NO-H]-
                         Dim query = New List(Of SpectrumPeak) From {
                                 New SpectrumPeak() With {
-                                .Mass = sph1,
+                                .mz = sph1,
                                 .Intensity = 1
                             },
                                 New SpectrumPeak() With {
-                                .Mass = sphFragment,
+                                .mz = sphFragment,
                                 .Intensity = 1
                             }
                             }
@@ -9912,7 +9912,7 @@ New SpectrumPeak() With {
 
                     Dim mustQuery = New List(Of SpectrumPeak) From {
                                 New SpectrumPeak() With {
-                            .Mass = sph1,
+                            .mz = sph1,
                             .Intensity = 50
                         }
                             }
@@ -9925,15 +9925,15 @@ New SpectrumPeak() With {
 
                     Dim query = New List(Of SpectrumPeak) From {
                                 New SpectrumPeak() With {
-                            .Mass = sph1,
+                            .mz = sph1,
                             .Intensity = 1
                         },
                                 New SpectrumPeak() With {
-                            .Mass = sphFragment1,
+                            .mz = sphFragment1,
                             .Intensity = 1
                         },
                                 New SpectrumPeak() With {
-                            .Mass = sphFragment2,
+                            .mz = sphFragment2,
                             .Intensity = 1
                         }
                             }
@@ -9996,19 +9996,19 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = sph1,
+                                .mz = sph1,
                                 .Intensity = 1
                             },
                             New SpectrumPeak() With {
-                                .Mass = sph2,
+                                .mz = sph2,
                                 .Intensity = 5
                             },
                             New SpectrumPeak() With {
-                                .Mass = sph3,
+                                .mz = sph3,
                                 .Intensity = 10
                             },
                             New SpectrumPeak() With {
-                                .Mass = sph4,
+                                .mz = sph4,
                                 .Intensity = 5
                             }                            'new SpectrumPeak() { Mass = acylamide, Intensity = 0.01 }
                             }
@@ -10037,7 +10037,7 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = sph3,
+                                .mz = sph3,
                                 .Intensity = 1
                             }
                         }
@@ -10092,15 +10092,15 @@ New SpectrumPeak() With {
                         Dim acylamide = LipidMsmsCharacterizationUtility.fattyacidProductIon(acylCarbon, acylDouble) - OxygenMass + NitrogenMass + HydrogenMass + Electron
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = sphChain_loss,
+                                .mz = sphChain_loss,
                                 .Intensity = 1
                             },
                             New SpectrumPeak() With {
-                                .Mass = sphFragment,
+                                .mz = sphFragment,
                                 .Intensity = 1
                             },
                             New SpectrumPeak() With {
-                                .Mass = acylamide,
+                                .mz = acylamide,
                                 .Intensity = 1
                             }
                         }
@@ -10185,7 +10185,7 @@ New SpectrumPeak() With {
 
                                 Dim query1 = New List(Of SpectrumPeak) From {
                                     New SpectrumPeak() With {
-                                        .Mass = esterFa,
+                                        .mz = esterFa,
                                         .Intensity = 30
                                     }
                                 }
@@ -10198,15 +10198,15 @@ New SpectrumPeak() With {
 
                                     Dim query2 = New List(Of SpectrumPeak) From {
                                             New SpectrumPeak() With {
-                                            .Mass = esterloss,
+                                            .mz = esterloss,
                                             .Intensity = 1
                                         },
                                             New SpectrumPeak() With {
-                                            .Mass = esterFa,
+                                            .mz = esterFa,
                                             .Intensity = 30
                                         },
                                             New SpectrumPeak() With {
-                                            .Mass = acylamide,
+                                            .mz = acylamide,
                                             .Intensity = 0.01
                                         }
                                         }
@@ -10274,15 +10274,15 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = sph1,
+                                .mz = sph1,
                                 .Intensity = 5
                             },
                             New SpectrumPeak() With {
-                                .Mass = sph2,
+                                .mz = sph2,
                                 .Intensity = 5
                             },
                             New SpectrumPeak() With {
-                                .Mass = sph3,
+                                .mz = sph3,
                                 .Intensity = 5
                             }                            'new SpectrumPeak() { Mass = acylamide, Intensity = 0.01 }
                             }
@@ -10323,7 +10323,7 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = sph3,
+                                .mz = sph3,
                                 .Intensity = 1
                             }
                         }
@@ -10385,7 +10385,7 @@ New SpectrumPeak() With {
 
                             Dim query1 = New List(Of SpectrumPeak) From {
                                     New SpectrumPeak() With {
-                                    .Mass = esterFa,
+                                    .mz = esterFa,
                                     .Intensity = 30
                                 }
                                 }
@@ -10399,15 +10399,15 @@ New SpectrumPeak() With {
 
                                 Dim query2 = New List(Of SpectrumPeak) From {
                                             New SpectrumPeak() With {
-                                        .Mass = esterloss,
+                                        .mz = esterloss,
                                         .Intensity = 1
                                     },
                                             New SpectrumPeak() With {
-                                        .Mass = esterFa,
+                                        .mz = esterFa,
                                         .Intensity = 30
                                     },
                                             New SpectrumPeak() With {
-                                        .Mass = acylamide,
+                                        .mz = acylamide,
                                         .Intensity = 0.01
                                     }
                                         }
@@ -10500,15 +10500,15 @@ New SpectrumPeak() With {
 
                                 Dim query = New List(Of SpectrumPeak) From {
                                     New SpectrumPeak() With {
-                                        .Mass = omegaAcylloss,
+                                        .mz = omegaAcylloss,
                                         .Intensity = 0.01
                                     },
                                     New SpectrumPeak() With {
-                                        .Mass = omegaAcyllossHexloss,
+                                        .mz = omegaAcyllossHexloss,
                                         .Intensity = 0.01
                                     },
                                     New SpectrumPeak() With {
-                                        .Mass = omegaAcylFA,
+                                        .mz = omegaAcylFA,
                                         .Intensity = 0.01
                                     }
                                 }
@@ -10525,7 +10525,7 @@ New SpectrumPeak() With {
                                     Dim acylamide = LipidMsmsCharacterizationUtility.fattyacidProductIon(acylCarbon, acylDouble) + NitrogenMass + HydrogenMass + Electron
                                     Dim query2 = New List(Of SpectrumPeak) From {
                                     New SpectrumPeak() With {
-                                            .Mass = acylamide,
+                                            .mz = acylamide,
                                             .Intensity = 0.01
                                         }
                                     }
@@ -10594,15 +10594,15 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = sph1,
+                                .mz = sph1,
                                 .Intensity = 5
                             },
                             New SpectrumPeak() With {
-                                .Mass = sph2,
+                                .mz = sph2,
                                 .Intensity = 5
                             },
                             New SpectrumPeak() With {
-                                .Mass = sph3,
+                                .mz = sph3,
                                 .Intensity = 5
                             }                            'new SpectrumPeak() { Mass = acylamide, Intensity = 0.01 }
                             }
@@ -10636,7 +10636,7 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = sph3,
+                                .mz = sph3,
                                 .Intensity = 1
                             }
                         }
@@ -10713,15 +10713,15 @@ New SpectrumPeak() With {
                         Dim acylFragment = LipidMsmsCharacterizationUtility.fattyacidProductIon(acylCarbon, acylDouble) + OxygenMass
                         Dim query = New List(Of SpectrumPeak) From {
                                 New SpectrumPeak() With {
-                                .Mass = sphChain_loss,
+                                .mz = sphChain_loss,
                                 .Intensity = 0.1
                             },
                                 New SpectrumPeak() With {
-                                .Mass = sphFragment,
+                                .mz = sphFragment,
                                 .Intensity = 1
                             },
                                 New SpectrumPeak() With {
-                                .Mass = acylFragment,
+                                .mz = acylFragment,
                                 .Intensity = 1
                             }
                             }
@@ -10789,11 +10789,11 @@ New SpectrumPeak() With {
 
                                 Dim query = New List(Of SpectrumPeak) From {
                                     New SpectrumPeak() With {
-                                        .Mass = extAcylloss,
+                                        .mz = extAcylloss,
                                         .Intensity = 0.01
                                     },
                                     New SpectrumPeak() With {
-                                        .Mass = extFa,
+                                        .mz = extFa,
                                         .Intensity = 0.01
                                     }
                                 }
@@ -10806,7 +10806,7 @@ New SpectrumPeak() With {
                                     Dim acylamide = LipidMsmsCharacterizationUtility.fattyacidProductIon(acylCarbon, acylDouble) + NitrogenMass + HydrogenMass + Electron + OxygenMass
                                     Dim query2 = New List(Of SpectrumPeak) From {
 New SpectrumPeak() With {
-    .Mass = acylamide,
+    .mz = acylamide,
     .Intensity = 0.01
 }
 }
@@ -10850,7 +10850,7 @@ New SpectrumPeak() With {
 
                                 Dim query = New List(Of SpectrumPeak) From {
                                     New SpectrumPeak() With {
-                                        .Mass = extAcylloss,
+                                        .mz = extAcylloss,
                                         .Intensity = 1
                                     }
                                 }
@@ -10914,15 +10914,15 @@ New SpectrumPeak() With {
 
                                 Dim query = New List(Of SpectrumPeak) From {
                                     New SpectrumPeak() With {
-                                        .Mass = esterloss,
+                                        .mz = esterloss,
                                         .Intensity = 1
                                     },
                                     New SpectrumPeak() With {
-                                        .Mass = esterFa,
+                                        .mz = esterFa,
                                         .Intensity = 50
                                     },
                                     New SpectrumPeak() With {
-                                        .Mass = acylFragment,
+                                        .mz = acylFragment,
                                         .Intensity = 1
                                     }
                                 }
@@ -11007,27 +11007,27 @@ New SpectrumPeak() With {
                                 Dim sphLoss2 = sphLoss - H2O      '[M-Sph+C2H4N]-
                                 Dim query = New List(Of SpectrumPeak) From {
                                     New SpectrumPeak() With {
-                                        .Mass = extAcylHexloss,
+                                        .mz = extAcylHexloss,
                                         .Intensity = 1
                                     },
                                     New SpectrumPeak() With {
-                                        .Mass = extAcylFa,
+                                        .mz = extAcylFa,
                                         .Intensity = 1
                                     },
                                     New SpectrumPeak() With {
-                                        .Mass = sphLoss,
+                                        .mz = sphLoss,
                                         .Intensity = 1
                                     },
                                     New SpectrumPeak() With {
-                                        .Mass = sphLoss2,
+                                        .mz = sphLoss2,
                                         .Intensity = 1
                                     },
                                     New SpectrumPeak() With {
-                                        .Mass = extAcylLoss,
+                                        .mz = extAcylLoss,
                                         .Intensity = 10
                                     },
                                     New SpectrumPeak() With {
-                                        .Mass = extAcylLoss2,
+                                        .mz = extAcylLoss2,
                                         .Intensity = 10
                                     }
                                 }
@@ -11083,41 +11083,41 @@ New SpectrumPeak() With {
 
                                 Dim exAcylQuery = New List(Of SpectrumPeak)() From {
                                     New SpectrumPeak() With {
-                                        .Mass = exAcylSugarIon,
+                                        .mz = exAcylSugarIon,
                                         .Intensity = 1
                                     },
                                     New SpectrumPeak() With {
-                                        .Mass = exAcylSugarLossIon,
+                                        .mz = exAcylSugarLossIon,
                                         .Intensity = 1
                                     }
                                 }
 
                                 Dim ceramideQuery = New List(Of SpectrumPeak)() From {
                                     New SpectrumPeak() With {
-                                        .Mass = ceramideIon,
+                                        .mz = ceramideIon,
                                         .Intensity = 1
                                     },
                                     New SpectrumPeak() With {
-                                        .Mass = ceramideIon_1WaterLoss,
+                                        .mz = ceramideIon_1WaterLoss,
                                         .Intensity = 1
                                     },
                                     New SpectrumPeak() With {
-                                        .Mass = ceramideIon_2WaterLoss,
+                                        .mz = ceramideIon_2WaterLoss,
                                         .Intensity = 1
                                     }
                                 }
 
                                 Dim sphQuery = New List(Of SpectrumPeak)() From {
                                     New SpectrumPeak() With {
-                                        .Mass = sphIon,
+                                        .mz = sphIon,
                                         .Intensity = 1
                                     },
                                     New SpectrumPeak() With {
-                                        .Mass = sphIon_1H2OLoss,
+                                        .mz = sphIon_1H2OLoss,
                                         .Intensity = 1
                                     },
                                     New SpectrumPeak() With {
-                                        .Mass = sphIon_CH2OLoss,
+                                        .mz = sphIon_CH2OLoss,
                                         .Intensity = 1
                                     }
                                 }
@@ -11204,30 +11204,30 @@ New SpectrumPeak() With {
 
                                 Dim ceramideQuery = New List(Of SpectrumPeak)() From {
                                     New SpectrumPeak() With {
-                                        .Mass = ceramideIon,
+                                        .mz = ceramideIon,
                                         .Intensity = 1
                                     },
                                     New SpectrumPeak() With {
-                                        .Mass = ceramideIon_1WaterLoss,
+                                        .mz = ceramideIon_1WaterLoss,
                                         .Intensity = 1
                                     },
                                     New SpectrumPeak() With {
-                                        .Mass = ceramideIon_2WaterLoss,
+                                        .mz = ceramideIon_2WaterLoss,
                                         .Intensity = 1
                                     }
                                 }
 
                                 Dim sphQuery = New List(Of SpectrumPeak)() From {
                                     New SpectrumPeak() With {
-                                        .Mass = sphIon,
+                                        .mz = sphIon,
                                         .Intensity = 1
                                     },
                                     New SpectrumPeak() With {
-                                        .Mass = sphIon_1H2OLoss,
+                                        .mz = sphIon_1H2OLoss,
                                         .Intensity = 1
                                     },
                                     New SpectrumPeak() With {
-                                        .Mass = sphIon_CH2OLoss,
+                                        .mz = sphIon_CH2OLoss,
                                         .Intensity = 1
                                     }
                                 }
@@ -11292,17 +11292,17 @@ New SpectrumPeak() With {
                                 Dim sphLoss2 = sphLoss - H2O      '[M-Sph+C2H4N]-
                                 Dim queryExtAcyl = New List(Of SpectrumPeak) From {
                                     New SpectrumPeak() With {
-                                        .Mass = extAcylFa,
+                                        .mz = extAcylFa,
                                         .Intensity = 1.0
                                     }
                                 }
                                 Dim querySph = New List(Of SpectrumPeak) From {
                                     New SpectrumPeak() With {
-                                        .Mass = sphLoss,
+                                        .mz = sphLoss,
                                         .Intensity = 0.005
                                     },
                                     New SpectrumPeak() With {
-                                        .Mass = sphLoss2,
+                                        .mz = sphLoss2,
                                         .Intensity = 0.005
                                     }
                                 }
@@ -11370,15 +11370,15 @@ New SpectrumPeak() With {
 
                             Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                    .Mass = sph1,
+                                    .mz = sph1,
                                     .Intensity = 1
                                 },
                             New SpectrumPeak() With {
-                                    .Mass = sph2,
+                                    .mz = sph2,
                                     .Intensity = 1
                                 },
                             New SpectrumPeak() With {
-                                    .Mass = sph3,
+                                    .mz = sph3,
                                     .Intensity = 1
                                 }                            ' new SpectrumPeak() { Mass = acylamide, Intensity = 0.01 }
                             }
@@ -11410,15 +11410,15 @@ New SpectrumPeak() With {
 
                             Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                    .Mass = sph1,
+                                    .mz = sph1,
                                     .Intensity = 1
                                 },
                             New SpectrumPeak() With {
-                                    .Mass = sph2,
+                                    .mz = sph2,
                                     .Intensity = 1
                                 },
                             New SpectrumPeak() With {
-                                    .Mass = sph3,
+                                    .mz = sph3,
                                     .Intensity = 1
                                 }                            ' new SpectrumPeak() { Mass = acylamide, Intensity = 0.01 }
                             }
@@ -11499,11 +11499,11 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = sph1,
+                                .mz = sph1,
                                 .Intensity = 0.01
                             },
                             New SpectrumPeak() With {
-                                .Mass = sph2,
+                                .mz = sph2,
                                 .Intensity = 0.01
                             }
                         }
@@ -11580,11 +11580,11 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = sph1,
+                                .mz = sph1,
                                 .Intensity = 0.01
                             },
                             New SpectrumPeak() With {
-                                .Mass = sph2,
+                                .mz = sph2,
                                 .Intensity = 0.01
                             }
                         }
@@ -11646,11 +11646,11 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = sph1,
+                                .mz = sph1,
                                 .Intensity = 0.01
                             },
                             New SpectrumPeak() With {
-                                .Mass = sph2,
+                                .mz = sph2,
                                 .Intensity = 0.01
                             }
                         }
@@ -11761,11 +11761,11 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = sph1,
+                                .mz = sph1,
                                 .Intensity = 0.01
                             },
                             New SpectrumPeak() With {
-                                .Mass = sph2,
+                                .mz = sph2,
                                 .Intensity = 0.01
                             }
                         }
@@ -11832,11 +11832,11 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = sph1,
+                                .mz = sph1,
                                 .Intensity = 0.01
                             },
                             New SpectrumPeak() With {
-                                .Mass = sph2,
+                                .mz = sph2,
                                 .Intensity = 0.01
                             }
                         }
@@ -11902,11 +11902,11 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = sph1,
+                                .mz = sph1,
                                 .Intensity = 0.01
                             },
                             New SpectrumPeak() With {
-                                .Mass = sph2,
+                                .mz = sph2,
                                 .Intensity = 0.01
                             }
                         }
@@ -11975,11 +11975,11 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = sph1,
+                                .mz = sph1,
                                 .Intensity = 0.01
                             },
                             New SpectrumPeak() With {
-                                .Mass = sph2,
+                                .mz = sph2,
                                 .Intensity = 0.01
                             }
                         }
@@ -12204,11 +12204,11 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = sn1_gly,
+                                .mz = sn1_gly,
                                 .Intensity = 1.0
                             },
                             New SpectrumPeak() With {
-                                .Mass = sn2,
+                                .mz = sn2,
                                 .Intensity = 1.0
                             }
                         }
@@ -12257,7 +12257,7 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = sn1_gly,
+                                .mz = sn1_gly,
                                 .Intensity = 30.0
                             }                            'new SpectrumPeak() { Mass = sn2, Intensity = 1.0 }
                             }
@@ -12309,7 +12309,7 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = acylLoss1,
+                                .mz = acylLoss1,
                                 .Intensity = 0.1
                             }
                         }
@@ -12325,7 +12325,7 @@ New SpectrumPeak() With {
                         Dim acylLoss2 = theoreticalMz - LipidMsmsCharacterizationUtility.acylCainMass(acylCarbon, acylDouble) - acylOxidized * OxygenMass + Proton
                         Dim query2 = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = acylLoss2,
+                                .mz = acylLoss2,
                                 .Intensity = 0.1
                             }
                         }
@@ -12382,7 +12382,7 @@ New SpectrumPeak() With {
 
                             Dim query = New List(Of SpectrumPeak) From {
                                 New SpectrumPeak() With {
-                                    .Mass = acylLoss,
+                                    .mz = acylLoss,
                                     .Intensity = 0.1
                                 }
                                 }
@@ -12417,7 +12417,7 @@ New SpectrumPeak() With {
 
                             Dim query = New List(Of SpectrumPeak) From {
                                 New SpectrumPeak() With {
-                                    .Mass = acylLoss,
+                                    .mz = acylLoss,
                                     .Intensity = 0.1
                                 }
                                 }
@@ -12881,7 +12881,7 @@ New SpectrumPeak() With {
 
                         Dim queryMust = New List(Of SpectrumPeak) From {
                                 New SpectrumPeak() With {
-                                .Mass = sn2Loss,
+                                .mz = sn2Loss,
                                 .Intensity = 5
                             }
                             }
@@ -12892,11 +12892,11 @@ New SpectrumPeak() With {
                         'new SpectrumPeak() { Mass = sn2Loss, Intensity = 5 },
                         Dim query = New List(Of SpectrumPeak) From {
                                     New SpectrumPeak() With {
-                                    .Mass = sn2GlyLoss,
+                                    .mz = sn2GlyLoss,
                                     .Intensity = 5
                                 },
                                     New SpectrumPeak() With {
-                                    .Mass = sn2H2OGlyLoss,
+                                    .mz = sn2H2OGlyLoss,
                                     .Intensity = 5
                                 }
                                 }
@@ -12942,15 +12942,15 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                                 New SpectrumPeak() With {
-                                .Mass = sn2Loss,
+                                .mz = sn2Loss,
                                 .Intensity = 10.0
                             },
                                 New SpectrumPeak() With {
-                                .Mass = sn2CO2Loss,
+                                .mz = sn2CO2Loss,
                                 .Intensity = 5.0
                             },
                                 New SpectrumPeak() With {
-                                .Mass = sn2,
+                                .mz = sn2,
                                 .Intensity = 5.0
                             }
                             }
@@ -13005,19 +13005,19 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                                     New SpectrumPeak() With {
-                                .Mass = sn2Loss,
+                                .mz = sn2Loss,
                                 .Intensity = 5
                             },
                                     New SpectrumPeak() With {
-                                .Mass = sn2SerLoss,
+                                .mz = sn2SerLoss,
                                 .Intensity = 5
                             },
                                     New SpectrumPeak() With {
-                                .Mass = sn2SerGlyLoss,
+                                .mz = sn2SerGlyLoss,
                                 .Intensity = 5
                             },
                                     New SpectrumPeak() With {
-                                .Mass = ser,
+                                .mz = ser,
                                 .Intensity = 5
                             }
                                 }
@@ -13060,19 +13060,19 @@ New SpectrumPeak() With {
 
                             Dim query = New List(Of SpectrumPeak) From {
                                     New SpectrumPeak() With {
-                                    .Mass = sn2Loss,
+                                    .mz = sn2Loss,
                                     .Intensity = 10.0
                                 },
                                     New SpectrumPeak() With {
-                                    .Mass = sn2CH2OLoss,
+                                    .mz = sn2CH2OLoss,
                                     .Intensity = 5.0
                                 },
                                     New SpectrumPeak() With {
-                                    .Mass = sn2CH2O3Loss,
+                                    .mz = sn2CH2O3Loss,
                                     .Intensity = 5.0
                                 },
                                     New SpectrumPeak() With {
-                                    .Mass = sn2,
+                                    .mz = sn2,
                                     .Intensity = 5.0
                                 }
                                 }
@@ -13136,19 +13136,19 @@ New SpectrumPeak() With {
                             If acylOxidized = 0 Then
                                 Dim query = New List(Of SpectrumPeak) From {
                                     New SpectrumPeak() With {
-                                        .Mass = acylLoss,
+                                        .mz = acylLoss,
                                         .Intensity = 1.0
                                     },
                                     New SpectrumPeak() With {
-                                        .Mass = acylH2OLoss,
+                                        .mz = acylH2OLoss,
                                         .Intensity = 1.0
                                     },
                                     New SpectrumPeak() With {
-                                        .Mass = sph1,
+                                        .mz = sph1,
                                         .Intensity = 1.0
                                     },
                                     New SpectrumPeak() With {
-                                        .Mass = sph2,
+                                        .mz = sph2,
                                         .Intensity = 1.0
                                     }
                             }
@@ -13179,15 +13179,15 @@ New SpectrumPeak() With {
 
                             Dim query2 = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                    .Mass = acylLoss,
+                                    .mz = acylLoss,
                                     .Intensity = 1.0
                                 },
                             New SpectrumPeak() With {
-                                    .Mass = acylH2OLoss,
+                                    .mz = acylH2OLoss,
                                     .Intensity = 1.0
                                 },
                             New SpectrumPeak() With {
-                                    .Mass = sph3,
+                                    .mz = sph3,
                                     .Intensity = 1.0
                                 }
                             }
@@ -13236,11 +13236,11 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = acylLoss,
+                                .mz = acylLoss,
                                 .Intensity = 1.0
                             },
                             New SpectrumPeak() With {
-                                .Mass = acylamideLoss,
+                                .mz = acylamideLoss,
                                 .Intensity = 1.0
                             }
                             }
@@ -13291,11 +13291,11 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = sn1,
+                                .mz = sn1,
                                 .Intensity = 5.0
                             },
                             New SpectrumPeak() With {
-                                .Mass = sn2,
+                                .mz = sn2,
                                 .Intensity = 10.0
                             }
                         }
@@ -13562,15 +13562,15 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = sn2Loss,
+                                .mz = sn2Loss,
                                 .Intensity = 5
                             },
                             New SpectrumPeak() With {
-                                .Mass = sn2H2OLoss,
+                                .mz = sn2H2OLoss,
                                 .Intensity = 5
                             },
                             New SpectrumPeak() With {
-                                .Mass = sn1Fragment,
+                                .mz = sn1Fragment,
                                 .Intensity = 5
                             }
                         }
@@ -13997,19 +13997,19 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = sn1,
+                                .mz = sn1,
                                 .Intensity = 0.1
                             },
                             New SpectrumPeak() With {
-                                .Mass = sn2,
+                                .mz = sn2,
                                 .Intensity = 0.1
                             },
                             New SpectrumPeak() With {
-                                .Mass = nl_SN1,
+                                .mz = nl_SN1,
                                 .Intensity = 0.1
                             },
                             New SpectrumPeak() With {
-                                .Mass = nl_SN2,
+                                .mz = nl_SN2,
                                 .Intensity = 0.1
                             }
                         }
@@ -14060,7 +14060,7 @@ New SpectrumPeak() With {
                         'new SpectrumPeak() { Mass = sn2, Intensity = 0.1 },
                         Dim query = New List(Of SpectrumPeak) From {
                                                        New SpectrumPeak() With {
-                                    .Mass = NL_sn2,
+                                    .mz = NL_sn2,
                                     .Intensity = 0.1
                                 }
                         }
@@ -14097,11 +14097,11 @@ New SpectrumPeak() With {
 
                     Dim query = New List(Of SpectrumPeak) From {
                         New SpectrumPeak() With {
-                            .Mass = sn2,
+                            .mz = sn2,
                             .Intensity = 0.1
                         },
                         New SpectrumPeak() With {
-                            .Mass = sn2Mag,
+                            .mz = sn2Mag,
                             .Intensity = 10
                         }
                     }
@@ -14190,11 +14190,11 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                         New SpectrumPeak() With {
-                                .Mass = sn1,
+                                .mz = sn1,
                                 .Intensity = 0.1
                             },
                         New SpectrumPeak() With {
-                                .Mass = sn2,
+                                .mz = sn2,
                                 .Intensity = 0.1
                             }
                     }
@@ -14237,11 +14237,11 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                         New SpectrumPeak() With {
-                                .Mass = sn1,
+                                .mz = sn1,
                                 .Intensity = 10.0
                             },
                         New SpectrumPeak() With {
-                                .Mass = sn2,
+                                .mz = sn2,
                                 .Intensity = 10.0
                             }
                     }
@@ -14291,11 +14291,11 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                         New SpectrumPeak() With {
-                                .Mass = sn1,
+                                .mz = sn1,
                                 .Intensity = 0.1
                             },
                         New SpectrumPeak() With {
-                                .Mass = sn2,
+                                .mz = sn2,
                                 .Intensity = 0.1
                             }
                     }
@@ -14338,11 +14338,11 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                         New SpectrumPeak() With {
-                                .Mass = sn1,
+                                .mz = sn1,
                                 .Intensity = 10.0
                             },
                         New SpectrumPeak() With {
-                                .Mass = sn2,
+                                .mz = sn2,
                                 .Intensity = 10.0
                             }
                     }
@@ -14393,11 +14393,11 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                         New SpectrumPeak() With {
-                                .Mass = sph1,
+                                .mz = sph1,
                                 .Intensity = 0.1
                             },
                         New SpectrumPeak() With {
-                                .Mass = sph2,
+                                .mz = sph2,
                                 .Intensity = 0.1
                             }
                     }
@@ -14434,7 +14434,7 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                         New SpectrumPeak() With {
-                                .Mass = sphFragment,
+                                .mz = sphFragment,
                                 .Intensity = 0.01
                             }
                     }
@@ -14499,23 +14499,23 @@ New SpectrumPeak() With {
 
                                 Dim query = New List(Of SpectrumPeak) From {
                                     New SpectrumPeak() With {
-                                        .Mass = nl_SN1,
+                                        .mz = nl_SN1,
                                         .Intensity = 5
                                     },
                                     New SpectrumPeak() With {
-                                        .Mass = nl_SN2,
+                                        .mz = nl_SN2,
                                         .Intensity = 5
                                     },
                                     New SpectrumPeak() With {
-                                        .Mass = nl_SN3,
+                                        .mz = nl_SN3,
                                         .Intensity = 5
                                     },
                                     New SpectrumPeak() With {
-                                        .Mass = nl_SN1andH2O,
+                                        .mz = nl_SN1andH2O,
                                         .Intensity = 5
                                     },
                                     New SpectrumPeak() With {
-                                        .Mass = nl_SN2andH2O,
+                                        .mz = nl_SN2andH2O,
                                         .Intensity = 5
                                     }
                                 }
@@ -14586,27 +14586,27 @@ New SpectrumPeak() With {
 
                                         Dim query = New List(Of SpectrumPeak) From {
 New SpectrumPeak() With {
-    .Mass = nl_SN1,
+    .mz = nl_SN1,
     .Intensity = 5
 },
 New SpectrumPeak() With {
-    .Mass = nl_SN2,
+    .mz = nl_SN2,
     .Intensity = 5
 },
 New SpectrumPeak() With {
-    .Mass = nl_SN4,
+    .mz = nl_SN4,
     .Intensity = 5
 },
 New SpectrumPeak() With {
-    .Mass = nl_SN3andSN4,
+    .mz = nl_SN3andSN4,
     .Intensity = 5
 },
 New SpectrumPeak() With {
-    .Mass = nl_SN1andSN4,
+    .mz = nl_SN1andSN4,
     .Intensity = 5
 },
 New SpectrumPeak() With {
-    .Mass = nl_SN2andSN4,
+    .mz = nl_SN2andSN4,
     .Intensity = 5
 }
 }
@@ -14815,11 +14815,11 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = sn1Fa,
+                                .mz = sn1Fa,
                                 .Intensity = 0.1
                             },
                             New SpectrumPeak() With {
-                                .Mass = sn2Fa,
+                                .mz = sn2Fa,
                                 .Intensity = 0.1
                             }
                         }
@@ -14997,19 +14997,19 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = nl_SN1,
+                                .mz = nl_SN1,
                                 .Intensity = 0.01
                             },
                             New SpectrumPeak() With {
-                                .Mass = nl_SN1_H2O,
+                                .mz = nl_SN1_H2O,
                                 .Intensity = 0.01
                             },
                             New SpectrumPeak() With {
-                                .Mass = nl_SN2,
+                                .mz = nl_SN2,
                                 .Intensity = 0.01
                             },
                             New SpectrumPeak() With {
-                                .Mass = nl_NS2_H2O,
+                                .mz = nl_NS2_H2O,
                                 .Intensity = 0.01
                             }
                         }
@@ -15051,11 +15051,11 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = nl_SN1,
+                                .mz = nl_SN1,
                                 .Intensity = 0.01
                             },
                             New SpectrumPeak() With {
-                                .Mass = nl_SN2,
+                                .mz = nl_SN2,
                                 .Intensity = 0.01
                             }
                         }
@@ -15098,11 +15098,11 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                         New SpectrumPeak() With {
-                                .Mass = sn1,
+                                .mz = sn1,
                                 .Intensity = 1.0
                             },
                         New SpectrumPeak() With {
-                                .Mass = sn2,
+                                .mz = sn2,
                                 .Intensity = 1.0
                             }
                     }
@@ -15149,11 +15149,11 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                         New SpectrumPeak() With {
-                                .Mass = sn1,
+                                .mz = sn1,
                                 .Intensity = 0.1
                             },
                         New SpectrumPeak() With {
-                                .Mass = sn2,
+                                .mz = sn2,
                                 .Intensity = 0.1
                             }
                     }
@@ -15192,11 +15192,11 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = sn1,
+                                .mz = sn1,
                                 .Intensity = 0.01
                             },
                             New SpectrumPeak() With {
-                                .Mass = sn2,
+                                .mz = sn2,
                                 .Intensity = 0.01
                             }
                         }
@@ -15239,11 +15239,11 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                         New SpectrumPeak() With {
-                                .Mass = sn1,
+                                .mz = sn1,
                                 .Intensity = 1.0
                             },
                         New SpectrumPeak() With {
-                                .Mass = sn2,
+                                .mz = sn2,
                                 .Intensity = 1.0
                             }
                     }
@@ -15296,19 +15296,19 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = nl_SN1,
+                                .mz = nl_SN1,
                                 .Intensity = 0.01
                             },
                             New SpectrumPeak() With {
-                                .Mass = nl_SN1_H2O,
+                                .mz = nl_SN1_H2O,
                                 .Intensity = 0.01
                             },
                             New SpectrumPeak() With {
-                                .Mass = nl_SN2,
+                                .mz = nl_SN2,
                                 .Intensity = 0.01
                             },
                             New SpectrumPeak() With {
-                                .Mass = nl_NS2_H2O,
+                                .mz = nl_NS2_H2O,
                                 .Intensity = 0.01
                             }
                         }
@@ -15365,11 +15365,11 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = sn1,
+                                .mz = sn1,
                                 .Intensity = 1.0
                             },
                             New SpectrumPeak() With {
-                                .Mass = sn2,
+                                .mz = sn2,
                                 .Intensity = 1.0
                             }
                         }
@@ -15416,11 +15416,11 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = nl_SN1,
+                                .mz = nl_SN1,
                                 .Intensity = 0.01
                             },
                             New SpectrumPeak() With {
-                                .Mass = nl_SN2,
+                                .mz = nl_SN2,
                                 .Intensity = 0.01
                             }
                         }
@@ -15469,11 +15469,11 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = sn1,
+                                .mz = sn1,
                                 .Intensity = 1.0
                             },
                             New SpectrumPeak() With {
-                                .Mass = sn2,
+                                .mz = sn2,
                                 .Intensity = 1.0
                             }
                         }
@@ -15582,11 +15582,11 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = sn1,
+                                .mz = sn1,
                                 .Intensity = 0.01
                             },
                             New SpectrumPeak() With {
-                                .Mass = sn2,
+                                .mz = sn2,
                                 .Intensity = 0.01
                             }
                         }
@@ -15629,7 +15629,7 @@ New SpectrumPeak() With {
                 Dim diagnosticMzIntensity2 = 0.0
 
                 For i = 0 To spectrum.Count - 1
-                    Dim mz = spectrum(i).Mass
+                    Dim mz = spectrum(i).mz
                     Dim intensity = spectrum(i).Intensity
 
                     If intensity > threshold AndAlso std.Abs(mz - diagnosticMz) < ms2Tolerance Then
@@ -15942,11 +15942,11 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
 New SpectrumPeak() With {
-    .Mass = nl_SN1,
+    .mz = nl_SN1,
     .Intensity = 5
 },
 New SpectrumPeak() With {
-    .Mass = nl_SN2,
+    .mz = nl_SN2,
     .Intensity = 5
 }
 }
@@ -16012,15 +16012,15 @@ New SpectrumPeak() With {
                                 Dim nl_SN3 = diagnosticMz - LipidMsmsCharacterizationUtility.acylCainMass(sn3Carbon, sn3Double) - H2O + HydrogenMass
                                 Dim query = New List(Of SpectrumPeak) From {
                                     New SpectrumPeak() With {
-                                        .Mass = nl_SN1,
+                                        .mz = nl_SN1,
                                         .Intensity = 5
                                     },
                                     New SpectrumPeak() With {
-                                        .Mass = nl_SN2,
+                                        .mz = nl_SN2,
                                         .Intensity = 5
                                     },
                                     New SpectrumPeak() With {
-                                        .Mass = nl_SN3,
+                                        .mz = nl_SN3,
                                         .Intensity = 5
                                     }
                                 }
@@ -16061,15 +16061,15 @@ New SpectrumPeak() With {
                                 Dim nl_SN3 = diagnosticMz - LipidMsmsCharacterizationUtility.acylCainMass(sn3Carbon, sn3Double) - H2O + HydrogenMass
                                 Dim query = New List(Of SpectrumPeak) From {
                                     New SpectrumPeak() With {
-                                        .Mass = nl_SN1,
+                                        .mz = nl_SN1,
                                         .Intensity = 0.1
                                     },
                                     New SpectrumPeak() With {
-                                        .Mass = nl_SN2,
+                                        .mz = nl_SN2,
                                         .Intensity = 0.1
                                     },
                                     New SpectrumPeak() With {
-                                        .Mass = nl_SN3,
+                                        .mz = nl_SN3,
                                         .Intensity = 0.1
                                     }
                                 }
@@ -16085,15 +16085,15 @@ New SpectrumPeak() With {
                                     Dim nl_SN3_H = diagnosticMzH - LipidMsmsCharacterizationUtility.acylCainMass(sn3Carbon, sn3Double) - H2O + HydrogenMass
                                     Dim query2 = New List(Of SpectrumPeak) From {
                                     New SpectrumPeak() With {
-                                            .Mass = nl_SN1_H,
+                                            .mz = nl_SN1_H,
                                             .Intensity = 0.1
                                         },
                                     New SpectrumPeak() With {
-                                            .Mass = nl_SN2_H,
+                                            .mz = nl_SN2_H,
                                             .Intensity = 0.1
                                         },
                                     New SpectrumPeak() With {
-                                            .Mass = nl_SN3_H,
+                                            .mz = nl_SN3_H,
                                             .Intensity = 0.1
                                         }
                                     }
@@ -16149,7 +16149,7 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                                 New SpectrumPeak() With {
-                                .Mass = sph1,
+                                .mz = sph1,
                                 .Intensity = 0.01
                             }
                             }
@@ -16210,7 +16210,7 @@ New SpectrumPeak() With {
                         Dim sphFragment = diagnosticMz1 - LipidMsmsCharacterizationUtility.acylCainMass(acylCarbon, acylDouble) + HydrogenMass
                         Dim query = New List(Of SpectrumPeak) From {
                                 New SpectrumPeak() With {
-                                .Mass = sphFragment,
+                                .mz = sphFragment,
                                 .Intensity = 0.01
                             }
                             }
@@ -16258,7 +16258,7 @@ New SpectrumPeak() With {
                         ' must query
                         Dim queryMust = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = sph2,
+                                .mz = sph2,
                                 .Intensity = 5
                             }
                         }
@@ -16269,11 +16269,11 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = sph1,
+                                .mz = sph1,
                                 .Intensity = 1
                             },
                             New SpectrumPeak() With {
-                                .Mass = sph3,
+                                .mz = sph3,
                                 .Intensity = 1
                             }
                         }
@@ -16311,7 +16311,7 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = sph3,
+                                .mz = sph3,
                                 .Intensity = 1
                             }
                         }
@@ -16370,15 +16370,15 @@ New SpectrumPeak() With {
                         '    sphChain_loss + " " + sphFragment + " " + acylFragment);
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = sphChain_loss,
+                                .mz = sphChain_loss,
                                 .Intensity = 5
                             },
                             New SpectrumPeak() With {
-                                .Mass = sphFragment,
+                                .mz = sphFragment,
                                 .Intensity = 1
                             },
                             New SpectrumPeak() With {
-                                .Mass = acylFragment,
+                                .mz = acylFragment,
                                 .Intensity = 1
                             }
                         }
@@ -16461,19 +16461,19 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = nl_SN1,
+                                .mz = nl_SN1,
                                 .Intensity = 0.01
                             },
                             New SpectrumPeak() With {
-                                .Mass = nl_SN1_H2O,
+                                .mz = nl_SN1_H2O,
                                 .Intensity = 0.01
                             },
                             New SpectrumPeak() With {
-                                .Mass = nl_SN2,
+                                .mz = nl_SN2,
                                 .Intensity = 0.01
                             },
                             New SpectrumPeak() With {
-                                .Mass = nl_NS2_H2O,
+                                .mz = nl_NS2_H2O,
                                 .Intensity = 0.01
                             }
                         }
@@ -16513,11 +16513,11 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = nl_SN1,
+                                .mz = nl_SN1,
                                 .Intensity = 0.01
                             },
                             New SpectrumPeak() With {
-                                .Mass = nl_SN2,
+                                .mz = nl_SN2,
                                 .Intensity = 0.01
                             }
                         }
@@ -16560,11 +16560,11 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                         New SpectrumPeak() With {
-                                .Mass = sn1,
+                                .mz = sn1,
                                 .Intensity = 1.0
                             },
                         New SpectrumPeak() With {
-                                .Mass = sn2,
+                                .mz = sn2,
                                 .Intensity = 1.0
                             }
                     }
@@ -16605,11 +16605,11 @@ New SpectrumPeak() With {
 
                         Dim query = New List(Of SpectrumPeak) From {
                             New SpectrumPeak() With {
-                                .Mass = Sn2Acyl,
+                                .mz = Sn2Acyl,
                                 .Intensity = 5
                             },
                             New SpectrumPeak() With {
-                                .Mass = Sn2FA,
+                                .mz = Sn2FA,
                                 .Intensity = 5
                             }
                         }

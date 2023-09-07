@@ -572,7 +572,7 @@ Public NotInheritable Class LipidAnnotation
         Dim maxintensity = peaks.Max(Function(n) n.Intensity)
         For Each peak In peaks
             spectrum.Add(New SpectrumPeak With {
-                .Mass = peak.Mass,
+                .mz = peak.mz,
                 .Intensity = peak.Intensity / maxintensity * 100.0
             })
         Next

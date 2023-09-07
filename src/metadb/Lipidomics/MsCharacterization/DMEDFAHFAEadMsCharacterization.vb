@@ -10,7 +10,7 @@ Friend Class DMEDFAHFAEadMsCharacterization
                     New DiagnosticIon() With {
                     .MzTolerance = 0.05,
                     .IonAbundanceCutOff = 10,
-                    .Mz = snPositionMzValues(0).Mass
+                    .Mz = snPositionMzValues(0).mz
                 }
                 }
         Else

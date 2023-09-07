@@ -45,7 +45,7 @@ Public Class PCEidSpectrumGenerator
             spectrum.AddRange(EidSpecificSpectrum(lipid, adduct, 0R, 200.0R))
             spectrum.AddRange(GetAcylDoubleBondSpectrum(lipid, lipid.Chains.GetTypedChains(Of AcylChain)().Where(Function(c) c.DoubleBond.UnDecidedCount = 0 AndAlso c.Oxidized.UnDecidedCount = 0), adduct))
         End If
-        spectrum = spectrum.GroupBy(Function(spec) spec, comparer).[Select](Function(specs) New SpectrumPeak(Enumerable.First(specs).Mass, specs.Sum(Function(n) n.Intensity), String.Join(", ", specs.[Select](Function(spec) spec.Comment)), specs.Aggregate(SpectrumComment.none, Function(a, b) a Or b.SpectrumComment))).OrderBy(Function(peak) peak.Mass).ToList()
+        spectrum = spectrum.GroupBy(Function(spec) spec, comparer).[Select](Function(specs) New SpectrumPeak(Enumerable.First(specs).mz, specs.Sum(Function(n) n.Intensity), String.Join(", ", specs.[Select](Function(spec) spec.Comment)), specs.Aggregate(SpectrumComment.none, Function(a, b) a Or b.SpectrumComment))).OrderBy(Function(peak) peak.Mass).ToList()
         Return CreateReference(lipid, adduct, spectrum, molecule)
     End Function
 
@@ -122,7 +122,7 @@ New SpectrumPeak(adduct.ConvertToMz(lipid.Mass) / 2, 100.0R, "[Precursor]2+") Wi
                 Dim peaks = EidSpecificSpectrumGenerator.EidSpecificSpectrumGen(lipid, chain, adduct, nlMass, intensity)
                 If chain.DoubleBondCount = 1 Then
                     For Each item In peaks ' ++
-                        item.Mass = item.Mass / 2
+                        item.mz = item.mz / 2
                         item.Intensity = item.Intensity / 5
                     Next
                 End If

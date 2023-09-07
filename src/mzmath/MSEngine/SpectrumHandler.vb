@@ -19,7 +19,7 @@ Public NotInheritable Class SpectrumHandler
         Dim range2Peaks = New Dictionary(Of Integer, List(Of SpectrumPeak))()
 
         For Each peak In peaks1
-            Dim mass = peak.Mass
+            Dim mass = peak.mz
             Dim massframe = CInt(mass / bin)
             If range2Peaks.ContainsKey(massframe) Then
                 range2Peaks(massframe).Add(peak)
@@ -31,7 +31,7 @@ Public NotInheritable Class SpectrumHandler
         Next
 
         For Each peak In peaks2
-            Dim mass = peak.Mass
+            Dim mass = peak.mz
             Dim massframe = CInt(mass / bin)
             If range2Peaks.ContainsKey(massframe) Then
                 range2Peaks(massframe).Add(peak)
@@ -55,7 +55,7 @@ Public NotInheritable Class SpectrumHandler
         If spectrum.Count = 0 Then Return New List(Of SpectrumPeak)()
         Dim maxIntensity = Math.Pow(spectrum.Max(Function(n) n.Intensity), powFactor)
         Return spectrum.[Select](Function(n) New SpectrumPeak With {
-            .Mass = n.Mass,
+            .mz = n.mz,
             .Intensity = Math.Pow(n.Intensity, powFactor) / maxIntensity * maxValue
         }).ToList()
     End Function
@@ -66,7 +66,7 @@ Public NotInheritable Class SpectrumHandler
         Dim range2Peaks = New Dictionary(Of Integer, List(Of SpectrumPeak))()
 
         For Each peak In spectrum
-            Dim mass = peak.Mass
+            Dim mass = peak.mz
             Dim massframe = CInt(mass / delta)
             If range2Peaks.ContainsKey(massframe) Then
                 range2Peaks(massframe).Add(peak)
@@ -93,7 +93,7 @@ Public NotInheritable Class SpectrumHandler
         Dim range2Peaks = New Dictionary(Of Integer, List(Of SpectrumPeak))()
 
         For Each peak In spectrum
-            Dim mass = peak.Mass
+            Dim mass = peak.mz
             Dim massframe = CInt(mass / bin)
             If range2Peaks.ContainsKey(massframe) Then
                 range2Peaks(massframe).Add(peak)
@@ -118,9 +118,9 @@ Public NotInheritable Class SpectrumHandler
         Dim refinedPeaklist = New List(Of SpectrumPeak)()
 
         For Each peak In peaklist
-            If peak.Mass < minMz Then Continue For
-            If peak.Mass > maxMz Then Continue For
-            If peak.Mass > precursorMz + ms2Tol Then Continue For
+            If peak.mz < minMz Then Continue For
+            If peak.mz > maxMz Then Continue For
+            If peak.mz > precursorMz + ms2Tol Then Continue For
             If peak.Intensity < absoluteAbundanceCutOff Then Continue For
             If peak.Intensity >= maxIntensity * relativeAbundanceCutOff * 0.01 Then
                 refinedPeaklist.Add(peak)
@@ -128,7 +128,7 @@ Public NotInheritable Class SpectrumHandler
         Next
         Dim sumIntensity = refinedPeaklist.Sum(Function(n) n.Intensity)
         Return refinedPeaklist.[Select](Function(n) New SpectrumPeak() With {
-            .Mass = n.Mass,
+            .mz = n.mz,
             .Intensity = n.Intensity / sumIntensity
         }).ToList()
     End Function
@@ -139,9 +139,9 @@ Public NotInheritable Class SpectrumHandler
         Dim refinedPeaklist = New List(Of SpectrumPeak)()
 
         For Each peak In peaklist
-            If peak.Mass < minMz Then Continue For
-            If peak.Mass > maxMz Then Continue For
-            If peak.Mass > precursorMz + ms2Tol Then Continue For
+            If peak.mz < minMz Then Continue For
+            If peak.mz > maxMz Then Continue For
+            If peak.mz > precursorMz + ms2Tol Then Continue For
             If peak.Intensity < absoluteAbundanceCutOff Then Continue For
             If peak.Intensity >= maxIntensity * relativeAbundanceCutOff * 0.01 Then
                 refinedPeaklist.Add(peak)
@@ -156,7 +156,7 @@ Public NotInheritable Class SpectrumHandler
         End If
         Dim sumIntensity = refinedPeaklist.Sum(Function(n) n.Intensity)
         Return refinedPeaklist.[Select](Function(n) New SpectrumPeak() With {
-            .Mass = n.Mass,
+            .mz = n.mz,
             .Intensity = n.Intensity / sumIntensity
         }).ToList()
     End Function
@@ -167,13 +167,13 @@ Public NotInheritable Class SpectrumHandler
         Dim refinedPeaklist = New List(Of SpectrumPeak)()
 
         For Each peak In peaklist
-            If peak.Mass < minMz Then Continue For
-            If peak.Mass > maxMz Then Continue For
-            If removeAfterPrecursor AndAlso peak.Mass > precursorMz + ms2Tol Then Continue For
+            If peak.mz < minMz Then Continue For
+            If peak.mz > maxMz Then Continue For
+            If removeAfterPrecursor AndAlso peak.mz > precursorMz + ms2Tol Then Continue For
             If peak.Intensity < absoluteAbundanceCutOff Then Continue For
             If peak.Intensity >= maxIntensity * relativeAbundanceCutOff * 0.01 Then
                 refinedPeaklist.Add(New SpectrumPeak() With {
-                    .Mass = peak.Mass,
+                    .mz = peak.mz,
                     .Intensity = peak.Intensity,
                     .Comment = String.Empty
                 })
@@ -208,30 +208,30 @@ Public NotInheritable Class SpectrumHandler
             Dim predChargeNumber = 1
             For j = i + 1 To peaks.Count - 1
                 Dim isotopePeak = peaks(j)
-                If isotopePeak.Mass > peak.Mass + c13_c12Diff + tolerance Then Exit For
+                If isotopePeak.mz > peak.mz + c13_c12Diff + tolerance Then Exit For
                 If isotopePeak.IsotopeWeightNumber >= 0 Then Continue For
 
                 For k = maxChargeNumber To 1 Step -1
-                    Dim predIsotopeMass = peak.Mass + c13_c12Diff / k
-                    Dim diff = Math.Abs(predIsotopeMass - isotopePeak.Mass)
+                    Dim predIsotopeMass = peak.mz + c13_c12Diff / k
+                    Dim diff = Math.Abs(predIsotopeMass - isotopePeak.mz)
                     If diff < tolerance Then
                         predChargeNumber = k
                         If k <= 3 Then
                             Exit For
                         ElseIf k = 4 OrElse k = 5 Then
-                            Dim predNextIsotopeMass = peak.Mass + c13_c12Diff / (k - 1)
-                            Dim nextDiff = Math.Abs(predNextIsotopeMass - isotopePeak.Mass)
+                            Dim predNextIsotopeMass = peak.mz + c13_c12Diff / (k - 1)
+                            Dim nextDiff = Math.Abs(predNextIsotopeMass - isotopePeak.mz)
                             If diff > nextDiff Then predChargeNumber = k - 1
                             Exit For
                         ElseIf k >= 6 Then
-                            Dim predNextIsotopeMass = peak.Mass + c13_c12Diff / (k - 1)
-                            Dim nextDiff = Math.Abs(predNextIsotopeMass - isotopePeak.Mass)
+                            Dim predNextIsotopeMass = peak.mz + c13_c12Diff / (k - 1)
+                            Dim nextDiff = Math.Abs(predNextIsotopeMass - isotopePeak.mz)
                             If diff > nextDiff Then
                                 predChargeNumber = k - 1
                                 diff = nextDiff
 
-                                predNextIsotopeMass = peak.Mass + c13_c12Diff / (k - 2)
-                                nextDiff = Math.Abs(predNextIsotopeMass - isotopePeak.Mass)
+                                predNextIsotopeMass = peak.mz + c13_c12Diff / (k - 2)
+                                nextDiff = Math.Abs(predNextIsotopeMass - isotopePeak.mz)
 
                                 If diff > nextDiff Then
                                     predChargeNumber = k - 2
@@ -251,17 +251,17 @@ Public NotInheritable Class SpectrumHandler
             Dim isotopeTemps = New IsotopeTemp(maxTraceNumber + 1 - 1) {}
             isotopeTemps(0) = New IsotopeTemp() With {
                 .WeightNumber = 0,
-                .Mz = peak.Mass,
+                .Mz = peak.mz,
                 .Intensity = peak.Intensity,
                 .PeakID = i,
-                .MzClBr = peak.Mass
+                .MzClBr = peak.mz
             }
 
             For j = 1 To isotopeTemps.Length - 1
                 isotopeTemps(j) = New IsotopeTemp() With {
                     .WeightNumber = j,
-                    .Mz = peak.Mass + j * c13_c12Diff / predChargeNumber,
-                    .MzClBr = If(j Mod 2 = 0, peak.Mass + j * c13_c12Diff / predChargeNumber, peak.Mass + j * br81_br79 * 0.5 / predChargeNumber),
+                    .Mz = peak.mz + j * c13_c12Diff / predChargeNumber,
+                    .MzClBr = If(j Mod 2 = 0, peak.mz + j * c13_c12Diff / predChargeNumber, peak.mz + j * br81_br79 * 0.5 / predChargeNumber),
                     .Intensity = 0,
                     .PeakID = -1
                 }
@@ -269,7 +269,7 @@ Public NotInheritable Class SpectrumHandler
 
             Dim reminderIndex = i + 1
             Dim isFinished = False
-            Dim mzFocused = peak.Mass
+            Dim mzFocused = peak.mz
             For j = 1 To maxTraceNumber
                 Dim predIsotopicMass = mzFocused + c13_c12Diff / predChargeNumber
                 Dim predClBrIsotopicMass = mzFocused + br81_br79 * 0.5 / predChargeNumber
@@ -278,7 +278,7 @@ Public NotInheritable Class SpectrumHandler
                     Dim isotopePeak = peaks(k)
                     If isotopePeak.IsotopeWeightNumber >= 0 Then Continue For
 
-                    Dim isotopeMz = isotopePeak.Mass
+                    Dim isotopeMz = isotopePeak.mz
                     Dim diffMz = Math.Abs(predIsotopicMass - isotopeMz)
                     Dim diffMzClBr = Math.Abs(predClBrIsotopicMass - isotopeMz)
 
@@ -321,7 +321,7 @@ Public NotInheritable Class SpectrumHandler
                                 mzFocused = isotopeMz
                             End If
                         End If
-                    ElseIf isotopePeak.Mass >= predIsotopicMass + tolerance Then
+                    ElseIf isotopePeak.mz >= predIsotopicMass + tolerance Then
                         If k = peaks.Count - 1 Then Exit For
                         reminderIndex = k
                         If isotopeTemps(j - 1).PeakID = -1 AndAlso isotopeTemps(j).PeakID = -1 Then
@@ -337,7 +337,7 @@ Public NotInheritable Class SpectrumHandler
             Next
 
             ' finalize and store
-            Dim monoisotopicMass = peak.Mass * predChargeNumber
+            Dim monoisotopicMass = peak.mz * predChargeNumber
             Dim simulatedFormulaByAlkane = getSimulatedFormulaByAlkane(monoisotopicMass)
 
             'from here, simple decreasing will be expected for <= 800 Da

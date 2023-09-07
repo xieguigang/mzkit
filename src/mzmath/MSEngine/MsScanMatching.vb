@@ -310,14 +310,14 @@ Public NotInheritable Class MsScanMatching
         If Not IsComparedAvailable(peaks1, peaks2) Then Return New Double(1) {-1, -1}
 
         Dim sumM As Double = 0, sumL As Double = 0
-        Dim minMz = peaks2(0).Mass
-        Dim maxMz = peaks2(peaks2.Count - 1).Mass
+        Dim minMz = peaks2(0).mz
+        Dim maxMz = peaks2(peaks2.Count - 1).mz
 
         If massBegin > minMz Then minMz = massBegin
         If maxMz > massEnd Then maxMz = massEnd
 
         Dim focusedMz = minMz
-        Dim maxLibIntensity = peaks2.Max(Function(n) n.Intensity)
+        Dim maxLibIntensity = peaks2.Max(Function(n) n.intensity)
         Dim remaindIndexM = 0, remaindIndexL = 0
         Dim counter = 0
         Dim libCounter = 0
@@ -328,10 +328,10 @@ Public NotInheritable Class MsScanMatching
         While focusedMz <= maxMz
             sumL = 0
             For i = remaindIndexL To peaks2.Count - 1
-                If peaks2(i).Mass < focusedMz - bin Then
+                If peaks2(i).mz < focusedMz - bin Then
                     Continue For
-                ElseIf focusedMz - bin <= peaks2(i).Mass AndAlso peaks2(i).Mass < focusedMz + bin Then
-                    sumL += peaks2(i).Intensity
+                ElseIf focusedMz - bin <= peaks2(i).mz AndAlso peaks2(i).mz < focusedMz + bin Then
+                    sumL += peaks2(i).intensity
                 Else
                     remaindIndexL = i
                     Exit For
@@ -344,10 +344,10 @@ Public NotInheritable Class MsScanMatching
 
             sumM = 0
             For i = remaindIndexM To peaks1.Count - 1
-                If peaks1(i).Mass < focusedMz - bin Then
+                If peaks1(i).mz < focusedMz - bin Then
                     Continue For
-                ElseIf focusedMz - bin <= peaks1(i).Mass AndAlso peaks1(i).Mass < focusedMz + bin Then
-                    sumM += peaks1(i).Intensity
+                ElseIf focusedMz - bin <= peaks1(i).mz AndAlso peaks1(i).mz < focusedMz + bin Then
+                    sumM += peaks1(i).intensity
                 Else
                     remaindIndexM = i
                     Exit For
@@ -358,8 +358,8 @@ Public NotInheritable Class MsScanMatching
                 counter += 1
             End If
 
-            If focusedMz + bin > peaks2(peaks2.Count - 1).Mass Then Exit While
-            focusedMz = peaks2(remaindIndexL).Mass
+            If focusedMz + bin > peaks2(peaks2.Count - 1).mz Then Exit While
+            focusedMz = peaks2(remaindIndexL).mz
         End While
 
         If libCounter = 0 Then
@@ -379,8 +379,8 @@ Public NotInheritable Class MsScanMatching
     End Function
 
     Public Shared Function GetSpectralEntropy(peaks As List(Of SpectrumPeak)) As Double
-        Dim sumIntensity = peaks.Sum(Function(n) n.Intensity)
-        Return -1 * peaks.Sum(Function(n) n.Intensity / sumIntensity * std.Log(n.Intensity / sumIntensity, 2))
+        Dim sumIntensity = peaks.Sum(Function(n) n.intensity)
+        Return -1 * peaks.Sum(Function(n) n.intensity / sumIntensity * std.Log(n.intensity / sumIntensity, 2))
     End Function
 
     Public Shared Function GetModifiedDotProductScore(prop1 As IMSScanProperty, prop2 As IMSScanProperty, Optional massTolerance As Double = 0.05, Optional massToleranceType As MassToleranceType = MassToleranceType.Da) As Double()
@@ -414,8 +414,8 @@ Public NotInheritable Class MsScanMatching
         End If
 
         Dim product = matchedPeaks.Sum(Function(n) n.Intensity * n.MatchedIntensity)
-        Dim scaler1 = prop1.Spectrum.Where(Function(n) n.IsMatched = False).Sum(Function(n) std.Pow(n.Intensity, 2))
-        Dim scaler2 = prop2.Spectrum.Where(Function(n) n.IsMatched = False).Sum(Function(n) std.Pow(n.Intensity, 2))
+        Dim scaler1 = prop1.Spectrum.Where(Function(n) n.IsMatched = False).Sum(Function(n) std.Pow(n.intensity, 2))
+        Dim scaler2 = prop2.Spectrum.Where(Function(n) n.IsMatched = False).Sum(Function(n) std.Pow(n.intensity, 2))
         Return New Double() {product / (product + scaler1 + scaler2), matchedPeaks.Count}
     End Function
 
@@ -434,22 +434,22 @@ Public NotInheritable Class MsScanMatching
         Dim precursorDiff = rPrecursor - ePrecursor
         For i = 0 To rPeaks.Count - 1
             Dim rPeak = rPeaks(i)
-            Dim massTol = If(massTolType = MassToleranceType.Da, massTolerance, PPMmethod.ConvertPpmToMassAccuracy(rPeak.Mass, massTolerance))
+            Dim massTol = If(massTolType = MassToleranceType.Da, massTolerance, PPMmethod.ConvertPpmToMassAccuracy(rPeak.mz, massTolerance))
             Dim minPeakID = -1
             Dim minIntensityDiff = Double.MaxValue
             Dim isProduct = False
             For j = 0 To ePeaks.Count - 1
                 Dim ePeak = ePeaks(j)
                 If ePeak.IsMatched = True Then Continue For
-                If std.Abs(ePeak.Mass - rPeak.Mass) < massTol Then
-                    Dim intensityDiff = std.Abs(ePeak.Intensity - rPeak.Intensity)
+                If std.Abs(ePeak.mz - rPeak.mz) < massTol Then
+                    Dim intensityDiff = std.Abs(ePeak.intensity - rPeak.intensity)
                     If intensityDiff < minIntensityDiff Then
                         minIntensityDiff = intensityDiff
                         minPeakID = j
                         isProduct = True
                     End If
-                ElseIf std.Abs(precursorDiff + ePeak.Mass - rPeak.Mass) < massTol Then
-                    Dim intensityDiff = std.Abs(ePeak.Intensity - rPeak.Intensity)
+                ElseIf std.Abs(precursorDiff + ePeak.mz - rPeak.mz) < massTol Then
+                    Dim intensityDiff = std.Abs(ePeak.intensity - rPeak.intensity)
                     If intensityDiff < minIntensityDiff Then
                         minIntensityDiff = intensityDiff
                         minPeakID = j
@@ -462,9 +462,9 @@ Public NotInheritable Class MsScanMatching
                 rPeak.IsMatched = True
                 ePeaks(minPeakID).IsMatched = True
                 matchedPeaks.Add(New MatchedPeak() With {
-    .Mass = rPeak.Mass,
-    .Intensity = rPeak.Intensity,
-    .MatchedIntensity = ePeaks(minPeakID).Intensity,
+    .Mass = rPeak.mz,
+    .Intensity = rPeak.intensity,
+    .MatchedIntensity = ePeaks(minPeakID).intensity,
     .IsProductIonMatched = isProduct,
     .IsNeutralLossMatched = Not isProduct
 })
@@ -572,8 +572,8 @@ Public NotInheritable Class MsScanMatching
 
     Public Shared Function GetMachedSpectralPeaks(peaks1 As List(Of SpectrumPeak), peaks2 As List(Of SpectrumPeak), bin As Double, massBegin As Double, massEnd As Double) As List(Of SpectrumPeak)
         If Not IsComparedAvailable(peaks1, peaks2) Then Return New List(Of SpectrumPeak)()
-        Dim minMz = std.Max(peaks2(0).Mass, massBegin)
-        Dim maxMz = std.Min(peaks2(peaks2.Count - 1).Mass, massEnd)
+        Dim minMz = std.Max(peaks2(0).mz, massBegin)
+        Dim maxMz = std.Min(peaks2(peaks2.Count - 1).mz, massEnd)
         Dim focusedMz = minMz
 
         Dim remaindIndexM = 0, remaindIndexL = 0
@@ -583,11 +583,11 @@ Public NotInheritable Class MsScanMatching
             Dim maxRefIntensity = Double.MinValue
             Dim maxRefID = -1
             For i = remaindIndexL To peaks2.Count - 1
-                If peaks2(i).Mass < focusedMz - bin Then
+                If peaks2(i).mz < focusedMz - bin Then
                     Continue For
-                ElseIf std.Abs(focusedMz - peaks2(i).Mass) < bin Then
-                    If maxRefIntensity < peaks2(i).Intensity Then
-                        maxRefIntensity = peaks2(i).Intensity
+                ElseIf std.Abs(focusedMz - peaks2(i).mz) < bin Then
+                    If maxRefIntensity < peaks2(i).intensity Then
+                        maxRefIntensity = peaks2(i).intensity
                         maxRefID = i
                     End If
                 Else
@@ -598,16 +598,16 @@ Public NotInheritable Class MsScanMatching
 
             Dim spectrumPeak As SpectrumPeak = If(maxRefID >= 0, peaks2(maxRefID).Clone(), Nothing)
             If spectrumPeak Is Nothing Then
-                focusedMz = peaks2(remaindIndexL).Mass
+                focusedMz = peaks2(remaindIndexL).mz
                 If remaindIndexL = peaks2.Count - 1 Then Exit While
                 Continue While
             End If
             Dim sumintensity = 0.0
             For i = remaindIndexM To peaks1.Count - 1
-                If peaks1(i).Mass < focusedMz - bin Then
+                If peaks1(i).mz < focusedMz - bin Then
                     Continue For
-                ElseIf std.Abs(focusedMz - peaks1(i).Mass) < bin Then
-                    sumintensity += peaks1(i).Intensity
+                ElseIf std.Abs(focusedMz - peaks1(i).mz) < bin Then
+                    sumintensity += peaks1(i).intensity
                     spectrumPeak.IsMatched = True
                 Else
                     remaindIndexM = i
@@ -618,8 +618,8 @@ Public NotInheritable Class MsScanMatching
             spectrumPeak.Resolution = sumintensity
             searchedPeaks.Add(spectrumPeak)
 
-            If focusedMz + bin > peaks2(peaks2.Count - 1).Mass Then Exit While
-            focusedMz = peaks2(remaindIndexL).Mass
+            If focusedMz + bin > peaks2(peaks2.Count - 1).mz Then Exit While
+            focusedMz = peaks2(remaindIndexL).mz
         End While
 
         Return searchedPeaks
@@ -650,8 +650,8 @@ Public NotInheritable Class MsScanMatching
         Dim peaks1 = prop1.Spectrum
         Dim peaks2 = prop2.Spectrum
 
-        Dim minMz = peaks2(0).Mass
-        Dim maxMz = peaks2(peaks2.Count - 1).Mass
+        Dim minMz = peaks2(0).mz
+        Dim maxMz = peaks2(peaks2.Count - 1).mz
 
         If massBegin > minMz Then minMz = massBegin
         If maxMz > massEnd Then maxMz = massEnd
@@ -668,10 +668,10 @@ Public NotInheritable Class MsScanMatching
         While focusedMz <= maxMz
             sumL = 0
             For i = remaindIndexL To peaks2.Count - 1
-                If peaks2(i).Mass < focusedMz - bin Then
+                If peaks2(i).mz < focusedMz - bin Then
                     Continue For
-                ElseIf focusedMz - bin <= peaks2(i).Mass AndAlso peaks2(i).Mass < focusedMz + bin Then
-                    sumL += peaks2(i).Intensity
+                ElseIf focusedMz - bin <= peaks2(i).mz AndAlso peaks2(i).mz < focusedMz + bin Then
+                    sumL += peaks2(i).intensity
                 Else
                     remaindIndexL = i
                     Exit For
@@ -680,10 +680,10 @@ Public NotInheritable Class MsScanMatching
 
             sumM = 0
             For i = remaindIndexM To peaks1.Count - 1
-                If peaks1(i).Mass < focusedMz - bin Then
+                If peaks1(i).mz < focusedMz - bin Then
                     Continue For
-                ElseIf focusedMz - bin <= peaks1(i).Mass AndAlso peaks1(i).Mass < focusedMz + bin Then
-                    sumM += peaks1(i).Intensity
+                ElseIf focusedMz - bin <= peaks1(i).mz AndAlso peaks1(i).mz < focusedMz + bin Then
+                    sumM += peaks1(i).intensity
                 Else
                     remaindIndexM = i
                     Exit For
@@ -706,8 +706,8 @@ Public NotInheritable Class MsScanMatching
                 counter += 1
             End If
 
-            If focusedMz + bin > peaks2(peaks2.Count - 1).Mass Then Exit While
-            focusedMz = peaks2(remaindIndexL).Mass
+            If focusedMz + bin > peaks2(peaks2.Count - 1).mz Then Exit While
+            focusedMz = peaks2(remaindIndexL).mz
         End While
 
         If baseM = 0 OrElse baseR = 0 Then Return 0
@@ -796,8 +796,8 @@ Public NotInheritable Class MsScanMatching
         Dim peaks1 = prop1.Spectrum
         Dim peaks2 = prop2.Spectrum
 
-        Dim minMz = std.Min(peaks1(0).Mass, peaks2(0).Mass)
-        Dim maxMz = std.Max(peaks1(peaks1.Count - 1).Mass, peaks2(peaks2.Count - 1).Mass)
+        Dim minMz = std.Min(peaks1(0).mz, peaks2(0).mz)
+        Dim maxMz = std.Max(peaks1(peaks1.Count - 1).mz, peaks2(peaks2.Count - 1).mz)
 
         If massBegin > minMz Then minMz = massBegin
         If maxMz > massEnd Then maxMz = massEnd
@@ -813,10 +813,10 @@ Public NotInheritable Class MsScanMatching
         While focusedMz <= maxMz
             sumM = 0
             For i = remaindIndexM To peaks1.Count - 1
-                If peaks1(i).Mass < focusedMz - bin Then
+                If peaks1(i).mz < focusedMz - bin Then
                     Continue For
-                ElseIf focusedMz - bin <= peaks1(i).Mass AndAlso peaks1(i).Mass < focusedMz + bin Then
-                    sumM += peaks1(i).Intensity
+                ElseIf focusedMz - bin <= peaks1(i).mz AndAlso peaks1(i).mz < focusedMz + bin Then
+                    sumM += peaks1(i).intensity
                 Else
                     remaindIndexM = i
                     Exit For
@@ -825,10 +825,10 @@ Public NotInheritable Class MsScanMatching
 
             sumR = 0
             For i = remaindIndexL To peaks2.Count - 1
-                If peaks2(i).Mass < focusedMz - bin Then
+                If peaks2(i).mz < focusedMz - bin Then
                     Continue For
-                ElseIf focusedMz - bin <= peaks2(i).Mass AndAlso peaks2(i).Mass < focusedMz + bin Then
-                    sumR += peaks2(i).Intensity
+                ElseIf focusedMz - bin <= peaks2(i).mz AndAlso peaks2(i).mz < focusedMz + bin Then
+                    sumR += peaks2(i).intensity
                 Else
                     remaindIndexL = i
                     Exit For
@@ -849,13 +849,13 @@ Public NotInheritable Class MsScanMatching
                 If sumR > baseR Then baseR = sumR
             End If
 
-            If focusedMz + bin > std.Max(peaks1(peaks1.Count - 1).Mass, peaks2(peaks2.Count - 1).Mass) Then Exit While
-            If focusedMz + bin > peaks2(remaindIndexL).Mass AndAlso focusedMz + bin <= peaks1(remaindIndexM).Mass Then
-                focusedMz = peaks1(remaindIndexM).Mass
-            ElseIf focusedMz + bin <= peaks2(remaindIndexL).Mass AndAlso focusedMz + bin > peaks1(remaindIndexM).Mass Then
-                focusedMz = peaks2(remaindIndexL).Mass
+            If focusedMz + bin > std.Max(peaks1(peaks1.Count - 1).mz, peaks2(peaks2.Count - 1).mz) Then Exit While
+            If focusedMz + bin > peaks2(remaindIndexL).mz AndAlso focusedMz + bin <= peaks1(remaindIndexM).mz Then
+                focusedMz = peaks1(remaindIndexM).mz
+            ElseIf focusedMz + bin <= peaks2(remaindIndexL).mz AndAlso focusedMz + bin > peaks1(remaindIndexM).mz Then
+                focusedMz = peaks2(remaindIndexL).mz
             Else
-                focusedMz = std.Min(peaks1(remaindIndexM).Mass, peaks2(remaindIndexL).Mass)
+                focusedMz = std.Min(peaks1(remaindIndexM).mz, peaks2(remaindIndexL).mz)
             End If
         End While
 
@@ -928,8 +928,8 @@ Public NotInheritable Class MsScanMatching
         Dim peaks1 = prop1.Spectrum
         Dim peaks2 = prop2.Spectrum
 
-        Dim minMz = std.Min(peaks1(0).Mass, peaks2(0).Mass)
-        Dim maxMz = std.Max(peaks1(peaks1.Count - 1).Mass, peaks2(peaks2.Count - 1).Mass)
+        Dim minMz = std.Min(peaks1(0).mz, peaks2(0).mz)
+        Dim maxMz = std.Max(peaks1(peaks1.Count - 1).mz, peaks2(peaks2.Count - 1).mz)
         Dim focusedMz = minMz
         Dim remaindIndexM = 0, remaindIndexL = 0
 
@@ -945,10 +945,10 @@ Public NotInheritable Class MsScanMatching
         While focusedMz <= maxMz
             sumM = 0
             For i = remaindIndexM To peaks1.Count - 1
-                If peaks1(i).Mass < focusedMz - bin Then
+                If peaks1(i).mz < focusedMz - bin Then
                     Continue For
-                ElseIf focusedMz - bin <= peaks1(i).Mass AndAlso peaks1(i).Mass < focusedMz + bin Then
-                    sumM += peaks1(i).Intensity
+                ElseIf focusedMz - bin <= peaks1(i).mz AndAlso peaks1(i).mz < focusedMz + bin Then
+                    sumM += peaks1(i).intensity
                 Else
                     remaindIndexM = i
                     Exit For
@@ -957,10 +957,10 @@ Public NotInheritable Class MsScanMatching
 
             sumR = 0
             For i = remaindIndexL To peaks2.Count - 1
-                If peaks2(i).Mass < focusedMz - bin Then
+                If peaks2(i).mz < focusedMz - bin Then
                     Continue For
-                ElseIf focusedMz - bin <= peaks2(i).Mass AndAlso peaks2(i).Mass < focusedMz + bin Then
-                    sumR += peaks2(i).Intensity
+                ElseIf focusedMz - bin <= peaks2(i).mz AndAlso peaks2(i).mz < focusedMz + bin Then
+                    sumR += peaks2(i).intensity
                 Else
                     remaindIndexL = i
                     Exit For
@@ -973,13 +973,13 @@ Public NotInheritable Class MsScanMatching
             referenceMassList.Add(New Double() {focusedMz, sumR})
             If sumR > baseR Then baseR = sumR
 
-            If focusedMz + bin > std.Max(peaks1(peaks1.Count - 1).Mass, peaks2(peaks2.Count - 1).Mass) Then Exit While
-            If focusedMz + bin > peaks2(remaindIndexL).Mass AndAlso focusedMz + bin <= peaks1(remaindIndexM).Mass Then
-                focusedMz = peaks1(remaindIndexM).Mass
-            ElseIf focusedMz + bin <= peaks2(remaindIndexL).Mass AndAlso focusedMz + bin > peaks1(remaindIndexM).Mass Then
-                focusedMz = peaks2(remaindIndexL).Mass
+            If focusedMz + bin > std.Max(peaks1(peaks1.Count - 1).mz, peaks2(peaks2.Count - 1).mz) Then Exit While
+            If focusedMz + bin > peaks2(remaindIndexL).mz AndAlso focusedMz + bin <= peaks1(remaindIndexM).mz Then
+                focusedMz = peaks1(remaindIndexM).mz
+            ElseIf focusedMz + bin <= peaks2(remaindIndexL).mz AndAlso focusedMz + bin > peaks1(remaindIndexM).mz Then
+                focusedMz = peaks2(remaindIndexL).mz
             Else
-                focusedMz = std.Min(peaks1(remaindIndexM).Mass, peaks2(remaindIndexL).Mass)
+                focusedMz = std.Min(peaks1(remaindIndexM).mz, peaks2(remaindIndexL).mz)
             End If
         End While
 
