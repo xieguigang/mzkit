@@ -4,6 +4,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.ElementsExactMass
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
 Imports std = System.Math
+Imports MassDiffDictionary = BioNovoGene.BioDeep.Chemoinformatics.Formula.ElementsExactMass
 
 Public NotInheritable Class LipidMsmsCharacterizationUtility
     Private Sub New()
@@ -1121,29 +1122,28 @@ Public NotInheritable Class LipidMsmsCharacterizationUtility
         Dim lipidName = lipidClass & " " & chainString
 
         Return New LipidMolecule() With {
-.lipidClass = lbmClass,
+.LipidClass = lbmClass,
 .AnnotationLevel = 2,
 .SublevelLipidName = totalName,
-.lipidName = lipidName,
+.LipidName = lipidName,
 .TotalCarbonCount = totalCarbon,
 .TotalDoubleBondCount = totalDB,
 .TotalChainString = totalString,
-.score = score,
-.sn1CarbonCount = sn1CarbonCount,
+.Score = score,
+.Sn1CarbonCount = sn1CarbonCount,
 .Sn1DoubleBondCount = sn1DbCount,
 .Sn1AcylChainString = sn1ChainString,
-.sn2CarbonCount = sn2CarbonCount,
+.Sn2CarbonCount = sn2CarbonCount,
 .Sn2DoubleBondCount = sn2DbCount,
 .Sn2AcylChainString = sn2ChainString,
-.sn3CarbonCount = sn3CarbonCount,
+.Sn3CarbonCount = sn3CarbonCount,
 .Sn3DoubleBondCount = sn3DbCount,
 .Sn3AcylChainString = sn3ChainString,
-.sn4CarbonCount = sn4CarbonCount,
+.Sn4CarbonCount = sn4CarbonCount,
 .Sn4DoubleBondCount = sn4DbCount,
 .Sn4AcylChainString = sn4ChainString
-
 }
-        End Function
+    End Function
     Public Shared Function getCardiolipinMoleculeObjAsLevel2_2(lipidClass As String, lbmClass As LbmClass, sn1Carbon As Integer, sn2Carbon As Integer, sn3Carbon As Integer, sn4Carbon As Integer, sn1Double As Integer, sn2Double As Integer, sn3Double As Integer, sn4Double As Integer, score As Double) As LipidMolecule
 
         Dim totalCarbon = sn1Carbon + sn2Carbon + sn3Carbon + sn4Carbon
@@ -1192,29 +1192,28 @@ Public NotInheritable Class LipidMsmsCharacterizationUtility
         Dim lipidName = lipidClass & " " & chainString
 
         Return New LipidMolecule() With {
-.lipidClass = lbmClass,
+.LipidClass = lbmClass,
 .AnnotationLevel = 2,
 .SublevelLipidName = totalName,
-.lipidName = lipidName,
+.LipidName = lipidName,
 .TotalCarbonCount = totalCarbon,
 .TotalDoubleBondCount = totalDB,
 .TotalChainString = totalString,
-.score = score,
-.sn1CarbonCount = sn1CarbonCount,
+.Score = score,
+.Sn1CarbonCount = sn1CarbonCount,
 .Sn1DoubleBondCount = sn1DbCount,
 .Sn1AcylChainString = sn1ChainString,
-.sn2CarbonCount = sn2CarbonCount,
+.Sn2CarbonCount = sn2CarbonCount,
 .Sn2DoubleBondCount = sn2DbCount,
 .Sn2AcylChainString = sn2ChainString,
-.sn3CarbonCount = sn3CarbonCount,
+.Sn3CarbonCount = sn3CarbonCount,
 .Sn3DoubleBondCount = sn3DbCount,
 .Sn3AcylChainString = sn3ChainString,
-.sn4CarbonCount = sn4CarbonCount,
+.Sn4CarbonCount = sn4CarbonCount,
 .Sn4DoubleBondCount = sn4DbCount,
 .Sn4AcylChainString = sn4ChainString
-
 }
-        End Function
+    End Function
 
     Public Shared Function getLysocardiolipinMoleculeObjAsLevel2(lipidClass As String, lbmClass As LbmClass, sn1Carbon As Integer, sn2Carbon As Integer, sn3Carbon As Integer, sn1Double As Integer, sn2Double As Integer, sn3Double As Integer, score As Double) As LipidMolecule
 
@@ -1244,26 +1243,25 @@ Public NotInheritable Class LipidMsmsCharacterizationUtility
         Dim lipidName = lipidClass & " " & chainString
 
         Return New LipidMolecule() With {
-.lipidClass = lbmClass,
+.LipidClass = lbmClass,
 .AnnotationLevel = 2,
 .SublevelLipidName = totalName,
-.lipidName = lipidName,
+.LipidName = lipidName,
 .TotalCarbonCount = totalCarbon,
 .TotalDoubleBondCount = totalDB,
 .TotalChainString = totalString,
-.score = score,
+.Score = score,
 .Sn1CarbonCount = sn1Carbon,
 .Sn1DoubleBondCount = sn1Double,
 .Sn1AcylChainString = sn1ChainString,
-.sn2CarbonCount = sn2CarbonCount,
+.Sn2CarbonCount = sn2CarbonCount,
 .Sn2DoubleBondCount = sn2DbCount,
 .Sn2AcylChainString = sn2ChainString,
-.sn3CarbonCount = sn3CarbonCount,
+.Sn3CarbonCount = sn3CarbonCount,
 .Sn3DoubleBondCount = sn3DbCount,
 .Sn3AcylChainString = sn3ChainString
-
 }
-        End Function
+    End Function
 
     Public Shared Function getFahfaMoleculeObjAsLevel2_0(lipidClass As String, lbmClass As LbmClass, sn1Carbon As Integer, sn1Double As Integer, sn2Carbon As Integer, sn2Double As Integer, score As Double) As LipidMolecule
 
@@ -2680,10 +2678,9 @@ Public NotInheritable Class LipidMsmsCharacterization
                                 New SpectrumPeak() With {
                                     .Mass = sn1,
                                     .Intensity = 30.0
+                                }                                'new SpectrumPeak() { Mass = nl_SN1, Intensity = 10.0 }
                                 }
-                                'new SpectrumPeak() { Mass = nl_SN1, Intensity = 10.0 }
-                                }
-                                foundCount = 0
+                            foundCount = 0
                             averageIntensity = 0.0
                             LipidMsmsCharacterizationUtility.countFragmentExistence(spectrum, query, ms2Tolerance, foundCount, averageIntensity)
 
@@ -3720,12 +3717,10 @@ New SpectrumPeak() With {
                             New SpectrumPeak() With {
                                 .Mass = sn2,
                                 .Intensity = 30.0
-                            }
-                            'new SpectrumPeak() { Mass = NL_sn2, Intensity = 0.1 },
-                            'new SpectrumPeak() { Mass = NL_sn2AndWater, Intensity = 0.1 }
+                            }    'new SpectrumPeak() { Mass = NL_sn2, Intensity = 0.1 },       'new SpectrumPeak() { Mass = NL_sn2AndWater, Intensity = 0.1 }
                             }
 
-                            Dim foundCount = 0
+                        Dim foundCount = 0
                         Dim averageIntensity = 0.0
                         LipidMsmsCharacterizationUtility.countFragmentExistence(spectrum, query, ms2Tolerance, foundCount, averageIntensity)
 
@@ -3966,11 +3961,9 @@ New SpectrumPeak() With {
                                 New SpectrumPeak() With {
                                         .Mass = sn2_xH2Oloss,
                                         .Intensity = 0.1
-                                    }
-                                    'new SpectrumPeak() { Mass = NL_sn2, Intensity = 0.1 },
-                                    'new SpectrumPeak() { Mass = NL_sn2H2O, Intensity = 0.1 }
+                                    }      'new SpectrumPeak() { Mass = NL_sn2, Intensity = 0.1 },          'new SpectrumPeak() { Mass = NL_sn2H2O, Intensity = 0.1 }
                                 }
-                                    Dim foundCount = 0
+                                Dim foundCount = 0
                                 Dim averageIntensity = 0.0
                                 LipidMsmsCharacterizationUtility.countFragmentExistence(spectrum, query, ms2Tolerance, foundCount, averageIntensity)
 
@@ -4065,12 +4058,10 @@ New SpectrumPeak() With {
                                 New SpectrumPeak() With {
                                         .Mass = sn2_xH2Oloss,
                                         .Intensity = 0.1
-                                    }
-                                    'new SpectrumPeak() { Mass = nl_sn2, Intensity = 0.1 },
-                                    'new SpectrumPeak() { Mass = nl_sn2AndWater, Intensity = 0.1 }
+                                    }                         'new SpectrumPeak() { Mass = nl_sn2, Intensity = 0.1 },              'new SpectrumPeak() { Mass = nl_sn2AndWater, Intensity = 0.1 }
                                 }
 
-                                    Dim foundCount = 0
+                                Dim foundCount = 0
                                 Dim averageIntensity = 0.0
                                 LipidMsmsCharacterizationUtility.countFragmentExistence(spectrum, query, ms2Tolerance, foundCount, averageIntensity)
 
@@ -5514,14 +5505,10 @@ New SpectrumPeak() With {
                             New SpectrumPeak() With {
                                 .Mass = sn2,
                                 .Intensity = 0.01
-                            }
-                        'new SpectrumPeak() { Mass = nl_SN1, Intensity = 0.01 },
-                        'new SpectrumPeak() { Mass = nl_SN1_H2O, Intensity = 0.01 },
-                        'new SpectrumPeak() { Mass = nl_SN2, Intensity = 0.01 },
-                        'new SpectrumPeak() { Mass = nl_NS2_H2O, Intensity = 0.01 }
+                            }                 'new SpectrumPeak() { Mass = nl_SN1, Intensity = 0.01 },                     'new SpectrumPeak() { Mass = nl_SN1_H2O, Intensity = 0.01 },                  'new SpectrumPeak() { Mass = nl_SN2, Intensity = 0.01 },                        'new SpectrumPeak() { Mass = nl_NS2_H2O, Intensity = 0.01 }
                         }
 
-                            Dim foundCount = 0
+                        Dim foundCount = 0
                         Dim averageIntensity = 0.0
                         LipidMsmsCharacterizationUtility.countFragmentExistence(spectrum, query, ms2Tolerance, foundCount, averageIntensity)
 
@@ -5845,8 +5832,8 @@ New SpectrumPeak() With {
                                 'var nl_SN1 = diagnosticMz - LipidMsmsCharacterizationUtility.acylCainMass(sn1Carbon, sn1Double) - H2O + MassDiffDictionary.HydrogenMass;
                                 Dim nl_SN2 = diagnosticMz - LipidMsmsCharacterizationUtility.acylCainMass(sn2Carbon, sn2Double) - H2O + HydrogenMass
                                 Dim nl_SN3 = diagnosticMz - LipidMsmsCharacterizationUtility.acylCainMass(sn3Carbon, sn3Double) - H2O + HydrogenMass
+                                'new SpectrumPeak() { Mass = nl_SN1, Intensity = 0.1 },
                                 Dim query = New List(Of SpectrumPeak) From {
-                                        'new SpectrumPeak() { Mass = nl_SN1, Intensity = 0.1 },
                                         New SpectrumPeak() With {
                                             .Mass = nl_SN2,
                                             .Intensity = 1
@@ -5857,7 +5844,7 @@ New SpectrumPeak() With {
                                         }
                                     }
 
-                                    Dim foundCount = 0
+                                Dim foundCount = 0
                                 Dim averageIntensity = 0.0
                                 LipidMsmsCharacterizationUtility.countFragmentExistence(spectrum, query, ms2Tolerance, foundCount, averageIntensity)
 
@@ -5866,9 +5853,9 @@ New SpectrumPeak() With {
                                     'var nl_SN1_H = diagnosticMzH - LipidMsmsCharacterizationUtility.acylCainMass(sn1Carbon, sn1Double) - H2O + MassDiffDictionary.HydrogenMass;
                                     Dim nl_SN2_H = diagnosticMzH - LipidMsmsCharacterizationUtility.acylCainMass(sn2Carbon, sn2Double) - H2O + HydrogenMass
                                     Dim nl_SN3_H = diagnosticMzH - LipidMsmsCharacterizationUtility.acylCainMass(sn3Carbon, sn3Double) - H2O + HydrogenMass
+                                    'new SpectrumPeak() { Mass = nl_SN1_H, Intensity = 0.1 },
                                     Dim query2 = New List(Of SpectrumPeak) From {
-                                            'new SpectrumPeak() { Mass = nl_SN1_H, Intensity = 0.1 },
-                                            New SpectrumPeak() With {
+                                                                                      New SpectrumPeak() With {
                                                 .Mass = nl_SN2_H,
                                                 .Intensity = 0.1
                                             },
@@ -5878,7 +5865,7 @@ New SpectrumPeak() With {
                                             }
                                             }
 
-                                        Dim foundCount2 = 0
+                                    Dim foundCount2 = 0
                                     Dim averageIntensity2 = 0.0
                                     LipidMsmsCharacterizationUtility.countFragmentExistence(spectrum, query, ms2Tolerance, foundCount, averageIntensity2)
 
@@ -8321,11 +8308,10 @@ New SpectrumPeak() With {
                             New SpectrumPeak() With {
                                 .Mass = sph3,
                                 .Intensity = 5
-                            }
-                            'new SpectrumPeak() { Mass = acylamide, Intensity = 0.01 }
+                            }                          'new SpectrumPeak() { Mass = acylamide, Intensity = 0.01 }
                             }
 
-                            Dim foundCount = 0
+                        Dim foundCount = 0
                         Dim averageIntensity = 0.0
                         LipidMsmsCharacterizationUtility.countFragmentExistence(spectrum, query, ms2Tolerance, foundCount, averageIntensity)
 
@@ -8497,11 +8483,10 @@ New SpectrumPeak() With {
                             New SpectrumPeak() With {
                                 .Mass = sph3,
                                 .Intensity = 1
-                            }
-                            'new SpectrumPeak() { Mass = acylamide, Intensity = 0.01 }
+                            }                            'new SpectrumPeak() { Mass = acylamide, Intensity = 0.01 }
                             }
 
-                            Dim foundCount = 0
+                        Dim foundCount = 0
                         Dim averageIntensity = 0.0
                         LipidMsmsCharacterizationUtility.countFragmentExistence(spectrum, query, ms2Tolerance, foundCount, averageIntensity)
 
@@ -8509,7 +8494,7 @@ New SpectrumPeak() With {
 
                             'var header = sphDouble == 0 ? "HexCer-HDS" : "HexCer-HS";
                             Dim header = "HexCer"
-                            Dim lbm = If(sphDouble = 0, [Enum].LbmClass.HexCer_HDS, [Enum].LbmClass.HexCer_HS)
+                            Dim lbm = If(sphDouble = 0, Lipidomics.LbmClass.HexCer_HDS, Lipidomics.LbmClass.HexCer_HS)
 
                             Dim molecule = LipidMsmsCharacterizationUtility.getCeramideoxMoleculeObjAsLevel2(header, lbm, "d", sphCarbon, sphDouble, acylCarbon, acylDouble, 1, averageIntensity)
                             candidates.Add(molecule)
@@ -8519,7 +8504,7 @@ New SpectrumPeak() With {
 
                 'var headerString = totalDoubleBond == 0 ? "HexCer-HDS" : "HexCer-HS";
                 Dim headerString = "HexCer"
-                Dim lbmClass = If(totalDoubleBond = 0, [Enum].LbmClass.HexCer_HDS, [Enum].LbmClass.HexCer_HS)
+                Dim lbmClass As LbmClass = If(totalDoubleBond = 0, LbmClass.HexCer_HDS, LbmClass.HexCer_HS)
 
                 Return LipidMsmsCharacterizationUtility.returnAnnotationResult(headerString, lbmClass, "d", theoreticalMz, adduct, totalCarbon, totalDoubleBond, 1, candidates, 2)
             ElseIf Equals(adductform, "[M+Na]+") Then
@@ -8546,7 +8531,7 @@ New SpectrumPeak() With {
 
                         If foundCount = 1 Then ' 
                             Dim header = "HexCer"
-                            Dim lbm = If(sphDouble = 0, [Enum].LbmClass.HexCer_HDS, [Enum].LbmClass.HexCer_HS)
+                            Dim lbm = If(sphDouble = 0, Lipidomics.LbmClass.HexCer_HDS, Lipidomics.LbmClass.HexCer_HS)
 
                             Dim molecule = LipidMsmsCharacterizationUtility.getCeramideoxMoleculeObjAsLevel2(header, lbm, "d", sphCarbon, sphDouble, acylCarbon, acylDouble, 1, averageIntensity)
                             candidates.Add(molecule)
@@ -8556,7 +8541,7 @@ New SpectrumPeak() With {
                 If candidates.Count = 0 Then Return Nothing
 
                 Dim headerString = "HexCer"
-                Dim lbmClass = If(totalDoubleBond = 0, [Enum].LbmClass.HexCer_HDS, [Enum].LbmClass.HexCer_HS)
+                Dim lbmClass As LbmClass = If(totalDoubleBond = 0, LbmClass.HexCer_HDS, LbmClass.HexCer_HS)
 
                 Return LipidMsmsCharacterizationUtility.returnAnnotationResult(headerString, lbmClass, "d", theoreticalMz, adduct, totalCarbon, totalDoubleBond, 1, candidates, 2)
             End If
@@ -8603,7 +8588,7 @@ New SpectrumPeak() With {
                             If True Then ' 
                                 'var header = sphDouble == 0 ? "HexCer-HDS" : "HexCer-HS";
                                 Dim header = "HexCer"
-                                Dim lbm = If(sphDouble = 0, [Enum].LbmClass.HexCer_HDS, [Enum].LbmClass.HexCer_HS)
+                                Dim lbm = If(sphDouble = 0, Lipidomics.LbmClass.HexCer_HDS, Lipidomics.LbmClass.HexCer_HS)
 
                                 Dim molecule = LipidMsmsCharacterizationUtility.getCeramideoxMoleculeObjAsLevel2(header, lbm, "d", sphCarbon, sphDouble, acylCarbon, acylDouble, 1, averageIntensity)
                                 candidates.Add(molecule)
@@ -8614,7 +8599,7 @@ New SpectrumPeak() With {
 
                 'var headerString = totalDoubleBond == 0 ? "HexCer-HDS" : "HexCer-HS";
                 Dim headerString = "HexCer"
-                Dim lbmClass = If(totalDoubleBond = 0, [Enum].LbmClass.HexCer_HDS, [Enum].LbmClass.HexCer_HS)
+                Dim lbmClass = If(totalDoubleBond = 0, Lipidomics.LbmClass.HexCer_HDS, Lipidomics.LbmClass.HexCer_HS)
 
                 Return LipidMsmsCharacterizationUtility.returnAnnotationResult(headerString, lbmClass, "d", theoreticalMz, adduct, totalCarbon, totalDoubleBond, 1, candidates, 2)
             End If
@@ -8662,11 +8647,10 @@ New SpectrumPeak() With {
                             New SpectrumPeak() With {
                             .Mass = sph2,
                             .Intensity = 5
-                        }
-                            'new SpectrumPeak() { Mass = acylamide, Intensity = 0.01 }
+                        }                            'new SpectrumPeak() { Mass = acylamide, Intensity = 0.01 }
                             }
 
-                        Dim foundCount = 0
+                    Dim foundCount = 0
                     Dim averageIntensity = 0.0
                     LipidMsmsCharacterizationUtility.countFragmentExistence(spectrum, query, ms2Tolerance, foundCount, averageIntensity)
 
@@ -8824,22 +8808,21 @@ New SpectrumPeak() With {
                             New SpectrumPeak() With {
                                 .Mass = sph3,
                                 .Intensity = 3
+                            }                            'new SpectrumPeak() { Mass = acylamide, Intensity = 0.01 }
                             }
-                            'new SpectrumPeak() { Mass = acylamide, Intensity = 0.01 }
-                            }
 
-                            'Console.WriteLine("Cer-O" + sphCarbon + ":" + sphDouble + "/" + acylCarbon + ":" + acylDouble + " " +
-                            ' sph1 + " " + sph2 + " " + sph3);
+                        'Console.WriteLine("Cer-O" + sphCarbon + ":" + sphDouble + "/" + acylCarbon + ":" + acylDouble + " " +
+                        ' sph1 + " " + sph2 + " " + sph3);
 
 
-                            Dim foundCount = 0
+                        Dim foundCount = 0
                         Dim averageIntensity = 0.0
                         LipidMsmsCharacterizationUtility.countFragmentExistence(spectrum, query, ms2Tolerance, foundCount, averageIntensity)
 
                         If foundCount >= 2 Then ' 
                             'var header = sphDouble == 0 ? "Cer-HDS" : "Cer-HS";
                             Dim header = "Cer"
-                            Dim lbm = If(sphDouble = 0, [Enum].LbmClass.Cer_HDS, [Enum].LbmClass.Cer_HS)
+                            Dim lbm = If(sphDouble = 0, Lipidomics.LbmClass.Cer_HDS, Lipidomics.LbmClass.Cer_HS)
 
                             Dim molecule = LipidMsmsCharacterizationUtility.getCeramideoxMoleculeObjAsLevel2(header, lbm, "d", sphCarbon, sphDouble, acylCarbon, acylDouble, 1, averageIntensity)
                             candidates.Add(molecule)
@@ -8850,7 +8833,7 @@ New SpectrumPeak() With {
 
                 'var headerString = totalDoubleBond == 0 ? "Cer-HDS" : "Cer-HS";
                 Dim headerString = "Cer"
-                Dim lbmClass = If(totalDoubleBond = 0, [Enum].LbmClass.Cer_HDS, [Enum].LbmClass.Cer_HS)
+                Dim lbmClass = If(totalDoubleBond = 0, Lipidomics.LbmClass.Cer_HDS, Lipidomics.LbmClass.Cer_HS)
 
                 Return LipidMsmsCharacterizationUtility.returnAnnotationResult(headerString, lbmClass, "d", theoreticalMz, adduct, totalCarbon, totalDoubleBond, 1, candidates, 2)
             ElseIf Equals(adductform, "[M+Na]+") Then
@@ -8877,7 +8860,7 @@ New SpectrumPeak() With {
 
                         If foundCount = 1 Then ' 
                             Dim header = "Cer"
-                            Dim lbm = If(sphDouble = 0, [Enum].LbmClass.Cer_HDS, [Enum].LbmClass.Cer_HS)
+                            Dim lbm = If(sphDouble = 0, Lipidomics.LbmClass.Cer_HDS, Lipidomics.LbmClass.Cer_HS)
 
                             Dim molecule = LipidMsmsCharacterizationUtility.getCeramideoxMoleculeObjAsLevel2(header, lbm, "d", sphCarbon, sphDouble, acylCarbon, acylDouble, 1, averageIntensity)
                             candidates.Add(molecule)
@@ -8886,7 +8869,7 @@ New SpectrumPeak() With {
                 Next
                 If candidates.Count = 0 Then Return Nothing
                 Dim headerString = "Cer"
-                Dim lbmClass = If(totalDoubleBond = 0, [Enum].LbmClass.Cer_HDS, [Enum].LbmClass.Cer_HS)
+                Dim lbmClass = If(totalDoubleBond = 0, Lipidomics.LbmClass.Cer_HDS, Lipidomics.LbmClass.Cer_HS)
 
                 Return LipidMsmsCharacterizationUtility.returnAnnotationResult(headerString, lbmClass, "d", theoreticalMz, adduct, totalCarbon, totalDoubleBond, 1, candidates, 2)
             End If
@@ -9002,14 +8985,13 @@ New SpectrumPeak() With {
                             New SpectrumPeak() With {
                                 .Mass = sph3,
                                 .Intensity = 1
-                            }
-                            'new SpectrumPeak() { Mass = acylamide, Intensity = 0.01 }
+                            }                            'new SpectrumPeak() { Mass = acylamide, Intensity = 0.01 }
                             }
 
-                            'Console.WriteLine("Cer-DOS" + sphCarbon + ":" + sphDouble + "/" + acylCarbon + ":" + acylDouble + " " +
-                            ' sph1 + " " + sph2 + " " + sph3);
+                        'Console.WriteLine("Cer-DOS" + sphCarbon + ":" + sphDouble + "/" + acylCarbon + ":" + acylDouble + " " +
+                        ' sph1 + " " + sph2 + " " + sph3);
 
-                            Dim foundCount = 0
+                        Dim foundCount = 0
                         Dim averageIntensity = 0.0
                         LipidMsmsCharacterizationUtility.countFragmentExistence(spectrum, query, ms2Tolerance, foundCount, averageIntensity)
 
@@ -9054,7 +9036,7 @@ New SpectrumPeak() With {
                 classIonFound.Add(LipidMsmsCharacterizationUtility.isDiagnosticFragmentExist(spectrum, ms2Tolerance, diagnosticMz1, threshold1))
                 classIonFound.Add(LipidMsmsCharacterizationUtility.isDiagnosticFragmentExist(spectrum, ms2Tolerance, diagnosticMz2, threshold2))
                 classIonFound.Add(LipidMsmsCharacterizationUtility.isDiagnosticFragmentExist(spectrum, ms2Tolerance, diagnosticMz3, threshold3))
-                If classIonFound.Count(Function(f) f = True) < 2 Then Return Nothing
+                If classIonFound.Where(Function(f) f = True).Count < 2 Then Return Nothing
 
                 ' seek [M-C18H30O15-H]- // reject Hex3Cer
                 Dim threshold5 = 1
@@ -9100,7 +9082,7 @@ New SpectrumPeak() With {
                 classIonFound.Add(LipidMsmsCharacterizationUtility.isDiagnosticFragmentExist(spectrum, ms2Tolerance, diagnosticMz, threshold))
                 classIonFound.Add(LipidMsmsCharacterizationUtility.isDiagnosticFragmentExist(spectrum, ms2Tolerance, diagnosticMz2, threshold2))
                 classIonFound.Add(LipidMsmsCharacterizationUtility.isDiagnosticFragmentExist(spectrum, ms2Tolerance, diagnosticMz3, threshold3))
-                If classIonFound.Count(Function(f) f = True) < 2 Then Return Nothing
+                If classIonFound.Where(Function(f) f = True).Count < 2 Then Return Nothing
 
                 ' seek [M-C18H30O15-H]- // reject Hex3Cer
                 Dim threshold5 = 1
@@ -9177,7 +9159,7 @@ New SpectrumPeak() With {
                 classIonFound.Add(LipidMsmsCharacterizationUtility.isDiagnosticFragmentExist(spectrum, ms2Tolerance, diagnosticMz2, threshold2))
                 classIonFound.Add(LipidMsmsCharacterizationUtility.isDiagnosticFragmentExist(spectrum, ms2Tolerance, diagnosticMz3, threshold3))
                 classIonFound.Add(LipidMsmsCharacterizationUtility.isDiagnosticFragmentExist(spectrum, ms2Tolerance, diagnosticMz4, threshold4))
-                If classIonFound.Count(Function(f) f = True) < 3 Then Return Nothing
+                If classIonFound.Where(Function(f) f = True).Count < 3 Then Return Nothing
 
                 If Equals(adduct.AdductIonName, "[M+CH3COO]-") OrElse Equals(adduct.AdductIonName, "[M+Hac-H]-") Then
                     Dim diagnosticMz5 = theoreticalMz - HydrogenMass - 44.998214
@@ -9222,7 +9204,7 @@ New SpectrumPeak() With {
                 classIonFound.Add(LipidMsmsCharacterizationUtility.isDiagnosticFragmentExist(spectrum, ms2Tolerance, diagnosticMz2, threshold2))
                 classIonFound.Add(LipidMsmsCharacterizationUtility.isDiagnosticFragmentExist(spectrum, ms2Tolerance, diagnosticMz3, threshold3))
                 classIonFound.Add(LipidMsmsCharacterizationUtility.isDiagnosticFragmentExist(spectrum, ms2Tolerance, diagnosticMz4, threshold4))
-                If classIonFound.Count(Function(f) f = True) < 3 Then Return Nothing
+                If classIonFound.Where(Function(f) f = True).Count < 3 Then Return Nothing
 
 
                 ' from here, acyl level annotation is executed.
@@ -9310,11 +9292,10 @@ New SpectrumPeak() With {
                             New SpectrumPeak() With {
                                 .Mass = sph4,
                                 .Intensity = 5
-                            }
-                            'new SpectrumPeak() { Mass = acylamide, Intensity = 0.01 }
+                            }                        'new SpectrumPeak() { Mass = acylamide, Intensity = 0.01 }
                             }
 
-                            Dim foundCount = 0
+                        Dim foundCount = 0
                         Dim averageIntensity = 0.0
                         LipidMsmsCharacterizationUtility.countFragmentExistence(spectrum, query, ms2Tolerance, foundCount, averageIntensity)
 
@@ -9474,11 +9455,10 @@ New SpectrumPeak() With {
                             New SpectrumPeak() With {
                                 .Mass = sph4,
                                 .Intensity = 1
-                            }
-                            'new SpectrumPeak() { Mass = acylamide, Intensity = 0.01 }
+                            }                          'new SpectrumPeak() { Mass = acylamide, Intensity = 0.01 }
                             }
 
-                            Dim foundCount = 0
+                        Dim foundCount = 0
                         Dim averageIntensity = 0.0
                         LipidMsmsCharacterizationUtility.countFragmentExistence(spectrum, query, ms2Tolerance, foundCount, averageIntensity)
 
@@ -10030,11 +10010,10 @@ New SpectrumPeak() With {
                             New SpectrumPeak() With {
                                 .Mass = sph4,
                                 .Intensity = 5
-                            }
-                            'new SpectrumPeak() { Mass = acylamide, Intensity = 0.01 }
+                            }                            'new SpectrumPeak() { Mass = acylamide, Intensity = 0.01 }
                             }
 
-                            Dim foundCount = 0
+                        Dim foundCount = 0
                         Dim averageIntensity = 0.0
                         LipidMsmsCharacterizationUtility.countFragmentExistence(spectrum, query, ms2Tolerance, foundCount, averageIntensity)
 
@@ -10305,11 +10284,10 @@ New SpectrumPeak() With {
                             New SpectrumPeak() With {
                                 .Mass = sph3,
                                 .Intensity = 5
-                            }
-                            'new SpectrumPeak() { Mass = acylamide, Intensity = 0.01 }
+                            }                            'new SpectrumPeak() { Mass = acylamide, Intensity = 0.01 }
                             }
 
-                            Dim foundCount = 0
+                        Dim foundCount = 0
                         Dim averageIntensity = 0.0
                         LipidMsmsCharacterizationUtility.countFragmentExistence(spectrum, query, ms2Tolerance, foundCount, averageIntensity)
 
@@ -10626,11 +10604,10 @@ New SpectrumPeak() With {
                             New SpectrumPeak() With {
                                 .Mass = sph3,
                                 .Intensity = 5
-                            }
-                            'new SpectrumPeak() { Mass = acylamide, Intensity = 0.01 }
+                            }                            'new SpectrumPeak() { Mass = acylamide, Intensity = 0.01 }
                             }
 
-                            Dim foundCount = 0
+                        Dim foundCount = 0
                         Dim averageIntensity = 0.0
                         LipidMsmsCharacterizationUtility.countFragmentExistence(spectrum, query, ms2Tolerance, foundCount, averageIntensity)
 
@@ -11403,11 +11380,10 @@ New SpectrumPeak() With {
                             New SpectrumPeak() With {
                                     .Mass = sph3,
                                     .Intensity = 1
-                                }
-                            ' new SpectrumPeak() { Mass = acylamide, Intensity = 0.01 }
+                                }                            ' new SpectrumPeak() { Mass = acylamide, Intensity = 0.01 }
                             }
 
-                                Dim foundCount = 0
+                            Dim foundCount = 0
                             Dim averageIntensity = 0.0
                             LipidMsmsCharacterizationUtility.countFragmentExistence(spectrum, query, ms2Tolerance, foundCount, averageIntensity)
 
@@ -11444,11 +11420,10 @@ New SpectrumPeak() With {
                             New SpectrumPeak() With {
                                     .Mass = sph3,
                                     .Intensity = 1
-                                }
-                            ' new SpectrumPeak() { Mass = acylamide, Intensity = 0.01 }
+                                }                            ' new SpectrumPeak() { Mass = acylamide, Intensity = 0.01 }
                             }
 
-                                Dim foundCount = 0
+                            Dim foundCount = 0
                             Dim averageIntensity = 0.0
                             LipidMsmsCharacterizationUtility.countFragmentExistence(spectrum, query, ms2Tolerance, foundCount, averageIntensity)
 
@@ -12284,11 +12259,10 @@ New SpectrumPeak() With {
                             New SpectrumPeak() With {
                                 .Mass = sn1_gly,
                                 .Intensity = 30.0
-                            }
-                            'new SpectrumPeak() { Mass = sn2, Intensity = 1.0 }
+                            }                            'new SpectrumPeak() { Mass = sn2, Intensity = 1.0 }
                             }
 
-                            Dim foundCount = 0
+                        Dim foundCount = 0
                         Dim averageIntensity = 0.0
                         LipidMsmsCharacterizationUtility.countFragmentExistence(spectrum, query, ms2Tolerance, foundCount, averageIntensity)
 
@@ -12915,8 +12889,8 @@ New SpectrumPeak() With {
                         Dim averageIntensitMusty = 0.0
                         LipidMsmsCharacterizationUtility.countFragmentExistence(spectrum, queryMust, ms2Tolerance, foundCountMust, averageIntensitMusty)
                         If foundCountMust = 0 Then Continue For
+                        'new SpectrumPeak() { Mass = sn2Loss, Intensity = 5 },
                         Dim query = New List(Of SpectrumPeak) From {
-                                    'new SpectrumPeak() { Mass = sn2Loss, Intensity = 5 },
                                     New SpectrumPeak() With {
                                     .Mass = sn2GlyLoss,
                                     .Intensity = 5
@@ -12927,13 +12901,13 @@ New SpectrumPeak() With {
                                 }
                                 }
 
-                            'Console.WriteLine("NAAG " + sn1Carbon + ":" + sn1Double + "/" + sn2Carbon + ":" + sn2Double +
-                            '   " " + sn2Loss + " " + sn2GlyLoss + " " + sn2H2OGlyLoss);
-                            'if (sn1Carbon == 10 && sn2Carbon == 19) {
-                            '    Console.WriteLine();
-                            '}
+                        'Console.WriteLine("NAAG " + sn1Carbon + ":" + sn1Double + "/" + sn2Carbon + ":" + sn2Double +
+                        '   " " + sn2Loss + " " + sn2GlyLoss + " " + sn2H2OGlyLoss);
+                        'if (sn1Carbon == 10 && sn2Carbon == 19) {
+                        '    Console.WriteLine();
+                        '}
 
-                            Dim foundCount = 0
+                        Dim foundCount = 0
                         Dim averageIntensity = 0.0
                         LipidMsmsCharacterizationUtility.countFragmentExistence(spectrum, query, ms2Tolerance, foundCount, averageIntensity)
 
@@ -14083,16 +14057,15 @@ New SpectrumPeak() With {
 
                         'var sn2 = LipidMsmsCharacterizationUtility.fattyacidProductIon(sn2Carbon, sn2Double);
                         Dim NL_sn2 = theoreticalMz - LipidMsmsCharacterizationUtility.acylCainMass(sn2Carbon, sn2Double) - H2O + Proton
-
+                        'new SpectrumPeak() { Mass = sn2, Intensity = 0.1 },
                         Dim query = New List(Of SpectrumPeak) From {
-                            'new SpectrumPeak() { Mass = sn2, Intensity = 0.1 },
-                            New SpectrumPeak() With {
+                                                       New SpectrumPeak() With {
                                     .Mass = NL_sn2,
                                     .Intensity = 0.1
                                 }
                         }
 
-                            Dim foundCount = 0
+                        Dim foundCount = 0
                         Dim averageIntensity = 0.0
                         LipidMsmsCharacterizationUtility.countFragmentExistence(spectrum, query, ms2Tolerance, foundCount, averageIntensity)
 

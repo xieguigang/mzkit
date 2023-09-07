@@ -63,7 +63,7 @@ Public Class CLSpectrumGenerator
         Return New MoleculeMsReference With {
 .PrecursorMz = adduct.ConvertToMz(lipid.Mass),
 .IonMode = adduct.IonMode,
-.spectrum = spectrum,
+.Spectrum = spectrum,
 .Name = lipid.Name,
 .Formula = molecule?.Formula,
 .Ontology = molecule?.Ontology,
@@ -122,9 +122,8 @@ New SpectrumPeak(sn1sn2mass + ProtonMass, 300.0R, $"[Sn1+Sn2+C3H3O2+H]+") With {
 New SpectrumPeak(sn3sn4mass + ProtonMass, 300.0R, $"[Sn3+Sn4+C3H3O2+H]+") With {
     .SpectrumComment = SpectrumComment.acylchain
 }
-
 }
-            spectrum.AddRange(acylChains.SelectMany(Function(acylChain) GetAcylLevelSpectrum(lipid, acylChain, adduct, nlMass)))
+        spectrum.AddRange(acylChains.SelectMany(Function(acylChain) GetAcylLevelSpectrum(lipid, acylChain, adduct, nlMass)))
 
         Return spectrum.ToArray()
     End Function
