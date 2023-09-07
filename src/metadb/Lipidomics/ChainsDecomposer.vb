@@ -1,6 +1,4 @@
-﻿Imports CompMs.Common.DataStructure
-
-Friend NotInheritable Class ChainsDecomposer
+﻿Friend NotInheritable Class ChainsDecomposer
     Implements IDecomposer(Of ITotalChain, TotalChain), IDecomposer(Of ITotalChain, MolecularSpeciesLevelChains), IDecomposer(Of ITotalChain, PositionLevelChains)
     Private Function Decompose1(Of T)(visitor As IAcyclicVisitor, element As T) As ITotalChain Implements IDecomposer(Of ITotalChain, TotalChain).Decompose
         Return element

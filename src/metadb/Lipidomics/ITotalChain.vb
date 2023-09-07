@@ -1,8 +1,4 @@
-﻿Imports CompMs.Common.DataStructure
-Imports System
-Imports System.Collections.Generic
-Imports System.Linq
-Imports System.Runtime.CompilerServices
+﻿Imports System.Runtime.CompilerServices
 
 Public Interface ITotalChain
     Inherits IEquatable(Of ITotalChain), IVisitableElement

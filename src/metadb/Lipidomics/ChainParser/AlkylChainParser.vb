@@ -1,5 +1,4 @@
-﻿Imports System.Linq
-Imports System.Text.RegularExpressions
+﻿Imports System.Text.RegularExpressions
 
 Public Class AlkylChainParser
     Private Shared ReadOnly CarbonPattern As String = "(?<carbon>\d+)"

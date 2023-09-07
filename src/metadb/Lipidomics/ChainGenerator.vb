@@ -1,7 +1,4 @@
-﻿Imports CompMs.Common.Extension
-Imports System
-Imports System.Collections.Generic
-Imports System.Linq
+﻿Imports std = System.Math
 
 Public Class ChainGenerator
     Implements IChainGenerator
@@ -35,75 +32,60 @@ Public Class ChainGenerator
 
     Private Function EnumerateBonds(carbon As Integer, doubleBond As IDoubleBond) As IEnumerable(Of IDoubleBond)
         If doubleBond.UnDecidedCount = 0 Then
-            Return [Return](doubleBond)
+            Return {doubleBond}
         End If
         Dim used = New Boolean(carbon - 1) {}
         For i = 1 To Begin - 1
             used(i - 1) = True
         Next
         For Each bond In doubleBond.Bonds
-            For i = Math.Max(1, bond.Position - Skip + 1) To bond.Position + Skip - 1
+            For i = std.Max(1, bond.Position - Skip + 1) To bond.Position + Skip - 1
                 used(i - 1) = True
             Next
         Next
 
-        ''' Cannot convert LocalFunctionStatementSyntax, CONVERSION ERROR: Conversion for LocalFunctionStatement not implemented, please report this issue in 'System.Collections.Generic....' at character 2815
-        ''' 
-        ''' 
-        ''' Input:
-        ''' 
-        System.Collections.Generic.IEnumerable<CompMs.Common.Lipidomics.IDoubleBond> rec(int i, System.Collections.Generic.List<CompMs.Common.Lipidomics.IDoubleBondInfo> infos) {
-                if (infos.Count == doubleBond.UnDecidedCount) {
-                    yield return new CompMs.Common.Lipidomics.DoubleBond(doubleBond.Bonds.Concat(infos).OrderBy(b => b.Position).ToArray());
-                    yield break;
-                }
-                for (var j = i; j <= carbon - this.End; j++){
-                    if (used[j - 1]) {
-                        continue;
-                    }
-                    infos.Add(CompMs.Common.Lipidomics.DoubleBondInfo.Create(j));
-                    foreach(var res In rec(j + this.Skip, infos)) {
-                        yield return res;
-                    }
-                    infos.RemoveAt(infos.Count - 1);
-                }
-            }
+        Dim rec = Iterator Function(i As Integer, infos As List(Of IDoubleBondInfo))
+                      If (infos.Count = doubleBond.UnDecidedCount) Then
+                          Yield New DoubleBond(doubleBond.Bonds.Concat(infos).OrderBy(b >= b.Position).ToArray())
+                          Return
+                      End If
 
-''' 
+                      For j = i To carbon - Me.End
+                          If (used(j - 1)) Then Continue For
 
-            Return rec(Begin, New List(Of IDoubleBondInfo)(doubleBond.UnDecidedCount))
+                          infos.Add(DoubleBondInfo.Create(j))
+                          For Each res In rec(j + Me.Skip, infos)
+                              Yield res
+                          Next
+                          infos.RemoveAt(infos.Count - 1)
+                      Next
+                  End Function
+
+        Return rec(Begin, New List(Of IDoubleBondInfo)(doubleBond.UnDecidedCount))
     End Function
 
     Private Function EnumerateOxidized(carbon As Integer, oxidized As IOxidized, begin As Integer) As IEnumerable(Of IOxidized)
         If oxidized.UnDecidedCount = 0 Then
-            Return [Return](oxidized)
+            Return {oxidized}
         End If
 
-        ''' Cannot convert LocalFunctionStatementSyntax, CONVERSION ERROR: Conversion for LocalFunctionStatement not implemented, please report this issue in 'System.Collections.Generic....' at character 4193
-        ''' 
-        ''' 
-        ''' Input:
-        ''' 
-        System.Collections.Generic.IEnumerable<CompMs.Common.Lipidomics.IOxidized> rec(int i, System.Collections.Generic.List<int> infos) {
-                if (infos.Count == oxidized.UnDecidedCount) {
-                    yield return CompMs.Common.Lipidomics.Oxidized.CreateFromPosition(oxidized.Oxidises.Concat(infos).OrderBy(p => p).ToArray());
-                    yield break;
-                }
-                for (var j = i; j <carbon + 1; j++){
-                    if (oxidized.Oxidises.Contains(j)) {
-                        continue;
-                    }
-                    infos.Add(j);
-                    foreach(var res In rec(j + 1, infos)) {
-                        yield return res;
-                    }
-                    infos.RemoveAt(infos.Count - 1);
-                }
-            }
+        Dim rec = Iterator Function(i As Integer, infos As List(Of Integer))
+                      If (infos.Count = oxidized.UnDecidedCount) Then
+                          Yield oxidized.CreateFromPosition(oxidized.Oxidises.Concat(infos).OrderBy(p >= p).ToArray())
+                          Return
+                      End If
+                      For j = i To carbon
+                          If (oxidized.Oxidises.Contains(j)) Then Continue For
 
-''' 
+                          infos.Add(j)
+                          For Each res In rec(j + 1, infos)
+                              Yield res
+                          Next
+                          infos.RemoveAt(infos.Count - 1)
+                      Next
+                  End Function
 
-            Return rec(begin, New List(Of Integer)(oxidized.UnDecidedCount))
+        Return rec(begin, New List(Of Integer)(oxidized.UnDecidedCount))
     End Function
 
     Public Function CarbonIsValid(carbon As Integer) As Boolean Implements IChainGenerator.CarbonIsValid

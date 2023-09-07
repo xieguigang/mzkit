@@ -1,8 +1,4 @@
-﻿Imports CompMs.Common.DataStructure
-Imports CompMs.Common.FormulaGenerator.DataObj
-Imports System
-Imports System.Collections.Generic
-Imports System.Linq
+﻿Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.ElementsExactMass
 
 Public Class AcylChain
     Implements IChain
