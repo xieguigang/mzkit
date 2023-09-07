@@ -60,34 +60,77 @@ Public Class TotalChainVariationGenerator
             Dim sphingos = RecurseGenerate(candidates.SphingoCandidate, New Func(Of Integer, Integer, Integer, SphingoChain)(AddressOf CreateSphingoChain)).ToArray()
             Dim acyls = RecurseGenerate(candidates.AcylCandidate, New Func(Of Integer, Integer, Integer, AcylChain)(AddressOf CreateAcylChain)).ToArray()
             Dim alkyls = RecurseGenerate(candidates.AlkylCandidate, New Func(Of Integer, Integer, Integer, AlkylChain)(AddressOf CreateAlkylChain)).ToArray()
-            Return From sphingo In sphingos From acyl In acyls From alkyl In alkyls Select New PositionLevelChains(sphingo.Concat(Of IChain)(acyl).Concat(alkyl).ToArray())
+            Return From sphingo In sphingos
+                   From acyl In acyls
+                   From alkyl In alkyls
+                   Select New PositionLevelChains(sphingo.Select(Function(si) DirectCast(si, IChain)).Concat(acyl.Select(Function(ai) DirectCast(ai, IChain))).Concat(alkyl.Select(Function(ai) DirectCast(ai, IChain))).ToArray())
         Else
             Dim acyls = RecurseGenerate(candidates.AcylCandidate, New Func(Of Integer, Integer, Integer, AcylChain)(AddressOf CreateAcylChain)).ToArray()
             Dim alkyls = RecurseGenerate(candidates.AlkylCandidate, New Func(Of Integer, Integer, Integer, AlkylChain)(AddressOf CreateAlkylChain)).ToArray()
-            Return From acyl In acyls From alkyl In alkyls Select New MolecularSpeciesLevelChains(alkyl.Concat(Of IChain)(acyl).ToArray())
+            Return From acyl In acyls
+                   From alkyl In alkyls
+                   Select New MolecularSpeciesLevelChains(alkyl.Select(Function(ai) DirectCast(ai, IChain)).Concat(acyl.Select(Function(ai) DirectCast(ai, IChain))).ToArray())
         End If
     End Function
 
     Private Function InternalSeparate(chains As TotalChain) As IEnumerable(Of ChainSet)
         Dim minAcylCarbonMinAlkylCarbonMinSphingoCarbon As (minAcylCarbon As Integer, minAlkylCarbon As Integer, minSphingoCarbon As Integer) = Nothing
+        Dim minAcylCarbon As Integer, minAlkylCarbon As Integer, minSphingoCarbon As Integer
         minAcylCarbonMinAlkylCarbonMinSphingoCarbon = (MinLength * chains.AcylChainCount, MinLength * chains.AlkylChainCount, MinLength * chains.SphingoChainCount)
+
+        With minAcylCarbonMinAlkylCarbonMinSphingoCarbon
+            minAcylCarbon = .minAcylCarbon
+            minAlkylCarbon = .minAlkylCarbon
+            minSphingoCarbon = .minSphingoCarbon
+        End With
+
         Dim carbonRemain = chains.CarbonCount - minAcylCarbon - minAlkylCarbon - minSphingoCarbon
         If carbonRemain < 0 Then
             Return Enumerable.Empty(Of ChainSet)()
         End If
 
         Dim maxAcylCarbonMaxAlkylCarbonMaxSphingoCarbon As (maxAcylCarbon As Integer, maxAlkylCarbon As Integer, maxSphingoCarbon As Integer) = Nothing
+        Dim maxAcylCarbon As Integer, maxAlkylCarbon As Integer, maxSphingoCarbon As Integer
         maxAcylCarbonMaxAlkylCarbonMaxSphingoCarbon = ((carbonRemain + minAcylCarbon) * std.Sign(chains.AcylChainCount), (carbonRemain + minAlkylCarbon) * std.Sign(chains.AlkylChainCount), (carbonRemain + minSphingoCarbon) * std.Sign(chains.SphingoChainCount))
+
+        With maxAcylCarbonMaxAlkylCarbonMaxSphingoCarbon
+            maxAcylCarbon = .maxAcylCarbon
+            maxAlkylCarbon = .maxAlkylCarbon
+            maxSphingoCarbon = .maxSphingoCarbon
+        End With
+
         Dim minAcylDbMinAlkylDbMinSphingoDb As (minAcylDb As Integer, minAlkylDb As Integer, minSphingoDb As Integer) = Nothing
+        Dim minAcylDb As Integer, minAlkylDb As Integer, minSphingoDb As Integer
         minAcylDbMinAlkylDbMinSphingoDb = (0, 0, 0)
         Dim dbRemain = chains.DoubleBondCount - minAcylDb - minAlkylDb - minSphingoDb
         Dim maxAcylDbMaxAlkylDbMaxSphingoDb As (maxAcylDb As Integer, maxAlkylDb As Integer, maxSphingoDb As Integer) = Nothing
+        Dim maxAcylDb As Integer, maxAlkylDb As Integer, maxSphingoDb As Integer
         maxAcylDbMaxAlkylDbMaxSphingoDb = ((dbRemain + minAcylDb) * std.Sign(chains.AcylChainCount), (dbRemain + minAlkylDb) * std.Sign(chains.AlkylChainCount), (dbRemain + minSphingoDb) * std.Sign(chains.SphingoChainCount))
+
+        With maxAcylDbMaxAlkylDbMaxSphingoDb
+            maxAcylDb = .maxAcylDb
+            maxAlkylDb = .maxAlkylDb
+            maxSphingoDb = .maxSphingoDb
+        End With
+
         Dim minAcylOxMinAlkylOxMinSphingoOx As (minAcylOx As Integer, minAlkylOx As Integer, minSphingoOx As Integer) = Nothing
+        Dim minAcylOx As Integer, minAlkylOx As Integer, minSphingoOx As Integer
         minAcylOxMinAlkylOxMinSphingoOx = (0, 0, chains.SphingoChainCount * 2)
+        With minAcylOxMinAlkylOxMinSphingoOx
+            minAcylOx = .minAcylOx
+            minAlkylOx = .minAlkylOx
+            minSphingoOx = .minSphingoOx
+        End With
         Dim oxRemain = chains.OxidizedCount - minAcylOx - minAlkylOx - minSphingoOx
         Dim maxAcylOxMaxAlkylOxMaxSphingoOx As (maxAcylOx As Integer, maxAlkylOx As Integer, maxSphingoOx As Integer) = Nothing
+        Dim maxAcylOx As Integer, maxAlkylOx As Integer, maxSphingoOx As Integer
         maxAcylOxMaxAlkylOxMaxSphingoOx = ((dbRemain + minAcylOx) * std.Sign(chains.AcylChainCount), (dbRemain + minAlkylOx) * std.Sign(chains.AlkylChainCount), (dbRemain + minSphingoOx) * std.Sign(chains.SphingoChainCount))
+
+        With maxAcylOxMaxAlkylOxMaxSphingoOx
+            maxAcylOx = .maxAcylOx
+            maxAlkylOx = .maxAlkylOx
+            maxSphingoOx = .maxSphingoOx
+        End With
 
         Dim css = Me.Distribute(chains.CarbonCount, minAcylCarbon, maxAcylCarbon, minAlkylCarbon, maxAlkylCarbon, minSphingoCarbon, maxSphingoCarbon).ToArray()
         Dim dbss = Me.Distribute(chains.DoubleBondCount, minAcylDb, maxAcylDb, minAlkylDb, maxAlkylDb, minSphingoDb, maxSphingoDb).ToArray()
@@ -101,7 +144,7 @@ Public Class TotalChainVariationGenerator
     End Function
 
     Public Function Permutate(chains As MolecularSpeciesLevelChains) As IEnumerable(Of ITotalChain) Implements ITotalChainVariationGenerator.Permutate
-        Return Permutations(chains.GetDeterminedChains()).[Select](Of IChain(), ITotalChain)(Function([set]) New PositionLevelChains([set])).Distinct(ChainsComparer)
+        Return Permutations(chains.GetDeterminedChains()).Select(Function([set]) New PositionLevelChains([set])).Distinct(ChainsComparer)
     End Function
 
     Public Function Product(chains As PositionLevelChains) As IEnumerable(Of ITotalChain) Implements ITotalChainVariationGenerator.Product
@@ -137,43 +180,42 @@ Public Class TotalChainVariationGenerator
         End If
 
         Dim [set] = New T(candidate.ChainCount - 1) {}
-        ''' Cannot convert LocalFunctionStatementSyntax, CONVERSION ERROR: Conversion for LocalFunctionStatement not implemented, please report this issue in 'System.Collections.Generic....' at character 10242
-        ''' 
-        ''' 
-        ''' Input:
-        '''             System.Collections.Generic.IEnumerable<T[]> rec(int carbon_, int db_, int ox_, int minCarbon_, int minDb_, int minOx_, int chain_) {
-        If (chain_ == 1) Then {
-                    If (this.DoubleBondIsValid(carbon_, db_) && this.IsLexicographicOrder(minCarbon_, minDb_, minOx_, carbon_, db_, ox_)) Then {
-                        @set[candidate.ChainCount - 1] = create(carbon_, db_, ox_);
-                        yield return @set.ToArray();
-                    }
-                    yield break;
-                }
-                For (var c = minCarbon_; c <= carbon_ / chain_; c++) {
-                    If (!this.CarbonNumberValid(c)) Then {
-                        Continue For;
-                    }
-                    For (var d = 0; d <= db_ && this.DoubleBondIsValid(c, d); d++) {
-                        If (!this.IsLexicographicOrder(minCarbon_, minDb_, c, d)) Then {
-                            Continue For;
-                        }
-                        For (var o = candidate.MinimumOxidizedCount; o <= ox_; o++) {
-                            If (!this.IsLexicographicOrder(minCarbon_, minDb_, minOx_, c, d, o)) Then {
-                                Continue For;
-                            }
-                            @set[candidate.ChainCount - chain_] = create(c, d, o);
-                            foreach(var res In rec(carbon_ - c, db_ - d, ox_ - o, c, d, o, chain_ - 1)) {
-                                yield return res;
-                            }
-                        }
-                    }
-                }
-            }
+        Dim rec As Func(Of Integer, Integer, Integer, Integer, Integer, Integer, Integer, IEnumerable(Of T())) =
+            Iterator Function(carbon_ As Integer, db_ As Integer, ox_ As Integer, minCarbon_ As Integer, minDb_ As Integer, minOx_ As Integer, chain_ As Integer) As IEnumerable(Of T())
+                If (chain_ = 1) Then
+                    If (Me.DoubleBondIsValid(carbon_, db_) AndAlso Me.IsLexicographicOrder(minCarbon_, minDb_, minOx_, carbon_, db_, ox_)) Then
+                        [set](candidate.ChainCount - 1) = create(carbon_, db_, ox_)
+                        Yield [set].ToArray()
+                    End If
+                    Return
+                End If
+                For c = minCarbon_ To carbon_ / chain_
+                    If (Not Me.CarbonNumberValid(c)) Then
+                        Continue For
+                    End If
+                    For d = 0 To db_
 
-''' 
+                        If Not Me.DoubleBondIsValid(c, d) Then
+                            Exit For
+                        End If
+                        If (Not Me.IsLexicographicOrder(minCarbon_, minDb_, c, d)) Then
+                            Continue For
+                        End If
+                        For o = candidate.MinimumOxidizedCount To ox_
+                            If (Not Me.IsLexicographicOrder(minCarbon_, minDb_, minOx_, c, d, o)) Then
+                                Continue For
+                            End If
+                            [set](candidate.ChainCount - chain_) = create(c, d, o)
+                            For Each res In rec(carbon_ - c, db_ - d, ox_ - o, c, d, o, chain_ - 1)
+                                Yield res
+                            Next
+                        Next
+                    Next
+                Next
+            End Function
 
-            Return rec(candidate.CarbonCount, candidate.DoubleBondCount, candidate.OxidizedCount, MinLength, -1, -1, candidate.ChainCount)
-        End Function
+        Return rec(candidate.CarbonCount, candidate.DoubleBondCount, candidate.OxidizedCount, MinLength, -1, -1, candidate.ChainCount)
+    End Function
 
     Private ReadOnly _sphingoCache As ConcurrentDictionary(Of (Integer, Integer, Integer), SphingoChain) = New ConcurrentDictionary(Of (Integer, Integer, Integer), SphingoChain)()
     Private Function CreateSphingoChain(carbon As Integer, db As Integer, ox As Integer) As SphingoChain
@@ -194,11 +236,11 @@ Public Class TotalChainVariationGenerator
 
     Friend Class PositionLevelChainEqualityCompaerer
         Implements IEqualityComparer(Of ITotalChain)
-        Public Function Equals(x As ITotalChain, y As ITotalChain) As Boolean Implements IEqualityComparer(Of ITotalChain).Equals
+        Public Overloads Function Equals(x As ITotalChain, y As ITotalChain) As Boolean Implements IEqualityComparer(Of ITotalChain).Equals
             Return Equals(x.ToString(), y.ToString())
         End Function
 
-        Public Function GetHashCode(obj As ITotalChain) As Integer Implements IEqualityComparer(Of ITotalChain).GetHashCode
+        Public Overloads Function GetHashCode(obj As ITotalChain) As Integer Implements IEqualityComparer(Of ITotalChain).GetHashCode
             Return obj.ToString().GetHashCode()
         End Function
     End Class
