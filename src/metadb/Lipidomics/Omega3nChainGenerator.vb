@@ -35,7 +35,7 @@
 
     Private Function EnumerateDoubleBond(carbon As Integer, doubleBond As IDoubleBond) As IEnumerable(Of IDoubleBond)
         If doubleBond.UnDecidedCount = 0 Then
-            Return [Return](doubleBond)
+            Return {doubleBond}
         End If
         If Not DoubleBondIsValid(carbon, doubleBond.Count) Then
             Return Enumerable.Empty(Of IDoubleBond)()
@@ -66,7 +66,7 @@
 
     Private Function EnumerateDoubleBondInEther(carbon As Integer, doubleBond As IDoubleBond) As IEnumerable(Of IDoubleBond)
         If doubleBond.UnDecidedCount = 0 Then
-            Return [Return](doubleBond)
+            Return {doubleBond}
         End If
         If Not DoubleBondIsValid(carbon, doubleBond.Count - 1) Then
             Return Enumerable.Empty(Of IDoubleBond)()
@@ -95,7 +95,7 @@
 
     Private Function EnumerateDoubleBondInPlasmalogen(carbon As Integer, doubleBond As IDoubleBond) As IEnumerable(Of IDoubleBond)
         If doubleBond.UnDecidedCount = 0 Then
-            Return [Return](doubleBond)
+            Return {doubleBond}
         End If
         If Not DoubleBondIsValid(carbon, doubleBond.Count - 1) Then
             Return Enumerable.Empty(Of IDoubleBond)()
@@ -198,7 +198,7 @@
 
     Private Function BitArrayToBond(arr As HashSet(Of Integer)) As IDoubleBond
         Dim bonds = New List(Of IDoubleBondInfo)()
-        For Each v In arr.OrderBy(Function(v) v)
+        For Each v In arr.OrderBy(Function(vi) vi)
             bonds.Add(DoubleBondInfo.Create(v))
         Next
         Return New DoubleBond(bonds.Count, bonds)
@@ -206,33 +206,27 @@
 
     Private Function EnumerateOxidized(carbon As Integer, oxidized As IOxidized, begin As Integer, [end] As Integer) As IEnumerable(Of IOxidized)
         If oxidized.UnDecidedCount = 0 Then
-            Return [Return](oxidized)
+            Return {oxidized}
         End If
 
-        ''' Cannot convert LocalFunctionStatementSyntax, CONVERSION ERROR: Conversion for LocalFunctionStatement not implemented, please report this issue in 'System.Collections.Generic....' at character 12878
-        ''' 
-        ''' 
-        ''' Input:
-        ''' 
-        System.Collections.Generic.IEnumerable<CompMs.Common.Lipidomics.IOxidized> rec(int i, System.Collections.Generic.List<int> infos) {
-                if (infos.Count == oxidized.UnDecidedCount) {
-                    yield return CompMs.Common.Lipidomics.Oxidized.CreateFromPosition(oxidized.Oxidises.Concat(infos).OrderBy(p => p).ToArray());
-                    yield break;
-                }
-                for (var j = i; j <carbon + 1; j++){ 
-                    if (oxidized.Oxidises.Contains(j)) {
-                        continue;
-                    }
-                    infos.Add(j);
-                    ForEach(var res In rec(j + 1, infos)) {
-                        yield return res;
-                    }
-                    infos.RemoveAt(infos.Count - 1);
-                }
-            }
+        Dim rec As Func(Of Integer, List(Of Integer), IEnumerable(Of IOxidized)) =
+            Iterator Function(i As Integer, infos As List(Of Integer)) As IEnumerable(Of IOxidized)
+                If (infos.Count = oxidized.UnDecidedCount) Then
+                    Yield Lipidomics.Oxidized.CreateFromPosition(oxidized.Oxidises.Concat(infos).OrderBy(Function(p) p).ToArray())
+                    Return
+                End If
+                For j As Integer = i To carbon
+                    If (oxidized.Oxidises.Contains(j)) Then
+                        Continue For
+                    End If
+                    infos.Add(j)
+                    For Each res As IOxidized In rec(j + 1, infos)
+                        Yield res
+                    Next
+                    infos.RemoveAt(infos.Count - 1)
+                Next
+            End Function
 
-''' 
-
-            Return rec(begin, New List(Of Integer)(oxidized.UnDecidedCount))
+        Return rec(begin, New List(Of Integer)(oxidized.UnDecidedCount))
     End Function
 End Class
