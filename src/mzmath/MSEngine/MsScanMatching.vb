@@ -284,10 +284,10 @@ Public NotInheritable Class MsScanMatching
     ''' double[] [0]m/z[1]intensity
     ''' 
     ''' </summary>
-    ''' <param name="peaks1">
+    ''' <param name="prop1">
     ''' Add the experimental MS/MS spectrum.
     ''' </param>
-    ''' <param name="peaks2">
+    ''' <param name="prop2">
     ''' Add the theoretical MS/MS spectrum. The theoretical MS/MS spectrum is supposed to be retreived in MSP parcer.
     ''' </param>
     ''' <param name="bin">
@@ -527,15 +527,16 @@ Public NotInheritable Class MsScanMatching
     End Function
 
     ''' <summary>
-    ''' <param name="peaks1">
+    ''' <param name="prop1">
     ''' Add the experimental MS/MS spectrum.
     ''' </param>
-    ''' <param name="peaks2">
+    ''' <param name="prop2">
     ''' Add the theoretical MS/MS spectrum. The theoretical MS/MS spectrum is supposed to be retreived in MSP parcer.
     ''' </param>
     ''' <param name="bin">
     ''' Add the bin value to merge the abundance of m/z.
     ''' </param>
+    ''' </summary>
     Public Shared Function GetMachedSpectralPeaks(ByVal prop1 As IMSScanProperty, ByVal chargeState As Integer, ByVal prop2 As IMSScanProperty, ByVal bin As Double, ByVal massBegin As Double, ByVal massEnd As Double) As List(Of SpectrumPeak)
         If Not IsComparedAvailable(prop1, prop2) Then Return New List(Of SpectrumPeak)()
 
@@ -629,10 +630,10 @@ Public NotInheritable Class MsScanMatching
     ''' Stein, S. E. An Integrated Method for Spectrum Extraction. J.Am.Soc.Mass.Spectrom, 10, 770-781, 1999.
     ''' The spectrum similarity of MS/MS with respect to library spectrum will be calculated in this method.
     ''' </summary>
-    ''' <param name="peaks1">
+    ''' <param name="prop1">
     ''' Add the experimental MS/MS spectrum.
     ''' </param>
-    ''' <param name="peaks2">
+    ''' <param name="prop2">
     ''' Add the theoretical MS/MS spectrum. The theoretical MS/MS spectrum is supposed to be retreived in MSP parcer.
     ''' </param>
     ''' <param name="bin">
@@ -774,10 +775,10 @@ Public NotInheritable Class MsScanMatching
     ''' Stein, S. E. An Integrated Method for Spectrum Extraction. J.Am.Soc.Mass.Spectrom, 10, 770-781, 1999.
     ''' The spectrum similarity of MS/MS will be calculated in this method.
     ''' </summary>
-    ''' <param name="peaks1">
+    ''' <param name="prop1">
     ''' Add the experimental MS/MS spectrum.
     ''' </param>
-    ''' <param name="peaks2">
+    ''' <param name="prop2">
     ''' Add the theoretical MS/MS spectrum. The theoretical MS/MS spectrum is supposed to be retreived in MSP parcer.
     ''' </param>
     ''' <param name="bin">

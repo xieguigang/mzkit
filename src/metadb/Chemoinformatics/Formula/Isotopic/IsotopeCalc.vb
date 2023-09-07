@@ -1,11 +1,4 @@
-﻿Imports System
-Imports System.Collections.Generic
-Imports System.Linq
-Imports System.Text.RegularExpressions
-Imports CompMs.Common.DataObj.Database
-Imports CompMs.Common.DataObj.Property
-Imports CompMs.Common.FormulaGenerator.Parser
-Imports CompMs.Common.Mathematics.Basic
+﻿Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.Math.Statistics
 
 Namespace Formula.IsotopicPatterns
