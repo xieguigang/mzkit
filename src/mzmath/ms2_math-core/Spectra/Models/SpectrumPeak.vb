@@ -41,6 +41,12 @@
         Tailing
     End Enum
 
+    ''' <summary>
+    ''' A more details of the spectrum peak model than <see cref="ms2"/> object
+    ''' </summary>
+    ''' <remarks>
+    ''' MS-DIAL model
+    ''' </remarks>
     Public Class SpectrumPeak
         Implements ISpectrumPeak
 
