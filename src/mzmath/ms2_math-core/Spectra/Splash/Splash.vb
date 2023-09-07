@@ -178,7 +178,7 @@ Namespace Spectra.SplashID
         ''' <param name="spec">the spectrum data (in mz:int pairs)</param>
         ''' <returns>the Hash of the spectrum data</returns>
         Private Function getSpectrumBlock(spec As ISpectrum) As String
-            Dim ions As List(Of Ion) = spec.getSortedIonsByMZ()
+            Dim ions As List(Of ms2) = spec.getSortedIonsByMZ()
 
             Dim strIons As StringBuilder = New StringBuilder()
             For Each i In ions
@@ -259,7 +259,7 @@ Namespace Spectra.SplashID
         ' 
 
         Protected Function filterSpectrum(s As ISpectrum, topIons As Integer, basePeakPercentage As Double) As ISpectrum
-            Dim ions As List(Of Ion) = s.GetIons()
+            Dim ions As List(Of ms2) = s.GetIons()
 
             ' Find base peak intensity
             Dim basePeakIntensity = 0.0
@@ -270,10 +270,10 @@ Namespace Spectra.SplashID
 
             ' Filter by base peak percentage if needed
             If basePeakPercentage >= 0 Then
-                Dim filteredIons As List(Of Ion) = New List(Of Ion)()
+                Dim filteredIons As New List(Of ms2)()
 
                 For Each ion In ions
-                    If ion.Intensity + EPSILON >= basePeakPercentage * basePeakIntensity Then filteredIons.Add(New Ion(ion.MZ, ion.Intensity))
+                    If ion.intensity + EPSILON >= basePeakPercentage * basePeakIntensity Then filteredIons.Add(New ms2(ion.mz, ion.intensity))
                 Next
 
                 ions = filteredIons

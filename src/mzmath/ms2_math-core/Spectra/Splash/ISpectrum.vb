@@ -22,9 +22,9 @@
 
 Namespace Spectra.SplashID
     Public Interface ISpectrum
-        Function GetIons() As List(Of Ion)
-        Function getSortedIonsByMZ(Optional desc As Boolean = False) As List(Of Ion)
-        Function getSortedIonsByIntensity(Optional desc As Boolean = True) As List(Of Ion)
+        Function GetIons() As List(Of ms2)
+        Function getSortedIonsByMZ(Optional desc As Boolean = False) As List(Of ms2)
+        Function getSortedIonsByIntensity(Optional desc As Boolean = True) As List(Of ms2)
         Function getSpectrumType() As SpectrumType
         Function ToString() As String
     End Interface

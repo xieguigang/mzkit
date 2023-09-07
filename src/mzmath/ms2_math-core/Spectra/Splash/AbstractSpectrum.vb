@@ -29,25 +29,10 @@ Namespace Spectra.SplashID
         Private Const MAX_RELATIVE_INTENSITY As Integer = 100
 
 #Region "fields and Properties"
-        Protected typeField As SpectrumType
-        Public Property Type As SpectrumType
-            Get
-                Return typeField
-            End Get
-            Friend Set(value As SpectrumType)
-                typeField = value
-            End Set
-        End Property
 
-        Protected ionsField As List(Of Ion) = New List(Of Ion)()
-        Public Property Ions As List(Of Ion)
-            Get
-                Return ionsField
-            End Get
-            Friend Set(value As List(Of Ion))
-                ionsField = value
-            End Set
-        End Property
+        Public Property Type As SpectrumType
+        Public Property Ions As New List(Of ms2)
+
 #End Region
 
 #Region "Constructors"
@@ -61,7 +46,7 @@ Namespace Spectra.SplashID
                 Throw New ArgumentException("The spectrum data can't be null or empty.")
             End If
 
-            ionsField = New List(Of Ion)()
+            Ions = New List(Of ms2)()
             Dim splitData As Array = data.Split(" "c)
 
             For Each ion As String In splitData
@@ -70,7 +55,7 @@ Namespace Spectra.SplashID
                 'get intensity
                 Dim intensity = Double.Parse(ion.Split(":"c)(1))
 
-                Dim newIon As Ion = New Ion(mz, intensity)
+                Dim newIon As New ms2(mz, intensity)
                 Ions.Add(newIon)
             Next
 
@@ -82,7 +67,7 @@ Namespace Spectra.SplashID
         ''' Creates a spectrum based on a list of ions
         ''' </summary>
         ''' <param name="ions"></param>
-        Public Sub New(ions As List(Of Ion))
+        Public Sub New(ions As List(Of ms2))
             If ions.Count <= 0 Then
                 Throw New ArgumentException("The spectrum data can't be null or empty.")
             End If
@@ -106,29 +91,14 @@ Namespace Spectra.SplashID
             Return String.Format("[Spectrum: Type={0}, Ions={1}]", Type, ionList.ToString())
         End Function
 
-        'returns a JSON representation of the spectrum
-        Public Function toJSON() As String
-            Dim ionList As StringBuilder = New StringBuilder()
-            For Each ion In Ions
-                ionList.Append(ion.ToJSON())
-                ionList.Append(" "c)
-            Next
-
-            If ionList.Length > 1 Then
-                ionList.Remove(ionList.Length - 1, 1)
-            End If
-
-            Return String.Format("[Spectrum: Type={0}, Ions={1}]", Type, ionList.ToString())
-        End Function
-
         'returns the current spectrum type
         Public Function getSpectrumType() As SpectrumType Implements ISpectrum.getSpectrumType
             Return Type
         End Function
 
         ' returns the current spectrum's list of ions sorted by descending intensities
-        Public Function getSortedIonsByIntensity(Optional desc As Boolean = True) As List(Of Ion) Implements ISpectrum.getSortedIonsByIntensity
-            Dim sorted As List(Of Ion) = Ions.OrderByDescending(Function(i) i.Intensity).ThenBy(Function(m) m.MZ).ToList()
+        Public Function getSortedIonsByIntensity(Optional desc As Boolean = True) As List(Of ms2) Implements ISpectrum.getSortedIonsByIntensity
+            Dim sorted As List(Of ms2) = Ions.OrderByDescending(Function(i) i.intensity).ThenBy(Function(m) m.mz).ToList()
 
             If Not desc Then
                 sorted.Reverse()
@@ -138,8 +108,8 @@ Namespace Spectra.SplashID
         End Function
 
         ' returns the current spectrum's list of ions sorted by ascending m/z ratio values
-        Public Function getSortedIonsByMZ(Optional desc As Boolean = False) As List(Of Ion) Implements ISpectrum.getSortedIonsByMZ
-            Dim sorted As List(Of Ion) = Ions.OrderBy(Function(i) i.MZ).ThenByDescending(Function(i) i.Intensity).ToList()
+        Public Function getSortedIonsByMZ(Optional desc As Boolean = False) As List(Of ms2) Implements ISpectrum.getSortedIonsByMZ
+            Dim sorted As List(Of ms2) = Ions.OrderBy(Function(i) i.mz).ThenByDescending(Function(i) i.intensity).ToList()
 
             If desc Then
                 sorted.Reverse()
@@ -149,8 +119,8 @@ Namespace Spectra.SplashID
         End Function
 
         ' calculate the relative spectrum in the range [0 .. 100]
-        Private Function toRelative(scale As Integer) As List(Of Ion)
-            Dim relativeIons As List(Of Ion) = New List(Of Ion)()
+        Private Function toRelative(scale As Integer) As List(Of ms2)
+            Dim relativeIons As List(Of ms2) = New List(Of ms2)()
             relativeIons.AddRange(Ions)
 
             Dim maxInt = relativeIons.Max(Function(ion) ion.Intensity)
@@ -160,6 +130,6 @@ Namespace Spectra.SplashID
         End Function
 
         ' returns list of ions
-        Public MustOverride Function GetIons() As List(Of Ion) Implements ISpectrum.GetIons
+        Public MustOverride Function GetIons() As List(Of ms2) Implements ISpectrum.GetIons
     End Class
 End Namespace

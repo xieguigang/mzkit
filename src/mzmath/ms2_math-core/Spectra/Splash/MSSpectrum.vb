@@ -28,12 +28,12 @@ Namespace Spectra.SplashID
             Type = SpectrumType.MS
         End Sub
 
-        Public Sub New(ions As List(Of Ion))
+        Public Sub New(ions As List(Of ms2))
             MyBase.New(ions)
             Type = SpectrumType.MS
         End Sub
 
-        Public Overrides Function GetIons() As List(Of Ion)
+        Public Overrides Function GetIons() As List(Of ms2)
             Return Ions
         End Function
     End Class
