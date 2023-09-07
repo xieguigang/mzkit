@@ -1,5 +1,6 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.BioDeep.Chemistry.MetaLib
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
 Imports std = System.Math
 
@@ -40,10 +41,14 @@ End Interface
 Public Class Lipid
     Implements ILipid
     Public Sub New(lipidClass As LbmClass, mass As Double, chains As ITotalChain)
+        If chains Is Nothing Then
+            Throw New ArgumentNullException(NameOf(chains))
+        End If
+
         Me.LipidClass = lipidClass
         Me.Mass = mass
         AnnotationLevel = GetAnnotationLevel(chains)
-        Me.Chains = If(chains, CSharpImpl.__Throw(Of ITotalChain)(New ArgumentNullException(NameOf(chains))))
+        Me.Chains = chains
         Description = chains.Description
     End Sub
 

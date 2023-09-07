@@ -31,6 +31,7 @@
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj" />
     <ProjectReference Include="..\..\mzmath\ms2_math-core\mzmath-netcore5.vbproj" />
     <ProjectReference Include="..\Chemoinformatics\chemoinformatics-netcore5.vbproj" />
+    <ProjectReference Include="..\XrefEngine\XrefEngine.NET5.vbproj" />
   </ItemGroup>
 
 </Project>
