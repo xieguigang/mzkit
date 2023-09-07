@@ -1,6 +1,6 @@
 ﻿Imports System.Runtime.InteropServices
-Imports BioNovoGene.Analytical.MassSpectrometry.std.Ms1.PrecursorType
-Imports BioNovoGene.Analytical.MassSpectrometry.std.Spectra
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.ElementsExactMass
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
 Imports std = System.Math
