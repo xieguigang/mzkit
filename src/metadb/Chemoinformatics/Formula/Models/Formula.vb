@@ -97,7 +97,7 @@ Namespace Formula
             End Get
         End Property
 
-        Friend m_formula As String
+        Friend m_formula As String = ""
 
         ''' <summary>
         ''' get all elements label that parse from current formula object
@@ -182,6 +182,10 @@ Namespace Formula
             Else
                 Me.m_formula = formula
             End If
+        End Sub
+
+        Sub New()
+            CountsByElement = New Dictionary(Of String, Integer)
         End Sub
 
         ''' <summary>
