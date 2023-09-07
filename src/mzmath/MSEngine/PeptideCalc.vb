@@ -148,9 +148,9 @@ Public NotInheritable Class PeptideCalc
     ''' <summary>
     ''' peptide should be processed by Sequence2PeptideByFixedModifications before using this method
     ''' </summary>
-    ''' <paramname="peptide"></param>
-    ''' <paramname="container"></param>
-    ''' <paramname="maxNumberOfModificationsPerPeptide"></param>
+    ''' <param name="peptide"></param>
+    ''' <param name="container"></param>
+    ''' <param name="maxNumberOfModificationsPerPeptide"></param>
     ''' <returns></returns>
     Public Shared Function Sequence2PeptidesByVariableModifications(ByVal peptide As Peptide, ByVal container As ModificationContainer, ByVal Optional maxNumberOfModificationsPerPeptide As Integer = 2, ByVal Optional minPeptideMass As Double = 300, ByVal Optional maxPeptideMass As Double = 4600) As List(Of Peptide)
         'var sequence = peptide.Sequence;

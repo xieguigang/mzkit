@@ -16,9 +16,9 @@ Namespace Formula.IsotopicPatterns
         ''' <summary>
         ''' This method calculate the theoretical isotopic abundances with the exact m/z from the molecular formula string such as C6H12O6.
         ''' </summary>
-        ''' <paramname="elementName">Put the formula string.</param>
-        ''' <paramname="massFilter">Put the integar value that you want ot calculate until the isotopic value. Ex. if you put 3, this method calculate the isotopic abundances until M+3. </param>
-        ''' <paramname="iupacReferenceBean">Put the iupac bean which can be retrived with IupacParcer.cs.</param>
+        ''' <param name="elementName">Put the formula string.</param>
+        ''' <param name="massFilter">Put the integar value that you want ot calculate until the isotopic value. Ex. if you put 3, this method calculate the isotopic abundances until M+3. </param>
+        ''' <param name="iupacReferenceBean">Put the iupac bean which can be retrived with IupacParcer.cs.</param>
         ''' <returns>This program returns the theoretical isotopic abundances with the exact m/z values.</returns>
         Public Function GetAccurateIsotopeProperty(ByVal elementName As String, ByVal massFilter As Integer, ByVal iupacReferenceBean As IupacDatabase) As IsotopeProperty
             Dim compoundPropertyBean As IsotopeProperty = New IsotopeProperty()
@@ -40,9 +40,9 @@ Namespace Formula.IsotopicPatterns
         ''' <summary>
         ''' This method calculate the theoretical isotopic abundances with the nominal m/z from the molecular formula string such as C6H12O6.
         ''' </summary>
-        ''' <paramname="elementName">Put the formula string.</param>
-        ''' <paramname="massFilter">Put the integar value that you want ot calculate until the isotopic value. Ex. if you put 3, this method calculate the isotopic abundances until M+3. </param>
-        ''' <paramname="iupacReferenceBean">Put the iupac bean which can be retrived with IupacParcer.cs.</param>
+        ''' <param name="elementName">Put the formula string.</param>
+        ''' <param name="massFilter">Put the integar value that you want ot calculate until the isotopic value. Ex. if you put 3, this method calculate the isotopic abundances until M+3. </param>
+        ''' <param name="iupacReferenceBean">Put the iupac bean which can be retrived with IupacParcer.cs.</param>
         ''' <returns>This program returns the theoretical isotopic abundances with the nominal m/z values.</returns>
         Public Function GetNominalIsotopeProperty(ByVal elementName As String, ByVal massFilter As Integer, ByVal iupacReferenceBean As IupacDatabase) As IsotopeProperty
             Dim compoundPropertyBean As IsotopeProperty = New IsotopeProperty()
