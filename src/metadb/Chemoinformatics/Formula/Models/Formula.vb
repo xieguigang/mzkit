@@ -97,7 +97,7 @@ Namespace Formula
             End Get
         End Property
 
-        Friend m_formula As String = ""
+        Protected Friend m_formula As String = ""
 
         ''' <summary>
         ''' get all elements label that parse from current formula object
@@ -142,7 +142,7 @@ Namespace Formula
         ''' sum all isotopic mass of the atom elements. 
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property ExactMass As Double Implements IExactMassProvider.ExactMass
+        Public Overridable ReadOnly Property ExactMass As Double Implements IExactMassProvider.ExactMass
             Get
                 Try
                     Return Aggregate element
