@@ -82,8 +82,7 @@ Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
                 spectrum.AddRange({New SpectrumPeak(adduct.ConvertToMz(lipid.Mass) - H2O, 150R, "Precursor-H2O") With {
 .SpectrumComment = SpectrumComment.metaboliteclass
 }, New SpectrumPeak(lipid.Mass + ProtonMass, 150R, "[M+H]+") With {
-.SpectrumComment = SpectrumComment.metaboliteclass
-'new SpectrumPeak(lipid.Mass + MassDiffDictionary.ProtonMass-H2O, 150d, "[M+H]+ -H2O") { SpectrumComment = SpectrumComment.metaboliteclass },
+.SpectrumComment = SpectrumComment.metaboliteclass'new SpectrumPeak(lipid.Mass + MassDiffDictionary.ProtonMass-H2O, 150d, "[M+H]+ -H2O") { SpectrumComment = SpectrumComment.metaboliteclass },
 }})
             ElseIf Equals(adduct.AdductIonName, "[M+H]+") Then
                 spectrum.AddRange({New SpectrumPeak(adduct.ConvertToMz(lipid.Mass) - H2O, 100R, "Precursor-H2O") With {

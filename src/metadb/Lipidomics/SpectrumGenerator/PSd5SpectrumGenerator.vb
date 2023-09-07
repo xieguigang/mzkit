@@ -1,7 +1,8 @@
 ﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
-Imports BioNovoGene.BioDeep.Chemistry.MetaLib
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.ElementsExactMass
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
+Imports BioNovoGene.BioDeep.MSEngine
+
 Public Class PSd5SpectrumGenerator
     Implements ILipidSpectrumGenerator
 
@@ -55,7 +56,7 @@ Public Class PSd5SpectrumGenerator
         Return New MoleculeMsReference With {
 .PrecursorMz = adduct.ConvertToMz(lipid.Mass),
 .IonMode = adduct.IonMode,
-.spectrum = spectrum,
+.Spectrum = spectrum,
 .Name = lipid.Name,
 .Formula = molecule?.Formula,
 .Ontology = molecule?.Ontology,
@@ -98,12 +99,11 @@ New SpectrumPeak(adduct.ConvertToMz(Gly_O), 100.0R, "Gly-O") With {
             spectrum.AddRange({New SpectrumPeak(adduct.ConvertToMz(lipid.Mass - H2O), 100.0R, "Precursor -H2O") With {
         .SpectrumComment = SpectrumComment.metaboliteclass
             }, New SpectrumPeak(adduct.ConvertToMz(lipid.Mass - CHO2), 200.0R, "Precursor -CHO2") With {
-        .SpectrumComment = SpectrumComment.metaboliteclass
-                'new SpectrumPeak(adduct.ConvertToMz(lipid.Mass - C3H5NO2), 200d, "Precursor -C3H5NO2") { SpectrumComment = SpectrumComment.metaboliteclass },
-                }, New SpectrumPeak(adduct.ConvertToMz(C3H8NO6P), 100R, "Header") With {
+        .SpectrumComment = SpectrumComment.metaboliteclass                'new SpectrumPeak(adduct.ConvertToMz(lipid.Mass - C3H5NO2), 200d, "Precursor -C3H5NO2") { SpectrumComment = SpectrumComment.metaboliteclass },
+                }, New SpectrumPeak(adduct.ConvertToMz(C3H8NO6P), 100.0R, "Header") With {
             .SpectrumComment = SpectrumComment.metaboliteclass
                              }})
-            End If
+        End If
 
         Return spectrum.ToArray()
     End Function

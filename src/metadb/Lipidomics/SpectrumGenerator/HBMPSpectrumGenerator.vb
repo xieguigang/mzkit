@@ -1,9 +1,9 @@
 ﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
-Imports BioNovoGene.BioDeep.MSEngine
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.ElementsExactMass
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
+Imports BioNovoGene.BioDeep.MSEngine
 
-    Public Class HBMPSpectrumGenerator
+Public Class HBMPSpectrumGenerator
         Implements ILipidSpectrumGenerator
         'HBMP explain rule -> HBMP 1 chain(sn1)/2 chain(sn2,sn3)
         'HBMP sn1_sn2_sn3 (follow the rules of alignment) -- MolecularSpeciesLevelChains
@@ -71,18 +71,16 @@ Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
         End Function
         Private Function GetHBMPSpectrum(lipid As ILipid, adduct As AdductIon) As SpectrumPeak()
             Dim adductmass = If(Equals(adduct.AdductIonName, "[M+NH4]+"), ProtonMass, adduct.AdductIonAccurateMass)
-            Dim spectrum = New List(Of SpectrumPeak) From {
-    New SpectrumPeak(adduct.ConvertToMz(lipid.Mass), 999R, "Precursor") With {
+        Dim spectrum = New List(Of SpectrumPeak) From {
+    New SpectrumPeak(adduct.ConvertToMz(lipid.Mass), 999.0R, "Precursor") With {
         .SpectrumComment = SpectrumComment.precursor
     },
-    New SpectrumPeak(lipid.Mass + adductmass - H2O, 100R, "Precursor -H2O") With {
+    New SpectrumPeak(lipid.Mass + adductmass - H2O, 100.0R, "Precursor -H2O") With {
         .SpectrumComment = SpectrumComment.metaboliteclass,
         .IsAbsolutelyRequiredFragmentForAnnotation = True
-    }
-'new SpectrumPeak(C3H9O6P + adductmass, 50d, "C3H9O6P") { SpectrumComment = SpectrumComment.metaboliteclass },
-'new SpectrumPeak(C3H9O6P -H2O + adductmass, 50d, "C3H9O6P - H2O") { SpectrumComment = SpectrumComment.metaboliteclass },
+    }'new SpectrumPeak(C3H9O6P + adductmass, 50d, "C3H9O6P") { SpectrumComment = SpectrumComment.metaboliteclass },'new SpectrumPeak(C3H9O6P -H2O + adductmass, 50d, "C3H9O6P - H2O") { SpectrumComment = SpectrumComment.metaboliteclass },
 }
-            If Equals(adduct.AdductIonName, "[M+NH4]+") Then
+        If Equals(adduct.AdductIonName, "[M+NH4]+") Then
                 spectrum.Add(New SpectrumPeak(lipid.Mass + ProtonMass, 100R, "[M+H]+") With {
 .SpectrumComment = SpectrumComment.metaboliteclass
 })
@@ -111,8 +109,7 @@ Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
             Dim chainMass = acylChain.Mass - HydrogenMass
             Dim adductmass = If(Equals(adduct.AdductIonName, "[M+NH4]+"), ProtonMass, adduct.AdductIonAccurateMass)
 
-            Dim spectrum = New List(Of SpectrumPeak) From {
-    'new SpectrumPeak(chainMass + C3H6O2 + adductmass, 100d, $"{acylChain}+C3H4O2+H"),
+            Dim spectrum = New List(Of SpectrumPeak) From {    'new SpectrumPeak(chainMass + C3H6O2 + adductmass, 100d, $"{acylChain}+C3H4O2+H"),
     New SpectrumPeak(chainMass + ProtonMass, 50R, $"{acylChain} Acyl+") With {
         .SpectrumComment = SpectrumComment.acylchain
     },
@@ -124,8 +121,7 @@ Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
     },
     New SpectrumPeak(lipidMass - chainMass - C3H9O6P + adductmass, 200R, $"-C3H9O6P -{acylChain}") With {
         .SpectrumComment = SpectrumComment.acylchain
-    }
- 'new SpectrumPeak(lipidMass - chainMass - C3H9O6P - H2O + adductmass, 50d, $"-C3H9O6P -{acylChain}-H2O") { SpectrumComment = SpectrumComment.acylchain },
+    } 'new SpectrumPeak(lipidMass - chainMass - C3H9O6P - H2O + adductmass, 50d, $"-C3H9O6P -{acylChain}-H2O") { SpectrumComment = SpectrumComment.acylchain },
  }
 
             Return spectrum.ToArray()
@@ -136,25 +132,22 @@ Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
             Dim chainMass = acylChain.Mass - HydrogenMass
             Dim adductmass = If(Equals(adduct.AdductIonName, "[M+NH4]+"), ProtonMass, adduct.AdductIonAccurateMass)
 
-            Dim spectrum = New List(Of SpectrumPeak) From {
-    New SpectrumPeak(chainMass + C3H6O2 + adductmass, 100R, $"{acylChain}+C3H4O2+H") With {
+        Dim spectrum = New List(Of SpectrumPeak) From {
+    New SpectrumPeak(chainMass + C3H6O2 + adductmass, 100.0R, $"{acylChain}+C3H4O2+H") With {
+        .SpectrumComment = SpectrumComment.acylchain
+    },    'new SpectrumPeak(chainMass + C3H6O2 - H2O + adductmass, 100d, $"{acylChain} + C3H4O2 -H2O +H"){ SpectrumComment = SpectrumComment.acylchain },
+    New SpectrumPeak(chainMass + ProtonMass, 50.0R, $"{acylChain} Acyl+") With {
         .SpectrumComment = SpectrumComment.acylchain
     },
-    'new SpectrumPeak(chainMass + C3H6O2 - H2O + adductmass, 100d, $"{acylChain} + C3H4O2 -H2O +H"){ SpectrumComment = SpectrumComment.acylchain },
-    New SpectrumPeak(chainMass + ProtonMass, 50R, $"{acylChain} Acyl+") With {
+    New SpectrumPeak(lipidMass - chainMass - HydrogenMass + adductmass, 50.0R, $"-{acylChain}") With {
         .SpectrumComment = SpectrumComment.acylchain
     },
-    New SpectrumPeak(lipidMass - chainMass - HydrogenMass + adductmass, 50R, $"-{acylChain}") With {
+    New SpectrumPeak(lipidMass - chainMass - H2O + adductmass, 50.0R, $"-{acylChain}-H2O") With {
         .SpectrumComment = SpectrumComment.acylchain
-    },
-    New SpectrumPeak(lipidMass - chainMass - H2O + adductmass, 50R, $"-{acylChain}-H2O") With {
-        .SpectrumComment = SpectrumComment.acylchain
-    }
- 'new SpectrumPeak(lipidMass - chainMass - C3H9O6P + adductmass, 200d, $"-C3H9O6P -{acylChain}") { SpectrumComment = SpectrumComment.acylchain },
- 'new SpectrumPeak(lipidMass - chainMass - C3H9O6P - H2O + adductmass, 50d, $"-C3H9O6P -{acylChain}-H2O") { SpectrumComment = SpectrumComment.acylchain },
+    } 'new SpectrumPeak(lipidMass - chainMass - C3H9O6P + adductmass, 200d, $"-C3H9O6P -{acylChain}") { SpectrumComment = SpectrumComment.acylchain }, 'new SpectrumPeak(lipidMass - chainMass - C3H9O6P - H2O + adductmass, 50d, $"-C3H9O6P -{acylChain}-H2O") { SpectrumComment = SpectrumComment.acylchain },
  }
 
-            Return spectrum.ToArray()
+        Return spectrum.ToArray()
         End Function
 
 

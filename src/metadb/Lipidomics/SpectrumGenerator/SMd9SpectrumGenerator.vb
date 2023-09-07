@@ -1,7 +1,8 @@
 ﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
-Imports BioNovoGene.BioDeep.Chemistry.MetaLib
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.ElementsExactMass
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
+Imports BioNovoGene.BioDeep.MSEngine
+
 Public Class SMd9SpectrumGenerator
     Implements ILipidSpectrumGenerator
     Private Shared ReadOnly C5H5D9NO4P As Double = {CarbonMass * 5, HydrogenMass * 5, NitrogenMass, OxygenMass * 4, PhosphorusMass, Hydrogen2Mass * 9}.Sum()
@@ -99,10 +100,9 @@ Public Class SMd9SpectrumGenerator
         Dim spectrum = New List(Of SpectrumPeak)()
         If Equals(adduct.AdductIonName, "[M+H]+") Then
             spectrum.AddRange({New SpectrumPeak(chainMass + ProtonMass - H2O * 2, 100.0R, "[sph+H]+ -Header -H2O") With {
-.SpectrumComment = SpectrumComment.acylchain
-'new SpectrumPeak(chainMass + MassDiffDictionary.ProtonMass - CH4O2, 100d, "[sph+H]+ -CH4O2"),
+.SpectrumComment = SpectrumComment.acylchain'new SpectrumPeak(chainMass + MassDiffDictionary.ProtonMass - CH4O2, 100d, "[sph+H]+ -CH4O2"),
 }})
-            End If
+        End If
         Return spectrum.ToArray()
     End Function
 

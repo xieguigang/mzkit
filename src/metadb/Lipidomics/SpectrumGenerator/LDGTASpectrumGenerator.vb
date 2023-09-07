@@ -88,14 +88,13 @@ New SpectrumPeak(adduct.ConvertToMz(C7H13NO2 + H2O), 200.0R, "Header + H2O") Wit
 }, '162[M+H]+
 New SpectrumPeak(adduct.ConvertToMz(C7H13NO2 + OxygenMass), 200.0R, "Header + O") With {
     .SpectrumComment = SpectrumComment.metaboliteclass
-}, '160[M+H]+
-    'new SpectrumPeak(adduct.ConvertToMz(Gly_C), 150d, "Gly-C")  { SpectrumComment = SpectrumComment.metaboliteclass },
-    New SpectrumPeak(adduct.ConvertToMz(Gly_O), 150R, "Gly-O") With {
+}, '160[M+H]+    'new SpectrumPeak(adduct.ConvertToMz(Gly_C), 150d, "Gly-C")  { SpectrumComment = SpectrumComment.metaboliteclass },
+    New SpectrumPeak(adduct.ConvertToMz(Gly_O), 150.0R, "Gly-O") With {
         .SpectrumComment = SpectrumComment.metaboliteclass,
         .IsAbsolutelyRequiredFragmentForAnnotation = True
     }
 }
-            Return spectrum.ToArray()
+        Return spectrum.ToArray()
     End Function
 
     Private Function GetAcylLevelSpectrum(lipid As ILipid, acylChains As IEnumerable(Of IChain), adduct As AdductIon) As IEnumerable(Of SpectrumPeak)

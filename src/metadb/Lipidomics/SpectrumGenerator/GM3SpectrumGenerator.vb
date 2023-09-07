@@ -1,7 +1,7 @@
 ﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
-Imports BioNovoGene.BioDeep.MSEngine
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.ElementsExactMass
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
+Imports BioNovoGene.BioDeep.MSEngine
 
 
 Public Class GM3SpectrumGenerator
@@ -135,19 +135,17 @@ New SpectrumPeak(C11H15NO7 + C6H10O5 * 2 + H2O * 2 + C2H3N + adductmass, 300.0R,
         Dim spectrum = New List(Of SpectrumPeak)()
         If Equals(adduct.AdductIonName, "[M+H]+") OrElse Equals(adduct.AdductIonName, "[M+NH4]+") Then
             spectrum.AddRange({New SpectrumPeak(chainMass + ProtonMass - H2O * 2, 300.0R, "[sph+H]+ -Header -H2O") With {
-.SpectrumComment = SpectrumComment.acylchain
-'new SpectrumPeak(chainMass + MassDiffDictionary.ProtonMass - CH4O2, 100d, "[sph+H]+ -CH4O2"),
+.SpectrumComment = SpectrumComment.acylchain'new SpectrumPeak(chainMass + MassDiffDictionary.ProtonMass - CH4O2, 100d, "[sph+H]+ -CH4O2"),
 }})
-            End If
+        End If
         Return spectrum.ToArray()
     End Function
 
     Private Function GetAcylSpectrum(lipid As ILipid, acyl As AcylChain, adduct As AdductIon) As SpectrumPeak()
         Dim chainMass = acyl.Mass + HydrogenMass
-        Dim spectrum = New List(Of SpectrumPeak)() From {
-'new SpectrumPeak(adduct.ConvertToMz(chainMass) +C2H2N , 200d, "[FAA+C2H+adduct]+") { SpectrumComment = SpectrumComment.acylchain },
+        Dim spectrum = New List(Of SpectrumPeak)() From {'new SpectrumPeak(adduct.ConvertToMz(chainMass) +C2H2N , 200d, "[FAA+C2H+adduct]+") { SpectrumComment = SpectrumComment.acylchain },
 }
-            Return spectrum.ToArray()
+        Return spectrum.ToArray()
     End Function
 
     Private Shared ReadOnly comparer As IEqualityComparer(Of SpectrumPeak) = New SpectrumEqualityComparer()

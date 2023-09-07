@@ -129,9 +129,8 @@ Public Class HexCerSpectrumGenerator
                  New SpectrumPeak(adduct.ConvertToMz(chainMass) + C2H3NO + C6H10O5, 150.0R, "[FAA+C2H4O+Hex+adduct]+") With {
         .SpectrumComment = SpectrumComment.acylchain
     }
-
 }
-            If Equals(adduct.AdductIonName, "[M+H]+") OrElse Equals(adduct.AdductIonName, "[M+H-H2O]+") Then
+        If Equals(adduct.AdductIonName, "[M+H]+") OrElse Equals(adduct.AdductIonName, "[M+H-H2O]+") Then
             spectrum.AddRange({New SpectrumPeak(chainMass + ProtonMass + C2H3NO - HydrogenMass - OxygenMass, 200.0R, "[FAA+C2H+H]+") With {
 .SpectrumComment = SpectrumComment.acylchain
 }, New SpectrumPeak(chainMass + ProtonMass + NH, 200.0R, "[FAA+H]+") With {

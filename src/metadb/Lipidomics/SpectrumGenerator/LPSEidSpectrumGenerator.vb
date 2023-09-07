@@ -1,7 +1,7 @@
 ﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
-Imports BioNovoGene.BioDeep.MSEngine
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.ElementsExactMass
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
+Imports BioNovoGene.BioDeep.MSEngine
 
 Public Class LPSEidSpectrumGenerator
     Implements ILipidSpectrumGenerator
@@ -84,17 +84,9 @@ New SpectrumPeak(adduct.ConvertToMz(Gly_C), 100.0R, "Gly-C") With {
 },
 New SpectrumPeak(adduct.ConvertToMz(Gly_O), 100.0R, "Gly-O") With {
     .SpectrumComment = SpectrumComment.metaboliteclass
+}'new SpectrumPeak(adduct.ConvertToMz(lipid.Mass) - H2O, 999d, "Precursor") { SpectrumComment = SpectrumComment.precursor },'new SpectrumPeak(adduct.ConvertToMz(lipid.Mass) - CHO2, 200d, "Precursor -CHO2") { SpectrumComment = SpectrumComment.metaboliteclass },'new SpectrumPeak(adduct.ConvertToMz(lipid.Mass) - C3H8NO6P, 500d, "Precursor -C3H8NO6P") { SpectrumComment = SpectrumComment.metaboliteclass },'new SpectrumPeak(C3H8NO6P + MassDiffDictionary.ProtonMass, 100d, "Header") { SpectrumComment = SpectrumComment.metaboliteclass },'new SpectrumPeak(C3H9O6P + MassDiffDictionary.ProtonMass, 100d, "C3H9O6P") { SpectrumComment = SpectrumComment.metaboliteclass },'new SpectrumPeak(C3H9O6P + MassDiffDictionary.ProtonMass - H2O, 100d, "C3H9O6P") { SpectrumComment = SpectrumComment.metaboliteclass },'new SpectrumPeak(Gly_C + MassDiffDictionary.ProtonMass, 100d, "Gly-C") { SpectrumComment = SpectrumComment.metaboliteclass },'new SpectrumPeak(Gly_O + MassDiffDictionary.ProtonMass, 100d, "Gly-O") { SpectrumComment = SpectrumComment.metaboliteclass },
 }
-'new SpectrumPeak(adduct.ConvertToMz(lipid.Mass) - H2O, 999d, "Precursor") { SpectrumComment = SpectrumComment.precursor },
-'new SpectrumPeak(adduct.ConvertToMz(lipid.Mass) - CHO2, 200d, "Precursor -CHO2") { SpectrumComment = SpectrumComment.metaboliteclass },
-'new SpectrumPeak(adduct.ConvertToMz(lipid.Mass) - C3H8NO6P, 500d, "Precursor -C3H8NO6P") { SpectrumComment = SpectrumComment.metaboliteclass },
-'new SpectrumPeak(C3H8NO6P + MassDiffDictionary.ProtonMass, 100d, "Header") { SpectrumComment = SpectrumComment.metaboliteclass },
-'new SpectrumPeak(C3H9O6P + MassDiffDictionary.ProtonMass, 100d, "C3H9O6P") { SpectrumComment = SpectrumComment.metaboliteclass },
-'new SpectrumPeak(C3H9O6P + MassDiffDictionary.ProtonMass - H2O, 100d, "C3H9O6P") { SpectrumComment = SpectrumComment.metaboliteclass },
-'new SpectrumPeak(Gly_C + MassDiffDictionary.ProtonMass, 100d, "Gly-C") { SpectrumComment = SpectrumComment.metaboliteclass },
-'new SpectrumPeak(Gly_O + MassDiffDictionary.ProtonMass, 100d, "Gly-O") { SpectrumComment = SpectrumComment.metaboliteclass },
-}
-            If Equals(adduct.AdductIonName, "[M+H]+") Then
+        If Equals(adduct.AdductIonName, "[M+H]+") Then
             spectrum.AddRange({New SpectrumPeak(adduct.ConvertToMz(lipid.Mass - C3H8NO6P), 500.0R, "Precursor -C3H8NO6P") With {
 .SpectrumComment = SpectrumComment.metaboliteclass
 }, New SpectrumPeak(adduct.ConvertToMz(lipid.Mass - CHO2), 200.0R, "Precursor -CHO2") With {
@@ -127,10 +119,9 @@ New SpectrumPeak(adduct.ConvertToMz(Gly_O), 100.0R, "Gly-O") With {
             spectrum.AddRange({New SpectrumPeak(chainMass + ProtonMass, 100.0R, $"{acylChain} acyl") With {
 .SpectrumComment = SpectrumComment.acylchain
 }, New SpectrumPeak(adduct.ConvertToMz(lipidMass - chainMass), 100.0R, $"-{acylChain}") With {
-.SpectrumComment = SpectrumComment.acylchain
-'new SpectrumPeak(lipidMass - chainMass - MassDiffDictionary.OxygenMass, 50d, $"-{acylChain}-O"),
+.SpectrumComment = SpectrumComment.acylchain'new SpectrumPeak(lipidMass - chainMass - MassDiffDictionary.OxygenMass, 50d, $"-{acylChain}-O"),
 }})
-            End If
+        End If
         Return spectrum.ToArray()
     End Function
 

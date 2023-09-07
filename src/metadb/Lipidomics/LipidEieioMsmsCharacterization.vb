@@ -1,5 +1,7 @@
 ﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.ElementsExactMass
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
 Imports std = System.Math
 
 Public NotInheritable Class LipidEieioMsmsCharacterization
@@ -1598,11 +1600,10 @@ New SpectrumPeak() With {
                             New SpectrumPeak() With {
                             .Mass = sph3,
                             .Intensity = 1
-                        }
-                            ' new SpectrumPeak() { Mass = acylamide, Intensity = 0.01 }
+                        }                            ' new SpectrumPeak() { Mass = acylamide, Intensity = 0.01 }
                             }
 
-                        Dim foundCount = 0
+                    Dim foundCount = 0
                     Dim averageIntensity = 0.0
                     LipidMsmsCharacterizationUtility.countFragmentExistence(spectrum, query, ms2Tolerance, foundCount, averageIntensity)
 
@@ -1631,11 +1632,10 @@ New SpectrumPeak() With {
                             New SpectrumPeak() With {
                             .Mass = sph3,
                             .Intensity = 1
-                        }
-                            ' new SpectrumPeak() { Mass = acylamide, Intensity = 0.01 }
+                        }                            ' new SpectrumPeak() { Mass = acylamide, Intensity = 0.01 }
                             }
 
-                        Dim foundCount = 0
+                    Dim foundCount = 0
                     Dim averageIntensity = 0.0
                     LipidMsmsCharacterizationUtility.countFragmentExistence(spectrum, query, ms2Tolerance, foundCount, averageIntensity)
 

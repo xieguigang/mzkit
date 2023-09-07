@@ -124,13 +124,12 @@ Public Class LPGEidSpectrumGenerator
             Dim adductMass = If(Equals(adduct.AdductIonName, "[M+NH4]+"), ProtonMass, adduct.AdductIonAccurateMass)
             Dim spectrum = New List(Of SpectrumPeak)()
             If chainMass <> 0.0 Then
-                spectrum.AddRange({New SpectrumPeak(lipid.Mass - chainMass + adductMass, 200R, $"-{acylChain}") With {
+            spectrum.AddRange({New SpectrumPeak(lipid.Mass - chainMass + adductMass, 200.0R, $"-{acylChain}") With {
 .SpectrumComment = SpectrumComment.acylchain
-}, New SpectrumPeak(chainMass + ProtonMass, 100R, $"{acylChain} acyl") With {
-.SpectrumComment = SpectrumComment.acylchain
-'new SpectrumPeak(adduct.ConvertToMz(lipid.Mass - chainMass - H2O), 100d, $"-{acylChain}-H2O") { SpectrumComment = SpectrumComment.acylchain },
+}, New SpectrumPeak(chainMass + ProtonMass, 100.0R, $"{acylChain} acyl") With {
+.SpectrumComment = SpectrumComment.acylchain'new SpectrumPeak(adduct.ConvertToMz(lipid.Mass - chainMass - H2O), 100d, $"-{acylChain}-H2O") { SpectrumComment = SpectrumComment.acylchain },
 }})
-            End If
+        End If
             Return spectrum.ToArray()
         End Function
 
