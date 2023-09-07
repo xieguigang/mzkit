@@ -69,20 +69,20 @@ Namespace Spectra
     ''' <remarks>
     ''' [mz, into, annotation]
     ''' </remarks>
-    Public Class ms2 : Implements IMzAnnotation, INumericKey
+    Public Class ms2 : Implements IMzAnnotation, INumericKey, ISpectrumPeak
 
         ''' <summary>
         ''' Molecular fragment m/z
         ''' </summary>
         ''' <returns></returns>
         <DataFrameColumn(NameOf(mz))>
-        <XmlAttribute> Public Property mz As Double Implements IMzAnnotation.mz, INumericKey.key
+        <XmlAttribute> Public Property mz As Double Implements IMzAnnotation.mz, INumericKey.key, ISpectrumPeak.Mass
         ''' <summary>
         ''' Relative intensity.(percentage) 
         ''' </summary>
         ''' <returns></returns>
         <DataFrameColumn(NameOf(intensity))>
-        <XmlAttribute> Public Property intensity As Double
+        <XmlAttribute> Public Property intensity As Double Implements ISpectrumPeak.Intensity
 
         ''' <summary>
         ''' Peak annotation data or something else
