@@ -1,4 +1,7 @@
-﻿Imports std = System.Math
+﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType.AdductIonParser
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
+Imports std = System.Math
 
 Module Parser
 
@@ -32,7 +35,7 @@ Module Parser
 
     Public Function CalculateAccurateMassAndIsotopeRatioOfMolecularFormula(ByVal rawFormula As String) As (Double, Double, Double)
         Dim formula As String = Nothing, multipliedNum As Double = Nothing
-        Dim nil As (formula, multipliedNum) = GetFormulaAndNumber(rawFormula)
+        Dim nil As (formula As String, multipliedNum As Double) = GetFormulaAndNumber(rawFormula)
 
         formula = nil.formula
         multipliedNum = nil.multipliedNum
@@ -57,8 +60,8 @@ Module Parser
 
         'Organic compound adduct check
         Dim formulaBean As Formula = Nothing, organicAcurateMass As Double = Nothing
-            (formulaBean, organicAcurateMass) = GetOrganicAdductFormulaAndMass(formula, multipliedNum)
-            Return (organicAcurateMass, SevenGoldenRulesCheck.GetM1IsotopicAbundance(formulaBean), SevenGoldenRulesCheck.GetM2IsotopicAbundance(formulaBean))
+        Dim nil2 As (formulaBean As Dictionary(Of String, Integer), organicAcurateMass As Double) = GetOrganicAdductFormulaAndMass(formula, multipliedNum)
+        Return (organicAcurateMass, SevenGoldenRulesCheck.GetM1IsotopicAbundance(formulaBean), SevenGoldenRulesCheck.GetM2IsotopicAbundance(formulaBean))
     End Function
 
     Public Function CalculateAccurateMassAndIsotopeRatio(ByVal adductName As String) As (Double, Double, Double)
@@ -71,21 +74,21 @@ Module Parser
         Dim equationNum = CountChar(adductName, "+"c) + CountChar(adductName, "-"c)
         Dim formula = String.Empty
         Dim accAccurateMass As Double = 0, accM1Intensity As Double = 0, accM2Intensity As Double = 0
-        Dim accurateMass As Double = Nothing, m1Intensity As Double = Nothing, m2Intensity As Double = Nothing, accurateMass As Double = Nothing, m1Intensity As Double = Nothing, m2Intensity As Double = Nothing
+        Dim accurateMass As Double = Nothing, m1Intensity As Double = Nothing, m2Intensity As Double = Nothing
         For i = adductName.Length - 1 To 0 Step -1
             If adductName(i).Equals("+"c) Then
-                    (accurateMass, m1Intensity, m2Intensity) = CalculateAccurateMassAndIsotopeRatioOfMolecularFormula(formula)
-                    accAccurateMass += accurateMass
-                accM1Intensity += m1Intensity
-                accM2Intensity += m2Intensity
+                Dim nul As (accurateMass As Double, m1Intensity As Double, m2Intensity As Double) = CalculateAccurateMassAndIsotopeRatioOfMolecularFormula(formula)
+                accAccurateMass += nul.accurateMass
+                accM1Intensity += nul.m1Intensity
+                accM2Intensity += nul.m2Intensity
 
                 formula = String.Empty
                 equationNum -= 1
             ElseIf adductName(i).Equals("-"c) Then
-                    (accurateMass, m1Intensity, m2Intensity) = CalculateAccurateMassAndIsotopeRatioOfMolecularFormula(formula)
-                    accAccurateMass -= accurateMass
-                accM1Intensity -= m1Intensity
-                accM2Intensity -= m2Intensity
+                Dim nul As (accurateMass As Double, m1Intensity As Double, m2Intensity As Double) = CalculateAccurateMassAndIsotopeRatioOfMolecularFormula(formula)
+                accAccurateMass -= nul.accurateMass
+                accM1Intensity -= nul.m1Intensity
+                accM2Intensity -= nul.m2Intensity
 
                 formula = String.Empty
                 equationNum -= 1

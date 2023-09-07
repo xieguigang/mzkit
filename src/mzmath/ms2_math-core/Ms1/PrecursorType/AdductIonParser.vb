@@ -4,7 +4,12 @@ Imports System.Text.RegularExpressions
 Imports std = System.Math
 
 Namespace Ms1.PrecursorType
+
+    ''' <summary>
+    ''' MS-DIAL AdductIonParser
+    ''' </summary>
     Public Module AdductIonParser
+
         Private ReadOnly c13_c12 As Double = 0.010815728
         Private ReadOnly h2_h1 As Double = 0.000115013
         Private ReadOnly n15_n14 As Double = 0.003653298
