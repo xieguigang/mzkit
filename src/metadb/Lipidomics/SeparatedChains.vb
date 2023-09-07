@@ -116,16 +116,16 @@ Public Class SeparatedChains
                 box(std.Min(Threading.Interlocked.Increment(idx), idx - 1)) = c
             End If
         Next
-        Return String.Concat(CType(Enumerable.Select(Of ChainInformation, Global.System.[String])(box, CType(Function(c) CStr(c.Chain.ToString() & If(c.Position < 0, "_", "/")), Func(Of ChainInformation, String))), IEnumerable(Of String))).TrimEnd("_"c, "/"c)
+        Return String.Concat(CType(Enumerable.Select(box, CType(Function(c) CStr(c.Chain.ToString() & If(c.Position < 0, "_", "/")), Func(Of ChainInformation, String))), IEnumerable(Of String))).TrimEnd("_"c, "/"c)
     End Function
 
     Private Function Includes(chains As ITotalChain) As Boolean Implements ITotalChain.Includes
         If chains.ChainCount <> ChainCount Then
             Return False
         End If
-        Dim sChains As SeparatedChains = Nothing
+        Dim sChains As SeparatedChains = TryCast(chains, SeparatedChains)
 
-        If Not (CSharpImpl.__Assign(sChains, TryCast(chains, SeparatedChains)) IsNot Nothing) Then
+        If sChains Is Nothing Then
             Return False
         End If
         If _decided.Length > sChains._decided.Length Then
@@ -134,8 +134,8 @@ Public Class SeparatedChains
         Dim used = New HashSet(Of ChainInformation)()
         Dim ci As ChainInformation = Nothing
         For Each d In _decided
-
-            If CSharpImpl.__Assign(ci, TryCast(sChains._decided.FirstOrDefault(Function(d2) d2.Position = d.Position), ChainInformation)) IsNot Nothing AndAlso d.Chain.Includes(ci.Chain) Then
+            ci = TryCast(sChains._decided.FirstOrDefault(Function(d2) d2.Position = d.Position), ChainInformation)
+            If ci IsNot Nothing AndAlso d.Chain.Includes(ci.Chain) Then
                 used.Add(ci)
             Else
                 Return False
@@ -154,9 +154,9 @@ Public Class SeparatedChains
         If other.ChainCount <> ChainCount Then
             Return False
         End If
-        Dim sChains As SeparatedChains = Nothing
+        Dim sChains As SeparatedChains = TryCast(other, SeparatedChains)
 
-        If Not (CSharpImpl.__Assign(sChains, TryCast(other, SeparatedChains)) IsNot Nothing) Then
+        If sChains Is Nothing Then
             Return False
         End If
         If _decided.Length > sChains._decided.Length Then
@@ -165,8 +165,8 @@ Public Class SeparatedChains
         Dim used = New HashSet(Of ChainInformation)()
         Dim ci As ChainInformation = Nothing
         For Each d In _decided
-
-            If CSharpImpl.__Assign(ci, TryCast(sChains._decided.FirstOrDefault(Function(d2) d2.Position = d.Position), ChainInformation)) IsNot Nothing AndAlso d.Chain.Equals(ci.Chain) Then
+            ci = TryCast(sChains._decided.FirstOrDefault(Function(d2) d2.Position = d.Position), ChainInformation)
+            If ci IsNot Nothing AndAlso d.Chain.Equals(ci.Chain) Then
                 used.Add(ci)
             Else
                 Return False
@@ -182,9 +182,9 @@ Public Class SeparatedChains
     End Function
 
     Public Overridable Function Accept(Of TResult)(visitor As IAcyclicVisitor, decomposer As IAcyclicDecomposer(Of TResult)) As TResult Implements IVisitableElement.Accept
-        Dim decomposer_ As IDecomposer(Of TResult, SeparatedChains) = Nothing
+        Dim decomposer_ As IDecomposer(Of TResult, SeparatedChains) = TryCast(decomposer, IDecomposer(Of TResult, SeparatedChains))
 
-        If CSharpImpl.__Assign(decomposer_, TryCast(decomposer, IDecomposer(Of TResult, SeparatedChains))) IsNot Nothing Then
+        If decomposer_ IsNot Nothing Then
             Return decomposer_.Decompose(visitor, Me)
         End If
         Return Nothing

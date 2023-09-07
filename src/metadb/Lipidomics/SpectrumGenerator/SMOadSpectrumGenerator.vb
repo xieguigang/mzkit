@@ -51,15 +51,18 @@ Public Class SMOadSpectrumGenerator
         '"SphOAD-CO"
         Dim oadId = New String() {"OAD01", "OAD02", "OAD02+O", "OAD03", "OAD04", "OAD08", "OAD12", "OAD14", "OAD15", "OAD15+O", "OAD16", "OAD17", "OAD12+O", "OAD12+O+H", "OAD12+O+2H", "OAD01+H", "SphOAD", "SphOAD+H", "SphOAD+2H"}
 
-        Dim plChains As PositionLevelChains = Nothing, sphingo As SphingoChain = Nothing, acyl As AcylChain = Nothing
+        Dim plChains As PositionLevelChains = TryCast(lipid.Chains, PositionLevelChains)
+        Dim sphingo As SphingoChain = Nothing
+        Dim acyl As AcylChain = Nothing
 
-        If CSharpImpl.__Assign(plChains, TryCast(lipid.Chains, PositionLevelChains)) IsNot Nothing Then
-            If CSharpImpl.__Assign(sphingo, TryCast(lipid.Chains.GetChainByPosition(1), SphingoChain)) IsNot Nothing Then
+        If plChains IsNot Nothing Then
+            sphingo = TryCast(lipid.Chains.GetChainByPosition(1), SphingoChain)
+            If sphingo IsNot Nothing Then
                 'spectrum.AddRange(GetSphingoSpectrum(lipid, sphingo, adduct));
                 spectrum.AddRange(spectrumGenerator.GetSphingoDoubleBondSpectrum(lipid, sphingo, adduct, nlMass, 30.0R, oadId))
             End If
-
-            If CSharpImpl.__Assign(acyl, TryCast(lipid.Chains.GetChainByPosition(2), AcylChain)) IsNot Nothing Then
+            acyl = TryCast(lipid.Chains.GetChainByPosition(2), AcylChain)
+            If acyl IsNot Nothing Then
                 'spectrum.AddRange(GetAcylSpectrum(lipid, acyl, adduct));
                 spectrum.AddRange(spectrumGenerator.GetAcylDoubleBondSpectrum(lipid, acyl, adduct, nlMass, 30.0R, oadId))
             End If

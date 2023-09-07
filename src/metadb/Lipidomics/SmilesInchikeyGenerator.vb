@@ -1,14 +1,8 @@
-﻿Imports System
-Imports System.Collections.Generic
-Imports NCDK.Smiles
-Imports NCDK.Graphs.InChI
-Imports System.Linq
-
-Public Class SmilesInchikeyGenerator
+﻿Public Class SmilesInchikeyGenerator
     Public Shared Function Generate(lipid As Lipid) As SmilesInchikey
-        Dim plChains As PositionLevelChains = Nothing
+        Dim plChains As PositionLevelChains = TryCast(lipid.Chains, PositionLevelChains)
 
-        If CSharpImpl.__Assign(plChains, TryCast(lipid.Chains, PositionLevelChains)) IsNot Nothing Then
+        If plChains IsNot Nothing Then
             Dim smilesHeaderDict = SmilesLipidHeader.HeaderDictionary
             Dim headerSmiles = smilesHeaderDict(lipid.LipidClass.ToString())
             If Equals(headerSmiles, Nothing) Then Return Nothing

@@ -19,7 +19,7 @@ Public Class CeramideOadSpectrumGenerator
     End Sub
 
     Public Sub New(spectrumGenerator As IOadSpectrumPeakGenerator)
-        Me.spectrumGenerator = If(spectrumGenerator, CSharpImpl.__Throw(Of IOadSpectrumPeakGenerator)(New ArgumentNullException(NameOf(spectrumGenerator))))
+        Me.spectrumGenerator = spectrumGenerator
     End Sub
 
     Public Function CanGenerate(lipid As ILipid, adduct As AdductIon) As Boolean Implements ILipidSpectrumGenerator.CanGenerate
@@ -56,15 +56,15 @@ Public Class CeramideOadSpectrumGenerator
         '"SphOAD+2H",
         Dim oadId = New String() {"OAD02", "OAD03", "OAD05", "OAD06", "OAD07", "OAD08", "OAD15", "OAD16", "SphOAD", "SphOAD-CO"}
 
-        Dim sphingo As SphingoChain = Nothing
+        Dim sphingo As SphingoChain = TryCast(lipid.Chains.GetChainByPosition(1), SphingoChain)
 
-        If CSharpImpl.__Assign(sphingo, TryCast(lipid.Chains.GetChainByPosition(1), SphingoChain)) IsNot Nothing Then
+        If sphingo IsNot Nothing Then
             spectrum.AddRange(GetSphingoSpectrum(lipid, sphingo, adduct))
             spectrum.AddRange(spectrumGenerator.GetSphingoDoubleBondSpectrum(lipid, sphingo, adduct, nlMass, 30.0R, oadId))
         End If
-        Dim acyl As AcylChain = Nothing
+        Dim acyl As AcylChain = TryCast(lipid.Chains.GetChainByPosition(2), AcylChain)
 
-        If CSharpImpl.__Assign(acyl, TryCast(lipid.Chains.GetChainByPosition(2), AcylChain)) IsNot Nothing Then
+        If acyl IsNot Nothing Then
             'spectrum.AddRange(GetAcylSpectrum(lipid, acyl, adduct));
             spectrum.AddRange(spectrumGenerator.GetAcylDoubleBondSpectrum(lipid, acyl, adduct, nlMass, 30.0R, oadId))
         End If

@@ -5,6 +5,7 @@ Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
 
 Public Class CeramideSpectrumGenerator
     Implements ILipidSpectrumGenerator
+
     Private Shared ReadOnly H2O As Double = {HydrogenMass * 2, OxygenMass}.Sum()
     Private Shared ReadOnly CH6O2 As Double = {CarbonMass * 1, HydrogenMass * 6, OxygenMass * 2}.Sum()
     Private Shared ReadOnly CH4O2 As Double = {CarbonMass * 1, HydrogenMass * 4, OxygenMass * 2}.Sum()
@@ -16,7 +17,7 @@ Public Class CeramideSpectrumGenerator
         spectrumGenerator = New SpectrumPeakGenerator()
     End Sub
     Public Sub New(spectrumGenerator As ISpectrumPeakGenerator)
-        Me.spectrumGenerator = If(spectrumGenerator, CSharpImpl.__Throw(Of ISpectrumPeakGenerator)(New ArgumentNullException(NameOf(spectrumGenerator))))
+        Me.spectrumGenerator = spectrumGenerator
     End Sub
 
     Private ReadOnly spectrumGenerator As ISpectrumPeakGenerator
@@ -38,15 +39,15 @@ Public Class CeramideSpectrumGenerator
         Dim spectrum = New List(Of SpectrumPeak)()
         Dim nlmass = If(Equals(adduct.AdductIonName, "[M+H]+"), H2O, 0.0)
         spectrum.AddRange(GetCerNSSpectrum(lipid, adduct))
-        Dim sphingo As SphingoChain = Nothing
+        Dim sphingo As SphingoChain = TryCast(lipid.Chains.GetChainByPosition(1), SphingoChain)
 
-        If CSharpImpl.__Assign(sphingo, TryCast(lipid.Chains.GetChainByPosition(1), SphingoChain)) IsNot Nothing Then
+        If sphingo IsNot Nothing Then
             spectrum.AddRange(GetSphingoSpectrum(lipid, sphingo, adduct))
             spectrum.AddRange(spectrumGenerator.GetSphingoDoubleBondSpectrum(lipid, sphingo, adduct, nlmass, 30.0R))
         End If
-        Dim acyl As AcylChain = Nothing
+        Dim acyl As AcylChain = TryCast(lipid.Chains.GetChainByPosition(2), AcylChain)
 
-        If CSharpImpl.__Assign(acyl, TryCast(lipid.Chains.GetChainByPosition(2), AcylChain)) IsNot Nothing Then
+        If acyl IsNot Nothing Then
             spectrum.AddRange(GetAcylSpectrum(lipid, acyl, adduct))
             spectrum.AddRange(spectrumGenerator.GetAcylDoubleBondSpectrum(lipid, acyl, adduct, nlmass, 30.0R))
         End If

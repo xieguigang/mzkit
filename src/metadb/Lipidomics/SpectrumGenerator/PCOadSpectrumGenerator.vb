@@ -96,8 +96,8 @@ Public Class PCOadSpectrumGenerator
 }, New SpectrumPeak(lipid.Mass - CH3, 100.0R, "[M-CH3]-") With {
 .SpectrumComment = SpectrumComment.metaboliteclass
 }})
-
-            If CSharpImpl.__Assign(Chains, TryCast(lipid.Chains, SeparatedChains)) IsNot Nothing Then
+            Chains = TryCast(lipid.Chains, SeparatedChains)
+            If Chains IsNot Nothing Then
                 For Each chain As AcylChain In lipid.Chains.GetDeterminedChains()
                     spectrum.AddRange({New SpectrumPeak(chain.Mass + OxygenMass + Electron, 30.0R, $"{chain} FA") With {
 .SpectrumComment = SpectrumComment.acylchain

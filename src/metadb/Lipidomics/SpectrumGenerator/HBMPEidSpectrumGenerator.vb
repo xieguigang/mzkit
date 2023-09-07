@@ -172,24 +172,24 @@ Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
 
         Private Shared Function EidSpecificSpectrum(lipid As Lipid, adduct As AdductIon, nlMass As Double, intensity As Double) As SpectrumPeak()
             Dim spectrum = New List(Of SpectrumPeak)()
-            Dim sn23 As IChain = Nothing
+        Dim sn23 As IChain = TryCast(lipid.Chains.GetChainByPosition(1), IChain)
 
-            If CSharpImpl.__Assign(sn23, TryCast(lipid.Chains.GetChainByPosition(1), IChain)) IsNot Nothing Then ' HBMP sn-2/sn-3/sn-2'/sn-3'
-                nlMass = sn23.Mass + C3H9O6P - HydrogenMass + adduct.AdductIonAccurateMass - ProtonMass
-                Dim sn23ps = lipid.Chains.GetDeterminedChains().ToList()
-                sn23ps.Remove(sn23)
-                For Each chain In sn23ps
-                    If chain.DoubleBond.Count = 0 OrElse chain.DoubleBond.UnDecidedCount > 0 OrElse chain.DoubleBond.Count < 3 Then Continue For
-                    spectrum.AddRange(EidSpecificSpectrumGenerator.EidSpecificSpectrumGen(lipid, chain, adduct, nlMass, intensity))
-                Next
-                If sn23.DoubleBond.Count <> 0 OrElse sn23.DoubleBond.UnDecidedCount = 0 Then
-                    If sn23.DoubleBond.Count < 3 AndAlso sn23ps.Count = 2 Then
-                        nlMass = sn23ps.Sum(Function(c) c.Mass) + C3H9O6P - HydrogenMass + adduct.AdductIonAccurateMass - ProtonMass
-                        spectrum.AddRange(EidSpecificSpectrumGenerator.EidSpecificSpectrumGen(lipid, sn23, adduct, nlMass, intensity))
-                    End If
+        If sn23 IsNot Nothing Then ' HBMP sn-2/sn-3/sn-2'/sn-3'
+            nlMass = sn23.Mass + C3H9O6P - HydrogenMass + adduct.AdductIonAccurateMass - ProtonMass
+            Dim sn23ps = lipid.Chains.GetDeterminedChains().ToList()
+            sn23ps.Remove(sn23)
+            For Each chain In sn23ps
+                If chain.DoubleBond.Count = 0 OrElse chain.DoubleBond.UnDecidedCount > 0 OrElse chain.DoubleBond.Count < 3 Then Continue For
+                spectrum.AddRange(EidSpecificSpectrumGenerator.EidSpecificSpectrumGen(lipid, chain, adduct, nlMass, intensity))
+            Next
+            If sn23.DoubleBond.Count <> 0 OrElse sn23.DoubleBond.UnDecidedCount = 0 Then
+                If sn23.DoubleBond.Count < 3 AndAlso sn23ps.Count = 2 Then
+                    nlMass = sn23ps.Sum(Function(c) c.Mass) + C3H9O6P - HydrogenMass + adduct.AdductIonAccurateMass - ProtonMass
+                    spectrum.AddRange(EidSpecificSpectrumGenerator.EidSpecificSpectrumGen(lipid, sn23, adduct, nlMass, intensity))
                 End If
             End If
-            Return spectrum.ToArray()
+        End If
+        Return spectrum.ToArray()
         End Function
 
         Private Shared ReadOnly comparer As IEqualityComparer(Of SpectrumPeak) = New SpectrumEqualityComparer()

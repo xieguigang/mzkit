@@ -19,7 +19,7 @@ Public Class CerNSd7SpectrumGenerator
         spectrumGenerator = New SpectrumPeakGenerator()
     End Sub
     Public Sub New(spectrumGenerator As ISpectrumPeakGenerator)
-        Me.spectrumGenerator = If(spectrumGenerator, CSharpImpl.__Throw(Of ISpectrumPeakGenerator)(New ArgumentNullException(NameOf(spectrumGenerator))))
+        Me.spectrumGenerator = spectrumGenerator
     End Sub
 
     Private ReadOnly spectrumGenerator As ISpectrumPeakGenerator
@@ -37,21 +37,22 @@ Public Class CerNSd7SpectrumGenerator
         Dim spectrum = New List(Of SpectrumPeak)()
         Dim nlmass = If(Equals(adduct.AdductIonName, "[M+H]+"), H2O, 0.0)
         spectrum.AddRange(GetCerNSd7Spectrum(lipid, adduct))
-        Dim sphingo As SphingoChain = Nothing
+        Dim sphingo As SphingoChain = TryCast(lipid.Chains.GetChainByPosition(1), SphingoChain)
 
-        If CSharpImpl.__Assign(sphingo, TryCast(lipid.Chains.GetChainByPosition(1), SphingoChain)) IsNot Nothing Then
+        If sphingo IsNot Nothing Then
             spectrum.AddRange(GetSphingoSpectrum(lipid, sphingo, adduct))
             spectrum.AddRange(GetSphingoDoubleBondSpectrum(lipid, sphingo, adduct, nlmass, 100.0R))
         End If
-        Dim acyl As AcylChain = Nothing
+        Dim acyl As AcylChain = TryCast(lipid.Chains.GetChainByPosition(2), AcylChain)
 
-        If CSharpImpl.__Assign(acyl, TryCast(lipid.Chains.GetChainByPosition(2), AcylChain)) IsNot Nothing Then
+        If acyl IsNot Nothing Then
             spectrum.AddRange(GetAcylSpectrum(lipid, acyl, adduct))
             spectrum.AddRange(spectrumGenerator.GetAcylDoubleBondSpectrum(lipid, acyl, adduct, nlmass - sphD7MassBalance, 30.0R))
         End If
         spectrum = spectrum.GroupBy(Function(spec) spec, comparer).[Select](Function(specs) New SpectrumPeak(Enumerable.First(specs).Mass, specs.Sum(Function(n) n.Intensity), String.Join(", ", specs.[Select](Function(spec) spec.Comment)), specs.Aggregate(SpectrumComment.none, Function(a, b) a Or b.SpectrumComment))).OrderBy(Function(peak) peak.Mass).ToList()
         Return CreateReference(lipid, adduct, spectrum, molecule)
     End Function
+
     Private Function CreateReference(lipid As ILipid, adduct As AdductIon, spectrum As List(Of SpectrumPeak), molecule As IMoleculeProperty) As MoleculeMsReference
         Return New MoleculeMsReference With {
     .PrecursorMz = adduct.ConvertToMz(lipid.Mass + sphD7MassBalance),
