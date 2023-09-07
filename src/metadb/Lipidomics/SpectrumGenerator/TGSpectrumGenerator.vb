@@ -20,7 +20,7 @@ Public Class TGSpectrumGenerator
     End Sub
 
     Public Sub New(spectrumGenerator As ISpectrumPeakGenerator)
-        Me.spectrumGenerator = If(spectrumGenerator, CSharpImpl.__Throw(Of ISpectrumPeakGenerator)(New ArgumentNullException(NameOf(spectrumGenerator))))
+        Me.spectrumGenerator = spectrumGenerator
     End Sub
 
     Private ReadOnly spectrumGenerator As ISpectrumPeakGenerator
@@ -40,8 +40,8 @@ Public Class TGSpectrumGenerator
         Dim sn2 As IChain = Nothing
         If lipid.Description.Has(LipidDescription.Chain) Then
             Dim chains = lipid.Chains.GetDeterminedChains().ToList()
-
-            If CSharpImpl.__Assign(sn2, TryCast(lipid.Chains.GetChainByPosition(2), IChain)) IsNot Nothing Then
+            sn2 = TryCast(lipid.Chains.GetChainByPosition(2), IChain)
+            If sn2 IsNot Nothing Then
                 spectrum.AddRange(GetAcylPositionSpectrum(lipid, sn2, adduct))
                 chains.Remove(sn2)
             End If

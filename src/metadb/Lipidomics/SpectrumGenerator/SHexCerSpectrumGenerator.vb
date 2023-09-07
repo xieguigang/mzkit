@@ -20,7 +20,7 @@ Public Class SHexCerSpectrumGenerator
         spectrumGenerator = New SpectrumPeakGenerator()
     End Sub
     Public Sub New(spectrumGenerator As ISpectrumPeakGenerator)
-        Me.spectrumGenerator = If(spectrumGenerator, CSharpImpl.__Throw(Of ISpectrumPeakGenerator)(New ArgumentNullException(NameOf(spectrumGenerator))))
+        Me.spectrumGenerator = spectrumGenerator
     End Sub
 
     Private ReadOnly spectrumGenerator As ISpectrumPeakGenerator
@@ -40,12 +40,13 @@ Public Class SHexCerSpectrumGenerator
         spectrum.AddRange(GetSHexCerSpectrum(lipid, adduct))
         Dim sphingo As SphingoChain = Nothing, acyl As AcylChain = Nothing
         If TypeOf lipid.Chains Is PositionLevelChains Then
-            If CSharpImpl.__Assign(sphingo, TryCast(lipid.Chains.GetChainByPosition(1), SphingoChain)) IsNot Nothing Then
+            sphingo = TryCast(lipid.Chains.GetChainByPosition(1), SphingoChain)
+            If sphingo IsNot Nothing Then
                 spectrum.AddRange(GetSphingoSpectrum(lipid, sphingo, adduct))
                 'spectrum.AddRange(spectrumGenerator.GetSphingoDoubleBondSpectrum(lipid, sphingo, adduct, nlmass, 20d));
             End If
-
-            If CSharpImpl.__Assign(acyl, TryCast(lipid.Chains.GetChainByPosition(2), AcylChain)) IsNot Nothing Then
+            acyl = TryCast(lipid.Chains.GetChainByPosition(2), AcylChain)
+            If acyl IsNot Nothing Then
                 spectrum.AddRange(GetAcylSpectrum(lipid, acyl, adduct))
                 'spectrum.AddRange(spectrumGenerator.GetAcylDoubleBondSpectrum(lipid, acyl, adduct, nlmass, 20d));
             End If

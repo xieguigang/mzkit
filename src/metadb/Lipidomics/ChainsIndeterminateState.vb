@@ -70,9 +70,9 @@ Public NotInheritable Class ChainsIndeterminateState
     Friend NotInheritable Class MolecularSpeciesLevelIndeterminate
         Implements IIndeterminate
         Public Function Indeterminate(chains As ITotalChain) As ITotalChain Implements IIndeterminate.Indeterminate
-            Dim sc As SeparatedChains = Nothing
+            Dim sc As SeparatedChains = TryCast(chains, SeparatedChains)
 
-            If chains.Description.HasFlag(LipidDescription.SnPosition) AndAlso CSharpImpl.__Assign(sc, TryCast(chains, SeparatedChains)) IsNot Nothing Then
+            If chains.Description.HasFlag(LipidDescription.SnPosition) AndAlso sc IsNot Nothing Then
                 Return New MolecularSpeciesLevelChains(sc.GetDeterminedChains())
             End If
             Return chains

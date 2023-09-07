@@ -1,11 +1,11 @@
 ﻿Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.ElementsExactMass
 
-Public Class AcylChain
-    Implements IChain
+Public Class AcylChain : Implements IChain
+
     Public Sub New(carbonCount As Integer, doubleBond As IDoubleBond, oxidized As IOxidized)
         Me.CarbonCount = carbonCount
-        Me.DoubleBond = If(doubleBond, CSharpImpl.__Throw(Of IDoubleBond)(New ArgumentNullException(NameOf(doubleBond))))
-        Me.Oxidized = If(oxidized, CSharpImpl.__Throw(Of IOxidized)(New ArgumentNullException(NameOf(oxidized))))
+        Me.DoubleBond = doubleBond
+        Me.Oxidized = oxidized
     End Sub
 
     Public ReadOnly Property DoubleBond As IDoubleBond Implements IChain.DoubleBond
@@ -56,9 +56,9 @@ Public Class AcylChain
     End Function
 
     Public Function Accept(Of TResult)(visitor As IAcyclicVisitor, decomposer As IAcyclicDecomposer(Of TResult)) As TResult Implements IVisitableElement.Accept
-        Dim concrete As IDecomposer(Of TResult, AcylChain) = Nothing
+        Dim concrete As IDecomposer(Of TResult, AcylChain) = TryCast(decomposer, IDecomposer(Of TResult, AcylChain))
 
-        If CSharpImpl.__Assign(concrete, TryCast(decomposer, IDecomposer(Of TResult, AcylChain))) IsNot Nothing Then
+        If concrete IsNot Nothing Then
             Return concrete.Decompose(visitor, Me)
         End If
         Return Nothing
@@ -77,8 +77,8 @@ Public Class AlkylChain
     Implements IChain
     Public Sub New(carbonCount As Integer, doubleBond As IDoubleBond, oxidized As IOxidized)
         Me.CarbonCount = carbonCount
-        Me.DoubleBond = If(doubleBond, CSharpImpl.__Throw(Of IDoubleBond)(New ArgumentNullException(NameOf(doubleBond))))
-        Me.Oxidized = If(oxidized, CSharpImpl.__Throw(Of IOxidized)(New ArgumentNullException(NameOf(oxidized))))
+        Me.DoubleBond = doubleBond
+        Me.Oxidized = oxidized
     End Sub
     Public ReadOnly Property DoubleBond As IDoubleBond Implements IChain.DoubleBond
 
@@ -145,9 +145,9 @@ Public Class AlkylChain
     End Function
 
     Public Function Accept(Of TResult)(visitor As IAcyclicVisitor, decomposer As IAcyclicDecomposer(Of TResult)) As TResult Implements IVisitableElement.Accept
-        Dim concrete As IDecomposer(Of TResult, AlkylChain) = Nothing
+        Dim concrete As IDecomposer(Of TResult, AlkylChain) = TryCast(decomposer, IDecomposer(Of TResult, AlkylChain))
 
-        If CSharpImpl.__Assign(concrete, TryCast(decomposer, IDecomposer(Of TResult, AlkylChain))) IsNot Nothing Then
+        If concrete IsNot Nothing Then
             Return concrete.Decompose(visitor, Me)
         End If
         Return Nothing
@@ -176,7 +176,7 @@ Public Class SphingoChain
         '}
 
         Me.CarbonCount = carbonCount
-        Me.DoubleBond = If(doubleBond, CSharpImpl.__Throw(Of IDoubleBond)(New ArgumentNullException(NameOf(doubleBond))))
+        Me.DoubleBond = doubleBond
         Me.Oxidized = oxidized
     End Sub
 
@@ -213,9 +213,9 @@ Public Class SphingoChain
     End Function
 
     Public Function Accept(Of TResult)(visitor As IAcyclicVisitor, decomposer As IAcyclicDecomposer(Of TResult)) As TResult Implements IVisitableElement.Accept
-        Dim concrete As IDecomposer(Of TResult, SphingoChain) = Nothing
+        Dim concrete As IDecomposer(Of TResult, SphingoChain) = TryCast(decomposer, IDecomposer(Of TResult, SphingoChain))
 
-        If CSharpImpl.__Assign(concrete, TryCast(decomposer, IDecomposer(Of TResult, SphingoChain))) IsNot Nothing Then
+        If concrete IsNot Nothing Then
             Return concrete.Decompose(visitor, Me)
         End If
         Return Nothing
@@ -231,7 +231,7 @@ Public Class SphingoChain
         Return TypeOf chain Is SphingoChain AndAlso chain.CarbonCount = CarbonCount AndAlso chain.DoubleBondCount = DoubleBondCount AndAlso chain.OxidizedCount = OxidizedCount AndAlso DoubleBond.Includes(chain.DoubleBond) AndAlso Oxidized.Includes(chain.Oxidized)
     End Function
 
-    Public Function Equals(other As IChain) As Boolean Implements IEquatable(Of IChain).Equals
+    Public Overloads Function Equals(other As IChain) As Boolean Implements IEquatable(Of IChain).Equals
         Return TypeOf other Is SphingoChain AndAlso CarbonCount = other.CarbonCount AndAlso DoubleBond.Equals(other.DoubleBond) AndAlso Oxidized.Equals(other.Oxidized)
     End Function
 End Class

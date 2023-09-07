@@ -1,31 +1,41 @@
-﻿Imports CompMs.Common.DataStructure
+﻿Public NotInheritable Class IdentityDecomposer(Of TResult, TElement)
+    Implements IDecomposer(Of TResult, TElement)
+    Private Shared _instance As IdentityDecomposer(Of TResult, TElement)
+
+    Public Shared ReadOnly Property Instance As IdentityDecomposer(Of TResult, TElement)
+        Get
+            Return If(_instance, Function()
+                                     _instance = New IdentityDecomposer(Of TResult, TElement)()
+                                     Return _instance
+                                 End Function())
+        End Get
+    End Property
+
+    Private Function Decompose(Of T As TElement)(ByVal visitor As IAcyclicVisitor, ByVal element As T) As TResult Implements IDecomposer(Of TResult, TElement).Decompose
+        Dim vis As IVisitor(Of TResult, T) = TryCast(visitor, IVisitor(Of TResult, T))
+
+        If vis IsNot Nothing Then
+            Return vis.Visit(element)
+        End If
+        Return Nothing
+    End Function
+End Class
 
 Friend NotInheritable Class LipidAnnotationLevelConverter
     Implements IVisitor(Of Lipid, ILipid)
     Private ReadOnly _chainsVisitor As IVisitor(Of ITotalChain, ITotalChain)
 
     Public Sub New(chainsVisitor As IVisitor(Of ITotalChain, ITotalChain))
-        _chainsVisitor = If(chainsVisitor, CSharpImpl.__Throw(Of IVisitor(Of ITotalChain, ITotalChain))(New ArgumentNullException(NameOf(chainsVisitor))))
+        _chainsVisitor = chainsVisitor
     End Sub
 
     Private Function Visit(item As ILipid) As Lipid Implements IVisitor(Of Lipid, ILipid).Visit
         Dim converted = item.Chains.Accept(_chainsVisitor, IdentityDecomposer(Of ITotalChain, ITotalChain).Instance)
-        Dim lipid As Lipid = Nothing
+        Dim lipid As Lipid = TryCast(item, Lipid)
 
-        If item.Chains Is converted AndAlso CSharpImpl.__Assign(lipid, TryCast(item, Lipid)) IsNot Nothing Then
+        If item.Chains Is converted AndAlso lipid IsNot Nothing Then
             Return lipid
         End If
         Return New Lipid(item.LipidClass, item.Mass, converted)
     End Function
-
-    Private Class CSharpImpl
-        <Obsolete("Please refactor calling code to use normal Visual Basic assignment")>
-        Shared Function __Assign(Of T)(ByRef target As T, value As T) As T
-            target = value
-            Return value
-        End Function <Obsolete("Please refactor calling code to use normal throw statements")>
-            Shared Function __Throw(Of T)(e As Exception) As T
-            Throw e
-        End Function
-    End Class
 End Class

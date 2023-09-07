@@ -27,9 +27,9 @@ Public Class MolecularSpeciesLevelChains
     End Function
 
     Private Function Includes(chains As ITotalChain) As Boolean Implements ITotalChain.Includes
-        Dim sChains As SeparatedChains = Nothing
+        Dim sChains As SeparatedChains = TryCast(chains, SeparatedChains)
 
-        If chains.ChainCount <> ChainCount OrElse Not (CSharpImpl.__Assign(sChains, TryCast(chains, SeparatedChains)) IsNot Nothing) Then
+        If chains.ChainCount <> ChainCount OrElse sChains IsNot Nothing Then
             Return False
         End If
 
@@ -45,14 +45,21 @@ Public Class MolecularSpeciesLevelChains
     End Function
 
     Public Overrides Function Equals(other As ITotalChain) As Boolean Implements IEquatable(Of ITotalChain).Equals
-        Dim mChains As MolecularSpeciesLevelChains = Nothing
-        Return CSharpImpl.__Assign(mChains, TryCast(other, MolecularSpeciesLevelChains)) IsNot Nothing AndAlso ChainCount = other.ChainCount AndAlso CarbonCount = other.CarbonCount AndAlso DoubleBondCount = other.DoubleBondCount AndAlso OxidizedCount = other.OxidizedCount AndAlso Description = other.Description AndAlso GetDeterminedChains().Zip(mChains.GetDeterminedChains(), Function(a, b) a.Equals(b)).All(Function(p) p)
+        Dim mChains As MolecularSpeciesLevelChains = TryCast(other, MolecularSpeciesLevelChains)
+
+        Return mChains IsNot Nothing AndAlso
+            ChainCount = other.ChainCount AndAlso
+            CarbonCount = other.CarbonCount AndAlso
+            DoubleBondCount = other.DoubleBondCount AndAlso
+            OxidizedCount = other.OxidizedCount AndAlso
+            Description = other.Description AndAlso
+            GetDeterminedChains().Zip(mChains.GetDeterminedChains(), Function(a, b) a.Equals(b)).All(Function(p) p)
     End Function
 
     Public Overrides Function Accept(Of TResult)(visitor As IAcyclicVisitor, decomposer As IAcyclicDecomposer(Of TResult)) As TResult Implements IVisitableElement.Accept
-        Dim decomposer_ As IDecomposer(Of TResult, MolecularSpeciesLevelChains) = Nothing
+        Dim decomposer_ As IDecomposer(Of TResult, MolecularSpeciesLevelChains) = TryCast(decomposer, IDecomposer(Of TResult, MolecularSpeciesLevelChains))
 
-        If CSharpImpl.__Assign(decomposer_, TryCast(decomposer, IDecomposer(Of TResult, MolecularSpeciesLevelChains))) IsNot Nothing Then
+        If decomposer_ IsNot Nothing Then
             Return decomposer_.Decompose(visitor, Me)
         End If
         Return Nothing

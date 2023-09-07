@@ -18,8 +18,8 @@ Public Class EtherPCOadSpectrumGenerator
         End Sub
 
         Public Sub New(spectrumGenerator As IOadSpectrumPeakGenerator)
-            Me.spectrumGenerator = If(spectrumGenerator, CSharpImpl.__Throw(Of IOadSpectrumPeakGenerator)(New ArgumentNullException(NameOf(spectrumGenerator))))
-        End Sub
+        Me.spectrumGenerator = spectrumGenerator
+    End Sub
 
         Public Function CanGenerate(lipid As ILipid, adduct As AdductIon) As Boolean Implements ILipidSpectrumGenerator.CanGenerate
             If Equals(adduct.AdductIonName, "[M+H]+") Then
@@ -50,8 +50,10 @@ Public Class EtherPCOadSpectrumGenerator
             '"OAD01+H"
             Dim oadId = New String() {"OAD01", "OAD02", "OAD03", "OAD04", "OAD08", "OAD12+O", "OAD12+O+H", "OAD12+O+2H"}
             Dim alkyl As AlkylChain = Nothing, acyl As AcylChain = Nothing
-            (alkyl, acyl) = lipid.Chains.Deconstruct(Of AlkylChain, AcylChain)()
-            If alkyl IsNot Nothing AndAlso acyl IsNot Nothing Then
+        Dim nil As (alkyl As AlkylChain, acyl As AcylChain) = lipid.Chains.Deconstruct(Of AlkylChain, AcylChain)()
+        alkyl = nil.alkyl
+        acyl = nil.acyl
+        If alkyl IsNot Nothing AndAlso acyl IsNot Nothing Then
                 If alkyl.DoubleBond.Bonds.Any(Function(b) b.Position = 1) Then
                     spectrum.AddRange(GetEtherPCPSpectrum(lipid, alkyl, acyl, adduct))
                 Else

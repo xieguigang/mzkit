@@ -23,7 +23,7 @@ Public Class PGEidSpectrumGenerator
     End Sub
 
     Public Sub New(spectrumGenerator As ISpectrumPeakGenerator)
-        Me.spectrumGenerator = If(spectrumGenerator, CSharpImpl.__Throw(Of ISpectrumPeakGenerator)(New ArgumentNullException(NameOf(spectrumGenerator))))
+        Me.spectrumGenerator = spectrumGenerator
     End Sub
 
     Private ReadOnly spectrumGenerator As ISpectrumPeakGenerator
@@ -139,9 +139,9 @@ New SpectrumPeak(Gly_O + adductmass, 100.0R, "Gly-O") With {
 
     Private Shared Function EidSpecificSpectrum(lipid As Lipid, adduct As AdductIon, nlMass As Double, intensity As Double) As SpectrumPeak()
         Dim spectrum = New List(Of SpectrumPeak)()
-        Dim chains As SeparatedChains = Nothing
+        Dim chains As SeparatedChains = TryCast(lipid.Chains, SeparatedChains)
 
-        If CSharpImpl.__Assign(chains, TryCast(lipid.Chains, SeparatedChains)) IsNot Nothing Then
+        If chains IsNot Nothing Then
             For Each chain In lipid.Chains.GetDeterminedChains()
                 If chain.DoubleBond.Count = 0 OrElse chain.DoubleBond.UnDecidedCount > 0 Then Continue For
                 If chain.DoubleBond.Count <= 3 Then
