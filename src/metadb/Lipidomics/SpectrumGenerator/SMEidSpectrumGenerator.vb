@@ -16,7 +16,7 @@ Public Class SMEidSpectrumGenerator
         spectrumGenerator = New SpectrumPeakGenerator()
     End Sub
     Public Sub New(spectrumGenerator As ISpectrumPeakGenerator)
-        Me.spectrumGenerator = If(spectrumGenerator, CSharpImpl.__Throw(Of ISpectrumPeakGenerator)(New ArgumentNullException(NameOf(spectrumGenerator))))
+        Me.spectrumGenerator = spectrumGenerator
     End Sub
 
     Private ReadOnly spectrumGenerator As ISpectrumPeakGenerator
@@ -37,15 +37,20 @@ Public Class SMEidSpectrumGenerator
         Dim spectrum = New List(Of SpectrumPeak)()
         Dim nlmass = 0.0
         spectrum.AddRange(GetSMSpectrum(lipid, adduct))
-        Dim plChains As PositionLevelChains = Nothing, sphingo As SphingoChain = Nothing, acyl As AcylChain = Nothing
+        Dim plChains As PositionLevelChains = TryCast(lipid.Chains, PositionLevelChains)
+        Dim sphingo As SphingoChain = Nothing
+        Dim acyl As AcylChain = Nothing
 
-        If CSharpImpl.__Assign(plChains, TryCast(lipid.Chains, PositionLevelChains)) IsNot Nothing Then
-            If CSharpImpl.__Assign(sphingo, TryCast(lipid.Chains.GetChainByPosition(1), SphingoChain)) IsNot Nothing Then
+        If plChains IsNot Nothing Then
+            sphingo = TryCast(lipid.Chains.GetChainByPosition(1), SphingoChain)
+            If sphingo IsNot Nothing Then
                 spectrum.AddRange(GetSphingoSpectrum(lipid, sphingo, adduct))
                 spectrum.AddRange(spectrumGenerator.GetSphingoDoubleBondSpectrum(lipid, sphingo, adduct, nlmass, 30.0R))
             End If
 
-            If CSharpImpl.__Assign(acyl, TryCast(lipid.Chains.GetChainByPosition(2), AcylChain)) IsNot Nothing Then
+            acyl = TryCast(lipid.Chains.GetChainByPosition(2), AcylChain)
+
+            If acyl IsNot Nothing Then
                 spectrum.AddRange(GetAcylSpectrum(lipid, acyl, adduct))
                 spectrum.AddRange(spectrumGenerator.GetAcylDoubleBondSpectrum(lipid, acyl, adduct, nlmass, 30.0R))
                 spectrum.AddRange(EidSpecificSpectrum(lipid, adduct, nlmass, 200.0R))
@@ -124,9 +129,9 @@ Public Class SMEidSpectrumGenerator
     End Function
     Private Shared Function EidSpecificSpectrum(lipid As Lipid, adduct As AdductIon, nlMass As Double, intensity As Double) As SpectrumPeak()
         Dim spectrum = New List(Of SpectrumPeak)()
-        Dim chains As SeparatedChains = Nothing
+        Dim chains As SeparatedChains = TryCast(lipid.Chains, SeparatedChains)
 
-        If CSharpImpl.__Assign(chains, TryCast(lipid.Chains, SeparatedChains)) IsNot Nothing Then
+        If chains IsNot Nothing Then
             For Each chain In lipid.Chains.GetDeterminedChains()
                 If chain.DoubleBond.Count = 0 OrElse chain.DoubleBond.UnDecidedCount > 0 Then Continue For
                 If chain.DoubleBond.Count <= 3 Then

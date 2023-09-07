@@ -18,7 +18,7 @@ Public Class SMSpectrumGenerator
         spectrumGenerator = New SpectrumPeakGenerator()
     End Sub
     Public Sub New(spectrumGenerator As ISpectrumPeakGenerator)
-        Me.spectrumGenerator = If(spectrumGenerator, CSharpImpl.__Throw(Of ISpectrumPeakGenerator)(New ArgumentNullException(NameOf(spectrumGenerator))))
+        Me.spectrumGenerator = spectrumGenerator
     End Sub
 
     Private ReadOnly spectrumGenerator As ISpectrumPeakGenerator
@@ -39,15 +39,18 @@ Public Class SMSpectrumGenerator
         Dim spectrum = New List(Of SpectrumPeak)()
         Dim nlmass = 0.0
         spectrum.AddRange(GetSMSpectrum(lipid, adduct))
-        Dim plChains As PositionLevelChains = Nothing, sphingo As SphingoChain = Nothing, acyl As AcylChain = Nothing
+        Dim plChains As PositionLevelChains = TryCast(lipid.Chains, PositionLevelChains)
+        Dim sphingo As SphingoChain = Nothing
+        Dim acyl As AcylChain = Nothing
 
-        If CSharpImpl.__Assign(plChains, TryCast(lipid.Chains, PositionLevelChains)) IsNot Nothing Then
-            If CSharpImpl.__Assign(sphingo, TryCast(lipid.Chains.GetChainByPosition(1), SphingoChain)) IsNot Nothing Then
+        If plChains IsNot Nothing Then
+            sphingo = TryCast(lipid.Chains.GetChainByPosition(1), SphingoChain)
+            If sphingo IsNot Nothing Then
                 spectrum.AddRange(GetSphingoSpectrum(lipid, sphingo, adduct))
                 spectrum.AddRange(spectrumGenerator.GetSphingoDoubleBondSpectrum(lipid, sphingo, adduct, nlmass, 30.0R))
             End If
-
-            If CSharpImpl.__Assign(acyl, TryCast(lipid.Chains.GetChainByPosition(2), AcylChain)) IsNot Nothing Then
+            acyl = TryCast(lipid.Chains.GetChainByPosition(2), AcylChain)
+            If acyl IsNot Nothing Then
                 spectrum.AddRange(GetAcylSpectrum(lipid, acyl, adduct))
                 spectrum.AddRange(spectrumGenerator.GetAcylDoubleBondSpectrum(lipid, acyl, adduct, nlmass, 30.0R))
             End If

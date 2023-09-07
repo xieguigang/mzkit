@@ -16,7 +16,7 @@ Public Class HexCerSpectrumGenerator
         spectrumGenerator = New SpectrumPeakGenerator()
     End Sub
     Public Sub New(spectrumGenerator As ISpectrumPeakGenerator)
-        Me.spectrumGenerator = If(spectrumGenerator, CSharpImpl.__Throw(Of ISpectrumPeakGenerator)(New ArgumentNullException(NameOf(spectrumGenerator))))
+        Me.spectrumGenerator = spectrumGenerator
     End Sub
 
     Private ReadOnly spectrumGenerator As ISpectrumPeakGenerator
@@ -34,17 +34,20 @@ Public Class HexCerSpectrumGenerator
         Dim spectrum = New List(Of SpectrumPeak)()
         Dim nlmass = If(Equals(adduct.AdductIonName, "[M+H]+"), H2O + C6H10O5, If(Equals(adduct.AdductIonName, "[M+H-H2O]+"), C6H10O5, 0.0))
         spectrum.AddRange(GetHexCerNSSpectrum(lipid, adduct))
-        Dim plChains As PositionLevelChains = Nothing, sphingo As SphingoChain = Nothing, acyl As AcylChain = Nothing
+        Dim plChains As PositionLevelChains = TryCast(lipid.Chains, PositionLevelChains)
+        Dim sphingo As SphingoChain = Nothing
+        Dim acyl As AcylChain = Nothing
 
-        If CSharpImpl.__Assign(plChains, TryCast(lipid.Chains, PositionLevelChains)) IsNot Nothing Then
-            If CSharpImpl.__Assign(sphingo, TryCast(lipid.Chains.GetChainByPosition(1), SphingoChain)) IsNot Nothing Then
+        If plChains IsNot Nothing Then
+            sphingo = TryCast(lipid.Chains.GetChainByPosition(1), SphingoChain)
+            If sphingo IsNot Nothing Then
                 spectrum.AddRange(GetSphingoSpectrum(lipid, sphingo, adduct))
                 If Equals(adduct.AdductIonName, "[M+Na]+") Then
                     spectrum.AddRange(spectrumGenerator.GetSphingoDoubleBondSpectrum(lipid, sphingo, adduct, nlmass, 30.0R)) '-header
                 End If
             End If
-
-            If CSharpImpl.__Assign(acyl, TryCast(lipid.Chains.GetChainByPosition(2), AcylChain)) IsNot Nothing Then
+            acyl = TryCast(lipid.Chains.GetChainByPosition(2), AcylChain)
+            If acyl IsNot Nothing Then
                 spectrum.AddRange(GetAcylSpectrum(lipid, acyl, adduct))
                 If Equals(adduct.AdductIonName, "[M+Na]+") Then
                     spectrum.AddRange(spectrumGenerator.GetAcylDoubleBondSpectrum(lipid, acyl, adduct, nlmass, 30.0R)) '-header
