@@ -44,22 +44,23 @@ Public Class ChainGenerator
             Next
         Next
 
-        Dim rec = Iterator Function(i As Integer, infos As List(Of IDoubleBondInfo))
-                      If (infos.Count = doubleBond.UnDecidedCount) Then
-                          Yield New DoubleBond(doubleBond.Bonds.Concat(infos).OrderBy(b >= b.Position).ToArray())
-                          Return
-                      End If
+        Dim rec As Func(Of Integer, List(Of IDoubleBondInfo), IEnumerable(Of IDoubleBond)) =
+            Iterator Function(i As Integer, infos As List(Of IDoubleBondInfo)) As IEnumerable(Of IDoubleBond)
+                If (infos.Count = doubleBond.UnDecidedCount) Then
+                    Yield New DoubleBond(doubleBond.Bonds.Concat(infos).OrderBy(Function(b) b.Position).ToArray())
+                    Return
+                End If
 
-                      For j = i To carbon - Me.End
-                          If (used(j - 1)) Then Continue For
+                For j = i To carbon - Me.End
+                    If (used(j - 1)) Then Continue For
 
-                          infos.Add(DoubleBondInfo.Create(j))
-                          For Each res In rec(j + Me.Skip, infos)
-                              Yield res
-                          Next
-                          infos.RemoveAt(infos.Count - 1)
-                      Next
-                  End Function
+                    infos.Add(DoubleBondInfo.Create(j))
+                    For Each res In rec(j + Me.Skip, infos)
+                        Yield res
+                    Next
+                    infos.RemoveAt(infos.Count - 1)
+                Next
+            End Function
 
         Return rec(Begin, New List(Of IDoubleBondInfo)(doubleBond.UnDecidedCount))
     End Function
@@ -69,21 +70,22 @@ Public Class ChainGenerator
             Return {oxidized}
         End If
 
-        Dim rec = Iterator Function(i As Integer, infos As List(Of Integer))
-                      If (infos.Count = oxidized.UnDecidedCount) Then
-                          Yield oxidized.CreateFromPosition(oxidized.Oxidises.Concat(infos).OrderBy(p >= p).ToArray())
-                          Return
-                      End If
-                      For j = i To carbon
-                          If (oxidized.Oxidises.Contains(j)) Then Continue For
+        Dim rec As Func(Of Integer, List(Of Integer), IEnumerable(Of IOxidized)) =
+            Iterator Function(i As Integer, infos As List(Of Integer)) As IEnumerable(Of IOxidized)
+                If (infos.Count = oxidized.UnDecidedCount) Then
+                    Yield Lipidomics.Oxidized.CreateFromPosition(oxidized.Oxidises.Concat(infos).OrderBy(Function(p) p).ToArray())
+                    Return
+                End If
+                For j = i To carbon
+                    If (oxidized.Oxidises.Contains(j)) Then Continue For
 
-                          infos.Add(j)
-                          For Each res In rec(j + 1, infos)
-                              Yield res
-                          Next
-                          infos.RemoveAt(infos.Count - 1)
-                      Next
-                  End Function
+                    infos.Add(j)
+                    For Each res In rec(j + 1, infos)
+                        Yield res
+                    Next
+                    infos.RemoveAt(infos.Count - 1)
+                Next
+            End Function
 
         Return rec(begin, New List(Of Integer)(oxidized.UnDecidedCount))
     End Function
