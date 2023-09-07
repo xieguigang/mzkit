@@ -105,7 +105,7 @@ Public NotInheritable Class SpectrumHandler
         Next
 
         For Each pair In range2Peaks
-            Dim maxMass = IEnumerableExtension.Argmax(Of SpectrumPeak, Global.System.[Double])(pair.Value, CType(Function(n) n.Intensity, Func(Of SpectrumPeak, Double))).Mass
+            Dim maxMass = pair.Value.OrderByDescending(Function(n) n.Intensity).First.Mass
             Dim sumIntensity = pair.Value.Sum(Function(n) n.Intensity)
             peaks.Add(New SpectrumPeak(maxMass, sumIntensity))
         Next

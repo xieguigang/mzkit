@@ -24,7 +24,7 @@ Public Class AminoAcid
     Public Property Modifications As List(Of Modification)
 
     Public Function IsModified() As Boolean
-        Return Not ModifiedCode.IsEmptyOrNull()
+        Return Not ModifiedCode.IsNullOrEmpty
     End Function
 
     Public Function ExactMass() As Double
@@ -65,7 +65,7 @@ Public Class AminoAcid
         ThreeLetters = aa.ThreeLetters
         Formula = aa.Formula
 
-        If modifiedCode.IsEmptyOrNull() Then Return
+        If modifiedCode.IsNullOrEmpty Then Return
 
         Me.ModifiedCode = modifiedCode
         Me.ModifiedComposition = modifiedComposition
@@ -77,7 +77,7 @@ Public Class AminoAcid
         ThreeLetters = aa.ThreeLetters
         Formula = aa.Formula
 
-        If modifiedCode.IsEmptyOrNull() Then Return
+        If modifiedCode.IsNullOrEmpty Then Return
 
         Me.ModifiedCode = modifiedCode
         Me.ModifiedComposition = modifiedComposition
