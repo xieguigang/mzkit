@@ -1,6 +1,4 @@
-﻿Imports CompMs.Common.DataStructure
-Imports System.Collections.Generic
-Imports System.Linq
+﻿Imports Microsoft.VisualBasic.ComponentModel.Algorithm
 
 
 Public Class MolecularSpeciesLevelChains
@@ -69,31 +67,17 @@ Public Class MolecularSpeciesLevelChains
         End Function
 
         Private Function TypeToOrder(x As IChain) As Integer
-            ''' Cannot convert SwitchStatementSyntax, System.InvalidCastException: Unable to cast object of type 'Microsoft.CodeAnalysis.VisualBasic.Syntax.EmptyStatementSyntax' to type 'Microsoft.CodeAnalysis.VisualBasic.Syntax.CaseClauseSyntax'.
-            '''    在 System.Linq.Enumerable.<CastIterator>d__97`1.MoveNext()
-            '''    在 Microsoft.CodeAnalysis.VisualBasic.SyntaxFactory.SeparatedList[TNode](IEnumerable`1 nodes)
-            '''    在 ICSharpCode.CodeConverter.VB.MethodBodyExecutableStatementVisitor.ConvertSwitchSection(SwitchSectionSyntax section)
-            '''    在 System.Linq.Enumerable.WhereSelectEnumerableIterator`2.MoveNext()
-            '''    在 System.Linq.Buffer`1..ctor(IEnumerable`1 source)
-            '''    在 System.Linq.Enumerable.ToArray[TSource](IEnumerable`1 source)
-            '''    在 ICSharpCode.CodeConverter.VB.MethodBodyExecutableStatementVisitor.VisitSwitchStatement(SwitchStatementSyntax node)
-            '''    在 Microsoft.CodeAnalysis.CSharp.CSharpSyntaxVisitor`1.Visit(SyntaxNode node)
-            '''    在 ICSharpCode.CodeConverter.VB.CommentConvertingMethodBodyVisitor.DefaultVisit(SyntaxNode node)
-            ''' 
-            ''' Input:
-            '''                 switch (x) {
-            Case CompMs.Common.Lipidomics.SphingoChain _
-                        Return 0;
-                    Case CompMs.Common.Lipidomics.AlkylChain _
-                        Return 1;
-                    Case CompMs.Common.Lipidomics.AcylChain _
-                        Return 2;
-                    Default
-                        Return 3;
-                }
-
-''' 
-            End Function
+            Select Case x.GetType
+                Case GetType(SphingoChain)
+                    Return 0
+                Case GetType(AlkylChain)
+                    Return 1
+                Case GetType(AcylChain)
+                    Return 2
+                Case Else
+                    Return 3
+            End Select
+        End Function
     End Class
 
 End Class

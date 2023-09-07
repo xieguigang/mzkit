@@ -5,7 +5,7 @@ Friend Class DMEDFAHFAEadMsCharacterization
     Public Shared Function Characterize(scan As IMSScanProperty, molecule As ILipid, reference As MoleculeMsReference, tolerance As Single, mzBegin As Single, mzEnd As Single) As (ILipid, Double())
         Dim snPositionMzValues = reference.Spectrum.Where(Function(n) n.SpectrumComment = SpectrumComment.snposition).ToList()
         Dim dions4position As List(Of DiagnosticIon) = Nothing
-        If Not snPositionMzValues.IsEmptyOrNull() Then
+        If Not snPositionMzValues.IsNullOrEmpty Then
             dions4position = New List(Of DiagnosticIon)() From {
                     New DiagnosticIon() With {
                     .MzTolerance = 0.05,
