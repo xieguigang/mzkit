@@ -6,6 +6,7 @@
     <UseApplicationFramework>True</UseApplicationFramework>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Title>Lipidomics Annotation Workflow</Title>
+    <Configurations>Debug;Release;Rsharp_app_release;mzkit_win32</Configurations>
     <Description>Lipidomics annotation code module port from MS-DIAL</Description>
     <Copyright>MS-DIAL; PANOMIX</Copyright>
     <IncludeSymbols>True</IncludeSymbols>
