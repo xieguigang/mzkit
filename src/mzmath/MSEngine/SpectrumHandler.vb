@@ -43,7 +43,7 @@ Public NotInheritable Class SpectrumHandler
         Next
 
         For Each pair In range2Peaks
-            Dim maxMass As Double = pair.Value.OrderByDescending(Function(p) p.Intensity).First.Mass
+            Dim maxMass As Double = pair.Value.OrderByDescending(Function(p) p.intensity).First.mz
             Dim sumIntensity = pair.Value.Sum(Function(n) n.Intensity) * 0.5
             peaks.Add(New SpectrumPeak(maxMass, sumIntensity))
         Next
@@ -105,7 +105,7 @@ Public NotInheritable Class SpectrumHandler
         Next
 
         For Each pair In range2Peaks
-            Dim maxMass = pair.Value.OrderByDescending(Function(n) n.Intensity).First.Mass
+            Dim maxMass = pair.Value.OrderByDescending(Function(n) n.intensity).First.mz
             Dim sumIntensity = pair.Value.Sum(Function(n) n.Intensity)
             peaks.Add(New SpectrumPeak(maxMass, sumIntensity))
         Next
@@ -175,7 +175,7 @@ Public NotInheritable Class SpectrumHandler
                 refinedPeaklist.Add(New SpectrumPeak() With {
                     .mz = peak.mz,
                     .Intensity = peak.Intensity,
-                    .Comment = String.Empty
+                    .Annotation = String.Empty
                 })
             End If
         Next
