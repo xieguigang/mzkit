@@ -73,21 +73,18 @@ New SpectrumPeak(adduct.ConvertToMz(lipid.Mass), 999.0R, "Precursor") With {
 },
         New SpectrumPeak(adduct.ConvertToMz(lipid.Mass) - H2O, 200.0R, "Precursor-H2O") With {
     .SpectrumComment = SpectrumComment.metaboliteclass
-},
-            'new SpectrumPeak(adduct.ConvertToMz(lipid.Mass)-C6H10O5, 300d, "Precursor-Hex") { SpectrumComment = SpectrumComment.metaboliteclass },
-            'new SpectrumPeak(adduct.ConvertToMz(lipid.Mass)-C6H10O5-H2O, 200d, "Precursor-Hex-H2O") { SpectrumComment = SpectrumComment.metaboliteclass },
-            'new SpectrumPeak(adduct.ConvertToMz(lipid.Mass)-C6H10O5-H2O*2, 200d, "Precursor-Hex-2H2O") { SpectrumComment = SpectrumComment.metaboliteclass },
-            New SpectrumPeak(adduct.ConvertToMz(lipid.Mass) - C6H10O5 * 2, 100R, "Precursor-2Hex") With {
+},            'new SpectrumPeak(adduct.ConvertToMz(lipid.Mass)-C6H10O5, 300d, "Precursor-Hex") { SpectrumComment = SpectrumComment.metaboliteclass },            'new SpectrumPeak(adduct.ConvertToMz(lipid.Mass)-C6H10O5-H2O, 200d, "Precursor-Hex-H2O") { SpectrumComment = SpectrumComment.metaboliteclass },            'new SpectrumPeak(adduct.ConvertToMz(lipid.Mass)-C6H10O5-H2O*2, 200d, "Precursor-Hex-2H2O") { SpectrumComment = SpectrumComment.metaboliteclass },
+            New SpectrumPeak(adduct.ConvertToMz(lipid.Mass) - C6H10O5 * 2, 100.0R, "Precursor-2Hex") With {
         .SpectrumComment = SpectrumComment.metaboliteclass
     },
-            New SpectrumPeak(adduct.ConvertToMz(lipid.Mass) - C6H10O5 * 2 - H2O, 400R, "Precursor-2Hex-H2O") With {
+            New SpectrumPeak(adduct.ConvertToMz(lipid.Mass) - C6H10O5 * 2 - H2O, 400.0R, "Precursor-2Hex-H2O") With {
         .SpectrumComment = SpectrumComment.metaboliteclass
     },
-            New SpectrumPeak(adduct.ConvertToMz(lipid.Mass) - C6H10O5 * 2 - H2O * 2, 100R, "Precursor-2Hex-2H2O") With {
+            New SpectrumPeak(adduct.ConvertToMz(lipid.Mass) - C6H10O5 * 2 - H2O * 2, 100.0R, "Precursor-2Hex-2H2O") With {
         .SpectrumComment = SpectrumComment.metaboliteclass
     }
 }
-            Return spectrum.ToArray()
+        Return spectrum.ToArray()
     End Function
 
     Private Function GetSphingoSpectrum(lipid As ILipid, sphingo As SphingoChain, adduct As AdductIon) As SpectrumPeak()
@@ -115,9 +112,8 @@ New SpectrumPeak(adduct.ConvertToMz(lipid.Mass), 999.0R, "Precursor") With {
              New SpectrumPeak(adduct.ConvertToMz(chainMass) + C2H3NO + HydrogenMass + C6H10O5 * 2, 150.0R, "[FAA+C2H4O+2Hex+adduct]+") With {
     .SpectrumComment = SpectrumComment.acylchain
 }
-
 }
-            If Equals(adduct.AdductIonName, "[M+H]+") Then
+        If Equals(adduct.AdductIonName, "[M+H]+") Then
             spectrum.AddRange({New SpectrumPeak(chainMass + ProtonMass + NH, 200.0R, "[FAA+H]+") With {
 .SpectrumComment = SpectrumComment.acylchain
 }, New SpectrumPeak(chainMass + ProtonMass + C2H3NO, 150.0R, "[FAA+C2H2O+H]+") With {

@@ -54,7 +54,7 @@ Namespace Ms1.PrecursorType
             {"La", 138.9063533}
             })
 
-        Public Function GetAdductContent(ByVal adduct As String) As String
+        Public Function GetAdductContent(adduct As String) As String
             Dim trimedAdductName = adduct.Split("["c)(1).Split("]"c)(0).Trim()
             If Not trimedAdductName.Contains("+"c) AndAlso Not trimedAdductName.Contains("-"c) Then Return String.Empty
 
@@ -80,12 +80,12 @@ Namespace Ms1.PrecursorType
             Return contentString.Trim()
         End Function
 
-        Public Function CountChar(ByVal s As String, ByVal c As Char) As Integer
+        Public Function CountChar(s As String, c As Char) As Integer
             Return s.Length - s.Replace(c.ToString(), "").Length
         End Function
 
         Private ReadOnly XmerCheckTemplate As Regex = New Regex("\[(?<x>\d+)?")
-        Public Function GetAdductIonXmer(ByVal adductName As String) As Integer
+        Public Function GetAdductIonXmer(adductName As String) As Integer
             Dim match = XmerCheckTemplate.Match(adductName)
             If match.Success Then
                 If match.Groups("x").Success Then
@@ -96,11 +96,11 @@ Namespace Ms1.PrecursorType
         End Function
 
         Private ReadOnly FormatCheckTemplate As Regex = New Regex("^\[[^\]\[\(\)]+\](?!.*[\]\[\(\)]).*[+-].*$")
-        Public Function IonTypeFormatChecker(ByVal adductName As String) As Boolean
+        Public Function IonTypeFormatChecker(adductName As String) As Boolean
             Return Not Equals(adductName, Nothing) AndAlso FormatCheckTemplate.IsMatch(adductName)
         End Function
 
-        Public Function GetIonType(ByVal adductName As String) As IonModes
+        Public Function GetIonType(adductName As String) As IonModes
             Dim chargeString = adductName.Split("]"c)(1)
             If chargeString.Contains("+"c) Then
                 Return IonModes.Positive
@@ -109,14 +109,14 @@ Namespace Ms1.PrecursorType
             End If
         End Function
 
-        Public Function GetRadicalInfo(ByVal adductName As String) As Boolean
+        Public Function GetRadicalInfo(adductName As String) As Boolean
             Dim chargeString = adductName.Split("]"c)(1)
             Return chargeString.Contains("."c)
         End Function
 
 
         Private ReadOnly ChargeNumberTemplate As Regex = New Regex("](?<charge>\d+)?[+-]")
-        Public Function GetChargeNumber(ByVal adductName As String) As Integer
+        Public Function GetChargeNumber(adductName As String) As Integer
             Dim match = ChargeNumberTemplate.Match(adductName)
             If match.Success Then
                 If match.Groups("charge").Success Then
@@ -135,7 +135,7 @@ Namespace Ms1.PrecursorType
         ''' </summary>
         ''' <param name="formula"></param>
         ''' <returns></returns>
-        Public Function GetFormulaAndNumber(ByVal formula As String) As (String, Double)
+        Public Function GetFormulaAndNumber(formula As String) As (String, Double)
             Dim numString = String.Empty
             For i = 0 To formula.Length - 1
                 If Char.IsNumber(formula(i)) Then
@@ -147,7 +147,7 @@ Namespace Ms1.PrecursorType
             Return (formula.Substring(numString.Length), If(String.IsNullOrEmpty(numString), 1, Double.Parse(numString)))
         End Function
 
-        Public Function IsCommonAdduct(ByVal formula As String, ByVal multipliedNumber As Double, <Out> ByRef acurateMass As Double, <Out> ByRef m1Intensity As Double, <Out> ByRef m2Intensity As Double) As Boolean
+        Public Function IsCommonAdduct(formula As String, multipliedNumber As Double, <Out> ByRef acurateMass As Double, <Out> ByRef m1Intensity As Double, <Out> ByRef m2Intensity As Double) As Boolean
             If formula.Equals("Na") Then
                 acurateMass = multipliedNumber * 22.9897692809
                 m1Intensity = 0
@@ -251,7 +251,7 @@ Namespace Ms1.PrecursorType
             Return False
         End Function
 
-        Public Function GetOrganicAdductFormulaAndMass(ByVal formula As String, ByVal multipliedNumber As Double) As (Dictionary(Of String, Integer), Double)
+        Public Function GetOrganicAdductFormulaAndMass(formula As String, multipliedNumber As Double) As (Dictionary(Of String, Integer), Double)
             Dim formulaBean = New Dictionary(Of String, Integer)
             Dim acurateMass = 0R
             Dim mc = Regex.Matches(formula, "C(?!a|d|e|l|o|r|s|u)([0-9]*)", RegexOptions.None)

@@ -52,7 +52,7 @@ Namespace Formula
     {"I", 1}
 }
 
-        Public Shared Function Check(ByVal formula As Formula, ByVal isValenceCheck As Boolean, ByVal coverRange As CoverRange, ByVal isElementProbabilityCheck As Boolean, ByVal adduct As AdductIon) As Boolean
+        Public Shared Function Check(formula As Formula, isValenceCheck As Boolean, coverRange As CoverRange, isElementProbabilityCheck As Boolean, adduct As AdductIon) As Boolean
             If Equals(adduct.AdductIonName, "[M]+") OrElse Equals(adduct.AdductIonName, "[M]-") OrElse Equals(adduct.AdductIonName, "[M-2H]-") Then
                 If isValenceCheck AndAlso Not ValenceCheckByHydrogenShift(formula) Then Return False
             Else
@@ -66,7 +66,7 @@ Namespace Formula
             Return True
         End Function
 
-        Public Shared Function ValenceCheck(ByVal formula As Formula) As Boolean
+        Public Shared Function ValenceCheck(formula As Formula) As Boolean
             Dim atomTotal = formula!Br + formula!Cl + formula!C + formula!F + formula!H + formula!I + formula!N + formula!O + formula!P + formula!Si + formula!S
             Dim oddValenceAtomTotal = formula!Br + formula!Cl + formula!F + formula!H + formula!I + formula!N + formula!P
             Dim valenceTotal = ValenceDict("Br") * formula!Br + ValenceDict("Cl") * formula!Cl + ValenceDict("C") * formula!C + ValenceDict("F") * formula!F + ValenceDict("H") * formula!H + ValenceDict("I") * formula!I + ValenceDict("N") * formula!N + ValenceDict("O") * formula!O + ValenceDict("P") * formula!P + ValenceDict("Si") * formula!Si + ValenceDict("S") * formula!S
@@ -77,7 +77,7 @@ Namespace Formula
             Return True
         End Function
 
-        Public Shared Function ValenceCheckByHydrogenShift(ByVal formula As Formula) As Boolean
+        Public Shared Function ValenceCheckByHydrogenShift(formula As Formula) As Boolean
             Dim atomTotal = formula!Br + formula!Cl + formula!C + formula!F + formula!H + formula!I + formula!N + formula!O + formula!P + formula!Si + formula!S
             Dim oddValenceAtomTotal = formula!Br + formula!Cl + formula!F + formula!H + formula!I + formula!N + formula!P
             Dim valenceTotal = ValenceDict("Br") * formula!Br + ValenceDict("Cl") * formula!Cl + ValenceDict("C") * formula!C + ValenceDict("F") * formula!F + ValenceDict("H") * formula!H + ValenceDict("I") * formula!I + ValenceDict("N") * formula!N + ValenceDict("O") * formula!O + ValenceDict("P") * formula!P + ValenceDict("Si") * formula!Si + ValenceDict("S") * formula!S
@@ -98,7 +98,7 @@ Namespace Formula
             Return True
         End Function
 
-        Public Shared Function GetIsotopicPeaks(ByVal formula As Formula) As List(Of IsotopicPeak)
+        Public Shared Function GetIsotopicPeaks(formula As Formula) As List(Of IsotopicPeak)
             Dim isotopicPeaks = New List(Of IsotopicPeak)()
             Dim formulaMass As Double = formula.ExactMass
 
@@ -271,22 +271,22 @@ Namespace Formula
             Return isotopicPeaks
         End Function
 
-        Public Shared Function GetM1IsotopicAbundance(ByVal formula As Formula) As Double
+        Public Shared Function GetM1IsotopicAbundance(formula As Formula) As Double
             Dim abundance = formula!C * c13_c12 + formula!H * h2_h1 + formula!N * n15_n14 + formula!O * o17_o16 + formula!S * s33_s32 + formula!Si * si29_si28
             Return abundance
         End Function
 
-        Public Shared Function GetM2IsotopicAbundance(ByVal formula As Formula) As Double
+        Public Shared Function GetM2IsotopicAbundance(formula As Formula) As Double
             Dim abundance = formula!C * c13_c12 * formula!H * h2_h1 + formula!C * c13_c12 * formula!N * n15_n14 + formula!C * c13_c12 * formula!O * o17_o16 + formula!C * c13_c12 * formula!S * s33_s32 + formula!C * c13_c12 * formula!Si * si29_si28 + formula!H * h2_h1 * formula!N * n15_n14 + formula!H * h2_h1 * formula!O * o17_o16 + formula!H * h2_h1 * formula!S * s33_s32 + formula!H * h2_h1 * formula!Si * si29_si28 + formula!N * n15_n14 * formula!O * o17_o16 + formula!N * n15_n14 * formula!S * s33_s32 + formula!N * n15_n14 * formula!Si * si29_si28 + formula!O * o17_o16 * formula!S * s33_s32 + formula!O * o17_o16 * formula!Si * si29_si28 + formula!S * s33_s32 * formula!Si * si29_si28 + formula!C * (formula!C - 1) * 0.5 * Math.Pow(c13_c12, 2) + formula!H * (formula!H - 1) * 0.5 * Math.Pow(h2_h1, 2) + formula!N * (formula!N - 1) * 0.5 * Math.Pow(n15_n14, 2) + formula!O * (formula!O - 1) * 0.5 * Math.Pow(o17_o16, 2) + formula!S * (formula!S - 1) * 0.5 * Math.Pow(s33_s32, 2) + formula!Si * (formula!Si - 1) * 0.5 * Math.Pow(si29_si28, 2) + formula!O * o18_o16 + formula!S * s34_s32 + formula!Si * si30_si28 + formula!Br * br81_br79 + formula!Cl * cl37_cl35
             Return abundance
         End Function
 
-        Public Shared Function GetIsotopicDifference(ByVal tAbundance As Double, ByVal m1Intensity As Double) As Double
+        Public Shared Function GetIsotopicDifference(tAbundance As Double, m1Intensity As Double) As Double
             Dim diff = tAbundance - m1Intensity
             Return diff
         End Function
 
-        Public Shared Function HeteroAtomCheck(ByVal formula As Formula, ByVal coverRange As CoverRange) As Boolean
+        Public Shared Function HeteroAtomCheck(formula As Formula, coverRange As CoverRange) As Boolean
             Dim cnum As Double = formula!C, nnum As Double = formula!N, onum As Double = formula!O, pnum As Double = formula!P, snum As Double = formula!S, hnum As Double = formula!H, fnum As Double = formula!F, clnum As Double = formula!Cl, brnum As Double = formula!Br, inum As Double = formula!I, sinum As Double = formula!Si
             Dim n_c = nnum / cnum, o_c = onum / cnum, p_c = pnum / cnum, s_c = snum / cnum, h_c = hnum / cnum, f_c = fnum / cnum, cl_c = clnum / cnum, br_c = brnum / cnum, i_c = inum / cnum, si_c = sinum / cnum
             Dim o_p As Double
@@ -319,7 +319,7 @@ Namespace Formula
             End Select
         End Function
 
-        Public Shared Function ProbabilityCheck(ByVal formula As Formula) As Boolean
+        Public Shared Function ProbabilityCheck(formula As Formula) As Boolean
             If formula!N > 1 AndAlso formula!O > 1 AndAlso formula!P > 1 AndAlso formula!S > 1 Then
                 If formula!N >= 10 OrElse formula!O >= 20 OrElse formula!P >= 4 OrElse formula!S >= 3 Then Return False
             End If

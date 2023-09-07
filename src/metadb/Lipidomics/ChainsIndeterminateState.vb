@@ -8,16 +8,16 @@ End Interface
 
 Public Interface IVisitor(Of Out TResult, In TElement)
     Inherits IAcyclicVisitor
-    Function Visit(ByVal item As TElement) As TResult
+    Function Visit(item As TElement) As TResult
 End Interface
 
 Public Interface IDecomposer(Of Out TResult, In TElement)
     Inherits IAcyclicDecomposer(Of TResult)
-    Function Decompose(Of T As TElement)(ByVal visitor As IAcyclicVisitor, ByVal element As T) As TResult
+    Function Decompose(Of T As TElement)(visitor As IAcyclicVisitor, element As T) As TResult
 End Interface
 
 Public Interface IVisitableElement
-    Function Accept(Of TResult)(ByVal visitor As IAcyclicVisitor, ByVal decomposer As IAcyclicDecomposer(Of TResult)) As TResult
+    Function Accept(Of TResult)(visitor As IAcyclicVisitor, decomposer As IAcyclicDecomposer(Of TResult)) As TResult
 End Interface
 
 Public NotInheritable Class ChainsIndeterminateState

@@ -3,6 +3,8 @@ Imports System
 Imports System.Collections.Concurrent
 Imports System.Collections.Generic
 Imports System.Linq
+Imports std = System.Math
+
 
 Public Class TotalChainVariationGenerator
     Implements ITotalChainVariationGenerator
@@ -79,17 +81,17 @@ Public Class TotalChainVariationGenerator
         End If
 
         Dim maxAcylCarbonMaxAlkylCarbonMaxSphingoCarbon As (maxAcylCarbon As Integer, maxAlkylCarbon As Integer, maxSphingoCarbon As Integer) = Nothing
-        maxAcylCarbonMaxAlkylCarbonMaxSphingoCarbon = ((carbonRemain + minAcylCarbon) * Math.Sign(chains.AcylChainCount), (carbonRemain + minAlkylCarbon) * Math.Sign(chains.AlkylChainCount), (carbonRemain + minSphingoCarbon) * Math.Sign(chains.SphingoChainCount))
+        maxAcylCarbonMaxAlkylCarbonMaxSphingoCarbon = ((carbonRemain + minAcylCarbon) * std.Sign(chains.AcylChainCount), (carbonRemain + minAlkylCarbon) * std.Sign(chains.AlkylChainCount), (carbonRemain + minSphingoCarbon) * std.Sign(chains.SphingoChainCount))
         Dim minAcylDbMinAlkylDbMinSphingoDb As (minAcylDb As Integer, minAlkylDb As Integer, minSphingoDb As Integer) = Nothing
         minAcylDbMinAlkylDbMinSphingoDb = (0, 0, 0)
         Dim dbRemain = chains.DoubleBondCount - minAcylDb - minAlkylDb - minSphingoDb
         Dim maxAcylDbMaxAlkylDbMaxSphingoDb As (maxAcylDb As Integer, maxAlkylDb As Integer, maxSphingoDb As Integer) = Nothing
-        maxAcylDbMaxAlkylDbMaxSphingoDb = ((dbRemain + minAcylDb) * Math.Sign(chains.AcylChainCount), (dbRemain + minAlkylDb) * Math.Sign(chains.AlkylChainCount), (dbRemain + minSphingoDb) * Math.Sign(chains.SphingoChainCount))
+        maxAcylDbMaxAlkylDbMaxSphingoDb = ((dbRemain + minAcylDb) * std.Sign(chains.AcylChainCount), (dbRemain + minAlkylDb) * std.Sign(chains.AlkylChainCount), (dbRemain + minSphingoDb) * std.Sign(chains.SphingoChainCount))
         Dim minAcylOxMinAlkylOxMinSphingoOx As (minAcylOx As Integer, minAlkylOx As Integer, minSphingoOx As Integer) = Nothing
         minAcylOxMinAlkylOxMinSphingoOx = (0, 0, chains.SphingoChainCount * 2)
         Dim oxRemain = chains.OxidizedCount - minAcylOx - minAlkylOx - minSphingoOx
         Dim maxAcylOxMaxAlkylOxMaxSphingoOx As (maxAcylOx As Integer, maxAlkylOx As Integer, maxSphingoOx As Integer) = Nothing
-        maxAcylOxMaxAlkylOxMaxSphingoOx = ((dbRemain + minAcylOx) * Math.Sign(chains.AcylChainCount), (dbRemain + minAlkylOx) * Math.Sign(chains.AlkylChainCount), (dbRemain + minSphingoOx) * Math.Sign(chains.SphingoChainCount))
+        maxAcylOxMaxAlkylOxMaxSphingoOx = ((dbRemain + minAcylOx) * std.Sign(chains.AcylChainCount), (dbRemain + minAlkylOx) * std.Sign(chains.AlkylChainCount), (dbRemain + minSphingoOx) * std.Sign(chains.SphingoChainCount))
 
         Dim css = Me.Distribute(chains.CarbonCount, minAcylCarbon, maxAcylCarbon, minAlkylCarbon, maxAlkylCarbon, minSphingoCarbon, maxSphingoCarbon).ToArray()
         Dim dbss = Me.Distribute(chains.DoubleBondCount, minAcylDb, maxAcylDb, minAlkylDb, maxAlkylDb, minSphingoDb, maxSphingoDb).ToArray()

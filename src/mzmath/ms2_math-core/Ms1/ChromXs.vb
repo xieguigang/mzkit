@@ -28,7 +28,7 @@ Namespace Chromatogram
 
         Public ReadOnly Property Unit As ChromXUnit Implements IChromX.Unit
 
-        Public Sub New(ByVal retentionTime As Double, ByVal Optional unit As ChromXUnit = ChromXUnit.Min)
+        Public Sub New(retentionTime As Double, Optional unit As ChromXUnit = ChromXUnit.Min)
             Value = retentionTime
             Type = ChromXType.RT
             Me.Unit = unit
@@ -41,7 +41,7 @@ Namespace Chromatogram
         ''' <param name="_type"></param>
         ''' <param name="unit"></param>
         <EditorBrowsable(EditorBrowsableState.Never)>
-        Public Sub New(ByVal value As Double, ByVal _type As ChromXType, ByVal unit As ChromXUnit)
+        Public Sub New(value As Double, _type As ChromXType, unit As ChromXUnit)
             Me.Value = value
             Type = ChromXType.RT
             Me.Unit = unit
@@ -90,7 +90,7 @@ Namespace Chromatogram
 
         Public ReadOnly Property Unit As ChromXUnit Implements IChromX.Unit
 
-        Public Sub New(ByVal retentionIndex As Double, ByVal Optional unit As ChromXUnit = ChromXUnit.None)
+        Public Sub New(retentionIndex As Double, Optional unit As ChromXUnit = ChromXUnit.None)
             Value = retentionIndex
             Type = ChromXType.RI
             Me.Unit = unit
@@ -103,7 +103,7 @@ Namespace Chromatogram
         ''' <param name="_type"></param>
         ''' <param name="unit"></param>
         <EditorBrowsable(EditorBrowsableState.Never)>
-        Public Sub New(ByVal value As Double, ByVal _type As ChromXType, ByVal unit As ChromXUnit)
+        Public Sub New(value As Double, _type As ChromXType, unit As ChromXUnit)
             Me.Value = value
             Type = ChromXType.RI
             Me.Unit = unit
@@ -152,7 +152,7 @@ Namespace Chromatogram
 
         Public ReadOnly Property Unit As ChromXUnit Implements IChromX.Unit
 
-        Public Sub New(ByVal driftTime As Double, ByVal Optional unit As ChromXUnit = ChromXUnit.Msec)
+        Public Sub New(driftTime As Double, Optional unit As ChromXUnit = ChromXUnit.Msec)
             Value = driftTime
             Type = ChromXType.Drift
             Me.Unit = unit
@@ -165,7 +165,7 @@ Namespace Chromatogram
         ''' <param name="_type"></param>
         ''' <param name="unit"></param>
         <EditorBrowsable(EditorBrowsableState.Never)>
-        Public Sub New(ByVal value As Double, ByVal _type As ChromXType, ByVal unit As ChromXUnit)
+        Public Sub New(value As Double, _type As ChromXType, unit As ChromXUnit)
             Me.Value = value
             Type = ChromXType.Drift
             Me.Unit = unit
@@ -215,7 +215,7 @@ Namespace Chromatogram
 
         Public ReadOnly Property Unit As ChromXUnit Implements IChromX.Unit
 
-        Public Sub New(ByVal mz As Double, ByVal Optional unit As ChromXUnit = ChromXUnit.Mz)
+        Public Sub New(mz As Double, Optional unit As ChromXUnit = ChromXUnit.Mz)
             Value = mz
             Type = ChromXType.Mz
             Me.Unit = unit
@@ -228,7 +228,7 @@ Namespace Chromatogram
         ''' <param name="_type"></param>
         ''' <param name="unit"></param>
         <EditorBrowsable(EditorBrowsableState.Never)>
-        Public Sub New(ByVal value As Double, ByVal _type As ChromXType, ByVal unit As ChromXUnit)
+        Public Sub New(value As Double, _type As ChromXType, unit As ChromXUnit)
             Me.Value = value
             Type = ChromXType.Mz
             Me.Unit = unit
@@ -288,7 +288,7 @@ Namespace Chromatogram
             Get
                 Return RT
             End Get
-            Set(ByVal value As IChromX)
+            Set(value As IChromX)
                 RT = CType(value, RetentionTime)
             End Set
         End Property
@@ -297,7 +297,7 @@ Namespace Chromatogram
             Get
                 Return RI
             End Get
-            Set(ByVal value As IChromX)
+            Set(value As IChromX)
                 RI = CType(value, RetentionIndex)
             End Set
         End Property
@@ -306,7 +306,7 @@ Namespace Chromatogram
             Get
                 Return Drift
             End Get
-            Set(ByVal value As IChromX)
+            Set(value As IChromX)
                 Drift = CType(value, DriftTime)
             End Set
         End Property
@@ -315,7 +315,7 @@ Namespace Chromatogram
             Get
                 Return Mz
             End Get
-            Set(ByVal value As IChromX)
+            Set(value As IChromX)
                 Mz = CType(value, MzValue)
             End Set
         End Property
@@ -337,7 +337,7 @@ Namespace Chromatogram
 
 
         <Obsolete("This constructor is for MessagePack only, don't use.")>
-        Public Sub New(ByVal innerRT As IChromX, ByVal innerRI As IChromX, ByVal innerDrift As IChromX, ByVal innerMz As IChromX, ByVal mainType As ChromXType)
+        Public Sub New(innerRT As IChromX, innerRI As IChromX, innerDrift As IChromX, innerMz As IChromX, mainType As ChromXType)
             Me.InnerRT = innerRT
             Me.InnerRI = innerRI
             Me.InnerDrift = innerDrift
@@ -353,7 +353,7 @@ Namespace Chromatogram
             MainType = ChromXType.RT
         End Sub
 
-        Public Sub New(ByVal value As Double, ByVal Optional type As ChromXType = ChromXType.RT, ByVal Optional unit As ChromXUnit = ChromXUnit.Min)
+        Public Sub New(value As Double, Optional type As ChromXType = ChromXType.RT, Optional unit As ChromXUnit = ChromXUnit.Min)
             RT = RetentionTime.Default
             RI = RetentionIndex.Default
             Drift = DriftTime.Default
@@ -372,7 +372,7 @@ Namespace Chromatogram
             MainType = type
         End Sub
 
-        Public Sub New(ByVal chromX As IChromX)
+        Public Sub New(chromX As IChromX)
             RT = RetentionTime.Default
             RI = RetentionIndex.Default
             Drift = DriftTime.Default
@@ -395,7 +395,7 @@ Namespace Chromatogram
             MainType = chromX.Type
         End Sub
 
-        Public Sub New(ByVal rt As RetentionTime, ByVal ri As RetentionIndex, ByVal dt As DriftTime, ByVal mz As MzValue, ByVal type As ChromXType)
+        Public Sub New(rt As RetentionTime, ri As RetentionIndex, dt As DriftTime, mz As MzValue, type As ChromXType)
             Me.RT = rt
             Me.RI = ri
             Drift = dt
@@ -403,22 +403,22 @@ Namespace Chromatogram
             MainType = type
         End Sub
 
-        Public Sub New(ByVal retentionTime As RetentionTime)
+        Public Sub New(retentionTime As RetentionTime)
             Me.New(retentionTime, RetentionIndex.Default, DriftTime.Default, MzValue.Default, retentionTime.Type)
 
         End Sub
 
-        Public Sub New(ByVal retentionIndex As RetentionIndex)
+        Public Sub New(retentionIndex As RetentionIndex)
             Me.New(RetentionTime.Default, retentionIndex, DriftTime.Default, MzValue.Default, retentionIndex.Type)
 
         End Sub
 
-        Public Sub New(ByVal driftTime As DriftTime)
+        Public Sub New(driftTime As DriftTime)
             Me.New(RetentionTime.Default, RetentionIndex.Default, driftTime, MzValue.Default, driftTime.Type)
 
         End Sub
 
-        Public Sub New(ByVal mz As MzValue)
+        Public Sub New(mz As MzValue)
             Me.New(RetentionTime.Default, RetentionIndex.Default, DriftTime.Default, mz, mz.Type)
 
         End Sub
@@ -478,7 +478,7 @@ Namespace Chromatogram
             End Get
         End Property
 
-        Public Function GetChromByType(ByVal type As ChromXType) As IChromX
+        Public Function GetChromByType(type As ChromXType) As IChromX
             Select Case type
                 Case ChromXType.RT
                     Return RT
@@ -517,7 +517,7 @@ Namespace Chromatogram
             Return True
         End Function
 
-        Public Shared Function Create(Of T As IChromX)(ByVal time As T) As ChromXs
+        Public Shared Function Create(Of T As IChromX)(time As T) As ChromXs
             Return ChromXBuilder(Of T).action(time)
         End Function
 

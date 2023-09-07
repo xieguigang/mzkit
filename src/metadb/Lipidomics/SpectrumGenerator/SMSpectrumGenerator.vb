@@ -109,10 +109,9 @@ Public Class SMSpectrumGenerator
             spectrum.AddRange({New SpectrumPeak(adduct.ConvertToMz(chainMass - H2O * 2), 100.0R, "[sph+H]+ -H2O") With {
 .SpectrumComment = SpectrumComment.acylchain
 }, New SpectrumPeak(adduct.ConvertToMz(chainMass + C5H14NO4P - H2O - NH4), 100.0R, "Header+sph -NH4") With {
-.SpectrumComment = SpectrumComment.acylchain
-'new SpectrumPeak(chainMass + MassDiffDictionary.ProtonMass - CH4O2, 100d, "[sph+H]+ -CH4O2"),
+.SpectrumComment = SpectrumComment.acylchain'new SpectrumPeak(chainMass + MassDiffDictionary.ProtonMass - CH4O2, 100d, "[sph+H]+ -CH4O2"),
 }})
-            End If
+        End If
         Return spectrum.ToArray()
     End Function
 

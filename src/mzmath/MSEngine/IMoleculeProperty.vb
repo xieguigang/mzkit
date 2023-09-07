@@ -14,7 +14,7 @@ End Interface
 '    Private ReadOnly SMILES_PARSER As SmilesParser = New SmilesParser(CHEM_OBJECT_BUILDER)
 
 '    <Extension()>
-'    Public Function ToAtomContainer(ByVal molecule As IMoleculeProperty) As IAtomContainer
+'    Public Function ToAtomContainer(molecule As IMoleculeProperty) As IAtomContainer
 '        If String.IsNullOrEmpty(molecule.SMILES) Then
 '            Throw New InvalidSmilesException("No information on SMILES.")
 '        End If
@@ -26,7 +26,7 @@ End Interface
 '    End Function
 
 '    <Extension()>
-'    Public Function IsValidInChIKey(ByVal molecule As IMoleculeProperty) As Boolean
+'    Public Function IsValidInChIKey(molecule As IMoleculeProperty) As Boolean
 '        Return Not String.IsNullOrWhiteSpace(molecule.InChIKey) AndAlso molecule.InChIKey.Length = 27
 '    End Function
 'End Module

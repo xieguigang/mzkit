@@ -79,28 +79,27 @@ Public Class EtherPESpectrumGenerator
         End Function
 
         Private Function GetEtherPESpectrum(lipid As ILipid, adduct As AdductIon) As SpectrumPeak()
-            Dim spectrum = New List(Of SpectrumPeak) From {
-    New SpectrumPeak(adduct.ConvertToMz(lipid.Mass), 999R, "Precursor") With {
+        Dim spectrum = New List(Of SpectrumPeak) From {
+    New SpectrumPeak(adduct.ConvertToMz(lipid.Mass), 999.0R, "Precursor") With {
         .SpectrumComment = SpectrumComment.precursor
     },
-    New SpectrumPeak(adduct.ConvertToMz(C2H8NO4P), 100R, "Header") With {
+    New SpectrumPeak(adduct.ConvertToMz(C2H8NO4P), 100.0R, "Header") With {
         .SpectrumComment = SpectrumComment.metaboliteclass,
         .IsAbsolutelyRequiredFragmentForAnnotation = True
     },
-    New SpectrumPeak(adduct.ConvertToMz(Gly_C), 300R, "Gly-C") With {
+    New SpectrumPeak(adduct.ConvertToMz(Gly_C), 300.0R, "Gly-C") With {
         .SpectrumComment = SpectrumComment.metaboliteclass,
         .IsAbsolutelyRequiredFragmentForAnnotation = True
     },
-    New SpectrumPeak(adduct.ConvertToMz(Gly_O), 300R, "Gly-O") With {
+    New SpectrumPeak(adduct.ConvertToMz(Gly_O), 300.0R, "Gly-O") With {
         .SpectrumComment = SpectrumComment.metaboliteclass,
         .IsAbsolutelyRequiredFragmentForAnnotation = True
     },
-    New SpectrumPeak(adduct.ConvertToMz(lipid.Mass) / 2, 100R, "[Precursor]2+") With {
+    New SpectrumPeak(adduct.ConvertToMz(lipid.Mass) / 2, 100.0R, "[Precursor]2+") With {
         .SpectrumComment = SpectrumComment.metaboliteclass
     }
-
 }
-            If Equals(adduct.AdductIonName, "[M+Na]+") Then
+        If Equals(adduct.AdductIonName, "[M+Na]+") Then
                 'new SpectrumPeak(adduct.ConvertToMz(lipid.Mass - C2H8NO4P), 150d, "Precursor -C2H8NO4P") { SpectrumComment = SpectrumComment.metaboliteclass },
                 spectrum.AddRange({New SpectrumPeak(adduct.ConvertToMz(lipid.Mass - C2H5N), 150R, "Precursor -C2H5N") With {
             .SpectrumComment = SpectrumComment.metaboliteclass
@@ -142,37 +141,31 @@ Public Class EtherPESpectrumGenerator
         End Function
 
         Private Function GetEtherPEOSpectrum(lipid As ILipid, alkylChain As IChain, acylChain As IChain, adduct As AdductIon) As SpectrumPeak()
-            Dim spectrum = New List(Of SpectrumPeak) From {
-    New SpectrumPeak(adduct.ConvertToMz(lipid.Mass - alkylChain.Mass + HydrogenMass), 50R, $"-{alkylChain}") With {
+        Dim spectrum = New List(Of SpectrumPeak) From {
+    New SpectrumPeak(adduct.ConvertToMz(lipid.Mass - alkylChain.Mass + HydrogenMass), 50.0R, $"-{alkylChain}") With {
         .SpectrumComment = SpectrumComment.acylchain
     },
-    New SpectrumPeak(adduct.ConvertToMz(lipid.Mass - acylChain.Mass + HydrogenMass), 50R, $"-{acylChain}") With {
+    New SpectrumPeak(adduct.ConvertToMz(lipid.Mass - acylChain.Mass + HydrogenMass), 50.0R, $"-{acylChain}") With {
         .SpectrumComment = SpectrumComment.acylchain
     },
-    New SpectrumPeak(adduct.ConvertToMz(lipid.Mass - alkylChain.Mass - OxygenMass), 200R, $"-{alkylChain}-O") With {
+    New SpectrumPeak(adduct.ConvertToMz(lipid.Mass - alkylChain.Mass - OxygenMass), 200.0R, $"-{alkylChain}-O") With {
         .SpectrumComment = SpectrumComment.acylchain
     },
-    New SpectrumPeak(adduct.ConvertToMz(lipid.Mass - acylChain.Mass - H2O), 200R, $"-{acylChain}-O") With {
+    New SpectrumPeak(adduct.ConvertToMz(lipid.Mass - acylChain.Mass - H2O), 200.0R, $"-{acylChain}-O") With {
         .SpectrumComment = SpectrumComment.acylchain
-    }
-
-'new SpectrumPeak(adduct.ConvertToMz(lipid.Mass - alkylChain.Mass- C2H8NO4P + MassDiffDictionary.HydrogenMass), 50d, $"- Header -{alkylChain}") { SpectrumComment = SpectrumComment.acylchain },
-'new SpectrumPeak(adduct.ConvertToMz(lipid.Mass - acylChain.Mass- C2H8NO4P + MassDiffDictionary.HydrogenMass), 50d, $"- Header -{acylChain}") { SpectrumComment = SpectrumComment.acylchain },
-'new SpectrumPeak(adduct.ConvertToMz(lipid.Mass - alkylChain.Mass- C2H8NO4P - MassDiffDictionary.OxygenMass - MassDiffDictionary.HydrogenMass), 200d, $"- Header -{alkylChain}-O") { SpectrumComment = SpectrumComment.acylchain },
-'new SpectrumPeak(adduct.ConvertToMz(lipid.Mass - acylChain.Mass- C2H8NO4P - H2O), 200d, $"- Header -{acylChain}-O") { SpectrumComment = SpectrumComment.acylchain },
+    }'new SpectrumPeak(adduct.ConvertToMz(lipid.Mass - alkylChain.Mass- C2H8NO4P + MassDiffDictionary.HydrogenMass), 50d, $"- Header -{alkylChain}") { SpectrumComment = SpectrumComment.acylchain },'new SpectrumPeak(adduct.ConvertToMz(lipid.Mass - acylChain.Mass- C2H8NO4P + MassDiffDictionary.HydrogenMass), 50d, $"- Header -{acylChain}") { SpectrumComment = SpectrumComment.acylchain },'new SpectrumPeak(adduct.ConvertToMz(lipid.Mass - alkylChain.Mass- C2H8NO4P - MassDiffDictionary.OxygenMass - MassDiffDictionary.HydrogenMass), 200d, $"- Header -{alkylChain}-O") { SpectrumComment = SpectrumComment.acylchain },'new SpectrumPeak(adduct.ConvertToMz(lipid.Mass - acylChain.Mass- C2H8NO4P - H2O), 200d, $"- Header -{acylChain}-O") { SpectrumComment = SpectrumComment.acylchain },
 }
-            If Equals(adduct.AdductIonName, "[M+Na]+") Then
+        If Equals(adduct.AdductIonName, "[M+Na]+") Then
                 spectrum.AddRange({New SpectrumPeak(adduct.ConvertToMz(lipid.Mass - C2H5N - H2O + HydrogenMass), 500R, "Precursor -C2H6NO")})
             End If
             Return spectrum.ToArray()
         End Function
 
         Private Function GetSn1PositionSpectrum(lipid As ILipid, chain As IChain, adduct As AdductIon) As SpectrumPeak()
-            Return {New SpectrumPeak(adduct.ConvertToMz(lipid.Mass - chain.Mass - OxygenMass - CH2), 50R, "-CH2(Sn1)") With {
-.SpectrumComment = SpectrumComment.snposition
-'new SpectrumPeak(adduct.ConvertToMz(lipid.Mass - chain.Mass - C2H8NO4P - MassDiffDictionary.OxygenMass - CH2), 50d, "- Header -CH2(Sn1)") { SpectrumComment = SpectrumComment.snposition },
+        Return {New SpectrumPeak(adduct.ConvertToMz(lipid.Mass - chain.Mass - OxygenMass - CH2), 50.0R, "-CH2(Sn1)") With {
+.SpectrumComment = SpectrumComment.snposition'new SpectrumPeak(adduct.ConvertToMz(lipid.Mass - chain.Mass - C2H8NO4P - MassDiffDictionary.OxygenMass - CH2), 50d, "- Header -CH2(Sn1)") { SpectrumComment = SpectrumComment.snposition },
 }}
-        End Function
+    End Function
 
         Private Shared ReadOnly comparer As IEqualityComparer(Of SpectrumPeak) = New SpectrumEqualityComparer()
 

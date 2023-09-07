@@ -137,16 +137,15 @@ Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
             Dim lipidMass = lipid.Mass + adductmass
             Dim spectrum = New List(Of SpectrumPeak)()
             If Equals(adduct.AdductIonName, "[M+Na]+") Then
-                spectrum.AddRange({New SpectrumPeak(chainMass + C2H3O, 100R, "Sn2 diagnostics") With {
+            spectrum.AddRange({New SpectrumPeak(chainMass + C2H3O, 100.0R, "Sn2 diagnostics") With {
 .SpectrumComment = SpectrumComment.snposition,
 .IsAbsolutelyRequiredFragmentForAnnotation = True
-}, New SpectrumPeak(acylChain.Mass + Electron, 100R, $"{acylChain}+ Sn2") With {
-.SpectrumComment = SpectrumComment.acylchain
-'new SpectrumPeak(lipidMass - chainMass + MassDiffDictionary.HydrogenMass*2, 50d, $"-{acylChain}") { SpectrumComment = SpectrumComment.acylchain },
-}, New SpectrumPeak(lipidMass - chainMass - OxygenMass, 200R, $"-{acylChain}-O Sn2") With {
+}, New SpectrumPeak(acylChain.Mass + Electron, 100.0R, $"{acylChain}+ Sn2") With {
+.SpectrumComment = SpectrumComment.acylchain'new SpectrumPeak(lipidMass - chainMass + MassDiffDictionary.HydrogenMass*2, 50d, $"-{acylChain}") { SpectrumComment = SpectrumComment.acylchain },
+}, New SpectrumPeak(lipidMass - chainMass - OxygenMass, 200.0R, $"-{acylChain}-O Sn2") With {
 .SpectrumComment = SpectrumComment.acylchain
 }})
-            Else
+        Else
                 spectrum.AddRange({New SpectrumPeak(chainMass + C2H3O, 100R, "Sn2 diagnostics") With {
 .SpectrumComment = SpectrumComment.snposition
 }, New SpectrumPeak(acylChain.Mass + Electron, 100R, $"{acylChain}+ Sn2") With {

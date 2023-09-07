@@ -1,4 +1,8 @@
-﻿Public Class OadSpectrumPeakGenerator
+﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.ElementsExactMass
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
+
+Public Class OadSpectrumPeakGenerator
     Implements IOadSpectrumPeakGenerator
     Private Shared ReadOnly CH2 As Double = {HydrogenMass * 2, CarbonMass}.Sum()
 
@@ -190,7 +194,6 @@
 .spectrum = New SpectrumPeak(adduct.ConvertToMz(dbPeakHigher - HydrogenMass * 2), factor * abundance * 0.2, $"{chain} C{bond} +C +O -2H OAD04") With {
 .SpectrumComment = speccomment
 }
-
 }, New OadFragmentPeaks With {
 .OadId = "OAD05",
 .spectrum = New SpectrumPeak(adduct.ConvertToMz(dbPeakHigher - H2O + HydrogenMass), factor * abundance * 0.15, $"{chain} C{bond} +C +O +H -H2O OAD05") With {
@@ -206,7 +209,6 @@
 .spectrum = New SpectrumPeak(adduct.ConvertToMz(dbPeakHigher - H2O - HydrogenMass), factor * abundance * 0.1, $"{chain} C{bond} +C +O -H -H2O OAD07") With {
 .SpectrumComment = speccomment
 }
-
 }, New OadFragmentPeaks With {
 .OadId = "OAD08",
 .spectrum = New SpectrumPeak(adduct.ConvertToMz(dbPeak + OxygenMass), factor * abundance * 0.2, $"{chain} C{bond} +O OAD08") With {
@@ -227,13 +229,11 @@
 .spectrum = New SpectrumPeak(adduct.ConvertToMz(dbPeak), factor * abundance * 0.1, $"{chain} C{bond} -2H OAD11") With {
 .SpectrumComment = speccomment
 }
-
 }, New OadFragmentPeaks With {
 .OadId = "OAD12",
 .spectrum = New SpectrumPeak(adduct.ConvertToMz(dbPeakLower + OxygenMass - HydrogenMass), factor * abundance * 0.3, $"{chain} C{bond} +O -H OAD12") With {
 .SpectrumComment = speccomment
 }
-
 }, New OadFragmentPeaks With {
 .OadId = "OAD13",
 .spectrum = New SpectrumPeak(adduct.ConvertToMz(dbPeakLower + OxygenMass - HydrogenMass * 2), factor * abundance * 0.3, $"{chain} C{bond} +O -2H OAD13") With {
@@ -263,9 +263,7 @@
 .OadId = "OAD17",
 .spectrum = New SpectrumPeak(adduct.ConvertToMz(dbPeakLower - HydrogenMass * 2), factor * abundance * 0.15, $"{chain} C{bond} -C -2H OAD17") With {
 .SpectrumComment = speccomment
-}
-
-'add 20230330
+}'add 20230330
 }, New OadFragmentPeaks With {
 .OadId = "OAD12+O",
 .spectrum = New SpectrumPeak(adduct.ConvertToMz(dbPeakLower + OxygenMass * 2 - HydrogenMass), factor * abundance * 0.3, $"{chain} C{bond} +O -H OAD12+O") With {
@@ -287,7 +285,7 @@
 .SpectrumComment = speccomment
 }
 }})
-            Return OadPeaks
+        Return OadPeaks
     End Function
 
     Private Function SphingoDoubleBondSpectrumWithId(bond As Integer, diffs As Double(), sphingo As IChain, adduct As AdductIon, chainLoss As Double, abundance As Double) As List(Of OadFragmentPeaks)

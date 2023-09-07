@@ -7,7 +7,7 @@ Namespace Spectra
         Inherits IMSProperty
         Property ScanID As Integer
         Property Spectrum As List(Of SpectrumPeak)
-        Sub AddPeak(ByVal mass As Double, ByVal intensity As Double, ByVal Optional comment As String = Nothing)
+        Sub AddPeak(mass As Double, intensity As Double, Optional comment As String = Nothing)
     End Interface
 
     Public Interface IMSProperty

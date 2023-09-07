@@ -103,10 +103,9 @@ Public Class SMEidSpectrumGenerator
         Dim spectrum = New List(Of SpectrumPeak)()
         If Equals(adduct.AdductIonName, "[M+H]+") Then
             spectrum.AddRange({New SpectrumPeak(chainMass + ProtonMass - H2O * 2, 100.0R, "[sph+H]+ -Header -H2O") With {
-.SpectrumComment = SpectrumComment.acylchain
-'new SpectrumPeak(chainMass + MassDiffDictionary.ProtonMass - CH4O2, 100d, "[sph+H]+ -CH4O2"),
+.SpectrumComment = SpectrumComment.acylchain'new SpectrumPeak(chainMass + MassDiffDictionary.ProtonMass - CH4O2, 100d, "[sph+H]+ -CH4O2"),
 }})
-            End If
+        End If
         Return spectrum.ToArray()
     End Function
 

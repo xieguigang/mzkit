@@ -84,13 +84,12 @@ Public Class EtherPCOadSpectrumGenerator
         End Function
 
         Private Function GetEtherPCPSpectrum(lipid As ILipid, alkylChain As IChain, acylChain As IChain, adduct As AdductIon) As SpectrumPeak()
-            'new SpectrumPeak(adduct.ConvertToMz(lipid.Mass - alkylChain.Mass), 100d, $"-{alkylChain}"),
-            'new SpectrumPeak(adduct.ConvertToMz(lipid.Mass - acylChain.Mass), 100d, $"-{acylChain}"),
-            Return {New SpectrumPeak(adduct.ConvertToMz(lipid.Mass - alkylChain.Mass - OxygenMass - HydrogenMass), 50R, $"-{alkylChain}-O") With {
-            .SpectrumComment = SpectrumComment.acylchain
-        'new SpectrumPeak(adduct.ConvertToMz(lipid.Mass - acylChain.Mass - MassDiffDictionary.OxygenMass), 200d, $"-{acylChain}-O") { SpectrumComment = SpectrumComment.acylchain },
+        'new SpectrumPeak(adduct.ConvertToMz(lipid.Mass - alkylChain.Mass), 100d, $"-{alkylChain}"),
+        'new SpectrumPeak(adduct.ConvertToMz(lipid.Mass - acylChain.Mass), 100d, $"-{acylChain}"),
+        Return {New SpectrumPeak(adduct.ConvertToMz(lipid.Mass - alkylChain.Mass - OxygenMass - HydrogenMass), 50.0R, $"-{alkylChain}-O") With {
+            .SpectrumComment = SpectrumComment.acylchain        'new SpectrumPeak(adduct.ConvertToMz(lipid.Mass - acylChain.Mass - MassDiffDictionary.OxygenMass), 200d, $"-{acylChain}-O") { SpectrumComment = SpectrumComment.acylchain },
         }}
-        End Function
+    End Function
 
         Private Function GetEtherPCOSpectrum(lipid As ILipid, alkylChain As IChain, acylChain As IChain, adduct As AdductIon) As SpectrumPeak()
             'new SpectrumPeak(adduct.ConvertToMz(lipid.Mass - alkylChain.Mass), 100d, $"-{alkylChain}"){ SpectrumComment = SpectrumComment.acylchain },

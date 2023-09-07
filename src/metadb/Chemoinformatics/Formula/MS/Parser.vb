@@ -12,11 +12,11 @@ Namespace Formula.MS
         ''' <param name="adductName">Add the formula string such as "C6H12O6"</param>
         ''' <returns></returns>
         <Obsolete("Use AdductIon.GetAddutIon instead of this method.")>
-        Public Function GetAdductIonBean(ByVal adductName As String) As AdductIon
+        Public Function GetAdductIonBean(adductName As String) As AdductIon
             Return AdductIon.GetAdductIon(adductName)
         End Function
 
-        Public Function ConvertDifferentChargedAdduct(ByVal adduct As AdductIon, ByVal chargeNumber As Integer) As AdductIon
+        Public Function ConvertDifferentChargedAdduct(adduct As AdductIon, chargeNumber As Integer) As AdductIon
             If chargeNumber = 0 Then Return adduct
             If adduct.FormatCheck = False Then Return adduct
             If std.Abs(adduct.ChargeNumber) = chargeNumber Then Return adduct
@@ -34,7 +34,7 @@ Namespace Formula.MS
             Return newAdduct
         End Function
 
-        Public Function CalculateAccurateMassAndIsotopeRatioOfMolecularFormula(ByVal rawFormula As String) As (Double, Double, Double)
+        Public Function CalculateAccurateMassAndIsotopeRatioOfMolecularFormula(rawFormula As String) As (Double, Double, Double)
             Dim formula As String = Nothing, multipliedNum As Double = Nothing
             Dim nil As (formula As String, multipliedNum As Double) = GetFormulaAndNumber(rawFormula)
 
@@ -65,7 +65,7 @@ Namespace Formula.MS
             Return (organicAcurateMass, SevenGoldenRulesCheck.GetM1IsotopicAbundance(formulaBean), SevenGoldenRulesCheck.GetM2IsotopicAbundance(formulaBean))
         End Function
 
-        Public Function CalculateAccurateMassAndIsotopeRatio(ByVal adductName As String) As (Double, Double, Double)
+        Public Function CalculateAccurateMassAndIsotopeRatio(adductName As String) As (Double, Double, Double)
             adductName = adductName.Split("["c)(1).Split("]"c)(0).Trim()
 
             If Not adductName.Contains("+"c) AndAlso Not adductName.Contains("-"c) Then

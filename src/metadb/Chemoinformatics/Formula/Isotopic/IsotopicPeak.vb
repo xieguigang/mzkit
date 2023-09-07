@@ -12,7 +12,7 @@ Namespace Formula.IsotopicPatterns
 
         End Sub
 
-        Public Sub New(ByVal source As IsotopicPeak)
+        Public Sub New(source As IsotopicPeak)
             RelativeAbundance = source.RelativeAbundance
             AbsoluteAbundance = source.AbsoluteAbundance
             Mass = source.Mass

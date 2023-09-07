@@ -19,7 +19,7 @@ Namespace Formula.MS
 
         Public Property AdductIonAccurateMass As Double
 
-        Public Function ConvertToMz(ByVal exactMass As Double) As Double
+        Public Function ConvertToMz(exactMass As Double) As Double
             Dim precursorMz = (exactMass * AdductIonXmer + AdductIonAccurateMass) / ChargeNumber
             If IonMode = IonModes.Positive Then
                 precursorMz -= 0.0005485799 * ChargeNumber
@@ -29,7 +29,7 @@ Namespace Formula.MS
             Return precursorMz
         End Function
 
-        Public Function ConvertToExactMass(ByVal mz As Double) As Double
+        Public Function ConvertToExactMass(mz As Double) As Double
             Dim monoIsotopicMass = (mz * ChargeNumber - AdductIonAccurateMass) / AdductIonXmer
             If IonMode = IonModes.Positive Then
                 monoIsotopicMass += 0.0005485799 * ChargeNumber
@@ -76,11 +76,11 @@ Namespace Formula.MS
         ''' </summary>
         ''' <param name="adductName">Add the formula string such as "C6H12O6"</param>
         ''' <returns>AdductIon</returns>
-        Public Shared Function GetAdductIon(ByVal adductName As String) As AdductIon
+        Public Shared Function GetAdductIon(adductName As String) As AdductIon
             Return ADDUCT_IONS.GetOrAdd(adductName)
         End Function
 
-        Private Shared Function GetAdductIonCore(ByVal adductName As String) As AdductIon
+        Private Shared Function GetAdductIonCore(adductName As String) As AdductIon
             Dim adduct As AdductIon = New AdductIon() With {
             .AdductIonName = adductName
         }
@@ -115,7 +115,7 @@ Namespace Formula.MS
             Return adduct
         End Function
 
-        Public Shared Function GetStandardAdductIon(ByVal charge As Integer, ByVal ionMode As IonModes) As AdductIon
+        Public Shared Function GetStandardAdductIon(charge As Integer, ionMode As IonModes) As AdductIon
             Select Case ionMode
                 Case IonModes.Positive
                     If charge >= 2 Then
@@ -146,7 +146,7 @@ Namespace Formula.MS
                 _dictionary.TryAdd([Default].AdductIonName, [Default])
             End Sub
 
-            Public Function GetOrAdd(ByVal adduct As String) As AdductIon
+            Public Function GetOrAdd(adduct As String) As AdductIon
                 Return _dictionary.GetOrAdd(adduct, New Func(Of String, AdductIon)(AddressOf GetAdductIonCore))
             End Function
         End Class

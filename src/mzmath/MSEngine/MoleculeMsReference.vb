@@ -8,7 +8,7 @@ Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
 Public Interface IIonProperty
     ' Molecule ion metadata
     ReadOnly Property AdductType As AdductIon
-    Sub SetAdductType(ByVal adduct As AdductIon)
+    Sub SetAdductType(adduct As AdductIon)
     ReadOnly Property CollisionCrossSection As Double
 End Interface
 
@@ -30,7 +30,7 @@ Public Class MoleculeMsReference
     End Sub
 
     <Obsolete("This constructor is for MessagePack only, don't use.")>
-    Public Sub New(ByVal scanID As Integer, ByVal precursorMz As Double, ByVal chromXs As ChromXs, ByVal ionMode As IonModes, ByVal spectrum As List(Of SpectrumPeak), ByVal name As String, ByVal formula As Formula, ByVal ontology As String, ByVal sMILES As String, ByVal inChIKey As String, ByVal adductType As AdductIon)
+    Public Sub New(scanID As Integer, precursorMz As Double, chromXs As ChromXs, ionMode As IonModes, spectrum As List(Of SpectrumPeak), name As String, formula As Formula, ontology As String, sMILES As String, inChIKey As String, adductType As AdductIon)
         Me.ScanID = scanID
         Me.PrecursorMz = precursorMz
         Me.ChromXs = chromXs
@@ -72,7 +72,7 @@ Public Class MoleculeMsReference
 
     Public Property AdductType As AdductIon Implements IIonProperty.AdductType
 
-    Public Sub SetAdductType(ByVal adduct As AdductIon) Implements IIonProperty.SetAdductType
+    Public Sub SetAdductType(adduct As AdductIon) Implements IIonProperty.SetAdductType
         AdductType = adduct
     End Sub
 
@@ -115,7 +115,7 @@ Public Class MoleculeMsReference
 
     Public Property FragmentationCondition As String
 
-    Public Sub AddPeak(ByVal mass As Double, ByVal intensity As Double, ByVal Optional comment As String = Nothing) Implements IMSScanProperty.AddPeak
+    Public Sub AddPeak(mass As Double, intensity As Double, Optional comment As String = Nothing) Implements IMSScanProperty.AddPeak
         Spectrum.Add(New SpectrumPeak(mass, intensity, comment))
     End Sub
 

@@ -1,9 +1,9 @@
 ﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
-Imports BioNovoGene.BioDeep.MSEngine
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.ElementsExactMass
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
+Imports BioNovoGene.BioDeep.MSEngine
 
-    Public Class EtherPEEidSpectrumGenerator
+Public Class EtherPEEidSpectrumGenerator
         Implements ILipidSpectrumGenerator
         Private Shared ReadOnly C2H8NO4P As Double = {CarbonMass * 2, HydrogenMass * 8, NitrogenMass, OxygenMass * 4, PhosphorusMass}.Sum()
 
@@ -132,33 +132,30 @@ Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
         End Function
 
         Private Function GetEtherPEOSpectrum(lipid As ILipid, alkylChain As IChain, acylChain As IChain, adduct As AdductIon) As SpectrumPeak()
-            Dim spectrum = New List(Of SpectrumPeak) From {
-    New SpectrumPeak(adduct.ConvertToMz(lipid.Mass - alkylChain.Mass + HydrogenMass), 50R, $"-{alkylChain}") With {
+        Dim spectrum = New List(Of SpectrumPeak) From {
+    New SpectrumPeak(adduct.ConvertToMz(lipid.Mass - alkylChain.Mass + HydrogenMass), 50.0R, $"-{alkylChain}") With {
         .SpectrumComment = SpectrumComment.acylchain
     },
-    New SpectrumPeak(adduct.ConvertToMz(lipid.Mass - acylChain.Mass + HydrogenMass), 50R, $"-{acylChain}") With {
+    New SpectrumPeak(adduct.ConvertToMz(lipid.Mass - acylChain.Mass + HydrogenMass), 50.0R, $"-{acylChain}") With {
         .SpectrumComment = SpectrumComment.acylchain
     },
-    New SpectrumPeak(adduct.ConvertToMz(lipid.Mass - alkylChain.Mass - OxygenMass), 200R, $"-{alkylChain}-O") With {
+    New SpectrumPeak(adduct.ConvertToMz(lipid.Mass - alkylChain.Mass - OxygenMass), 200.0R, $"-{alkylChain}-O") With {
         .SpectrumComment = SpectrumComment.acylchain
     },
-    New SpectrumPeak(adduct.ConvertToMz(lipid.Mass - acylChain.Mass - H2O), 200R, $"-{acylChain}-O") With {
+    New SpectrumPeak(adduct.ConvertToMz(lipid.Mass - acylChain.Mass - H2O), 200.0R, $"-{acylChain}-O") With {
         .SpectrumComment = SpectrumComment.acylchain
     },
-    New SpectrumPeak(acylChain.Mass, 50R, $"{acylChain} acyl+") With {
+    New SpectrumPeak(acylChain.Mass, 50.0R, $"{acylChain} acyl+") With {
         .SpectrumComment = SpectrumComment.acylchain
     },
-
-    New SpectrumPeak(adduct.ConvertToMz(lipid.Mass - alkylChain.Mass - C2H8NO4P + HydrogenMass), 50R, $"- Header -{alkylChain}") With {
+    New SpectrumPeak(adduct.ConvertToMz(lipid.Mass - alkylChain.Mass - C2H8NO4P + HydrogenMass), 50.0R, $"- Header -{alkylChain}") With {
         .SpectrumComment = SpectrumComment.acylchain
     },
-    New SpectrumPeak(adduct.ConvertToMz(lipid.Mass - acylChain.Mass - C2H8NO4P + HydrogenMass), 50R, $"- Header -{acylChain}") With {
+    New SpectrumPeak(adduct.ConvertToMz(lipid.Mass - acylChain.Mass - C2H8NO4P + HydrogenMass), 50.0R, $"- Header -{acylChain}") With {
         .SpectrumComment = SpectrumComment.acylchain
-    }
-'new SpectrumPeak(adduct.ConvertToMz(lipid.Mass - alkylChain.Mass- C2H8NO4P - MassDiffDictionary.OxygenMass - MassDiffDictionary.HydrogenMass), 200d, $"- Header -{alkylChain}-O") { SpectrumComment = SpectrumComment.acylchain },
-'new SpectrumPeak(adduct.ConvertToMz(lipid.Mass - acylChain.Mass- C2H8NO4P - H2O), 200d, $"- Header -{acylChain}-O") { SpectrumComment = SpectrumComment.acylchain },
+    }'new SpectrumPeak(adduct.ConvertToMz(lipid.Mass - alkylChain.Mass- C2H8NO4P - MassDiffDictionary.OxygenMass - MassDiffDictionary.HydrogenMass), 200d, $"- Header -{alkylChain}-O") { SpectrumComment = SpectrumComment.acylchain },'new SpectrumPeak(adduct.ConvertToMz(lipid.Mass - acylChain.Mass- C2H8NO4P - H2O), 200d, $"- Header -{acylChain}-O") { SpectrumComment = SpectrumComment.acylchain },
 }
-            Return spectrum.ToArray()
+        Return spectrum.ToArray()
         End Function
 
         Private Function GetSn1PositionSpectrum(lipid As ILipid, alkylChain As IChain, adduct As AdductIon) As SpectrumPeak()

@@ -122,15 +122,14 @@ Public Class SHexCerSpectrumGenerator
             Dim chainMass = sphingo.Mass + HydrogenMass
             Dim spectrum = New List(Of SpectrumPeak)()
             If Equals(adduct.AdductIonName, "[M+H]+") Then
-                spectrum.AddRange({New SpectrumPeak(adduct.ConvertToMz(chainMass - H2O), 100R, "[Sph-H2O+H]+") With {
+            spectrum.AddRange({New SpectrumPeak(adduct.ConvertToMz(chainMass - H2O), 100.0R, "[Sph-H2O+H]+") With {
 .SpectrumComment = SpectrumComment.acylchain
-}, New SpectrumPeak(adduct.ConvertToMz(chainMass - H2O * 2), 200R, "[Sph-2H2O+H]+") With {
+}, New SpectrumPeak(adduct.ConvertToMz(chainMass - H2O * 2), 200.0R, "[Sph-2H2O+H]+") With {
 .SpectrumComment = SpectrumComment.acylchain
-}, New SpectrumPeak(adduct.ConvertToMz(chainMass - CH4O2), 80R, "[sph-CH4O2+H]+ ") With {
-.SpectrumComment = SpectrumComment.acylchain
-'new SpectrumPeak(adduct.ConvertToMz(chainMass + C6H10O5 - MassDiffDictionary.NitrogenMass - MassDiffDictionary.HydrogenMass*2), 80d, "[sph+Hex+H]+") { SpectrumComment = SpectrumComment.acylchain },
+}, New SpectrumPeak(adduct.ConvertToMz(chainMass - CH4O2), 80.0R, "[sph-CH4O2+H]+ ") With {
+.SpectrumComment = SpectrumComment.acylchain'new SpectrumPeak(adduct.ConvertToMz(chainMass + C6H10O5 - MassDiffDictionary.NitrogenMass - MassDiffDictionary.HydrogenMass*2), 80d, "[sph+Hex+H]+") { SpectrumComment = SpectrumComment.acylchain },
 }})
-            End If
+        End If
             Return spectrum.ToArray()
         End Function
 

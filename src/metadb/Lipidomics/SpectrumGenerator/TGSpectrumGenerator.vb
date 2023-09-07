@@ -143,11 +143,9 @@ New SpectrumPeak(adduct.ConvertToMz(lipid.Mass) / 2, 50.0R, "[Precursor]2+") Wit
 .SpectrumComment = SpectrumComment.snposition,
 .IsAbsolutelyRequiredFragmentForAnnotation = True
 }, New SpectrumPeak(acylChain.Mass + Electron, 100.0R, $"{acylChain}+ Sn2") With {
-.SpectrumComment = SpectrumComment.acylchain
-'new SpectrumPeak(lipidMass - chainMass + MassDiffDictionary.HydrogenMass*2, 50d, $"-{acylChain}") { SpectrumComment = SpectrumComment.acylchain },
-'new SpectrumPeak(lipidMass - chainMass - MassDiffDictionary.OxygenMass , 200d, $"-{acylChain}-O Sn2") { SpectrumComment = SpectrumComment.acylchain },
+.SpectrumComment = SpectrumComment.acylchain'new SpectrumPeak(lipidMass - chainMass + MassDiffDictionary.HydrogenMass*2, 50d, $"-{acylChain}") { SpectrumComment = SpectrumComment.acylchain },'new SpectrumPeak(lipidMass - chainMass - MassDiffDictionary.OxygenMass , 200d, $"-{acylChain}-O Sn2") { SpectrumComment = SpectrumComment.acylchain },
 }})
-            Else
+        Else
             spectrum.AddRange({New SpectrumPeak(chainMass + C2H3O, 100.0R, "Sn2 diagnostics") With {
 .SpectrumComment = SpectrumComment.snposition
 }, New SpectrumPeak(acylChain.Mass + Electron, 100.0R, $"{acylChain}+ Sn2") With {
