@@ -1,62 +1,64 @@
 ﻿#Region "Microsoft.VisualBasic::66c28ed87ef11d52865ddc97e6e544bb, mzkit\src\assembly\NMRFidTool\AbstractFastFourierTransformTool.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 169
-    '    Code Lines: 97
-    ' Comment Lines: 47
-    '   Blank Lines: 25
-    '     File Size: 6.48 KB
+' Summaries:
 
 
-    ' Class AbstractFastFourierTransformTool
-    ' 
-    '     Properties: Acquisition, Data, Fid, Processing
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: computeFFT, getRealPart
-    ' 
-    '     Sub: applyRedfieldOnSequentialData, initDataFormat, setData, shiftData, tdRelatedNonUnderstoodRearrangementForSequential
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 169
+'    Code Lines: 97
+' Comment Lines: 47
+'   Blank Lines: 25
+'     File Size: 6.48 KB
+
+
+' Class AbstractFastFourierTransformTool
+' 
+'     Properties: Acquisition, Data, Fid, Processing
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: computeFFT, getRealPart
+' 
+'     Sub: applyRedfieldOnSequentialData, initDataFormat, setData, shiftData, tdRelatedNonUnderstoodRearrangementForSequential
+' 
+' /********************************************************************************/
 
 #End Region
+
+Imports std = System.Math
 
 ' 
 '  Copyright (c) 2013. EMBL, European Bioinformatics Institute
@@ -183,7 +185,7 @@ Public MustInherit Class AbstractFastFourierTransformTool
     Friend Overridable Sub shiftData()
         ' perform a left or right shift of the data (ignoring the corresponding portion of the data)
         ' the code from cuteNMR was simplified
-        For i As Integer = 0 To fidField.Proc.TdEffective - Math.Abs(fidField.Proc.Shift) - 1
+        For i As Integer = 0 To fidField.Proc.TdEffective - std.Abs(fidField.Proc.Shift) - 1
             Dim dataIndex = If(fidField.Proc.Shift >= 0, i, i - fidField.Proc.Shift) ' or shift the placement of the data to the right
             ' or shift the placement of the data to the right
             Dim fidIndex = If(fidField.Proc.Shift >= 0, i + fidField.Proc.Shift, i) ' start in the correct order
@@ -192,10 +194,10 @@ Public MustInherit Class AbstractFastFourierTransformTool
 
             If type Is Acqu.FidData.INT32 Then
                 dataField(dataIndex) = fidField.Fid(fidIndex)
-            ElseIf type Is Acqu.FidData.[Double] Then
+            ElseIf type Is Acqu.FidData.[DOUBLE] Then
                 dataField(dataIndex) = fidField.Fid(fidIndex)
-            ElseIf type Is Acqu.FidData.Float Then
-            ElseIf type Is Acqu.FidData.Int16 Then
+            ElseIf type Is Acqu.FidData.FLOAT Then
+            ElseIf type Is Acqu.FidData.INT16 Then
             Else
             End If
         Next

@@ -3,6 +3,8 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.ElementsExactMass
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.IsotopicPatterns
 Imports MassDiffDictionary = BioNovoGene.BioDeep.Chemoinformatics.Formula.ElementsExactMass
+Imports std = System.Math
+
 Public Class IsotopeTemp
     Public Property WeightNumber As Integer
     Public Property Mz As Double
@@ -213,25 +215,25 @@ Public NotInheritable Class SpectrumHandler
 
                 For k = maxChargeNumber To 1 Step -1
                     Dim predIsotopeMass = peak.mz + c13_c12Diff / k
-                    Dim diff = Math.Abs(predIsotopeMass - isotopePeak.mz)
+                    Dim diff = std.Abs(predIsotopeMass - isotopePeak.mz)
                     If diff < tolerance Then
                         predChargeNumber = k
                         If k <= 3 Then
                             Exit For
                         ElseIf k = 4 OrElse k = 5 Then
                             Dim predNextIsotopeMass = peak.mz + c13_c12Diff / (k - 1)
-                            Dim nextDiff = Math.Abs(predNextIsotopeMass - isotopePeak.mz)
+                            Dim nextDiff = std.Abs(predNextIsotopeMass - isotopePeak.mz)
                             If diff > nextDiff Then predChargeNumber = k - 1
                             Exit For
                         ElseIf k >= 6 Then
                             Dim predNextIsotopeMass = peak.mz + c13_c12Diff / (k - 1)
-                            Dim nextDiff = Math.Abs(predNextIsotopeMass - isotopePeak.mz)
+                            Dim nextDiff = std.Abs(predNextIsotopeMass - isotopePeak.mz)
                             If diff > nextDiff Then
                                 predChargeNumber = k - 1
                                 diff = nextDiff
 
                                 predNextIsotopeMass = peak.mz + c13_c12Diff / (k - 2)
-                                nextDiff = Math.Abs(predNextIsotopeMass - isotopePeak.mz)
+                                nextDiff = std.Abs(predNextIsotopeMass - isotopePeak.mz)
 
                                 If diff > nextDiff Then
                                     predChargeNumber = k - 2
@@ -279,8 +281,8 @@ Public NotInheritable Class SpectrumHandler
                     If isotopePeak.IsotopeWeightNumber >= 0 Then Continue For
 
                     Dim isotopeMz = isotopePeak.mz
-                    Dim diffMz = Math.Abs(predIsotopicMass - isotopeMz)
-                    Dim diffMzClBr = Math.Abs(predClBrIsotopicMass - isotopeMz)
+                    Dim diffMz = std.Abs(predIsotopicMass - isotopeMz)
+                    Dim diffMzClBr = std.Abs(predClBrIsotopicMass - isotopeMz)
 
                     If diffMz < tolerance Then
 
@@ -293,7 +295,7 @@ Public NotInheritable Class SpectrumHandler
                             }
                             mzFocused = isotopeMz
                         Else
-                            If Math.Abs(isotopeTemps(j).Mz - predIsotopicMass) > Math.Abs(isotopeMz - predIsotopicMass) Then
+                            If std.Abs(isotopeTemps(j).Mz - predIsotopicMass) > std.Abs(isotopeMz - predIsotopicMass) Then
                                 isotopeTemps(j).Mz = isotopeMz
                                 isotopeTemps(j).Intensity = isotopePeak.Intensity
                                 isotopeTemps(j).PeakID = k
@@ -312,7 +314,7 @@ Public NotInheritable Class SpectrumHandler
                             }
                             mzFocused = isotopeMz
                         Else
-                            If Math.Abs(isotopeTemps(j).Mz - predIsotopicMass) > Math.Abs(isotopeMz - predIsotopicMass) Then
+                            If std.Abs(isotopeTemps(j).Mz - predIsotopicMass) > std.Abs(isotopeMz - predIsotopicMass) Then
                                 isotopeTemps(j).Mz = isotopeMz
                                 isotopeTemps(j).MzClBr = isotopeMz
                                 isotopeTemps(j).Intensity = isotopePeak.Intensity
@@ -370,7 +372,7 @@ Public NotInheritable Class SpectrumHandler
                     Dim expRatio = isotopeTemps(j).Intensity / isotopeTemps(j - 1).Intensity
                     Dim simRatio = simulatedIsotopicPeaks.IsotopeProfile(j).RelativeAbundance / simulatedIsotopicPeaks.IsotopeProfile(j - 1).RelativeAbundance
 
-                    If Math.Abs(expRatio - simRatio) < 5.0 Then
+                    If std.Abs(expRatio - simRatio) < 5.0 Then
                         peaks(isotopeTemps(j).PeakID).IsotopeParentPeakID = peak.PeakID
                         peaks(isotopeTemps(j).PeakID).IsotopeWeightNumber = j
                         peaks(isotopeTemps(j).PeakID).Charge = peak.Charge

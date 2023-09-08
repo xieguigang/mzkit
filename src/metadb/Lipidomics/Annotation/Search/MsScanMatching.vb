@@ -1484,8 +1484,9 @@ Public NotInheritable Class MsScanMatching
     ''' [1] MatchedPeaksCount is also returned.
     ''' </returns>
     Public Shared Function GetLipidomicsMatchedPeaksScores(msScanProp As IMSScanProperty, molMsRef As MoleculeMsReference, bin As Double, massBegin As Double, massEnd As Double) As Double()
-
-        If Not MSEngine.MsScanMatching.IsComparedAvailable(msScanProp, molMsRef) Then Return New Double() {-1, -1}
+        If Not MSEngine.MsScanMatching.IsComparedAvailable(msScanProp, molMsRef) Then
+            Return New Double() {-1, -1}
+        End If
 
         ' in lipidomics project, currently, the well-known lipid classes now including
         ' PC, PE, PI, PS, PG, BMP, SM, TAG are now evaluated.

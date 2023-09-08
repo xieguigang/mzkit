@@ -59,8 +59,20 @@ Namespace Formula.IsotopicPatterns
 
     Public Class Isotope
 
+        ''' <summary>
+        ''' Exact Mass
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Mass As Double
+        ''' <summary>
+        ''' Natural Relative Abundance
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Prob As Double
+        ''' <summary>
+        ''' Nominal Mass
+        ''' </summary>
+        ''' <returns></returns>
         Public Property NumNeutrons As Integer
 
         Public Overrides Function ToString() As String

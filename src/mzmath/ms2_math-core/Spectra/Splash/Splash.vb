@@ -19,13 +19,15 @@
 '  You should have received a copy of the GNU Lesser General Public
 '  License along with this library; if not, write to the Free Software
 '  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+Imports System.Runtime.CompilerServices
 Imports System.Security.Cryptography
 Imports System.Text
 Imports std = System.Math
 
 Namespace Spectra.SplashID
+
     Public Class Splash
-        Implements ISplash
+
         Private Const PREFIX As String = "splash"
         Private Const VERSION As Integer = 0
 
@@ -87,19 +89,23 @@ Namespace Spectra.SplashID
         ''' </summary>
         Private Shared ReadOnly EPSILON As Double = 0.0000001
 
+        Dim spectrumType As SpectrumType
 
+        Sub New(type As SpectrumType)
+            Me.spectrumType = type
+        End Sub
 
-        Public Function splashIt(spectrum As ISpectrum) As String Implements ISplash.splashIt
-
-            ' check spectrum var
-            If spectrum Is Nothing Then
-                Throw New ArgumentNullException("The spectrum can't be null")
-            End If
-
-            Dim hash As StringBuilder = New StringBuilder()
+        ''' <summary>
+        ''' calculate the splash id of a given spectrum object from this function
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="spectrum"></param>
+        ''' <returns></returns>
+        Public Function CalcSplashID(Of T As {New, ISpectrum})(spectrum As T) As String
+            Dim hash As New StringBuilder()
 
             'creating first block 'splash<type><version>'
-            hash.Append(getFirstBlock(spectrum.getSpectrumType()))
+            hash.Append(getFirstBlock(spectrumType))
             hash.Append("-"c)
 
             'create prefilter block
@@ -120,10 +126,7 @@ Namespace Spectra.SplashID
             hash.Append(getSpectrumBlock(spectrum))
 
             Return hash.ToString()
-
         End Function
-
-
 
         ''' <summary>
         ''' Generates the version block
@@ -131,10 +134,10 @@ Namespace Spectra.SplashID
         ''' <param name="specType">type of spectrum beign splashed</param>
         ''' <returns>the version block as a string</returns>
         Private Function getFirstBlock(specType As SpectrumType) As String
-            Call Debug.WriteLine(String.Format("version block: {0}", PREFIX & CInt(specType).ToString() & VERSION.ToString()))
-            Return (PREFIX & CInt(specType).ToString() & VERSION.ToString())
+            Dim s As String = (PREFIX & CInt(specType).ToString() & VERSION.ToString())
+            Call Debug.WriteLine(String.Format("version block: {0}", s))
+            Return s
         End Function
-
 
         ''' <summary>
         ''' calculates a histogram of the spectrum. If weighted, it sums the mz * intensities for the peaks in each bin
@@ -146,9 +149,9 @@ Namespace Spectra.SplashID
             Dim maxIntensity As Double = 0
 
             ' initialize and populate bins
-            For Each ion In CType(spec, MSSpectrum).Ions
-                Dim bin = CInt(ion.MZ / binSize) Mod length
-                binnedIons(bin) += ion.Intensity
+            For Each ion As ms2 In spec.GetIons
+                Dim bin = CInt(ion.mz / binSize) Mod length
+                binnedIons(bin) += ion.intensity
 
                 If binnedIons(bin) > maxIntensity Then
                     maxIntensity = binnedIons(bin)
@@ -171,7 +174,6 @@ Namespace Spectra.SplashID
             Return histogram.ToString()
         End Function
 
-
         ''' <summary>
         ''' calculate the hash for the whole spectrum
         ''' </summary>
@@ -179,18 +181,19 @@ Namespace Spectra.SplashID
         ''' <returns>the Hash of the spectrum data</returns>
         Private Function getSpectrumBlock(spec As ISpectrum) As String
             Dim ions As List(Of ms2) = spec.getSortedIonsByMZ()
+            Dim strIons As New StringBuilder()
 
-            Dim strIons As StringBuilder = New StringBuilder()
-            For Each i In ions
-                strIons.Append(String.Format("{0}:{1}", formatMZ(i.MZ), formatIntensity(i.Intensity)))
+            For Each i As ms2 In ions
+                strIons.Append(String.Format("{0}:{1}", formatMZ(i.mz), formatIntensity(i.intensity)))
                 strIons.Append(ION_SEPERATOR)
             Next
 
             'string to hash
             strIons.Remove(strIons.Length - 1, 1)
-            Dim message As Byte() = Encoding.UTF8.GetBytes(strIons.ToString())
 
+            Dim message As Byte() = Encoding.UTF8.GetBytes(strIons.ToString())
             Dim hashString As New SHA256Managed()
+
             hashString.ComputeHash(message)
 
             Dim hash = BitConverter.ToString(hashString.Hash)
@@ -212,8 +215,7 @@ Namespace Spectra.SplashID
         ''' <returns></returns>
         Private Function translateBase(number As String, initialBase As Integer, finalBase As Integer, fill As Integer) As String
             Dim n = ToBase10(number, initialBase)
-
-            Dim result As StringBuilder = New StringBuilder()
+            Dim result As New StringBuilder()
 
             While n > 0
                 result.Insert(0, INTENSITY_MAP(n Mod finalBase))
@@ -228,10 +230,12 @@ Namespace Spectra.SplashID
             Return result.ToString()
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Function formatMZ(number As Double) As String
             Return String.Format("{0}", CLng((number + EPSILON) * MZ_PRECISION_FACTOR))
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Function formatIntensity(number As Double) As String
             Return String.Format("{0}", CLng((number + EPSILON) * INTENSITY_PRECISION_FACTOR))
         End Function
@@ -257,15 +261,14 @@ Namespace Spectra.SplashID
         ' 		 * @param basePeakPercentage percentage of base peak above which to retain
         ' 		 * @return filtered spectrum
         ' 
-
-        Protected Function filterSpectrum(s As ISpectrum, topIons As Integer, basePeakPercentage As Double) As ISpectrum
+        Protected Function filterSpectrum(Of T As {New, ISpectrum})(s As T, topIons As Integer, basePeakPercentage As Double) As T
             Dim ions As List(Of ms2) = s.GetIons()
 
             ' Find base peak intensity
             Dim basePeakIntensity = 0.0
 
             For Each ion In ions
-                If ion.Intensity > basePeakIntensity Then basePeakIntensity = ion.Intensity
+                If ion.intensity > basePeakIntensity Then basePeakIntensity = ion.intensity
             Next
 
             ' Filter by base peak percentage if needed
@@ -281,12 +284,14 @@ Namespace Spectra.SplashID
 
             ' Filter by top ions if necessary
             If topIons > 0 AndAlso ions.Count > topIons Then
-                ions = ions.OrderByDescending(Function(i) i.Intensity).ThenBy(Function(m) m.MZ).ToList()
+                ions = ions.OrderByDescending(Function(i) i.intensity).ThenBy(Function(m) m.mz).ToList()
 
                 ions = ions.GetRange(0, topIons)
             End If
 
-            Return New MSSpectrum(ions)
+            Dim spec As New T
+            spec.SetIons(ions)
+            Return spec
         End Function
 
         ' *
@@ -295,8 +300,8 @@ Namespace Spectra.SplashID
         ' 		 * @param topIons number of top ions to retain
         ' 		 * @return filtered spectrum
         ' 
-
-        Protected Function filterSpectrum(s As ISpectrum, topIons As Integer) As ISpectrum
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Protected Function filterSpectrum(Of T As {New, ISpectrum})(s As T, topIons As Integer) As T
             Return filterSpectrum(s, topIons, -1)
         End Function
 
@@ -305,9 +310,9 @@ Namespace Spectra.SplashID
         ' 		 * @param s spectrum
         ' 		 * @param basePeakPercentage percentage of base peak above which to retain
         ' 		 * @return filtered spectrum
-        ' 
 
-        Protected Function filterSpectrum(s As ISpectrum, basePeakPercentage As Double) As ISpectrum
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Protected Function filterSpectrum(Of T As {New, ISpectrum})(s As T, basePeakPercentage As Double) As T
             Return filterSpectrum(s, -1, basePeakPercentage)
         End Function
     End Class

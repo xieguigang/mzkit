@@ -265,7 +265,7 @@ Public Class AdductsAnnotation(Of T As IMS1Annotation)
 
     Public Iterator Function AdductsAnnotation(peak As T) As IEnumerable(Of PeakQuery(Of T))
         For Each adduct As MzCalculator In adducts
-            Dim exact_mass As Double = adduct.CalcMass(precursorMZ:=peak.mz)
+            Dim exact_mass As Double = adduct.CalcMass(mz:=peak.mz)
             Dim q As New PeakQuery(Of T) With {
                 .exactMass = exact_mass,
                 .peaks = {activator(peak, adduct.ToString)}

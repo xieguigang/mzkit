@@ -7,6 +7,7 @@ Namespace Formula.MS
     ''' This is the storage of adduct ion information.
     ''' </summary>
     Public Class AdductIon
+
         ''' <summary>
         ''' Initializes a new instance of the AdductIon class.
         ''' <para>

@@ -1,4 +1,7 @@
-﻿Namespace Formula
+﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
+
+Namespace Formula
 
 
     Public Module AtomMass
@@ -16,6 +19,65 @@
     End Module
 
     Public Module FormulaCalculateUtility
+
+
+        Public Function ConvertFormulaAdductPairToPrecursorAdduct(ByVal formula As Formula, ByVal adduct As AdductIon) As Formula
+
+            If adduct.IonMode = IonModes.Positive Then
+                Select Case adduct.AdductIonName
+                    Case "[M+H]+"
+                        Return formula + "H"
+                    Case "[M]+"
+                        Return formula
+                    Case "[M+NH4]+"
+                        Return formula + "NH4"
+                    Case "[M+Na]+"
+                        Return formula
+                    Case "[M+H-H2O]+"
+                        Return formula - "OH"
+                    Case Else
+                        Return formula
+                End Select
+            Else
+                Select Case adduct.AdductIonName
+                    Case "[M-H]-"
+                        Return formula - "H"
+                    Case "[M-H2O-H]-"
+                        Return formula - "H3O"
+                    Case "[M+FA-H]-"
+                        Return formula + "CHO2"
+                    Case "[M+Hac-H]-"
+                        Return formula + "C2H3O2"
+                    Case Else
+                        Return formula
+                End Select
+            End If
+        End Function
+
+        Public Function ConvertTmsMeoxSubtractedFormula(ByVal formula As Formula) As Formula
+            If formula!Tms = 0 AndAlso formula!Meox = 0 Then Return formula
+            Dim tmsCount = formula!Tms
+            Dim meoxCount = formula!Meox
+
+            Dim cNum = formula!C - tmsCount * 3 - meoxCount
+            Dim hNum = formula!H - tmsCount * 8 - meoxCount * 3
+            Dim nNum = formula!N - meoxCount
+            Dim oNum = formula!O
+            Dim pNum = formula!P
+            Dim sNum = formula!S
+            Dim fNum = formula!F
+            Dim clNum = formula!Cl
+            Dim brNum = formula!Br
+            Dim iNum = formula!I
+            Dim siNum = formula!Si - tmsCount
+            Dim counts As New Dictionary(Of String, Integer) From {
+                {"C", cNum}, {"H", hNum}, {"N", nNum}, {"O", oNum}, {"P", pNum},
+                {"S", sNum}, {"F", fNum}, {"Cl", clNum}, {"Br", brNum}, {"I", iNum},
+                {"Si", siNum}
+            }
+
+            Return New Formula(counts)
+        End Function
 
         Public Function GetExactMass(element2count As Dictionary(Of String, Integer)) As Double
             Dim mass = 0.0
@@ -231,11 +293,11 @@
             Dim atoms = New List(Of (Element As String, count As Integer, order As Integer))()
             For Each pair In element2count
                 If elem2order.ContainsKey(pair.Key) Then
-                                   Call      atoms.Add((                    Element: = pair.Key,                    Count: = pair.Value,                    Order := elem2order(pair.Key)                ))
+                    Call atoms.Add((Element: =pair.Key, Count: =pair.Value, Order:=elem2order(pair.Key)))
                 End If
             Next
-            For Each atom In atoms.OrderBy(Function(n) n.Order)
-                formulastring += If(atom.Count > 1, atom.Element & atom.Count.ToString(), If(atom.Count < 0, atom.Element & "(" & atom.Count.ToString() & ")", atom.Element))
+            For Each atom In atoms.OrderBy(Function(n) n.order)
+                formulastring += If(atom.count > 1, atom.Element & atom.count.ToString(), If(atom.count < 0, atom.Element & "(" & atom.count.ToString() & ")", atom.Element))
             Next
             Return formulastring
         End Function

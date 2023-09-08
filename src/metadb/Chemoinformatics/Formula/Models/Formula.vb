@@ -198,6 +198,27 @@ Namespace Formula
             Return EmpiricalFormula
         End Function
 
+        Public Function EqualsTo(fb As Formula, Optional isIgnoreHydrogen As Boolean = False) As Boolean
+            If Not isIgnoreHydrogen Then
+                If Me!H <> fb!H Then
+                    Return False
+                End If
+            End If
+
+            If CountsByElement.Keys.Union(fb.CountsByElement.Keys).Count <> CountsByElement.Count Then
+                ' has different element composition
+                Return False
+            End If
+
+            For Each atom As String In CountsByElement.Keys
+                If CountsByElement(atom) <> fb.CountsByElement(fb) Then
+                    Return False
+                End If
+            Next
+
+            Return True
+        End Function
+
         Public Shared Operator *(composition As Formula, n%) As Formula
             Dim newFormula$ = $"({composition}){n}"
             Dim newComposition = composition.CountsByElement _
@@ -256,6 +277,16 @@ Namespace Formula
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator -(mass As Double, f As Formula) As Double
             Return mass - f.ExactMass
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Operator -(f As Formula, fs As String) As Formula
+            Return f - FormulaScanner.ScanFormula(fs)
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Operator +(f As Formula, fs As String) As Formula
+            Return f + FormulaScanner.ScanFormula(fs)
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
