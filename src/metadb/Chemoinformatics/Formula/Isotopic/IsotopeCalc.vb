@@ -1,5 +1,6 @@
 ﻿Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.Math.Statistics
+Imports std = System.Math
 
 Namespace Formula.IsotopicPatterns
     ''' <summary>
