@@ -19,232 +19,232 @@ Public NotInheritable Class LipidMassLibraryGenerator
 
         Select Case lipidclass
             Case LbmClass.PC
-                generatePcSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generatePcSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
             Case LbmClass.PE
-                generatePeSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generatePeSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
             Case LbmClass.PS
-                generatePsSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generatePsSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
             Case LbmClass.PI
-                generatePiSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generatePiSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
             Case LbmClass.PG
-                generatePgSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generatePgSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
             Case LbmClass.TG
-                generateTagSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generateTagSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
             Case LbmClass.SM
-                generateSmSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generateSmSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
             Case LbmClass.LNAPE
-                generateLnapeSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generateLnapeSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
                 'add
             Case LbmClass.DG
-                generateDagSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generateDagSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
             Case LbmClass.MG
-                generateMagSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generateMagSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
             Case LbmClass.FA
-                generateFaSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generateFaSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
             Case LbmClass.FAHFA
-                generateFahfaSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generateFahfaSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
             Case LbmClass.LPC
-                generateLpcSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generateLpcSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
             Case LbmClass.LPE
-                generateLpeSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generateLpeSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
             Case LbmClass.LPG
-                generateLpgSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generateLpgSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
             Case LbmClass.LPI
-                generateLpiSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generateLpiSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
             Case LbmClass.LPS
-                generateLpsSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generateLpsSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
             Case LbmClass.LPA
-                generateLpaSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generateLpaSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
             Case LbmClass.PA
-                generatePaSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generatePaSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
             Case LbmClass.MGDG
-                generateMgdgSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generateMgdgSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
             Case LbmClass.SQDG
-                generateSqdgSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generateSqdgSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
             Case LbmClass.DGDG
-                generateDgdgSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generateDgdgSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
             Case LbmClass.DGTS
-                generateDgtsSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generateDgtsSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
             Case LbmClass.LDGTS
-                generateLdgtsSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generateLdgtsSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
             Case LbmClass.HBMP
-                generateHbmpSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generateHbmpSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
             Case LbmClass.BMP
-                generateBmpSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generateBmpSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
             Case LbmClass.CAR
-                generateAcarSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generateAcarSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
             Case LbmClass.DGGA
-                generateGlcadgSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generateGlcadgSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
             Case LbmClass.ADGGA
-                generateAcylglcadgSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generateAcylglcadgSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
             Case LbmClass.CL
-                generateClSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generateClSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
             Case LbmClass.CE
-                generateCeSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generateCeSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
             Case LbmClass.EtherPE
-                generateEtherpeSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generateEtherpeSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
             Case LbmClass.EtherPC
-                generateEtherpcSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generateEtherpcSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
                 ' ceramide
             Case LbmClass.Cer_AP
-                generateCerapSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generateCerapSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
             Case LbmClass.Cer_ADS
-                generateCeradsSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generateCeradsSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
             Case LbmClass.Cer_AS
-                generateCerasSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generateCerasSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
             Case LbmClass.Cer_NP
-                generateCernpSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generateCernpSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
             Case LbmClass.Cer_NDS
-                generateCerndsSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generateCerndsSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
             Case LbmClass.Cer_NS
-                generateCernsSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generateCernsSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
             Case LbmClass.Cer_BDS
-                generateCerbdsSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generateCerbdsSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
             Case LbmClass.Cer_BS
-                generateCerbsSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generateCerbsSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
             Case LbmClass.HexCer_AP
-                generateHexcerapSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generateHexcerapSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
             Case LbmClass.HexCer_NDS
-                generateHexcerndsSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generateHexcerndsSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
             Case LbmClass.HexCer_NS
-                generateHexcernsSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generateHexcernsSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
             Case LbmClass.Cer_EODS
-                generateCereodsSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generateCereodsSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
             Case LbmClass.Cer_EOS
-                generateCereosSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generateCereosSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
             Case LbmClass.HexCer_EOS
-                generateHexcereosSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generateHexcereosSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
                 ' OxPls
             Case LbmClass.OxFA
-                generateOxfaSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, maxOxygen)
+                generateOxfaSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, maxOxygen)
             Case LbmClass.OxPC
-                generateOxpcSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, maxOxygen)
+                generateOxpcSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, maxOxygen)
             Case LbmClass.OxPE
-                generateOxpeSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, maxOxygen)
+                generateOxpeSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, maxOxygen)
             Case LbmClass.OxPG
-                generateOxpgSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, maxOxygen)
+                generateOxpgSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, maxOxygen)
             Case LbmClass.OxPI
-                generateOxpiSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, maxOxygen)
+                generateOxpiSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, maxOxygen)
             Case LbmClass.OxPS
-                generateOxpsSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, maxOxygen)
+                generateOxpsSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, maxOxygen)
             Case LbmClass.EtherOxPC
-                generateOxpcEtherSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, maxOxygen)
+                generateOxpcEtherSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, maxOxygen)
             Case LbmClass.EtherOxPE
-                generateOxpeEtherSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, maxOxygen)
+                generateOxpeEtherSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, maxOxygen)
             Case LbmClass.PEtOH
-                generatePetohSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generatePetohSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
             Case LbmClass.PMeOH
-                generatePmeohSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generatePmeohSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
             Case LbmClass.PBtOH
-                generatePbtohSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generatePbtohSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
             Case LbmClass.GM3
-                generateGm3Species(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generateGm3Species(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
             Case LbmClass.LNAPS
-                generateLnapsSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generateLnapsSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
             Case LbmClass.EtherLPE
-                generateEtherlpeSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generateEtherlpeSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
             Case LbmClass.EtherLPC
-                generateEtherlpcSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generateEtherlpcSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
             Case LbmClass.Hex2Cer
-                generateHexhexcernsSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generateHexhexcernsSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
             Case LbmClass.Hex3Cer
-                generateHexhexhexcernsSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generateHexhexhexcernsSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
             Case LbmClass.Cer_EBDS
-                generateAcylcerbdsSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generateAcylcerbdsSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
             Case LbmClass.AHexCer
-                generateAcylhexcerasSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generateAcylhexcerasSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
             Case LbmClass.ASM
-                generateAcylsmSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generateAcylsmSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
 
             Case LbmClass.Cer_OS
-                generateCerosSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generateCerosSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
             Case LbmClass.MLCL
-                generateLclSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generateLclSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
             Case LbmClass.DLCL
-                generateDlclSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generateDlclSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
             Case LbmClass.PhytoSph
-                generatePhytosphingosineSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generatePhytosphingosineSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
             Case LbmClass.Sph
-                generateSphingosineSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generateSphingosineSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
             Case LbmClass.DHSph
-                generateSphinganineSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generateSphinganineSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
             Case LbmClass.EtherMGDG
-                generateEthermgdgSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generateEthermgdgSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
             Case LbmClass.EtherDGDG
-                generateEtherdgdgSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generateEtherdgdgSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
             Case LbmClass.EtherTG
-                generateEthertagSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generateEthertagSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
                 'add 10/04/19
             Case LbmClass.EtherPI
-                generateEtherpiSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generateEtherpiSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
             Case LbmClass.EtherPS
-                generateEtherpsSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generateEtherpsSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
             Case LbmClass.PE_Cer
-                generatePetceramideSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
-                generatePedceramideSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generatePetceramideSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generatePedceramideSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
                 ' add 13/05/19
             Case LbmClass.DCAE
-                generateDcaesSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generateDcaesSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
             Case LbmClass.GDCAE
-                generateGdcaesSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generateGdcaesSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
             Case LbmClass.GLCAE
-                generateGlcaesSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generateGlcaesSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
             Case LbmClass.TDCAE
-                generateTdcaesSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generateTdcaesSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
             Case LbmClass.TLCAE
-                generateTlcaesSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generateTlcaesSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
             Case LbmClass.NAE
-                generateAnandamideSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generateAnandamideSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
             Case LbmClass.NAGly
-                generateFAHFAmideGlySpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generateFAHFAmideGlySpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
             Case LbmClass.NAGlySer
-                generateFAHFAmideGlySerSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generateFAHFAmideGlySerSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
             Case LbmClass.SL
-                generateSulfonolipidSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, maxOxygen)
+                generateSulfonolipidSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, maxOxygen)
             Case LbmClass.EtherPG
-                generateEtherpgSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generateEtherpgSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
             Case LbmClass.EtherLPG
-                generateEtherlpgSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generateEtherlpgSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
             Case LbmClass.PI_Cer
-                generatePiceramideDihydroxySpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, maxOxygen)
-                generatePiceramideTrihydroxySpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, maxOxygen)
-                generatePiceramideOxDihydroxySpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, maxOxygen)
+                generatePiceramideDihydroxySpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, maxOxygen)
+                generatePiceramideTrihydroxySpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, maxOxygen)
+                generatePiceramideOxDihydroxySpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, maxOxygen)
             Case LbmClass.SHexCer
-                generateShexcerSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
-                generateShexcerOxSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generateShexcerSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generateShexcerOxSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
 
             Case LbmClass.CoQ
-                generateCoenzymeqSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount)
+                generateCoenzymeqSpecies(adduct, minCarbonCount, maxCarbonCount)
 
             Case LbmClass.Vitamin_E
-                generateVitaminESpecies(outputfolder, adduct)
-                generateVitaminDSpecies(outputfolder, adduct)
+                generateVitaminESpecies(adduct)
+                generateVitaminDSpecies(adduct)
 
             Case LbmClass.VAE
-                generateVitaminASpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generateVitaminASpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
 
             Case LbmClass.NAOrn
-                generateFAHFAmideOrnSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generateFAHFAmideOrnSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
 
             Case LbmClass.BRSE
-                generateBrseSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generateBrseSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
             Case LbmClass.CASE
-                generateCaseSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generateCaseSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
             Case LbmClass.SISE
-                generateSiseSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generateSiseSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
             Case LbmClass.STSE
-                generateStseSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generateStseSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
 
             Case LbmClass.AHexBRS
-                generateAhexbrseSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generateAhexbrseSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
             Case LbmClass.AHexCAS
-                generateAhexcaseSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generateAhexcaseSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
             Case LbmClass.AHexCS
-                generateAhexceSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generateAhexceSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
             Case LbmClass.AHexSIS
-                generateAhexsiseSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generateAhexsiseSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
             Case LbmClass.AHexSTS
-                generateAhexstseSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+                generateAhexstseSpecies(adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
 
         End Select
     End Function
