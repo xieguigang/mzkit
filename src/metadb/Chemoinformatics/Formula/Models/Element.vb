@@ -77,10 +77,14 @@ Namespace Formula
     ''' </summary>
     Public Class Element
 
+        ''' <summary>
+        ''' the iupac ID
+        ''' </summary>
+        ''' <returns></returns>
         Public Property id As Integer
 
         ''' <summary>
-        ''' the element atom symbol
+        ''' the element atom symbol, or the element name in MS-DIAL
         ''' </summary>
         ''' <returns></returns>
         Public Property symbol As String
@@ -125,7 +129,7 @@ Namespace Formula
         ''' A in-memory database for the element mass
         ''' </summary>
         ''' <returns></returns>
-        Private Shared Iterator Function MemoryPopulateElements() As IEnumerable(Of Element)
+        Friend Shared Iterator Function MemoryPopulateElements() As IEnumerable(Of Element)
             Yield New Element(1) With {.symbol = "H", .name = "Hydrogen", .charge = 1, .isotopic = H, .isotopes = {Isotope(1.0078250321, 0.999885, 1), Isotope(2.014101778, 0.000115, 2)}}
             Yield New Element(1) With {.symbol = "D", .name = "Deuterium", .charge = 1, .isotopic = 2.014101778, .isotopes = {Isotope(2.014101778, 0.000115, 2)}}
             Yield New Element(2) With {.symbol = "He", .name = "Helium", .charge = 0, .isotopic = 4.0026029, .isotopes = {Isotope(3.0160293097, 0.00000137, 3), Isotope(4.0026032497, 0.99999863, 4)}}
