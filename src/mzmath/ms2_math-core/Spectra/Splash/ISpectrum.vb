@@ -21,11 +21,19 @@
 '  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 
 Namespace Spectra.SplashID
+
+    ''' <summary>
+    ''' the abstract spectrum object, a spectrum object is a
+    ''' kind of the fragment collection object
+    ''' </summary>
     Public Interface ISpectrum
-        Function GetIons() As List(Of ms2)
-        Function getSortedIonsByMZ(Optional desc As Boolean = False) As List(Of ms2)
-        Function getSortedIonsByIntensity(Optional desc As Boolean = True) As List(Of ms2)
-        Function getSpectrumType() As SpectrumType
-        Function ToString() As String
+
+        ''' <summary>
+        ''' get the ion peaks data
+        ''' </summary>
+        ''' <returns></returns>
+        Function GetIons() As IEnumerable(Of ms2)
+        Sub SetIons(ions As IEnumerable(Of ms2))
+
     End Interface
 End Namespace

@@ -21,6 +21,7 @@
 '  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 
 Namespace Spectra.SplashID
+
     Public Enum SpectrumType As Integer
         MS = 1
         NMR = 2
@@ -28,4 +29,5 @@ Namespace Spectra.SplashID
         IR = 4
         RAMAN = 5
     End Enum
+
 End Namespace
