@@ -14,7 +14,7 @@ Namespace Formula.MS
 
         Public Property Intensity As Double
 
-        Public Property Formula As Formula = New Formula()
+        Public Property Formula As Formula
 
         Public Property IonMode As IonModes
 
