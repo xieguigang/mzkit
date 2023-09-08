@@ -1,5 +1,5 @@
 ﻿Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
-Imports BioNovoGene.BioDeep.MSEngine
+Imports BioNovoGene.BioDeep.MSFinder
 Imports Microsoft.VisualBasic.Linq
 
 Public NotInheritable Class LipidMassLibraryGenerator

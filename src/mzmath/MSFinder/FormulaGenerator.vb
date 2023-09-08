@@ -6,10 +6,26 @@ Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
 Imports std = System.Math
 
+Public Class RawData : Inherits PeakMs2
+
+    Public Property CarbonNumberFromLabeledExperiment As Integer
+    Public Property SulfurNumberFromLabeledExperiment As Integer
+    Public Property NitrogenNumberFromLabeledExperiment As Integer
+    Public Property OxygenNumberFromLabeledExperiment As Integer
+    Public Property CarbonNitrogenNumberFromLabeledExperiment As Integer
+    Public Property CarbonSulfurNumberFromLabeledExperiment As Integer
+    Public Property NitrogenSulfurNumberFromLabeledExperiment As Integer
+    Public Property CarbonNitrogenSulfurNumberFromLabeledExperiment As Integer
+End Class
+
 ''' <summary>
 ''' This class is the main program to find the molecular formula candidates from the mass spectra and to rank them.
 ''' </summary>
+''' <remarks>
+''' MS-DIAL MassFinder Code
+''' </remarks>
 Public Class FormulaGenerator
+
     Private Const cMass As Double = 12.0
     Private Const hMass As Double = 1.00782503207
     Private Const nMass As Double = 14.0030740048
@@ -56,7 +72,7 @@ Public Class FormulaGenerator
     ''' The parameters will be set by the user-defined paramerters.
     ''' </summary>
     ''' <param name="param"></param>
-    Public Sub New(ByVal param As AnalysisParamOfMsfinder)
+    Public Sub New(param As AnalysisParamOfMsfinder)
         Me.oCheck = param.IsOcheck
         Me.nCheck = param.IsNcheck
         Me.pCheck = param.IsPcheck
@@ -75,7 +91,7 @@ Public Class FormulaGenerator
         Me.maxFoldInitialize(Me.coverRange, Me.fCheck, Me.clCheck, Me.brCheck, Me.iCheck, Me.siCheck)
     End Sub
 
-    Private Sub maxFoldInitialize(ByVal coverRange As CoverRange, ByVal fCheck As Boolean, ByVal clCheck As Boolean, ByVal brCheck As Boolean, ByVal iCheck As Boolean, ByVal siCheck As Boolean)
+    Private Sub maxFoldInitialize(coverRange As CoverRange, fCheck As Boolean, clCheck As Boolean, brCheck As Boolean, iCheck As Boolean, siCheck As Boolean)
         Select Case coverRange
             Case CoverRange.CommonRange
                 Me.hMinFold = 0
@@ -128,17 +144,15 @@ Public Class FormulaGenerator
     ''' This is the main method to find the formula candidates.
     ''' MS-FINDER program now utilizes three internal databases including formulaDB, neutralLossDB, and existFormulaDB.
     ''' </summary>
-    ''' <param name="formulaDB"></param>
     ''' <param name="neutralLossDB"></param>
     ''' <param name="existFormulaDB"></param>
     ''' <param name="mass"></param>
-    ''' <param name="ms2Tol"></param>
     ''' <param name="m1Intensity"></param>
     ''' <param name="m2Intensity"></param>
     ''' <param name="rawData"></param>
     ''' <param name="adductIon"></param>
     ''' <returns></returns>
-    Public Function GetFormulaCandidateList(ByVal productIonDB As List(Of ProductIon), ByVal neutralLossDB As List(Of NeutralLoss), ByVal existFormulaDB As List(Of ExistFormulaQuery), ByVal param As AnalysisParamOfMsfinder, ByVal mass As Double, ByVal m1Intensity As Double, ByVal m2Intensity As Double, ByVal rawData As CompMs.Common.DataObj.RawData, ByVal adductIon As AdductIon, ByVal isotopeCheck As Boolean) As List(Of FormulaResult)
+    Public Function GetFormulaCandidateList(productIonDB As List(Of ProductIon), neutralLossDB As List(Of NeutralLoss), existFormulaDB As List(Of ExistFormulaQuery), param As AnalysisParamOfMsfinder, mass As Double, m1Intensity As Double, m2Intensity As Double, rawData As RawData, adductIon As AdductIon, isotopeCheck As Boolean) As List(Of FormulaResult)
 
         'param set
         Dim ms1Tol = param.Mass1Tolerance
@@ -152,7 +166,7 @@ Public Class FormulaGenerator
         Dim formulaResults = New System.Collections.Generic.List(Of FormulaResult)()
         Dim ms2Peaklist = FragmentAssigner.GetCentroidMsMsSpectrum(rawData)
         Dim refinedPeaklist = FragmentAssigner.GetRefinedPeaklist(ms2Peaklist, relativeAbundanceCutOff, 0.0, (mass * CDbl(adductIon.AdductIonXmer) + adductIon.AdductIonAccurateMass) / CDbl(adductIon.ChargeNumber), ms2Tol, massTolType, 1000, False, Not param.CanExcuteMS2AdductSearch)
-        Dim neutralLosslist = FragmentAssigner.GetNeutralLossList(refinedPeaklist, rawData.PrecursorMz, ms1Tol)
+        Dim neutralLosslist = FragmentAssigner.GetNeutralLossList(refinedPeaklist, rawData.mz, ms1Tol)
 
         Dim syncObj = New Object()
         'var endID = getFormulaDbLastIndex(formulaDB, mass + ms1Tol);
@@ -222,7 +236,7 @@ Public Class FormulaGenerator
         Return formulaResults
     End Function
 
-    Private Function getFormulaResults(ByVal rawData As CompMs.Common.DataObj.RawData, ByVal param As AnalysisParamOfMsfinder, ByVal mass As Double, ByVal ms1Tol As Double, ByVal m1Intensity As Double, ByVal m2Intensity As Double, ByVal adduct As AdductIon, ByVal isotopeCheck As Boolean, ByVal maxReportNumber As Integer, ByVal existFormulaDB As List(Of ExistFormulaQuery), ByVal refinedPeaklist As List(Of SpectrumPeak), ByVal neutralLosses As List(Of NeutralLoss), ByVal productIonDB As List(Of ProductIon), ByVal neutralLossDB As List(Of NeutralLoss)) As List(Of FormulaResult)
+    Private Function getFormulaResults(rawData As RawData, param As AnalysisParamOfMsfinder, mass As Double, ms1Tol As Double, m1Intensity As Double, m2Intensity As Double, adduct As AdductIon, isotopeCheck As Boolean, maxReportNumber As Integer, existFormulaDB As List(Of ExistFormulaQuery), refinedPeaklist As List(Of SpectrumPeak), neutralLosses As List(Of NeutralLoss), productIonDB As List(Of ProductIon), neutralLossDB As List(Of NeutralLoss)) As List(Of FormulaResult)
 
 
         Dim maxCnum = CInt((mass / 12.0))
@@ -255,7 +269,7 @@ Public Class FormulaGenerator
         Return formulaResultsMaster
     End Function
 
-    Private Function getFormulaResults(ByVal c As Integer, ByVal rawData As CompMs.Common.DataObj.RawData, ByVal param As AnalysisParamOfMsfinder, ByVal mass As Double, ByVal ms1Tol As Double, ByVal m1Intensity As Double, ByVal m2Intensity As Double, ByVal adduct As AdductIon, ByVal isotopeCheck As Boolean, ByVal maxReportNumber As Integer, ByVal existFormulaDB As List(Of ExistFormulaQuery), ByVal refinedPeaklist As List(Of SpectrumPeak), ByVal neutralLosses As List(Of NeutralLoss), ByVal productIonDB As List(Of ProductIon), ByVal neutralLossDB As List(Of NeutralLoss)) As List(Of FormulaResult)
+    Private Function getFormulaResults(c As Integer, rawData As RawData, param As AnalysisParamOfMsfinder, mass As Double, ms1Tol As Double, m1Intensity As Double, m2Intensity As Double, adduct As AdductIon, isotopeCheck As Boolean, maxReportNumber As Integer, existFormulaDB As List(Of ExistFormulaQuery), refinedPeaklist As List(Of SpectrumPeak), neutralLosses As List(Of NeutralLoss), productIonDB As List(Of ProductIon), neutralLossDB As List(Of NeutralLoss)) As List(Of FormulaResult)
 
 
 
@@ -396,7 +410,7 @@ Public Class FormulaGenerator
         Return formulaResults
     End Function
 
-    Private Function getFormulaSearchResults(ByVal formula As Formula, ByVal rawData As CompMs.Common.DataObj.RawData, ByVal param As AnalysisParamOfMsfinder, ByVal mass As Double, ByVal ms1Tol As Double, ByVal m1Intensity As Double, ByVal m2Intensity As Double, ByVal adductIon As AdductIon, ByVal isotopeCheck As Boolean, ByVal maxReportNumber As Integer, ByVal existFormulaDB As List(Of ExistFormulaQuery), ByVal refinedPeaklist As List(Of SpectrumPeak), ByVal neutralLosslist As List(Of NeutralLoss), ByVal productIonDB As List(Of ProductIon), ByVal neutralLossDB As List(Of NeutralLoss)) As List(Of FormulaResult)
+    Private Function getFormulaSearchResults(formula As Formula, rawData As RawData, param As AnalysisParamOfMsfinder, mass As Double, ms1Tol As Double, m1Intensity As Double, m2Intensity As Double, adductIon As AdductIon, isotopeCheck As Boolean, maxReportNumber As Integer, existFormulaDB As List(Of ExistFormulaQuery), refinedPeaklist As List(Of SpectrumPeak), neutralLosslist As List(Of NeutralLoss), productIonDB As List(Of ProductIon), neutralLossDB As List(Of NeutralLoss)) As List(Of FormulaResult)
 
 
         If formula.ExactMass + formula!C * Me.maxMassFoldChange < mass - ms1Tol Then Return Nothing
@@ -417,7 +431,7 @@ Public Class FormulaGenerator
             Return Nothing
         End If
 
-        '''test for ms-dial and ms-finder integration project
+        'test for ms-dial and ms-finder integration project
         'if (FormulaStringParcer.OrganicElementsReader(formula.FormulaString).Cnum != formula.Cnum) return null;
 
 
@@ -448,7 +462,6 @@ Public Class FormulaGenerator
     ''' This is the main method to find the formula candidates.
     ''' MS-FINDER program now utilizes three internal databases including formulaDB, neutralLossDB, and existFormulaDB.
     ''' </summary>
-    ''' <param name="formulaDB"></param>
     ''' <param name="existFormulaDB"></param>
     ''' <param name="mass"></param>
     ''' <param name="m1Intensity"></param>
@@ -456,9 +469,7 @@ Public Class FormulaGenerator
     ''' <param name="adductIon"></param>
     ''' <param name="isotopeCheck"></param>
     ''' <returns></returns>
-    'public List<FormulaResult> GetFormulaCandidateList(List<Formula> formulaDB, List<ExistFormulaQuery> existFormulaDB, AnalysisParamOfMsfinder param, double mass, double ms1Tol, double ms2Tol, MassToleranceType massTolType, double m1Intensity, double m2Intensity, double isotopeRatioTolAsPercentage, int maxReportNumber, AdductIon adductIon, bool isotopeCheck) {
-    'public List<FormulaResult> GetFormulaCandidateList(RawData rawData, List<Formula> formulaDB, List<ExistFormulaQuery> existFormulaDB,
-    Public Function GetFormulaCandidateList(ByVal rawData As CompMs.Common.DataObj.RawData, ByVal existFormulaDB As List(Of ExistFormulaQuery), ByVal param As AnalysisParamOfMsfinder, ByVal mass As Double, ByVal m1Intensity As Double, ByVal m2Intensity As Double, ByVal adductIon As AdductIon, ByVal isotopeCheck As Boolean) As List(Of FormulaResult)
+    Public Function GetFormulaCandidateList(rawData As RawData, existFormulaDB As List(Of ExistFormulaQuery), param As AnalysisParamOfMsfinder, mass As Double, m1Intensity As Double, m2Intensity As Double, adductIon As AdductIon, isotopeCheck As Boolean) As List(Of FormulaResult)
 
         'param set
         Dim ms1Tol = param.Mass1Tolerance
@@ -505,7 +516,7 @@ Public Class FormulaGenerator
     End Function
 
     'public FormulaResult GetFormulaScore(string formulaString, List<NeutralLoss> neutralLossDB, List<ExistFormulaQuery> existFormulaDB, double mass, AnalysisParamOfMsfinder param, double ms1Tol, double ms2Tol, MassToleranceType massTolType, double relativeAbundanceCutOff, double subtractedM1Intensity, double subtractedM2Intensity, double isotopeRatioTolAsPercentage, RawData rawData, AdductIon adductIon, bool isotopeCheck) {
-    Public Function GetFormulaScore(ByVal formulaString As String, ByVal productIonDB As List(Of ProductIon), ByVal neutralLossDB As List(Of NeutralLoss), ByVal existFormulaDB As List(Of ExistFormulaQuery), ByVal param As AnalysisParamOfMsfinder, ByVal mass As Double, ByVal subtractedM1Intensity As Double, ByVal subtractedM2Intensity As Double, ByVal rawData As CompMs.Common.DataObj.RawData, ByVal adductIon As AdductIon, ByVal isotopeCheck As Boolean) As FormulaResult
+    Public Function GetFormulaScore(formulaString As String, productIonDB As List(Of ProductIon), neutralLossDB As List(Of NeutralLoss), existFormulaDB As List(Of ExistFormulaQuery), param As AnalysisParamOfMsfinder, mass As Double, subtractedM1Intensity As Double, subtractedM2Intensity As Double, rawData As RawData, adductIon As AdductIon, isotopeCheck As Boolean) As FormulaResult
 
         'param set
         Dim ms1Tol = param.Mass1Tolerance
@@ -522,15 +533,15 @@ Public Class FormulaGenerator
 
         If ms2Peaklist IsNot Nothing AndAlso ms2Peaklist.Count <> 0 Then
             Dim refinedPeaklist = FragmentAssigner.GetRefinedPeaklist(ms2Peaklist, relativeAbundanceCutOff, 0.0, (mass * CDbl(adductIon.AdductIonXmer) + adductIon.AdductIonAccurateMass) / CDbl(adductIon.ChargeNumber), ms2Tol, massTolType, 1000, False, Not param.CanExcuteMS2AdductSearch)
-            Dim neutralLosslist = FragmentAssigner.GetNeutralLossList(refinedPeaklist, rawData.PrecursorMz, ms1Tol)
+            Dim neutralLosslist = FragmentAssigner.GetNeutralLossList(refinedPeaklist, rawData.mz, ms1Tol)
 
             If param.CanExcuteMS2AdductSearch Then
                 If adductIon.IonMode = IonModes.Positive Then
-                    formulaResult.AnnotatedIonResult = FragmentAssigner.GetAnnotatedIon(refinedPeaklist, adductIon, param.MS2PositiveAdductIonList, rawData.PrecursorMz, param.Mass2Tolerance, param.MassTolType)
+                    formulaResult.AnnotatedIonResult = FragmentAssigner.GetAnnotatedIon(refinedPeaklist, adductIon, param.MS2PositiveAdductIonList, rawData.mz, param.Mass2Tolerance, param.MassTolType)
                 Else
-                    formulaResult.AnnotatedIonResult = FragmentAssigner.GetAnnotatedIon(refinedPeaklist, adductIon, param.MS2NegativeAdductIonList, rawData.PrecursorMz, param.Mass2Tolerance, param.MassTolType)
+                    formulaResult.AnnotatedIonResult = FragmentAssigner.GetAnnotatedIon(refinedPeaklist, adductIon, param.MS2NegativeAdductIonList, rawData.mz, param.Mass2Tolerance, param.MassTolType)
                 End If
-                refinedPeaklist = FragmentAssigner.GetRefinedPeaklist(refinedPeaklist, rawData.PrecursorMz)
+                refinedPeaklist = FragmentAssigner.GetRefinedPeaklist(refinedPeaklist, rawData.mz)
             End If
             Me.setFragmentProperties(formulaResult, refinedPeaklist, neutralLosslist, productIonDB, neutralLossDB, ms2Tol, massTolType, adductIon)
         End If
@@ -541,7 +552,7 @@ Public Class FormulaGenerator
         Return formulaResult
     End Function
 
-    Private Sub setExistFormulaDbInfo(ByVal formulaResult As FormulaResult, ByVal existFormulaDB As List(Of ExistFormulaQuery))
+    Private Sub setExistFormulaDbInfo(formulaResult As FormulaResult, existFormulaDB As List(Of ExistFormulaQuery))
         Dim resourceNames As String
         Dim resourceRecords As Integer
         Dim pubchemCids As List(Of Integer)
@@ -552,7 +563,7 @@ Public Class FormulaGenerator
         formulaResult.PubchemResources = pubchemCids
     End Sub
 
-    Private Sub tryExistFormulaDbSearch(ByVal formula As Formula, ByVal queryDB As List(Of ExistFormulaQuery), <Out> ByRef resourceNames As String, <Out> ByRef resourceRecords As Integer, <Out> ByRef pubchemCIDs As List(Of Integer))
+    Private Sub tryExistFormulaDbSearch(formula As Formula, queryDB As List(Of ExistFormulaQuery), <Out> ByRef resourceNames As String, <Out> ByRef resourceRecords As Integer, <Out> ByRef pubchemCIDs As List(Of Integer))
         pubchemCIDs = New System.Collections.Generic.List(Of Integer)()
         resourceNames = String.Empty
         resourceRecords = 0
@@ -577,7 +588,7 @@ Public Class FormulaGenerator
         Next
     End Sub
 
-    Private Function getQueryStartIndex(ByVal mass As Double, ByVal tol As Double, ByVal queryDB As List(Of ExistFormulaQuery)) As Integer
+    Private Function getQueryStartIndex(mass As Double, tol As Double, queryDB As List(Of ExistFormulaQuery)) As Integer
         If queryDB Is Nothing OrElse queryDB.Count = 0 Then Return 0
         Dim targetMass As Double = mass - tol
         Dim startIndex As Integer = 0, endIndex As Integer = queryDB.Count - 1
@@ -594,7 +605,7 @@ Public Class FormulaGenerator
         Return startIndex
     End Function
 
-    Private Sub setFragmentProperties(ByVal formulaResult As FormulaResult, ByVal refinedPeaklist As List(Of SpectrumPeak), ByVal neutralLosslist As List(Of NeutralLoss), ByVal productIonDB As List(Of ProductIon), ByVal neutralLossDB As List(Of NeutralLoss), ByVal ms2Tol As Double, ByVal massTolType As MassToleranceType, ByVal adductIon As AdductIon)
+    Private Sub setFragmentProperties(formulaResult As FormulaResult, refinedPeaklist As List(Of SpectrumPeak), neutralLosslist As List(Of NeutralLoss), productIonDB As List(Of ProductIon), neutralLossDB As List(Of NeutralLoss), ms2Tol As Double, massTolType As MassToleranceType, adductIon As AdductIon)
         If refinedPeaklist Is Nothing OrElse neutralLosslist Is Nothing Then Return
 
         formulaResult.ProductIonResult = FragmentAssigner.FastFragmnetAssigner(refinedPeaklist, productIonDB, formulaResult.Formula, ms2Tol, massTolType, adductIon)
@@ -611,7 +622,7 @@ Public Class FormulaGenerator
     End Sub
 
 
-    Private Function getUniqueNeutralLossCount(ByVal neutralLosses As List(Of NeutralLoss)) As Integer
+    Private Function getUniqueNeutralLossCount(neutralLosses As List(Of NeutralLoss)) As Integer
 
         If neutralLosses.Count = 0 Then Return 0
 
@@ -638,7 +649,7 @@ Public Class FormulaGenerator
         Return formulas.Count
     End Function
 
-    Private Function getUniqueNeutralLossCountByMass(ByVal neutralLosses As List(Of NeutralLoss), ByVal ms2Tol As Double, ByVal massTolType As MassToleranceType) As Integer
+    Private Function getUniqueNeutralLossCountByMass(neutralLosses As List(Of NeutralLoss), ms2Tol As Double, massTolType As MassToleranceType) As Integer
 
         If neutralLosses.Count = 0 Then Return 0
 
@@ -755,7 +766,7 @@ Public Class FormulaGenerator
     '    return formulaCandidate;
     '}
 
-    Private Function getFormulaSearchResults(ByVal formulaBean As Formula, ByVal param As AnalysisParamOfMsfinder, ByVal mass As Double, ByVal ms1Tol As Double, ByVal m1Intensity As Double, ByVal m2Intensity As Double, ByVal adduct As AdductIon, ByVal isotopeCheck As Boolean, ByVal maxFormulaNum As Integer, ByVal existFormulaDB As List(Of ExistFormulaQuery), ByVal refinedPeaklist As List(Of SpectrumPeak), ByVal neutralLosses As List(Of NeutralLoss), ByVal productIonDB As List(Of ProductIon), ByVal neutralLossDB As List(Of NeutralLoss)) As List(Of FormulaResult)
+    Private Function getFormulaSearchResults(formulaBean As Formula, param As AnalysisParamOfMsfinder, mass As Double, ms1Tol As Double, m1Intensity As Double, m2Intensity As Double, adduct As AdductIon, isotopeCheck As Boolean, maxFormulaNum As Integer, existFormulaDB As List(Of ExistFormulaQuery), refinedPeaklist As List(Of SpectrumPeak), neutralLosses As List(Of NeutralLoss), productIonDB As List(Of ProductIon), neutralLossDB As List(Of NeutralLoss)) As List(Of FormulaResult)
 
         If param.IsTmsMeoxDerivative AndAlso formulaBean!N < param.MinimumMeoxCount Then Return New System.Collections.Generic.List(Of FormulaResult)()
 
@@ -837,7 +848,7 @@ Public Class FormulaGenerator
         Return formulaCandidates
     End Function
 
-    Private Function tryGetFormulaResultCandidate(ByVal formula As Formula, ByVal param As AnalysisParamOfMsfinder, ByVal mass As Double, ByVal ms1Tol As Double, ByVal m1Intensity As Double, ByVal m2Intensity As Double, ByVal isotopeCheck As Boolean, ByVal adduct As AdductIon, ByVal refinedPeaklist As List(Of SpectrumPeak), ByVal neutralLosses As List(Of NeutralLoss), ByVal existFormulaDB As List(Of ExistFormulaQuery), ByVal productIonDB As List(Of ProductIon), ByVal neutralLossDB As List(Of NeutralLoss)) As FormulaResult
+    Private Function tryGetFormulaResultCandidate(formula As Formula, param As AnalysisParamOfMsfinder, mass As Double, ms1Tol As Double, m1Intensity As Double, m2Intensity As Double, isotopeCheck As Boolean, adduct As AdductIon, refinedPeaklist As List(Of SpectrumPeak), neutralLosses As List(Of NeutralLoss), existFormulaDB As List(Of ExistFormulaQuery), productIonDB As List(Of ProductIon), neutralLossDB As List(Of NeutralLoss)) As FormulaResult
 
         Dim ms2Tol = param.Mass2Tolerance
         Dim massTolType = param.MassTolType
@@ -886,7 +897,7 @@ Public Class FormulaGenerator
 
 
 
-    Private Function getFormulaResultCandidates(ByVal formulaCandidate As List(Of FormulaResult), ByVal formulaResult As FormulaResult, ByVal maxFormulaNum As Integer) As List(Of FormulaResult)
+    Private Function getFormulaResultCandidates(formulaCandidate As List(Of FormulaResult), formulaResult As FormulaResult, maxFormulaNum As Integer) As List(Of FormulaResult)
         If formulaCandidate.Count < maxFormulaNum - 1 Then
             formulaCandidate.Add(formulaResult)
         ElseIf formulaCandidate.Count = maxFormulaNum - 1 Then
@@ -904,7 +915,7 @@ Public Class FormulaGenerator
         Return formulaCandidate
     End Function
 
-    Private Function getFormulaResultStartIndex(ByVal score As Double, ByVal tol As Double, ByVal results As List(Of FormulaResult)) As Integer
+    Private Function getFormulaResultStartIndex(score As Double, tol As Double, results As List(Of FormulaResult)) As Integer
         If results Is Nothing OrElse results.Count = 0 Then Return 0
         Dim targetScore As Double = score + tol
         Dim startIndex As Integer = 0, endIndex As Integer = results.Count - 1
@@ -921,7 +932,7 @@ Public Class FormulaGenerator
         Return startIndex
     End Function
 
-    Private Function getFormulaResultInsertID(ByVal formulaCandidate As List(Of FormulaResult), ByVal formulaResult As FormulaResult, ByVal startID As Integer) As Integer
+    Private Function getFormulaResultInsertID(formulaCandidate As List(Of FormulaResult), formulaResult As FormulaResult, startID As Integer) As Integer
         Dim maxID = 0
         For i As Integer = startID To 0 Step -1
             If formulaCandidate(CInt((i))).TotalScore < formulaResult.TotalScore Then
@@ -933,7 +944,7 @@ Public Class FormulaGenerator
         Return maxID
     End Function
 
-    Private Function getFormulaResult(ByVal formula As Formula, ByVal param As AnalysisParamOfMsfinder, ByVal mass As Double, ByVal ms1MassTol As Double, ByVal m1Intensity As Double, ByVal m2Intensity As Double, ByVal isotopeCheck As Boolean, ByVal existFormulaDB As List(Of ExistFormulaQuery)) As FormulaResult
+    Private Function getFormulaResult(formula As Formula, param As AnalysisParamOfMsfinder, mass As Double, ms1MassTol As Double, m1Intensity As Double, m2Intensity As Double, isotopeCheck As Boolean, existFormulaDB As List(Of ExistFormulaQuery)) As FormulaResult
         Dim isotopicAbundanceTolerance = param.IsotopicAbundanceTolerance
         Dim formulaResult = New FormulaResult()
 
@@ -958,7 +969,7 @@ Public Class FormulaGenerator
         Return formulaResult
     End Function
 
-    Private Function getCandidateFormulaBean(ByVal originalFormula As Formula, ByVal addHnum As Integer, ByVal addFnum As Integer, ByVal addClnum As Integer, ByVal addBrnum As Integer, ByVal addInum As Integer, ByVal addSinum As Integer, ByVal Optional tmsCount As Integer = 0, ByVal Optional meoxCount As Integer = 0) As Formula
+    Private Function getCandidateFormulaBean(originalFormula As Formula, addHnum As Integer, addFnum As Integer, addClnum As Integer, addBrnum As Integer, addInum As Integer, addSinum As Integer, Optional tmsCount As Integer = 0, Optional meoxCount As Integer = 0) As Formula
         Dim cNum = originalFormula!C
         Dim hNum = originalFormula!H + addHnum
         Dim nNum = originalFormula!N

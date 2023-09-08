@@ -21,7 +21,7 @@ Namespace Formula
     Public Module FormulaCalculateUtility
 
 
-        Public Function ConvertFormulaAdductPairToPrecursorAdduct(ByVal formula As Formula, ByVal adduct As AdductIon) As Formula
+        Public Function ConvertFormulaAdductPairToPrecursorAdduct(formula As Formula, adduct As AdductIon) As Formula
 
             If adduct.IonMode = IonModes.Positive Then
                 Select Case adduct.AdductIonName
@@ -54,7 +54,7 @@ Namespace Formula
             End If
         End Function
 
-        Public Function ConvertTmsMeoxSubtractedFormula(ByVal formula As Formula) As Formula
+        Public Function ConvertTmsMeoxSubtractedFormula(formula As Formula) As Formula
             If formula!Tms = 0 AndAlso formula!Meox = 0 Then Return formula
             Dim tmsCount = formula!Tms
             Dim meoxCount = formula!Meox

@@ -13,10 +13,9 @@ Public NotInheritable Class FragmentAssigner
     ''' <summary>
     ''' peaklist should be centroid and refined. For peaklist refining, use GetRefinedPeaklist.
     ''' </summary>
-    ''' <paramname="peaklist"></param>
-    ''' <paramname="formula"></param>
-    ''' <paramname="analysisParam"></param>
-    Public Shared Function FastFragmnetAssigner(ByVal peaklist As List(Of SpectrumPeak), ByVal productIonDB As List(Of ProductIon), ByVal formula As Formula, ByVal ms2Tol As Double, ByVal massTolType As MassToleranceType, ByVal adductIon As AdductIon) As List(Of ProductIon)
+    ''' <param name="peaklist"></param>
+    ''' <param name="formula"></param>
+    Public Shared Function FastFragmnetAssigner(peaklist As List(Of SpectrumPeak), productIonDB As List(Of ProductIon), formula As Formula, ms2Tol As Double, massTolType As MassToleranceType, adductIon As AdductIon) As List(Of ProductIon)
         Dim productIons = New List(Of ProductIon)()
         Dim eMass = electron
         If adductIon.IonMode = IonModes.Negative Then eMass = -1.0 * electron
@@ -79,7 +78,7 @@ Public NotInheritable Class FragmentAssigner
         Return productIons
     End Function
 
-    Private Shared Function getFormulaCandidatesbyLibrarySearch(ByVal formula As Formula, ByVal ionMode As IonModes, ByVal mz As Double, ByVal massTol As Double, ByVal productIonDB As List(Of ProductIon)) As List(Of Formula)
+    Private Shared Function getFormulaCandidatesbyLibrarySearch(formula As Formula, ionMode As IonModes, mz As Double, massTol As Double, productIonDB As List(Of ProductIon)) As List(Of Formula)
         Dim candidates = New List(Of Formula)()
         Dim startIndex = getStartIndex(mz, massTol, productIonDB)
         For i = startIndex To productIonDB.Count - 1
@@ -96,7 +95,7 @@ Public NotInheritable Class FragmentAssigner
         Return candidates
     End Function
 
-    Private Shared Function getStartIndex(ByVal mass As Double, ByVal tol As Double, ByVal productIonDB As List(Of ProductIon)) As Integer
+    Private Shared Function getStartIndex(mass As Double, tol As Double, productIonDB As List(Of ProductIon)) As Integer
         If productIonDB Is Nothing OrElse productIonDB.Count = 0 Then Return 0
         Dim targetMass = mass - tol
         Dim startIndex = 0, endIndex = productIonDB.Count - 1
@@ -116,13 +115,12 @@ Public NotInheritable Class FragmentAssigner
     ''' <summary>
     ''' The neutralLosslist can be made by GetNeutralLossList after using GetRefinedPeaklist.
     ''' </summary>
-    ''' <paramname="neutralLosslist"></param>
-    ''' <paramname="neutralLossDB"></param>
-    ''' <paramname="originalFormula"></param>
-    ''' <paramname="analysisParam"></param>
-    ''' <paramname="adductIon"></param>
+    ''' <param name="neutralLosslist"></param>
+    ''' <param name="neutralLossDB"></param>
+    ''' <param name="originalFormula"></param>
+    ''' <param name="adductIon"></param>
     ''' <returns></returns>
-    Public Shared Function FastNeutralLossAssigner(ByVal neutralLosslist As List(Of NeutralLoss), ByVal neutralLossDB As List(Of NeutralLoss), ByVal originalFormula As Formula, ByVal ms2Tol As Double, ByVal massTolType As MassToleranceType, ByVal adductIon As AdductIon) As List(Of NeutralLoss)
+    Public Shared Function FastNeutralLossAssigner(neutralLosslist As List(Of NeutralLoss), neutralLossDB As List(Of NeutralLoss), originalFormula As Formula, ms2Tol As Double, massTolType As MassToleranceType, adductIon As AdductIon) As List(Of NeutralLoss)
         Dim neutralLossResult = New List(Of NeutralLoss)()
         'double eMass = electron; if (adductIon.IonMode == IonMode.Negative) eMass = -1.0 * electron; 
 
@@ -169,7 +167,7 @@ Public NotInheritable Class FragmentAssigner
         Return neutralLossResult.OrderByDescending(Function(n) std.Max(n.PrecursorIntensity, n.ProductIntensity)).ToList()
     End Function
 
-    Private Shared Function getStartIndex(ByVal mass As Double, ByVal tol As Double, ByVal neutralLossDB As List(Of NeutralLoss)) As Integer
+    Private Shared Function getStartIndex(mass As Double, tol As Double, neutralLossDB As List(Of NeutralLoss)) As Integer
         If neutralLossDB Is Nothing OrElse neutralLossDB.Count = 0 Then Return 0
         Dim targetMass = mass - tol
         Dim startIndex = 0, endIndex = neutralLossDB.Count - 1
@@ -189,9 +187,9 @@ Public NotInheritable Class FragmentAssigner
     ''' <summary>
     ''' peaklist should be centroid and refined. For peaklist refining, use GetRefinedPeaklist.
     ''' </summary>
-    ''' <paramname="peaklist"></param>
+    ''' <param name="peaklist"></param>
     ''' <returns></returns>
-    Public Shared Function GetNeutralLossList(ByVal peaklist As List(Of SpectrumPeak), ByVal precurosrMz As Double, ByVal masstol As Double) As List(Of NeutralLoss)
+    Public Shared Function GetNeutralLossList(peaklist As List(Of SpectrumPeak), precurosrMz As Double, masstol As Double) As List(Of NeutralLoss)
         If peaklist Is Nothing OrElse peaklist.Count = 0 Then Return New List(Of NeutralLoss)()
 
         Dim neutralLosslist = New List(Of NeutralLoss)()
@@ -240,17 +238,18 @@ Public NotInheritable Class FragmentAssigner
     ''' <summary>
     ''' peaklist should be centroid.
     ''' </summary>
-    ''' <paramname="peaklist"></param>
-    ''' <paramname="analysisParam"></param>
-    ''' <paramname="precursorMz"></param>
+    ''' <param name="peaklist"></param>
+    ''' <param name="precursorMz"></param>
     ''' <returns></returns>
-    Public Shared Function GetRefinedPeaklist(ByVal peaklist As List(Of SpectrumPeak), ByVal relativeAbundanceCutOff As Double, ByVal absoluteAbundanceCutOff As Double, ByVal precursorMz As Double, ByVal ms2Tol As Double, ByVal massTolType As MassToleranceType, ByVal Optional peakListMax As Integer = 1000, ByVal Optional isRemoveIsotopes As Boolean = False, ByVal Optional removeAfterPrecursor As Boolean = True) As List(Of SpectrumPeak)
+    Public Shared Function GetRefinedPeaklist(peaklist As SpectrumPeak(), relativeAbundanceCutOff As Double, absoluteAbundanceCutOff As Double, precursorMz As Double, ms2Tol As Double, massTolType As MassToleranceType, Optional peakListMax As Integer = 1000, Optional isRemoveIsotopes As Boolean = False, Optional removeAfterPrecursor As Boolean = True) As List(Of SpectrumPeak)
 
 
 
+        If peaklist Is Nothing OrElse peaklist.Length = 0 Then
+            Return New List(Of SpectrumPeak)()
+        End If
 
-        If peaklist Is Nothing OrElse peaklist.Count = 0 Then Return New List(Of SpectrumPeak)()
-        Dim maxIntensity = getMaxIntensity(peaklist)
+        Dim maxIntensity = Aggregate ms2 As SpectrumPeak In peaklist Into Max(ms2.intensity)
         Dim refinedPeaklist = New List(Of SpectrumPeak)()
 
         For Each peak In peaklist
@@ -301,7 +300,7 @@ Public NotInheritable Class FragmentAssigner
         Return refinedPeaklist
     End Function
 
-    Public Shared Function GetRefinedPeaklist(ByVal peaklist As List(Of SpectrumPeak), ByVal precursorMz As Double) As List(Of SpectrumPeak)
+    Public Shared Function GetRefinedPeaklist(peaklist As List(Of SpectrumPeak), precursorMz As Double) As List(Of SpectrumPeak)
         If peaklist Is Nothing OrElse peaklist.Count = 0 Then Return New List(Of SpectrumPeak)()
         Dim refinedPeaklist = New List(Of SpectrumPeak)()
 
@@ -319,13 +318,16 @@ Public NotInheritable Class FragmentAssigner
     ''' <summary>
     ''' peaklist should be centroid.
     ''' </summary>
-    ''' <paramname="peaklist"></param>
-    ''' <paramname="analysisParam"></param>
-    ''' <paramname="precursorMz"></param>
+    ''' <param name="peaklist"></param>
+    ''' <param name="precursorMz"></param>
     ''' <returns></returns>
-    Public Shared Function GetRefinedPeaklist(ByVal peaklist As List(Of SpectrumPeak), ByVal relativeAbundanceCutOff As Double, ByVal absoluteAbundanceCutOff As Double, ByVal precursorMz As Double, ByVal ms2Tol As Double, ByVal massTolType As MassToleranceType) As List(Of SpectrumPeak)
-        If peaklist Is Nothing OrElse peaklist.Count = 0 Then Return New List(Of SpectrumPeak)()
-        Dim maxIntensity = getMaxIntensity(peaklist)
+    Public Shared Function GetRefinedPeaklist(peaklist As List(Of SpectrumPeak), relativeAbundanceCutOff As Double, absoluteAbundanceCutOff As Double, precursorMz As Double, ms2Tol As Double, massTolType As MassToleranceType) As List(Of SpectrumPeak)
+
+        If peaklist Is Nothing OrElse peaklist.Count = 0 Then
+            Return New List(Of SpectrumPeak)()
+        End If
+
+        Dim maxIntensity = Aggregate ms2 As SpectrumPeak In peaklist Into Max(ms2.intensity)
         Dim refinedPeaklist = New List(Of SpectrumPeak)()
 
         For Each peak In peaklist
@@ -346,59 +348,10 @@ Public NotInheritable Class FragmentAssigner
     ''' <summary>
     ''' get centroid spectrum: judge if the type is profile or centroid
     ''' </summary>
-    ''' <paramname="rawData"></param>
+    ''' <param name="rawData"></param>
     ''' <returns></returns>
-    Public Shared Function GetCentroidMsMsSpectrum(ByVal rawData As RawData) As List(Of SpectrumPeak)
-        Dim ms2Peaklist As List(Of SpectrumPeak)
-
-        If rawData.SpectrumType = MSDataType.Centroid Then
-            ms2Peaklist = rawData.Ms2Spectrum
-        Else
-            ms2Peaklist = SpectralCentroiding.Centroid(rawData.Ms2Spectrum)
-        End If
-
-        If ms2Peaklist Is Nothing Then Return New List(Of SpectrumPeak)()
-
-        Return ms2Peaklist
-    End Function
-
-    ''' <summary>
-    ''' get centroid spectrum: judge if the type is profile or centroid
-    ''' </summary>
-    ''' <paramname="rawData"></param>
-    ''' <returns></returns>
-    Public Shared Function GetCentroidMs1Spectrum(ByVal rawData As RawData) As List(Of SpectrumPeak)
-        Dim ms1Peaklist As List(Of SpectrumPeak)
-
-        If rawData.SpectrumType = MSDataType.Centroid Then
-            ms1Peaklist = rawData.Ms1Spectrum
-        Else
-            ms1Peaklist = SpectralCentroiding.Centroid(rawData.Ms1Spectrum)
-        End If
-
-        If ms1Peaklist Is Nothing Then Return New List(Of SpectrumPeak)()
-
-        Return ms1Peaklist
-    End Function
-
-    ''' <summary>
-    ''' get centroid spectrum: judge if the type is profile or centroid
-    ''' </summary>
-    ''' <paramname="peaklist"></param>
-    ''' <paramname="dataType"></param>
-    ''' <returns></returns>
-    Public Shared Function GetCentroidSpectrum(ByVal peaklist As List(Of SpectrumPeak), ByVal dataType As MSDataType, ByVal threshold As Double) As List(Of SpectrumPeak)
-        Dim cPeaklist As List(Of SpectrumPeak)
-
-        If dataType = MSDataType.Centroid Then
-            cPeaklist = peaklist
-        Else
-            cPeaklist = SpectralCentroiding.Centroid(peaklist, threshold)
-        End If
-
-        If cPeaklist Is Nothing Then Return New List(Of SpectrumPeak)()
-
-        Return cPeaklist
+    Public Shared Function GetCentroidMsMsSpectrum(rawData As RawData) As SpectrumPeak()
+        Return rawData.mzInto.Centroid(Tolerance.PPM(30), New RelativeIntensityCutoff(0.01)).Select(Function(p) New SpectrumPeak(p)).ToArray
     End Function
 
     'private static double hMass = 1.00782503207;
@@ -413,10 +366,10 @@ Public NotInheritable Class FragmentAssigner
     'private static double brMass = 78.91833710000;
     'private static double iMass = 126.90447300000;
 
-    Private Shared Function getValenceCheckedFragmentFormulaList(ByVal formula As Formula, ByVal ionMode As IonModes, ByVal mass As Double, ByVal massTol As Double) As List(Of Formula)
+    Private Shared Function getValenceCheckedFragmentFormulaList(formula As Formula, ionMode As IonModes, mass As Double, massTol As Double) As List(Of Formula)
         Dim fragmentFormulas = New List(Of Formula)()
         Dim hydrogen = 1
-        If ionMode = ionMode.Negative Then hydrogen = -1
+        If ionMode = IonModes.Negative Then hydrogen = -1
 
         Dim maxHmass = hMass * (formula!H + hydrogen)
         Dim maxCHmass = maxHmass + cMass * formula!C
@@ -506,7 +459,7 @@ Public NotInheritable Class FragmentAssigner
         Return fragmentFormulas
     End Function
 
-    Private Shared Function isotopicPeakAssignmnet(ByVal peaklist As List(Of SpectrumPeak), ByVal massTol As Double, ByVal massTolType As MassToleranceType) As List(Of SpectrumPeak)
+    Private Shared Function isotopicPeakAssignmnet(peaklist As List(Of SpectrumPeak), massTol As Double, massTolType As MassToleranceType) As List(Of SpectrumPeak)
         Dim c13_c12_Ratio = 0.010815728
 
         For i = 0 To peaklist.Count - 1
@@ -568,7 +521,7 @@ Public NotInheritable Class FragmentAssigner
     End Function
 
 
-    Public Shared Function GetAnnotatedIon(ByVal peaklist As List(Of SpectrumPeak), ByVal mainAdduct As AdductIon, ByVal referenceAdductTypeList As List(Of AdductIon), ByVal precursorMz As Double, ByVal massTol As Double, ByVal massTolType As MassToleranceType) As List(Of AnnotatedIon)
+    Public Shared Function GetAnnotatedIon(peaklist As List(Of SpectrumPeak), mainAdduct As AdductIon, referenceAdductTypeList As List(Of AdductIon), precursorMz As Double, massTol As Double, massTolType As MassToleranceType) As List(Of AnnotatedIon)
         Dim annotations = New List(Of AnnotatedIon)()
         For Each peak In peaklist
             annotations.Add(New AnnotatedIon() With {
@@ -580,7 +533,7 @@ Public NotInheritable Class FragmentAssigner
         Return annotations
     End Function
 
-    Public Shared Sub AnnotateIsotopes(ByVal peaklist As List(Of SpectrumPeak), ByVal annotations As List(Of AnnotatedIon), ByVal massTol As Double, ByVal massTolType As MassToleranceType)
+    Public Shared Sub AnnotateIsotopes(peaklist As List(Of SpectrumPeak), annotations As List(Of AnnotatedIon), massTol As Double, massTolType As MassToleranceType)
         Dim c13_c12_Ratio = 0.010815728
         For i = 0 To peaklist.Count - 1
             Dim mass = peaklist(i).mz
@@ -625,7 +578,7 @@ Public NotInheritable Class FragmentAssigner
     End Sub
 
 
-    Public Shared Sub AnnotateAdducts(ByVal peaklist As List(Of SpectrumPeak), ByVal annotations As List(Of AnnotatedIon), ByVal mainAdduct As AdductIon, ByVal referenceAdductTypeList As List(Of AdductIon), ByVal precursorMz As Double, ByVal massTol As Double, ByVal massTolType As MassToleranceType)
+    Public Shared Sub AnnotateAdducts(peaklist As List(Of SpectrumPeak), annotations As List(Of AnnotatedIon), mainAdduct As AdductIon, referenceAdductTypeList As List(Of AdductIon), precursorMz As Double, massTol As Double, massTolType As MassToleranceType)
 
         For i = 0 To peaklist.Count - 1
             Dim peak = peaklist(i)
@@ -672,15 +625,7 @@ Public NotInheritable Class FragmentAssigner
         Next
     End Sub
 
-    Private Shared Function getMaxIntensity(ByVal peaklist As List(Of SpectrumPeak)) As Double
-        Dim maxInt = Double.MinValue
-        For Each peak In peaklist
-            If peak.intensity > maxInt Then maxInt = peak.intensity
-        Next
-        Return maxInt
-    End Function
-
-    Private Shared Function isFormulaComposition(ByVal nlFormula As Formula, ByVal originFormula As Formula) As Boolean
+    Private Shared Function isFormulaComposition(nlFormula As Formula, originFormula As Formula) As Boolean
         If nlFormula!C <= originFormula!C AndAlso
             nlFormula!H <= originFormula!H AndAlso
             nlFormula!N <= originFormula!N AndAlso

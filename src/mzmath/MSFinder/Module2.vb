@@ -115,7 +115,7 @@ Public Class AnalysisParamOfMsfinder
 
         MassRangeMax = 2000
         MassRangeMin = 0
-        RetentionType = RetentionType.RT
+        ' RetentionType = RetentionType.RT
 
         IsUsePredictedRtForStructureElucidation = False
         IsUseRtInchikeyLibrary = True
@@ -168,8 +168,8 @@ Public Class AnalysisParamOfMsfinder
     Public Property MassRangeMin As Double
     Public Property MassRangeMax As Double
     Public Property RelativeAbundanceCutOff As Double
-    Public Property SolventType As SolventType
-    Public Property RetentionType As RetentionType
+    ' Public Property SolventType As SolventType
+    ' Public Property RetentionType As RetentionType
 
     ' formula generator
     Public Property CoverRange As CoverRange
@@ -239,7 +239,7 @@ Public Class AnalysisParamOfMsfinder
     Public Property IsUseInSilicoSpectralDbForLipids As Boolean
     Public Property IsUseUserDefinedSpectralDb As Boolean
     Public Property UserDefinedSpectralDbFilePath As String
-    Public Property LipidQueryBean As LipidQueryBean
+    ' Public Property LipidQueryBean As LipidQueryBean
     Public Property ScoreCutOffForSpectralMatch As Double
 
     'retention time setting for structure elucidation

@@ -189,6 +189,7 @@
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj" />
     <ProjectReference Include="..\..\mzmath\ms2_math-core\mzmath-netcore5.vbproj" />
     <ProjectReference Include="..\..\mzmath\MSEngine\MSEngine.vbproj" />
+    <ProjectReference Include="..\..\mzmath\MSFinder\MSFinder.vbproj" />
     <ProjectReference Include="..\Chemoinformatics\chemoinformatics-netcore5.vbproj" />
   </ItemGroup>
 

@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>BioNovoGene.BioDeep.MSFinder</RootNamespace>
+    <TargetFrameworks>net6.0-windows;net6.0;net48</TargetFrameworks>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Title>MS-DIAL MSFinder</Title>
+    <AssemblyName>BioNovoGene.BioDeep.$(MSBuildProjectName)</AssemblyName>
+    <UseApplicationFramework>True</UseApplicationFramework>
+    <Platforms>AnyCPU;x64</Platforms>
+    <Configurations>Debug;Release;Rsharp_app_release;mzkit_win32</Configurations>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <ProjectReference Include="..\..\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj" />
+    <ProjectReference Include="..\ms2_math-core\mzmath-netcore5.vbproj" />
+  </ItemGroup>
+
+</Project>

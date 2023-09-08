@@ -7,18 +7,18 @@
 ''' </summary>
 
 Public Class ExistFormulaQuery
-        Public Sub New()
-            PubchemCidList = New List(Of Integer)()
-            Formula = New Formula()
-        End Sub
+    Public Sub New()
+        PubchemCidList = New List(Of Integer)()
+        Formula = New Formula()
+    End Sub
 
-        Public Sub New(ByVal formula As Formula, ByVal pubchemCidList As List(Of Integer), ByVal formulaRecords As Integer, ByVal dbRecords As Integer, ByVal dbNames As String)
-            Me.Formula = formula
-            Me.PubchemCidList = pubchemCidList
-            Me.FormulaRecords = formulaRecords
-            ResourceNumber = dbRecords
-            ResourceNames = dbNames
-        End Sub
+    Public Sub New(formula As Formula, pubchemCidList As List(Of Integer), formulaRecords As Integer, dbRecords As Integer, dbNames As String)
+        Me.Formula = formula
+        Me.PubchemCidList = pubchemCidList
+        Me.FormulaRecords = formulaRecords
+        ResourceNumber = dbRecords
+        ResourceNames = dbNames
+    End Sub
 
 
     Public Property Formula As Formula
@@ -31,5 +31,5 @@ Public Class ExistFormulaQuery
     Public Property ResourceNumber As Integer
 
     Public Property ResourceNames As String
-    End Class
+End Class
 

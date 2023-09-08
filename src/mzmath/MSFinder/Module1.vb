@@ -63,14 +63,14 @@ Public Class AnnotatedIon
         PeakType = AnnotationType.Product
     End Sub
 
-    Public Sub SetIsotopeC13(ByVal linkedMz As Double)
+    Public Sub SetIsotopeC13(linkedMz As Double)
         LinkedAccurateMass = linkedMz
         PeakType = AnnotationType.Isotope
         IsotopeWeightNumber = 1
         IsotopeName = "C-13"
     End Sub
 
-    Public Sub SetIsotope(ByVal linkedMz As Double, ByVal intensity As Double, ByVal linkedIntensity As Double, ByVal isotomeName As String, ByVal weightNumber As Integer)
+    Public Sub SetIsotope(linkedMz As Double, intensity As Double, linkedIntensity As Double, isotomeName As String, weightNumber As Integer)
         PeakType = AnnotationType.Isotope
         LinkedAccurateMass = linkedMz
         Me.Intensity = intensity
@@ -79,7 +79,7 @@ Public Class AnnotatedIon
         IsotopeName = isotomeName
     End Sub
 
-    Public Sub SetAdduct(ByVal linkedMz As Double, ByVal intensity As Double, ByVal linkedIntensity As Double, ByVal adduct As AdductIon)
+    Public Sub SetAdduct(linkedMz As Double, intensity As Double, linkedIntensity As Double, adduct As AdductIon)
         PeakType = AnnotationType.Adduct
         Me.Intensity = intensity
         Me.LinkedIntensity = linkedIntensity

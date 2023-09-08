@@ -73,6 +73,10 @@
         Public Sub New()
         End Sub
 
+        Sub New(fragment As ms2)
+
+        End Sub
+
         Public Sub New(mass As Double, intensity As Double,
                        Optional comment As String = Nothing,
                        Optional spectrumcomment As SpectrumComment = SpectrumComment.none,

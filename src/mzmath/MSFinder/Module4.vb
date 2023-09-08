@@ -8,15 +8,15 @@ Public NotInheritable Class Scoring
     Private Sub New()
     End Sub
 
-    Public Shared Function MassDifferenceScore(ByVal diff As Double, ByVal devi As Double) As Double
+    Public Shared Function MassDifferenceScore(diff As Double, devi As Double) As Double
         Return Gaussian.StandadizedGaussianFunction(diff, devi)
     End Function
 
-    Public Shared Function IsotopicDifferenceScore(ByVal m1Diff As Double, ByVal m2Diff As Double, ByVal devi As Double) As Double
+    Public Shared Function IsotopicDifferenceScore(m1Diff As Double, m2Diff As Double, devi As Double) As Double
         Return (Gaussian.StandadizedGaussianFunction(m1Diff, devi) + Gaussian.StandadizedGaussianFunction(m2Diff, devi)) * 0.5
     End Function
 
-    Public Shared Function FragmentHitsScore(ByVal peaklist As List(Of SpectrumPeak), ByVal productIons As List(Of ProductIon), ByVal ms2Tol As Double, ByVal massTolType As MassToleranceType) As Double
+    Public Shared Function FragmentHitsScore(peaklist As List(Of SpectrumPeak), productIons As List(Of ProductIon), ms2Tol As Double, massTolType As MassToleranceType) As Double
         Dim devi = 0.0
         If peaklist.Count = 0 Then Return 0
 
@@ -43,7 +43,7 @@ Public NotInheritable Class Scoring
         End If
     End Function
 
-    Public Shared Function NeutralLossScore(ByVal neutralLossResult As List(Of NeutralLoss), ByVal ms2Tol As Double, ByVal massTolType As MassToleranceType, ByVal neutralLossNum As Double) As Double
+    Public Shared Function NeutralLossScore(neutralLossResult As List(Of NeutralLoss), ms2Tol As Double, massTolType As MassToleranceType, neutralLossNum As Double) As Double
         Dim devi = 0.0
         If neutralLossResult.Count <> 0 Then
             Dim totalScore As Double = 0
@@ -63,7 +63,7 @@ Public NotInheritable Class Scoring
         End If
     End Function
 
-    Public Shared Function NeutralLossScore(ByVal hits As Integer, ByVal totalCount As Integer) As Double
+    Public Shared Function NeutralLossScore(hits As Integer, totalCount As Integer) As Double
         If totalCount <= 0 Then Return 0.0
 
         Dim hitsDouble = CDbl(hits)
@@ -72,7 +72,7 @@ Public NotInheritable Class Scoring
     End Function
 
 
-    Public Shared Function DatabaseScore(ByVal recordNum As Integer, ByVal recordName As String) As Double
+    Public Shared Function DatabaseScore(recordNum As Integer, recordName As String) As Double
         Dim lDatabaseScore = 0.0
         Dim isMineIncluded = False
         If Not Equals(recordName, Nothing) AndAlso recordName.Contains("MINE") Then isMineIncluded = True
@@ -86,7 +86,7 @@ Public NotInheritable Class Scoring
         Return lDatabaseScore
     End Function
 
-    Public Shared Function TotalScore(ByVal result As FormulaResult) As Double
+    Public Shared Function TotalScore(result As FormulaResult) As Double
         'double score = 6.4305 * result.MassDiffScore + 0.3285 * result.IsotopicScore + 2.9103 * result.ProductIonScore + 0.7190 * result.NeutralLossScore + 10.7509 * DatabaseScore(result.ResourceRecords);
         Dim score = result.MassDiffScore + result.IsotopicScore + result.ProductIonScore + result.NeutralLossScore + DatabaseScore(result.ResourceRecords, result.ResourceNames)
         'double score = DatabaseScore(result.ResourceRecords, result.ResourceNames);

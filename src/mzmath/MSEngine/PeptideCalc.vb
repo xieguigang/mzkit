@@ -1,4 +1,5 @@
 ﻿Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
+Imports BioNovoGene.BioDeep.MSFinder
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports SMRUCC.genomics.SequenceModel.Polypeptides
 
