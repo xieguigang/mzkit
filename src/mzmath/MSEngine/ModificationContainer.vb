@@ -73,7 +73,7 @@ Public Class ModificationContainer
 
     End Sub
 
-    Public Sub New(ByVal modifications As List(Of Modification))
+    Public Sub New(modifications As List(Of Modification))
         ProteinNtermFixedMods = modifications.Where(Function(n) Not n.IsVariable AndAlso Equals(n.Position, "proteinNterm")).ToList()
         ProteinCtermFixedMods = modifications.Where(Function(n) Not n.IsVariable AndAlso Equals(n.Position, "proteinCterm")).ToList()
         AnyNtermFixedMods = modifications.Where(Function(n) Not n.IsVariable AndAlso Equals(n.Position, "anyNterm")).ToList()
@@ -202,7 +202,7 @@ Public Class ModificationContainer
     End Function
 
 
-    Public Function GetModificationProtocolDict(ByVal modifications As List(Of Modification)) As Dictionary(Of Char, ModificationProtocol)
+    Public Function GetModificationProtocolDict(modifications As List(Of Modification)) As Dictionary(Of Char, ModificationProtocol)
         Dim dict = GetInitializeObject()
         For Each [mod] In modifications
             For Each site In [mod].ModificationSites
@@ -235,7 +235,7 @@ Public NotInheritable Class ModificationUtility
     Private Sub New()
     End Sub
 
-    Public Shared Function GetModifiedComposition(ByVal modseqence As List(Of Modification)) As Formula
+    Public Shared Function GetModifiedComposition(modseqence As List(Of Modification)) As Formula
         If modseqence.IsNullOrEmpty Then Return Nothing
         Dim dict = New Dictionary(Of String, Integer)()
         For Each [mod] In modseqence
@@ -251,7 +251,7 @@ Public NotInheritable Class ModificationUtility
         Return New Formula(dict)
     End Function
 
-    Public Shared Function GetModifiedAminoacidCode(ByVal originalcode As String, ByVal modseqence As List(Of Modification)) As String
+    Public Shared Function GetModifiedAminoacidCode(originalcode As String, modseqence As List(Of Modification)) As String
         If modseqence.IsNullOrEmpty Then Return String.Empty
         Dim code = originalcode
         For Each [mod] In modseqence
@@ -260,7 +260,7 @@ Public NotInheritable Class ModificationUtility
         Return code
     End Function
 
-    Public Shared Function GetModifiedCompositions(ByVal originalcode As String, ByVal modseqence As List(Of Modification)) As (String, Formula)
+    Public Shared Function GetModifiedCompositions(originalcode As String, modseqence As List(Of Modification)) As (String, Formula)
         If modseqence.IsNullOrEmpty Then Return (String.Empty, Nothing)
         Dim dict = New Dictionary(Of String, Integer)()
         Dim code = originalcode
@@ -289,7 +289,7 @@ Public NotInheritable Class ModificationUtility
         Return (code, New Formula(dict))
     End Function
 
-    Public Shared Function GetModificationContainer(ByVal fixedModifications As List(Of Modification), ByVal variableModifications As List(Of Modification), ByVal selectedFixedModifications As List(Of String), ByVal selectedVariableModifications As List(Of String)) As ModificationContainer
+    Public Shared Function GetModificationContainer(fixedModifications As List(Of Modification), variableModifications As List(Of Modification), selectedFixedModifications As List(Of String), selectedVariableModifications As List(Of String)) As ModificationContainer
 
         Dim sModifications = New List(Of Modification)()
         For Each modString In selectedFixedModifications
@@ -317,7 +317,7 @@ Public NotInheritable Class ModificationUtility
         Return New ModificationContainer(sModifications)
     End Function
 
-    Public Shared Function GetModificationContainer(ByVal fixedModifications As List(Of Modification), ByVal variableModifications As List(Of Modification)) As ModificationContainer
+    Public Shared Function GetModificationContainer(fixedModifications As List(Of Modification), variableModifications As List(Of Modification)) As ModificationContainer
         Dim modifications = New List(Of Modification)()
         Dim fixedModStrings = New List(Of String)()
         For Each [mod] In fixedModifications.Where(Function(n) n.IsSelected)
@@ -337,7 +337,7 @@ Public NotInheritable Class ModificationUtility
     End Function
 
 
-    Public Shared Function GetModifiedPeptides(ByVal peptides As List(Of Peptide), ByVal modContainer As ModificationContainer, ByVal Optional maxNumberOfModificationsPerPeptide As Integer = 2, ByVal Optional minPeptideMass As Double = 300, ByVal Optional maxPeptideMass As Double = 4600) As List(Of Peptide)
+    Public Shared Function GetModifiedPeptides(peptides As List(Of Peptide), modContainer As ModificationContainer, Optional maxNumberOfModificationsPerPeptide As Integer = 2, Optional minPeptideMass As Double = 300, Optional maxPeptideMass As Double = 4600) As List(Of Peptide)
         Dim mPeptides = New List(Of Peptide)()
         For Each peptide In peptides
             Dim results = PeptideCalc.Sequence2Peptides(peptide, modContainer, maxNumberOfModificationsPerPeptide, minPeptideMass, maxPeptideMass)
@@ -348,7 +348,7 @@ Public NotInheritable Class ModificationUtility
         Return mPeptides
     End Function
 
-    Public Shared Function GetFastModifiedPeptides(ByVal peptides As List(Of Peptide), ByVal modContainer As ModificationContainer, ByVal Optional maxNumberOfModificationsPerPeptide As Integer = 2, ByVal Optional minPeptideMass As Double = 300, ByVal Optional maxPeptideMass As Double = 4600) As List(Of Peptide)
+    Public Shared Function GetFastModifiedPeptides(peptides As List(Of Peptide), modContainer As ModificationContainer, Optional maxNumberOfModificationsPerPeptide As Integer = 2, Optional minPeptideMass As Double = 300, Optional maxPeptideMass As Double = 4600) As List(Of Peptide)
         Dim mPeptides = New List(Of Peptide)()
         For Each peptide In peptides
             If peptide.ExactMass > maxPeptideMass Then Continue For
@@ -376,7 +376,7 @@ Public Class ModificationProtocol
 
     Public Property ModSequence As List(Of Modification) = New List(Of Modification)() ' A -> K -> K(Acethyl)
 
-    Public Sub UpdateProtocol(ByVal oneletter As Char, ByVal [mod] As Modification)
+    Public Sub UpdateProtocol(oneletter As Char, [mod] As Modification)
         Dim threeletter2onechar = AminoAcidObjUtility.ThreeLetter2OneChar
         If IsModified() Then
             If Equals(ModSequence(ModSequence.Count - 1).Type, "AaSubstitution") Then

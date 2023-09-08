@@ -176,7 +176,8 @@
             For i = 6 To length - 1 Step 2
                 If Not sets.Contains(i) Then
                     sets.Add(i)
-                    Dim tmp = [next].[Select](Function(b) b.Decide(DoubleBondInfo.Create(i))).ToArray()
+                    Dim idx = i
+                    Dim tmp = [next].[Select](Function(b) b.Decide(DoubleBondInfo.Create(idx))).ToArray()
                     result = result.Concat(tmp.Where(Function(b) b.UnDecidedCount = 0))
                     [next] = [next].Concat(tmp.Where(Function(b) b.UnDecidedCount > 0))
                 End If

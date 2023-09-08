@@ -2,7 +2,7 @@
 Imports System.Text.RegularExpressions
 
 Public Module FormulaStringParcer
-    Public Function OrganicElementsReader(ByVal formulaString As String) As DerivatizationFormula
+    Public Function OrganicElementsReader(formulaString As String) As DerivatizationFormula
         If Equals(formulaString, Nothing) Then Return Nothing
         If Equals(formulaString, String.Empty) Then Return Nothing
         If Equals(formulaString, "Unknown") Then Return Nothing
@@ -43,7 +43,7 @@ Public Module FormulaStringParcer
         Return formula
     End Function
 
-    Public Function OrganicElementsReader(ByVal formulaString As String, ByVal cLabelMass As Double, ByVal hLabelMass As Double, ByVal nLabelMass As Double, ByVal oLabelMass As Double, ByVal pLabelMass As Double, ByVal sLabelMass As Double, ByVal fLabelMass As Double, ByVal clLabelMass As Double, ByVal brLabelMass As Double, ByVal iLabelMass As Double, ByVal siLabelMass As Double) As DerivatizationFormula
+    Public Function OrganicElementsReader(formulaString As String, cLabelMass As Double, hLabelMass As Double, nLabelMass As Double, oLabelMass As Double, pLabelMass As Double, sLabelMass As Double, fLabelMass As Double, clLabelMass As Double, brLabelMass As Double, iLabelMass As Double, siLabelMass As Double) As DerivatizationFormula
         Dim cnum = 0, hnum = 0, pnum = 0, snum = 0, onum = 0, nnum = 0, fnum = 0, clnum = 0, brnum = 0, inum = 0, sinum = 0
 
         setElementNumbers(formulaString, cnum, hnum, nnum, onum, pnum, snum, fnum, clnum, brnum, inum, sinum)
@@ -53,7 +53,7 @@ Public Module FormulaStringParcer
         Return formula
     End Function
 
-    Public Function IsOrganicFormula(ByVal formulaString As String) As Boolean
+    Public Function IsOrganicFormula(formulaString As String) As Boolean
         Dim mc As MatchCollection
 
         Dim cnum = 0
@@ -179,7 +179,7 @@ Public Module FormulaStringParcer
         End If
     End Function
 
-    Public Function MQComposition2FormulaObj(ByVal composition As String) As DerivatizationFormula
+    Public Function MQComposition2FormulaObj(composition As String) As DerivatizationFormula
         Dim elements = composition.Split(" "c)
         Dim dict = New Dictionary(Of String, Integer)()
         Dim elemCount As Integer = Nothing
@@ -199,11 +199,11 @@ Public Module FormulaStringParcer
         Return New DerivatizationFormula(dict)
     End Function
 
-    Friend Function Convert2FormulaObjV3(ByVal formulaString As String) As DerivatizationFormula
+    Friend Function Convert2FormulaObjV3(formulaString As String) As DerivatizationFormula
         Return ToFormula(TokenizeFormula(formulaString))
     End Function
 
-    Private Function ToFormula(ByVal elements As List(Of (String, Integer))) As DerivatizationFormula
+    Private Function ToFormula(elements As List(Of (String, Integer))) As DerivatizationFormula
         Dim result = New Dictionary(Of String, Integer)()
         Dim element As String = Nothing, number As Integer = Nothing
 
@@ -220,11 +220,11 @@ Public Module FormulaStringParcer
         Return New DerivatizationFormula(result)
     End Function
 
-    Public Function TokenizeFormula(ByVal formulaString As String) As List(Of (String, Integer))
+    Public Function TokenizeFormula(formulaString As String) As List(Of (String, Integer))
         Return TokenizeFormulaCharacter(formulaString).[Select](New Func(Of String, (String, Integer))(AddressOf ParseToken)).ToList()
     End Function
 
-    Private Function TokenizeFormulaCharacter(ByVal formulaString As String) As List(Of String)
+    Private Function TokenizeFormulaCharacter(formulaString As String) As List(Of String)
         ' C12H24O12 -> C12, H24, O12
         Dim result = New List(Of String)()
         Dim i = 0
@@ -263,7 +263,7 @@ Public Module FormulaStringParcer
         Return result
     End Function
 
-    Private Function ParseToken(ByVal token As String) As (String, Integer)
+    Private Function ParseToken(token As String) As (String, Integer)
         ' C2 -> C, 2 , [13C]2 -> [13C], 2
         Dim cleaned = New String(token.Where(Function(c) Not Char.IsWhiteSpace(c)).ToArray())
         Dim i = 0, j = 0
@@ -288,7 +288,7 @@ Public Module FormulaStringParcer
         End If
     End Function
 
-    Private Sub setElementNumbers(ByVal formulaString As String, <Out> ByRef cnum As Integer, <Out> ByRef hnum As Integer, <Out> ByRef nnum As Integer, <Out> ByRef onum As Integer, <Out> ByRef pnum As Integer, <Out> ByRef snum As Integer, <Out> ByRef fnum As Integer, <Out> ByRef clnum As Integer, <Out> ByRef brnum As Integer, <Out> ByRef inum As Integer, <Out> ByRef sinum As Integer, ByVal Optional tmsCount As Integer = 0, ByVal Optional meoxCount As Integer = 0)
+    Private Sub setElementNumbers(formulaString As String, <Out> ByRef cnum As Integer, <Out> ByRef hnum As Integer, <Out> ByRef nnum As Integer, <Out> ByRef onum As Integer, <Out> ByRef pnum As Integer, <Out> ByRef snum As Integer, <Out> ByRef fnum As Integer, <Out> ByRef clnum As Integer, <Out> ByRef brnum As Integer, <Out> ByRef inum As Integer, <Out> ByRef sinum As Integer, Optional tmsCount As Integer = 0, Optional meoxCount As Integer = 0)
         Dim mc As MatchCollection
 
         cnum = 0
@@ -411,7 +411,7 @@ Public Module FormulaStringParcer
         sinum += tmsCount
     End Sub
 
-    Private Sub setElementNumbers(ByVal formulaString As String, <Out> ByRef cnum As Integer, <Out> ByRef hnum As Integer, <Out> ByRef nnum As Integer, <Out> ByRef onum As Integer, <Out> ByRef pnum As Integer, <Out> ByRef snum As Integer, <Out> ByRef fnum As Integer, <Out> ByRef clnum As Integer, <Out> ByRef brnum As Integer, <Out> ByRef inum As Integer, <Out> ByRef sinum As Integer, <Out> ByRef c13num As Integer, <Out> ByRef h2num As Integer, ByVal Optional tmsCount As Integer = 0, ByVal Optional meoxCount As Integer = 0)
+    Private Sub setElementNumbers(formulaString As String, <Out> ByRef cnum As Integer, <Out> ByRef hnum As Integer, <Out> ByRef nnum As Integer, <Out> ByRef onum As Integer, <Out> ByRef pnum As Integer, <Out> ByRef snum As Integer, <Out> ByRef fnum As Integer, <Out> ByRef clnum As Integer, <Out> ByRef brnum As Integer, <Out> ByRef inum As Integer, <Out> ByRef sinum As Integer, <Out> ByRef c13num As Integer, <Out> ByRef h2num As Integer, Optional tmsCount As Integer = 0, Optional meoxCount As Integer = 0)
         Dim mc As MatchCollection
 
         cnum = 0

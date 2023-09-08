@@ -62,7 +62,17 @@ Public NotInheritable Class LipidAnnotation
     Private Sub New()
     End Sub
 
-    ' ref molecules must be sorted by mz before using this program
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="queryMz"></param>
+    ''' <param name="queryRt"></param>
+    ''' <param name="msScanProp"></param>
+    ''' <param name="RefMolecules">ref molecules must be sorted by mz before using this program</param>
+    ''' <param name="ionMode"></param>
+    ''' <param name="ms1tol"></param>
+    ''' <param name="ms2tol"></param>
+    ''' <returns></returns>
     Public Shared Function Characterize(queryMz As Double, queryRt As Double, msScanProp As IMSScanProperty, RefMolecules As List(Of LipidMolecule), ionMode As IonModes, ms1tol As Double, ms2tol As Double) As LipidMolecule
 
         Dim startID = GetDatabaseStartIndex(queryMz, ms1tol, RefMolecules)
@@ -562,7 +572,7 @@ Public NotInheritable Class LipidAnnotation
         Dim maxintensity = peaks.Max(Function(n) n.Intensity)
         For Each peak In peaks
             spectrum.Add(New SpectrumPeak With {
-                .Mass = peak.Mass,
+                .mz = peak.mz,
                 .Intensity = peak.Intensity / maxintensity * 100.0
             })
         Next

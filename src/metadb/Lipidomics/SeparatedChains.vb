@@ -150,7 +150,7 @@ Public Class SeparatedChains
         Return True
     End Function
 
-    Public Overridable Function Equals(other As ITotalChain) As Boolean Implements IEquatable(Of ITotalChain).Equals
+    Public Overridable Overloads Function Equals(other As ITotalChain) As Boolean Implements IEquatable(Of ITotalChain).Equals
         If other.ChainCount <> ChainCount Then
             Return False
         End If

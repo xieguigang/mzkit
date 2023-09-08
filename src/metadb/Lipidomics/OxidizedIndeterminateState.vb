@@ -1,10 +1,4 @@
-﻿Imports CompMs.Common.DataStructure
-Imports System
-Imports System.Collections.Generic
-Imports System.Linq
-
-
-Public NotInheritable Class OxidizedIndeterminateState
+﻿Public NotInheritable Class OxidizedIndeterminateState
     Public Shared ReadOnly Property AllPositions As OxidizedIndeterminateState = New OxidizedIndeterminateState(State.PositionExclude, Nothing)
     Public Shared ReadOnly Property Identity As OxidizedIndeterminateState = New OxidizedIndeterminateState(State.None, Nothing)
 

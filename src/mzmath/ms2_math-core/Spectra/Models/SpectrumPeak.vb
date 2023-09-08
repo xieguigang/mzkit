@@ -47,14 +47,8 @@
     ''' <remarks>
     ''' MS-DIAL model
     ''' </remarks>
-    Public Class SpectrumPeak
+    Public Class SpectrumPeak : Inherits ms2
         Implements ISpectrumPeak
-
-        Public Property Mass As Double Implements ISpectrumPeak.Mass
-
-        Public Property Intensity As Double Implements ISpectrumPeak.Intensity
-
-        Public Property Comment As String
 
         Public Property Resolution As Double
 
@@ -79,9 +73,9 @@
         Public Sub New()
         End Sub
         Public Sub New(mass As Double, intensity As Double, Optional comment As String = Nothing, Optional spectrumcomment As SpectrumComment = SpectrumComment.none, Optional isMust As Boolean = False)
-            Me.Mass = mass
-            Me.Intensity = intensity
-            Me.Comment = comment
+            Me.mz = mass
+            Me.intensity = intensity
+            Me.Annotation = comment
             Me.SpectrumComment = spectrumcomment
             IsAbsolutelyRequiredFragmentForAnnotation = isMust
         End Sub

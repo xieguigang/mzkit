@@ -11,7 +11,7 @@ Public NotInheritable Class PeptideCalc
     Private Shared H2O As Double = 18.010564684
 
     ' N -> C, just return exactmass using default setting
-    Public Shared Function Sequence2Mass(ByVal sequence As String) As Double
+    Public Shared Function Sequence2Mass(sequence As String) As Double
         Dim mass = 0.0
         Dim char2mass = OneChar2Mass
         Dim offsetMass = OH + H2O * (sequence.Length - 2) + H ' N-terminal, internal amino acids, C-terminal
@@ -24,7 +24,7 @@ Public NotInheritable Class PeptideCalc
         Return mass - offsetMass
     End Function
 
-    Public Shared Function Sequence2Mass(ByVal sequence As List(Of AminoAcid)) As Double
+    Public Shared Function Sequence2Mass(sequence As List(Of AminoAcid)) As Double
         Dim mass = 0.0
         Dim offsetMass = OH + H2O * (sequence.Count - 2) + H ' N-terminal, internal amino acids, C-terminal
         For i = 0 To sequence.Count - 1
@@ -34,7 +34,7 @@ Public NotInheritable Class PeptideCalc
         Return mass - offsetMass
     End Function
 
-    Public Shared Function Sequence2AminoAcids(ByVal sequence As String, ByVal char2AA As Dictionary(Of Char, AminoAcid)) As List(Of AminoAcid)
+    Public Shared Function Sequence2AminoAcids(sequence As String, char2AA As Dictionary(Of Char, AminoAcid)) As List(Of AminoAcid)
         Dim aalist = New List(Of AminoAcid)()
         For Each oneletter In sequence
             If char2AA.ContainsKey(oneletter) Then aalist.Add(char2AA(oneletter))
@@ -42,13 +42,13 @@ Public NotInheritable Class PeptideCalc
         Return aalist
     End Function
 
-    Public Shared Function Sequence2Peptide(ByVal peptide As Peptide) As Peptide
+    Public Shared Function Sequence2Peptide(peptide As Peptide) As Peptide
         Dim sequence = peptide.SequenceObj
         peptide.ExactMass = Sequence2Mass(sequence)
         Return peptide
     End Function
 
-    Public Shared Function Sequence2Peptides(ByVal peptide As Peptide, ByVal container As ModificationContainer, ByVal Optional maxNumberOfModificationsPerPeptide As Integer = 2, ByVal Optional minPeptideMass As Double = 300, ByVal Optional maxPeptideMass As Double = 4600) As List(Of Peptide)
+    Public Shared Function Sequence2Peptides(peptide As Peptide, container As ModificationContainer, Optional maxNumberOfModificationsPerPeptide As Integer = 2, Optional minPeptideMass As Double = 300, Optional maxPeptideMass As Double = 4600) As List(Of Peptide)
 
         Dim fmPeptide = Sequence2PeptideByFixedModifications(peptide, container, maxPeptideMass)
         If fmPeptide Is Nothing Then Return Nothing
@@ -56,14 +56,14 @@ Public NotInheritable Class PeptideCalc
         Return Sequence2PeptidesByVariableModifications(peptide, container, maxNumberOfModificationsPerPeptide, minPeptideMass, maxPeptideMass)
     End Function
 
-    Public Shared Function Sequence2FastPeptides(ByVal peptide As Peptide, ByVal container As ModificationContainer, ByVal Optional maxNumberOfModificationsPerPeptide As Integer = 2, ByVal Optional minPeptideMass As Double = 300, ByVal Optional maxPeptideMass As Double = 4600) As List(Of Peptide)
+    Public Shared Function Sequence2FastPeptides(peptide As Peptide, container As ModificationContainer, Optional maxNumberOfModificationsPerPeptide As Integer = 2, Optional minPeptideMass As Double = 300, Optional maxPeptideMass As Double = 4600) As List(Of Peptide)
         Dim fmPeptide = Sequence2PeptideByFixedModifications(peptide, container, maxPeptideMass)
         If fmPeptide Is Nothing Then Return Nothing
         If fmPeptide.CountModifiedAminoAcids() > maxNumberOfModificationsPerPeptide Then Return Nothing
         Return Sequence2FastPeptidesByVariableModifications(peptide, container, fmPeptide.CountModifiedAminoAcids(), maxNumberOfModificationsPerPeptide, minPeptideMass, maxPeptideMass)
     End Function
 
-    Public Shared Function Sequence2PeptideByFixedModifications(ByVal peptide As Peptide, ByVal container As ModificationContainer, ByVal Optional maxPeptideMass As Double = 4600) As Peptide
+    Public Shared Function Sequence2PeptideByFixedModifications(peptide As Peptide, container As ModificationContainer, Optional maxPeptideMass As Double = 4600) As Peptide
         Dim sequence = peptide.SequenceObj
         If container.IsEmptyOrNull Then Return Sequence2Peptide(peptide)
 
@@ -84,7 +84,7 @@ Public NotInheritable Class PeptideCalc
         Return peptide
     End Function
 
-    Public Shared Function GetAminoAcidByFixedModifications(ByVal peptide As Peptide, ByVal modseq As List(Of Modification), ByVal container As ModificationContainer, ByVal index As Integer) As AminoAcid
+    Public Shared Function GetAminoAcidByFixedModifications(peptide As Peptide, modseq As List(Of Modification), container As ModificationContainer, index As Integer) As AminoAcid
 
         Dim isProteinNTerminal = peptide.IsProteinNterminal
         Dim isProteinCTerminal = peptide.IsProteinCterminal
@@ -98,7 +98,7 @@ Public NotInheritable Class PeptideCalc
         Return GetAminoAcidByFixedModifications(modseq, container, aaChar, isPeptideNTerminal, isPeptideCTerminal, isProteinNTerminal, isProteinCTerminal)
     End Function
 
-    Public Shared Function GetAminoAcidByFixedModifications(ByVal modseq As List(Of Modification), ByVal container As ModificationContainer, ByVal aaChar As Char, ByVal isPeptideNTerminal As Boolean, ByVal isPeptideCTerminal As Boolean, ByVal isProteinNTerminal As Boolean, ByVal isProteinCTerminal As Boolean) As AminoAcid
+    Public Shared Function GetAminoAcidByFixedModifications(modseq As List(Of Modification), container As ModificationContainer, aaChar As Char, isPeptideNTerminal As Boolean, isPeptideCTerminal As Boolean, isProteinNTerminal As Boolean, isProteinCTerminal As Boolean) As AminoAcid
         If isPeptideNTerminal AndAlso isProteinNTerminal AndAlso container.ProteinNterm2FixedMod(aaChar).IsModified() Then
             SetModificationSequence(modseq, container.ProteinNterm2FixedMod(aaChar))
         ElseIf isPeptideNTerminal AndAlso container.AnyNtermSite2FixedMod(aaChar).IsModified() Then
@@ -152,7 +152,7 @@ Public NotInheritable Class PeptideCalc
     ''' <param name="container"></param>
     ''' <param name="maxNumberOfModificationsPerPeptide"></param>
     ''' <returns></returns>
-    Public Shared Function Sequence2PeptidesByVariableModifications(ByVal peptide As Peptide, ByVal container As ModificationContainer, ByVal Optional maxNumberOfModificationsPerPeptide As Integer = 2, ByVal Optional minPeptideMass As Double = 300, ByVal Optional maxPeptideMass As Double = 4600) As List(Of Peptide)
+    Public Shared Function Sequence2PeptidesByVariableModifications(peptide As Peptide, container As ModificationContainer, Optional maxNumberOfModificationsPerPeptide As Integer = 2, Optional minPeptideMass As Double = 300, Optional maxPeptideMass As Double = 4600) As List(Of Peptide)
         'var sequence = peptide.Sequence;
         If container.IsEmptyOrNull Then Return New List(Of Peptide)() From {
             Sequence2Peptide(peptide)
@@ -184,7 +184,7 @@ Public NotInheritable Class PeptideCalc
         Return peptides
     End Function
 
-    Public Shared Function Sequence2FastPeptidesByVariableModifications(ByVal peptide As Peptide, ByVal container As ModificationContainer, ByVal fixedModCount As Integer, ByVal Optional maxNumberOfModificationsPerPeptide As Integer = 2, ByVal Optional minPeptideMass As Double = 300, ByVal Optional maxPeptideMass As Double = 4600) As List(Of Peptide)
+    Public Shared Function Sequence2FastPeptidesByVariableModifications(peptide As Peptide, container As ModificationContainer, fixedModCount As Integer, Optional maxNumberOfModificationsPerPeptide As Integer = 2, Optional minPeptideMass As Double = 300, Optional maxPeptideMass As Double = 4600) As List(Of Peptide)
 
         If container.IsEmptyOrNull Then Return New List(Of Peptide)() From {
             Sequence2Peptide(peptide)
@@ -268,7 +268,7 @@ Public NotInheritable Class PeptideCalc
         Return peptides
     End Function
 
-    Private Shared Function GetResidueCodeIndexToModificationIndexDictionary(ByVal peptide As Peptide, ByVal container As ModificationContainer) As Dictionary(Of Integer, Integer)
+    Private Shared Function GetResidueCodeIndexToModificationIndexDictionary(peptide As Peptide, container As ModificationContainer) As Dictionary(Of Integer, Integer)
         Dim dict = New Dictionary(Of Integer, Integer)()
         For i = 0 To peptide.SequenceObj.Count() - 1
             Dim aa = peptide.SequenceObj(i)
@@ -281,7 +281,7 @@ Public NotInheritable Class PeptideCalc
 
 
 
-    Private Shared Sub EnumerateModifications(ByVal pep As Peptide, ByVal container As ModificationContainer, ByVal index As Integer, ByVal numModifications As Integer, ByVal maxModifications As Integer, ByVal aminoacids As List(Of AminoAcid), ByVal result As List(Of List(Of AminoAcid)))
+    Private Shared Sub EnumerateModifications(pep As Peptide, container As ModificationContainer, index As Integer, numModifications As Integer, maxModifications As Integer, aminoacids As List(Of AminoAcid), result As List(Of List(Of AminoAcid)))
 
         'Console.WriteLine(index);
         If index >= pep.SequenceObj.Count Then
@@ -305,7 +305,7 @@ Public NotInheritable Class PeptideCalc
         End If
     End Sub
 
-    Public Shared Function GetAminoAcidByVariableModifications(ByVal peptide As Peptide, ByVal modseq As List(Of Modification), ByVal container As ModificationContainer, ByVal index As Integer) As AminoAcid
+    Public Shared Function GetAminoAcidByVariableModifications(peptide As Peptide, modseq As List(Of Modification), container As ModificationContainer, index As Integer) As AminoAcid
 
         Dim isProteinNTerminal = peptide.IsProteinNterminal
         Dim isProteinCTerminal = peptide.IsProteinCterminal
@@ -319,7 +319,7 @@ Public NotInheritable Class PeptideCalc
         Return GetAminoAcidByVariableModifications(modseq, container, aaChar, isPeptideNTerminal, isPeptideCTerminal, isProteinNTerminal, isProteinCTerminal)
     End Function
 
-    Public Shared Function GetAminoAcidByVariableModifications(ByVal modseq As List(Of Modification), ByVal container As ModificationContainer, ByVal aaChar As Char, ByVal isPeptideNTerminal As Boolean, ByVal isPeptideCTerminal As Boolean, ByVal isProteinNTerminal As Boolean, ByVal isProteinCTerminal As Boolean) As AminoAcid
+    Public Shared Function GetAminoAcidByVariableModifications(modseq As List(Of Modification), container As ModificationContainer, aaChar As Char, isPeptideNTerminal As Boolean, isPeptideCTerminal As Boolean, isProteinNTerminal As Boolean, isProteinCTerminal As Boolean) As AminoAcid
         If isPeptideNTerminal AndAlso isProteinNTerminal AndAlso container.ProteinNterm2VariableMod(aaChar).IsModified() Then
             SetModificationSequence(modseq, container.ProteinNterm2VariableMod(aaChar))
         ElseIf isPeptideNTerminal AndAlso container.AnyNtermSite2VariableMod(aaChar).IsModified() Then
@@ -353,7 +353,7 @@ Public NotInheritable Class PeptideCalc
 
     End Function
 
-    Public Shared Function CalculatePeptideFormula(ByVal aaSequence As List(Of AminoAcid)) As Formula
+    Public Shared Function CalculatePeptideFormula(aaSequence As List(Of AminoAcid)) As Formula
         Dim dict = New Dictionary(Of String, Integer)()
         For Each aa In aaSequence
             Dim formula = aa.GetFormula()
@@ -375,14 +375,14 @@ Public NotInheritable Class PeptideCalc
         Return New Formula(dict)
     End Function
 
-    Public Shared Sub SetModificationSequence(ByVal modseq As List(Of Modification), ByVal protocol As ModificationProtocol)
+    Public Shared Sub SetModificationSequence(modseq As List(Of Modification), protocol As ModificationProtocol)
         Dim mods = protocol.ModSequence
         For Each [mod] In mods
             modseq.Add([mod])
         Next
     End Sub
 
-    Public Shared Function Sequence2Formula(ByVal sequence As String) As Formula
+    Public Shared Function Sequence2Formula(sequence As String) As Formula
         Dim carbon = 0
         Dim hydrogen = 0
         Dim nitrogen = 0

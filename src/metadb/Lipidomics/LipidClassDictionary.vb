@@ -1,9 +1,4 @@
-﻿Imports CompMs.Common.Enum
-Imports System.Collections.Generic
-Imports System.Collections.ObjectModel
-Imports System.IO
-Imports System.Reflection
-
+﻿Imports System.IO
 
 Public Class LipidClassProperty
         Public Sub New([class] As LbmClass, displayName As String, acylChain As Integer, alkylChain As Integer, sphingoChain As Integer)
@@ -29,38 +24,50 @@ Public Class LipidClassProperty
     End Class
 
 Public Class LipidClassDictionary
+
+    Public ReadOnly Property LbmItems As IReadOnlyDictionary(Of LbmClass, LipidClassProperty)
+        Get
+            Return m_lbmItems
+        End Get
+    End Property
+
+    ReadOnly m_lbmItems As Dictionary(Of LbmClass, LipidClassProperty)
+
     Private Sub New()
-        lbmItemsField = New Dictionary(Of LbmClass, LipidClassProperty)()
-        LbmItems = New ReadOnlyDictionary(Of LbmClass, LipidClassProperty)(lbmItemsField)
+        m_lbmItems = New Dictionary(Of LbmClass, LipidClassProperty)()
     End Sub
-
-    Public ReadOnly Property LbmItems As ReadOnlyDictionary(Of LbmClass, LipidClassProperty)
-
-    Private ReadOnly lbmItemsField As Dictionary(Of LbmClass, LipidClassProperty)
-
 
     Public Shared ReadOnly Property [Default] As LipidClassDictionary
         Get
+            Static defaultField As LipidClassDictionary
+
             If defaultField Is Nothing Then
                 defaultField = ParseDictinary()
             End If
+
             Return defaultField
         End Get
     End Property
-    Private Shared defaultField As LipidClassDictionary
 
     Private Shared Function ParseDictinary() As LipidClassDictionary
-        Dim resourceName = "CompMs.Common.Resources.LipidClassProperties.csv"
-        Dim assembly = Reflection.Assembly.GetExecutingAssembly()
         Dim result = New LipidClassDictionary()
         Dim acyl As Integer = Nothing, alkyl As Integer = Nothing, sphingo As Integer = Nothing
-        Using stream = assembly.GetManifestResourceStream(resourceName)
+
+        Using stream = My.Resources.ResourceManager.GetStream("LipidClassProperties")
             Using reader = New StreamReader(stream)
-                reader.ReadLine() ' skip header
+                Call reader.ReadLine() ' skip header
+
                 While reader.Peek() >= 0
                     Dim cols = reader.ReadLine().Split(","c)
-                    Dim item = New LipidClassProperty(System.Enum.Parse(GetType(LbmClass), cols(0)), cols(1), If(Integer.TryParse(cols(2), acyl), acyl, 0), If(Integer.TryParse(cols(3), alkyl), alkyl, 0), If(Integer.TryParse(cols(4), sphingo), sphingo, 0))
-                    result.lbmItemsField(item.Class) = item
+                    Dim item = New LipidClassProperty(
+                        System.Enum.Parse(GetType(LbmClass), cols(0)),
+                        cols(1),
+                        If(Integer.TryParse(cols(2), acyl), acyl, 0),
+                        If(Integer.TryParse(cols(3), alkyl), alkyl, 0),
+                        If(Integer.TryParse(cols(4), sphingo), sphingo, 0)
+                    )
+
+                    result.m_lbmItems(item.Class) = item
                 End While
             End Using
         End Using

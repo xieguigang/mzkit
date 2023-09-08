@@ -13,7 +13,7 @@ Namespace Formula.IsotopicPatterns
         ''' <param name="massFilter">Put the integar value that you want ot calculate until the isotopic value. Ex. if you put 3, this method calculate the isotopic abundances until M+3. </param>
         ''' <param name="iupacReferenceBean">Put the iupac bean which can be retrived with IupacParcer.cs.</param>
         ''' <returns>This program returns the theoretical isotopic abundances with the exact m/z values.</returns>
-        Public Function GetAccurateIsotopeProperty(ByVal elementName As String, ByVal massFilter As Integer, ByVal iupacReferenceBean As IupacDatabase) As IsotopeProperty
+        Public Function GetAccurateIsotopeProperty(elementName As String, massFilter As Integer, iupacReferenceBean As IupacDatabase) As IsotopeProperty
             Dim compoundPropertyBean As IsotopeProperty = New IsotopeProperty()
             compoundPropertyBean.Formula = FormulaScanner.Convert2FormulaObjV2(elementName)
             compoundPropertyBean.ElementProfile = GetBasicCompoundElementProfile(elementName)
@@ -37,7 +37,7 @@ Namespace Formula.IsotopicPatterns
         ''' <param name="massFilter">Put the integar value that you want ot calculate until the isotopic value. Ex. if you put 3, this method calculate the isotopic abundances until M+3. </param>
         ''' <param name="iupacReferenceBean">Put the iupac bean which can be retrived with IupacParcer.cs.</param>
         ''' <returns>This program returns the theoretical isotopic abundances with the nominal m/z values.</returns>
-        Public Function GetNominalIsotopeProperty(ByVal elementName As String, ByVal massFilter As Integer, ByVal iupacReferenceBean As IupacDatabase) As IsotopeProperty
+        Public Function GetNominalIsotopeProperty(elementName As String, massFilter As Integer, iupacReferenceBean As IupacDatabase) As IsotopeProperty
             Dim compoundPropertyBean As IsotopeProperty = New IsotopeProperty()
             compoundPropertyBean.Formula = FormulaScanner.Convert2FormulaObjV2(elementName)
             compoundPropertyBean.ElementProfile = GetBasicCompoundElementProfile(elementName)
@@ -54,7 +54,7 @@ Namespace Formula.IsotopicPatterns
             Return compoundPropertyBean
         End Function
 
-        Public Function GetBasicCompoundElementProfile(ByVal formula As String) As List(Of AtomProperty)
+        Public Function GetBasicCompoundElementProfile(formula As String) As List(Of AtomProperty)
             Dim elementProfileList As List(Of AtomProperty) = New List(Of AtomProperty)()
             Dim elementPropertyBean As AtomProperty = New AtomProperty()
             Dim mc As MatchCollection
@@ -177,7 +177,7 @@ Namespace Formula.IsotopicPatterns
             Return elementProfileList
         End Function
 
-        Private Sub setIupacReferenceInformation(ByVal compoundPropertyBean As IsotopeProperty, ByVal iupacReferenceBean As IupacDatabase)
+        Private Sub setIupacReferenceInformation(compoundPropertyBean As IsotopeProperty, iupacReferenceBean As IupacDatabase)
             Dim accurateMass As Double = 0
             For i = 0 To compoundPropertyBean.ElementProfile.Count - 1
                 If iupacReferenceBean.ElementName2AtomElementProperties.ContainsKey(compoundPropertyBean.ElementProfile(i).ElementName) Then
@@ -193,7 +193,7 @@ Namespace Formula.IsotopicPatterns
             compoundPropertyBean.ExactMass = accurateMass
         End Sub
 
-        Private Sub setAccurateIsotopePropertyInformation(ByVal compoundPropertyBean As IsotopeProperty, ByVal massFilter As Integer)
+        Private Sub setAccurateIsotopePropertyInformation(compoundPropertyBean As IsotopeProperty, massFilter As Integer)
             For i = 0 To compoundPropertyBean.ElementProfile.Count - 1
                 compoundPropertyBean.ElementProfile(i).IsotopicPeaks = getIsotopeElementProperty(compoundPropertyBean.ElementProfile(i).AtomElementProperties)
                 compoundPropertyBean.ElementProfile(i).IsotopicPeaks = getAccurateIsotopeElementProperty(compoundPropertyBean.ElementProfile(i).IsotopicPeaks, compoundPropertyBean.ElementProfile(i).ElementNumber, massFilter)
@@ -201,7 +201,7 @@ Namespace Formula.IsotopicPatterns
             Next
         End Sub
 
-        Private Sub setFinalAccurateIsotopeProfile(ByVal compoundPropertyBean As IsotopeProperty, ByVal massFilter As Integer)
+        Private Sub setFinalAccurateIsotopeProfile(compoundPropertyBean As IsotopeProperty, massFilter As Integer)
             Dim abundanceElementPropertyBean As List(Of IsotopicPeak) = New List(Of IsotopicPeak)()
             abundanceElementPropertyBean = compoundPropertyBean.ElementProfile(0).IsotopicPeaks
 
@@ -217,7 +217,7 @@ Namespace Formula.IsotopicPatterns
             Next
         End Sub
 
-        Private Sub setNominalIsotopePropertyInformation(ByVal compoundPropertyBean As IsotopeProperty, ByVal massFilter As Integer)
+        Private Sub setNominalIsotopePropertyInformation(compoundPropertyBean As IsotopeProperty, massFilter As Integer)
             For i = 0 To compoundPropertyBean.ElementProfile.Count - 1
                 compoundPropertyBean.ElementProfile(i).IsotopicPeaks = getIsotopeElementProperty(compoundPropertyBean.ElementProfile(i).AtomElementProperties)
                 compoundPropertyBean.ElementProfile(i).IsotopicPeaks = getNominalIsotopeElementProperty(compoundPropertyBean.ElementProfile(i).IsotopicPeaks, compoundPropertyBean.ElementProfile(i).ElementNumber, massFilter)
@@ -225,7 +225,7 @@ Namespace Formula.IsotopicPatterns
             Next
         End Sub
 
-        Private Sub setFinalNominalIsotopeProfile(ByVal compoundPropertyBean As IsotopeProperty, ByVal massFilter As Integer)
+        Private Sub setFinalNominalIsotopeProfile(compoundPropertyBean As IsotopeProperty, massFilter As Integer)
             Dim abundanceElementPropertyBean As List(Of IsotopicPeak) = New List(Of IsotopicPeak)()
             abundanceElementPropertyBean = compoundPropertyBean.ElementProfile(0).IsotopicPeaks
 
@@ -241,7 +241,7 @@ Namespace Formula.IsotopicPatterns
             Next
         End Sub
 
-        Private Function getIsotopeElementProperty(ByVal iupacElementPropertyBeanList As List(Of AtomElementProperty)) As List(Of IsotopicPeak)
+        Private Function getIsotopeElementProperty(iupacElementPropertyBeanList As List(Of AtomElementProperty)) As List(Of IsotopicPeak)
             Dim isotopeElementPropertyBeanList As List(Of IsotopicPeak) = New List(Of IsotopicPeak)()
 
             Dim relativeAbundance, massDifference As Double
@@ -258,7 +258,7 @@ Namespace Formula.IsotopicPatterns
             Return isotopeElementPropertyBeanList
         End Function
 
-        Private Function getAccurateIsotopeElementProperty(ByVal isotopeElementPropertyBeanList As List(Of IsotopicPeak), ByVal n As Integer, ByVal filterMass As Integer) As List(Of IsotopicPeak)
+        Private Function getAccurateIsotopeElementProperty(isotopeElementPropertyBeanList As List(Of IsotopicPeak), n As Integer, filterMass As Integer) As List(Of IsotopicPeak)
             If isotopeElementPropertyBeanList.Count = 1 Then Return isotopeElementPropertyBeanList
 
             Dim accurateIsotopeElementPropertyBeanList As List(Of IsotopicPeak) = New List(Of IsotopicPeak)()
@@ -287,7 +287,7 @@ Namespace Formula.IsotopicPatterns
             Return accurateIsotopeElementPropertyBeanList
         End Function
 
-        Private Function getNominalIsotopeElementProperty(ByVal isotopeElementPropertyBeanList As List(Of IsotopicPeak), ByVal n As Integer, ByVal filterMass As Integer) As List(Of IsotopicPeak)
+        Private Function getNominalIsotopeElementProperty(isotopeElementPropertyBeanList As List(Of IsotopicPeak), n As Integer, filterMass As Integer) As List(Of IsotopicPeak)
             If isotopeElementPropertyBeanList.Count = 1 Then Return isotopeElementPropertyBeanList
 
             Dim nominalIsotopeElementPropertyBeanList As List(Of IsotopicPeak) = New List(Of IsotopicPeak)()
@@ -316,7 +316,7 @@ Namespace Formula.IsotopicPatterns
             Return nominalIsotopeElementPropertyBeanList
         End Function
 
-        Private Function getAllIsotopeElementPropertyForTenIsotopomerElement(ByVal isotopeElementPropertyBeanList As List(Of IsotopicPeak), ByVal n As Integer, ByVal filterMass As Integer) As List(Of IsotopicPeak)
+        Private Function getAllIsotopeElementPropertyForTenIsotopomerElement(isotopeElementPropertyBeanList As List(Of IsotopicPeak), n As Integer, filterMass As Integer) As List(Of IsotopicPeak)
             Dim abundanceElementPropertyBeanList1 As List(Of IsotopicPeak) = New List(Of IsotopicPeak)()
             Dim abundanceElementPropertyBeanList2 As List(Of IsotopicPeak) = New List(Of IsotopicPeak)()
             Dim abundanceElementPropertyBeanList3 As List(Of IsotopicPeak) = New List(Of IsotopicPeak)()
@@ -484,7 +484,7 @@ Namespace Formula.IsotopicPatterns
             Return abundanceElementPropertyBeanList1
         End Function
 
-        Private Function getAllIsotopeElementPropertyForNineIsotopomerElement(ByVal isotopeElementPropertyBeanList As List(Of IsotopicPeak), ByVal n As Integer, ByVal filterMass As Integer) As List(Of IsotopicPeak)
+        Private Function getAllIsotopeElementPropertyForNineIsotopomerElement(isotopeElementPropertyBeanList As List(Of IsotopicPeak), n As Integer, filterMass As Integer) As List(Of IsotopicPeak)
             Dim abundanceElementPropertyBeanList1 As List(Of IsotopicPeak) = New List(Of IsotopicPeak)()
             Dim abundanceElementPropertyBeanList2 As List(Of IsotopicPeak) = New List(Of IsotopicPeak)()
             Dim abundanceElementPropertyBeanList3 As List(Of IsotopicPeak) = New List(Of IsotopicPeak)()
@@ -634,7 +634,7 @@ Namespace Formula.IsotopicPatterns
             Return abundanceElementPropertyBeanList1
         End Function
 
-        Private Function getAllIsotopeElementPropertyForEightIsotopomerElement(ByVal isotopeElementPropertyBeanList As List(Of IsotopicPeak), ByVal n As Integer, ByVal filterMass As Integer) As List(Of IsotopicPeak)
+        Private Function getAllIsotopeElementPropertyForEightIsotopomerElement(isotopeElementPropertyBeanList As List(Of IsotopicPeak), n As Integer, filterMass As Integer) As List(Of IsotopicPeak)
             Dim abundanceElementPropertyBeanList1 As List(Of IsotopicPeak) = New List(Of IsotopicPeak)()
             Dim abundanceElementPropertyBeanList2 As List(Of IsotopicPeak) = New List(Of IsotopicPeak)()
             Dim abundanceElementPropertyBeanList3 As List(Of IsotopicPeak) = New List(Of IsotopicPeak)()
@@ -765,7 +765,7 @@ Namespace Formula.IsotopicPatterns
             Return abundanceElementPropertyBeanList1
         End Function
 
-        Private Function getAllIsotopeElementPropertyForSevenIsotopomerElement(ByVal isotopeElementPropertyBeanList As List(Of IsotopicPeak), ByVal n As Integer, ByVal filterMass As Integer) As List(Of IsotopicPeak)
+        Private Function getAllIsotopeElementPropertyForSevenIsotopomerElement(isotopeElementPropertyBeanList As List(Of IsotopicPeak), n As Integer, filterMass As Integer) As List(Of IsotopicPeak)
             Dim abundanceElementPropertyBeanList1 As List(Of IsotopicPeak) = New List(Of IsotopicPeak)()
             Dim abundanceElementPropertyBeanList2 As List(Of IsotopicPeak) = New List(Of IsotopicPeak)()
             Dim abundanceElementPropertyBeanList3 As List(Of IsotopicPeak) = New List(Of IsotopicPeak)()
@@ -878,7 +878,7 @@ Namespace Formula.IsotopicPatterns
             Return abundanceElementPropertyBeanList1
         End Function
 
-        Private Function getAllIsotopeElementPropertyForSixIsotopomerElement(ByVal isotopeElementPropertyBeanList As List(Of IsotopicPeak), ByVal n As Integer, ByVal filterMass As Integer) As List(Of IsotopicPeak)
+        Private Function getAllIsotopeElementPropertyForSixIsotopomerElement(isotopeElementPropertyBeanList As List(Of IsotopicPeak), n As Integer, filterMass As Integer) As List(Of IsotopicPeak)
             Dim abundanceElementPropertyBeanList1 As List(Of IsotopicPeak) = New List(Of IsotopicPeak)()
             Dim abundanceElementPropertyBeanList2 As List(Of IsotopicPeak) = New List(Of IsotopicPeak)()
             Dim abundanceElementPropertyBeanList3 As List(Of IsotopicPeak) = New List(Of IsotopicPeak)()
@@ -973,7 +973,7 @@ Namespace Formula.IsotopicPatterns
             Return abundanceElementPropertyBeanList1
         End Function
 
-        Private Function getAllIsotopeElementPropertyForFiveIsotopomerElement(ByVal isotopeElementPropertyBeanList As List(Of IsotopicPeak), ByVal n As Integer, ByVal filterMass As Integer) As List(Of IsotopicPeak)
+        Private Function getAllIsotopeElementPropertyForFiveIsotopomerElement(isotopeElementPropertyBeanList As List(Of IsotopicPeak), n As Integer, filterMass As Integer) As List(Of IsotopicPeak)
             Dim abundanceElementPropertyBeanList1 As List(Of IsotopicPeak) = New List(Of IsotopicPeak)()
             Dim abundanceElementPropertyBeanList2 As List(Of IsotopicPeak) = New List(Of IsotopicPeak)()
             Dim abundanceElementPropertyBeanList3 As List(Of IsotopicPeak) = New List(Of IsotopicPeak)()
@@ -1051,7 +1051,7 @@ Namespace Formula.IsotopicPatterns
             Return abundanceElementPropertyBeanList1
         End Function
 
-        Private Function getAllIsotopeElementPropertyForFourIsotopomerElement(ByVal isotopeElementPropertyBeanList As List(Of IsotopicPeak), ByVal n As Integer, ByVal filterMass As Integer) As List(Of IsotopicPeak)
+        Private Function getAllIsotopeElementPropertyForFourIsotopomerElement(isotopeElementPropertyBeanList As List(Of IsotopicPeak), n As Integer, filterMass As Integer) As List(Of IsotopicPeak)
             Dim abundanceElementPropertyBeanList1 As List(Of IsotopicPeak) = New List(Of IsotopicPeak)()
             Dim abundanceElementPropertyBeanList2 As List(Of IsotopicPeak) = New List(Of IsotopicPeak)()
             Dim abundanceElementPropertyBeanList3 As List(Of IsotopicPeak) = New List(Of IsotopicPeak)()
@@ -1109,7 +1109,7 @@ Namespace Formula.IsotopicPatterns
             Return abundanceElementPropertyBeanList1
         End Function
 
-        Private Function getAllIsotopeElementPropertyForThreeIsotopomerElement(ByVal isotopeElementPropertyBeanList As List(Of IsotopicPeak), ByVal n As Integer, ByVal filterMass As Integer) As List(Of IsotopicPeak)
+        Private Function getAllIsotopeElementPropertyForThreeIsotopomerElement(isotopeElementPropertyBeanList As List(Of IsotopicPeak), n As Integer, filterMass As Integer) As List(Of IsotopicPeak)
             Dim abundanceElementPropertyBeanList1 As List(Of IsotopicPeak) = New List(Of IsotopicPeak)()
             Dim abundanceElementPropertyBeanList2 As List(Of IsotopicPeak) = New List(Of IsotopicPeak)()
 
@@ -1149,7 +1149,7 @@ Namespace Formula.IsotopicPatterns
             Return abundanceElementPropertyBeanList1
         End Function
 
-        Private Function getAllIsotopeElementPropertyForTwoIsotopomerElement(ByVal isotopeElementPropertyBeanList As List(Of IsotopicPeak), ByVal n As Integer, ByVal filterMass As Integer) As List(Of IsotopicPeak)
+        Private Function getAllIsotopeElementPropertyForTwoIsotopomerElement(isotopeElementPropertyBeanList As List(Of IsotopicPeak), n As Integer, filterMass As Integer) As List(Of IsotopicPeak)
             Dim abundanceElementPropertyBeanList1 As List(Of IsotopicPeak) = New List(Of IsotopicPeak)()
 
             Dim a_relativeAbundance = isotopeElementPropertyBeanList(1).RelativeAbundance
@@ -1172,7 +1172,7 @@ Namespace Formula.IsotopicPatterns
             Return abundanceElementPropertyBeanList1
         End Function
 
-        Private Function getAccurateMultiplatedIsotopeElement(ByVal abundanceElementPropertyBeanList1 As List(Of IsotopicPeak), ByVal abundanceElementPropertyBeanList2 As List(Of IsotopicPeak), ByVal filterMass As Integer) As List(Of IsotopicPeak)
+        Private Function getAccurateMultiplatedIsotopeElement(abundanceElementPropertyBeanList1 As List(Of IsotopicPeak), abundanceElementPropertyBeanList2 As List(Of IsotopicPeak), filterMass As Integer) As List(Of IsotopicPeak)
             Dim multiplatedAbundanceElementBeanList As List(Of IsotopicPeak) = New List(Of IsotopicPeak)()
             Dim relativeAbundance, massDifference As Double
             For i = 0 To abundanceElementPropertyBeanList1.Count - 1
@@ -1188,7 +1188,7 @@ Namespace Formula.IsotopicPatterns
             Return multiplatedAbundanceElementBeanList
         End Function
 
-        Private Function getAccurateMultiplatedIsotopeElement(ByVal relativeAbund As Double, ByVal massDiff As Double, ByVal abundanceElementPropertyBeanList As List(Of IsotopicPeak), ByVal filterMass As Integer) As List(Of IsotopicPeak)
+        Private Function getAccurateMultiplatedIsotopeElement(relativeAbund As Double, massDiff As Double, abundanceElementPropertyBeanList As List(Of IsotopicPeak), filterMass As Integer) As List(Of IsotopicPeak)
             Dim multiplatedAbundanceElementBeanList As List(Of IsotopicPeak) = New List(Of IsotopicPeak)()
             Dim relativeAbundance, massDifference As Double
             For i = 0 To abundanceElementPropertyBeanList.Count - 1
@@ -1202,7 +1202,7 @@ Namespace Formula.IsotopicPatterns
             Return multiplatedAbundanceElementBeanList
         End Function
 
-        Private Function getAccurateMargedIsotopeElement(ByVal abundanceElementPropertyBeanList1 As List(Of IsotopicPeak), ByVal abundanceElementPropertyBeanList2 As List(Of IsotopicPeak)) As List(Of IsotopicPeak)
+        Private Function getAccurateMargedIsotopeElement(abundanceElementPropertyBeanList1 As List(Of IsotopicPeak), abundanceElementPropertyBeanList2 As List(Of IsotopicPeak)) As List(Of IsotopicPeak)
             Dim abundanceElementPropertyBeanList As List(Of IsotopicPeak) = New List(Of IsotopicPeak)()
             For i = 0 To abundanceElementPropertyBeanList1.Count - 1
                 abundanceElementPropertyBeanList.Add(abundanceElementPropertyBeanList1(i))
@@ -1215,7 +1215,7 @@ Namespace Formula.IsotopicPatterns
             Return abundanceElementPropertyBeanList
         End Function
 
-        Private Function getNominalIsotopeElementPropertyForTenIsotopomerElement(ByVal isotopeElementPropertyBeanList As List(Of IsotopicPeak), ByVal n As Integer, ByVal filterMass As Integer) As List(Of IsotopicPeak)
+        Private Function getNominalIsotopeElementPropertyForTenIsotopomerElement(isotopeElementPropertyBeanList As List(Of IsotopicPeak), n As Integer, filterMass As Integer) As List(Of IsotopicPeak)
             Dim abundanceElementPropertyBeanList1 As List(Of IsotopicPeak) = New List(Of IsotopicPeak)()
             For i = 0 To filterMass - 1
                 abundanceElementPropertyBeanList1.Add(New IsotopicPeak() With {
@@ -1436,7 +1436,7 @@ Namespace Formula.IsotopicPatterns
             Return abundanceElementPropertyBeanList1
         End Function
 
-        Private Function getNominalIsotopeElementPropertyForNineIsotopomerElement(ByVal isotopeElementPropertyBeanList As List(Of IsotopicPeak), ByVal n As Integer, ByVal filterMass As Integer) As List(Of IsotopicPeak)
+        Private Function getNominalIsotopeElementPropertyForNineIsotopomerElement(isotopeElementPropertyBeanList As List(Of IsotopicPeak), n As Integer, filterMass As Integer) As List(Of IsotopicPeak)
             Dim abundanceElementPropertyBeanList1 As List(Of IsotopicPeak) = New List(Of IsotopicPeak)()
             For i = 0 To filterMass - 1
                 abundanceElementPropertyBeanList1.Add(New IsotopicPeak() With {
@@ -1633,7 +1633,7 @@ Namespace Formula.IsotopicPatterns
             Return abundanceElementPropertyBeanList1
         End Function
 
-        Private Function getNominalIsotopeElementPropertyForEightIsotopomerElement(ByVal isotopeElementPropertyBeanList As List(Of IsotopicPeak), ByVal n As Integer, ByVal filterMass As Integer) As List(Of IsotopicPeak)
+        Private Function getNominalIsotopeElementPropertyForEightIsotopomerElement(isotopeElementPropertyBeanList As List(Of IsotopicPeak), n As Integer, filterMass As Integer) As List(Of IsotopicPeak)
             Dim abundanceElementPropertyBeanList1 As List(Of IsotopicPeak) = New List(Of IsotopicPeak)()
             For i = 0 To filterMass - 1
                 abundanceElementPropertyBeanList1.Add(New IsotopicPeak() With {
@@ -1808,7 +1808,7 @@ Namespace Formula.IsotopicPatterns
             Return abundanceElementPropertyBeanList1
         End Function
 
-        Private Function getNominalIsotopeElementPropertyForSevenIsotopomerElement(ByVal isotopeElementPropertyBeanList As List(Of IsotopicPeak), ByVal n As Integer, ByVal filterMass As Integer) As List(Of IsotopicPeak)
+        Private Function getNominalIsotopeElementPropertyForSevenIsotopomerElement(isotopeElementPropertyBeanList As List(Of IsotopicPeak), n As Integer, filterMass As Integer) As List(Of IsotopicPeak)
             Dim abundanceElementPropertyBeanList1 As List(Of IsotopicPeak) = New List(Of IsotopicPeak)()
             For i = 0 To filterMass - 1
                 abundanceElementPropertyBeanList1.Add(New IsotopicPeak() With {
@@ -1961,7 +1961,7 @@ Namespace Formula.IsotopicPatterns
             Return abundanceElementPropertyBeanList1
         End Function
 
-        Private Function getNominalIsotopeElementPropertyForSixIsotopomerElement(ByVal isotopeElementPropertyBeanList As List(Of IsotopicPeak), ByVal n As Integer, ByVal filterMass As Integer) As List(Of IsotopicPeak)
+        Private Function getNominalIsotopeElementPropertyForSixIsotopomerElement(isotopeElementPropertyBeanList As List(Of IsotopicPeak), n As Integer, filterMass As Integer) As List(Of IsotopicPeak)
             Dim abundanceElementPropertyBeanList1 As List(Of IsotopicPeak) = New List(Of IsotopicPeak)()
             For i = 0 To filterMass - 1
                 abundanceElementPropertyBeanList1.Add(New IsotopicPeak() With {
@@ -2091,7 +2091,7 @@ Namespace Formula.IsotopicPatterns
             Return abundanceElementPropertyBeanList1
         End Function
 
-        Private Function getNominalIsotopeElementPropertyForFiveIsotopomerElement(ByVal isotopeElementPropertyBeanList As List(Of IsotopicPeak), ByVal n As Integer, ByVal filterMass As Integer) As List(Of IsotopicPeak)
+        Private Function getNominalIsotopeElementPropertyForFiveIsotopomerElement(isotopeElementPropertyBeanList As List(Of IsotopicPeak), n As Integer, filterMass As Integer) As List(Of IsotopicPeak)
             Dim abundanceElementPropertyBeanList1 As List(Of IsotopicPeak) = New List(Of IsotopicPeak)()
             For i = 0 To filterMass - 1
                 abundanceElementPropertyBeanList1.Add(New IsotopicPeak() With {
@@ -2194,7 +2194,7 @@ Namespace Formula.IsotopicPatterns
             Return abundanceElementPropertyBeanList1
         End Function
 
-        Private Function getNominalIsotopeElementPropertyForFourIsotopomerElement(ByVal isotopeElementPropertyBeanList As List(Of IsotopicPeak), ByVal n As Integer, ByVal filterMass As Integer) As List(Of IsotopicPeak)
+        Private Function getNominalIsotopeElementPropertyForFourIsotopomerElement(isotopeElementPropertyBeanList As List(Of IsotopicPeak), n As Integer, filterMass As Integer) As List(Of IsotopicPeak)
             Dim abundanceElementPropertyBeanList1 As List(Of IsotopicPeak) = New List(Of IsotopicPeak)()
             For i = 0 To filterMass - 1
                 abundanceElementPropertyBeanList1.Add(New IsotopicPeak() With {
@@ -2269,7 +2269,7 @@ Namespace Formula.IsotopicPatterns
             Return abundanceElementPropertyBeanList1
         End Function
 
-        Private Function getNominalIsotopeElementPropertyForThreeIsotopomerElement(ByVal isotopeElementPropertyBeanList As List(Of IsotopicPeak), ByVal n As Integer, ByVal filterMass As Integer) As List(Of IsotopicPeak)
+        Private Function getNominalIsotopeElementPropertyForThreeIsotopomerElement(isotopeElementPropertyBeanList As List(Of IsotopicPeak), n As Integer, filterMass As Integer) As List(Of IsotopicPeak)
             Dim abundanceElementPropertyBeanList1 As List(Of IsotopicPeak) = New List(Of IsotopicPeak)()
             Dim abundanceElementPropertyBeanList2 As List(Of IsotopicPeak) = New List(Of IsotopicPeak)()
 
@@ -2320,7 +2320,7 @@ Namespace Formula.IsotopicPatterns
             Return abundanceElementPropertyBeanList1
         End Function
 
-        Private Function getNominalIsotopeElementPropertyForTwoIsotopomerElement(ByVal isotopeElementPropertyBeanList As List(Of IsotopicPeak), ByVal n As Integer, ByVal filterMass As Integer) As List(Of IsotopicPeak)
+        Private Function getNominalIsotopeElementPropertyForTwoIsotopomerElement(isotopeElementPropertyBeanList As List(Of IsotopicPeak), n As Integer, filterMass As Integer) As List(Of IsotopicPeak)
             Dim abundanceElementPropertyBeanList1 As List(Of IsotopicPeak) = New List(Of IsotopicPeak)()
             For i = 0 To filterMass - 1
                 abundanceElementPropertyBeanList1.Add(New IsotopicPeak() With {
@@ -2347,7 +2347,7 @@ Namespace Formula.IsotopicPatterns
             Return abundanceElementPropertyBeanList1
         End Function
 
-        Private Function getNominalMargedIsotopeElement(ByVal abundanceElementPropertyBeanList1 As List(Of IsotopicPeak), ByVal abundanceElementPropertyBeanList2 As List(Of IsotopicPeak)) As List(Of IsotopicPeak)
+        Private Function getNominalMargedIsotopeElement(abundanceElementPropertyBeanList1 As List(Of IsotopicPeak), abundanceElementPropertyBeanList2 As List(Of IsotopicPeak)) As List(Of IsotopicPeak)
             For i = 0 To abundanceElementPropertyBeanList1.Count - 1
                 abundanceElementPropertyBeanList1(i).RelativeAbundance += abundanceElementPropertyBeanList2(i).RelativeAbundance
                 abundanceElementPropertyBeanList1(i).MassDifferenceFromMonoisotopicIon = i
@@ -2356,7 +2356,7 @@ Namespace Formula.IsotopicPatterns
             Return abundanceElementPropertyBeanList1
         End Function
 
-        Private Function getNominalMultiplatedisotopeElement(ByVal abundanceElementPropertyBeanList1 As List(Of IsotopicPeak), ByVal abundanceElementPropertyBeanList2 As List(Of IsotopicPeak), ByVal filterMass As Integer) As List(Of IsotopicPeak)
+        Private Function getNominalMultiplatedisotopeElement(abundanceElementPropertyBeanList1 As List(Of IsotopicPeak), abundanceElementPropertyBeanList2 As List(Of IsotopicPeak), filterMass As Integer) As List(Of IsotopicPeak)
             Dim massDiff As Integer
             Dim multipliedIsotopeElementList As List(Of IsotopicPeak) = New List(Of IsotopicPeak)()
             For i = 0 To filterMass - 1
@@ -2378,7 +2378,7 @@ Namespace Formula.IsotopicPatterns
             Return multipliedIsotopeElementList
         End Function
 
-        Private Function getNominalMultiplatedIsotopeElement(ByVal relativeAbund As Double, ByVal massDiff As Double, ByVal abundanceElementPropertyBeanList As List(Of IsotopicPeak), ByVal filterMass As Integer) As List(Of IsotopicPeak)
+        Private Function getNominalMultiplatedIsotopeElement(relativeAbund As Double, massDiff As Double, abundanceElementPropertyBeanList As List(Of IsotopicPeak), filterMass As Integer) As List(Of IsotopicPeak)
             Dim multiplatedAbundanceElementBeanList As List(Of IsotopicPeak) = New List(Of IsotopicPeak)()
             For i = 0 To filterMass - 1
                 multiplatedAbundanceElementBeanList.Add(New IsotopicPeak() With {

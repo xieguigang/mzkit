@@ -17,12 +17,12 @@ Public NotInheritable Class MsScanMatching
     Private Sub New()
     End Sub
 
-    Public Shared Function IsComparedAvailable(Of T)(ByVal obj1 As IReadOnlyCollection(Of T), ByVal obj2 As IReadOnlyCollection(Of T)) As Boolean
+    Public Shared Function IsComparedAvailable(Of T)(obj1 As IReadOnlyCollection(Of T), obj2 As IReadOnlyCollection(Of T)) As Boolean
         If obj1 Is Nothing OrElse obj2 Is Nothing OrElse obj1.Count = 0 OrElse obj2.Count = 0 Then Return False
         Return True
     End Function
 
-    Public Shared Function IsComparedAvailable(ByVal obj1 As IMSScanProperty, ByVal obj2 As IMSScanProperty) As Boolean
+    Public Shared Function IsComparedAvailable(obj1 As IMSScanProperty, obj2 As IMSScanProperty) As Boolean
         If obj1.Spectrum Is Nothing OrElse obj2.Spectrum Is Nothing OrElse obj1.Spectrum.Count = 0 OrElse obj2.Spectrum.Count = 0 Then Return False
         Return True
     End Function
@@ -57,7 +57,7 @@ Public NotInheritable Class MsScanMatching
     '    return result;
     '}
 
-    Public Shared Function CompareMS2ScanProperties(ByVal scanProp As IMSScanProperty, ByVal refSpec As MoleculeMsReference, ByVal param As MsRefSearchParameterBase, ByVal Optional targetOmics As TargetOmics = TargetOmics.Metabolomics, ByVal Optional scanCCS As Double = -1.0, ByVal Optional scanIsotopes As IReadOnlyList(Of IsotopicPeak) = Nothing, ByVal Optional refIsotopes As IReadOnlyList(Of IsotopicPeak) = Nothing, ByVal Optional andromedaDelta As Double = 100, ByVal Optional andromedaMaxPeaks As Integer = 12) As MsScanMatchResult
+    Public Shared Function CompareMS2ScanProperties(scanProp As IMSScanProperty, refSpec As MoleculeMsReference, param As MsRefSearchParameterBase, Optional targetOmics As TargetOmics = TargetOmics.Metabolomics, Optional scanCCS As Double = -1.0, Optional scanIsotopes As IReadOnlyList(Of IsotopicPeak) = Nothing, Optional refIsotopes As IReadOnlyList(Of IsotopicPeak) = Nothing, Optional andromedaDelta As Double = 100, Optional andromedaMaxPeaks As Integer = 12) As MsScanMatchResult
 
         Dim result As MsScanMatchResult = Nothing
         If targetOmics = TargetOmics.Metabolomics Then
@@ -78,7 +78,7 @@ Public NotInheritable Class MsScanMatching
         Return result
     End Function
 
-    Public Shared Function CompareMS2ScanProperties(ByVal scanProp As IMSScanProperty, ByVal chargestate As Integer, ByVal refSpec As PeptideMsReference, ByVal param As MsRefSearchParameterBase, ByVal Optional targetOmics As TargetOmics = TargetOmics.Metabolomics, ByVal Optional scanCCS As Double = -1.0, ByVal Optional scanIsotopes As IReadOnlyList(Of IsotopicPeak) = Nothing, ByVal Optional refIsotopes As IReadOnlyList(Of IsotopicPeak) = Nothing, ByVal Optional andromedaDelta As Double = 100, ByVal Optional andromedaMaxPeaks As Integer = 12) As MsScanMatchResult
+    Public Shared Function CompareMS2ScanProperties(scanProp As IMSScanProperty, chargestate As Integer, refSpec As PeptideMsReference, param As MsRefSearchParameterBase, Optional targetOmics As TargetOmics = TargetOmics.Metabolomics, Optional scanCCS As Double = -1.0, Optional scanIsotopes As IReadOnlyList(Of IsotopicPeak) = Nothing, Optional refIsotopes As IReadOnlyList(Of IsotopicPeak) = Nothing, Optional andromedaDelta As Double = 100, Optional andromedaMaxPeaks As Integer = 12) As MsScanMatchResult
 
         Dim result As MsScanMatchResult = Nothing
         If targetOmics = TargetOmics.Proteomics Then
@@ -115,7 +115,7 @@ Public NotInheritable Class MsScanMatching
     '}
 
 
-    Public Shared Function CompareMS2ProteomicsScanProperties(ByVal scanProp As IMSScanProperty, ByVal chargestate As Integer, ByVal refSpec As PeptideMsReference, ByVal param As MsRefSearchParameterBase, ByVal andromedaDelta As Single, ByVal andromedaMaxPeaks As Single) As MsScanMatchResult
+    Public Shared Function CompareMS2ProteomicsScanProperties(scanProp As IMSScanProperty, chargestate As Integer, refSpec As PeptideMsReference, param As MsRefSearchParameterBase, andromedaDelta As Single, andromedaMaxPeaks As Single) As MsScanMatchResult
 
         Dim result = CompareBasicMSScanProperties(scanProp, refSpec, param, param.Ms2Tolerance, param.MassRangeBegin, param.MassRangeEnd)
         Dim matchedPeaks = GetMachedSpectralPeaks(scanProp, chargestate, refSpec, param.Ms2Tolerance, param.MassRangeBegin, param.MassRangeEnd)
@@ -134,7 +134,7 @@ Public NotInheritable Class MsScanMatching
     End Function
 
 
-    Public Shared Function CompareEIMSScanProperties(ByVal scanProp As IMSScanProperty, ByVal refSpec As MoleculeMsReference, ByVal param As MsRefSearchParameterBase, ByVal Optional isUseRetentionIndex As Boolean = False) As MsScanMatchResult
+    Public Shared Function CompareEIMSScanProperties(scanProp As IMSScanProperty, refSpec As MoleculeMsReference, param As MsRefSearchParameterBase, Optional isUseRetentionIndex As Boolean = False) As MsScanMatchResult
         Dim result = CompareMSScanProperties(scanProp, refSpec, param, param.Ms1Tolerance, param.MassRangeBegin, param.MassRangeEnd)
         Dim msMatchedScore = GetIntegratedSpectraSimilarity(result)
         If isUseRetentionIndex Then
@@ -145,7 +145,7 @@ Public NotInheritable Class MsScanMatching
         Return result
     End Function
 
-    Public Shared Function CompareEIMSScanProperties(ByVal scan1 As IMSScanProperty, ByVal scan2 As IMSScanProperty, ByVal param As MsRefSearchParameterBase, ByVal Optional isUseRetentionIndex As Boolean = False) As MsScanMatchResult
+    Public Shared Function CompareEIMSScanProperties(scan1 As IMSScanProperty, scan2 As IMSScanProperty, param As MsRefSearchParameterBase, Optional isUseRetentionIndex As Boolean = False) As MsScanMatchResult
         Dim result = CompareMSScanProperties(scan1, scan2, param, param.Ms1Tolerance, param.MassRangeBegin, param.MassRangeEnd)
         Dim msMatchedScore = GetIntegratedSpectraSimilarity(result)
         If isUseRetentionIndex Then
@@ -156,7 +156,7 @@ Public NotInheritable Class MsScanMatching
         Return result
     End Function
 
-    Public Shared Function GetIntegratedSpectraSimilarity(ByVal result As MsScanMatchResult) As Double
+    Public Shared Function GetIntegratedSpectraSimilarity(result As MsScanMatchResult) As Double
         Dim dotproductFact = 3.0
         Dim revDotproductFact = 2.0
         Dim matchedRatioFact = 1.0
@@ -164,7 +164,7 @@ Public NotInheritable Class MsScanMatching
     End Function
 
 
-    Public Shared Function CompareMSScanProperties(ByVal scanProp As IMSScanProperty, ByVal refSpec As MoleculeMsReference, ByVal param As MsRefSearchParameterBase, ByVal ms2Tol As Single, ByVal massRangeBegin As Single, ByVal massRangeEnd As Single) As MsScanMatchResult
+    Public Shared Function CompareMSScanProperties(scanProp As IMSScanProperty, refSpec As MoleculeMsReference, param As MsRefSearchParameterBase, ms2Tol As Single, massRangeBegin As Single, massRangeEnd As Single) As MsScanMatchResult
 
         Dim result = CompareMSScanProperties(scanProp, CType(refSpec, IMSScanProperty), param, ms2Tol, massRangeBegin, massRangeEnd)
         result.Name = refSpec.Name
@@ -173,7 +173,7 @@ Public NotInheritable Class MsScanMatching
         Return result
     End Function
 
-    Public Shared Function CompareMSScanProperties(ByVal scanProp As IMSScanProperty, ByVal refSpec As IMSScanProperty, ByVal param As MsRefSearchParameterBase, ByVal ms2Tol As Single, ByVal massRangeBegin As Single, ByVal massRangeEnd As Single) As MsScanMatchResult
+    Public Shared Function CompareMSScanProperties(scanProp As IMSScanProperty, refSpec As IMSScanProperty, param As MsRefSearchParameterBase, ms2Tol As Single, massRangeBegin As Single, massRangeEnd As Single) As MsScanMatchResult
 
         Dim result = CompareBasicMSScanProperties(scanProp, refSpec, param, ms2Tol, massRangeBegin, massRangeEnd)
         Dim matchedPeaksScores = GetMatchedPeaksScores(scanProp, refSpec, ms2Tol, massRangeBegin, massRangeEnd)
@@ -187,7 +187,7 @@ Public NotInheritable Class MsScanMatching
         Return result
     End Function
 
-    Public Shared Function CompareBasicMSScanProperties(ByVal scanProp As IMSScanProperty, ByVal refSpec As MoleculeMsReference, ByVal param As MsRefSearchParameterBase, ByVal ms2Tol As Single, ByVal massRangeBegin As Single, ByVal massRangeEnd As Single) As MsScanMatchResult
+    Public Shared Function CompareBasicMSScanProperties(scanProp As IMSScanProperty, refSpec As MoleculeMsReference, param As MsRefSearchParameterBase, ms2Tol As Single, massRangeBegin As Single, massRangeEnd As Single) As MsScanMatchResult
         Dim result = CompareMSScanProperties(scanProp, CType(refSpec, IMSScanProperty), param, ms2Tol, massRangeBegin, massRangeEnd)
         result.Name = refSpec.Name
         result.LibraryID = refSpec.ScanID
@@ -195,7 +195,7 @@ Public NotInheritable Class MsScanMatching
         Return result
     End Function
 
-    Public Shared Function CompareBasicMSScanProperties(ByVal scanProp As IMSScanProperty, ByVal refSpec As IMSScanProperty, ByVal param As MsRefSearchParameterBase, ByVal ms2Tol As Single, ByVal massRangeBegin As Single, ByVal massRangeEnd As Single) As MsScanMatchResult
+    Public Shared Function CompareBasicMSScanProperties(scanProp As IMSScanProperty, refSpec As IMSScanProperty, param As MsRefSearchParameterBase, ms2Tol As Single, massRangeBegin As Single, massRangeEnd As Single) As MsScanMatchResult
 
         Dim isRtMatch = False
         Dim isRiMatch = False
@@ -253,7 +253,7 @@ Public NotInheritable Class MsScanMatching
     ''' <returns>
     ''' The similarity score which is standadized from 0 (no similarity) to 1 (consistency) will be return.
     ''' </returns>
-    Public Shared Function GetIsotopeRatioSimilarity(ByVal peaks1 As IReadOnlyList(Of IsotopicPeak), ByVal peaks2 As IReadOnlyList(Of IsotopicPeak), ByVal targetedMz As Double, ByVal tolerance As Double) As Double
+    Public Shared Function GetIsotopeRatioSimilarity(peaks1 As IReadOnlyList(Of IsotopicPeak), peaks2 As IReadOnlyList(Of IsotopicPeak), targetedMz As Double, tolerance As Double) As Double
         If Not IsComparedAvailable(peaks1, peaks2) Then Return -1
 
         Dim similarity As Double = 0
@@ -297,7 +297,7 @@ Public NotInheritable Class MsScanMatching
     ''' [0] The similarity score which is standadized from 0 (no similarity) to 1 (consistency) will be returned.
     ''' [1] MatchedPeaksCount is also returned.
     ''' </returns>
-    Public Shared Function GetMatchedPeaksScores(ByVal prop1 As IMSScanProperty, ByVal prop2 As IMSScanProperty, ByVal bin As Double, ByVal massBegin As Double, ByVal massEnd As Double) As Double()
+    Public Shared Function GetMatchedPeaksScores(prop1 As IMSScanProperty, prop2 As IMSScanProperty, bin As Double, massBegin As Double, massEnd As Double) As Double()
         If Not IsComparedAvailable(prop1, prop2) Then Return New Double(1) {-1, -1}
 
         Dim peaks1 = prop1.Spectrum
@@ -306,18 +306,18 @@ Public NotInheritable Class MsScanMatching
         Return GetMatchedPeaksScores(peaks1, peaks2, bin, massBegin, massEnd)
     End Function
 
-    Public Shared Function GetMatchedPeaksScores(ByVal peaks1 As List(Of SpectrumPeak), ByVal peaks2 As List(Of SpectrumPeak), ByVal bin As Double, ByVal massBegin As Double, ByVal massEnd As Double) As Double()
+    Public Shared Function GetMatchedPeaksScores(peaks1 As List(Of SpectrumPeak), peaks2 As List(Of SpectrumPeak), bin As Double, massBegin As Double, massEnd As Double) As Double()
         If Not IsComparedAvailable(peaks1, peaks2) Then Return New Double(1) {-1, -1}
 
         Dim sumM As Double = 0, sumL As Double = 0
-        Dim minMz = peaks2(0).Mass
-        Dim maxMz = peaks2(peaks2.Count - 1).Mass
+        Dim minMz = peaks2(0).mz
+        Dim maxMz = peaks2(peaks2.Count - 1).mz
 
         If massBegin > minMz Then minMz = massBegin
         If maxMz > massEnd Then maxMz = massEnd
 
         Dim focusedMz = minMz
-        Dim maxLibIntensity = peaks2.Max(Function(n) n.Intensity)
+        Dim maxLibIntensity = peaks2.Max(Function(n) n.intensity)
         Dim remaindIndexM = 0, remaindIndexL = 0
         Dim counter = 0
         Dim libCounter = 0
@@ -328,10 +328,10 @@ Public NotInheritable Class MsScanMatching
         While focusedMz <= maxMz
             sumL = 0
             For i = remaindIndexL To peaks2.Count - 1
-                If peaks2(i).Mass < focusedMz - bin Then
+                If peaks2(i).mz < focusedMz - bin Then
                     Continue For
-                ElseIf focusedMz - bin <= peaks2(i).Mass AndAlso peaks2(i).Mass < focusedMz + bin Then
-                    sumL += peaks2(i).Intensity
+                ElseIf focusedMz - bin <= peaks2(i).mz AndAlso peaks2(i).mz < focusedMz + bin Then
+                    sumL += peaks2(i).intensity
                 Else
                     remaindIndexL = i
                     Exit For
@@ -344,10 +344,10 @@ Public NotInheritable Class MsScanMatching
 
             sumM = 0
             For i = remaindIndexM To peaks1.Count - 1
-                If peaks1(i).Mass < focusedMz - bin Then
+                If peaks1(i).mz < focusedMz - bin Then
                     Continue For
-                ElseIf focusedMz - bin <= peaks1(i).Mass AndAlso peaks1(i).Mass < focusedMz + bin Then
-                    sumM += peaks1(i).Intensity
+                ElseIf focusedMz - bin <= peaks1(i).mz AndAlso peaks1(i).mz < focusedMz + bin Then
+                    sumM += peaks1(i).intensity
                 Else
                     remaindIndexM = i
                     Exit For
@@ -358,8 +358,8 @@ Public NotInheritable Class MsScanMatching
                 counter += 1
             End If
 
-            If focusedMz + bin > peaks2(peaks2.Count - 1).Mass Then Exit While
-            focusedMz = peaks2(remaindIndexL).Mass
+            If focusedMz + bin > peaks2(peaks2.Count - 1).mz Then Exit While
+            focusedMz = peaks2(remaindIndexL).mz
         End While
 
         If libCounter = 0 Then
@@ -369,7 +369,7 @@ Public NotInheritable Class MsScanMatching
         End If
     End Function
 
-    Public Shared Function GetSpetralEntropySimilarity(ByVal peaks1 As List(Of SpectrumPeak), ByVal peaks2 As List(Of SpectrumPeak), ByVal bin As Double) As Double
+    Public Shared Function GetSpetralEntropySimilarity(peaks1 As List(Of SpectrumPeak), peaks2 As List(Of SpectrumPeak), bin As Double) As Double
         Dim combinedSpectrum = SpectrumHandler.GetCombinedSpectrum(peaks1, peaks2, bin)
         Dim entropy12 = GetSpectralEntropy(combinedSpectrum)
         Dim entropy1 = GetSpectralEntropy(peaks1)
@@ -378,12 +378,12 @@ Public NotInheritable Class MsScanMatching
         Return 1 - (2 * entropy12 - entropy1 - entropy2) * 0.5
     End Function
 
-    Public Shared Function GetSpectralEntropy(ByVal peaks As List(Of SpectrumPeak)) As Double
-        Dim sumIntensity = peaks.Sum(Function(n) n.Intensity)
-        Return -1 * peaks.Sum(Function(n) n.Intensity / sumIntensity * std.Log(n.Intensity / sumIntensity, 2))
+    Public Shared Function GetSpectralEntropy(peaks As List(Of SpectrumPeak)) As Double
+        Dim sumIntensity = peaks.Sum(Function(n) n.intensity)
+        Return -1 * peaks.Sum(Function(n) n.intensity / sumIntensity * std.Log(n.intensity / sumIntensity, 2))
     End Function
 
-    Public Shared Function GetModifiedDotProductScore(ByVal prop1 As IMSScanProperty, ByVal prop2 As IMSScanProperty, ByVal Optional massTolerance As Double = 0.05, ByVal Optional massToleranceType As MassToleranceType = MassToleranceType.Da) As Double()
+    Public Shared Function GetModifiedDotProductScore(prop1 As IMSScanProperty, prop2 As IMSScanProperty, Optional massTolerance As Double = 0.05, Optional massToleranceType As MassToleranceType = MassToleranceType.Da) As Double()
         Dim matchedPeaks = New List(Of MatchedPeak)()
         If prop1.PrecursorMz < prop2.PrecursorMz Then
             SearchMatchedPeaks(prop1.Spectrum, prop1.PrecursorMz, prop2.Spectrum, prop2.PrecursorMz, massTolerance, massToleranceType, matchedPeaks)
@@ -401,7 +401,7 @@ Public NotInheritable Class MsScanMatching
         Return New Double() {product / (std.Sqrt(scaler1) * std.Sqrt(scaler2)), matchedPeaks.Count}
     End Function
 
-    Public Shared Function GetBonanzaScore(ByVal prop1 As IMSScanProperty, ByVal prop2 As IMSScanProperty, ByVal Optional massTolerance As Double = 0.05, ByVal Optional massToleranceType As MassToleranceType = MassToleranceType.Da) As Double()
+    Public Shared Function GetBonanzaScore(prop1 As IMSScanProperty, prop2 As IMSScanProperty, Optional massTolerance As Double = 0.05, Optional massToleranceType As MassToleranceType = MassToleranceType.Da) As Double()
         Dim matchedPeaks = New List(Of MatchedPeak)()
         If prop1.PrecursorMz < prop2.PrecursorMz Then
             SearchMatchedPeaks(prop1.Spectrum, prop1.PrecursorMz, prop2.Spectrum, prop2.PrecursorMz, massTolerance, massToleranceType, matchedPeaks)
@@ -414,12 +414,12 @@ Public NotInheritable Class MsScanMatching
         End If
 
         Dim product = matchedPeaks.Sum(Function(n) n.Intensity * n.MatchedIntensity)
-        Dim scaler1 = prop1.Spectrum.Where(Function(n) n.IsMatched = False).Sum(Function(n) std.Pow(n.Intensity, 2))
-        Dim scaler2 = prop2.Spectrum.Where(Function(n) n.IsMatched = False).Sum(Function(n) std.Pow(n.Intensity, 2))
+        Dim scaler1 = prop1.Spectrum.Where(Function(n) n.IsMatched = False).Sum(Function(n) std.Pow(n.intensity, 2))
+        Dim scaler2 = prop2.Spectrum.Where(Function(n) n.IsMatched = False).Sum(Function(n) std.Pow(n.intensity, 2))
         Return New Double() {product / (product + scaler1 + scaler2), matchedPeaks.Count}
     End Function
 
-    Public Shared Sub SearchMatchedPeaks(ByVal ePeaks As List(Of SpectrumPeak), ByVal ePrecursor As Double, ByVal rPeaks As List(Of SpectrumPeak), ByVal rPrecursor As Double, ByVal massTolerance As Double, ByVal massTolType As MassToleranceType, <Out> ByRef matchedPeaks As List(Of MatchedPeak)) ' small precursor
+    Public Shared Sub SearchMatchedPeaks(ePeaks As List(Of SpectrumPeak), ePrecursor As Double, rPeaks As List(Of SpectrumPeak), rPrecursor As Double, massTolerance As Double, massTolType As MassToleranceType, <Out> ByRef matchedPeaks As List(Of MatchedPeak)) ' small precursor
         ' large precursor
         matchedPeaks = New List(Of MatchedPeak)()
         For Each e In ePeaks
@@ -434,22 +434,22 @@ Public NotInheritable Class MsScanMatching
         Dim precursorDiff = rPrecursor - ePrecursor
         For i = 0 To rPeaks.Count - 1
             Dim rPeak = rPeaks(i)
-            Dim massTol = If(massTolType = MassToleranceType.Da, massTolerance, PPMmethod.ConvertPpmToMassAccuracy(rPeak.Mass, massTolerance))
+            Dim massTol = If(massTolType = MassToleranceType.Da, massTolerance, PPMmethod.ConvertPpmToMassAccuracy(rPeak.mz, massTolerance))
             Dim minPeakID = -1
             Dim minIntensityDiff = Double.MaxValue
             Dim isProduct = False
             For j = 0 To ePeaks.Count - 1
                 Dim ePeak = ePeaks(j)
                 If ePeak.IsMatched = True Then Continue For
-                If std.Abs(ePeak.Mass - rPeak.Mass) < massTol Then
-                    Dim intensityDiff = std.Abs(ePeak.Intensity - rPeak.Intensity)
+                If std.Abs(ePeak.mz - rPeak.mz) < massTol Then
+                    Dim intensityDiff = std.Abs(ePeak.intensity - rPeak.intensity)
                     If intensityDiff < minIntensityDiff Then
                         minIntensityDiff = intensityDiff
                         minPeakID = j
                         isProduct = True
                     End If
-                ElseIf std.Abs(precursorDiff + ePeak.Mass - rPeak.Mass) < massTol Then
-                    Dim intensityDiff = std.Abs(ePeak.Intensity - rPeak.Intensity)
+                ElseIf std.Abs(precursorDiff + ePeak.mz - rPeak.mz) < massTol Then
+                    Dim intensityDiff = std.Abs(ePeak.intensity - rPeak.intensity)
                     If intensityDiff < minIntensityDiff Then
                         minIntensityDiff = intensityDiff
                         minPeakID = j
@@ -462,9 +462,9 @@ Public NotInheritable Class MsScanMatching
                 rPeak.IsMatched = True
                 ePeaks(minPeakID).IsMatched = True
                 matchedPeaks.Add(New MatchedPeak() With {
-    .Mass = rPeak.Mass,
-    .Intensity = rPeak.Intensity,
-    .MatchedIntensity = ePeaks(minPeakID).Intensity,
+    .Mass = rPeak.mz,
+    .Intensity = rPeak.intensity,
+    .MatchedIntensity = ePeaks(minPeakID).intensity,
     .IsProductIonMatched = isProduct,
     .IsNeutralLossMatched = Not isProduct
 })
@@ -472,7 +472,7 @@ Public NotInheritable Class MsScanMatching
         Next
     End Sub
 
-    Public Shared Function GetProcessedSpectrum(ByVal peaks As List(Of SpectrumPeak), ByVal peakPrecursorMz As Double, ByVal Optional minMz As Double = 0.0, ByVal Optional maxMz As Double = 10000, ByVal Optional relativeAbundanceCutOff As Double = 0.1, ByVal Optional absoluteAbundanceCutOff As Double = 50.0, ByVal Optional massTolerance As Double = 0.05, ByVal Optional massBinningValue As Double = 1.0, ByVal Optional intensityScaleFactor As Double = 0.5, ByVal Optional scaledMaxValue As Double = 100, ByVal Optional massDelta As Double = 1, ByVal Optional maxPeakNumInDelta As Integer = 12, ByVal Optional massToleranceType As MassToleranceType = MassToleranceType.Da, ByVal Optional isBrClConsideredForIsotopes As Boolean = False, ByVal Optional isRemoveIsotopes As Boolean = False, ByVal Optional removeAfterPrecursor As Boolean = True) As List(Of SpectrumPeak) ' 0.1%
+    Public Shared Function GetProcessedSpectrum(peaks As List(Of SpectrumPeak), peakPrecursorMz As Double, Optional minMz As Double = 0.0, Optional maxMz As Double = 10000, Optional relativeAbundanceCutOff As Double = 0.1, Optional absoluteAbundanceCutOff As Double = 50.0, Optional massTolerance As Double = 0.05, Optional massBinningValue As Double = 1.0, Optional intensityScaleFactor As Double = 0.5, Optional scaledMaxValue As Double = 100, Optional massDelta As Double = 1, Optional maxPeakNumInDelta As Integer = 12, Optional massToleranceType As MassToleranceType = MassToleranceType.Da, Optional isBrClConsideredForIsotopes As Boolean = False, Optional isRemoveIsotopes As Boolean = False, Optional removeAfterPrecursor As Boolean = True) As List(Of SpectrumPeak) ' 0.1%
 
         'Console.WriteLine("Original peaks");
         'foreach (var peak in peaks) {
@@ -509,7 +509,7 @@ Public NotInheritable Class MsScanMatching
     ''' </summary>
     ''' <param name="peaks"></param>
     ''' <returns></returns>
-    Public Shared Function GetAndromedaScore(ByVal peaks As List(Of SpectrumPeak), ByVal andromedaDelta As Double, ByVal andromedaMaxPeak As Double) As Double
+    Public Shared Function GetAndromedaScore(peaks As List(Of SpectrumPeak), andromedaDelta As Double, andromedaMaxPeak As Double) As Double
         Dim p = andromedaMaxPeak / andromedaDelta
         Dim q = 1 - p
         Dim n = peaks.Count
@@ -537,7 +537,7 @@ Public NotInheritable Class MsScanMatching
     ''' Add the bin value to merge the abundance of m/z.
     ''' </param>
     ''' </summary>
-    Public Shared Function GetMachedSpectralPeaks(ByVal prop1 As IMSScanProperty, ByVal chargeState As Integer, ByVal prop2 As IMSScanProperty, ByVal bin As Double, ByVal massBegin As Double, ByVal massEnd As Double) As List(Of SpectrumPeak)
+    Public Shared Function GetMachedSpectralPeaks(prop1 As IMSScanProperty, chargeState As Integer, prop2 As IMSScanProperty, bin As Double, massBegin As Double, massEnd As Double) As List(Of SpectrumPeak)
         If Not IsComparedAvailable(prop1, prop2) Then Return New List(Of SpectrumPeak)()
 
         Dim peaks1 = prop1.Spectrum
@@ -570,10 +570,10 @@ Public NotInheritable Class MsScanMatching
         Return finalPeaks
     End Function
 
-    Public Shared Function GetMachedSpectralPeaks(ByVal peaks1 As List(Of SpectrumPeak), ByVal peaks2 As List(Of SpectrumPeak), ByVal bin As Double, ByVal massBegin As Double, ByVal massEnd As Double) As List(Of SpectrumPeak)
+    Public Shared Function GetMachedSpectralPeaks(peaks1 As List(Of SpectrumPeak), peaks2 As List(Of SpectrumPeak), bin As Double, massBegin As Double, massEnd As Double) As List(Of SpectrumPeak)
         If Not IsComparedAvailable(peaks1, peaks2) Then Return New List(Of SpectrumPeak)()
-        Dim minMz = std.Max(peaks2(0).Mass, massBegin)
-        Dim maxMz = std.Min(peaks2(peaks2.Count - 1).Mass, massEnd)
+        Dim minMz = std.Max(peaks2(0).mz, massBegin)
+        Dim maxMz = std.Min(peaks2(peaks2.Count - 1).mz, massEnd)
         Dim focusedMz = minMz
 
         Dim remaindIndexM = 0, remaindIndexL = 0
@@ -583,11 +583,11 @@ Public NotInheritable Class MsScanMatching
             Dim maxRefIntensity = Double.MinValue
             Dim maxRefID = -1
             For i = remaindIndexL To peaks2.Count - 1
-                If peaks2(i).Mass < focusedMz - bin Then
+                If peaks2(i).mz < focusedMz - bin Then
                     Continue For
-                ElseIf std.Abs(focusedMz - peaks2(i).Mass) < bin Then
-                    If maxRefIntensity < peaks2(i).Intensity Then
-                        maxRefIntensity = peaks2(i).Intensity
+                ElseIf std.Abs(focusedMz - peaks2(i).mz) < bin Then
+                    If maxRefIntensity < peaks2(i).intensity Then
+                        maxRefIntensity = peaks2(i).intensity
                         maxRefID = i
                     End If
                 Else
@@ -598,16 +598,16 @@ Public NotInheritable Class MsScanMatching
 
             Dim spectrumPeak As SpectrumPeak = If(maxRefID >= 0, peaks2(maxRefID).Clone(), Nothing)
             If spectrumPeak Is Nothing Then
-                focusedMz = peaks2(remaindIndexL).Mass
+                focusedMz = peaks2(remaindIndexL).mz
                 If remaindIndexL = peaks2.Count - 1 Then Exit While
                 Continue While
             End If
             Dim sumintensity = 0.0
             For i = remaindIndexM To peaks1.Count - 1
-                If peaks1(i).Mass < focusedMz - bin Then
+                If peaks1(i).mz < focusedMz - bin Then
                     Continue For
-                ElseIf std.Abs(focusedMz - peaks1(i).Mass) < bin Then
-                    sumintensity += peaks1(i).Intensity
+                ElseIf std.Abs(focusedMz - peaks1(i).mz) < bin Then
+                    sumintensity += peaks1(i).intensity
                     spectrumPeak.IsMatched = True
                 Else
                     remaindIndexM = i
@@ -618,8 +618,8 @@ Public NotInheritable Class MsScanMatching
             spectrumPeak.Resolution = sumintensity
             searchedPeaks.Add(spectrumPeak)
 
-            If focusedMz + bin > peaks2(peaks2.Count - 1).Mass Then Exit While
-            focusedMz = peaks2(remaindIndexL).Mass
+            If focusedMz + bin > peaks2(peaks2.Count - 1).mz Then Exit While
+            focusedMz = peaks2(remaindIndexL).mz
         End While
 
         Return searchedPeaks
@@ -642,7 +642,7 @@ Public NotInheritable Class MsScanMatching
     ''' <returns>
     ''' The similarity score which is standadized from 0 (no similarity) to 1 (consistency) will be return.
     ''' </returns>
-    Public Shared Function GetReverseDotProduct(ByVal prop1 As IMSScanProperty, ByVal prop2 As IMSScanProperty, ByVal bin As Double, ByVal massBegin As Double, ByVal massEnd As Double) As Double
+    Public Shared Function GetReverseDotProduct(prop1 As IMSScanProperty, prop2 As IMSScanProperty, bin As Double, massBegin As Double, massEnd As Double) As Double
         Dim scalarM As Double = 0, scalarR As Double = 0, covariance As Double = 0
         Dim sumM As Double = 0, sumL As Double = 0
         If Not IsComparedAvailable(prop1, prop2) Then Return -1
@@ -650,8 +650,8 @@ Public NotInheritable Class MsScanMatching
         Dim peaks1 = prop1.Spectrum
         Dim peaks2 = prop2.Spectrum
 
-        Dim minMz = peaks2(0).Mass
-        Dim maxMz = peaks2(peaks2.Count - 1).Mass
+        Dim minMz = peaks2(0).mz
+        Dim maxMz = peaks2(peaks2.Count - 1).mz
 
         If massBegin > minMz Then minMz = massBegin
         If maxMz > massEnd Then maxMz = massEnd
@@ -668,10 +668,10 @@ Public NotInheritable Class MsScanMatching
         While focusedMz <= maxMz
             sumL = 0
             For i = remaindIndexL To peaks2.Count - 1
-                If peaks2(i).Mass < focusedMz - bin Then
+                If peaks2(i).mz < focusedMz - bin Then
                     Continue For
-                ElseIf focusedMz - bin <= peaks2(i).Mass AndAlso peaks2(i).Mass < focusedMz + bin Then
-                    sumL += peaks2(i).Intensity
+                ElseIf focusedMz - bin <= peaks2(i).mz AndAlso peaks2(i).mz < focusedMz + bin Then
+                    sumL += peaks2(i).intensity
                 Else
                     remaindIndexL = i
                     Exit For
@@ -680,10 +680,10 @@ Public NotInheritable Class MsScanMatching
 
             sumM = 0
             For i = remaindIndexM To peaks1.Count - 1
-                If peaks1(i).Mass < focusedMz - bin Then
+                If peaks1(i).mz < focusedMz - bin Then
                     Continue For
-                ElseIf focusedMz - bin <= peaks1(i).Mass AndAlso peaks1(i).Mass < focusedMz + bin Then
-                    sumM += peaks1(i).Intensity
+                ElseIf focusedMz - bin <= peaks1(i).mz AndAlso peaks1(i).mz < focusedMz + bin Then
+                    sumM += peaks1(i).intensity
                 Else
                     remaindIndexM = i
                     Exit For
@@ -706,8 +706,8 @@ Public NotInheritable Class MsScanMatching
                 counter += 1
             End If
 
-            If focusedMz + bin > peaks2(peaks2.Count - 1).Mass Then Exit While
-            focusedMz = peaks2(remaindIndexL).Mass
+            If focusedMz + bin > peaks2(peaks2.Count - 1).mz Then Exit While
+            focusedMz = peaks2(remaindIndexL).mz
         End While
 
         If baseM = 0 OrElse baseR = 0 Then Return 0
@@ -787,7 +787,7 @@ Public NotInheritable Class MsScanMatching
     ''' <returns>
     ''' The similarity score which is standadized from 0 (no similarity) to 1 (consistency) will be return.
     ''' </returns>
-    Public Shared Function GetWeightedDotProduct(ByVal prop1 As IMSScanProperty, ByVal prop2 As IMSScanProperty, ByVal bin As Double, ByVal massBegin As Double, ByVal massEnd As Double) As Double
+    Public Shared Function GetWeightedDotProduct(prop1 As IMSScanProperty, prop2 As IMSScanProperty, bin As Double, massBegin As Double, massEnd As Double) As Double
         Dim scalarM As Double = 0, scalarR As Double = 0, covariance As Double = 0
         Dim sumM As Double = 0, sumR As Double = 0
 
@@ -796,8 +796,8 @@ Public NotInheritable Class MsScanMatching
         Dim peaks1 = prop1.Spectrum
         Dim peaks2 = prop2.Spectrum
 
-        Dim minMz = std.Min(peaks1(0).Mass, peaks2(0).Mass)
-        Dim maxMz = std.Max(peaks1(peaks1.Count - 1).Mass, peaks2(peaks2.Count - 1).Mass)
+        Dim minMz = std.Min(peaks1(0).mz, peaks2(0).mz)
+        Dim maxMz = std.Max(peaks1(peaks1.Count - 1).mz, peaks2(peaks2.Count - 1).mz)
 
         If massBegin > minMz Then minMz = massBegin
         If maxMz > massEnd Then maxMz = massEnd
@@ -813,10 +813,10 @@ Public NotInheritable Class MsScanMatching
         While focusedMz <= maxMz
             sumM = 0
             For i = remaindIndexM To peaks1.Count - 1
-                If peaks1(i).Mass < focusedMz - bin Then
+                If peaks1(i).mz < focusedMz - bin Then
                     Continue For
-                ElseIf focusedMz - bin <= peaks1(i).Mass AndAlso peaks1(i).Mass < focusedMz + bin Then
-                    sumM += peaks1(i).Intensity
+                ElseIf focusedMz - bin <= peaks1(i).mz AndAlso peaks1(i).mz < focusedMz + bin Then
+                    sumM += peaks1(i).intensity
                 Else
                     remaindIndexM = i
                     Exit For
@@ -825,10 +825,10 @@ Public NotInheritable Class MsScanMatching
 
             sumR = 0
             For i = remaindIndexL To peaks2.Count - 1
-                If peaks2(i).Mass < focusedMz - bin Then
+                If peaks2(i).mz < focusedMz - bin Then
                     Continue For
-                ElseIf focusedMz - bin <= peaks2(i).Mass AndAlso peaks2(i).Mass < focusedMz + bin Then
-                    sumR += peaks2(i).Intensity
+                ElseIf focusedMz - bin <= peaks2(i).mz AndAlso peaks2(i).mz < focusedMz + bin Then
+                    sumR += peaks2(i).intensity
                 Else
                     remaindIndexL = i
                     Exit For
@@ -849,13 +849,13 @@ Public NotInheritable Class MsScanMatching
                 If sumR > baseR Then baseR = sumR
             End If
 
-            If focusedMz + bin > std.Max(peaks1(peaks1.Count - 1).Mass, peaks2(peaks2.Count - 1).Mass) Then Exit While
-            If focusedMz + bin > peaks2(remaindIndexL).Mass AndAlso focusedMz + bin <= peaks1(remaindIndexM).Mass Then
-                focusedMz = peaks1(remaindIndexM).Mass
-            ElseIf focusedMz + bin <= peaks2(remaindIndexL).Mass AndAlso focusedMz + bin > peaks1(remaindIndexM).Mass Then
-                focusedMz = peaks2(remaindIndexL).Mass
+            If focusedMz + bin > std.Max(peaks1(peaks1.Count - 1).mz, peaks2(peaks2.Count - 1).mz) Then Exit While
+            If focusedMz + bin > peaks2(remaindIndexL).mz AndAlso focusedMz + bin <= peaks1(remaindIndexM).mz Then
+                focusedMz = peaks1(remaindIndexM).mz
+            ElseIf focusedMz + bin <= peaks2(remaindIndexL).mz AndAlso focusedMz + bin > peaks1(remaindIndexM).mz Then
+                focusedMz = peaks2(remaindIndexL).mz
             Else
-                focusedMz = std.Min(peaks1(remaindIndexM).Mass, peaks2(remaindIndexL).Mass)
+                focusedMz = std.Min(peaks1(remaindIndexM).mz, peaks2(remaindIndexL).mz)
             End If
         End While
 
@@ -919,7 +919,7 @@ Public NotInheritable Class MsScanMatching
         End If
     End Function
 
-    Public Shared Function GetSimpleDotProduct(ByVal prop1 As IMSScanProperty, ByVal prop2 As IMSScanProperty, ByVal bin As Double, ByVal massBegin As Double, ByVal massEnd As Double) As Double
+    Public Shared Function GetSimpleDotProduct(prop1 As IMSScanProperty, prop2 As IMSScanProperty, bin As Double, massBegin As Double, massEnd As Double) As Double
         Dim scalarM As Double = 0, scalarR As Double = 0, covariance As Double = 0
         Dim sumM As Double = 0, sumR As Double = 0
 
@@ -928,8 +928,8 @@ Public NotInheritable Class MsScanMatching
         Dim peaks1 = prop1.Spectrum
         Dim peaks2 = prop2.Spectrum
 
-        Dim minMz = std.Min(peaks1(0).Mass, peaks2(0).Mass)
-        Dim maxMz = std.Max(peaks1(peaks1.Count - 1).Mass, peaks2(peaks2.Count - 1).Mass)
+        Dim minMz = std.Min(peaks1(0).mz, peaks2(0).mz)
+        Dim maxMz = std.Max(peaks1(peaks1.Count - 1).mz, peaks2(peaks2.Count - 1).mz)
         Dim focusedMz = minMz
         Dim remaindIndexM = 0, remaindIndexL = 0
 
@@ -945,10 +945,10 @@ Public NotInheritable Class MsScanMatching
         While focusedMz <= maxMz
             sumM = 0
             For i = remaindIndexM To peaks1.Count - 1
-                If peaks1(i).Mass < focusedMz - bin Then
+                If peaks1(i).mz < focusedMz - bin Then
                     Continue For
-                ElseIf focusedMz - bin <= peaks1(i).Mass AndAlso peaks1(i).Mass < focusedMz + bin Then
-                    sumM += peaks1(i).Intensity
+                ElseIf focusedMz - bin <= peaks1(i).mz AndAlso peaks1(i).mz < focusedMz + bin Then
+                    sumM += peaks1(i).intensity
                 Else
                     remaindIndexM = i
                     Exit For
@@ -957,10 +957,10 @@ Public NotInheritable Class MsScanMatching
 
             sumR = 0
             For i = remaindIndexL To peaks2.Count - 1
-                If peaks2(i).Mass < focusedMz - bin Then
+                If peaks2(i).mz < focusedMz - bin Then
                     Continue For
-                ElseIf focusedMz - bin <= peaks2(i).Mass AndAlso peaks2(i).Mass < focusedMz + bin Then
-                    sumR += peaks2(i).Intensity
+                ElseIf focusedMz - bin <= peaks2(i).mz AndAlso peaks2(i).mz < focusedMz + bin Then
+                    sumR += peaks2(i).intensity
                 Else
                     remaindIndexL = i
                     Exit For
@@ -973,13 +973,13 @@ Public NotInheritable Class MsScanMatching
             referenceMassList.Add(New Double() {focusedMz, sumR})
             If sumR > baseR Then baseR = sumR
 
-            If focusedMz + bin > std.Max(peaks1(peaks1.Count - 1).Mass, peaks2(peaks2.Count - 1).Mass) Then Exit While
-            If focusedMz + bin > peaks2(remaindIndexL).Mass AndAlso focusedMz + bin <= peaks1(remaindIndexM).Mass Then
-                focusedMz = peaks1(remaindIndexM).Mass
-            ElseIf focusedMz + bin <= peaks2(remaindIndexL).Mass AndAlso focusedMz + bin > peaks1(remaindIndexM).Mass Then
-                focusedMz = peaks2(remaindIndexL).Mass
+            If focusedMz + bin > std.Max(peaks1(peaks1.Count - 1).mz, peaks2(peaks2.Count - 1).mz) Then Exit While
+            If focusedMz + bin > peaks2(remaindIndexL).mz AndAlso focusedMz + bin <= peaks1(remaindIndexM).mz Then
+                focusedMz = peaks1(remaindIndexM).mz
+            ElseIf focusedMz + bin <= peaks2(remaindIndexL).mz AndAlso focusedMz + bin > peaks1(remaindIndexM).mz Then
+                focusedMz = peaks2(remaindIndexL).mz
             Else
-                focusedMz = std.Min(peaks1(remaindIndexM).Mass, peaks2(remaindIndexL).Mass)
+                focusedMz = std.Min(peaks1(remaindIndexM).mz, peaks2(remaindIndexL).mz)
             End If
         End While
 
@@ -1003,7 +1003,7 @@ Public NotInheritable Class MsScanMatching
         End If
     End Function
 
-    Public Shared Function GetGaussianSimilarity(ByVal actual As IChromX, ByVal reference As IChromX, ByVal tolerance As Double, <Out> ByRef isInTolerance As Boolean) As Double
+    Public Shared Function GetGaussianSimilarity(actual As IChromX, reference As IChromX, tolerance As Double, <Out> ByRef isInTolerance As Boolean) As Double
         isInTolerance = False
         If actual Is Nothing OrElse reference Is Nothing Then Return -1
         If actual.Value <= 0 OrElse reference.Value <= 0 Then Return -1
@@ -1012,7 +1012,7 @@ Public NotInheritable Class MsScanMatching
         Return similarity
     End Function
 
-    Public Shared Function GetGaussianSimilarity(ByVal actual As Double, ByVal reference As Double, ByVal tolerance As Double, <Out> ByRef isInTolerance As Boolean) As Double
+    Public Shared Function GetGaussianSimilarity(actual As Double, reference As Double, tolerance As Double, <Out> ByRef isInTolerance As Boolean) As Double
         isInTolerance = False
         If actual <= 0 OrElse reference <= 0 Then Return -1
         If std.Abs(actual - reference) <= tolerance Then isInTolerance = True
@@ -1036,7 +1036,7 @@ Public NotInheritable Class MsScanMatching
     ''' <returns>
     ''' The similarity score which is standadized from 0 (no similarity) to 1 (consistency) will be return.
     ''' </returns>
-    Public Shared Function GetGaussianSimilarity(ByVal actual As Double, ByVal reference As Double, ByVal tolrance As Double) As Double
+    Public Shared Function GetGaussianSimilarity(actual As Double, reference As Double, tolrance As Double) As Double
         Return std.Exp(-0.5 * std.Pow((actual - reference) / tolrance, 2))
     End Function
 
@@ -1053,7 +1053,7 @@ Public NotInheritable Class MsScanMatching
     ''' <returns>
     ''' The similarity score which is standadized from 0 (no similarity) to 1 (consistency) will be return.
     ''' </returns>
-    Public Shared Function GetTotalSimilarity(ByVal accurateMassSimilarity As Double, ByVal rtSimilarity As Double, ByVal isotopeSimilarity As Double, ByVal spectraSimilarity As Double, ByVal reverseSearchSimilarity As Double, ByVal presenceSimilarity As Double, ByVal spectrumPenalty As Boolean, ByVal targetOmics As TargetOmics, ByVal isUseRT As Boolean) As Double
+    Public Shared Function GetTotalSimilarity(accurateMassSimilarity As Double, rtSimilarity As Double, isotopeSimilarity As Double, spectraSimilarity As Double, reverseSearchSimilarity As Double, presenceSimilarity As Double, spectrumPenalty As Boolean, targetOmics As TargetOmics, isUseRT As Boolean) As Double
         Dim dotProductFactor = 3.0
         Dim revesrseDotProdFactor = 2.0
         Dim presensePercentageFactor = 1.0
@@ -1094,7 +1094,7 @@ Public NotInheritable Class MsScanMatching
         End If
     End Function
 
-    Public Shared Function GetTotalSimilarity(ByVal accurateMassSimilarity As Double, ByVal rtSimilarity As Double, ByVal ccsSimilarity As Double, ByVal isotopeSimilarity As Double, ByVal spectraSimilarity As Double, ByVal reverseSearchSimilarity As Double, ByVal presenceSimilarity As Double, ByVal spectrumPenalty As Boolean, ByVal targetOmics As TargetOmics, ByVal isUseRT As Boolean, ByVal isUseCcs As Boolean) As Double
+    Public Shared Function GetTotalSimilarity(accurateMassSimilarity As Double, rtSimilarity As Double, ccsSimilarity As Double, isotopeSimilarity As Double, spectraSimilarity As Double, reverseSearchSimilarity As Double, presenceSimilarity As Double, spectrumPenalty As Boolean, targetOmics As TargetOmics, isUseRT As Boolean, isUseCcs As Boolean) As Double
         Dim dotProductFactor = 3.0
         Dim revesrseDotProdFactor = 2.0
         Dim presensePercentageFactor = 1.0
@@ -1202,7 +1202,7 @@ Public NotInheritable Class MsScanMatching
     ''' <returns>
     ''' The similarity score which is standadized from 0 (no similarity) to 1 (consistency) will be return.
     ''' </returns>
-    Public Shared Function GetTotalSimilarity(ByVal accurateMassSimilarity As Double, ByVal rtSimilarity As Double, ByVal isotopeSimilarity As Double, ByVal isUseRT As Boolean) As Double
+    Public Shared Function GetTotalSimilarity(accurateMassSimilarity As Double, rtSimilarity As Double, isotopeSimilarity As Double, isUseRT As Boolean) As Double
         If Not isUseRT Then
             If isotopeSimilarity < 0 Then
                 Return accurateMassSimilarity
@@ -1222,7 +1222,7 @@ Public NotInheritable Class MsScanMatching
         End If
     End Function
 
-    Public Shared Function GetTotalSimilarity(ByVal accurateMassSimilarity As Double, ByVal rtSimilarity As Double, ByVal ccsSimilarity As Double, ByVal isotopeSimilarity As Double, ByVal isUseRT As Boolean, ByVal isUseCcs As Boolean) As Double
+    Public Shared Function GetTotalSimilarity(accurateMassSimilarity As Double, rtSimilarity As Double, ccsSimilarity As Double, isotopeSimilarity As Double, isUseRT As Boolean, isUseCcs As Boolean) As Double
 
         Dim rtFactor = 1.0
         Dim massFactor = 1.0
@@ -1255,7 +1255,7 @@ Public NotInheritable Class MsScanMatching
         End If
     End Function
 
-    Public Shared Function GetTotalSimilarityUsingSimpleDotProduct(ByVal accurateMassSimilarity As Double, ByVal rtSimilarity As Double, ByVal isotopeSimilarity As Double, ByVal dotProductSimilarity As Double, ByVal spectrumPenalty As Boolean, ByVal targetOmics As TargetOmics, ByVal isUseRT As Boolean) As Double
+    Public Shared Function GetTotalSimilarityUsingSimpleDotProduct(accurateMassSimilarity As Double, rtSimilarity As Double, isotopeSimilarity As Double, dotProductSimilarity As Double, spectrumPenalty As Boolean, targetOmics As TargetOmics, isUseRT As Boolean) As Double
         Dim msmsFactor = 2.0
         Dim rtFactor = 1.0
         Dim massFactor = 1.0
@@ -1284,7 +1284,7 @@ Public NotInheritable Class MsScanMatching
         End If
     End Function
 
-    Public Shared Function GetTotalScore(ByVal result As MsScanMatchResult, ByVal param As MsRefSearchParameterBase) As Double
+    Public Shared Function GetTotalScore(result As MsScanMatchResult, param As MsRefSearchParameterBase) As Double
         Dim totalScore = 0.0
         If param.IsUseTimeForAnnotationScoring AndAlso result.RtSimilarity > 0 Then
             totalScore += result.RtSimilarity
@@ -1310,7 +1310,7 @@ Public NotInheritable Class MsScanMatching
         Return totalScore
     End Function
 
-    Public Shared Function GetTotalSimilarity(ByVal rtSimilarity As Double, ByVal eiSimilarity As Double, ByVal Optional isUseRT As Boolean = True) As Double
+    Public Shared Function GetTotalSimilarity(rtSimilarity As Double, eiSimilarity As Double, Optional isUseRT As Boolean = True) As Double
         If rtSimilarity < 0 OrElse Not isUseRT Then
             Return eiSimilarity
         Else

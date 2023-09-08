@@ -50,7 +50,7 @@ Public Class MsRefSearchParameterBase
 
     Public Sub New()
     End Sub
-    Public Sub New(ByVal parameter As MsRefSearchParameterBase)
+    Public Sub New(parameter As MsRefSearchParameterBase)
         MassRangeBegin = parameter.MassRangeBegin
         MassRangeEnd = parameter.MassRangeEnd
         RtTolerance = parameter.RtTolerance

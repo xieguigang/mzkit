@@ -70,9 +70,10 @@ Namespace Spectra
     ''' [mz, into, annotation]
     ''' </remarks>
     Public Class ms2 : Implements IMzAnnotation, INumericKey, ISpectrumPeak
+        Implements IComparable
 
         ''' <summary>
-        ''' Molecular fragment m/z
+        ''' Molecular fragment m/z.(or the mass value)
         ''' </summary>
         ''' <returns></returns>
         <DataFrameColumn(NameOf(mz))>
@@ -109,6 +110,27 @@ Namespace Spectra
             End If
 
             Return mzinto & If(Annotation.StringEmpty, "", $" {Annotation}")
+        End Function
+
+        ''' <summary>
+        ''' compares by mz value
+        ''' </summary>
+        ''' <param name="other"></param>
+        ''' <returns></returns>
+        Public Function CompareTo(other As Object) As Integer Implements IComparable.CompareTo
+            If [GetType]() IsNot other.GetType() Then
+                Throw New ArgumentException(String.Format("Can't compare {0} with {1}.", [GetType](), other.GetType()))
+            End If
+
+            Dim otherCpy = DirectCast(other, ms2)
+
+            If intensity < otherCpy.intensity Then
+                Return -1
+            ElseIf intensity > otherCpy.intensity Then
+                Return 1
+            Else
+                Return otherCpy.mz.CompareTo(mz)
+            End If
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
