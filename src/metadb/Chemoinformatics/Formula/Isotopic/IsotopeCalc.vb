@@ -368,7 +368,7 @@ Namespace Formula.IsotopicPatterns
                 relativeAbundance_a = SpecialFunctions.BinomialCoefficient(n, i) * Math.Pow(a_relativeAbundance, i)
                 massDifference_a = a_massDifference * i
 
-                If Math.Abs(massDifference_a) > filterMass - 1 Then Exit For
+                If std.Abs(massDifference_a) > filterMass - 1 Then Exit For
 
                 abundanceElementPropertyBeanList2 = New List(Of IsotopicPeak)()
 
@@ -376,7 +376,7 @@ Namespace Formula.IsotopicPatterns
                     relativeAbundance_ba = SpecialFunctions.BinomialCoefficient(i, j) * Math.Pow(b_a_relativeAbundance, j)
                     massDifference_ba = b_a_massDifference * j
 
-                    If Math.Abs(massDifference_ba) > filterMass - 1 Then Exit For
+                    If std.Abs(massDifference_ba) > filterMass - 1 Then Exit For
 
                     abundanceElementPropertyBeanList3 = New List(Of IsotopicPeak)()
 
@@ -384,7 +384,7 @@ Namespace Formula.IsotopicPatterns
                         relativeAbundance_cb = SpecialFunctions.BinomialCoefficient(j, k) * Math.Pow(c_b_relativeAbundance, k)
                         massDifference_cb = c_b_massDifference * k
 
-                        If Math.Abs(massDifference_cb) > filterMass - 1 Then Exit For
+                        If std.Abs(massDifference_cb) > filterMass - 1 Then Exit For
 
                         abundanceElementPropertyBeanList4 = New List(Of IsotopicPeak)()
 
@@ -392,7 +392,7 @@ Namespace Formula.IsotopicPatterns
                             relativeAbundance_dc = SpecialFunctions.BinomialCoefficient(k, l) * Math.Pow(d_c_relativeAbundance, l)
                             massDifference_dc = d_c_massDifference * l
 
-                            If Math.Abs(massDifference_dc) > filterMass - 1 Then Exit For
+                            If std.Abs(massDifference_dc) > filterMass - 1 Then Exit For
 
                             abundanceElementPropertyBeanList5 = New List(Of IsotopicPeak)()
 
@@ -400,7 +400,7 @@ Namespace Formula.IsotopicPatterns
                                 relativeAbundance_ed = SpecialFunctions.BinomialCoefficient(l, m) * Math.Pow(e_d_relativeAbundance, m)
                                 massDifference_ed = e_d_massDifference * m
 
-                                If Math.Abs(massDifference_ed) > filterMass - 1 Then Exit For
+                                If std.Abs(massDifference_ed) > filterMass - 1 Then Exit For
 
                                 abundanceElementPropertyBeanList6 = New List(Of IsotopicPeak)()
 
@@ -408,7 +408,7 @@ Namespace Formula.IsotopicPatterns
                                     relativeAbundance_fe = SpecialFunctions.BinomialCoefficient(m, o) * Math.Pow(f_e_relativeAbundance, o)
                                     massDifference_fe = f_e_massDifference * o
 
-                                    If Math.Abs(massDifference_fe) > filterMass - 1 Then Exit For
+                                    If std.Abs(massDifference_fe) > filterMass - 1 Then Exit For
 
                                     abundanceElementPropertyBeanList7 = New List(Of IsotopicPeak)()
 
@@ -416,7 +416,7 @@ Namespace Formula.IsotopicPatterns
                                         relativeAbundance_gf = SpecialFunctions.BinomialCoefficient(o, p) * Math.Pow(g_f_relativeAbundance, p)
                                         massDifference_gf = g_f_massDifference * p
 
-                                        If Math.Abs(massDifference_gf) > filterMass - 1 Then Exit For
+                                        If std.Abs(massDifference_gf) > filterMass - 1 Then Exit For
 
                                         abundanceElementPropertyBeanList8 = New List(Of IsotopicPeak)()
 
@@ -424,7 +424,7 @@ Namespace Formula.IsotopicPatterns
                                             relativeAbundance_hg = SpecialFunctions.BinomialCoefficient(p, q) * Math.Pow(h_g_relativeAbundance, q)
                                             massDifference_hg = h_g_massDifference * q
 
-                                            If Math.Abs(massDifference_hg) > filterMass - 1 Then Exit For
+                                            If std.Abs(massDifference_hg) > filterMass - 1 Then Exit For
 
                                             abundanceElementPropertyBeanList9 = New List(Of IsotopicPeak)()
 
@@ -432,7 +432,7 @@ Namespace Formula.IsotopicPatterns
                                                 relativeAbundance_ih = SpecialFunctions.BinomialCoefficient(q, r) * Math.Pow(i_h_relativeAbundance, r)
                                                 massDifference_ih = i_h_massDifference * r
 
-                                                If Math.Abs(massDifference_ih) > filterMass - 1 Then Exit For
+                                                If std.Abs(massDifference_ih) > filterMass - 1 Then Exit For
 
                                                 abundanceElementPropertyBeanList9.Add(New IsotopicPeak() With {
                                                     .RelativeAbundance = relativeAbundance_ih,
@@ -531,7 +531,7 @@ Namespace Formula.IsotopicPatterns
                 relativeAbundance_a = SpecialFunctions.BinomialCoefficient(n, i) * Math.Pow(a_relativeAbundance, i)
                 massDifference_a = a_massDifference * i
 
-                If Math.Abs(massDifference_a) > filterMass - 1 Then Exit For
+                If std.Abs(massDifference_a) > filterMass - 1 Then Exit For
 
                 abundanceElementPropertyBeanList2 = New List(Of IsotopicPeak)()
 
@@ -539,7 +539,7 @@ Namespace Formula.IsotopicPatterns
                     relativeAbundance_ba = SpecialFunctions.BinomialCoefficient(i, j) * Math.Pow(b_a_relativeAbundance, j)
                     massDifference_ba = b_a_massDifference * j
 
-                    If Math.Abs(massDifference_ba) > filterMass - 1 Then Exit For
+                    If std.Abs(massDifference_ba) > filterMass - 1 Then Exit For
 
                     abundanceElementPropertyBeanList3 = New List(Of IsotopicPeak)()
 
@@ -547,7 +547,7 @@ Namespace Formula.IsotopicPatterns
                         relativeAbundance_cb = SpecialFunctions.BinomialCoefficient(j, k) * Math.Pow(c_b_relativeAbundance, k)
                         massDifference_cb = c_b_massDifference * k
 
-                        If Math.Abs(massDifference_cb) > filterMass - 1 Then Exit For
+                        If std.Abs(massDifference_cb) > filterMass - 1 Then Exit For
 
                         abundanceElementPropertyBeanList4 = New List(Of IsotopicPeak)()
 
@@ -555,7 +555,7 @@ Namespace Formula.IsotopicPatterns
                             relativeAbundance_dc = SpecialFunctions.BinomialCoefficient(k, l) * Math.Pow(d_c_relativeAbundance, l)
                             massDifference_dc = d_c_massDifference * l
 
-                            If Math.Abs(massDifference_dc) > filterMass - 1 Then Exit For
+                            If std.Abs(massDifference_dc) > filterMass - 1 Then Exit For
 
                             abundanceElementPropertyBeanList5 = New List(Of IsotopicPeak)()
 
@@ -563,7 +563,7 @@ Namespace Formula.IsotopicPatterns
                                 relativeAbundance_ed = SpecialFunctions.BinomialCoefficient(l, m) * Math.Pow(e_d_relativeAbundance, m)
                                 massDifference_ed = e_d_massDifference * m
 
-                                If Math.Abs(massDifference_ed) > filterMass - 1 Then Exit For
+                                If std.Abs(massDifference_ed) > filterMass - 1 Then Exit For
 
                                 abundanceElementPropertyBeanList6 = New List(Of IsotopicPeak)()
 
@@ -571,7 +571,7 @@ Namespace Formula.IsotopicPatterns
                                     relativeAbundance_fe = SpecialFunctions.BinomialCoefficient(m, o) * Math.Pow(f_e_relativeAbundance, o)
                                     massDifference_fe = f_e_massDifference * o
 
-                                    If Math.Abs(massDifference_fe) > filterMass - 1 Then Exit For
+                                    If std.Abs(massDifference_fe) > filterMass - 1 Then Exit For
 
                                     abundanceElementPropertyBeanList7 = New List(Of IsotopicPeak)()
 
@@ -579,7 +579,7 @@ Namespace Formula.IsotopicPatterns
                                         relativeAbundance_gf = SpecialFunctions.BinomialCoefficient(o, p) * Math.Pow(g_f_relativeAbundance, p)
                                         massDifference_gf = g_f_massDifference * p
 
-                                        If Math.Abs(massDifference_gf) > filterMass - 1 Then Exit For
+                                        If std.Abs(massDifference_gf) > filterMass - 1 Then Exit For
 
                                         abundanceElementPropertyBeanList8 = New List(Of IsotopicPeak)()
 
@@ -587,7 +587,7 @@ Namespace Formula.IsotopicPatterns
                                             relativeAbundance_hg = SpecialFunctions.BinomialCoefficient(p, q) * Math.Pow(h_g_relativeAbundance, q)
                                             massDifference_hg = h_g_massDifference * q
 
-                                            If Math.Abs(massDifference_hg) > filterMass - 1 Then Exit For
+                                            If std.Abs(massDifference_hg) > filterMass - 1 Then Exit For
 
                                             abundanceElementPropertyBeanList8.Add(New IsotopicPeak() With {
                                                 .RelativeAbundance = relativeAbundance_hg,
@@ -676,7 +676,7 @@ Namespace Formula.IsotopicPatterns
                 relativeAbundance_a = SpecialFunctions.BinomialCoefficient(n, i) * Math.Pow(a_relativeAbundance, i)
                 massDifference_a = a_massDifference * i
 
-                If Math.Abs(massDifference_a) > filterMass - 1 Then Exit For
+                If std.Abs(massDifference_a) > filterMass - 1 Then Exit For
 
                 abundanceElementPropertyBeanList2 = New List(Of IsotopicPeak)()
 
@@ -684,7 +684,7 @@ Namespace Formula.IsotopicPatterns
                     relativeAbundance_ba = SpecialFunctions.BinomialCoefficient(i, j) * Math.Pow(b_a_relativeAbundance, j)
                     massDifference_ba = b_a_massDifference * j
 
-                    If Math.Abs(massDifference_ba) > filterMass - 1 Then Exit For
+                    If std.Abs(massDifference_ba) > filterMass - 1 Then Exit For
 
                     abundanceElementPropertyBeanList3 = New List(Of IsotopicPeak)()
 
@@ -692,7 +692,7 @@ Namespace Formula.IsotopicPatterns
                         relativeAbundance_cb = SpecialFunctions.BinomialCoefficient(j, k) * Math.Pow(c_b_relativeAbundance, k)
                         massDifference_cb = c_b_massDifference * k
 
-                        If Math.Abs(massDifference_cb) > filterMass - 1 Then Exit For
+                        If std.Abs(massDifference_cb) > filterMass - 1 Then Exit For
 
                         abundanceElementPropertyBeanList4 = New List(Of IsotopicPeak)()
 
@@ -700,7 +700,7 @@ Namespace Formula.IsotopicPatterns
                             relativeAbundance_dc = SpecialFunctions.BinomialCoefficient(k, l) * Math.Pow(d_c_relativeAbundance, l)
                             massDifference_dc = d_c_massDifference * l
 
-                            If Math.Abs(massDifference_dc) > filterMass - 1 Then Exit For
+                            If std.Abs(massDifference_dc) > filterMass - 1 Then Exit For
 
                             abundanceElementPropertyBeanList5 = New List(Of IsotopicPeak)()
 
@@ -708,7 +708,7 @@ Namespace Formula.IsotopicPatterns
                                 relativeAbundance_ed = SpecialFunctions.BinomialCoefficient(l, m) * Math.Pow(e_d_relativeAbundance, m)
                                 massDifference_ed = e_d_massDifference * m
 
-                                If Math.Abs(massDifference_ed) > filterMass - 1 Then Exit For
+                                If std.Abs(massDifference_ed) > filterMass - 1 Then Exit For
 
                                 abundanceElementPropertyBeanList6 = New List(Of IsotopicPeak)()
 
@@ -716,7 +716,7 @@ Namespace Formula.IsotopicPatterns
                                     relativeAbundance_fe = SpecialFunctions.BinomialCoefficient(m, o) * Math.Pow(f_e_relativeAbundance, o)
                                     massDifference_fe = f_e_massDifference * o
 
-                                    If Math.Abs(massDifference_fe) > filterMass - 1 Then Exit For
+                                    If std.Abs(massDifference_fe) > filterMass - 1 Then Exit For
 
                                     abundanceElementPropertyBeanList7 = New List(Of IsotopicPeak)()
 
@@ -724,7 +724,7 @@ Namespace Formula.IsotopicPatterns
                                         relativeAbundance_gf = SpecialFunctions.BinomialCoefficient(o, p) * Math.Pow(g_f_relativeAbundance, p)
                                         massDifference_gf = g_f_massDifference * p
 
-                                        If Math.Abs(massDifference_gf) > filterMass - 1 Then Exit For
+                                        If std.Abs(massDifference_gf) > filterMass - 1 Then Exit For
 
                                         abundanceElementPropertyBeanList7.Add(New IsotopicPeak() With {
                                             .RelativeAbundance = relativeAbundance_gf,
@@ -802,7 +802,7 @@ Namespace Formula.IsotopicPatterns
                 relativeAbundance_a = SpecialFunctions.BinomialCoefficient(n, i) * Math.Pow(a_relativeAbundance, i)
                 massDifference_a = a_massDifference * i
 
-                If Math.Abs(massDifference_a) > filterMass - 1 Then Exit For
+                If std.Abs(massDifference_a) > filterMass - 1 Then Exit For
 
                 abundanceElementPropertyBeanList2 = New List(Of IsotopicPeak)()
 
@@ -810,7 +810,7 @@ Namespace Formula.IsotopicPatterns
                     relativeAbundance_ba = SpecialFunctions.BinomialCoefficient(i, j) * Math.Pow(b_a_relativeAbundance, j)
                     massDifference_ba = b_a_massDifference * j
 
-                    If Math.Abs(massDifference_ba) > filterMass - 1 Then Exit For
+                    If std.Abs(massDifference_ba) > filterMass - 1 Then Exit For
 
                     abundanceElementPropertyBeanList3 = New List(Of IsotopicPeak)()
 
@@ -818,7 +818,7 @@ Namespace Formula.IsotopicPatterns
                         relativeAbundance_cb = SpecialFunctions.BinomialCoefficient(j, k) * Math.Pow(c_b_relativeAbundance, k)
                         massDifference_cb = c_b_massDifference * k
 
-                        If Math.Abs(massDifference_cb) > filterMass - 1 Then Exit For
+                        If std.Abs(massDifference_cb) > filterMass - 1 Then Exit For
 
                         abundanceElementPropertyBeanList4 = New List(Of IsotopicPeak)()
 
@@ -826,7 +826,7 @@ Namespace Formula.IsotopicPatterns
                             relativeAbundance_dc = SpecialFunctions.BinomialCoefficient(k, l) * Math.Pow(d_c_relativeAbundance, l)
                             massDifference_dc = d_c_massDifference * l
 
-                            If Math.Abs(massDifference_dc) > filterMass - 1 Then Exit For
+                            If std.Abs(massDifference_dc) > filterMass - 1 Then Exit For
 
                             abundanceElementPropertyBeanList5 = New List(Of IsotopicPeak)()
 
@@ -834,7 +834,7 @@ Namespace Formula.IsotopicPatterns
                                 relativeAbundance_ed = SpecialFunctions.BinomialCoefficient(l, m) * Math.Pow(e_d_relativeAbundance, m)
                                 massDifference_ed = e_d_massDifference * m
 
-                                If Math.Abs(massDifference_ed) > filterMass - 1 Then Exit For
+                                If std.Abs(massDifference_ed) > filterMass - 1 Then Exit For
 
                                 abundanceElementPropertyBeanList6 = New List(Of IsotopicPeak)()
 
@@ -842,7 +842,7 @@ Namespace Formula.IsotopicPatterns
                                     relativeAbundance_fe = SpecialFunctions.BinomialCoefficient(m, o) * Math.Pow(f_e_relativeAbundance, o)
                                     massDifference_fe = f_e_massDifference * o
 
-                                    If Math.Abs(massDifference_fe) > filterMass - 1 Then Exit For
+                                    If std.Abs(massDifference_fe) > filterMass - 1 Then Exit For
 
                                     abundanceElementPropertyBeanList6.Add(New IsotopicPeak() With {
                                         .RelativeAbundance = relativeAbundance_fe,
@@ -910,7 +910,7 @@ Namespace Formula.IsotopicPatterns
                 relativeAbundance_a = SpecialFunctions.BinomialCoefficient(n, i) * Math.Pow(a_relativeAbundance, i)
                 massDifference_a = a_massDifference * i
 
-                If Math.Abs(massDifference_a) > filterMass - 1 Then Exit For
+                If std.Abs(massDifference_a) > filterMass - 1 Then Exit For
 
                 abundanceElementPropertyBeanList2 = New List(Of IsotopicPeak)()
 
@@ -918,7 +918,7 @@ Namespace Formula.IsotopicPatterns
                     relativeAbundance_ba = SpecialFunctions.BinomialCoefficient(i, j) * Math.Pow(b_a_relativeAbundance, j)
                     massDifference_ba = b_a_massDifference * j
 
-                    If Math.Abs(massDifference_ba) > filterMass - 1 Then Exit For
+                    If std.Abs(massDifference_ba) > filterMass - 1 Then Exit For
 
                     abundanceElementPropertyBeanList3 = New List(Of IsotopicPeak)()
 
@@ -926,7 +926,7 @@ Namespace Formula.IsotopicPatterns
                         relativeAbundance_cb = SpecialFunctions.BinomialCoefficient(j, k) * Math.Pow(c_b_relativeAbundance, k)
                         massDifference_cb = c_b_massDifference * k
 
-                        If Math.Abs(massDifference_cb) > filterMass - 1 Then Exit For
+                        If std.Abs(massDifference_cb) > filterMass - 1 Then Exit For
 
                         abundanceElementPropertyBeanList4 = New List(Of IsotopicPeak)()
 
@@ -934,7 +934,7 @@ Namespace Formula.IsotopicPatterns
                             relativeAbundance_dc = SpecialFunctions.BinomialCoefficient(k, l) * Math.Pow(d_c_relativeAbundance, l)
                             massDifference_dc = d_c_massDifference * l
 
-                            If Math.Abs(massDifference_dc) > filterMass - 1 Then Exit For
+                            If std.Abs(massDifference_dc) > filterMass - 1 Then Exit For
 
                             abundanceElementPropertyBeanList5 = New List(Of IsotopicPeak)()
 
@@ -942,7 +942,7 @@ Namespace Formula.IsotopicPatterns
                                 relativeAbundance_ed = SpecialFunctions.BinomialCoefficient(l, m) * Math.Pow(e_d_relativeAbundance, m)
                                 massDifference_ed = e_d_massDifference * m
 
-                                If Math.Abs(massDifference_ed) > filterMass - 1 Then Exit For
+                                If std.Abs(massDifference_ed) > filterMass - 1 Then Exit For
 
                                 abundanceElementPropertyBeanList5.Add(New IsotopicPeak() With {
                                     .RelativeAbundance = relativeAbundance_ed,
@@ -1000,7 +1000,7 @@ Namespace Formula.IsotopicPatterns
                 relativeAbundance_a = SpecialFunctions.BinomialCoefficient(n, i) * Math.Pow(a_relativeAbundance, i)
                 massDifference_a = a_massDifference * i
 
-                If Math.Abs(massDifference_a) > filterMass - 1 Then Exit For
+                If std.Abs(massDifference_a) > filterMass - 1 Then Exit For
 
 
                 abundanceElementPropertyBeanList2 = New List(Of IsotopicPeak)()
@@ -1009,7 +1009,7 @@ Namespace Formula.IsotopicPatterns
                     relativeAbundance_ba = SpecialFunctions.BinomialCoefficient(i, j) * Math.Pow(b_a_relativeAbundance, j)
                     massDifference_ba = b_a_massDifference * j
 
-                    If Math.Abs(massDifference_ba) > filterMass - 1 Then Exit For
+                    If std.Abs(massDifference_ba) > filterMass - 1 Then Exit For
 
                     abundanceElementPropertyBeanList3 = New List(Of IsotopicPeak)()
 
@@ -1017,7 +1017,7 @@ Namespace Formula.IsotopicPatterns
                         relativeAbundance_cb = SpecialFunctions.BinomialCoefficient(j, k) * Math.Pow(c_b_relativeAbundance, k)
                         massDifference_cb = c_b_massDifference * k
 
-                        If Math.Abs(massDifference_cb) > filterMass - 1 Then Exit For
+                        If std.Abs(massDifference_cb) > filterMass - 1 Then Exit For
 
                         abundanceElementPropertyBeanList4 = New List(Of IsotopicPeak)()
 
@@ -1025,7 +1025,7 @@ Namespace Formula.IsotopicPatterns
                             relativeAbundance_dc = SpecialFunctions.BinomialCoefficient(k, l) * Math.Pow(d_c_relativeAbundance, l)
                             massDifference_dc = d_c_massDifference * l
 
-                            If Math.Abs(massDifference_dc) > filterMass - 1 Then Exit For
+                            If std.Abs(massDifference_dc) > filterMass - 1 Then Exit For
 
                             abundanceElementPropertyBeanList4.Add(New IsotopicPeak() With {
                                 .RelativeAbundance = relativeAbundance_dc,
@@ -1073,7 +1073,7 @@ Namespace Formula.IsotopicPatterns
                 relativeAbundance_a = SpecialFunctions.BinomialCoefficient(n, i) * Math.Pow(a_relativeAbundance, i)
                 massDifference_a = a_massDifference * i
 
-                If Math.Abs(massDifference_a) > filterMass - 1 Then Exit For
+                If std.Abs(massDifference_a) > filterMass - 1 Then Exit For
 
                 abundanceElementPropertyBeanList2 = New List(Of IsotopicPeak)()
 
@@ -1081,7 +1081,7 @@ Namespace Formula.IsotopicPatterns
                     relativeAbundance_ba = SpecialFunctions.BinomialCoefficient(i, j) * Math.Pow(b_a_relativeAbundance, j)
                     massDifference_ba = b_a_massDifference * j
 
-                    If Math.Abs(massDifference_ba) > filterMass - 1 Then Exit For
+                    If std.Abs(massDifference_ba) > filterMass - 1 Then Exit For
 
                     abundanceElementPropertyBeanList3 = New List(Of IsotopicPeak)()
 
@@ -1089,7 +1089,7 @@ Namespace Formula.IsotopicPatterns
                         relativeAbundance_cb = SpecialFunctions.BinomialCoefficient(j, k) * Math.Pow(c_b_relativeAbundance, k)
                         massDifference_cb = c_b_massDifference * k
 
-                        If Math.Abs(massDifference_cb) > filterMass - 1 Then Exit For
+                        If std.Abs(massDifference_cb) > filterMass - 1 Then Exit For
 
                         abundanceElementPropertyBeanList3.Add(New IsotopicPeak() With {
                             .RelativeAbundance = relativeAbundance_cb,
@@ -1126,7 +1126,7 @@ Namespace Formula.IsotopicPatterns
                 relativeAbundance_a = SpecialFunctions.BinomialCoefficient(n, i) * Math.Pow(a_relativeAbundance, i)
                 massDifference_a = a_massDifference * i
 
-                If Math.Abs(massDifference_a) > filterMass - 1 Then Exit For
+                If std.Abs(massDifference_a) > filterMass - 1 Then Exit For
 
                 abundanceElementPropertyBeanList2 = New List(Of IsotopicPeak)()
 
@@ -1134,7 +1134,7 @@ Namespace Formula.IsotopicPatterns
                     relativeAbundance_ba = SpecialFunctions.BinomialCoefficient(i, k) * Math.Pow(b_a_relativeAbundance, k)
                     massDifference_ba = b_a_massDifference * k
 
-                    If Math.Abs(massDifference_ba) > filterMass - 1 Then Exit For
+                    If std.Abs(massDifference_ba) > filterMass - 1 Then Exit For
 
                     abundanceElementPropertyBeanList2.Add(New IsotopicPeak() With {
                         .RelativeAbundance = relativeAbundance_ba,
@@ -1161,7 +1161,7 @@ Namespace Formula.IsotopicPatterns
                 relativeAbundance_a = SpecialFunctions.BinomialCoefficient(n, i) * Math.Pow(a_relativeAbundance, i)
                 massDifference_a = a_massDifference * i
 
-                If Math.Abs(massDifference_a) > filterMass - 1 Then Exit For
+                If std.Abs(massDifference_a) > filterMass - 1 Then Exit For
 
                 abundanceElementPropertyBeanList1.Add(New IsotopicPeak() With {
                     .RelativeAbundance = relativeAbundance_a,
@@ -1179,7 +1179,7 @@ Namespace Formula.IsotopicPatterns
                 For j = 0 To abundanceElementPropertyBeanList2.Count - 1
                     relativeAbundance = abundanceElementPropertyBeanList1(i).RelativeAbundance * abundanceElementPropertyBeanList2(j).RelativeAbundance
                     massDifference = abundanceElementPropertyBeanList1(i).MassDifferenceFromMonoisotopicIon + abundanceElementPropertyBeanList2(j).MassDifferenceFromMonoisotopicIon
-                    If Math.Abs(massDifference) <= filterMass Then multiplatedAbundanceElementBeanList.Add(New IsotopicPeak() With {
+                    If std.Abs(massDifference) <= filterMass Then multiplatedAbundanceElementBeanList.Add(New IsotopicPeak() With {
 .RelativeAbundance = relativeAbundance,
 .MassDifferenceFromMonoisotopicIon = massDifference
 })
@@ -1194,7 +1194,7 @@ Namespace Formula.IsotopicPatterns
             For i = 0 To abundanceElementPropertyBeanList.Count - 1
                 relativeAbundance = relativeAbund * abundanceElementPropertyBeanList(i).RelativeAbundance
                 massDifference = massDiff + abundanceElementPropertyBeanList(i).MassDifferenceFromMonoisotopicIon
-                If Math.Abs(massDifference) <= filterMass Then multiplatedAbundanceElementBeanList.Add(New IsotopicPeak() With {
+                If std.Abs(massDifference) <= filterMass Then multiplatedAbundanceElementBeanList.Add(New IsotopicPeak() With {
 .RelativeAbundance = relativeAbundance,
 .MassDifferenceFromMonoisotopicIon = massDifference
 })
@@ -1274,7 +1274,7 @@ Namespace Formula.IsotopicPatterns
                 relativeAbundance_a = SpecialFunctions.BinomialCoefficient(n, i) * Math.Pow(a_relativeAbundance, i)
                 massDifference_a = Math.Round(a_massDifference * i, 0)
 
-                If Math.Abs(massDifference_a) > filterMass - 1 Then Exit For
+                If std.Abs(massDifference_a) > filterMass - 1 Then Exit For
 
                 abundanceElementPropertyBeanList2 = New List(Of IsotopicPeak)()
                 For j = 0 To filterMass - 1
@@ -1288,7 +1288,7 @@ Namespace Formula.IsotopicPatterns
                     relativeAbundance_ba = SpecialFunctions.BinomialCoefficient(i, j) * Math.Pow(b_a_relativeAbundance, j)
                     massDifference_ba = Math.Round(b_a_massDifference * j, 0)
 
-                    If Math.Abs(massDifference_ba) > filterMass - 1 Then Exit For
+                    If std.Abs(massDifference_ba) > filterMass - 1 Then Exit For
 
                     abundanceElementPropertyBeanList3 = New List(Of IsotopicPeak)()
                     For k = 0 To filterMass - 1
@@ -1302,7 +1302,7 @@ Namespace Formula.IsotopicPatterns
                         relativeAbundance_cb = SpecialFunctions.BinomialCoefficient(j, k) * Math.Pow(c_b_relativeAbundance, k)
                         massDifference_cb = Math.Round(c_b_massDifference * k, 0)
 
-                        If Math.Abs(massDifference_cb) > filterMass - 1 Then Exit For
+                        If std.Abs(massDifference_cb) > filterMass - 1 Then Exit For
 
                         abundanceElementPropertyBeanList4 = New List(Of IsotopicPeak)()
                         For l = 0 To filterMass - 1
@@ -1316,7 +1316,7 @@ Namespace Formula.IsotopicPatterns
                             relativeAbundance_dc = SpecialFunctions.BinomialCoefficient(k, l) * Math.Pow(d_c_relativeAbundance, l)
                             massDifference_dc = Math.Round(d_c_massDifference * l, 0)
 
-                            If Math.Abs(massDifference_dc) > filterMass - 1 Then Exit For
+                            If std.Abs(massDifference_dc) > filterMass - 1 Then Exit For
 
                             abundanceElementPropertyBeanList5 = New List(Of IsotopicPeak)()
                             For m = 0 To filterMass - 1
@@ -1330,7 +1330,7 @@ Namespace Formula.IsotopicPatterns
                                 relativeAbundance_ed = SpecialFunctions.BinomialCoefficient(l, m) * Math.Pow(e_d_relativeAbundance, m)
                                 massDifference_ed = Math.Round(e_d_massDifference * m, 0)
 
-                                If Math.Abs(massDifference_ed) > filterMass - 1 Then Exit For
+                                If std.Abs(massDifference_ed) > filterMass - 1 Then Exit For
 
                                 abundanceElementPropertyBeanList6 = New List(Of IsotopicPeak)()
                                 For o = 0 To filterMass - 1
@@ -1344,7 +1344,7 @@ Namespace Formula.IsotopicPatterns
                                     relativeAbundance_fe = SpecialFunctions.BinomialCoefficient(m, o) * Math.Pow(f_e_relativeAbundance, o)
                                     massDifference_fe = Math.Round(f_e_massDifference * o, 0)
 
-                                    If Math.Abs(massDifference_fe) > filterMass - 1 Then Exit For
+                                    If std.Abs(massDifference_fe) > filterMass - 1 Then Exit For
 
                                     abundanceElementPropertyBeanList7 = New List(Of IsotopicPeak)()
                                     For p = 0 To filterMass - 1
@@ -1358,7 +1358,7 @@ Namespace Formula.IsotopicPatterns
                                         relativeAbundance_gf = SpecialFunctions.BinomialCoefficient(o, p) * Math.Pow(g_f_relativeAbundance, p)
                                         massDifference_gf = Math.Round(g_f_massDifference * p, 0)
 
-                                        If Math.Abs(massDifference_gf) > filterMass - 1 Then Exit For
+                                        If std.Abs(massDifference_gf) > filterMass - 1 Then Exit For
 
                                         abundanceElementPropertyBeanList8 = New List(Of IsotopicPeak)()
                                         For q = 0 To filterMass - 1
@@ -1372,7 +1372,7 @@ Namespace Formula.IsotopicPatterns
                                             relativeAbundance_hg = SpecialFunctions.BinomialCoefficient(p, q) * Math.Pow(h_g_relativeAbundance, q)
                                             massDifference_hg = Math.Round(h_g_massDifference * q, 0)
 
-                                            If Math.Abs(massDifference_hg) > filterMass - 1 Then Exit For
+                                            If std.Abs(massDifference_hg) > filterMass - 1 Then Exit For
 
                                             abundanceElementPropertyBeanList9 = New List(Of IsotopicPeak)()
                                             For r = 0 To filterMass - 1
@@ -1386,7 +1386,7 @@ Namespace Formula.IsotopicPatterns
                                                 relativeAbundance_ih = SpecialFunctions.BinomialCoefficient(q, r) * Math.Pow(i_h_relativeAbundance, r)
                                                 massDifference_ih = Math.Round(i_h_massDifference * r, 0)
 
-                                                If Math.Abs(massDifference_ih) > filterMass - 1 Then Exit For
+                                                If std.Abs(massDifference_ih) > filterMass - 1 Then Exit For
 
                                                 abundanceElementPropertyBeanList9(massDifference_ih).RelativeAbundance += relativeAbundance_ih
                                                 abundanceElementPropertyBeanList9(massDifference_ih).MassDifferenceFromMonoisotopicIon = massDifference_ih
@@ -1490,7 +1490,7 @@ Namespace Formula.IsotopicPatterns
                 relativeAbundance_a = SpecialFunctions.BinomialCoefficient(n, i) * Math.Pow(a_relativeAbundance, i)
                 massDifference_a = Math.Round(a_massDifference * i, 0)
 
-                If Math.Abs(massDifference_a) > filterMass - 1 Then Exit For
+                If std.Abs(massDifference_a) > filterMass - 1 Then Exit For
 
                 abundanceElementPropertyBeanList2 = New List(Of IsotopicPeak)()
                 For j = 0 To filterMass - 1
@@ -1504,7 +1504,7 @@ Namespace Formula.IsotopicPatterns
                     relativeAbundance_ba = SpecialFunctions.BinomialCoefficient(i, j) * Math.Pow(b_a_relativeAbundance, j)
                     massDifference_ba = Math.Round(b_a_massDifference * j, 0)
 
-                    If Math.Abs(massDifference_ba) > filterMass - 1 Then Exit For
+                    If std.Abs(massDifference_ba) > filterMass - 1 Then Exit For
 
                     abundanceElementPropertyBeanList3 = New List(Of IsotopicPeak)()
                     For k = 0 To filterMass - 1
@@ -1518,7 +1518,7 @@ Namespace Formula.IsotopicPatterns
                         relativeAbundance_cb = SpecialFunctions.BinomialCoefficient(j, k) * Math.Pow(c_b_relativeAbundance, k)
                         massDifference_cb = Math.Round(c_b_massDifference * k, 0)
 
-                        If Math.Abs(massDifference_cb) > filterMass - 1 Then Exit For
+                        If std.Abs(massDifference_cb) > filterMass - 1 Then Exit For
 
                         abundanceElementPropertyBeanList4 = New List(Of IsotopicPeak)()
                         For l = 0 To filterMass - 1
@@ -1532,7 +1532,7 @@ Namespace Formula.IsotopicPatterns
                             relativeAbundance_dc = SpecialFunctions.BinomialCoefficient(k, l) * Math.Pow(d_c_relativeAbundance, l)
                             massDifference_dc = Math.Round(d_c_massDifference * l, 0)
 
-                            If Math.Abs(massDifference_dc) > filterMass - 1 Then Exit For
+                            If std.Abs(massDifference_dc) > filterMass - 1 Then Exit For
 
                             abundanceElementPropertyBeanList5 = New List(Of IsotopicPeak)()
                             For m = 0 To filterMass - 1
@@ -1546,7 +1546,7 @@ Namespace Formula.IsotopicPatterns
                                 relativeAbundance_ed = SpecialFunctions.BinomialCoefficient(l, m) * Math.Pow(e_d_relativeAbundance, m)
                                 massDifference_ed = Math.Round(e_d_massDifference * m, 0)
 
-                                If Math.Abs(massDifference_ed) > filterMass - 1 Then Exit For
+                                If std.Abs(massDifference_ed) > filterMass - 1 Then Exit For
 
                                 abundanceElementPropertyBeanList6 = New List(Of IsotopicPeak)()
                                 For o = 0 To filterMass - 1
@@ -1560,7 +1560,7 @@ Namespace Formula.IsotopicPatterns
                                     relativeAbundance_fe = SpecialFunctions.BinomialCoefficient(m, o) * Math.Pow(f_e_relativeAbundance, o)
                                     massDifference_fe = Math.Round(f_e_massDifference * o, 0)
 
-                                    If Math.Abs(massDifference_fe) > filterMass - 1 Then Exit For
+                                    If std.Abs(massDifference_fe) > filterMass - 1 Then Exit For
 
                                     abundanceElementPropertyBeanList7 = New List(Of IsotopicPeak)()
                                     For p = 0 To filterMass - 1
@@ -1574,7 +1574,7 @@ Namespace Formula.IsotopicPatterns
                                         relativeAbundance_gf = SpecialFunctions.BinomialCoefficient(o, p) * Math.Pow(g_f_relativeAbundance, p)
                                         massDifference_gf = Math.Round(g_f_massDifference * p, 0)
 
-                                        If Math.Abs(massDifference_gf) > filterMass - 1 Then Exit For
+                                        If std.Abs(massDifference_gf) > filterMass - 1 Then Exit For
 
                                         abundanceElementPropertyBeanList8 = New List(Of IsotopicPeak)()
                                         For q = 0 To filterMass - 1
@@ -1588,7 +1588,7 @@ Namespace Formula.IsotopicPatterns
                                             relativeAbundance_hg = SpecialFunctions.BinomialCoefficient(p, q) * Math.Pow(h_g_relativeAbundance, q)
                                             massDifference_hg = Math.Round(h_g_massDifference * q, 0)
 
-                                            If Math.Abs(massDifference_hg) > filterMass - 1 Then Exit For
+                                            If std.Abs(massDifference_hg) > filterMass - 1 Then Exit For
 
                                             abundanceElementPropertyBeanList8(massDifference_hg).RelativeAbundance += relativeAbundance_hg
                                             abundanceElementPropertyBeanList8(massDifference_hg).MassDifferenceFromMonoisotopicIon = massDifference_hg
@@ -1682,7 +1682,7 @@ Namespace Formula.IsotopicPatterns
                 relativeAbundance_a = SpecialFunctions.BinomialCoefficient(n, i) * Math.Pow(a_relativeAbundance, i)
                 massDifference_a = Math.Round(a_massDifference * i, 0)
 
-                If Math.Abs(massDifference_a) > filterMass - 1 Then Exit For
+                If std.Abs(massDifference_a) > filterMass - 1 Then Exit For
 
 
                 abundanceElementPropertyBeanList2 = New List(Of IsotopicPeak)()
@@ -1697,7 +1697,7 @@ Namespace Formula.IsotopicPatterns
                     relativeAbundance_ba = SpecialFunctions.BinomialCoefficient(i, j) * Math.Pow(b_a_relativeAbundance, j)
                     massDifference_ba = Math.Round(b_a_massDifference * j, 0)
 
-                    If Math.Abs(massDifference_ba) > filterMass - 1 Then Exit For
+                    If std.Abs(massDifference_ba) > filterMass - 1 Then Exit For
 
 
                     abundanceElementPropertyBeanList3 = New List(Of IsotopicPeak)()
@@ -1712,7 +1712,7 @@ Namespace Formula.IsotopicPatterns
                         relativeAbundance_cb = SpecialFunctions.BinomialCoefficient(j, k) * Math.Pow(c_b_relativeAbundance, k)
                         massDifference_cb = Math.Round(c_b_massDifference * k, 0)
 
-                        If Math.Abs(massDifference_cb) > filterMass - 1 Then Exit For
+                        If std.Abs(massDifference_cb) > filterMass - 1 Then Exit For
 
                         abundanceElementPropertyBeanList4 = New List(Of IsotopicPeak)()
                         For l = 0 To filterMass - 1
@@ -1726,7 +1726,7 @@ Namespace Formula.IsotopicPatterns
                             relativeAbundance_dc = SpecialFunctions.BinomialCoefficient(k, l) * Math.Pow(d_c_relativeAbundance, l)
                             massDifference_dc = Math.Round(d_c_massDifference * l, 0)
 
-                            If Math.Abs(massDifference_dc) > filterMass - 1 Then Exit For
+                            If std.Abs(massDifference_dc) > filterMass - 1 Then Exit For
 
 
                             abundanceElementPropertyBeanList5 = New List(Of IsotopicPeak)()
@@ -1741,7 +1741,7 @@ Namespace Formula.IsotopicPatterns
                                 relativeAbundance_ed = SpecialFunctions.BinomialCoefficient(l, m) * Math.Pow(e_d_relativeAbundance, m)
                                 massDifference_ed = Math.Round(e_d_massDifference * m, 0)
 
-                                If Math.Abs(massDifference_ed) > filterMass - 1 Then Exit For
+                                If std.Abs(massDifference_ed) > filterMass - 1 Then Exit For
 
                                 abundanceElementPropertyBeanList6 = New List(Of IsotopicPeak)()
                                 For o = 0 To filterMass - 1
@@ -1755,7 +1755,7 @@ Namespace Formula.IsotopicPatterns
                                     relativeAbundance_fe = SpecialFunctions.BinomialCoefficient(m, o) * Math.Pow(f_e_relativeAbundance, o)
                                     massDifference_fe = Math.Round(f_e_massDifference * o, 0)
 
-                                    If Math.Abs(massDifference_fe) > filterMass - 1 Then Exit For
+                                    If std.Abs(massDifference_fe) > filterMass - 1 Then Exit For
 
                                     abundanceElementPropertyBeanList7 = New List(Of IsotopicPeak)()
                                     For p = 0 To filterMass - 1
@@ -1769,7 +1769,7 @@ Namespace Formula.IsotopicPatterns
                                         relativeAbundance_gf = SpecialFunctions.BinomialCoefficient(o, p) * Math.Pow(g_f_relativeAbundance, p)
                                         massDifference_gf = Math.Round(g_f_massDifference * p, 0)
 
-                                        If Math.Abs(massDifference_gf) > filterMass - 1 Then Exit For
+                                        If std.Abs(massDifference_gf) > filterMass - 1 Then Exit For
 
                                         abundanceElementPropertyBeanList7(massDifference_gf).RelativeAbundance += relativeAbundance_gf
                                         abundanceElementPropertyBeanList7(massDifference_gf).MassDifferenceFromMonoisotopicIon = massDifference_gf
@@ -1852,7 +1852,7 @@ Namespace Formula.IsotopicPatterns
                 relativeAbundance_a = SpecialFunctions.BinomialCoefficient(n, i) * Math.Pow(a_relativeAbundance, i)
                 massDifference_a = Math.Round(a_massDifference * i, 0)
 
-                If Math.Abs(massDifference_a) > filterMass - 1 Then Exit For
+                If std.Abs(massDifference_a) > filterMass - 1 Then Exit For
 
 
                 abundanceElementPropertyBeanList2 = New List(Of IsotopicPeak)()
@@ -1867,7 +1867,7 @@ Namespace Formula.IsotopicPatterns
                     relativeAbundance_ba = SpecialFunctions.BinomialCoefficient(i, j) * Math.Pow(b_a_relativeAbundance, j)
                     massDifference_ba = Math.Round(b_a_massDifference * j, 0)
 
-                    If Math.Abs(massDifference_ba) > filterMass - 1 Then Exit For
+                    If std.Abs(massDifference_ba) > filterMass - 1 Then Exit For
 
 
                     abundanceElementPropertyBeanList3 = New List(Of IsotopicPeak)()
@@ -1882,7 +1882,7 @@ Namespace Formula.IsotopicPatterns
                         relativeAbundance_cb = SpecialFunctions.BinomialCoefficient(j, k) * Math.Pow(c_b_relativeAbundance, k)
                         massDifference_cb = Math.Round(c_b_massDifference * k, 0)
 
-                        If Math.Abs(massDifference_cb) > filterMass - 1 Then Exit For
+                        If std.Abs(massDifference_cb) > filterMass - 1 Then Exit For
 
 
                         abundanceElementPropertyBeanList4 = New List(Of IsotopicPeak)()
@@ -1897,7 +1897,7 @@ Namespace Formula.IsotopicPatterns
                             relativeAbundance_dc = SpecialFunctions.BinomialCoefficient(k, l) * Math.Pow(d_c_relativeAbundance, l)
                             massDifference_dc = Math.Round(d_c_massDifference * l, 0)
 
-                            If Math.Abs(massDifference_dc) > filterMass - 1 Then Exit For
+                            If std.Abs(massDifference_dc) > filterMass - 1 Then Exit For
 
 
                             abundanceElementPropertyBeanList5 = New List(Of IsotopicPeak)()
@@ -1912,7 +1912,7 @@ Namespace Formula.IsotopicPatterns
                                 relativeAbundance_ed = SpecialFunctions.BinomialCoefficient(l, m) * Math.Pow(e_d_relativeAbundance, m)
                                 massDifference_ed = Math.Round(e_d_massDifference * m, 0)
 
-                                If Math.Abs(massDifference_ed) > filterMass - 1 Then Exit For
+                                If std.Abs(massDifference_ed) > filterMass - 1 Then Exit For
 
 
                                 abundanceElementPropertyBeanList6 = New List(Of IsotopicPeak)()
@@ -1927,7 +1927,7 @@ Namespace Formula.IsotopicPatterns
                                     relativeAbundance_fe = SpecialFunctions.BinomialCoefficient(m, o) * Math.Pow(f_e_relativeAbundance, o)
                                     massDifference_fe = Math.Round(f_e_massDifference * o, 0)
 
-                                    If Math.Abs(massDifference_fe) > filterMass - 1 Then Exit For
+                                    If std.Abs(massDifference_fe) > filterMass - 1 Then Exit For
 
                                     abundanceElementPropertyBeanList6(massDifference_fe).RelativeAbundance += relativeAbundance_fe
                                     abundanceElementPropertyBeanList6(massDifference_fe).MassDifferenceFromMonoisotopicIon = massDifference_fe
@@ -2000,7 +2000,7 @@ Namespace Formula.IsotopicPatterns
                 relativeAbundance_a = SpecialFunctions.BinomialCoefficient(n, i) * Math.Pow(a_relativeAbundance, i)
                 massDifference_a = Math.Round(a_massDifference * i, 0)
 
-                If Math.Abs(massDifference_a) > filterMass - 1 Then Exit For
+                If std.Abs(massDifference_a) > filterMass - 1 Then Exit For
 
                 abundanceElementPropertyBeanList2 = New List(Of IsotopicPeak)()
                 For j = 0 To filterMass - 1
@@ -2014,7 +2014,7 @@ Namespace Formula.IsotopicPatterns
                     relativeAbundance_ba = SpecialFunctions.BinomialCoefficient(i, j) * Math.Pow(b_a_relativeAbundance, j)
                     massDifference_ba = Math.Round(b_a_massDifference * j, 0)
 
-                    If Math.Abs(massDifference_ba) > filterMass - 1 Then Exit For
+                    If std.Abs(massDifference_ba) > filterMass - 1 Then Exit For
 
 
                     abundanceElementPropertyBeanList3 = New List(Of IsotopicPeak)()
@@ -2029,7 +2029,7 @@ Namespace Formula.IsotopicPatterns
                         relativeAbundance_cb = SpecialFunctions.BinomialCoefficient(j, k) * Math.Pow(c_b_relativeAbundance, k)
                         massDifference_cb = Math.Round(c_b_massDifference * k, 0)
 
-                        If Math.Abs(massDifference_cb) > filterMass - 1 Then Exit For
+                        If std.Abs(massDifference_cb) > filterMass - 1 Then Exit For
 
 
                         abundanceElementPropertyBeanList4 = New List(Of IsotopicPeak)()
@@ -2044,7 +2044,7 @@ Namespace Formula.IsotopicPatterns
                             relativeAbundance_dc = SpecialFunctions.BinomialCoefficient(k, l) * Math.Pow(d_c_relativeAbundance, l)
                             massDifference_dc = Math.Round(d_c_massDifference * l, 0)
 
-                            If Math.Abs(massDifference_dc) > filterMass - 1 Then Exit For
+                            If std.Abs(massDifference_dc) > filterMass - 1 Then Exit For
 
 
                             abundanceElementPropertyBeanList5 = New List(Of IsotopicPeak)()
@@ -2061,7 +2061,7 @@ Namespace Formula.IsotopicPatterns
 
 
 
-                                If Math.Abs(massDifference_ed) > filterMass - 1 Then Exit For
+                                If std.Abs(massDifference_ed) > filterMass - 1 Then Exit For
 
                                 abundanceElementPropertyBeanList5(massDifference_ed).RelativeAbundance += relativeAbundance_ed
                                 abundanceElementPropertyBeanList5(massDifference_ed).MassDifferenceFromMonoisotopicIon = massDifference_ed
@@ -2125,7 +2125,7 @@ Namespace Formula.IsotopicPatterns
                 relativeAbundance_a = SpecialFunctions.BinomialCoefficient(n, i) * Math.Pow(a_relativeAbundance, i)
                 massDifference_a = Math.Round(a_massDifference * i, 0)
 
-                If Math.Abs(massDifference_a) > filterMass - 1 Then Exit For
+                If std.Abs(massDifference_a) > filterMass - 1 Then Exit For
 
                 abundanceElementPropertyBeanList2 = New List(Of IsotopicPeak)()
                 For j = 0 To filterMass - 1
@@ -2140,7 +2140,7 @@ Namespace Formula.IsotopicPatterns
                     relativeAbundance_ba = SpecialFunctions.BinomialCoefficient(i, j) * Math.Pow(b_a_relativeAbundance, j)
                     massDifference_ba = Math.Round(b_a_massDifference * j, 0)
 
-                    If Math.Abs(massDifference_ba) > filterMass - 1 Then Exit For
+                    If std.Abs(massDifference_ba) > filterMass - 1 Then Exit For
 
 
                     abundanceElementPropertyBeanList3 = New List(Of IsotopicPeak)()
@@ -2155,7 +2155,7 @@ Namespace Formula.IsotopicPatterns
                         relativeAbundance_cb = SpecialFunctions.BinomialCoefficient(j, k) * Math.Pow(c_b_relativeAbundance, k)
                         massDifference_cb = Math.Round(c_b_massDifference * k, 0)
 
-                        If Math.Abs(massDifference_cb) > filterMass - 1 Then Exit For
+                        If std.Abs(massDifference_cb) > filterMass - 1 Then Exit For
 
                         abundanceElementPropertyBeanList4 = New List(Of IsotopicPeak)()
                         For l = 0 To filterMass - 1
@@ -2169,7 +2169,7 @@ Namespace Formula.IsotopicPatterns
                             relativeAbundance_dc = SpecialFunctions.BinomialCoefficient(k, l) * Math.Pow(d_c_relativeAbundance, l)
                             massDifference_dc = Math.Round(d_c_massDifference * l, 0)
 
-                            If Math.Abs(massDifference_dc) > filterMass - 1 Then Exit For
+                            If std.Abs(massDifference_dc) > filterMass - 1 Then Exit For
 
                             abundanceElementPropertyBeanList4(massDifference_dc).RelativeAbundance += relativeAbundance_dc
                             abundanceElementPropertyBeanList4(massDifference_dc).MassDifferenceFromMonoisotopicIon = massDifference_dc
@@ -2223,7 +2223,7 @@ Namespace Formula.IsotopicPatterns
                 relativeAbundance_a = SpecialFunctions.BinomialCoefficient(n, i) * Math.Pow(a_relativeAbundance, i)
                 massDifference_a = Math.Round(a_massDifference * i, 0)
 
-                If Math.Abs(massDifference_a) > filterMass - 1 Then Exit For
+                If std.Abs(massDifference_a) > filterMass - 1 Then Exit For
 
                 abundanceElementPropertyBeanList2 = New List(Of IsotopicPeak)()
                 For j = 0 To filterMass - 1
@@ -2237,7 +2237,7 @@ Namespace Formula.IsotopicPatterns
                     relativeAbundance_ba = SpecialFunctions.BinomialCoefficient(i, j) * Math.Pow(b_a_relativeAbundance, j)
                     massDifference_ba = Math.Round(b_a_massDifference * j, 0)
 
-                    If Math.Abs(massDifference_ba) > filterMass - 1 Then Exit For
+                    If std.Abs(massDifference_ba) > filterMass - 1 Then Exit For
 
                     abundanceElementPropertyBeanList3 = New List(Of IsotopicPeak)()
                     For k = 0 To filterMass - 1
@@ -2251,7 +2251,7 @@ Namespace Formula.IsotopicPatterns
                         relativeAbundance_cb = SpecialFunctions.BinomialCoefficient(j, k) * Math.Pow(c_b_relativeAbundance, k)
                         massDifference_cb = Math.Round(c_b_massDifference * k, 0)
 
-                        If Math.Abs(massDifference_cb) > filterMass - 1 Then Exit For
+                        If std.Abs(massDifference_cb) > filterMass - 1 Then Exit For
 
                         abundanceElementPropertyBeanList3(massDifference_cb).RelativeAbundance += relativeAbundance_cb
                         abundanceElementPropertyBeanList3(massDifference_cb).MassDifferenceFromMonoisotopicIon = massDifference_cb
@@ -2293,7 +2293,7 @@ Namespace Formula.IsotopicPatterns
                 relativeAbundance_a = SpecialFunctions.BinomialCoefficient(n, i) * Math.Pow(a_relativeAbundance, i)
                 massDifference_a = Math.Round(a_massDifference * i, 0)
 
-                If Math.Abs(massDifference_a) > filterMass - 1 Then Exit For
+                If std.Abs(massDifference_a) > filterMass - 1 Then Exit For
 
                 abundanceElementPropertyBeanList2 = New List(Of IsotopicPeak)()
                 For j = 0 To filterMass - 1
@@ -2307,7 +2307,7 @@ Namespace Formula.IsotopicPatterns
                     relativeAbundance_ba = SpecialFunctions.BinomialCoefficient(i, j) * Math.Pow(b_a_relativeAbundance, j)
                     massDifference_ba = Math.Round(b_a_massDifference * j, 0)
 
-                    If Math.Abs(massDifference_ba) > filterMass - 1 Then Exit For
+                    If std.Abs(massDifference_ba) > filterMass - 1 Then Exit For
 
                     abundanceElementPropertyBeanList2(massDifference_ba).RelativeAbundance += relativeAbundance_ba
                     abundanceElementPropertyBeanList2(massDifference_ba).MassDifferenceFromMonoisotopicIon = CInt(massDifference_ba)
@@ -2338,7 +2338,7 @@ Namespace Formula.IsotopicPatterns
                 relativeAbundance_a = SpecialFunctions.BinomialCoefficient(n, i) * Math.Pow(a_relativeAbundance, i)
                 massDifference_a = Math.Round(a_massDifference * i, 0)
 
-                If Math.Abs(massDifference_a) > filterMass - 1 Then Exit For
+                If std.Abs(massDifference_a) > filterMass - 1 Then Exit For
 
                 abundanceElementPropertyBeanList1(massDifference_a).RelativeAbundance += relativeAbundance_a
                 abundanceElementPropertyBeanList1(massDifference_a).MassDifferenceFromMonoisotopicIon = CInt(massDifference_a)
@@ -2392,7 +2392,7 @@ Namespace Formula.IsotopicPatterns
                 relativeAbundance = relativeAbund * abundanceElementPropertyBeanList(i).RelativeAbundance
                 massDifference = Math.Round(massDiff + abundanceElementPropertyBeanList(i).MassDifferenceFromMonoisotopicIon, 0)
 
-                If Math.Abs(massDifference) <= filterMass - 1 Then
+                If std.Abs(massDifference) <= filterMass - 1 Then
                     multiplatedAbundanceElementBeanList(massDifference).RelativeAbundance += relativeAbundance
                     multiplatedAbundanceElementBeanList(massDifference).MassDifferenceFromMonoisotopicIon = CInt(massDifference)
                 End If

@@ -17,6 +17,31 @@
 
     Public Module FormulaCalculateUtility
 
+        Public Function ConvertTmsMeoxSubtractedFormula(ByVal formula As Formula) As Formula
+            If formula!Tms = 0 AndAlso formula!Meox = 0 Then Return formula
+            Dim tmsCount = formula!Tms
+            Dim meoxCount = formula!Meox
+
+            Dim cNum = formula!C - tmsCount * 3 - meoxCount
+            Dim hNum = formula!H - tmsCount * 8 - meoxCount * 3
+            Dim nNum = formula!N - meoxCount
+            Dim oNum = formula!O
+            Dim pNum = formula!P
+            Dim sNum = formula!S
+            Dim fNum = formula!F
+            Dim clNum = formula!Cl
+            Dim brNum = formula!Br
+            Dim iNum = formula!I
+            Dim siNum = formula!Si - tmsCount
+            Dim counts As New Dictionary(Of String, Integer) From {
+                {"C", cNum}, {"H", hNum}, {"N", nNum}, {"O", oNum}, {"P", pNum},
+                {"S", sNum}, {"F", fNum}, {"Cl", clNum}, {"Br", brNum}, {"I", iNum},
+                {"Si", siNum}
+            }
+
+            Return New Formula(counts)
+        End Function
+
         Public Function GetExactMass(element2count As Dictionary(Of String, Integer)) As Double
             Dim mass = 0.0
             Dim elem2mass = ElementDictionary.MassDict

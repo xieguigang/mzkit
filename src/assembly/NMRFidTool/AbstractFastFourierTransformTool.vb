@@ -183,7 +183,7 @@ Public MustInherit Class AbstractFastFourierTransformTool
     Friend Overridable Sub shiftData()
         ' perform a left or right shift of the data (ignoring the corresponding portion of the data)
         ' the code from cuteNMR was simplified
-        For i As Integer = 0 To fidField.Proc.TdEffective - Math.Abs(fidField.Proc.Shift) - 1
+        For i As Integer = 0 To fidField.Proc.TdEffective - std.Abs(fidField.Proc.Shift) - 1
             Dim dataIndex = If(fidField.Proc.Shift >= 0, i, i - fidField.Proc.Shift) ' or shift the placement of the data to the right
             ' or shift the placement of the data to the right
             Dim fidIndex = If(fidField.Proc.Shift >= 0, i + fidField.Proc.Shift, i) ' start in the correct order
