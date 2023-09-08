@@ -70,8 +70,16 @@ declare namespace MsImaging {
    */
    function FilterMz(viewer: object, mz: number, tolerance?: any, title?: string, env?: object): object;
    /**
-     * @param summary default value Is ``null``.
-     * @param env default value Is ``null``.
+    * Get intensity data vector from a given MS-imaging layer
+    * 
+    * 
+     * @param layer -
+     * @param summary -
+     * 
+     * + default value Is ``null``.
+     * @param env -
+     * 
+     * + default value Is ``null``.
    */
    function intensity(layer: any, summary?: object, env?: object): number;
    /**

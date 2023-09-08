@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Get intensity data vector from a given MS-imaging layer</title>
+    <title>evaluate the splash id of the given spectrum data</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <style rel="stylesheet" type="text/css">
@@ -148,12 +148,12 @@
 
         <table style="width: 100%;">
             <tr>
-                <td>intensity {MsImaging}</td>
+                <td>splash_id {data}</td>
                 <td style="text-align: right;">R Documentation</td>
             </tr>
         </table>
 
-        <h2>Get intensity data vector from a given MS-imaging layer</h2>
+        <h2>evaluate the splash id of the given spectrum data</h2>
 
         <h3>Description</h3>
 
@@ -162,19 +162,15 @@
         <h3>Usage</h3>
 
         <div style="width: 100%; padding-left: 3%; color: black;">
-            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>intensity</strong>(<i>layer</i>,
-    <i>summary</i> = Total);</code></pre>
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>splash_id</strong>(<i>spec</i>,
+    <i>type</i> = MS);</code></pre>
         </div>
 
         <h3>Arguments</h3>
 
         <table>
             
-<dt>layer</dt>
-<dd><p><p>-</p></p></dd>
-
-
-<dt>summary</dt>
+<dt>spec</dt>
 <dd><p><p>-</p></p></dd>
 
 
@@ -184,22 +180,35 @@
         </table>
 
 
-        <h3 style="display: none;">Details</h3>
+        <h3 style="display: block;">Details</h3>
 
-        
+        <p>The SPLASH is an unambiguous, database-independent spectral identifier, <br />
+ just as the InChIKey is designed to serve as a unique identifier for <br />
+ chemical structures. It contains separate blocks that define different <br />
+ layers of information, separated by dashes. For example, the full SPLASH <br />
+ of a caffeine mass spectrum above is splash10-0002-0900000000-b112e4e059e1ecf98c5f.<br />
+ The first block is the SPLASH identifier, the second and third are <br />
+ summary blocks, and the fourth is the unique hash block.</p>
+
+<p>The SPLASH began As the MoNA (Massbank Of North America) hash, designed To <br />
+ identify duplicate spectra within the database. This idea developed further <br />
+ during the 2015 Metabolomics conference, where the SPLASH collaboration <br />
+ was formed. Currently, the specification has been formalized For mass <br />
+ spectrometry data. Additional specifications For IR, UV And NMR spectrometry<br />
+ are planned.</p>
 
 
         <h3>Value</h3>
 
-        this function returns data object of type double.
+        this function returns data object of type <i>any</i> kind.
 
         <h3 style="display: none;">Examples</h3>
 
         
 
         <hr />
-        <div style="text-align: center;">[Package <em>MsImaging</em> version 1.0.0.0 <a
-                href="../MsImaging.html">Index</a>]
+        <div style="text-align: center;">[Package <em>data</em> version 1.0.0.0 <a
+                href="../data.html">Index</a>]
         </div>
     </div>
 </body>

@@ -24,3 +24,4 @@ MS-Imaging data handler
 + [getMatrixIons](MSI/getMatrixIons.1) 
 + [pixelMatrix](MSI/pixelMatrix.1) dumping raw data matrix as text table file.
 + [spatial.convolution](MSI/spatial.convolution.1) sum pixels for create pixel spot convolution
++ [pack_matrix](MSI/pack_matrix.1) pack the matrix file as the MSI mzpack
