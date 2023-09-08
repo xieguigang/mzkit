@@ -78,6 +78,8 @@ Namespace Formula
     ''' </summary>
     Public Class Element
 
+        Public Property id As Integer
+
         ''' <summary>
         ''' the element atom symbol
         ''' </summary>
@@ -98,8 +100,15 @@ Namespace Formula
         Public Property isotopic As Double
         Public Property isotopes As Isotope()
 
+        Sub New()
+        End Sub
+
+        Sub New(i As Integer)
+            id = i
+        End Sub
+
         Public Overrides Function ToString() As String
-            Return Me.GetJson
+            Return $"[{id}] {symbol} - {name} ({isotopic})"
         End Function
 
         Public Shared Function MemoryLoadElements() As Dictionary(Of String, Element)
