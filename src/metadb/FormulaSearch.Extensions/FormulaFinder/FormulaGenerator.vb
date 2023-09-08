@@ -4,6 +4,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
+Imports std = System.Math
 
 ''' <summary>
 ''' This class is the main program to find the molecular formula candidates from the mass spectra and to rank them.
@@ -137,7 +138,7 @@ Public Class FormulaGenerator
     ''' <param name="rawData"></param>
     ''' <param name="adductIon"></param>
     ''' <returns></returns>
-    Public Function GetFormulaCandidateList(ByVal productIonDB As System.Collections.Generic.List(Of ProductIon), ByVal neutralLossDB As System.Collections.Generic.List(Of NeutralLoss), ByVal existFormulaDB As System.Collections.Generic.List(Of ExistFormulaQuery), ByVal param As AnalysisParamOfMsfinder, ByVal mass As Double, ByVal m1Intensity As Double, ByVal m2Intensity As Double, ByVal rawData As CompMs.Common.DataObj.RawData, ByVal adductIon As AdductIon, ByVal isotopeCheck As Boolean) As System.Collections.Generic.List(Of FormulaResult)
+    Public Function GetFormulaCandidateList(ByVal productIonDB As List(Of ProductIon), ByVal neutralLossDB As List(Of NeutralLoss), ByVal existFormulaDB As List(Of ExistFormulaQuery), ByVal param As AnalysisParamOfMsfinder, ByVal mass As Double, ByVal m1Intensity As Double, ByVal m2Intensity As Double, ByVal rawData As CompMs.Common.DataObj.RawData, ByVal adductIon As AdductIon, ByVal isotopeCheck As Boolean) As List(Of FormulaResult)
 
         'param set
         Dim ms1Tol = param.Mass1Tolerance
@@ -149,9 +150,9 @@ Public Class FormulaGenerator
         If massTolType = MassToleranceType.Ppm Then ms1Tol = PPMmethod.ConvertPpmToMassAccuracy(mass, ms1Tol)
 
         Dim formulaResults = New System.Collections.Generic.List(Of FormulaResult)()
-        Dim ms2Peaklist = CompMs.Common.FormulaGenerator.[Function].FragmentAssigner.GetCentroidMsMsSpectrum(rawData)
-        Dim refinedPeaklist = CompMs.Common.FormulaGenerator.[Function].FragmentAssigner.GetRefinedPeaklist(ms2Peaklist, relativeAbundanceCutOff, 0.0, (mass * CDbl(adductIon.AdductIonXmer) + adductIon.AdductIonAccurateMass) / CDbl(adductIon.ChargeNumber), ms2Tol, massTolType, 1000, False, Not param.CanExcuteMS2AdductSearch)
-        Dim neutralLosslist = CompMs.Common.FormulaGenerator.[Function].FragmentAssigner.GetNeutralLossList(refinedPeaklist, rawData.PrecursorMz, ms1Tol)
+        Dim ms2Peaklist = FragmentAssigner.GetCentroidMsMsSpectrum(rawData)
+        Dim refinedPeaklist = FragmentAssigner.GetRefinedPeaklist(ms2Peaklist, relativeAbundanceCutOff, 0.0, (mass * CDbl(adductIon.AdductIonXmer) + adductIon.AdductIonAccurateMass) / CDbl(adductIon.ChargeNumber), ms2Tol, massTolType, 1000, False, Not param.CanExcuteMS2AdductSearch)
+        Dim neutralLosslist = FragmentAssigner.GetNeutralLossList(refinedPeaklist, rawData.PrecursorMz, ms1Tol)
 
         Dim syncObj = New Object()
         'var endID = getFormulaDbLastIndex(formulaDB, mass + ms1Tol);
@@ -174,39 +175,39 @@ Public Class FormulaGenerator
         '        }
         '    }
         '});
-        '''for (int i = 0; i < formulaDB.Count; i++) {
-        '''    if (formulaDB[i].Mass + formulaDB[i].Cnum * this.maxMassFoldChange < mass - ms1Tol) continue;
-        '''    if (formulaDB[i].Onum > 0 && !this.oCheck) continue;
-        '''    if (formulaDB[i].Nnum > 0 && !this.nCheck) continue;
-        '''    if (formulaDB[i].Pnum > 0 && !this.pCheck) continue;
-        '''    if (formulaDB[i].Snum > 0 && !this.sCheck) continue;
+        'for (int i = 0; i < formulaDB.Count; i++) {
+        '    if (formulaDB[i].Mass + formulaDB[i].Cnum * this.maxMassFoldChange < mass - ms1Tol) continue;
+        '    if (formulaDB[i].Onum > 0 && !this.oCheck) continue;
+        '    if (formulaDB[i].Nnum > 0 && !this.nCheck) continue;
+        '    if (formulaDB[i].Pnum > 0 && !this.pCheck) continue;
+        '    if (formulaDB[i].Snum > 0 && !this.sCheck) continue;
 
-        '''    if (rawData.CarbonNumberFromLabeledExperiment >= 0 && formulaDB[i].Cnum != rawData.CarbonNumberFromLabeledExperiment)
-        '''        continue;
-        '''    if (rawData.NitrogenNumberFromLabeledExperiment >= 0 && formulaDB[i].Nnum != rawData.NitrogenNumberFromLabeledExperiment)
-        '''        continue;
-        '''    if (rawData.OxygenNumberFromLabeledExperiment >= 0 && formulaDB[i].Onum != rawData.OxygenNumberFromLabeledExperiment)
-        '''        continue;
-        '''    if (rawData.SulfurNumberFromLabeledExperiment >= 0 && formulaDB[i].Snum != rawData.SulfurNumberFromLabeledExperiment)
-        '''        continue;
-        '''    if (rawData.CarbonNitrogenNumberFromLabeledExperiment >= 0 && formulaDB[i].Cnum + formulaDB[i].Nnum != rawData.CarbonNitrogenNumberFromLabeledExperiment)
-        '''        continue;
-        '''    if (rawData.CarbonSulfurNumberFromLabeledExperiment >= 0 && formulaDB[i].Cnum + formulaDB[i].Snum != rawData.CarbonSulfurNumberFromLabeledExperiment)
-        '''        continue;
-        '''    if (rawData.NitrogenSulfurNumberFromLabeledExperiment >= 0 && formulaDB[i].Nnum + formulaDB[i].Snum != rawData.NitrogenSulfurNumberFromLabeledExperiment)
-        '''        continue;
-        '''    if (rawData.CarbonNitrogenSulfurNumberFromLabeledExperiment >= 0 && formulaDB[i].Cnum + formulaDB[i].Nnum + formulaDB[i].Snum != rawData.CarbonNumberFromLabeledExperiment)
-        '''        continue;
+        '    if (rawData.CarbonNumberFromLabeledExperiment >= 0 && formulaDB[i].Cnum != rawData.CarbonNumberFromLabeledExperiment)
+        '        continue;
+        '    if (rawData.NitrogenNumberFromLabeledExperiment >= 0 && formulaDB[i].Nnum != rawData.NitrogenNumberFromLabeledExperiment)
+        '        continue;
+        '    if (rawData.OxygenNumberFromLabeledExperiment >= 0 && formulaDB[i].Onum != rawData.OxygenNumberFromLabeledExperiment)
+        '        continue;
+        '    if (rawData.SulfurNumberFromLabeledExperiment >= 0 && formulaDB[i].Snum != rawData.SulfurNumberFromLabeledExperiment)
+        '        continue;
+        '    if (rawData.CarbonNitrogenNumberFromLabeledExperiment >= 0 && formulaDB[i].Cnum + formulaDB[i].Nnum != rawData.CarbonNitrogenNumberFromLabeledExperiment)
+        '        continue;
+        '    if (rawData.CarbonSulfurNumberFromLabeledExperiment >= 0 && formulaDB[i].Cnum + formulaDB[i].Snum != rawData.CarbonSulfurNumberFromLabeledExperiment)
+        '        continue;
+        '    if (rawData.NitrogenSulfurNumberFromLabeledExperiment >= 0 && formulaDB[i].Nnum + formulaDB[i].Snum != rawData.NitrogenSulfurNumberFromLabeledExperiment)
+        '        continue;
+        '    if (rawData.CarbonNitrogenSulfurNumberFromLabeledExperiment >= 0 && formulaDB[i].Cnum + formulaDB[i].Nnum + formulaDB[i].Snum != rawData.CarbonNumberFromLabeledExperiment)
+        '        continue;
 
-        '''    if (formulaDB[i].Mass > mass + ms1Tol) break;
+        '    if (formulaDB[i].Mass > mass + ms1Tol) break;
 
-        '''    formulaResults = getFormulaSearchResults(formulaResults, formulaDB[i], param, mass, ms1Tol,
-        '''        m1Intensity, m2Intensity, adductIon, isotopeCheck, maxReportNumber, 
-        '''        existFormulaDB, refinedPeaklist, neutralLosslist, productIonDB, neutralLossDB);
-        '''}
+        '    formulaResults = getFormulaSearchResults(formulaResults, formulaDB[i], param, mass, ms1Tol,
+        ' m1Intensity, m2Intensity, adductIon, isotopeCheck, maxReportNumber, 
+        '        existFormulaDB, refinedPeaklist, neutralLosslist, productIonDB, neutralLossDB);
+        '}
 #End Region
         If formulaResults.Count > 0 Then
-            formulaResults = formulaResults.OrderByDescending(Function(n) System.std.Abs(n.TotalScore)).ToList()
+            formulaResults = formulaResults.OrderByDescending(Function(n) std.Abs(n.TotalScore)).ToList()
 
             For i As Integer = 0 To Me.isCheckedNum - 1
                 If i > formulaResults.Count - 1 Then Exit For
@@ -221,7 +222,7 @@ Public Class FormulaGenerator
         Return formulaResults
     End Function
 
-    Private Function getFormulaResults(ByVal rawData As CompMs.Common.DataObj.RawData, ByVal param As AnalysisParamOfMsfinder, ByVal mass As Double, ByVal ms1Tol As Double, ByVal m1Intensity As Double, ByVal m2Intensity As Double, ByVal adduct As AdductIon, ByVal isotopeCheck As Boolean, ByVal maxReportNumber As Integer, ByVal existFormulaDB As System.Collections.Generic.List(Of ExistFormulaQuery), ByVal refinedPeaklist As System.Collections.Generic.List(Of SpectrumPeak), ByVal neutralLosses As System.Collections.Generic.List(Of NeutralLoss), ByVal productIonDB As System.Collections.Generic.List(Of ProductIon), ByVal neutralLossDB As System.Collections.Generic.List(Of NeutralLoss)) As System.Collections.Generic.List(Of FormulaResult)
+    Private Function getFormulaResults(ByVal rawData As CompMs.Common.DataObj.RawData, ByVal param As AnalysisParamOfMsfinder, ByVal mass As Double, ByVal ms1Tol As Double, ByVal m1Intensity As Double, ByVal m2Intensity As Double, ByVal adduct As AdductIon, ByVal isotopeCheck As Boolean, ByVal maxReportNumber As Integer, ByVal existFormulaDB As List(Of ExistFormulaQuery), ByVal refinedPeaklist As List(Of SpectrumPeak), ByVal neutralLosses As List(Of NeutralLoss), ByVal productIonDB As List(Of ProductIon), ByVal neutralLossDB As List(Of NeutralLoss)) As List(Of FormulaResult)
 
 
         Dim maxCnum = CInt((mass / 12.0))
@@ -229,30 +230,32 @@ Public Class FormulaGenerator
 
         Dim syncObj = New Object()
         Dim sw = New System.Diagnostics.Stopwatch()
+        Dim q = Sub(c As Object, state As ParallelLoopState)
+                    Dim formulaResults = Me.getFormulaResults(c, rawData, param, mass, ms1Tol, m1Intensity, m2Intensity, adduct, isotopeCheck, maxReportNumber, existFormulaDB, refinedPeaklist, neutralLosses, productIonDB, neutralLossDB)
+
+                    If formulaResults IsNot Nothing AndAlso formulaResults.Count <> 0 Then
+                        SyncLock syncObj
+                            Dim lap = sw.ElapsedMilliseconds * 0.001 / 60.0 ' min
+                            If param.FormulaPredictionTimeOut > 0 AndAlso param.FormulaPredictionTimeOut < lap Then
+                                Call System.Diagnostics.Debug.WriteLine("Calculation stopped.")
+                                state.[Stop]()
+                            End If
+
+                            For Each result In formulaResults
+                                formulaResultsMaster = Me.getFormulaResultCandidates(formulaResultsMaster, result, 100000000)
+                            Next
+                        End SyncLock
+                    End If
+                End Sub
+
         sw.Start()
-
-        Call System.Threading.Tasks.Parallel.[For](1, maxCnum, Sub(c, state)
-                                                                   Dim formulaResults = Me.getFormulaResults(c, rawData, param, mass, ms1Tol, m1Intensity, m2Intensity, adduct, isotopeCheck, maxReportNumber, existFormulaDB, refinedPeaklist, neutralLosses, productIonDB, neutralLossDB)
-
-                                                                   If formulaResults IsNot Nothing AndAlso formulaResults.Count <> 0 Then
-                                                                       SyncLock syncObj
-                                                                           Dim lap = sw.ElapsedMilliseconds * 0.001 / 60.0 ' min
-                                                                           If param.FormulaPredictionTimeOut > 0 AndAlso param.FormulaPredictionTimeOut < lap Then
-                                                                               Call System.Diagnostics.Debug.WriteLine("Calculation stopped.")
-                                                                               state.[Stop]()
-                                                                           End If
-
-                                                                           For Each result In formulaResults
-                                                                               formulaResultsMaster = Me.getFormulaResultCandidates(formulaResultsMaster, result, 100000000)
-                                                                           Next
-                                                                       End SyncLock
-                                                                   End If
-                                                               End Sub)
+        Call Parallel.[For](1, maxCnum, q)
         sw.[Stop]()
+
         Return formulaResultsMaster
     End Function
 
-    Private Function getFormulaResults(ByVal c As Integer, ByVal rawData As CompMs.Common.DataObj.RawData, ByVal param As AnalysisParamOfMsfinder, ByVal mass As Double, ByVal ms1Tol As Double, ByVal m1Intensity As Double, ByVal m2Intensity As Double, ByVal adduct As AdductIon, ByVal isotopeCheck As Boolean, ByVal maxReportNumber As Integer, ByVal existFormulaDB As System.Collections.Generic.List(Of ExistFormulaQuery), ByVal refinedPeaklist As System.Collections.Generic.List(Of SpectrumPeak), ByVal neutralLosses As System.Collections.Generic.List(Of NeutralLoss), ByVal productIonDB As System.Collections.Generic.List(Of ProductIon), ByVal neutralLossDB As System.Collections.Generic.List(Of NeutralLoss)) As System.Collections.Generic.List(Of FormulaResult)
+    Private Function getFormulaResults(ByVal c As Integer, ByVal rawData As CompMs.Common.DataObj.RawData, ByVal param As AnalysisParamOfMsfinder, ByVal mass As Double, ByVal ms1Tol As Double, ByVal m1Intensity As Double, ByVal m2Intensity As Double, ByVal adduct As AdductIon, ByVal isotopeCheck As Boolean, ByVal maxReportNumber As Integer, ByVal existFormulaDB As List(Of ExistFormulaQuery), ByVal refinedPeaklist As List(Of SpectrumPeak), ByVal neutralLosses As List(Of NeutralLoss), ByVal productIonDB As List(Of ProductIon), ByVal neutralLossDB As List(Of NeutralLoss)) As List(Of FormulaResult)
 
 
 
@@ -349,7 +352,13 @@ Public Class FormulaGenerator
 
                                                 If param.IsTmsMeoxDerivative Then
                                                     For meox As Integer = param.MinimumMeoxCount To n
-                                                        Dim formula = New Formula(c, h, n, o, p, s, f, cl, br, i, si, si, meox)
+                                                        ' TMS equals to Si
+                                                        Dim counts As New Dictionary(Of String, Integer) From {
+                                                            {"C", c}, {"H", h}, {"N", n}, {"O", o}, {"P", p},
+                                                            {"S", s}, {"F", f}, {"Cl", cl}, {"Br", br}, {"I", i}, {"Si", si},
+                                                            {"TMS", si}, {"MEOX", meox}
+                                                        }
+                                                        Dim formula = New Formula(counts)
                                                         If formula!C - si * 3 - meox <= 0 Then Continue For
 
                                                         Dim convertedFormula = FormulaCalculateUtility.ConvertTmsMeoxSubtractedFormula(formula)
@@ -358,7 +367,10 @@ Public Class FormulaGenerator
                                                         If formulaResult IsNot Nothing Then formulaResults.Add(formulaResult)
                                                     Next
                                                 Else
-                                                    Dim formula = New Formula(c, h, n, o, p, s, f, cl, br, i, si)
+                                                    Dim counts As New Dictionary(Of String, Integer) From {
+                                                            {"C", c}, {"H", h}, {"N", n}, {"O", o}, {"P", p},
+                                                            {"S", s}, {"F", f}, {"Cl", cl}, {"Br", br}, {"I", i}, {"Si", si}}
+                                                    Dim formula = New Formula(counts)
                                                     Dim formulaResult = Me.tryGetFormulaResultCandidate(formula, param, mass, ms1Tol, m1Intensity, m2Intensity, isotopeCheck, adduct, refinedPeaklist, neutralLosses, existFormulaDB, productIonDB, neutralLossDB)
                                                     If formulaResult IsNot Nothing Then formulaResults.Add(formulaResult)
                                                 End If
@@ -384,7 +396,7 @@ Public Class FormulaGenerator
         Return formulaResults
     End Function
 
-    Private Function getFormulaSearchResults(ByVal formula As Formula, ByVal rawData As CompMs.Common.DataObj.RawData, ByVal param As AnalysisParamOfMsfinder, ByVal mass As Double, ByVal ms1Tol As Double, ByVal m1Intensity As Double, ByVal m2Intensity As Double, ByVal adductIon As AdductIon, ByVal isotopeCheck As Boolean, ByVal maxReportNumber As Integer, ByVal existFormulaDB As System.Collections.Generic.List(Of ExistFormulaQuery), ByVal refinedPeaklist As System.Collections.Generic.List(Of SpectrumPeak), ByVal neutralLosslist As System.Collections.Generic.List(Of NeutralLoss), ByVal productIonDB As System.Collections.Generic.List(Of ProductIon), ByVal neutralLossDB As System.Collections.Generic.List(Of NeutralLoss)) As System.Collections.Generic.List(Of FormulaResult)
+    Private Function getFormulaSearchResults(ByVal formula As Formula, ByVal rawData As CompMs.Common.DataObj.RawData, ByVal param As AnalysisParamOfMsfinder, ByVal mass As Double, ByVal ms1Tol As Double, ByVal m1Intensity As Double, ByVal m2Intensity As Double, ByVal adductIon As AdductIon, ByVal isotopeCheck As Boolean, ByVal maxReportNumber As Integer, ByVal existFormulaDB As List(Of ExistFormulaQuery), ByVal refinedPeaklist As List(Of SpectrumPeak), ByVal neutralLosslist As List(Of NeutralLoss), ByVal productIonDB As List(Of ProductIon), ByVal neutralLossDB As List(Of NeutralLoss)) As List(Of FormulaResult)
 
 
         If formula.ExactMass + formula!C * Me.maxMassFoldChange < mass - ms1Tol Then Return Nothing
@@ -401,7 +413,9 @@ Public Class FormulaGenerator
         If rawData.CarbonNitrogenNumberFromLabeledExperiment >= 0 AndAlso formula!C + formula!N <> rawData.CarbonNitrogenNumberFromLabeledExperiment / xMer Then Return Nothing
         If rawData.CarbonSulfurNumberFromLabeledExperiment >= 0 AndAlso formula!C + formula!S <> rawData.CarbonSulfurNumberFromLabeledExperiment / xMer Then Return Nothing
         If rawData.NitrogenSulfurNumberFromLabeledExperiment >= 0 AndAlso formula!N + formula!S <> rawData.NitrogenSulfurNumberFromLabeledExperiment / xMer Then Return Nothing
-        If rawData.CarbonNitrogenSulfurNumberFromLabeledExperiment >= 0 AndAlso formula!C + formula!N + formula!S <> rawData.CarbonNumberFromLabeledExperiment / xMer Then Return Nothing
+        If rawData.CarbonNitrogenSulfurNumberFromLabeledExperiment >= 0 AndAlso formula!C + formula!N + formula!S <> rawData.CarbonNumberFromLabeledExperiment / xMer Then
+            Return Nothing
+        End If
 
         '''test for ms-dial and ms-finder integration project
         'if (FormulaStringParcer.OrganicElementsReader(formula.FormulaString).Cnum != formula.Cnum) return null;
@@ -444,7 +458,7 @@ Public Class FormulaGenerator
     ''' <returns></returns>
     'public List<FormulaResult> GetFormulaCandidateList(List<Formula> formulaDB, List<ExistFormulaQuery> existFormulaDB, AnalysisParamOfMsfinder param, double mass, double ms1Tol, double ms2Tol, MassToleranceType massTolType, double m1Intensity, double m2Intensity, double isotopeRatioTolAsPercentage, int maxReportNumber, AdductIon adductIon, bool isotopeCheck) {
     'public List<FormulaResult> GetFormulaCandidateList(RawData rawData, List<Formula> formulaDB, List<ExistFormulaQuery> existFormulaDB,
-    Public Function GetFormulaCandidateList(ByVal rawData As CompMs.Common.DataObj.RawData, ByVal existFormulaDB As System.Collections.Generic.List(Of ExistFormulaQuery), ByVal param As AnalysisParamOfMsfinder, ByVal mass As Double, ByVal m1Intensity As Double, ByVal m2Intensity As Double, ByVal adductIon As AdductIon, ByVal isotopeCheck As Boolean) As System.Collections.Generic.List(Of FormulaResult)
+    Public Function GetFormulaCandidateList(ByVal rawData As CompMs.Common.DataObj.RawData, ByVal existFormulaDB As List(Of ExistFormulaQuery), ByVal param As AnalysisParamOfMsfinder, ByVal mass As Double, ByVal m1Intensity As Double, ByVal m2Intensity As Double, ByVal adductIon As AdductIon, ByVal isotopeCheck As Boolean) As List(Of FormulaResult)
 
         'param set
         Dim ms1Tol = param.Mass1Tolerance
@@ -475,7 +489,7 @@ Public Class FormulaGenerator
         '}
 
         If formulaResults.Count > 0 Then
-            formulaResults = formulaResults.OrderByDescending(Function(n) System.std.Abs(n.TotalScore)).ToList()
+            formulaResults = formulaResults.OrderByDescending(Function(n) std.Abs(n.TotalScore)).ToList()
 
             For i As Integer = 0 To Me.isCheckedNum - 1
                 If i > formulaResults.Count - 1 Then Exit For
@@ -491,7 +505,7 @@ Public Class FormulaGenerator
     End Function
 
     'public FormulaResult GetFormulaScore(string formulaString, List<NeutralLoss> neutralLossDB, List<ExistFormulaQuery> existFormulaDB, double mass, AnalysisParamOfMsfinder param, double ms1Tol, double ms2Tol, MassToleranceType massTolType, double relativeAbundanceCutOff, double subtractedM1Intensity, double subtractedM2Intensity, double isotopeRatioTolAsPercentage, RawData rawData, AdductIon adductIon, bool isotopeCheck) {
-    Public Function GetFormulaScore(ByVal formulaString As String, ByVal productIonDB As System.Collections.Generic.List(Of ProductIon), ByVal neutralLossDB As System.Collections.Generic.List(Of NeutralLoss), ByVal existFormulaDB As System.Collections.Generic.List(Of ExistFormulaQuery), ByVal param As AnalysisParamOfMsfinder, ByVal mass As Double, ByVal subtractedM1Intensity As Double, ByVal subtractedM2Intensity As Double, ByVal rawData As CompMs.Common.DataObj.RawData, ByVal adductIon As AdductIon, ByVal isotopeCheck As Boolean) As FormulaResult
+    Public Function GetFormulaScore(ByVal formulaString As String, ByVal productIonDB As List(Of ProductIon), ByVal neutralLossDB As List(Of NeutralLoss), ByVal existFormulaDB As List(Of ExistFormulaQuery), ByVal param As AnalysisParamOfMsfinder, ByVal mass As Double, ByVal subtractedM1Intensity As Double, ByVal subtractedM2Intensity As Double, ByVal rawData As CompMs.Common.DataObj.RawData, ByVal adductIon As AdductIon, ByVal isotopeCheck As Boolean) As FormulaResult
 
         'param set
         Dim ms1Tol = param.Mass1Tolerance
@@ -504,33 +518,33 @@ Public Class FormulaGenerator
         If massTolType = MassToleranceType.Ppm Then ms1Tol = PPMmethod.ConvertPpmToMassAccuracy(mass, ms1Tol)
         Dim formulaResult = Me.getFormulaResult(formula, param, mass, ms1Tol, subtractedM1Intensity, subtractedM2Intensity, isotopeCheck, existFormulaDB)
 
-        Dim ms2Peaklist = CompMs.Common.FormulaGenerator.[Function].FragmentAssigner.GetCentroidMsMsSpectrum(rawData)
+        Dim ms2Peaklist = FragmentAssigner.GetCentroidMsMsSpectrum(rawData)
 
         If ms2Peaklist IsNot Nothing AndAlso ms2Peaklist.Count <> 0 Then
-            Dim refinedPeaklist = CompMs.Common.FormulaGenerator.[Function].FragmentAssigner.GetRefinedPeaklist(ms2Peaklist, relativeAbundanceCutOff, 0.0, (mass * CDbl(adductIon.AdductIonXmer) + adductIon.AdductIonAccurateMass) / CDbl(adductIon.ChargeNumber), ms2Tol, massTolType, 1000, False, Not param.CanExcuteMS2AdductSearch)
-            Dim neutralLosslist = CompMs.Common.FormulaGenerator.[Function].FragmentAssigner.GetNeutralLossList(refinedPeaklist, rawData.PrecursorMz, ms1Tol)
+            Dim refinedPeaklist = FragmentAssigner.GetRefinedPeaklist(ms2Peaklist, relativeAbundanceCutOff, 0.0, (mass * CDbl(adductIon.AdductIonXmer) + adductIon.AdductIonAccurateMass) / CDbl(adductIon.ChargeNumber), ms2Tol, massTolType, 1000, False, Not param.CanExcuteMS2AdductSearch)
+            Dim neutralLosslist = FragmentAssigner.GetNeutralLossList(refinedPeaklist, rawData.PrecursorMz, ms1Tol)
 
             If param.CanExcuteMS2AdductSearch Then
                 If adductIon.IonMode = IonModes.Positive Then
-                    formulaResult.AnnotatedIonResult = CompMs.Common.FormulaGenerator.[Function].FragmentAssigner.GetAnnotatedIon(refinedPeaklist, adductIon, param.MS2PositiveAdductIonList, rawData.PrecursorMz, param.Mass2Tolerance, param.MassTolType)
+                    formulaResult.AnnotatedIonResult = FragmentAssigner.GetAnnotatedIon(refinedPeaklist, adductIon, param.MS2PositiveAdductIonList, rawData.PrecursorMz, param.Mass2Tolerance, param.MassTolType)
                 Else
-                    formulaResult.AnnotatedIonResult = CompMs.Common.FormulaGenerator.[Function].FragmentAssigner.GetAnnotatedIon(refinedPeaklist, adductIon, param.MS2NegativeAdductIonList, rawData.PrecursorMz, param.Mass2Tolerance, param.MassTolType)
+                    formulaResult.AnnotatedIonResult = FragmentAssigner.GetAnnotatedIon(refinedPeaklist, adductIon, param.MS2NegativeAdductIonList, rawData.PrecursorMz, param.Mass2Tolerance, param.MassTolType)
                 End If
-                refinedPeaklist = CompMs.Common.FormulaGenerator.[Function].FragmentAssigner.GetRefinedPeaklist(refinedPeaklist, rawData.PrecursorMz)
+                refinedPeaklist = FragmentAssigner.GetRefinedPeaklist(refinedPeaklist, rawData.PrecursorMz)
             End If
             Me.setFragmentProperties(formulaResult, refinedPeaklist, neutralLosslist, productIonDB, neutralLossDB, ms2Tol, massTolType, adductIon)
         End If
 
-        formulaResult.TotalScore = System.Math.Round(CompMs.Common.FormulaGenerator.[Function].Scoring.TotalScore(formulaResult), 3)
+        formulaResult.TotalScore = System.Math.Round(Scoring.TotalScore(formulaResult), 3)
         formulaResult.IsSelected = True
 
         Return formulaResult
     End Function
 
-    Private Sub setExistFormulaDbInfo(ByVal formulaResult As FormulaResult, ByVal existFormulaDB As System.Collections.Generic.List(Of ExistFormulaQuery))
+    Private Sub setExistFormulaDbInfo(ByVal formulaResult As FormulaResult, ByVal existFormulaDB As List(Of ExistFormulaQuery))
         Dim resourceNames As String
         Dim resourceRecords As Integer
-        Dim pubchemCids As System.Collections.Generic.List(Of Integer)
+        Dim pubchemCids As List(Of Integer)
 
         Me.tryExistFormulaDbSearch(formulaResult.Formula, existFormulaDB, resourceNames, resourceRecords, pubchemCids)
         formulaResult.ResourceNames = resourceNames
@@ -538,19 +552,19 @@ Public Class FormulaGenerator
         formulaResult.PubchemResources = pubchemCids
     End Sub
 
-    Private Sub tryExistFormulaDbSearch(ByVal formula As Formula, ByVal queryDB As System.Collections.Generic.List(Of ExistFormulaQuery), <Out> ByRef resourceNames As String, <Out> ByRef resourceRecords As Integer, <Out> ByRef pubchemCIDs As System.Collections.Generic.List(Of Integer))
+    Private Sub tryExistFormulaDbSearch(ByVal formula As Formula, ByVal queryDB As List(Of ExistFormulaQuery), <Out> ByRef resourceNames As String, <Out> ByRef resourceRecords As Integer, <Out> ByRef pubchemCIDs As List(Of Integer))
         pubchemCIDs = New System.Collections.Generic.List(Of Integer)()
         resourceNames = String.Empty
         resourceRecords = 0
 
         Dim cFormula = FormulaCalculateUtility.ConvertTmsMeoxSubtractedFormula(formula)
-        Dim mass = cFormula.Mass
+        Dim mass = cFormula.ExactMass
         Dim tol = 0.00005
         Dim startID = Me.getQueryStartIndex(mass, tol, queryDB)
 
         For i As Integer = startID To queryDB.Count - 1
-            If queryDB(CInt((i))).Formula.Mass < mass - tol Then Continue For
-            If queryDB(CInt((i))).Formula.Mass > mass + tol Then Exit For
+            If queryDB(CInt((i))).Formula.ExactMass < mass - tol Then Continue For
+            If queryDB(CInt((i))).Formula.ExactMass > mass + tol Then Exit For
 
             Dim qFormula = queryDB(CInt((i))).Formula
 
@@ -563,16 +577,16 @@ Public Class FormulaGenerator
         Next
     End Sub
 
-    Private Function getQueryStartIndex(ByVal mass As Double, ByVal tol As Double, ByVal queryDB As System.Collections.Generic.List(Of ExistFormulaQuery)) As Integer
+    Private Function getQueryStartIndex(ByVal mass As Double, ByVal tol As Double, ByVal queryDB As List(Of ExistFormulaQuery)) As Integer
         If queryDB Is Nothing OrElse queryDB.Count = 0 Then Return 0
         Dim targetMass As Double = mass - tol
         Dim startIndex As Integer = 0, endIndex As Integer = queryDB.Count - 1
         Dim counter As Integer = 0
 
         While counter < 10
-            If queryDB(CInt((startIndex))).Formula.Mass <= targetMass AndAlso targetMass < queryDB(CInt(((startIndex + endIndex) / 2))).Formula.Mass Then
+            If queryDB(CInt((startIndex))).Formula.ExactMass <= targetMass AndAlso targetMass < queryDB(CInt(((startIndex + endIndex) / 2))).Formula.ExactMass Then
                 endIndex = (startIndex + endIndex) / 2
-            ElseIf queryDB(CInt(((startIndex + endIndex) / 2))).Formula.Mass <= targetMass AndAlso targetMass < queryDB(CInt((endIndex))).Formula.Mass Then
+            ElseIf queryDB(CInt(((startIndex + endIndex) / 2))).Formula.ExactMass <= targetMass AndAlso targetMass < queryDB(CInt((endIndex))).Formula.ExactMass Then
                 startIndex = (startIndex + endIndex) / 2
             End If
             counter += 1
@@ -580,11 +594,11 @@ Public Class FormulaGenerator
         Return startIndex
     End Function
 
-    Private Sub setFragmentProperties(ByVal formulaResult As FormulaResult, ByVal refinedPeaklist As System.Collections.Generic.List(Of SpectrumPeak), ByVal neutralLosslist As System.Collections.Generic.List(Of NeutralLoss), ByVal productIonDB As System.Collections.Generic.List(Of ProductIon), ByVal neutralLossDB As System.Collections.Generic.List(Of NeutralLoss), ByVal ms2Tol As Double, ByVal massTolType As MassToleranceType, ByVal adductIon As AdductIon)
+    Private Sub setFragmentProperties(ByVal formulaResult As FormulaResult, ByVal refinedPeaklist As List(Of SpectrumPeak), ByVal neutralLosslist As List(Of NeutralLoss), ByVal productIonDB As List(Of ProductIon), ByVal neutralLossDB As List(Of NeutralLoss), ByVal ms2Tol As Double, ByVal massTolType As MassToleranceType, ByVal adductIon As AdductIon)
         If refinedPeaklist Is Nothing OrElse neutralLosslist Is Nothing Then Return
 
-        formulaResult.ProductIonResult = CompMs.Common.FormulaGenerator.[Function].FragmentAssigner.FastFragmnetAssigner(refinedPeaklist, productIonDB, formulaResult.Formula, ms2Tol, massTolType, adductIon)
-        formulaResult.NeutralLossResult = CompMs.Common.FormulaGenerator.[Function].FragmentAssigner.FastNeutralLossAssigner(neutralLosslist, neutralLossDB, formulaResult.Formula, ms2Tol, massTolType, adductIon)
+        formulaResult.ProductIonResult = FragmentAssigner.FastFragmnetAssigner(refinedPeaklist, productIonDB, formulaResult.Formula, ms2Tol, massTolType, adductIon)
+        formulaResult.NeutralLossResult = FragmentAssigner.FastNeutralLossAssigner(neutralLosslist, neutralLossDB, formulaResult.Formula, ms2Tol, massTolType, adductIon)
 
         formulaResult.ProductIonNum = formulaResult.ProductIonResult.Count
         formulaResult.ProductIonHits = formulaResult.ProductIonResult.Where(Function(n) n.CandidateOntologies.Count > 0).Count
@@ -592,12 +606,12 @@ Public Class FormulaGenerator
         formulaResult.NeutralLossHits = Me.getUniqueNeutralLossCount(formulaResult.NeutralLossResult)
         formulaResult.NeutralLossNum = Me.getUniqueNeutralLossCountByMass(neutralLosslist, ms2Tol, massTolType)
 
-        formulaResult.ProductIonScore = System.Math.Round(CompMs.Common.FormulaGenerator.[Function].Scoring.FragmentHitsScore(refinedPeaklist, formulaResult.ProductIonResult, ms2Tol, massTolType), 3)
-        formulaResult.NeutralLossScore = System.Math.Round(CompMs.Common.FormulaGenerator.[Function].Scoring.NeutralLossScore(formulaResult.NeutralLossHits, formulaResult.NeutralLossNum), 3)
+        formulaResult.ProductIonScore = System.Math.Round(Scoring.FragmentHitsScore(refinedPeaklist, formulaResult.ProductIonResult, ms2Tol, massTolType), 3)
+        formulaResult.NeutralLossScore = System.Math.Round(Scoring.NeutralLossScore(formulaResult.NeutralLossHits, formulaResult.NeutralLossNum), 3)
     End Sub
 
 
-    Private Function getUniqueNeutralLossCount(ByVal neutralLosses As System.Collections.Generic.List(Of NeutralLoss)) As Integer
+    Private Function getUniqueNeutralLossCount(ByVal neutralLosses As List(Of NeutralLoss)) As Integer
 
         If neutralLosses.Count = 0 Then Return 0
 
@@ -640,7 +654,7 @@ Public Class FormulaGenerator
             If massTolType = MassToleranceType.Ppm Then massTol = PPMmethod.ConvertPpmToMassAccuracy(neutralLosses(CInt((i))).PrecursorMz, ms2Tol)
             Dim flg = False
             For Each mass In masses
-                If System.std.Abs(mass - lossMass) < massTol Then
+                If std.Abs(mass - lossMass) < massTol Then
                     flg = True
                     Exit For
                 End If
@@ -741,7 +755,7 @@ Public Class FormulaGenerator
     '    return formulaCandidate;
     '}
 
-    Private Function getFormulaSearchResults(ByVal formulaBean As Formula, ByVal param As AnalysisParamOfMsfinder, ByVal mass As Double, ByVal ms1Tol As Double, ByVal m1Intensity As Double, ByVal m2Intensity As Double, ByVal adduct As AdductIon, ByVal isotopeCheck As Boolean, ByVal maxFormulaNum As Integer, ByVal existFormulaDB As System.Collections.Generic.List(Of ExistFormulaQuery), ByVal refinedPeaklist As System.Collections.Generic.List(Of SpectrumPeak), ByVal neutralLosses As System.Collections.Generic.List(Of NeutralLoss), ByVal productIonDB As System.Collections.Generic.List(Of ProductIon), ByVal neutralLossDB As System.Collections.Generic.List(Of NeutralLoss)) As System.Collections.Generic.List(Of FormulaResult)
+    Private Function getFormulaSearchResults(ByVal formulaBean As Formula, ByVal param As AnalysisParamOfMsfinder, ByVal mass As Double, ByVal ms1Tol As Double, ByVal m1Intensity As Double, ByVal m2Intensity As Double, ByVal adduct As AdductIon, ByVal isotopeCheck As Boolean, ByVal maxFormulaNum As Integer, ByVal existFormulaDB As List(Of ExistFormulaQuery), ByVal refinedPeaklist As List(Of SpectrumPeak), ByVal neutralLosses As List(Of NeutralLoss), ByVal productIonDB As List(Of ProductIon), ByVal neutralLossDB As List(Of NeutralLoss)) As List(Of FormulaResult)
 
         If param.IsTmsMeoxDerivative AndAlso formulaBean!N < param.MinimumMeoxCount Then Return New System.Collections.Generic.List(Of FormulaResult)()
 
@@ -770,40 +784,40 @@ Public Class FormulaGenerator
 
 #Region ""
         For h As Integer = 0 To maxInum
-            If formulaBean.Mass + CDbl(h) * iMass + maxBrClSiFHmass < mass - ms1Tol Then Continue For
-            If formulaBean.Mass + CDbl(h) * iMass > mass + ms1Tol Then Exit For
+            If formulaBean.ExactMass + CDbl(h) * iMass + maxBrClSiFHmass < mass - ms1Tol Then Continue For
+            If formulaBean.ExactMass + CDbl(h) * iMass > mass + ms1Tol Then Exit For
 
             For i As Integer = 0 To maxBrnum
-                If formulaBean.Mass + CDbl(h) * iMass + CDbl(i) * brMass + maxClSiFHmass < mass - ms1Tol Then Continue For
-                If formulaBean.Mass + CDbl(h) * iMass + CDbl(i) * brMass > mass + ms1Tol Then Exit For
+                If formulaBean.ExactMass + CDbl(h) * iMass + CDbl(i) * brMass + maxClSiFHmass < mass - ms1Tol Then Continue For
+                If formulaBean.ExactMass + CDbl(h) * iMass + CDbl(i) * brMass > mass + ms1Tol Then Exit For
 
                 For j As Integer = 0 To maxClnum
-                    If formulaBean.Mass + CDbl(h) * iMass + CDbl(i) * brMass + CDbl(j) * clMass + maxSiFHmass < mass - ms1Tol Then Continue For
-                    If formulaBean.Mass + CDbl(h) * iMass + CDbl(i) * brMass + CDbl(j) * clMass > mass + ms1Tol Then Exit For
+                    If formulaBean.ExactMass + CDbl(h) * iMass + CDbl(i) * brMass + CDbl(j) * clMass + maxSiFHmass < mass - ms1Tol Then Continue For
+                    If formulaBean.ExactMass + CDbl(h) * iMass + CDbl(i) * brMass + CDbl(j) * clMass > mass + ms1Tol Then Exit For
 
                     For k As Integer = 0 To maxSinum
                         If param.IsTmsMeoxDerivative AndAlso k < param.MinimumTmsCount Then Continue For
-                        If formulaBean.Mass + CDbl(h) * iMass + CDbl(i) * brMass + CDbl(j) * clMass + CDbl(k) * siMass + maxFHmass < mass - ms1Tol Then Continue For
-                        If formulaBean.Mass + CDbl(h) * iMass + CDbl(i) * brMass + CDbl(j) * clMass + CDbl(k) * siMass > mass + ms1Tol Then Exit For
+                        If formulaBean.ExactMass + CDbl(h) * iMass + CDbl(i) * brMass + CDbl(j) * clMass + CDbl(k) * siMass + maxFHmass < mass - ms1Tol Then Continue For
+                        If formulaBean.ExactMass + CDbl(h) * iMass + CDbl(i) * brMass + CDbl(j) * clMass + CDbl(k) * siMass > mass + ms1Tol Then Exit For
 
                         For l As Integer = 0 To maxFnum
-                            If formulaBean.Mass + CDbl(h) * iMass + CDbl(i) * brMass + CDbl(j) * clMass + CDbl(k) * siMass + CDbl(l) * fMass + maxHmass < mass - ms1Tol Then Continue For
-                            If formulaBean.Mass + CDbl(h) * iMass + CDbl(i) * brMass + CDbl(j) * clMass + CDbl(k) * siMass + CDbl(l) * fMass > mass + ms1Tol Then Exit For
+                            If formulaBean.ExactMass + CDbl(h) * iMass + CDbl(i) * brMass + CDbl(j) * clMass + CDbl(k) * siMass + CDbl(l) * fMass + maxHmass < mass - ms1Tol Then Continue For
+                            If formulaBean.ExactMass + CDbl(h) * iMass + CDbl(i) * brMass + CDbl(j) * clMass + CDbl(k) * siMass + CDbl(l) * fMass > mass + ms1Tol Then Exit For
 
                             For m As Integer = minHnum To maxHnum
-                                If formulaBean.Mass + CDbl(h) * iMass + CDbl(i) * brMass + CDbl(j) * clMass + CDbl(k) * siMass + CDbl(l) * fMass + CDbl(m) * hMass < mass - ms1Tol Then Continue For
-                                If formulaBean.Mass + CDbl(h) * iMass + CDbl(i) * brMass + CDbl(j) * clMass + CDbl(k) * siMass + CDbl(l) * fMass + CDbl(m) * hMass > mass + ms1Tol Then Exit For
+                                If formulaBean.ExactMass + CDbl(h) * iMass + CDbl(i) * brMass + CDbl(j) * clMass + CDbl(k) * siMass + CDbl(l) * fMass + CDbl(m) * hMass < mass - ms1Tol Then Continue For
+                                If formulaBean.ExactMass + CDbl(h) * iMass + CDbl(i) * brMass + CDbl(j) * clMass + CDbl(k) * siMass + CDbl(l) * fMass + CDbl(m) * hMass > mass + ms1Tol Then Exit For
 
                                 If param.IsTmsMeoxDerivative Then
 
                                     Dim tmsCount = k
-                                    For n As Integer = param.MinimumMeoxCount To formulaBean.Nnum
+                                    For n As Integer = param.MinimumMeoxCount To formulaBean!N
                                         Dim meoxCount = n
                                         Dim formula = Me.getCandidateFormulaBean(formulaBean, m, l, j, i, h, k, tmsCount, meoxCount)
 
-                                        If formula.Cnum - tmsCount * 3 - meoxCount <= 0 Then Continue For
-                                        Dim convertedFormula = CompMs.Common.FormulaGenerator.[Function].MolecularFormulaUtility.ConvertTmsMeoxSubtractedFormula(formula)
-                                        If Not CompMs.Common.FormulaGenerator.[Function].SevenGoldenRulesCheck.Check(convertedFormula, Me.valenceCheck, Me.coverRange, Me.probabilityCheck, adduct) Then Continue For
+                                        If formula!C - tmsCount * 3 - meoxCount <= 0 Then Continue For
+                                        Dim convertedFormula = FormulaCalculateUtility.ConvertTmsMeoxSubtractedFormula(formula)
+                                        If Not SevenGoldenRulesCheck.Check(convertedFormula, Me.valenceCheck, Me.coverRange, Me.probabilityCheck, adduct) Then Continue For
 
                                         Dim formulaResult = Me.tryGetFormulaResultCandidate(formula, param, mass, ms1Tol, m1Intensity, m2Intensity, isotopeCheck, adduct, refinedPeaklist, neutralLosses, existFormulaDB, productIonDB, neutralLossDB)
                                         If formulaResult IsNot Nothing Then formulaCandidates = Me.getFormulaResultCandidates(formulaCandidates, formulaResult, 100000000)
@@ -823,7 +837,7 @@ Public Class FormulaGenerator
         Return formulaCandidates
     End Function
 
-    Private Function tryGetFormulaResultCandidate(ByVal formula As Formula, ByVal param As AnalysisParamOfMsfinder, ByVal mass As Double, ByVal ms1Tol As Double, ByVal m1Intensity As Double, ByVal m2Intensity As Double, ByVal isotopeCheck As Boolean, ByVal adduct As AdductIon, ByVal refinedPeaklist As System.Collections.Generic.List(Of SpectrumPeak), ByVal neutralLosses As System.Collections.Generic.List(Of NeutralLoss), ByVal existFormulaDB As System.Collections.Generic.List(Of ExistFormulaQuery), ByVal productIonDB As System.Collections.Generic.List(Of ProductIon), ByVal neutralLossDB As System.Collections.Generic.List(Of NeutralLoss)) As FormulaResult
+    Private Function tryGetFormulaResultCandidate(ByVal formula As Formula, ByVal param As AnalysisParamOfMsfinder, ByVal mass As Double, ByVal ms1Tol As Double, ByVal m1Intensity As Double, ByVal m2Intensity As Double, ByVal isotopeCheck As Boolean, ByVal adduct As AdductIon, ByVal refinedPeaklist As List(Of SpectrumPeak), ByVal neutralLosses As List(Of NeutralLoss), ByVal existFormulaDB As List(Of ExistFormulaQuery), ByVal productIonDB As List(Of ProductIon), ByVal neutralLossDB As List(Of NeutralLoss)) As FormulaResult
 
         Dim ms2Tol = param.Mass2Tolerance
         Dim massTolType = param.MassTolType
@@ -834,14 +848,14 @@ Public Class FormulaGenerator
             If param.CanExcuteMS2AdductSearch Then
                 Dim precursorMz = (mass * CDbl(adduct.AdductIonXmer) + adduct.AdductIonAccurateMass) / CDbl(adduct.ChargeNumber)
                 If adduct.IonMode = IonModes.Positive Then
-                    formulaResult.AnnotatedIonResult = CompMs.Common.FormulaGenerator.[Function].FragmentAssigner.GetAnnotatedIon(refinedPeaklist, adduct, param.MS2PositiveAdductIonList, precursorMz, param.Mass2Tolerance, param.MassTolType)
+                    formulaResult.AnnotatedIonResult = FragmentAssigner.GetAnnotatedIon(refinedPeaklist, adduct, param.MS2PositiveAdductIonList, precursorMz, param.Mass2Tolerance, param.MassTolType)
                 Else
-                    formulaResult.AnnotatedIonResult = CompMs.Common.FormulaGenerator.[Function].FragmentAssigner.GetAnnotatedIon(refinedPeaklist, adduct, param.MS2NegativeAdductIonList, precursorMz, param.Mass2Tolerance, param.MassTolType)
+                    formulaResult.AnnotatedIonResult = FragmentAssigner.GetAnnotatedIon(refinedPeaklist, adduct, param.MS2NegativeAdductIonList, precursorMz, param.Mass2Tolerance, param.MassTolType)
                 End If
-                refinedPeaklist = CompMs.Common.FormulaGenerator.[Function].FragmentAssigner.GetRefinedPeaklist(refinedPeaklist, precursorMz)
+                refinedPeaklist = FragmentAssigner.GetRefinedPeaklist(refinedPeaklist, precursorMz)
             End If
             Me.setFragmentProperties(formulaResult, refinedPeaklist, neutralLosses, productIonDB, neutralLossDB, ms2Tol, massTolType, adduct)
-            formulaResult.TotalScore = System.Math.Round(CompMs.Common.FormulaGenerator.[Function].Scoring.TotalScore(formulaResult), 3)
+            formulaResult.TotalScore = System.Math.Round(Scoring.TotalScore(formulaResult), 3)
             Return formulaResult
         Else
             Return Nothing
@@ -877,7 +891,7 @@ Public Class FormulaGenerator
             formulaCandidate.Add(formulaResult)
         ElseIf formulaCandidate.Count = maxFormulaNum - 1 Then
             formulaCandidate.Add(formulaResult)
-            formulaCandidate = formulaCandidate.OrderByDescending(Function(n) System.std.Abs(n.TotalScore)).ToList()
+            formulaCandidate = formulaCandidate.OrderByDescending(Function(n) std.Abs(n.TotalScore)).ToList()
         ElseIf formulaCandidate.Count > maxFormulaNum - 1 Then
             If formulaCandidate(CInt((formulaCandidate.Count - 1))).TotalScore < formulaResult.TotalScore Then
                 Dim startID = Me.getFormulaResultStartIndex(formulaResult.TotalScore, 0.01, formulaCandidate)
@@ -907,7 +921,7 @@ Public Class FormulaGenerator
         Return startIndex
     End Function
 
-    Private Function getFormulaResultInsertID(ByVal formulaCandidate As System.Collections.Generic.List(Of FormulaResult), ByVal formulaResult As FormulaResult, ByVal startID As Integer) As Integer
+    Private Function getFormulaResultInsertID(ByVal formulaCandidate As List(Of FormulaResult), ByVal formulaResult As FormulaResult, ByVal startID As Integer) As Integer
         Dim maxID = 0
         For i As Integer = startID To 0 Step -1
             If formulaCandidate(CInt((i))).TotalScore < formulaResult.TotalScore Then
@@ -919,7 +933,7 @@ Public Class FormulaGenerator
         Return maxID
     End Function
 
-    Private Function getFormulaResult(ByVal formula As Formula, ByVal param As AnalysisParamOfMsfinder, ByVal mass As Double, ByVal ms1MassTol As Double, ByVal m1Intensity As Double, ByVal m2Intensity As Double, ByVal isotopeCheck As Boolean, ByVal existFormulaDB As System.Collections.Generic.List(Of ExistFormulaQuery)) As FormulaResult
+    Private Function getFormulaResult(ByVal formula As Formula, ByVal param As AnalysisParamOfMsfinder, ByVal mass As Double, ByVal ms1MassTol As Double, ByVal m1Intensity As Double, ByVal m2Intensity As Double, ByVal isotopeCheck As Boolean, ByVal existFormulaDB As List(Of ExistFormulaQuery)) As FormulaResult
         Dim isotopicAbundanceTolerance = param.IsotopicAbundanceTolerance
         Dim formulaResult = New FormulaResult()
 
@@ -931,10 +945,10 @@ Public Class FormulaGenerator
         formulaResult.M1IsotopicDiff = System.Math.Round(SevenGoldenRulesCheck.GetIsotopicDifference(formulaResult.M1IsotopicIntensity, m1Intensity), 4)
         formulaResult.M2IsotopicDiff = System.Math.Round(SevenGoldenRulesCheck.GetIsotopicDifference(formulaResult.M2IsotopicIntensity, m2Intensity), 4)
 
-        formulaResult.MassDiffScore = System.Math.Round(CompMs.Common.FormulaGenerator.[Function].Scoring.MassDifferenceScore(formulaResult.MassDiff, ms1MassTol), 3)
+        formulaResult.MassDiffScore = System.Math.Round(Scoring.MassDifferenceScore(formulaResult.MassDiff, ms1MassTol), 3)
 
         If isotopeCheck = True Then
-            formulaResult.IsotopicScore = System.Math.Round(CompMs.Common.FormulaGenerator.[Function].Scoring.IsotopicDifferenceScore(formulaResult.M1IsotopicDiff, formulaResult.M2IsotopicDiff, isotopicAbundanceTolerance * 0.01), 3)
+            formulaResult.IsotopicScore = System.Math.Round(Scoring.IsotopicDifferenceScore(formulaResult.M1IsotopicDiff, formulaResult.M2IsotopicDiff, isotopicAbundanceTolerance * 0.01), 3)
         Else
             formulaResult.IsotopicScore = 1
         End If

@@ -280,6 +280,16 @@ Namespace Formula
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Operator -(f As Formula, fs As String) As Formula
+            Return f - FormulaScanner.ScanFormula(fs)
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Operator +(f As Formula, fs As String) As Formula
+            Return f + FormulaScanner.ScanFormula(fs)
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator +(mass As Double, f As Formula) As Double
             Return mass + f.ExactMass
         End Operator
