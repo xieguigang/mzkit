@@ -95,7 +95,7 @@ Namespace Ms1.PrecursorType
         ''' </summary>
         Public Property adducts As Double
         ''' <summary>
-        ''' +/-
+        ''' only one of the char +/-
         ''' </summary>
         ''' <returns></returns>
         Public Property mode As Char
@@ -146,7 +146,7 @@ Namespace Ms1.PrecursorType
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function CalcMZ(mass#) As Double
-            Return (AdductMZ(mass * M, adducts, charge))
+            Return AdductMZ(mass, adducts, charge, IonMode:=If(mode = "+"c, IonModes.Positive, IonModes.Negative), M:=M)
         End Function
 
         <DebuggerStepThrough>
@@ -169,14 +169,28 @@ Namespace Ms1.PrecursorType
         ''' <summary>
         ''' 返回加和物的m/z数据
         ''' </summary>
-        ''' <param name="mass#"></param>
-        ''' <param name="adduct#"></param>
-        ''' <param name="charge%"></param>
+        ''' <param name="exactMass">the exact mass of the metabolite</param>
+        ''' <param name="AdductIonAccurateMass">the exact mass of the adduct ion</param>
+        ''' <param name="chargeNumber">the charge value of the adduct ion</param>
+        ''' <param name="M">
+        ''' Adduct Ion Xmer
+        ''' </param>
         ''' <returns></returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Function AdductMZ(mass#, adduct#, charge%) As Double
-            Return (mass / stdNum.Abs(charge) + adduct)
+        Public Shared Function AdductMZ(exactMass#, AdductIonAccurateMass#, chargeNumber%,
+                                        IonMode As IonModes,
+                                        Optional M As Integer = 1) As Double
+
+            Dim precursorMz = (exactMass * M + AdductIonAccurateMass) / chargeNumber
+
+            If IonMode = IonModes.Positive Then
+                precursorMz -= 0.0005485799 * chargeNumber
+            Else
+                precursorMz += 0.0005485799 * chargeNumber
+            End If
+
+            Return precursorMz
         End Function
 
         ''' <summary>
