@@ -7,13 +7,13 @@ Public NotInheritable Class LipidMassLibraryGenerator
     Private Sub New()
     End Sub
 
-    Public Shared Function Run(lipidclass As LbmClass,
-                               adduct As AdductIon,
-                               minCarbonCount As Integer,
-                               maxCarbonCount As Integer,
-                               minDoubleBond As Integer,
-                               maxDoubleBond As Integer,
-                               maxOxygen As Integer) As IEnumerable(Of LipidIon)
+    Public Shared Function GetIons(lipidclass As LbmClass,
+                                   adduct As AdductIon,
+                                   minCarbonCount As Integer,
+                                   maxCarbonCount As Integer,
+                                   minDoubleBond As Integer,
+                                   maxDoubleBond As Integer,
+                                   maxOxygen As Integer) As IEnumerable(Of LipidIon)
 
         Select Case lipidclass
             Case LbmClass.PC

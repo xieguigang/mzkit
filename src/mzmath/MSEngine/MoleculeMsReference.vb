@@ -20,8 +20,8 @@ Public Interface IMoleculeMsProperty
     Inherits IMSScanProperty, IMoleculeProperty, IMSIonProperty ' especially used for library record
 End Interface
 
-Public Class MoleculeMsReference
-    Implements IMoleculeMsProperty
+Public Class MoleculeMsReference : Implements IMoleculeMsProperty
+
     Public Sub New()
         ChromXs = New ChromXs()
         Spectrum = New List(Of SpectrumPeak)()
