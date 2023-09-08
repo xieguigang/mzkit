@@ -64,14 +64,18 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.SplashID
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv
+Imports Microsoft.VisualBasic.Emit.Delegates
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports SMRUCC.Rsharp
+Imports SMRUCC.Rsharp.Interpreter
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
@@ -167,6 +171,83 @@ Module data
             Return ""
         Else
             Return $"{i.mz.ToString("F4")}:{i.intensity.ToString("G3")}"
+        End If
+    End Function
+
+    ''' <summary>
+    ''' evaluate the splash id of the given spectrum data
+    ''' </summary>
+    ''' <param name="spec"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' The SPLASH is an unambiguous, database-independent spectral identifier, 
+    ''' just as the InChIKey is designed to serve as a unique identifier for 
+    ''' chemical structures. It contains separate blocks that define different 
+    ''' layers of information, separated by dashes. For example, the full SPLASH 
+    ''' of a caffeine mass spectrum above is splash10-0002-0900000000-b112e4e059e1ecf98c5f.
+    ''' The first block is the SPLASH identifier, the second and third are 
+    ''' summary blocks, and the fourth is the unique hash block.
+    ''' 
+    ''' The SPLASH began As the MoNA (Massbank Of North America) hash, designed To 
+    ''' identify duplicate spectra within the database. This idea developed further 
+    ''' during the 2015 Metabolomics conference, where the SPLASH collaboration 
+    ''' was formed. Currently, the specification has been formalized For mass 
+    ''' spectrometry data. Additional specifications For IR, UV And NMR spectrometry
+    ''' are planned.
+    ''' </remarks>
+    <ExportAPI("splash_id")>
+    Public Function splashId(<RRawVectorArgument>
+                             spec As Object,
+                             Optional type As SpectrumType = SpectrumType.MS,
+                             Optional env As Environment = Nothing) As Object
+
+        Dim hash As New Splash(SpectrumType.MS)
+
+        If TypeOf spec Is vector Then
+            spec = DirectCast(spec, vector).data
+        End If
+
+        If TypeOf spec Is list Then
+            Dim id As New list With {.slots = New Dictionary(Of String, Object)}
+
+            For Each spec_item In DirectCast(spec, list).slots
+                Call id.add(spec_item.Key, splashId(spec_item.Value, hash, env))
+
+                If Program.isException(id(spec_item.Key)) Then
+                    Return id(spec_item.Key)
+                End If
+            Next
+
+            Return id
+        ElseIf spec.GetType.IsArray Then
+            Dim list As Array = spec
+            Dim id As String() = New String(list.Length - 1) {}
+
+            For i As Integer = 0 To id.Length - 1
+                id(i) = splashId(list.GetValue(i), hash, env)
+            Next
+
+            Return id
+        Else
+            Return splashId(spec, hash, env)
+        End If
+    End Function
+
+    ''' <summary>
+    ''' calculate the splash id of a single spectrum object
+    ''' </summary>
+    ''' <param name="spec"></param>
+    ''' <param name="hash"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    Private Function splashId(spec As Object, hash As Splash, env As Environment) As Object
+        If TypeOf spec Is LibraryMatrix Then
+            Return hash.CalcSplashID(DirectCast(spec, LibraryMatrix))
+        ElseIf TypeOf spec Is PeakMs2 Then
+            Return hash.CalcSplashID(DirectCast(spec, PeakMs2))
+        Else
+            Return Message.InCompatibleType(GetType(LibraryMatrix), spec.GetType, env)
         End If
     End Function
 
