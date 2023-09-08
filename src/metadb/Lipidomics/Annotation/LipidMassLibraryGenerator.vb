@@ -3,12 +3,12 @@ Imports System.Text
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
 Imports BioNovoGene.BioDeep.MSEngine
 
-
 Public NotInheritable Class LipidMassLibraryGenerator
+
     Private Sub New()
     End Sub
 
-    Public Shared Sub Run(outputfolder As String,
+    Public Shared Function Run(
                           lipidclass As LbmClass,
                           adduct As AdductIon,
                           minCarbonCount As Integer,
@@ -246,1107 +246,1149 @@ Public NotInheritable Class LipidMassLibraryGenerator
             Case LbmClass.AHexSTS
                 generateAhexstseSpecies(outputfolder, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
 
-
         End Select
-    End Sub
+    End Function
 
-
-    Private Shared Sub generatePsSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+    Private Shared Function generatePsSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "PS" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C6H12NO8P")
-        commonGlycerolipidsGenerator(filepath, "PS", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 2)
-    End Sub
+        Return commonGlycerolipidsGenerator("PS", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 2)
+    End Function
 
-    Private Shared Sub generatePeSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+    Private Shared Function generatePeSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "PE" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C5H12NO6P")
-        commonGlycerolipidsGenerator(filepath, "PE", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 2)
-    End Sub
+        commonGlycerolipidsGenerator("PE", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 2)
+    End Function
 
-    Private Shared Sub generatePcSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+    Private Shared Function generatePcSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "PC" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C8H18NO6P")
-        commonGlycerolipidsGenerator(filepath, "PC", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 2)
-    End Sub
+        commonGlycerolipidsGenerator("PC", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 2)
+    End Function
 
-    Private Shared Sub generatePiSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+    Private Shared Function generatePiSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "PI" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C9H17O11P")
-        commonGlycerolipidsGenerator(filepath, "PI", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 2)
-    End Sub
+        commonGlycerolipidsGenerator("PI", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 2)
+    End Function
 
-    Private Shared Sub generatePgSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+    Private Shared Function generatePgSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "PG" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C6H13O8P")
-        commonGlycerolipidsGenerator(filepath, "PG", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 2)
-    End Sub
+        commonGlycerolipidsGenerator("PG", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 2)
+    End Function
 
-    Private Shared Sub generateTagSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+    Private Shared Function generateTagSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "TAG" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C3H5O3")
-        commonGlycerolipidsGenerator(filepath, "TAG", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 3)
-    End Sub
+        commonGlycerolipidsGenerator("TAG", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 3)
+    End Function
 
 
-    Private Shared Sub generateLnapeSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+    Private Shared Function generateLnapeSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "LNAPE" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C5H12NO6P")
-        commonGlycerolipidsGenerator(filepath, "LNAPE", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 2)
-    End Sub
+        commonGlycerolipidsGenerator("LNAPE", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 2)
+    End Function
     'add
-    Private Shared Sub generateDagSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+    Private Shared Function generateDagSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "DAG" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C3H6O3")
-        commonGlycerolipidsGenerator(filepath, "DAG", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 2)
-    End Sub
-    Private Shared Sub generateMagSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+        commonGlycerolipidsGenerator("DAG", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 2)
+    End Function
+    Private Shared Function generateMagSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "MAG" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C3H7O3")
-        commonGlycerolipidsGenerator(filepath, "MAG", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1)
-    End Sub
-    Private Shared Sub generateFaSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+        commonGlycerolipidsGenerator("MAG", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1)
+    End Function
+    Private Shared Function generateFaSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "FA" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("HO")
-        commonGlycerolipidsGenerator(filepath, "FA", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1)
-    End Sub
-    Private Shared Sub generateFahfaSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+        commonGlycerolipidsGenerator("FA", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1)
+    End Function
+    Private Shared Function generateFahfaSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "FAHFA" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("HO")
-        fahfaGenerator(filepath, "FAHFA", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
-    End Sub
+        fahfaGenerator("FAHFA", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+    End Function
 
-    Private Shared Sub generateLpcSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+    Private Shared Function generateLpcSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "LPC" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C8H19NO6P")
-        commonGlycerolipidsGenerator(filepath, "LPC", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1)
-    End Sub
-    Private Shared Sub generateLpeSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+        commonGlycerolipidsGenerator("LPC", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1)
+    End Function
+    Private Shared Function generateLpeSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "LPE" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C5H13NO6P")
-        commonGlycerolipidsGenerator(filepath, "LPE", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1)
-    End Sub
-    Private Shared Sub generateLpgSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+        commonGlycerolipidsGenerator("LPE", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1)
+    End Function
+    Private Shared Function generateLpgSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "LPG" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C6H14O8P")
-        commonGlycerolipidsGenerator(filepath, "LPG", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1)
-    End Sub
-    Private Shared Sub generateLpiSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+        commonGlycerolipidsGenerator("LPG", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1)
+    End Function
+    Private Shared Function generateLpiSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "LPI" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C9H18O11P")
-        commonGlycerolipidsGenerator(filepath, "LPI", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1)
-    End Sub
-    Private Shared Sub generateLpsSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+        commonGlycerolipidsGenerator("LPI", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1)
+    End Function
+    Private Shared Function generateLpsSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "LPS" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C6H13NO8P")
-        commonGlycerolipidsGenerator(filepath, "LPS", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1)
-    End Sub
-    Private Shared Sub generateLpaSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+        commonGlycerolipidsGenerator("LPS", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1)
+    End Function
+    Private Shared Function generateLpaSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "LPA" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C3H8O6P")
-        commonGlycerolipidsGenerator(filepath, "LPA", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1)
-    End Sub
-    Private Shared Sub generatePaSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+        commonGlycerolipidsGenerator("LPA", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1)
+    End Function
+    Private Shared Function generatePaSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "PA" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C3H7O6P")
-        commonGlycerolipidsGenerator(filepath, "PA", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 2)
-    End Sub
-    Private Shared Sub generateMgdgSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+        commonGlycerolipidsGenerator("PA", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 2)
+    End Function
+    Private Shared Function generateMgdgSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "MGDG" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C9H16O8")
-        commonGlycerolipidsGenerator(filepath, "MGDG", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 2)
-    End Sub
-    Private Shared Sub generateSqdgSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+        commonGlycerolipidsGenerator("MGDG", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 2)
+    End Function
+    Private Shared Function generateSqdgSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "SQDG" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C9H16O10S")
-        commonGlycerolipidsGenerator(filepath, "SQDG", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 2)
-    End Sub
-    Private Shared Sub generateDgdgSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+        commonGlycerolipidsGenerator("SQDG", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 2)
+    End Function
+    Private Shared Function generateDgdgSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "DGDG" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C15H26O13")
-        commonGlycerolipidsGenerator(filepath, "DGDG", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 2)
-    End Sub
-    Private Shared Sub generateDgtsSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+        commonGlycerolipidsGenerator("DGDG", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 2)
+    End Function
+    Private Shared Function generateDgtsSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "DGTS" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C10H19NO5")
-        commonGlycerolipidsGenerator(filepath, "DGTS", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 2)
-    End Sub
-    Private Shared Sub generateLdgtsSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+        commonGlycerolipidsGenerator("DGTS", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 2)
+    End Function
+    Private Shared Function generateLdgtsSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "LDGTS" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C10H20NO5")
-        commonGlycerolipidsGenerator(filepath, "LDGTS", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1)
-    End Sub
-    Private Shared Sub generateHbmpSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+        commonGlycerolipidsGenerator("LDGTS", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1)
+    End Function
+    Private Shared Function generateHbmpSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "HBMP" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C6H12O8P")
-        commonGlycerolipidsGenerator(filepath, "HBMP", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 3)
-    End Sub
-    Private Shared Sub generateBmpSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+        commonGlycerolipidsGenerator("HBMP", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 3)
+    End Function
+    Private Shared Function generateBmpSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "BMP" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C6H13O8P")
-        commonGlycerolipidsGenerator(filepath, "BMP", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 2)
-    End Sub
-    Private Shared Sub generateAcarSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+        commonGlycerolipidsGenerator("BMP", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 2)
+    End Function
+    Private Shared Function generateAcarSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "ACar" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C7H15O3N")
-        commonGlycerolipidsGenerator(filepath, "ACar", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1)
-    End Sub
-    Private Shared Sub generateGlcadgSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+        commonGlycerolipidsGenerator("ACar", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1)
+    End Function
+    Private Shared Function generateGlcadgSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "GlcADG" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C9H14O9")
-        commonGlycerolipidsGenerator(filepath, "GlcADG", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 2)
-    End Sub
-    Private Shared Sub generateAcylglcadgSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+        commonGlycerolipidsGenerator("GlcADG", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 2)
+    End Function
+    Private Shared Function generateAcylglcadgSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "AcylGlcADG" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C9H13O9")
-        commonGlycerolipidsGenerator(filepath, "AcylGlcADG", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 3)
-    End Sub
-    Private Shared Sub generateClSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+        commonGlycerolipidsGenerator("AcylGlcADG", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 3)
+    End Function
+    Private Shared Function generateClSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "CL" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C9H18O13P2")
-        commonGlycerolipidsGenerator(filepath, "CL", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 4)
-    End Sub
-    Private Shared Sub generateCeSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+        commonGlycerolipidsGenerator("CL", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 4)
+    End Function
+    Private Shared Function generateCeSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "CE" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C27H45O")
-        commonGlycerolipidsGenerator(filepath, "CE", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1)
-    End Sub
+        commonGlycerolipidsGenerator("CE", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1)
+    End Function
 
-    Private Shared Sub generateEtherpeSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+    Private Shared Function generateEtherpeSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "EtherPE" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C5H12NO6P")
-        commonGlycerolipidsEtherGenerator(filepath, "EtherPE", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 2, 1)
-    End Sub
+        commonGlycerolipidsEtherGenerator("EtherPE", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 2, 1)
+    End Function
 
-    Private Shared Sub generateEtherpcSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+    Private Shared Function generateEtherpcSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "EtherPC" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C8H18NO6P")
-        commonGlycerolipidsEtherGenerator(filepath, "EtherPC", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 2, 1)
-    End Sub
+        commonGlycerolipidsEtherGenerator("EtherPC", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 2, 1)
+    End Function
     ' ceramide
-    Private Shared Sub generateSmSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+    Private Shared Function generateSmSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "SM" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C5H13NO3P")
         Dim sphingoHydroxyCount = 2
         Dim acylHydroxyCount = 0
-        commonCeramideGenerator(filepath, "SM", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
-    End Sub
+        commonCeramideGenerator("SM", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
+    End Function
     'add MT
-    Private Shared Sub generateCerapSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+    Private Shared Function generateCerapSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "Cer_AP" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("H")
         Dim sphingoHydroxyCount = 3
         Dim acylHydroxyCount = 1
-        commonCeramideGenerator(filepath, "Cer_AP", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
-    End Sub
-    Private Shared Sub generateCeradsSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+        commonCeramideGenerator("Cer_AP", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
+    End Function
+    Private Shared Function generateCeradsSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "Cer_ADS" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("H")
         Dim sphingoHydroxyCount = 2
         Dim acylHydroxyCount = 1
-        commonCeramideGenerator(filepath, "Cer_ADS", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
-    End Sub
-    Private Shared Sub generateCerasSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+        commonCeramideGenerator("Cer_ADS", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
+    End Function
+    Private Shared Function generateCerasSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "Cer_AS" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("H")
         Dim sphingoHydroxyCount = 2
         Dim acylHydroxyCount = 1
-        commonCeramideGenerator(filepath, "Cer_AS", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
-    End Sub
-    Private Shared Sub generateCernpSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+        commonCeramideGenerator("Cer_AS", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
+    End Function
+    Private Shared Function generateCernpSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "Cer_NP" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("H")
         Dim sphingoHydroxyCount = 3
         Dim acylHydroxyCount = 0
-        commonCeramideGenerator(filepath, "Cer_NP", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
-    End Sub
-    Private Shared Sub generateCerndsSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+        commonCeramideGenerator("Cer_NP", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
+    End Function
+    Private Shared Function generateCerndsSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "Cer_NDS" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("H")
         Dim sphingoHydroxyCount = 2
         Dim acylHydroxyCount = 0
-        commonCeramideGenerator(filepath, "Cer_NDS", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
-    End Sub
-    Private Shared Sub generateCernsSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+        commonCeramideGenerator("Cer_NDS", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
+    End Function
+    Private Shared Function generateCernsSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "Cer_NS" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("H")
         Dim sphingoHydroxyCount = 2
         Dim acylHydroxyCount = 0
-        commonCeramideGenerator(filepath, "Cer_NS", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
-    End Sub
-    Private Shared Sub generateCerbdsSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+        commonCeramideGenerator("Cer_NS", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
+    End Function
+    Private Shared Function generateCerbdsSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "Cer_BDS" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("H")
         Dim sphingoHydroxyCount = 2
         Dim acylHydroxyCount = 1
-        commonCeramideGenerator(filepath, "Cer_BDS", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
-    End Sub
-    Private Shared Sub generateCerbsSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+        commonCeramideGenerator("Cer_BDS", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
+    End Function
+    Private Shared Function generateCerbsSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "Cer_BS" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("H")
         Dim sphingoHydroxyCount = 2
         Dim acylHydroxyCount = 1
-        commonCeramideGenerator(filepath, "Cer_BS", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
-    End Sub
-    Private Shared Sub generateHexcerapSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+        commonCeramideGenerator("Cer_BS", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
+    End Function
+    Private Shared Function generateHexcerapSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "HexCer_AP" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C6H11O5")
         Dim sphingoHydroxyCount = 3
         Dim acylHydroxyCount = 1
-        commonCeramideGenerator(filepath, "HexCer_AP", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
-    End Sub
-    Private Shared Sub generateHexcerndsSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+        commonCeramideGenerator("HexCer_AP", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
+    End Function
+    Private Shared Function generateHexcerndsSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "HexCer_NDS" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C6H11O5")
         Dim sphingoHydroxyCount = 2
         Dim acylHydroxyCount = 0
-        commonCeramideGenerator(filepath, "HexCer_NDS", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
-    End Sub
-    Private Shared Sub generateHexcernsSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+        commonCeramideGenerator("HexCer_NDS", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
+    End Function
+    Private Shared Function generateHexcernsSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "HexCer_NS" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C6H11O5")
         Dim sphingoHydroxyCount = 2
         Dim acylHydroxyCount = 0
-        commonCeramideGenerator(filepath, "HexCer_NS", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
-    End Sub
-    Private Shared Sub generateCereodsSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+        commonCeramideGenerator("HexCer_NS", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
+    End Function
+    Private Shared Function generateCereodsSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "Cer_EODS" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("H")
         Dim sphingoHydroxyCount = 2
         Dim acylHydroxyCount = 1
-        commonCeramideEsterGenerator(filepath, "Cer_EODS", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
-    End Sub
-    Private Shared Sub generateCereosSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+        commonCeramideEsterGenerator("Cer_EODS", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
+    End Function
+    Private Shared Function generateCereosSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "Cer_EOS" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("H")
         Dim sphingoHydroxyCount = 2
         Dim acylHydroxyCount = 1
-        commonCeramideEsterGenerator(filepath, "Cer_EOS", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
-    End Sub
-    Private Shared Sub generateHexcereosSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+        commonCeramideEsterGenerator("Cer_EOS", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
+    End Function
+    Private Shared Function generateHexcereosSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "HexCer_EOS" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C6H11O5")
         Dim sphingoHydroxyCount = 2
         Dim acylHydroxyCount = 1
-        commonCeramideEsterGenerator(filepath, "HexCer_EOS", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
-    End Sub
+        commonCeramideEsterGenerator("HexCer_EOS", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
+    End Function
 
     '
-    Private Shared Sub generateOxfaSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer, maxOxygen As Integer)
+    Private Shared Function generateOxfaSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer, maxOxygen As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "OxFA" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("HO")
         Dim acylCount = 1
-        commonGlycerolipidsOxGenerator(filepath, "OxFA", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, maxOxygen, acylCount)
-    End Sub
-    Private Shared Sub generateOxpcSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer, maxOxygen As Integer)
+        commonGlycerolipidsOxGenerator("OxFA", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, maxOxygen, acylCount)
+    End Function
+    Private Shared Function generateOxpcSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer, maxOxygen As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "OxPC" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C8H18NO6P")
         Dim acylCount = 2
-        commonGlycerolipidsOxGenerator(filepath, "OxPC", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, maxOxygen, acylCount)
-    End Sub
-    Private Shared Sub generateOxpeSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer, maxOxygen As Integer)
+        commonGlycerolipidsOxGenerator("OxPC", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, maxOxygen, acylCount)
+    End Function
+    Private Shared Function generateOxpeSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer, maxOxygen As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "OxPE" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C5H12NO6P")
         Dim acylCount = 2
-        commonGlycerolipidsOxGenerator(filepath, "OxPE", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, maxOxygen, acylCount)
-    End Sub
-    Private Shared Sub generateOxpgSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer, maxOxygen As Integer)
+        commonGlycerolipidsOxGenerator("OxPE", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, maxOxygen, acylCount)
+    End Function
+    Private Shared Function generateOxpgSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer, maxOxygen As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "OxPG" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C6H13O8P")
         Dim acylCount = 2
-        commonGlycerolipidsOxGenerator(filepath, "OxPG", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, maxOxygen, acylCount)
-    End Sub
-    Private Shared Sub generateOxpiSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer, maxOxygen As Integer)
+        commonGlycerolipidsOxGenerator("OxPG", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, maxOxygen, acylCount)
+    End Function
+    Private Shared Function generateOxpiSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer, maxOxygen As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "OxPI" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C9H17O11P")
         Dim acylCount = 2
-        commonGlycerolipidsOxGenerator(filepath, "OxPI", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, maxOxygen, acylCount)
-    End Sub
-    Private Shared Sub generateOxpsSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer, maxOxygen As Integer)
+        commonGlycerolipidsOxGenerator("OxPI", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, maxOxygen, acylCount)
+    End Function
+    Private Shared Function generateOxpsSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer, maxOxygen As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "OxPS" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C6H12NO8P")
         Dim acylCount = 2
-        commonGlycerolipidsOxGenerator(filepath, "OxPS", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, maxOxygen, acylCount)
-    End Sub
-    Private Shared Sub generateOxpcEtherSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer, maxOxygen As Integer)
+        commonGlycerolipidsOxGenerator("OxPS", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, maxOxygen, acylCount)
+    End Function
+    Private Shared Function generateOxpcEtherSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer, maxOxygen As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "EtherOxPC" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C8H18NO6P")
         Dim acylCount = 2
         Dim etherCount = 1
-        commonGlycerolipidsOxEtherGenerator(filepath, "EtherOxPC", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, maxOxygen, acylCount, etherCount)
-    End Sub
-    Private Shared Sub generateOxpeEtherSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer, maxOxygen As Integer)
+        commonGlycerolipidsOxEtherGenerator("EtherOxPC", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, maxOxygen, acylCount, etherCount)
+    End Function
+    Private Shared Function generateOxpeEtherSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer, maxOxygen As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "EtherOxPE" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C5H12NO6P")
         Dim acylCount = 2
         Dim etherCount = 1
-        commonGlycerolipidsOxEtherGenerator(filepath, "EtherOxPE", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, maxOxygen, acylCount, etherCount)
-    End Sub
+        commonGlycerolipidsOxEtherGenerator("EtherOxPE", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, maxOxygen, acylCount, etherCount)
+    End Function
     'others
-    Private Shared Sub generatePetohSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+    Private Shared Function generatePetohSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "PEtOH" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C5H11O6P")
-        commonGlycerolipidsGenerator(filepath, "PEtOH", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 2)
-    End Sub
-    Private Shared Sub generatePmeohSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+        commonGlycerolipidsGenerator("PEtOH", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 2)
+    End Function
+    Private Shared Function generatePmeohSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "PMeOH" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C4H9O6P")
-        commonGlycerolipidsGenerator(filepath, "PMeOH", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 2)
-    End Sub
-    Private Shared Sub generatePbtohSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+        commonGlycerolipidsGenerator("PMeOH", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 2)
+    End Function
+    Private Shared Function generatePbtohSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "PBtOH" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C7H15O6P")
-        commonGlycerolipidsGenerator(filepath, "PBtOH", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 2)
-    End Sub
-    Private Shared Sub generateGm3Species(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+        commonGlycerolipidsGenerator("PBtOH", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 2)
+    End Function
+    Private Shared Function generateGm3Species(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "GM3" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C23H38NO18")
         Dim sphingoHydroxyCount = 2
         Dim acylHydroxyCount = 0
-        commonCeramideGenerator(filepath, "GM3", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
-    End Sub
-    Private Shared Sub generateShexcerSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+        commonCeramideGenerator("GM3", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
+    End Function
+    Private Shared Function generateShexcerSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "SHexCer" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C6H11O8S")
         Dim sphingoHydroxyCount = 2
         Dim acylHydroxyCount = 0
-        commonCeramideGenerator(filepath, "SHexCer", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
-    End Sub
-    Private Shared Sub generateLnapsSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+        commonCeramideGenerator("SHexCer", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
+    End Function
+    Private Shared Function generateLnapsSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "LNAPS" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C6H12NO8P")
-        commonGlycerolipidsGenerator(filepath, "LNAPS", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 2)
-    End Sub
-    Private Shared Sub generateEtherlpeSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+        commonGlycerolipidsGenerator("LNAPS", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 2)
+    End Function
+    Private Shared Function generateEtherlpeSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "EtherLPE" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C5H13NO6P")
-        commonGlycerolipidsEtherGenerator(filepath, "EtherLPE", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1, 1)
-    End Sub
+        commonGlycerolipidsEtherGenerator("EtherLPE", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1, 1)
+    End Function
 
-    Private Shared Sub generateEtherlpcSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+    Private Shared Function generateEtherlpcSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "EtherLPC" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C8H19NO6P")
-        commonGlycerolipidsEtherGenerator(filepath, "EtherLPC", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1, 1)
-    End Sub
-    Private Shared Sub generateHexhexcernsSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+        commonGlycerolipidsEtherGenerator("EtherLPC", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1, 1)
+    End Function
+    Private Shared Function generateHexhexcernsSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "HexHexCer_NS" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C12H21O10")
         Dim sphingoHydroxyCount = 2
         Dim acylHydroxyCount = 0
-        commonCeramideGenerator(filepath, "HexHexCer_NS", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
-    End Sub
-    Private Shared Sub generateHexhexhexcernsSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+        commonCeramideGenerator("HexHexCer_NS", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
+    End Function
+    Private Shared Function generateHexhexhexcernsSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "HexHexHexCer_NS" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C18H31O15")
         Dim sphingoHydroxyCount = 2
         Dim acylHydroxyCount = 0
-        commonCeramideGenerator(filepath, "HexHexHexCer_NS", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
-    End Sub
-    Private Shared Sub generateAcylcerbdsSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+        commonCeramideGenerator("HexHexHexCer_NS", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
+    End Function
+    Private Shared Function generateAcylcerbdsSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "AcylCer_BDS" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("H")
         Dim sphingoHydroxyCount = 2
         Dim acylHydroxyCount = 1
-        commonCeramideEsterGenerator(filepath, "AcylCer_BDS", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
-    End Sub
-    Private Shared Sub generateAcylhexcerasSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+        commonCeramideEsterGenerator("AcylCer_BDS", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
+    End Function
+    Private Shared Function generateAcylhexcerasSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "AcylHexCer" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C6H11O5")
         Dim sphingoHydroxyCount = 2
         Dim acylHydroxyCount = 1
-        commonCeramideEsterGenerator(filepath, "AcylHexCer", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
-    End Sub
-    Private Shared Sub generateAcylsmSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+        commonCeramideEsterGenerator("AcylHexCer", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
+    End Function
+    Private Shared Function generateAcylsmSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "AcylSM" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C5H13NO3P")
         Dim sphingoHydroxyCount = 2
         Dim acylHydroxyCount = 0
-        commonCeramideEsterGenerator(filepath, "AcylSM", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
-    End Sub
-    Private Shared Sub generateCerosSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+        commonCeramideEsterGenerator("AcylSM", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
+    End Function
+    Private Shared Function generateCerosSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "Cer_OS" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("H")
         Dim sphingoHydroxyCount = 2
         Dim acylHydroxyCount = 1
-        commonCeramideGenerator(filepath, "Cer_OS", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
-    End Sub
-    Private Shared Sub generateLclSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+        commonCeramideGenerator("Cer_OS", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
+    End Function
+    Private Shared Function generateLclSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "LCL" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C9H19O13P2")
-        commonGlycerolipidsGenerator(filepath, "LCL", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 3)
-    End Sub
-    Private Shared Sub generateDlclSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+        commonGlycerolipidsGenerator("LCL", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 3)
+    End Function
+    Private Shared Function generateDlclSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "DLCL" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C9H20O13P2")
-        commonGlycerolipidsGenerator(filepath, "DLCL", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 2)
-    End Sub
-    Private Shared Sub generatePhytosphingosineSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+        commonGlycerolipidsGenerator("DLCL", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 2)
+    End Function
+    Private Shared Function generatePhytosphingosineSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "Phytosphingosine" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("H")
         Dim hydroxyCount = 3
-        commonSphingosineGenerator(filepath, "Phytosphingosine", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, hydroxyCount)
-    End Sub
-    Private Shared Sub generateSphingosineSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+        commonSphingosineGenerator("Phytosphingosine", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, hydroxyCount)
+    End Function
+    Private Shared Function generateSphingosineSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "Sphingosine" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("H")
         Dim hydroxyCount = 2
-        commonSphingosineGenerator(filepath, "Sphingosine", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, hydroxyCount)
-    End Sub
-    Private Shared Sub generateSphinganineSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+        commonSphingosineGenerator("Sphingosine", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, hydroxyCount)
+    End Function
+    Private Shared Function generateSphinganineSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "Sphinganine" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("H")
         Dim hydroxyCount = 2
-        commonSphingosineGenerator(filepath, "Sphinganine", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, hydroxyCount)
-    End Sub
-    Private Shared Sub generateEthermgdgSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+        commonSphingosineGenerator("Sphinganine", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, hydroxyCount)
+    End Function
+    Private Shared Function generateEthermgdgSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "EtherMGDG" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C9H16O8")
-        commonGlycerolipidsEtherGenerator(filepath, "EtherMGDG", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 2, 1)
-    End Sub
-    Private Shared Sub generateEtherdgdgSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+        commonGlycerolipidsEtherGenerator("EtherMGDG", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 2, 1)
+    End Function
+    Private Shared Function generateEtherdgdgSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "EtherDGDG" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C15H26O13")
-        commonGlycerolipidsEtherGenerator(filepath, "EtherDGDG", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 2, 1)
-    End Sub
+        commonGlycerolipidsEtherGenerator("EtherDGDG", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 2, 1)
+    End Function
 
-    Private Shared Sub generateEthertagSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+    Private Shared Function generateEthertagSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "EtherTAG" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C3H5O3")
-        commonGlycerolipidsEtherGenerator(filepath, "EtherTAG", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 3, 1)
-    End Sub
+        commonGlycerolipidsEtherGenerator("EtherTAG", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 3, 1)
+    End Function
 
     ' add 10/04/19
-    Private Shared Sub generateEtherpiSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+    Private Shared Function generateEtherpiSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "EtherPI" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C9H17O11P")
-        commonGlycerolipidsEtherGenerator(filepath, "EtherPI", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 2, 1)
-    End Sub
-    Private Shared Sub generateEtherpsSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+        commonGlycerolipidsEtherGenerator("EtherPI", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 2, 1)
+    End Function
+    Private Shared Function generateEtherpsSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "EtherPS" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C6H12NO8P")
-        commonGlycerolipidsEtherGenerator(filepath, "EtherPS", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 2, 1)
-    End Sub
-    Private Shared Sub generatePetceramideSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+        commonGlycerolipidsEtherGenerator("EtherPS", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 2, 1)
+    End Function
+    Private Shared Function generatePetceramideSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "PE-Cer(t)" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C2H7NO3P")
         Dim sphingoHydroxyCount = 3
         Dim acylHydroxyCount = 0
-        commonCeramideGenerator(filepath, "PE_Cer", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
-    End Sub
-    Private Shared Sub generatePedceramideSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+        commonCeramideGenerator("PE_Cer", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
+    End Function
+    Private Shared Function generatePedceramideSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "PE-Cer(d)" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C2H7NO3P")
         Dim sphingoHydroxyCount = 2
         Dim acylHydroxyCount = 0
-        commonCeramideGenerator(filepath, "PE_Cer", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
-    End Sub
+        commonCeramideGenerator("PE_Cer", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
+    End Function
 
     ''' add 13/05/19
-    Private Shared Sub generateDcaesSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+    Private Shared Function generateDcaesSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "DCAE" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C24H39O4")
-        commonGlycerolipidsGenerator(filepath, "DCAE", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1)
-    End Sub
-    Private Shared Sub generateGdcaesSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+        commonGlycerolipidsGenerator("DCAE", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1)
+    End Function
+    Private Shared Function generateGdcaesSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "GDCAE" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C26H42NO5")
-        commonGlycerolipidsGenerator(filepath, "GDCAE", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1)
-    End Sub
-    Private Shared Sub generateGlcaesSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+        commonGlycerolipidsGenerator("GDCAE", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1)
+    End Function
+    Private Shared Function generateGlcaesSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "GLCAE" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C26H42NO4")
-        commonGlycerolipidsGenerator(filepath, "GLCAE", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1)
-    End Sub
-    Private Shared Sub generateTdcaesSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+        commonGlycerolipidsGenerator("GLCAE", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1)
+    End Function
+    Private Shared Function generateTdcaesSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "TDCAE" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C26H44NO6S")
-        commonGlycerolipidsGenerator(filepath, "TDCAE", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1)
-    End Sub
-    Private Shared Sub generateTlcaesSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+        commonGlycerolipidsGenerator("TDCAE", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1)
+    End Function
+    Private Shared Function generateTlcaesSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "TLCAE" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C26H44NO5S")
-        commonGlycerolipidsGenerator(filepath, "TLCAE", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1)
-    End Sub
+        commonGlycerolipidsGenerator("TLCAE", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1)
+    End Function
 
-    Private Shared Sub generateAnandamideSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+    Private Shared Function generateAnandamideSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "Anandamide" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C2H6NO")
-        commonGlycerolipidsGenerator(filepath, "NAE", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1)
-    End Sub
+        commonGlycerolipidsGenerator("NAE", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1)
+    End Function
 
-    Private Shared Sub generateFAHFAmideGlySpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+    Private Shared Function generateFAHFAmideGlySpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "FAHFAmide(Gly)" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C2H4NO2")
-        fahfaGenerator(filepath, "NAAG", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
-    End Sub
+        fahfaGenerator("NAAG", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+    End Function
 
-    Private Shared Sub generateFAHFAmideGlySerSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+    Private Shared Function generateFAHFAmideGlySerSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "FAHFAmide(GlySer)" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C5H9N2O4")
-        fahfaGenerator(filepath, "NAAGS", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
-    End Sub
+        fahfaGenerator("NAAGS", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+    End Function
 
-    Private Shared Sub generateSulfonolipidSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer, oxygenCount As Integer)
+    Private Shared Function generateSulfonolipidSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer, oxygenCount As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "Sulfonolipid" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("SO3H")
-        commonSulfonolipidGenerator(filepath, "SL", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, oxygenCount)
-    End Sub
+        commonSulfonolipidGenerator("SL", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, oxygenCount)
+    End Function
 
-    Private Shared Sub generateEtherpgSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+    Private Shared Function generateEtherpgSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "EtherPG" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C6H13O8P")
-        commonGlycerolipidsEtherGenerator(filepath, "EtherPG", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 2, 1)
-    End Sub
+        commonGlycerolipidsEtherGenerator("EtherPG", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 2, 1)
+    End Function
 
-    Private Shared Sub generateEtherlpgSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+    Private Shared Function generateEtherlpgSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "EtherLPG" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C6H15O7P")
-        commonGlycerolipidsEtherGenerator(filepath, "EtherLPG", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 2, 1)
-    End Sub
+        commonGlycerolipidsEtherGenerator("EtherLPG", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 2, 1)
+    End Function
 
-    Private Shared Sub generatePiceramideDihydroxySpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer, maxOxydized As Integer)
+    Private Shared Function generatePiceramideDihydroxySpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer, maxOxydized As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "PI-Cer(d)" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C6H12O8P")
         Dim sphingoHydroxyCount = 2
         Dim acylHydroxyCount = 0
-        commonCeramideGenerator(filepath, "PI_Cer", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
-    End Sub
-    Private Shared Sub generatePiceramideTrihydroxySpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer, maxOxydized As Integer)
+        commonCeramideGenerator("PI_Cer", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
+    End Function
+    Private Shared Function generatePiceramideTrihydroxySpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer, maxOxydized As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "PI-Cer(t)" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C6H12O8P")
         Dim sphingoHydroxyCount = 3
         Dim acylHydroxyCount = 0
-        commonCeramideGenerator(filepath, "PI_Cer", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
-    End Sub
-    Private Shared Sub generatePiceramideOxDihydroxySpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer, maxOxydized As Integer)
+        commonCeramideGenerator("PI_Cer", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
+    End Function
+    Private Shared Function generatePiceramideOxDihydroxySpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer, maxOxydized As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "PI-Cer(d_O)" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C6H12O8P")
         Dim sphingoHydroxyCount = 2
         Dim acylHydroxyCount = 1
-        commonCeramideOxGenerator(filepath, "PI_Cer", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
-    End Sub
-    Private Shared Sub generateShexcerOxSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+        commonCeramideOxGenerator("PI_Cer", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
+    End Function
+    Private Shared Function generateShexcerOxSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "SHexCerO" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C6H11O8S")
         Dim sphingoHydroxyCount = 2
         Dim acylHydroxyCount = 1
-        commonCeramideOxGenerator(filepath, "SHexCer", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
-    End Sub
-    Private Shared Sub generateCoenzymeqSpecies(outputfolder As String, adduct As AdductIon, minRepeatCount As Integer, maxRepeatCount As Integer)
+        commonCeramideOxGenerator("SHexCer", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, sphingoHydroxyCount, acylHydroxyCount)
+    End Function
+    Private Shared Function generateCoenzymeqSpecies(adduct As AdductIon, minRepeatCount As Integer, maxRepeatCount As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "CoQ" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C9H10O4")
         Dim additionalFormula = OrganicElementsReader("C5H8")
-        commonCoenzymeqlipidsGenerator(filepath, "CoQ", headerFormula, adduct, minRepeatCount, maxRepeatCount, additionalFormula)
-    End Sub
+        commonCoenzymeqlipidsGenerator("CoQ", headerFormula, adduct, minRepeatCount, maxRepeatCount, additionalFormula)
+    End Function
 
-    Private Shared Sub generateVitaminESpecies(outputfolder As String, adduct As AdductIon)
+    Private Shared Function generateVitaminESpecies(adduct As AdductIon)
         Dim adductString = adduct.AdductIonName
         If Equals(adductString.Substring(adductString.Length - 1, 1), "-") Then
             Dim filepath = outputfolder & "\" & "VitaminE" & "_" & adductString & ".txt"
             Dim formula = OrganicElementsReader("C29H50O2")
-            commonSinglemoleculeGenerator(filepath, "Vitamin", formula, adduct)
+            commonSinglemoleculeGenerator("Vitamin", formula, adduct)
         End If
-    End Sub
-    Private Shared Sub generateVitaminDSpecies(outputfolder As String, adduct As AdductIon)
+    End Function
+    Private Shared Function generateVitaminDSpecies(adduct As AdductIon)
         Dim adductString = adduct.AdductIonName
         If Equals(adductString, "[M+H]+") Then
             Dim filepath = outputfolder & "\" & "VitaminD" & "_" & adductString & ".txt"
             Dim formula = OrganicElementsReader("C27H44O2")
-            commonSinglemoleculeGenerator(filepath, "Vitamin", formula, adduct)
+            commonSinglemoleculeGenerator("Vitamin", formula, adduct)
         End If
-    End Sub
-    Private Shared Sub generateVitaminASpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+    End Function
+    Private Shared Function generateVitaminASpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         If Equals(adductString.Substring(adductString.Length - 1, 1), "+") Then
             Dim filepath = outputfolder & "\" & "VitaminA" & "_" & adductString & ".txt"
             Dim headerFormula = OrganicElementsReader("C20H29O")
-            commonGlycerolipidsGenerator(filepath, "VAE", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1)
+            commonGlycerolipidsGenerator("VAE", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1)
         End If
-    End Sub
+    End Function
 
-    Private Shared Sub generateFAHFAmideOrnSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+    Private Shared Function generateFAHFAmideOrnSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "FAHFAmide(Orn)" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C5H11N2O2")
-        fahfaGenerator(filepath, "NAAO", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
-    End Sub
+        fahfaGenerator("NAAO", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond)
+    End Function
 
-    Private Shared Sub generateBrseSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+    Private Shared Function generateBrseSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "BRSE" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C28H45O")
-        commonGlycerolipidsGenerator(filepath, "BRSE", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1)
-    End Sub
-    Private Shared Sub generateCaseSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+        commonGlycerolipidsGenerator("BRSE", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1)
+    End Function
+    Private Shared Function generateCaseSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "CASE" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C28H47O")
-        commonGlycerolipidsGenerator(filepath, "CASE", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1)
-    End Sub
-    Private Shared Sub generateSiseSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+        commonGlycerolipidsGenerator("CASE", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1)
+    End Function
+    Private Shared Function generateSiseSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "SISE" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C29H49O")
-        commonGlycerolipidsGenerator(filepath, "SISE", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1)
-    End Sub
+        commonGlycerolipidsGenerator("SISE", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1)
+    End Function
 
-    Private Shared Sub generateStseSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+    Private Shared Function generateStseSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "STSE" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C29H47O")
-        commonGlycerolipidsGenerator(filepath, "STSE", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1)
-    End Sub
+        commonGlycerolipidsGenerator("STSE", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1)
+    End Function
 
-    Private Shared Sub generateAhexbrseSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+    Private Shared Function generateAhexbrseSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "AHexBRSE" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C34H55O6")
-        commonGlycerolipidsGenerator(filepath, "AHexBRSE", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1)
-    End Sub
+        commonGlycerolipidsGenerator("AHexBRSE", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1)
+    End Function
 
-    Private Shared Sub generateAhexcaseSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+    Private Shared Function generateAhexcaseSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "AHexCASE" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C34H57O6")
-        commonGlycerolipidsGenerator(filepath, "AHexCASE", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1)
-    End Sub
-    Private Shared Sub generateAhexceSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+        commonGlycerolipidsGenerator("AHexCASE", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1)
+    End Function
+    Private Shared Function generateAhexceSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "AHexCE" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C33H55O6")
-        commonGlycerolipidsGenerator(filepath, "AHexCE", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1)
-    End Sub
-    Private Shared Sub generateAhexsiseSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+        commonGlycerolipidsGenerator("AHexCE", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1)
+    End Function
+    Private Shared Function generateAhexsiseSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
         Dim filepath = outputfolder & "\" & "AHexSISE" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C35H59O6")
-        commonGlycerolipidsGenerator(filepath, "AHexSISE", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1)
-    End Sub
-    Private Shared Sub generateAhexstseSpecies(outputfolder As String, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
+        commonGlycerolipidsGenerator("AHexSISE", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1)
+    End Function
+    Private Shared Function generateAhexstseSpecies(adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
         Dim adductString = adduct.AdductIonName
-        Dim filepath = outputfolder & "\" & "AHexSTSE" & "_" & adductString & ".txt"
         Dim headerFormula = OrganicElementsReader("C35H57O6")
-        commonGlycerolipidsGenerator(filepath, "AHexSTSE", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1)
-    End Sub
+        commonGlycerolipidsGenerator("AHexSTSE", headerFormula, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, 1)
+    End Function
 
 
 
-    Private Shared Sub commonGlycerolipidsOxGenerator(filepath As String, classString As String, headerFormula As DerivatizationFormula, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer, maxOxygen As Integer, acylCount As Integer)
+    Private Shared Iterator Function commonGlycerolipidsOxGenerator(classString As String, headerFormula As DerivatizationFormula, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer, maxOxygen As Integer, acylCount As Integer) As IEnumerable(Of LipidIon) As IEnumerable(Of LipidIon)
 
-        Using sw = New StreamWriter(filepath, False, Encoding.ASCII)
-            writeHeader(sw)
-            For i = minCarbonCount To maxCarbonCount
-                For j = minDoubleBond To maxDoubleBond
-                    For k = 1 To maxOxygen
+        For i = minCarbonCount To maxCarbonCount
+            For j = minDoubleBond To maxDoubleBond
+                For k = 1 To maxOxygen
 
-                        If j + 1 < k Then Continue For
-                        'if (K + j > maxDoubleBond)        // extra Hydroxy + Doublebond < maxDoubleBond 
-                        '    continue;
+                    If j + 1 < k Then Continue For
+                    'if (K + j > maxDoubleBond)        // extra Hydroxy + Doublebond < maxDoubleBond 
+                    '    continue;
 
-                        If isPracticalDoubleBondSize(i, j) Then
-
-                            Dim totalChainCarbon = i
-                            Dim totalChainDoubleBond = j
-                            Dim totalChainHydrogen = totalChainCarbon * 2 - acylCount - totalChainDoubleBond * 2
-                            Dim totalChainOxygen = acylCount + k
-
-                            Dim totalFormula = New DerivatizationFormula(headerFormula!C + totalChainCarbon, headerFormula!H + totalChainHydrogen, headerFormula!N, headerFormula!O + totalChainOxygen, headerFormula!P, headerFormula!S, 0, 0, 0, 0, 0)
-                            Dim mz = adduct.ConvertToMz(totalFormula.ExactMass)
-                            Dim lipidname = classString & " " & totalChainCarbon.ToString() & ":" & totalChainDoubleBond.ToString() & "+" & k.ToString() & "O"
-
-                            sw.WriteLine(lipidname & Microsoft.VisualBasic.Constants.vbTab & mz.ToString() & Microsoft.VisualBasic.Constants.vbTab & adduct.AdductIonName)
-                        End If
-                    Next
-
-
-                Next
-            Next
-        End Using
-    End Sub
-    Private Shared Sub commonGlycerolipidsOxEtherGenerator(filepath As String, classString As String, headerFormula As DerivatizationFormula, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer, maxOxygen As Integer, acylCount As Integer, etherCount As Integer)
-
-        Using sw = New StreamWriter(filepath, False, Encoding.ASCII)
-            writeHeader(sw)
-            For i = minCarbonCount To maxCarbonCount
-                For j = minDoubleBond To maxDoubleBond
-                    For k = 1 To maxOxygen
-
-                        If j + 1 < k Then Continue For
-                        'if (K + j > maxDoubleBond)        // extra Hydroxy + Doublebond < maxDoubleBond 
-                        '    continue;
-
-                        If isPracticalDoubleBondSize(i, j) Then
-
-                            Dim totalChainCarbon = i
-                            Dim totalChainDoubleBond = j
-                            Dim totalChainHydrogen = totalChainCarbon * 2 - acylCount - totalChainDoubleBond * 2 + etherCount * 2
-                            Dim totalChainOxygen = acylCount + k - 1
-
-                            Dim totalFormula = New DerivatizationFormula(headerFormula!C + totalChainCarbon, headerFormula!H + totalChainHydrogen, headerFormula!N, headerFormula!O + totalChainOxygen, headerFormula!P, headerFormula!S, 0, 0, 0, 0, 0)
-                            Dim mz = adduct.ConvertToMz(totalFormula.ExactMass)
-                            Dim lipidname = classString & " " & totalChainCarbon.ToString() & ":" & totalChainDoubleBond.ToString() & "e+" & k.ToString() & "O"
-
-                            sw.WriteLine(lipidname & Microsoft.VisualBasic.Constants.vbTab & mz.ToString() & Microsoft.VisualBasic.Constants.vbTab & adduct.AdductIonName)
-                        End If
-                    Next
-
-
-                Next
-            Next
-        End Using
-    End Sub
-
-
-    Private Shared Sub fahfaGenerator(filepath As String, classString As String, headerFormula As DerivatizationFormula, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer)
-        Using sw = New StreamWriter(filepath, False, Encoding.ASCII)
-            writeHeader(sw)
-            For i = minCarbonCount To maxCarbonCount
-                For j = minDoubleBond To maxDoubleBond
-                    If isPracticalDoubleBondSize(i, j) Then
-
-                        Dim totalChainCarbon = i
-                        Dim totalChainDoubleBond = j
-                        Dim totalChainHydrogen = totalChainCarbon * 2 - 2 * totalChainDoubleBond - 3 ' scafold FA
-                        Dim totalChainOxygen = 3
-
-                        Dim totalFormula = New DerivatizationFormula(headerFormula!C + totalChainCarbon, headerFormula!H + totalChainHydrogen, headerFormula!N, headerFormula!O + totalChainOxygen, headerFormula!P, headerFormula!S, 0, 0, 0, 0, 0)
-                        Dim mz = adduct.ConvertToMz(totalFormula.ExactMass)
-                        Dim lipidname = classString & " " & totalChainCarbon.ToString() & ":" & totalChainDoubleBond.ToString()
-
-
-                        sw.WriteLine(lipidname & Microsoft.VisualBasic.Constants.vbTab & mz.ToString() & Microsoft.VisualBasic.Constants.vbTab & adduct.AdductIonName)
-                    End If
-                Next
-            Next
-        End Using
-    End Sub
-
-
-    Private Shared Sub commonCeramideGenerator(filepath As String, classString As String, headerFormula As DerivatizationFormula, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer, sphingoHydroxyCount As Integer, acylHydroxyCount As Integer)
-
-        Dim hydroHeader = "d"
-        If sphingoHydroxyCount = 3 Then hydroHeader = "t"
-        Using sw = New StreamWriter(filepath, False, Encoding.ASCII)
-            writeHeader(sw)
-            For i = minCarbonCount To maxCarbonCount
-                For j = minDoubleBond To maxDoubleBond
-                    If isPracticalDoubleBondSize(i, j) Then
-
-                        Dim totalChainCarbon = i
-                        Dim totalChainDoubleBond = j
-                        Dim totalChainHydrogen = totalChainCarbon * 2 - totalChainDoubleBond * 2
-                        Dim totalChainOxygen = 1 + sphingoHydroxyCount + acylHydroxyCount
-                        Dim totalNitrogenCount = 1
-
-                        Dim totalFormula = New DerivatizationFormula(headerFormula!C + totalChainCarbon, headerFormula!H + totalChainHydrogen, headerFormula!N + totalNitrogenCount, headerFormula!O + totalChainOxygen, headerFormula!P, headerFormula!S, 0, 0, 0, 0, 0)
-                        Dim mz = adduct.ConvertToMz(totalFormula.ExactMass)
-                        Dim lipidname = classString & " " & hydroHeader & totalChainCarbon.ToString() & ":" & totalChainDoubleBond.ToString()
-
-                        sw.WriteLine(lipidname & Microsoft.VisualBasic.Constants.vbTab & mz.ToString() & Microsoft.VisualBasic.Constants.vbTab & adduct.AdductIonName)
-                    End If
-                Next
-            Next
-        End Using
-    End Sub
-
-    Private Shared Sub commonGlycerolipidsGenerator(filepath As String, classString As String, headerFormula As DerivatizationFormula, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer, acylCount As Integer)
-
-        Using sw = New StreamWriter(filepath, False, Encoding.ASCII)
-            writeHeader(sw)
-            For i = minCarbonCount To maxCarbonCount
-                For j = minDoubleBond To maxDoubleBond
                     If isPracticalDoubleBondSize(i, j) Then
 
                         Dim totalChainCarbon = i
                         Dim totalChainDoubleBond = j
                         Dim totalChainHydrogen = totalChainCarbon * 2 - acylCount - totalChainDoubleBond * 2
-                        Dim totalChainOxygen = acylCount
+                        Dim totalChainOxygen = acylCount + k
 
                         Dim totalFormula = New DerivatizationFormula(headerFormula!C + totalChainCarbon, headerFormula!H + totalChainHydrogen, headerFormula!N, headerFormula!O + totalChainOxygen, headerFormula!P, headerFormula!S, 0, 0, 0, 0, 0)
                         Dim mz = adduct.ConvertToMz(totalFormula.ExactMass)
-                        Dim lipidname = classString & " " & totalChainCarbon.ToString() & ":" & totalChainDoubleBond.ToString()
+                        Dim lipidname = classString & " " & totalChainCarbon.ToString() & ":" & totalChainDoubleBond.ToString() & "+" & k.ToString() & "O"
 
-                        sw.WriteLine(lipidname & Microsoft.VisualBasic.Constants.vbTab & mz.ToString() & Microsoft.VisualBasic.Constants.vbTab & adduct.AdductIonName)
+                        Yield New LipidIon With {
+                            .lipidname = lipidname,
+                            .total_formula = totalFormula.EmpiricalFormula,
+                            .mz = mz,
+                            .adduct = adduct.AdductIonName
+                        }
                     End If
                 Next
-            Next
-        End Using
-    End Sub
-    'add MT
-    Private Shared Sub commonGlycerolipidsEtherGenerator(filepath As String, classString As String, headerFormula As DerivatizationFormula, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer, acylCount As Integer, etherCount As Integer)
 
-        Using sw = New StreamWriter(filepath, False, Encoding.ASCII)
-            writeHeader(sw)
-            For i = minCarbonCount To maxCarbonCount
-                For j = minDoubleBond To maxDoubleBond
+
+            Next
+        Next
+    End Function
+    Private Shared Iterator Function commonGlycerolipidsOxEtherGenerator(classString As String, headerFormula As DerivatizationFormula, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer, maxOxygen As Integer, acylCount As Integer, etherCount As Integer) As IEnumerable(Of LipidIon)
+
+        For i = minCarbonCount To maxCarbonCount
+            For j = minDoubleBond To maxDoubleBond
+                For k = 1 To maxOxygen
+
+                    If j + 1 < k Then Continue For
+                    'if (K + j > maxDoubleBond)        // extra Hydroxy + Doublebond < maxDoubleBond 
+                    '    continue;
+
                     If isPracticalDoubleBondSize(i, j) Then
 
                         Dim totalChainCarbon = i
                         Dim totalChainDoubleBond = j
                         Dim totalChainHydrogen = totalChainCarbon * 2 - acylCount - totalChainDoubleBond * 2 + etherCount * 2
-                        Dim totalChainOxygen = acylCount - 1
+                        Dim totalChainOxygen = acylCount + k - 1
 
                         Dim totalFormula = New DerivatizationFormula(headerFormula!C + totalChainCarbon, headerFormula!H + totalChainHydrogen, headerFormula!N, headerFormula!O + totalChainOxygen, headerFormula!P, headerFormula!S, 0, 0, 0, 0, 0)
                         Dim mz = adduct.ConvertToMz(totalFormula.ExactMass)
-                        Dim lipidname = classString & " " & totalChainCarbon.ToString() & ":" & totalChainDoubleBond.ToString() & "e"
+                        Dim lipidname = classString & " " & totalChainCarbon.ToString() & ":" & totalChainDoubleBond.ToString() & "e+" & k.ToString() & "O"
 
-                        sw.WriteLine(lipidname & Microsoft.VisualBasic.Constants.vbTab & mz.ToString() & Microsoft.VisualBasic.Constants.vbTab & adduct.AdductIonName)
+                        Yield New LipidIon With {
+                            .lipidname = lipidname,
+                            .total_formula = totalFormula.EmpiricalFormula,
+                            .mz = mz,
+                            .adduct = adduct.AdductIonName
+                        }
                     End If
                 Next
             Next
-        End Using
-    End Sub
-    Private Shared Sub commonCeramideEsterGenerator(filepath As String, classString As String, headerFormula As DerivatizationFormula, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer, sphingoHydroxyCount As Integer, acylHydroxyCount As Integer)
+        Next
+    End Function
+
+    Private Shared Iterator Function fahfaGenerator(classString As String, headerFormula As DerivatizationFormula, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer) As IEnumerable(Of LipidIon)
+
+        For i = minCarbonCount To maxCarbonCount
+            For j = minDoubleBond To maxDoubleBond
+                If isPracticalDoubleBondSize(i, j) Then
+
+                    Dim totalChainCarbon = i
+                    Dim totalChainDoubleBond = j
+                    Dim totalChainHydrogen = totalChainCarbon * 2 - 2 * totalChainDoubleBond - 3 ' scafold FA
+                    Dim totalChainOxygen = 3
+
+                    Dim totalFormula = New DerivatizationFormula(headerFormula!C + totalChainCarbon, headerFormula!H + totalChainHydrogen, headerFormula!N, headerFormula!O + totalChainOxygen, headerFormula!P, headerFormula!S, 0, 0, 0, 0, 0)
+                    Dim mz = adduct.ConvertToMz(totalFormula.ExactMass)
+                    Dim lipidname = classString & " " & totalChainCarbon.ToString() & ":" & totalChainDoubleBond.ToString()
+
+                    Yield New LipidIon With {
+                            .lipidname = lipidname,
+                            .total_formula = totalFormula.EmpiricalFormula,
+                            .mz = mz,
+                            .adduct = adduct.AdductIonName
+                        }
+                End If
+            Next
+        Next
+    End Function
+
+
+    Private Shared Iterator Function commonCeramideGenerator(classString As String, headerFormula As DerivatizationFormula, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer, sphingoHydroxyCount As Integer, acylHydroxyCount As Integer) As IEnumerable(Of LipidIon)
+
         Dim hydroHeader = "d"
-        If sphingoHydroxyCount = 3 Then hydroHeader = "t"
-        Using sw = New StreamWriter(filepath, False, Encoding.ASCII)
-            writeHeader(sw)
-            For i = minCarbonCount To maxCarbonCount
-                For j = minDoubleBond To maxDoubleBond
-                    If isPracticalDoubleBondSize(i, j) Then
+        If sphingoHydroxyCount = 3 Then
+            hydroHeader = "t"
+        End If
 
-                        Dim totalChainCarbon = i
-                        Dim totalChainDoubleBond = j
-                        Dim totalChainHydrogen = totalChainCarbon * 2 - totalChainDoubleBond * 2 - 2
-                        Dim totalChainOxygen = 2 + sphingoHydroxyCount + acylHydroxyCount
-                        Dim totalNitrogenCount = 1
+        For i = minCarbonCount To maxCarbonCount
+            For j = minDoubleBond To maxDoubleBond
+                If isPracticalDoubleBondSize(i, j) Then
 
-                        Dim totalFormula = New DerivatizationFormula(headerFormula!C + totalChainCarbon, headerFormula!H + totalChainHydrogen, headerFormula!N + totalNitrogenCount, headerFormula!O + totalChainOxygen, headerFormula!P, headerFormula!S, 0, 0, 0, 0, 0)
-                        Dim mz = adduct.ConvertToMz(totalFormula.ExactMass)
-                        Dim lipidname = classString & " " & hydroHeader & totalChainCarbon.ToString() & ":" & totalChainDoubleBond.ToString()
+                    Dim totalChainCarbon = i
+                    Dim totalChainDoubleBond = j
+                    Dim totalChainHydrogen = totalChainCarbon * 2 - totalChainDoubleBond * 2
+                    Dim totalChainOxygen = 1 + sphingoHydroxyCount + acylHydroxyCount
+                    Dim totalNitrogenCount = 1
 
-                        sw.WriteLine(lipidname & Microsoft.VisualBasic.Constants.vbTab & mz.ToString() & Microsoft.VisualBasic.Constants.vbTab & adduct.AdductIonName)
-                    End If
-                Next
+                    Dim totalFormula = New DerivatizationFormula(headerFormula!C + totalChainCarbon, headerFormula!H + totalChainHydrogen, headerFormula!N + totalNitrogenCount, headerFormula!O + totalChainOxygen, headerFormula!P, headerFormula!S, 0, 0, 0, 0, 0)
+                    Dim mz = adduct.ConvertToMz(totalFormula.ExactMass)
+                    Dim lipidname = classString & " " & hydroHeader & totalChainCarbon.ToString() & ":" & totalChainDoubleBond.ToString()
+
+                    Yield New LipidIon With {
+                            .lipidname = lipidname,
+                            .total_formula = totalFormula.EmpiricalFormula,
+                            .mz = mz,
+                            .adduct = adduct.AdductIonName
+                        }
+                End If
             Next
-        End Using
-    End Sub
-    Private Shared Sub commonSphingosineGenerator(filepath As String, classString As String, headerFormula As DerivatizationFormula, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer, HydroxyCount As Integer)
+        Next
+    End Function
 
-        Using sw = New StreamWriter(filepath, False, Encoding.ASCII)
-            writeHeader(sw)
-            For i = minCarbonCount To maxCarbonCount
-                For j = minDoubleBond To maxDoubleBond
-                    If isPracticalDoubleBondSize(i, j) Then
+    Private Shared Iterator Function commonGlycerolipidsGenerator(classString As String, headerFormula As DerivatizationFormula, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer, acylCount As Integer) As IEnumerable(Of LipidIon)
 
-                        Dim totalChainCarbon = i
-                        Dim totalChainDoubleBond = j
-                        Dim totalChainHydrogen = totalChainCarbon * 2 - totalChainDoubleBond * 2 + 2
-                        Dim totalChainOxygen = HydroxyCount
-                        Dim totalNitrogenCount = 1
+        For i = minCarbonCount To maxCarbonCount
+            For j = minDoubleBond To maxDoubleBond
+                If isPracticalDoubleBondSize(i, j) Then
 
-                        Dim totalFormula = New DerivatizationFormula(headerFormula!C + totalChainCarbon, headerFormula!H + totalChainHydrogen, headerFormula!N + totalNitrogenCount, headerFormula!O + totalChainOxygen, headerFormula!P, headerFormula!S, 0, 0, 0, 0, 0)
-                        Dim mz = adduct.ConvertToMz(totalFormula.ExactMass)
-                        Dim lipidname = classString & " " & totalChainCarbon.ToString() & ":" & totalChainDoubleBond.ToString()
+                    Dim totalChainCarbon = i
+                    Dim totalChainDoubleBond = j
+                    Dim totalChainHydrogen = totalChainCarbon * 2 - acylCount - totalChainDoubleBond * 2
+                    Dim totalChainOxygen = acylCount
 
-                        sw.WriteLine(lipidname & Microsoft.VisualBasic.Constants.vbTab & mz.ToString() & Microsoft.VisualBasic.Constants.vbTab & adduct.AdductIonName)
-                    End If
-                Next
+                    Dim totalFormula = New DerivatizationFormula(headerFormula!C + totalChainCarbon, headerFormula!H + totalChainHydrogen, headerFormula!N, headerFormula!O + totalChainOxygen, headerFormula!P, headerFormula!S, 0, 0, 0, 0, 0)
+                    Dim mz = adduct.ConvertToMz(totalFormula.ExactMass)
+                    Dim lipidname = classString & " " & totalChainCarbon.ToString() & ":" & totalChainDoubleBond.ToString()
+
+                    Yield New LipidIon With {
+                            .lipidname = lipidname,
+                            .total_formula = totalFormula.EmpiricalFormula,
+                            .mz = mz,
+                            .adduct = adduct.AdductIonName
+                        }
+                End If
             Next
-        End Using
-    End Sub
+        Next
+    End Function
+    'add MT
+    Private Shared Iterator Function commonGlycerolipidsEtherGenerator(classString As String, headerFormula As DerivatizationFormula, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer, acylCount As Integer, etherCount As Integer) As IEnumerable(Of LipidIon)
 
-    Private Shared Sub commonSulfonolipidGenerator(filepath As String, classString As String, headerFormula As DerivatizationFormula, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer, acylHydroxyCount As Integer)
+        For i = minCarbonCount To maxCarbonCount
+            For j = minDoubleBond To maxDoubleBond
+                If isPracticalDoubleBondSize(i, j) Then
 
+                    Dim totalChainCarbon = i
+                    Dim totalChainDoubleBond = j
+                    Dim totalChainHydrogen = totalChainCarbon * 2 - acylCount - totalChainDoubleBond * 2 + etherCount * 2
+                    Dim totalChainOxygen = acylCount - 1
+
+                    Dim totalFormula = New DerivatizationFormula(headerFormula!C + totalChainCarbon, headerFormula!H + totalChainHydrogen, headerFormula!N, headerFormula!O + totalChainOxygen, headerFormula!P, headerFormula!S, 0, 0, 0, 0, 0)
+                    Dim mz = adduct.ConvertToMz(totalFormula.ExactMass)
+                    Dim lipidname = classString & " " & totalChainCarbon.ToString() & ":" & totalChainDoubleBond.ToString() & "e"
+
+                    Yield New LipidIon With {
+                            .lipidname = lipidname,
+                            .total_formula = totalFormula.EmpiricalFormula,
+                            .mz = mz,
+                            .adduct = adduct.AdductIonName
+                        }
+                End If
+            Next
+        Next
+    End Function
+
+    Private Shared Iterator Function commonCeramideEsterGenerator(classString As String, headerFormula As DerivatizationFormula, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer, sphingoHydroxyCount As Integer, acylHydroxyCount As Integer) As IEnumerable(Of LipidIon)
+        Dim hydroHeader = "d"
+        If sphingoHydroxyCount = 3 Then
+            hydroHeader = "t"
+        End If
+
+        For i = minCarbonCount To maxCarbonCount
+            For j = minDoubleBond To maxDoubleBond
+                If isPracticalDoubleBondSize(i, j) Then
+
+                    Dim totalChainCarbon = i
+                    Dim totalChainDoubleBond = j
+                    Dim totalChainHydrogen = totalChainCarbon * 2 - totalChainDoubleBond * 2 - 2
+                    Dim totalChainOxygen = 2 + sphingoHydroxyCount + acylHydroxyCount
+                    Dim totalNitrogenCount = 1
+
+                    Dim totalFormula = New DerivatizationFormula(headerFormula!C + totalChainCarbon, headerFormula!H + totalChainHydrogen, headerFormula!N + totalNitrogenCount, headerFormula!O + totalChainOxygen, headerFormula!P, headerFormula!S, 0, 0, 0, 0, 0)
+                    Dim mz = adduct.ConvertToMz(totalFormula.ExactMass)
+                    Dim lipidname = classString & " " & hydroHeader & totalChainCarbon.ToString() & ":" & totalChainDoubleBond.ToString()
+
+                    Yield New LipidIon With {
+                            .lipidname = lipidname,
+                            .total_formula = totalFormula.EmpiricalFormula,
+                            .mz = mz,
+                            .adduct = adduct.AdductIonName
+                        }
+                End If
+            Next
+        Next
+    End Function
+
+    Private Shared Iterator Function commonSphingosineGenerator(classString As String, headerFormula As DerivatizationFormula, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer, HydroxyCount As Integer) As IEnumerable(Of LipidIon)
+
+        For i = minCarbonCount To maxCarbonCount
+            For j = minDoubleBond To maxDoubleBond
+                If isPracticalDoubleBondSize(i, j) Then
+
+                    Dim totalChainCarbon = i
+                    Dim totalChainDoubleBond = j
+                    Dim totalChainHydrogen = totalChainCarbon * 2 - totalChainDoubleBond * 2 + 2
+                    Dim totalChainOxygen = HydroxyCount
+                    Dim totalNitrogenCount = 1
+
+                    Dim totalFormula = New DerivatizationFormula(headerFormula!C + totalChainCarbon, headerFormula!H + totalChainHydrogen, headerFormula!N + totalNitrogenCount, headerFormula!O + totalChainOxygen, headerFormula!P, headerFormula!S, 0, 0, 0, 0, 0)
+                    Dim mz = adduct.ConvertToMz(totalFormula.ExactMass)
+                    Dim lipidname = classString & " " & totalChainCarbon.ToString() & ":" & totalChainDoubleBond.ToString()
+
+                    Yield New LipidIon With {
+                            .lipidname = lipidname,
+                            .total_formula = totalFormula.EmpiricalFormula,
+                            .mz = mz,
+                            .adduct = adduct.AdductIonName
+                        }
+                End If
+            Next
+        Next
+    End Function
+
+    Private Shared Iterator Function commonSulfonolipidGenerator(classString As String,
+                                                                 headerFormula As DerivatizationFormula,
+                                                                 adduct As AdductIon,
+                                                                 minCarbonCount As Integer,
+                                                                 maxCarbonCount As Integer,
+                                                                 minDoubleBond As Integer,
+                                                                 maxDoubleBond As Integer,
+                                                                 acylHydroxyCount As Integer) As IEnumerable(Of LipidIon)
         Dim hydroHeader = "m"
-        Using sw = New StreamWriter(filepath, False, Encoding.ASCII)
-            writeHeader(sw)
-            For i = minCarbonCount To maxCarbonCount
-                For j = minDoubleBond To maxDoubleBond
-                    For k = 0 To acylHydroxyCount
-                        If isPracticalDoubleBondSize(i, j) Then
-                            Dim totalChainCarbon = i
-                            Dim totalChainDoubleBond = j
-                            Dim totalChainHydrogen = totalChainCarbon * 2 - totalChainDoubleBond * 2
-                            Dim totalChainOxygen = 1 + 1 + k
-                            Dim totalNitrogenCount = 1
 
-                            Dim totalString = String.Empty
+        For i = minCarbonCount To maxCarbonCount
+            For j = minDoubleBond To maxDoubleBond
+                For k = 0 To acylHydroxyCount
+                    If isPracticalDoubleBondSize(i, j) Then
+                        Dim totalChainCarbon = i
+                        Dim totalChainDoubleBond = j
+                        Dim totalChainHydrogen = totalChainCarbon * 2 - totalChainDoubleBond * 2
+                        Dim totalChainOxygen = 1 + 1 + k
+                        Dim totalNitrogenCount = 1
 
-                            totalString = If(k = 0, hydroHeader & totalChainCarbon.ToString() & ":" & totalChainDoubleBond.ToString(), hydroHeader & totalChainCarbon.ToString() & ":" & totalChainDoubleBond.ToString() & "+" & k.ToString() & "O")
+                        Dim totalString = String.Empty
 
-                            Dim totalFormula = New DerivatizationFormula(headerFormula!C + totalChainCarbon, headerFormula!H + totalChainHydrogen, headerFormula!N + totalNitrogenCount, headerFormula!O + totalChainOxygen, headerFormula!P, headerFormula!S, 0, 0, 0, 0, 0)
-                            Dim mz = adduct.ConvertToMz(totalFormula.ExactMass)
-                            Dim lipidname = classString & " " & totalString
+                        totalString = If(k = 0, hydroHeader & totalChainCarbon.ToString() & ":" & totalChainDoubleBond.ToString(), hydroHeader & totalChainCarbon.ToString() & ":" & totalChainDoubleBond.ToString() & "+" & k.ToString() & "O")
 
-                            sw.WriteLine(lipidname & Microsoft.VisualBasic.Constants.vbTab & mz.ToString() & Microsoft.VisualBasic.Constants.vbTab & adduct.AdductIonName)
-                        End If
-                    Next
+                        Dim totalFormula = New DerivatizationFormula(headerFormula!C + totalChainCarbon, headerFormula!H + totalChainHydrogen, headerFormula!N + totalNitrogenCount, headerFormula!O + totalChainOxygen, headerFormula!P, headerFormula!S, 0, 0, 0, 0, 0)
+                        Dim mz = adduct.ConvertToMz(totalFormula.ExactMass)
+                        Dim lipidname = classString & " " & totalString
+
+                        Yield New LipidIon With {
+                            .lipidname = lipidname,
+                            .total_formula = totalFormula.EmpiricalFormula,
+                            .mz = mz,
+                            .adduct = adduct.AdductIonName
+                        }
+                    End If
                 Next
             Next
-        End Using
-    End Sub
+        Next
+    End Function
 
-    Private Shared Sub commonCeramideOxGenerator(filepath As String, classString As String, headerFormula As DerivatizationFormula, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer, sphingoHydroxyCount As Integer, acylHydroxyCount As Integer)
-
+    Private Shared Iterator Function commonCeramideOxGenerator(classString As String,
+                                                               headerFormula As DerivatizationFormula,
+                                                               adduct As AdductIon,
+                                                               minCarbonCount As Integer,
+                                                               maxCarbonCount As Integer,
+                                                               minDoubleBond As Integer,
+                                                               maxDoubleBond As Integer,
+                                                               sphingoHydroxyCount As Integer,
+                                                               acylHydroxyCount As Integer) As IEnumerable(Of LipidIon)
         Dim hydroHeader = "d"
-        If sphingoHydroxyCount = 3 Then hydroHeader = "t"
-        Using sw = New StreamWriter(filepath, False, Encoding.ASCII)
-            writeHeader(sw)
-            For i = minCarbonCount To maxCarbonCount
-                For j = minDoubleBond To maxDoubleBond
-                    For k = 1 To acylHydroxyCount
 
-                        If isPracticalDoubleBondSize(i, j) Then
-                            Dim totalChainCarbon = i
-                            Dim totalChainDoubleBond = j
-                            Dim totalChainHydrogen = totalChainCarbon * 2 - totalChainDoubleBond * 2
-                            Dim totalChainOxygen = 1 + sphingoHydroxyCount + k
-                            Dim totalNitrogenCount = 1
+        If sphingoHydroxyCount = 3 Then
+            hydroHeader = "t"
+        End If
 
-                            Dim totalString = String.Empty
+        For i = minCarbonCount To maxCarbonCount
+            For j = minDoubleBond To maxDoubleBond
+                For k = 1 To acylHydroxyCount
 
-                            totalString = If(k = 1, hydroHeader & totalChainCarbon.ToString() & ":" & totalChainDoubleBond.ToString() & "+" & "O", hydroHeader & totalChainCarbon.ToString() & ":" & totalChainDoubleBond.ToString() & "+" & k.ToString() & "O")
+                    If isPracticalDoubleBondSize(i, j) Then
+                        Dim totalChainCarbon = i
+                        Dim totalChainDoubleBond = j
+                        Dim totalChainHydrogen = totalChainCarbon * 2 - totalChainDoubleBond * 2
+                        Dim totalChainOxygen = 1 + sphingoHydroxyCount + k
+                        Dim totalNitrogenCount = 1
 
-                            Dim totalFormula = New DerivatizationFormula(headerFormula!C + totalChainCarbon, headerFormula!H + totalChainHydrogen, headerFormula!N + totalNitrogenCount, headerFormula!O + totalChainOxygen, headerFormula!P, headerFormula!S, 0, 0, 0, 0, 0)
-                            Dim mz = adduct.ConvertToMz(totalFormula.ExactMass)
-                            Dim lipidname = classString & " " & totalString
+                        Dim totalString = String.Empty
 
-                            sw.WriteLine(lipidname & Microsoft.VisualBasic.Constants.vbTab & mz.ToString() & Microsoft.VisualBasic.Constants.vbTab & adduct.AdductIonName)
-                        End If
-                    Next
+                        totalString = If(k = 1, hydroHeader & totalChainCarbon.ToString() & ":" & totalChainDoubleBond.ToString() & "+" & "O", hydroHeader & totalChainCarbon.ToString() & ":" & totalChainDoubleBond.ToString() & "+" & k.ToString() & "O")
+
+                        Dim totalFormula = New DerivatizationFormula(headerFormula!C + totalChainCarbon, headerFormula!H + totalChainHydrogen, headerFormula!N + totalNitrogenCount, headerFormula!O + totalChainOxygen, headerFormula!P, headerFormula!S, 0, 0, 0, 0, 0)
+                        Dim mz = adduct.ConvertToMz(totalFormula.ExactMass)
+                        Dim lipidname = classString & " " & totalString
+
+                        Yield New LipidIon With {
+                            .lipidname = lipidname,
+                            .total_formula = totalFormula.EmpiricalFormula,
+                            .mz = mz,
+                            .adduct = adduct.AdductIonName
+                        }
+                    End If
                 Next
             Next
-        End Using
-    End Sub
+        Next
+    End Function
 
-    Private Shared Sub commonCoenzymeqlipidsGenerator(filepath As String, classString As String, headerFormula As DerivatizationFormula, adduct As AdductIon, minRepeatCount As Integer, maxRepeatCount As Integer, additionalFormula As DerivatizationFormula)
+    Private Shared Iterator Function commonCoenzymeqlipidsGenerator(classString As String,
+                                                                    headerFormula As DerivatizationFormula,
+                                                                    adduct As AdductIon,
+                                                                    minRepeatCount As Integer,
+                                                                    maxRepeatCount As Integer,
+                                                                    additionalFormula As DerivatizationFormula) As IEnumerable(Of LipidIon)
 
-        Using sw = New StreamWriter(filepath, False, Encoding.ASCII)
-            writeHeader(sw)
-            For i = minRepeatCount To maxRepeatCount
-                Dim totalCarbon = headerFormula!C + additionalFormula!C * i
-                Dim totalHydrogen = headerFormula!H + additionalFormula!H * i
-                Dim totalOxygen = headerFormula!O + additionalFormula!O * i
-                Dim totalNitrogen = headerFormula!N + additionalFormula!N * i
-
-                Dim totalFormula = New DerivatizationFormula(totalCarbon, totalHydrogen, totalNitrogen, totalOxygen, headerFormula!P, headerFormula!S, 0, 0, 0, 0, 0)
-                Dim mz = adduct.ConvertToMz(totalFormula.ExactMass)
-                Dim lipidname = classString
-
-                sw.WriteLine(lipidname & Microsoft.VisualBasic.Constants.vbTab & mz.ToString() & Microsoft.VisualBasic.Constants.vbTab & adduct.AdductIonName)
-
-            Next
-        End Using
-    End Sub
-
-    Private Shared Sub commonSinglemoleculeGenerator(filepath As String, classString As String, headerFormula As DerivatizationFormula, adduct As AdductIon)
-        Using sw = New StreamWriter(filepath, False, Encoding.ASCII)
-            writeHeader(sw)
-            Dim totalCarbon = headerFormula!C
-            Dim totalHydrogen = headerFormula!H
-            Dim totalOxygen = headerFormula!O
-            Dim totalNitrogen = headerFormula!N
+        For i = minRepeatCount To maxRepeatCount
+            Dim totalCarbon = headerFormula!C + additionalFormula!C * i
+            Dim totalHydrogen = headerFormula!H + additionalFormula!H * i
+            Dim totalOxygen = headerFormula!O + additionalFormula!O * i
+            Dim totalNitrogen = headerFormula!N + additionalFormula!N * i
 
             Dim totalFormula = New DerivatizationFormula(totalCarbon, totalHydrogen, totalNitrogen, totalOxygen, headerFormula!P, headerFormula!S, 0, 0, 0, 0, 0)
             Dim mz = adduct.ConvertToMz(totalFormula.ExactMass)
             Dim lipidname = classString
 
-            sw.WriteLine(lipidname & " " & Microsoft.VisualBasic.Constants.vbTab & mz.ToString() & Microsoft.VisualBasic.Constants.vbTab & adduct.AdductIonName)
+            Yield New LipidIon With {
+                .lipidname = lipidname,
+                .total_formula = totalFormula.EmpiricalFormula,
+                .mz = mz,
+                .adduct = adduct.AdductIonName
+            }
+        Next
+    End Function
 
-        End Using
-    End Sub
+    Private Shared Iterator Function commonSinglemoleculeGenerator(classString As String, headerFormula As DerivatizationFormula, adduct As AdductIon) As IEnumerable(Of LipidIon)
+        Dim totalCarbon = headerFormula!C
+        Dim totalHydrogen = headerFormula!H
+        Dim totalOxygen = headerFormula!O
+        Dim totalNitrogen = headerFormula!N
 
+        Dim totalFormula = New DerivatizationFormula(totalCarbon, totalHydrogen, totalNitrogen, totalOxygen, headerFormula!P, headerFormula!S, 0, 0, 0, 0, 0)
+        Dim mz = adduct.ConvertToMz(totalFormula.ExactMass)
+        Dim lipidname = classString
 
-    Private Shared Sub writeHeader(sw As StreamWriter)
-        sw.WriteLine("Name" & Microsoft.VisualBasic.Constants.vbTab & "Mz" & Microsoft.VisualBasic.Constants.vbTab & "Adduct")
-    End Sub
+        Yield New LipidIon With {
+            .adduct = adduct.AdductIonName,
+            .lipidname = lipidname,
+            .mz = mz,
+            .total_formula = totalFormula.EmpiricalFormula
+        }
+    End Function
 
     Private Shared Function isPracticalDoubleBondSize(carbon As Integer, doublebond As Integer) As Boolean
         If doublebond = 0 Then
@@ -1357,5 +1399,15 @@ Public NotInheritable Class LipidMassLibraryGenerator
             Return True
         End If
     End Function
+End Class
+
+Public Class LipidIon
+
+    Public Property lipidname As String
+    Public Property mz As Double
+    Public Property adduct As String
+    Public Property total_formula As String
+    Public Property [class] As LbmClass
+
 End Class
 
