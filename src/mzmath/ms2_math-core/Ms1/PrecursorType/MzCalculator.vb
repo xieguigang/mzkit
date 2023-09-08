@@ -71,7 +71,6 @@ Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Text
-Imports stdNum = System.Math
 
 Namespace Ms1.PrecursorType
 
@@ -132,11 +131,11 @@ Namespace Ms1.PrecursorType
         ''' <summary>
         ''' Evaluate the exact mass from m/z based on current precursor adducts data
         ''' </summary>
-        ''' <param name="precursorMZ#"></param>
+        ''' <param name="mz#"></param>
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function CalcMass(precursorMZ#) As Double
-            Return (ReverseMass(precursorMZ, M, charge, adducts))
+        Public Function CalcMass(mz#) As Double
+            Return (ReverseMass(mz, M, charge, adducts, ionMode:=If(mode = "+"c, IonModes.Positive, IonModes.Negative)))
         End Function
 
         ''' <summary>
@@ -185,9 +184,9 @@ Namespace Ms1.PrecursorType
             Dim precursorMz = (exactMass * M + AdductIonAccurateMass) / chargeNumber
 
             If IonMode = IonModes.Positive Then
-                precursorMz -= 0.0005485799 * chargeNumber
+                precursorMz -= ElectronMassInDalton * chargeNumber
             Else
-                precursorMz += 0.0005485799 * chargeNumber
+                precursorMz += ElectronMassInDalton * chargeNumber
             End If
 
             Return precursorMz
@@ -198,13 +197,21 @@ Namespace Ms1.PrecursorType
         ''' </summary>
         ''' <param name="mz#"></param>
         ''' <param name="M#"></param>
-        ''' <param name="charge%"></param>
-        ''' <param name="adduct#"></param>
+        ''' <param name="chargeNumber%"></param>
+        ''' <param name="adductIonAccurateMass#"></param>
         ''' <returns></returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Function ReverseMass(mz#, M#, charge%, adduct#) As Double
-            Return ((mz - adduct) * stdNum.Abs(charge) / M)
+        Public Shared Function ReverseMass(mz#, M#, chargeNumber%, adductIonAccurateMass#, ionMode As IonModes) As Double
+            Dim monoIsotopicMass = (mz * chargeNumber - adductIonAccurateMass) / M
+
+            If ionMode = IonModes.Positive Then
+                monoIsotopicMass += ElectronMassInDalton * chargeNumber
+            Else
+                monoIsotopicMass -= ElectronMassInDalton * chargeNumber
+            End If
+
+            Return monoIsotopicMass
         End Function
 
         ''' <summary>
