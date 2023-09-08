@@ -72,7 +72,12 @@
 
         Public Sub New()
         End Sub
-        Public Sub New(mass As Double, intensity As Double, Optional comment As String = Nothing, Optional spectrumcomment As SpectrumComment = SpectrumComment.none, Optional isMust As Boolean = False)
+
+        Public Sub New(mass As Double, intensity As Double,
+                       Optional comment As String = Nothing,
+                       Optional spectrumcomment As SpectrumComment = SpectrumComment.none,
+                       Optional isMust As Boolean = False)
+
             Me.mz = mass
             Me.intensity = intensity
             Me.Annotation = comment

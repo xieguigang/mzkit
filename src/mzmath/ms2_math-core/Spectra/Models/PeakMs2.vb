@@ -59,6 +59,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.SplashID
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports stdNum = System.Math
 
@@ -71,7 +72,7 @@ Namespace Spectra
     ''' A union data model of the ms1 annotation data 
     ''' associated with the ms2 peak scan data.
     ''' </remarks>
-    Public Class PeakMs2 : Implements IMs1, IMs1Scan, IMS1Annotation
+    Public Class PeakMs2 : Implements IMs1, IMs1Scan, IMS1Annotation, ISpectrum
 
         ''' <summary>
         ''' The precursor ``m/z`` value.
@@ -139,6 +140,16 @@ Namespace Spectra
                 End If
             End Get
         End Property
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Sub SetIons(ions As IEnumerable(Of ms2)) Implements ISpectrum.SetIons
+            mzInto = ions.ToArray
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Function GetIons() As IEnumerable(Of ms2) Implements ISpectrum.GetIons
+            Return mzInto.AsEnumerable
+        End Function
 
         ''' <summary>
         ''' 将mzXML文件之中的RT文本解析为以秒为单位的rt保留时间数值

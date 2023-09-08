@@ -60,6 +60,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.SplashID
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
@@ -75,6 +76,7 @@ Namespace Spectra
     ''' </summary>
     Public Class LibraryMatrix : Inherits IVector(Of ms2)
         Implements INamedValue
+        Implements ISpectrum
 
         ''' <summary>
         ''' The list of molecular fragment
@@ -171,6 +173,16 @@ Namespace Spectra
         <DebuggerStepThrough>
         Sub New(data As IEnumerable(Of ms2))
             Call MyBase.New(data)
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Function GetIons() As IEnumerable(Of ms2) Implements ISpectrum.GetIons
+            Return Array.AsEnumerable
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Sub SetIons(ions As IEnumerable(Of ms2)) Implements ISpectrum.SetIons
+            buffer = ions.ToArray
         End Sub
 
         ''' <summary>
@@ -292,5 +304,6 @@ Namespace Spectra
                 .Select(Function(r) (r.mz, r.intensity)) _
                 .ToArray
         End Operator
+
     End Class
 End Namespace

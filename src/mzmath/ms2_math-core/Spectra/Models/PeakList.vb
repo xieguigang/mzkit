@@ -64,6 +64,9 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 
 Namespace Spectra
 
+    ''' <summary>
+    ''' Spectrum data in vector model
+    ''' </summary>
     Public Class PeakList
 
         ''' <summary>
