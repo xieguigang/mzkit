@@ -72,7 +72,7 @@
 
         Public Property ElementNumber As Integer
 
-        Public Property AtomElementProperties As List(Of AtomElementProperty) = New List(Of AtomElementProperty)()
+        Public Property AtomElementProperties As AtomElementProperty()
 
         Public Property IsotopicPeaks As List(Of IsotopicPeak) = New List(Of IsotopicPeak)()
 

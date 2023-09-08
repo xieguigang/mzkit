@@ -241,12 +241,12 @@ Namespace Formula.IsotopicPatterns
             Next
         End Sub
 
-        Private Function getIsotopeElementProperty(iupacElementPropertyBeanList As List(Of AtomElementProperty)) As List(Of IsotopicPeak)
+        Private Function getIsotopeElementProperty(iupacElementPropertyBeanList As AtomElementProperty()) As List(Of IsotopicPeak)
             Dim isotopeElementPropertyBeanList As List(Of IsotopicPeak) = New List(Of IsotopicPeak)()
 
             Dim relativeAbundance, massDifference As Double
 
-            For i = 0 To iupacElementPropertyBeanList.Count - 1
+            For i = 0 To iupacElementPropertyBeanList.Length - 1
                 relativeAbundance = iupacElementPropertyBeanList(i).NaturalRelativeAbundance / iupacElementPropertyBeanList(0).NaturalRelativeAbundance
                 massDifference = iupacElementPropertyBeanList(i).ExactMass - iupacElementPropertyBeanList(0).ExactMass
                 isotopeElementPropertyBeanList.Add(New IsotopicPeak() With {
