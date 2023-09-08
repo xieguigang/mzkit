@@ -6,18 +6,6 @@ Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
 Imports std = System.Math
 
-Public Class RawData : Inherits PeakMs2
-
-    Public Property CarbonNumberFromLabeledExperiment As Integer
-    Public Property SulfurNumberFromLabeledExperiment As Integer
-    Public Property NitrogenNumberFromLabeledExperiment As Integer
-    Public Property OxygenNumberFromLabeledExperiment As Integer
-    Public Property CarbonNitrogenNumberFromLabeledExperiment As Integer
-    Public Property CarbonSulfurNumberFromLabeledExperiment As Integer
-    Public Property NitrogenSulfurNumberFromLabeledExperiment As Integer
-    Public Property CarbonNitrogenSulfurNumberFromLabeledExperiment As Integer
-End Class
-
 ''' <summary>
 ''' This class is the main program to find the molecular formula candidates from the mass spectra and to rank them.
 ''' </summary>

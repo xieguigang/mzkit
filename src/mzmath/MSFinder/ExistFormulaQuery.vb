@@ -5,8 +5,8 @@
 ''' The queries are stored in .EFD file of the same folder of main program (should be).
 ''' The EFD file will be retrieved by ExistFormulaDbParcer.cs.
 ''' </summary>
-
 Public Class ExistFormulaQuery
+
     Public Sub New()
         PubchemCidList = New List(Of Integer)()
         Formula = New Formula()
@@ -20,9 +20,7 @@ Public Class ExistFormulaQuery
         ResourceNames = dbNames
     End Sub
 
-
     Public Property Formula As Formula
-
 
     Public Property PubchemCidList As List(Of Integer)
 
@@ -31,5 +29,6 @@ Public Class ExistFormulaQuery
     Public Property ResourceNumber As Integer
 
     Public Property ResourceNames As String
+
 End Class
 
