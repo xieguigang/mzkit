@@ -8,22 +8,14 @@ Public NotInheritable Class LipidMassLibraryGenerator
     Private Sub New()
     End Sub
 
-    Public Shared Sub Integrate(inputfolder As String, output As String)
-        Dim files = Directory.GetFiles(inputfolder, "*.txt", SearchOption.TopDirectoryOnly)
-        Using sw = New StreamWriter(output, False, Encoding.ASCII)
-            sw.WriteLine("Name" & Microsoft.VisualBasic.Constants.vbTab & "MZ" & Microsoft.VisualBasic.Constants.vbTab & "Adduct")
-            For Each file In files
-                Using sr = New StreamReader(file, Encoding.ASCII)
-                    sr.ReadLine()
-                    While sr.Peek() > -1
-                        sw.WriteLine(sr.ReadLine())
-                    End While
-                End Using
-            Next
-        End Using
-    End Sub
-
-    Public Shared Sub Run(outputfolder As String, lipidclass As LbmClass, adduct As AdductIon, minCarbonCount As Integer, maxCarbonCount As Integer, minDoubleBond As Integer, maxDoubleBond As Integer, maxOxygen As Integer)
+    Public Shared Sub Run(outputfolder As String,
+                          lipidclass As LbmClass,
+                          adduct As AdductIon,
+                          minCarbonCount As Integer,
+                          maxCarbonCount As Integer,
+                          minDoubleBond As Integer,
+                          maxDoubleBond As Integer,
+                          maxOxygen As Integer)
 
         Select Case lipidclass
             Case LbmClass.PC
