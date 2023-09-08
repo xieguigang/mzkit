@@ -459,9 +459,9 @@ Public NotInheritable Class FragmentAssigner
         Return fragmentFormulas
     End Function
 
-    Private Shared Function isotopicPeakAssignmnet(peaklist As List(Of SpectrumPeak), massTol As Double, massTolType As MassToleranceType) As List(Of SpectrumPeak)
-        Dim c13_c12_Ratio = 0.010815728
+    Public Const c13_c12_Ratio = 0.010815728
 
+    Private Shared Function isotopicPeakAssignmnet(peaklist As List(Of SpectrumPeak), massTol As Double, massTolType As MassToleranceType) As List(Of SpectrumPeak)
         For i = 0 To peaklist.Count - 1
             Dim mass = peaklist(i).mz
             Dim m1Intensity = peaklist(i).intensity

@@ -463,8 +463,8 @@ Public Class FormulaGenerator
         Dim ms1Tol = param.Mass1Tolerance
         Dim massTolType = param.MassTolType
         Dim maxReportNumber = param.FormulaMaximumReportNumber
+        Dim formulaResults As New List(Of FormulaResult)()
 
-        Dim formulaResults = New System.Collections.Generic.List(Of FormulaResult)()
         If massTolType = MassToleranceType.Ppm Then ms1Tol = PPMmethod.ConvertPpmToMassAccuracy(mass, ms1Tol)
 
         formulaResults = Me.getFormulaResults(rawData, param, mass, ms1Tol, m1Intensity, m2Intensity, adductIon, isotopeCheck, maxReportNumber, existFormulaDB, Nothing, Nothing, Nothing, Nothing)
@@ -534,25 +534,26 @@ Public Class FormulaGenerator
             Me.setFragmentProperties(formulaResult, refinedPeaklist, neutralLosslist, productIonDB, neutralLossDB, ms2Tol, massTolType, adductIon)
         End If
 
-        formulaResult.TotalScore = System.Math.Round(Scoring.TotalScore(formulaResult), 3)
+        formulaResult.TotalScore = std.Round(Scoring.TotalScore(formulaResult), 3)
         formulaResult.IsSelected = True
 
         Return formulaResult
     End Function
 
     Private Sub setExistFormulaDbInfo(formulaResult As FormulaResult, existFormulaDB As List(Of ExistFormulaQuery))
-        Dim resourceNames As String
-        Dim resourceRecords As Integer
-        Dim pubchemCids As List(Of Integer)
+        Dim resourceNames As String = Nothing
+        Dim resourceRecords As Integer = Nothing
+        Dim pubchemCids As List(Of Integer) = Nothing
 
-        Me.tryExistFormulaDbSearch(formulaResult.Formula, existFormulaDB, resourceNames, resourceRecords, pubchemCids)
+        Call Me.tryExistFormulaDbSearch(formulaResult.Formula, existFormulaDB, resourceNames, resourceRecords, pubchemCids)
+
         formulaResult.ResourceNames = resourceNames
         formulaResult.ResourceRecords = resourceRecords
         formulaResult.PubchemResources = pubchemCids
     End Sub
 
     Private Sub tryExistFormulaDbSearch(formula As Formula, queryDB As List(Of ExistFormulaQuery), <Out> ByRef resourceNames As String, <Out> ByRef resourceRecords As Integer, <Out> ByRef pubchemCIDs As List(Of Integer))
-        pubchemCIDs = New System.Collections.Generic.List(Of Integer)()
+        pubchemCIDs = New List(Of Integer)()
         resourceNames = String.Empty
         resourceRecords = 0
 
