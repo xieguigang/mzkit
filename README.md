@@ -414,13 +414,6 @@ Just click ``OK`` on the dialog:
 	}
 </script>
 
-### Credit
-
-GUI Framework library of mzkit_win32 software:
-
-+ Windows Ribbon: https://github.com/harborsiem/WindowsRibbon
-+ DockPanel: https://github.com/dockpanelsuite/dockpanelsuite
-
 ### Reference
 
 + X. Shen, R. Wang, X. Xiong, Y. Yin, Y. Cai, Z. Ma, N. Liu, and Z.-J. Zhu* (Corresponding Author), Metabolic Reaction Network-based Recursive Metabolite Annotation for Untargeted Metabolomics, Nature Communications, 2019, 10: 1516.
