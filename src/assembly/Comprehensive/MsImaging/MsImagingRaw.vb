@@ -1,69 +1,70 @@
 ﻿#Region "Microsoft.VisualBasic::b7c2150cdfd428d1c6209782046f41fe, mzkit\src\assembly\Comprehensive\MsImaging\MsImagingRaw.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 180
-    '    Code Lines: 133
-    ' Comment Lines: 25
-    '   Blank Lines: 22
-    '     File Size: 7.52 KB
+' Summaries:
 
 
-    '     Module MsImagingRaw
-    ' 
-    '         Function: GetMSIMetadata, MeasureRow, MSICombineRowScans, ParseRowNumber
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 180
+'    Code Lines: 133
+' Comment Lines: 25
+'   Blank Lines: 22
+'     File Size: 7.52 KB
+
+
+'     Module MsImagingRaw
+' 
+'         Function: GetMSIMetadata, MeasureRow, MSICombineRowScans, ParseRowNumber
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.CommandLine.InteropService.Pipeline
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
-Imports Microsoft.VisualBasic.DataStorage.netCDF.Components
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.Math.Statistics.Linq
 Imports Microsoft.VisualBasic.Scripting.Expressions
 
 Namespace MsImaging
@@ -72,6 +73,31 @@ Namespace MsImaging
     ''' raw data file reader helper code
     ''' </summary>
     Public Module MsImagingRaw
+
+        <Extension>
+        Public Function Summary(msidata As mzPack, Optional filter As Func(Of Integer, Integer, Boolean) = Nothing) As IEnumerable(Of iPixelIntensity)
+            If filter Is Nothing Then
+                filter = Function(x, y) True
+            End If
+
+            Return From p As ScanMS1
+                   In msidata.MS.AsParallel
+                   Let xi As Integer = Integer.Parse(p.meta("x"))
+                   Let yi As Integer = Integer.Parse(p.meta("y"))
+                   Where Not p.into.IsNullOrEmpty
+                   Where filter(xi, yi)
+                   Select New iPixelIntensity With {
+                       .x = xi,
+                       .y = yi,
+                       .average = p.into.Average,
+                       .basePeakIntensity = p.into.Max,
+                       .totalIon = p.into.Sum,
+                       .basePeakMz = p.mz(which.Max(p.into)),
+                       .numIons = p.size,
+                       .min = p.into.Min,
+                       .median = p.into.Median
+                   }
+        End Function
 
         ''' <summary>
         ''' 

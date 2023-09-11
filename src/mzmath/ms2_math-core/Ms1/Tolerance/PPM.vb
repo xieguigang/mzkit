@@ -65,6 +65,12 @@ Namespace Ms1
     ''' </summary>
     Public Class PPMmethod : Inherits Tolerance
 
+        Public Overrides ReadOnly Property Type As MassToleranceType
+            Get
+                Return MassToleranceType.Ppm
+            End Get
+        End Property
+
         Sub New()
         End Sub
 
@@ -94,6 +100,10 @@ Namespace Ms1
             End If
 
             Return ppmd
+        End Function
+
+        Public Shared Function ConvertPpmToMassAccuracy(exactMass As Double, ppm As Double) As Double
+            Return ppm * exactMass / 1000000.0
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

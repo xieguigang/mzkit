@@ -142,6 +142,32 @@ declare namespace data {
    */
    function search(q: any, refer: object, tolerance?: any, intocutoff?: number, similarity_cutoff?: number, env?: object): object;
    /**
+    * evaluate the splash id of the given spectrum data
+    * 
+    * > The SPLASH is an unambiguous, database-independent spectral identifier, 
+    * >  just as the InChIKey is designed to serve as a unique identifier for 
+    * >  chemical structures. It contains separate blocks that define different 
+    * >  layers of information, separated by dashes. For example, the full SPLASH 
+    * >  of a caffeine mass spectrum above is splash10-0002-0900000000-b112e4e059e1ecf98c5f.
+    * >  The first block is the SPLASH identifier, the second and third are 
+    * >  summary blocks, and the fourth is the unique hash block.
+    * >  
+    * >  The SPLASH began As the MoNA (Massbank Of North America) hash, designed To 
+    * >  identify duplicate spectra within the database. This idea developed further 
+    * >  during the 2015 Metabolomics conference, where the SPLASH collaboration 
+    * >  was formed. Currently, the specification has been formalized For mass 
+    * >  spectrometry data. Additional specifications For IR, UV And NMR spectrometry
+    * >  are planned.
+    * 
+     * @param spec -
+     * @param type 
+     * + default value Is ``null``.
+     * @param env -
+     * 
+     * + default value Is ``null``.
+   */
+   function splash_id(spec: any, type?: object, env?: object): any;
+   /**
     * Union and merge the given multiple spectrum data into one single spectrum
     * 
     * 

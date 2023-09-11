@@ -140,6 +140,11 @@ Namespace Deconvolute
             Return mzUnique
         End Function
 
+        <Extension>
+        Public Function DeconvoluteMS(sp As LibraryMatrix, len As Integer, mzIndex As BlockSearchFunction(Of (mz As Double, Integer))) As Double()
+            Return DeconvoluteScan(sp.Select(Function(a) a.mz).ToArray, sp.Select(Function(a) a.intensity).ToArray, len, mzIndex)
+        End Function
+
         ''' <summary>
         ''' make alignment of the scan data to a given set of the mz index data
         ''' </summary>

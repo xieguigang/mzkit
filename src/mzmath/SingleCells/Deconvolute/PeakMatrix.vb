@@ -65,6 +65,16 @@ Namespace Deconvolute
 
     Public Module PeakMatrix
 
+        <Extension>
+        Public Function CreateMzIndex(mzSet As Double()) As BlockSearchFunction(Of (mz As Double, Integer))
+            Return New BlockSearchFunction(Of (mz As Double, Integer))(
+                data:=mzSet.Select(Function(mzi, i) (mzi, i)),
+                eval:=Function(i) i.mz,
+                tolerance:=1,
+                fuzzy:=True
+            )
+        End Function
+
         ''' <summary>
         ''' ms-imaging raw data matrix deconvolution
         ''' </summary>
@@ -81,12 +91,7 @@ Namespace Deconvolute
                 mzSet = GetMzIndex(raw:=raw, mzdiff:=mzdiff, freq:=freq)
             End If
 
-            Dim mzIndex As New BlockSearchFunction(Of (mz As Double, Integer))(
-                data:=mzSet.Select(Function(mzi, i) (mzi, i)),
-                eval:=Function(i) i.mz,
-                tolerance:=1,
-                fuzzy:=True
-            )
+            Dim mzIndex = mzSet.CreateMzIndex
             Dim matrix As PixelData() = raw _
                 .deconvoluteMatrix(mzSet.Length, mzIndex) _
                 .ToArray
@@ -105,12 +110,7 @@ Namespace Deconvolute
         ''' <param name="raw"></param>
         ''' <returns></returns>
         Public Iterator Function ExportScans(Of T As {New, INamedValue, IVector})(raw As mzPack, mzSet As Double()) As IEnumerable(Of T)
-            Dim mzIndex As New BlockSearchFunction(Of (mz As Double, Integer))(
-                data:=mzSet.Select(Function(mzi, i) (mzi, i)),
-                eval:=Function(i) i.mz,
-                tolerance:=1,
-                fuzzy:=True
-            )
+            Dim mzIndex = mzSet.CreateMzIndex
             Dim len As Integer = mzSet.Length
 
             For Each scan As ScanMS1 In raw.MS

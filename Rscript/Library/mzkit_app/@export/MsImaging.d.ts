@@ -28,8 +28,10 @@ declare namespace MsImaging {
         *  when this parameter value is set to TRUE
         * 
         * + default value Is ``true``.
+        * @param env 
+        * + default value Is ``null``.
       */
-      function pixels(layer: object, character?: boolean): string|object;
+      function pixels(layer: any, character?: boolean, env?: object): string|object;
    }
    /**
     * test of a given MSI layer is target?
@@ -68,8 +70,16 @@ declare namespace MsImaging {
    */
    function FilterMz(viewer: object, mz: number, tolerance?: any, title?: string, env?: object): object;
    /**
-     * @param summary default value Is ``null``.
-     * @param env default value Is ``null``.
+    * Get intensity data vector from a given MS-imaging layer
+    * 
+    * 
+     * @param layer -
+     * @param summary -
+     * 
+     * + default value Is ``null``.
+     * @param env -
+     * 
+     * + default value Is ``null``.
    */
    function intensity(layer: any, summary?: object, env?: object): number;
    /**
@@ -216,8 +226,10 @@ declare namespace MsImaging {
      * @param data -
      * @param x -
      * @param y -
+     * @param env 
+     * + default value Is ``null``.
    */
-   function pixel(data: object, x: object, y: object): object;
+   function pixel(data: any, x: object, y: object, env?: object): object;
    module read {
       /**
        * open the existed mzImage cache file

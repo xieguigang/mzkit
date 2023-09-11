@@ -73,6 +73,9 @@ declare namespace math {
      * + default value Is ``'+'``.
    */
    function exact_mass(mz: number, mode?: any): object;
+   /**
+   */
+   function intensity_vec(ms: object, mzSet: object): number;
    module ions {
       /**
        * data pre-processing helper, make the spectra ion data unique
@@ -135,6 +138,9 @@ declare namespace math {
      * + default value Is ``null``.
    */
    function mz(mass: number, mode?: any, env?: object): object|number;
+   /**
+   */
+   function mz_index(mz: number): object;
    /**
     * calculate ppm value between two mass vector
     * 

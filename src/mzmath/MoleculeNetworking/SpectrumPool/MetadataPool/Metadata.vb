@@ -47,8 +47,28 @@ Namespace PoolData
             End Get
         End Property
 
+        Sub New()
+        End Sub
+
+        Sub New(copy As Metadata)
+            Me.adducts = copy.adducts
+            Me.sample_source = copy.sample_source
+            Me.source_file = copy.source_file
+            Me.rt = copy.rt
+            Me.biodeep_id = copy.biodeep_id
+            Me.block = New BufferRegion(copy.block)
+            Me.formula = copy.formula
+            Me.guid = copy.guid
+            Me.instrument = copy.instrument
+            Me.intensity = copy.intensity
+            Me.mz = copy.mz
+            Me.name = copy.name
+            Me.organism = copy.organism
+            Me.project = copy.project
+        End Sub
+
         Public Overrides Function ToString() As String
-            Return $"[{guid}] {name}"
+            Return $"[{guid}] {name} {mz.ToString("F4")}@{(rt / 60).ToString("F2")}min"
         End Function
 
     End Class

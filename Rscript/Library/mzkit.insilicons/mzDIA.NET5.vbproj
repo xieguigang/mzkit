@@ -137,6 +137,7 @@
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj" />
     <ProjectReference Include="..\..\..\src\assembly\assembly\assembly-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\src\assembly\SpectrumTree\spectrumTree.NETCore5.vbproj" />
+    <ProjectReference Include="..\..\..\src\metadb\Lipidomics\Lipidomics.vbproj" />
     <ProjectReference Include="..\..\..\src\metadna\metaDNA\metaDNA.NET5.vbproj" />
     <ProjectReference Include="..\..\..\src\metadna\MetaDNA_visual\metaDNA_visual.NET5.vbproj" />
     <ProjectReference Include="..\..\..\src\mzmath\MoleculeNetworking\MoleculeNetworking.vbproj" />

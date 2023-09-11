@@ -24,7 +24,7 @@
 + [sum_layers](MsImaging/sum_layers.1) merge multiple layers via intensity sum
 + [rgb](MsImaging/rgb.1) rendering ions MSI in (R,G,B) color channels
 + [MSIlayer](MsImaging/MSIlayer.1) get MSI pixels layer via given ``m/z`` value.
-+ [intensity](MsImaging/intensity.1) 
++ [intensity](MsImaging/intensity.1) Get intensity data vector from a given MS-imaging layer
 + [knnFill](MsImaging/knnFill.1) do pixel interpolation for run MS-imaging
 + [MSI_coverage](MsImaging/MSI_coverage.1) 
 + [assert](MsImaging/assert.1) test of a given MSI layer is target?

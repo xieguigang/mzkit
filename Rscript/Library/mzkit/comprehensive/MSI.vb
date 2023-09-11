@@ -77,6 +77,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Data.GraphTheory.GridGraph
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
@@ -123,6 +124,39 @@ Module MSI
         Call table.add(NameOf(IonStat.Q3Intensity), ions.Select(Function(i) i.Q3Intensity))
 
         Return table
+    End Function
+
+    ''' <summary>
+    ''' scale the spatial matrix by column
+    ''' </summary>
+    ''' <param name="m"></param>
+    ''' <param name="factor">the size of this numeric vector should be equals to the 
+    ''' ncol of the given dataframe input <paramref name="m"/>.
+    ''' </param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("scale")>
+    Public Function scale(m As rDataframe, <RRawVectorArgument> factor As Object, Optional env As Environment = Nothing) As Object
+        Dim f As Double() = CLRVector.asNumeric(factor)
+        Dim v As Double()
+        Dim cols As String() = m.colnames
+        Dim name As String
+
+        If f.Length <> cols.Length Then
+            Return Internal.debug.stop($"the dimension of the factor vector({f.Length}) is not matched with the dataframe columns({cols.Length})!", env)
+        End If
+
+        m = New rDataframe(m)
+
+        For i As Integer = 0 To cols.Length - 1
+            name = cols(i)
+            v = CLRVector.asNumeric(m.columns(name))
+            v = SIMD.Divide.f64_op_divide_f64_scalar(v, v.Sum)
+            v = SIMD.Multiply.f64_scalar_op_multiply_f64(f(i), v)
+            m.columns(name) = v
+        Next
+
+        Return m
     End Function
 
     ''' <summary>
@@ -426,22 +460,52 @@ Module MSI
         Return pixels
     End Function
 
+    Private Function GetXySpatialFilter(x As Integer(), y As Integer()) As Func(Of Integer, Integer, Boolean)
+        If x.IsNullOrEmpty AndAlso y.IsNullOrEmpty Then
+            Return Function(xi, yi) True
+        ElseIf x.IsNullOrEmpty Then
+            Dim yindex As Index(Of Integer) = y.Indexing
+            ' filter y
+            Return Function(xi, yi) yi Like yindex
+        ElseIf y.IsNullOrEmpty Then
+            Dim xindex As Index(Of Integer) = x.Indexing
+            ' filter x
+            Return Function(xi, yi) xi Like xindex
+        Else
+            ' filter xy
+            Dim pixels As Index(Of String) = x _
+                .Select(Function(xi, i) $"{xi},{y(i)}") _
+                .Indexing
+
+            Return Function(xi, yi) $"{xi},{yi}" Like pixels
+        End If
+    End Function
+
     ''' <summary>
     ''' Fetch MSI summary data
     ''' </summary>
     ''' <param name="raw"></param>
+    ''' <param name="as_vector">
+    ''' returns the raw vector of <see cref="iPixelIntensity"/> if set this
+    ''' parameter value to value TRUE, or its wrapper object <see cref="MSISummary"/> 
+    ''' if set this parameter value to FALSE by default.
+    ''' </param>
+    ''' <param name="dims">
+    ''' overrides the MSI data its scan dimension value? This parameter value is
+    ''' a numeric vector with two integer element that represents the dimension
+    ''' of the MSI data(width and height)
+    ''' </param>
     ''' <returns></returns>
     <ExportAPI("MSI_summary")>
     <RApiReturn(GetType(MSISummary), GetType(iPixelIntensity))>
     Public Function MSI_summary(raw As mzPack,
-                                Optional x As Long() = Nothing,
-                                Optional y As Long() = Nothing,
+                                Optional x As Integer() = Nothing,
+                                Optional y As Integer() = Nothing,
                                 Optional as_vector As Boolean = False,
                                 <RRawVectorArgument>
                                 Optional dims As Object = Nothing,
                                 Optional env As Environment = Nothing) As Object
 
-        Dim filter As Func(Of Long, Long, Boolean)
         Dim dimSize = InteropArgumentHelper.getSize(dims, env, [default]:="0,0")
         Dim dimsVal As Size? = Nothing
 
@@ -451,40 +515,7 @@ Module MSI
             dimsVal = raw.GetMSIMetadata.GetDimension
         End If
 
-        If x.IsNullOrEmpty AndAlso y.IsNullOrEmpty Then
-            filter = Function(xi, yi) True
-        ElseIf x.IsNullOrEmpty Then
-            Dim yindex As Index(Of Long) = y.Indexing
-            ' filter y
-            filter = Function(xi, yi) yi Like yindex
-        ElseIf y.IsNullOrEmpty Then
-            Dim xindex As Index(Of Long) = x.Indexing
-            ' filter x
-            filter = Function(xi, yi) xi Like xindex
-        Else
-            ' filter xy
-            Dim pixels As Index(Of String) = x _
-                .Select(Function(xi, i) $"{xi},{y(i)}") _
-                .Indexing
-
-            filter = Function(xi, yi) $"{xi},{yi}" Like pixels
-        End If
-
-        Dim pixelFilter As IEnumerable(Of iPixelIntensity) =
-            From p As ScanMS1
-            In raw.MS
-            Let xi As Long = Long.Parse(p.meta("x"))
-            Let yi As Long = Long.Parse(p.meta("y"))
-            Where Not p.into.IsNullOrEmpty
-            Where filter(xi, yi)
-            Select New iPixelIntensity With {
-                .x = xi,
-                .y = yi,
-                .average = p.into.Average,
-                .basePeakIntensity = p.into.Max,
-                .totalIon = p.into.Sum,
-                .basePeakMz = p.mz(which.Max(p.into))
-            }
+        Dim pixelFilter As IEnumerable(Of iPixelIntensity) = raw.Summary(filter:=GetXySpatialFilter(x, y))
 
         If Not (x.IsNullOrEmpty OrElse y.IsNullOrEmpty) Then
             Dim pixels As Index(Of String) = x _
@@ -814,6 +845,74 @@ Module MSI
         Next
 
         Return convolution
+    End Function
+
+    ''' <summary>
+    ''' pack the matrix file as the MSI mzpack
+    ''' </summary>
+    ''' <param name="file">
+    ''' the file resource reference to the csv table file, and the
+    ''' csv file should be in format of ion peaks features in column
+    ''' and spatial spot id in rows
+    ''' </param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("pack_matrix")>
+    Public Function packMatrix(<RRawVectorArgument> file As Object, Optional env As Environment = Nothing) As Object
+        Dim buf = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Read, env)
+
+        If buf Like GetType(Message) Then
+            Return buf.TryCast(Of Message)
+        End If
+
+        Dim read As New StreamReader(buf.TryCast(Of Stream))
+        Dim ionsMz As Double() = RowObject.TryParse(read.ReadLine) _
+            .Skip(1) _
+            .Select(Function(si) Val(si)) _
+            .ToArray
+        Dim line As Value(Of String) = ""
+        Dim scans As New List(Of ScanMS1)
+        Dim ti As Double = 0
+
+        Do While (line = read.ReadLine) IsNot Nothing
+            Dim t As String() = Tokenizer.CharsParser(line).ToArray
+            Dim xy As Integer() = t(0) _
+                .Split(","c) _
+                .Select(Function(si) Integer.Parse(si)) _
+                .ToArray
+            Dim v As Double() = t _
+                .Skip(1) _
+                .Select(Function(si) Val(si)) _
+                .ToArray
+
+            For i As Integer = 0 To v.Length - 1
+                If v(i) < 0 Then
+                    v(i) = 0
+                End If
+            Next
+
+            ti += 1.98
+
+            Call scans.Add(New ScanMS1 With {
+                .BPC = v.Max,
+                .into = v,
+                .meta = New Dictionary(Of String, String) From {
+                    {"x", xy(0)},
+                    {"y", xy(1)}
+                },
+                .mz = ionsMz,
+                .products = Nothing,
+                .rt = ti,
+                .TIC = v.Sum,
+                .scan_id = $"[MS1] [{xy(0)},{xy(1)}] totalIons={ .TIC} basePeak={ .BPC} basepeak_m/z={ionsMz(which.Max(v))}"
+            })
+        Loop
+
+        Return New mzPack With {
+            .MS = scans.ToArray,
+            .source = NameOf(packMatrix),
+            .Application = FileApplicationClass.MSImaging
+        }
     End Function
 End Module
 

@@ -84,9 +84,15 @@ declare namespace MSI {
      * + default value Is ``null``.
      * @param y 
      * + default value Is ``null``.
-     * @param as_vector 
+     * @param as_vector returns the raw vector of @``T:BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML.iPixelIntensity`` if set this
+     *  parameter value to value TRUE, or its wrapper object @``T:BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML.MSISummary`` 
+     *  if set this parameter value to FALSE by default.
+     * 
      * + default value Is ``false``.
-     * @param dims 
+     * @param dims overrides the MSI data its scan dimension value? This parameter value is
+     *  a numeric vector with two integer element that represents the dimension
+     *  of the MSI data(width and height)
+     * 
      * + default value Is ``null``.
      * @param env 
      * + default value Is ``null``.
@@ -97,6 +103,18 @@ declare namespace MSI {
       */
       function imzML(file: string): any;
    }
+   /**
+    * pack the matrix file as the MSI mzpack
+    * 
+    * 
+     * @param file the file resource reference to the csv table file, and the
+     *  csv file should be in format of ion peaks features in column
+     *  and spatial spot id in rows
+     * @param env -
+     * 
+     * + default value Is ``null``.
+   */
+   function pack_matrix(file: any, env?: object): any;
    /**
     * Extract the ion data matrix
     * 
@@ -207,6 +225,18 @@ declare namespace MSI {
       */
       function scans(raw: string, y?: object, correction?: object, env?: object): any;
    }
+   /**
+    * scale the spatial matrix by column
+    * 
+    * 
+     * @param m -
+     * @param factor the size of this numeric vector should be equals to the 
+     *  ncol of the given dataframe input **`m`**.
+     * @param env -
+     * 
+     * + default value Is ``null``.
+   */
+   function scale(m: object, factor: any, env?: object): any;
    /**
     * combine each row scan summary vector as the pixels 2D matrix
     * 

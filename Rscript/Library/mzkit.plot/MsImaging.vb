@@ -458,8 +458,33 @@ Module MsImaging
     ''' <param name="y"></param>
     ''' <returns></returns>
     <ExportAPI("pixel")>
-    Public Function GetPixel(data As XICReader, x As Integer, y As Integer) As ibdPixel
-        Return data.GetPixel(x, y)
+    <RApiReturn(GetType(ibdPixel))>
+    Public Function GetPixel(data As Object, x As Integer(), y As Integer(), Optional env As Environment = Nothing) As Object
+        If x.Length = 1 AndAlso y.Length = 1 Then
+            If TypeOf data Is XICReader Then
+                Return DirectCast(data, XICReader).GetPixel(x(0), y(0))
+            ElseIf TypeOf data Is MSISummary Then
+                Return DirectCast(data, MSISummary).GetPixel(x(0), y(0))
+            Else
+                Return Message.InCompatibleType(GetType(XICReader), data.GetType, env)
+            End If
+        Else
+            If TypeOf data Is XICReader Then
+                With DirectCast(data, XICReader)
+                    Return x _
+                        .Select(Function(xi, i) .GetPixel(xi, y(i))) _
+                        .ToArray
+                End With
+            ElseIf TypeOf data Is MSISummary Then
+                With DirectCast(data, MSISummary)
+                    Return x _
+                        .Select(Function(xi, i) .GetPixel(xi, y(i))) _
+                        .ToArray
+                End With
+            Else
+                Return Message.InCompatibleType(GetType(XICReader), data.GetType, env)
+            End If
+        End If
     End Function
 
     ''' <summary>
@@ -661,6 +686,13 @@ Module MsImaging
         End If
     End Function
 
+    ''' <summary>
+    ''' Get intensity data vector from a given MS-imaging layer
+    ''' </summary>
+    ''' <param name="layer"></param>
+    ''' <param name="summary"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("intensity")>
     <RApiReturn(GetType(Double))>
     Public Function GetIntensityData(layer As Object,
@@ -976,14 +1008,28 @@ Module MsImaging
     ''' <returns></returns>
     <ExportAPI("as.pixels")>
     <RApiReturn(GetType(String), GetType(Point2D))>
-    Public Function asPixels(layer As SingleIonLayer, Optional character As Boolean = True) As Object
+    Public Function asPixels(layer As Object,
+                             Optional character As Boolean = True,
+                             Optional env As Environment = Nothing) As Object
+
+        If TypeOf layer Is SingleIonLayer Then
+            Return DirectCast(layer, SingleIonLayer).MSILayer.asPixels(character)
+        ElseIf TypeOf layer Is MSISummary Then
+            Return DirectCast(layer, MSISummary).rowScans.IteratesALL.asPixels(character)
+        Else
+            Return Message.InCompatibleType(GetType(SingleIonLayer), layer.GetType, env)
+        End If
+    End Function
+
+    <Extension>
+    Private Function asPixels(Of T As RasterPixel)(ps As IEnumerable(Of T), character As Boolean) As Object
         If character Then
-            Return layer.MSILayer _
-                .Select(Function(p) $"{p.x},{p.y}") _
+            Return ps _
+                .Select(Function(p) $"{p.X},{p.Y}") _
                 .ToArray
         Else
-            Return layer.MSILayer _
-                .Select(Function(p) New Point2D(p.x, p.y)) _
+            Return ps _
+                .Select(Function(p) New Point2D(p.X, p.Y)) _
                 .ToArray
         End If
     End Function

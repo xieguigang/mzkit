@@ -65,6 +65,12 @@ Namespace Ms1
     ''' </summary>
     Public Class DAmethod : Inherits Tolerance
 
+        Public Overrides ReadOnly Property Type As MassToleranceType
+            Get
+                Return MassToleranceType.Da
+            End Get
+        End Property
+
         <DebuggerStepThrough>
         Sub New(Optional da# = 0.3)
             DeltaTolerance = da
