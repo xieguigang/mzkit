@@ -189,7 +189,12 @@ Module MSI
             Return Internal.debug.stop(New NotSupportedException("version 1 mzPack file can not supports the metadata!"), env)
         Else
             Dim pack As New mzStream(file.TryCast(Of Stream))
-            metadata = New Metadata(pack.metadata)
+
+            If pack.metadata.IsNullOrEmpty Then
+                metadata = mzPack.FromStream(stream:=pack).GetMSIMetadata
+            Else
+                metadata = New Metadata(pack.metadata)
+            End If
         End If
 
         If TypeOf raw Is String Then
