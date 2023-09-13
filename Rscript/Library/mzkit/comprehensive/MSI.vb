@@ -171,8 +171,32 @@ Module MSI
     ''' str(as.list(as.object(msi_data)$GetMetadata()));
     ''' </example>
     <ExportAPI("msi_metadata")>
-    Public Function GetMSIMetadata(raw As mzPack) As Metadata
-        Return raw.GetMSIMetadata
+    <RApiReturn(GetType(Metadata))>
+    Public Function GetMSIMetadata(<RRawVectorArgument> raw As Object, Optional env As Environment = Nothing) As Object
+        If TypeOf raw Is mzPack Then
+            Return DirectCast(raw, mzPack).GetMSIMetadata
+        End If
+
+        Dim file = SMRUCC.Rsharp.GetFileStream(raw, FileAccess.Read, env)
+        Dim metadata As Metadata
+
+        If file Like GetType(Message) Then
+            Return file.TryCast(Of Message)
+        End If
+
+        If file.TryCast(Of Stream).GetFormatVersion = 1 Then
+            ' version 1 format not supports metadata
+            Return Internal.debug.stop(New NotSupportedException("version 1 mzPack file can not supports the metadata!"), env)
+        Else
+            Dim pack As New mzStream(file.TryCast(Of Stream))
+            metadata = New Metadata(pack.metadata)
+        End If
+
+        If TypeOf raw Is String Then
+            Call file.TryCast(Of Stream).Dispose()
+        End If
+
+        Return metadata
     End Function
 
     ''' <summary>

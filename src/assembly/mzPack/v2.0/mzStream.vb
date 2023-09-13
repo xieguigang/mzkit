@@ -107,6 +107,16 @@ Public Class mzStream : Implements IMzPackReader
     End Property
 
     ''' <summary>
+    ''' get the metadata for the mzpack raw data file
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property metadata As IReadOnlyDictionary(Of String, String)
+        Get
+            Return meta
+        End Get
+    End Property
+
+    ''' <summary>
     ''' get all ms1 scan id
     ''' </summary>
     ''' <returns></returns>
@@ -159,6 +169,10 @@ Public Class mzStream : Implements IMzPackReader
         summary = pack.ReadText("/.etc/ms_scans.json").LoadJSON(Of Dictionary(Of String, Double))
         sampleTags = GetSampleTags(pack)
         ion_annotations = loadAnnotations()
+
+        If meta Is Nothing Then
+            meta = New Dictionary(Of String, String)
+        End If
 
         Call cacheScanIndex()
     End Sub
@@ -269,6 +283,11 @@ Public Class mzStream : Implements IMzPackReader
         TIC = ms1.TIC
     End Sub
 
+    ''' <summary>
+    ''' get the metadata from a specific scan data
+    ''' </summary>
+    ''' <param name="scan_id">the specific scan data was referenced via this scan id pointer</param>
+    ''' <returns></returns>
     Public Function GetMetadata(scan_id As String) As Dictionary(Of String, String) Implements IMzPackReader.GetMetadata
         Dim refer As String = $"{findScan1Name(scan_id)}/Scan1.mz"
         Dim metadata As StreamObject = pack.GetObject(refer)
