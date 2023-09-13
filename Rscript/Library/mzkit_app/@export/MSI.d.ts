@@ -73,8 +73,10 @@ declare namespace MSI {
     * 
     * 
      * @param raw -
+     * @param env 
+     * + default value Is ``null``.
    */
-   function msi_metadata(raw: object): object;
+   function msi_metadata(raw: any, env?: object): object;
    /**
     * Fetch MSI summary data
     * 
