@@ -89,6 +89,8 @@ Namespace Spectra.SplashID
         ''' </summary>
         Private Shared ReadOnly EPSILON As Double = 0.0000001
 
+        Public Shared ReadOnly MSSplash As New Splash(SpectrumType.MS)
+
         Dim spectrumType As SpectrumType
 
         Sub New(type As SpectrumType)
