@@ -36,7 +36,7 @@ Public NotInheritable Class FragmentAssigner
         Dim eMass = electron
         If AdductIon.IonMode = IonModes.Negative Then eMass = -1.0 * electron
 
-        For Each peak In peaklist
+        For Each peak As SpectrumPeak In peaklist
             If Not Equals(peak.Annotation, "M") Then Continue For
 
             Dim mass = peak.mz + eMass
@@ -75,7 +75,7 @@ Public NotInheritable Class FragmentAssigner
 })
         Next
 
-        For Each ion In productIons
+        For Each ion As ProductIon In productIons
             Dim startIndex = FragmentAssigner.getStartIndex(ion.Mass, 0.1, productIonDB)
             For i = startIndex To productIonDB.Count - 1
                 Dim ionQuery = productIonDB(i)
@@ -458,7 +458,10 @@ Public NotInheritable Class FragmentAssigner
                                                         {"I", inum}, {"Si", sinum}
                                                     }
                                                     Dim fragmentFormula = New Formula(counts)
-                                                    If SevenGoldenRulesCheck.ValenceCheckByHydrogenShift(fragmentFormula) Then fragmentFormulas.Add(fragmentFormula)
+
+                                                    If SevenGoldenRulesCheck.ValenceCheckByHydrogenShift(fragmentFormula) Then
+                                                        fragmentFormulas.Add(fragmentFormula)
+                                                    End If
                                                 Next
                                             Next
                                         Next
