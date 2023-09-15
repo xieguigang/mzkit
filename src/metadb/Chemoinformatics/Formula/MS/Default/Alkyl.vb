@@ -56,7 +56,7 @@
 
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 
-Namespace AtomGroups
+Namespace Formula.MS.AtomGroups
 
     ''' <summary>
     ''' 烷基（alkyl），即饱和烃基，是烷烃分子中少掉一个氢原子而成的烃基，常用-R表示。烷基是一类仅含有碳、氢两种原子的链状有机基团。

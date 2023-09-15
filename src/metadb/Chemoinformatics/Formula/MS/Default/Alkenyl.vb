@@ -55,7 +55,7 @@
 
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 
-Namespace AtomGroups
+Namespace Formula.MS.AtomGroups
 
     Public Class Alkenyl
 
