@@ -84,7 +84,7 @@ Namespace Deconvolute
         ''' <returns></returns>
         Public Function CreateMatrix(raw As mzPack,
                                      Optional mzdiff As Double = 0.001,
-                                     Optional freq As Double = 0.001,
+                                     Optional freq As Double = 0.01,
                                      Optional mzSet As Double() = Nothing) As MzMatrix
 
             If mzSet.IsNullOrEmpty Then

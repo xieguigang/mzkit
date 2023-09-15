@@ -823,7 +823,7 @@ Module MSI
     <ExportAPI("pixelMatrix")>
     Public Function PixelMatrix(raw As mzPack, file As Stream,
                                 Optional mzdiff As Double = 0.001,
-                                Optional q As Double = 0.001,
+                                Optional q As Double = 0.01,
                                 Optional env As Environment = Nothing) As Message
 
         Dim matrix As MzMatrix = SingleCellMatrix.CreateMatrix(raw, mzdiff, freq:=q)
