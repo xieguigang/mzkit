@@ -818,8 +818,16 @@ Module MSI
     ''' </summary>
     ''' <param name="raw"></param>
     ''' <param name="file"></param>
+    ''' <param name="mzdiff">
+    ''' the mass tolerance width for extract the feature ions
+    ''' </param>
+    ''' <param name="q">
+    ''' the frequence threshold for filter the feature ions, this 
+    ''' value range of this parameter should be inside [0,1] which
+    ''' means percentage cutoff.
+    ''' </param>
     ''' <param name="env"></param>
-    ''' <returns></returns>
+    ''' <returns>This function has no value returns</returns>
     <ExportAPI("pixelMatrix")>
     Public Function PixelMatrix(raw As mzPack, file As Stream,
                                 Optional mzdiff As Double = 0.001,
