@@ -74,6 +74,12 @@ Namespace Pixel
         Public MustOverride ReadOnly Property scanId As String
         Public MustOverride ReadOnly Property sampleTag As String
 
+        ''' <summary>
+        ''' used for evaluate the <see cref="Splash"/>
+        ''' </summary>
+        Sub New()
+        End Sub
+
         Public Overridable Function GetMs() As ms2()
             Return GetMsPipe.ToArray
         End Function
