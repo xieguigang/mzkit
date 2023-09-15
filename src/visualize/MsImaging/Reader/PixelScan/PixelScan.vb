@@ -57,6 +57,7 @@
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.SplashID
 Imports Microsoft.VisualBasic.Data.GraphTheory.GridGraph
 
 Namespace Pixel
@@ -64,7 +65,7 @@ Namespace Pixel
     ''' <summary>
     ''' the abstract model of pixel point [x,y] and method for get ms data vector
     ''' </summary>
-    Public MustInherit Class PixelScan : Implements IDisposable, IPoint2D, IMsScan
+    Public MustInherit Class PixelScan : Implements IDisposable, IPoint2D, IMsScan, ISpectrum
 
         Dim disposedValue As Boolean
 
@@ -72,6 +73,12 @@ Namespace Pixel
         Public MustOverride ReadOnly Property Y As Integer Implements IPoint2D.Y
         Public MustOverride ReadOnly Property scanId As String
         Public MustOverride ReadOnly Property sampleTag As String
+
+        ''' <summary>
+        ''' used for evaluate the <see cref="Splash"/>
+        ''' </summary>
+        Sub New()
+        End Sub
 
         Public Overridable Function GetMs() As ms2()
             Return GetMsPipe.ToArray
@@ -85,6 +92,7 @@ Namespace Pixel
         Public MustOverride Function HasAnyMzIon(mz As Double(), tolerance As Tolerance) As Boolean
         Public MustOverride Function GetMzIonIntensity() As Double()
         Public MustOverride Function SetXY(x As Integer, y As Integer) As mzPackPixel
+        Protected MustOverride Sub SetIons(ions As IEnumerable(Of ms2)) Implements ISpectrum.SetIons
 
         Public Overridable Function GetMzIonIntensity(mz As Double, mzdiff As Tolerance) As Double Implements IMsScan.GetMzIonIntensity
             Dim allMatched = GetMsPipe.Where(Function(mzi) mzdiff(mz, mzi.mz)).ToArray
@@ -102,7 +110,7 @@ Namespace Pixel
             Return $"[{X},{Y}]"
         End Function
 
-        Protected Friend MustOverride Function GetMsPipe() As IEnumerable(Of ms2) Implements IMsScan.GetMs
+        Protected Friend MustOverride Function GetMsPipe() As IEnumerable(Of ms2) Implements IMsScan.GetMs, ISpectrum.GetIons
         Protected Friend MustOverride Sub release()
 
         Private Sub Dispose(disposing As Boolean)
@@ -130,5 +138,6 @@ Namespace Pixel
             Dispose(disposing:=True)
             GC.SuppressFinalize(Me)
         End Sub
+
     End Class
 End Namespace

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c5c6a6b5a50c86122ae20c8afd573753, mzkit\src\metadb\FormulaSearch.Extensions\AtomGroups\Default\Others.vb"
+﻿#Region "Microsoft.VisualBasic::9741818f1b10d572065109ce0a93903d, mzkit\src\metadb\FormulaSearch.Extensions\AtomGroups\Default\Amines.vb"
 
     ' Author:
     ' 
@@ -37,16 +37,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 14
-    '    Code Lines: 10
+    '   Total Lines: 10
+    '    Code Lines: 6
     ' Comment Lines: 0
     '   Blank Lines: 4
-    '     File Size: 609 B
+    '     File Size: 240 B
 
 
-    '     Class Others
+    '     Class Amines
     ' 
-    '         Properties: CH2O, H, nitro_group, NL2H2O, NLH2O
+    '         Properties: methylamine
     ' 
     ' 
     ' /********************************************************************************/
@@ -55,15 +55,11 @@
 
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 
-Namespace AtomGroups
+Namespace Formula.MS.AtomGroups
 
-    Public Class Others
+    Public Class Amines
 
-        Public Shared ReadOnly Property H As Formula = FormulaScanner.ScanFormula("H")
-        Public Shared ReadOnly Property nitro_group As Formula = FormulaScanner.ScanFormula("NO2")
-        Public Shared ReadOnly Property NLH2O As Formula = FormulaScanner.ScanFormula("H2O")
-        Public Shared ReadOnly Property NL2H2O As Formula = FormulaScanner.ScanFormula("(H2O)2")
-        Public Shared ReadOnly Property CH2O As Formula = FormulaScanner.ScanFormula("CH2O")
+        Public Shared ReadOnly Property methylamine As Formula = FormulaScanner.ScanFormula("NH2CH2")
 
     End Class
 End Namespace

@@ -315,6 +315,15 @@ Public Class mzPack
         Next
     End Sub
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Shared Function FromStream(stream As mzStream,
+                                      Optional ignoreThumbnail As Boolean = False,
+                                      Optional skipMsn As Boolean = False,
+                                      Optional verbose As Boolean = True) As mzPack
+
+        Return stream.ReadModel(ignoreThumbnail, skipMsn, verbose)
+    End Function
+
     ''' <summary>
     ''' load all content data in <see cref="mzPack"/> object into memory at one time.
     ''' the file format version is test from the magic number.

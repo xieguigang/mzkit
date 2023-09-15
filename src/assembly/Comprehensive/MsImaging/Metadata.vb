@@ -91,6 +91,19 @@ Namespace MsImaging
             End Get
         End Property
 
+        Sub New()
+        End Sub
+
+        Sub New(list As IDictionary(Of String, String))
+            scan_x = Val(list.TryGetValue("width"))
+            scan_y = Val(list.TryGetValue("height"))
+            resolution = Val(list.TryGetValue("resolution"))
+            mass_range = New DoubleRange(
+                min:=Val(list.TryGetValue("mzmin")),
+                max:=Val(list.TryGetValue("mzmax"))
+            )
+        End Sub
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetDimension() As Size
             Return New Size(scan_x, scan_y)

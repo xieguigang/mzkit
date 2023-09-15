@@ -73,8 +73,10 @@ declare namespace MSI {
     * 
     * 
      * @param raw -
+     * @param env 
+     * + default value Is ``null``.
    */
-   function msi_metadata(raw: object): object;
+   function msi_metadata(raw: any, env?: object): object;
    /**
     * Fetch MSI summary data
     * 
@@ -183,13 +185,18 @@ declare namespace MSI {
     * 
      * @param raw -
      * @param file -
-     * @param mzdiff 
+     * @param mzdiff the mass tolerance width for extract the feature ions
+     * 
      * + default value Is ``0.001``.
-     * @param q 
-     * + default value Is ``0.001``.
+     * @param q the frequence threshold for filter the feature ions, this 
+     *  value range of this parameter should be inside [0,1] which
+     *  means percentage cutoff.
+     * 
+     * + default value Is ``0.01``.
      * @param env -
      * 
      * + default value Is ``null``.
+     * @return This function has no value returns
    */
    function pixelMatrix(raw: object, file: object, mzdiff?: number, q?: number, env?: object): object;
    /**

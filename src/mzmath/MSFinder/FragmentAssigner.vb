@@ -5,22 +5,38 @@ Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
 Imports std = System.Math
 
+''' <summary>
+''' spectrum peak annotation helper
+''' </summary>
 Public NotInheritable Class FragmentAssigner
-    Private Sub New()
+
+    Dim productIonDB As List(Of ProductIon)
+    Dim ms2Tol As Double, massTolType As MassToleranceType
+
+    ''' <summary>
+    ''' use default profile
+    ''' </summary>
+    Sub New()
+        productIonDB = New List(Of ProductIon)(ProductIon.GetDefault)
+        ms2Tol = 0.3
+        massTolType = MassToleranceType.Da
     End Sub
-    Private Shared electron As Double = 0.0005485799
+
+    Const electron As Double = 0.0005485799
+
+    Public Shared ReadOnly Property [Default] As New FragmentAssigner
 
     ''' <summary>
     ''' peaklist should be centroid and refined. For peaklist refining, use GetRefinedPeaklist.
     ''' </summary>
     ''' <param name="peaklist"></param>
     ''' <param name="formula"></param>
-    Public Shared Function FastFragmnetAssigner(peaklist As List(Of SpectrumPeak), productIonDB As List(Of ProductIon), formula As Formula, ms2Tol As Double, massTolType As MassToleranceType, adductIon As AdductIon) As List(Of ProductIon)
+    Public Function FastFragmnetAssigner(peaklist As List(Of SpectrumPeak), formula As Formula, AdductIon As AdductIon) As List(Of ProductIon)
         Dim productIons = New List(Of ProductIon)()
         Dim eMass = electron
-        If adductIon.IonMode = IonModes.Negative Then eMass = -1.0 * electron
+        If AdductIon.IonMode = IonModes.Negative Then eMass = -1.0 * electron
 
-        For Each peak In peaklist
+        For Each peak As SpectrumPeak In peaklist
             If Not Equals(peak.Annotation, "M") Then Continue For
 
             Dim mass = peak.mz + eMass
@@ -30,20 +46,20 @@ Public NotInheritable Class FragmentAssigner
             Dim minId = -1
 
             'for precursor annotation
-            If std.Abs(mass - formula.ExactMass - adductIon.AdductIonAccurateMass) < massTol Then
-                Dim nFormula = FormulaCalculateUtility.ConvertFormulaAdductPairToPrecursorAdduct(formula, adductIon)
+            If std.Abs(mass - formula.ExactMass - AdductIon.AdductIonAccurateMass) < massTol Then
+                Dim nFormula = FormulaCalculateUtility.ConvertFormulaAdductPairToPrecursorAdduct(formula, AdductIon)
                 productIons.Add(New ProductIon() With {
                     .Formula = nFormula,
                     .Mass = peak.mz,
-                    .MassDiff = formula.ExactMass + adductIon.AdductIonAccurateMass - mass,
+                    .MassDiff = formula.ExactMass + AdductIon.AdductIonAccurateMass - mass,
                     .Intensity = peak.intensity
                 })
                 Continue For
             End If
 
             'library search
-            Dim fragmentFormulas = getFormulaCandidatesbyLibrarySearch(formula, adductIon.IonMode, peak.mz, massTol, productIonDB)
-            If fragmentFormulas Is Nothing OrElse fragmentFormulas.Count = 0 Then fragmentFormulas = getValenceCheckedFragmentFormulaList(formula, adductIon.IonMode, peak.mz, massTol)
+            Dim fragmentFormulas = getFormulaCandidatesbyLibrarySearch(formula, AdductIon.IonMode, peak.mz, massTol, productIonDB)
+            If fragmentFormulas Is Nothing OrElse fragmentFormulas.Count = 0 Then fragmentFormulas = getValenceCheckedFragmentFormulaList(formula, AdductIon.IonMode, peak.mz, massTol)
 
             For i = 0 To fragmentFormulas.Count - 1
                 If minDiff > std.Abs(mass - fragmentFormulas(i).ExactMass) Then
@@ -59,11 +75,11 @@ Public NotInheritable Class FragmentAssigner
 })
         Next
 
-        For Each ion In productIons
+        For Each ion As ProductIon In productIons
             Dim startIndex = FragmentAssigner.getStartIndex(ion.Mass, 0.1, productIonDB)
             For i = startIndex To productIonDB.Count - 1
                 Dim ionQuery = productIonDB(i)
-                If ionQuery.IonMode <> adductIon.IonMode Then Continue For
+                If ionQuery.IonMode <> AdductIon.IonMode Then Continue For
                 If ionQuery.Formula.ExactMass > ion.Mass + 0.1 Then Exit For
 
                 If FragmentAssigner.isFormulaComposition(ion.Formula, ionQuery.Formula) Then
@@ -442,7 +458,10 @@ Public NotInheritable Class FragmentAssigner
                                                         {"I", inum}, {"Si", sinum}
                                                     }
                                                     Dim fragmentFormula = New Formula(counts)
-                                                    If SevenGoldenRulesCheck.ValenceCheckByHydrogenShift(fragmentFormula) Then fragmentFormulas.Add(fragmentFormula)
+
+                                                    If SevenGoldenRulesCheck.ValenceCheckByHydrogenShift(fragmentFormula) Then
+                                                        fragmentFormulas.Add(fragmentFormula)
+                                                    End If
                                                 Next
                                             Next
                                         Next

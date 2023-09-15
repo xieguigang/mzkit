@@ -171,8 +171,37 @@ Module MSI
     ''' str(as.list(as.object(msi_data)$GetMetadata()));
     ''' </example>
     <ExportAPI("msi_metadata")>
-    Public Function GetMSIMetadata(raw As mzPack) As Metadata
-        Return raw.GetMSIMetadata
+    <RApiReturn(GetType(Metadata))>
+    Public Function GetMSIMetadata(<RRawVectorArgument> raw As Object, Optional env As Environment = Nothing) As Object
+        If TypeOf raw Is mzPack Then
+            Return DirectCast(raw, mzPack).GetMSIMetadata
+        End If
+
+        Dim file = SMRUCC.Rsharp.GetFileStream(raw, FileAccess.Read, env)
+        Dim metadata As Metadata
+
+        If file Like GetType(Message) Then
+            Return file.TryCast(Of Message)
+        End If
+
+        If file.TryCast(Of Stream).GetFormatVersion = 1 Then
+            ' version 1 format not supports metadata
+            Return Internal.debug.stop(New NotSupportedException("version 1 mzPack file can not supports the metadata!"), env)
+        Else
+            Dim pack As New mzStream(file.TryCast(Of Stream))
+
+            If pack.metadata.IsNullOrEmpty Then
+                metadata = mzPack.FromStream(stream:=pack).GetMSIMetadata
+            Else
+                metadata = New Metadata(pack.metadata)
+            End If
+        End If
+
+        If TypeOf raw Is String Then
+            Call file.TryCast(Of Stream).Dispose()
+        End If
+
+        Return metadata
     End Function
 
     ''' <summary>
@@ -789,16 +818,27 @@ Module MSI
     ''' </summary>
     ''' <param name="raw"></param>
     ''' <param name="file"></param>
+    ''' <param name="mzdiff">
+    ''' the mass tolerance width for extract the feature ions
+    ''' </param>
+    ''' <param name="q">
+    ''' the frequence threshold for filter the feature ions, this 
+    ''' value range of this parameter should be inside [0,1] which
+    ''' means percentage cutoff.
+    ''' </param>
     ''' <param name="env"></param>
-    ''' <returns></returns>
+    ''' <returns>This function has no value returns</returns>
     <ExportAPI("pixelMatrix")>
     Public Function PixelMatrix(raw As mzPack, file As Stream,
                                 Optional mzdiff As Double = 0.001,
-                                Optional q As Double = 0.001,
+                                Optional q As Double = 0.01,
                                 Optional env As Environment = Nothing) As Message
 
         Dim matrix As MzMatrix = SingleCellMatrix.CreateMatrix(raw, mzdiff, freq:=q)
+        Dim println = env.WriteLineHandler
 
+        Call println($"Extract pixel matrix with mzdiff:{mzdiff}, frequency:{q}")
+        Call println($"get {matrix.mz.Length} ions with {matrix.matrix.Length} pixel spots")
         Call matrix.ExportCsvSheet(file)
         Call file.Flush()
 

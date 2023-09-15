@@ -597,7 +597,7 @@ Public Class FormulaGenerator
     Private Sub setFragmentProperties(formulaResult As FormulaResult, refinedPeaklist As List(Of SpectrumPeak), neutralLosslist As List(Of NeutralLoss), productIonDB As List(Of ProductIon), neutralLossDB As List(Of NeutralLoss), ms2Tol As Double, massTolType As MassToleranceType, adductIon As AdductIon)
         If refinedPeaklist Is Nothing OrElse neutralLosslist Is Nothing Then Return
 
-        formulaResult.ProductIonResult = FragmentAssigner.FastFragmnetAssigner(refinedPeaklist, productIonDB, formulaResult.Formula, ms2Tol, massTolType, adductIon)
+        formulaResult.ProductIonResult = FragmentAssigner.Default.FastFragmnetAssigner(refinedPeaklist, formulaResult.Formula, adductIon)
         formulaResult.NeutralLossResult = FragmentAssigner.FastNeutralLossAssigner(neutralLosslist, neutralLossDB, formulaResult.Formula, ms2Tol, massTolType, adductIon)
 
         formulaResult.ProductIonNum = formulaResult.ProductIonResult.Count
@@ -606,8 +606,8 @@ Public Class FormulaGenerator
         formulaResult.NeutralLossHits = Me.getUniqueNeutralLossCount(formulaResult.NeutralLossResult)
         formulaResult.NeutralLossNum = Me.getUniqueNeutralLossCountByMass(neutralLosslist, ms2Tol, massTolType)
 
-        formulaResult.ProductIonScore = System.Math.Round(Scoring.FragmentHitsScore(refinedPeaklist, formulaResult.ProductIonResult, ms2Tol, massTolType), 3)
-        formulaResult.NeutralLossScore = System.Math.Round(Scoring.NeutralLossScore(formulaResult.NeutralLossHits, formulaResult.NeutralLossNum), 3)
+        formulaResult.ProductIonScore = Scoring.FragmentHitsScore(refinedPeaklist, formulaResult.ProductIonResult, ms2Tol, massTolType)
+        formulaResult.NeutralLossScore = Scoring.NeutralLossScore(formulaResult.NeutralLossHits, formulaResult.NeutralLossNum)
     End Sub
 
 
