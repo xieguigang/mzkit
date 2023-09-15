@@ -91,6 +91,11 @@ Public Module Extensions
     ''' +  2 for v2 HDS advanced version
     ''' + -1 means invalid file format
     ''' </returns>
+    ''' <remarks>
+    ''' this function will parse the magic header and 
+    ''' then move the file pointer to the start 
+    ''' location
+    ''' </remarks>
     <Extension>
     Public Function GetFormatVersion(file As Stream) As Integer
         Dim buf1 As Byte() = New Byte(mzPackWriter.Magic.Length - 1) {}

@@ -120,7 +120,7 @@ Namespace Deconvolute
         ''' </summary>
         ''' <param name="scanMz"></param>
         ''' <param name="mzdiff"></param>
-        ''' <param name="freq"></param>
+        ''' <param name="freq">[0,1] percentage</param>
         ''' <returns></returns>
         Public Function GetMzIndex(scanMz As IEnumerable(Of Double), mzdiff As Double, freq As Double) As Double()
             Dim mzBins As NamedCollection(Of Double)() = scanMz _
@@ -129,7 +129,8 @@ Namespace Deconvolute
                 .OrderByDescending(Function(a) a.Length) _
                 .ToArray
             Dim counts As Vector = mzBins.Select(Function(a) a.Length).AsVector
-            Dim norm As Vector = (counts / counts.Max) * 100
+            ' normalize to [0,1]
+            Dim norm As Vector = counts / counts.Max
             Dim n As Integer = (norm > freq).Sum
             Dim mzUnique As Double() = mzBins _
                 .Take(n) _
