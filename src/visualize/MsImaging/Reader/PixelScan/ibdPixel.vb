@@ -63,6 +63,7 @@ Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.SplashID
 
 Namespace Pixel
 
@@ -107,6 +108,12 @@ Namespace Pixel
             Me.enableCache = True
             Me.X = x
             Me.Y = y
+        End Sub
+
+        ''' <summary>
+        ''' used for evaluate the <see cref="Splash"/>
+        ''' </summary>
+        Sub New()
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -160,6 +167,10 @@ Namespace Pixel
                          Return mzlist.Any(Function(zzz) tolerance(zzz, mzi))
                      End Function)
         End Function
+
+        Protected Overrides Sub SetIons(ions As IEnumerable(Of ms2))
+            memoryCache = ions.ToArray
+        End Sub
 
         Protected Friend Overrides Sub release()
             Erase memoryCache

@@ -62,6 +62,7 @@
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.SplashID
 
 Namespace Pixel
 
@@ -84,10 +85,20 @@ Namespace Pixel
             End Get
         End Property
 
+        ''' <summary>
+        ''' used for evaluate the <see cref="Splash"/>
+        ''' </summary>
+        Sub New()
+        End Sub
+
         Sub New(x As Integer, y As Integer, data As ms2())
             Me.X = x
             Me.Y = y
             Me.data = data
+        End Sub
+
+        Protected Overrides Sub SetIons(ions As IEnumerable(Of ms2))
+            data = ions.ToArray
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
