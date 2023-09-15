@@ -120,7 +120,7 @@ Namespace Deconvolute
         ''' </summary>
         ''' <param name="scanMz"></param>
         ''' <param name="mzdiff"></param>
-        ''' <param name="freq"></param>
+        ''' <param name="freq">[0,100] percentage</param>
         ''' <returns></returns>
         Public Function GetMzIndex(scanMz As IEnumerable(Of Double), mzdiff As Double, freq As Double) As Double()
             Dim mzBins As NamedCollection(Of Double)() = scanMz _
