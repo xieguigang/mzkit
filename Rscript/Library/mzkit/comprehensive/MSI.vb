@@ -827,7 +827,10 @@ Module MSI
                                 Optional env As Environment = Nothing) As Message
 
         Dim matrix As MzMatrix = SingleCellMatrix.CreateMatrix(raw, mzdiff, freq:=q)
+        Dim println = env.WriteLineHandler
 
+        Call println($"Extract pixel matrix with mzdiff:{mzdiff}, frequency:{q}")
+        Call println($"get {matrix.mz.Length} ions with {matrix.matrix.Length} pixel spots")
         Call matrix.ExportCsvSheet(file)
         Call file.Flush()
 
