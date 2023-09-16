@@ -950,6 +950,11 @@ Module MSI
         Dim ti As Double = 0
 
         For Each row As NamedCollection(Of Object) In df.forEachRow
+            If row.name.IndexOf("_") >= 0 Then
+                ' is duplicated spot
+                Continue For
+            End If
+
             Dim xy As Integer() = row.name _
                 .Split(","c) _
                 .Select(Function(si) CInt(Val(si))) _
@@ -971,6 +976,12 @@ Module MSI
 
         Do While (line = read.ReadLine) IsNot Nothing
             Dim t As String() = Tokenizer.CharsParser(line).ToArray
+
+            If t(0).IndexOf("_") >= 0 Then
+                ' is duplicated spot
+                Continue Do
+            End If
+
             Dim xy As Integer() = t(0) _
                 .Split(","c) _
                 .Select(Function(si) CInt(Val(si))) _
