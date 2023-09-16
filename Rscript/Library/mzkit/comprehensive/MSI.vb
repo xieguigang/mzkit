@@ -899,60 +899,89 @@ Module MSI
     ''' <returns></returns>
     <ExportAPI("pack_matrix")>
     Public Function packMatrix(<RRawVectorArgument> file As Object, Optional env As Environment = Nothing) As Object
-        Dim buf = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Read, env)
+        Dim scans As ScanMS1()
 
-        If buf Like GetType(Message) Then
-            Return buf.TryCast(Of Message)
+        If TypeOf file Is rDataframe Then
+            scans = DirectCast(file, rDataframe).packDf.ToArray
+        Else
+            Dim buf = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Read, env)
+
+            If buf Like GetType(Message) Then
+                Return buf.TryCast(Of Message)
+            End If
+
+            scans = New StreamReader(buf.TryCast(Of Stream)).packFile.ToArray
         End If
-
-        Dim read As New StreamReader(buf.TryCast(Of Stream))
-        Dim ionsMz As Double() = RowObject.TryParse(read.ReadLine) _
-            .Skip(1) _
-            .Select(Function(si) Val(si)) _
-            .ToArray
-        Dim line As Value(Of String) = ""
-        Dim scans As New List(Of ScanMS1)
-        Dim ti As Double = 0
-
-        Do While (line = read.ReadLine) IsNot Nothing
-            Dim t As String() = Tokenizer.CharsParser(line).ToArray
-            Dim xy As Integer() = t(0) _
-                .Split(","c) _
-                .Select(Function(si) Integer.Parse(si)) _
-                .ToArray
-            Dim v As Double() = t _
-                .Skip(1) _
-                .Select(Function(si) Val(si)) _
-                .ToArray
-
-            For i As Integer = 0 To v.Length - 1
-                If v(i) < 0 Then
-                    v(i) = 0
-                End If
-            Next
-
-            ti += 1.98
-
-            Call scans.Add(New ScanMS1 With {
-                .BPC = v.Max,
-                .into = v,
-                .meta = New Dictionary(Of String, String) From {
-                    {"x", xy(0)},
-                    {"y", xy(1)}
-                },
-                .mz = ionsMz,
-                .products = Nothing,
-                .rt = ti,
-                .TIC = v.Sum,
-                .scan_id = $"[MS1] [{xy(0)},{xy(1)}] totalIons={ .TIC} basePeak={ .BPC} basepeak_m/z={ionsMz(which.Max(v))}"
-            })
-        Loop
 
         Return New mzPack With {
             .MS = scans.ToArray,
             .source = NameOf(packMatrix),
             .Application = FileApplicationClass.MSImaging
         }
+    End Function
+
+    Private Function scan(xy As Integer(), ionsMz As Double(), v As Double(), ByRef ti As Double) As ScanMS1
+        For i As Integer = 0 To v.Length - 1
+            If v(i) < 0 Then
+                v(i) = 0
+            End If
+        Next
+
+        ti += 1.98
+
+        Return New ScanMS1 With {
+            .BPC = v.Max,
+            .into = v,
+            .meta = New Dictionary(Of String, String) From {
+                {"x", xy(0)},
+                {"y", xy(1)}
+            },
+            .mz = ionsMz,
+            .products = Nothing,
+            .rt = ti,
+            .TIC = v.Sum,
+            .scan_id = $"[MS1] [{xy(0)},{xy(1)}] totalIons={ .TIC} basePeak={ .BPC} basepeak_m/z={ionsMz(which.Max(v))}"
+        }
+    End Function
+
+    <Extension>
+    Private Iterator Function packDf(df As rDataframe) As IEnumerable(Of ScanMS1)
+        Dim ionsMz As Double() = CLRVector.asNumeric(df.colnames)
+        Dim ti As Double = 0
+
+        For Each row As NamedCollection(Of Object) In df.forEachRow
+            Dim xy As Integer() = row.name _
+                .Split(","c) _
+                .Select(Function(si) CInt(Val(si))) _
+                .ToArray
+            Dim v As Double() = CLRVector.asNumeric(row.value)
+
+            Yield scan(xy, ionsMz, v, ti)
+        Next
+    End Function
+
+    <Extension>
+    Private Iterator Function packFile(read As StreamReader) As IEnumerable(Of ScanMS1)
+        Dim ionsMz As Double() = RowObject.TryParse(read.ReadLine) _
+            .Skip(1) _
+            .Select(Function(si) Val(si)) _
+            .ToArray
+        Dim line As Value(Of String) = ""
+        Dim ti As Double = 0
+
+        Do While (line = read.ReadLine) IsNot Nothing
+            Dim t As String() = Tokenizer.CharsParser(line).ToArray
+            Dim xy As Integer() = t(0) _
+                .Split(","c) _
+                .Select(Function(si) CInt(Val(si))) _
+                .ToArray
+            Dim v As Double() = t _
+                .Skip(1) _
+                .Select(Function(si) Val(si)) _
+                .ToArray
+
+            Yield scan(xy, ionsMz, v, ti)
+        Loop
     End Function
 End Module
 
