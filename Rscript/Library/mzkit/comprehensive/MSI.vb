@@ -914,33 +914,42 @@ Module MSI
         End If
 
         Return New mzPack With {
-            .MS = scans.ToArray,
+            .MS = scans.Where(Function(s) Not s Is Nothing).ToArray,
             .source = NameOf(packMatrix),
             .Application = FileApplicationClass.MSImaging
         }
     End Function
 
     Private Function scan(xy As Integer(), ionsMz As Double(), v As Double(), ByRef ti As Double) As ScanMS1
-        For i As Integer = 0 To v.Length - 1
-            If v(i) < 0 Then
-                v(i) = 0
-            End If
-        Next
+        Dim ms As ms2() = ionsMz _
+            .Select(Function(mzi, i)
+                        Return New ms2 With {
+                            .mz = mzi,
+                            .intensity = v(i)
+                        }
+                    End Function) _
+            .Where(Function(m) m.intensity > 1) _
+            .OrderByDescending(Function(m) m.intensity) _
+            .ToArray
+
+        If ms.IsNullOrEmpty Then
+            Return Nothing
+        End If
 
         ti += 1.98
 
         Return New ScanMS1 With {
-            .BPC = v.Max,
-            .into = v,
+            .BPC = ms.First.intensity,
+            .into = ms.Select(Function(i) i.intensity).ToArray,
             .meta = New Dictionary(Of String, String) From {
                 {"x", xy(0)},
                 {"y", xy(1)}
             },
-            .mz = ionsMz,
+            .mz = ms.Select(Function(m) m.mz).ToArray,
             .products = Nothing,
             .rt = ti,
-            .TIC = v.Sum,
-            .scan_id = $"[MS1] [{xy(0)},{xy(1)}] totalIons={ .TIC} basePeak={ .BPC} basepeak_m/z={ionsMz(which.Max(v))}"
+            .TIC = .into.Sum,
+            .scan_id = $"[MS1] [{xy(0)},{xy(1)}] {ms.Length}ions: totalIons={ .TIC} basePeak={ .BPC} basepeak_m/z={ms.First.mz}"
         }
     End Function
 
