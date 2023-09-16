@@ -66,7 +66,7 @@ Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.HeatMap
 Imports Microsoft.VisualBasic.Serialization.JSON
-Imports HeatMapPixel = Microsoft.VisualBasic.Imaging.Drawing2D.HeatMap.Pixel
+Imports HeatMapPixel = Microsoft.VisualBasic.Imaging.Pixel
 
 ''' <summary>
 ''' a pixels point of [x,y,color]
