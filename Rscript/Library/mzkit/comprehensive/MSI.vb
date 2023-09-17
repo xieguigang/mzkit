@@ -934,6 +934,12 @@ Module MSI
 
         If ms.IsNullOrEmpty Then
             Return Nothing
+        Else
+            Dim maxinto As Double = ms(0).intensity
+
+            ms = ms _
+                .Where(Function(mzi) mzi.intensity / maxinto > 0.01) _
+                .ToArray
         End If
 
         ti += 1.98
