@@ -89,6 +89,8 @@ Namespace Spectra.SplashID
         ''' </summary>
         Private Shared ReadOnly EPSILON As Double = 0.0000001
 
+        Public Shared ReadOnly MSSplash As New Splash(SpectrumType.MS)
+
         Dim spectrumType As SpectrumType
 
         Sub New(type As SpectrumType)
@@ -158,13 +160,15 @@ Namespace Spectra.SplashID
                 End If
             Next
 
-            ' Normalize the histogram
-            For i = 0 To length - 1
-                binnedIons(i) = (nbase - 1) * binnedIons(i) / maxIntensity
-            Next
+            If maxIntensity > 0 Then
+                ' Normalize the histogram
+                For i As Integer = 0 To length - 1
+                    binnedIons(i) = (nbase - 1) * binnedIons(i) / maxIntensity
+                Next
+            End If
 
             ' build histogram
-            Dim histogram As StringBuilder = New StringBuilder()
+            Dim histogram As New StringBuilder()
 
             For Each bin As Double In Enumerable.ToList(binnedIons).GetRange(0, length)
                 histogram.Append(INTENSITY_MAP.ElementAt(CInt(bin + EPSILON)))
@@ -181,17 +185,19 @@ Namespace Spectra.SplashID
         ''' <returns>the Hash of the spectrum data</returns>
         Private Function getSpectrumBlock(spec As ISpectrum) As String
             Dim ions As List(Of ms2) = spec.getSortedIonsByMZ()
-            Dim strIons As New StringBuilder()
+            Dim s_ions As New StringBuilder()
 
             For Each i As ms2 In ions
-                strIons.Append(String.Format("{0}:{1}", formatMZ(i.mz), formatIntensity(i.intensity)))
-                strIons.Append(ION_SEPERATOR)
+                s_ions.Append(String.Format("{0}:{1}", formatMZ(i.mz), formatIntensity(i.intensity)))
+                s_ions.Append(ION_SEPERATOR)
             Next
 
-            'string to hash
-            strIons.Remove(strIons.Length - 1, 1)
+            If s_ions.Length > 0 Then
+                'string to hash
+                s_ions.Remove(s_ions.Length - 1, 1)
+            End If
 
-            Dim message As Byte() = Encoding.UTF8.GetBytes(strIons.ToString())
+            Dim message As Byte() = Encoding.UTF8.GetBytes(s_ions.ToString())
             Dim hashString As New SHA256Managed()
 
             hashString.ComputeHash(message)
@@ -262,7 +268,7 @@ Namespace Spectra.SplashID
         ' 		 * @return filtered spectrum
         ' 
         Protected Function filterSpectrum(Of T As {New, ISpectrum})(s As T, topIons As Integer, basePeakPercentage As Double) As T
-            Dim ions As List(Of ms2) = s.GetIons()
+            Dim ions As List(Of ms2) = s.GetIons().AsList
 
             ' Find base peak intensity
             Dim basePeakIntensity = 0.0

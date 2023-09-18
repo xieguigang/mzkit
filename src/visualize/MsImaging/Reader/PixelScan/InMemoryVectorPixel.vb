@@ -148,6 +148,9 @@ Namespace Pixel
             End If
         End Sub
 
+        ''' <summary>
+        ''' used for evaluate the <see cref="Splash"/>
+        ''' </summary>
         Sub New()
         End Sub
 
@@ -246,6 +249,13 @@ Namespace Pixel
         Public Overrides Function HasAnyMzIon(mz() As Double, tolerance As Tolerance) As Boolean
             Return mz.Any(Function(mzi) Me.mz.Any(Function(mz2) tolerance(mzi, mz2)))
         End Function
+
+        Protected Overrides Sub SetIons(ions As IEnumerable(Of ms2))
+            With ions.ToArray
+                _mz = .Select(Function(m) m.mz).ToArray
+                _intensity = .Select(Function(m) m.intensity).ToArray
+            End With
+        End Sub
 
         Protected Friend Overrides Iterator Function GetMsPipe() As IEnumerable(Of ms2)
             For i As Integer = 0 To mz.Length - 1

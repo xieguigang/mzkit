@@ -1,62 +1,62 @@
 ﻿#Region "Microsoft.VisualBasic::e398118d1588425e30cfd74f3da7d1c8, mzkit\src\visualize\MsImaging\Reader\PixelScan\mzPackPixel.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 126
-    '    Code Lines: 99
-    ' Comment Lines: 6
-    '   Blank Lines: 21
-    '     File Size: 4.19 KB
+' Summaries:
 
 
-    '     Class mzPackPixel
-    ' 
-    '         Properties: mz, sampleTag, scan, scanId, X
-    '                     Y
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: GetMsPipe, (+2 Overloads) GetMzIonIntensity, (+2 Overloads) HasAnyMzIon
-    ' 
-    '         Sub: release
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 126
+'    Code Lines: 99
+' Comment Lines: 6
+'   Blank Lines: 21
+'     File Size: 4.19 KB
+
+
+'     Class mzPackPixel
+' 
+'         Properties: mz, sampleTag, scan, scanId, X
+'                     Y
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: GetMsPipe, (+2 Overloads) GetMzIonIntensity, (+2 Overloads) HasAnyMzIon
+' 
+'         Sub: release
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -66,6 +66,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.SplashID
 
 Namespace Pixel
 
@@ -113,6 +114,12 @@ Namespace Pixel
             End Get
         End Property
 
+        ''' <summary>
+        ''' used for evaluate the <see cref="Splash"/>
+        ''' </summary>
+        Sub New()
+        End Sub
+
         Sub New(scan As ScanMS1, Optional x As Integer = Integer.MinValue, Optional y As Integer = Integer.MinValue)
             'Dim ms1 As ms2() = scan _
             '    .GetMs _
@@ -142,6 +149,13 @@ Namespace Pixel
                 .scan_id = scan_id,
                 .TIC = into.Sum
             }
+        End Sub
+
+        Protected Overrides Sub SetIons(ions As IEnumerable(Of ms2))
+            With ions.ToArray
+                scan.mz = .Select(Function(m) m.mz).ToArray
+                scan.into = .Select(Function(m) m.intensity).ToArray
+            End With
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
