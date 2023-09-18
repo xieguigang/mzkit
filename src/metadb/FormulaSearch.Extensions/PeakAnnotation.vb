@@ -56,10 +56,15 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.SplashID
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 
-Public Class Annotation
+''' <summary>
+''' Do formula search and peak annotation result
+''' </summary>
+Public Class PeakAnnotation
 
     Public Property products As ms2()
     Public Property formula As FormulaComposition
@@ -80,5 +85,9 @@ Public Class Annotation
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overrides Function ToString() As String
         Return formula.ToString
+    End Function
+
+    Public Shared Function DoPeakAnnotation(peaks As ISpectrum, precursorMz As Double, adduct As MzCalculator, formula As Formula) As PeakAnnotation
+
     End Function
 End Class
