@@ -165,7 +165,7 @@ Module FormulaTools
     ''' <returns></returns>
     <ExportAPI("peakAnnotations")>
     <RApiReturn(GetType(LibraryMatrix))>
-    Public Function peakAnnotation_f(library As Object, formula As Object, adducts As MzCalculator(),
+    Public Function peakAnnotation_f(library As Object, formula As Object, <RRawVectorArgument> adducts As Object,
                                      Optional massDiff As Double = 0.1,
                                      Optional isotopeFirst As Boolean = True,
                                      Optional env As Environment = Nothing) As Object
@@ -173,6 +173,7 @@ Module FormulaTools
         Dim centroid As Boolean
         Dim name As String
         Dim peaksData As ms2()
+        Dim adductList = Math.GetPrecursorTypes(adducts, env)
 
         If library Is Nothing Then
             Return Nothing
@@ -196,6 +197,7 @@ Module FormulaTools
 
         Dim results As New list With {.slots = New Dictionary(Of String, Object)}
         Dim f As Formula
+        Dim spec As New LibraryMatrix(peaksData)
 
         If TypeOf formula Is String Then
             f = FormulaScanner.ScanFormula(DirectCast(formula, String))
@@ -205,11 +207,11 @@ Module FormulaTools
             Return Message.InCompatibleType(GetType(Formula), formula.GetType, env)
         End If
 
-        For Each adduct As MzCalculator In adducts
-            results.slots(adduct.ToString) = PeakAnnotation.DoPeakAnnotation(New LibraryMatrix(peaksData), parentMz, adduct, f)
+        For Each adduct As MzCalculator In adductList
+            results.slots(adduct.ToString) = PeakAnnotation.DoPeakAnnotation(spec, parentMz, adduct, f)
         Next
 
-        If adducts.Length = 1 Then
+        If adductList.Length = 1 Then
             Return results.data.First
         Else
             Return results
