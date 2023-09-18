@@ -66,7 +66,18 @@ Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 ''' </summary>
 Public Class PeakAnnotation
 
+    ''' <summary>
+    ''' the product peak annotation result dataset, this array contains all spectrum peaks, includes
+    ''' peak has been annotated or peaks has no annotation data.
+    ''' </summary>
+    ''' <returns></returns>
     Public Property products As ms2()
+    ''' <summary>
+    ''' the target metabolite formula source data, this could be parsed from
+    ''' the database of the know metabolite or the de-novo formula prediction
+    ''' result based on the algorithm 
+    ''' </summary>
+    ''' <returns></returns>
     Public Property formula As FormulaComposition
 
     Sub New(formula As FormulaComposition, products As ms2())
@@ -90,4 +101,15 @@ Public Class PeakAnnotation
     Public Shared Function DoPeakAnnotation(peaks As ISpectrum, precursorMz As Double, adduct As MzCalculator, formula As Formula) As PeakAnnotation
 
     End Function
+
+    ''' <summary>
+    ''' get the spectrum peak annotation result outputs
+    ''' </summary>
+    ''' <param name="pa"></param>
+    ''' <returns></returns>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Shared Narrowing Operator CType(pa As PeakAnnotation) As ms2()
+        Return pa.products
+    End Operator
+
 End Class
