@@ -149,26 +149,8 @@ Module FormulaTools
                                         Optional env As Environment = Nothing) As Object
 
         Dim items = annotation.forEachRow({"annotation", "formula"}).ToArray
-        Dim list As FragmentAnnotationHolder() = items _
-            .Select(Function(tuple)
-                        Dim name As String = any.ToString(tuple(Scan0))
-                        Dim formula As String = any.ToString(tuple(1))
 
-                        If formula.IsNumeric Then
-                            Return AtomGroupHandler.CreateModel(name, Val(formula))
-                        Else
-                            Return AtomGroupHandler.CreateModel(name, formula)
-                        End If
-                    End Function) _
-            .ToArray
-
-        If debug Then
-            Call AtomGroupHandler.Clear()
-        End If
-
-        Call AtomGroupHandler.Register(annotations:=list)
-
-        Return Nothing
+        Throw New NotImplementedException
     End Function
 
     ''' <summary>
@@ -183,17 +165,14 @@ Module FormulaTools
     ''' <returns></returns>
     <ExportAPI("peakAnnotations")>
     <RApiReturn(GetType(LibraryMatrix))>
-    Public Function PeakAnnotation(library As Object,
-                                   Optional massDiff As Double = 0.1,
-                                   Optional isotopeFirst As Boolean = True,
-                                   Optional adducts As MzCalculator() = Nothing,
-                                   Optional env As Environment = Nothing) As Object
-
-        Dim anno As New PeakAnnotation(massDiff, isotopeFirst, adducts)
-        Dim result As Annotation
+    Public Function peakAnnotation_f(library As Object, formula As Object, adducts As MzCalculator(),
+                                     Optional massDiff As Double = 0.1,
+                                     Optional isotopeFirst As Boolean = True,
+                                     Optional env As Environment = Nothing) As Object
         Dim parentMz As Double
         Dim centroid As Boolean
         Dim name As String
+        Dim peaksData As ms2()
 
         If library Is Nothing Then
             Return Nothing
@@ -203,24 +182,38 @@ Module FormulaTools
             parentMz = mat.parentMz
             centroid = mat.centroid
             name = mat.name
-            result = anno.RunAnnotation(mat.parentMz, mat.ms2)
+            peaksData = mat.ms2
         ElseIf TypeOf library Is PeakMs2 Then
             Dim peak As PeakMs2 = DirectCast(library, PeakMs2)
 
             parentMz = peak.mz
             centroid = True
             name = peak.lib_guid
-            result = anno.RunAnnotation(parentMz, peak.mzInto)
+            peaksData = peak.mzInto
         Else
             Return Message.InCompatibleType(GetType(LibraryMatrix), library.GetType, env)
         End If
 
-        Return New LibraryMatrix With {
-            .centroid = centroid,
-            .ms2 = result.products,
-            .parentMz = parentMz,
-            .name = name
-        }
+        Dim results As New list With {.slots = New Dictionary(Of String, Object)}
+        Dim f As Formula
+
+        If TypeOf formula Is String Then
+            f = FormulaScanner.ScanFormula(DirectCast(formula, String))
+        ElseIf TypeOf formula Is Formula Then
+            f = formula
+        Else
+            Return Message.InCompatibleType(GetType(Formula), formula.GetType, env)
+        End If
+
+        For Each adduct As MzCalculator In adducts
+            results.slots(adduct.ToString) = PeakAnnotation.DoPeakAnnotation(New LibraryMatrix(peaksData), parentMz, adduct, f)
+        Next
+
+        If adducts.Length = 1 Then
+            Return results.data.First
+        Else
+            Return results
+        End If
     End Function
 
     ''' <summary>
