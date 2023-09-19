@@ -81,7 +81,7 @@ Public NotInheritable Class FragmentAssigner
                 fragmentFormulas = getValenceCheckedFragmentFormulaList(formula, AdductIon.IonMode, peak.mz, massTol)
             End If
 
-            For i = 0 To fragmentFormulas.Count - 1
+            For i As Integer = 0 To fragmentFormulas.Count - 1
                 If minDiff > std.Abs(mass - fragmentFormulas(i).ExactMass) Then
                     minId = i
                     minDiff = std.Abs(mass - fragmentFormulas(i).ExactMass)
@@ -101,7 +101,7 @@ Public NotInheritable Class FragmentAssigner
         For Each ion As ProductIon In productIons
             Dim startIndex = FragmentAssigner.getStartIndex(ion.Mass, 0.1, productIonDB)
 
-            For i = startIndex To productIonDB.Count - 1
+            For i As Integer = startIndex To productIonDB.Count - 1
                 Dim ionQuery = productIonDB(i)
 
                 If ionQuery.IonMode <> AdductIon.IonMode Then Continue For
