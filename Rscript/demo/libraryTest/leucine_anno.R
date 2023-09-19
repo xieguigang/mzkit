@@ -18,5 +18,5 @@ for(ion in spectrum) {
     );
 
     str(ion);
-    stop();
+    # stop();
 }
