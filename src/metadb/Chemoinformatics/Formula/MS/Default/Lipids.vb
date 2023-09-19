@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ecf3b1f41d16e6bdee4cf31d88d99a48, mzkit\src\mzmath\ms2_math-core\Ms1\PrecursorType\TypeMatch.vb"
+﻿#Region "Microsoft.VisualBasic::418ce802a8eaa7e9aa6b3f01d3e1c125, mzkit\src\metadb\FormulaSearch.Extensions\AtomGroups\Default\Lipids.vb"
 
 ' Author:
 ' 
@@ -37,14 +37,14 @@
 
 ' Code Statistics:
 
-'   Total Lines: 13
-'    Code Lines: 7
-' Comment Lines: 3
-'   Blank Lines: 3
-'     File Size: 267 B
+'   Total Lines: 6
+'    Code Lines: 4
+' Comment Lines: 0
+'   Blank Lines: 2
+'     File Size: 79 B
 
 
-'     Structure TypeMatch
+'     Class Lipids
 ' 
 ' 
 ' 
@@ -53,40 +53,9 @@
 
 #End Region
 
-Imports System.Runtime.CompilerServices
+Namespace Formula.MS.AtomGroups
 
-Namespace Ms1.PrecursorType
+    Public Class Lipids
 
-    ''' <summary>
-    ''' The precursor type matches result between the ion m/z value and the metabolite exact mass value.
-    ''' </summary>
-    Public Structure TypeMatch
-
-        ''' <summary>
-        ''' The mass error
-        ''' </summary>
-        Dim errors As Double
-        ''' <summary>
-        ''' the precursor type adducts matched result in string name
-        ''' </summary>
-        Dim precursorType As String
-        Dim message As String
-        ''' <summary>
-        ''' the precursor type model object
-        ''' </summary>
-        Dim adducts As MzCalculator
-
-        Public Overrides Function ToString() As String
-            If Not message.StringEmpty Then
-                Return message
-            Else
-                Return precursorType
-            End If
-        End Function
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Narrowing Operator CType(m As TypeMatch) As MzCalculator
-            Return m.adducts
-        End Operator
-    End Structure
+    End Class
 End Namespace

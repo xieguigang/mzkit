@@ -82,7 +82,7 @@ Public Class PeakQuery(Of T As IMS1Annotation)
     Public ReadOnly Property id_group As String()
         Get
             Return peaks _
-                .Select(Function(p) p.id) _
+                .Select(Function(p) p.Key) _
                 .ToArray
         End Get
     End Property

@@ -124,6 +124,7 @@ Public Class PrecursorIonSearch : Inherits FormulaSearch
 
             Call precursorTypeProgress($"Run search for precursor type: {type.ToString}")
 
+            ' do de-novo formula generation based on the calculated exact_mass value
             For Each formula As FormulaComposition In SearchByExactMass(exact_mass, doVerify:=False, cancel:=cancel)
                 Yield New PrecursorIonComposition(formula.CountsByElement, formula.EmpiricalFormula) With {
                     .adducts = type.adducts,

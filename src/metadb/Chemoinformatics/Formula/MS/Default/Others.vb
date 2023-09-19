@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f98ef6dbf960a0dfb66613062d7a82e9, mzkit\src\metadb\FormulaSearch.Extensions\Scores\IsotopicAbundanceRatio.vb"
+﻿#Region "Microsoft.VisualBasic::c5c6a6b5a50c86122ae20c8afd573753, mzkit\src\metadb\FormulaSearch.Extensions\AtomGroups\Default\Others.vb"
 
     ' Author:
     ' 
@@ -37,21 +37,33 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 3
-    '    Code Lines: 2
+    '   Total Lines: 14
+    '    Code Lines: 10
     ' Comment Lines: 0
-    '   Blank Lines: 1
-    '     File Size: 48 B
+    '   Blank Lines: 4
+    '     File Size: 609 B
 
 
-    ' Class IsotopicAbundanceRatio
+    '     Class Others
     ' 
+    '         Properties: CH2O, H, nitro_group, NL2H2O, NLH2O
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
-Public Class IsotopicAbundanceRatio
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 
-End Class
+Namespace Formula.MS.AtomGroups
+
+    Public Class Others
+
+        Public Shared ReadOnly Property H As Formula = FormulaScanner.ScanFormula("H")
+        Public Shared ReadOnly Property nitro_group As Formula = FormulaScanner.ScanFormula("NO2")
+        Public Shared ReadOnly Property NLH2O As Formula = FormulaScanner.ScanFormula("H2O")
+        Public Shared ReadOnly Property NL2H2O As Formula = FormulaScanner.ScanFormula("(H2O)2")
+        Public Shared ReadOnly Property CH2O As Formula = FormulaScanner.ScanFormula("CH2O")
+
+    End Class
+End Namespace

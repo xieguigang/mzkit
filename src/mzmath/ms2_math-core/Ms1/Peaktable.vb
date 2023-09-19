@@ -76,7 +76,7 @@ Public Class Peaktable
     ''' <remarks>
     ''' xcms_id
     ''' </remarks>
-    Public Property name As String Implements IMS1Annotation.id
+    Public Property name As String Implements IMS1Annotation.Key
     Public Property mz As Double Implements IMs1.mz
     Public Property mzmin As Double
     Public Property mzmax As Double

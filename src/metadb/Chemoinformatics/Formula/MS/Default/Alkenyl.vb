@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f968df9679d923de026cc265dbccc067, mzkit\src\metadb\FormulaSearch.Extensions\Annotation.vb"
+﻿#Region "Microsoft.VisualBasic::c9a8db01ba679e5315f45d5d7db0c3af, mzkit\src\metadb\FormulaSearch.Extensions\AtomGroups\Default\Alkenyl.vb"
 
     ' Author:
     ' 
@@ -37,48 +37,29 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 27
-    '    Code Lines: 23
+    '   Total Lines: 10
+    '    Code Lines: 6
     ' Comment Lines: 0
     '   Blank Lines: 4
-    '     File Size: 938 B
+    '     File Size: 234 B
 
 
-    ' Class Annotation
+    '     Class Alkenyl
     ' 
-    '     Properties: formula, products
+    '         Properties: vinyl
     ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: ToString
     ' 
     ' /********************************************************************************/
 
 #End Region
 
-Imports System.Runtime.CompilerServices
-Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 
-Public Class Annotation
+Namespace Formula.MS.AtomGroups
 
-    Public Property products As ms2()
-    Public Property formula As FormulaComposition
+    Public Class Alkenyl
 
-    Sub New(formula As FormulaComposition, products As ms2())
-        Me.formula = formula
-        Me.products = products _
-            .Select(Function(a)
-                        Return New ms2 With {
-                            .mz = a.mz,
-                            .intensity = a.intensity,
-                            .Annotation = If(a.Annotation.IsInteger, "", a.Annotation)
-                        }
-                    End Function) _
-            .ToArray
-    End Sub
+        Public Shared ReadOnly Property vinyl As Formula = FormulaScanner.ScanFormula("CH2CH")
 
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Overrides Function ToString() As String
-        Return formula.ToString
-    End Function
-End Class
+    End Class
+End Namespace
