@@ -108,10 +108,12 @@ declare namespace formula {
      * @param isotopeFirst -
      * 
      * + default value Is ``true``.
+     * @param as_list 
+     * + default value Is ``true``.
      * @param env 
      * + default value Is ``null``.
    */
-   function peakAnnotations(library: any, formula: any, adducts: any, massDiff?: number, isotopeFirst?: boolean, env?: object): object;
+   function peakAnnotations(library: any, formula: any, adducts: any, massDiff?: number, isotopeFirst?: boolean, as_list?: boolean, env?: object): object;
    module read {
       /**
        * Read KCF model data
