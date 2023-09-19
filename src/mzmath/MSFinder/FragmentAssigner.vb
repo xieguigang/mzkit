@@ -34,10 +34,17 @@ Public NotInheritable Class FragmentAssigner
     ''' </summary>
     ''' <param name="peaklist"></param>
     ''' <param name="formula"></param>
+    ''' <remarks>
+    ''' this function only populate out the product ion fragment which has 
+    ''' the annotation result
+    ''' </remarks>
     Public Function FastFragmnetAssigner(peaklist As List(Of SpectrumPeak), formula As Formula, AdductIon As AdductIon) As List(Of ProductIon)
         Dim productIons = New List(Of ProductIon)()
         Dim eMass = electron
-        If AdductIon.IonMode = IonModes.Negative Then eMass = -1.0 * electron
+
+        If AdductIon.IonMode = IonModes.Negative Then
+            eMass = -1.0 * electron
+        End If
 
         For Each peak As SpectrumPeak In peaklist
             If peak.Annotation <> "M" Then
@@ -57,7 +64,8 @@ Public NotInheritable Class FragmentAssigner
             'for precursor annotation
             If std.Abs(mass - formula.ExactMass - AdductIon.AdductIonAccurateMass) < massTol Then
                 Dim nFormula = FormulaCalculateUtility.ConvertFormulaAdductPairToPrecursorAdduct(formula, AdductIon)
-                productIons.Add(New ProductIon() With {
+
+                Call productIons.Add(New ProductIon() With {
                     .Formula = nFormula,
                     .Mass = peak.mz,
                     .MassDiff = formula.ExactMass + AdductIon.AdductIonAccurateMass - mass,

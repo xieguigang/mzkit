@@ -56,12 +56,14 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.SplashID
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
 Imports BioNovoGene.BioDeep.MSFinder
+Imports Microsoft.VisualBasic.Linq
 Imports std = System.Math
 
 ''' <summary>
@@ -135,6 +137,18 @@ Public Class PeakAnnotation
             .massdiff = 0,
             .ppm = 0
         }
+        Dim union As ms2() = result _
+            .Select(Function(i)
+                        Return New ms2 With {
+                            .mz = i.Mass,
+                            .intensity = i.Intensity,
+                            .Annotation = i.Name
+                        }
+                    End Function) _
+            .JoinIterates(peaks.GetIons) _
+            .ToArray _
+            .Centroid(Tolerance.DeltaMass(0.1), New RelativeIntensityCutoff(0.01)) _
+            .ToArray
 
         Return New PeakAnnotation(fcom, result)
     End Function
