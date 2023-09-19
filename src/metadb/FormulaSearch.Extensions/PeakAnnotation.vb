@@ -62,6 +62,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.SplashID
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
 Imports BioNovoGene.BioDeep.MSFinder
+Imports std = System.Math
 
 ''' <summary>
 ''' Do formula search and peak annotation result
@@ -117,7 +118,16 @@ Public Class PeakAnnotation
 
     Public Shared Function DoPeakAnnotation(peaks As ISpectrum, precursorMz As Double, adduct As MzCalculator, formula As Formula) As PeakAnnotation
         Dim assign As New FragmentAssigner
-        Dim peaksData As SpectrumPeak() = peaks.GetIons.Select(Function(m) New SpectrumPeak(m)).ToArray
+        Dim exactMass As Double = formula.ExactMass
+        Dim peaksData As SpectrumPeak() = peaks.GetIons _
+            .Select(Function(m)
+                        If std.Abs(m.mz - exactMass) <= 0.1 Then
+                            m.Annotation = "M"
+                        End If
+
+                        Return New SpectrumPeak(m)
+                    End Function) _
+            .ToArray
         Dim adductInfo As New AdductIon(adduct)
         Dim result = assign.FastFragmnetAssigner(peaksData.AsList, formula, adductInfo)
         Dim fcom As New FormulaComposition(formula.CountsByElement, formula.ToString) With {

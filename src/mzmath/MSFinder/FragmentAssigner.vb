@@ -37,7 +37,9 @@ Public NotInheritable Class FragmentAssigner
         If AdductIon.IonMode = IonModes.Negative Then eMass = -1.0 * electron
 
         For Each peak As SpectrumPeak In peaklist
-            If Not Equals(peak.Annotation, "M") Then Continue For
+            If peak.Annotation <> "M" Then
+                Continue For
+            End If
 
             Dim mass = peak.mz + eMass
             Dim minDiff = Double.MaxValue
