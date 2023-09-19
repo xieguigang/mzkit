@@ -10,7 +10,9 @@ let spectrum = `${@dir}/leucine.mgf`
 
 for(ion in spectrum) {
     let iondata = as.list(ion);
-    
+        
+    print(iondata$precursor_type);
+
     ion = formula::peakAnnotations(
         ion, "C6H13NO2", iondata$precursor_type
     );

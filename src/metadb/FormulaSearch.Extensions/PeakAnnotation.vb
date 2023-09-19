@@ -150,7 +150,7 @@ Public Class PeakAnnotation
             .Centroid(Tolerance.DeltaMass(0.1), New RelativeIntensityCutoff(0.01)) _
             .ToArray
 
-        Return New PeakAnnotation(fcom, result)
+        Return New PeakAnnotation(fcom, union)
     End Function
 
     ''' <summary>

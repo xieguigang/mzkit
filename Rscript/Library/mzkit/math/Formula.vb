@@ -167,6 +167,7 @@ Module FormulaTools
     Public Function peakAnnotation_f(library As Object, formula As Object, <RRawVectorArgument> adducts As Object,
                                      Optional massDiff As Double = 0.1,
                                      Optional isotopeFirst As Boolean = True,
+                                     Optional as_list As Boolean = True,
                                      Optional env As Environment = Nothing) As Object
         Dim parentMz As Double
         Dim centroid As Boolean
@@ -197,6 +198,7 @@ Module FormulaTools
         Dim results As New list With {.slots = New Dictionary(Of String, Object)}
         Dim f As Formula
         Dim spec As New LibraryMatrix(peaksData)
+        Dim anno As PeakAnnotation
 
         If TypeOf formula Is String Then
             f = FormulaScanner.ScanFormula(DirectCast(formula, String))
@@ -207,7 +209,22 @@ Module FormulaTools
         End If
 
         For Each adduct As MzCalculator In adductList
-            results.slots(adduct.ToString) = PeakAnnotation.DoPeakAnnotation(spec, parentMz, adduct, f)
+            anno = PeakAnnotation.DoPeakAnnotation(spec, parentMz, adduct, f)
+
+            If as_list Then
+                results.slots(adduct.ToString) = New list With {
+                   .slots = New Dictionary(Of String, Object) From {
+                       {"products", anno.products},
+                       {"formula", f},
+                       {"adduct", adduct.ToString},
+                       {"charge", anno.formula.charge},
+                       {"ppm", anno.formula.ppm},
+                       {"massdiff", anno.formula.massdiff}
+                   }
+                }
+            Else
+                results.slots(adduct.ToString) = anno
+            End If
         Next
 
         If adductList.Length = 1 Then
