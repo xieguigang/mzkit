@@ -101,19 +101,17 @@ declare namespace formula {
     * 
     * 
      * @param library A ms2 matrix object
+     * @param adducts -
      * @param massDiff -
      * 
      * + default value Is ``0.1``.
      * @param isotopeFirst -
      * 
      * + default value Is ``true``.
-     * @param adducts -
-     * 
-     * + default value Is ``null``.
      * @param env 
      * + default value Is ``null``.
    */
-   function peakAnnotations(library: any, massDiff?: number, isotopeFirst?: boolean, adducts?: object, env?: object): object;
+   function peakAnnotations(library: any, formula: any, adducts: any, massDiff?: number, isotopeFirst?: boolean, env?: object): object;
    module read {
       /**
        * Read KCF model data
