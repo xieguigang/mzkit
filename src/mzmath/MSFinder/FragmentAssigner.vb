@@ -122,7 +122,7 @@ Public NotInheritable Class FragmentAssigner
     Private Shared Function getFormulaCandidatesbyLibrarySearch(formula As Formula, ionMode As IonModes, mz As Double, massTol As Double, productIonDB As List(Of ProductIon)) As List(Of Formula)
         Dim candidates = New List(Of Formula)()
         Dim startIndex = getStartIndex(mz, massTol, productIonDB)
-        For i = startIndex To productIonDB.Count - 1
+        For i As Integer = startIndex To productIonDB.Count - 1
             Dim ionQuery = productIonDB(i)
             If ionQuery.IonMode <> ionMode Then Continue For
             If ionQuery.Formula.ExactMass < mz - massTol Then Continue For
