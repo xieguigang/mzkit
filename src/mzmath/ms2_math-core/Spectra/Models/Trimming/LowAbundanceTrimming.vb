@@ -98,6 +98,11 @@ Namespace Spectra
         ''' <returns></returns>
         Public Shared ReadOnly Property [Default] As New [Default](Of LowAbundanceTrimming)(intoCutff)
 
+        ''' <summary>
+        ''' Removes the fragment peaks which its intensity value which is lower than the specific threshold
+        ''' </summary>
+        ''' <param name="spectrum"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Trim(spectrum As IEnumerable(Of ms2)) As ms2()
             If m_threshold <= 0 Then

@@ -66,15 +66,21 @@
 
         Public Property IsMatched As Boolean = False
 
-        Public Property SpectrumComment As SpectrumComment
+        Public Property SpectrumComment As SpectrumComment = SpectrumComment.none
 
         Public Property IsAbsolutelyRequiredFragmentForAnnotation As Boolean
 
         Public Sub New()
         End Sub
 
+        ''' <summary>
+        ''' do make data copy
+        ''' </summary>
+        ''' <param name="fragment"></param>
         Sub New(fragment As ms2)
-
+            mz = fragment.mz
+            intensity = fragment.intensity
+            Annotation = fragment.Annotation
         End Sub
 
         Public Sub New(mass As Double, intensity As Double,

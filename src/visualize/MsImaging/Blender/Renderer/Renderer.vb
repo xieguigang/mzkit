@@ -69,7 +69,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D.HeatMap
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
-Imports RasterPixel = Microsoft.VisualBasic.Imaging.Drawing2D.HeatMap.Pixel
+Imports RasterPixel = Microsoft.VisualBasic.Imaging.Pixel
 
 Namespace Blender
 

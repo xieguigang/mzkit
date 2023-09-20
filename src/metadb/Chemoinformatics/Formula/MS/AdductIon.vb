@@ -1,5 +1,6 @@
 ﻿Imports System.Collections.Concurrent
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
+Imports std = System.Math
 
 Namespace Formula.MS
 
@@ -16,6 +17,14 @@ Namespace Formula.MS
         ''' </para>
         ''' </summary>
         Public Sub New()
+        End Sub
+
+        Sub New(adducts As MzCalculator)
+            Me.AdductIonAccurateMass = std.Abs(adducts.adducts)
+            Me.AdductIonName = adducts.ToString
+            Me.AdductIonXmer = adducts.M
+            Me.ChargeNumber = adducts.charge
+            Me.IonMode = Provider.ParseIonMode(adducts.mode)
         End Sub
 
         Public Property AdductIonAccurateMass As Double

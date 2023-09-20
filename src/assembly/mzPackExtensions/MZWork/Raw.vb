@@ -276,9 +276,17 @@ mzPackReader:
             End If
         End Function
 
-        Public Function GetMs2Scans() As IEnumerable(Of ScanMS2)
+        Public Function GetMs2Scans(Optional ignores_empty As Boolean = True) As IEnumerable(Of ScanMS2)
             Call LoadMzpack(Sub(m, s) Console.WriteLine($"[{m}] -> [{s}]"))
-            Return ms2.Values
+
+            If ignores_empty Then
+                Return From ms As ScanMS2
+                       In ms2.Values
+                       Where ms.size > 0
+                       Select ms
+            Else
+                Return ms2.Values
+            End If
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

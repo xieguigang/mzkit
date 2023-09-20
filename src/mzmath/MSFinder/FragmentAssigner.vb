@@ -10,6 +10,9 @@ Imports std = System.Math
 ''' </summary>
 Public NotInheritable Class FragmentAssigner
 
+    ''' <summary>
+    ''' must be sort by mass
+    ''' </summary>
     Dim productIonDB As List(Of ProductIon)
     Dim ms2Tol As Double, massTolType As MassToleranceType
 
@@ -17,7 +20,7 @@ Public NotInheritable Class FragmentAssigner
     ''' use default profile
     ''' </summary>
     Sub New()
-        productIonDB = New List(Of ProductIon)(ProductIon.GetDefault)
+        productIonDB = New List(Of ProductIon)(ProductIon.GetDefault.OrderBy(Function(i) i.Mass))
         ms2Tol = 0.3
         massTolType = MassToleranceType.Da
     End Sub
@@ -31,24 +34,38 @@ Public NotInheritable Class FragmentAssigner
     ''' </summary>
     ''' <param name="peaklist"></param>
     ''' <param name="formula"></param>
+    ''' <remarks>
+    ''' this function only populate out the product ion fragment which has 
+    ''' the annotation result
+    ''' </remarks>
     Public Function FastFragmnetAssigner(peaklist As List(Of SpectrumPeak), formula As Formula, AdductIon As AdductIon) As List(Of ProductIon)
         Dim productIons = New List(Of ProductIon)()
         Dim eMass = electron
-        If AdductIon.IonMode = IonModes.Negative Then eMass = -1.0 * electron
+
+        If AdductIon.IonMode = IonModes.Negative Then
+            eMass = -1.0 * electron
+        End If
 
         For Each peak As SpectrumPeak In peaklist
-            If Not Equals(peak.Annotation, "M") Then Continue For
+            If peak.Annotation <> "M" Then
+                Continue For
+            End If
 
             Dim mass = peak.mz + eMass
             Dim minDiff = Double.MaxValue
             Dim massTol = ms2Tol
-            If massTolType = MassToleranceType.Ppm Then massTol = PPMmethod.ConvertPpmToMassAccuracy(mass, ms2Tol)
+
+            If massTolType = MassToleranceType.Ppm Then
+                massTol = PPMmethod.ConvertPpmToMassAccuracy(mass, ms2Tol)
+            End If
+
             Dim minId = -1
 
             'for precursor annotation
             If std.Abs(mass - formula.ExactMass - AdductIon.AdductIonAccurateMass) < massTol Then
                 Dim nFormula = FormulaCalculateUtility.ConvertFormulaAdductPairToPrecursorAdduct(formula, AdductIon)
-                productIons.Add(New ProductIon() With {
+
+                Call productIons.Add(New ProductIon() With {
                     .Formula = nFormula,
                     .Mass = peak.mz,
                     .MassDiff = formula.ExactMass + AdductIon.AdductIonAccurateMass - mass,
@@ -59,26 +76,34 @@ Public NotInheritable Class FragmentAssigner
 
             'library search
             Dim fragmentFormulas = getFormulaCandidatesbyLibrarySearch(formula, AdductIon.IonMode, peak.mz, massTol, productIonDB)
-            If fragmentFormulas Is Nothing OrElse fragmentFormulas.Count = 0 Then fragmentFormulas = getValenceCheckedFragmentFormulaList(formula, AdductIon.IonMode, peak.mz, massTol)
 
-            For i = 0 To fragmentFormulas.Count - 1
+            If fragmentFormulas Is Nothing OrElse fragmentFormulas.Count = 0 Then
+                fragmentFormulas = getValenceCheckedFragmentFormulaList(formula, AdductIon.IonMode, peak.mz, massTol)
+            End If
+
+            For i As Integer = 0 To fragmentFormulas.Count - 1
                 If minDiff > std.Abs(mass - fragmentFormulas(i).ExactMass) Then
                     minId = i
                     minDiff = std.Abs(mass - fragmentFormulas(i).ExactMass)
                 End If
             Next
-            If minId >= 0 Then productIons.Add(New ProductIon() With {
-.Formula = fragmentFormulas(minId),
-.Mass = peak.mz,
-.MassDiff = fragmentFormulas(minId).ExactMass - mass,
-.Intensity = peak.intensity
-})
+
+            If minId >= 0 Then
+                productIons.Add(New ProductIon() With {
+                    .Formula = fragmentFormulas(minId),
+                    .Mass = peak.mz,
+                    .MassDiff = fragmentFormulas(minId).ExactMass - mass,
+                    .Intensity = peak.intensity
+                })
+            End If
         Next
 
         For Each ion As ProductIon In productIons
             Dim startIndex = FragmentAssigner.getStartIndex(ion.Mass, 0.1, productIonDB)
-            For i = startIndex To productIonDB.Count - 1
+
+            For i As Integer = startIndex To productIonDB.Count - 1
                 Dim ionQuery = productIonDB(i)
+
                 If ionQuery.IonMode <> AdductIon.IonMode Then Continue For
                 If ionQuery.Formula.ExactMass > ion.Mass + 0.1 Then Exit For
 
@@ -97,7 +122,7 @@ Public NotInheritable Class FragmentAssigner
     Private Shared Function getFormulaCandidatesbyLibrarySearch(formula As Formula, ionMode As IonModes, mz As Double, massTol As Double, productIonDB As List(Of ProductIon)) As List(Of Formula)
         Dim candidates = New List(Of Formula)()
         Dim startIndex = getStartIndex(mz, massTol, productIonDB)
-        For i = startIndex To productIonDB.Count - 1
+        For i As Integer = startIndex To productIonDB.Count - 1
             Dim ionQuery = productIonDB(i)
             If ionQuery.IonMode <> ionMode Then Continue For
             If ionQuery.Formula.ExactMass < mz - massTol Then Continue For
@@ -112,7 +137,10 @@ Public NotInheritable Class FragmentAssigner
     End Function
 
     Private Shared Function getStartIndex(mass As Double, tol As Double, productIonDB As List(Of ProductIon)) As Integer
-        If productIonDB Is Nothing OrElse productIonDB.Count = 0 Then Return 0
+        If productIonDB Is Nothing OrElse productIonDB.Count = 0 Then
+            Return 0
+        End If
+
         Dim targetMass = mass - tol
         Dim startIndex = 0, endIndex = productIonDB.Count - 1
         Dim counter = 0

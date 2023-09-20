@@ -50,14 +50,16 @@ Namespace Formula.MS
                        .Formula = atom_group.GetValue(Nothing),
                        .IonMode = IonModes.Positive,
                        .Name = atom_group.Name,
-                       .ShortName = .Name
+                       .ShortName = .Name,
+                       .Mass = .Formula.ExactMass
                     }
 
                     Yield New ProductIon With {
                        .Formula = atom_group.GetValue(Nothing),
                        .IonMode = IonModes.Negative,
                        .Name = atom_group.Name,
-                       .ShortName = .Name
+                       .ShortName = .Name,
+                       .Mass = .Formula.ExactMass
                     }
                 Next
             Next
