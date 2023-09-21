@@ -61,4 +61,9 @@ Public Class MSScoreGenerator : Inherits ComparisonProvider
     Public Overrides Function ToString() As String
         Return $"[{Me.GetHashCode.ToHexString}] {align.ToString}, has {cache.Count} spectrum data cached."
     End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Overrides Function GetObject(id As String) As Object
+        Return GetSpectral(guid:=id)
+    End Function
 End Class
