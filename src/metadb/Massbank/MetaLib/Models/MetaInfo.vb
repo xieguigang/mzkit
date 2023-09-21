@@ -116,5 +116,10 @@ Namespace MetaLib.Models
                 .Formula = formula
             }
         End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Narrowing Operator CType(m As MetaInfo) As MetaboliteAnnotation
+            Return m.ToSimpleAnnotation
+        End Operator
     End Class
 End Namespace
