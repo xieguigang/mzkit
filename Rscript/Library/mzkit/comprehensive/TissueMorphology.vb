@@ -432,11 +432,11 @@ Module TissueMorphology
     ''' <summary>
     ''' create a collection of the umap sample data
     ''' </summary>
-    ''' <param name="points"></param>
-    ''' <param name="x"></param>
-    ''' <param name="y"></param>
-    ''' <param name="z"></param>
-    ''' <param name="cluster"></param>
+    ''' <param name="points">the spatial points</param>
+    ''' <param name="x">umap dimension x</param>
+    ''' <param name="y">umap dimension y</param>
+    ''' <param name="z">umap dimension z</param>
+    ''' <param name="cluster">the cluster id</param>
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("UMAPsample")>
@@ -445,7 +445,7 @@ Module TissueMorphology
                                      x As Double(),
                                      y As Double(),
                                      z As Double(),
-                                     cluster As Integer(),
+                                     cluster As String(),
                                      Optional is_singlecells As Boolean = False,
                                      Optional env As Environment = Nothing) As UMAPPoint()
 
@@ -549,17 +549,22 @@ Module TissueMorphology
     ''' <param name="tissueMorphology"></param>
     ''' <param name="file"></param>
     ''' <param name="umap"></param>
-    ''' <param name="dimension"></param>
+    ''' <param name="dimension">The dimension size of the ms-imaging slide sample data</param>
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("writeCDF")>
+    <RApiReturn(TypeCodes.boolean)>
     Public Function createCDF(tissueMorphology As TissueRegion(),
                               file As Object,
                               Optional umap As UMAPPoint() = Nothing,
-                              Optional dimension As Size = Nothing,
+                              <RRawVectorArgument>
+                              Optional dimension As Object = Nothing,
                               Optional env As Environment = Nothing) As Object
 
         Dim saveBuf = SMRUCC.Rsharp.GetFileStream(file, IO.FileAccess.Write, env)
+        Dim dimSize = InteropArgumentHelper _
+            .getSize(dimension, env, "0,0") _
+            .SizeParser
 
         If saveBuf Like GetType(Message) Then
             Return saveBuf.TryCast(Of Message)
@@ -569,7 +574,7 @@ Module TissueMorphology
             Return tissueMorphology.WriteCDF(
                 file:=buffer,
                 umap:=umap,
-                dimension:=dimension
+                dimension:=dimSize
             )
         End Using
     End Function
