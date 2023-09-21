@@ -163,13 +163,14 @@ Public Module CDF
             Dim umapX As Double() = umap.Select(Function(p) p.x).ToArray
             Dim umapY As Double() = umap.Select(Function(p) p.y).ToArray
             Dim umapZ As Double() = umap.Select(Function(p) p.z).ToArray
-            Dim clusters As Integer() = umap.Select(Function(p) Integer.Parse(p.class)).ToArray
+            Dim clusters As String() = umap.Select(Function(p) p.class).ToArray
             Dim umapsize As New Dimension With {.name = "umap_size", .size = umap.Length}
             Dim labels As String() = umap.Select(Function(p) Strings.Trim(p.label)).ToArray
+            Dim clusterLabelChars As New chars(clusters)
 
             Call cdf.AddVariable("sampleX", New integers(sampleX), umapsize)
             Call cdf.AddVariable("sampleY", New integers(sampleY), umapsize)
-            Call cdf.AddVariable("cluster", New integers(clusters), umapsize)
+            Call cdf.AddVariable("cluster", clusterLabelChars, New Dimension("label_chars", clusterLabelChars.Length))
 
             Call cdf.AddVariable("umapX", New doubles(umapX), umapsize)
             Call cdf.AddVariable("umapY", New doubles(umapY), umapsize)
@@ -194,8 +195,20 @@ Public Module CDF
         Dim umapX As doubles = cdf.getDataVariable("umapX")
         Dim umapY As doubles = cdf.getDataVariable("umapY")
         Dim umapZ As doubles = cdf.getDataVariable("umapZ")
-        Dim clusters As integers = cdf.getDataVariable("cluster")
+        Dim clusterVar = cdf.getDataVariableEntry("cluster")
+        Dim clusters As String()
         Dim labels As String() = {}
+
+        If clusterVar.type = CDFDataTypes.INT Then
+            ' version 1 format
+            clusters = DirectCast(cdf.getDataVariable("cluster"), integers) _
+                .AsEnumerable _
+                .Select(Function(i) i.ToString) _
+                .ToArray
+        Else
+            ' new format
+            clusters = DirectCast(cdf.getDataVariable("cluster"), chars).LoadJSON(Of String())
+        End If
 
         ' label is optional for make data compatibability
         If cdf.dataVariableExists("spot_labels") Then
