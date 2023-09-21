@@ -6,7 +6,7 @@ writeCDF \- export the tissue data as cdf file
 \fIwriteCDF(\fBtissueMorphology\fR as <generic> TissueRegion[], 
 \fBfile\fR as any, 
 \fBumap\fR as <generic> UMAPPoint[] = \fB<NULL>\fR, 
-\fBdimension\fR as <generic> Size = \fB<NULL>\fR, 
+\fBdimension\fR as any = \fB<NULL>\fR, 
 [\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
@@ -23,7 +23,7 @@ export the tissue data as cdf file
 \fBumap\fB \fR\- -. 
 .PP
 .PP
-\fBdimension\fB \fR\- -. 
+\fBdimension\fB \fR\- The dimension size of the ms-imaging slide sample data. 
 .PP
 .PP
 \fBenv\fB \fR\- -. 
