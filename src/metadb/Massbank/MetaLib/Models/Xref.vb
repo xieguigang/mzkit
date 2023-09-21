@@ -91,22 +91,22 @@ Namespace MetaLib.Models
         <MessagePackMember(3)> Public Property HMDB As String
         <MessagePackMember(4)> Public Property metlin As String
         <MessagePackMember(5)> Public Property DrugBank As String
-        Public Property ChEMBL As String
-        <MessagePackMember(5)> Public Property Wikipedia As String
-        Public Property lipidmaps As String
-        Public Property MeSH As String
-        Public Property ChemIDplus As String
-        Public Property MetaCyc As String
-        Public Property KNApSAcK As String
+        <MessagePackMember(6)> Public Property ChEMBL As String
+        <MessagePackMember(7)> Public Property Wikipedia As String
+        <MessagePackMember(8)> Public Property lipidmaps As String
+        <MessagePackMember(9)> Public Property MeSH As String
+        <MessagePackMember(10)> Public Property ChemIDplus As String
+        <MessagePackMember(11)> Public Property MetaCyc As String
+        <MessagePackMember(12)> Public Property KNApSAcK As String
         ''' <summary>
         ''' Multiple CAS id may exists
         ''' </summary>
         ''' <returns></returns>
         <XmlElement>
-        <MessagePackMember(6)> Public Property CAS As String()
-        <MessagePackMember(7)> Public Property InChIkey As String
-        <MessagePackMember(8)> Public Property InChI As String
-        <MessagePackMember(9)> Public Property SMILES As String
+        <MessagePackMember(13)> Public Property CAS As String()
+        <MessagePackMember(14)> Public Property InChIkey As String
+        <MessagePackMember(15)> Public Property InChI As String
+        <MessagePackMember(16)> Public Property SMILES As String
 
         Sub New()
         End Sub
