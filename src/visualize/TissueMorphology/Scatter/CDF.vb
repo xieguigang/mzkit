@@ -197,6 +197,12 @@ Public Module CDF
         Return True
     End Function
 
+    ''' <summary>
+    ''' mapping the string label to integer enum code
+    ''' </summary>
+    ''' <param name="umap"></param>
+    ''' <param name="labels"></param>
+    ''' <returns></returns>
     <Extension>
     Private Function encodeClusterLabels(umap As UMAPPoint(), ByRef labels As Dictionary(Of String, String)) As Integer()
         labels = New Dictionary(Of String, String)
@@ -222,6 +228,16 @@ Public Module CDF
         Return index
     End Function
 
+    ''' <summary>
+    ''' this function decode the cluster label for load umap cluster data,
+    ''' based of the different file version, this function unify the data
+    ''' decode operations:
+    ''' 
+    ''' v1: just convert the integer id to string 
+    ''' v2: try to decode the integer enum code to the string labels
+    ''' </summary>
+    ''' <param name="cdf"></param>
+    ''' <returns></returns>
     <Extension>
     Private Function ReadClusterLabelv2(cdf As netCDFReader) As String()
         Dim id As integers = cdf.getDataVariable("cluster")
