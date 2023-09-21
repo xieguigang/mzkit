@@ -1,54 +1,54 @@
 ﻿#Region "Microsoft.VisualBasic::a6e603723b4db43a8dfd25c17dd11aac, mzkit\src\visualize\TissueMorphology\Scatter\CDF.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 217
-    '    Code Lines: 168
-    ' Comment Lines: 18
-    '   Blank Lines: 31
-    '     File Size: 8.92 KB
+' Summaries:
 
 
-    ' Module CDF
-    ' 
-    '     Function: (+2 Overloads) GetDimension, IsTissueMorphologyCDF, (+2 Overloads) ReadTissueMorphology, (+2 Overloads) ReadUMAP, WriteCDF
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 217
+'    Code Lines: 168
+' Comment Lines: 18
+'   Blank Lines: 31
+'     File Size: 8.92 KB
+
+
+' Module CDF
+' 
+'     Function: (+2 Overloads) GetDimension, IsTissueMorphologyCDF, (+2 Overloads) ReadTissueMorphology, (+2 Overloads) ReadUMAP, WriteCDF
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -163,18 +163,27 @@ Public Module CDF
             Dim umapX As Double() = umap.Select(Function(p) p.x).ToArray
             Dim umapY As Double() = umap.Select(Function(p) p.y).ToArray
             Dim umapZ As Double() = umap.Select(Function(p) p.z).ToArray
-            Dim clusters As String() = umap.Select(Function(p) p.class).ToArray
+            Dim cluster_labels As Dictionary(Of String, String) = Nothing
+            Dim clusters As Integer() = umap.encodeClusterLabels(labels:=cluster_labels)
             Dim umapsize As New Dimension With {.name = "umap_size", .size = umap.Length}
             Dim labels As String() = umap.Select(Function(p) Strings.Trim(p.label)).ToArray
-            Dim clusterLabelChars As New chars(clusters)
+            Dim str As chars
+            Dim strLen As Dimension
 
             Call cdf.AddVariable("sampleX", New integers(sampleX), umapsize)
             Call cdf.AddVariable("sampleY", New integers(sampleY), umapsize)
-            Call cdf.AddVariable("cluster", clusterLabelChars, New Dimension("label_chars", clusterLabelChars.Length))
+            Call cdf.AddVariable("cluster", New integers(clusters), umapsize)
 
             Call cdf.AddVariable("umapX", New doubles(umapX), umapsize)
             Call cdf.AddVariable("umapY", New doubles(umapY), umapsize)
             Call cdf.AddVariable("umapZ", New doubles(umapZ), umapsize)
+
+            ' cluster labels is optional
+            For Each cluster In cluster_labels
+                str = New chars(cluster.Value)
+                strLen = New Dimension($"sizeof_{cluster.Key}", str.Length)
+                cdf.AddVariable(cluster.Key, str, strLen)
+            Next
 
             ' cells labels is optional
             If Not labels.All(Function(s) s = "") Then
@@ -189,6 +198,54 @@ Public Module CDF
     End Function
 
     <Extension>
+    Private Function encodeClusterLabels(umap As UMAPPoint(), ByRef labels As Dictionary(Of String, String)) As Integer()
+        labels = New Dictionary(Of String, String)
+
+        If umap.All(Function(c) c.class.IsPattern("\d+")) Then
+            Return umap.Select(Function(u) Integer.Parse(u.class)).ToArray
+        End If
+
+        Dim labelIndex As Index(Of String) = umap _
+            .Select(Function(l) l.class) _
+            .Distinct _
+            .Indexing
+        Dim index As Integer() = New Integer(umap.Length - 1) {}
+
+        For i As Integer = 0 To umap.Length - 1
+            index(i) = labelIndex.IndexOf(umap(i).class)
+        Next
+
+        For Each label As SeqValue(Of String) In labelIndex
+            Call labels.Add($"cluster_label_{label.i}", label.value)
+        Next
+
+        Return index
+    End Function
+
+    <Extension>
+    Private Function ReadClusterLabelv2(cdf As netCDFReader) As String()
+        Dim id As integers = cdf.getDataVariable("cluster")
+        Dim vars As String() = id.Select(Function(i) $"cluster_label_{i}").ToArray
+        Dim labels As String() = New String(id.Length - 1) {}
+        Dim cache As New Dictionary(Of String, String)
+        Dim offset As Integer
+
+        For i As Integer = 0 To id.Length - 1
+            offset = i
+            labels(i) = cache.ComputeIfAbsent(vars(i),
+               lazyValue:=Function(varName)
+                              If cdf.dataVariableExists(varName) Then
+                                  Return CType(cdf.getDataVariable(varName), chars).CharString
+                              Else
+                                  Return id(offset).ToString
+                              End If
+                          End Function)
+        Next
+
+        Return labels
+    End Function
+
+    <Extension>
     Public Iterator Function ReadUMAP(cdf As netCDFReader) As IEnumerable(Of UMAPPoint)
         Dim sampleX As integers = cdf.getDataVariable("sampleX")
         Dim sampleY As integers = cdf.getDataVariable("sampleY")
@@ -200,11 +257,8 @@ Public Module CDF
         Dim labels As String() = {}
 
         If clusterVar.type = CDFDataTypes.INT Then
-            ' version 1 format
-            clusters = DirectCast(cdf.getDataVariable("cluster"), integers) _
-                .AsEnumerable _
-                .Select(Function(i) i.ToString) _
-                .ToArray
+            ' version 1 and v2 format
+            clusters = cdf.ReadClusterLabelv2
         Else
             ' new format
             clusters = DirectCast(cdf.getDataVariable("cluster"), chars).LoadJSON(Of String())
