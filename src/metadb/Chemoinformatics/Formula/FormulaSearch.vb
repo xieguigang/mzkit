@@ -103,7 +103,10 @@ Namespace Formula
             Return reorders.ToArray
         End Function
 
-        Public Iterator Function SearchByExactMass(exact_mass As Double, Optional doVerify As Boolean = True, Optional cancel As Value(Of Boolean) = Nothing) As IEnumerable(Of FormulaComposition)
+        Public Iterator Function SearchByExactMass(exact_mass As Double,
+                                                   Optional doVerify As Boolean = True,
+                                                   Optional cancel As Value(Of Boolean) = Nothing) As IEnumerable(Of FormulaComposition)
+
             Dim elements As New Stack(Of ElementSearchCandiate)(candidateElements.AsEnumerable.Reverse)
             Dim seed As New FormulaComposition(New Dictionary(Of String, Integer), "")
 
