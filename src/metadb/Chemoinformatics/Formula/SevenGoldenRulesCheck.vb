@@ -1,5 +1,6 @@
 ﻿Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.IsotopicPatterns
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports MassDiffDictionary = BioNovoGene.BioDeep.Chemoinformatics.Formula.ElementsExactMass
 
 Namespace Formula
@@ -52,11 +53,19 @@ Namespace Formula
     {"I", 1}
 }
 
-        Public Shared Function Check(formula As Formula, isValenceCheck As Boolean, coverRange As CoverRange, isElementProbabilityCheck As Boolean, adduct As AdductIon) As Boolean
-            If Equals(adduct.AdductIonName, "[M]+") OrElse Equals(adduct.AdductIonName, "[M]-") OrElse Equals(adduct.AdductIonName, "[M-2H]-") Then
-                If isValenceCheck AndAlso Not ValenceCheckByHydrogenShift(formula) Then Return False
+        Public Shared Function Check(formula As Formula, isValenceCheck As Boolean, coverRange As CoverRange, isElementProbabilityCheck As Boolean,
+                                     Optional adduct As AdductIon = Nothing) As Boolean
+
+            Static hydrogenShiftCheck As Index(Of String) = {"[M]+", "[M]-", "[M-2H]-"}
+
+            If adduct IsNot Nothing AndAlso adduct.AdductIonName Like hydrogenShiftCheck Then
+                If isValenceCheck AndAlso Not ValenceCheckByHydrogenShift(formula) Then
+                    Return False
+                End If
             Else
-                If isValenceCheck AndAlso Not ValenceCheck(formula) Then Return False
+                If isValenceCheck AndAlso Not ValenceCheck(formula) Then
+                    Return False
+                End If
             End If
 
 
