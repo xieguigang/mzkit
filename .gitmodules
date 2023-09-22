@@ -4,6 +4,7 @@
 [submodule "src/mzkit"]
 	path = src/mzkit
 	url = https://gitlink.org.cn/xieguigang/mzkit_win32.git
+	ignore = all
 [submodule "src/visual/KCF"]
 	path = src/visualize/KCF
 	url = https://gitee.com/xieguigang/KEGG.molDraw.git
