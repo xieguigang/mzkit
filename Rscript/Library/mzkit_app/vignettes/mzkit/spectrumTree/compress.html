@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>pack the matrix file as the MSI mzpack</title>
+    <title>Compress and make cleanup of the spectrum library</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <style rel="stylesheet" type="text/css">
@@ -148,12 +148,12 @@
 
         <table style="width: 100%;">
             <tr>
-                <td>pack_matrix {MSI}</td>
+                <td>compress {spectrumTree}</td>
                 <td style="text-align: right;">R Documentation</td>
             </tr>
         </table>
 
-        <h2>pack the matrix file as the MSI mzpack</h2>
+        <h2>Compress and make cleanup of the spectrum library</h2>
 
         <h3>Description</h3>
 
@@ -162,19 +162,24 @@
         <h3>Usage</h3>
 
         <div style="width: 100%; padding-left: 3%; color: black;">
-            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>pack_matrix</strong>(<i>file</i>,
-    <i>dims</i> = <span style='color: blue !important;'>NULL</span>,
-    <i>res</i> = <span style='color: green;'>17</span>);</code></pre>
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>compress</strong>(<i>spectrumLib</i>, <i>file</i>, <i>metadb</i>,
+    <i>nspec</i> = <span style='color: green;'>5</span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
 
         <table>
             
+<dt>spectrumLib</dt>
+<dd><p><p>-</p></p></dd>
+
+
 <dt>file</dt>
-<dd><p><p>the file resource reference to the csv table file, and the<br />
- csv file should be in format of ion peaks features in column<br />
- and spatial spot id in rows</p></p></dd>
+<dd><p><p>A file object for write the spectrum library.</p></p></dd>
+
+
+<dt>metadb</dt>
+<dd><p><p>metabolite annotation database library for get annotation information</p></p></dd>
 
 
 <dt>env</dt>
@@ -197,8 +202,8 @@
         
 
         <hr />
-        <div style="text-align: center;">[Package <em>MSI</em> version 1.0.0.0 <a
-                href="../MSI.html">Index</a>]
+        <div style="text-align: center;">[Package <em>spectrumTree</em> version 1.0.0.0 <a
+                href="../spectrumTree.html">Index</a>]
         </div>
     </div>
 </body>

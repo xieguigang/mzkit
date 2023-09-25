@@ -63,6 +63,9 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 
 Namespace MsImaging
 
+    ''' <summary>
+    ''' the mzpack metadata format for ms-imaging raw data
+    ''' </summary>
     Public Class Metadata
 
         Public Property scan_x As Integer
@@ -91,9 +94,24 @@ Namespace MsImaging
             End Get
         End Property
 
+        ''' <summary>
+        ''' construct a blank ms-imaging metadata list
+        ''' </summary>
+        ''' <remarks>
+        ''' for write metadata to mzpack file, use the <see cref="GetMetadata()"/>
+        ''' function for generates the data dictionary object for write
+        ''' </remarks>
         Sub New()
         End Sub
 
+        ''' <summary>
+        ''' Parse the list data which is read from the mzpack file
+        ''' </summary>
+        ''' <param name="list"></param>
+        ''' <remarks>
+        ''' for write metadata to mzpack file, use the <see cref="GetMetadata()"/> 
+        ''' function for generates the data dictionary object for write
+        ''' </remarks>
         Sub New(list As IDictionary(Of String, String))
             scan_x = Val(list.TryGetValue("width"))
             scan_y = Val(list.TryGetValue("height"))
@@ -115,6 +133,9 @@ Namespace MsImaging
         End Function
 
         ''' <summary>
+        ''' Contruct a dictionary object from current ms-imaging 
+        ''' metadata object for write to mzpack file:
+        ''' 
         ''' 1. width
         ''' 2. height
         ''' 3. resolution

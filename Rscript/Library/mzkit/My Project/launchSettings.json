@@ -6,7 +6,7 @@
     "run_exe": {
       "commandName": "Executable",
       "executablePath": "\\GCModeller\\src\\R-sharp\\App\\net6.0\\R#.exe",
-      "commandLineArgs": "\\biodeep\\biodeep_pipeline\\biodeepMSMS_v5\\test\\ms1_demo\\mz_search_test.R --attach \"\\mzkit\\Rscript\\Library\\mzkit_app\" --debug"
+      "commandLineArgs": "U:\\项目以外内容\\2023\\血清血浆物质列表\\human_samples\\compress_run.R --attach \"\\mzkit\\Rscript\\Library\\mzkit_app\" --debug"
     },
     "annotation": {
       "commandName": "Executable",

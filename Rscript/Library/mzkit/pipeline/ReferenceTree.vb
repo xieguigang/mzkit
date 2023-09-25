@@ -62,9 +62,10 @@ Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree
 Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.PackLib
 Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.Query
 Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.Tree
+Imports BioNovoGene.BioDeep.MSEngine
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
 Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.Data.IO.MessagePack.Constants
+Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.MetaData
@@ -556,5 +557,49 @@ Module ReferenceTreePkg
         End If
 
         Return tree
+    End Function
+
+    ''' <summary>
+    ''' Compress and make cleanup of the spectrum library
+    ''' </summary>
+    ''' <param name="spectrumLib"></param>
+    ''' <param name="file">A file object for write the spectrum library.</param>
+    ''' <param name="metadb">
+    ''' metabolite annotation database library for get annotation information
+    ''' </param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("compress")>
+    Public Function compress(spectrumLib As SpectrumReader, file As Object, metadb As IMzQuery,
+                             Optional nspec As Integer = 5,
+                             Optional env As Environment = Nothing) As Object
+
+        Dim buf = SMRUCC.Rsharp.GetFileStream(file, FileAccess.ReadWrite, env)
+
+        If buf Like GetType(Message) Then
+            Return buf.TryCast(Of Message)
+        End If
+
+        Dim pullAll = spectrumLib.LoadMass.ToArray
+        Dim newPool As New SpectrumPack(buf.TryCast(Of Stream))
+
+        For Each metabo As MassIndex In pullAll
+            Dim allspec = spectrumLib.GetSpectrum(metabo).ToArray
+
+            If allspec.Length > nspec Then
+                allspec = Cleanup.Compress(allspec, n:=nspec).ToArray
+            End If
+
+            Dim annoData = metadb.GetAnnotation(uniqueId:=metabo.name)
+            Dim uuid As String
+
+            For Each spectrum As PeakMs2 In allspec
+                Call newPool.Push(uuid, annoData.formula, spectrum)
+            Next
+        Next
+
+        Call newPool.Dispose()
+
+        Return True
     End Function
 End Module

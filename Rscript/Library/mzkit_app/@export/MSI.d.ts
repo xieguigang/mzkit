@@ -112,11 +112,15 @@ declare namespace MSI {
      * @param file the file resource reference to the csv table file, and the
      *  csv file should be in format of ion peaks features in column
      *  and spatial spot id in rows
+     * @param dims 
+     * + default value Is ``null``.
+     * @param res 
+     * + default value Is ``17``.
      * @param env -
      * 
      * + default value Is ``null``.
    */
-   function pack_matrix(file: any, env?: object): any;
+   function pack_matrix(file: any, dims?: any, res?: number, env?: object): any;
    /**
     * Extract the ion data matrix
     * 

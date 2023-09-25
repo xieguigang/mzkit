@@ -75,6 +75,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Data.GraphTheory.GridGraph
 Imports Microsoft.VisualBasic.Language
@@ -898,8 +899,14 @@ Module MSI
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("pack_matrix")>
-    Public Function packMatrix(<RRawVectorArgument> file As Object, Optional env As Environment = Nothing) As Object
+    Public Function packMatrix(<RRawVectorArgument> file As Object,
+                               <RRawVectorArgument>
+                               Optional dims As Object = Nothing,
+                               Optional res As Double = 17,
+                               Optional env As Environment = Nothing) As Object
         Dim scans As ScanMS1()
+        Dim msi_dims As Size = InteropArgumentHelper.getSize(dims, env, "0,0").SizeParser
+        Dim metadata As Metadata = Nothing
 
         If TypeOf file Is rDataframe Then
             scans = DirectCast(file, rDataframe).packDf.ToArray
@@ -913,10 +920,25 @@ Module MSI
             scans = New StreamReader(buf.TryCast(Of Stream)).packFile.ToArray
         End If
 
+        If Not msi_dims.IsEmpty Then
+            metadata = New Metadata With {
+                .[class] = FileApplicationClass.MSImaging.ToString,
+                .mass_range = scans _
+                    .Where(Function(s) Not s Is Nothing) _
+                    .Select(Function(s) s.mz.MinMax) _
+                    .IteratesALL _
+                    .MinMax,
+                .resolution = res,
+                .scan_x = msi_dims.Width,
+                .scan_y = msi_dims.Height
+            }
+        End If
+
         Return New mzPack With {
             .MS = scans.Where(Function(s) Not s Is Nothing).ToArray,
             .source = NameOf(packMatrix),
-            .Application = FileApplicationClass.MSImaging
+            .Application = FileApplicationClass.MSImaging,
+            .metadata = If(metadata Is Nothing, Nothing, metadata.GetMetadata)
         }
     End Function
 
