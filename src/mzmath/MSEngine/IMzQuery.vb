@@ -56,12 +56,9 @@
 
 #End Region
 
-Public Interface IMzQuery
+Public Interface IMzQuery : Inherits IMetaDb
 
     Function QueryByMz(mz As Double) As IEnumerable(Of MzQuery)
-    Function GetAnnotation(uniqueId As String) As (name As String, formula As String)
-    Function GetMetadata(uniqueId As String) As Object
-    Function GetDbXref(uniqueId As String) As Dictionary(Of String, String)
 
     ''' <summary>
     ''' query a set of m/z peak list
@@ -70,6 +67,12 @@ Public Interface IMzQuery
     ''' <returns></returns>
     Function MSetAnnotation(mzlist As IEnumerable(Of Double), Optional topN As Integer = 3) As IEnumerable(Of MzQuery)
 
+End Interface
+
+Public Interface IMetaDb
+    Function GetAnnotation(uniqueId As String) As (name As String, formula As String)
+    Function GetMetadata(uniqueId As String) As Object
+    Function GetDbXref(uniqueId As String) As Dictionary(Of String, String)
 End Interface
 
 Public Module MetalIons

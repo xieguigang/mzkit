@@ -268,12 +268,17 @@ Namespace PackLib
                 Dim bcode As String = file.ReadText(ref)
                 Dim mass As BDictionary = BencodeDecoder.Decode(bcode).First
                 Dim index As New MassIndex
+                Dim formula As BString = Nothing
 
                 index.name = mass!name.ToString
                 index.exactMass = Val(mass!exactMass.ToString)
                 index.spectrum = DirectCast(mass!spectrum, BList) _
                     .Select(Function(b) Integer.Parse(b.ToString)) _
                     .AsList
+
+                If mass.TryGetValue("formula", formula) Then
+                    index.formula = formula.ToString
+                End If
 
                 Yield index
             Next
