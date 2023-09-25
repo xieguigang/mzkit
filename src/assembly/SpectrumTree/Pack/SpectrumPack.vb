@@ -1,4 +1,5 @@
 ﻿Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.Tree
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
@@ -29,6 +30,11 @@ Namespace PackLib
         Sub New(file As Stream)
             Me.file = New StreamPack(file, meta_size:=64 * 1024 * 1024)
         End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function PathName(name As String) As String
+            Return name.Replace("\", "_").Replace("/", "_")
+        End Function
 
         Public Sub Push(uuid As String, formula As String, spectrum As PeakMs2)
             Dim index As MassIndex

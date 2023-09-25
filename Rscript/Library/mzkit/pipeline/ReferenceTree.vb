@@ -546,7 +546,7 @@ Module ReferenceTreePkg
                 ' symbol \ or / in the metabolite name will generates an
                 ' incorrect reference path, so these two symbol needs to be 
                 ' removed from the name
-                uuid = $"{uuid}|{name.Replace("\", "_").Replace("/", "_")}"
+                uuid = $"{uuid}|{SpectrumPack.PathName(name)}"
             End If
 
             For Each spectrum As PeakMs2 In list.populates(Of PeakMs2)(env)
@@ -570,8 +570,9 @@ Module ReferenceTreePkg
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("compress")>
-    Public Function compress(spectrumLib As SpectrumReader, file As Object, metadb As IMzQuery,
+    Public Function compress(spectrumLib As SpectrumReader, file As Object, metadb As IMetaDb,
                              Optional nspec As Integer = 5,
+                             Optional xrefDb As String = Nothing,
                              Optional env As Environment = Nothing) As Object
 
         Dim buf = SMRUCC.Rsharp.GetFileStream(file, FileAccess.ReadWrite, env)
@@ -591,7 +592,16 @@ Module ReferenceTreePkg
             End If
 
             Dim annoData = metadb.GetAnnotation(uniqueId:=metabo.name)
+            Dim xrefs = metadb.GetDbXref(metabo.name)
             Dim uuid As String
+
+            If Not xrefDb.StringEmpty Then
+                uuid = xrefs.TryGetValue(xrefDb)
+            Else
+                uuid = metabo.name
+            End If
+
+            uuid = $"{uuid}|{SpectrumPack.PathName(annoData.name)}|{SpectrumPack.PathName(annoData.formula)}"
 
             For Each spectrum As PeakMs2 In allspec
                 Call newPool.Push(uuid, annoData.formula, spectrum)
