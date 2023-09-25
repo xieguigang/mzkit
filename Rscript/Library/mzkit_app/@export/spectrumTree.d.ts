@@ -35,6 +35,20 @@ declare namespace spectrumTree {
    */
    function addBucket(tree: any, x: any, ignore_error?: boolean, args?: object, env?: object): any;
    /**
+    * Compress and make cleanup of the spectrum library
+    * 
+    * 
+     * @param spectrumLib -
+     * @param file A file object for write the spectrum library.
+     * @param metadb metabolite annotation database library for get annotation information
+     * @param nspec 
+     * + default value Is ``5``.
+     * @param env -
+     * 
+     * + default value Is ``null``.
+   */
+   function compress(spectrumLib: object, file: any, metadb: object, nspec?: object, env?: object): any;
+   /**
     * set dot cutoff parameter for the cos score similarity algorithm
     * 
     * 
