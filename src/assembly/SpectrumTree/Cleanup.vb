@@ -46,7 +46,13 @@ Public Module Cleanup
         End If
 
         Dim spec As ms2() = norm_spec _
-            .Select(Function(r) r.Properties.Select(Function(n) New ms2(n.Key, n.Value))) _
+            .Select(Function(r)
+                        Return r.Properties _
+                            .Where(Function(m) m.Value > 0) _
+                            .Select(Function(n)
+                                        Return New ms2(n.Key, n.Value)
+                                    End Function)
+                    End Function) _
             .IteratesALL _
             .ToArray _
             .Centroid(da, New RelativeIntensityCutoff(0)) _
