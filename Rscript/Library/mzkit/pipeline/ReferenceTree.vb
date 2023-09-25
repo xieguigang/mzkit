@@ -582,8 +582,10 @@ Module ReferenceTreePkg
             Dim allspec = spectrumLib.GetSpectrum(metabo).ToArray
 
             If allspec.Length > nspec Then
-
+                allspec = Cleanup.Compress(allspec, n:=nspec).ToArray
             End If
+
+
         Next
     End Function
 End Module
