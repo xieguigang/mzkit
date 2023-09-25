@@ -575,6 +575,15 @@ Module ReferenceTreePkg
             Return buf.TryCast(Of Message)
         End If
 
+        Dim pullAll = spectrumLib.LoadMass.ToArray
+        Dim newPool As New SpectrumPack(buf.TryCast(Of Stream))
 
+        For Each metabo As MassIndex In pullAll
+            Dim allspec = spectrumLib.GetSpectrum(metabo).ToArray
+
+            If allspec.Length > nspec Then
+
+            End If
+        Next
     End Function
 End Module
