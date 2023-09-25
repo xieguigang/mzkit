@@ -45,6 +45,7 @@ Public Module Cleanup
             Return rawdata(norm_spec(Scan0).ID)
         End If
 
+        Dim template = rawdata(norm_spec(Scan0).ID)
         Dim spec As ms2() = norm_spec _
             .Select(Function(r)
                         Return r.Properties _
@@ -57,9 +58,16 @@ Public Module Cleanup
             .ToArray _
             .Centroid(da, New RelativeIntensityCutoff(0)) _
             .ToArray
+        Dim rt As Double() = norm_spec.Select(Function(s) rawdata(s.ID).rt).ToArray
+        Dim mz1 As Double() = norm_spec.Select(Function(s) rawdata(s.ID).mz).ToArray
 
         Return New PeakMs2 With {
-            .mzInto = spec
+            .mzInto = spec,
+            .file = template.file,
+            .lib_guid = template.scan & "#" & clusterId,
+            .scan = template.scan,
+            .rt = rt.Average,
+            .mz = 0
         }
     End Function
 
