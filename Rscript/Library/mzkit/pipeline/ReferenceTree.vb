@@ -64,7 +64,6 @@ Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.Query
 Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.Tree
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
 Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.Data.IO.MessagePack.Constants
 Imports Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.MetaData
@@ -556,5 +555,26 @@ Module ReferenceTreePkg
         End If
 
         Return tree
+    End Function
+
+    ''' <summary>
+    ''' Compress and make cleanup of the spectrum library
+    ''' </summary>
+    ''' <param name="spectrumLib"></param>
+    ''' <param name="file">A file object for write the spectrum library.</param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("compress")>
+    Public Function compress(spectrumLib As SpectrumReader, file As Object,
+                             Optional nspec As Integer = 5,
+                             Optional env As Environment = Nothing) As Object
+
+        Dim buf = SMRUCC.Rsharp.GetFileStream(file, FileAccess.ReadWrite, env)
+
+        If buf Like GetType(Message) Then
+            Return buf.TryCast(Of Message)
+        End If
+
+
     End Function
 End Module
