@@ -15,7 +15,12 @@ Public Module Cleanup
     <Extension>
     Public Iterator Function Compress(spec As IEnumerable(Of PeakMs2), n As Integer) As IEnumerable(Of PeakMs2)
         Dim da3 As Tolerance = Tolerance.DeltaMass(0.3)
-        Dim rawdata = spec.ToDictionary(Function(s) s.lib_guid)
+        Dim rawdata As Dictionary(Of String, PeakMs2) = spec _
+            .Select(Function(s, i)
+                        s.lib_guid = $"{s.lib_guid}.{i + 1}"
+                        Return s
+                    End Function) _
+            .ToDictionary(Function(s) s.lib_guid)
         Dim allMz As Double() = rawdata.Values _
             .Select(Function(m) m.mzInto) _
             .IteratesALL _
@@ -23,7 +28,9 @@ Public Module Cleanup
             .Centroid(da3, New RelativeIntensityCutoff(0.0)) _
             .Select(Function(a) a.mz) _
             .ToArray
-        Dim specData As EntityClusterModel() = rawdata.Values.CreateSpecRows(allMz, da3).Kmeans(expected:=n)
+        Dim specData As EntityClusterModel() = rawdata.Values _
+            .CreateSpecRows(allMz, da3) _
+            .Kmeans(expected:=n)
 
         For Each group In specData.GroupBy(Function(a) a.Cluster)
             Yield group _
