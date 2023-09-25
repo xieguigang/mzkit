@@ -103,7 +103,10 @@ Namespace Formula
             Return reorders.ToArray
         End Function
 
-        Public Iterator Function SearchByExactMass(exact_mass As Double, Optional doVerify As Boolean = True, Optional cancel As Value(Of Boolean) = Nothing) As IEnumerable(Of FormulaComposition)
+        Public Iterator Function SearchByExactMass(exact_mass As Double,
+                                                   Optional doVerify As Boolean = True,
+                                                   Optional cancel As Value(Of Boolean) = Nothing) As IEnumerable(Of FormulaComposition)
+
             Dim elements As New Stack(Of ElementSearchCandiate)(candidateElements.AsEnumerable.Reverse)
             Dim seed As New FormulaComposition(New Dictionary(Of String, Integer), "")
 
@@ -130,6 +133,7 @@ Namespace Formula
 
                     If Not checked Then
                         Continue For
+                    ElseIf Not SevenGoldenRulesCheck.Check(formula, True, CoverRange.CommonRange, True) Then
                     End If
                 End If
 
@@ -214,8 +218,6 @@ Namespace Formula
                                                     doVerify As Boolean) As IEnumerable(Of FormulaComposition)
             If candidates.Count = 0 Then
                 Return
-            ElseIf Not parent.ElementProbabilityCheck Then
-                Return
             End If
 
             Dim current As ElementSearchCandiate = candidates.Pop
@@ -224,16 +226,6 @@ Namespace Formula
             For n As Integer = current.MinCount To current.MaxCount
                 Dim formula As FormulaComposition = parent.AppendElement(current.Element, n)
                 Dim ppm As Double = FormulaSearch.PPM(formula.ExactMass, exact_mass)
-
-                If doVerify AndAlso Not formula.HeteroatomRatioCheck Then
-                    Continue For
-
-                    ' the HC ratio is -1 when in the initial status:
-                    ' only just H or C
-                    ' pass this status
-                ElseIf doVerify AndAlso (enableHCRatioCheck AndAlso (formula.HCRatio > -1) AndAlso (Not formula.HydrogenCarbonElementRatioCheck)) Then
-                    Continue For
-                End If
 
                 If cancel.Value Then
                     Exit For

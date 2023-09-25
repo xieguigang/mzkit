@@ -50,6 +50,11 @@ Namespace Formula.MS
         End Function
 
         Public Property AdductIonXmer As Integer
+
+        ''' <summary>
+        ''' the precursor adduct name, example as ``[M+H]+``
+        ''' </summary>
+        ''' <returns></returns>
         Public Property AdductIonName As String = String.Empty
         Public Property ChargeNumber As Integer
         Public Property IonMode As IonModes
