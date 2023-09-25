@@ -75,6 +75,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Data.GraphTheory.GridGraph
 Imports Microsoft.VisualBasic.Language
@@ -922,7 +923,14 @@ Module MSI
         If Not msi_dims.IsEmpty Then
             metadata = New Metadata With {
                 .[class] = FileApplicationClass.MSImaging.ToString,
-                .mass_range = scans.Where(Function(s) Not s Is Nothing).Select(Function(s) s.mz.minmax)
+                .mass_range = scans _
+                    .Where(Function(s) Not s Is Nothing) _
+                    .Select(Function(s) s.mz.MinMax) _
+                    .IteratesALL _
+                    .MinMax,
+                .resolution = res,
+                .scan_x = msi_dims.Width,
+                .scan_y = msi_dims.Height
             }
         End If
 
