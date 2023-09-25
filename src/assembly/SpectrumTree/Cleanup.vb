@@ -1,8 +1,10 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math
 
 Public Module Cleanup
 
@@ -59,7 +61,11 @@ Public Module Cleanup
             .Centroid(da, New RelativeIntensityCutoff(0)) _
             .ToArray
         Dim rt As Double() = norm_spec.Select(Function(s) rawdata(s.ID).rt).ToArray
-        Dim mz1 As Double() = norm_spec.Select(Function(s) rawdata(s.ID).mz).ToArray
+        Dim mz1 As NamedCollection(Of Double)() = norm_spec _
+            .Select(Function(s) rawdata(s.ID).mz) _
+            .GroupBy(da) _
+            .OrderByDescending(Function(a) a.Length) _
+            .ToArray
 
         Return New PeakMs2 With {
             .mzInto = spec,
@@ -67,7 +73,7 @@ Public Module Cleanup
             .lib_guid = template.scan & "#" & clusterId,
             .scan = template.scan,
             .rt = rt.Average,
-            .mz = 0
+            .mz = mz1(Scan0).value.Average
         }
     End Function
 
