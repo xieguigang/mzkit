@@ -43,11 +43,13 @@ declare namespace spectrumTree {
      * @param metadb metabolite annotation database library for get annotation information
      * @param nspec 
      * + default value Is ``5``.
+     * @param xrefDb 
+     * + default value Is ``null``.
      * @param env -
      * 
      * + default value Is ``null``.
    */
-   function compress(spectrumLib: object, file: any, metadb: object, nspec?: object, env?: object): any;
+   function compress(spectrumLib: object, file: any, metadb: object, nspec?: object, xrefDb?: string, env?: object): any;
    /**
     * set dot cutoff parameter for the cos score similarity algorithm
     * 
