@@ -72,7 +72,7 @@ Public NotInheritable Class KEGGHandler : Inherits MSSearch(Of KEGGCompound)
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Shared Function Wraps(compounds As IEnumerable(Of Compound)) As IEnumerable(Of KEGGCompound)
-        Return compounds.Select(Function(c) New KEGGCompound With {.KEGG = c})
+        Return compounds.Where(Function(c) c.exactMass > 0).Select(Function(c) New KEGGCompound With {.KEGG = c})
     End Function
 
     Public Overloads Shared Function CreateIndex(compounds As IEnumerable(Of KEGGCompound), types As MzCalculator(), tolerance As Tolerance) As MSSearch(Of KEGGCompound)
