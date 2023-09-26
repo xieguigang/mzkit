@@ -33,7 +33,7 @@ Namespace PackLib
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function PathName(name As String) As String
-            Return name.Replace("\", "_").Replace("/", "_")
+            Return Strings.Trim(name).Replace("\", "_").Replace("/", "_").Replace(""""c, "").Replace("?", ".").Replace("*", ".").Trim
         End Function
 
         Public Sub Push(uuid As String, formula As String, spectrum As PeakMs2)
