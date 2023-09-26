@@ -574,6 +574,7 @@ Module ReferenceTreePkg
     Public Function compress(spectrumLib As SpectrumReader, file As Object, metadb As IMetaDb,
                              Optional nspec As Integer = 5,
                              Optional xrefDb As String = Nothing,
+                             Optional test As Integer = -1,
                              Optional env As Environment = Nothing) As Object
 
         Dim buf = SMRUCC.Rsharp.GetFileStream(file, FileAccess.ReadWrite, env)
@@ -584,6 +585,7 @@ Module ReferenceTreePkg
 
         Dim pullAll = spectrumLib.LoadMass.ToArray
         Dim newPool As New SpectrumPack(buf.TryCast(Of Stream))
+        Dim nsize As Integer = 0
 
         For Each metabo As MassIndex In pullAll
             Try
@@ -626,6 +628,14 @@ Module ReferenceTreePkg
                     spectrum.file = uuid
                     newPool.Push(uuid, If(annoData.formula, metabo.formula), spectrum)
                 Next
+
+                nsize += 1
+
+                If test > 0 Then
+                    If nsize >= test Then
+                        Exit For
+                    End If
+                End If
             Catch ex As Exception
 
             End Try
