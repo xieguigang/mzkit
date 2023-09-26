@@ -74,6 +74,16 @@ Namespace PackLib
             End If
         End Sub
 
+        ''' <summary>
+        ''' test for <see cref="GetIdMap(String)"/>
+        ''' </summary>
+        ''' <param name="libname"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function HasMapName(libname As String) As Boolean
+            Return map.ContainsKey(libname)
+        End Function
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetAllLibNames() As IEnumerable(Of String)
             Return libnames.AsEnumerable

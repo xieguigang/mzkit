@@ -408,9 +408,19 @@ Module MSI
     End Function
 
     <ExportAPI("open.imzML")>
-    Public Function open_imzML(file As String) As Object
+    Public Function open_imzML(file As String, Optional env As Environment = Nothing) As Object
         Dim scans As ScanData() = imzML.LoadScans(file:=file).ToArray
-        Dim ibd = ibdReader.Open(file.ChangeSuffix("ibd"))
+        Dim ibd As ibdReader
+        Dim ibdfile As String = file.ChangeSuffix("ibd")
+
+        If Not ibdfile.FileExists Then
+            Return Internal.debug.stop({
+                $"The intensity binary data file({ibdfile}) is missing!",
+                $"ibd file: {ibdfile}"
+            }, env)
+        Else
+            ibd = ibdReader.Open(ibdfile)
+        End If
 
         Return New list With {
             .slots = New Dictionary(Of String, Object) From {

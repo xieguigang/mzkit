@@ -89,6 +89,10 @@ Public Structure KEGGCompound : Implements IReadOnlyId, IExactMassProvider, ICom
                 Return Nothing
             End If
 
+            If KEGG.commonNames Is Nothing Then
+                Return kegg_id
+            End If
+
             Return If(KEGG.commonNames.FirstOrDefault, kegg_id)
         End Get
     End Property
