@@ -72,6 +72,7 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Interpreter
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
+Imports SMRUCC.Rsharp.Runtime.Internal.Invokes
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
@@ -449,7 +450,7 @@ Module ReferenceTreePkg
         Dim i As i32 = 1
         Dim n As Integer = input.length
         Dim d As Integer = input.length * 0.01 + 1
-        Dim t0 = Now
+        Dim t0 = now()
 
         For Each name As String In input.getNames
             result = input(name)
@@ -465,7 +466,7 @@ Module ReferenceTreePkg
             End If
 
             If n > 8 AndAlso ++i Mod d = 0 Then
-                Call println($"[query_tree, {(Now - t0).FormatTime}] {(i / n * 100).ToString("F2")}% {name}...")
+                Call println($"[query_tree, {(now() - t0).FormatTime}] {(i / n * 100).ToString("F2")}% {name}...")
             End If
         Next
 
@@ -573,6 +574,7 @@ Module ReferenceTreePkg
     Public Function compress(spectrumLib As SpectrumReader, file As Object, metadb As IMetaDb,
                              Optional nspec As Integer = 5,
                              Optional xrefDb As String = Nothing,
+                             Optional test As Integer = -1,
                              Optional env As Environment = Nothing) As Object
 
         Dim buf = SMRUCC.Rsharp.GetFileStream(file, FileAccess.ReadWrite, env)
@@ -583,29 +585,60 @@ Module ReferenceTreePkg
 
         Dim pullAll = spectrumLib.LoadMass.ToArray
         Dim newPool As New SpectrumPack(buf.TryCast(Of Stream))
+        Dim nsize As Integer = 0
 
         For Each metabo As MassIndex In pullAll
-            Dim allspec = spectrumLib.GetSpectrum(metabo).ToArray
+            Try
+                Dim allspec = spectrumLib.GetSpectrum(metabo).ToArray
+                Dim i As i32 = 1
 
-            If allspec.Length > nspec Then
-                allspec = Cleanup.Compress(allspec, n:=nspec).ToArray
-            End If
+                If allspec.Length > nspec Then
+                    allspec = Cleanup.Compress(allspec, n:=nspec).ToArray
+                End If
 
-            Dim annoData = metadb.GetAnnotation(uniqueId:=metabo.name)
-            Dim xrefs = metadb.GetDbXref(metabo.name)
-            Dim uuid As String
+                Dim annoData = metadb.GetAnnotation(uniqueId:=metabo.name)
+                Dim xrefs = metadb.GetDbXref(metabo.name)
+                Dim uuid As String
+                Dim xref_id As String
 
-            If Not xrefDb.StringEmpty Then
-                uuid = xrefs.TryGetValue(xrefDb)
-            Else
-                uuid = metabo.name
-            End If
+                If annoData.name.StringEmpty AndAlso annoData.formula.StringEmpty Then
+                    uuid = metabo.name
+                    xref_id = uuid
+                Else
+                    If Not xrefDb.StringEmpty Then
+                        uuid = xrefs.TryGetValue(xrefDb)
+                    Else
+                        uuid = metabo.name.Split.First
+                    End If
 
-            uuid = $"{uuid}|{SpectrumPack.PathName(annoData.name)}|{SpectrumPack.PathName(annoData.formula)}"
+                    If Not uuid.StringEmpty Then
+                        xref_id = uuid
+                    Else
+                        xref_id = metabo.name.Split.First
+                    End If
 
-            For Each spectrum As PeakMs2 In allspec
-                Call newPool.Push(uuid, annoData.formula, spectrum)
-            Next
+                    uuid = $"{uuid}|{SpectrumPack.PathName(annoData.name)}|{SpectrumPack.PathName(annoData.formula)}"
+                End If
+
+                Call base.print(uuid,, env)
+
+                For Each spectrum As PeakMs2 In allspec
+                    spectrum.lib_guid = $"{uuid}#{++i}"
+                    spectrum.scan = xref_id
+                    spectrum.file = uuid
+                    newPool.Push(uuid, If(annoData.formula, metabo.formula), spectrum)
+                Next
+
+                nsize += 1
+
+                If test > 0 Then
+                    If nsize >= test Then
+                        Exit For
+                    End If
+                End If
+            Catch ex As Exception
+
+            End Try
         Next
 
         Call newPool.Dispose()
