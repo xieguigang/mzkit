@@ -102,8 +102,9 @@ declare namespace MSI {
    function MSI_summary(raw: object, x?: object, y?: object, as_vector?: boolean, dims?: any, env?: object): object|object;
    module open {
       /**
+        * @param env default value Is ``null``.
       */
-      function imzML(file: string): any;
+      function imzML(file: string, env?: object): any;
    }
    /**
     * pack the matrix file as the MSI mzpack
