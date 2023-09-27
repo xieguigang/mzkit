@@ -55,6 +55,7 @@
 
 #End Region
 
+Imports System.ComponentModel
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
@@ -77,16 +78,26 @@ Public Class IonStat
     Public Property mz As Double
     Public Property mzmin As Double
     Public Property mzmax As Double
+
+    <DisplayName("mz.diff")>
     Public Property mzwidth As String
     Public Property pixels As Integer
     Public Property density As Double
+    <DisplayName("max.into")>
     Public Property maxIntensity As Double
+    <DisplayName("basepeak.x")>
     Public Property basePixelX As Integer
+    <DisplayName("basepeak.y")>
     Public Property basePixelY As Integer
+    <DisplayName("intensity(Q1)")>
     Public Property Q1Intensity As Double
+    <DisplayName("intensity(Q2)")>
     Public Property Q2Intensity As Double
+    <DisplayName("intensity(Q3)")>
     Public Property Q3Intensity As Double
+    <DisplayName("moran I")>
     Public Property moran As Double
+    <DisplayName("moran p-value")>
     Public Property pvalue As Double
 
     Public Shared Function DoStat(allPixels As PixelScan(),
@@ -98,7 +109,6 @@ Public Class IonStat
             .Select(Function(i)
                         Dim pt As New Point(i.X, i.Y)
                         Dim ions = i.GetMsPipe.Select(Function(ms) New PixelData(pt, ms))
-
                         Return ions
                     End Function) _
             .IteratesALL _
@@ -147,7 +157,7 @@ Public Class IonStat
                             Yield New PixelData(xy, ms1)
                         Next
                     End Function) _
-            .IteratesALL _
+.IteratesALL _
             .DoCall(Function(allIons)
                         Return DoStatInternal(allIons, nsize, da, parallel)
                     End Function)
@@ -180,8 +190,8 @@ Public Class IonStat
         Dim pixels = Grid(Of PixelData).Create(ion, Function(x) New Point(x.x, x.y))
         Dim basePixel = ion.OrderByDescending(Function(i) i.intensity).First
         Dim intensity As Double() = ion _
-            .Select(Function(i) i.intensity) _
-            .ToArray
+.Select(Function(i) i.intensity) _
+.ToArray
         Dim moran As MoranTest = MoranTest.moran_test(intensity, ion.Select(Function(p) CDbl(p.x)).ToArray, ion.Select(Function(p) CDbl(p.y)).ToArray)
         Dim Q As DataQuartile = intensity.Quartile
         Dim counts As New List(Of Double)
@@ -195,9 +205,9 @@ Public Class IonStat
 
             Dim count As Integer = pixels _
                 .Query(top.x, top.y, nsize) _
-                .Where(Function(i)
-                           Return Not i Is Nothing AndAlso i.intensity > 0
-                       End Function) _
+.Where(Function(i)
+           Return Not i Is Nothing AndAlso i.intensity > 0
+       End Function) _
                 .Count
             Dim density As Double = count / A
 
@@ -229,8 +239,7 @@ Public Class IonStat
         Dim ions = allIons _
             .ToArray _
             .GroupBy(Function(d) d.mz, Tolerance.DeltaMass(da)) _
-            .ToArray
-
+.ToArray
         If parallel Then
             For Each stat In ions _
                 .AsParallel _
