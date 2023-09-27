@@ -52,7 +52,7 @@ Namespace MsImaging.APSMALDI
             }
         End Function
 
-        Public Function GetRawdataFile(path As String) As String
+        Public Function GetRawdataFile(folder As String) As String
             If [Global] Is Nothing Then
                 Return Nothing
             End If
@@ -60,7 +60,7 @@ Namespace MsImaging.APSMALDI
                 Return Nothing
             End If
 
-            Return $"{path}/{[Global].DataPath}"
+            Return $"{folder}/{[Global].DataPath}"
         End Function
 
         Public Shared Function ReadUdpFile(file As String) As UDPPrj
