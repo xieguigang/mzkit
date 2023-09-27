@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>count pixels/density/etc for each ions m/z data</title>
+    <title>Stats the ion features inside a MSI raw data slide</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <style rel="stylesheet" type="text/css">
@@ -153,7 +153,7 @@
             </tr>
         </table>
 
-        <h2>count pixels/density/etc for each ions m/z data</h2>
+        <h2>Stats the ion features inside a MSI raw data slide</h2>
 
         <h3>Description</h3>
 
@@ -173,27 +173,29 @@
         <table>
             
 <dt>raw</dt>
-<dd><p><p>-</p></p></dd>
+<dd><p><p>the raw data object could be a mzpack data object or <br />
+ MS-imaging ion feature layers object</p></p></dd>
 
 
 <dt>grid.size</dt>
-<dd><p><p>-</p></p></dd>
+<dd><p><p>the grid cell size for evaluate the pixel density</p></p></dd>
 
 
 <dt>da</dt>
-<dd><p><p>-</p></p></dd>
+<dd><p><p>the mass tolerance value, only works when<br />
+ the input raw data object is mzpack object</p></p></dd>
 
         </table>
 
 
-        <h3 style="display: none;">Details</h3>
+        <h3 style="display: block;">Details</h3>
 
-        
+        <p>count pixels/density/etc for each ions m/z data</p>
 
 
         <h3>Value</h3>
 
-        this function returns data object of type <a href="/clr/BioNovoGene/Analytical/MassSpectrometry/MsImaging/IonStat[].html">IonStat[]</a>.
+        this function returns data object of type <a href="/clr/BioNovoGene/Analytical/MassSpectrometry/MsImaging/IonStat.html">IonStat</a>.
 
         <h3 style="display: none;">Examples</h3>
 

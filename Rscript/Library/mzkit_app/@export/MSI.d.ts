@@ -54,20 +54,25 @@ declare namespace MSI {
    */
    function ions_jointmatrix(raw: object, env?: object): object;
    /**
-    * count pixels/density/etc for each ions m/z data
+    * Stats the ion features inside a MSI raw data slide
     * 
+    * > count pixels/density/etc for each ions m/z data
     * 
-     * @param raw -
-     * @param grid_size -
+     * @param raw the raw data object could be a mzpack data object or 
+     *  MS-imaging ion feature layers object
+     * @param grid_size the grid cell size for evaluate the pixel density
      * 
      * + default value Is ``5``.
-     * @param da -
+     * @param da the mass tolerance value, only works when
+     *  the input raw data object is mzpack object
      * 
      * + default value Is ``0.01``.
      * @param parallel 
      * + default value Is ``true``.
+     * @param env 
+     * + default value Is ``null``.
    */
-   function ionStat(raw: object, grid_size?: object, da?: number, parallel?: boolean): object;
+   function ionStat(raw: any, grid_size?: object, da?: number, parallel?: boolean, env?: object): object;
    /**
     * get ms-imaging metadata
     * 
