@@ -67,6 +67,7 @@ Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Quantile
 Imports Microsoft.VisualBasic.Math.Statistics.Hypothesis
+Imports Microsoft.VisualBasic.Parallel
 Imports Point = System.Drawing.Point
 Imports stdNum = System.Math
 
@@ -157,7 +158,7 @@ Public Class IonStat
                             Yield New PixelData(xy, ms1)
                         Next
                     End Function) _
-.IteratesALL _
+            .IteratesALL _
             .DoCall(Function(allIons)
                         Return DoStatInternal(allIons, nsize, da, parallel)
                     End Function)
@@ -179,9 +180,9 @@ Public Class IonStat
     End Function
 
     ''' <summary>
-    ''' 
+    ''' Run analysis for a single ion layer data
     ''' </summary>
-    ''' <param name="ion"></param>
+    ''' <param name="ion">An ion layer data, consist with a collection of the spatial spot data</param>
     ''' <param name="nsize">
     ''' the grid cell size for evaluate the pixel density
     ''' </param>
@@ -190,8 +191,8 @@ Public Class IonStat
         Dim pixels = Grid(Of PixelData).Create(ion, Function(x) New Point(x.x, x.y))
         Dim basePixel = ion.OrderByDescending(Function(i) i.intensity).First
         Dim intensity As Double() = ion _
-.Select(Function(i) i.intensity) _
-.ToArray
+            .Select(Function(i) i.intensity) _
+            .ToArray
         Dim moran As MoranTest = MoranTest.moran_test(intensity, ion.Select(Function(p) CDbl(p.x)).ToArray, ion.Select(Function(p) CDbl(p.y)).ToArray)
         Dim Q As DataQuartile = intensity.Quartile
         Dim counts As New List(Of Double)
@@ -205,9 +206,9 @@ Public Class IonStat
 
             Dim count As Integer = pixels _
                 .Query(top.x, top.y, nsize) _
-.Where(Function(i)
-           Return Not i Is Nothing AndAlso i.intensity > 0
-       End Function) _
+                .Where(Function(i)
+                           Return Not i Is Nothing AndAlso i.intensity > 0
+                       End Function) _
                 .Count
             Dim density As Double = count / A
 
@@ -232,27 +233,47 @@ Public Class IonStat
         }
     End Function
 
-    Private Shared Iterator Function DoStatInternal(allIons As IEnumerable(Of PixelData),
-                                                    nsize As Integer,
-                                                    da As Double,
-                                                    parallel As Boolean) As IEnumerable(Of IonStat)
+    Private Shared Function DoStatInternal(allIons As IEnumerable(Of PixelData),
+                                           nsize As Integer,
+                                           da As Double,
+                                           parallel As Boolean) As IEnumerable(Of IonStat)
+
+        ' convert the spatial spot pack as multiple imaging layers
+        ' based on the ion feature tag data
         Dim ions = allIons _
             .ToArray _
             .GroupBy(Function(d) d.mz, Tolerance.DeltaMass(da)) _
-.ToArray
-        If parallel Then
-            For Each stat In ions _
-                .AsParallel _
-                .Select(Function(ion)
-                            Return DoStatSingleIon(ion, nsize)
-                        End Function)
+            .ToArray
+        Dim par As New StatTask(ions, nsize)
 
-                Yield stat
-            Next
+        If parallel Then
+            Call par.Run()
         Else
-            For Each ion As NamedCollection(Of PixelData) In ions
-                Yield DoStatSingleIon(ion, nsize)
-            Next
+            Call par.Solve()
         End If
+
+        Return par.result
     End Function
+
+    Private Class StatTask : Inherits VectorTask
+
+        Public result As IonStat()
+
+        Dim layers As NamedCollection(Of PixelData)()
+        Dim nsize As Integer
+
+        Sub New(layers As NamedCollection(Of PixelData)(), nsize As Integer)
+            Call MyBase.New(layers.Length)
+
+            Me.layers = layers
+            Me.result = New IonStat(layers.Length - 1) {}
+            Me.nsize = nsize
+        End Sub
+
+        Protected Overrides Sub Solve(start As Integer, ends As Integer)
+            For i As Integer = start To ends
+                result(i) = DoStatSingleIon(layers(i), nsize)
+            Next
+        End Sub
+    End Class
 End Class
