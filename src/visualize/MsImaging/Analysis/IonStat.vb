@@ -149,6 +149,30 @@ Public Class IonStat
                     End Function)
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="layer"></param>
+    ''' <param name="nsize">
+    ''' the grid cell size for evaluate the pixel density
+    ''' </param>
+    ''' <returns></returns>
+    Public Shared Function DoStat(layer As SingleIonLayer, Optional nsize As Integer = 5) As IonStat
+        Dim points = layer.MSILayer.Select(Function(a) (New Point(a.x, a.y), New ms2(a.mz, a.intensity)))
+        Dim ion As New NamedCollection(Of (pixel As Point, ms As ms2))(layer.IonMz, points)
+        Dim stats As IonStat = DoStatSingleIon(ion, nsize)
+
+        Return stats
+    End Function
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="ion"></param>
+    ''' <param name="nsize">
+    ''' the grid cell size for evaluate the pixel density
+    ''' </param>
+    ''' <returns></returns>
     Private Shared Function DoStatSingleIon(ion As NamedCollection(Of (pixel As Point, ms As ms2)), nsize As Integer) As IonStat
         Dim pixels = Grid(Of (Point, ms2)).Create(ion, Function(x) x.Item1)
         Dim basePixel = ion.OrderByDescending(Function(i) i.ms.intensity).First

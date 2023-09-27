@@ -84,6 +84,7 @@ Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Scripting.Runtime
+Imports SMRUCC.Rsharp
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Invokes
@@ -613,25 +614,53 @@ Module MSI
     End Function
 
     ''' <summary>
-    ''' count pixels/density/etc for each ions m/z data
+    ''' Stats the ion features inside a MSI raw data slide
     ''' </summary>
-    ''' <param name="raw"></param>
-    ''' <param name="grid_size"></param>
-    ''' <param name="da"></param>
+    ''' <param name="raw">
+    ''' the raw data object could be a mzpack data object or 
+    ''' MS-imaging ion feature layers object
+    ''' </param>
+    ''' <param name="grid_size">
+    ''' the grid cell size for evaluate the pixel density
+    ''' </param>
+    ''' <param name="da">the mass tolerance value, only works when
+    ''' the input raw data object is mzpack object</param>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' count pixels/density/etc for each ions m/z data
+    ''' </remarks>
     <ExportAPI("ionStat")>
-    Public Function IonStats(raw As mzPack,
+    <RApiReturn(GetType(IonStat))>
+    Public Function IonStats(<RRawVectorArgument>
+                             raw As Object,
                              Optional grid_size As Integer = 5,
                              Optional da As Double = 0.01,
-                             Optional parallel As Boolean = True) As IonStat()
+                             Optional parallel As Boolean = True,
+                             Optional env As Environment = Nothing) As Object
 
-        Return IonStat.DoStat(
-            raw:=raw,
-            nsize:=grid_size,
-            da:=da,
-            parallel:=parallel
-        ) _
-        .ToArray
+        If TypeOf raw Is mzPack Then
+            Return IonStat.DoStat(
+                raw:=DirectCast(raw, mzPack),
+                nsize:=grid_size,
+                da:=da,
+                parallel:=parallel
+            ) _
+            .ToArray
+        Else
+            Dim layers = pipeline.TryCreatePipeline(Of SingleIonLayer)(raw, env)
+
+            If layers.isError Then
+                Return layers.getError
+            End If
+
+            Return env.EvaluateFramework(Of SingleIonLayer, IonStat)(
+                x:=layers.populates(Of SingleIonLayer)(env),
+                eval:=Function(layer)
+                          Return IonStat.DoStat(layer, nsize:=grid_size)
+                      End Function,
+                parallel:=parallel
+            )
+        End If
     End Function
 
     <ExportAPI("ions_jointmatrix")>
