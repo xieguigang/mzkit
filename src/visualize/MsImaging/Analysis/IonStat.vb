@@ -75,29 +75,29 @@ Imports stdNum = System.Math
 ''' </summary>
 Public Class IonStat
 
-    Public Property mz As Double
-    Public Property mzmin As Double
-    Public Property mzmax As Double
+    <Category("MSdata")> Public Property mz As Double
+    <Category("MSdata")> Public Property mzmin As Double
+    <Category("MSdata")> Public Property mzmax As Double
 
-    <DisplayName("mz.diff")>
+    <Category("MSdata")> <DisplayName("mz.diff")>
     Public Property mzwidth As String
-    Public Property pixels As Integer
-    Public Property density As Double
-    <DisplayName("max.into")>
+    <Category("Spatial")> Public Property pixels As Integer
+    <Category("Spatial")> Public Property density As Double
+    <Category("MSdata")> <DisplayName("max.into")>
     Public Property maxIntensity As Double
     <DisplayName("basepeak.x")>
-    Public Property basePixelX As Integer
+    <Category("Spatial")> Public Property basePixelX As Integer
     <DisplayName("basepeak.y")>
-    Public Property basePixelY As Integer
-    <DisplayName("intensity(Q1)")>
+    <Category("Spatial")> Public Property basePixelY As Integer
+    <Category("MSdata")> <DisplayName("intensity(Q1)")>
     Public Property Q1Intensity As Double
-    <DisplayName("intensity(Q2)")>
+    <Category("MSdata")> <DisplayName("intensity(Q2)")>
     Public Property Q2Intensity As Double
-    <DisplayName("intensity(Q3)")>
+    <Category("MSdata")> <DisplayName("intensity(Q3)")>
     Public Property Q3Intensity As Double
-    <DisplayName("moran I")>
+    <Category("Spatial")> <DisplayName("moran I")>
     Public Property moran As Double
-    <DisplayName("moran p-value")>
+    <Category("Spatial")> <DisplayName("moran p-value")>
     Public Property pvalue As Double
 
     Public Shared Function DoStat(allPixels As PixelScan(),
