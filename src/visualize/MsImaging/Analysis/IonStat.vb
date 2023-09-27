@@ -1,57 +1,57 @@
 ﻿#Region "Microsoft.VisualBasic::9ef6f690224e209c6ce5ebaeb7e665bb, mzkit\src\visualize\MsImaging\Analysis\IonStat.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 149
-    '    Code Lines: 124
-    ' Comment Lines: 10
-    '   Blank Lines: 15
-    '     File Size: 6.05 KB
+' Summaries:
 
 
-    ' Class IonStat
-    ' 
-    '     Properties: basePixelX, basePixelY, density, maxIntensity, mz
-    '                 pixels, Q1Intensity, Q2Intensity, Q3Intensity, RSD
-    ' 
-    '     Function: (+2 Overloads) DoStat, DoStatInternal, DoStatSingleIon
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 149
+'    Code Lines: 124
+' Comment Lines: 10
+'   Blank Lines: 15
+'     File Size: 6.05 KB
+
+
+' Class IonStat
+' 
+'     Properties: basePixelX, basePixelY, density, maxIntensity, mz
+'                 pixels, Q1Intensity, Q2Intensity, Q3Intensity, RSD
+' 
+'     Function: (+2 Overloads) DoStat, DoStatInternal, DoStatSingleIon
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -59,19 +59,22 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
-Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.GraphTheory.GridGraph
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Quantile
+Imports Microsoft.VisualBasic.Math.Statistics.Hypothesis
 Imports Point = System.Drawing.Point
 Imports stdNum = System.Math
 
 Public Class IonStat
 
     Public Property mz As Double
+    Public Property mzmin As Double
+    Public Property mzmax As Double
+    Public Property mzwidth As String
     Public Property pixels As Integer
     Public Property density As Double
     Public Property maxIntensity As Double
@@ -80,7 +83,8 @@ Public Class IonStat
     Public Property Q1Intensity As Double
     Public Property Q2Intensity As Double
     Public Property Q3Intensity As Double
-    Public Property RSD As Double
+    Public Property moran As Double
+    Public Property pvalue As Double
 
     Public Shared Function DoStat(allPixels As PixelScan(),
                                   Optional nsize As Integer = 5,
@@ -148,9 +152,11 @@ Public Class IonStat
         Dim intensity As Double() = ion _
             .Select(Function(i) i.ms.intensity) _
             .ToArray
+        Dim moran As MoranTest = MoranTest.moran_test(intensity, ion.Select(Function(p) CDbl(p.pixel.X)).ToArray, ion.Select(Function(p) CDbl(p.pixel.Y)).ToArray)
         Dim Q As DataQuartile = intensity.Quartile
         Dim counts As New List(Of Double)
         Dim A As Double = nsize ^ 2
+        Dim mzlist As Double() = ion.Select(Function(p) p.ms.mz).ToArray
 
         For Each top As (pixel As Point, ms As ms2) In From i As (pixel As Point, ms As ms2)
                                                        In ion
@@ -177,7 +183,11 @@ Public Class IonStat
             .Q2Intensity = Q.Q2,
             .Q3Intensity = Q.Q3,
             .density = counts.Average,
-            .RSD = SingleCellIonStat.fillVector(intensity).RSD * 100
+            .moran = moran.Observed,
+            .pvalue = moran.pvalue,
+            .mzmin = mzlist.Min,
+            .mzmax = mzlist.Max,
+            .mzwidth = If(PPMmethod.PPM(.mzmin, .mzmax) > 30, $"da:{ .mzmax - .mzmin}", $"ppm:{PPMmethod.PPM(.mzmin, .mzmax)}")
         }
     End Function
 
