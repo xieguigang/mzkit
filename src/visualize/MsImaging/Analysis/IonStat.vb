@@ -210,8 +210,8 @@ Public Class IonStat
             .Q2Intensity = Q.Q2,
             .Q3Intensity = Q.Q3,
             .density = counts.Average,
-            .moran = moran.Observed,
-            .pvalue = moran.pvalue,
+            .moran = If(ion.Length <= 3, -1, moran.Observed),
+            .pvalue = If(ion.Length <= 3, 1, moran.pvalue),
             .mzmin = mzlist.Min,
             .mzmax = mzlist.Max,
             .mzwidth = If(PPMmethod.PPM(.mzmin, .mzmax) > 30, $"da:{ (.mzmax - .mzmin).ToString("F3")}", $"ppm:{PPMmethod.PPM(.mzmin, .mzmax).ToString("F1")}")
