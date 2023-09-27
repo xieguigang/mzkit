@@ -60,6 +60,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
+Imports Microsoft.VisualBasic.ApplicationServices.Plugin
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.GraphTheory.GridGraph
 Imports Microsoft.VisualBasic.Linq
@@ -76,29 +77,43 @@ Imports stdNum = System.Math
 ''' </summary>
 Public Class IonStat
 
-    Public Property mz As Double
-    Public Property mzmin As Double
-    Public Property mzmax As Double
+    <Category("MSdata")> <TypeConverter(GetType(FormattedDoubleConverter)), FormattedDoubleFormatString("F4")> Public Property mz As Double
+    <Category("MSdata")> <TypeConverter(GetType(FormattedDoubleConverter)), FormattedDoubleFormatString("F4")> Public Property mzmin As Double
+    <Category("MSdata")> <TypeConverter(GetType(FormattedDoubleConverter)), FormattedDoubleFormatString("F4")> Public Property mzmax As Double
 
-    <DisplayName("mz.diff")>
+    <Category("MSdata")> <DisplayName("mz.diff")>
     Public Property mzwidth As String
-    Public Property pixels As Integer
+
+    <Category("Spatial")> Public Property pixels As Integer
+    <Category("Spatial")>
+    <TypeConverter(GetType(FormattedDoubleConverter)), FormattedDoubleFormatString("F2")>
     Public Property density As Double
-    <DisplayName("max.into")>
+
+    <Category("MSdata")> <DisplayName("max.into")>
+    <TypeConverter(GetType(FormattedDoubleConverter)), FormattedDoubleFormatString("G5")>
     Public Property maxIntensity As Double
+
     <DisplayName("basepeak.x")>
-    Public Property basePixelX As Integer
+    <Category("Spatial")> Public Property basePixelX As Integer
     <DisplayName("basepeak.y")>
-    Public Property basePixelY As Integer
-    <DisplayName("intensity(Q1)")>
+    <Category("Spatial")> Public Property basePixelY As Integer
+
+    <Category("MSdata")> <DisplayName("intensity(Q1)")>
+    <TypeConverter(GetType(FormattedDoubleConverter)), FormattedDoubleFormatString("G5")>
     Public Property Q1Intensity As Double
-    <DisplayName("intensity(Q2)")>
+    <Category("MSdata")> <DisplayName("intensity(Q2)")>
+    <TypeConverter(GetType(FormattedDoubleConverter)), FormattedDoubleFormatString("G5")>
     Public Property Q2Intensity As Double
-    <DisplayName("intensity(Q3)")>
+    <Category("MSdata")> <DisplayName("intensity(Q3)")>
+    <TypeConverter(GetType(FormattedDoubleConverter)), FormattedDoubleFormatString("G5")>
     Public Property Q3Intensity As Double
-    <DisplayName("moran I")>
+
+    <Category("Spatial")> <DisplayName("moran I")>
+    <TypeConverter(GetType(FormattedDoubleConverter)), FormattedDoubleFormatString("F3")>
     Public Property moran As Double
-    <DisplayName("moran p-value")>
+
+    <Category("Spatial")> <DisplayName("moran p-value")>
+    <TypeConverter(GetType(FormattedDoubleConverter)), FormattedDoubleFormatString("G4")>
     Public Property pvalue As Double
 
     Public Shared Function DoStat(allPixels As PixelScan(),
