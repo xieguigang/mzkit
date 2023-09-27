@@ -645,6 +645,7 @@ Module MSI
                 da:=da,
                 parallel:=parallel
             ) _
+            .OrderBy(Function(s) s.pvalue) _
             .ToArray
         Else
             Dim layers = pipeline.TryCreatePipeline(Of SingleIonLayer)(raw, env)
