@@ -84,7 +84,9 @@ Public Class IonStat
     Public Property mzwidth As String
 
     <Category("Spatial")> Public Property pixels As Integer
-    <Category("Spatial")> Public Property density As Double
+    <Category("Spatial")>
+    <TypeConverter(GetType(FormattedDoubleConverter)), FormattedDoubleFormatString("F2")>
+    Public Property density As Double
 
     <Category("MSdata")> <DisplayName("max.into")>
     <TypeConverter(GetType(FormattedDoubleConverter)), FormattedDoubleFormatString("G5")>
