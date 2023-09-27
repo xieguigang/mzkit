@@ -98,8 +98,8 @@ Namespace MsImaging.APSMALDI
 
     Public Class UdpGlobal
 
-        Public Property StartTime As Date
-        Public Property EndTime As Date
+        Public Property StartTime As String
+        Public Property EndTime As String
         Public Property SpecOrigin As String
         Public Property DataPath As String
         Public Property [Operator] As String
