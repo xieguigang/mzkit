@@ -115,6 +115,9 @@ Module MSI
         }
 
         Call table.add(NameOf(IonStat.mz), ions.Select(Function(i) i.mz))
+        Call table.add(NameOf(IonStat.mzmin), ions.Select(Function(i) i.mzmin))
+        Call table.add(NameOf(IonStat.mzmax), ions.Select(Function(i) i.mzmax))
+        Call table.add(NameOf(IonStat.mzwidth), ions.Select(Function(i) i.mzwidth))
         Call table.add(NameOf(IonStat.pixels), ions.Select(Function(i) i.pixels))
         Call table.add(NameOf(IonStat.density), ions.Select(Function(i) i.density))
         Call table.add("basePixel.X", ions.Select(Function(i) i.basePixelX))
@@ -123,6 +126,8 @@ Module MSI
         Call table.add(NameOf(IonStat.Q1Intensity), ions.Select(Function(i) i.Q1Intensity))
         Call table.add(NameOf(IonStat.Q2Intensity), ions.Select(Function(i) i.Q2Intensity))
         Call table.add(NameOf(IonStat.Q3Intensity), ions.Select(Function(i) i.Q3Intensity))
+        Call table.add(NameOf(IonStat.moran), ions.Select(Function(i) i.moran))
+        Call table.add(NameOf(IonStat.pvalue), ions.Select(Function(i) i.pvalue))
 
         Return table
     End Function

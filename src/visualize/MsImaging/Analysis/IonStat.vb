@@ -69,6 +69,9 @@ Imports Microsoft.VisualBasic.Math.Statistics.Hypothesis
 Imports Point = System.Drawing.Point
 Imports stdNum = System.Math
 
+''' <summary>
+''' Stats the ion features inside a MSI raw data slide
+''' </summary>
 Public Class IonStat
 
     Public Property mz As Double
