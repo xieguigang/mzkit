@@ -190,7 +190,7 @@ Public Class IonStat
             .pvalue = moran.pvalue,
             .mzmin = mzlist.Min,
             .mzmax = mzlist.Max,
-            .mzwidth = If(PPMmethod.PPM(.mzmin, .mzmax) > 30, $"da:{ .mzmax - .mzmin}", $"ppm:{PPMmethod.PPM(.mzmin, .mzmax)}")
+            .mzwidth = If(PPMmethod.PPM(.mzmin, .mzmax) > 30, $"da:{ (.mzmax - .mzmin).ToString("F3")}", $"ppm:{PPMmethod.PPM(.mzmin, .mzmax).ToString("F1")}")
         }
     End Function
 
