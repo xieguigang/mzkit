@@ -97,7 +97,7 @@ Public Class IonStat
         Dim ionList = allPixels _
             .Select(Function(i)
                         Dim pt As New Point(i.X, i.Y)
-                        Dim ions = i.GetMsPipe.Select(Function(ms) (pt, ms))
+                        Dim ions = i.GetMsPipe.Select(Function(ms) New PixelData(pt, ms))
 
                         Return ions
                     End Function) _
@@ -108,7 +108,7 @@ Public Class IonStat
             Dim allHits = ionList _
                 .AsParallel _
                 .Where(Function(i)
-                           Return mz.Any(Function(mzi) stdNum.Abs(mzi - i.ms.mz) <= da)
+                           Return mz.Any(Function(mzi) stdNum.Abs(mzi - i.mz) <= da)
                        End Function) _
                 .DoCall(Function(allIons) DoStatInternal(allIons, nsize, da, parallel)) _
                 .ToList
@@ -140,8 +140,12 @@ Public Class IonStat
                                   Optional da As Double = 0.05,
                                   Optional parallel As Boolean = False) As IEnumerable(Of IonStat)
         Return raw.MS _
-            .Select(Function(scan)
-                        Return scan.GetMs.Select(Function(ms1) (scan.GetMSIPixel, ms1))
+            .Select(Iterator Function(scan) As IEnumerable(Of PixelData)
+                        Dim xy As Point = scan.GetMSIPixel
+
+                        For Each ms1 As ms2 In scan.GetMs
+                            Yield New PixelData(xy, ms1)
+                        Next
                     End Function) _
             .IteratesALL _
             .DoCall(Function(allIons)
@@ -158,8 +162,7 @@ Public Class IonStat
     ''' </param>
     ''' <returns></returns>
     Public Shared Function DoStat(layer As SingleIonLayer, Optional nsize As Integer = 5) As IonStat
-        Dim points = layer.MSILayer.Select(Function(a) (New Point(a.x, a.y), New ms2(a.mz, a.intensity)))
-        Dim ion As New NamedCollection(Of (pixel As Point, ms As ms2))(layer.IonMz, points)
+        Dim ion As New NamedCollection(Of PixelData)(layer.IonMz, layer.MSILayer)
         Dim stats As IonStat = DoStatSingleIon(ion, nsize)
 
         Return stats
@@ -173,26 +176,27 @@ Public Class IonStat
     ''' the grid cell size for evaluate the pixel density
     ''' </param>
     ''' <returns></returns>
-    Private Shared Function DoStatSingleIon(ion As NamedCollection(Of (pixel As Point, ms As ms2)), nsize As Integer) As IonStat
-        Dim pixels = Grid(Of (Point, ms2)).Create(ion, Function(x) x.Item1)
-        Dim basePixel = ion.OrderByDescending(Function(i) i.ms.intensity).First
+    Private Shared Function DoStatSingleIon(ion As NamedCollection(Of PixelData), nsize As Integer) As IonStat
+        Dim pixels = Grid(Of PixelData).Create(ion, Function(x) New Point(x.x, x.y))
+        Dim basePixel = ion.OrderByDescending(Function(i) i.intensity).First
         Dim intensity As Double() = ion _
-            .Select(Function(i) i.ms.intensity) _
+            .Select(Function(i) i.intensity) _
             .ToArray
-        Dim moran As MoranTest = MoranTest.moran_test(intensity, ion.Select(Function(p) CDbl(p.pixel.X)).ToArray, ion.Select(Function(p) CDbl(p.pixel.Y)).ToArray)
+        Dim moran As MoranTest = MoranTest.moran_test(intensity, ion.Select(Function(p) CDbl(p.x)).ToArray, ion.Select(Function(p) CDbl(p.y)).ToArray)
         Dim Q As DataQuartile = intensity.Quartile
         Dim counts As New List(Of Double)
         Dim A As Double = nsize ^ 2
-        Dim mzlist As Double() = ion.Select(Function(p) p.ms.mz).ToArray
+        Dim mzlist As Double() = ion.Select(Function(p) p.mz).ToArray
 
-        For Each top As (pixel As Point, ms As ms2) In From i As (pixel As Point, ms As ms2)
-                                                       In ion
-                                                       Order By i.ms.intensity Descending
-                                                       Take 30
+        For Each top As PixelData In From i As PixelData
+                                     In ion
+                                     Order By i.intensity Descending
+                                     Take 30
+
             Dim count As Integer = pixels _
-                .Query(top.pixel.X, top.pixel.Y, nsize) _
+                .Query(top.x, top.y, nsize) _
                 .Where(Function(i)
-                           Return Not i.Item2 Is Nothing AndAlso i.Item2.intensity > 0
+                           Return Not i Is Nothing AndAlso i.intensity > 0
                        End Function) _
                 .Count
             Dim density As Double = count / A
@@ -202,8 +206,8 @@ Public Class IonStat
 
         Return New IonStat With {
             .mz = Val(ion.name),
-            .basePixelX = basePixel.pixel.X,
-            .basePixelY = basePixel.pixel.Y,
+            .basePixelX = basePixel.x,
+            .basePixelY = basePixel.y,
             .maxIntensity = intensity.Average,
             .pixels = pixels.size,
             .Q1Intensity = Q.Q1,
@@ -218,13 +222,13 @@ Public Class IonStat
         }
     End Function
 
-    Private Shared Iterator Function DoStatInternal(allIons As IEnumerable(Of (pixel As Point, ms As ms2)),
+    Private Shared Iterator Function DoStatInternal(allIons As IEnumerable(Of PixelData),
                                                     nsize As Integer,
                                                     da As Double,
                                                     parallel As Boolean) As IEnumerable(Of IonStat)
         Dim ions = allIons _
             .ToArray _
-            .GroupBy(Function(d) d.ms.mz, Tolerance.DeltaMass(da)) _
+            .GroupBy(Function(d) d.mz, Tolerance.DeltaMass(da)) _
             .ToArray
 
         If parallel Then
@@ -237,7 +241,7 @@ Public Class IonStat
                 Yield stat
             Next
         Else
-            For Each ion As NamedCollection(Of (pixel As Point, ms As ms2)) In ions
+            For Each ion As NamedCollection(Of PixelData) In ions
                 Yield DoStatSingleIon(ion, nsize)
             Next
         End If

@@ -60,6 +60,7 @@ Imports System.Drawing
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.GraphTheory.GridGraph
 Imports Microsoft.VisualBasic.Data.IO
@@ -104,9 +105,14 @@ Public Class PixelData : Implements IMSIPixel, IPoint2D, HeatMapPixel, RasterPix
         Me.intensity = into
     End Sub
 
-    Sub New(p As Point)
+    Sub New(p As Point, Optional ms1 As ms2 = Nothing)
         x = p.X
         y = p.Y
+
+        If Not ms1 Is Nothing Then
+            mz = ms1.mz
+            intensity = ms1.intensity
+        End If
     End Sub
 
     Public Overrides Function ToString() As String
