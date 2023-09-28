@@ -67,6 +67,8 @@ Namespace Blender
 
         ReadOnly theme As Theme
 
+        Public Property width As Double = 1000
+
         <DebuggerStepThrough>
         Sub New(theme As Theme)
             Me.theme = theme
