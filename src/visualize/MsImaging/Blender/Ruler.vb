@@ -67,7 +67,7 @@ Namespace Blender
 
         ReadOnly theme As Theme
 
-        Public Property width As Double = 1000
+        Public Property width As Double?
 
         <DebuggerStepThrough>
         Sub New(theme As Theme)
@@ -94,12 +94,26 @@ Namespace Blender
             End Using
         End Sub
 
-        Public Sub DrawOnCanvas(g As IGraphics, dimsize As Size, rect As Rectangle, color As Color, resolution As Double)
+        Private Function eval(rect As Rectangle, dimsize As Size, resolution As Double, ByRef rulerWidth As Double) As Double
             Dim ratio As Double = rect.Width / dimsize.Width
-            Dim rulerWidth As Double = rect.Width * 0.2
+
+            If width Is Nothing Then
+                rulerWidth = rect.Width * 0.2
+                Return (rulerWidth / ratio * resolution)
+            Else
+                ratio = dimsize.Width / rect.Width
+                rulerWidth = ratio * width
+                Return CDbl(width)
+            End If
+        End Function
+
+        Public Sub DrawOnCanvas(g As IGraphics, dimsize As Size, rect As Rectangle, color As Color, resolution As Double)
+            ' width drawing on the canvas
+            Dim rulerWidth As Double = 0
             Dim pen As Pen = Stroke.TryParse(theme.lineStroke).GDIObject
             Dim font As Font = CSSFont.TryParse(theme.tagCSS).GDIObject(g.Dpi)
-            Dim physical As String = (rulerWidth / ratio * resolution).ToString("F2") & " um"
+            ' width of the ruler standards for
+            Dim physical As String = eval(rect, dimsize, resolution, rulerWidth).ToString("F2") & " um"
             Dim fontsize As SizeF = g.MeasureString(physical, font)
             Dim bottom As Double = rect.Bottom - fontsize.Height * 2
             Dim left As New PointF(rect.Left + rect.Width * 0.05, bottom)
