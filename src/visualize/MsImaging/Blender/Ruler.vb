@@ -97,7 +97,7 @@ Namespace Blender
         Private Function eval(rect As Rectangle, dimsize As Size, resolution As Double, ByRef rulerWidth As Double) As Double
             Dim ratio As Double = rect.Width / dimsize.Width
 
-            If width Is Nothing Then
+            If width Is Nothing OrElse width <= 0 Then
                 rulerWidth = rect.Width * 0.2
                 Return (rulerWidth / ratio * resolution)
             Else
