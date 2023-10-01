@@ -80,6 +80,7 @@ Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Data.GraphTheory.GridGraph
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.MachineLearning.ComponentModel.Activations
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Scripting.MetaData
@@ -160,7 +161,7 @@ Module MSI
             v = CLRVector.asNumeric(m.columns(name))
             v = SIMD.Divide.f64_op_divide_f64_scalar(v, v.Sum)
             v = SIMD.Multiply.f64_scalar_op_multiply_f64(f(i), v)
-            m.columns(name) = v
+            m.columns(name) = ReLU.ReLU(v)
         Next
 
         Return m
