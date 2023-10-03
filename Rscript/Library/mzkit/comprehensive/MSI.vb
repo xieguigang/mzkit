@@ -97,6 +97,7 @@ Imports imzML = BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzM
 Imports rDataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
 Imports SingleCellMath = BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute.Math
 Imports SingleCellMatrix = BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute.PeakMatrix
+Imports std = System.Math
 Imports vector = Microsoft.VisualBasic.Math.LinearAlgebra.Vector
 
 ''' <summary>
@@ -1116,6 +1117,7 @@ Module MSI
         Call df.add("m/z", moran.Select(Function(i) Val(i.lbMz)))
         Call df.add("moran I", moran.Select(Function(i) i.m.Observed))
         Call df.add("moran i", moran.Select(Function(i) i.m.Expected))
+        Call df.add("score", moran.Select(Function(i) i.m.Observed * (-std.Log(i.m.pvalue))))
         Call df.add("sd", moran.Select(Function(i) i.m.SD))
         Call df.add("p-value", moran.Select(Function(i) i.m.pvalue))
 
