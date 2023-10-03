@@ -25,3 +25,4 @@ MS-Imaging data handler
 + [pixelMatrix](MSI/pixelMatrix.1) dumping raw data matrix as text table file.
 + [spatial.convolution](MSI/spatial.convolution.1) sum pixels for create pixel spot convolution
 + [pack_matrix](MSI/pack_matrix.1) pack the matrix file as the MSI mzpack
++ [moran_I](MSI/moran_I.1) evaluate the moran index for each ion layer

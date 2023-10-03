@@ -74,6 +74,16 @@ declare namespace MSI {
    */
    function ionStat(raw: any, grid_size?: object, da?: number, parallel?: boolean, env?: object): object;
    /**
+    * evaluate the moran index for each ion layer
+    * 
+    * 
+     * @param x A spatial expression data matrix, should be in format of:
+     *  
+     *  1. the spatial spot xy in row names, and
+     *  2. the ions feature m/z label in col names
+   */
+   function moran_I(x: object): any;
+   /**
     * get ms-imaging metadata
     * 
     * 
