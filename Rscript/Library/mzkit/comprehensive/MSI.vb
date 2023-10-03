@@ -1100,7 +1100,7 @@ Module MSI
         Dim sx As Double() = xy.Select(Function(i) i(0)).ToArray
         Dim sy As Double() = xy.Select(Function(i) i(1)).ToArray
         Dim moran = x.colnames _
-            .SafeQuery _
+            .AsParallel _
             .Select(Function(lbMz)
                         Dim v As Double() = CLRVector.asNumeric(x(lbMz))
                         Dim m As MoranTest = MoranTest.moran_test(v, sx, sy)
