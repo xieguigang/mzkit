@@ -83,6 +83,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.ComponentModel.Activations
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.Math.Statistics.Hypothesis
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports SMRUCC.Rsharp
@@ -1076,6 +1077,49 @@ Module MSI
 
             Yield scan(xy, ionsMz, v, ti)
         Loop
+    End Function
+
+    ''' <summary>
+    ''' evaluate the moran index for each ion layer
+    ''' </summary>
+    ''' <param name="x">
+    ''' A spatial expression data matrix, should be in format of:
+    ''' 
+    ''' 1. the spatial spot xy in row names, and
+    ''' 2. the ions feature m/z label in col names
+    ''' </param>
+    ''' <returns></returns>
+    <ExportAPI("moran_I")>
+    Public Function moran_index(x As rDataframe) As Object
+        Dim xy As Double()() = x.rownames _
+            .Select(Function(si)
+                        Return si.Split(","c).Select(Function(si2) Val(si2)).ToArray
+                    End Function) _
+            .ToArray
+        Dim sx As Double() = xy.Select(Function(i) i(0)).ToArray
+        Dim sy As Double() = xy.Select(Function(i) i(1)).ToArray
+        Dim moran = x.colnames _
+            .SafeQuery _
+            .Select(Function(lbMz)
+                        Dim v As Double() = CLRVector.asNumeric(x(lbMz))
+                        Dim m As MoranTest = MoranTest.moran_test(v, sx, sy)
+
+                        Return (lbMz, m)
+                    End Function) _
+            .OrderByDescending(Function(m) m.m.Observed) _
+            .ToArray
+        Dim df As New rDataframe With {
+            .rownames = moran.Select(Function(i) i.lbMz).ToArray,
+            .columns = New Dictionary(Of String, Array)
+        }
+
+        Call df.add("m/z", moran.Select(Function(i) Val(i.lbMz)))
+        Call df.add("moran I", moran.Select(Function(i) i.m.Observed))
+        Call df.add("moran i", moran.Select(Function(i) i.m.Expected))
+        Call df.add("sd", moran.Select(Function(i) i.m.SD))
+        Call df.add("p-value", moran.Select(Function(i) i.m.pvalue))
+
+        Return df
     End Function
 End Module
 
