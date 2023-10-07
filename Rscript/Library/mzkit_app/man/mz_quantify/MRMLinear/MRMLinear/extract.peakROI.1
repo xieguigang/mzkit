@@ -1,7 +1,7 @@
 .\" man page create by R# package system.
 .TH MRMLINEAR 2 2000-Jan "extract.peakROI" "extract.peakROI"
 .SH NAME
-extract.peakROI \- 
+extract.peakROI \- Exact \fBregions of interested\fR based on the given ion pair as targets.
 .SH SYNOPSIS
 \fIextract.peakROI(\fBmzML\fR as string, 
 \fBionpairs\fR as <generic> IonPair[], 
@@ -18,6 +18,29 @@ extract.peakROI \-
 \fBsn_threshold\fR as double = 3, 
 \fBTPAFactors\fR as list[double] = \fB<NULL>\fR, 
 [\fB<Environment>\fR]);\fR
+.SH DESCRIPTION
+.PP
+Exact \fBregions of interested\fR based on the given ion pair as targets.
+.PP
+.SH OPTIONS
+.PP
+\fBmzML\fB \fR\- A mzML raw data file. 
+.PP
+.PP
+\fBionpairs\fB \fR\- MRM ion pairs. 
+.PP
+.PP
+\fBTPAFactors\fB \fR\- Peak factors. 
+.PP
+.PP
+\fBbaselineQuantile#\fB \fR\- -. 
+.PP
+.PP
+\fBintegratorTicks%\fB \fR\- -. 
+.PP
+.PP
+\fBpeakAreaMethod\fB \fR\- -. 
+.PP
 .SH SEE ALSO
 MRMLinear
 .SH FILES
