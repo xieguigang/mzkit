@@ -9726,6 +9726,7 @@ Global
 		..\..\..\..\..\GCModeller\src\R-sharp\Library\shares\JsonHelper\JsonHelper.projitems*{b2ae1422-d7da-4053-a386-eb2ea9326d68}*SharedItemsImports = 13
 		mzkit.interopArguments\mzkit.interopArguments.projitems*{c295c3af-3e62-4756-966a-3d0b90ded160}*SharedItemsImports = 13
 		..\..\..\..\..\GCModeller\src\R-sharp\studio\Rstudio.common\Rstudio.common.projitems*{c6684765-7e4e-4f87-b7c4-0bbf34b35249}*SharedItemsImports = 5
+		..\..\..\..\..\GCModeller\src\R-sharp\Library\shares\R_graphic.interop\R_graphic.interop.projitems*{e074376e-93c3-4263-8bd5-0cf87e1511db}*SharedItemsImports = 5
 		mzkit.interopArguments\mzkit.interopArguments.projitems*{e074376e-93c3-4263-8bd5-0cf87e1511db}*SharedItemsImports = 5
 	EndGlobalSection
 EndGlobal
