@@ -3,237 +3,237 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.31911.260
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "mzmath-netcore5", "..\..\..\..\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj", "{1BA7FFB2-F4D0-4DF0-A5AF-4190D849FE9D}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "mzmath-netcore5", "..\..\..\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj", "{1BA7FFB2-F4D0-4DF0-A5AF-4190D849FE9D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "framework", "framework", "{64094D8D-7E1D-4A0E-96D8-339AB6A375AC}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "Core", "..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj", "{5E161D08-84EC-4D88-A5CA-CEA92D8999B0}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "Core", "..\..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj", "{5E161D08-84EC-4D88-A5CA-CEA92D8999B0}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "signalprocessing-netcore5", "..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\SignalProcessing\SignalProcessing\signalprocessing-netcore5.vbproj", "{AB027275-6748-46BF-8217-20C1858A768D}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "signalprocessing-netcore5", "..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\SignalProcessing\SignalProcessing\signalprocessing-netcore5.vbproj", "{AB027275-6748-46BF-8217-20C1858A768D}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "Rsharp-netcore5", "..\..\..\..\..\GCModeller\src\R-sharp\R#\Rsharp-netcore5.vbproj", "{1C247500-03CF-49BF-A189-73B509B27B79}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "Rsharp-netcore5", "..\..\..\..\GCModeller\src\R-sharp\R#\Rsharp-netcore5.vbproj", "{1C247500-03CF-49BF-A189-73B509B27B79}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "mzkit.dll", "mzkit.dll", "{70F05EAA-5D6D-4DB6-AF06-68C9BFCB9179}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "assembly-netcore5", "..\..\..\..\src\assembly\assembly\assembly-netcore5.vbproj", "{BDAECE54-BF9E-42A5-801D-5DF08B40F9A0}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "assembly-netcore5", "..\..\..\src\assembly\assembly\assembly-netcore5.vbproj", "{BDAECE54-BF9E-42A5-801D-5DF08B40F9A0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "data", "data", "{44104EDC-DD8E-4111-9F3E-AE095C49D470}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "chemoinformatics-netcore5", "..\..\..\..\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj", "{F6E91D23-F6AF-4D70-B2AD-6CC68BF747BD}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "chemoinformatics-netcore5", "..\..\..\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj", "{F6E91D23-F6AF-4D70-B2AD-6CC68BF747BD}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "mzkit.NET5", "mzkit\mzkit.NET5.vbproj", "{66FF7873-086B-420D-B440-FCB76A7E04EA}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "mzkit.NET5", "src\mzkit\mzkit.NET5.vbproj", "{66FF7873-086B-420D-B440-FCB76A7E04EA}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "binarydata-netcore5", "..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\BinaryData\binarydata-netcore5.vbproj", "{7B4BF1C9-A5E8-4FB5-836C-BA1319D7A529}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "binarydata-netcore5", "..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\BinaryData\binarydata-netcore5.vbproj", "{7B4BF1C9-A5E8-4FB5-836C-BA1319D7A529}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "msgpack-netcore5", "..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\msgpack\msgpack-netcore5.vbproj", "{2BB75E37-8EA2-4F4A-B53B-4D382A4A1A32}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "msgpack-netcore5", "..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\msgpack\msgpack-netcore5.vbproj", "{2BB75E37-8EA2-4F4A-B53B-4D382A4A1A32}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "datastorage-netcore5", "..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\DataStorage\datastorage-netcore5.vbproj", "{9255A2B1-B2BC-4B24-BF4A-EB658B4068F6}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "datastorage-netcore5", "..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\DataStorage\datastorage-netcore5.vbproj", "{9255A2B1-B2BC-4B24-BF4A-EB658B4068F6}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "ProteoWizard.Interop.NET5", "..\..\..\..\src\assembly\ProteoWizard.Interop\ProteoWizard.Interop.NET5.vbproj", "{25627216-47C6-453E-B53C-ED635018C25A}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "ProteoWizard.Interop.NET5", "..\..\..\src\assembly\ProteoWizard.Interop\ProteoWizard.Interop.NET5.vbproj", "{25627216-47C6-453E-B53C-ED635018C25A}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "dataframework-netcore5", "..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\DataFrame\dataframework-netcore5.vbproj", "{CE7356FB-23F4-4999-81D5-44B2348A946F}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "dataframework-netcore5", "..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\DataFrame\dataframework-netcore5.vbproj", "{CE7356FB-23F4-4999-81D5-44B2348A946F}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "deconv.NET5", "..\..\..\..\src\mzmath\mz_deco\deconv.NET5.vbproj", "{0EDA68C5-1EB9-4CD7-BA55-D739B3BD6F88}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "deconv.NET5", "..\..\..\src\mzmath\mz_deco\deconv.NET5.vbproj", "{0EDA68C5-1EB9-4CD7-BA55-D739B3BD6F88}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "assembly", "assembly", "{15071E4A-7D3A-4289-8117-2CC438A191A2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "network", "network", "{E96F8193-C347-4561-8B2E-269487C455D5}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "physics-netcore5", "..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\gr\physics\physics-netcore5.vbproj", "{41BC5BEF-6537-43A6-8AD6-B534034AD5E0}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "physics-netcore5", "..\..\..\..\GCModeller\src\runtime\sciBASIC#\gr\physics\physics-netcore5.vbproj", "{41BC5BEF-6537-43A6-8AD6-B534034AD5E0}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "graph-netcore5", "..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Graph\graph-netcore5.vbproj", "{ABD9AC77-5532-4143-A4D0-4E60D6F2499B}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "graph-netcore5", "..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Graph\graph-netcore5.vbproj", "{ABD9AC77-5532-4143-A4D0-4E60D6F2499B}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "network_graph-netcore5", "..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\gr\network-visualization\Datavisualization.Network\network_graph-netcore5.vbproj", "{D4C4EF86-DDB0-4D7D-B810-B8E21ACF34E3}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "network_graph-netcore5", "..\..\..\..\GCModeller\src\runtime\sciBASIC#\gr\network-visualization\Datavisualization.Network\network_graph-netcore5.vbproj", "{D4C4EF86-DDB0-4D7D-B810-B8E21ACF34E3}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "biocore-netcore5", "..\..\..\..\..\GCModeller\src\GCModeller\core\Bio.Assembly\biocore-netcore5.vbproj", "{3E67480A-2169-48D8-B654-C73834F39EFB}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "biocore-netcore5", "..\..\..\..\GCModeller\src\GCModeller\core\Bio.Assembly\biocore-netcore5.vbproj", "{3E67480A-2169-48D8-B654-C73834F39EFB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "KCF", "KCF", "{DC8F86AE-FAD3-42BB-A517-2A02BFFCFE05}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "KCF_graph.NET5", "..\..\..\..\src\visualize\KCF\KCF.Graph\KCF_graph.NET5.vbproj", "{6B5566F3-7311-4125-A2E0-0A2337668DD4}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "KCF_graph.NET5", "..\..\..\src\visualize\KCF\KCF.Graph\KCF_graph.NET5.vbproj", "{6B5566F3-7311-4125-A2E0-0A2337668DD4}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "KCF_IO.NET5", "..\..\..\..\src\visualize\KCF\KCF.IO\KCF_IO.NET5.vbproj", "{0349A825-5236-454B-9E28-BFB50B4C10AD}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "KCF_IO.NET5", "..\..\..\src\visualize\KCF\KCF.IO\KCF_IO.NET5.vbproj", "{0349A825-5236-454B-9E28-BFB50B4C10AD}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "signal_io-netcore5", "..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\SignalProcessing\Signal.IO\signal_io-netcore5.vbproj", "{AC793DAF-8F3B-47E9-8A0F-0C3C0EC70F4A}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "signal_io-netcore5", "..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\SignalProcessing\Signal.IO\signal_io-netcore5.vbproj", "{AC793DAF-8F3B-47E9-8A0F-0C3C0EC70F4A}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "Comprehensive.NET5", "..\..\..\..\src\assembly\Comprehensive\Comprehensive.NET5.vbproj", "{7CD7929F-167D-48C2-A737-D6E028EB7174}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "Comprehensive.NET5", "..\..\..\src\assembly\Comprehensive\Comprehensive.NET5.vbproj", "{7CD7929F-167D-48C2-A737-D6E028EB7174}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "mzkit.interopArguments", "mzkit.interopArguments\mzkit.interopArguments.shproj", "{C295C3AF-3E62-4756-966A-3D0B90DED160}"
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "mzkit.interopArguments", "src\mzkit.interopArguments\mzkit.interopArguments.shproj", "{C295C3AF-3E62-4756-966A-3D0B90DED160}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "SDF.Extensions.NET5", "..\..\..\..\src\visualize\SDF.Extensions\SDF.Extensions.NET5.vbproj", "{A3B1D3C8-5679-494E-991F-8059AB72BE1E}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "SDF.Extensions.NET5", "..\..\..\src\visualize\SDF.Extensions\SDF.Extensions.NET5.vbproj", "{A3B1D3C8-5679-494E-991F-8059AB72BE1E}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "MoNA.NET5", "..\..\..\..\src\metadb\MoNA\MoNA.NET5.vbproj", "{464702EB-8151-427F-8CEF-05A784D67890}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "MoNA.NET5", "..\..\..\src\metadb\MoNA\MoNA.NET5.vbproj", "{464702EB-8151-427F-8CEF-05A784D67890}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "math", "math", "{AA7139B0-FCE7-42E3-8A86-8C9A6385DFDB}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "Targetted.NET5", "..\..\..\..\src\mzmath\TargetedMetabolomics\Targetted.NET5.vbproj", "{95360FBD-C990-477F-8EB3-50FF24857DB5}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "Targetted.NET5", "..\..\..\src\mzmath\TargetedMetabolomics\Targetted.NET5.vbproj", "{95360FBD-C990-477F-8EB3-50FF24857DB5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "math", "math", "{A747D2E4-4C42-4AD6-A17F-186CE592303A}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "linear-netcore5", "..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\DataFittings\linear-netcore5.vbproj", "{5FD581A6-096E-4A21-95C9-92181CDA9543}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "linear-netcore5", "..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\DataFittings\linear-netcore5.vbproj", "{5FD581A6-096E-4A21-95C9-92181CDA9543}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "odes-netcore5", "..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\ODE\odes-netcore5.vbproj", "{E9C34925-B7B5-42AC-8AAA-8245DED4DB0F}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "odes-netcore5", "..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\ODE\odes-netcore5.vbproj", "{E9C34925-B7B5-42AC-8AAA-8245DED4DB0F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "graphics", "graphics", "{A0BD071C-02D4-4D7A-94D0-06855CEB2478}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "html_netcore5", "..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\mime\text%html\html_netcore5.vbproj", "{CF395727-FE03-4141-ACA0-260BB59AF52B}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "html_netcore5", "..\..\..\..\GCModeller\src\runtime\sciBASIC#\mime\text%html\html_netcore5.vbproj", "{CF395727-FE03-4141-ACA0-260BB59AF52B}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "imaging.NET5", "..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\imaging.NET5.vbproj", "{465EA077-F563-4718-8795-8AFD2ECC56E3}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "imaging.NET5", "..\..\..\..\GCModeller\src\runtime\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\imaging.NET5.vbproj", "{465EA077-F563-4718-8795-8AFD2ECC56E3}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "plots-netcore5", "..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Visualization\Plots\plots-netcore5.vbproj", "{052EFEB6-19B5-4151-B282-77E5BE8D18CA}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "plots-netcore5", "..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Visualization\Plots\plots-netcore5.vbproj", "{052EFEB6-19B5-4151-B282-77E5BE8D18CA}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "xlsx-netcore5", "..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\xlsx-netcore5.vbproj", "{C7C02130-6802-450B-94D0-4D3BC5E52591}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "xlsx-netcore5", "..\..\..\..\GCModeller\src\runtime\sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\xlsx-netcore5.vbproj", "{C7C02130-6802-450B-94D0-4D3BC5E52591}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "renv", "renv", "{04F05CE9-F5D1-4FB9-BB02-0A5021899AEC}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "MsPlot.NET5", "..\..\..\..\src\visualize\plot\MsPlot.NET5.vbproj", "{23920423-1168-4A5B-9040-36DC97E41E22}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "MsPlot.NET5", "..\..\..\src\visualize\plot\MsPlot.NET5.vbproj", "{23920423-1168-4A5B-9040-36DC97E41E22}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "plots_extensions-netcore5", "..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Visualization\Plots-statistics\plots_extensions-netcore5.vbproj", "{069711B8-5C7F-4097-B8CC-846C6E6C413D}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "plots_extensions-netcore5", "..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Visualization\Plots-statistics\plots_extensions-netcore5.vbproj", "{069711B8-5C7F-4097-B8CC-846C6E6C413D}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "machine_learning-netcore5", "..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\MachineLearning\MachineLearning\machine_learning-netcore5.vbproj", "{659E2ADC-9D32-40F8-9716-2825F4C7659E}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "machine_learning-netcore5", "..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\MachineLearning\MachineLearning\machine_learning-netcore5.vbproj", "{659E2ADC-9D32-40F8-9716-2825F4C7659E}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "dataframeUtils-netcore5", "..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\DataFrame\dataframeUtils-netcore5.vbproj", "{057C3E8B-2718-4296-A949-C884D69E51B9}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "dataframeUtils-netcore5", "..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\DataFrame\dataframeUtils-netcore5.vbproj", "{057C3E8B-2718-4296-A949-C884D69E51B9}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "stats-netcore5", "..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\Math.Statistics\stats-netcore5.vbproj", "{EDF64A71-8654-4263-91BD-11D3C344DC52}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "stats-netcore5", "..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\Math.Statistics\stats-netcore5.vbproj", "{EDF64A71-8654-4263-91BD-11D3C344DC52}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "randomizer-netcore5", "..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\Randomizer\randomizer-netcore5.vbproj", "{7B0217BA-E7C4-4D17-B125-7600EA11EC22}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "randomizer-netcore5", "..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\Randomizer\randomizer-netcore5.vbproj", "{7B0217BA-E7C4-4D17-B125-7600EA11EC22}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "MsImaging.NET5", "..\..\..\..\src\visualize\MsImaging\MsImaging.NET5.vbproj", "{840FDA68-2ADC-4EB4-B369-B4364A136175}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "MsImaging.NET5", "..\..\..\src\visualize\MsImaging\MsImaging.NET5.vbproj", "{840FDA68-2ADC-4EB4-B369-B4364A136175}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "info", "info", "{DC7FD285-1E31-413F-8CAE-26F2FCBF64AB}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "SMILES.NET5", "..\..\..\..\src\metadb\SMILES\SMILES.NET5.vbproj", "{83295C00-1ABD-4D1E-9A71-85CBF6B84A70}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "SMILES.NET5", "..\..\..\src\metadb\SMILES\SMILES.NET5.vbproj", "{83295C00-1ABD-4D1E-9A71-85CBF6B84A70}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "mzPackExtensions.NET5", "..\..\..\..\src\assembly\mzPackExtensions\mzPackExtensions.NET5.vbproj", "{0743159E-E339-4A49-AF5E-CA7488AAA6CB}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "mzPackExtensions.NET5", "..\..\..\src\assembly\mzPackExtensions\mzPackExtensions.NET5.vbproj", "{0743159E-E339-4A49-AF5E-CA7488AAA6CB}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "DataMining.NET5", "..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\DataMining\DataMining\DataMining.NET5.vbproj", "{30305E78-B433-4C12-B26D-FFB6AEA7E9A6}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "DataMining.NET5", "..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\DataMining\DataMining\DataMining.NET5.vbproj", "{30305E78-B433-4C12-B26D-FFB6AEA7E9A6}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "Math.NET5", "..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\Math\Math.NET5.vbproj", "{E4E859D3-F581-401D-BB6D-37AFF663B88D}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "Math.NET5", "..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\Math\Math.NET5.vbproj", "{E4E859D3-F581-401D-BB6D-37AFF663B88D}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "hctree.NET5", "..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\hctree.NET5.vbproj", "{CD42C225-FA38-4800-9AB6-79B1E2D50FA2}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "hctree.NET5", "..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\hctree.NET5.vbproj", "{CD42C225-FA38-4800-9AB6-79B1E2D50FA2}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "R-cmd.NET5", "..\..\..\..\..\GCModeller\src\R-sharp\studio\R-terminal\R-cmd.NET5.vbproj", "{C6684765-7E4E-4F87-B7C4-0BBF34B35249}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "R-cmd.NET5", "..\..\..\..\GCModeller\src\R-sharp\studio\R-terminal\R-cmd.NET5.vbproj", "{C6684765-7E4E-4F87-B7C4-0BBF34B35249}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DIA", "DIA", "{FCD7C68D-B1FB-4505-8C18-1B42D02205BF}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "ms2_simulator.NET5", "..\..\..\..\src\mzmath\ms2_simulator\ms2_simulator.NET5.vbproj", "{08D2E718-D4BF-489B-9238-DDAECBB10A86}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "ms2_simulator.NET5", "..\..\..\src\mzmath\ms2_simulator\ms2_simulator.NET5.vbproj", "{08D2E718-D4BF-489B-9238-DDAECBB10A86}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "metaDNA.NET5", "..\..\..\..\src\metadna\metaDNA\metaDNA.NET5.vbproj", "{D113A6D4-66DE-490C-8A24-F81CEFAC9C91}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "metaDNA.NET5", "..\..\..\src\metadna\metaDNA\metaDNA.NET5.vbproj", "{D113A6D4-66DE-490C-8A24-F81CEFAC9C91}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "metaDNA_visual.NET5", "..\..\..\..\src\metadna\MetaDNA_visual\metaDNA_visual.NET5.vbproj", "{2887BED5-9576-4A28-B227-00FB758708C8}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "metaDNA_visual.NET5", "..\..\..\src\metadna\MetaDNA_visual\metaDNA_visual.NET5.vbproj", "{2887BED5-9576-4A28-B227-00FB758708C8}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "network_io-netcore5", "..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\gr\network-visualization\Network.IO.Extensions\network_io-netcore5.vbproj", "{D0836C13-C91F-4740-8D5E-B64CB46A0354}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "network_io-netcore5", "..\..\..\..\GCModeller\src\runtime\sciBASIC#\gr\network-visualization\Network.IO.Extensions\network_io-netcore5.vbproj", "{D0836C13-C91F-4740-8D5E-B64CB46A0354}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "networkVisualizer.NET5", "..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\gr\network-visualization\Visualizer\networkVisualizer.NET5.vbproj", "{9C1F25CB-4809-4709-84C5-E5C6E37CFDC0}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "networkVisualizer.NET5", "..\..\..\..\GCModeller\src\runtime\sciBASIC#\gr\network-visualization\Visualizer\networkVisualizer.NET5.vbproj", "{9C1F25CB-4809-4709-84C5-E5C6E37CFDC0}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "repository.NET5", "..\..\..\..\..\GCModeller\src\repository\Bio.Repository\repository.NET5.vbproj", "{D9AA64FF-2A9D-4F67-AC87-7484F785CEE7}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "repository.NET5", "..\..\..\..\GCModeller\src\repository\Bio.Repository\repository.NET5.vbproj", "{D9AA64FF-2A9D-4F67-AC87-7484F785CEE7}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "annotation.NET5", "..\..\..\..\..\GCModeller\src\GCModeller\core\Bio.Annotation\annotation.NET5.vbproj", "{FF8C9FA0-7EFF-4ABE-8E60-AC341E841309}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "annotation.NET5", "..\..\..\..\GCModeller\src\GCModeller\core\Bio.Annotation\annotation.NET5.vbproj", "{FF8C9FA0-7EFF-4ABE-8E60-AC341E841309}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "gcmodeller", "gcmodeller", "{4B4CDEFE-0EBB-4BF9-A19F-08D168342460}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "Fisher.NET5", "..\..\..\..\..\GCModeller\src\GCModeller\annotations\GSEA\FisherCore\Fisher.NET5.vbproj", "{AA4C89D3-6FA6-4A4D-B457-4DF33EEA8431}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "Fisher.NET5", "..\..\..\..\GCModeller\src\GCModeller\annotations\GSEA\FisherCore\Fisher.NET5.vbproj", "{AA4C89D3-6FA6-4A4D-B457-4DF33EEA8431}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "DensityQuery.NET5", "..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\DataMining\DensityQuery\DensityQuery.NET5.vbproj", "{404B110D-0339-4D9C-92E7-6965406E7E3F}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "DensityQuery.NET5", "..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\DataMining\DensityQuery\DensityQuery.NET5.vbproj", "{404B110D-0339-4D9C-92E7-6965406E7E3F}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "massbank.NET5", "..\..\..\..\src\metadb\Massbank\massbank.NET5.vbproj", "{74E6635F-FFCB-4039-BD70-DDEA8DAB0742}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "massbank.NET5", "..\..\..\src\metadb\Massbank\massbank.NET5.vbproj", "{74E6635F-FFCB-4039-BD70-DDEA8DAB0742}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "XrefEngine.NET5", "..\..\..\..\src\metadb\XrefEngine\XrefEngine.NET5.vbproj", "{6219E225-5F16-460E-AE0A-69017048C208}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "XrefEngine.NET5", "..\..\..\src\metadb\XrefEngine\XrefEngine.NET5.vbproj", "{6219E225-5F16-460E-AE0A-69017048C208}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "obo_foundry-netcore5", "..\..\..\..\..\GCModeller\src\GCModeller\foundation\OBO_Foundry\obo_foundry-netcore5.vbproj", "{13EEA627-7DD3-4046-AD23-4D29FDF93B9B}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "obo_foundry-netcore5", "..\..\..\..\GCModeller\src\GCModeller\foundation\OBO_Foundry\obo_foundry-netcore5.vbproj", "{13EEA627-7DD3-4046-AD23-4D29FDF93B9B}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "rdf_xml-netcore5", "..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\mime\application%rdf+xml\rdf_xml-netcore5.vbproj", "{202F07E5-4480-4D36-B0C5-5E936372153B}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "rdf_xml-netcore5", "..\..\..\..\GCModeller\src\runtime\sciBASIC#\mime\application%rdf+xml\rdf_xml-netcore5.vbproj", "{202F07E5-4480-4D36-B0C5-5E936372153B}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "MSEngine", "..\..\..\..\src\mzmath\MSEngine\MSEngine.vbproj", "{8139F133-AD13-4855-B2CA-A5600C86D337}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "MSEngine", "..\..\..\src\mzmath\MSEngine\MSEngine.vbproj", "{8139F133-AD13-4855-B2CA-A5600C86D337}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "mzpack.NET5", "..\..\..\..\src\assembly\mzPack\mzpack.NET5.vbproj", "{7A13EC52-D117-4A43-B6F7-F18C25E79C06}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "mzpack.NET5", "..\..\..\src\assembly\mzPack\mzpack.NET5.vbproj", "{7A13EC52-D117-4A43-B6F7-F18C25E79C06}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "RData.NET5", "..\..\..\..\..\GCModeller\src\R-sharp\studio\RData\RData.NET5.vbproj", "{7F7DB5B3-E93C-4683-9101-E817BEADDA19}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "RData.NET5", "..\..\..\..\GCModeller\src\R-sharp\studio\RData\RData.NET5.vbproj", "{7F7DB5B3-E93C-4683-9101-E817BEADDA19}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "LoadR.NET5", "..\..\..\..\src\assembly\LoadR.NET5\LoadR.NET5.vbproj", "{7F135503-460A-4D65-8600-D332927BFCDF}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "LoadR.NET5", "..\..\..\src\assembly\LoadR.NET5\LoadR.NET5.vbproj", "{7F135503-460A-4D65-8600-D332927BFCDF}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "KCFDraw.NET5", "..\..\..\..\src\visualize\KCF\KCFDraw\KCFDraw.NET5.vbproj", "{6628A3E8-332F-4AFF-9EE5-AE41DF2AC4FD}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "KCFDraw.NET5", "..\..\..\src\visualize\KCF\KCFDraw\KCFDraw.NET5.vbproj", "{6628A3E8-332F-4AFF-9EE5-AE41DF2AC4FD}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".NET4.8_vendors", ".NET4.8_vendors", "{C6FC2403-7408-42EC-AFC6-608FF9E684B7}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "BrukerDataReader.NET5", "..\..\..\..\src\assembly\BrukerDataReader\BrukerDataReader.NET5.vbproj", "{2EC13844-EB75-4FAA-BBC6-422C16C3132A}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "BrukerDataReader.NET5", "..\..\..\src\assembly\BrukerDataReader\BrukerDataReader.NET5.vbproj", "{2EC13844-EB75-4FAA-BBC6-422C16C3132A}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "sciexWiffReader", "..\..\..\..\src\assembly\sciexWiffReader\sciexWiffReader.vbproj", "{0D82246C-02C5-4F9E-A571-EA4FA2077059}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "sciexWiffReader", "..\..\..\src\assembly\sciexWiffReader\sciexWiffReader.vbproj", "{0D82246C-02C5-4F9E-A571-EA4FA2077059}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "JsonHelper", "..\..\..\..\..\GCModeller\src\R-sharp\Library\shares\JsonHelper\JsonHelper.shproj", "{B2AE1422-D7DA-4053-A386-EB2EA9326D68}"
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "JsonHelper", "..\..\..\..\GCModeller\src\R-sharp\Library\shares\JsonHelper\JsonHelper.shproj", "{B2AE1422-D7DA-4053-A386-EB2EA9326D68}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "R_graphic.interop", "..\..\..\..\..\GCModeller\src\R-sharp\Library\shares\R_graphic.interop\R_graphic.interop.shproj", "{53AF2B13-CCD5-4F73-94D5-612191E785A9}"
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "R_graphic.interop", "..\..\..\..\GCModeller\src\R-sharp\Library\shares\R_graphic.interop\R_graphic.interop.shproj", "{53AF2B13-CCD5-4F73-94D5-612191E785A9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "shares", "shares", "{A3D8102D-9397-4C61-8EF5-3BAFB7B8A6CD}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "MSFileReader.NET5", "..\..\..\..\src\assembly\ThermoRawFileReader\MSFileReader.NET5.vbproj", "{165723E3-7DF6-44B3-8CAC-B1A843F51811}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "MSFileReader.NET5", "..\..\..\src\assembly\ThermoRawFileReader\MSFileReader.NET5.vbproj", "{165723E3-7DF6-44B3-8CAC-B1A843F51811}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "FormulaSearch.Extensions.NET5", "..\..\..\..\src\metadb\FormulaSearch.Extensions\FormulaSearch.Extensions.NET5.vbproj", "{65F8866B-F719-414B-A4E7-8D945E9F0419}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "FormulaSearch.Extensions.NET5", "..\..\..\src\metadb\FormulaSearch.Extensions\FormulaSearch.Extensions.NET5.vbproj", "{65F8866B-F719-414B-A4E7-8D945E9F0419}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "Mummichog", "..\..\..\..\src\mzmath\Mummichog\Mummichog.vbproj", "{55412A7A-7EF6-44F9-84CC-6E99B0511B4A}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "Mummichog", "..\..\..\src\mzmath\Mummichog\Mummichog.vbproj", "{55412A7A-7EF6-44F9-84CC-6E99B0511B4A}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "TissueMorphology", "..\..\..\..\src\visualize\TissueMorphology\TissueMorphology.vbproj", "{0BAB50E0-3D20-47AB-9725-79C00BB2812D}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "TissueMorphology", "..\..\..\src\visualize\TissueMorphology\TissueMorphology.vbproj", "{0BAB50E0-3D20-47AB-9725-79C00BB2812D}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "netCDF", "..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\netCDF\netCDF.vbproj", "{A83280C5-A3F4-451A-B0D5-0109A948081F}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "netCDF", "..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\netCDF\netCDF.vbproj", "{A83280C5-A3F4-451A-B0D5-0109A948081F}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "HDSPack", "..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\HDSPack\HDSPack.vbproj", "{082CA05A-CD8C-4A5E-B1A1-2C4BF30F02E4}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "HDSPack", "..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\HDSPack\HDSPack.vbproj", "{082CA05A-CD8C-4A5E-B1A1-2C4BF30F02E4}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "btree-netcore5", "..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\DataMining\BinaryTree\btree-netcore5.vbproj", "{AFA2CB3A-4D26-4572-99A1-EB89186B304A}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "btree-netcore5", "..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\DataMining\BinaryTree\btree-netcore5.vbproj", "{AFA2CB3A-4D26-4572-99A1-EB89186B304A}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "MoleculeNetworking", "..\..\..\..\src\mzmath\MoleculeNetworking\MoleculeNetworking.vbproj", "{046945E8-2E84-4047-BE34-2AA470AA192D}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "MoleculeNetworking", "..\..\..\src\mzmath\MoleculeNetworking\MoleculeNetworking.vbproj", "{046945E8-2E84-4047-BE34-2AA470AA192D}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "spectrumTree.NETCore5", "..\..\..\..\src\assembly\SpectrumTree\spectrumTree.NETCore5.vbproj", "{E0899D20-D97E-4B2E-8A4E-6F3D3B4B434F}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "spectrumTree.NETCore5", "..\..\..\src\assembly\SpectrumTree\spectrumTree.NETCore5.vbproj", "{E0899D20-D97E-4B2E-8A4E-6F3D3B4B434F}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "biopax-netcore5", "..\..\..\..\..\GCModeller\src\GCModeller\models\SBML\Biopax\biopax-netcore5.vbproj", "{6CFA75B1-BDAE-489B-A317-F5088986C671}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "biopax-netcore5", "..\..\..\..\GCModeller\src\GCModeller\models\SBML\Biopax\biopax-netcore5.vbproj", "{6CFA75B1-BDAE-489B-A317-F5088986C671}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "gsea-netcore5", "..\..\..\..\..\GCModeller\src\GCModeller\annotations\GSEA\GSEA\gsea-netcore5.vbproj", "{B1230028-0637-4773-91BF-D2429736E869}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "gsea-netcore5", "..\..\..\..\GCModeller\src\GCModeller\annotations\GSEA\GSEA\gsea-netcore5.vbproj", "{B1230028-0637-4773-91BF-D2429736E869}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "go_owl-netcore5", "..\..\..\..\..\GCModeller\src\GCModeller\data\GO_gene-ontology\GeneOntology\go_owl-netcore5.vbproj", "{2A7AF258-BDC8-4080-9F64-2CFA5F26B415}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "go_owl-netcore5", "..\..\..\..\GCModeller\src\GCModeller\data\GO_gene-ontology\GeneOntology\go_owl-netcore5.vbproj", "{2A7AF258-BDC8-4080-9F64-2CFA5F26B415}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "xml-netcore5", "..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\mime\application%xml\xml-netcore5.vbproj", "{5F318245-85DC-4C30-B9F1-784FB60FE35B}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "xml-netcore5", "..\..\..\..\GCModeller\src\runtime\sciBASIC#\mime\application%xml\xml-netcore5.vbproj", "{5F318245-85DC-4C30-B9F1-784FB60FE35B}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "HDF5", "..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\HDF5\HDF5.vbproj", "{18FF675D-1A3D-4B0D-BEEF-687F543EE2F2}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "HDF5", "..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\HDF5\HDF5.vbproj", "{18FF675D-1A3D-4B0D-BEEF-687F543EE2F2}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "SQLite3", "..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\SQLite3\SQLite3.vbproj", "{573D8832-09B1-45FE-BD7C-8AF1967D26AB}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "SQLite3", "..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\SQLite3\SQLite3.vbproj", "{573D8832-09B1-45FE-BD7C-8AF1967D26AB}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "SABIO-RK.NET", "..\..\..\..\..\GCModeller\src\GCModeller\data\SABIO-RK\SABIO-RK.NET.vbproj", "{D69327F5-F323-432E-BB68-364287B9BFEE}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "SABIO-RK.NET", "..\..\..\..\GCModeller\src\GCModeller\data\SABIO-RK\SABIO-RK.NET.vbproj", "{D69327F5-F323-432E-BB68-364287B9BFEE}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "Rhea", "..\..\..\..\..\GCModeller\src\GCModeller\data\Rhea\Rhea.vbproj", "{820B39E0-9FBB-457B-81E5-9D8D96A3AD88}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "Rhea", "..\..\..\..\GCModeller\src\GCModeller\data\Rhea\Rhea.vbproj", "{820B39E0-9FBB-457B-81E5-9D8D96A3AD88}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "sbml-netcore5", "..\..\..\..\..\GCModeller\src\GCModeller\models\SBML\SBML\sbml-netcore5.vbproj", "{64145E1D-C246-4185-AE80-80DDE14F89EE}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "sbml-netcore5", "..\..\..\..\GCModeller\src\GCModeller\models\SBML\SBML\sbml-netcore5.vbproj", "{64145E1D-C246-4185-AE80-80DDE14F89EE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "mime", "mime", "{13EDC514-4122-4A70-986F-BA01A4919963}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "NMRFidTool", "..\..\..\..\src\assembly\NMRFidTool\NMRFidTool.vbproj", "{E07724CD-360F-4F00-8D66-57FF6ACCB6EF}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "NMRFidTool", "..\..\..\src\assembly\NMRFidTool\NMRFidTool.vbproj", "{E07724CD-360F-4F00-8D66-57FF6ACCB6EF}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "HTS_matrix-netcore5", "..\..\..\..\..\GCModeller\src\GCModeller\analysis\HTS_matrix\HTS_matrix-netcore5.vbproj", "{BDB62948-A7D0-4BFB-834E-0AF2E4B53574}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "HTS_matrix-netcore5", "..\..\..\..\GCModeller\src\GCModeller\analysis\HTS_matrix\HTS_matrix-netcore5.vbproj", "{BDB62948-A7D0-4BFB-834E-0AF2E4B53574}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "designer-netcore5", "..\..\..\..\..\GCModeller\src\workbench\modules\ExperimentDesigner\designer-netcore5.vbproj", "{771D0780-1568-4E7D-B476-3BE57599671D}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "designer-netcore5", "..\..\..\..\GCModeller\src\workbench\modules\ExperimentDesigner\designer-netcore5.vbproj", "{771D0780-1568-4E7D-B476-3BE57599671D}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "Landscape", "..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\gr\Landscape\Landscape.vbproj", "{A75DF5BE-0A08-4AA7-BA71-C4426D57CA98}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "Landscape", "..\..\..\..\GCModeller\src\runtime\sciBASIC#\gr\Landscape\Landscape.vbproj", "{A75DF5BE-0A08-4AA7-BA71-C4426D57CA98}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "SingleCells", "..\..\..\..\src\mzmath\SingleCells\SingleCells.vbproj", "{8937F057-C063-4477-8AE1-9A8C2B890235}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "SingleCells", "..\..\..\src\mzmath\SingleCells\SingleCells.vbproj", "{8937F057-C063-4477-8AE1-9A8C2B890235}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "SignalReader", "..\..\..\..\src\assembly\SignalReader\SignalReader.vbproj", "{48B5DF9E-C5E0-421D-A28D-C1FA8B6972B4}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "SignalReader", "..\..\..\src\assembly\SignalReader\SignalReader.vbproj", "{48B5DF9E-C5E0-421D-A28D-C1FA8B6972B4}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "KEGGNetwork.NET5", "..\..\..\..\..\GCModeller\src\GCModeller\models\Networks\KEGG\KEGGNetwork.NET5.vbproj", "{D3E66590-071A-44DC-9B14-A60D4651BCD9}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "KEGGNetwork.NET5", "..\..\..\..\GCModeller\src\GCModeller\models\Networks\KEGG\KEGGNetwork.NET5.vbproj", "{D3E66590-071A-44DC-9B14-A60D4651BCD9}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "Cytoscape.NET5", "..\..\..\..\..\GCModeller\src\interops\visualize\Cytoscape\Cytoscape\Cytoscape.NET5.vbproj", "{753AA31A-CD61-4D3A-9D79-EEDB22271BFA}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "Cytoscape.NET5", "..\..\..\..\GCModeller\src\interops\visualize\Cytoscape\Cytoscape\Cytoscape.NET5.vbproj", "{753AA31A-CD61-4D3A-9D79-EEDB22271BFA}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "InteractionModel.NET5", "..\..\..\..\..\GCModeller\src\GCModeller\core\Bio.InteractionModel\InteractionModel.NET5.vbproj", "{8FC1946C-591E-4CD3-9EDA-9EF2CF9DE8ED}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "InteractionModel.NET5", "..\..\..\..\GCModeller\src\GCModeller\core\Bio.InteractionModel\InteractionModel.NET5.vbproj", "{8FC1946C-591E-4CD3-9EDA-9EF2CF9DE8ED}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "datavisual-netcore5", "..\..\..\..\..\GCModeller\src\GCModeller\visualize\DataVisualizationExtensions\datavisual-netcore5.vbproj", "{FBB8D60C-029B-419E-A773-406ACEBCF4AB}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "datavisual-netcore5", "..\..\..\..\GCModeller\src\GCModeller\visualize\DataVisualizationExtensions\datavisual-netcore5.vbproj", "{FBB8D60C-029B-419E-A773-406ACEBCF4AB}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "JSON-netcore5", "..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\mime\application%json\JSON-netcore5.vbproj", "{DBBA8271-A559-43AF-A699-AD227C0FCB7D}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "JSON-netcore5", "..\..\..\..\GCModeller\src\runtime\sciBASIC#\mime\application%json\JSON-netcore5.vbproj", "{DBBA8271-A559-43AF-A699-AD227C0FCB7D}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "Lipidomics", "..\..\..\..\src\metadb\Lipidomics\Lipidomics.vbproj", "{8E8B118A-5C2C-4188-825F-9A40B06D53CE}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "Lipidomics", "..\..\..\src\metadb\Lipidomics\Lipidomics.vbproj", "{8E8B118A-5C2C-4188-825F-9A40B06D53CE}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "MSFinder", "..\..\..\..\src\mzmath\MSFinder\MSFinder.vbproj", "{3A76A7E4-3340-480E-A1EC-AC2551BB8041}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "MSFinder", "..\..\..\src\mzmath\MSFinder\MSFinder.vbproj", "{3A76A7E4-3340-480E-A1EC-AC2551BB8041}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "mzDIA.NET5", "mzDIA\mzDIA.NET5.vbproj", "{7FB1001D-02A9-46A5-BE72-11EA8756391D}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "mzDIA.NET5", "src\mzDIA\mzDIA.NET5.vbproj", "{7FB1001D-02A9-46A5-BE72-11EA8756391D}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "mzplot.NET5", "mzplot\mzplot.NET5.vbproj", "{0B072D5C-35FD-4725-A71E-C03E7E5A6C4A}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "mzplot.NET5", "src\mzplot\mzplot.NET5.vbproj", "{0B072D5C-35FD-4725-A71E-C03E7E5A6C4A}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "quantify.NET5", "mzquant\quantify.NET5.vbproj", "{E074376E-93C3-4263-8BD5-0CF87E1511DB}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "quantify.NET5", "src\mzquant\quantify.NET5.vbproj", "{E074376E-93C3-4263-8BD5-0CF87E1511DB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9717,16 +9717,16 @@ Global
 		SolutionGuid = {75B511EF-0EE5-4406-AEA1-274A98DAF7E3}
 	EndGlobalSection
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		..\..\..\..\..\GCModeller\src\R-sharp\Library\shares\R_graphic.interop\R_graphic.interop.projitems*{0b072d5c-35fd-4725-a71e-c03e7e5a6c4a}*SharedItemsImports = 5
-		mzkit.interopArguments\mzkit.interopArguments.projitems*{0b072d5c-35fd-4725-a71e-c03e7e5a6c4a}*SharedItemsImports = 5
-		..\..\..\..\..\GCModeller\src\R-sharp\Library\shares\R_graphic.interop\R_graphic.interop.projitems*{53af2b13-ccd5-4f73-94d5-612191e785a9}*SharedItemsImports = 13
-		..\..\..\..\..\GCModeller\src\R-sharp\Library\shares\R_graphic.interop\R_graphic.interop.projitems*{66ff7873-086b-420d-b440-fcb76a7e04ea}*SharedItemsImports = 5
-		mzkit.interopArguments\mzkit.interopArguments.projitems*{66ff7873-086b-420d-b440-fcb76a7e04ea}*SharedItemsImports = 5
-		mzkit.interopArguments\mzkit.interopArguments.projitems*{7fb1001d-02a9-46a5-be72-11ea8756391d}*SharedItemsImports = 5
-		..\..\..\..\..\GCModeller\src\R-sharp\Library\shares\JsonHelper\JsonHelper.projitems*{b2ae1422-d7da-4053-a386-eb2ea9326d68}*SharedItemsImports = 13
-		mzkit.interopArguments\mzkit.interopArguments.projitems*{c295c3af-3e62-4756-966a-3d0b90ded160}*SharedItemsImports = 13
-		..\..\..\..\..\GCModeller\src\R-sharp\studio\Rstudio.common\Rstudio.common.projitems*{c6684765-7e4e-4f87-b7c4-0bbf34b35249}*SharedItemsImports = 5
-		..\..\..\..\..\GCModeller\src\R-sharp\Library\shares\R_graphic.interop\R_graphic.interop.projitems*{e074376e-93c3-4263-8bd5-0cf87e1511db}*SharedItemsImports = 5
-		mzkit.interopArguments\mzkit.interopArguments.projitems*{e074376e-93c3-4263-8bd5-0cf87e1511db}*SharedItemsImports = 5
+		..\..\..\..\GCModeller\src\R-sharp\Library\shares\R_graphic.interop\R_graphic.interop.projitems*{0b072d5c-35fd-4725-a71e-c03e7e5a6c4a}*SharedItemsImports = 5
+		src\mzkit.interopArguments\mzkit.interopArguments.projitems*{0b072d5c-35fd-4725-a71e-c03e7e5a6c4a}*SharedItemsImports = 5
+		..\..\..\..\GCModeller\src\R-sharp\Library\shares\R_graphic.interop\R_graphic.interop.projitems*{53af2b13-ccd5-4f73-94d5-612191e785a9}*SharedItemsImports = 13
+		..\..\..\..\GCModeller\src\R-sharp\Library\shares\R_graphic.interop\R_graphic.interop.projitems*{66ff7873-086b-420d-b440-fcb76a7e04ea}*SharedItemsImports = 5
+		src\mzkit.interopArguments\mzkit.interopArguments.projitems*{66ff7873-086b-420d-b440-fcb76a7e04ea}*SharedItemsImports = 5
+		src\mzkit.interopArguments\mzkit.interopArguments.projitems*{7fb1001d-02a9-46a5-be72-11ea8756391d}*SharedItemsImports = 5
+		..\..\..\..\GCModeller\src\R-sharp\Library\shares\JsonHelper\JsonHelper.projitems*{b2ae1422-d7da-4053-a386-eb2ea9326d68}*SharedItemsImports = 13
+		src\mzkit.interopArguments\mzkit.interopArguments.projitems*{c295c3af-3e62-4756-966a-3d0b90ded160}*SharedItemsImports = 13
+		..\..\..\..\GCModeller\src\R-sharp\studio\Rstudio.common\Rstudio.common.projitems*{c6684765-7e4e-4f87-b7c4-0bbf34b35249}*SharedItemsImports = 5
+		..\..\..\..\GCModeller\src\R-sharp\Library\shares\R_graphic.interop\R_graphic.interop.projitems*{e074376e-93c3-4263-8bd5-0cf87e1511db}*SharedItemsImports = 5
+		src\mzkit.interopArguments\mzkit.interopArguments.projitems*{e074376e-93c3-4263-8bd5-0cf87e1511db}*SharedItemsImports = 5
 	EndGlobalSection
 EndGlobal
