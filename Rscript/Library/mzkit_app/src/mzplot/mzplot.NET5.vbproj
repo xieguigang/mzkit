@@ -19,6 +19,9 @@
 	  <RuntimeIdentifiers>win7-x64;win7-x86;win-x64;linux-x64;linux-arm64;osx-x64</RuntimeIdentifiers>
 	  <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <DocumentationFile>mzplot.xml</DocumentationFile>
+    <ApplicationIcon>favicon.ico</ApplicationIcon>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <IncludeSymbols>True</IncludeSymbols>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -112,11 +115,16 @@
     <Compile Remove="test\**" />
     <EmbeddedResource Remove="test\**" />
     <None Remove="test\**" />
-    <None Include="..\..\..\LICENSE">
+    <Content Include="favicon.ico" />
+    <None Include="..\..\..\..\..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\..\..\..\..\LICENSE">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
-    <None Include="..\..\..\.pkg\Flask.png">
+    <None Include="..\..\..\..\..\.pkg\Flask.png">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
