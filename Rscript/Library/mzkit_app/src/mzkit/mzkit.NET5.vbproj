@@ -14,7 +14,7 @@
 		<PackageLicenseFile>LICENSE</PackageLicenseFile>
 		<PackageProjectUrl>http://mzkit.org</PackageProjectUrl>
 		<PackageIcon>Flask.png</PackageIcon>
-    <OutputPath>../\mzkit_app\assembly\</OutputPath>
+    <OutputPath>../..\assembly\</OutputPath>
 		<PackageIconUrl />
 		<RuntimeIdentifiers>win7-x64;win7-x86;win-x64;linux-x64;linux-arm64;osx-x64</RuntimeIdentifiers>
 		<UseApplicationFramework>True</UseApplicationFramework>
@@ -103,7 +103,7 @@
 		<DefineDebug>false</DefineDebug>
 		<DefineTrace>true</DefineTrace>
 		<DefineConstants>netcore5=1,UNIX=1</DefineConstants>
-		<OutputPath>../\mzkit_app\assembly\</OutputPath>
+		
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0|AnyCPU'">
