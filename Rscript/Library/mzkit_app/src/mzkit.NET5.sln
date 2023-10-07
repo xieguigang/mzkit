@@ -9717,8 +9717,10 @@ Global
 		SolutionGuid = {75B511EF-0EE5-4406-AEA1-274A98DAF7E3}
 	EndGlobalSection
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		..\..\..\..\..\GCModeller\src\R-sharp\Library\shares\R_graphic.interop\R_graphic.interop.projitems*{0b072d5c-35fd-4725-a71e-c03e7e5a6c4a}*SharedItemsImports = 5
 		mzkit.interopArguments\mzkit.interopArguments.projitems*{0b072d5c-35fd-4725-a71e-c03e7e5a6c4a}*SharedItemsImports = 5
 		..\..\..\..\..\GCModeller\src\R-sharp\Library\shares\R_graphic.interop\R_graphic.interop.projitems*{53af2b13-ccd5-4f73-94d5-612191e785a9}*SharedItemsImports = 13
+		..\..\..\..\..\GCModeller\src\R-sharp\Library\shares\R_graphic.interop\R_graphic.interop.projitems*{66ff7873-086b-420d-b440-fcb76a7e04ea}*SharedItemsImports = 5
 		mzkit.interopArguments\mzkit.interopArguments.projitems*{66ff7873-086b-420d-b440-fcb76a7e04ea}*SharedItemsImports = 5
 		mzkit.interopArguments\mzkit.interopArguments.projitems*{7fb1001d-02a9-46a5-be72-11ea8756391d}*SharedItemsImports = 5
 		..\..\..\..\..\GCModeller\src\R-sharp\Library\shares\JsonHelper\JsonHelper.projitems*{b2ae1422-d7da-4053-a386-eb2ea9326d68}*SharedItemsImports = 13

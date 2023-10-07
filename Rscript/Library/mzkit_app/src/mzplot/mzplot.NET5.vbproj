@@ -123,28 +123,28 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\GCModeller\src\R-sharp\R#\Rsharp-netcore5.vbproj" />
-    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\Math\Math.NET5.vbproj" />
-    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\imaging.NET5.vbproj" />
-    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj" />
-    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\mime\text%html\html_netcore5.vbproj" />
-    <ProjectReference Include="..\..\..\src\assembly\assembly\assembly-netcore5.vbproj" />
-    <ProjectReference Include="..\..\..\src\assembly\Comprehensive\Comprehensive.NET5.vbproj" />
-    <ProjectReference Include="..\..\..\src\assembly\mzPack\mzpack.NET5.vbproj" />
-    <ProjectReference Include="..\..\..\src\assembly\NMRFidTool\NMRFidTool.vbproj" />
-    <ProjectReference Include="..\..\..\src\assembly\SignalReader\SignalReader.vbproj" />
-    <ProjectReference Include="..\..\..\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj" />
-    <ProjectReference Include="..\..\..\src\metadb\SMILES\SMILES.NET5.vbproj" />
-    <ProjectReference Include="..\..\..\src\mzmath\MoleculeNetworking\MoleculeNetworking.vbproj" />
-    <ProjectReference Include="..\..\..\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj" />
-    <ProjectReference Include="..\..\..\src\mzmath\mz_deco\deconv.NET5.vbproj" />
-    <ProjectReference Include="..\..\..\src\visualize\KCF\KCF.Graph\KCF_graph.NET5.vbproj" />
-    <ProjectReference Include="..\..\..\src\visualize\KCF\KCF.IO\KCF_IO.NET5.vbproj" />
-    <ProjectReference Include="..\..\..\src\visualize\KCF\KCFDraw\KCFDraw.NET5.vbproj" />
-    <ProjectReference Include="..\..\..\src\visualize\MsImaging\MsImaging.NET5.vbproj" />
-    <ProjectReference Include="..\..\..\src\visualize\plot\MsPlot.NET5.vbproj" />
-    <ProjectReference Include="..\..\..\src\visualize\SDF.Extensions\SDF.Extensions.NET5.vbproj" />
-    <ProjectReference Include="..\..\..\src\visualize\TissueMorphology\TissueMorphology.vbproj" />
+    <ProjectReference Include="../../..\..\..\..\GCModeller\src\R-sharp\R#\Rsharp-netcore5.vbproj" />
+    <ProjectReference Include="../../..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\Math\Math.NET5.vbproj" />
+    <ProjectReference Include="../../..\..\..\..\GCModeller\src\runtime\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\imaging.NET5.vbproj" />
+    <ProjectReference Include="../../..\..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <ProjectReference Include="../../..\..\..\..\GCModeller\src\runtime\sciBASIC#\mime\text%html\html_netcore5.vbproj" />
+    <ProjectReference Include="../../..\..\..\src\assembly\assembly\assembly-netcore5.vbproj" />
+    <ProjectReference Include="../../..\..\..\src\assembly\Comprehensive\Comprehensive.NET5.vbproj" />
+    <ProjectReference Include="../../..\..\..\src\assembly\mzPack\mzpack.NET5.vbproj" />
+    <ProjectReference Include="../../..\..\..\src\assembly\NMRFidTool\NMRFidTool.vbproj" />
+    <ProjectReference Include="../../..\..\..\src\assembly\SignalReader\SignalReader.vbproj" />
+    <ProjectReference Include="../../..\..\..\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj" />
+    <ProjectReference Include="../../..\..\..\src\metadb\SMILES\SMILES.NET5.vbproj" />
+    <ProjectReference Include="../../..\..\..\src\mzmath\MoleculeNetworking\MoleculeNetworking.vbproj" />
+    <ProjectReference Include="../../..\..\..\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj" />
+    <ProjectReference Include="../../..\..\..\src\mzmath\mz_deco\deconv.NET5.vbproj" />
+    <ProjectReference Include="../../..\..\..\src\visualize\KCF\KCF.Graph\KCF_graph.NET5.vbproj" />
+    <ProjectReference Include="../../..\..\..\src\visualize\KCF\KCF.IO\KCF_IO.NET5.vbproj" />
+    <ProjectReference Include="../../..\..\..\src\visualize\KCF\KCFDraw\KCFDraw.NET5.vbproj" />
+    <ProjectReference Include="../../..\..\..\src\visualize\MsImaging\MsImaging.NET5.vbproj" />
+    <ProjectReference Include="../../..\..\..\src\visualize\plot\MsPlot.NET5.vbproj" />
+    <ProjectReference Include="../../..\..\..\src\visualize\SDF.Extensions\SDF.Extensions.NET5.vbproj" />
+    <ProjectReference Include="../../..\..\..\src\visualize\TissueMorphology\TissueMorphology.vbproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -153,6 +153,6 @@
 
   <Import Project="..\mzkit.interopArguments\mzkit.interopArguments.projitems" Label="Shared" />
 
-	<Import Project="..\..\..\..\GCModeller\src\R-sharp\Library\shares\R_graphic.interop\R_graphic.interop.projitems" Label="Shared" />
+	<Import Project="../../..\..\..\..\GCModeller\src\R-sharp\Library\shares\R_graphic.interop\R_graphic.interop.projitems" Label="Shared" />
 
 </Project>

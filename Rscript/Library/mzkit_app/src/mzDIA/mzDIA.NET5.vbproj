@@ -125,27 +125,27 @@
 
   
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\GCModeller\src\GCModeller\core\Bio.Assembly\biocore-netcore5.vbproj" />
-    <ProjectReference Include="..\..\..\..\GCModeller\src\R-sharp\R#\Rsharp-netcore5.vbproj" />
-    <ProjectReference Include="..\..\..\..\GCModeller\src\repository\Bio.Repository\repository.NET5.vbproj" />
-    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\DataMining\BinaryTree\btree-netcore5.vbproj" />
-    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\MachineLearning\MachineLearning\machine_learning-netcore5.vbproj" />
-    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\Math\Math.NET5.vbproj" />
-    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Visualization\Plots-statistics\plots_extensions-netcore5.vbproj" />
-    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Visualization\Plots\plots-netcore5.vbproj" />
-    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\imaging.NET5.vbproj" />
-    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj" />
-    <ProjectReference Include="..\..\..\src\assembly\assembly\assembly-netcore5.vbproj" />
-    <ProjectReference Include="..\..\..\src\assembly\SpectrumTree\spectrumTree.NETCore5.vbproj" />
-    <ProjectReference Include="..\..\..\src\metadb\Lipidomics\Lipidomics.vbproj" />
-    <ProjectReference Include="..\..\..\src\metadna\metaDNA\metaDNA.NET5.vbproj" />
-    <ProjectReference Include="..\..\..\src\metadna\MetaDNA_visual\metaDNA_visual.NET5.vbproj" />
-    <ProjectReference Include="..\..\..\src\mzmath\MoleculeNetworking\MoleculeNetworking.vbproj" />
-    <ProjectReference Include="..\..\..\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj" />
-    <ProjectReference Include="..\..\..\src\mzmath\ms2_simulator\ms2_simulator.NET5.vbproj" />
-    <ProjectReference Include="..\..\..\src\visualize\KCF\KCF.Graph\KCF_graph.NET5.vbproj" />
-    <ProjectReference Include="..\..\..\src\visualize\KCF\KCF.IO\KCF_IO.NET5.vbproj" />
-    <ProjectReference Include="..\..\..\src\visualize\MsImaging\MsImaging.NET5.vbproj" />
+    <ProjectReference Include="../../..\..\..\..\GCModeller\src\GCModeller\core\Bio.Assembly\biocore-netcore5.vbproj" />
+    <ProjectReference Include="../../..\..\..\..\GCModeller\src\R-sharp\R#\Rsharp-netcore5.vbproj" />
+    <ProjectReference Include="../../..\..\..\..\GCModeller\src\repository\Bio.Repository\repository.NET5.vbproj" />
+    <ProjectReference Include="../../..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\DataMining\BinaryTree\btree-netcore5.vbproj" />
+    <ProjectReference Include="../../..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\MachineLearning\MachineLearning\machine_learning-netcore5.vbproj" />
+    <ProjectReference Include="../../..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\Math\Math.NET5.vbproj" />
+    <ProjectReference Include="../../..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Visualization\Plots-statistics\plots_extensions-netcore5.vbproj" />
+    <ProjectReference Include="../../..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Visualization\Plots\plots-netcore5.vbproj" />
+    <ProjectReference Include="../../..\..\..\..\GCModeller\src\runtime\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\imaging.NET5.vbproj" />
+    <ProjectReference Include="../../..\..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <ProjectReference Include="../../..\..\..\src\assembly\assembly\assembly-netcore5.vbproj" />
+    <ProjectReference Include="../../..\..\..\src\assembly\SpectrumTree\spectrumTree.NETCore5.vbproj" />
+    <ProjectReference Include="../../..\..\..\src\metadb\Lipidomics\Lipidomics.vbproj" />
+    <ProjectReference Include="../../..\..\..\src\metadna\metaDNA\metaDNA.NET5.vbproj" />
+    <ProjectReference Include="../../..\..\..\src\metadna\MetaDNA_visual\metaDNA_visual.NET5.vbproj" />
+    <ProjectReference Include="../../..\..\..\src\mzmath\MoleculeNetworking\MoleculeNetworking.vbproj" />
+    <ProjectReference Include="../../..\..\..\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj" />
+    <ProjectReference Include="../../..\..\..\src\mzmath\ms2_simulator\ms2_simulator.NET5.vbproj" />
+    <ProjectReference Include="../../..\..\..\src\visualize\KCF\KCF.Graph\KCF_graph.NET5.vbproj" />
+    <ProjectReference Include="../../..\..\..\src\visualize\KCF\KCF.IO\KCF_IO.NET5.vbproj" />
+    <ProjectReference Include="../../..\..\..\src\visualize\MsImaging\MsImaging.NET5.vbproj" />
   </ItemGroup>
 
   
