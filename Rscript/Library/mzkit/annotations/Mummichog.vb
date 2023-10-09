@@ -185,6 +185,7 @@ Module Mummichog
                                        Optional modelSize As Integer = -1,
                                        Optional pinned As String() = Nothing,
                                        Optional ignore_topology As Boolean = False,
+                                       Optional ga As Boolean = False,
                                        Optional env As Environment = Nothing) As Object
 
         Dim models As New List(Of NamedValue(Of NetworkGraph))
@@ -210,14 +211,25 @@ Module Mummichog
             Call println(pinned)
         End If
 
-        Dim result As ActivityEnrichment() = candidates.PeakListAnnotation(
-            background:=models,
-            minhit:=minhit,
-            permutation:=permutation,
-            modelSize:=modelSize,
-            pinned:=pinned,
-            ignoreTopology:=ignore_topology
-        )
+        Dim result As ActivityEnrichment()
+
+        If ga Then
+            result = GAPeakListAnnotation.PeakListAnnotation(
+                candidates:=candidates, background:=models,
+                minhit:=minhit, permutation:=permutation,
+                modelSize:=modelSize, pinned:=pinned,
+                ignoreTopology:=ignore_topology
+            )
+        Else
+            result = candidates.PeakListAnnotation(
+                background:=models,
+                minhit:=minhit,
+                permutation:=permutation,
+                modelSize:=modelSize,
+                pinned:=pinned,
+                ignoreTopology:=ignore_topology
+            )
+        End If
 
         Return result
     End Function
