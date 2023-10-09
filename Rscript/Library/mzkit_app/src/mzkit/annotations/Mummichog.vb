@@ -186,6 +186,7 @@ Module Mummichog
                                        Optional pinned As String() = Nothing,
                                        Optional ignore_topology As Boolean = False,
                                        Optional ga As Boolean = False,
+                                       Optional pop_size As Integer = 100,
                                        Optional env As Environment = Nothing) As Object
 
         Dim models As New List(Of NamedValue(Of NetworkGraph))
@@ -218,6 +219,7 @@ Module Mummichog
                 candidates:=candidates, background:=models,
                 minhit:=minhit, permutation:=permutation,
                 modelSize:=modelSize, pinned:=pinned,
+                popsize:=pop_size,
                 ignoreTopology:=ignore_topology
             )
         Else
