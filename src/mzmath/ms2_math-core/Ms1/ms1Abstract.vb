@@ -1,68 +1,70 @@
 ﻿#Region "Microsoft.VisualBasic::c565b4c40a5559c6a5fdee00bc76f2c3, mzkit\src\mzmath\ms2_math-core\Ms1\ms1Abstract.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 31
-    '    Code Lines: 13
-    ' Comment Lines: 7
-    '   Blank Lines: 11
-    '     File Size: 529 B
+' Summaries:
 
 
-    ' Interface IMs1
-    ' 
-    '     Properties: mz
-    ' 
-    ' Interface IRetentionTime
-    ' 
-    '     Properties: rt
-    ' 
-    ' Interface IMs1Scan
-    ' 
-    '     Properties: intensity
-    ' 
-    ' Interface IMS1Annotation
-    ' 
-    '     Properties: id, precursor_type
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 31
+'    Code Lines: 13
+' Comment Lines: 7
+'   Blank Lines: 11
+'     File Size: 529 B
+
+
+' Interface IMs1
+' 
+'     Properties: mz
+' 
+' Interface IRetentionTime
+' 
+'     Properties: rt
+' 
+' Interface IMs1Scan
+' 
+'     Properties: intensity
+' 
+' Interface IMS1Annotation
+' 
+'     Properties: id, precursor_type
+' 
+' /********************************************************************************/
 
 #End Region
+
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 
 Public Interface IMs1 : Inherits IRetentionTime
 
@@ -89,9 +91,16 @@ Public Interface IMs1Scan : Inherits IMs1
 
 End Interface
 
-Public Interface IMS1Annotation : Inherits IMs1Scan
+''' <summary>
+''' the abstract annotation result model of a ion, this abstract interface model 
+''' contains data properties:
+''' 
+''' 1. the entity key: is the unique reference id of the targetd annotated metabolite in the source database
+''' 2. the ion adducts precursor type: the adducts type of the target annotated metabolite convert to the 
+'''    given ion mz data
+''' </summary>
+Public Interface IMS1Annotation : Inherits IMs1Scan, INamedValue
 
-    Property id As String
     Property precursor_type As String
 
 End Interface

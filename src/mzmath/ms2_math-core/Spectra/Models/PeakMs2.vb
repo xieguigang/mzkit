@@ -103,7 +103,7 @@ Namespace Spectra
         ''' <summary>
         ''' A unique variable name, meaning could be different with <see cref="LibraryMatrix.Name" />. 
         ''' </summary>
-        Public Property lib_guid As String Implements IMS1Annotation.id
+        Public Property lib_guid As String Implements IMS1Annotation.Key
 
         ''' <summary>
         ''' adducts type of the <see cref="mz"/> value.

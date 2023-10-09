@@ -59,7 +59,6 @@
 #End Region
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
-Imports BioNovoGene.Analytical.MassSpectrometry.Math.AtomGroups
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.BioDeep.Chemistry
@@ -149,26 +148,8 @@ Module FormulaTools
                                         Optional env As Environment = Nothing) As Object
 
         Dim items = annotation.forEachRow({"annotation", "formula"}).ToArray
-        Dim list As FragmentAnnotationHolder() = items _
-            .Select(Function(tuple)
-                        Dim name As String = any.ToString(tuple(Scan0))
-                        Dim formula As String = any.ToString(tuple(1))
 
-                        If formula.IsNumeric Then
-                            Return AtomGroupHandler.CreateModel(name, Val(formula))
-                        Else
-                            Return AtomGroupHandler.CreateModel(name, formula)
-                        End If
-                    End Function) _
-            .ToArray
-
-        If debug Then
-            Call AtomGroupHandler.Clear()
-        End If
-
-        Call AtomGroupHandler.Register(annotations:=list)
-
-        Return Nothing
+        Throw New NotImplementedException
     End Function
 
     ''' <summary>
@@ -183,17 +164,16 @@ Module FormulaTools
     ''' <returns></returns>
     <ExportAPI("peakAnnotations")>
     <RApiReturn(GetType(LibraryMatrix))>
-    Public Function PeakAnnotation(library As Object,
-                                   Optional massDiff As Double = 0.1,
-                                   Optional isotopeFirst As Boolean = True,
-                                   Optional adducts As MzCalculator() = Nothing,
-                                   Optional env As Environment = Nothing) As Object
-
-        Dim anno As New PeakAnnotation(massDiff, isotopeFirst, adducts)
-        Dim result As Annotation
+    Public Function peakAnnotation_f(library As Object, formula As Object, <RRawVectorArgument> adducts As Object,
+                                     Optional massDiff As Double = 0.1,
+                                     Optional isotopeFirst As Boolean = True,
+                                     Optional as_list As Boolean = True,
+                                     Optional env As Environment = Nothing) As Object
         Dim parentMz As Double
         Dim centroid As Boolean
         Dim name As String
+        Dim peaksData As ms2()
+        Dim adductList = Math.GetPrecursorTypes(adducts, env)
 
         If library Is Nothing Then
             Return Nothing
@@ -203,24 +183,55 @@ Module FormulaTools
             parentMz = mat.parentMz
             centroid = mat.centroid
             name = mat.name
-            result = anno.RunAnnotation(mat.parentMz, mat.ms2)
+            peaksData = mat.ms2
         ElseIf TypeOf library Is PeakMs2 Then
             Dim peak As PeakMs2 = DirectCast(library, PeakMs2)
 
             parentMz = peak.mz
             centroid = True
             name = peak.lib_guid
-            result = anno.RunAnnotation(parentMz, peak.mzInto)
+            peaksData = peak.mzInto
         Else
             Return Message.InCompatibleType(GetType(LibraryMatrix), library.GetType, env)
         End If
 
-        Return New LibraryMatrix With {
-            .centroid = centroid,
-            .ms2 = result.products,
-            .parentMz = parentMz,
-            .name = name
-        }
+        Dim results As New list With {.slots = New Dictionary(Of String, Object)}
+        Dim f As Formula
+        Dim spec As New LibraryMatrix(peaksData)
+        Dim anno As PeakAnnotation
+
+        If TypeOf formula Is String Then
+            f = FormulaScanner.ScanFormula(DirectCast(formula, String))
+        ElseIf TypeOf formula Is Formula Then
+            f = formula
+        Else
+            Return Message.InCompatibleType(GetType(Formula), formula.GetType, env)
+        End If
+
+        For Each adduct As MzCalculator In adductList
+            anno = PeakAnnotation.DoPeakAnnotation(spec, parentMz, adduct, f)
+
+            If as_list Then
+                results.slots(adduct.ToString) = New list With {
+                   .slots = New Dictionary(Of String, Object) From {
+                       {"products", anno.products},
+                       {"formula", f},
+                       {"adduct", adduct.ToString},
+                       {"charge", anno.formula.charge},
+                       {"ppm", anno.formula.ppm},
+                       {"massdiff", anno.formula.massdiff}
+                   }
+                }
+            Else
+                results.slots(adduct.ToString) = anno
+            End If
+        Next
+
+        If adductList.Length = 1 Then
+            Return results.data.First
+        Else
+            Return results
+        End If
     End Function
 
     ''' <summary>

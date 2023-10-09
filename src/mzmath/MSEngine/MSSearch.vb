@@ -250,7 +250,7 @@ Public Class MSSearch(Of Compound As {IReadOnlyId, ICompoundNameProvider, IExact
         '    Next
         'Next
 
-        Return New MSSearch(Of Compound)(compounds, tolerance, types)
+        Return New MSSearch(Of Compound)(compounds.Where(Function(c) c.ExactMass > 0), tolerance, types)
     End Function
 
     Public Function GetAnnotation(uniqueId As String) As (name As String, formula As String) Implements IMzQuery.GetAnnotation

@@ -167,8 +167,13 @@ Namespace Spectra
                                 Dim fragments As ms2() = g.ToArray
                                 Dim maxi As Integer = which.Max(fragments.Select(Function(m) m.intensity))
                                 Dim max As ms2 = fragments(maxi)
+                                Dim annos As String = fragments _
+                                    .Where(Function(f) Not f.Annotation.StringEmpty) _
+                                    .JoinBy(", ")
 
-                                Return max
+                                Return New ms2(max.mz, max.intensity) With {
+                                    .Annotation = annos
+                                }
                             End Function) _
                     .ToArray
             End If

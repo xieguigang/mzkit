@@ -105,13 +105,13 @@ Namespace MarkupData.imzML
     ''' <summary>
     ''' the MSI pixel data spot model of [x,z,intensity]
     ''' </summary>
-    Public Class PixelScanIntensity : Implements IMSIPixel, RasterPixel
+    Public Class PixelScanIntensity : Implements IMSIPixel, RasterPixel, Pixel
 
         ''' <summary>
         ''' TIC
         ''' </summary>
         ''' <returns></returns>
-        Public Property totalIon As Double Implements IMSIPixel.intensity
+        Public Property totalIon As Double Implements IMSIPixel.intensity, Pixel.Scale
         Public Property x As Integer Implements IMSIPixel.x, RasterPixel.X
         Public Property y As Integer Implements IMSIPixel.y, RasterPixel.Y
 

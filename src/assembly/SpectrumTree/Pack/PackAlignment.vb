@@ -48,9 +48,9 @@ Namespace PackLib
                 ' if the spectrum cos dotcutoff
                 ' matches the cutoff threshold
                 ' then we have a candidate hit
-                If min > dotcutoff Then
+                If min > dotcutoff AndAlso spectrum.HasMapName(hit.Id) Then
                     Call hits.Add(New ___tmp With {
-                       .id = spectrum(hit.Id),
+                       .id = spectrum(libname:=hit.Id),
                        .hit = hit,
                        .align = align,
                        .forward = score.forward,

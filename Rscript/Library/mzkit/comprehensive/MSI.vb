@@ -75,6 +75,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Data.GraphTheory.GridGraph
 Imports Microsoft.VisualBasic.Language
@@ -83,6 +84,7 @@ Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Scripting.Runtime
+Imports SMRUCC.Rsharp
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Invokes
@@ -114,6 +116,9 @@ Module MSI
         }
 
         Call table.add(NameOf(IonStat.mz), ions.Select(Function(i) i.mz))
+        Call table.add(NameOf(IonStat.mzmin), ions.Select(Function(i) i.mzmin))
+        Call table.add(NameOf(IonStat.mzmax), ions.Select(Function(i) i.mzmax))
+        Call table.add(NameOf(IonStat.mzwidth), ions.Select(Function(i) i.mzwidth))
         Call table.add(NameOf(IonStat.pixels), ions.Select(Function(i) i.pixels))
         Call table.add(NameOf(IonStat.density), ions.Select(Function(i) i.density))
         Call table.add("basePixel.X", ions.Select(Function(i) i.basePixelX))
@@ -122,6 +127,8 @@ Module MSI
         Call table.add(NameOf(IonStat.Q1Intensity), ions.Select(Function(i) i.Q1Intensity))
         Call table.add(NameOf(IonStat.Q2Intensity), ions.Select(Function(i) i.Q2Intensity))
         Call table.add(NameOf(IonStat.Q3Intensity), ions.Select(Function(i) i.Q3Intensity))
+        Call table.add(NameOf(IonStat.moran), ions.Select(Function(i) i.moran))
+        Call table.add(NameOf(IonStat.pvalue), ions.Select(Function(i) i.pvalue))
 
         Return table
     End Function
@@ -407,9 +414,19 @@ Module MSI
     End Function
 
     <ExportAPI("open.imzML")>
-    Public Function open_imzML(file As String) As Object
+    Public Function open_imzML(file As String, Optional env As Environment = Nothing) As Object
         Dim scans As ScanData() = imzML.LoadScans(file:=file).ToArray
-        Dim ibd = ibdReader.Open(file.ChangeSuffix("ibd"))
+        Dim ibd As ibdReader
+        Dim ibdfile As String = file.ChangeSuffix("ibd")
+
+        If Not ibdfile.FileExists Then
+            Return Internal.debug.stop({
+                $"The intensity binary data file({ibdfile}) is missing!",
+                $"ibd file: {ibdfile}"
+            }, env)
+        Else
+            ibd = ibdReader.Open(ibdfile)
+        End If
 
         Return New list With {
             .slots = New Dictionary(Of String, Object) From {
@@ -597,25 +614,54 @@ Module MSI
     End Function
 
     ''' <summary>
-    ''' count pixels/density/etc for each ions m/z data
+    ''' Extract the ion features inside a MSI raw data slide sample file
     ''' </summary>
-    ''' <param name="raw"></param>
-    ''' <param name="grid_size"></param>
-    ''' <param name="da"></param>
+    ''' <param name="raw">
+    ''' the raw data object could be a mzpack data object or 
+    ''' MS-imaging ion feature layers object
+    ''' </param>
+    ''' <param name="grid_size">
+    ''' the grid cell size for evaluate the pixel density
+    ''' </param>
+    ''' <param name="da">the mass tolerance value, only works when
+    ''' the input raw data object is mzpack object</param>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' count pixels/density/etc for each ions m/z data
+    ''' </remarks>
     <ExportAPI("ionStat")>
-    Public Function IonStats(raw As mzPack,
+    <RApiReturn(GetType(IonStat))>
+    Public Function IonStats(<RRawVectorArgument>
+                             raw As Object,
                              Optional grid_size As Integer = 5,
                              Optional da As Double = 0.01,
-                             Optional parallel As Boolean = True) As IonStat()
+                             Optional parallel As Boolean = True,
+                             Optional env As Environment = Nothing) As Object
 
-        Return IonStat.DoStat(
-            raw:=raw,
-            nsize:=grid_size,
-            da:=da,
-            parallel:=parallel
-        ) _
-        .ToArray
+        If TypeOf raw Is mzPack Then
+            Return IonStat.DoStat(
+                raw:=DirectCast(raw, mzPack),
+                nsize:=grid_size,
+                da:=da,
+                parallel:=parallel
+            ) _
+            .OrderBy(Function(s) s.pvalue) _
+            .ToArray
+        Else
+            Dim layers = pipeline.TryCreatePipeline(Of SingleIonLayer)(raw, env)
+
+            If layers.isError Then
+                Return layers.getError
+            End If
+
+            Return env.EvaluateFramework(Of SingleIonLayer, IonStat)(
+                x:=layers.populates(Of SingleIonLayer)(env),
+                eval:=Function(layer)
+                          Return IonStat.DoStat(layer, nsize:=grid_size)
+                      End Function,
+                parallel:=parallel
+            )
+        End If
     End Function
 
     <ExportAPI("ions_jointmatrix")>
@@ -818,16 +864,27 @@ Module MSI
     ''' </summary>
     ''' <param name="raw"></param>
     ''' <param name="file"></param>
+    ''' <param name="mzdiff">
+    ''' the mass tolerance width for extract the feature ions
+    ''' </param>
+    ''' <param name="q">
+    ''' the frequence threshold for filter the feature ions, this 
+    ''' value range of this parameter should be inside [0,1] which
+    ''' means percentage cutoff.
+    ''' </param>
     ''' <param name="env"></param>
-    ''' <returns></returns>
+    ''' <returns>This function has no value returns</returns>
     <ExportAPI("pixelMatrix")>
     Public Function PixelMatrix(raw As mzPack, file As Stream,
                                 Optional mzdiff As Double = 0.001,
-                                Optional q As Double = 0.001,
+                                Optional q As Double = 0.01,
                                 Optional env As Environment = Nothing) As Message
 
         Dim matrix As MzMatrix = SingleCellMatrix.CreateMatrix(raw, mzdiff, freq:=q)
+        Dim println = env.WriteLineHandler
 
+        Call println($"Extract pixel matrix with mzdiff:{mzdiff}, frequency:{q}")
+        Call println($"get {matrix.mz.Length} ions with {matrix.matrix.Length} pixel spots")
         Call matrix.ExportCsvSheet(file)
         Call file.Flush()
 
@@ -887,61 +944,137 @@ Module MSI
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("pack_matrix")>
-    Public Function packMatrix(<RRawVectorArgument> file As Object, Optional env As Environment = Nothing) As Object
-        Dim buf = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Read, env)
+    Public Function packMatrix(<RRawVectorArgument> file As Object,
+                               <RRawVectorArgument>
+                               Optional dims As Object = Nothing,
+                               Optional res As Double = 17,
+                               Optional env As Environment = Nothing) As Object
+        Dim scans As ScanMS1()
+        Dim msi_dims As Size = InteropArgumentHelper.getSize(dims, env, "0,0").SizeParser
+        Dim metadata As Metadata = Nothing
 
-        If buf Like GetType(Message) Then
-            Return buf.TryCast(Of Message)
+        If TypeOf file Is rDataframe Then
+            scans = DirectCast(file, rDataframe).packDf.ToArray
+        Else
+            Dim buf = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Read, env)
+
+            If buf Like GetType(Message) Then
+                Return buf.TryCast(Of Message)
+            End If
+
+            scans = New StreamReader(buf.TryCast(Of Stream)).packFile.ToArray
         End If
 
-        Dim read As New StreamReader(buf.TryCast(Of Stream))
+        If Not msi_dims.IsEmpty Then
+            metadata = New Metadata With {
+                .[class] = FileApplicationClass.MSImaging.ToString,
+                .mass_range = scans _
+                    .Where(Function(s) Not s Is Nothing) _
+                    .Select(Function(s) s.mz.MinMax) _
+                    .IteratesALL _
+                    .MinMax,
+                .resolution = res,
+                .scan_x = msi_dims.Width,
+                .scan_y = msi_dims.Height
+            }
+        End If
+
+        Return New mzPack With {
+            .MS = scans.Where(Function(s) Not s Is Nothing).ToArray,
+            .source = NameOf(packMatrix),
+            .Application = FileApplicationClass.MSImaging,
+            .metadata = If(metadata Is Nothing, Nothing, metadata.GetMetadata)
+        }
+    End Function
+
+    Private Function scan(xy As Integer(), ionsMz As Double(), v As Double(), ByRef ti As Double) As ScanMS1
+        Dim ms As ms2() = ionsMz _
+            .Select(Function(mzi, i)
+                        Return New ms2 With {
+                            .mz = mzi,
+                            .intensity = v(i)
+                        }
+                    End Function) _
+            .Where(Function(m) m.intensity > 1) _
+            .OrderByDescending(Function(m) m.intensity) _
+            .ToArray
+
+        If ms.IsNullOrEmpty Then
+            Return Nothing
+        Else
+            Dim maxinto As Double = ms(0).intensity
+
+            ms = ms _
+                .Where(Function(mzi) mzi.intensity / maxinto > 0.01) _
+                .ToArray
+        End If
+
+        ti += 1.98
+
+        Return New ScanMS1 With {
+            .BPC = ms.First.intensity,
+            .into = ms.Select(Function(i) i.intensity).ToArray,
+            .meta = New Dictionary(Of String, String) From {
+                {"x", xy(0)},
+                {"y", xy(1)}
+            },
+            .mz = ms.Select(Function(m) m.mz).ToArray,
+            .products = Nothing,
+            .rt = ti,
+            .TIC = .into.Sum,
+            .scan_id = $"[MS1] [{xy(0)},{xy(1)}] {ms.Length}ions: totalIons={ .TIC} basePeak={ .BPC} basepeak_m/z={ms.First.mz}"
+        }
+    End Function
+
+    <Extension>
+    Private Iterator Function packDf(df As rDataframe) As IEnumerable(Of ScanMS1)
+        Dim ionsMz As Double() = CLRVector.asNumeric(df.colnames)
+        Dim ti As Double = 0
+
+        For Each row As NamedCollection(Of Object) In df.forEachRow
+            If row.name.IndexOf("_") >= 0 Then
+                ' is duplicated spot
+                Continue For
+            End If
+
+            Dim xy As Integer() = row.name _
+                .Split(","c) _
+                .Select(Function(si) CInt(Val(si))) _
+                .ToArray
+            Dim v As Double() = CLRVector.asNumeric(row.value)
+
+            Yield scan(xy, ionsMz, v, ti)
+        Next
+    End Function
+
+    <Extension>
+    Private Iterator Function packFile(read As StreamReader) As IEnumerable(Of ScanMS1)
         Dim ionsMz As Double() = RowObject.TryParse(read.ReadLine) _
             .Skip(1) _
             .Select(Function(si) Val(si)) _
             .ToArray
         Dim line As Value(Of String) = ""
-        Dim scans As New List(Of ScanMS1)
         Dim ti As Double = 0
 
         Do While (line = read.ReadLine) IsNot Nothing
             Dim t As String() = Tokenizer.CharsParser(line).ToArray
+
+            If t(0).IndexOf("_") >= 0 Then
+                ' is duplicated spot
+                Continue Do
+            End If
+
             Dim xy As Integer() = t(0) _
                 .Split(","c) _
-                .Select(Function(si) Integer.Parse(si)) _
+                .Select(Function(si) CInt(Val(si))) _
                 .ToArray
             Dim v As Double() = t _
                 .Skip(1) _
                 .Select(Function(si) Val(si)) _
                 .ToArray
 
-            For i As Integer = 0 To v.Length - 1
-                If v(i) < 0 Then
-                    v(i) = 0
-                End If
-            Next
-
-            ti += 1.98
-
-            Call scans.Add(New ScanMS1 With {
-                .BPC = v.Max,
-                .into = v,
-                .meta = New Dictionary(Of String, String) From {
-                    {"x", xy(0)},
-                    {"y", xy(1)}
-                },
-                .mz = ionsMz,
-                .products = Nothing,
-                .rt = ti,
-                .TIC = v.Sum,
-                .scan_id = $"[MS1] [{xy(0)},{xy(1)}] totalIons={ .TIC} basePeak={ .BPC} basepeak_m/z={ionsMz(which.Max(v))}"
-            })
+            Yield scan(xy, ionsMz, v, ti)
         Loop
-
-        Return New mzPack With {
-            .MS = scans.ToArray,
-            .source = NameOf(packMatrix),
-            .Application = FileApplicationClass.MSImaging
-        }
     End Function
 End Module
 

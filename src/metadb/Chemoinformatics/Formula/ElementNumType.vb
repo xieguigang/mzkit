@@ -70,20 +70,22 @@ Namespace Formula
         Public Br As Integer
         Public Other As Integer
 
-        Sub New(formula As Formula)
-            H = formula("H")
-            C = formula("C")
-            Si = formula("Si")
-            N = formula("N")
-            P = formula("P")
-            O = formula("O")
-            S = formula("S")
-            Cl = formula("Cl")
-            I = formula("I")
-            F = formula("F")
-            Br = formula("Br")
+        Public Formula As Formula
 
-            Dim counts As New Dictionary(Of String, Integer)(formula.CountsByElement)
+        Sub New(f As Formula)
+            H = f("H")
+            C = f("C")
+            Si = f("Si")
+            N = f("N")
+            P = f("P")
+            O = f("O")
+            S = f("S")
+            Cl = f("Cl")
+            I = f("I")
+            Me.F = f("F")
+            Br = f("Br")
+
+            Dim counts As New Dictionary(Of String, Integer)(f.CountsByElement)
 
             Call counts.Remove("H")
             Call counts.Remove("C")
@@ -98,6 +100,7 @@ Namespace Formula
             Call counts.Remove("Br")
 
             Other = counts.Values.Sum
+            Formula = f
         End Sub
     End Structure
 End Namespace

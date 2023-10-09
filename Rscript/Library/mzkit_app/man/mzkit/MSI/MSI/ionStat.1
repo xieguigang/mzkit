@@ -1,25 +1,36 @@
 .\" man page create by R# package system.
 .TH MSI 1 2000-Jan "ionStat" "ionStat"
 .SH NAME
-ionStat \- count pixels/density/etc for each ions m/z data
+ionStat \- Extract the ion features inside a MSI raw data slide sample file
 .SH SYNOPSIS
-\fIionStat(\fBraw\fR as <generic> mzPack, 
+\fIionStat(\fBraw\fR as any, 
 \fBgrid_size\fR as integer = 5, 
 \fBda\fR as double = 0.01, 
-\fBparallel\fR as boolean = TRUE);\fR
+\fBparallel\fR as boolean = TRUE, 
+[\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
-count pixels/density/etc for each ions m/z data
+Extract the ion features inside a MSI raw data slide sample file
 .PP
 .SH OPTIONS
 .PP
-\fBraw\fB \fR\- -. 
+\fBraw\fB \fR\- 
+ the raw data object could be a mzpack data object or 
+ MS-imaging ion feature layers object
+. 
 .PP
 .PP
-\fBgrid_size\fB \fR\- -. 
+\fBgrid_size\fB \fR\- 
+ the grid cell size for evaluate the pixel density
+. 
 .PP
 .PP
-\fBda\fB \fR\- -. 
+\fBda\fB \fR\- the mass tolerance value, only works when
+ the input raw data object is mzpack object. 
+.PP
+.SH DETAILS
+.PP
+count pixels/density/etc for each ions m/z data
 .PP
 .SH SEE ALSO
 MSI

@@ -56,7 +56,7 @@
 
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 
-Namespace AtomGroups
+Namespace Formula.MS.AtomGroups
 
     ''' <summary>
     ''' 酮基是一个碳原子和氧原子形成双键，同时这个碳原子还和另外两个碳原子形成共价键结构式，可以用R1-(C=O)-R2。

@@ -74,6 +74,16 @@ Namespace PackLib
             End If
         End Sub
 
+        ''' <summary>
+        ''' test for <see cref="GetIdMap(String)"/>
+        ''' </summary>
+        ''' <param name="libname"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function HasMapName(libname As String) As Boolean
+            Return map.ContainsKey(libname)
+        End Function
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetAllLibNames() As IEnumerable(Of String)
             Return libnames.AsEnumerable
@@ -268,12 +278,17 @@ Namespace PackLib
                 Dim bcode As String = file.ReadText(ref)
                 Dim mass As BDictionary = BencodeDecoder.Decode(bcode).First
                 Dim index As New MassIndex
+                Dim formula As BString = Nothing
 
                 index.name = mass!name.ToString
                 index.exactMass = Val(mass!exactMass.ToString)
                 index.spectrum = DirectCast(mass!spectrum, BList) _
                     .Select(Function(b) Integer.Parse(b.ToString)) _
                     .AsList
+
+                If mass.TryGetValue("formula", formula) Then
+                    index.formula = formula.ToString
+                End If
 
                 Yield index
             Next

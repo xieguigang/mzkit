@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7b2c5afbf5d06fcffe60c037a3b3324d, mzkit\src\metadb\FormulaSearch.Extensions\Scores\NitrogenRule.vb"
+﻿#Region "Microsoft.VisualBasic::9741818f1b10d572065109ce0a93903d, mzkit\src\metadb\FormulaSearch.Extensions\AtomGroups\Default\Amines.vb"
 
     ' Author:
     ' 
@@ -37,16 +37,17 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 22
-    '    Code Lines: 11
-    ' Comment Lines: 8
-    '   Blank Lines: 3
-    '     File Size: 809 B
+    '   Total Lines: 10
+    '    Code Lines: 6
+    ' Comment Lines: 0
+    '   Blank Lines: 4
+    '     File Size: 240 B
 
 
-    ' Class NitrogenRule
+    '     Class Amines
     ' 
-    '     Function: TestRule
+    '         Properties: methylamine
+    ' 
     ' 
     ' /********************************************************************************/
 
@@ -54,23 +55,11 @@
 
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 
-Public Class NitrogenRule
+Namespace Formula.MS.AtomGroups
 
-    ''' <summary>
-    ''' 若有机化合物有偶数个N原子或不含N原子，则其分子离子的质量是偶数；
-    ''' 含奇数个N原子，其质量数是奇数。质谱中最高质量峰不符合氮律就不是
-    ''' 分子离子峰。
-    ''' </summary>
-    ''' <param name="exact_mass"></param>
-    ''' <param name="formula"></param>
-    ''' <returns></returns>
-    Public Shared Function TestRule(exact_mass#, formula As Formula) As Boolean
-        Dim isEven As Boolean = CInt(exact_mass) Mod 2 = 0
+    Public Class Amines
 
-        If isEven Then
-            Return formula("N") = 0 OrElse formula("N") Mod 2 = 0
-        Else
-            Return formula("N") Mod 2 <> 0
-        End If
-    End Function
-End Class
+        Public Shared ReadOnly Property methylamine As Formula = FormulaScanner.ScanFormula("NH2CH2")
+
+    End Class
+End Namespace

@@ -233,7 +233,7 @@ Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "JSON-netcore5", "..\..\..\G
 EndProject
 Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "Lipidomics", "..\..\src\metadb\Lipidomics\Lipidomics.vbproj", "{8E8B118A-5C2C-4188-825F-9A40B06D53CE}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "MSFinder", "..\..\src\mzmath\MSFinder\MSFinder.vbproj", "{3A76A7E4-3340-480E-A1EC-AC2551BB8041}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "MSFinder", "..\..\src\mzmath\MSFinder\MSFinder.vbproj", "{3A76A7E4-3340-480E-A1EC-AC2551BB8041}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9595,8 +9595,8 @@ Global
 		{3A76A7E4-3340-480E-A1EC-AC2551BB8041}.Rsharp_app_release|Any CPU.Build.0 = Release|Any CPU
 		{3A76A7E4-3340-480E-A1EC-AC2551BB8041}.Rsharp_app_release|ARM32.ActiveCfg = Release|Any CPU
 		{3A76A7E4-3340-480E-A1EC-AC2551BB8041}.Rsharp_app_release|ARM32.Build.0 = Release|Any CPU
-		{3A76A7E4-3340-480E-A1EC-AC2551BB8041}.Rsharp_app_release|x64.ActiveCfg = Release|Any CPU
-		{3A76A7E4-3340-480E-A1EC-AC2551BB8041}.Rsharp_app_release|x64.Build.0 = Release|Any CPU
+		{3A76A7E4-3340-480E-A1EC-AC2551BB8041}.Rsharp_app_release|x64.ActiveCfg = Rsharp_app_release|x64
+		{3A76A7E4-3340-480E-A1EC-AC2551BB8041}.Rsharp_app_release|x64.Build.0 = Rsharp_app_release|x64
 		{3A76A7E4-3340-480E-A1EC-AC2551BB8041}.Rsharp_app_release|x86.ActiveCfg = Release|Any CPU
 		{3A76A7E4-3340-480E-A1EC-AC2551BB8041}.Rsharp_app_release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection

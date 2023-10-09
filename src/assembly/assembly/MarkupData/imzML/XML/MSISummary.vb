@@ -122,8 +122,6 @@ Namespace MarkupData.imzML
                             Return row.OrderBy(Function(p) p.x).ToArray
                         End Function) _
                 .ToArray
-            Dim width As Integer = matrix2D.Select(Function(p) p.Select(Function(pi) pi.x).Max).Max
-            Dim height As Integer = matrix2D.Select(Function(p) p.Select(Function(pi) pi.y).Max).Max
 
             If dims Is Nothing Then
                 Dim points = matrix2D _

@@ -17,6 +17,8 @@
     <OutputPath>../\mzkit_app\assembly\</OutputPath>
 		<PackageIconUrl />
 		<RuntimeIdentifiers>win7-x64;win7-x86;win-x64;linux-x64;linux-arm64;osx-x64</RuntimeIdentifiers>
+		<UseApplicationFramework>True</UseApplicationFramework>
+		<ApplicationIcon>favicon.ico</ApplicationIcon>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -196,6 +198,7 @@
 		<EmbeddedResource Remove="test\**" />
 		<None Remove="RData\**" />
 		<None Remove="test\**" />
+		<Content Include="favicon.ico" />
 		<None Include="..\..\..\LICENSE">
 			<Pack>True</Pack>
 			<PackagePath></PackagePath>
