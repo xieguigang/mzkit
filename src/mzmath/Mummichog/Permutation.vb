@@ -56,6 +56,9 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
+''' <summary>
+''' A helper module for generates the combination
+''' </summary>
 Public Module Permutation
 
     <Extension>
