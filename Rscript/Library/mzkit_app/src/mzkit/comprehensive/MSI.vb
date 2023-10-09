@@ -80,8 +80,10 @@ Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Data.GraphTheory.GridGraph
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.MachineLearning.ComponentModel.Activations
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.Math.Statistics.Hypothesis
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports SMRUCC.Rsharp
@@ -95,6 +97,7 @@ Imports imzML = BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzM
 Imports rDataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
 Imports SingleCellMath = BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute.Math
 Imports SingleCellMatrix = BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute.PeakMatrix
+Imports std = System.Math
 Imports vector = Microsoft.VisualBasic.Math.LinearAlgebra.Vector
 
 ''' <summary>
@@ -160,7 +163,7 @@ Module MSI
             v = CLRVector.asNumeric(m.columns(name))
             v = SIMD.Divide.f64_op_divide_f64_scalar(v, v.Sum)
             v = SIMD.Multiply.f64_scalar_op_multiply_f64(f(i), v)
-            m.columns(name) = v
+            m.columns(name) = ReLU.ReLU(v)
         Next
 
         Return m
@@ -1075,6 +1078,50 @@ Module MSI
 
             Yield scan(xy, ionsMz, v, ti)
         Loop
+    End Function
+
+    ''' <summary>
+    ''' evaluate the moran index for each ion layer
+    ''' </summary>
+    ''' <param name="x">
+    ''' A spatial expression data matrix, should be in format of:
+    ''' 
+    ''' 1. the spatial spot xy in row names, and
+    ''' 2. the ions feature m/z label in col names
+    ''' </param>
+    ''' <returns></returns>
+    <ExportAPI("moran_I")>
+    Public Function moran_index(x As rDataframe) As Object
+        Dim xy As Double()() = x.rownames _
+            .Select(Function(si)
+                        Return si.Split(","c).Select(Function(si2) Val(si2)).ToArray
+                    End Function) _
+            .ToArray
+        Dim sx As Double() = xy.Select(Function(i) i(0)).ToArray
+        Dim sy As Double() = xy.Select(Function(i) i(1)).ToArray
+        Dim moran = x.colnames _
+            .AsParallel _
+            .Select(Function(lbMz)
+                        Dim v As Double() = CLRVector.asNumeric(x(lbMz))
+                        Dim m As MoranTest = MoranTest.moran_test(v, sx, sy)
+
+                        Return (lbMz, m)
+                    End Function) _
+            .OrderByDescending(Function(m) m.m.Observed) _
+            .ToArray
+        Dim df As New rDataframe With {
+            .rownames = moran.Select(Function(i) i.lbMz).ToArray,
+            .columns = New Dictionary(Of String, Array)
+        }
+
+        Call df.add("m/z", moran.Select(Function(i) Val(i.lbMz)))
+        Call df.add("moran I", moran.Select(Function(i) i.m.Observed))
+        Call df.add("moran i", moran.Select(Function(i) i.m.Expected))
+        Call df.add("score", moran.Select(Function(i) i.m.Observed * (-std.Log(i.m.pvalue))))
+        Call df.add("sd", moran.Select(Function(i) i.m.SD))
+        Call df.add("p-value", moran.Select(Function(i) i.m.pvalue))
+
+        Return df
     End Function
 End Module
 
