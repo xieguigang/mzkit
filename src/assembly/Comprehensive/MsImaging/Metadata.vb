@@ -104,6 +104,11 @@ Namespace MsImaging
         Sub New()
         End Sub
 
+        Sub New(dimension As Size)
+            scan_x = dimension.Width
+            scan_y = dimension.Height
+        End Sub
+
         ''' <summary>
         ''' Parse the list data which is read from the mzpack file
         ''' </summary>
