@@ -13,7 +13,7 @@ imports "repository" from "kegg_kit";
 
 setwd(@dir);
 
-const mzlist = "./mz.txt";
+const mzlist = "./test.csv";
 const mzdiff = 20;
 const minHits = 3;
 const permutation = 1000;
@@ -30,8 +30,7 @@ const kegg_compounds = GCModeller::kegg_compounds(rawList = TRUE)
 print("query kegg metabolite candidates...");
 
 # get a list of candidate results
-const mzSet = mzlist 
-|> readLines()
+const mzSet = read.csv(mzlist , row.names = 1, check.names = FALSE, check.modes = FALSE)[, "mz"]
 |> as.numeric()
 # |> take(20000)
 |> queryCandidateSet(msData = kegg_compounds)
