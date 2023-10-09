@@ -6,6 +6,19 @@ Imports Microsoft.VisualBasic.MachineLearning.Darwinism.GAF.Population.Substitut
 
 Public Module GAPeakListAnnotation
 
+    ''' <summary>
+    ''' Run annotation via the genetic algorithm
+    ''' </summary>
+    ''' <param name="candidates"></param>
+    ''' <param name="background"></param>
+    ''' <param name="minhit"></param>
+    ''' <param name="popsize"></param>
+    ''' <param name="permutation"></param>
+    ''' <param name="modelSize"></param>
+    ''' <param name="pinned"></param>
+    ''' <param name="ignoreTopology"></param>
+    ''' <param name="mutation_rate"></param>
+    ''' <returns></returns>
     Public Function PeakListAnnotation(candidates As IEnumerable(Of MzSet),
                                        background As IEnumerable(Of NamedValue(Of NetworkGraph)),
                                        Optional minhit As Integer = 3,
