@@ -17,7 +17,9 @@ Public Class ContextFitness : Implements Fitness(Of AnnotationSet)
     Dim ignoreTopology As Boolean = False
 
     Public Function Calculate(chromosome As AnnotationSet, parallel As Boolean) As Double Implements Fitness(Of AnnotationSet).Calculate
-        Dim result As ActivityEnrichment() = chromosome.CandidateSet.PeakListAnnotation(background, pinList, modelSize, ignoreTopology)
+        Dim result As ActivityEnrichment() = chromosome.CandidateSet.PeakListAnnotation(
+            background, pinList, modelSize, ignoreTopology,
+            parallel:=parallel)
         Dim score As Double = result.Score(ignoreTopology)
 
         If score <= 0 Then
