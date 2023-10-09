@@ -29,6 +29,16 @@ Public Class AnnotationSet : Implements Chromosome(Of AnnotationSet)
     ''' </remarks>
     Public Property i As Integer()
 
+    Public ReadOnly Property CandidateSet As MzQuery()
+        Get
+            Return i _
+                .Select(Function(idx, j) IonSet(j)(idx)) _
+                .GroupBy(Function(a) a.unique_id) _
+                .Select(Function(a) a.First) _
+                .ToArray
+        End Get
+    End Property
+
     Public Iterator Function Crossover(another As AnnotationSet) As IEnumerable(Of AnnotationSet) Implements Chromosome(Of AnnotationSet).Crossover
         Dim clone1 As New AnnotationSet With {.i = Me.i.ToArray, .IonSet = IonSet, .MutationRate = MutationRate}
         Dim clone2 As New AnnotationSet With {.i = another.i.ToArray, .IonSet = IonSet, .MutationRate = MutationRate}

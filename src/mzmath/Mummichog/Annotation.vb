@@ -62,14 +62,25 @@ Imports std = System.Math
 
 Public Module Annotation
 
+    ''' <summary>
+    ''' Run network graph module enrichment
+    ''' </summary>
+    ''' <param name="candidateList"></param>
+    ''' <param name="allsubgraph"></param>
+    ''' <param name="pinList"></param>
+    ''' <param name="modelSize"></param>
+    ''' <param name="ignoreTopology"></param>
+    ''' <param name="parallel"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function PeakListAnnotation(candidateList As MzQuery(), allsubgraph As NamedValue(Of NetworkGraph)(), pinList As Index(Of String),
                                        Optional modelSize As Integer = -1,
-                                       Optional ignoreTopology As Boolean = False) As ActivityEnrichment()
+                                       Optional ignoreTopology As Boolean = False,
+                                       Optional parallel As Boolean = True) As ActivityEnrichment()
 
         Dim input As Dictionary(Of String, MzQuery) = candidateList.ToDictionary(Function(a) a.unique_id)
         Dim scores = From graph As NamedValue(Of NetworkGraph)
-                     In allsubgraph.AsParallel
+                     In allsubgraph.Populate(parallel)
                      Let query = ActivityEnrichment.Evaluate(
                          input:=input,
                          background:=graph,
