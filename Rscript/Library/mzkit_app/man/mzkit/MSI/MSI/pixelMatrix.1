@@ -6,7 +6,7 @@ pixelMatrix \- dumping raw data matrix as text table file.
 \fIpixelMatrix(\fBraw\fR as <generic> mzPack, 
 \fBfile\fR as <generic> Stream, 
 \fBmzdiff\fR as double = 0.001, 
-\fBq\fR as double = 0.01, 
+\fBq\fR as double = 0.001, 
 [\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
@@ -20,23 +20,7 @@ dumping raw data matrix as text table file.
 \fBfile\fB \fR\- -. 
 .PP
 .PP
-\fBmzdiff\fB \fR\- 
- the mass tolerance width for extract the feature ions
-. 
-.PP
-.PP
-\fBq\fB \fR\- 
- the frequence threshold for filter the feature ions, this 
- value range of this parameter should be inside [0,1] which
- means percentage cutoff.
-. 
-.PP
-.PP
 \fBenv\fB \fR\- -. 
-.PP
-.SH VALUE
-.PP
-This function has no value returns
 .PP
 .SH SEE ALSO
 MSI

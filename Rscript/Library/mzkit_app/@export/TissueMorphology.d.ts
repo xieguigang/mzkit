@@ -116,18 +116,18 @@ declare namespace TissueMorphology {
     * create a collection of the umap sample data
     * 
     * 
-     * @param points the spatial points
-     * @param x umap dimension x
-     * @param y umap dimension y
-     * @param z umap dimension z
-     * @param cluster the cluster id
+     * @param points -
+     * @param x -
+     * @param y -
+     * @param z -
+     * @param cluster -
      * @param is_singlecells 
      * + default value Is ``false``.
      * @param env -
      * 
      * + default value Is ``null``.
    */
-   function UMAPsample(points: any, x: number, y: number, z: number, cluster: string, is_singlecells?: boolean, env?: object): object;
+   function UMAPsample(points: any, x: number, y: number, z: number, cluster: object, is_singlecells?: boolean, env?: object): object;
    /**
     * export the tissue data as cdf file
     * 
@@ -137,12 +137,12 @@ declare namespace TissueMorphology {
      * @param umap -
      * 
      * + default value Is ``null``.
-     * @param dimension The dimension size of the ms-imaging slide sample data
+     * @param dimension -
      * 
      * + default value Is ``null``.
      * @param env -
      * 
      * + default value Is ``null``.
    */
-   function writeCDF(tissueMorphology: object, file: any, umap?: object, dimension?: any, env?: object): boolean;
+   function writeCDF(tissueMorphology: object, file: any, umap?: object, dimension?: object, env?: object): any;
 }
