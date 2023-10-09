@@ -73,7 +73,7 @@ Public Class MzSet
     ''' <summary>
     ''' the candidate size of current m/z matches result 
     ''' </summary>
-    ''' <returns></returns>
+    ''' <returns>the <see cref="Array.Length"/> of <see cref="query"/> candidate list.</returns>
     Public ReadOnly Property size As Integer
         Get
             Return query.Length
