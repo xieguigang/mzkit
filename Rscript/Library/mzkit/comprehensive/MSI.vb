@@ -614,7 +614,7 @@ Module MSI
     End Function
 
     ''' <summary>
-    ''' Stats the ion features inside a MSI raw data slide
+    ''' Extract the ion features inside a MSI raw data slide sample file
     ''' </summary>
     ''' <param name="raw">
     ''' the raw data object could be a mzpack data object or 

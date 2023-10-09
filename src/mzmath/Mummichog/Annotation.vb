@@ -1,54 +1,54 @@
 ﻿#Region "Microsoft.VisualBasic::bccdea2dc76081e0ecfbec18b19c38e4, mzkit\src\mzmath\Mummichog\Annotation.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 104
-    '    Code Lines: 90
-    ' Comment Lines: 1
-    '   Blank Lines: 13
-    '     File Size: 4.02 KB
+' Summaries:
 
 
-    ' Module Annotation
-    ' 
-    '     Function: GetCandidateSet, PeakListAnnotation
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 104
+'    Code Lines: 90
+' Comment Lines: 1
+'   Blank Lines: 13
+'     File Size: 4.02 KB
+
+
+' Module Annotation
+' 
+'     Function: GetCandidateSet, PeakListAnnotation
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -57,9 +57,46 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Linq
-Imports stdNum = System.Math
+Imports Microsoft.VisualBasic.Text.Xml.Models
+Imports std = System.Math
 
 Public Module Annotation
+
+    ''' <summary>
+    ''' Run network graph module enrichment
+    ''' </summary>
+    ''' <param name="candidateList"></param>
+    ''' <param name="allsubgraph"></param>
+    ''' <param name="pinList"></param>
+    ''' <param name="modelSize"></param>
+    ''' <param name="ignoreTopology"></param>
+    ''' <param name="parallel"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function PeakListAnnotation(candidateList As MzQuery(), allsubgraph As NamedValue(Of NetworkGraph)(), pinList As Index(Of String),
+                                       Optional modelSize As Integer = -1,
+                                       Optional ignoreTopology As Boolean = False,
+                                       Optional parallel As Boolean = True) As ActivityEnrichment()
+
+        Dim input As Dictionary(Of String, MzQuery) = candidateList.ToDictionary(Function(a) a.unique_id)
+        Dim scores = From graph As NamedValue(Of NetworkGraph)
+                     In allsubgraph.Populate(parallel)
+                     Let query = ActivityEnrichment.Evaluate(
+                         input:=input,
+                         background:=graph,
+                         modelSize:=modelSize,
+                         pinList:=pinList,
+                         ignoreTopology:=ignoreTopology
+                     )
+                     Where query.Background > 0 AndAlso
+                         query.Input > 0 AndAlso
+                         query.Activity > 0 AndAlso
+                         Not query.Q.IsNaNImaginary
+                     Select query
+                     Order By query.Activity Descending
+
+        Return scores.ToArray
+    End Function
 
     <Extension>
     Public Function PeakListAnnotation(candidates As IEnumerable(Of MzSet),
@@ -72,10 +109,8 @@ Public Module Annotation
 
         Dim result, tmp1 As ActivityEnrichment()
         Dim allsubgraph As NamedValue(Of NetworkGraph)() = background.ToArray
-        Dim scores As IEnumerable(Of ActivityEnrichment)
         Dim maxScore As Double = -9999999
         Dim score As Double
-        Dim input As Dictionary(Of String, MzQuery)
         Dim pinList As Index(Of String) = pinned.Indexing
 
         If modelSize <= 0 Then
@@ -90,38 +125,10 @@ Public Module Annotation
         result = Nothing
 
         For Each candidateList As MzQuery() In candidates.CreateCombinations(permutation)
-            input = candidateList.ToDictionary(Function(a) a.unique_id)
-            scores = From graph As NamedValue(Of NetworkGraph)
-                     In allsubgraph.AsParallel
-                     Let query = ActivityEnrichment.Evaluate(
-                         input:=input,
-                         background:=graph,
-                         modelSize:=modelSize,
-                         pinList:=pinList,
-                         ignoreTopology:=ignoreTopology
-                     )
-                     Where query.Background > 0 AndAlso
-                         query.Input > 0 AndAlso
-                         query.Activity > 0 AndAlso
-                         Not query.Q.IsNaNImaginary
-                     Select query
-                     Order By query.Activity Descending
-            tmp1 = scores.ToArray
-
-            If ignoreTopology Then
-                score = Aggregate v As ActivityEnrichment
-                        In tmp1
-                        Let pscore As Double = If(
-                            v.Fisher.two_tail_pvalue < 1.0E-100,
-                            100,
-                            -stdNum.Log10(v.Fisher.two_tail_pvalue)
-                        )
-                        Into Sum(pscore * v.Input)
-            Else
-                score = Aggregate v As ActivityEnrichment
-                        In tmp1
-                        Into Sum(v.Activity * v.Input)
-            End If
+            tmp1 = candidateList _
+                .PeakListAnnotation(allsubgraph, pinList, modelSize, ignoreTopology) _
+                .ToArray
+            score = tmp1.Score(ignoreTopology)
 
             ' evaluate the best candidate collection
             If maxScore < score Then
@@ -133,6 +140,24 @@ Public Module Annotation
         Next
 
         Return result
+    End Function
+
+    <Extension>
+    Public Function Score(tmp1 As ActivityEnrichment(), Optional ignoreTopology As Boolean = False) As Double
+        If ignoreTopology Then
+            Return Aggregate v As ActivityEnrichment
+                   In tmp1
+                   Let pscore As Double = If(
+                       v.Fisher.two_tail_pvalue < 1.0E-100,
+                       100,
+                       -std.Log10(v.Fisher.two_tail_pvalue)
+                   )
+                   Into Sum(pscore * v.Input)
+        Else
+            Return Aggregate v As ActivityEnrichment
+                   In tmp1
+                   Into Sum(v.Activity * v.Input)
+        End If
     End Function
 
     <Extension>

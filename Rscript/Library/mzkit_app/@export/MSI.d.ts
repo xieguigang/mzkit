@@ -54,7 +54,7 @@ declare namespace MSI {
    */
    function ions_jointmatrix(raw: object, env?: object): object;
    /**
-    * Stats the ion features inside a MSI raw data slide
+    * Extract the ion features inside a MSI raw data slide sample file
     * 
     * > count pixels/density/etc for each ions m/z data
     * 

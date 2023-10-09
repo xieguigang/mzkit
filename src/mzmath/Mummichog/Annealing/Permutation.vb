@@ -56,8 +56,17 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
+''' <summary>
+''' A helper module for generates the combination
+''' </summary>
 Public Module Permutation
 
+    ''' <summary>
+    ''' Populate n annotation candidate combination result, the candidate list size n is equals to <paramref name="permutations"/>.
+    ''' </summary>
+    ''' <param name="input"></param>
+    ''' <param name="permutations"></param>
+    ''' <returns></returns>
     <Extension>
     Public Iterator Function CreateCombinations(input As IEnumerable(Of MzSet), permutations As Integer) As IEnumerable(Of MzQuery())
         Dim raw As MzSet() = input.ToArray
