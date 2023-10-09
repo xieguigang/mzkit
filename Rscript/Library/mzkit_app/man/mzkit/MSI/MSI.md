@@ -14,7 +14,7 @@ MS-Imaging data handler
 + [MSI_summary](MSI/MSI_summary.1) Fetch MSI summary data
 + [correction](MSI/correction.1) calculate the X scale
 + [basePeakMz](MSI/basePeakMz.1) 
-+ [ionStat](MSI/ionStat.1) count pixels/density/etc for each ions m/z data
++ [ionStat](MSI/ionStat.1) Extract the ion features inside a MSI raw data slide sample file
 + [ions_jointmatrix](MSI/ions_jointmatrix.1) 
 + [scans2D](MSI/scans2D.1) combine each row scan raw data files as the pixels 2D matrix
 + [scanMatrix](MSI/scanMatrix.1) combine each row scan summary vector as the pixels 2D matrix
@@ -25,3 +25,4 @@ MS-Imaging data handler
 + [pixelMatrix](MSI/pixelMatrix.1) dumping raw data matrix as text table file.
 + [spatial.convolution](MSI/spatial.convolution.1) sum pixels for create pixel spot convolution
 + [pack_matrix](MSI/pack_matrix.1) pack the matrix file as the MSI mzpack
++ [moran_I](MSI/moran_I.1) evaluate the moran index for each ion layer

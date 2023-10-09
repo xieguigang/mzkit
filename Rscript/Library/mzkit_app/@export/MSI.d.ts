@@ -54,20 +54,35 @@ declare namespace MSI {
    */
    function ions_jointmatrix(raw: object, env?: object): object;
    /**
-    * count pixels/density/etc for each ions m/z data
+    * Extract the ion features inside a MSI raw data slide sample file
     * 
+    * > count pixels/density/etc for each ions m/z data
     * 
-     * @param raw -
-     * @param grid_size -
+     * @param raw the raw data object could be a mzpack data object or 
+     *  MS-imaging ion feature layers object
+     * @param grid_size the grid cell size for evaluate the pixel density
      * 
      * + default value Is ``5``.
-     * @param da -
+     * @param da the mass tolerance value, only works when
+     *  the input raw data object is mzpack object
      * 
      * + default value Is ``0.01``.
      * @param parallel 
      * + default value Is ``true``.
+     * @param env 
+     * + default value Is ``null``.
    */
-   function ionStat(raw: object, grid_size?: object, da?: number, parallel?: boolean): object;
+   function ionStat(raw: any, grid_size?: object, da?: number, parallel?: boolean, env?: object): object;
+   /**
+    * evaluate the moran index for each ion layer
+    * 
+    * 
+     * @param x A spatial expression data matrix, should be in format of:
+     *  
+     *  1. the spatial spot xy in row names, and
+     *  2. the ions feature m/z label in col names
+   */
+   function moran_I(x: object): any;
    /**
     * get ms-imaging metadata
     * 
@@ -102,8 +117,9 @@ declare namespace MSI {
    function MSI_summary(raw: object, x?: object, y?: object, as_vector?: boolean, dims?: any, env?: object): object|object;
    module open {
       /**
+        * @param env default value Is ``null``.
       */
-      function imzML(file: string): any;
+      function imzML(file: string, env?: object): any;
    }
    /**
     * pack the matrix file as the MSI mzpack
@@ -112,11 +128,15 @@ declare namespace MSI {
      * @param file the file resource reference to the csv table file, and the
      *  csv file should be in format of ion peaks features in column
      *  and spatial spot id in rows
+     * @param dims 
+     * + default value Is ``null``.
+     * @param res 
+     * + default value Is ``17``.
      * @param env -
      * 
      * + default value Is ``null``.
    */
-   function pack_matrix(file: any, env?: object): any;
+   function pack_matrix(file: any, dims?: any, res?: number, env?: object): any;
    /**
     * Extract the ion data matrix
     * 
@@ -185,13 +205,18 @@ declare namespace MSI {
     * 
      * @param raw -
      * @param file -
-     * @param mzdiff 
+     * @param mzdiff the mass tolerance width for extract the feature ions
+     * 
      * + default value Is ``0.001``.
-     * @param q 
-     * + default value Is ``0.001``.
+     * @param q the frequence threshold for filter the feature ions, this 
+     *  value range of this parameter should be inside [0,1] which
+     *  means percentage cutoff.
+     * 
+     * + default value Is ``0.01``.
      * @param env -
      * 
      * + default value Is ``null``.
+     * @return This function has no value returns
    */
    function pixelMatrix(raw: object, file: object, mzdiff?: number, q?: number, env?: object): object;
    /**
