@@ -33,6 +33,15 @@ Public Class ContextFitness : Implements Fitness(Of AnnotationSet)
            parallel:=True)
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="chromosome"></param>
+    ''' <param name="parallel"></param>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' the smaller fitness value is better
+    ''' </remarks>
     Public Function Calculate(chromosome As AnnotationSet, parallel As Boolean) As Double Implements Fitness(Of AnnotationSet).Calculate
         Dim result As ActivityEnrichment() = chromosome.CandidateSet.PeakListAnnotation(
             background, pinList, modelSize, ignoreTopology,

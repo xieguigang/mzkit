@@ -44,7 +44,8 @@ result = kegg_maps
 |> peakList_annotation(
     candidates = mzSet,
     minhit = minHits,
-    permutation = permutation
+    permutation = permutation,
+    ga = TRUE
 )
 ;
 
