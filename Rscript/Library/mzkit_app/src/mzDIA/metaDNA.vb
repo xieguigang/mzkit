@@ -486,7 +486,7 @@ Module metaDNAInfer
 #Region "kegg"
 
     ''' <summary>
-    ''' create the kegg compound ms1 annotation query engine.
+    ''' Create the kegg compound ms1 annotation query engine.
     ''' </summary>
     ''' <param name="kegg">
     ''' a set of kegg compound data
@@ -525,30 +525,8 @@ Module metaDNAInfer
             Return mzErr.TryCast(Of Message)
         End If
 
-        Dim typeList As pipeline = pipeline.TryCreatePipeline(Of MzCalculator)(precursors, env, suppress:=True)
-        Dim calculators As MzCalculator()
+        Dim calculators As MzCalculator() = Math.GetPrecursorTypes(precursors, env)
         Dim excludesEntry As Index(Of String) = CLRVector.asCharacter(excludes).Indexing
-
-        If typeList.isError Then
-            typeList = pipeline.TryCreatePipeline(Of String)(precursors, env, suppress:=True)
-
-            If typeList.isError Then
-                Return typeList.getError
-            Else
-                Dim types As String() = typeList _
-                    .populates(Of String)(env) _
-                    .Select(Function(str) str.Split("|"c)) _
-                    .IteratesALL _
-                    .Distinct _
-                    .ToArray
-
-                calculators = Provider.Calculators(types)
-            End If
-        Else
-            calculators = typeList _
-                .populates(Of MzCalculator)(env) _
-                .ToArray
-        End If
 
         Return KEGGHandler.CreateIndex(
             compounds:=keggSet _
