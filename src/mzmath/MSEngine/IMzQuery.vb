@@ -56,8 +56,16 @@
 
 #End Region
 
+''' <summary>
+''' Query annotation candidates by the given m/z mass value
+''' </summary>
 Public Interface IMzQuery : Inherits IMetaDb
 
+    ''' <summary>
+    ''' Query annotation candidates by the given m/z mass value
+    ''' </summary>
+    ''' <param name="mz"></param>
+    ''' <returns></returns>
     Function QueryByMz(mz As Double) As IEnumerable(Of MzQuery)
 
     ''' <summary>

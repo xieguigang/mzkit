@@ -160,6 +160,12 @@ Public Module Annotation
         End If
     End Function
 
+    ''' <summary>
+    ''' Populate a sequence of the annotation search candidate set
+    ''' </summary>
+    ''' <param name="MsDb"></param>
+    ''' <param name="peaks"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function GetCandidateSet(MsDb As IMzQuery, peaks As IEnumerable(Of Double)) As IEnumerable(Of MzSet)
         Return From mzi As Double

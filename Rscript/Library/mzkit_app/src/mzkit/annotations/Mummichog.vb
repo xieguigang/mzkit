@@ -242,11 +242,13 @@ Module Mummichog
     End Function
 
     ''' <summary>
-    ''' 
+    ''' Matches all of the annotation hits candidates from a given of the mass peak list
     ''' </summary>
-    ''' <param name="mz"></param>
+    ''' <param name="mz">A numeric vector, the given mass peak list for run candidate search.</param>
     ''' <param name="msData">
-    ''' the <see cref="IMzQuery"/> annotation engine
+    ''' the <see cref="IMzQuery"/> annotation engine, should has the 
+    ''' interface function for query annotation candidates by the
+    ''' given m/z mass value.
     ''' </param>
     ''' <param name="env"></param>
     ''' <returns></returns>
