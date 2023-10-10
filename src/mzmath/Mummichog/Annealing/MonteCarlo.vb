@@ -51,21 +51,15 @@ Public Class MonteCarlo
             .i = VectorExtensions.Replicate(0, .IonSet.Length).ToArray,
             .MutationRate = mutation_rate
         }
-        Dim tempr0 As Double = 1
         Dim t As New PerformanceCounter
-        Dim d As Integer = permutations / 20
+        Dim d As Integer = permutations / 50
 
         best_score = Double.MinValue
         t.Set()
 
         For i As Integer = 0 To permutations
             candidates = eval(candidates)
-            tempr0 *= 0.99
-            candidates.MutationRate *= tempr0
 
-            If candidates.MutationRate < 0.0001 Then
-                Exit For
-            End If
             If i Mod d = 0 Then
                 VBDebugger.EchoLine(t.Mark($"{i}/{permutations}  {(100 * i / permutations).ToString("F1")}% | {candidates.ToString}, context_score:{best_score}").ToString)
             End If

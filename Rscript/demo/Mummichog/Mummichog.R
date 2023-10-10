@@ -38,7 +38,7 @@ const mzSet = read.csv(mzlist , row.names = 1, check.names = FALSE, check.modes 
 
 print("run data annotations!");
 
-result = kegg_maps
+let result = kegg_maps
 |> kegg_background(reactions = kegg_reactions)
 |> peakList_annotation(
     candidates = mzSet,
