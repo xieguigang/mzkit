@@ -67,6 +67,8 @@ Namespace Deconvolute
 
         <Extension>
         Public Function CreateMzIndex(mzSet As Double(), Optional win_size As Double = 1) As BlockSearchFunction(Of (mz As Double, Integer))
+            Call VBDebugger.EchoLine($"tolerance window size: {win_size}")
+
             Return New BlockSearchFunction(Of (mz As Double, Integer))(
                 data:=mzSet.Select(Function(mzi, i) (mzi, i)),
                 eval:=Function(i) i.mz,
