@@ -66,11 +66,11 @@ Namespace Deconvolute
     Public Module PeakMatrix
 
         <Extension>
-        Public Function CreateMzIndex(mzSet As Double()) As BlockSearchFunction(Of (mz As Double, Integer))
+        Public Function CreateMzIndex(mzSet As Double(), Optional win_size As Double = 1) As BlockSearchFunction(Of (mz As Double, Integer))
             Return New BlockSearchFunction(Of (mz As Double, Integer))(
                 data:=mzSet.Select(Function(mzi, i) (mzi, i)),
                 eval:=Function(i) i.mz,
-                tolerance:=1,
+                tolerance:=win_size,
                 fuzzy:=True
             )
         End Function
