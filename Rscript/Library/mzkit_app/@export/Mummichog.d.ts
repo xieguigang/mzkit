@@ -76,11 +76,13 @@ declare namespace Mummichog {
      * + default value Is ``false``.
      * @param ga 
      * + default value Is ``false``.
+     * @param pop_size 
+     * + default value Is ``100``.
      * @param env -
      * 
      * + default value Is ``null``.
    */
-   function peakList_annotation(background: object, candidates: object, minhit?: object, permutation?: object, modelSize?: object, pinned?: string, ignore_topology?: boolean, ga?: boolean, env?: object): object;
+   function peakList_annotation(background: object, candidates: object, minhit?: object, permutation?: object, modelSize?: object, pinned?: string, ignore_topology?: boolean, ga?: boolean, pop_size?: object, env?: object): object;
    /**
     * 
     * 
