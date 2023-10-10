@@ -1,6 +1,9 @@
 ﻿Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 
+''' <summary>
+''' Do candidate set annotation search via Monte-Carlo method
+''' </summary>
 Public Class MonteCarlo
 
     Dim background As ContextFitness
@@ -38,7 +41,10 @@ Public Class MonteCarlo
     ''' <param name="permutations"></param>
     ''' <param name="mutation_rate"></param>
     ''' <returns></returns>
-    Public Function Solve(input As IEnumerable(Of MzSet), permutations As Integer, Optional mutation_rate As Double = 0.3) As ActivityEnrichment()
+    Public Function Solve(input As IEnumerable(Of MzSet),
+                          Optional permutations As Integer = 1000,
+                          Optional mutation_rate As Double = 0.3) As ActivityEnrichment()
+
         Dim candidates As New AnnotationSet With {
             .IonSet = input.ToArray,
             .i = VectorExtensions.Replicate(0, .IonSet.Length).ToArray,
