@@ -76,7 +76,7 @@ Public Module Annotation
     ''' 
     ''' </remarks>
     <Extension>
-    Public Function PeakListAnnotation(candidateList As MzQuery(), allsubgraph As NamedValue(Of NetworkGraph)(), pinList As Index(Of String),
+    Friend Function PeakListAnnotation(candidateList As MzQuery(), allsubgraph As NamedValue(Of NetworkGraph)(), pinList As Index(Of String),
                                        Optional modelSize As Integer = -1,
                                        Optional ignoreTopology As Boolean = False,
                                        Optional parallel As Boolean = True) As ActivityEnrichment()
@@ -102,7 +102,7 @@ Public Module Annotation
     End Function
 
     ''' <summary>
-    ''' 
+    ''' Do ms1 peak list annotation based on the given biological context information
     ''' </summary>
     ''' <param name="candidates"></param>
     ''' <param name="background"></param>

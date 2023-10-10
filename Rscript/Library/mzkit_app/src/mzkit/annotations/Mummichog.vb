@@ -164,7 +164,9 @@ Module Mummichog
     End Function
 
     ''' <summary>
-    ''' do ms1 peaks annotation
+    ''' ### do ms1 peaks annotation
+    ''' 
+    ''' Do ms1 peak list annotation based on the given biological context information
     ''' </summary>
     ''' <param name="background">
     ''' the enrichment and network topology graph mode list
@@ -187,6 +189,7 @@ Module Mummichog
                                        Optional ignore_topology As Boolean = False,
                                        Optional ga As Boolean = False,
                                        Optional pop_size As Integer = 100,
+                                       Optional mutation_rate As Double = 0.3,
                                        Optional env As Environment = Nothing) As Object
 
         Dim models As New List(Of NamedValue(Of NetworkGraph))
@@ -220,7 +223,8 @@ Module Mummichog
                 minhit:=minhit, permutation:=permutation,
                 modelSize:=modelSize, pinned:=pinned,
                 popsize:=pop_size,
-                ignoreTopology:=ignore_topology
+                ignoreTopology:=ignore_topology,
+                mutation_rate:=mutation_rate
             )
         Else
             result = candidates.PeakListAnnotation(
@@ -229,7 +233,8 @@ Module Mummichog
                 permutation:=permutation,
                 modelSize:=modelSize,
                 pinned:=pinned,
-                ignoreTopology:=ignore_topology
+                ignoreTopology:=ignore_topology,
+                mutation_rate:=mutation_rate
             )
         End If
 

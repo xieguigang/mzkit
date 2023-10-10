@@ -7,7 +7,7 @@ Imports Microsoft.VisualBasic.MachineLearning.Darwinism.GAF.Population.Substitut
 Public Module GAPeakListAnnotation
 
     ''' <summary>
-    ''' Run annotation via the genetic algorithm
+    ''' Do ms1 peak list annotation based on the given biological context information, Run annotation via the genetic algorithm
     ''' </summary>
     ''' <param name="candidates"></param>
     ''' <param name="background"></param>
