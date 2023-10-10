@@ -70,6 +70,10 @@ Imports Microsoft.VisualBasic.Linq
 
 <Assembly: InternalsVisibleTo("BioNovoGene.BioDeep.MetaDNA")>
 
+''' <summary>
+''' Engine for run m/z query
+''' </summary>
+''' <typeparam name="Compound"></typeparam>
 Public Class MSSearch(Of Compound As {IReadOnlyId, ICompoundNameProvider, IExactMassProvider, IFormulaProvider}) : Implements IMzQuery
 
     Friend Structure IonIndex : Implements IExactMassProvider
