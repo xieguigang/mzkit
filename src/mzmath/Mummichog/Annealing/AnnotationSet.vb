@@ -8,6 +8,7 @@ Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 Public Class AnnotationSet : Implements Chromosome(Of AnnotationSet)
 
     Public Property MutationRate As Double Implements Chromosome(Of AnnotationSet).MutationRate
+    Public Property Score As Double
 
     Public ReadOnly Property Key As String Implements IReadOnlyId.Identity
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

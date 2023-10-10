@@ -23,6 +23,7 @@ Public Class MonteCarlo
         Dim score As Double = 1 / background.Calculate(clone, parallel:=True)
         Dim uniq As Double = clone.UniqueHitSize
 
+        clone.Score = score
         score *= uniq
 
         If score > best_score Then
@@ -61,7 +62,7 @@ Public Class MonteCarlo
             candidates = eval(candidates)
 
             If i Mod d = 0 Then
-                VBDebugger.EchoLine(t.Mark($"{i}/{permutations}  {(100 * i / permutations).ToString("F1")}% | {candidates.ToString}, context_score:{best_score}").ToString)
+                VBDebugger.EchoLine(t.Mark($"{i}/{permutations}  {(100 * i / permutations).ToString("F1")}% | {candidates}, context_score:({candidates.Score.ToString("F3")}, {best_score.ToString("F0")})").ToString)
             End If
         Next
 
