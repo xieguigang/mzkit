@@ -54,6 +54,10 @@ Public Class AnnotationSet : Implements Chromosome(Of AnnotationSet)
         End Get
     End Property
 
+    Public Overrides Function ToString() As String
+        Return $"<{UInteger.Parse(Key).ToHexString}> {UniqueHitSize} uniq candidates"
+    End Function
+
     Public Iterator Function Crossover(another As AnnotationSet) As IEnumerable(Of AnnotationSet) Implements Chromosome(Of AnnotationSet).Crossover
         Dim clone1 As New AnnotationSet With {.i = Me.i.ToArray, .IonSet = IonSet, .MutationRate = MutationRate}
         Dim clone2 As New AnnotationSet With {.i = another.i.ToArray, .IonSet = IonSet, .MutationRate = MutationRate}

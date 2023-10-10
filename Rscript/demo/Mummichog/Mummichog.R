@@ -44,7 +44,7 @@ result = kegg_maps
     candidates = mzSet,
     minhit = minHits,
     permutation = permutation,
-    ga = TRUE
+    ga = FALSE
 )
 ;
 

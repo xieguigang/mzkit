@@ -1,5 +1,6 @@
 ﻿Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
+Imports Microsoft.VisualBasic.ApplicationServices
 
 ''' <summary>
 ''' Do candidate set annotation search via Monte-Carlo method
@@ -50,14 +51,24 @@ Public Class MonteCarlo
             .i = VectorExtensions.Replicate(0, .IonSet.Length).ToArray,
             .MutationRate = mutation_rate
         }
-        Dim t0 As Double = 1
+        Dim tempr0 As Double = 1
+        Dim t As New PerformanceCounter
+        Dim d As Integer = permutations / 20
 
-        Me.best_score = Double.MinValue
+        best_score = Double.MinValue
+        t.Set()
 
         For i As Integer = 0 To permutations
             candidates = eval(candidates)
-            t0 *= 0.9
-            candidates.MutationRate *= t0
+            tempr0 *= 0.99
+            candidates.MutationRate *= tempr0
+
+            If candidates.MutationRate < 0.0001 Then
+                Exit For
+            End If
+            If i Mod d = 0 Then
+                VBDebugger.EchoLine(t.Mark($"{i}/{permutations}  {(100 * i / permutations).ToString("F1")}% | {candidates.ToString}, context_score:{best_score}").ToString)
+            End If
         Next
 
         Dim result As ActivityEnrichment() = background.Enrich(candidates)
