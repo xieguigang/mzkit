@@ -306,19 +306,22 @@ Module Mummichog
     ''' <param name="background"></param>
     ''' <returns></returns>
     <ExportAPI("fromGseaBackground")>
-    Public Function fromGseaBackground(background As Background) As list
+    Public Function fromGseaBackground(background As Background, Optional min_size As Integer = 3) As list
+        Dim gset As New Dictionary(Of String, Object)
+        Dim filters = From ci As Cluster In background.clusters Where ci.size >= min_size
+
+        For Each c As Cluster In filters
+            gset(c.ID) = New list With {
+                .slots = New Dictionary(Of String, Object) From {
+                    {"name", c.ID},
+                    {"desc", c.names},
+                    {"model", c.SingularGraph}
+                }
+            }
+        Next
+
         Return New list With {
-            .slots = background.clusters _
-                .Where(Function(c) c.members.Length > 2) _
-                .ToDictionary(Function(c) c.ID,
-                              Function(c)
-                                  Dim slot As New list With {.slots = New Dictionary(Of String, Object)}
-
-                                  slot.add("desc", c.names)
-                                  slot.add("model", c.SingularGraph)
-
-                                  Return CObj(slot)
-                              End Function)
+            .slots = gset
         }
     End Function
 

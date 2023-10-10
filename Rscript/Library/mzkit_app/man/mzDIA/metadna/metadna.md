@@ -15,6 +15,6 @@ Metabolic Reaction Network-based Recursive Metabolite Annotation for Untargeted 
 + [as.table](metadna/as.table.1) 
 + [as.graph](metadna/as.graph.1) 
 + [as.ticks](metadna/as.ticks.1) 
-+ [annotationSet](metadna/annotationSet.1) create the kegg compound ms1 annotation query engine.
++ [annotationSet](metadna/annotationSet.1) Create the kegg compound ms1 annotation query engine.
 + [kegg.library](metadna/kegg.library.1) load kegg compounds
 + [kegg.network](metadna/kegg.network.1) load the kegg reaction class data.

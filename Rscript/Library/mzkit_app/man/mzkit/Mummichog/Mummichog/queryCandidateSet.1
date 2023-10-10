@@ -1,18 +1,24 @@
 .\" man page create by R# package system.
 .TH MUMMICHOG 1 2000-Jan "queryCandidateSet" "queryCandidateSet"
 .SH NAME
-queryCandidateSet \- 
+queryCandidateSet \- Matches all of the annotation hits candidates from a given of the mass peak list
 .SH SYNOPSIS
 \fIqueryCandidateSet(\fBmz\fR as double, 
 \fBmsData\fR as any, 
 [\fB<Environment>\fR]);\fR
+.SH DESCRIPTION
+.PP
+Matches all of the annotation hits candidates from a given of the mass peak list
+.PP
 .SH OPTIONS
 .PP
-\fBmz\fB \fR\- -. 
+\fBmz\fB \fR\- A numeric vector, the given mass peak list for run candidate search.. 
 .PP
 .PP
 \fBmsData\fB \fR\- 
- the @\fBT:BioNovoGene.BioDeep.MSEngine.IMzQuery\fR annotation engine
+ the @\fBT:BioNovoGene.BioDeep.MSEngine.IMzQuery\fR annotation engine, should has the 
+ interface function for query annotation candidates by the
+ given m/z mass value.
 . 
 .PP
 .PP
