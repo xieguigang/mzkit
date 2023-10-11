@@ -56,13 +56,18 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports SMRUCC.genomics.Analysis.HTS.GSEA
 
+''' <summary>
+''' Create background model from the GSEA background model
+''' </summary>
 Public Module GSEA
 
     ''' <summary>
     ''' Create a graph model for run Mummichog annotation without 
     ''' any network topology information
     ''' </summary>
-    ''' <param name="cluster"></param>
+    ''' <param name="cluster">
+    ''' One of the cluster inside a gsea <see cref="Background"/> model
+    ''' </param>
     ''' <returns>
     ''' just create a graph with node set, no edges
     ''' </returns>
