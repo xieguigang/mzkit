@@ -23,8 +23,10 @@ declare namespace Mummichog {
     * 
     * 
      * @param background -
+     * @param min_size 
+     * + default value Is ``3``.
    */
-   function fromGseaBackground(background: object): object;
+   function fromGseaBackground(background: object, min_size?: object): object;
    /**
      * @param adducts default value Is ``["[M]+","[M+H]+","[M+H2O]+","[M+H-H2O]+"]``.
      * @param isotopic_max default value Is ``5``.
