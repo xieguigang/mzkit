@@ -76,7 +76,7 @@ Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
-Imports stdNum = System.Math
+Imports std = System.Math
 
 ''' <summary>
 ''' Mummichog searches for enrichment patterns on metabolic network, 
@@ -144,7 +144,7 @@ Module Mummichog
             If pathway.Fisher.two_tail_pvalue < 1.0E-100 Then
                 score *= 100
             Else
-                score *= -stdNum.Log10(pathway.Fisher.two_tail_pvalue) + 1
+                score *= -std.Log10(pathway.Fisher.two_tail_pvalue) + 1
             End If
 
             For Each hit In pathway.Hits.SafeQuery
