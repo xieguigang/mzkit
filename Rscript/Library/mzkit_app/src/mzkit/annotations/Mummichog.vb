@@ -251,7 +251,9 @@ Module Mummichog
     ''' given m/z mass value.
     ''' </param>
     ''' <param name="env"></param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' A set of the metabolite ion m/z query candidates result
+    ''' </returns>
     <ExportAPI("queryCandidateSet")>
     <RApiReturn(GetType(MzSet))>
     Public Function queryCandidateSet(mz As Double(), msData As Object, Optional env As Environment = Nothing) As Object
