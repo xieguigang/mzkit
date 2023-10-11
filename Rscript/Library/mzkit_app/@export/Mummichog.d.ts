@@ -12,6 +12,14 @@
 */
 declare namespace Mummichog {
    /**
+    * Extract all candidates unique id from the given query result
+    * 
+    * 
+     * @param env 
+     * + default value Is ``null``.
+   */
+   function candidates_Id(q: any, env?: object): string;
+   /**
      * @param tolerance default value Is ``'ppm:20'``.
      * @param env default value Is ``null``.
    */
@@ -100,6 +108,7 @@ declare namespace Mummichog {
      * @param env -
      * 
      * + default value Is ``null``.
+     * @return A set of the metabolite ion m/z query candidates result
    */
    function queryCandidateSet(mz: number, msData: any, env?: object): object;
 }

@@ -67,6 +67,7 @@ Imports Microsoft.VisualBasic.Emit.Delegates
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.genomics.Analysis.HTS.GSEA
 Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
@@ -227,6 +228,10 @@ Module Mummichog
                 mutation_rate:=mutation_rate
             )
         Else
+            Call println($"Run mummichog algorithm with Monte-Carlo permutation in parallel with {VectorTask.n_threads} CPU threads!")
+            Call println($"evaluate for {candidates.Length} ion features,")
+            Call println($"based on {models.Count} biological context background model!")
+
             result = candidates.PeakListAnnotation(
                 background:=models,
                 minhit:=minhit,
@@ -251,7 +256,9 @@ Module Mummichog
     ''' given m/z mass value.
     ''' </param>
     ''' <param name="env"></param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' A set of the metabolite ion m/z query candidates result
+    ''' </returns>
     <ExportAPI("queryCandidateSet")>
     <RApiReturn(GetType(MzSet))>
     Public Function queryCandidateSet(mz As Double(), msData As Object, Optional env As Environment = Nothing) As Object
@@ -262,6 +269,39 @@ Module Mummichog
         Else
             Return Message.InCompatibleType(GetType(IMzQuery), msData.GetType, env)
         End If
+    End Function
+
+    ''' <summary>
+    ''' Extract all candidates unique id from the given query result
+    ''' </summary>
+    ''' <returns></returns>
+    <ExportAPI("candidates_Id")>
+    <RApiReturn(GetType(String))>
+    Public Function extractCandidateUniqueId(<RRawVectorArgument> q As Object, Optional env As Environment = Nothing) As Object
+        Dim pull As pipeline = pipeline.TryCreatePipeline(Of MzSet)(q, env, suppress:=True)
+        Dim candidates As New List(Of MzQuery)
+
+        If Not pull.isError Then
+            For Each qi As MzSet In pull.populates(Of MzSet)(env)
+                If qi.query IsNot Nothing Then
+                    Call candidates.AddRange(qi.query)
+                End If
+            Next
+        Else
+            pull = pipeline.TryCreatePipeline(Of MzQuery)(q, env)
+
+            If pull.isError Then
+                Return pull.getError
+            Else
+                Call candidates.AddRange(pull.populates(Of MzQuery)(env))
+            End If
+        End If
+
+        Return candidates _
+            .Where(Function(i) Not i Is Nothing) _
+            .Select(Function(i) i.unique_id) _
+            .Distinct _
+            .ToArray
     End Function
 
     <ExportAPI("createMzset")>

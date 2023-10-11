@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Matches all of the annotation hits candidates from a given of the mass peak list</title>
+    <title>Extract all candidates unique id from the given query result</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <style rel="stylesheet" type="text/css">
@@ -148,12 +148,12 @@
 
         <table style="width: 100%;">
             <tr>
-                <td>queryCandidateSet {Mummichog}</td>
+                <td>candidates_Id {Mummichog}</td>
                 <td style="text-align: right;">R Documentation</td>
             </tr>
         </table>
 
-        <h2>Matches all of the annotation hits candidates from a given of the mass peak list</h2>
+        <h2>Extract all candidates unique id from the given query result</h2>
 
         <h3>Description</h3>
 
@@ -162,26 +162,13 @@
         <h3>Usage</h3>
 
         <div style="width: 100%; padding-left: 3%; color: black;">
-            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>queryCandidateSet</strong>(<i>mz</i>, <i>msData</i>);</code></pre>
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>candidates_Id</strong>(<i>q</i>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
 
         <table>
             
-<dt>mz</dt>
-<dd><p><p>A numeric vector, the given mass peak list for run candidate search.</p></p></dd>
-
-
-<dt>msData</dt>
-<dd><p><p>the @<code>T:BioNovoGene.BioDeep.MSEngine.IMzQuery</code> annotation engine, should has the <br />
- interface function for query annotation candidates by the<br />
- given m/z mass value.</p></p></dd>
-
-
-<dt>env</dt>
-<dd><p><p>-</p></p></dd>
-
         </table>
 
 
@@ -192,7 +179,7 @@
 
         <h3>Value</h3>
 
-        <p>A set of the metabolite ion m/z query candidates result</p>
+        this function returns data object of type string.
 
         <h3 style="display: none;">Examples</h3>
 
