@@ -1,0 +1,17 @@
+{
+  "profiles": {
+    "mzkit.NET5": {
+      "commandName": "Project"
+    },
+    "run_exe": {
+      "commandName": "Executable",
+      "executablePath": "\\GCModeller\\src\\R-sharp\\App\\net6.0\\R#.exe",
+      "commandLineArgs": "\"X:\\AP-SMALDI-SingleCells-0.1um\\test\\研发数据（小鼠睾丸空代原始数据）-AP SMALDI\\clustering.R\" --attach \"\\mzkit\\Rscript\\Library\\mzkit_app\" --debug"
+    },
+    "annotation": {
+      "commandName": "Executable",
+      "executablePath": "\\GCModeller\\src\\R-sharp\\App\\net6.0\\R#.exe",
+      "commandLineArgs": "\\biodeep\\biodeep_pipeline\\biodeepMSMS_v5\\test\\ms1_demo\\run_ms1_anno_test_20230922.R --attach \\biodeep\\biodeepdb_v3\\biodeepdb_v3     --debug=none"
+    }
+  }
+}
