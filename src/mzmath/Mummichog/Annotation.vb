@@ -57,10 +57,43 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Text.Xml.Models
 Imports std = System.Math
 
 Public Module Annotation
+
+    Private Class PeakListAnnotationTask : Inherits VectorTask
+
+        ReadOnly background As NamedValue(Of NetworkGraph)()
+        ReadOnly input As Dictionary(Of String, MzQuery)
+
+        Public ReadOnly result As ActivityEnrichment()
+
+        Public modelSize As Integer
+        Public ignoreTopology As Boolean
+        Public pinList As Index(Of String)
+
+        Sub New(candidateList As MzQuery(), allsubgraph As NamedValue(Of NetworkGraph)())
+            Call MyBase.New(allsubgraph.Length)
+
+            input = candidateList.ToDictionary(Function(a) a.unique_id)
+            background = allsubgraph
+            result = New ActivityEnrichment(background.Length - 1) {}
+        End Sub
+
+        Protected Overrides Sub Solve(start As Integer, ends As Integer)
+            For i As Integer = start To ends
+                result(i) = ActivityEnrichment.Evaluate(
+                    input:=input,
+                    background:=background(i),
+                    modelSize:=modelSize,
+                    pinList:=pinList,
+                    ignoreTopology:=ignoreTopology
+                )
+            Next
+        End Sub
+    End Class
 
     ''' <summary>
     ''' Run network graph module enrichment
@@ -81,16 +114,20 @@ Public Module Annotation
                                        Optional ignoreTopology As Boolean = False,
                                        Optional parallel As Boolean = True) As ActivityEnrichment()
 
-        Dim input As Dictionary(Of String, MzQuery) = candidateList.ToDictionary(Function(a) a.unique_id)
-        Dim scores = From graph As NamedValue(Of NetworkGraph)
-                     In allsubgraph.Populate(parallel)
-                     Let query = ActivityEnrichment.Evaluate(
-                         input:=input,
-                         background:=graph,
-                         modelSize:=modelSize,
-                         pinList:=pinList,
-                         ignoreTopology:=ignoreTopology
-                     )
+        Dim task As New PeakListAnnotationTask(candidateList, allsubgraph) With {
+            .ignoreTopology = ignoreTopology,
+            .modelSize = modelSize,
+            .pinList = pinList
+        }
+
+        If parallel Then
+            Call task.Run()
+        Else
+            Call task.Solve()
+        End If
+
+        Dim scores = From query As ActivityEnrichment
+                     In task.result
                      Where query.Background > 0 AndAlso
                          query.Input > 0 AndAlso
                          query.Activity > 0 AndAlso
