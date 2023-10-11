@@ -67,6 +67,7 @@ Imports Microsoft.VisualBasic.Emit.Delegates
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.genomics.Analysis.HTS.GSEA
 Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
@@ -227,6 +228,10 @@ Module Mummichog
                 mutation_rate:=mutation_rate
             )
         Else
+            Call println($"Run mummichog algorithm with Monte-Carlo permutation in parallel with {VectorTask.n_threads} CPU threads!")
+            Call println($"evaluate for {candidates.Length} ion features,")
+            Call println($"based on {models.Count} biological context background model!")
+
             result = candidates.PeakListAnnotation(
                 background:=models,
                 minhit:=minhit,
