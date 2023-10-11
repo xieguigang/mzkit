@@ -67,8 +67,11 @@ Public Module GSEA
     <Extension>
     Public Function SingularGraph(cluster As Cluster) As NetworkGraph
         Dim g As New NetworkGraph
+        Dim uniqs As IEnumerable(Of BackgroundGene) = cluster.members _
+            .GroupBy(Function(a) a.accessionID) _
+            .Select(Function(d) d.First)
 
-        For Each member As BackgroundGene In cluster.members
+        For Each member As BackgroundGene In uniqs
             Call g.CreateNode(member.accessionID, New NodeData With {.label = member.name})
         Next
 
