@@ -57,13 +57,14 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.Language.Default
 
 <Assembly: InternalsVisibleTo("mzkit")>
 
 ''' <summary>
 ''' query result of a ms1 m/z ion
 ''' </summary>
-Public Class MzQuery
+Public Class MzQuery : Implements IsEmpty
 
     ''' <summary>
     ''' the source ``m/z`` value
@@ -95,7 +96,7 @@ Public Class MzQuery
     <XmlText>
     Public Property name As String
 
-    Friend ReadOnly Property isEmpty As Boolean
+    Friend ReadOnly Property isEmpty As Boolean Implements Language.Default.IsEmpty.IsEmpty
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
             Return mz = 0.0 AndAlso

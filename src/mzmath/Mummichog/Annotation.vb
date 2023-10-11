@@ -57,10 +57,43 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Text.Xml.Models
 Imports std = System.Math
 
 Public Module Annotation
+
+    Private Class PeakListAnnotationTask : Inherits VectorTask
+
+        ReadOnly background As NamedValue(Of NetworkGraph)()
+        ReadOnly input As Dictionary(Of String, MzQuery)
+
+        Public ReadOnly result As ActivityEnrichment()
+
+        Public modelSize As Integer
+        Public ignoreTopology As Boolean
+        Public pinList As Index(Of String)
+
+        Sub New(candidateList As MzQuery(), allsubgraph As NamedValue(Of NetworkGraph)())
+            Call MyBase.New(allsubgraph.Length)
+
+            input = candidateList.ToDictionary(Function(a) a.unique_id)
+            background = allsubgraph
+            result = New ActivityEnrichment(background.Length - 1) {}
+        End Sub
+
+        Protected Overrides Sub Solve(start As Integer, ends As Integer)
+            For i As Integer = start To ends
+                result(i) = ActivityEnrichment.Evaluate(
+                    input:=input,
+                    background:=background(i),
+                    modelSize:=modelSize,
+                    pinList:=pinList,
+                    ignoreTopology:=ignoreTopology
+                )
+            Next
+        End Sub
+    End Class
 
     ''' <summary>
     ''' Run network graph module enrichment
@@ -72,22 +105,29 @@ Public Module Annotation
     ''' <param name="ignoreTopology"></param>
     ''' <param name="parallel"></param>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' 
+    ''' </remarks>
     <Extension>
-    Public Function PeakListAnnotation(candidateList As MzQuery(), allsubgraph As NamedValue(Of NetworkGraph)(), pinList As Index(Of String),
+    Friend Function PeakListAnnotation(candidateList As MzQuery(), allsubgraph As NamedValue(Of NetworkGraph)(), pinList As Index(Of String),
                                        Optional modelSize As Integer = -1,
                                        Optional ignoreTopology As Boolean = False,
                                        Optional parallel As Boolean = True) As ActivityEnrichment()
 
-        Dim input As Dictionary(Of String, MzQuery) = candidateList.ToDictionary(Function(a) a.unique_id)
-        Dim scores = From graph As NamedValue(Of NetworkGraph)
-                     In allsubgraph.Populate(parallel)
-                     Let query = ActivityEnrichment.Evaluate(
-                         input:=input,
-                         background:=graph,
-                         modelSize:=modelSize,
-                         pinList:=pinList,
-                         ignoreTopology:=ignoreTopology
-                     )
+        Dim task As New PeakListAnnotationTask(candidateList, allsubgraph) With {
+            .ignoreTopology = ignoreTopology,
+            .modelSize = modelSize,
+            .pinList = pinList
+        }
+
+        If parallel Then
+            Call task.Run()
+        Else
+            Call task.Solve()
+        End If
+
+        Dim scores = From query As ActivityEnrichment
+                     In task.result
                      Where query.Background > 0 AndAlso
                          query.Input > 0 AndAlso
                          query.Activity > 0 AndAlso
@@ -98,6 +138,20 @@ Public Module Annotation
         Return scores.ToArray
     End Function
 
+    ''' <summary>
+    ''' Do ms1 peak list annotation based on the given biological context information
+    ''' </summary>
+    ''' <param name="candidates"></param>
+    ''' <param name="background"></param>
+    ''' <param name="minhit"></param>
+    ''' <param name="permutation"></param>
+    ''' <param name="modelSize"></param>
+    ''' <param name="pinned"></param>
+    ''' <param name="ignoreTopology"></param>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' this function is based on the Monte-Carlo method for run candidate search
+    ''' </remarks>
     <Extension>
     Public Function PeakListAnnotation(candidates As IEnumerable(Of MzSet),
                                        background As IEnumerable(Of NamedValue(Of NetworkGraph)),
@@ -105,13 +159,10 @@ Public Module Annotation
                                        Optional permutation As Integer = 100,
                                        Optional modelSize As Integer = -1,
                                        Optional pinned As String() = Nothing,
-                                       Optional ignoreTopology As Boolean = False) As ActivityEnrichment()
+                                       Optional ignoreTopology As Boolean = False,
+                                       Optional mutation_rate As Double = 0.3) As ActivityEnrichment()
 
-        Dim result, tmp1 As ActivityEnrichment()
         Dim allsubgraph As NamedValue(Of NetworkGraph)() = background.ToArray
-        Dim maxScore As Double = -9999999
-        Dim score As Double
-        Dim pinList As Index(Of String) = pinned.Indexing
 
         If modelSize <= 0 Then
             modelSize = allsubgraph _
@@ -122,22 +173,8 @@ Public Module Annotation
                 .Count
         End If
 
-        result = Nothing
-
-        For Each candidateList As MzQuery() In candidates.CreateCombinations(permutation)
-            tmp1 = candidateList _
-                .PeakListAnnotation(allsubgraph, pinList, modelSize, ignoreTopology) _
-                .ToArray
-            score = tmp1.Score(ignoreTopology)
-
-            ' evaluate the best candidate collection
-            If maxScore < score Then
-                result = tmp1
-                maxScore = score
-
-                Call VBDebugger.EchoLine("Max_mummichog_score: " & maxScore)
-            End If
-        Next
+        Dim monteCarlo As New MonteCarlo(allsubgraph, modelSize, pinned, ignoreTopology)
+        Dim result As ActivityEnrichment() = monteCarlo.Solve(candidates, permutation, mutation_rate)
 
         Return result
     End Function
@@ -160,6 +197,12 @@ Public Module Annotation
         End If
     End Function
 
+    ''' <summary>
+    ''' Populate a sequence of the annotation search candidate set
+    ''' </summary>
+    ''' <param name="MsDb"></param>
+    ''' <param name="peaks"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function GetCandidateSet(MsDb As IMzQuery, peaks As IEnumerable(Of Double)) As IEnumerable(Of MzSet)
         Return From mzi As Double

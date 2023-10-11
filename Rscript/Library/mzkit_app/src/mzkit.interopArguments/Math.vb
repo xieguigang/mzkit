@@ -126,6 +126,10 @@ Module Math
 
         If Not data.isError Then
             Return data.populates(Of String)(env) _
+                .Where(Function(si) Not si.StringEmpty) _
+                .Select(Function(si) si.Split("|"c)) _
+                .IteratesALL _
+                .Distinct _
                 .ToArray _
                 .DoCall(AddressOf Provider.Calculators)
         End If

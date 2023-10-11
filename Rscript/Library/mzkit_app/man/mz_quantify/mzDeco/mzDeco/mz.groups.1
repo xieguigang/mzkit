@@ -1,11 +1,29 @@
 .\" man page create by R# package system.
 .TH MZDECO 1 2000-Jan "mz.groups" "mz.groups"
 .SH NAME
-mz.groups \- 
+mz.groups \- do \fBm/z\fR grouping under the given tolerance
 .SH SYNOPSIS
 \fImz.groups(\fBms1\fR as any, 
 \fBmzdiff\fR as any = "ppm:20", 
 [\fB<Environment>\fR]);\fR
+.SH DESCRIPTION
+.PP
+do \fBm/z\fR grouping under the given tolerance
+.PP
+.SH OPTIONS
+.PP
+\fBms1\fB \fR\- -. 
+.PP
+.PP
+\fBmzdiff\fB \fR\- -. 
+.PP
+.PP
+\fBenv\fB \fR\- -. 
+.PP
+.SH VALUE
+.PP
+create a list of XIC dataset for run downstream deconv operation
+.PP
 .SH SEE ALSO
 mzDeco
 .SH FILES

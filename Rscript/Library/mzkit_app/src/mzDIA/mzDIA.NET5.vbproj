@@ -3,7 +3,7 @@
   <PropertyGroup>
     <RootNamespace>mzkit</RootNamespace>
     <TargetFrameworks>net6.0</TargetFrameworks>
-    <AssemblyName>mzplot</AssemblyName>
+    <AssemblyName>mzDIA</AssemblyName>
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;LipidSearch;PlantMAT;mzkit;Rsharp_app_release</Configurations>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -18,49 +18,51 @@
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
 	  <RuntimeIdentifiers>win7-x64;win7-x86;win-x64;linux-x64;linux-arm64;osx-x64</RuntimeIdentifiers>
 	  <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <DocumentationFile>mzplot.xml</DocumentationFile>
+	  <ApplicationIcon>favicon.ico</ApplicationIcon>
+	  <PackageReadmeFile>README.md</PackageReadmeFile>
+	  <IncludeSymbols>True</IncludeSymbols>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    
+    <DocumentationFile>mzDIA.xml</DocumentationFile>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <DefineConstants>netcore5=1</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    
+    <DocumentationFile>mzDIA.xml</DocumentationFile>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <DefineConstants>netcore5=1</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    
+    <DocumentationFile>mzDIA.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit|AnyCPU'">
-    
+    <DocumentationFile>mzDIA.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='PlantMAT|AnyCPU'">
-    
+    <DocumentationFile>mzDIA.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='LipidSearch|AnyCPU'">
-    
+    <DocumentationFile>mzDIA.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|AnyCPU'">
-    
+    <DocumentationFile>mzDIA.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    
+    <DocumentationFile>mzDIA.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit|x64'">
-  
+    <DocumentationFile>mzDIA.xml</DocumentationFile>
     
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <Optimize>false</Optimize>
@@ -72,7 +74,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='PlantMAT|x64'">
-    
+    <DocumentationFile>mzDIA.xml</DocumentationFile>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <Optimize>false</Optimize>
     <DebugSymbols>true</DebugSymbols>
@@ -85,7 +87,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='LipidSearch|x64'">
-    
+    <DocumentationFile>mzDIA.xml</DocumentationFile>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <Optimize>false</Optimize>
     <DebugSymbols>true</DebugSymbols>
@@ -96,7 +98,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|x64'">
-    
+    <DocumentationFile>mzDIA.xml</DocumentationFile>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <Optimize>false</Optimize>
     <DebugSymbols>true</DebugSymbols>
@@ -104,55 +106,61 @@
     <DefineDebug>false</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
-    <OutputPath>../\mzkit_app\assembly\</OutputPath>
+    <OutputPath>../..\assembly\</OutputPath>
   </PropertyGroup>
 
-
   <ItemGroup>
-    <Compile Remove="test\**" />
-    <EmbeddedResource Remove="test\**" />
-    <None Remove="test\**" />
-    <None Include="..\..\..\LICENSE">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
-    <None Include="..\..\..\.pkg\Flask.png">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
+    <Content Include="favicon.ico" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\..\GCModeller\src\R-sharp\R#\Rsharp-netcore5.vbproj" />
-    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\Math\Math.NET5.vbproj" />
-    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\imaging.NET5.vbproj" />
-    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj" />
-    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\mime\text%html\html_netcore5.vbproj" />
-    <ProjectReference Include="..\..\..\src\assembly\assembly\assembly-netcore5.vbproj" />
-    <ProjectReference Include="..\..\..\src\assembly\Comprehensive\Comprehensive.NET5.vbproj" />
-    <ProjectReference Include="..\..\..\src\assembly\mzPack\mzpack.NET5.vbproj" />
-    <ProjectReference Include="..\..\..\src\assembly\NMRFidTool\NMRFidTool.vbproj" />
-    <ProjectReference Include="..\..\..\src\assembly\SignalReader\SignalReader.vbproj" />
-    <ProjectReference Include="..\..\..\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj" />
-    <ProjectReference Include="..\..\..\src\metadb\SMILES\SMILES.NET5.vbproj" />
-    <ProjectReference Include="..\..\..\src\mzmath\MoleculeNetworking\MoleculeNetworking.vbproj" />
-    <ProjectReference Include="..\..\..\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj" />
-    <ProjectReference Include="..\..\..\src\mzmath\mz_deco\deconv.NET5.vbproj" />
-    <ProjectReference Include="..\..\..\src\visualize\KCF\KCF.Graph\KCF_graph.NET5.vbproj" />
-    <ProjectReference Include="..\..\..\src\visualize\KCF\KCF.IO\KCF_IO.NET5.vbproj" />
-    <ProjectReference Include="..\..\..\src\visualize\KCF\KCFDraw\KCFDraw.NET5.vbproj" />
-    <ProjectReference Include="..\..\..\src\visualize\MsImaging\MsImaging.NET5.vbproj" />
-    <ProjectReference Include="..\..\..\src\visualize\plot\MsPlot.NET5.vbproj" />
-    <ProjectReference Include="..\..\..\src\visualize\SDF.Extensions\SDF.Extensions.NET5.vbproj" />
-    <ProjectReference Include="..\..\..\src\visualize\TissueMorphology\TissueMorphology.vbproj" />
-  </ItemGroup>
-
+  
   <ItemGroup>
     <Import Include="System.Data" />
   </ItemGroup>
 
+  
+  <ItemGroup>
+    <None Include="..\..\..\..\..\.pkg\Flask.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+    <None Include="..\..\..\..\..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\..\..\..\..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+  
+  <ItemGroup>
+    <ProjectReference Include="../../..\..\..\..\GCModeller\src\GCModeller\core\Bio.Assembly\biocore-netcore5.vbproj" />
+    <ProjectReference Include="../../..\..\..\..\GCModeller\src\R-sharp\R#\Rsharp-netcore5.vbproj" />
+    <ProjectReference Include="../../..\..\..\..\GCModeller\src\repository\Bio.Repository\repository.NET5.vbproj" />
+    <ProjectReference Include="../../..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\DataMining\BinaryTree\btree-netcore5.vbproj" />
+    <ProjectReference Include="../../..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\MachineLearning\MachineLearning\machine_learning-netcore5.vbproj" />
+    <ProjectReference Include="../../..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\Math\Math.NET5.vbproj" />
+    <ProjectReference Include="../../..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Visualization\Plots-statistics\plots_extensions-netcore5.vbproj" />
+    <ProjectReference Include="../../..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Visualization\Plots\plots-netcore5.vbproj" />
+    <ProjectReference Include="../../..\..\..\..\GCModeller\src\runtime\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\imaging.NET5.vbproj" />
+    <ProjectReference Include="../../..\..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <ProjectReference Include="../../..\..\..\src\assembly\assembly\assembly-netcore5.vbproj" />
+    <ProjectReference Include="../../..\..\..\src\assembly\SpectrumTree\spectrumTree.NETCore5.vbproj" />
+    <ProjectReference Include="../../..\..\..\src\metadb\Lipidomics\Lipidomics.vbproj" />
+    <ProjectReference Include="../../..\..\..\src\metadna\metaDNA\metaDNA.NET5.vbproj" />
+    <ProjectReference Include="../../..\..\..\src\metadna\MetaDNA_visual\metaDNA_visual.NET5.vbproj" />
+    <ProjectReference Include="../../..\..\..\src\mzmath\MoleculeNetworking\MoleculeNetworking.vbproj" />
+    <ProjectReference Include="../../..\..\..\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj" />
+    <ProjectReference Include="../../..\..\..\src\mzmath\ms2_simulator\ms2_simulator.NET5.vbproj" />
+    <ProjectReference Include="../../..\..\..\src\visualize\KCF\KCF.Graph\KCF_graph.NET5.vbproj" />
+    <ProjectReference Include="../../..\..\..\src\visualize\KCF\KCF.IO\KCF_IO.NET5.vbproj" />
+    <ProjectReference Include="../../..\..\..\src\visualize\MsImaging\MsImaging.NET5.vbproj" />
+  </ItemGroup>
+
+  
   <Import Project="..\mzkit.interopArguments\mzkit.interopArguments.projitems" Label="Shared" />
 
-	<Import Project="..\..\..\..\GCModeller\src\R-sharp\Library\shares\R_graphic.interop\R_graphic.interop.projitems" Label="Shared" />
 
 </Project>

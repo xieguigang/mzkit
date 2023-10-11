@@ -15,7 +15,7 @@ Public Interface IMassSearch
 End Interface
 
 ''' <summary>
-''' A simple implements of mass search index
+''' A simple implements of exact mass search index
 ''' </summary>
 Public Class MassSearchIndex(Of T As IExactMassProvider) : Implements IMassSearch
 

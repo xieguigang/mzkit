@@ -1,7 +1,7 @@
 .\" man page create by R# package system.
 .TH MRMLINEAR 2 2000-Jan "linears" "linears"
 .SH NAME
-linears \- 
+linears \- Create linear fitting based on the wiff raw scan data.
 .SH SYNOPSIS
 \fIlinears(\fBrawScan\fR as <generic> DataSet[], 
 \fBcalibrates\fR as <generic> Standards[], 
@@ -10,6 +10,34 @@ linears \-
 \fBmaxDeletions\fR as integer = 1, 
 \fBisWorkCurveMode\fR as boolean = TRUE, 
 \fBargs\fR as <generic> MRMArguments = \fB<NULL>\fR);\fR
+.SH DESCRIPTION
+.PP
+Create linear fitting based on the wiff raw scan data.
+.PP
+.SH OPTIONS
+.PP
+\fBrawScan\fB \fR\- The wiff raw scan data which are extract by function: \fBwiff.scans\fR.. 
+.PP
+.PP
+\fBcalibrates\fB \fR\- -. 
+.PP
+.PP
+\fB[ISvector]\fB \fR\- -. 
+.PP
+.PP
+\fBmaxDeletions\fB \fR\- 
+ Max number of the reference points that delete automatically by 
+ the linear modelling program.
+ 
+ + negative value means auto
+ + zero means no deletion
+ + positive means the max allowed point numbers for auto deletion by the program
+. 
+.PP
+.SH DETAILS
+.PP
+20200106 checked, test success
+.PP
 .SH SEE ALSO
 MRMLinear
 .SH FILES

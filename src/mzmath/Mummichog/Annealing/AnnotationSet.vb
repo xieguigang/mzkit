@@ -8,6 +8,7 @@ Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 Public Class AnnotationSet : Implements Chromosome(Of AnnotationSet)
 
     Public Property MutationRate As Double Implements Chromosome(Of AnnotationSet).MutationRate
+    Public Property Score As Double
 
     Public ReadOnly Property Key As String Implements IReadOnlyId.Identity
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -39,6 +40,25 @@ Public Class AnnotationSet : Implements Chromosome(Of AnnotationSet)
         End Get
     End Property
 
+    ''' <summary>
+    ''' the size of the result output <see cref="CandidateSet"/>.
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property UniqueHitSize As Integer
+        Get
+            Return i _
+                .Select(Function(idx, j)
+                            Return IonSet(j)(idx)
+                        End Function) _
+                .GroupBy(Function(a) a.unique_id) _
+                .Count
+        End Get
+    End Property
+
+    Public Overrides Function ToString() As String
+        Return $"<{UInteger.Parse(Key).ToHexString}> {UniqueHitSize} uniq candidates"
+    End Function
+
     Public Iterator Function Crossover(another As AnnotationSet) As IEnumerable(Of AnnotationSet) Implements Chromosome(Of AnnotationSet).Crossover
         Dim clone1 As New AnnotationSet With {.i = Me.i.ToArray, .IonSet = IonSet, .MutationRate = MutationRate}
         Dim clone2 As New AnnotationSet With {.i = another.i.ToArray, .IonSet = IonSet, .MutationRate = MutationRate}
@@ -53,6 +73,11 @@ Public Class AnnotationSet : Implements Chromosome(Of AnnotationSet)
     ''' generate a new annotation candidate combination
     ''' </summary>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' 1. this function make an object copy at first
+    ''' 2. and then do the annotation candidate mutations
+    ''' 3. returns the new clone one
+    ''' </remarks>
     Public Function Mutate() As AnnotationSet Implements Chromosome(Of AnnotationSet).Mutate
         Dim clone As New AnnotationSet With {
             .IonSet = IonSet,

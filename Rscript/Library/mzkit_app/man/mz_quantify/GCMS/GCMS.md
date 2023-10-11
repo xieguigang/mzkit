@@ -8,7 +8,7 @@
 + [parseContents](GCMS/parseContents.1) 
 + [contentTable](GCMS/contentTable.1) 
 + [read.raw](GCMS/read.raw.1) 
-+ [peakRaw](GCMS/peakRaw.1) 
-+ [linear_algorithm](GCMS/linear_algorithm.1) 
++ [peakRaw](GCMS/peakRaw.1) read raw peaks data
++ [linear_algorithm](GCMS/linear_algorithm.1) create linear model handler
 + [linears](GCMS/linears.1) 
 + [ROIlist](GCMS/ROIlist.1) 

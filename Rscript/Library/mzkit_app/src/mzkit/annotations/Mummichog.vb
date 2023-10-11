@@ -67,6 +67,7 @@ Imports Microsoft.VisualBasic.Emit.Delegates
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.genomics.Analysis.HTS.GSEA
 Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
@@ -76,7 +77,7 @@ Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
-Imports stdNum = System.Math
+Imports std = System.Math
 
 ''' <summary>
 ''' Mummichog searches for enrichment patterns on metabolic network, 
@@ -144,7 +145,7 @@ Module Mummichog
             If pathway.Fisher.two_tail_pvalue < 1.0E-100 Then
                 score *= 100
             Else
-                score *= -stdNum.Log10(pathway.Fisher.two_tail_pvalue) + 1
+                score *= -std.Log10(pathway.Fisher.two_tail_pvalue) + 1
             End If
 
             For Each hit In pathway.Hits.SafeQuery
@@ -164,7 +165,9 @@ Module Mummichog
     End Function
 
     ''' <summary>
-    ''' do ms1 peaks annotation
+    ''' ### do ms1 peaks annotation
+    ''' 
+    ''' Do ms1 peak list annotation based on the given biological context information
     ''' </summary>
     ''' <param name="background">
     ''' the enrichment and network topology graph mode list
@@ -186,6 +189,8 @@ Module Mummichog
                                        Optional pinned As String() = Nothing,
                                        Optional ignore_topology As Boolean = False,
                                        Optional ga As Boolean = False,
+                                       Optional pop_size As Integer = 100,
+                                       Optional mutation_rate As Double = 0.3,
                                        Optional env As Environment = Nothing) As Object
 
         Dim models As New List(Of NamedValue(Of NetworkGraph))
@@ -218,16 +223,23 @@ Module Mummichog
                 candidates:=candidates, background:=models,
                 minhit:=minhit, permutation:=permutation,
                 modelSize:=modelSize, pinned:=pinned,
-                ignoreTopology:=ignore_topology
+                popsize:=pop_size,
+                ignoreTopology:=ignore_topology,
+                mutation_rate:=mutation_rate
             )
         Else
+            Call println($"Run mummichog algorithm with Monte-Carlo permutation in parallel with {VectorTask.n_threads} CPU threads!")
+            Call println($"evaluate for {candidates.Length} ion features,")
+            Call println($"based on {models.Count} biological context background model!")
+
             result = candidates.PeakListAnnotation(
                 background:=models,
                 minhit:=minhit,
                 permutation:=permutation,
                 modelSize:=modelSize,
                 pinned:=pinned,
-                ignoreTopology:=ignore_topology
+                ignoreTopology:=ignore_topology,
+                mutation_rate:=mutation_rate
             )
         End If
 
@@ -235,14 +247,18 @@ Module Mummichog
     End Function
 
     ''' <summary>
-    ''' 
+    ''' Matches all of the annotation hits candidates from a given of the mass peak list
     ''' </summary>
-    ''' <param name="mz"></param>
+    ''' <param name="mz">A numeric vector, the given mass peak list for run candidate search.</param>
     ''' <param name="msData">
-    ''' the <see cref="IMzQuery"/> annotation engine
+    ''' the <see cref="IMzQuery"/> annotation engine, should has the 
+    ''' interface function for query annotation candidates by the
+    ''' given m/z mass value.
     ''' </param>
     ''' <param name="env"></param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' A set of the metabolite ion m/z query candidates result
+    ''' </returns>
     <ExportAPI("queryCandidateSet")>
     <RApiReturn(GetType(MzSet))>
     Public Function queryCandidateSet(mz As Double(), msData As Object, Optional env As Environment = Nothing) As Object
@@ -253,6 +269,39 @@ Module Mummichog
         Else
             Return Message.InCompatibleType(GetType(IMzQuery), msData.GetType, env)
         End If
+    End Function
+
+    ''' <summary>
+    ''' Extract all candidates unique id from the given query result
+    ''' </summary>
+    ''' <returns></returns>
+    <ExportAPI("candidates_Id")>
+    <RApiReturn(GetType(String))>
+    Public Function extractCandidateUniqueId(<RRawVectorArgument> q As Object, Optional env As Environment = Nothing) As Object
+        Dim pull As pipeline = pipeline.TryCreatePipeline(Of MzSet)(q, env, suppress:=True)
+        Dim candidates As New List(Of MzQuery)
+
+        If Not pull.isError Then
+            For Each qi As MzSet In pull.populates(Of MzSet)(env)
+                If qi.query IsNot Nothing Then
+                    Call candidates.AddRange(qi.query)
+                End If
+            Next
+        Else
+            pull = pipeline.TryCreatePipeline(Of MzQuery)(q, env)
+
+            If pull.isError Then
+                Return pull.getError
+            Else
+                Call candidates.AddRange(pull.populates(Of MzQuery)(env))
+            End If
+        End If
+
+        Return candidates _
+            .Where(Function(i) Not i Is Nothing) _
+            .Select(Function(i) i.unique_id) _
+            .Distinct _
+            .ToArray
     End Function
 
     <ExportAPI("createMzset")>
@@ -297,19 +346,22 @@ Module Mummichog
     ''' <param name="background"></param>
     ''' <returns></returns>
     <ExportAPI("fromGseaBackground")>
-    Public Function fromGseaBackground(background As Background) As list
+    Public Function fromGseaBackground(background As Background, Optional min_size As Integer = 3) As list
+        Dim gset As New Dictionary(Of String, Object)
+        Dim filters = From ci As Cluster In background.clusters Where ci.size >= min_size
+
+        For Each c As Cluster In filters
+            gset(c.ID) = New list With {
+                .slots = New Dictionary(Of String, Object) From {
+                    {"name", c.ID},
+                    {"desc", c.names},
+                    {"model", c.SingularGraph}
+                }
+            }
+        Next
+
         Return New list With {
-            .slots = background.clusters _
-                .Where(Function(c) c.members.Length > 2) _
-                .ToDictionary(Function(c) c.ID,
-                              Function(c)
-                                  Dim slot As New list With {.slots = New Dictionary(Of String, Object)}
-
-                                  slot.add("desc", c.names)
-                                  slot.add("model", c.SingularGraph)
-
-                                  Return CObj(slot)
-                              End Function)
+            .slots = gset
         }
     End Function
 
