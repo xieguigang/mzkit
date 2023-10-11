@@ -23,8 +23,10 @@ declare namespace Mummichog {
     * 
     * 
      * @param background -
+     * @param min_size 
+     * + default value Is ``3``.
    */
-   function fromGseaBackground(background: object): object;
+   function fromGseaBackground(background: object, min_size?: object): object;
    /**
      * @param adducts default value Is ``["[M]+","[M+H]+","[M+H2O]+","[M+H-H2O]+"]``.
      * @param isotopic_max default value Is ``5``.
@@ -56,7 +58,9 @@ declare namespace Mummichog {
    */
    function mzScore(result: object, minHits?: object, ignore_topology?: boolean): object;
    /**
-    * do ms1 peaks annotation
+    * ### do ms1 peaks annotation
+    *  
+    *  Do ms1 peak list annotation based on the given biological context information
     * 
     * 
      * @param background the enrichment and network topology graph mode list
@@ -76,16 +80,23 @@ declare namespace Mummichog {
      * + default value Is ``false``.
      * @param ga 
      * + default value Is ``false``.
+     * @param pop_size 
+     * + default value Is ``100``.
+     * @param mutation_rate 
+     * + default value Is ``0.3``.
      * @param env -
      * 
      * + default value Is ``null``.
    */
-   function peakList_annotation(background: object, candidates: object, minhit?: object, permutation?: object, modelSize?: object, pinned?: string, ignore_topology?: boolean, ga?: boolean, env?: object): object;
+   function peakList_annotation(background: object, candidates: object, minhit?: object, permutation?: object, modelSize?: object, pinned?: string, ignore_topology?: boolean, ga?: boolean, pop_size?: object, mutation_rate?: number, env?: object): object;
    /**
+    * Matches all of the annotation hits candidates from a given of the mass peak list
     * 
     * 
-     * @param mz -
-     * @param msData the @``T:BioNovoGene.BioDeep.MSEngine.IMzQuery`` annotation engine
+     * @param mz A numeric vector, the given mass peak list for run candidate search.
+     * @param msData the @``T:BioNovoGene.BioDeep.MSEngine.IMzQuery`` annotation engine, should has the 
+     *  interface function for query annotation candidates by the
+     *  given m/z mass value.
      * @param env -
      * 
      * + default value Is ``null``.

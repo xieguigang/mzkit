@@ -7,7 +7,7 @@ Imports Microsoft.VisualBasic.MachineLearning.Darwinism.GAF.Population.Substitut
 Public Module GAPeakListAnnotation
 
     ''' <summary>
-    ''' Run annotation via the genetic algorithm
+    ''' Do ms1 peak list annotation based on the given biological context information, Run annotation via the genetic algorithm
     ''' </summary>
     ''' <param name="candidates"></param>
     ''' <param name="background"></param>
@@ -22,7 +22,7 @@ Public Module GAPeakListAnnotation
     Public Function PeakListAnnotation(candidates As IEnumerable(Of MzSet),
                                        background As IEnumerable(Of NamedValue(Of NetworkGraph)),
                                        Optional minhit As Integer = 3,
-                                       Optional popsize As Integer = 300,
+                                       Optional popsize As Integer = 100,
                                        Optional permutation As Integer = 1000,
                                        Optional modelSize As Integer = -1,
                                        Optional pinned As String() = Nothing,

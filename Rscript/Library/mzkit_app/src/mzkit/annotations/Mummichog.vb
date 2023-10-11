@@ -76,7 +76,7 @@ Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
-Imports stdNum = System.Math
+Imports std = System.Math
 
 ''' <summary>
 ''' Mummichog searches for enrichment patterns on metabolic network, 
@@ -144,7 +144,7 @@ Module Mummichog
             If pathway.Fisher.two_tail_pvalue < 1.0E-100 Then
                 score *= 100
             Else
-                score *= -stdNum.Log10(pathway.Fisher.two_tail_pvalue) + 1
+                score *= -std.Log10(pathway.Fisher.two_tail_pvalue) + 1
             End If
 
             For Each hit In pathway.Hits.SafeQuery
@@ -164,7 +164,9 @@ Module Mummichog
     End Function
 
     ''' <summary>
-    ''' do ms1 peaks annotation
+    ''' ### do ms1 peaks annotation
+    ''' 
+    ''' Do ms1 peak list annotation based on the given biological context information
     ''' </summary>
     ''' <param name="background">
     ''' the enrichment and network topology graph mode list
@@ -186,6 +188,8 @@ Module Mummichog
                                        Optional pinned As String() = Nothing,
                                        Optional ignore_topology As Boolean = False,
                                        Optional ga As Boolean = False,
+                                       Optional pop_size As Integer = 100,
+                                       Optional mutation_rate As Double = 0.3,
                                        Optional env As Environment = Nothing) As Object
 
         Dim models As New List(Of NamedValue(Of NetworkGraph))
@@ -218,7 +222,9 @@ Module Mummichog
                 candidates:=candidates, background:=models,
                 minhit:=minhit, permutation:=permutation,
                 modelSize:=modelSize, pinned:=pinned,
-                ignoreTopology:=ignore_topology
+                popsize:=pop_size,
+                ignoreTopology:=ignore_topology,
+                mutation_rate:=mutation_rate
             )
         Else
             result = candidates.PeakListAnnotation(
@@ -227,7 +233,8 @@ Module Mummichog
                 permutation:=permutation,
                 modelSize:=modelSize,
                 pinned:=pinned,
-                ignoreTopology:=ignore_topology
+                ignoreTopology:=ignore_topology,
+                mutation_rate:=mutation_rate
             )
         End If
 
@@ -235,11 +242,13 @@ Module Mummichog
     End Function
 
     ''' <summary>
-    ''' 
+    ''' Matches all of the annotation hits candidates from a given of the mass peak list
     ''' </summary>
-    ''' <param name="mz"></param>
+    ''' <param name="mz">A numeric vector, the given mass peak list for run candidate search.</param>
     ''' <param name="msData">
-    ''' the <see cref="IMzQuery"/> annotation engine
+    ''' the <see cref="IMzQuery"/> annotation engine, should has the 
+    ''' interface function for query annotation candidates by the
+    ''' given m/z mass value.
     ''' </param>
     ''' <param name="env"></param>
     ''' <returns></returns>
@@ -297,19 +306,22 @@ Module Mummichog
     ''' <param name="background"></param>
     ''' <returns></returns>
     <ExportAPI("fromGseaBackground")>
-    Public Function fromGseaBackground(background As Background) As list
+    Public Function fromGseaBackground(background As Background, Optional min_size As Integer = 3) As list
+        Dim gset As New Dictionary(Of String, Object)
+        Dim filters = From ci As Cluster In background.clusters Where ci.size >= min_size
+
+        For Each c As Cluster In filters
+            gset(c.ID) = New list With {
+                .slots = New Dictionary(Of String, Object) From {
+                    {"name", c.ID},
+                    {"desc", c.names},
+                    {"model", c.SingularGraph}
+                }
+            }
+        Next
+
         Return New list With {
-            .slots = background.clusters _
-                .Where(Function(c) c.members.Length > 2) _
-                .ToDictionary(Function(c) c.ID,
-                              Function(c)
-                                  Dim slot As New list With {.slots = New Dictionary(Of String, Object)}
-
-                                  slot.add("desc", c.names)
-                                  slot.add("model", c.SingularGraph)
-
-                                  Return CObj(slot)
-                              End Function)
+            .slots = gset
         }
     End Function
 

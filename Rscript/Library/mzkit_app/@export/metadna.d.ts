@@ -10,7 +10,7 @@
 */
 declare namespace metadna {
    /**
-    * create the kegg compound ms1 annotation query engine.
+    * Create the kegg compound ms1 annotation query engine.
     * 
     * 
      * @param kegg a set of kegg compound data
