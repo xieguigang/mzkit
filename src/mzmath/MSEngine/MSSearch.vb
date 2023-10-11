@@ -102,6 +102,10 @@ Public Class MSSearch(Of Compound As {IReadOnlyId, ICompoundNameProvider, IExact
     ''' </summary>
     Friend ReadOnly index As Dictionary(Of String, Compound)
 
+    ''' <summary>
+    ''' pull all compound meta data from current m/z search index
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property Metadata As IEnumerable(Of Compound)
         Get
             Return index.Values
