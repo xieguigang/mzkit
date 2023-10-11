@@ -266,6 +266,39 @@ Module Mummichog
         End If
     End Function
 
+    ''' <summary>
+    ''' Extract all candidates unique id from the given query result
+    ''' </summary>
+    ''' <returns></returns>
+    <ExportAPI("candidates_Id")>
+    <RApiReturn(GetType(String))>
+    Public Function extractCandidateUniqueId(<RRawVectorArgument> q As Object, Optional env As Environment = Nothing) As Object
+        Dim pull As pipeline = pipeline.TryCreatePipeline(Of MzSet)(q, env, suppress:=True)
+        Dim candidates As New List(Of MzQuery)
+
+        If Not pull.isError Then
+            For Each qi As MzSet In pull.populates(Of MzSet)(env)
+                If qi.query IsNot Nothing Then
+                    Call candidates.AddRange(qi.query)
+                End If
+            Next
+        Else
+            pull = pipeline.TryCreatePipeline(Of MzQuery)(q, env)
+
+            If pull.isError Then
+                Return pull.getError
+            Else
+                Call candidates.AddRange(pull.populates(Of MzQuery)(env))
+            End If
+        End If
+
+        Return candidates _
+            .Where(Function(i) Not i Is Nothing) _
+            .Select(Function(i) i.unique_id) _
+            .Distinct _
+            .ToArray
+    End Function
+
     <ExportAPI("createMzset")>
     <RApiReturn(GetType(MzSet))>
     Public Function createMzSet(query As MzQuery(),
