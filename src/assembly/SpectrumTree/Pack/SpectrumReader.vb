@@ -243,6 +243,18 @@ Namespace PackLib
             Return (err_msg.ToString)
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' the file name should be the metabolite unique id, and used as the 
+        ''' tag prefix with delimiter ``|``, example as: 
+        ''' 
+        ''' ```
+        ''' HMDB0000001|libname.bcode
+        ''' ```
+        ''' </remarks>
         Private Function GetMassFiles() As IEnumerable(Of StreamBlock)
             Return DirectCast(file.GetObject("/massSet/"), StreamGroup) _
                 .ListFiles(safe:=True) _
