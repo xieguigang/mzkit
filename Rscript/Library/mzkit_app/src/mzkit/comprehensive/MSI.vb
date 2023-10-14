@@ -888,8 +888,11 @@ Module MSI
 
         Call println($"Extract pixel matrix with mzdiff:{mzdiff}, frequency:{q}")
         Call println($"get {matrix.mz.Length} ions with {matrix.matrix.Length} pixel spots")
+        Call println("get ion features:")
+        Call println(matrix.mz)
         Call matrix.ExportCsvSheet(file)
         Call file.Flush()
+        Call println("matrix created!")
 
         Return Nothing
     End Function
