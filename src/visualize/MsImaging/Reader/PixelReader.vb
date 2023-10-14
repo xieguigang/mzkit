@@ -66,6 +66,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.Statistics.Linq
 Imports stdNum = System.Math
 
 #If UNIX = 0 Then
@@ -129,9 +130,13 @@ Namespace Reader
             If summary Is Nothing Then
                 Dim rows = AllPixels _
                     .GroupBy(Function(p) p.Y) _
+                    .ToArray _
+                    .AsParallel _
                     .Select(Function(r)
-                                Return GetIntensitySummary(r)
+                                Return (r.Key, GetIntensitySummary(r))
                             End Function) _
+                    .OrderBy(Function(r) r.Key) _
+                    .Select(Function(r) r.Item2) _
                     .ToArray
 
                 summary = New MSISummary With {
@@ -157,7 +162,10 @@ Namespace Reader
                                 .basePeakMz = mz(which.Max(into)),
                                 .totalIon = into.Sum,
                                 .x = p.X,
-                                .y = p.Y
+                                .y = p.Y,
+                                .median = into.Median,
+                                .min = into.Min,
+                                .numIons = into.Length
                             }
                         End Function) _
                 .ToArray
