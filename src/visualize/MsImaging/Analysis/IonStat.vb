@@ -208,7 +208,12 @@ Public Class IonStat
         Dim intensity As Double() = ion _
             .Select(Function(i) i.intensity) _
             .ToArray
-        Dim moran As MoranTest = MoranTest.moran_test(intensity, ion.Select(Function(p) CDbl(p.x)).ToArray, ion.Select(Function(p) CDbl(p.y)).ToArray)
+        Dim sampling = ion.Where(Function(p) p.x Mod 5 = 0 AndAlso p.y Mod 5 = 0).ToArray
+        Dim moran As MoranTest = MoranTest.moran_test(
+            x:=sampling.Select(Function(i) i.intensity).ToArray,
+            c1:=sampling.Select(Function(p) CDbl(p.x)).ToArray,
+            c2:=sampling.Select(Function(p) CDbl(p.y)).ToArray
+        )
         Dim Q As DataQuartile = intensity.Quartile
         Dim counts As New List(Of Double)
         Dim A As Double = nsize ^ 2
