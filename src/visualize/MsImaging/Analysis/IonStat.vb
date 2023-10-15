@@ -189,7 +189,7 @@ Public Class IonStat
     ''' <returns></returns>
     Public Shared Function DoStat(layer As SingleIonLayer, Optional nsize As Integer = 5) As IonStat
         Dim ion As New NamedCollection(Of PixelData)(layer.IonMz, layer.MSILayer)
-        Dim stats As IonStat = DoStatSingleIon(ion, nsize)
+        Dim stats As IonStat = DoStatSingleIon(ion, nsize, parallel:=True)
 
         Return stats
     End Function
@@ -202,7 +202,7 @@ Public Class IonStat
     ''' the grid cell size for evaluate the pixel density
     ''' </param>
     ''' <returns></returns>
-    Private Shared Function DoStatSingleIon(ion As NamedCollection(Of PixelData), nsize As Integer) As IonStat
+    Private Shared Function DoStatSingleIon(ion As NamedCollection(Of PixelData), nsize As Integer, parallel As Boolean) As IonStat
         Dim pixels = Grid(Of PixelData).Create(ion, Function(x) New Point(x.x, x.y))
         Dim basePixel = ion.OrderByDescending(Function(i) i.intensity).First
         Dim intensity As Double() = ion _
@@ -212,7 +212,8 @@ Public Class IonStat
         Dim moran As MoranTest = MoranTest.moran_test(
             x:=sampling.Select(Function(i) i.intensity).ToArray,
             c1:=sampling.Select(Function(p) CDbl(p.x)).ToArray,
-            c2:=sampling.Select(Function(p) CDbl(p.y)).ToArray
+            c2:=sampling.Select(Function(p) CDbl(p.y)).ToArray,
+            parallel:=parallel
         )
         Dim Q As DataQuartile = intensity.Quartile
         Dim counts As New List(Of Double)
@@ -292,7 +293,9 @@ Public Class IonStat
 
         Protected Overrides Sub Solve(start As Integer, ends As Integer)
             For i As Integer = start To ends
-                result(i) = DoStatSingleIon(layers(i), nsize)
+                ' moran parallel if in sequenceMode
+                ' moran sequence if not in sequenceMode
+                result(i) = DoStatSingleIon(layers(i), nsize, parallel:=sequenceMode)
             Next
         End Sub
     End Class
