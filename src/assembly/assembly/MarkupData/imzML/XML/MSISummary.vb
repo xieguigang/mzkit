@@ -170,6 +170,7 @@ Namespace MarkupData.imzML
                     Case IntensitySummary.Average : into = p.average
                     Case IntensitySummary.BasePeak : into = p.basePeakIntensity
                     Case IntensitySummary.Total : into = p.totalIon
+                    Case IntensitySummary.Median : into = p.median
                     Case Else
                         Throw New NotImplementedException
                 End Select
@@ -212,6 +213,7 @@ Namespace MarkupData.imzML
         ''' get the average intensity signal value in a pixel
         ''' </summary>
         Average
+        Median
     End Enum
 
 End Namespace
