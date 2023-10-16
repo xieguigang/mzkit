@@ -1106,7 +1106,7 @@ Module MSI
             .AsParallel _
             .Select(Function(lbMz)
                         Dim v As Double() = CLRVector.asNumeric(x(lbMz))
-                        Dim m As MoranTest = MoranTest.moran_test(v, sx, sy)
+                        Dim m As MoranTest = MoranTest.moran_test(v, sx, sy, throwMaxIterError:=False)
 
                         Return (lbMz, m)
                     End Function) _

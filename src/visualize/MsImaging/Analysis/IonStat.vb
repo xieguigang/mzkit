@@ -213,7 +213,8 @@ Public Class IonStat
             x:=sampling.Select(Function(i) i.intensity).ToArray,
             c1:=sampling.Select(Function(p) CDbl(p.x)).ToArray,
             c2:=sampling.Select(Function(p) CDbl(p.y)).ToArray,
-            parallel:=parallel
+            parallel:=parallel,
+            throwMaxIterError:=False
         )
         Dim Q As DataQuartile = intensity.Quartile
         Dim counts As New List(Of Double)
