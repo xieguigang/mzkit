@@ -772,14 +772,24 @@ Module MSI
     ''' Extract the ion data matrix
     ''' </summary>
     ''' <param name="raw"></param>
-    ''' <param name="topN"></param>
+    ''' <param name="topN">
+    ''' select top N ion feature in each spot and then union the ion features as 
+    ''' the features set, this parameter only works when the <paramref name="ionSet"/> 
+    ''' parameter is empty or null.
+    ''' </param>
     ''' <param name="ionSet">
     ''' A tuple list of the ion dataset range, the tuple list object should 
     ''' be in data format of [unique_id => mz]
     ''' </param>
-    ''' <param name="mzError"></param>
+    ''' <param name="mzError">The mass tolerance of the ion m/z</param>
     ''' <param name="env"></param>
     ''' <returns></returns>
+    ''' <example>
+    ''' let raw = open.mzpack("/path/to/rawdata.mzPack");
+    ''' let ionsSet = list(ion1 = 100.0321, ion2 = 563.2254, ion3 = 336.9588);
+    ''' 
+    ''' MSI::peakMatrix(raw, ionSet = ionsSet, mzError = "da:0.05");
+    ''' </example>
     <ExportAPI("peakMatrix")>
     Public Function PeakMatrix(raw As mzPack,
                                Optional topN As Integer = 3,
@@ -788,14 +798,13 @@ Module MSI
                                Optional env As Environment = Nothing) As Object
 
         Dim err = Math.getTolerance(mzError, env)
-        Dim ions As Dictionary(Of String, Double) = Nothing
 
         If err Like GetType(Message) Then
             Return err.TryCast(Of Message)
         End If
 
         If Not ionSet Is Nothing Then
-            ions = ionSet.AsGeneric(Of Double)(env)
+            Dim ions = ionSet.AsGeneric(Of Double)(env)
 
             Return raw _
                 .SelectivePeakMatrix(ions, err.TryCast(Of Tolerance)) _
