@@ -10,7 +10,7 @@
 */
 declare namespace math {
    /**
-    * Converts profiles peak data to peak data in centroid mode.
+    * #### Converts profiles peak data to peak data in centroid mode.
     *  
     *  profile and centroid in Mass Spectrometry?
     *  

@@ -85,18 +85,24 @@ declare namespace mzweb {
     * get a overview ms1 spectrum data from the mzpack raw data
     * 
     * 
-     * @param mzpack -
-     * @param tolerance -
+     * @param mzpack The mzpack rawdata object
+     * @param tolerance The mass tolerance error
      * 
      * + default value Is ``'da:0.001'``.
-     * @param cutoff -
+     * @param cutoff intensity cutoff percentage value for removes the noised liked peaks.
      * 
      * + default value Is ``0.05``.
+     * @param ionset A numeric vector for make subset of the ion features 
+     *  which is extract from the input mzpack rawdata file
+     *  object.
+     * 
+     * + default value Is ``null``.
      * @param env -
      * 
      * + default value Is ``null``.
+     * @return A ms peaks object
    */
-   function ms1_peaks(mzpack: object, tolerance?: any, cutoff?: number, env?: object): object;
+   function ms1_peaks(mzpack: object, tolerance?: any, cutoff?: number, ionset?: any, env?: object): object;
    /**
     * get all ms1 scan data points
     * 

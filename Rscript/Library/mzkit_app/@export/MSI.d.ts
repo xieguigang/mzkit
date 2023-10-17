@@ -142,10 +142,12 @@ declare namespace MSI {
     * 
     * 
      * @param raw -
-     * @param topN -
+     * @param topN select top N ion feature in each spot and then union the ion features as 
+     *  the features set, this parameter only works when the **`ionSet`** 
+     *  parameter is empty or null.
      * 
      * + default value Is ``3``.
-     * @param mzError -
+     * @param mzError The mass tolerance of the ion m/z
      * 
      * + default value Is ``'da:0.05'``.
      * @param ionSet A tuple list of the ion dataset range, the tuple list object should 
