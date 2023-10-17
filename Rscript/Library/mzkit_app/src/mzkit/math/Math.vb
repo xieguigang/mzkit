@@ -597,7 +597,7 @@ Module MzMath
     End Function
 
     ''' <summary>
-    ''' Converts profiles peak data to peak data in centroid mode.
+    ''' #### Converts profiles peak data to peak data in centroid mode.
     ''' 
     ''' profile and centroid in Mass Spectrometry?
     ''' 
@@ -621,6 +621,9 @@ Module MzMath
     ''' <returns>
     ''' Peaks data in centroid mode or a new m/z vector in centroid.
     ''' </returns>
+    ''' <example>
+    ''' print(centroid([452.7627 67.563 457.336 347.8 242.3], tolerance = "da:0.1"));
+    ''' </example>
     <ExportAPI("centroid")>
     <RApiReturn(GetType(PeakMs2), GetType(LibraryMatrix), GetType(Double))>
     Public Function centroid(<RRawVectorArgument>
