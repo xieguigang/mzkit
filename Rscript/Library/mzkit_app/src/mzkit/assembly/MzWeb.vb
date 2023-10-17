@@ -552,28 +552,57 @@ Module MzWeb
     ''' <summary>
     ''' get a overview ms1 spectrum data from the mzpack raw data
     ''' </summary>
-    ''' <param name="mzpack"></param>
-    ''' <param name="tolerance"></param>
-    ''' <param name="cutoff"></param>
+    ''' <param name="mzpack">The mzpack rawdata object</param>
+    ''' <param name="tolerance">The mass tolerance error</param>
+    ''' <param name="cutoff">intensity cutoff percentage value for removes the noised liked peaks.</param>
+    ''' <param name="ionset">
+    ''' A numeric vector for make subset of the ion features 
+    ''' which is extract from the input mzpack rawdata file
+    ''' object.
+    ''' </param>
     ''' <param name="env"></param>
-    ''' <returns></returns>
+    ''' <returns>A ms peaks object</returns>
+    ''' <example>
+    ''' let rawdata = open.mzpack("/path/to/rawdata.mzPack");
+    ''' let ms1 = ms1_peaks(rawdata, tolerance = "da:0.001", 
+    '''      cutoff = 0.01, 
+    '''      ionset = [347.56 238.3712 631.31 131.23]);
+    ''' </example>
     <ExportAPI("ms1_peaks")>
     <RApiReturn(GetType(LibraryMatrix))>
     Public Function Ms1Peaks(mzpack As mzPack,
                              Optional tolerance As Object = "da:0.001",
                              Optional cutoff As Double = 0.05,
+                             <RRawVectorArgument>
+                             Optional ionset As Object = Nothing,
                              Optional env As Environment = Nothing) As Object
 
         Dim mzdiff = Math.getTolerance(tolerance, env)
+        Dim mzsubset As Double() = CLRVector.asNumeric(ionset)
 
         If mzdiff Like GetType(Message) Then
             Return mzdiff.TryCast(Of Message)
         End If
 
-        Dim ms As ms2() = mzpack.MS _
+        Dim allMassPeaks As ms2() = mzpack.MS _
             .Select(Function(scan) scan.GetMs) _
             .IteratesALL _
-            .ToArray _
+            .ToArray
+        Dim ms As ms2()
+
+        If Not mzsubset.IsNullOrEmpty Then
+            Dim findMz As Tolerance = New DAmethod(0.05)
+            Dim peaksubset As ms2() = allMassPeaks _
+                .AsParallel _
+                .Where(Function(a)
+                           Return mzsubset.Any(Function(mzi) findMz(mzi, a.mz))
+                       End Function) _
+                .ToArray
+
+            allMassPeaks = peaksubset
+        End If
+
+        ms = allMassPeaks _
             .Centroid(mzdiff.TryCast(Of Tolerance), New RelativeIntensityCutoff(cutoff)) _
             .ToArray
 
