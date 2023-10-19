@@ -164,7 +164,8 @@
         <div style="width: 100%; padding-left: 3%; color: black;">
             <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>ms1_peaks</strong>(<i>mzpack</i>,
     <i>tolerance</i> = <span style='color: brown;'><strong>"da:0.001"</strong></span>,
-    <i>cutoff</i> = <span style='color: green;'>0.05</span>);</code></pre>
+    <i>cutoff</i> = <span style='color: green;'>0.05</span>,
+    <i>ionset</i> = <span style='color: blue !important;'>NULL</span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
@@ -172,15 +173,21 @@
         <table>
             
 <dt>mzpack</dt>
-<dd><p><p>-</p></p></dd>
+<dd><p><p>The mzpack rawdata object</p></p></dd>
 
 
 <dt>tolerance</dt>
-<dd><p><p>-</p></p></dd>
+<dd><p><p>The mass tolerance error</p></p></dd>
 
 
 <dt>cutoff</dt>
-<dd><p><p>-</p></p></dd>
+<dd><p><p>intensity cutoff percentage value for removes the noised liked peaks.</p></p></dd>
+
+
+<dt>ionset</dt>
+<dd><p><p>A numeric vector for make subset of the ion features <br />
+ which is extract from the input mzpack rawdata file<br />
+ object.</p></p></dd>
 
 
 <dt>env</dt>
@@ -196,11 +203,14 @@
 
         <h3>Value</h3>
 
-        this function returns data object of type <a href="/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/LibraryMatrix.html">LibraryMatrix</a>.
+        <p>A ms peaks object</p>
 
-        <h3 style="display: none;">Examples</h3>
+        <h3 style="display: block;">Examples</h3>
 
-        
+        <pre><code>let rawdata = open.mzpack("/path/to/rawdata.mzPack");
+ let ms1 = ms1_peaks(rawdata, tolerance = "da:0.001", 
+      cutoff = 0.01, 
+      ionset = [347.56 238.3712 631.31 131.23]);</code></pre>
 
         <hr />
         <div style="text-align: center;">[Package <em>mzweb</em> version 1.0.0.0 <a

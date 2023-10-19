@@ -209,12 +209,24 @@ Public Class IonStat
             .Select(Function(i) i.intensity) _
             .ToArray
         Dim sampling = ion.Where(Function(p) p.x Mod 5 = 0 AndAlso p.y Mod 5 = 0).ToArray
-        Dim moran As MoranTest = MoranTest.moran_test(
-            x:=sampling.Select(Function(i) i.intensity).ToArray,
-            c1:=sampling.Select(Function(p) CDbl(p.x)).ToArray,
-            c2:=sampling.Select(Function(p) CDbl(p.y)).ToArray,
-            parallel:=parallel
-        )
+        Dim moran As MoranTest
+
+        If sampling.Length < 3 Then
+            moran = New MoranTest With {
+                .df = 0, .Expected = 0, .Observed = 0,
+                .prob2 = 1, .pvalue = 1, .SD = 0,
+                .t = 0, .z = 0
+            }
+        Else
+            moran = MoranTest.moran_test(
+                x:=sampling.Select(Function(i) i.intensity).ToArray,
+                c1:=sampling.Select(Function(p) CDbl(p.x)).ToArray,
+                c2:=sampling.Select(Function(p) CDbl(p.y)).ToArray,
+                parallel:=parallel,
+                throwMaxIterError:=False
+            )
+        End If
+
         Dim Q As DataQuartile = intensity.Quartile
         Dim counts As New List(Of Double)
         Dim A As Double = nsize ^ 2

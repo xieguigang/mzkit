@@ -6,7 +6,7 @@
     "run_exe": {
       "commandName": "Executable",
       "executablePath": "\\GCModeller\\src\\R-sharp\\App\\net6.0\\R#.exe",
-      "commandLineArgs": "\\biodeep\\biodeep_pipeline\\biodeepMSMS_v5\\test\\dbStruct\\targetted_loader.R --attach \"\\mzkit\\Rscript\\Library\\mzkit_app\" --debug"
+      "commandLineArgs": "\"Y:\\AP-SMALDI-SingleCells-0.1um\\test\\研发数据（小鼠睾丸空代原始数据）-AP SMALDI\\single_cells\\export_matrix.R\" --attach \"\\mzkit\\Rscript\\Library\\mzkit_app\" --debug=none"
     },
     "annotation": {
       "commandName": "Executable",

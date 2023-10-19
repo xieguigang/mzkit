@@ -6,7 +6,7 @@ peakMatrix \- Extract the ion data matrix
 \fIpeakMatrix(\fBraw\fR as <generic> mzPack, 
 \fBtopN\fR as integer = 3, 
 \fBmzError\fR as any = "da:0.05", 
-\fBionSet\fR as list = \fB<NULL>\fR, 
+\fBionSet\fR as any = \fB<NULL>\fR, 
 [\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
@@ -17,16 +17,21 @@ Extract the ion data matrix
 \fBraw\fB \fR\- -. 
 .PP
 .PP
-\fBtopN\fB \fR\- -. 
+\fBtopN\fB \fR\- 
+ select top N ion feature in each spot and then union the ion features as 
+ the features set, this parameter only works when the **`ionSet`** 
+ parameter is empty or null.
+. 
 .PP
 .PP
 \fBionSet\fB \fR\- 
  A tuple list of the ion dataset range, the tuple list object should 
- be in data format of [unique_id => mz]
+ be in data format of [unique_id => mz]. Or this parameter value could also
+ be a numeric vector of the target m/z feature values
 . 
 .PP
 .PP
-\fBmzError\fB \fR\- -. 
+\fBmzError\fB \fR\- The mass tolerance of the ion m/z. 
 .PP
 .PP
 \fBenv\fB \fR\- -. 

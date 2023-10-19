@@ -78,6 +78,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Data.GraphTheory.GridGraph
+Imports Microsoft.VisualBasic.Emit.Delegates
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.ComponentModel.Activations
@@ -91,6 +92,7 @@ Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Invokes
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
+Imports SMRUCC.Rsharp.Runtime.Internal.Object.Converts
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports imzML = BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML.XML
@@ -772,30 +774,58 @@ Module MSI
     ''' Extract the ion data matrix
     ''' </summary>
     ''' <param name="raw"></param>
-    ''' <param name="topN"></param>
+    ''' <param name="topN">
+    ''' select top N ion feature in each spot and then union the ion features as 
+    ''' the features set, this parameter only works when the <paramref name="ionSet"/> 
+    ''' parameter is empty or null.
+    ''' </param>
     ''' <param name="ionSet">
     ''' A tuple list of the ion dataset range, the tuple list object should 
-    ''' be in data format of [unique_id => mz]
+    ''' be in data format of [unique_id => mz]. Or this parameter value could also
+    ''' be a numeric vector of the target m/z feature values
     ''' </param>
-    ''' <param name="mzError"></param>
+    ''' <param name="mzError">The mass tolerance of the ion m/z</param>
     ''' <param name="env"></param>
     ''' <returns></returns>
+    ''' <example>
+    ''' let raw = open.mzpack("/path/to/rawdata.mzPack");
+    ''' let ionsSet = list(ion1 = 100.0321, ion2 = 563.2254, ion3 = 336.9588);
+    ''' 
+    ''' MSI::peakMatrix(raw, ionSet = ionsSet, mzError = "da:0.05");
+    ''' </example>
     <ExportAPI("peakMatrix")>
     Public Function PeakMatrix(raw As mzPack,
                                Optional topN As Integer = 3,
                                Optional mzError As Object = "da:0.05",
-                               Optional ionSet As list = Nothing,
+                               <RRawVectorArgument>
+                               Optional ionSet As Object = Nothing,
                                Optional env As Environment = Nothing) As Object
 
         Dim err = Math.getTolerance(mzError, env)
-        Dim ions As Dictionary(Of String, Double) = Nothing
 
         If err Like GetType(Message) Then
             Return err.TryCast(Of Message)
         End If
 
         If Not ionSet Is Nothing Then
-            ions = ionSet.AsGeneric(Of Double)(env)
+            Dim ions As Dictionary(Of String, Double)
+
+            If TypeOf ionSet Is list Then
+                ions = DirectCast(ionSet, list).AsGeneric(Of Double)(env)
+            ElseIf ionSet.GetType.ImplementInterface(Of IDictionary) Then
+                ions = RConversion.asList(ionSet, New list, env)
+            Else
+                Dim mz As Double() = CLRVector.asNumeric(ionSet)
+                Dim keys As String() = mz _
+                    .Select(Function(m) m.ToString) _
+                    .uniqueNames
+
+                ions = keys.Zip(mz) _
+                    .ToDictionary(Function(m) m.First,
+                                  Function(m)
+                                      Return m.Second
+                                  End Function)
+            End If
 
             Return raw _
                 .SelectivePeakMatrix(ions, err.TryCast(Of Tolerance)) _
@@ -1106,7 +1136,7 @@ Module MSI
             .AsParallel _
             .Select(Function(lbMz)
                         Dim v As Double() = CLRVector.asNumeric(x(lbMz))
-                        Dim m As MoranTest = MoranTest.moran_test(v, sx, sy)
+                        Dim m As MoranTest = MoranTest.moran_test(v, sx, sy, throwMaxIterError:=False)
 
                         Return (lbMz, m)
                     End Function) _
