@@ -57,7 +57,6 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.GraphTheory.GridGraph
 Imports Microsoft.VisualBasic.Imaging
-Imports Microsoft.VisualBasic.Imaging.Drawing2D.HeatMap
 Imports Microsoft.VisualBasic.Math.Distributions
 
 Public Module SampleData
@@ -76,9 +75,9 @@ Public Module SampleData
     Public Function ExtractSample(Of T As Pixel)(layer As T(),
                                                  regions As IEnumerable(Of TissueRegion),
                                                  Optional n As Integer = 32,
-                                                 Optional coverage As Double = 0.3) As Dictionary(Of String, NamedValue(Of Double()))
+                                                 Optional coverage As Double = 0.3) As Dictionary(Of String, Double())
 
-        Dim data As New Dictionary(Of String, NamedValue(Of Double()))
+        Dim data As New Dictionary(Of String, Double())
         Dim matrix = Grid(Of T).Create(layer, Function(i) New Point(i.X, i.Y))
 
         For Each region As TissueRegion In regions
@@ -106,7 +105,7 @@ Public Module SampleData
                         End Function) _
                 .ToArray
 
-            data(region.label) = New NamedValue(Of Double())(region.color.ToHtmlColor, vec)
+            data(region.label) = vec
         Next
 
         Return data
