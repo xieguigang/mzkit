@@ -158,6 +158,12 @@ Namespace mzData.mzWebCache
             End If
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="scans">load scans data list with unknown data length</param>
+        ''' <param name="progress"></param>
+        ''' <returns></returns>
         Public Iterator Function Load(scans As IEnumerable(Of Scan), Optional progress As Action(Of String) = Nothing) As IEnumerable(Of ScanMS1)
             Dim i As i32 = 1
             Dim ms1Yields As Integer = 0
@@ -180,7 +186,8 @@ Namespace mzData.mzWebCache
                     Call products.Add(scanVal)
                 End If
 
-                If isMs1 AndAlso progress IsNot Nothing AndAlso CInt(i) Mod 7 = 0 Then
+                ' adjust to 17 for make progress less verbose
+                If isMs1 AndAlso progress IsNot Nothing AndAlso CInt(i) Mod 17 = 0 Then
                     Call progress(scanVal.scan_id)
                 End If
             Next
