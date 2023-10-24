@@ -443,7 +443,7 @@ Module data
                                   Optional title$ = "MS Matrix",
                                   Optional parentMz As Double = -1,
                                   Optional centroid As Boolean = False,
-                                  <RRawVectorArgument>
+                                  <RListObjectArgument>
                                   Optional args As list = Nothing,
                                   Optional env As Environment = Nothing) As Object
         Dim MS As ms2()

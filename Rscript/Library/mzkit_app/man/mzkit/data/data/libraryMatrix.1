@@ -3,10 +3,11 @@
 .SH NAME
 libraryMatrix \- Create a library matrix object
 .SH SYNOPSIS
-\fIlibraryMatrix(\fBmatrix\fR as any, 
+\fIlibraryMatrix(\fBmatrix\fR as any = \fB<NULL>\fR, 
 \fBtitle\fR as string = "MS Matrix", 
 \fBparentMz\fR as double = -1, 
 \fBcentroid\fR as boolean = FALSE, 
+\fBargs\fR as list = \fB<NULL>\fR, 
 [\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
@@ -24,6 +25,10 @@ Create a library matrix object
 .PP
 .PP
 \fBenv\fB \fR\- -. 
+.PP
+.SH VALUE
+.PP
+A simple mzkit spectrum peak list object
 .PP
 .SH SEE ALSO
 data
