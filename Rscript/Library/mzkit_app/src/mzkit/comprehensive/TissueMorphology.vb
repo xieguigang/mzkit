@@ -181,6 +181,7 @@ Module TissueMorphology
     Public Function PlotTissueMap(g As IGraphics, canvas As GraphicsRegion, tissue As TissueRegion(), args As list, env As Environment) As Object
         Dim is_missing_sample As Boolean = args.getValue({"missing"}, env, [default]:=False)
         Dim sample As String = args.getValue({"sample"}, env, [default]:="")
+        Dim knn As Boolean = args.getValue({"knn"}, env, [default]:=False)
 
         If is_missing_sample AndAlso Not sample.StringEmpty Then
             tissue = tissue _
@@ -224,8 +225,11 @@ Module TissueMorphology
             fillColor = New SolidBrush(region.color)
             interplate = region.points _
                 .Select(Function(xy) New PixelData(xy) With {.intensity = 1}) _
-                .ToArray _
-                .KnnFill(dims, 4, 4)
+                .ToArray
+
+            If knn Then
+                interplate = interplate.KnnFill(dims, 4, 4)
+            End If
 
             For Each p As PixelData In interplate
                 dot = New RectangleF(scaler.Translate(p.x, p.y), dotSize)

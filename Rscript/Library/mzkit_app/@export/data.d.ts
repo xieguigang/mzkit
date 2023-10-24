@@ -29,6 +29,8 @@ declare namespace data {
     * 
      * @param matrix for a dataframe object, should contains column data:
      *  mz, into and annotation.
+     * 
+     * + default value Is ``null``.
      * @param title -
      * 
      * + default value Is ``'MS Matrix'``.
@@ -36,11 +38,14 @@ declare namespace data {
      * + default value Is ``-1``.
      * @param centroid 
      * + default value Is ``false``.
+     * @param args 
+     * + default value Is ``null``.
      * @param env -
      * 
      * + default value Is ``null``.
+     * @return A simple mzkit spectrum peak list object
    */
-   function libraryMatrix(matrix: any, title?: string, parentMz?: number, centroid?: boolean, env?: object): any;
+   function libraryMatrix(matrix?: any, title?: string, parentMz?: number, centroid?: boolean, args?: object, env?: object): any;
    /**
      * @param topIons default value Is ``5``.
    */
