@@ -80,6 +80,7 @@ Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
+Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports REnv = SMRUCC.Rsharp.Runtime
 
 ''' <summary>
@@ -428,34 +429,42 @@ Module data
     ''' </param>
     ''' <param name="title"></param>
     ''' <param name="env"></param>
-    ''' <returns></returns>
+    ''' <returns>A simple mzkit spectrum peak list object</returns>
+    ''' <example>
+    ''' libraryMatrix(mz = [100 101], intensity = [100 35]);
+    ''' 
+    ''' # or construct from a dataframe
+    ''' let data = data.frame(mz = [100 101], into = [100 35]);
+    ''' let msPeaks = libraryMatrix(data);
+    ''' </example>
     <ExportAPI("libraryMatrix")>
-    Public Function libraryMatrix(<RRawVectorArgument> matrix As Object,
+    Public Function libraryMatrix(<RRawVectorArgument>
+                                  Optional matrix As Object = Nothing,
                                   Optional title$ = "MS Matrix",
                                   Optional parentMz As Double = -1,
                                   Optional centroid As Boolean = False,
+                                  <RRawVectorArgument>
+                                  Optional args As list = Nothing,
                                   Optional env As Environment = Nothing) As Object
         Dim MS As ms2()
 
-        If TypeOf matrix Is dataframe Then
-            Dim ms2 As dataframe = DirectCast(matrix, dataframe)
-            Dim mz As Double() = ms2.getVector(Of Double)("mz", "m/z")
-            Dim into As Double() = ms2.getVector(Of Double)("into", "intensity")
-            Dim annotation As String() = ms2.getVector(Of String)("annotation")
+        If matrix Is Nothing Then
+            Dim mz As Double() = CLRVector.asNumeric(args.getBySynonyms("mz", "MZ", "m/z"))
+            Dim into As Double() = CLRVector.asNumeric(args.getBySynonyms("into", "intensity"))
 
-            If annotation Is Nothing Then
-                annotation = {}
+            If mz.IsNullOrEmpty OrElse into.IsNullOrEmpty Then
+                Return Internal.debug.stop("No mass spectrum peaks data was assigned!", env)
+            ElseIf mz.Length <> into.Length Then
+                Return Internal.debug.stop($"The vector data size of mz({mz.Length}) is mis-matched with the intensity vector({into.Length})!", env)
             End If
 
             MS = mz _
                 .Select(Function(mzi, i)
-                            Return New ms2 With {
-                                .mz = mzi,
-                                .intensity = into(i),
-                                .Annotation = annotation.ElementAtOrDefault(i)
-                            }
+                            Return New ms2 With {.mz = mzi, .intensity = into(i)}
                         End Function) _
                 .ToArray
+        ElseIf TypeOf matrix Is dataframe Then
+            MS = DirectCast(matrix, dataframe).MsdataFromDf.ToArray
         Else
             Dim data As pipeline = pipeline.TryCreatePipeline(Of ms2)(matrix, env)
 
@@ -472,6 +481,26 @@ Module data
             .parentMz = parentMz,
             .centroid = centroid
         }
+    End Function
+
+    <Extension>
+    Private Function MsdataFromDf(ms2 As dataframe) As IEnumerable(Of ms2)
+        Dim mz As Double() = ms2.getVector(Of Double)("mz", "m/z")
+        Dim into As Double() = ms2.getVector(Of Double)("into", "intensity")
+        Dim annotation As String() = ms2.getVector(Of String)("annotation")
+
+        If annotation Is Nothing Then
+            annotation = {}
+        End If
+
+        Return mz _
+            .Select(Function(mzi, i)
+                        Return New ms2 With {
+                            .mz = mzi,
+                            .intensity = into(i),
+                            .Annotation = annotation.ElementAtOrDefault(i)
+                        }
+                    End Function)
     End Function
 
     ''' <summary>
