@@ -25,7 +25,7 @@ declare namespace mzkit {
       /**
         * @param type default value Is ``["genes", "disease", "compounds"]``.
       */
-      function term_maps(type?: any, x: any): object;
+      function term_maps(x: any, type?: any): object;
    }
    /**
      * @param mzdiff default value Is ``da:0.001``.
