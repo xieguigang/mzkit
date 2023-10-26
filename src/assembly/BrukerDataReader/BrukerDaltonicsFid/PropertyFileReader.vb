@@ -2,9 +2,12 @@
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Text.Parser
 
-Public Class PropertyFileReader
+Friend NotInheritable Class PropertyFileReader
 
-    Public Iterator Function ReadData(file As StreamReader) As IEnumerable(Of NamedValue(Of String()))
+    Private Sub New()
+    End Sub
+
+    Public Shared Iterator Function ReadData(file As StreamReader) As IEnumerable(Of NamedValue(Of String()))
         For Each block As String() In FormattedParser.FlagSplit(file, AddressOf CheckFlag)
             Dim si As String = block.JoinBy(vbCrLf)
             si = si.TrimStart("#"c, "$"c)
@@ -16,6 +19,9 @@ Public Class PropertyFileReader
                 .Value = block
             }
         Next
+
+        Call file.Close()
+        Call file.Dispose()
     End Function
 
     ''' <summary>
