@@ -6,7 +6,7 @@ Imports System.Xml.Serialization
 ''' </summary>
 ''' 
 <XmlRoot("AnalysisParameter")>
-Public Class AnalysisParameter
+Public Class AnnotationParameter
 
     <XmlAttribute>
     Public Property cid As String
