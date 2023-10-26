@@ -7,6 +7,10 @@ Public Class pdata
     Public Property procs As NamedValue(Of String())()
     Public Property id As String
 
+    Public Overrides Function ToString() As String
+        Return id
+    End Function
+
     Public Shared Function LoadFolder(dir As String) As pdata
         Dim pklist = $"{dir}/peaklist.xml".LoadXml(Of pklist)
         Dim proc = PropertyFileReader.ReadData($"{dir}/proc".OpenReader).ToArray
