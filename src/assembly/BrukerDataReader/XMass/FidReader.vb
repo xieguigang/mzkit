@@ -1,3 +1,6 @@
-﻿Public Class FidReader
+﻿Namespace XMass
 
-End Class
+    Public Class FidReader
+
+    End Class
+End Namespace

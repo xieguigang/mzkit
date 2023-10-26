@@ -1,3 +1,6 @@
-﻿Public Class RawReader
+﻿Namespace XMass
 
-End Class
+    Public Class RawReader
+
+    End Class
+End Namespace
