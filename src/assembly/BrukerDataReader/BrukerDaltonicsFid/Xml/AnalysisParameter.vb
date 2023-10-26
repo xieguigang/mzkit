@@ -5,7 +5,6 @@ Imports System.Xml.Serialization
 ''' AnalysisParameter.xml
 ''' </summary>
 ''' 
-<XmlRoot("AnalysisParameter")>
 Public Class AnnotationParameter
 
     <XmlAttribute>
