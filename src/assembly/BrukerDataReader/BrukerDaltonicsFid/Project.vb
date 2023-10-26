@@ -1,5 +1,8 @@
 ﻿Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 
+''' <summary>
+''' XMASS, Bruker-Daltonics project reader
+''' </summary>
 Public Class Project
 
     Public Property sptype As String

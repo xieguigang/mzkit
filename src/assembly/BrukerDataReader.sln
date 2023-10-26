@@ -25,7 +25,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "binaryReader", "binaryReade
 EndProject
 Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "datastorage-netcore5", "..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\DataStorage\datastorage-netcore5.vbproj", "{49182485-7475-459F-A377-D29FBEC9A1ED}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "test", "BrukerDataReader\test\test.vbproj", "{E828FDE2-4207-4F46-A0EB-D9FC6B8CFE99}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "test", "BrukerDataReader\test\test.vbproj", "{E828FDE2-4207-4F46-A0EB-D9FC6B8CFE99}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -305,8 +305,8 @@ Global
 		{49182485-7475-459F-A377-D29FBEC9A1ED}.Rsharp_app_release|x64.Build.0 = Rsharp_app_release|x64
 		{E828FDE2-4207-4F46-A0EB-D9FC6B8CFE99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E828FDE2-4207-4F46-A0EB-D9FC6B8CFE99}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E828FDE2-4207-4F46-A0EB-D9FC6B8CFE99}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{E828FDE2-4207-4F46-A0EB-D9FC6B8CFE99}.Debug|x64.Build.0 = Debug|Any CPU
+		{E828FDE2-4207-4F46-A0EB-D9FC6B8CFE99}.Debug|x64.ActiveCfg = Debug|x64
+		{E828FDE2-4207-4F46-A0EB-D9FC6B8CFE99}.Debug|x64.Build.0 = Debug|x64
 		{E828FDE2-4207-4F46-A0EB-D9FC6B8CFE99}.LipidSearch|Any CPU.ActiveCfg = Debug|Any CPU
 		{E828FDE2-4207-4F46-A0EB-D9FC6B8CFE99}.LipidSearch|Any CPU.Build.0 = Debug|Any CPU
 		{E828FDE2-4207-4F46-A0EB-D9FC6B8CFE99}.LipidSearch|x64.ActiveCfg = Debug|Any CPU
