@@ -16,7 +16,9 @@ Public Class Project
         Dim acqu = PropertyFileReader.ReadData($"{dir}/acqu".OpenReader).ToArray
         Dim acqus = PropertyFileReader.ReadData($"{dir}/acqus".OpenReader).ToArray
         Dim method As AnalysisMethod = $"{dir}/Analysis.FAmethod".LoadXml(Of AnalysisMethod)
-        Dim parms As AnalysisParameter = $"{dir}/AnalysisParameter.xml".LoadXml(Of AnalysisParameter)
+        Dim parms As AnalysisParameter = ($"{dir}/AnalysisParameter.xml") _
+            .ReadAllText _
+            .CreateObjectFromXmlFragment(Of AnalysisParameter)
         Dim pdataList As New List(Of pdata)
 
         For Each pdatadir As String In $"{dir}/pdata".ListDirectory

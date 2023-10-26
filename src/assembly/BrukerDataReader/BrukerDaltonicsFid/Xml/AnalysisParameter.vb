@@ -4,8 +4,13 @@ Imports System.Xml.Serialization
 ''' <summary>
 ''' AnalysisParameter.xml
 ''' </summary>
+''' 
+<XmlRoot("AnalysisParameter")>
 Public Class AnalysisParameter
-    <XmlAttribute> Public Property cid As String
+
+    <XmlAttribute>
+    Public Property cid As String
+
     Public Property BuildingBlockName As String
     Public Property FontFaceName As String
     Public Property FontPointSize As Double
@@ -15,4 +20,5 @@ Public Class AnalysisParameter
     Public Property StringType As String
     Public Property PreviewFlag As Boolean
     Public Property ShowMassDifferenceFlag As Boolean
+
 End Class
