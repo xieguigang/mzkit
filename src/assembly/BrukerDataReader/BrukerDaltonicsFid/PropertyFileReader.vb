@@ -4,9 +4,17 @@ Imports Microsoft.VisualBasic.Text.Parser
 
 Public Class PropertyFileReader
 
-    Public Function ReadData(file As StreamReader) As NamedValue(Of String())
+    Public Iterator Function ReadData(file As StreamReader) As IEnumerable(Of NamedValue(Of String()))
         For Each block As String() In FormattedParser.FlagSplit(file, AddressOf CheckFlag)
+            Dim si As String = block.JoinBy(vbCrLf)
+            si = si.TrimStart("#"c, "$"c)
+            Dim split = si.GetTagValue("=", trim:=True)
+            block = split.Value.Trim.LineTokens
 
+            Yield New NamedValue(Of String()) With {
+                .Name = split.Name,
+                .Value = block
+            }
         Next
     End Function
 
