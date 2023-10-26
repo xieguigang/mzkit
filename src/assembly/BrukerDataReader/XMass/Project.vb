@@ -24,7 +24,7 @@ Namespace XMass
             Dim pdataList As New List(Of pdata)
 
             For Each pdatadir As String In $"{dir}/pdata".ListDirectory
-                Call pdataList.Add(BrukerDataReader.pdata.LoadFolder(pdatadir))
+                Call pdataList.Add(XMass.pdata.LoadFolder(pdatadir))
             Next
 
             Return New Project With {
