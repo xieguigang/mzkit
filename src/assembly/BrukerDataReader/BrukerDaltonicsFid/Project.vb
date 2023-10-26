@@ -7,6 +7,7 @@ Public Class Project
     Public Property acqu As NamedValue(Of String())()
     Public Property acqus As NamedValue(Of String())()
     Public Property AnalysisParameter As AnalysisParameter
+    Public Property source As String
 
     Public Shared Function FromResultFolder(dir As String) As Project
         Dim acqu = PropertyFileReader.ReadData($"{dir}/acqu".OpenReader).ToArray
@@ -24,7 +25,8 @@ Public Class Project
             .acqu = acqu,
             .acqus = acqus,
             .AnalysisParameter = parms,
-            .pdata = pdataList.ToArray
+            .pdata = pdataList.ToArray,
+            .source = dir
         }
     End Function
 End Class
