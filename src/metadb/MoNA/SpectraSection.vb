@@ -140,8 +140,24 @@ Public Class SpectraSection : Inherits MetaInfo
         Me.formula = If(metadata.molecular_formula, metadata.derivative_formula)
         Me.exact_mass = metadata.exact_mass
     End Sub
+
+    Public Function GetMetabolite() As MetaLib.Models.MetaLib
+        Return New MetaLib.Models.MetaLib With {
+            .ID = Me.ID,
+            .name = Me.name,
+            .IUPACName = Me.IUPACName,
+            .formula = Me.formula,
+            .exact_mass = Me.exact_mass,
+            .xref = New xref With {
+                .CAS = meta.cas_number
+            }
+        }
+    End Function
 End Class
 
+''' <summary>
+''' The reference spectra data which is parsed from the MoNA database
+''' </summary>
 Public Class SpectraInfo
 
     Public Property MsLevel As String
