@@ -331,40 +331,56 @@ Module MzWeb
     ''' <summary>
     ''' read the mzPack data file liked simple msn cached data
     ''' </summary>
-    ''' <param name="file"></param>
-    ''' <returns></returns>
+    ''' <param name="file">The cache file path or the file binary data buffer object</param>
+    ''' <returns>
+    ''' A vector of the mzkit peakms2 object
+    ''' </returns>
     <ExportAPI("read.cache")>
-    Public Function readCache(file As String) As PeakMs2()
-        Using buffer As New BinaryDataReader(file.Open(FileMode.Open, doClear:=False, [readOnly]:=True)) With {
-            .ByteOrder = ByteOrder.BigEndian
-        }
-            If buffer.ReadString(BinaryStringFormat.ZeroTerminated) <> "mzcache" Then
-                Throw New InvalidProgramException("magic header should be 'mzcache'!")
+    <RApiReturn(GetType(PeakMs2))>
+    Public Function readCache(<RRawVectorArgument> file As Object, Optional env As Environment = Nothing) As Object
+        Dim buf = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Read, env)
+
+        If buf Like GetType(Message) Then
+            Return buf.TryCast(Of Message)
+        End If
+
+        Using rd As New BinaryDataReader(buf.TryCast(Of Stream)) With {.ByteOrder = ByteOrder.BigEndian}
+            If rd.ReadString(BinaryStringFormat.ZeroTerminated) <> mzcacheMagic Then
+                Throw New InvalidProgramException($"magic header should be '{mzcacheMagic}'!")
             End If
 
-            Dim nsize As Integer = buffer.ReadInt32
+            Dim nsize As Integer = rd.ReadInt32
             Dim data As PeakMs2() = New PeakMs2(nsize - 1) {}
 
             For i As Integer = 0 To nsize - 1
-                data(i) = mzPack.CastToPeakMs2(Serialization.ReadScanMs2(file:=buffer))
+                data(i) = mzPack.CastToPeakMs2(Serialization.ReadScanMs2(file:=rd))
             Next
 
             Return data
         End Using
     End Function
 
+    Const mzcacheMagic As String = "mzcache"
+
     ''' <summary>
     ''' Write the ms2 spectrum collection into binary cache file
     ''' </summary>
-    ''' <param name="ions"></param>
-    ''' <param name="file"></param>
-    ''' <returns></returns>
+    ''' <param name="ions">Should be a collection of the mzkit peakms2 object</param>
+    ''' <param name="file">The file path to save the spectrum data collection as cache file.</param>
+    ''' <returns>
+    ''' this function returns a logical value for indicate operation is success or not.
+    ''' </returns>
     <ExportAPI("write.cache")>
-    Public Function writeCache(ions As PeakMs2(), file As String) As Boolean
-        Using buffer As New BinaryDataWriter(file.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False)) With {
-            .ByteOrder = ByteOrder.BigEndian
-        }
-            Call buffer.Write("mzcache", BinaryStringFormat.ZeroTerminated)
+    <RApiReturn(TypeCodes.boolean)>
+    Public Function writeCache(ions As PeakMs2(), file As Object, Optional env As Environment = Nothing) As Object
+        Dim buf = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Write, env)
+
+        If buf Like GetType(Message) Then
+            Return buf.TryCast(Of Message)
+        End If
+
+        Using buffer As New BinaryDataWriter(buf.TryCast(Of Stream)) With {.ByteOrder = ByteOrder.BigEndian}
+            Call buffer.Write(mzcacheMagic, BinaryStringFormat.ZeroTerminated)
             Call buffer.Write(ions.Length)
 
             For Each ion As PeakMs2 In ions
