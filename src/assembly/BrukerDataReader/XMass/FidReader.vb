@@ -85,34 +85,14 @@ Namespace XMass
         ''' </summary>
         ''' <returns></returns>
         Public Property timeDelta As Double
-        ''' <summary>
-        ''' ML1: calibration constant
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property calibrationConstants As Object
-        ''' <summary>
-        ''' ML2: calibration constant
-        ''' </summary>
-        ''' <returns></returns>
-        ''' <remarks>2 elements</remarks>
-        Public Property calibrationConstants As Object()
-        ''' <summary>
-        ''' ML3: calibration constant
-        ''' </summary>
-        ''' <returns></returns>
-        ''' <remarks>3 elements</remarks>
-        Public Property calibrationConstants As Object()
+
+        Public Property calibrationConstants As calibrationConstants
+
         ''' <summary>
         ''' If we want To use High Precision Calibration (HPC), we need:
-        '''  HPClBHi: upper mass threshold
         ''' </summary>
         ''' <returns></returns>
-        Public Property hpcLimits_maxMass
-        ''' <summary>
-        ''' HPClBLo: lower mass threshold
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property hpcLimits_minMass
+        Public Property hpcLimits As hpcLimits
         ''' <summary>
         ''' HPClOrd: polynomial order
         ''' </summary>
@@ -304,5 +284,27 @@ Namespace XMass
         ''' <returns></returns>
         Public Property sampleName As String
 
+    End Class
+
+    Public Class hpcLimits
+        ''' <summary>
+        ''' HPClBHi: upper mass threshold
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property maxMass As Double
+        ''' <summary>
+        ''' HPClBLo: lower mass threshold
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property minMass As Double
+    End Class
+
+    ''' <summary>
+    ''' calibration constant
+    ''' </summary>
+    Public Class calibrationConstants
+        Public Property ML1
+        Public Property ML2
+        Public Property ML3
     End Class
 End Namespace
