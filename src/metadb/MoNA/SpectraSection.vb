@@ -68,6 +68,9 @@ Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.BioDeep.Chemistry.MetaLib.Models
 
+''' <summary>
+''' Union of the spectrum data and the metabolite annotation metadata
+''' </summary>
 Public Class SpectraSection : Inherits MetaInfo
 
     ''' <summary>
@@ -85,7 +88,7 @@ Public Class SpectraSection : Inherits MetaInfo
     Dim meta As MetaData = Nothing
 
     ''' <summary>
-    ''' MoNA里面都主要是讲注释的信息放在<see cref="Comment"/>字段里面的。
+    ''' MoNA里面都主要是将注释的信息放在<see cref="Comment"/>字段里面的。
     ''' 物质的注释信息主要是放在这个结构体之中，这个属性是对<see cref="Comment"/>
     ''' 属性的解析结果
     ''' </summary>
