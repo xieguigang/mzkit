@@ -149,8 +149,26 @@ Public Class SpectraSection : Inherits MetaInfo
             .formula = Me.formula,
             .exact_mass = Me.exact_mass,
             .xref = New xref With {
-                .CAS = meta.cas_number
-            }
+                .CAS = meta.cas_number,
+                .chebi = meta.chebi,
+                .ChEMBL = meta.chembl,
+                .ChemIDplus = meta.ChemIDplus,
+                .DrugBank = meta.drugbank,
+                .HMDB = meta.hmdb,
+                .InChI = meta.InChI,
+                .InChIkey = meta.InChIKey,
+                .KEGG = meta.kegg,
+                .KNApSAcK = meta.knapsack,
+                .lipidmaps = meta.lipidmaps,
+                .MeSH = meta.Mesh,
+                .MetaCyc = "",
+                .metlin = "",
+                .pubchem = meta.pubchem_cid,
+                .SMILES = meta.SMILES.ElementAtOrDefault(0, ""),
+                .Wikipedia = meta.wikipedia
+            },
+            .description = meta.comment.JoinBy(vbCrLf),
+            .synonym = {meta.name}
         }
     End Function
 End Class
