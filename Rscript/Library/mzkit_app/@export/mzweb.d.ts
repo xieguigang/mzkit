@@ -192,9 +192,12 @@ declare namespace mzweb {
        * read the mzPack data file liked simple msn cached data
        * 
        * 
-        * @param file -
+        * @param file The cache file path or the file binary data buffer object
+        * @param env 
+        * + default value Is ``null``.
+        * @return A vector of the mzkit peakms2 object
       */
-      function cache(file: string): object;
+      function cache(file: any, env?: object): object;
    }
    /**
     * set thumbnail image to the raw data file
@@ -227,8 +230,10 @@ declare namespace mzweb {
        * 
        * 
         * @param file -
+        * @param env 
+        * + default value Is ``null``.
       */
-      function cache(ions: object, file: string): boolean;
+      function cache(ions: object, file: any, env?: object): boolean;
       /**
         * @param Ms2Only default value Is ``false``.
         * @param env default value Is ``null``.
