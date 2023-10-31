@@ -67,6 +67,7 @@ Imports System.Collections.Specialized
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.BioDeep.Chemistry.MetaLib.Models
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 
 ''' <summary>
 ''' Union of the spectrum data and the metabolite annotation metadata
@@ -142,12 +143,14 @@ Public Class SpectraSection : Inherits MetaInfo
     End Sub
 
     Public Function GetMetabolite() As MetaLib.Models.MetaLib
+        Dim mass As Double = FormulaScanner.ScanFormula(formula)
+
         Return New MetaLib.Models.MetaLib With {
             .ID = Me.ID,
             .name = Me.name,
-            .IUPACName = Me.IUPACName,
+            .IUPACName = If(Me.IUPACName, .name),
             .formula = Me.formula,
-            .exact_mass = Me.exact_mass,
+            .exact_mass = If(mass > 0, mass, Me.exact_mass),
             .xref = New xref With {
                 .CAS = meta.cas_number,
                 .chebi = meta.chebi,
