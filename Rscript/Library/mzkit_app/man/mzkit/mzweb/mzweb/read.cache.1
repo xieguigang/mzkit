@@ -3,14 +3,19 @@
 .SH NAME
 read.cache \- read the mzPack data file liked simple msn cached data
 .SH SYNOPSIS
-\fIread.cache(\fBfile\fR as string);\fR
+\fIread.cache(\fBfile\fR as any, 
+[\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
 read the mzPack data file liked simple msn cached data
 .PP
 .SH OPTIONS
 .PP
-\fBfile\fB \fR\- -. 
+\fBfile\fB \fR\- The cache file path or the file binary data buffer object. 
+.PP
+.SH VALUE
+.PP
+A vector of the mzkit peakms2 object
 .PP
 .SH SEE ALSO
 mzweb

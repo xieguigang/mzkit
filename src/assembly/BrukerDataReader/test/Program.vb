@@ -60,7 +60,14 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Module Program
     Sub Main(args As String())
+        Call xmassReader()
         Call spectrum()
+    End Sub
+
+    Sub xmassReader()
+        Dim proj = XMass.Project.FromResultFolder("E:\Bruker_MSImaging\0.1MS-80%-jichun-1\0_E5\1\1Ref")
+
+        Pause()
     End Sub
 
     Sub spectrum()

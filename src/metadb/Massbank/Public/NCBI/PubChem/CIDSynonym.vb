@@ -185,6 +185,7 @@ Namespace NCBI.PubChem
                     xref = New xref With {.pubchem = synonym.CID}
                     cas *= 0
                     cid = synonym.CID
+                    ' construct a new pubchem metabolite metadata
                     meta = New Models.MetaLib With {
                         .ID = cid,
                         .name = synonym.Synonym,

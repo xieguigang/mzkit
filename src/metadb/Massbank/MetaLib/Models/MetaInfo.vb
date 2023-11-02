@@ -65,6 +65,9 @@ Imports Microsoft.VisualBasic.Data.IO.MessagePack.Serialization
 
 Namespace MetaLib.Models
 
+    ''' <summary>
+    ''' the very basic metabolite annotation data model
+    ''' </summary>
     Public Class MetaInfo : Implements INamedValue
         Implements IEquatable(Of MetaInfo)
 

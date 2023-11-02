@@ -90,6 +90,12 @@ Public Module MspReader
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function GetMetadata(spectrum As MspData) As MetaData
-        Return spectrum.Comments.FillData
+        Dim metadata As MetaData = spectrum.Comments.FillData
+
+        If metadata.accession.StringEmpty Then
+            metadata.accession = spectrum.DB_id
+        End If
+
+        Return metadata
     End Function
 End Module

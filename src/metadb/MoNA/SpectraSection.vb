@@ -67,7 +67,11 @@ Imports System.Collections.Specialized
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.BioDeep.Chemistry.MetaLib.Models
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 
+''' <summary>
+''' Union of the spectrum data and the metabolite annotation metadata
+''' </summary>
 Public Class SpectraSection : Inherits MetaInfo
 
     ''' <summary>
@@ -85,7 +89,7 @@ Public Class SpectraSection : Inherits MetaInfo
     Dim meta As MetaData = Nothing
 
     ''' <summary>
-    ''' MoNA里面都主要是讲注释的信息放在<see cref="Comment"/>字段里面的。
+    ''' MoNA里面都主要是将注释的信息放在<see cref="Comment"/>字段里面的。
     ''' 物质的注释信息主要是放在这个结构体之中，这个属性是对<see cref="Comment"/>
     ''' 属性的解析结果
     ''' </summary>
@@ -137,8 +141,44 @@ Public Class SpectraSection : Inherits MetaInfo
         Me.formula = If(metadata.molecular_formula, metadata.derivative_formula)
         Me.exact_mass = metadata.exact_mass
     End Sub
+
+    Public Function GetMetabolite() As MetaLib.Models.MetaLib
+        Dim mass As Double = FormulaScanner.ScanFormula(formula)
+
+        Return New MetaLib.Models.MetaLib With {
+            .ID = Me.ID,
+            .name = Me.name,
+            .IUPACName = If(Me.IUPACName, .name),
+            .formula = Me.formula,
+            .exact_mass = If(mass > 0, mass, Me.exact_mass),
+            .xref = New xref With {
+                .CAS = meta.cas_number,
+                .chebi = meta.chebi,
+                .ChEMBL = meta.chembl,
+                .ChemIDplus = meta.ChemIDplus,
+                .DrugBank = meta.drugbank,
+                .HMDB = meta.hmdb,
+                .InChI = meta.InChI,
+                .InChIkey = meta.InChIKey,
+                .KEGG = meta.kegg,
+                .KNApSAcK = meta.knapsack,
+                .lipidmaps = meta.lipidmaps,
+                .MeSH = meta.Mesh,
+                .MetaCyc = "",
+                .metlin = "",
+                .pubchem = meta.pubchem_cid,
+                .SMILES = meta.SMILES.ElementAtOrDefault(0, ""),
+                .Wikipedia = meta.wikipedia
+            },
+            .description = meta.comment.JoinBy(vbCrLf),
+            .synonym = {meta.name}
+        }
+    End Function
 End Class
 
+''' <summary>
+''' The reference spectra data which is parsed from the MoNA database
+''' </summary>
 Public Class SpectraInfo
 
     Public Property MsLevel As String

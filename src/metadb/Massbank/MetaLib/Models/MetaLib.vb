@@ -63,9 +63,9 @@ Namespace MetaLib.Models
 
     Public Class BiosampleSource
 
-        Public Property biosample As String
-        Public Property source As String
-        Public Property reference As String
+        <MessagePackMember(0)> Public Property biosample As String
+        <MessagePackMember(1)> Public Property source As String
+        <MessagePackMember(2)> Public Property reference As String
 
     End Class
 

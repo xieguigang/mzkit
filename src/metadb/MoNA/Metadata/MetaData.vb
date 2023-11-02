@@ -157,6 +157,10 @@ Public Class MetaData
     <Column("mass error", "computed mass error")>
     Public Property mass_error As Double
 
+    ''' <summary>
+    ''' the CAS number
+    ''' </summary>
+    ''' <returns></returns>
     <Column("cas number", "cas")>
     Public Property cas_number As String()
     <Column("pubchem cid", "pubchem")>

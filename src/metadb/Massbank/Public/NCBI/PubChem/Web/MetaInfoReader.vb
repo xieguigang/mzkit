@@ -268,6 +268,7 @@ Namespace NCBI.PubChem
                 End If
             End If
 
+            ' construct a new pubchem metabolite annotation metadata
             Return New MetaInfo With {
                 .formula = formulaStr,
                 .xref = xref,
