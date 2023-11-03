@@ -887,7 +887,7 @@ Module MzMath
     ''' <summary>
     ''' Create a peak index
     ''' </summary>
-    ''' <param name="mz"></param>
+    ''' <param name="mz">A numeric vector of the peak m/z vector</param>
     ''' <returns></returns>
     <ExportAPI("mz_index")>
     Public Function CreateMzIndex(mz As Double()) As BlockSearchFunction(Of (mz As Double, Integer))
@@ -903,20 +903,61 @@ Module MzMath
     ''' on a given set of the peak m/z vector via the 
     ''' function ``mz_index``.
     ''' </param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' the returns value of this function is based on the input <paramref name="ms"/> data:
+    ''' 
+    ''' 1. for a single msdata object, then this function just returns a intensity numeric vector
+    ''' 2. for a collection of the msdata object, then this function will returns a
+    '''    dataframe object that each row is the element corresponding in the input msdata
+    '''    collection and each column is the m/z peak intensity value across the input
+    '''    msdata collection.
+    ''' </returns>
+    <RApiReturn(TypeCodes.double)>
     <ExportAPI("intensity_vec")>
-    Public Function alignIntensity(ms As LibraryMatrix, mzSet As BlockSearchFunction(Of (mz As Double, Integer))) As Double()
-        Return ms.DeconvoluteMS(mzSet.size, mzSet)
+    Public Function alignIntensity(<RRawVectorArgument>
+                                   ms As Object,
+                                   mzSet As BlockSearchFunction(Of (mz As Double, Integer)),
+                                   Optional env As Environment = Nothing) As Object
+
+        If TypeOf ms Is LibraryMatrix Then
+            Return DirectCast(ms, LibraryMatrix).DeconvoluteMS(mzSet.size, mzSet)
+        Else
+            Dim mat = env.EvaluateFramework(
+                x:=ms,
+                eval:=Function(x As LibraryMatrix) As Double()
+                          Return x.DeconvoluteMS(mzSet.size, mzSet)
+                      End Function,
+                parallel:=True
+            )
+            Dim df As New dataframe With {
+                .columns = New Dictionary(Of String, Array)
+            }
+
+
+        End If
     End Function
 
     ''' <summary>
     ''' normalized the peak intensity data, do [0,1] scaled.
     ''' </summary>
-    ''' <param name="msdata"></param>
+    ''' <param name="msdata">Should be a collection of the <see cref="Spectra.LibraryMatrix"/> object.</param>
+    ''' <param name="sum">
+    ''' the intensity normalization method to be used in this function, 
+    ''' set this parameter value to TRUE means use the total ion 
+    ''' normalization method, and the default value FALSE means used 
+    ''' the max intensity value for normalize the intensity value 
+    ''' to a relative percentage value.
+    ''' </param>
     ''' <param name="env"></param>
-    ''' <returns></returns>
+    ''' <returns>A collection of the <see cref="Spectra.LibraryMatrix"/> 
+    ''' object with the intensity value for each ms2 peak normalized.</returns>
     <ExportAPI("norm_msdata")>
-    Public Function normMs2(<RRawVectorArgument> msdata As Object, Optional sum As Boolean = False, Optional env As Environment = Nothing) As Object
+    <RApiReturn(GetType(LibraryMatrix))>
+    Public Function normMs2(<RRawVectorArgument>
+                            msdata As Object,
+                            Optional sum As Boolean = False,
+                            Optional env As Environment = Nothing) As Object
+
         Dim norm As Func(Of LibraryMatrix, LibraryMatrix)
 
         If sum Then
