@@ -94,8 +94,14 @@ declare namespace assembly {
    }
    module read {
       /**
+       * Read the spectrum data inside a mgf ASCII data file.
+       * 
+       * 
+        * @param file the file path to the target mgf data file
+        * @param env 
+        * + default value Is ``null``.
       */
-      function mgf(file: string): object;
+      function mgf(file: any, env?: object): object;
       /**
        * read MSL data files
        * 
