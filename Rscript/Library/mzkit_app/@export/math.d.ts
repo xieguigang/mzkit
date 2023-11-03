@@ -74,6 +74,13 @@ declare namespace math {
    */
    function exact_mass(mz: number, mode?: any): object;
    /**
+    * Extract an intensity vector based on a given peak index
+    * 
+    * 
+     * @param ms -
+     * @param mzSet A peak index object, which could be generated based 
+     *  on a given set of the peak m/z vector via the 
+     *  function ``mz_index``.
    */
    function intensity_vec(ms: object, mzSet: object): number;
    module ions {
@@ -139,8 +146,24 @@ declare namespace math {
    */
    function mz(mass: number, mode?: any, env?: object): object|number;
    /**
+    * Create a peak index
+    * 
+    * 
+     * @param mz -
    */
    function mz_index(mz: number): object;
+   /**
+    * normalized the peak intensity data, do [0,1] scaled.
+    * 
+    * 
+     * @param msdata -
+     * @param sum 
+     * + default value Is ``false``.
+     * @param env -
+     * 
+     * + default value Is ``null``.
+   */
+   function norm_msdata(msdata: any, sum?: boolean, env?: object): any;
    /**
     * calculate ppm value between two mass vector
     * 
