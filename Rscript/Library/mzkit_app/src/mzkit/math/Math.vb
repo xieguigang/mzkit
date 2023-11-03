@@ -884,13 +884,47 @@ Module MzMath
         Return uniques
     End Function
 
+    ''' <summary>
+    ''' Create a peak index
+    ''' </summary>
+    ''' <param name="mz"></param>
+    ''' <returns></returns>
     <ExportAPI("mz_index")>
     Public Function CreateMzIndex(mz As Double()) As BlockSearchFunction(Of (mz As Double, Integer))
         Return mz.CreateMzIndex
     End Function
 
+    ''' <summary>
+    ''' Extract an intensity vector based on a given peak index
+    ''' </summary>
+    ''' <param name="ms"></param>
+    ''' <param name="mzSet">
+    ''' A peak index object, which could be generated based 
+    ''' on a given set of the peak m/z vector via the 
+    ''' function ``mz_index``.
+    ''' </param>
+    ''' <returns></returns>
     <ExportAPI("intensity_vec")>
     Public Function alignIntensity(ms As LibraryMatrix, mzSet As BlockSearchFunction(Of (mz As Double, Integer))) As Double()
         Return ms.DeconvoluteMS(mzSet.size, mzSet)
+    End Function
+
+    ''' <summary>
+    ''' normalized the peak intensity data, do [0,1] scaled.
+    ''' </summary>
+    ''' <param name="msdata"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("norm_msdata")>
+    Public Function normMs2(<RRawVectorArgument> msdata As Object, Optional sum As Boolean = False, Optional env As Environment = Nothing) As Object
+        Dim norm As Func(Of LibraryMatrix, LibraryMatrix)
+
+        If sum Then
+            norm = Function(ms2) ms2 / ms2.SumMs
+        Else
+            norm = Function(ms2) ms2 / ms2.Max
+        End If
+
+        Return env.EvaluateFramework(msdata, norm, parallel:=True)
     End Function
 End Module
