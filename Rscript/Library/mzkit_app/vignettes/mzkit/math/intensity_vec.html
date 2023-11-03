@@ -188,7 +188,15 @@
 
         <h3>Value</h3>
 
-        this function returns data object of type double.
+        <p>the returns value of this function is based on the input <strong><code>ms</code></strong> data:</p>
+
+<ol>
+<li>for a single msdata object, then this function just returns a intensity numeric vector</li>
+<li>for a collection of the msdata object, then this function will returns a<br />
+dataframe object that each row is the element corresponding in the input msdata<br />
+collection and each column is the m/z peak intensity value across the input<br />
+msdata collection.</li>
+</ol>
 
         <h3 style="display: none;">Examples</h3>
 

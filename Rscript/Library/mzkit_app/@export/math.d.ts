@@ -81,8 +81,17 @@ declare namespace math {
      * @param mzSet A peak index object, which could be generated based 
      *  on a given set of the peak m/z vector via the 
      *  function ``mz_index``.
+     * @param env 
+     * + default value Is ``null``.
+     * @return the returns value of this function is based on the input **`ms`** data:
+     *  
+     *  1. for a single msdata object, then this function just returns a intensity numeric vector
+     *  2. for a collection of the msdata object, then this function will returns a
+     *     dataframe object that each row is the element corresponding in the input msdata
+     *     collection and each column is the m/z peak intensity value across the input
+     *     msdata collection.
    */
-   function intensity_vec(ms: object, mzSet: object): number;
+   function intensity_vec(ms: any, mzSet: object, env?: object): number;
    module ions {
       /**
        * data pre-processing helper, make the spectra ion data unique
@@ -149,21 +158,28 @@ declare namespace math {
     * Create a peak index
     * 
     * 
-     * @param mz -
+     * @param mz A numeric vector of the peak m/z vector
    */
    function mz_index(mz: number): object;
    /**
     * normalized the peak intensity data, do [0,1] scaled.
     * 
     * 
-     * @param msdata -
-     * @param sum 
+     * @param msdata Should be a collection of the @``T:BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.LibraryMatrix`` object.
+     * @param sum the intensity normalization method to be used in this function, 
+     *  set this parameter value to TRUE means use the total ion 
+     *  normalization method, and the default value FALSE means used 
+     *  the max intensity value for normalize the intensity value 
+     *  to a relative percentage value.
+     * 
      * + default value Is ``false``.
      * @param env -
      * 
      * + default value Is ``null``.
+     * @return A collection of the @``T:BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.LibraryMatrix`` 
+     *  object with the intensity value for each ms2 peak normalized.
    */
-   function norm_msdata(msdata: any, sum?: boolean, env?: object): any;
+   function norm_msdata(msdata: any, sum?: boolean, env?: object): object;
    /**
     * calculate ppm value between two mass vector
     * 
