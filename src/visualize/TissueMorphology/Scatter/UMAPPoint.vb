@@ -89,6 +89,26 @@ Public Class UMAPPoint
     ''' <returns></returns>
     Public Property [class] As String
 
+    Private Shared Function GetClusterLabels(df As DataFrame) As String()
+        Dim [class] As String()
+
+        Static fields As String() = {
+            "class", "Class",
+            "phenograph_cluster",
+            "Cluster", "cluster"
+        }
+
+        For Each name As String In fields
+            [class] = df.GetColumnValues(name).SafeQuery.ToArray
+
+            If Not [class].IsNullOrEmpty Then
+                Return [class]
+            End If
+        Next
+
+        Return New String() {}
+    End Function
+
     Public Shared Iterator Function ParseCsvTable(file As String) As IEnumerable(Of UMAPPoint)
         Dim df As DataFrame = DataFrame.Load(file)
         Dim labels As String() = df.Column(0).ToArray
@@ -96,12 +116,7 @@ Public Class UMAPPoint
         Dim y As Double() = df.GetColumnValues("y").Select(AddressOf Val).ToArray
         Dim z As Double() = df.GetColumnValues("z").Select(AddressOf Val).ToArray
         ' "Noise"
-        Dim [class] As String() = df.GetColumnValues("class").SafeQuery.ToArray
-
-        If [class].IsNullOrEmpty Then
-            [class] = df.GetColumnValues("phenograph_cluster").SafeQuery.ToArray
-        End If
-
+        Dim [class] As String() = GetClusterLabels(df)
         Dim classIndex As Index(Of String) = [class].Distinct.Where(Function(c) c <> "Noise").Indexing
         Dim label As String
         Dim t As String()
