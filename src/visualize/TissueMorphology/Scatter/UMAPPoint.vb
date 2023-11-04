@@ -106,14 +106,20 @@ Public Class UMAPPoint
         Dim label As String
         Dim t As String()
         Dim pt As Point
+        Dim class_tag As String = ""
 
         For i As Integer = 0 To labels.Length - 1
             label = labels(i)
             t = label.Split(","c)
             pt = New Point(Val(t(0)), Val(t(1)))
 
+            ' handling of missing class tag data
+            If [class].Length > 0 Then
+                class_tag = [class](i)
+            End If
+
             Yield New UMAPPoint With {
-                .[class] = classIndex.IndexOf([class](i)),
+                .[class] = classIndex.IndexOf(class_tag),
                 .label = labels(i),
                 .x = x(i), .y = y(i), .z = z(i),
                 .Pixel = pt
