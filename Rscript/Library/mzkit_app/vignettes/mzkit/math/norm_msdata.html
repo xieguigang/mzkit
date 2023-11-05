@@ -171,7 +171,15 @@
         <table>
             
 <dt>msdata</dt>
-<dd><p><p>-</p></p></dd>
+<dd><p><p>Should be a collection of the @<code>T:BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.LibraryMatrix</code> object.</p></p></dd>
+
+
+<dt>sum</dt>
+<dd><p><p>the intensity normalization method to be used in this function, <br />
+ set this parameter value to TRUE means use the total ion <br />
+ normalization method, and the default value FALSE means used <br />
+ the max intensity value for normalize the intensity value <br />
+ to a relative percentage value.</p></p></dd>
 
 
 <dt>env</dt>
@@ -187,7 +195,8 @@
 
         <h3>Value</h3>
 
-        this function returns data object of type <i>any</i> kind.
+        <p>A collection of the @<code>T:BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.LibraryMatrix</code> <br />
+ object with the intensity value for each ms2 peak normalized.</p>
 
         <h3 style="display: none;">Examples</h3>
 

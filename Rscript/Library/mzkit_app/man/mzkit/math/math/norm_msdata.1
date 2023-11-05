@@ -12,10 +12,24 @@ normalized the peak intensity data, do [0,1] scaled.
 .PP
 .SH OPTIONS
 .PP
-\fBmsdata\fB \fR\- -. 
+\fBmsdata\fB \fR\- Should be a collection of the @\fBT:BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.LibraryMatrix\fR object.. 
+.PP
+.PP
+\fBsum\fB \fR\- 
+ the intensity normalization method to be used in this function, 
+ set this parameter value to TRUE means use the total ion 
+ normalization method, and the default value FALSE means used 
+ the max intensity value for normalize the intensity value 
+ to a relative percentage value.
+. 
 .PP
 .PP
 \fBenv\fB \fR\- -. 
+.PP
+.SH VALUE
+.PP
+A collection of the @\fBT:BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.LibraryMatrix\fR 
+ object with the intensity value for each ms2 peak normalized.
 .PP
 .SH SEE ALSO
 math
