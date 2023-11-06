@@ -63,6 +63,7 @@ Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math
@@ -111,11 +112,12 @@ Public Class ChromatogramPeakPlot : Inherits Plot
             .Where(Function(xi) xi > 0) _
             .Sum()
         Dim maxInto = intoTicks.Max - base
-        Dim ay = Function(into As Double) As Double
-                     into = into - base
-                     accumulate += If(into < 0, 0, into)
-                     Return (accumulate / sumAll) * maxInto
-                 End Function
+        Dim ay As Func(Of Double, Double) =
+            Function(into As Double) As Double
+                into = into - base
+                accumulate += If(into < 0, 0, into)
+                Return (accumulate / sumAll) * maxInto
+            End Function
         Dim curvePen As Pen = Stroke.TryParse(theme.lineStroke).GDIObject
         Dim titleFont As Font = CSSFont.TryParse(theme.mainCSS).GDIObject(ppi)
         Dim ROIpen As Pen = Stroke.TryParse(ROI_styleCSS).GDIObject
@@ -142,32 +144,10 @@ Public Class ChromatogramPeakPlot : Inherits Plot
             YtickFormat:="G3"
         )
 
-        Dim A, B As PointF
-        ' 累加线
-        Dim ac1 As New PointF
-        Dim ac2 As PointF
-
-        ' 在这里绘制色谱曲线
-        For Each signal As SlideWindow(Of PointF) In chromatogram _
-            .Select(Function(c)
-                        Return New PointF(c.Time, c.Intensity)
-                    End Function) _
-            .SlideWindows(winSize:=2)
-
-            A = scaler.Translate(signal.First)
-            B = scaler.Translate(signal.Last)
-
-            Call g.DrawLine(curvePen, A, B)
-
-            If showAccumulateLine Then
-                ac2 = New PointF(signal.First.X, ay(signal.First.Y))
-                g.DrawLine(accumulateLine, scaler.Translate(ac1), scaler.Translate(ac2))
-                ac1 = ac2
-            End If
-        Next
+        Call DrawChromatogramCurve(chromatogram, g, scaler, curvePen, accumulateLine, ay)
 
         If Not MRM_ROIs.IsNullOrEmpty Then
-            Call showMRMRegion(g, timeTicks, intoTicks, scaler, ROIpen, baselinePen)
+            Call showMRMRegion(g, scaler, ROIpen)
         End If
 
         Dim left = rect.Left + (rect.Width - g.MeasureString(main, titleFont).Width) / 2
@@ -187,6 +167,35 @@ Public Class ChromatogramPeakPlot : Inherits Plot
         If legends > 0 Then
             Call DrawLegends(legends + New NamedValue(Of Pen) With {.Name = "Chromatogram", .Value = curvePen}, g, rect)
         End If
+    End Sub
+
+    Private Sub DrawChromatogramCurve(chromatogram As ChromatogramTick(), g As IGraphics, scaler As DataScaler,
+                                      curvePen As Pen,
+                                      accumulateLine As Pen,
+                                      Optional ay As Func(Of Double, Double) = Nothing)
+        Dim A, B As PointF
+        ' 累加线
+        Dim ac1 As New PointF
+        Dim ac2 As PointF
+
+        ' 在这里绘制色谱曲线
+        For Each signal As SlideWindow(Of PointF) In chromatogram _
+            .Select(Function(c)
+                        Return New PointF(c.Time, c.Intensity)
+                    End Function) _
+            .SlideWindows(winSize:=2)
+
+            A = scaler.Translate(signal.First)
+            B = scaler.Translate(signal.Last)
+
+            Call g.DrawLine(curvePen, A, B)
+
+            If showAccumulateLine AndAlso ay IsNot Nothing Then
+                ac2 = New PointF(signal.First.X, ay(signal.First.Y))
+                g.DrawLine(accumulateLine, scaler.Translate(ac1), scaler.Translate(ac2))
+                ac1 = ac2
+            End If
+        Next
     End Sub
 
     Private Overloads Sub DrawLegends(legends As List(Of NamedValue(Of Pen)), g As IGraphics, rect As Rectangle)
@@ -215,34 +224,28 @@ Public Class ChromatogramPeakPlot : Inherits Plot
     ''' <param name="scaler"></param>
     ''' <param name="ROIpen"></param>
     ''' <param name="baselinePen"></param>
-    Private Sub showMRMRegion(g As IGraphics, timeTicks#(), intoTicks#(), scaler As DataScaler, ROIpen As Pen, baselinePen As Pen)
-        Dim maxIntensity# = intoTicks.Max
-        Dim canvas As IGraphics = g
-        Dim drawLine = Sub(x1 As PointF, x2 As PointF, isBaseline As Boolean)
-                           x1 = scaler.Translate(x1)
-                           x2 = scaler.Translate(x2)
+    Private Sub showMRMRegion(g As IGraphics, scaler As DataScaler, ROIpen As Pen)
+        Dim colors As Color() = Designer.GetColors("paper", MRM_ROIs.Length)
+        Dim curvePen As Pen
+        Dim i As i32 = 0
 
-                           If isBaseline Then
-                               Call canvas.DrawLine(baselinePen, x1, x2)
-                           Else
-                               Call canvas.DrawLine(ROIpen, x1, x2)
-                           End If
-                       End Sub
-        Dim A, B As PointF
-
-        For Each MRM_ROI As ROI In MRM_ROIs
-            A = New PointF(MRM_ROI.time.Min, 0)
-            B = New PointF(MRM_ROI.time.Min, maxIntensity)
-            drawLine(A, B, False)
-
-            A = New PointF(MRM_ROI.time.Max, 0)
-            B = New PointF(MRM_ROI.time.Max, maxIntensity)
-            drawLine(A, B, False)
-
-            A = New PointF(timeTicks.Min, base)
-            B = New PointF(timeTicks.Max, base)
-
-            drawLine(A, B, True)
+        For Each roi As ROI In MRM_ROIs
+            curvePen = New Pen(colors(++i), ROIpen.Width) With {
+                .Alignment = ROIpen.Alignment,
+                .Transform = ROIpen.Transform,
+                .StartCap = ROIpen.StartCap,
+                .MiterLimit = ROIpen.MiterLimit,
+                .LineJoin = ROIpen.LineJoin,
+                .EndCap = ROIpen.EndCap,
+                .CompoundArray = ROIpen.CompoundArray,
+                .CustomEndCap = ROIpen.CustomEndCap,
+                .CustomStartCap = ROIpen.CustomStartCap,
+                .DashCap = ROIpen.DashCap,
+                .DashOffset = ROIpen.DashOffset,
+                .DashPattern = ROIpen.DashPattern,
+                .DashStyle = ROIpen.DashStyle
+            }
+            DrawChromatogramCurve(roi.ticks, g, scaler, curvePen, Nothing, Nothing)
         Next
     End Sub
 
