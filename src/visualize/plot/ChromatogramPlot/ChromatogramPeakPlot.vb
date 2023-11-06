@@ -1,54 +1,54 @@
 ﻿#Region "Microsoft.VisualBasic::a7cb6779754808366d1f91786395ed66, mzkit\src\visualize\plot\ChromatogramPlot\ChromatogramPeakPlot.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 209
-    '    Code Lines: 158
-    ' Comment Lines: 25
-    '   Blank Lines: 26
-    '     File Size: 9.87 KB
+' Summaries:
 
 
-    ' Module ChromatogramPeakPlot
-    ' 
-    '     Function: Plot
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 209
+'    Code Lines: 158
+' Comment Lines: 25
+'   Blank Lines: 26
+'     File Size: 9.87 KB
+
+
+' Module ChromatogramPeakPlot
+' 
+'     Function: Plot
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -59,6 +59,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
@@ -71,7 +72,7 @@ Imports Microsoft.VisualBasic.Scripting.Runtime
 ''' <summary>
 ''' time -> into
 ''' </summary>
-Public Module ChromatogramPeakPlot
+Public Class ChromatogramPeakPlot : Inherits Plot
 
     Public Const DefaultPadding$ = "padding: 200px 80px 150px 150px"
 
@@ -94,26 +95,25 @@ Public Module ChromatogramPeakPlot
     ''' 这个类似于对峰面积积分的结果
     ''' </param>
     ''' <returns></returns>
-    <Extension>
-    Public Function Plot(chromatogram As ChromatogramTick(),
-                         Optional size$ = "2100,1600",
-                         Optional padding$ = DefaultPadding,
-                         Optional bg$ = "white",
-                         Optional title$ = "NULL",
-                         Optional curveStyle$ = Stroke.ScatterLineStroke,
-                         Optional titleFontCSS$ = CSSFont.Win7VeryLarge,
-                         Optional legendFontCSS$ = CSSFont.Win7LargerNormal,
-                         Optional showMRMRegion As Boolean = False,
-                         Optional ROI_styleCSS$ = "stroke: red; stroke-width: 4px; stroke-dash: dash;",
-                         Optional baseLine_styleCSS$ = "stroke: green; stroke-width: 4px; stroke-dash: dash;",
-                         Optional accumulateLineStyleCss$ = "stroke: blue; stroke-width: 4px; stroke-dash: dash;",
-                         Optional showAccumulateLine As Boolean = False,
-                         Optional baselineQuantile# = 0.65,
-                         Optional angleThreshold# = 8,
-                         Optional peakwidth As DoubleRange = Nothing,
-                         Optional isMRM As Boolean = True,
-                         Optional sn_threshold As Double = 3,
-                         Optional ppi As Integer = 100) As GraphicsData
+    Public Overloads Function Plot(chromatogram As ChromatogramTick(),
+                                   Optional size$ = "2100,1600",
+                                   Optional padding$ = DefaultPadding,
+                                   Optional bg$ = "white",
+                                   Optional title$ = "NULL",
+                                   Optional curveStyle$ = Stroke.ScatterLineStroke,
+                                   Optional titleFontCSS$ = CSSFont.Win7VeryLarge,
+                                   Optional legendFontCSS$ = CSSFont.Win7LargerNormal,
+                                   Optional showMRMRegion As Boolean = False,
+                                   Optional ROI_styleCSS$ = "stroke: red; stroke-width: 4px; stroke-dash: dash;",
+                                   Optional baseLine_styleCSS$ = "stroke: green; stroke-width: 4px; stroke-dash: dash;",
+                                   Optional accumulateLineStyleCss$ = "stroke: blue; stroke-width: 4px; stroke-dash: dash;",
+                                   Optional showAccumulateLine As Boolean = False,
+                                   Optional baselineQuantile# = 0.65,
+                                   Optional angleThreshold# = 8,
+                                   Optional peakwidth As DoubleRange = Nothing,
+                                   Optional isMRM As Boolean = True,
+                                   Optional sn_threshold As Double = 3,
+                                   Optional ppi As Integer = 100) As GraphicsData
 
         Dim timeTicks#() = chromatogram.TimeArray.CreateAxisTicks
         Dim intoTicks#() = chromatogram.IntensityArray.CreateAxisTicks
@@ -260,4 +260,4 @@ Public Module ChromatogramPeakPlot
             plotInternal,
             dpi:=$"{ppi},{ppi}")
     End Function
-End Module
+End Class
