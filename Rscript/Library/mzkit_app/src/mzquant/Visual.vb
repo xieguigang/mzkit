@@ -184,6 +184,7 @@ Module Visual
                                             Optional fill As Boolean = True,
                                             Optional gridFill$ = "rgb(250,250,250)",
                                             Optional lineStyle$ = "stroke: black; stroke-width: 2px; stroke-dash: solid;",
+                                            <RRawVectorArgument> Optional ROI As ROI() = Nothing,
                                             <RRawVectorArgument>
                                             Optional relativeTimeScale As Object = Nothing,
                                             Optional parallel As Boolean = False,
@@ -208,7 +209,8 @@ Module Visual
                 showAccumulateLine:=True,
                 size:=InteropArgumentHelper.getSize(size, env, "2100,1650"),
                 padding:=InteropArgumentHelper.getPadding(padding),
-                curveStyle:=lineStyle
+                curveStyle:=lineStyle,
+                ROI:=ROI
             )
         ElseIf TypeOf chromatogram Is list AndAlso DirectCast(chromatogram, list).slots.All(Function(c) REnv.isVector(Of ChromatogramTick)(c.Value)) Then
             Return DirectCast(chromatogram, list).slots _

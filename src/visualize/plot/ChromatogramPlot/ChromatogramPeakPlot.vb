@@ -273,8 +273,8 @@ Public Class ChromatogramPeakPlot : Inherits Plot
                                           Optional angleThreshold# = 8,
                                           Optional peakwidth As DoubleRange = Nothing,
                                           Optional sn_threshold As Double = 3,
+                                          Optional ROI As ROI() = Nothing,
                                           Optional ppi As Integer = 100) As GraphicsData
-        Dim ROI As ROI() = Nothing
 
         If showMRMRegion Then
             ' 取出最大的ROI就是MRM色谱峰的保留时间范围
