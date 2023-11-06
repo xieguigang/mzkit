@@ -76,6 +76,14 @@ Imports REnv = SMRUCC.Rsharp.Runtime
 <Package("visualPlots")>
 Module Visual
 
+    ''' <summary>
+    ''' Create a chromatogram data from a dataframe object
+    ''' </summary>
+    ''' <param name="data"></param>
+    ''' <param name="time">the column name for get the rt field vector data</param>
+    ''' <param name="into">the column name for get the signal intensity field vector data</param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("as.chromatogram")>
     <RApiReturn(GetType(ChromatogramTick()))>
     Public Function asChromatogram(data As Object,
@@ -140,6 +148,13 @@ Module Visual
         )
     End Function
 
+    ''' <summary>
+    ''' plot MRM chromatogram overlaps in a speicifc rawdata file
+    ''' </summary>
+    ''' <param name="mzML">a specific MRM rawdata file</param>
+    ''' <param name="ions"></param>
+    ''' <param name="labelLayoutTicks"></param>
+    ''' <returns></returns>
     <ExportAPI("chromatogram.plot")>
     Public Function chromatogramPlot(mzML$, ions As IonPair(), Optional labelLayoutTicks% = 2000) As GraphicsData
         Return ions.MRMChromatogramPlot(mzML, labelLayoutTicks:=labelLayoutTicks)

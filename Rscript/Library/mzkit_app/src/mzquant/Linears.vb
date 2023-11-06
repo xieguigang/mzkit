@@ -77,7 +77,7 @@ Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports REnv = SMRUCC.Rsharp.Runtime
 Imports Rlist = SMRUCC.Rsharp.Runtime.Internal.Object.list
-Imports stdNum = System.Math
+Imports std = System.Math
 
 <Package("Linears")>
 Module Linears
@@ -132,7 +132,7 @@ Module Linears
                             .Properties = New Dictionary(Of String, String) From {
                                 {"name", If(namePoint Is Nothing, line.name, namePoint.Name)},
                                 {"equation", "f(x)=" & line.linear.Polynomial.ToString("G5", False)},
-                                {"R2", stdNum.Sqrt(line.linear.R2)},
+                                {"R2", std.Sqrt(line.linear.R2)},
                                 {"is.weighted", line.isWeighted},
                                 {"IS.calibration", line.requireISCalibration},
                                 {"IS", line.IS.name}
