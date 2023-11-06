@@ -59,7 +59,6 @@
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MSL
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
-Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Data
@@ -75,7 +74,6 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp
 Imports SMRUCC.Rsharp.Runtime
@@ -108,43 +106,13 @@ Module MRMkit
             End Function)
 
         REnv.Internal.htmlPrinter.AttachHtmlFormatter(Of QCData)(AddressOf MRMQCReport.CreateHtml)
-
         REnv.Internal.Object.Converts.makeDataframe.addHandler(GetType(RTAlignment()), AddressOf RTShiftSummary)
-        REnv.Internal.Object.Converts.makeDataframe.addHandler(GetType(ROI()), AddressOf ROISummary)
 
         Dim toolkit As AssemblyInfo = GetType(MRMkit).Assembly.FromAssembly
 
         Call VBDebugger.WaitOutput()
         Call toolkit.AppSummary(Nothing, Nothing, App.StdOut)
     End Sub
-
-    Private Function ROISummary(peaks As ROI(), args As list, env As Environment) As Rdataframe
-        Dim rt As Array = peaks.Select(Function(r) r.rt).ToArray
-        Dim rtmin As Double() = peaks.Select(Function(r) r.time.Min).ToArray
-        Dim rtmax As Double() = peaks.Select(Function(r) r.time.Max).ToArray
-        Dim maxinto As Array = peaks.Select(Function(r) r.maxInto).ToArray
-        Dim nticks As Array = peaks.Select(Function(r) r.ticks.Length).ToArray
-        Dim baseline As Array = peaks.Select(Function(r) r.baseline).ToArray
-        Dim area As Array = peaks.Select(Function(r) r.integration).ToArray
-        Dim noise As Array = peaks.Select(Function(r) r.noise).ToArray
-        Dim sn_ratio As Array = peaks.Select(Function(r) r.snRatio).ToArray
-
-        Return New Rdataframe With {
-            .columns = New Dictionary(Of String, Array) From {
-                {NameOf(rt), rt},
-                {NameOf(rtmin), rtmin},
-                {"rt(min)", rtmin.Select(Function(d) d / 60).ToArray},
-                {NameOf(rtmax), rtmax},
-                {"peak_width", (rtmax.AsVector - rtmin.AsVector).ToArray},
-                {NameOf(maxinto), maxinto},
-                {NameOf(nticks), nticks},
-                {NameOf(baseline), baseline},
-                {NameOf(area), area},
-                {NameOf(noise), noise},
-                {NameOf(sn_ratio), sn_ratio}
-            }
-        }
-    End Function
 
     Private Function RTShiftSummary(x As RTAlignment(), args As list, env As Environment) As Rdataframe
         Dim rownames = x.Select(Function(i) i.ion.target.accession).ToArray

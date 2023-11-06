@@ -9,24 +9,6 @@
  * 
 */
 declare namespace visualPlots {
-   module as {
-      /**
-       * Create a chromatogram data from a dataframe object
-       * 
-       * 
-        * @param data -
-        * @param time the column name for get the rt field vector data
-        * 
-        * + default value Is ``'Time'``.
-        * @param into the column name for get the signal intensity field vector data
-        * 
-        * + default value Is ``'Intensity'``.
-        * @param env -
-        * 
-        * + default value Is ``null``.
-      */
-      function chromatogram(data: any, time?: string, into?: string, env?: object): object;
-   }
    module chromatogram {
       /**
        * plot MRM chromatogram overlaps in a speicifc rawdata file

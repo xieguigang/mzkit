@@ -146,6 +146,7 @@ Module Visual
                                             <RRawVectorArgument> Optional ROI As ROI() = Nothing,
                                             <RRawVectorArgument>
                                             Optional relativeTimeScale As Object = Nothing,
+                                            Optional showAccumulateLine As Boolean = False,
                                             Optional parallel As Boolean = False,
                                             Optional env As Environment = Nothing) As Object
 
@@ -165,7 +166,7 @@ Module Visual
                 DirectCast(chromatogram, ChromatogramTick()),
                 title:=title,
                 showMRMRegion:=ROI.IsNullOrEmpty,
-                showAccumulateLine:=True,
+                showAccumulateLine:=showAccumulateLine,
                 size:=InteropArgumentHelper.getSize(size, env, "2100,1650"),
                 padding:=InteropArgumentHelper.getPadding(padding),
                 curveStyle:=lineStyle,
