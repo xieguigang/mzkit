@@ -87,7 +87,7 @@ Imports Rdataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
 Imports REnv = SMRUCC.Rsharp.Runtime
 Imports Rlist = SMRUCC.Rsharp.Runtime.Internal.Object.list
 Imports RRuntime = SMRUCC.Rsharp.Runtime
-Imports stdNum = System.Math
+Imports std = System.Math
 Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.XLSX.File
 
 ''' <summary>
@@ -153,10 +153,10 @@ Module MRMkit
         Dim isomerism As Array = x.Select(Function(i) If(i.ion.hasIsomerism, "*", "")).ToArray
         Dim rt As Array = x _
             .Select(Function(i)
-                        Dim act = stdNum.Round(i.actualRT)
+                        Dim act = std.Round(i.actualRT)
                         Dim ref = i.ion.target.rt
 
-                        Return $"{act}/{If(ref Is Nothing, "NA", stdNum.Round(ref.Value))}"
+                        Return $"{act}/{If(ref Is Nothing, "NA", std.Round(ref.Value))}"
                     End Function) _
             .ToArray
         Dim rtshifts = x _
@@ -347,6 +347,18 @@ Module MRMkit
         ).ToArray
     End Function
 
+    ''' <summary>
+    ''' ### Peak finding
+    ''' 
+    ''' Extract the peak ROI data from the chromatogram data
+    ''' </summary>
+    ''' <param name="chromatogram"></param>
+    ''' <param name="baselineQuantile"></param>
+    ''' <param name="angleThreshold"></param>
+    ''' <param name="peakwidth"></param>
+    ''' <param name="sn_threshold"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("peakROI")>
     <RApiReturn(GetType(ROI))>
     Public Function GetPeakROIList(<RRawVectorArgument(GetType(ChromatogramTick))>
