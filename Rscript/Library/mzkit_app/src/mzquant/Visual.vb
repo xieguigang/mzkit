@@ -205,7 +205,7 @@ Module Visual
             Return ChromatogramPeakPlot.Plot(
                 DirectCast(chromatogram, ChromatogramTick()),
                 title:=title,
-                showMRMRegion:=True,
+                showMRMRegion:=ROI.IsNullOrEmpty,
                 showAccumulateLine:=True,
                 size:=InteropArgumentHelper.getSize(size, env, "2100,1650"),
                 padding:=InteropArgumentHelper.getPadding(padding),
