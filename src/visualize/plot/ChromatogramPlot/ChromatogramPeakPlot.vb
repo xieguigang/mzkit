@@ -141,7 +141,8 @@ Public Class ChromatogramPeakPlot : Inherits Plot
             ylabel:="Intensity",
             htmlLabel:=False,
             XtickFormat:="F0",
-            YtickFormat:="G3"
+            YtickFormat:="G3",
+            gridFill:=theme.gridFill
         )
 
         Call DrawChromatogramCurve(chromatogram, g, scaler, curvePen, accumulateLine, ay)
@@ -276,6 +277,7 @@ Public Class ChromatogramPeakPlot : Inherits Plot
                                           Optional ROI_styleCSS$ = "stroke: red; stroke-width: 4px; stroke-dash: dash;",
                                           Optional baseLine_styleCSS$ = "stroke: green; stroke-width: 4px; stroke-dash: dash;",
                                           Optional accumulateLineStyleCss$ = "stroke: blue; stroke-width: 4px; stroke-dash: dash;",
+                                          Optional gridFill$ = "rgb(250,250,250)",
                                           Optional showAccumulateLine As Boolean = False,
                                           Optional baselineQuantile# = 0.65,
                                           Optional angleThreshold# = 8,
@@ -301,7 +303,8 @@ Public Class ChromatogramPeakPlot : Inherits Plot
             .background = bg,
             .legendLabelCSS = legendFontCSS,
             .lineStroke = curveStyle,
-            .mainCSS = titleFontCSS
+            .mainCSS = titleFontCSS,
+            .gridFill = gridFill
         }
         Dim app As New ChromatogramPeakPlot(chromatogram, theme, ROI,
             baselineQuantile:=baselineQuantile,
