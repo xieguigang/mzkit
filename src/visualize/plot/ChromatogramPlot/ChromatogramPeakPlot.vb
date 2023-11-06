@@ -237,12 +237,8 @@ Public Class ChromatogramPeakPlot : Inherits Plot
                 .MiterLimit = ROIpen.MiterLimit,
                 .LineJoin = ROIpen.LineJoin,
                 .EndCap = ROIpen.EndCap,
-                .CompoundArray = ROIpen.CompoundArray,
-                .CustomEndCap = ROIpen.CustomEndCap,
-                .CustomStartCap = ROIpen.CustomStartCap,
                 .DashCap = ROIpen.DashCap,
                 .DashOffset = ROIpen.DashOffset,
-                .DashPattern = ROIpen.DashPattern,
                 .DashStyle = ROIpen.DashStyle
             }
             DrawChromatogramCurve(roi.ticks, g, scaler, curvePen, Nothing, Nothing)

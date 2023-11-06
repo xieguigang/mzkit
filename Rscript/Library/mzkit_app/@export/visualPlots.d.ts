@@ -11,15 +11,32 @@
 declare namespace visualPlots {
    module as {
       /**
-        * @param time default value Is ``'Time'``.
-        * @param into default value Is ``'Intensity'``.
-        * @param env default value Is ``null``.
+       * Create a chromatogram data from a dataframe object
+       * 
+       * 
+        * @param data -
+        * @param time the column name for get the rt field vector data
+        * 
+        * + default value Is ``'Time'``.
+        * @param into the column name for get the signal intensity field vector data
+        * 
+        * + default value Is ``'Intensity'``.
+        * @param env -
+        * 
+        * + default value Is ``null``.
       */
       function chromatogram(data: any, time?: string, into?: string, env?: object): object;
    }
    module chromatogram {
       /**
-        * @param labelLayoutTicks default value Is ``2000``.
+       * plot MRM chromatogram overlaps in a speicifc rawdata file
+       * 
+       * 
+        * @param mzML a specific MRM rawdata file
+        * @param ions -
+        * @param labelLayoutTicks -
+        * 
+        * + default value Is ``2000``.
       */
       function plot(mzML: string, ions: object, labelLayoutTicks?: object): object;
    }
@@ -47,6 +64,8 @@ declare namespace visualPlots {
            * @param lineStyle Css value for adjust the plot style of the curve line of the chromatogram peaks data.
            * 
            * + default value Is ``'stroke: black; stroke-width: 2px; stroke-dash: solid;'``.
+           * @param ROI 
+           * + default value Is ``null``.
            * @param relativeTimeScale -
            * 
            * + default value Is ``null``.
@@ -56,7 +75,7 @@ declare namespace visualPlots {
            * 
            * + default value Is ``null``.
          */
-         function plot(chromatogram: any, title?: string, size?: any, padding?: any, fill?: boolean, gridFill?: string, lineStyle?: string, relativeTimeScale?: any, parallel?: boolean, env?: object): object;
+         function plot(chromatogram: any, title?: string, size?: any, padding?: any, fill?: boolean, gridFill?: string, lineStyle?: string, ROI?: object, relativeTimeScale?: any, parallel?: boolean, env?: object): object;
       }
    }
    /**

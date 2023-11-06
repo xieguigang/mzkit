@@ -112,6 +112,7 @@ Module Visual
                             .Intensity = intoVec(i)
                         }
                     End Function) _
+            .OrderBy(Function(ti) ti.Time) _
             .ToArray
     End Function
 
