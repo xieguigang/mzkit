@@ -7,8 +7,10 @@ Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.SignalProcessing
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp
+Imports SMRUCC.Rsharp.Interpreter
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
+Imports SMRUCC.Rsharp.Runtime.Components.[Interface]
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports Rdataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
@@ -24,14 +26,32 @@ Module QuantifyMath
     ''' <param name="dt"></param>
     ''' <returns></returns>
     <ExportAPI("resample")>
-    Public Function resample(TIC As ChromatogramTick(), Optional dt As Double = 1) As Object
+    Public Function resample(TIC As ChromatogramTick(),
+                             Optional dt As Double = 1,
+                             Optional aggregate As RFunction = Nothing,
+                             Optional env As Environment = Nothing) As Object
+
+        Dim fun As Func(Of IEnumerable(Of Double), Double) = Nothing
+
+        If Not aggregate Is Nothing Then
+            fun = Function(v) As Double
+                      Dim val As Object = aggregate.Invoke(env, {New InvokeParameter(runtimeValue:=v.ToArray)})
+
+                      If Program.isException(val) Then
+                          Throw DirectCast(val, Message).ToCLRException
+                      Else
+                          Return CLRVector.asNumeric(val).First
+                      End If
+                  End Function
+        End If
+
         Dim signal As New Signal(TIC)
-        Dim reshape = New BinSampler(signal).AggregateSignal(dt)
-        Dim aggregate = reshape _
+        Dim reshape = New BinSampler(signal).AggregateSignal(dt, fun)
+        Dim outVal = reshape _
             .Select(Function(t) New ChromatogramTick(t)) _
             .ToArray
 
-        Return aggregate
+        Return outVal
     End Function
 
     ''' <summary>
