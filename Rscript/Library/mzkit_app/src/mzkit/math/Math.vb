@@ -921,44 +921,44 @@ Module MzMath
 
         If TypeOf ms Is LibraryMatrix Then
             Return DirectCast(ms, LibraryMatrix).DeconvoluteMS(mzSet.size, mzSet)
-        Else
-            Dim mat = env.EvaluateFramework(
-                x:=ms,
-                eval:=Function(x As LibraryMatrix) As Double()
-                          Return x.DeconvoluteMS(mzSet.size, mzSet)
-                      End Function,
-                parallel:=True
-            )
+        End If
 
-            If TypeOf mat Is Double() Then
-                Return mat
-            End If
+        Dim mat = env.EvaluateFramework(
+            x:=ms,
+            eval:=Function(x As LibraryMatrix) As Double()
+                      Return x.DeconvoluteMS(mzSet.size, mzSet)
+                  End Function,
+            parallel:=True
+        )
 
-            If TypeOf mat Is list Then
-                Dim mat_list As list = mat
-                Dim matrix = mat_list.AsGeneric(Of Double())(env)
-                Dim size As Integer = matrix.First.Value.Length
-                Dim names = matrix.Keys.ToArray
-                Dim cols As String() = mzSet.raw _
+        If TypeOf mat Is Double() Then
+            Return mat
+        End If
+
+        If TypeOf mat Is list Then
+            Dim mat_list As list = mat
+            Dim matrix = mat_list.AsGeneric(Of Double())(env)
+            Dim size As Integer = matrix.First.Value.Length
+            Dim names = matrix.Keys.ToArray
+            Dim cols As String() = mzSet.raw _
                     .OrderBy(Function(m) m.Item2) _
                     .Select(Function(m) m.mz.ToString) _
                     .ToArray
-                Dim df As New dataframe With {
-                    .columns = New Dictionary(Of String, Array),
-                    .rownames = names
-                }
+            Dim df As New dataframe With {
+                .columns = New Dictionary(Of String, Array),
+                .rownames = names
+            }
 
-                For i As Integer = 0 To size - 1
-                    Dim offset = i
-                    Dim v = names.Select(Function(key) matrix(key)(offset))
+            For i As Integer = 0 To size - 1
+                Dim offset = i
+                Dim v = names.Select(Function(key) matrix(key)(offset))
 
-                    Call df.add(cols(i), v)
-                Next
+                Call df.add(cols(i), v)
+            Next
 
-                Return df
-            Else
-                Return Internal.debug.stop("not implemented", env)
-            End If
+            Return df
+        Else
+            Return Internal.debug.stop("not implemented", env)
         End If
     End Function
 
