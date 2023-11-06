@@ -254,8 +254,12 @@ declare namespace math {
      * @param dt -
      * 
      * + default value Is ``1``.
+     * @param aggregate 
+     * + default value Is ``null``.
+     * @param env 
+     * + default value Is ``null``.
    */
-   function resample(TIC: object, dt?: number): any;
+   function resample(TIC: object, dt?: number, aggregate?: object, env?: object): any;
    /**
     * reorder scan points into a sequence for downstream data analysis
     * 

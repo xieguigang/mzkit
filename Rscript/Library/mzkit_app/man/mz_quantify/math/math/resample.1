@@ -4,7 +4,9 @@
 resample \- Do resample of the chromatogram data
 .SH SYNOPSIS
 \fIresample(\fBTIC\fR as <generic> ChromatogramTick[], 
-\fBdt\fR as double = 1);\fR
+\fBdt\fR as double = 1, 
+\fBaggregate\fR as <generic> RFunction = \fB<NULL>\fR, 
+[\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
 Do resample of the chromatogram data
