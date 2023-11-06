@@ -221,11 +221,13 @@ declare namespace math {
      * @param sn_threshold -
      * 
      * + default value Is ``3``.
+     * @param joint 
+     * + default value Is ``false``.
      * @param env -
      * 
      * + default value Is ``null``.
    */
-   function peakROI(chromatogram: any, baselineQuantile?: number, angleThreshold?: number, peakwidth?: any, sn_threshold?: number, env?: object): object;
+   function peakROI(chromatogram: any, baselineQuantile?: number, angleThreshold?: number, peakwidth?: any, sn_threshold?: number, joint?: boolean, env?: object): object;
    /**
     * calculate ppm value between two mass vector
     * 
