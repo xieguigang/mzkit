@@ -59,7 +59,6 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
 Imports BioNovoGene.Analytical.MassSpectrometry.Visualization
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.Scripting.MetaData
@@ -67,7 +66,6 @@ Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
-Imports Rdataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
 Imports REnv = SMRUCC.Rsharp.Runtime
 
 ''' <summary>
@@ -75,46 +73,6 @@ Imports REnv = SMRUCC.Rsharp.Runtime
 ''' </summary>
 <Package("visualPlots")>
 Module Visual
-
-    ''' <summary>
-    ''' Create a chromatogram data from a dataframe object
-    ''' </summary>
-    ''' <param name="data"></param>
-    ''' <param name="time">the column name for get the rt field vector data</param>
-    ''' <param name="into">the column name for get the signal intensity field vector data</param>
-    ''' <param name="env"></param>
-    ''' <returns></returns>
-    <ExportAPI("as.chromatogram")>
-    <RApiReturn(GetType(ChromatogramTick()))>
-    Public Function asChromatogram(data As Object,
-                                   Optional time$ = "Time",
-                                   Optional into$ = "Intensity",
-                                   Optional env As Environment = Nothing) As Object
-        Dim timeVec As Double()
-        Dim intoVec As Double()
-
-        If data Is Nothing Then
-            Return Nothing
-        ElseIf TypeOf data Is Rdataframe Then
-            timeVec = CLRVector.asNumeric(DirectCast(data, Rdataframe).getColumnVector(time))
-            intoVec = CLRVector.asNumeric(DirectCast(data, Rdataframe).getColumnVector(into))
-        ElseIf TypeOf data Is DataSet() Then
-            timeVec = DirectCast(data, DataSet()).Vector(time)
-            intoVec = DirectCast(data, DataSet()).Vector(into)
-        Else
-            Return Internal.debug.stop($"invalid data sequence: {data.GetType.FullName}", env)
-        End If
-
-        Return timeVec _
-            .Select(Function(t, i)
-                        Return New ChromatogramTick With {
-                            .Time = t,
-                            .Intensity = intoVec(i)
-                        }
-                    End Function) _
-            .OrderBy(Function(ti) ti.Time) _
-            .ToArray
-    End Function
 
     ''' <summary>
     ''' Draw standard curve

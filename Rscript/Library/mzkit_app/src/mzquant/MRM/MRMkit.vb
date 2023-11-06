@@ -348,50 +348,6 @@ Module MRMkit
     End Function
 
     ''' <summary>
-    ''' ### Peak finding
-    ''' 
-    ''' Extract the peak ROI data from the chromatogram data
-    ''' </summary>
-    ''' <param name="chromatogram"></param>
-    ''' <param name="baselineQuantile"></param>
-    ''' <param name="angleThreshold"></param>
-    ''' <param name="peakwidth"></param>
-    ''' <param name="sn_threshold"></param>
-    ''' <param name="env"></param>
-    ''' <returns></returns>
-    <ExportAPI("peakROI")>
-    <RApiReturn(GetType(ROI))>
-    Public Function GetPeakROIList(<RRawVectorArgument(GetType(ChromatogramTick))>
-                                   chromatogram As Object,
-                                   Optional baselineQuantile# = 0.65,
-                                   Optional angleThreshold# = 5,
-                                   <RRawVectorArgument>
-                                   Optional peakwidth As Object = "8,30",
-                                   Optional sn_threshold As Double = 3,
-                                   Optional env As Environment = Nothing) As Object
-
-        If chromatogram Is Nothing Then
-            Return Nothing
-        End If
-
-        Dim _peakwidth = ApiArgumentHelpers.GetDoubleRange(peakwidth, env, "8,30")
-
-        If _peakwidth Like GetType(Message) Then
-            Return _peakwidth.TryCast(Of Message)
-        End If
-
-        Return DirectCast(REnv.asVector(Of ChromatogramTick)(chromatogram), ChromatogramTick()) _
-            .Shadows _
-            .PopulateROI(
-                baselineQuantile:=baselineQuantile,
-                angleThreshold:=angleThreshold,
-                peakwidth:=_peakwidth,
-                snThreshold:=sn_threshold
-            ) _
-            .ToArray
-    End Function
-
-    ''' <summary>
     ''' Get ion pair definition data from a given table file.
     ''' </summary>
     ''' <param name="file">A csv file or xlsx Excel data sheet</param>
