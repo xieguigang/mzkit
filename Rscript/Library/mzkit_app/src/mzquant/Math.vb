@@ -129,6 +129,7 @@ Module QuantifyMath
                                    <RRawVectorArgument>
                                    Optional peakwidth As Object = "8,30",
                                    Optional sn_threshold As Double = 3,
+                                   Optional joint As Boolean = False,
                                    Optional env As Environment = Nothing) As Object
 
         If chromatogram Is Nothing Then
@@ -147,7 +148,8 @@ Module QuantifyMath
                 baselineQuantile:=baselineQuantile,
                 angleThreshold:=angleThreshold,
                 peakwidth:=_peakwidth,
-                snThreshold:=sn_threshold
+                snThreshold:=sn_threshold,
+                joint:=joint
             ) _
             .ToArray
     End Function
