@@ -16,6 +16,10 @@ Imports REnv = SMRUCC.Rsharp.Runtime
 <Package("math")>
 Module QuantifyMath
 
+    Public Function resample()
+
+    End Function
+
     ''' <summary>
     ''' Create a chromatogram data from a dataframe object
     ''' </summary>
