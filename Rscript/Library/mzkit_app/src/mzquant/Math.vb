@@ -4,6 +4,7 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.SignalProcessing
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp
 Imports SMRUCC.Rsharp.Runtime
@@ -16,8 +17,21 @@ Imports REnv = SMRUCC.Rsharp.Runtime
 <Package("math")>
 Module QuantifyMath
 
-    Public Function resample()
+    ''' <summary>
+    ''' Do resample of the chromatogram data
+    ''' </summary>
+    ''' <param name="TIC"></param>
+    ''' <param name="dt"></param>
+    ''' <returns></returns>
+    <ExportAPI("resample")>
+    Public Function resample(TIC As ChromatogramTick(), Optional dt As Double = 1) As Object
+        Dim signal As New Signal(TIC)
+        Dim reshape = New BinSampler(signal).AggregateSignal(dt)
+        Dim aggregate = reshape _
+            .Select(Function(t) New ChromatogramTick(t)) _
+            .ToArray
 
+        Return aggregate
     End Function
 
     ''' <summary>
