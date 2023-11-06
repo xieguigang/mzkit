@@ -201,7 +201,8 @@ Module Visual
 
         If TypeOf chromatogram Is ChromatogramTick() Then
             ' [time, intensity]
-            Return DirectCast(chromatogram, ChromatogramTick()).Plot(
+            Return ChromatogramPeakPlot.Plot(
+                DirectCast(chromatogram, ChromatogramTick()),
                 title:=title,
                 showMRMRegion:=True,
                 showAccumulateLine:=True,

@@ -256,25 +256,24 @@ Public Class ChromatogramPeakPlot : Inherits Plot
     ''' 这个类似于对峰面积积分的结果
     ''' </param>
     ''' <returns></returns>
-    Public Overloads Function Plot(chromatogram As ChromatogramTick(),
-                                   Optional size$ = "2100,1600",
-                                   Optional padding$ = DefaultPadding,
-                                   Optional bg$ = "white",
-                                   Optional title$ = "NULL",
-                                   Optional curveStyle$ = Stroke.ScatterLineStroke,
-                                   Optional titleFontCSS$ = CSSFont.Win7VeryLarge,
-                                   Optional legendFontCSS$ = CSSFont.Win7LargerNormal,
-                                   Optional showMRMRegion As Boolean = False,
-                                   Optional ROI_styleCSS$ = "stroke: red; stroke-width: 4px; stroke-dash: dash;",
-                                   Optional baseLine_styleCSS$ = "stroke: green; stroke-width: 4px; stroke-dash: dash;",
-                                   Optional accumulateLineStyleCss$ = "stroke: blue; stroke-width: 4px; stroke-dash: dash;",
-                                   Optional showAccumulateLine As Boolean = False,
-                                   Optional baselineQuantile# = 0.65,
-                                   Optional angleThreshold# = 8,
-                                   Optional peakwidth As DoubleRange = Nothing,
-                                   Optional sn_threshold As Double = 3,
-                                   Optional ppi As Integer = 100) As GraphicsData
-
+    Public Overloads Shared Function Plot(chromatogram As ChromatogramTick(),
+                                          Optional size$ = "2100,1600",
+                                          Optional padding$ = DefaultPadding,
+                                          Optional bg$ = "white",
+                                          Optional title$ = "NULL",
+                                          Optional curveStyle$ = Stroke.ScatterLineStroke,
+                                          Optional titleFontCSS$ = CSSFont.Win7VeryLarge,
+                                          Optional legendFontCSS$ = CSSFont.Win7LargerNormal,
+                                          Optional showMRMRegion As Boolean = False,
+                                          Optional ROI_styleCSS$ = "stroke: red; stroke-width: 4px; stroke-dash: dash;",
+                                          Optional baseLine_styleCSS$ = "stroke: green; stroke-width: 4px; stroke-dash: dash;",
+                                          Optional accumulateLineStyleCss$ = "stroke: blue; stroke-width: 4px; stroke-dash: dash;",
+                                          Optional showAccumulateLine As Boolean = False,
+                                          Optional baselineQuantile# = 0.65,
+                                          Optional angleThreshold# = 8,
+                                          Optional peakwidth As DoubleRange = Nothing,
+                                          Optional sn_threshold As Double = 3,
+                                          Optional ppi As Integer = 100) As GraphicsData
         Dim ROI As ROI() = Nothing
 
         If showMRMRegion Then
