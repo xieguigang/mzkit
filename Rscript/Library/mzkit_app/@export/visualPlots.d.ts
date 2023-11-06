@@ -51,13 +51,15 @@ declare namespace visualPlots {
            * @param relativeTimeScale -
            * 
            * + default value Is ``null``.
+           * @param showAccumulateLine 
+           * + default value Is ``false``.
            * @param parallel 
            * + default value Is ``false``.
            * @param env -
            * 
            * + default value Is ``null``.
          */
-         function plot(chromatogram: any, title?: string, size?: any, padding?: any, fill?: boolean, gridFill?: string, lineStyle?: string, ROI?: object, relativeTimeScale?: any, parallel?: boolean, env?: object): object;
+         function plot(chromatogram: any, title?: string, size?: any, padding?: any, fill?: boolean, gridFill?: string, lineStyle?: string, ROI?: object, relativeTimeScale?: any, showAccumulateLine?: boolean, parallel?: boolean, env?: object): object;
       }
    }
    /**
