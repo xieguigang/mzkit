@@ -70,7 +70,7 @@ Imports Microsoft.VisualBasic.Math.Quantile
 Imports Microsoft.VisualBasic.Math.Statistics.Hypothesis
 Imports Microsoft.VisualBasic.Parallel
 Imports Point = System.Drawing.Point
-Imports stdNum = System.Math
+Imports std = System.Math
 
 ''' <summary>
 ''' Stats the ion features inside a MSI raw data slide
@@ -134,13 +134,13 @@ Public Class IonStat
             Dim allHits = ionList _
                 .AsParallel _
                 .Where(Function(i)
-                           Return mz.Any(Function(mzi) stdNum.Abs(mzi - i.mz) <= da)
+                           Return mz.Any(Function(mzi) std.Abs(mzi - i.mz) <= da)
                        End Function) _
                 .DoCall(Function(allIons) DoStatInternal(allIons, nsize, da, parallel)) _
                 .ToList
 
             For Each mzi As Double In mz
-                If allHits.Count = 0 OrElse Not allHits.All(Function(m) stdNum.Abs(m.mz - mzi) <= da) Then
+                If allHits.Count = 0 OrElse Not allHits.All(Function(m) std.Abs(m.mz - mzi) <= da) Then
                     ' missing current ion
                     ' fill empty
                     allHits.Add(New IonStat With {.mz = mzi})
