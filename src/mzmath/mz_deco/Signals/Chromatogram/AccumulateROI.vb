@@ -62,6 +62,7 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Scripting
 Imports Microsoft.VisualBasic.Math.SignalProcessing.PeakFinding
 Imports Microsoft.VisualBasic.Scripting.Runtime
+Imports std = System.Math
 
 Namespace Chromatogram
 
@@ -117,7 +118,8 @@ Namespace Chromatogram
         Public Iterator Function PopulateROI(chromatogram As IVector(Of ChromatogramTick), peakwidth As DoubleRange,
                                              Optional angleThreshold# = 3,
                                              Optional baselineQuantile# = 0.65,
-                                             Optional snThreshold As Double = 3) As IEnumerable(Of ROI)
+                                             Optional snThreshold As Double = 3,
+                                             Optional joint As Boolean = False) As IEnumerable(Of ROI)
             ' 先计算出基线和累加线
             Dim baseline# = chromatogram.Baseline(baselineQuantile)
             Dim time As Vector = chromatogram!time
@@ -125,6 +127,10 @@ Namespace Chromatogram
                 .FindAllSignalPeaks(chromatogram.As(Of ITimeSignal)) _
                 .Triming(peakwidth) _
                 .ToArray
+
+            If joint Then
+                peaks = peaks.JointPeaks().ToArray
+            End If
 
             For Each window As SignalPeak In peaks
                 Dim rtmin# = window.rtmin
@@ -146,6 +152,63 @@ Namespace Chromatogram
                     Yield ROI
                 End If
             Next
+        End Function
+
+        <Extension>
+        Private Iterator Function JointPeaks(raw As SignalPeak()) As IEnumerable(Of SignalPeak)
+            raw = raw.OrderBy(Function(t) t.rtmin).ToArray
+
+            Dim dt As Double() = raw _
+                .SlideWindows(winSize:=2, offset:=1) _
+                .Select(Function(twoPeak)
+                            Dim p0 = twoPeak.First
+                            Dim p1 = twoPeak.Last
+
+                            Return std.Abs(p1.rtmin - p0.rtmax)
+                        End Function) _
+                .OrderBy(Function(a) a) _
+                .ToArray
+            Dim q2 As Double = dt(dt.Length * (3 / 4)) * 1.25
+            Dim jointPeak As New List(Of SignalPeak) From {
+                raw(0)
+            }
+
+            For i As Integer = 1 To raw.Length - 1
+                If raw(i).rtmin - raw(i - 1).rtmax <= q2 Then
+                    jointPeak.Add(raw(i))
+                Else
+                    If jointPeak.Count > 0 Then
+                        ' break
+                        Yield AccumulateROI.JointPeak(jointPeak)
+                    End If
+
+                    jointPeak.Clear()
+                    jointPeak.Add(raw(i))
+                End If
+            Next
+
+            If jointPeak.Count > 0 Then
+                Yield AccumulateROI.JointPeak(jointPeak)
+            End If
+        End Function
+
+        Private Function JointPeak(peaks As List(Of SignalPeak)) As SignalPeak
+            If peaks.Count = 1 Then
+                Return peaks.First
+            End If
+
+            Dim base = Aggregate part In peaks Into Average(part.baseline)
+            Dim a = Aggregate part In peaks Into Sum(part.integration)
+
+            Return New SignalPeak With {
+                .baseline = base,
+                .integration = a,
+                .region = peaks _
+                    .Select(Function(i) i.region) _
+                    .IteratesALL _
+                    .OrderBy(Function(ti) ti.time) _
+                    .ToArray
+            }
         End Function
     End Module
 End Namespace

@@ -3,7 +3,7 @@
 The mass spectrum assembly file read/write library module.
 
 + [read.msl](assembly/read.msl.1) read MSL data files
-+ [read.mgf](assembly/read.mgf.1) 
++ [read.mgf](assembly/read.mgf.1) Read the spectrum data inside a mgf ASCII data file.
 + [read.msp](assembly/read.msp.1) 
 + [mgf.ion_peaks](assembly/mgf.ion_peaks.1) this function ensure that the output result of the any input ion objects is peakms2 data type.
 + [open.xml_seek](assembly/open.xml_seek.1) 

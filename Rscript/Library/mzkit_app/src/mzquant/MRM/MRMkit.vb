@@ -59,7 +59,6 @@
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MSL
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
-Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Data
@@ -75,7 +74,6 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp
 Imports SMRUCC.Rsharp.Runtime
@@ -87,7 +85,7 @@ Imports Rdataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
 Imports REnv = SMRUCC.Rsharp.Runtime
 Imports Rlist = SMRUCC.Rsharp.Runtime.Internal.Object.list
 Imports RRuntime = SMRUCC.Rsharp.Runtime
-Imports stdNum = System.Math
+Imports std = System.Math
 Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.XLSX.File
 
 ''' <summary>
@@ -108,43 +106,13 @@ Module MRMkit
             End Function)
 
         REnv.Internal.htmlPrinter.AttachHtmlFormatter(Of QCData)(AddressOf MRMQCReport.CreateHtml)
-
         REnv.Internal.Object.Converts.makeDataframe.addHandler(GetType(RTAlignment()), AddressOf RTShiftSummary)
-        REnv.Internal.Object.Converts.makeDataframe.addHandler(GetType(ROI()), AddressOf ROISummary)
 
         Dim toolkit As AssemblyInfo = GetType(MRMkit).Assembly.FromAssembly
 
         Call VBDebugger.WaitOutput()
         Call toolkit.AppSummary(Nothing, Nothing, App.StdOut)
     End Sub
-
-    Private Function ROISummary(peaks As ROI(), args As list, env As Environment) As Rdataframe
-        Dim rt As Array = peaks.Select(Function(r) r.rt).ToArray
-        Dim rtmin As Double() = peaks.Select(Function(r) r.time.Min).ToArray
-        Dim rtmax As Double() = peaks.Select(Function(r) r.time.Max).ToArray
-        Dim maxinto As Array = peaks.Select(Function(r) r.maxInto).ToArray
-        Dim nticks As Array = peaks.Select(Function(r) r.ticks.Length).ToArray
-        Dim baseline As Array = peaks.Select(Function(r) r.baseline).ToArray
-        Dim area As Array = peaks.Select(Function(r) r.integration).ToArray
-        Dim noise As Array = peaks.Select(Function(r) r.noise).ToArray
-        Dim sn_ratio As Array = peaks.Select(Function(r) r.snRatio).ToArray
-
-        Return New Rdataframe With {
-            .columns = New Dictionary(Of String, Array) From {
-                {NameOf(rt), rt},
-                {NameOf(rtmin), rtmin},
-                {"rt(min)", rtmin.Select(Function(d) d / 60).ToArray},
-                {NameOf(rtmax), rtmax},
-                {"peak_width", (rtmax.AsVector - rtmin.AsVector).ToArray},
-                {NameOf(maxinto), maxinto},
-                {NameOf(nticks), nticks},
-                {NameOf(baseline), baseline},
-                {NameOf(area), area},
-                {NameOf(noise), noise},
-                {NameOf(sn_ratio), sn_ratio}
-            }
-        }
-    End Function
 
     Private Function RTShiftSummary(x As RTAlignment(), args As list, env As Environment) As Rdataframe
         Dim rownames = x.Select(Function(i) i.ion.target.accession).ToArray
@@ -153,10 +121,10 @@ Module MRMkit
         Dim isomerism As Array = x.Select(Function(i) If(i.ion.hasIsomerism, "*", "")).ToArray
         Dim rt As Array = x _
             .Select(Function(i)
-                        Dim act = stdNum.Round(i.actualRT)
+                        Dim act = std.Round(i.actualRT)
                         Dim ref = i.ion.target.rt
 
-                        Return $"{act}/{If(ref Is Nothing, "NA", stdNum.Round(ref.Value))}"
+                        Return $"{act}/{If(ref Is Nothing, "NA", std.Round(ref.Value))}"
                     End Function) _
             .ToArray
         Dim rtshifts = x _
@@ -345,38 +313,6 @@ Module MRMkit
                 sn_threshold:=sn_threshold
             )
         ).ToArray
-    End Function
-
-    <ExportAPI("peakROI")>
-    <RApiReturn(GetType(ROI))>
-    Public Function GetPeakROIList(<RRawVectorArgument(GetType(ChromatogramTick))>
-                                   chromatogram As Object,
-                                   Optional baselineQuantile# = 0.65,
-                                   Optional angleThreshold# = 5,
-                                   <RRawVectorArgument>
-                                   Optional peakwidth As Object = "8,30",
-                                   Optional sn_threshold As Double = 3,
-                                   Optional env As Environment = Nothing) As Object
-
-        If chromatogram Is Nothing Then
-            Return Nothing
-        End If
-
-        Dim _peakwidth = ApiArgumentHelpers.GetDoubleRange(peakwidth, env, "8,30")
-
-        If _peakwidth Like GetType(Message) Then
-            Return _peakwidth.TryCast(Of Message)
-        End If
-
-        Return DirectCast(REnv.asVector(Of ChromatogramTick)(chromatogram), ChromatogramTick()) _
-            .Shadows _
-            .PopulateROI(
-                baselineQuantile:=baselineQuantile,
-                angleThreshold:=angleThreshold,
-                peakwidth:=_peakwidth,
-                snThreshold:=sn_threshold
-            ) _
-            .ToArray
     End Function
 
     ''' <summary>

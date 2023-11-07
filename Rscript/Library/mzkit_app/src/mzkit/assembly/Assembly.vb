@@ -211,9 +211,21 @@ Module Assembly
         Return MSL.FileReader.Load(file, unit).ToArray
     End Function
 
+    ''' <summary>
+    ''' Read the spectrum data inside a mgf ASCII data file.
+    ''' </summary>
+    ''' <param name="file">the file path to the target mgf data file</param>
+    ''' <returns></returns>
     <ExportAPI("read.mgf")>
-    Public Function ReadMgfIons(file As String) As Ions()
-        Return MgfReader.StreamParser(path:=file).ToArray
+    <RApiReturn(GetType(Ions))>
+    Public Function ReadMgfIons(<RRawVectorArgument> file As Object, Optional env As Environment = Nothing) As Object
+        Dim buf = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Read, env)
+
+        If buf Like GetType(Message) Then
+            Return buf.TryCast(Of Message)
+        End If
+
+        Return MgfReader.StreamParser(buf.TryCast(Of Stream)).ToArray
     End Function
 
     <ExportAPI("read.msp")>

@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>plot MRM chromatogram overlaps in a speicifc rawdata file</title>
+    <title>normalized the peak intensity data, do [0,1] scaled.</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <style rel="stylesheet" type="text/css">
@@ -148,12 +148,12 @@
 
         <table style="width: 100%;">
             <tr>
-                <td>chromatogram.plot {visualPlots}</td>
+                <td>norm_msdata {math}</td>
                 <td style="text-align: right;">R Documentation</td>
             </tr>
         </table>
 
-        <h2>plot MRM chromatogram overlaps in a speicifc rawdata file</h2>
+        <h2>normalized the peak intensity data, do [0,1] scaled.</h2>
 
         <h3>Description</h3>
 
@@ -162,23 +162,27 @@
         <h3>Usage</h3>
 
         <div style="width: 100%; padding-left: 3%; color: black;">
-            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>chromatogram.plot</strong>(<i>mzML</i>, <i>ions</i>,
-    <i>labelLayoutTicks</i> = <span style='color: green;'>2000</span>);</code></pre>
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>norm_msdata</strong>(<i>msdata</i>,
+    <i>sum</i> = <span style='color: blue !important;'>FALSE</span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
 
         <table>
             
-<dt>mzML</dt>
-<dd><p><p>a specific MRM rawdata file</p></p></dd>
+<dt>msdata</dt>
+<dd><p><p>Should be a collection of the @<code>T:BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.LibraryMatrix</code> object.</p></p></dd>
 
 
-<dt>ions</dt>
-<dd><p><p>-</p></p></dd>
+<dt>sum</dt>
+<dd><p><p>the intensity normalization method to be used in this function, <br />
+ set this parameter value to TRUE means use the total ion <br />
+ normalization method, and the default value FALSE means used <br />
+ the max intensity value for normalize the intensity value <br />
+ to a relative percentage value.</p></p></dd>
 
 
-<dt>labelLayoutTicks</dt>
+<dt>env</dt>
 <dd><p><p>-</p></p></dd>
 
         </table>
@@ -191,15 +195,16 @@
 
         <h3>Value</h3>
 
-        this function returns data object of type <a href="/clr/Microsoft/VisualBasic/Imaging/Driver/GraphicsData.html">GraphicsData</a>.
+        <p>A collection of the @<code>T:BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.LibraryMatrix</code> <br />
+ object with the intensity value for each ms2 peak normalized.</p>
 
         <h3 style="display: none;">Examples</h3>
 
         
 
         <hr />
-        <div style="text-align: center;">[Package <em>visualPlots</em> version 1.0.0.0 <a
-                href="../visualPlots.html">Index</a>]
+        <div style="text-align: center;">[Package <em>math</em> version 1.0.0.0 <a
+                href="../math.html">Index</a>]
         </div>
     </div>
 </body>

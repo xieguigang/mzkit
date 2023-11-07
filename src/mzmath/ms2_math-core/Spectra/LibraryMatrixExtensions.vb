@@ -72,6 +72,18 @@ Namespace Spectra
     Public Module LibraryMatrixExtensions
 
         ''' <summary>
+        ''' SUM(<see cref="ms2.intensity"/>)
+        ''' </summary>
+        ''' <param name="matrix"></param>
+        ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function SumMs(matrix As LibraryMatrix) As Double
+            Return Aggregate xi As ms2 In matrix.ms2 Into Sum(xi.intensity)
+        End Function
+
+        ''' <summary>
         ''' MAX(<see cref="ms2.intensity"/>)
         ''' </summary>
         ''' <param name="matrix"></param>

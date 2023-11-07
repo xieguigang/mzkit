@@ -1,0 +1,41 @@
+.\" man page create by R# package system.
+.TH MATH 4 2000-Jan "norm_msdata" "norm_msdata"
+.SH NAME
+norm_msdata \- normalized the peak intensity data, do [0,1] scaled.
+.SH SYNOPSIS
+\fInorm_msdata(\fBmsdata\fR as any, 
+\fBsum\fR as boolean = FALSE, 
+[\fB<Environment>\fR]);\fR
+.SH DESCRIPTION
+.PP
+normalized the peak intensity data, do [0,1] scaled.
+.PP
+.SH OPTIONS
+.PP
+\fBmsdata\fB \fR\- Should be a collection of the @\fBT:BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.LibraryMatrix\fR object.. 
+.PP
+.PP
+\fBsum\fB \fR\- 
+ the intensity normalization method to be used in this function, 
+ set this parameter value to TRUE means use the total ion 
+ normalization method, and the default value FALSE means used 
+ the max intensity value for normalize the intensity value 
+ to a relative percentage value.
+. 
+.PP
+.PP
+\fBenv\fB \fR\- -. 
+.PP
+.SH VALUE
+.PP
+A collection of the @\fBT:BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.LibraryMatrix\fR 
+ object with the intensity value for each ms2 peak normalized.
+.PP
+.SH SEE ALSO
+math
+.SH FILES
+.PP
+mzkit.dll
+.PP
+.SH AUTHOR
+Written by \fBgg.xie@bionovogene.com\fR

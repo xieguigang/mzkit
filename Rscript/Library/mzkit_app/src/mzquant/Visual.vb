@@ -59,7 +59,6 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
 Imports BioNovoGene.Analytical.MassSpectrometry.Visualization
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.Scripting.MetaData
@@ -67,7 +66,6 @@ Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
-Imports Rdataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
 Imports REnv = SMRUCC.Rsharp.Runtime
 
 ''' <summary>
@@ -75,37 +73,6 @@ Imports REnv = SMRUCC.Rsharp.Runtime
 ''' </summary>
 <Package("visualPlots")>
 Module Visual
-
-    <ExportAPI("as.chromatogram")>
-    <RApiReturn(GetType(ChromatogramTick()))>
-    Public Function asChromatogram(data As Object,
-                                   Optional time$ = "Time",
-                                   Optional into$ = "Intensity",
-                                   Optional env As Environment = Nothing) As Object
-        Dim timeVec As Double()
-        Dim intoVec As Double()
-
-        If data Is Nothing Then
-            Return Nothing
-        ElseIf TypeOf data Is Rdataframe Then
-            timeVec = CLRVector.asNumeric(DirectCast(data, Rdataframe).getColumnVector(time))
-            intoVec = CLRVector.asNumeric(DirectCast(data, Rdataframe).getColumnVector(into))
-        ElseIf TypeOf data Is DataSet() Then
-            timeVec = DirectCast(data, DataSet()).Vector(time)
-            intoVec = DirectCast(data, DataSet()).Vector(into)
-        Else
-            Return Internal.debug.stop($"invalid data sequence: {data.GetType.FullName}", env)
-        End If
-
-        Return timeVec _
-            .Select(Function(t, i)
-                        Return New ChromatogramTick With {
-                            .Time = t,
-                            .Intensity = intoVec(i)
-                        }
-                    End Function) _
-            .ToArray
-    End Function
 
     ''' <summary>
     ''' Draw standard curve
@@ -140,6 +107,13 @@ Module Visual
         )
     End Function
 
+    ''' <summary>
+    ''' plot MRM chromatogram overlaps in a speicifc rawdata file
+    ''' </summary>
+    ''' <param name="mzML">a specific MRM rawdata file</param>
+    ''' <param name="ions"></param>
+    ''' <param name="labelLayoutTicks"></param>
+    ''' <returns></returns>
     <ExportAPI("chromatogram.plot")>
     Public Function chromatogramPlot(mzML$, ions As IonPair(), Optional labelLayoutTicks% = 2000) As GraphicsData
         Return ions.MRMChromatogramPlot(mzML, labelLayoutTicks:=labelLayoutTicks)
@@ -169,8 +143,10 @@ Module Visual
                                             Optional fill As Boolean = True,
                                             Optional gridFill$ = "rgb(250,250,250)",
                                             Optional lineStyle$ = "stroke: black; stroke-width: 2px; stroke-dash: solid;",
+                                            <RRawVectorArgument> Optional ROI As ROI() = Nothing,
                                             <RRawVectorArgument>
                                             Optional relativeTimeScale As Object = Nothing,
+                                            Optional showAccumulateLine As Boolean = False,
                                             Optional parallel As Boolean = False,
                                             Optional env As Environment = Nothing) As Object
 
@@ -186,13 +162,16 @@ Module Visual
 
         If TypeOf chromatogram Is ChromatogramTick() Then
             ' [time, intensity]
-            Return DirectCast(chromatogram, ChromatogramTick()).Plot(
+            Return ChromatogramPeakPlot.Plot(
+                DirectCast(chromatogram, ChromatogramTick()),
                 title:=title,
-                showMRMRegion:=True,
-                showAccumulateLine:=True,
+                showMRMRegion:=ROI.IsNullOrEmpty,
+                showAccumulateLine:=showAccumulateLine,
                 size:=InteropArgumentHelper.getSize(size, env, "2100,1650"),
                 padding:=InteropArgumentHelper.getPadding(padding),
-                curveStyle:=lineStyle
+                curveStyle:=lineStyle,
+                ROI:=ROI,
+                gridFill:=gridFill
             )
         ElseIf TypeOf chromatogram Is list AndAlso DirectCast(chromatogram, list).slots.All(Function(c) REnv.isVector(Of ChromatogramTick)(c.Value)) Then
             Return DirectCast(chromatogram, list).slots _

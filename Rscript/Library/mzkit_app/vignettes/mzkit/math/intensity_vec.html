@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>intensity_vec</title>
+    <title>Extract an intensity vector based on a given peak index</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <style rel="stylesheet" type="text/css">
@@ -153,11 +153,11 @@
             </tr>
         </table>
 
-        <h2>intensity_vec</h2>
+        <h2>Extract an intensity vector based on a given peak index</h2>
 
         <h3>Description</h3>
 
-        intensity_vec
+        
 
         <h3>Usage</h3>
 
@@ -169,6 +169,15 @@
 
         <table>
             
+<dt>ms</dt>
+<dd><p><p>-</p></p></dd>
+
+
+<dt>mzSet</dt>
+<dd><p><p>A peak index object, which could be generated based <br />
+ on a given set of the peak m/z vector via the <br />
+ function <code>mz_index</code>.</p></p></dd>
+
         </table>
 
 
@@ -179,7 +188,15 @@
 
         <h3>Value</h3>
 
-        this function returns data object of type double.
+        <p>the returns value of this function is based on the input <strong><code>ms</code></strong> data:</p>
+
+<ol>
+<li>for a single msdata object, then this function just returns a intensity numeric vector</li>
+<li>for a collection of the msdata object, then this function will returns a<br />
+dataframe object that each row is the element corresponding in the input msdata<br />
+collection and each column is the m/z peak intensity value across the input<br />
+msdata collection.</li>
+</ol>
 
         <h3 style="display: none;">Examples</h3>
 

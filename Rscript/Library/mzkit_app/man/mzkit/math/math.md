@@ -21,5 +21,6 @@ mass spectrometry data math toolkit
 + [defaultPrecursors](math/defaultPrecursors.1) returns all precursor types for a given libtype
 + [toMS](math/toMS.1) 
 + [xcms_id](math/xcms_id.1) makes xcms_id format liked ROI unique id
-+ [mz_index](math/mz_index.1) 
-+ [intensity_vec](math/intensity_vec.1) 
++ [mz_index](math/mz_index.1) Create a peak index
++ [intensity_vec](math/intensity_vec.1) Extract an intensity vector based on a given peak index
++ [norm_msdata](math/norm_msdata.1) normalized the peak intensity data, do [0,1] scaled.
