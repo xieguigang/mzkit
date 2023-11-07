@@ -245,7 +245,7 @@ Public Class SingleIonLayer
             .ToArray
 
         Return New SingleIonLayer With {
-            .IonMz = If(mz.Length = 1, mz(0), mz.Select(Function(d) d.ToString("F4")).JoinBy("+")),
+            .IonMz = If(mz.Length = 1, mz(0).ToString, mz.Select(Function(d) d.ToString("F4")).JoinBy("+")),
             .DimensionSize = viewer.dimension,
             .MSILayer = pixels
         }
