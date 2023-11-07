@@ -214,11 +214,17 @@ declare namespace MsImaging {
      * @param tolerance -
      * 
      * + default value Is ``'da:0.1'``.
+     * @param split returns a single layer object for multiple input m/z
+     *  vector if not split by default, otherwise returns 
+     *  multiple layer objects in a list for each corresponding 
+     *  ion m/z if split parameter value is set to TRUE.
+     * 
+     * + default value Is ``false``.
      * @param env -
      * 
      * + default value Is ``null``.
    */
-   function MSIlayer(viewer: object, mz: number, tolerance?: any, env?: object): object;
+   function MSIlayer(viewer: object, mz: number, tolerance?: any, split?: boolean, env?: object): object;
    /**
     * get a pixel data
     * 
