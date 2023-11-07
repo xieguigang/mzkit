@@ -1156,6 +1156,14 @@ Module MSI
 
         Return df
     End Function
+
+    <ExportAPI("sample_bootstraping")>
+    Public Function SampleBootstraping(layer As SingleIonLayer, tissue As TissueRegion(),
+                                       Optional n As Integer = 32,
+                                       Optional coverage As Double = 0.3) As Object
+
+        Return layer.MSILayer.ExtractSample(tissue, n, coverage)
+    End Function
 End Module
 
 Public Class SpotVector : Implements IPoint2D

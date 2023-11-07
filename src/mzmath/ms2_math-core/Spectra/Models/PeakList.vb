@@ -130,6 +130,9 @@ Namespace Spectra
         End Function
     End Structure
 
+    ''' <summary>
+    ''' An abstract mass spectrum model, could be used for get spectrum peaks data
+    ''' </summary>
     Public Interface IMsScan
 
         Function GetMs() As IEnumerable(Of ms2)
