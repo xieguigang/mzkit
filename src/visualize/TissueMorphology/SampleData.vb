@@ -54,7 +54,6 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.GraphTheory.GridGraph
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Math.Distributions
@@ -62,7 +61,7 @@ Imports Microsoft.VisualBasic.Math.Distributions
 Public Module SampleData
 
     ''' <summary>
-    ''' 
+    ''' Analysis sample bootstrapping for a speicifc ion layer feature
     ''' </summary>
     ''' <param name="layer">
     ''' the layer data of target ion m/z in the ms-imaging raw data file

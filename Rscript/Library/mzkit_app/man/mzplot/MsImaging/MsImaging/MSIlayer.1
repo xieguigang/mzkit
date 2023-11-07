@@ -6,6 +6,7 @@ MSIlayer \- get MSI pixels layer via given \fBm/z\fR value.
 \fIMSIlayer(\fBviewer\fR as <generic> Drawer, 
 \fBmz\fR as double, 
 \fBtolerance\fR as any = "da:0.1", 
+\fBsplit\fR as boolean = FALSE, 
 [\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
@@ -17,6 +18,14 @@ get MSI pixels layer via given \fBm/z\fR value.
 .PP
 .PP
 \fBmz\fB \fR\- -. 
+.PP
+.PP
+\fBsplit\fB \fR\- 
+ returns a single layer object for multiple input m/z
+ vector if not split by default, otherwise returns 
+ multiple layer objects in a list for each corresponding 
+ ion m/z if split parameter value is set to TRUE.
+. 
 .PP
 .PP
 \fBtolerance\fB \fR\- -. 

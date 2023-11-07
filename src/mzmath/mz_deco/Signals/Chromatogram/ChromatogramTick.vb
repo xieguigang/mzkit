@@ -93,6 +93,15 @@ Namespace Chromatogram
             Me.Intensity = into
         End Sub
 
+        ''' <summary>
+        ''' make signal tick data copy
+        ''' </summary>
+        ''' <param name="tick"></param>
+        Sub New(tick As ITimeSignal)
+            Me.Time = tick.time
+            Me.Intensity = tick.intensity
+        End Sub
+
         Public Overrides Function ToString() As String
             Return $"{Intensity.ToString("G4")}@{Time.ToString("F2")}s"
         End Function

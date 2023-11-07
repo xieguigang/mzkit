@@ -256,6 +256,11 @@ declare namespace MSI {
       function scans(raw: string, y?: object, correction?: object, env?: object): any;
    }
    /**
+     * @param n default value Is ``32``.
+     * @param coverage default value Is ``0.3``.
+   */
+   function sample_bootstraping(layer: object, tissue: object, n?: object, coverage?: number): any;
+   /**
     * scale the spatial matrix by column
     * 
     * 

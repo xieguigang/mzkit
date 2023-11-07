@@ -6,7 +6,6 @@ MRM Targeted Metabolomics
 + [MRM.rt_alignments](MRMLinear/MRM.rt_alignments.1) 
 + [extract.ions](MRMLinear/extract.ions.1) Extract ion peaks
 + [extract.peakROI](MRMLinear/extract.peakROI.1) Exact ``regions of interested`` based on the given ion pair as targets.
-+ [peakROI](MRMLinear/peakROI.1) 
 + [read.ion_pairs](MRMLinear/read.ion_pairs.1) Get ion pair definition data from a given table file.
 + [isomerism.ion_pairs](MRMLinear/isomerism.ion_pairs.1) 
 + [as.ion_pairs](MRMLinear/as.ion_pairs.1) Convert any compatibale type as the ion pairs data object for MRM target selected.

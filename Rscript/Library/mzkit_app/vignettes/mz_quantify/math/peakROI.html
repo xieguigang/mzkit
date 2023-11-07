@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>as.chromatogram</title>
+    <title>Peak finding</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <style rel="stylesheet" type="text/css">
@@ -148,29 +148,55 @@
 
         <table style="width: 100%;">
             <tr>
-                <td>as.chromatogram {visualPlots}</td>
+                <td>peakROI {math}</td>
                 <td style="text-align: right;">R Documentation</td>
             </tr>
         </table>
 
-        <h2>as.chromatogram</h2>
+        <h2>Peak finding</h2>
 
         <h3>Description</h3>
 
-        as.chromatogram
+        <p><br /> Extract the peak ROI data from the chromatogram data</p>
 
         <h3>Usage</h3>
 
         <div style="width: 100%; padding-left: 3%; color: black;">
-            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>as.chromatogram</strong>(<i>data</i>,
-    <i>time</i> = <span style='color: brown;'><strong>"Time"</strong></span>,
-    <i>into</i> = <span style='color: brown;'><strong>"Intensity"</strong></span>);</code></pre>
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>peakROI</strong>(<i>chromatogram</i>,
+    <i>baselineQuantile</i> = <span style='color: green;'>0.65</span>,
+    <i>angleThreshold</i> = <span style='color: green;'>5</span>,
+    <i>peakwidth</i> = <span style='color: brown;'><strong>"8,30"</strong></span>,
+    <i>sn.threshold</i> = <span style='color: green;'>3</span>,
+    <i>joint</i> = <span style='color: blue !important;'>FALSE</span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
 
         <table>
             
+<dt>chromatogram</dt>
+<dd><p><p>-</p></p></dd>
+
+
+<dt>baselineQuantile</dt>
+<dd><p><p>-</p></p></dd>
+
+
+<dt>angleThreshold</dt>
+<dd><p><p>-</p></p></dd>
+
+
+<dt>peakwidth</dt>
+<dd><p><p>-</p></p></dd>
+
+
+<dt>sn.threshold</dt>
+<dd><p><p>-</p></p></dd>
+
+
+<dt>env</dt>
+<dd><p><p>-</p></p></dd>
+
         </table>
 
 
@@ -181,15 +207,15 @@
 
         <h3>Value</h3>
 
-        this function returns data object of type <a href="/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Chromatogram/ChromatogramTick[].html">ChromatogramTick[]</a>.
+        this function returns data object of type <a href="/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Chromatogram/ROI.html">ROI</a>.
 
         <h3 style="display: none;">Examples</h3>
 
         
 
         <hr />
-        <div style="text-align: center;">[Package <em>visualPlots</em> version 1.0.0.0 <a
-                href="../visualPlots.html">Index</a>]
+        <div style="text-align: center;">[Package <em>math</em> version 1.0.0.0 <a
+                href="../math.html">Index</a>]
         </div>
     </div>
 </body>

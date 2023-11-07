@@ -163,7 +163,8 @@
 
         <div style="width: 100%; padding-left: 3%; color: black;">
             <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>MSIlayer</strong>(<i>viewer</i>, <i>mz</i>,
-    <i>tolerance</i> = <span style='color: brown;'><strong>"da:0.1"</strong></span>);</code></pre>
+    <i>tolerance</i> = <span style='color: brown;'><strong>"da:0.1"</strong></span>,
+    <i>split</i> = <span style='color: blue !important;'>FALSE</span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
@@ -176,6 +177,13 @@
 
 <dt>mz</dt>
 <dd><p><p>-</p></p></dd>
+
+
+<dt>split</dt>
+<dd><p><p>returns a single layer object for multiple input m/z<br />
+ vector if not split by default, otherwise returns <br />
+ multiple layer objects in a list for each corresponding <br />
+ ion m/z if split parameter value is set to TRUE.</p></p></dd>
 
 
 <dt>tolerance</dt>

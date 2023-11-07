@@ -668,6 +668,12 @@ Module MsImaging
     ''' </summary>
     ''' <param name="viewer"></param>
     ''' <param name="mz"></param>
+    ''' <param name="split">
+    ''' returns a single layer object for multiple input m/z
+    ''' vector if not split by default, otherwise returns 
+    ''' multiple layer objects in a list for each corresponding 
+    ''' ion m/z if split parameter value is set to TRUE.
+    ''' </param>
     ''' <param name="tolerance"></param>
     ''' <param name="env"></param>
     ''' <returns></returns>
@@ -675,12 +681,40 @@ Module MsImaging
     <RApiReturn(GetType(SingleIonLayer))>
     Public Function GetIonLayer(viewer As Drawer, mz As Double(),
                                 Optional tolerance As Object = "da:0.1",
+                                Optional split As Boolean = False,
                                 Optional env As Environment = Nothing) As Object
 
         Dim mzErr As [Variant](Of Message, Tolerance) = Math.getTolerance(tolerance, env)
 
+        If mz.IsNullOrEmpty Then
+            Call env.AddMessage("the given input m/z vector is empty!")
+            Return Nothing
+        End If
+
         If mzErr Like GetType(Message) Then
             Return mzErr.TryCast(Of Message)
+        ElseIf split AndAlso mz.Length > 1 Then
+            Dim mzdiff As Tolerance = mzErr.TryCast(Of Tolerance)
+            Dim layers = mz.SeqIterator _
+                .AsParallel _
+                .Select(Function(i)
+                            Dim mzi = i.value
+                            Dim layer = SingleIonLayer.GetLayer({mzi}, viewer, mzdiff)
+
+                            Return (layer, i.i)
+                        End Function) _
+                .OrderBy(Function(a) a.i) _
+                .Select(Function(a) a.layer) _
+                .ToArray
+            Dim list As New list With {
+                .slots = New Dictionary(Of String, Object)
+            }
+
+            For i As Integer = 0 To mz.Length - 1
+                Call list.add(mz(i).ToString, layers(i))
+            Next
+
+            Return list
         Else
             Return SingleIonLayer.GetLayer(mz, viewer, mzErr.TryCast(Of Tolerance))
         End If

@@ -187,14 +187,6 @@ declare namespace MRMLinear {
       function rt_alignments(cal: any, ions: any, args?: object): object;
    }
    /**
-     * @param baselineQuantile default value Is ``0.65``.
-     * @param angleThreshold default value Is ``5``.
-     * @param peakwidth default value Is ``'8,30'``.
-     * @param sn_threshold default value Is ``3``.
-     * @param env default value Is ``null``.
-   */
-   function peakROI(chromatogram: any, baselineQuantile?: number, angleThreshold?: number, peakwidth?: any, sn_threshold?: number, env?: object): object;
-   /**
    */
    function R2(lines: object): number;
    module read {
