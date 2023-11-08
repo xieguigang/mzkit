@@ -151,7 +151,14 @@ Namespace Formula
                        Let mass As Double = isotopic * element.Value
                        Into Sum(mass)
                 Catch ex As Exception
-                    Call $"element key: '{CountsByElement.Keys.Where(Function(e) Not AllAtomElements.ContainsKey(e)).First}' is not exists in hash table!".Warning
+                    Dim notFound As String = CountsByElement _
+                        .Keys _
+                        .Where(Function(e)
+                                   Return Not AllAtomElements.ContainsKey(e)
+                               End Function) _
+                        .First
+
+                    Call $"Formula element key: '{notFound}' (inside {ToString()}) is not a valid atom element!".Warning
                     Return -1
                 End Try
 
