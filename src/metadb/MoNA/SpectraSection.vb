@@ -140,8 +140,16 @@ Public Class SpectraSection : Inherits MetaInfo
         Me.IUPACName = metadata.name
         Me.formula = If(metadata.molecular_formula, metadata.derivative_formula)
         Me.exact_mass = metadata.exact_mass
+
+        If Not formula.StringEmpty AndAlso formula.IndexOf(","c) > 0 Then
+            formula = formula.Split(","c).First
+        End If
     End Sub
 
+    ''' <summary>
+    ''' get metabolite information based on the metadata
+    ''' </summary>
+    ''' <returns></returns>
     Public Function GetMetabolite() As MetaLib.Models.MetaLib
         Dim mass As Double = FormulaScanner.ScanFormula(formula)
 
