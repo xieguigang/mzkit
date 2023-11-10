@@ -119,7 +119,8 @@ Namespace Chromatogram
                                              Optional angleThreshold# = 3,
                                              Optional baselineQuantile# = 0.65,
                                              Optional snThreshold As Double = 3,
-                                             Optional joint As Boolean = False) As IEnumerable(Of ROI)
+                                             Optional joint As Boolean = False,
+                                             Optional nticks As Integer = 6) As IEnumerable(Of ROI)
             ' 先计算出基线和累加线
             Dim baseline# = chromatogram.Baseline(baselineQuantile)
             Dim time As Vector = chromatogram!time
@@ -136,6 +137,11 @@ Namespace Chromatogram
                 Dim rtmin# = window.rtmin
                 Dim rtmax# = window.rtmax
                 Dim peak As ChromatogramTick() = window.region.As(Of ChromatogramTick).ToArray
+
+                If peak.Length < nticks Then
+                    Continue For
+                End If
+
                 Dim max# = peak.Max(Function(a) a.Intensity)
                 Dim rt# = window(which.Max(window.region.Select(Function(a) a.intensity))).time
                 Dim ROI As New ROI With {
