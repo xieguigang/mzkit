@@ -175,6 +175,13 @@ Namespace Ms1
             Return New DAmethod(da)
         End Function
 
+        ''' <summary>
+        ''' create the ppm tolerance error object
+        ''' </summary>
+        ''' <param name="value#"></param>
+        ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function PPM(value#) As PPMmethod
             Return New PPMmethod(value)
         End Function

@@ -138,5 +138,31 @@ Namespace ASCII.MGF
             }
         End Function
 
+        ''' <summary>
+        ''' Try to cast a mgf ion object to the mzkit general spectrum peak data
+        ''' </summary>
+        ''' <param name="ion"></param>
+        ''' <returns></returns>
+        Public Shared Narrowing Operator CType(ion As Ions) As PeakMs2
+            Dim meta As New MetaData(ion.Meta)
+            Dim id As String = If(ion.Accession, ion.Title)
+
+            meta!ion_intensity = ion.PepMass.text
+
+            Return New PeakMs2 With {
+                .activation = meta.activation,
+                .collisionEnergy = meta.collisionEnergy,
+                .file = ion.Rawfile,
+                .mz = Val(ion.PepMass.name),
+                .mzInto = ion.Peaks,
+                .rt = ion.RtInSeconds,
+                .scan = meta.scan,
+                .lib_guid = id,
+                .meta = meta,
+                .precursor_type = meta.precursor_type,
+                .intensity = Val(ion.PepMass.text)
+            }
+        End Operator
+
     End Class
 End Namespace

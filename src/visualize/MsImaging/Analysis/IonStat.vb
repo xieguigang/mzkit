@@ -92,6 +92,9 @@ Public Class IonStat
     <Category("MSdata")> <DisplayName("max.into")>
     <TypeConverter(GetType(FormattedDoubleConverter)), FormattedDoubleFormatString("G5")>
     Public Property maxIntensity As Double
+    <Category("MSdata")> <DisplayName("mean.into")>
+    <TypeConverter(GetType(FormattedDoubleConverter)), FormattedDoubleFormatString("G5")>
+    Public Property averageIntensity As Double
 
     <DisplayName("basepeak.x")>
     <Category("Spatial")> Public Property basePixelX As Integer
@@ -248,11 +251,21 @@ Public Class IonStat
             Call counts.Add(density)
         Next
 
+        Dim mzwidth_desc As String
+        Dim mzmin As Double = mzlist.Min
+        Dim mzmax As Double = mzlist.Max
+
+        If PPMmethod.PPM(mzmin, mzmax) > 30 Then
+            mzwidth_desc = $"da:{ (mzmax - mzmin).ToString("F3")}"
+        Else
+            mzwidth_desc = $"ppm:{PPMmethod.PPM(mzmin, mzmax).ToString("F1")}"
+        End If
+
         Return New IonStat With {
             .mz = Val(ion.name),
             .basePixelX = basePixel.x,
             .basePixelY = basePixel.y,
-            .maxIntensity = intensity.Average,
+            .maxIntensity = intensity.Max,
             .pixels = pixels.size,
             .Q1Intensity = Q.Q1,
             .Q2Intensity = Q.Q2,
@@ -260,9 +273,10 @@ Public Class IonStat
             .density = counts.Average,
             .moran = If(ion.Length <= 3, -1, moran.Observed),
             .pvalue = If(ion.Length <= 3, 1, moran.pvalue),
-            .mzmin = mzlist.Min,
-            .mzmax = mzlist.Max,
-            .mzwidth = If(PPMmethod.PPM(.mzmin, .mzmax) > 30, $"da:{ (.mzmax - .mzmin).ToString("F3")}", $"ppm:{PPMmethod.PPM(.mzmin, .mzmax).ToString("F1")}")
+            .mzmin = mzmin,
+            .mzmax = mzmax,
+            .mzwidth = mzwidth_desc,
+            .averageIntensity = intensity.Average
         }
     End Function
 

@@ -144,17 +144,7 @@ Namespace Formula
         ''' <returns></returns>
         Public Overridable ReadOnly Property ExactMass As Double Implements IExactMassProvider.ExactMass
             Get
-                Try
-                    Return Aggregate element
-                       In CountsByElement
-                       Let isotopic As Double = AllAtomElements(element.Key).isotopic
-                       Let mass As Double = isotopic * element.Value
-                       Into Sum(mass)
-                Catch ex As Exception
-                    Call $"element key: '{CountsByElement.Keys.Where(Function(e) Not AllAtomElements.ContainsKey(e)).First}' is not exists in hash table!".Warning
-                    Return -1
-                End Try
-
+                Return TryEvaluateExactMass()
             End Get
         End Property
 
@@ -187,6 +177,26 @@ Namespace Formula
         Sub New()
             CountsByElement = New Dictionary(Of String, Integer)
         End Sub
+
+        Private Function TryEvaluateExactMass() As Double
+            Try
+                Return Aggregate element
+                   In CountsByElement
+                   Let isotopic As Double = AllAtomElements(element.Key).isotopic
+                   Let mass As Double = isotopic * element.Value
+                   Into Sum(mass)
+            Catch ex As Exception
+                Dim notFound As String = CountsByElement _
+                    .Keys _
+                    .Where(Function(e)
+                               Return Not AllAtomElements.ContainsKey(e)
+                           End Function) _
+                    .First
+
+                Call $"Formula element key: '{notFound}' (inside {ToString()}) is not a valid atom element!".Warning
+                Return -1
+            End Try
+        End Function
 
         ''' <summary>
         ''' show <see cref="EmpiricalFormula"/>
