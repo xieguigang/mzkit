@@ -12,6 +12,37 @@ Imports RawChromatogram = BioNovoGene.Analytical.MassSpectrometry.Assembly.Marku
 
 Public Module ChromatogramReader
 
+    ''' <summary>
+    ''' make timed signal data alignment
+    ''' </summary>
+    ''' <param name="rawfiles"></param>
+    ''' <param name="dt"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Iterator Function FileAlignment(rawfiles As ChromatogramSerial(), Optional dt As Double = 0.5) As IEnumerable(Of ChromatogramSerial)
+        Dim samples As Resampler() = New Resampler(rawfiles.Length - 1) {}
+
+        For i As Integer = 0 To rawfiles.Length - 1
+            samples(i) = Resampler.CreateSampler(
+                x:=rawfiles(i).GetTime,
+                y:=rawfiles(i).GetIntensity
+            )
+        Next
+
+        Dim rtmin As Double = Aggregate line As ChromatogramSerial In rawfiles Into Min(line.rtmin)
+        Dim rtmax As Double = Aggregate line As ChromatogramSerial In rawfiles Into Max(line.rtmax)
+        Dim rt As Double() = seq(rtmin, rtmax, by:=dt).ToArray
+
+        For i As Integer = 0 To samples.Length - 1
+            Dim signal As Double() = samples(i).GetVector(rt)
+            Dim ticks As IEnumerable(Of ChromatogramTick) = rt _
+                .Zip(signal) _
+                .Select(Function(t) New ChromatogramTick(t.First, t.Second))
+
+            Yield New ChromatogramSerial(rawfiles(i).Name, ticks)
+        Next
+    End Function
+
     Public Function GetIonsChromatogram(file As String) As Chromatogram
         Return file.LoadChromatogramList.GetIonsChromatogram
     End Function
