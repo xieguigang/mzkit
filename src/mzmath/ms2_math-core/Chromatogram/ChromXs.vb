@@ -53,8 +53,6 @@
 
         Public Property MainType As ChromXType = ChromXType.RT Implements IChromXs.MainType
 
-
-        <Obsolete("This constructor is for MessagePack only, don't use.")>
         Public Sub New(innerRT As IChromX, innerRI As IChromX, innerDrift As IChromX, innerMz As IChromX, mainType As ChromXType)
             Me.InnerRT = innerRT
             Me.InnerRI = innerRI

@@ -143,11 +143,7 @@ Public Class D2Chromatogram
                 Dim vec As doubles = reader.getDataVariable(names(i))
                 Dim time As Double() = vec(0, vec.Length / 2)
                 Dim into As Double() = vec(vec.Length / 2, vec.Length)
-                Dim ticks As ChromatogramTick() = time _
-                    .Select(Function(t, j)
-                                Return New ChromatogramTick With {.Time = t, .Intensity = into(j)}
-                            End Function) _
-                    .ToArray
+                Dim ticks As ChromatogramTick() = ChromatogramTick.Zip(time, into).ToArray
                 Dim scan_time As Double = names(i).FindAttribute("scan_time").getObjectValue
                 Dim intensity As Double = names(i).FindAttribute("intensity").getObjectValue
 

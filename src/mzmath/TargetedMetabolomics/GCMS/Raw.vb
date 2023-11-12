@@ -107,11 +107,7 @@ Namespace GCMS
         Public Function GetTIC() As NamedCollection(Of ChromatogramTick)
             Return New NamedCollection(Of ChromatogramTick) With {
                 .name = title,
-                .value = times _
-                    .Select(Function(time, i)
-                                Return New ChromatogramTick(time, tic(i))
-                            End Function) _
-                    .ToArray
+                .value = ChromatogramTick.Zip(times, tic).ToArray
             }
         End Function
 

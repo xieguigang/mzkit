@@ -35,9 +35,7 @@ Public Module ChromatogramReader
 
         For i As Integer = 0 To samples.Length - 1
             Dim signal As Double() = samples(i).GetVector(rt)
-            Dim ticks As IEnumerable(Of ChromatogramTick) = rt _
-                .Zip(signal) _
-                .Select(Function(t) New ChromatogramTick(t.First, t.Second))
+            Dim ticks As IEnumerable(Of ChromatogramTick) = ChromatogramTick.Zip(rt, signal)
 
             Yield New ChromatogramSerial(rawfiles(i).Name, ticks)
         Next
@@ -115,12 +113,7 @@ Public Module ChromatogramReader
             time_array = time_array * 60
         End If
 
-        Dim data = time_array _
-                .Select(Function(t, i)
-                            Return New ChromatogramTick(t, intensity_array(i))
-                        End Function) _
-                .ToArray
-
+        Dim data = ChromatogramTick.Zip(time_array, intensity_array).ToArray
         Return data
     End Function
 
@@ -136,18 +129,12 @@ Public Module ChromatogramReader
     End Function
 
     <Extension>
-    Public Iterator Function GetTicks(chromatogram As Chromatogram, Optional isbpc As Boolean = False) As IEnumerable(Of ChromatogramTick)
-        Dim scan_time = chromatogram.scan_time
-        Dim bpc = chromatogram.BPC
-        Dim tic = chromatogram.TIC
-
-        For i As Integer = 0 To scan_time.Length - 1
-            If isbpc Then
-                Yield New ChromatogramTick With {.Time = scan_time(i), .Intensity = bpc(i)}
-            Else
-                Yield New ChromatogramTick With {.Time = scan_time(i), .Intensity = tic(i)}
-            End If
-        Next
+    Public Function GetTicks(chromatogram As Chromatogram, Optional isbpc As Boolean = False) As IEnumerable(Of ChromatogramTick)
+        If isbpc Then
+            Return ChromatogramTick.Zip(chromatogram.scan_time, chromatogram.BPC)
+        Else
+            Return ChromatogramTick.Zip(chromatogram.scan_time, chromatogram.TIC)
+        End If
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
