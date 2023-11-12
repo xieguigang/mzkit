@@ -112,20 +112,39 @@ Namespace Chromatogram
         End Operator
     End Class
 
+    ''' <summary>
+    ''' A label tagged chromatogram data
+    ''' </summary>
     Public Class ChromatogramSerial
 
+        ''' <summary>
+        ''' the data label
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Name As String
         Public Property Chromatogram As ChromatogramTick()
 
+        ''' <summary>
+        ''' get the min rt of current <see cref="Chromatogram"/>
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property rtmin As Double
             Get
-                Return Chromatogram.Select(Function(t) t.Time).Min
+                Return Aggregate t As ChromatogramTick
+                       In Chromatogram
+                       Into Min(t.Time)
             End Get
         End Property
 
+        ''' <summary>
+        ''' get the max rt of current <see cref="Chromatogram"/>
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property rtmax As Double
             Get
-                Return Chromatogram.Select(Function(t) t.Time).Max
+                Return Aggregate t As ChromatogramTick
+                       In Chromatogram
+                       Into Max(t.Time)
             End Get
         End Property
 

@@ -16,6 +16,12 @@ Public Module ChromatogramReader
         Return file.LoadChromatogramList.GetIonsChromatogram
     End Function
 
+    ''' <summary>
+    ''' Align the TIC/BPC
+    ''' </summary>
+    ''' <param name="tic"></param>
+    ''' <param name="bpc"></param>
+    ''' <returns></returns>
     Public Function GetIonsChromatogram(tic As ChromatogramTick(), bpc As ChromatogramTick()) As Chromatogram
         If tic.IsNullOrEmpty AndAlso bpc.IsNullOrEmpty Then
             Return Nothing
@@ -87,6 +93,11 @@ Public Module ChromatogramReader
         Return data
     End Function
 
+    ''' <summary>
+    ''' Extract the chromatogram data from the mzML/mzXML raw data node
+    ''' </summary>
+    ''' <param name="raw"></param>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function GetChromatogram(raw As RawChromatogram) As ChromatogramSerial
