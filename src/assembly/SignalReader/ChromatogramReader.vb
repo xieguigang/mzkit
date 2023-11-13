@@ -12,10 +12,45 @@ Imports RawChromatogram = BioNovoGene.Analytical.MassSpectrometry.Assembly.Marku
 
 Public Module ChromatogramReader
 
+    ''' <summary>
+    ''' make timed signal data alignment
+    ''' </summary>
+    ''' <param name="rawfiles"></param>
+    ''' <param name="dt"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Iterator Function FileAlignment(rawfiles As ChromatogramSerial(), Optional dt As Double = 0.5) As IEnumerable(Of ChromatogramSerial)
+        Dim samples As Resampler() = New Resampler(rawfiles.Length - 1) {}
+
+        For i As Integer = 0 To rawfiles.Length - 1
+            samples(i) = Resampler.CreateSampler(
+                x:=rawfiles(i).GetTime,
+                y:=rawfiles(i).GetIntensity
+            )
+        Next
+
+        Dim rtmin As Double = Aggregate line As ChromatogramSerial In rawfiles Into Min(line.rtmin)
+        Dim rtmax As Double = Aggregate line As ChromatogramSerial In rawfiles Into Max(line.rtmax)
+        Dim rt As Double() = seq(rtmin, rtmax, by:=dt).ToArray
+
+        For i As Integer = 0 To samples.Length - 1
+            Dim signal As Double() = samples(i).GetVector(rt)
+            Dim ticks As IEnumerable(Of ChromatogramTick) = ChromatogramTick.Zip(rt, signal)
+
+            Yield New ChromatogramSerial(rawfiles(i).Name, ticks)
+        Next
+    End Function
+
     Public Function GetIonsChromatogram(file As String) As Chromatogram
         Return file.LoadChromatogramList.GetIonsChromatogram
     End Function
 
+    ''' <summary>
+    ''' Align the TIC/BPC
+    ''' </summary>
+    ''' <param name="tic"></param>
+    ''' <param name="bpc"></param>
+    ''' <returns></returns>
     Public Function GetIonsChromatogram(tic As ChromatogramTick(), bpc As ChromatogramTick()) As Chromatogram
         If tic.IsNullOrEmpty AndAlso bpc.IsNullOrEmpty Then
             Return Nothing
@@ -78,15 +113,15 @@ Public Module ChromatogramReader
             time_array = time_array * 60
         End If
 
-        Dim data = time_array _
-                .Select(Function(t, i)
-                            Return New ChromatogramTick(t, intensity_array(i))
-                        End Function) _
-                .ToArray
-
+        Dim data = ChromatogramTick.Zip(time_array, intensity_array).ToArray
         Return data
     End Function
 
+    ''' <summary>
+    ''' Extract the chromatogram data from the mzML/mzXML raw data node
+    ''' </summary>
+    ''' <param name="raw"></param>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function GetChromatogram(raw As RawChromatogram) As ChromatogramSerial
@@ -94,18 +129,12 @@ Public Module ChromatogramReader
     End Function
 
     <Extension>
-    Public Iterator Function GetTicks(chromatogram As Chromatogram, Optional isbpc As Boolean = False) As IEnumerable(Of ChromatogramTick)
-        Dim scan_time = chromatogram.scan_time
-        Dim bpc = chromatogram.BPC
-        Dim tic = chromatogram.TIC
-
-        For i As Integer = 0 To scan_time.Length - 1
-            If isbpc Then
-                Yield New ChromatogramTick With {.Time = scan_time(i), .Intensity = bpc(i)}
-            Else
-                Yield New ChromatogramTick With {.Time = scan_time(i), .Intensity = tic(i)}
-            End If
-        Next
+    Public Function GetTicks(chromatogram As Chromatogram, Optional isbpc As Boolean = False) As IEnumerable(Of ChromatogramTick)
+        If isbpc Then
+            Return ChromatogramTick.Zip(chromatogram.scan_time, chromatogram.BPC)
+        Else
+            Return ChromatogramTick.Zip(chromatogram.scan_time, chromatogram.TIC)
+        End If
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>

@@ -99,6 +99,12 @@ Public Module UVSpectroscopyReader
         }
     End Function
 
+    ''' <summary>
+    ''' make signal data matrix transpose
+    ''' </summary>
+    ''' <param name="scans"></param>
+    ''' <param name="rawfile"></param>
+    ''' <returns></returns>
     <Extension>
     Public Iterator Function CreateTimeSignals(scans As IEnumerable(Of GeneralSignal), Optional rawfile As String = "raw") As IEnumerable(Of GeneralSignal)
         Dim samplers = scans _

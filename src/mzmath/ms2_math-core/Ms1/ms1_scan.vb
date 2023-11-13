@@ -57,17 +57,18 @@
 Imports System.Xml.Serialization
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.ComponentModel.TagData
 Imports Microsoft.VisualBasic.Math
 Imports stdNum = System.Math
 
 ''' <summary>
-''' [mz, rt, intensity]
+''' A TICPoint [mz, rt, intensity]
 ''' </summary>
-Public Class ms1_scan : Implements IMs1, IMs1Scan, INumericKey
+Public Class ms1_scan : Implements IMs1, IMs1Scan, INumericKey, ITimeSignal
 
     <XmlAttribute> Public Property mz As Double Implements IMs1.mz, INumericKey.key
-    <XmlAttribute> Public Property scan_time As Double Implements IMs1.rt
-    <XmlAttribute> Public Property intensity As Double Implements IMs1Scan.intensity
+    <XmlAttribute> Public Property scan_time As Double Implements IMs1.rt, ITimeSignal.time
+    <XmlAttribute> Public Property intensity As Double Implements IMs1Scan.intensity, ITimeSignal.intensity
 
     Public Overrides Function ToString() As String
         Return $"{mz.ToString("F4")}@{stdNum.Round(scan_time)} ({intensity})"
