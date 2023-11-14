@@ -1,4 +1,5 @@
 ﻿Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
 
@@ -18,7 +19,9 @@ Public Class MatrixReader : Implements IDisposable
     Public ReadOnly Property ionSet As Double()
     Public ReadOnly Property spots As Integer
 
-    Private disposedValue As Boolean
+    Dim disposedValue As Boolean
+    Dim spot_index As Dictionary(Of Long, Dictionary(Of Long, Long))
+    Dim label_index As Dictionary(Of String, Long())
 
     Sub New(s As Stream)
         Me.bin = New BinaryReader(s, Encoding.ASCII)
@@ -45,29 +48,95 @@ Public Class MatrixReader : Implements IDisposable
 
         _spots = bin.ReadInt32
 
+        Dim offset1 As Long = bin.ReadInt64
+        Dim offset2 As Long = bin.ReadInt64
+
+        Dim spot_index As New List(Of (Integer, Integer, Long))
+        Dim label_index As New List(Of (String, Long))
+
+        Call bin.BaseStream.Seek(offset1, SeekOrigin.Begin)
+
+        For i As Integer = 0 To _spots - 1
+            Dim x As Integer = bin.ReadInt32
+            Dim y As Integer = bin.ReadInt32
+            Dim p As Long = bin.ReadInt64
+
+            Call spot_index.Add((x, y, p))
+        Next
+
+        Call bin.BaseStream.Seek(offset2, SeekOrigin.Begin)
+
+        For i As Integer = 0 To _spots - 1
+            Dim label As String = bin.ReadString
+            Dim p As Long = bin.ReadInt64
+
+            Call label_index.Add((label, p))
+        Next
+
+        Me.label_index = label_index _
+            .GroupBy(Function(d) d.Item1) _
+            .ToDictionary(Function(d) d.Key,
+                          Function(d)
+                              Return d _
+                                  .Select(Function(o) o.Item2) _
+                                  .ToArray
+                          End Function)
+        Me.spot_index = spot_index _
+            .GroupBy(Function(a) CLng(a.Item1)) _
+            .ToDictionary(Function(a)
+                              Return a.Key
+                          End Function, AddressOf offsetIndex)
+
         Return bin.BaseStream.Position
+    End Function
+
+    Public Function GetSpot(x As Integer, y As Integer) As PixelData
+        Dim xl As Long = CLng(x)
+        Dim yl As Long = CLng(y)
+
+        If Not spot_index.ContainsKey(xl) Then
+            Return Nothing
+        End If
+
+        Dim index = spot_index(xl)
+
+        If Not index.ContainsKey(yl) Then
+            Return Nothing
+        Else
+            Call bin.BaseStream.Seek(index(yl), SeekOrigin.Begin)
+            Return LoadCurrentSpot()
+        End If
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Private Shared Function offsetIndex(a As IGrouping(Of Long, (Integer, Integer, Long))) As Dictionary(Of Long, Long)
+        Return a.ToDictionary(Function(ai) CLng(ai.Item2), Function(ai) ai.Item3)
     End Function
 
     Public Iterator Function LoadSpots() As IEnumerable(Of PixelData)
         Call bin.BaseStream.Seek(scan0, SeekOrigin.Begin)
 
         For i As Integer = 0 To spots - 1
-            Dim x As Integer = bin.ReadInt32
-            Dim y As Integer = bin.ReadInt32
-            Dim label As String = bin.ReadString
-            Dim into As Double() = New Double(featureSize - 1) {}
-
-            For offset As Integer = 0 To into.Length - 1
-                into(offset) = bin.ReadDouble
-            Next
-
-            Yield New PixelData With {
-                .X = x,
-                .Y = y,
-                .label = label,
-                .intensity = into
-            }
+            Yield LoadCurrentSpot()
         Next
+    End Function
+
+    Private Function LoadCurrentSpot() As PixelData
+        Dim x As Integer = bin.ReadInt32
+        Dim y As Integer = bin.ReadInt32
+        Dim label As String = bin.ReadString
+        Dim into As Double() = New Double(featureSize - 1) {}
+
+        For offset As Integer = 0 To into.Length - 1
+            into(offset) = bin.ReadDouble
+        Next
+
+        Return New PixelData With {
+            .X = x,
+            .Y = y,
+            .label = label,
+            .intensity = into
+        }
     End Function
 
     Protected Overridable Sub Dispose(disposing As Boolean)
