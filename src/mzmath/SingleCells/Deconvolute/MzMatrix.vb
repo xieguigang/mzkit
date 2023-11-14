@@ -56,10 +56,13 @@
 #End Region
 
 Imports System.IO
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+Imports Microsoft.VisualBasic.ComponentModel.Algorithm
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Text
+Imports HeatMapPixel = Microsoft.VisualBasic.Imaging.Pixel
 
 Namespace Deconvolute
 
@@ -94,6 +97,41 @@ Namespace Deconvolute
                 Return mz.TryCount
             End Get
         End Property
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <typeparam name="Pixel"></typeparam>
+        ''' <param name="mz"></param>
+        ''' <param name="mzdiff">
+        ''' parse from the <see cref="tolerance"/>
+        ''' </param>
+        ''' <param name="mzindex">search index is build based on the feature vector <see cref="MzMatrix.mz"/></param>
+        ''' <returns></returns>
+        Public Shared Iterator Function GetLayer(Of Pixel As {New, Class, HeatMapPixel})(m As MzMatrix,
+                                                                                         mz As Double,
+                                                                                         mzdiff As Tolerance,
+                                                                                         mzindex As BlockSearchFunction(Of (mz As Double, Integer))) As IEnumerable(Of Pixel)
+
+            Dim hits = mzindex.Search((mz, 0)).Where(Function(mzi) mzdiff(mzi.mz, mz)).ToArray
+            Dim conv As Double
+            Dim p As Pixel
+
+            If hits.IsNullOrEmpty Then
+                Return
+            End If
+
+            For Each spot As PixelData In m.matrix
+                conv = Aggregate a In hits Into Sum(spot.intensity(a.Item2))
+                p = New Pixel With {
+                    .X = spot.X,
+                    .Y = spot.Y,
+                    .Scale = conv
+                }
+
+                Yield p
+            Next
+        End Function
 
         ''' <summary>
         ''' Create a dataset matrix of spatial spot id or single cell id in rows and ions mz features in columns. 
