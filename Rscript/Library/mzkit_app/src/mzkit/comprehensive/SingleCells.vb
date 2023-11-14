@@ -1,64 +1,67 @@
 ﻿#Region "Microsoft.VisualBasic::2aaf4a362c848f1a8f55f9159784352e, mzkit\Rscript\Library\mzkit\comprehensive\SingleCells.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 92
-    '    Code Lines: 63
-    ' Comment Lines: 18
-    '   Blank Lines: 11
-    '     File Size: 3.94 KB
+' Summaries:
 
 
-    ' Module SingleCells
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: cellMatrix, cellStatsTable, singleCellsIons
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 92
+'    Code Lines: 63
+' Comment Lines: 18
+'   Blank Lines: 11
+'     File Size: 3.94 KB
+
+
+' Module SingleCells
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Function: cellMatrix, cellStatsTable, singleCellsIons
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.IO
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells
+Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.genomics.Analysis.HTS.DataFrame
 Imports SMRUCC.Rsharp.Runtime
+Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.[Object]
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports HTSMatrix = SMRUCC.genomics.Analysis.HTS.DataFrame.Matrix
@@ -143,5 +146,67 @@ Module SingleCells
                                     Optional parallel As Boolean = True) As Object
 
         Return SingleCellIonStat.DoIonStats(raw, da, parallel).ToArray
+    End Function
+
+    ''' <summary>
+    ''' write the single cell ion feature data matrix
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <param name="file"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("write.matrix")>
+    <RApiReturn(TypeCodes.boolean)>
+    Public Function writeMatrix(x As MzMatrix, file As Object, Optional env As Environment = Nothing) As Object
+        Dim buf = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Write, env)
+
+        If buf Like GetType(Message) Then
+            Return buf.TryCast(Of Message)
+        End If
+
+        ' save
+        Call New MatrixWriter(x).Write(buf.TryCast(Of Stream))
+        Call buf.TryCast(Of Stream).Flush()
+
+        If TypeOf file Is String Then
+            Call buf.TryCast(Of Stream).Dispose()
+        End If
+
+        Return True
+    End Function
+
+    ''' <summary>
+    ''' open a single cell data matrix reader
+    ''' </summary>
+    ''' <param name="file"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("open.matrix")>
+    <RApiReturn(
+        NameOf(MatrixReader.tolerance),
+        NameOf(MatrixReader.featureSize),
+        NameOf(MatrixReader.ionSet),
+        NameOf(MatrixReader.spots),
+        "reader"
+    )>
+    Public Function openMatrix(<RRawVectorArgument> file As Object, Optional env As Environment = Nothing) As Object
+        Dim buf = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Read, env)
+
+        If buf Like GetType(Message) Then
+            Return buf.TryCast(Of Message)
+        End If
+
+        Dim read As New MatrixReader(buf.TryCast(Of Stream))
+        Dim summary As New list With {
+            .slots = New Dictionary(Of String, Object)
+        }
+
+        Call summary.add(NameOf(MatrixReader.tolerance), read.tolerance)
+        Call summary.add(NameOf(MatrixReader.featureSize), read.featureSize)
+        Call summary.add(NameOf(MatrixReader.ionSet), read.ionSet)
+        Call summary.add(NameOf(MatrixReader.spots), read.spots)
+        Call summary.add("reader", read)
+
+        Return summary
     End Function
 End Module
