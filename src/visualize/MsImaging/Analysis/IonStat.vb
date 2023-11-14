@@ -169,6 +169,7 @@ Public Class IonStat
                                   Optional da As Double = 0.05,
                                   Optional parallel As Boolean = False) As IEnumerable(Of IonStat)
         Return raw.MS _
+            .AsParallel _
             .Select(Iterator Function(scan) As IEnumerable(Of PixelData)
                         Dim xy As Point = scan.GetMSIPixel
 
