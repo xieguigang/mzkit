@@ -1,13 +1,7 @@
-﻿Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
-Imports System.IO
+﻿Imports System.Drawing
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm
-Imports Microsoft.VisualBasic.ComponentModel.Collection
-Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Text
-Imports HeatMapPixel = Microsoft.VisualBasic.Imaging.Pixel
-Imports System.Drawing
 
 ''' <summary>
 ''' A spatial matrix reader
