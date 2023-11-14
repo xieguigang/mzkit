@@ -124,7 +124,7 @@ Namespace MsImaging
         ''' </remarks>
         <Extension>
         Public Function SelectivePeakMatrix(raw As mzPack, ions As Dictionary(Of String, Double), mzErr As Tolerance) As IEnumerable(Of DataSet)
-            Dim m = PeakMatrix.CreateMatrix(raw, mzErr.DeltaTolerance, 0, mzSet:=ions.Values.ToArray)
+            Dim m As MzMatrix = PeakMatrix.CreateMatrix(raw, mzErr.DeltaTolerance, 0, mzSet:=ions.Values.ToArray)
             Dim ds As IEnumerable(Of DataSet) = m.ExportSpatial(Of DataSet)
             Return ds
         End Function

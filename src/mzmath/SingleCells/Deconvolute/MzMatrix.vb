@@ -89,6 +89,12 @@ Namespace Deconvolute
         ''' <returns></returns>
         Public Property matrix As PixelData()
 
+        Public ReadOnly Property featureSize As Integer
+            Get
+                Return mz.TryCount
+            End Get
+        End Property
+
         ''' <summary>
         ''' Create a dataset matrix of spatial spot id or single cell id in rows and ions mz features in columns. 
         ''' </summary>
