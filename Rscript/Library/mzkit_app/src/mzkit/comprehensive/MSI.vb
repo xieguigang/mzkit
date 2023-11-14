@@ -911,12 +911,17 @@ Module MSI
     ''' means percentage cutoff.
     ''' </param>
     ''' <param name="env"></param>
-    ''' <returns>This function has no value returns</returns>
+    ''' <returns>This function returns a logical value TRUE if the 
+    ''' given <paramref name="file"/> stream buffer is not missing,
+    ''' otherwise the matrix object itself will be returns from 
+    ''' the function.</returns>
     <ExportAPI("pixelMatrix")>
-    Public Function PixelMatrix(raw As mzPack, file As Stream,
+    <RApiReturn(GetType(Boolean), GetType(MzMatrix))>
+    Public Function PixelMatrix(raw As mzPack,
+                                Optional file As Object = Nothing,
                                 Optional mzdiff As Double = 0.001,
                                 Optional q As Double = 0.01,
-                                Optional env As Environment = Nothing) As Message
+                                Optional env As Environment = Nothing) As Object
 
         Dim matrix As MzMatrix = SingleCellMatrix.CreateMatrix(raw, mzdiff, freq:=q)
         Dim println = env.WriteLineHandler
@@ -925,11 +930,23 @@ Module MSI
         Call println($"get {matrix.mz.Length} ions with {matrix.matrix.Length} pixel spots")
         Call println("get ion features:")
         Call println(matrix.mz)
-        Call matrix.ExportCsvSheet(file)
-        Call file.Flush()
+
+        If file Is Nothing Then
+            Return matrix
+        End If
+
+        Dim buf = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Write, env)
+
+        If buf Like GetType(Message) Then
+            Return buf.TryCast(Of Message)
+        End If
+
+        Call matrix.ExportCsvSheet(buf.TryCast(Of Stream))
+        Call buf.TryCast(Of Stream).Flush()
+
         Call println("matrix created!")
 
-        Return Nothing
+        Return True
     End Function
 
     ''' <summary>
