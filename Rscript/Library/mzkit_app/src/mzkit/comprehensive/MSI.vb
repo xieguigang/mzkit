@@ -808,33 +808,38 @@ Module MSI
         End If
 
         If Not ionSet Is Nothing Then
-            Dim ions As Dictionary(Of String, Double)
-
-            If TypeOf ionSet Is list Then
-                ions = DirectCast(ionSet, list).AsGeneric(Of Double)(env)
-            ElseIf ionSet.GetType.ImplementInterface(Of IDictionary) Then
-                ions = RConversion.asList(ionSet, New list, env)
-            Else
-                Dim mz As Double() = CLRVector.asNumeric(ionSet)
-                Dim keys As String() = mz _
-                    .Select(Function(m) m.ToString) _
-                    .uniqueNames
-
-                ions = keys.Zip(mz) _
-                    .ToDictionary(Function(m) m.First,
-                                  Function(m)
-                                      Return m.Second
-                                  End Function)
-            End If
-
-            Return raw _
-                .SelectivePeakMatrix(ions, err.TryCast(Of Tolerance)) _
-                .ToArray
+            Return raw.GetPeakMatrix(ionSet, err.TryCast(Of Tolerance), env)
         Else
             Return raw _
                 .TopIonsPeakMatrix(topN, err.TryCast(Of Tolerance)) _
                 .ToArray
         End If
+    End Function
+
+    <Extension>
+    Private Function GetPeakMatrix(raw As mzPack, ionSet As Object, err As Tolerance, env As Environment) As DataSet()
+        Dim ions As Dictionary(Of String, Double)
+
+        If TypeOf ionSet Is list Then
+            ions = DirectCast(ionSet, list).AsGeneric(Of Double)(env)
+        ElseIf ionSet.GetType.ImplementInterface(Of IDictionary) Then
+            ions = RConversion.asList(ionSet, New list, env)
+        Else
+            Dim mz As Double() = CLRVector.asNumeric(ionSet)
+            Dim keys As String() = mz _
+                .Select(Function(m) m.ToString) _
+                .uniqueNames
+
+            ions = keys.Zip(mz) _
+                .ToDictionary(Function(m) m.First,
+                              Function(m)
+                                  Return m.Second
+                              End Function)
+        End If
+
+        Return raw _
+            .SelectivePeakMatrix(ions, err) _
+            .ToArray
     End Function
 
     ''' <summary>
