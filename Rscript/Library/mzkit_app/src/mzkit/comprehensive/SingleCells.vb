@@ -54,6 +54,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports System.IO
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells
 Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
@@ -61,6 +62,7 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.genomics.Analysis.HTS.DataFrame
 Imports SMRUCC.Rsharp.Runtime
+Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.[Object]
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports HTSMatrix = SMRUCC.genomics.Analysis.HTS.DataFrame.Matrix
@@ -176,5 +178,67 @@ Module SingleCells
                                     Optional parallel As Boolean = True) As Object
 
         Return SingleCellIonStat.DoIonStats(raw, da, parallel).ToArray
+    End Function
+
+    ''' <summary>
+    ''' write the single cell ion feature data matrix
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <param name="file"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("write.matrix")>
+    <RApiReturn(TypeCodes.boolean)>
+    Public Function writeMatrix(x As MzMatrix, file As Object, Optional env As Environment = Nothing) As Object
+        Dim buf = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Write, env)
+
+        If buf Like GetType(Message) Then
+            Return buf.TryCast(Of Message)
+        End If
+
+        ' save
+        Call New MatrixWriter(x).Write(buf.TryCast(Of Stream))
+        Call buf.TryCast(Of Stream).Flush()
+
+        If TypeOf file Is String Then
+            Call buf.TryCast(Of Stream).Dispose()
+        End If
+
+        Return True
+    End Function
+
+    ''' <summary>
+    ''' open a single cell data matrix reader
+    ''' </summary>
+    ''' <param name="file"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("open.matrix")>
+    <RApiReturn(
+        NameOf(MatrixReader.tolerance),
+        NameOf(MatrixReader.featureSize),
+        NameOf(MatrixReader.ionSet),
+        NameOf(MatrixReader.spots),
+        "reader"
+    )>
+    Public Function openMatrix(<RRawVectorArgument> file As Object, Optional env As Environment = Nothing) As Object
+        Dim buf = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Read, env)
+
+        If buf Like GetType(Message) Then
+            Return buf.TryCast(Of Message)
+        End If
+
+        Dim read As New MatrixReader(buf.TryCast(Of Stream))
+        Dim summary As New list With {
+            .slots = New Dictionary(Of String, Object)
+        }
+
+        Call summary.add(NameOf(MatrixReader.tolerance), read.tolerance)
+        Call summary.add(NameOf(MatrixReader.featureSize), read.featureSize)
+        Call summary.add(NameOf(MatrixReader.ionSet), read.ionSet)
+        Call summary.add(NameOf(MatrixReader.spots), read.spots)
+        Call summary.add("reader", read)
+
+        Return summary
     End Function
 End Module

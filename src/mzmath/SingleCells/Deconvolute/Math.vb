@@ -61,7 +61,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Algorithm
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Deconvolute
 
@@ -170,7 +170,7 @@ Namespace Deconvolute
                 mzi = mz(i)
                 hit = mzIndex _
                     .Search((mzi, -1)) _
-                    .OrderBy(Function(a) stdNum.Abs(a.mz - mzi)) _
+                    .OrderBy(Function(a) std.Abs(a.mz - mzi)) _
                     .FirstOrDefault
 
                 If hit.mz < 1 AndAlso hit.idx = 0 Then
