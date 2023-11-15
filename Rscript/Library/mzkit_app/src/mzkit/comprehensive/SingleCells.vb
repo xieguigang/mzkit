@@ -1,60 +1,62 @@
 ﻿#Region "Microsoft.VisualBasic::2aaf4a362c848f1a8f55f9159784352e, mzkit\Rscript\Library\mzkit\comprehensive\SingleCells.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 92
-    '    Code Lines: 63
-    ' Comment Lines: 18
-    '   Blank Lines: 11
-    '     File Size: 3.94 KB
+' Summaries:
 
 
-    ' Module SingleCells
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: cellMatrix, cellStatsTable, singleCellsIons
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 92
+'    Code Lines: 63
+' Comment Lines: 18
+'   Blank Lines: 11
+'     File Size: 3.94 KB
+
+
+' Module SingleCells
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Function: cellMatrix, cellStatsTable, singleCellsIons
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells
+Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.genomics.Analysis.HTS.DataFrame
@@ -75,6 +77,7 @@ Module SingleCells
 
     Sub New()
         Call Internal.Object.Converts.makeDataframe.addHandler(GetType(SingleCellIonStat()), AddressOf cellStatsTable)
+        Call Internal.Object.Converts.makeDataframe.addHandler(GetType(MzMatrix), AddressOf mzMatrixDf)
     End Sub
 
     Private Function cellStatsTable(ions As SingleCellIonStat(), args As list, env As Environment) As Rdataframe
@@ -95,6 +98,36 @@ Module SingleCells
         Call table.add(NameOf(SingleCellIonStat.RSD), ions.Select(Function(i) i.RSD))
 
         Return table
+    End Function
+
+    <ExportAPI("mz_matrix")>
+    Public Function mzMatrixDf(x As MzMatrix, <RListObjectArgument> args As list, Optional env As Environment = Nothing) As Rdataframe
+        Dim singleCell As Boolean = args.getValue("singlecell", env, [default]:=False)
+        Dim df As New Rdataframe With {
+            .columns = New Dictionary(Of String, Array),
+            .rownames = If(singleCell, x.getCellLabels, x.getSpatialLabels)
+        }
+        Dim mz As Double() = x.mz
+        Dim offset As Integer
+
+        For i As Integer = 0 To mz.Length - 1
+            offset = i
+            df.add(mz(i).ToString, x.matrix.Select(Function(r) r.intensity(offset)))
+        Next
+
+        Return df
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Private Function getCellLabels(x As MzMatrix) As String()
+        Return x.matrix.Select(Function(r) r.label).ToArray
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Private Function getSpatialLabels(x As MzMatrix) As String()
+        Return x.matrix.Select(Function(r) $"{r.X},{r.Y}").ToArray
     End Function
 
     ''' <summary>
