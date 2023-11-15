@@ -24,6 +24,18 @@ declare namespace SingleCells {
      * + default value Is ``null``.
    */
    function cell_matrix(raw: object, mzdiff?: number, freq?: number, env?: object): any;
+   module open {
+      /**
+       * open a single cell data matrix reader
+       * 
+       * 
+        * @param file -
+        * @param env -
+        * 
+        * + default value Is ``null``.
+      */
+      function matrix(file: any, env?: object): object;
+   }
    /**
     * do stats of the single cell metabolomics ions
     * 
@@ -37,4 +49,17 @@ declare namespace SingleCells {
      * + default value Is ``true``.
    */
    function SCM_ionStat(raw: object, da?: number, parallel?: boolean): object;
+   module write {
+      /**
+       * write the single cell ion feature data matrix
+       * 
+       * 
+        * @param x -
+        * @param file -
+        * @param env -
+        * 
+        * + default value Is ``null``.
+      */
+      function matrix(x: object, file: any, env?: object): boolean;
+   }
 }

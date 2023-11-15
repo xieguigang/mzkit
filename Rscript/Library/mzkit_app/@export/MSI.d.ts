@@ -208,6 +208,8 @@ declare namespace MSI {
     * 
      * @param raw -
      * @param file -
+     * 
+     * + default value Is ``null``.
      * @param mzdiff the mass tolerance width for extract the feature ions
      * 
      * + default value Is ``0.001``.
@@ -219,9 +221,12 @@ declare namespace MSI {
      * @param env -
      * 
      * + default value Is ``null``.
-     * @return This function has no value returns
+     * @return This function returns a logical value TRUE if the 
+     *  given **`file`** stream buffer is not missing,
+     *  otherwise the matrix object itself will be returns from 
+     *  the function.
    */
-   function pixelMatrix(raw: object, file: object, mzdiff?: number, q?: number, env?: object): object;
+   function pixelMatrix(raw: object, file?: any, mzdiff?: number, q?: number, env?: object): boolean|object;
    /**
     * get pixels size from the raw data file
     * 
