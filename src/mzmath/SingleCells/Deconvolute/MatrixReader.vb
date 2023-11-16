@@ -51,6 +51,7 @@ Public Class MatrixReader : Implements IDisposable
 
         Dim offset1 As Long = bin.ReadInt64
         Dim offset2 As Long = bin.ReadInt64
+        Dim offset_spots As Long = bin.BaseStream.Position
 
         Dim spot_index As New List(Of (Integer, Integer, Long))
         Dim label_index As New List(Of (String, Long))
@@ -88,7 +89,7 @@ Public Class MatrixReader : Implements IDisposable
                               Return a.Key
                           End Function, AddressOf offsetIndex)
 
-        Return bin.BaseStream.Position
+        Return offset_spots
     End Function
 
     Public Function GetSpot(x As Integer, y As Integer) As PixelData

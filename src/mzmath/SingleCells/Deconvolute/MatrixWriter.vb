@@ -24,6 +24,7 @@ Public Class MatrixWriter
             Call bin.Write(mzi)
         Next
 
+        ' save count of the spots
         Call bin.Write(m.matrix.TryCount)
         Call bin.Flush()
 
