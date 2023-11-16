@@ -47,6 +47,7 @@ Public Class MatrixReader : Implements IDisposable
         Next
 
         _spots = bin.ReadInt32
+        _ionSet = mz
 
         Dim offset1 As Long = bin.ReadInt64
         Dim offset2 As Long = bin.ReadInt64
