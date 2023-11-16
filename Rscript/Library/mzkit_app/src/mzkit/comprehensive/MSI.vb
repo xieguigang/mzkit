@@ -66,6 +66,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.Comprehensive.MsImaging
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
@@ -442,7 +443,20 @@ Module MSI
         }
     End Function
 
+    ''' <summary>
+    ''' open the reader for the imzML ms-imaging file
+    ''' </summary>
+    ''' <param name="file">the file path to the specific imzML metadata file for load for run ms-imaging analysis.</param>
+    ''' <param name="env"></param>
+    ''' <returns>
+    ''' this function returns a tuple list object that contains 2 slot elements inside:
+    ''' 
+    ''' 1. scans: is the [x,y] spatial scans data
+    ''' 2. ibd: is the binary data reader wrapper object for the corresponding 
+    '''       ``ibd`` file of the given input imzML file.
+    ''' </returns>
     <ExportAPI("open.imzML")>
+    <RApiReturn("scans", "ibd")>
     Public Function open_imzML(file As String, Optional env As Environment = Nothing) As Object
         Dim scans As ScanData() = imzML.LoadScans(file:=file).ToArray
         Dim ibd As ibdReader
@@ -465,9 +479,21 @@ Module MSI
         }
     End Function
 
+    ''' <summary>
+    ''' Save and write the given ms-imaging mzpack object as imzML file
+    ''' </summary>
+    ''' <param name="mzpack"></param>
+    ''' <param name="file"></param>
+    ''' <returns></returns>
     <ExportAPI("write.imzML")>
-    Public Function write_imzML(mzpack As mzPack, file As String) As Object
-        Return imzXMLWriter.WriteXML(mzpack, output:=file)
+    Public Function write_imzML(mzpack As mzPack, file As String,
+                                Optional res As Double = 17,
+                                Optional ionMode As IonModes = IonModes.Positive) As Object
+
+        Return imzXMLWriter.WriteXML(
+            mzpack, output:=file,
+            res:=res,
+            ionMode:=ionMode)
     End Function
 
     ''' <summary>

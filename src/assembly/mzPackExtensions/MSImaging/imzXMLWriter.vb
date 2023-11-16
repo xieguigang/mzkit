@@ -53,21 +53,17 @@
 #End Region
 
 Imports System.Drawing
+Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports Microsoft.VisualBasic.Imaging.Math2D
 
 Public Module imzXMLWriter
 
-    ''' <summary>
-    ''' write mzpack file data as imzML file
-    ''' </summary>
-    ''' <param name="mzpack"></param>
-    ''' <param name="output"></param>
-    ''' <returns></returns>
-    Public Function WriteXML(mzpack As mzPack, output As String) As Boolean
-        Dim writer As imzML.mzPackWriter = imzML.mzPackWriter.OpenOutput(output)
-        Dim polygon As New Polygon2D(mzpack.MS.Select(Function(p) p.GetMSIPixel))
+    <Extension>
+    Private Function GetDimension(rawdata As mzPack) As Size
+        Dim polygon As New Polygon2D(rawdata.MS.Select(Function(p) p.GetMSIPixel))
         Dim dimsize As Size
 
         If polygon.length = 0 Then
@@ -79,10 +75,29 @@ Public Module imzXMLWriter
             }
         End If
 
+        Return dimsize
+    End Function
+
+    ''' <summary>
+    ''' write mzpack file data as imzML file
+    ''' </summary>
+    ''' <param name="mzpack"></param>
+    ''' <param name="output"></param>
+    ''' <param name="res">
+    ''' the spatial resolution
+    ''' </param>
+    ''' <returns></returns>
+    Public Function WriteXML(mzpack As mzPack, output As String,
+                             Optional res As Double = 17,
+                             Optional ionMode As IonModes = IonModes.Positive) As Boolean
+
+        Dim writer As imzML.mzPackWriter = imzML.mzPackWriter.OpenOutput(output)
+        Dim dimsize As Size = mzpack.GetDimension
+
         ' config of the writer
         Call writer _
-            .SetMSImagingParameters(dimsize, 17) _
-            .SetSpectrumParameters(1) _
+            .SetMSImagingParameters(dimsize, res) _
+            .SetSpectrumParameters(ionMode) _
             .SetSourceLocation(mzpack.source)
 
         For Each scan As ScanMS1 In mzpack.MS
