@@ -921,9 +921,14 @@ Module MSI
                                 Optional file As Object = Nothing,
                                 Optional mzdiff As Double = 0.001,
                                 Optional q As Double = 0.01,
+                                Optional fast_bin As Boolean = True,
                                 Optional env As Environment = Nothing) As Object
 
-        Dim matrix As MzMatrix = SingleCellMatrix.CreateMatrix(raw, mzdiff, freq:=q)
+        Dim matrix As MzMatrix = SingleCellMatrix.CreateMatrix(
+            raw, mzdiff,
+            freq:=q,
+            fastBin:=fast_bin
+        )
         Dim println = env.WriteLineHandler
 
         Call println($"Extract pixel matrix with mzdiff:{mzdiff}, frequency:{q}")

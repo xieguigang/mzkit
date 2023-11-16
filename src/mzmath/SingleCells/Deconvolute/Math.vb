@@ -59,6 +59,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports std = System.Math
@@ -100,19 +101,47 @@ Namespace Deconvolute
         ''' <returns>
         ''' m/z data vector has been re-order ascding
         ''' </returns>
-        Public Function GetMzIndex(raw As mzPack, mzdiff As Double, freq As Double) As Double()
-            Dim scanMz As New List(Of Double)
+        Public Function GetMzIndex(raw As mzPack, mzdiff As Double, freq As Double, Optional fast As Boolean = True) As Double()
+            If fast Then
+                Dim scanMz As New List(Of Double())
 
-            For Each x As Double() In raw.MS.Select(Function(ms) ms.mz)
-                Call scanMz.AddRange(x)
-            Next
+                For Each x As Double() In raw.MS.Select(Function(ms) ms.mz)
+                    Call scanMz.Add(x)
+                Next
 
-            Return GetMzIndex(scanMz, mzdiff, freq)
+                Return NumberGroups _
+                    .GroupByTree(scanMz, offset:=mzdiff) _
+                    .DoCall(Function(bins)
+                                Return GetMzIndex(bins.ToArray, freq)
+                            End Function)
+            Else
+                Dim scanMz As New List(Of Double)
+
+                For Each x As Double() In raw.MS.Select(Function(ms) ms.mz)
+                    Call scanMz.AddRange(x)
+                Next
+
+                Return GetMzIndex(scanMz, mzdiff, freq)
+            End If
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetMzIndex(raw As IEnumerable(Of ms2), mzdiff As Double, freq As Double) As Double()
             Return GetMzIndex(raw.Select(Function(r) r.mz), mzdiff, freq)
+        End Function
+
+        Public Function GetMzIndex(mzBins As NamedCollection(Of Double)(), freq As Double) As Double()
+            Dim counts As Vector = mzBins.Select(Function(a) a.Length).AsVector
+            ' normalize to [0,1]
+            Dim norm As Vector = counts / counts.Max
+            Dim n As Integer = (norm > freq).Sum
+            Dim mzUnique As Double() = mzBins _
+                .Take(n) _
+                .Select(Function(v) v.Average) _
+                .OrderBy(Function(mzi) mzi) _
+                .ToArray
+
+            Return mzUnique
         End Function
 
         ''' <summary>
@@ -128,17 +157,8 @@ Namespace Deconvolute
                 .Where(Function(v) v.Length > 0) _
                 .OrderByDescending(Function(a) a.Length) _
                 .ToArray
-            Dim counts As Vector = mzBins.Select(Function(a) a.Length).AsVector
-            ' normalize to [0,1]
-            Dim norm As Vector = counts / counts.Max
-            Dim n As Integer = (norm > freq).Sum
-            Dim mzUnique As Double() = mzBins _
-                .Take(n) _
-                .Select(Function(v) v.Average) _
-                .OrderBy(Function(mzi) mzi) _
-                .ToArray
 
-            Return mzUnique
+            Return GetMzIndex(mzBins, freq)
         End Function
 
         <Extension>

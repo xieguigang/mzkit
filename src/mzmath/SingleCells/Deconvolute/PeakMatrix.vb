@@ -87,10 +87,15 @@ Namespace Deconvolute
         Public Function CreateMatrix(raw As mzPack,
                                      Optional mzdiff As Double = 0.001,
                                      Optional freq As Double = 0.01,
-                                     Optional mzSet As Double() = Nothing) As MzMatrix
+                                     Optional mzSet As Double() = Nothing,
+                                     Optional fastBin As Boolean = True) As MzMatrix
 
             If mzSet.IsNullOrEmpty Then
-                mzSet = GetMzIndex(raw:=raw, mzdiff:=mzdiff, freq:=freq)
+                mzSet = GetMzIndex(
+                    raw:=raw,
+                    mzdiff:=mzdiff, freq:=freq,
+                    fast:=fastBin
+                )
             End If
 
             Dim mzIndex = mzSet.CreateMzIndex
