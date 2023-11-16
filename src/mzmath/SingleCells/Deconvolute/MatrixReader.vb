@@ -30,7 +30,7 @@ Public Class MatrixReader : Implements IDisposable
     End Sub
 
     Private Function loadHeaders() As Long
-        Dim bytes As Byte() = bin.ReadBytes(MatrixWriter.magic)
+        Dim bytes As Byte() = bin.ReadBytes(MatrixWriter.magic.Length)
         Dim si As String = Encoding.ASCII.GetString(bytes)
 
         If si <> MatrixWriter.magic Then
