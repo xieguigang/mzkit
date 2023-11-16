@@ -1,10 +1,33 @@
 .\" man page create by R# package system.
 .TH MSI 1 2000-Jan "write.imzML" "write.imzML"
 .SH NAME
-write.imzML \- 
+write.imzML \- Save and write the given ms-imaging mzpack object as imzML file
 .SH SYNOPSIS
 \fIwrite.imzML(\fBmzpack\fR as <generic> mzPack, 
-\fBfile\fR as string);\fR
+\fBfile\fR as string, 
+\fBres\fR as double = 17, 
+\fBionMode\fR as <integer> IonModes = [Positive]);\fR
+.SH DESCRIPTION
+.PP
+Save and write the given ms-imaging mzpack object as imzML file
+.PP
+.SH OPTIONS
+.PP
+\fBmzpack\fB \fR\- -. 
+.PP
+.PP
+\fBfile\fB \fR\- -. 
+.PP
+.PP
+\fBres\fB \fR\- 
+ the spatial resolution value
+. 
+.PP
+.PP
+\fBionMode\fB \fR\- 
+ the ion polarity mode value
+. 
+.PP
 .SH SEE ALSO
 MSI
 .SH FILES

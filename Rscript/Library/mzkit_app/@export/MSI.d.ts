@@ -14,11 +14,15 @@ declare namespace MSI {
        * cast the pixel collection to a ion imaging layer data
        * 
        * 
-        * @param pixels -
-        * @param context -
+        * @param x Should be a collection of the ms-imaging pixel data 
+        *  object, or a mz matrix object
+        * @param context the ms-imaging layer title, must be a valid mz numeric value if the input x 
+        *  is a mz matrix object
         * 
         * + default value Is ``'MSIlayer'``.
-        * @param dims -
+        * @param dims the dimension size of the ms-imaging layer data,
+        *  this dimension size will be evaluated based on the input pixel collection
+        *  data if this parameter leaves blank(or NULL) by default.
         * 
         * + default value Is ``null``.
         * @param strict -
@@ -28,11 +32,32 @@ declare namespace MSI {
         * 
         * + default value Is ``null``.
       */
-      function layer(pixels: object, context?: string, dims?: any, strict?: boolean, env?: object): object;
+      function layer(x: any, context?: any, dims?: any, strict?: boolean, env?: object): object;
    }
    /**
+    * Get the mass spectrum data of the MSI base peak data
+    * 
+    * 
+     * @param summary -
    */
    function basePeakMz(summary: object): object;
+   module cast {
+      /**
+       * cast the rawdata matrix as the
+       * 
+       * 
+        * @param x -
+        * @param mzdiff -
+        * 
+        * + default value Is ``0.01``.
+        * @param dims the dimension size of the ms-imaging spatial data
+        * 
+        * + default value Is ``null``.
+        * @param env 
+        * + default value Is ``null``.
+      */
+      function spatial_layers(x: object, mzdiff?: number, dims?: any, env?: object): any;
+   }
    /**
     * calculate the X scale
     * 
@@ -45,10 +70,21 @@ declare namespace MSI {
    */
    function correction(totalTime: number, pixels: object, hasMs2?: boolean): object;
    /**
-     * @param mzdiff default value Is ``0.001``.
-     * @param q default value Is ``0.001``.
+    * get matrix ions feature m/z vector
+    * 
+    * 
+     * @param raw -
+     * @param mzdiff -
+     * 
+     * + default value Is ``0.001``.
+     * @param q -
+     * 
+     * + default value Is ``0.001``.
+     * @param fast_bins -
+     * 
+     * + default value Is ``true``.
    */
-   function getMatrixIons(raw: object, mzdiff?: number, q?: number): number;
+   function getMatrixIons(raw: object, mzdiff?: number, q?: number, fast_bins?: boolean): number;
    /**
      * @param env default value Is ``null``.
    */
@@ -117,9 +153,20 @@ declare namespace MSI {
    function MSI_summary(raw: object, x?: object, y?: object, as_vector?: boolean, dims?: any, env?: object): object|object;
    module open {
       /**
-        * @param env default value Is ``null``.
+       * open the reader for the imzML ms-imaging file
+       * 
+       * 
+        * @param file the file path to the specific imzML metadata file for load for run ms-imaging analysis.
+        * @param env -
+        * 
+        * + default value Is ``null``.
+        * @return this function returns a tuple list object that contains 2 slot elements inside:
+        *  
+        *  1. scans: is the [x,y] spatial scans data
+        *  2. ibd: is the binary data reader wrapper object for the corresponding 
+        *        ``ibd`` file of the given input imzML file.
       */
-      function imzML(file: string, env?: object): any;
+      function imzML(file: string, env?: object): object;
    }
    /**
     * pack the matrix file as the MSI mzpack
@@ -218,6 +265,8 @@ declare namespace MSI {
      *  means percentage cutoff.
      * 
      * + default value Is ``0.01``.
+     * @param fast_bin 
+     * + default value Is ``true``.
      * @param env -
      * 
      * + default value Is ``null``.
@@ -226,7 +275,7 @@ declare namespace MSI {
      *  otherwise the matrix object itself will be returns from 
      *  the function.
    */
-   function pixelMatrix(raw: object, file?: any, mzdiff?: number, q?: number, env?: object): boolean|object;
+   function pixelMatrix(raw: object, file?: any, mzdiff?: number, q?: number, fast_bin?: boolean, env?: object): boolean|object;
    /**
     * get pixels size from the raw data file
     * 
@@ -330,7 +379,18 @@ declare namespace MSI {
    function splice(raw: object, partition?: object): object;
    module write {
       /**
+       * Save and write the given ms-imaging mzpack object as imzML file
+       * 
+       * 
+        * @param mzpack -
+        * @param file -
+        * @param res the spatial resolution value
+        * 
+        * + default value Is ``17``.
+        * @param ionMode the ion polarity mode value
+        * 
+        * + default value Is ``null``.
       */
-      function imzML(mzpack: object, file: string): any;
+      function imzML(mzpack: object, file: string, res?: number, ionMode?: object): any;
    }
 }
