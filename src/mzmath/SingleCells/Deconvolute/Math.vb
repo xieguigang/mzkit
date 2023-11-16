@@ -116,6 +116,7 @@ Namespace Deconvolute
                 Dim par As New IndexTask(scanMz, mzdiff)
                 Dim subgroups = DirectCast(par.Run(), IndexTask).groups
                 Dim merge = subgroups.IteratesALL _
+                    .Where(Function(n) n.Length > 0) _
                     .GroupBy(Function(a) a.Average, offsets:=mzdiff) _
                     .ToArray
                 Dim bins = merge _
@@ -152,8 +153,8 @@ Namespace Deconvolute
                 Call MyBase.New(blocks.Count)
 
                 Me.blocks = blocks
-                Me.groups = New NamedCollection(Of Double)(cpu_count - 1)() {}
                 Me.mzdiff = mzdiff
+                Me.groups = Me.Allocate(Of NamedCollection(Of Double)())()
             End Sub
 
             Protected Overrides Sub Solve(start As Integer, ends As Integer, thread_id As Integer)
