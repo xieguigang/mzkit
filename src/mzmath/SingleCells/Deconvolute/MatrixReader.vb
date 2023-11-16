@@ -139,6 +139,18 @@ Public Class MatrixReader : Implements IDisposable
         }
     End Function
 
+    ''' <summary>
+    ''' load all matrix into memory
+    ''' </summary>
+    ''' <returns></returns>
+    Public Function LoadMemory() As MzMatrix
+        Return New MzMatrix With {
+            .mz = ionSet,
+            .tolerance = tolerance,
+            .matrix = LoadSpots.ToArray
+        }
+    End Function
+
     Protected Overridable Sub Dispose(disposing As Boolean)
         If Not disposedValue Then
             If disposing Then

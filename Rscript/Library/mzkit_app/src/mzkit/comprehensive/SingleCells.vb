@@ -53,8 +53,8 @@
 
 #End Region
 
-Imports System.Runtime.CompilerServices
 Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells
 Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
@@ -102,6 +102,16 @@ Module SingleCells
         Return table
     End Function
 
+    ''' <summary>
+    ''' cast the matrix object as the dataframe
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <param name="args"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' implements the ``as.data.frame`` function
+    ''' </remarks>
     <ExportAPI("mz_matrix")>
     Public Function mzMatrixDf(x As MzMatrix, <RListObjectArgument> args As list, Optional env As Environment = Nothing) As Rdataframe
         Dim singleCell As Boolean = args.getValue("singlecell", env, [default]:=False)
@@ -213,6 +223,11 @@ Module SingleCells
     ''' <param name="file"></param>
     ''' <param name="env"></param>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' this function open a lazy reader of the matrix, for load all 
+    ''' data into memory at once, use the ``read.mz_matrix`` 
+    ''' function.
+    ''' </remarks>
     <ExportAPI("open.matrix")>
     <RApiReturn(
         NameOf(MatrixReader.tolerance),
@@ -240,5 +255,42 @@ Module SingleCells
         Call summary.add("reader", read)
 
         Return summary
+    End Function
+
+    ''' <summary>
+    ''' load the data matrix into memory at once
+    ''' </summary>
+    ''' <param name="file">
+    ''' a file connection to the matrix file or the matrix lazy 
+    ''' reader object which is created via the function 
+    ''' ``open.matrix``.
+    ''' </param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' for create a lazy data reader of the matrix, use the ``open.matrix`` function.
+    ''' </remarks>
+    <ExportAPI("read.mz_matrix")>
+    <RApiReturn(GetType(MzMatrix))>
+    Public Function readMzmatrix(<RRawVectorArgument>
+                                 file As Object,
+                                 Optional env As Environment = Nothing) As Object
+
+        If TypeOf file Is MatrixReader Then
+            Return DirectCast(file, MatrixReader).LoadMemory
+        Else
+            Dim buf = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Read, env)
+
+            If buf Like GetType(Message) Then
+                Return buf.TryCast(Of Message)
+            End If
+
+            Dim read As New MatrixReader(buf.TryCast(Of Stream))
+            Dim ms As MzMatrix = read.LoadMemory
+
+            Call read.Dispose()
+
+            Return ms
+        End If
     End Function
 End Module
