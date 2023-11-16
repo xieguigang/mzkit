@@ -145,6 +145,8 @@ Public Class MatrixReader : Implements IDisposable
     ''' load all matrix into memory
     ''' </summary>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function LoadMemory() As MzMatrix
         Return New MzMatrix With {
             .mz = ionSet,
