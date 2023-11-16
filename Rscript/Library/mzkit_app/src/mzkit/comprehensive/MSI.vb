@@ -484,6 +484,12 @@ Module MSI
     ''' </summary>
     ''' <param name="mzpack"></param>
     ''' <param name="file"></param>
+    ''' <param name="res">
+    ''' the spatial resolution value
+    ''' </param>
+    ''' <param name="ionMode">
+    ''' the ion polarity mode value
+    ''' </param>
     ''' <returns></returns>
     <ExportAPI("write.imzML")>
     Public Function write_imzML(mzpack As mzPack, file As String,
