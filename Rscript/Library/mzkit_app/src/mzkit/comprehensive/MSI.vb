@@ -668,6 +668,11 @@ Module MSI
         End If
     End Function
 
+    ''' <summary>
+    ''' Get the mass spectrum data of the MSI base peak data
+    ''' </summary>
+    ''' <param name="summary"></param>
+    ''' <returns></returns>
     <ExportAPI("basePeakMz")>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function basePeakMz(summary As MSISummary) As LibraryMatrix
@@ -945,12 +950,21 @@ Module MSI
         Return raw.MS.Select(Function(scan) scan.size).ToArray
     End Function
 
+    ''' <summary>
+    ''' get matrix ions feature m/z vector
+    ''' </summary>
+    ''' <param name="raw"></param>
+    ''' <param name="mzdiff"></param>
+    ''' <param name="q"></param>
+    ''' <param name="fast_bins"></param>
+    ''' <returns></returns>
     <ExportAPI("getMatrixIons")>
     Public Function GetMatrixIons(raw As mzPack,
                                   Optional mzdiff As Double = 0.001,
-                                  Optional q As Double = 0.001) As Double()
+                                  Optional q As Double = 0.001,
+                                  Optional fast_bins As Boolean = True) As Double()
 
-        Return SingleCellMath.GetMzIndex(raw, mzdiff, q)
+        Return SingleCellMath.GetMzIndex(raw, mzdiff, q, fast:=fast_bins)
     End Function
 
     ''' <summary>
@@ -1246,6 +1260,37 @@ Module MSI
                                        Optional coverage As Double = 0.3) As Object
 
         Return layer.MSILayer.ExtractSample(tissue, n, coverage)
+    End Function
+
+    ''' <summary>
+    ''' cast the rawdata matrix as the 
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <param name="mzdiff"></param>
+    ''' <param name="dims">
+    ''' the dimension size of the ms-imaging spatial data
+    ''' </param>
+    ''' <returns></returns>
+    <ExportAPI("cast.spatial_layers")>
+    Public Function castSpatialLayers(x As MzMatrix,
+                                      Optional mzdiff As Double = 0.01,
+                                      <RRawVectorArgument>
+                                      Optional dims As Object = Nothing,
+                                      Optional env As Environment = Nothing) As Object
+        Dim mz As Double() = x.mz
+        Dim diff1 As Tolerance = New DAmethod(mzdiff)
+        Dim diff2 As Tolerance = Tolerance.ParseScript(x.tolerance)
+        Dim size As Size = InteropArgumentHelper.getSize(dims, env, [default]:="0,0").SizeParser
+
+        If diff1 > diff2 Then
+            ' the mzdiff is greater than the matrix tolerance
+            ' needs to centroid the mz features
+            mz = mz.GroupBy(offset:=mzdiff) _
+                .Select(Function(a) a.Average) _
+                .ToArray
+        End If
+
+        Return New MsImaging.MatrixReader(x).ForEachLayer(mz, dims:=size).ToArray
     End Function
 End Module
 

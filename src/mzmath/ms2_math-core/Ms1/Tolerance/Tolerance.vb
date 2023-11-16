@@ -285,5 +285,19 @@ Namespace Ms1
         Public Shared Operator /(mzdiff As Tolerance, scale As Double) As Tolerance
             Return mzdiff.Scale(1 / scale)
         End Operator
+
+        ''' <summary>
+        ''' the tolerance error of <paramref name="d1"/> is greater than the tolerance error of <paramref name="d2"/>?
+        ''' </summary>
+        ''' <param name="d1"></param>
+        ''' <param name="d2"></param>
+        ''' <returns></returns>
+        Public Shared Operator >(d1 As Tolerance, d2 As Tolerance) As Boolean
+            Return d1.GetErrorPPM > d2.GetErrorPPM
+        End Operator
+
+        Public Shared Operator <(d1 As Tolerance, d2 As Tolerance) As Boolean
+            Return Not d1 > d2
+        End Operator
     End Class
 End Namespace
