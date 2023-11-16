@@ -62,6 +62,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.Parallel
 Imports std = System.Math
 
 Namespace Deconvolute
@@ -109,11 +110,27 @@ Namespace Deconvolute
                     Call scanMz.Add(x)
                 Next
 
-                Return NumberGroups _
-                    .GroupByTree(scanMz, offset:=mzdiff) _
-                    .DoCall(Function(bins)
-                                Return GetMzIndex(bins.ToArray, freq)
-                            End Function)
+                scanMz.Shuffle
+                VectorTask.n_threads = App.CPUCoreNumbers
+
+                Dim par As New IndexTask(scanMz, mzdiff)
+                Dim subgroups = DirectCast(par.Run(), IndexTask).groups
+                Dim merge = subgroups.IteratesALL _
+                    .GroupBy(Function(a) a.Average, offsets:=mzdiff) _
+                    .ToArray
+                Dim bins = merge _
+                    .Select(Function(g)
+                                Dim bin As Double() = g _
+                                    .Select(Function(i) i.value) _
+                                    .IteratesALL _
+                                    .ToArray
+
+                                Return New NamedCollection(Of Double)(bin.Average.ToString, bin)
+                            End Function) _
+                    .OrderByDescending(Function(g) g.Length) _
+                    .ToArray
+
+                Return GetMzIndex(bins, freq)
             Else
                 Dim scanMz As New List(Of Double)
 
@@ -125,12 +142,45 @@ Namespace Deconvolute
             End If
         End Function
 
+        Private Class IndexTask : Inherits VectorTask
+
+            Friend ReadOnly blocks As List(Of Double())
+            Friend ReadOnly groups As NamedCollection(Of Double)()()
+            Friend ReadOnly mzdiff As Double
+
+            Sub New(blocks As List(Of Double()), mzdiff As Double)
+                Call MyBase.New(blocks.Count)
+
+                Me.blocks = blocks
+                Me.groups = New NamedCollection(Of Double)(cpu_count - 1)() {}
+                Me.mzdiff = mzdiff
+            End Sub
+
+            Protected Overrides Sub Solve(start As Integer, ends As Integer, thread_id As Integer)
+                Dim subblocks As New List(Of Double())
+
+                For i As Integer = start To ends
+                    Call subblocks.Add(blocks(i))
+                Next
+
+                groups(thread_id) = NumberGroups.GroupByTree(subblocks, offset:=mzdiff).ToArray
+            End Sub
+        End Class
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetMzIndex(raw As IEnumerable(Of ms2), mzdiff As Double, freq As Double) As Double()
             Return GetMzIndex(raw.Select(Function(r) r.mz), mzdiff, freq)
         End Function
 
-        Public Function GetMzIndex(mzBins As NamedCollection(Of Double)(), freq As Double) As Double()
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="mzBins">
+        ''' the bin data should be sorted via the bin size desc!
+        ''' </param>
+        ''' <param name="freq"></param>
+        ''' <returns></returns>
+        Private Function GetMzIndex(mzBins As NamedCollection(Of Double)(), freq As Double) As Double()
             Dim counts As Vector = mzBins.Select(Function(a) a.Length).AsVector
             ' normalize to [0,1]
             Dim norm As Vector = counts / counts.Max
