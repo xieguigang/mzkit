@@ -97,6 +97,7 @@ Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports imzML = BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML.XML
 Imports rDataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
+Imports REnv = SMRUCC.Rsharp.Runtime
 Imports SingleCellMath = BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute.Math
 Imports SingleCellMatrix = BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute.PeakMatrix
 Imports std = System.Math
@@ -219,22 +220,45 @@ Module MSI
     ''' <summary>
     ''' cast the pixel collection to a ion imaging layer data
     ''' </summary>
-    ''' <param name="pixels"></param>
-    ''' <param name="context"></param>
-    ''' <param name="dims"></param>
+    ''' <param name="x">Should be a collection of the ms-imaging pixel data 
+    ''' object, or a mz matrix object</param>
+    ''' <param name="context">
+    ''' the ms-imaging layer title, must be a valid mz numeric value if the input x 
+    ''' is a mz matrix object
+    ''' </param>
+    ''' <param name="dims">the dimension size of the ms-imaging layer data,
+    ''' this dimension size will be evaluated based on the input pixel collection
+    ''' data if this parameter leaves blank(or NULL) by default.</param>
     ''' <param name="strict"></param>
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("as.layer")>
     <RApiReturn(GetType(SingleIonLayer))>
-    Public Function asMSILayer(pixels As MsImaging.PixelData(),
-                               Optional context As String = "MSIlayer",
+    Public Function asMSILayer(<RRawVectorArgument> x As Object,
+                               Optional context As Object = "MSIlayer",
                                <RRawVectorArgument>
                                Optional dims As Object = Nothing,
                                Optional strict As Boolean = True,
                                Optional env As Environment = Nothing) As Object
 
         Dim size As String = InteropArgumentHelper.getSize(dims, env, [default]:="0,0")
+        Dim pixels As MsImaging.PixelData()
+
+        If TypeOf x Is MzMatrix Then
+            Dim mat As New MsImaging.MatrixReader(DirectCast(x, MzMatrix))
+            Dim mz As Double() = CLRVector.asNumeric(context)
+
+            If mz.IsNullOrEmpty OrElse mz.All(Function(mzi) mzi <= 0.0) Then
+                Return Internal.debug.stop($"invalid given m/z context value: {context}, it should be a positive real number!", env)
+            End If
+
+            pixels = mz _
+                .Select(Function(mzi) mat.GetSpots(mzi)) _
+                .IteratesALL _
+                .ToArray
+        Else
+            pixels = REnv.asVector(Of MsImaging.PixelData)(x)
+        End If
 
         If size = "0,0" Then
             If strict OrElse pixels.Length > 0 Then

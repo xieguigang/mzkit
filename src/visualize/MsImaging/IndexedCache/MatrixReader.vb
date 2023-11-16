@@ -1,4 +1,5 @@
 ﻿Imports System.Drawing
+Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm
@@ -18,12 +19,17 @@ Public Class MatrixReader
         Me.index = m.mz.CreateMzIndex
     End Sub
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function GetSpots(mz As Double) As IEnumerable(Of PixelData)
+        Return MzMatrix.GetLayer(Of PixelData)(m, mz, mzdiff, index)
+    End Function
+
     Public Function GetLayer(mz As Double, Optional dims As Size = Nothing) As SingleIonLayer
-        Dim spots = MzMatrix.GetLayer(Of PixelData)(m, mz, mzdiff, index)
+        Dim spots As PixelData() = GetSpots(mz).ToArray
         Dim layer As New SingleIonLayer With {
             .DimensionSize = dims,
             .IonMz = mz.ToString,
-            .MSILayer = spots.ToArray
+            .MSILayer = spots
         }
 
         Return layer
