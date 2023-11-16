@@ -53,6 +53,7 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports System.IO
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells
@@ -78,6 +79,7 @@ Module SingleCells
 
     Sub New()
         Call Internal.Object.Converts.makeDataframe.addHandler(GetType(SingleCellIonStat()), AddressOf cellStatsTable)
+        Call Internal.Object.Converts.makeDataframe.addHandler(GetType(MzMatrix), AddressOf mzMatrixDf)
     End Sub
 
     Private Function cellStatsTable(ions As SingleCellIonStat(), args As list, env As Environment) As Rdataframe
@@ -98,6 +100,36 @@ Module SingleCells
         Call table.add(NameOf(SingleCellIonStat.RSD), ions.Select(Function(i) i.RSD))
 
         Return table
+    End Function
+
+    <ExportAPI("mz_matrix")>
+    Public Function mzMatrixDf(x As MzMatrix, <RListObjectArgument> args As list, Optional env As Environment = Nothing) As Rdataframe
+        Dim singleCell As Boolean = args.getValue("singlecell", env, [default]:=False)
+        Dim df As New Rdataframe With {
+            .columns = New Dictionary(Of String, Array),
+            .rownames = If(singleCell, x.getCellLabels, x.getSpatialLabels)
+        }
+        Dim mz As Double() = x.mz
+        Dim offset As Integer
+
+        For i As Integer = 0 To mz.Length - 1
+            offset = i
+            df.add(mz(i).ToString, x.matrix.Select(Function(r) r.intensity(offset)))
+        Next
+
+        Return df
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Private Function getCellLabels(x As MzMatrix) As String()
+        Return x.matrix.Select(Function(r) r.label).ToArray
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Private Function getSpatialLabels(x As MzMatrix) As String()
+        Return x.matrix.Select(Function(r) $"{r.X},{r.Y}").ToArray
     End Function
 
     ''' <summary>
