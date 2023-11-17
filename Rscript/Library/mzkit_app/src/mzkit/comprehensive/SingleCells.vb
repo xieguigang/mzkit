@@ -55,6 +55,7 @@
 
 Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells
 Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
@@ -305,6 +306,6 @@ Module SingleCells
     ''' <returns></returns>
     <ExportAPI("df.mz_matrix")>
     Public Function dfMzMatrix(x As MzMatrix) As Object
-
+        Return New SpatialMatrixReader(x)
     End Function
 End Module
