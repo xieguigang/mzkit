@@ -11,11 +11,24 @@ Public Class MatrixReader : Implements IdataframeReader
     ReadOnly m As MzMatrix
     ReadOnly index As BlockSearchFunction(Of (mz As Double, Integer))
     ReadOnly mzdiff As Tolerance
+    ReadOnly spatialIndex As Dictionary(Of String, Integer)
 
     Sub New(m As MzMatrix)
         Me.m = m
         Me.mzdiff = Tolerance.ParseScript(m.tolerance)
         Me.index = m.mz.CreateMzIndex
+
+        Call CreateIndex(m, spatialIndex)
+    End Sub
+
+    Private Shared Sub CreateIndex(m As MzMatrix, ByRef spatial As Dictionary(Of String, Integer))
+        Dim offsets = m.matrix.Select(Function(s, i) (s, i)).ToArray
+
+        spatial = offsets _
+            .ToDictionary(Function(s) $"{s.s.X},{s.s.Y}",
+                          Function(a)
+                              Return a.i
+                          End Function)
     End Sub
 
     Public Function getColumn(index As Object, env As Environment) As Object Implements IdataframeReader.getColumn
@@ -84,6 +97,15 @@ Public Class MatrixReader : Implements IdataframeReader
     End Function
 
     Public Function getRow(index As Object, env As Environment) As Object Implements IdataframeReader.getRow
-        Throw New NotImplementedException()
+        Dim xy As String() = CLRVector.asCharacter(index)
+        Dim vec As New list With {.slots = New Dictionary(Of String, Object)}
+
+        For Each spatial As String In xy
+            If spatialIndex.ContainsKey(spatial) Then
+                Call vec.add(spatial, m.matrix(spatialIndex(spatial)).intensity)
+            End If
+        Next
+
+        Return vec
     End Function
 End Class
