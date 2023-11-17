@@ -297,4 +297,14 @@ Module SingleCells
             Return ms
         End If
     End Function
+
+    ''' <summary>
+    ''' cast matrix object to the R liked dataframe object
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <returns></returns>
+    <ExportAPI("df.mz_matrix")>
+    Public Function dfMzMatrix(x As MzMatrix) As Object
+
+    End Function
 End Module

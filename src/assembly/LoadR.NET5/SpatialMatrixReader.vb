@@ -6,7 +6,7 @@ Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Internal.[Object]
 Imports SMRUCC.Rsharp.Runtime.Vectorization
 
-Public Class MatrixReader : Implements IdataframeReader
+Public Class SpatialMatrixReader : Implements IdataframeReader
 
     ReadOnly m As MzMatrix
     ReadOnly index As BlockSearchFunction(Of (mz As Double, Integer))
