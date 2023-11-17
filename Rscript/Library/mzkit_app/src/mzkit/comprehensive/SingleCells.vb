@@ -113,7 +113,11 @@ Module SingleCells
     ''' implements the ``as.data.frame`` function
     ''' </remarks>
     <ExportAPI("mz_matrix")>
-    Public Function mzMatrixDf(x As MzMatrix, <RListObjectArgument> args As list, Optional env As Environment = Nothing) As Rdataframe
+    Public Function mzMatrixDf(x As MzMatrix,
+                               <RListObjectArgument>
+                               args As list,
+                               Optional env As Environment = Nothing) As Rdataframe
+
         Dim singleCell As Boolean = args.getValue("singlecell", env, [default]:=False)
         Dim df As New Rdataframe With {
             .columns = New Dictionary(Of String, Array),
