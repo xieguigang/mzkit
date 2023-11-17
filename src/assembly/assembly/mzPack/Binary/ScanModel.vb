@@ -61,6 +61,9 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 
 Namespace mzData.mzWebCache
 
+    ''' <summary>
+    ''' Helper module for cast the clr object model
+    ''' </summary>
     Public Module ScanModel
 
         <Extension>

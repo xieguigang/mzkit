@@ -77,7 +77,7 @@ Namespace Deconvolute
         ''' <returns></returns>
         ''' 
         <Extension>
-        Public Function GetMzIndex(raw As mzPack, mzdiff As Double, topN As Integer) As Double()
+        Public Function GetMzIndex(raw As IMZPack, mzdiff As Double, topN As Integer) As Double()
             Dim scanMz As New List(Of Double)
             Dim top As IEnumerable(Of ms2)
 
@@ -102,7 +102,7 @@ Namespace Deconvolute
         ''' <returns>
         ''' m/z data vector has been re-order ascding
         ''' </returns>
-        Public Function GetMzIndex(raw As mzPack, mzdiff As Double, freq As Double, Optional fast As Boolean = True) As Double()
+        Public Function GetMzIndex(raw As IMZPack, mzdiff As Double, freq As Double, Optional fast As Boolean = True) As Double()
             If fast Then
                 Dim scanMz As New List(Of Double())
 

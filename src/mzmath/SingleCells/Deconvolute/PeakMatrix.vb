@@ -55,7 +55,6 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
@@ -84,7 +83,7 @@ Namespace Deconvolute
         ''' <param name="mzdiff"></param>
         ''' <param name="freq"></param>
         ''' <returns></returns>
-        Public Function CreateMatrix(raw As mzPack,
+        Public Function CreateMatrix(raw As IMZPack,
                                      Optional mzdiff As Double = 0.001,
                                      Optional freq As Double = 0.01,
                                      Optional mzSet As Double() = Nothing,
@@ -116,7 +115,7 @@ Namespace Deconvolute
         ''' <typeparam name="T"></typeparam>
         ''' <param name="raw"></param>
         ''' <returns></returns>
-        Public Iterator Function ExportScans(Of T As {New, INamedValue, IVector})(raw As mzPack, mzSet As Double()) As IEnumerable(Of T)
+        Public Iterator Function ExportScans(Of T As {New, INamedValue, IVector})(raw As IMZPack, mzSet As Double()) As IEnumerable(Of T)
             Dim mzIndex = mzSet.CreateMzIndex
             Dim len As Integer = mzSet.Length
 
@@ -133,7 +132,7 @@ Namespace Deconvolute
         End Function
 
         <Extension>
-        Private Iterator Function deconvoluteMatrix(raw As mzPack,
+        Private Iterator Function deconvoluteMatrix(raw As IMZPack,
                                                     len As Integer,
                                                     mzIndex As BlockSearchFunction(Of (mz As Double, Integer))) As IEnumerable(Of PixelData)
             For Each scan As ScanMS1 In raw.MS
