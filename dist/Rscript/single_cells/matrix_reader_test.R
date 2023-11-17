@@ -13,3 +13,6 @@ print(names(df));
 print(rownames(df));
 
 print(df[, 267.1339000012378]);
+
+
+print(df["12,4", ]);

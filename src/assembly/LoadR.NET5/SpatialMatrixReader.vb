@@ -103,6 +103,13 @@ Public Class SpatialMatrixReader : Implements IdataframeReader, IReflector
 
     Public Function getRow(index As Object, env As Environment) As Object Implements IdataframeReader.getRow
         Dim xy As String() = CLRVector.asCharacter(index)
+
+        If xy.IsNullOrEmpty Then
+            Return Nothing
+        ElseIf xy.Length = 1 Then
+            Return m.matrix(spatialIndex(xy(Scan0))).intensity
+        End If
+
         Dim vec As New list With {.slots = New Dictionary(Of String, Object)}
 
         For Each spatial As String In xy
