@@ -1,8 +1,10 @@
 ﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm
+Imports Microsoft.VisualBasic.Linq
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Internal.[Object]
+Imports SMRUCC.Rsharp.Runtime.Vectorization
 
 Public Class MatrixReader : Implements IdataframeReader
 
@@ -17,7 +19,68 @@ Public Class MatrixReader : Implements IdataframeReader
     End Sub
 
     Public Function getColumn(index As Object, env As Environment) As Object Implements IdataframeReader.getColumn
-        Throw New NotImplementedException()
+        Dim mz As Double() = CLRVector.asNumeric(index)
+
+        If mz.IsNullOrEmpty Then
+            Return Nothing
+        ElseIf mz.Length = 1 Then
+            Return loadLayer(mz(0))
+        End If
+
+        Dim out As New list With {
+            .slots = New Dictionary(Of String, Object)
+        }
+
+        For Each mzi As Double In mz
+            Call out.add(mzi.ToString, loadLayer(mzi))
+        Next
+
+        Return out
+    End Function
+
+    Private Function loadLayer(mzi As Double) As dataframe
+        Dim offsets As Integer() = Me.index _
+            .Search((mzi, -1)) _
+            .Where(Function(mzhit)
+                       Return mzdiff(mzi, mzhit.mz)
+                   End Function) _
+            .Select(Function(h) h.Item2) _
+            .ToArray
+
+        If offsets.Length = 0 Then
+            Return Nothing
+        End If
+
+        Dim x As New List(Of Integer)
+        Dim y As New List(Of Integer)
+        Dim label As New List(Of String)
+        Dim into As New List(Of Double)
+
+        For Each spot As PixelData In m.matrix
+            Dim intensity As Double = Aggregate i In offsets Into Sum(spot.intensity(i))
+
+            If intensity <= 0.0 Then
+                Continue For
+            End If
+
+            Call x.Add(spot.X)
+            Call y.Add(spot.Y)
+            Call label.Add(spot.label)
+            Call into.Add(intensity)
+        Next
+
+        Return New dataframe With {
+            .columns = New Dictionary(Of String, Array) From {
+                {"x", x.ToArray},
+                {"y", y.ToArray},
+                {"label", label.ToArray},
+                {"mz", {mzi}},
+                {"intensity", into.ToArray}
+            },
+            .rownames = x _
+                .Select(Function(xi, i) $"{xi},{y(i)}") _
+                .ToArray
+        }
     End Function
 
     Public Function getRow(index As Object, env As Environment) As Object Implements IdataframeReader.getRow
