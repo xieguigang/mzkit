@@ -1,12 +1,17 @@
-﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+﻿Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm
 Imports Microsoft.VisualBasic.Linq
 Imports SMRUCC.Rsharp.Runtime
+Imports SMRUCC.Rsharp.Runtime.Components.Interface
 Imports SMRUCC.Rsharp.Runtime.Internal.[Object]
 Imports SMRUCC.Rsharp.Runtime.Vectorization
 
-Public Class SpatialMatrixReader : Implements IdataframeReader
+''' <summary>
+''' The wrapper of the spatial matrix to R# language
+''' </summary>
+Public Class SpatialMatrixReader : Implements IdataframeReader, IReflector
 
     ReadOnly m As MzMatrix
     ReadOnly index As BlockSearchFunction(Of (mz As Double, Integer))
@@ -107,5 +112,15 @@ Public Class SpatialMatrixReader : Implements IdataframeReader
         Next
 
         Return vec
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function getNames() As String() Implements IReflector.getNames
+        Return m.mz.Select(Function(mzi) mzi.ToString).ToArray
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function getRowNames() As String() Implements IdataframeReader.getRowNames
+        Return spatialIndex.Keys.ToArray
     End Function
 End Class
