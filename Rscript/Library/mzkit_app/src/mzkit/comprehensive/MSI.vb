@@ -1263,9 +1263,9 @@ Module MSI
     End Function
 
     ''' <summary>
-    ''' cast the rawdata matrix as the 
+    ''' cast the rawdata matrix as the ms-imaging ion layer
     ''' </summary>
-    ''' <param name="x"></param>
+    ''' <param name="x">the matrix object</param>
     ''' <param name="mzdiff"></param>
     ''' <param name="dims">
     ''' the dimension size of the ms-imaging spatial data
