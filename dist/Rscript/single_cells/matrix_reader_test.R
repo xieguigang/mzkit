@@ -11,3 +11,5 @@ const df = df.mz_matrix(load);
 print(names(df));
 
 print(rownames(df));
+
+print(df[, 267.1339000012378]);
