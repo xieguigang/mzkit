@@ -71,6 +71,17 @@ Namespace Deconvolute
     ''' column is mz intensity value across different 
     ''' pixels
     ''' </summary>
+    ''' <remarks>
+    ''' this matrix object is difference to the GCModeller HTS expression matrix object: 
+    ''' 
+    ''' 1. the column in the HTS expression matrix object is the sample observation, 
+    '''    and this matrix object is a kind of matrix transpose result of the GCModeller 
+    '''    HTS expression matrix object.
+    ''' 2. the molecule feature inside this matrix object, is a kind of numeric tag, could 
+    '''    be resolve the tag equalant with a given number tolerance, the molecule feature 
+    '''    inside the GCModeller HTS expression matrix is a character tag, just use the 
+    '''    string equals to resolve the equalant. 
+    ''' </remarks>
     Public Class MzMatrix
 
         ''' <summary>
