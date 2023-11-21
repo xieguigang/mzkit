@@ -292,7 +292,7 @@ Public Class IonStat
             .ToArray _
             .GroupBy(Function(d) d.mz, Tolerance.DeltaMass(da)) _
             .ToArray
-        Dim par As New StatTask(ions, nsize)
+        Dim par As New IonFeatureTask(ions, nsize)
 
         If parallel Then
             Call par.Run()
@@ -303,7 +303,7 @@ Public Class IonStat
         Return par.result
     End Function
 
-    Private Class StatTask : Inherits VectorTask
+    Private Class IonFeatureTask : Inherits VectorTask
 
         Public result As IonStat()
 
