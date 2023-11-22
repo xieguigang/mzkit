@@ -83,18 +83,15 @@ Namespace Ms1
         ''' </summary>
         ''' <returns></returns>
         Public Overrides Function GetErrorPPM() As Double
-            Static sample_mz As Double() = New Double() {
-                50, 100, 200, 300,
-                400, 500, 600, 700, 800, 900,
-                1000,
-                3000
-            }
-
             Dim sample_ppm As Double() = sample_mz _
                 .Select(Function(mzi) PPMmethod.PPM(mzi, mzi + DeltaTolerance)) _
                 .ToArray
 
             Return sample_ppm.Average
+        End Function
+
+        Public Overrides Function GetErrorDalton() As Double
+            Return DeltaTolerance
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

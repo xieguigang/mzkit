@@ -129,6 +129,13 @@ Namespace Ms1
         ''' <returns></returns>
         Public MustOverride Overrides Function Equals(mz1 As Double, mz2 As Double) As Boolean
 
+        Protected Shared ReadOnly sample_mz As Double() = New Double() {
+            50, 100, 200, 300,
+            400, 500, 600, 700, 800, 900,
+            1000,
+            2000
+        }
+
         ''' <summary>
         ''' try to convert the mass dalton error as ppm error for 
         ''' compares the da tolerance with the ppm tolerance in 
@@ -136,6 +143,7 @@ Namespace Ms1
         ''' </summary>
         ''' <returns></returns>
         Public MustOverride Function GetErrorPPM() As Double
+        Public MustOverride Function GetErrorDalton() As Double
 
         ''' <summary>
         ''' 将分子质量误差值转换为百分比得分

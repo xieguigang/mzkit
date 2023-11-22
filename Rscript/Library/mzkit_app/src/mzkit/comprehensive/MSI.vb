@@ -72,6 +72,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.TissueMorphology
+Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells
 Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection
@@ -860,11 +861,13 @@ Module MSI
     ''' MSI::peakMatrix(raw, ionSet = ionsSet, mzError = "da:0.05");
     ''' </example>
     <ExportAPI("peakMatrix")>
+    <RApiReturn(GetType(MzMatrix), GetType(DataSet))>
     Public Function PeakMatrix(raw As mzPack,
                                Optional topN As Integer = 3,
                                Optional mzError As Object = "da:0.05",
                                <RRawVectorArgument>
                                Optional ionSet As Object = Nothing,
+                               Optional raw_matrix As Boolean = False,
                                Optional env As Environment = Nothing) As Object
 
         Dim err = Math.getTolerance(mzError, env)
@@ -873,8 +876,14 @@ Module MSI
             Return err.TryCast(Of Message)
         End If
 
+        Call base.print($"extract ion feature data with mass tolerance: {err.TryCast(Of Tolerance).ToString}",, env)
+
         If Not ionSet Is Nothing Then
-            Return raw.GetPeakMatrix(ionSet, err.TryCast(Of Tolerance), env)
+            Return raw.GetPeakMatrix(ionSet, err.TryCast(Of Tolerance), raw_matrix, env)
+        ElseIf raw_matrix Then
+            Dim topIons As Double() = raw.GetMzIndex(mzdiff:=err.TryCast(Of Tolerance).GetErrorDalton, topN:=topN)
+            Dim m = Deconvolute.PeakMatrix.CreateMatrix(raw, err.TryCast(Of Tolerance).GetErrorDalton, 0, mzSet:=topIons)
+            Return m
         Else
             Return raw _
                 .TopIonsPeakMatrix(topN, err.TryCast(Of Tolerance)) _
@@ -883,7 +892,10 @@ Module MSI
     End Function
 
     <Extension>
-    Private Function GetPeakMatrix(raw As mzPack, ionSet As Object, err As Tolerance, env As Environment) As DataSet()
+    Private Function GetPeakMatrix(raw As mzPack, ionSet As Object, err As Tolerance,
+                                   rawMatrix As Boolean,
+                                   env As Environment) As Object
+
         Dim ions As Dictionary(Of String, Double)
 
         If TypeOf ionSet Is list Then
@@ -903,9 +915,13 @@ Module MSI
                               End Function)
         End If
 
-        Return raw _
-            .SelectivePeakMatrix(ions, err) _
-            .ToArray
+        If rawMatrix Then
+            Return Deconvolute.PeakMatrix.CreateMatrix(raw, err.GetErrorDalton, 0, mzSet:=ions.Values.ToArray)
+        Else
+            Return raw _
+                .SelectivePeakMatrix(ions, err) _
+                .ToArray
+        End If
     End Function
 
     ''' <summary>

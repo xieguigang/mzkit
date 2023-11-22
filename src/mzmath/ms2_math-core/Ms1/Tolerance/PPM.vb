@@ -102,6 +102,12 @@ Namespace Ms1
             Return ppmd
         End Function
 
+        Public Overrides Function GetErrorDalton() As Double
+            Return sample_mz _
+                .Select(Function(mzi) ConvertPpmToMassAccuracy(mzi, DeltaTolerance)) _
+                .Average
+        End Function
+
         Public Shared Function ConvertPpmToMassAccuracy(exactMass As Double, ppm As Double) As Double
             Return ppm * exactMass / 1000000.0
         End Function
