@@ -135,6 +135,37 @@ Module SingleCells
         Return df
     End Function
 
+    ''' <summary>
+    ''' Cast the ion feature matrix as the GCModeller expression matrix object
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <returns></returns>
+    <ExportAPI("as.expression")>
+    Public Function asHTSExpression(x As MzMatrix, Optional single_cell As Boolean = False) As Object
+        Return New HTSMatrix With {
+            .sampleID = x.mz _
+                .Select(Function(mzi) mzi.ToString("F4")) _
+                .ToArray,
+            .tag = "ions_with_mzdiff:" & x.tolerance,
+            .expression = x.matrix _
+                .Select(Function(si)
+                            Dim label As String
+
+                            If single_cell Then
+                                label = si.label
+                            Else
+                                label = $"{si.X},{si.Y}"
+                            End If
+
+                            Return New DataFrameRow With {
+                                .geneID = label,
+                                .experiments = si.intensity
+                            }
+                        End Function) _
+                .ToArray
+        }
+    End Function
+
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Private Function getCellLabels(x As MzMatrix) As String()
