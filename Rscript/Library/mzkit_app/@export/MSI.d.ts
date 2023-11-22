@@ -202,11 +202,13 @@ declare namespace MSI {
      *  be a numeric vector of the target m/z feature values
      * 
      * + default value Is ``null``.
+     * @param raw_matrix 
+     * + default value Is ``false``.
      * @param env -
      * 
      * + default value Is ``null``.
    */
-   function peakMatrix(raw: object, topN?: object, mzError?: any, ionSet?: any, env?: object): any;
+   function peakMatrix(raw: object, topN?: object, mzError?: any, ionSet?: any, raw_matrix?: boolean, env?: object): object|object;
    /**
     * split the raw MSI 2D data into multiple parts with given resolution parts
     * 

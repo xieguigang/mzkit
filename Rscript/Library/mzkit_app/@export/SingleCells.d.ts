@@ -9,6 +9,17 @@
  * 
 */
 declare namespace SingleCells {
+   module as {
+      /**
+       * Cast the ion feature matrix as the GCModeller expression matrix object
+       * 
+       * 
+        * @param x -
+        * @param single_cell 
+        * + default value Is ``false``.
+      */
+      function expression(x: object, single_cell?: boolean): any;
+   }
    /**
     * export single cell expression matrix from the raw data scans
     * 
