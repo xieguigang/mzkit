@@ -716,7 +716,7 @@ Module MSI
         ElseIf TypeOf raw Is MzMatrix Then
             Return IonStat _
                 .DoStat(DirectCast(raw, MzMatrix), grid_size, parallel) _
-                .OrderBy(Function(s) s.pvalue) -
+                .OrderBy(Function(s) s.pvalue) _
                 .ToArray
         Else
             Dim layers = pipeline.TryCreatePipeline(Of SingleIonLayer)(raw, env)
