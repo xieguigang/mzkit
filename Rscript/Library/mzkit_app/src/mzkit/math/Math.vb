@@ -106,6 +106,8 @@ Module MzMath
         Call REnv.Internal.Object.Converts.addHandler(GetType(PrecursorInfo()), AddressOf getPrecursorTable)
 
         Call REnv.Internal.add("as.list", GetType(Tolerance), AddressOf summaryTolerance)
+        Call REnv.Internal.add("as.list", GetType(PPMmethod), AddressOf summaryTolerance)
+        Call REnv.Internal.add("as.list", GetType(DAmethod), AddressOf summaryTolerance)
 
         Call ExactMass.SetExactMassParser(Function(f) FormulaScanner.EvaluateExactMass(f))
     End Sub
