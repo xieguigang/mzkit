@@ -66,6 +66,7 @@ Imports System.Security.Cryptography
 Imports System.Text
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.SecurityString
@@ -111,8 +112,8 @@ Namespace MarkupData.imzML
             Return Me
         End Function
 
-        Public Function SetSpectrumParameters(ionMode As Integer) As mzPackWriter
-            scan_type = ionMode
+        Public Function SetSpectrumParameters(ionMode As IonModes) As mzPackWriter
+            scan_type = CInt(ionMode)
             Return Me
         End Function
 

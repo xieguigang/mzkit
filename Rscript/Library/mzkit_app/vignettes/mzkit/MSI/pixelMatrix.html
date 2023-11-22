@@ -162,9 +162,11 @@
         <h3>Usage</h3>
 
         <div style="width: 100%; padding-left: 3%; color: black;">
-            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>pixelMatrix</strong>(<i>raw</i>, <i>file</i>,
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>pixelMatrix</strong>(<i>raw</i>,
+    <i>file</i> = <span style='color: blue !important;'>NULL</span>,
     <i>mzdiff</i> = <span style='color: green;'>0.001</span>,
-    <i>q</i> = <span style='color: green;'>0.01</span>);</code></pre>
+    <i>q</i> = <span style='color: green;'>0.01</span>,
+    <i>fast.bin</i> = <span style='color: blue !important;'>TRUE</span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
@@ -202,7 +204,10 @@
 
         <h3>Value</h3>
 
-        <p>This function has no value returns</p>
+        <p>This function returns a logical value TRUE if the <br />
+ given <strong><code>file</code></strong> stream buffer is not missing,<br />
+ otherwise the matrix object itself will be returns from <br />
+ the function.</p>
 
         <h3 style="display: none;">Examples</h3>
 

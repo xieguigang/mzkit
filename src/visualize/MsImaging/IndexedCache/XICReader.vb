@@ -81,7 +81,7 @@ Imports Microsoft.VisualBasic.Data.GraphTheory.GridGraph
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.DataStorage.HDSPack
 Imports Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace IndexedCache
 
@@ -233,7 +233,7 @@ Namespace IndexedCache
             End If
 
             Dim ion As IonIndex = index _
-                .OrderBy(Function(i) stdNum.Abs(i.mz - mz)) _
+                .OrderBy(Function(i) std.Abs(i.mz - mz)) _
                 .First
 
             If Not mzdiff Is Nothing Then

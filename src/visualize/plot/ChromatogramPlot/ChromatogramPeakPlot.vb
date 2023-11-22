@@ -220,11 +220,8 @@ Public Class ChromatogramPeakPlot : Inherits Plot
     ''' 通过竖线将对应的峰积分区间给标注出来
     ''' </summary>
     ''' <param name="g"></param>
-    ''' <param name="timeTicks#"></param>
-    ''' <param name="intoTicks#"></param>
     ''' <param name="scaler"></param>
     ''' <param name="ROIpen"></param>
-    ''' <param name="baselinePen"></param>
     Private Sub showMRMRegion(g As IGraphics, scaler As DataScaler, ROIpen As Pen)
         Dim colors As Color() = Designer.GetColors("paper", MRM_ROIs.Length)
         Dim curvePen As Pen

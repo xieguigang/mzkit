@@ -3,8 +3,8 @@
 .SH NAME
 as.layer \- cast the pixel collection to a ion imaging layer data
 .SH SYNOPSIS
-\fIas.layer(\fBpixels\fR as <generic> PixelData[], 
-\fBcontext\fR as string = "MSIlayer", 
+\fIas.layer(\fBx\fR as any, 
+\fBcontext\fR as any = "MSIlayer", 
 \fBdims\fR as any = \fB<NULL>\fR, 
 \fBstrict\fR as boolean = TRUE, 
 [\fB<Environment>\fR]);\fR
@@ -14,13 +14,19 @@ cast the pixel collection to a ion imaging layer data
 .PP
 .SH OPTIONS
 .PP
-\fBpixels\fB \fR\- -. 
+\fBx\fB \fR\- Should be a collection of the ms-imaging pixel data 
+ object, or a mz matrix object. 
 .PP
 .PP
-\fBcontext\fB \fR\- -. 
+\fBcontext\fB \fR\- 
+ the ms-imaging layer title, must be a valid mz numeric value if the input x 
+ is a mz matrix object
+. 
 .PP
 .PP
-\fBdims\fB \fR\- -. 
+\fBdims\fB \fR\- the dimension size of the ms-imaging layer data,
+ this dimension size will be evaluated based on the input pixel collection
+ data if this parameter leaves blank(or NULL) by default.. 
 .PP
 .PP
 \fBstrict\fB \fR\- -. 

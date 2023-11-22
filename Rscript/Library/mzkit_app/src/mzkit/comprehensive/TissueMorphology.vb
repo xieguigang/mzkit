@@ -81,7 +81,7 @@ Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports RgraphicsDev = SMRUCC.Rsharp.Runtime.Internal.Invokes.graphicsDevice
-Imports stdNum = System.Math
+Imports std = System.Math
 
 ''' <summary>
 ''' spatial tissue region handler
@@ -208,8 +208,8 @@ Module TissueMorphology
         Dim rect = canvas.PlotRegion
         Dim lx = d3js.scale.linear.domain(range:=x).range(integers:={rect.Left, rect.Right})
         Dim ly = d3js.scale.linear.domain(range:=y).range(integers:={rect.Top, rect.Height})
-        Dim scale_x As Double = stdNum.Abs(lx(2) - lx(1))
-        Dim scale_y As Double = stdNum.Abs(ly(2) - ly(1))
+        Dim scale_x As Double = std.Abs(lx(2) - lx(1))
+        Dim scale_y As Double = std.Abs(ly(2) - ly(1))
         Dim dotSize As New SizeF(scale_x, scale_y)
         Dim dot As RectangleF
         Dim scaler As New DataScaler() With {.X = lx, .Y = ly, .region = rect}

@@ -59,9 +59,11 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
-Imports stdNum = System.Math
+Imports Microsoft.VisualBasic.Parallel
+Imports std = System.Math
 
 Namespace Deconvolute
 
@@ -75,7 +77,7 @@ Namespace Deconvolute
         ''' <returns></returns>
         ''' 
         <Extension>
-        Public Function GetMzIndex(raw As mzPack, mzdiff As Double, topN As Integer) As Double()
+        Public Function GetMzIndex(raw As IMZPack, mzdiff As Double, topN As Integer) As Double()
             Dim scanMz As New List(Of Double)
             Dim top As IEnumerable(Of ms2)
 
@@ -100,19 +102,97 @@ Namespace Deconvolute
         ''' <returns>
         ''' m/z data vector has been re-order ascding
         ''' </returns>
-        Public Function GetMzIndex(raw As mzPack, mzdiff As Double, freq As Double) As Double()
-            Dim scanMz As New List(Of Double)
+        Public Function GetMzIndex(raw As IMZPack, mzdiff As Double, freq As Double, Optional fast As Boolean = True) As Double()
+            If fast Then
+                Dim scanMz As New List(Of Double())
 
-            For Each x As Double() In raw.MS.Select(Function(ms) ms.mz)
-                Call scanMz.AddRange(x)
-            Next
+                For Each x As Double() In raw.MS.Select(Function(ms) ms.mz)
+                    Call scanMz.Add(x)
+                Next
 
-            Return GetMzIndex(scanMz, mzdiff, freq)
+                scanMz.Shuffle
+                VectorTask.n_threads = App.CPUCoreNumbers
+
+                Dim par As New IndexTask(scanMz, mzdiff)
+                Dim subgroups = DirectCast(par.Run(), IndexTask).groups
+                Dim merge = subgroups.IteratesALL _
+                    .Where(Function(n) n.Length > 0) _
+                    .GroupBy(Function(a) a.Average, offsets:=mzdiff) _
+                    .ToArray
+                Dim bins = merge _
+                    .Select(Function(g)
+                                Dim bin As Double() = g _
+                                    .Select(Function(i) i.value) _
+                                    .IteratesALL _
+                                    .ToArray
+
+                                Return New NamedCollection(Of Double)(bin.Average.ToString, bin)
+                            End Function) _
+                    .OrderByDescending(Function(g) g.Length) _
+                    .ToArray
+
+                Return GetMzIndex(bins, freq)
+            Else
+                Dim scanMz As New List(Of Double)
+
+                For Each x As Double() In raw.MS.Select(Function(ms) ms.mz)
+                    Call scanMz.AddRange(x)
+                Next
+
+                Return GetMzIndex(scanMz, mzdiff, freq)
+            End If
         End Function
+
+        Private Class IndexTask : Inherits VectorTask
+
+            Friend ReadOnly blocks As List(Of Double())
+            Friend ReadOnly groups As NamedCollection(Of Double)()()
+            Friend ReadOnly mzdiff As Double
+
+            Sub New(blocks As List(Of Double()), mzdiff As Double)
+                Call MyBase.New(blocks.Count)
+
+                Me.blocks = blocks
+                Me.mzdiff = mzdiff
+                Me.groups = Me.Allocate(Of NamedCollection(Of Double)())()
+            End Sub
+
+            Protected Overrides Sub Solve(start As Integer, ends As Integer, thread_id As Integer)
+                Dim subblocks As New List(Of Double())
+
+                For i As Integer = start To ends
+                    Call subblocks.Add(blocks(i))
+                Next
+
+                groups(thread_id) = NumberGroups.GroupByTree(subblocks, offset:=mzdiff).ToArray
+            End Sub
+        End Class
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetMzIndex(raw As IEnumerable(Of ms2), mzdiff As Double, freq As Double) As Double()
             Return GetMzIndex(raw.Select(Function(r) r.mz), mzdiff, freq)
+        End Function
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="mzBins">
+        ''' the bin data should be sorted via the bin size desc!
+        ''' </param>
+        ''' <param name="freq"></param>
+        ''' <returns></returns>
+        Private Function GetMzIndex(mzBins As NamedCollection(Of Double)(), freq As Double) As Double()
+            Dim counts As Vector = mzBins.Select(Function(a) a.Length).AsVector
+            ' normalize to [0,1]
+            Dim norm As Vector = counts / counts.Max
+            Dim n As Integer = (norm > freq).Sum
+            Dim mzUnique As Double() = mzBins _
+                .Take(n) _
+                .Select(Function(v) v.Average) _
+                .OrderBy(Function(mzi) mzi) _
+                .ToArray
+
+            Return mzUnique
         End Function
 
         ''' <summary>
@@ -128,17 +208,8 @@ Namespace Deconvolute
                 .Where(Function(v) v.Length > 0) _
                 .OrderByDescending(Function(a) a.Length) _
                 .ToArray
-            Dim counts As Vector = mzBins.Select(Function(a) a.Length).AsVector
-            ' normalize to [0,1]
-            Dim norm As Vector = counts / counts.Max
-            Dim n As Integer = (norm > freq).Sum
-            Dim mzUnique As Double() = mzBins _
-                .Take(n) _
-                .Select(Function(v) v.Average) _
-                .OrderBy(Function(mzi) mzi) _
-                .ToArray
 
-            Return mzUnique
+            Return GetMzIndex(mzBins, freq)
         End Function
 
         <Extension>
@@ -170,7 +241,7 @@ Namespace Deconvolute
                 mzi = mz(i)
                 hit = mzIndex _
                     .Search((mzi, -1)) _
-                    .OrderBy(Function(a) stdNum.Abs(a.mz - mzi)) _
+                    .OrderBy(Function(a) std.Abs(a.mz - mzi)) _
                     .FirstOrDefault
 
                 If hit.mz < 1 AndAlso hit.idx = 0 Then

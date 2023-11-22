@@ -74,15 +74,15 @@ Imports Microsoft.VisualBasic.Math
 ''' the unify in-memory data model of the mzkit MS data model.
 ''' (mzPack文件格式模型)
 ''' </summary>
-Public Class mzPack
+Public Class mzPack : Implements IMZPack
 
     ''' <summary>
     ''' 一般为二维散点图
     ''' </summary>
     ''' <returns></returns>
     Public Property Thumbnail As Image
-    Public Property MS As ScanMS1()
-    Public Property Application As FileApplicationClass
+    Public Property MS As ScanMS1() Implements IMZPack.MS
+    Public Property Application As FileApplicationClass Implements IMZPack.Application
 
     ''' <summary>
     ''' TIC/BPC
@@ -93,8 +93,8 @@ Public Class mzPack
     ''' the file name of the raw data source file
     ''' </summary>
     ''' <returns></returns>
-    Public Property source As String
-    Public Property metadata As New Dictionary(Of String, String)
+    Public Property source As String Implements IMZPack.source
+    Public Property metadata As New Dictionary(Of String, String) Implements IMZPack.metadata
 
     ''' <summary>
     ''' 其他的扫描器数据，例如紫外扫描

@@ -82,7 +82,7 @@ Public Module Annotation
             result = New ActivityEnrichment(background.Length - 1) {}
         End Sub
 
-        Protected Overrides Sub Solve(start As Integer, ends As Integer)
+        Protected Overrides Sub Solve(start As Integer, ends As Integer, cpu_id As Integer)
             For i As Integer = start To ends
                 result(i) = ActivityEnrichment.Evaluate(
                     input:=input,

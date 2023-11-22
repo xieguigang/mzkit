@@ -108,6 +108,12 @@ Module MzMath
         Call ExactMass.SetExactMassParser(Function(f) FormulaScanner.EvaluateExactMass(f))
     End Sub
 
+    ''' <summary>
+    ''' union of two mass spectrum matrix
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <param name="y"></param>
+    ''' <returns></returns>
     <ROperator("+")>
     Public Function union(x As LibraryMatrix, y As LibraryMatrix) As LibraryMatrix
         If x Is Nothing AndAlso y Is Nothing Then
@@ -215,6 +221,7 @@ Module MzMath
     <ExportAPI("mz")>
     <RApiReturn(GetType(PrecursorInfo), GetType(Double))>
     Public Function mz(mass As Double,
+                       <RRawVectorArgument>
                        Optional mode As Object = "+",
                        Optional env As Environment = Nothing) As Object
 
@@ -236,20 +243,24 @@ Module MzMath
                 }
             End If
         Else
-            Dim strVal As String = any.ToString(mode, "+")
+            Dim str As String() = CLRVector.asCharacter(mode)
 
             Static supportedModes As Index(Of String) = {"+", "-", "1", "-1"}
 
-            If strVal Like supportedModes Then
+            If str.Length = 1 AndAlso str.First Like supportedModes Then
                 Return MzCalculator _
-                    .EvaluateAll(mass, strVal) _
+                    .EvaluateAll(mass, str.First) _
                     .ToArray
             Else
                 ' the given string is a string value in precursor_type
                 ' format
-                Return Ms1.PrecursorType _
-                    .ParseMzCalculator(strVal, strVal.Last) _
-                    .CalcMZ(mass)
+                Return str _
+                    .Select(Function(strVal)
+                                Return Ms1.PrecursorType _
+                                    .ParseMzCalculator(strVal, strVal.Last) _
+                                    .CalcMZ(mass)
+                            End Function) _
+                    .ToArray
             End If
         End If
     End Function

@@ -4,9 +4,10 @@
 pixelMatrix \- dumping raw data matrix as text table file.
 .SH SYNOPSIS
 \fIpixelMatrix(\fBraw\fR as <generic> mzPack, 
-\fBfile\fR as <generic> Stream, 
+\fBfile\fR as any = \fB<NULL>\fR, 
 \fBmzdiff\fR as double = 0.001, 
 \fBq\fR as double = 0.01, 
+\fBfast_bin\fR as boolean = TRUE, 
 [\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
@@ -36,7 +37,10 @@ dumping raw data matrix as text table file.
 .PP
 .SH VALUE
 .PP
-This function has no value returns
+This function returns a logical value TRUE if the 
+ given **`file`** stream buffer is not missing,
+ otherwise the matrix object itself will be returns from 
+ the function.
 .PP
 .SH SEE ALSO
 MSI

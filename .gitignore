@@ -283,3 +283,4 @@ dist/workbench/ms_imaging/HR2MSI_mouse_urinary_bladder-S096.mzImage
 Rscript/Library/mzkit_app/test/peakdata.csv
 Rscript/Library/mzkit_app/test/cluster_1/cluster.pack
 Rscript/Library/mzkit_app/test/cluster_1/spectrum.dat
+dist/Rscript/single_cells/brain1.dat

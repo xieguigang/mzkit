@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>open.imzML</title>
+    <title>open the reader for the imzML ms-imaging file</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <style rel="stylesheet" type="text/css">
@@ -153,11 +153,11 @@
             </tr>
         </table>
 
-        <h2>open.imzML</h2>
+        <h2>open the reader for the imzML ms-imaging file</h2>
 
         <h3>Description</h3>
 
-        open.imzML
+        
 
         <h3>Usage</h3>
 
@@ -169,6 +169,13 @@
 
         <table>
             
+<dt>file</dt>
+<dd><p><p>the file path to the specific imzML metadata file for load for run ms-imaging analysis.</p></p></dd>
+
+
+<dt>env</dt>
+<dd><p><p>-</p></p></dd>
+
         </table>
 
 
@@ -179,7 +186,13 @@
 
         <h3>Value</h3>
 
-        this function returns data object of type <i>any</i> kind.
+        <p>this function returns a tuple list object that contains 2 slot elements inside:</p>
+
+<ol>
+<li>scans: is the [x,y] spatial scans data</li>
+<li>ibd: is the binary data reader wrapper object for the corresponding <br />
+   <code>ibd</code> file of the given input imzML file.</li>
+</ol> the list data also has some specificied data fields: <code>list(scans, ibd)</code>.
 
         <h3 style="display: none;">Examples</h3>
 

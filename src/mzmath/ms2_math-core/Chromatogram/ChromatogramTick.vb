@@ -110,35 +110,12 @@ Namespace Chromatogram
         Public Shared Narrowing Operator CType(tick As ChromatogramTick) As PointF
             Return New PointF(tick.Time, tick.Intensity)
         End Operator
-    End Class
 
-    Public Class ChromatogramSerial
-
-        Public Property Name As String
-        Public Property Chromatogram As ChromatogramTick()
-
-        Public ReadOnly Property rtmin As Double
-            Get
-                Return Chromatogram.Select(Function(t) t.Time).Min
-            End Get
-        End Property
-
-        Public ReadOnly Property rtmax As Double
-            Get
-                Return Chromatogram.Select(Function(t) t.Time).Max
-            End Get
-        End Property
-
-        Sub New()
-        End Sub
-
-        Sub New(name As String)
-            Me.Name = name
-        End Sub
-
-        Public Overrides Function ToString() As String
-            Return Name & $" [{rtmin.ToString("F4")} ~ {rtmax.ToString("F4")} sec]"
+        Public Shared Iterator Function Zip(rt As Double(), intensity As Double()) As IEnumerable(Of ChromatogramTick)
+            For i As Integer = 0 To rt.Length - 1
+                Yield New ChromatogramTick(rt(i), intensity(i))
+            Next
         End Function
-
     End Class
+
 End Namespace

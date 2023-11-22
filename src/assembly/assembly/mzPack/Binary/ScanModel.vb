@@ -55,15 +55,25 @@
 
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 
 Namespace mzData.mzWebCache
 
+    ''' <summary>
+    ''' Helper module for cast the clr object model
+    ''' </summary>
     Public Module ScanModel
 
         <Extension>
         Public Function Scan2(i As PeakMs2) As ScanMS2
+            Dim ionMode As Integer = 1
+
+            If Not i.precursor_type.StringEmpty Then
+                ionMode = Provider.ParseIonMode(i.precursor_type.Last)
+            End If
+
             Return New ScanMS2 With {
                 .centroided = True,
                 .mz = i.mzInto.Select(Function(mzi) mzi.mz).ToArray,
@@ -72,7 +82,8 @@ Namespace mzData.mzWebCache
                 .intensity = i.intensity,
                 .rt = i.rt,
                 .scan_id = $"{i.file}#{i.lib_guid}",
-                .collisionEnergy = i.collisionEnergy
+                .collisionEnergy = i.collisionEnergy,
+                .polarity = ionMode
             }
         End Function
 

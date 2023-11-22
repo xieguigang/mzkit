@@ -92,6 +92,9 @@ Public Class IonStat
     <Category("MSdata")> <DisplayName("max.into")>
     <TypeConverter(GetType(FormattedDoubleConverter)), FormattedDoubleFormatString("G5")>
     Public Property maxIntensity As Double
+    <Category("MSdata")> <DisplayName("mean.into")>
+    <TypeConverter(GetType(FormattedDoubleConverter)), FormattedDoubleFormatString("G5")>
+    Public Property averageIntensity As Double
 
     <DisplayName("basepeak.x")>
     <Category("Spatial")> Public Property basePixelX As Integer
@@ -166,6 +169,7 @@ Public Class IonStat
                                   Optional da As Double = 0.05,
                                   Optional parallel As Boolean = False) As IEnumerable(Of IonStat)
         Return raw.MS _
+            .AsParallel _
             .Select(Iterator Function(scan) As IEnumerable(Of PixelData)
                         Dim xy As Point = scan.GetMSIPixel
 
@@ -248,11 +252,21 @@ Public Class IonStat
             Call counts.Add(density)
         Next
 
+        Dim mzwidth_desc As String
+        Dim mzmin As Double = mzlist.Min
+        Dim mzmax As Double = mzlist.Max
+
+        If PPMmethod.PPM(mzmin, mzmax) > 30 Then
+            mzwidth_desc = $"da:{ (mzmax - mzmin).ToString("F3")}"
+        Else
+            mzwidth_desc = $"ppm:{PPMmethod.PPM(mzmin, mzmax).ToString("F1")}"
+        End If
+
         Return New IonStat With {
             .mz = Val(ion.name),
             .basePixelX = basePixel.x,
             .basePixelY = basePixel.y,
-            .maxIntensity = intensity.Average,
+            .maxIntensity = intensity.Max,
             .pixels = pixels.size,
             .Q1Intensity = Q.Q1,
             .Q2Intensity = Q.Q2,
@@ -260,9 +274,10 @@ Public Class IonStat
             .density = counts.Average,
             .moran = If(ion.Length <= 3, -1, moran.Observed),
             .pvalue = If(ion.Length <= 3, 1, moran.pvalue),
-            .mzmin = mzlist.Min,
-            .mzmax = mzlist.Max,
-            .mzwidth = If(PPMmethod.PPM(.mzmin, .mzmax) > 30, $"da:{ (.mzmax - .mzmin).ToString("F3")}", $"ppm:{PPMmethod.PPM(.mzmin, .mzmax).ToString("F1")}")
+            .mzmin = mzmin,
+            .mzmax = mzmax,
+            .mzwidth = mzwidth_desc,
+            .averageIntensity = intensity.Average
         }
     End Function
 
@@ -277,7 +292,7 @@ Public Class IonStat
             .ToArray _
             .GroupBy(Function(d) d.mz, Tolerance.DeltaMass(da)) _
             .ToArray
-        Dim par As New StatTask(ions, nsize)
+        Dim par As New IonFeatureTask(ions, nsize)
 
         If parallel Then
             Call par.Run()
@@ -288,7 +303,7 @@ Public Class IonStat
         Return par.result
     End Function
 
-    Private Class StatTask : Inherits VectorTask
+    Private Class IonFeatureTask : Inherits VectorTask
 
         Public result As IonStat()
 
@@ -303,7 +318,7 @@ Public Class IonStat
             Me.nsize = nsize
         End Sub
 
-        Protected Overrides Sub Solve(start As Integer, ends As Integer)
+        Protected Overrides Sub Solve(start As Integer, ends As Integer, cpu_id As Integer)
             For i As Integer = start To ends
                 ' moran parallel if in sequenceMode
                 ' moran sequence if not in sequenceMode
