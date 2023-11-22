@@ -43,10 +43,10 @@ declare namespace MSI {
    function basePeakMz(summary: object): object;
    module cast {
       /**
-       * cast the rawdata matrix as the
+       * cast the rawdata matrix as the ms-imaging ion layer
        * 
        * 
-        * @param x -
+        * @param x the matrix object
         * @param mzdiff -
         * 
         * + default value Is ``0.01``.

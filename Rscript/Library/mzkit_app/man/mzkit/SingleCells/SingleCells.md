@@ -8,3 +8,4 @@ Single cells metabolomics data processor
 + [write.matrix](SingleCells/write.matrix.1) write the single cell ion feature data matrix
 + [open.matrix](SingleCells/open.matrix.1) open a single cell data matrix reader
 + [read.mz_matrix](SingleCells/read.mz_matrix.1) load the data matrix into memory at once
++ [df.mz_matrix](SingleCells/df.mz_matrix.1) cast matrix object to the R liked dataframe object

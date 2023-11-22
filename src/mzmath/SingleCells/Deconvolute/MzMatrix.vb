@@ -71,10 +71,23 @@ Namespace Deconvolute
     ''' column is mz intensity value across different 
     ''' pixels
     ''' </summary>
+    ''' <remarks>
+    ''' this matrix object is difference to the GCModeller HTS expression matrix object: 
+    ''' 
+    ''' 1. the column in the HTS expression matrix object is the sample observation, 
+    '''    and this matrix object is a kind of matrix transpose result of the GCModeller 
+    '''    HTS expression matrix object.
+    ''' 2. the molecule feature inside this matrix object, is a kind of numeric tag, could 
+    '''    be resolve the tag equalant with a given number tolerance, the molecule feature 
+    '''    inside the GCModeller HTS expression matrix is a character tag, just use the 
+    '''    string equals to resolve the equalant. 
+    ''' </remarks>
     Public Class MzMatrix
 
         ''' <summary>
-        ''' m/z vector in numeric format of round to digit 4 
+        ''' m/z vector in numeric format of round to digit 4, this ion m/z 
+        ''' feature list is generated under the current mass 
+        ''' <see cref="tolerance"/>.
         ''' </summary>
         ''' <returns></returns>
         Public Property mz As Double()
@@ -92,6 +105,10 @@ Namespace Deconvolute
         ''' <returns></returns>
         Public Property matrix As PixelData()
 
+        ''' <summary>
+        ''' get count of the ion feature size under current mass <see cref="tolerance"/>
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property featureSize As Integer
             Get
                 Return mz.TryCount
@@ -99,7 +116,7 @@ Namespace Deconvolute
         End Property
 
         ''' <summary>
-        ''' 
+        ''' Get ion layer data via a given mass value and mass error.
         ''' </summary>
         ''' <typeparam name="Pixel"></typeparam>
         ''' <param name="mz"></param>
@@ -108,10 +125,12 @@ Namespace Deconvolute
         ''' </param>
         ''' <param name="mzindex">search index is build based on the feature vector <see cref="MzMatrix.mz"/></param>
         ''' <returns></returns>
-        Public Shared Iterator Function GetLayer(Of Pixel As {New, Class, HeatMapPixel})(m As MzMatrix,
-                                                                                         mz As Double,
-                                                                                         mzdiff As Tolerance,
-                                                                                         mzindex As BlockSearchFunction(Of (mz As Double, Integer))) As IEnumerable(Of Pixel)
+        Public Shared Iterator Function GetLayer(Of
+                                                    Pixel As {New, Class, HeatMapPixel})(
+                                                    m As MzMatrix,
+                                                    mz As Double,
+                                                    mzdiff As Tolerance,
+                                                    mzindex As BlockSearchFunction(Of (mz As Double, Integer))) As IEnumerable(Of Pixel)
 
             Dim hits = mzindex.Search((mz, 0)).Where(Function(mzi) mzdiff(mzi.mz, mz)).ToArray
             Dim conv As Double

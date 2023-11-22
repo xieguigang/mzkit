@@ -24,6 +24,15 @@ declare namespace SingleCells {
      * + default value Is ``null``.
    */
    function cell_matrix(raw: object, mzdiff?: number, freq?: number, env?: object): any;
+   module df {
+      /**
+       * cast matrix object to the R liked dataframe object
+       * 
+       * 
+        * @param x -
+      */
+      function mz_matrix(x: object): any;
+   }
    /**
     * cast the matrix object as the dataframe
     * 

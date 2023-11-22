@@ -162,7 +162,7 @@
         <h3>Usage</h3>
 
         <div style="width: 100%; padding-left: 3%; color: black;">
-            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>as.layer</strong>(<i>pixels</i>,
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>as.layer</strong>(<i>x</i>,
     <i>context</i> = <span style='color: brown;'><strong>"MSIlayer"</strong></span>,
     <i>dims</i> = <span style='color: blue !important;'>NULL</span>,
     <i>strict</i> = <span style='color: blue !important;'>TRUE</span>);</code></pre>
@@ -172,16 +172,20 @@
 
         <table>
             
-<dt>pixels</dt>
-<dd><p><p>-</p></p></dd>
+<dt>x</dt>
+<dd><p><p>Should be a collection of the ms-imaging pixel data <br />
+ object, or a mz matrix object</p></p></dd>
 
 
 <dt>context</dt>
-<dd><p><p>-</p></p></dd>
+<dd><p><p>the ms-imaging layer title, must be a valid mz numeric value if the input x <br />
+ is a mz matrix object</p></p></dd>
 
 
 <dt>dims</dt>
-<dd><p><p>-</p></p></dd>
+<dd><p><p>the dimension size of the ms-imaging layer data,<br />
+ this dimension size will be evaluated based on the input pixel collection<br />
+ data if this parameter leaves blank(or NULL) by default.</p></p></dd>
 
 
 <dt>strict</dt>
