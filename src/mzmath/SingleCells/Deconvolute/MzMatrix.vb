@@ -156,7 +156,9 @@ Namespace Deconvolute
         ''' Create a dataset matrix of spatial spot id or single cell id in rows and ions mz features in columns. 
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' the column features is the ion feature set and the object id is the spatial spot id
+        ''' </returns>
         Public Iterator Function ExportSpatial(Of T As {New, INamedValue, DynamicPropertyBase(Of Double)})() As IEnumerable(Of T)
             Dim mzId As String() = mz _
                 .Select(Function(mzi) mzi.ToString("F4")) _

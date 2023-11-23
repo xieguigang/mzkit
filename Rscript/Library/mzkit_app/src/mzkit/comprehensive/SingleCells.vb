@@ -126,10 +126,16 @@ Module SingleCells
         }
         Dim mz As Double() = x.mz
         Dim offset As Integer
+        Dim ionFeatureKey As String
 
+        ' loop each ion mz feature
         For i As Integer = 0 To mz.Length - 1
             offset = i
-            df.add(mz(i).ToString, x.matrix.Select(Function(r) r.intensity(offset)))
+            ionFeatureKey = mz(i).ToString
+            df.add(
+                key:=ionFeatureKey,
+                value:=x.matrix.Select(Function(r) r.intensity(offset))
+            )
         Next
 
         Return df

@@ -853,7 +853,13 @@ Module MSI
     ''' </param>
     ''' <param name="mzError">The mass tolerance of the ion m/z</param>
     ''' <param name="env"></param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' the data format of the two kind of the output data result is keeps the same:
+    ''' 
+    ''' + for a raw matrix object, the column is the ion features and the rows is the spatial spots.
+    ''' + for a dataset collection vector, the column is also the ion features and the 
+    '''   rows is the spatial spots.
+    ''' </returns>
     ''' <example>
     ''' let raw = open.mzpack("/path/to/rawdata.mzPack");
     ''' let ionsSet = list(ion1 = 100.0321, ion2 = 563.2254, ion3 = 336.9588);
@@ -877,6 +883,10 @@ Module MSI
         End If
 
         Call base.print($"extract ion feature data with mass tolerance: {err.TryCast(Of Tolerance).ToString}",, env)
+
+        If raw_matrix Then
+            Call base.print("the raw ions feature matrix object will be returned!",, env)
+        End If
 
         If Not ionSet Is Nothing Then
             Return raw.GetPeakMatrix(ionSet, err.TryCast(Of Tolerance), raw_matrix, env)
