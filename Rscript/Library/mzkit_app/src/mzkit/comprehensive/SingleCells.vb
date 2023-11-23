@@ -147,6 +147,7 @@ Module SingleCells
     ''' <param name="x"></param>
     ''' <returns></returns>
     <ExportAPI("as.expression")>
+    <RApiReturn(GetType(HTSMatrix))>
     Public Function asHTSExpression(x As MzMatrix, Optional single_cell As Boolean = False) As Object
         Return New HTSMatrix With {
             .sampleID = x.mz _
