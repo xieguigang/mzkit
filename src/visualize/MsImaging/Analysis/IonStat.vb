@@ -129,17 +129,20 @@ Public Class IonStat
             .Select(Function(i)
                         Dim pt As New Point(i.X, i.Y)
                         Dim ions = i.GetMsPipe.Select(Function(ms) New PixelData(pt, ms))
-                        Return ions
+                        Return ions.ToArray
                     End Function) _
-            .IteratesALL _
             .ToArray
 
         If Not mz.IsNullOrEmpty Then
             Dim allHits = ionList _
                 .AsParallel _
-                .Where(Function(i)
-                           Return mz.Any(Function(mzi) std.Abs(mzi - i.mz) <= da)
-                       End Function) _
+                .Select(Function(sp)
+                            Return sp _
+                                .Where(Function(i)
+                                           Return mz.Any(Function(mzi) std.Abs(mzi - i.mz) <= da)
+                                       End Function) _
+                                .ToArray
+                        End Function) _
                 .DoCall(Function(allIons) DoStatInternal(allIons, nsize, da, parallel)) _
                 .ToList
 
@@ -178,8 +181,9 @@ Public Class IonStat
                             Yield New PixelData(xy, ms1)
                         Next
                     End Function) _
-            .IteratesALL _
+            .Select(Function(p) p.ToArray) _
             .DoCall(Function(allIons)
+                        Call VBDebugger.EchoLine("start to pull all pixel data from the raw data pack...")
                         Return DoStatInternal(allIons, nsize, da, parallel)
                     End Function)
     End Function
@@ -282,7 +286,7 @@ Public Class IonStat
         }
     End Function
 
-    Private Shared Function DoStatInternal(allIons As IEnumerable(Of PixelData),
+    Private Shared Function DoStatInternal(allIons As IEnumerable(Of PixelData()),
                                            nsize As Integer,
                                            da As Double,
                                            parallel As Boolean) As IEnumerable(Of IonStat)
@@ -290,10 +294,11 @@ Public Class IonStat
         ' convert the spatial spot pack as multiple imaging layers
         ' based on the ion feature tag data
         Dim ions = allIons _
-            .ToArray _
-            .GroupBy(Function(d) d.mz, Tolerance.DeltaMass(da)) _
+            .GroupByTree(Function(d) d.mz, Tolerance.DeltaMass(da)) _
             .ToArray
         Dim par As New IonFeatureTask(ions, nsize)
+
+        Call VBDebugger.EchoLine($"get {ions.Length} ion features from the raw data pack!")
 
         If parallel Then
             Call par.Run()
