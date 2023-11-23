@@ -136,4 +136,8 @@ Public Class SpatialMatrixReader : Implements IdataframeReader, IReflector
     Public Function getRowNames() As String() Implements IdataframeReader.getRowNames
         Return spatialIndex.Keys.ToArray
     End Function
+
+    Public Function getMatrix() As MzMatrix
+        Return m
+    End Function
 End Class

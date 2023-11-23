@@ -81,6 +81,7 @@ Module SingleCells
     Sub New()
         Call Internal.Object.Converts.makeDataframe.addHandler(GetType(SingleCellIonStat()), AddressOf cellStatsTable)
         Call Internal.Object.Converts.makeDataframe.addHandler(GetType(MzMatrix), AddressOf mzMatrixDf)
+        Call Internal.Object.Converts.makeDataframe.addHandler(GetType(SpatialMatrixReader), AddressOf mzMatrixDf)
     End Sub
 
     Private Function cellStatsTable(ions As SingleCellIonStat(), args As list, env As Environment) As Rdataframe
@@ -114,17 +115,32 @@ Module SingleCells
     ''' implements the ``as.data.frame`` function
     ''' </remarks>
     <ExportAPI("mz_matrix")>
-    Public Function mzMatrixDf(x As MzMatrix,
+    <RApiReturn(GetType(Rdataframe))>
+    Public Function mzMatrixDf(x As Object,
                                <RListObjectArgument>
                                args As list,
-                               Optional env As Environment = Nothing) As Rdataframe
+                               Optional env As Environment = Nothing) As Object
+
+        Dim rawdata As MzMatrix
+
+        If x Is Nothing Then
+            Return Nothing
+        End If
+
+        If TypeOf x Is MzMatrix Then
+            rawdata = x
+        ElseIf TypeOf x Is SpatialMatrixReader Then
+            rawdata = DirectCast(x, SpatialMatrixReader).getMatrix
+        Else
+            Return Message.InCompatibleType(GetType(MzMatrix), x.GetType, env)
+        End If
 
         Dim singleCell As Boolean = args.getValue("singlecell", env, [default]:=False)
         Dim df As New Rdataframe With {
             .columns = New Dictionary(Of String, Array),
-            .rownames = If(singleCell, x.getCellLabels, x.getSpatialLabels)
+            .rownames = If(singleCell, rawdata.getCellLabels, rawdata.getSpatialLabels)
         }
-        Dim mz As Double() = x.mz
+        Dim mz As Double() = rawdata.mz
         Dim offset As Integer
         Dim ionFeatureKey As String
 
@@ -134,7 +150,7 @@ Module SingleCells
             ionFeatureKey = mz(i).ToString
             df.add(
                 key:=ionFeatureKey,
-                value:=x.matrix.Select(Function(r) r.intensity(offset))
+                value:=rawdata.matrix.Select(Function(r) r.intensity(offset))
             )
         Next
 
