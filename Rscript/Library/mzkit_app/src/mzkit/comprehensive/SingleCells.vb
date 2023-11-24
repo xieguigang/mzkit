@@ -61,6 +61,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells
 Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.MachineLearning.ComponentModel.Activations
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.genomics.Analysis.HTS.DataFrame
 Imports SMRUCC.Rsharp.Runtime
@@ -225,6 +226,7 @@ Module SingleCells
             End Function
         Dim scaled As New List(Of PixelData)
         Dim v As [Variant](Of Message, Double())
+        Dim into As Double()
         Dim m As MzMatrix
 
         If x Is Nothing Then
@@ -243,13 +245,16 @@ Module SingleCells
 
             If v Like GetType(Message) Then
                 Return v.TryCast(Of Message)
+            Else
+                into = v.TryCast(Of Double())
+                into = ReLU.ReLU(into)
             End If
 
             spot = New PixelData With {
                 .label = spot.label,
                 .X = spot.X,
                 .Y = spot.Y,
-                .intensity = v.TryCast(Of Double())
+                .intensity = into
             }
             scaled.Add(spot)
         Next
