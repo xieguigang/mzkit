@@ -105,8 +105,25 @@ Module MzMath
         Call REnv.Internal.Object.Converts.addHandler(GetType(AlignmentOutput), AddressOf getAlignmentTable)
         Call REnv.Internal.Object.Converts.addHandler(GetType(PrecursorInfo()), AddressOf getPrecursorTable)
 
+        Call REnv.Internal.add("as.list", GetType(Tolerance), AddressOf summaryTolerance)
+        Call REnv.Internal.add("as.list", GetType(PPMmethod), AddressOf summaryTolerance)
+        Call REnv.Internal.add("as.list", GetType(DAmethod), AddressOf summaryTolerance)
+
         Call ExactMass.SetExactMassParser(Function(f) FormulaScanner.EvaluateExactMass(f))
     End Sub
+
+    Private Function summaryTolerance(mzdiff As Tolerance, args As list, env As Environment) As Object
+        Dim summary As New list With {.slots = New Dictionary(Of String, Object)}
+
+        Call summary.add("mzdiff", mzdiff.ToString)
+        Call summary.add("script", mzdiff.GetScript)
+        Call summary.add("mass_error_dalton", mzdiff.GetErrorDalton)
+        Call summary.add("mass_error_ppm", mzdiff.GetErrorPPM)
+        Call summary.add("type", If(TypeOf mzdiff Is PPMmethod, "ppm", "da"))
+        Call summary.add("threshold", mzdiff.DeltaTolerance)
+
+        Return summary
+    End Function
 
     ''' <summary>
     ''' union of two mass spectrum matrix

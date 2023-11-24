@@ -9,6 +9,30 @@
  * 
 */
 declare namespace SingleCells {
+   module apply {
+      /**
+       * scale matrix for each spot/cell sample
+       * 
+       * 
+        * @param x -
+        * @param scaler -
+        * @param env -
+        * 
+        * + default value Is ``null``.
+      */
+      function scale(x: any, scaler: object, env?: object): any;
+   }
+   module as {
+      /**
+       * Cast the ion feature matrix as the GCModeller expression matrix object
+       * 
+       * 
+        * @param x -
+        * @param single_cell 
+        * + default value Is ``false``.
+      */
+      function expression(x: object, single_cell?: boolean): object;
+   }
    /**
     * export single cell expression matrix from the raw data scans
     * 
@@ -44,7 +68,7 @@ declare namespace SingleCells {
      * 
      * + default value Is ``null``.
    */
-   function mz_matrix(x: object, args: object, env?: object): object;
+   function mz_matrix(x: any, args: object, env?: object): object;
    module open {
       /**
        * open a single cell data matrix reader

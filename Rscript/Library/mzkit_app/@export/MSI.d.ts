@@ -179,11 +179,13 @@ declare namespace MSI {
      * + default value Is ``null``.
      * @param res 
      * + default value Is ``17``.
+     * @param noise_cutoff 
+     * + default value Is ``1``.
      * @param env -
      * 
      * + default value Is ``null``.
    */
-   function pack_matrix(file: any, dims?: any, res?: number, env?: object): any;
+   function pack_matrix(file: any, dims?: any, res?: number, noise_cutoff?: number, env?: object): any;
    /**
     * Extract the ion data matrix
     * 
@@ -202,11 +204,18 @@ declare namespace MSI {
      *  be a numeric vector of the target m/z feature values
      * 
      * + default value Is ``null``.
+     * @param raw_matrix 
+     * + default value Is ``false``.
      * @param env -
      * 
      * + default value Is ``null``.
+     * @return the data format of the two kind of the output data result is keeps the same:
+     *  
+     *  + for a raw matrix object, the column is the ion features and the rows is the spatial spots.
+     *  + for a dataset collection vector, the column is also the ion features and the 
+     *    rows is the spatial spots.
    */
-   function peakMatrix(raw: object, topN?: object, mzError?: any, ionSet?: any, env?: object): any;
+   function peakMatrix(raw: object, topN?: object, mzError?: any, ionSet?: any, raw_matrix?: boolean, env?: object): object|object;
    /**
     * split the raw MSI 2D data into multiple parts with given resolution parts
     * 

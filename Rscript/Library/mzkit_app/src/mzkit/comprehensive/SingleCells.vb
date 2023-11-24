@@ -60,12 +60,16 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells
 Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.MachineLearning.ComponentModel.Activations
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.genomics.Analysis.HTS.DataFrame
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
+Imports SMRUCC.Rsharp.Runtime.Components.[Interface]
 Imports SMRUCC.Rsharp.Runtime.Internal.[Object]
 Imports SMRUCC.Rsharp.Runtime.Interop
+Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports HTSMatrix = SMRUCC.genomics.Analysis.HTS.DataFrame.Matrix
 Imports Rdataframe = SMRUCC.Rsharp.Runtime.Internal.[Object].dataframe
 Imports SingleCellMath = BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute.Math
@@ -81,6 +85,7 @@ Module SingleCells
     Sub New()
         Call Internal.Object.Converts.makeDataframe.addHandler(GetType(SingleCellIonStat()), AddressOf cellStatsTable)
         Call Internal.Object.Converts.makeDataframe.addHandler(GetType(MzMatrix), AddressOf mzMatrixDf)
+        Call Internal.Object.Converts.makeDataframe.addHandler(GetType(SpatialMatrixReader), AddressOf mzMatrixDf)
     End Sub
 
     Private Function cellStatsTable(ions As SingleCellIonStat(), args As list, env As Environment) As Rdataframe
@@ -114,25 +119,78 @@ Module SingleCells
     ''' implements the ``as.data.frame`` function
     ''' </remarks>
     <ExportAPI("mz_matrix")>
-    Public Function mzMatrixDf(x As MzMatrix,
+    <RApiReturn(GetType(Rdataframe))>
+    Public Function mzMatrixDf(x As Object,
                                <RListObjectArgument>
                                args As list,
-                               Optional env As Environment = Nothing) As Rdataframe
+                               Optional env As Environment = Nothing) As Object
+
+        Dim rawdata As MzMatrix
+
+        If x Is Nothing Then
+            Return Nothing
+        End If
+
+        If TypeOf x Is MzMatrix Then
+            rawdata = x
+        ElseIf TypeOf x Is SpatialMatrixReader Then
+            rawdata = DirectCast(x, SpatialMatrixReader).getMatrix
+        Else
+            Return Message.InCompatibleType(GetType(MzMatrix), x.GetType, env)
+        End If
 
         Dim singleCell As Boolean = args.getValue("singlecell", env, [default]:=False)
         Dim df As New Rdataframe With {
             .columns = New Dictionary(Of String, Array),
-            .rownames = If(singleCell, x.getCellLabels, x.getSpatialLabels)
+            .rownames = If(singleCell, rawdata.getCellLabels, rawdata.getSpatialLabels)
         }
-        Dim mz As Double() = x.mz
+        Dim mz As Double() = rawdata.mz
         Dim offset As Integer
+        Dim ionFeatureKey As String
 
+        ' loop each ion mz feature
         For i As Integer = 0 To mz.Length - 1
             offset = i
-            df.add(mz(i).ToString, x.matrix.Select(Function(r) r.intensity(offset)))
+            ionFeatureKey = mz(i).ToString
+            df.add(
+                key:=ionFeatureKey,
+                value:=rawdata.matrix.Select(Function(r) r.intensity(offset))
+            )
         Next
 
         Return df
+    End Function
+
+    ''' <summary>
+    ''' Cast the ion feature matrix as the GCModeller expression matrix object
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <returns></returns>
+    <ExportAPI("as.expression")>
+    <RApiReturn(GetType(HTSMatrix))>
+    Public Function asHTSExpression(x As MzMatrix, Optional single_cell As Boolean = False) As Object
+        Return New HTSMatrix With {
+            .sampleID = x.mz _
+                .Select(Function(mzi) mzi.ToString("F4")) _
+                .ToArray,
+            .tag = "ions_with_mzdiff:" & x.tolerance,
+            .expression = x.matrix _
+                .Select(Function(si)
+                            Dim label As String
+
+                            If single_cell Then
+                                label = si.label
+                            Else
+                                label = $"{si.X},{si.Y}"
+                            End If
+
+                            Return New DataFrameRow With {
+                                .geneID = label,
+                                .experiments = si.intensity
+                            }
+                        End Function) _
+                .ToArray
+        }
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -145,6 +203,76 @@ Module SingleCells
     <Extension>
     Private Function getSpatialLabels(x As MzMatrix) As String()
         Return x.matrix.Select(Function(r) $"{r.X},{r.Y}").ToArray
+    End Function
+
+    ''' <summary>
+    ''' scale matrix for each spot/cell sample
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <param name="scaler"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("apply.scale")>
+    Public Function rowApplyScale(x As Object, scaler As RFunction, Optional env As Environment = Nothing) As Object
+        Dim lambda As Func(Of Double(), [Variant](Of Message, Double())) =
+            Function(xi)
+                Dim result As Object = scaler.Invoke(arguments:=New Object() {xi, env}, env)
+
+                If TypeOf result Is Message Then
+                    Return DirectCast(result, Message)
+                Else
+                    Return CLRVector.asNumeric(result)
+                End If
+            End Function
+        Dim scaled As New List(Of PixelData)
+        Dim v As [Variant](Of Message, Double())
+        Dim into As Double()
+        Dim m As MzMatrix
+
+        If x Is Nothing Then
+            Return Nothing
+        End If
+        If TypeOf x Is MzMatrix Then
+            m = x
+        ElseIf TypeOf x Is SpatialMatrixReader Then
+            m = DirectCast(x, SpatialMatrixReader).getMatrix
+        Else
+            Return Message.InCompatibleType(GetType(MzMatrix), x.GetType, env)
+        End If
+
+        Dim t0 = Now
+        Dim spots As Integer = m.matrix.Length
+        Dim d As Integer = spots / 25
+        Dim i As i32 = 0
+
+        For Each spot As PixelData In m.matrix
+            v = lambda(spot.intensity)
+
+            If v Like GetType(Message) Then
+                Return v.TryCast(Of Message)
+            Else
+                into = v.TryCast(Of Double())
+                into = ReLU.ReLU(into)
+            End If
+
+            spot = New PixelData With {
+                .label = spot.label,
+                .X = spot.X,
+                .Y = spot.Y,
+                .intensity = into
+            }
+            scaled.Add(spot)
+
+            If (++i Mod d) = 0 Then
+                Call VBDebugger.EchoLine($"[{i}/{spots}] ({spot.ToString}) {(i / spots * 100).ToString("F2")}% ... {StringFormats.ReadableElapsedTime((Now - t0).TotalMilliseconds)}")
+            End If
+        Next
+
+        Return New MzMatrix With {
+            .matrix = scaled.ToArray,
+            .mz = m.mz.ToArray,
+            .tolerance = m.tolerance
+        }
     End Function
 
     ''' <summary>

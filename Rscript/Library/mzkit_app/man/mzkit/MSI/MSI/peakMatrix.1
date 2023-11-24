@@ -7,6 +7,7 @@ peakMatrix \- Extract the ion data matrix
 \fBtopN\fR as integer = 3, 
 \fBmzError\fR as any = "da:0.05", 
 \fBionSet\fR as any = \fB<NULL>\fR, 
+\fBraw_matrix\fR as boolean = FALSE, 
 [\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
@@ -35,6 +36,14 @@ Extract the ion data matrix
 .PP
 .PP
 \fBenv\fB \fR\- -. 
+.PP
+.SH VALUE
+.PP
+the data format of the two kind of the output data result is keeps the same:
+ 
+ + for a raw matrix object, the column is the ion features and the rows is the spatial spots.
+ + for a dataset collection vector, the column is also the ion features and the 
+   rows is the spatial spots.
 .PP
 .SH SEE ALSO
 MSI

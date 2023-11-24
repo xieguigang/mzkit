@@ -95,6 +95,10 @@ Namespace Ms1
             End Get
         End Property
 
+        ''' <summary>
+        ''' ppm method or dalton method
+        ''' </summary>
+        ''' <returns></returns>
         Public MustOverride ReadOnly Property Type As MassToleranceType
 
         Default Public ReadOnly Property IsEquals(mz1#, mz2#) As Boolean
@@ -129,6 +133,13 @@ Namespace Ms1
         ''' <returns></returns>
         Public MustOverride Overrides Function Equals(mz1 As Double, mz2 As Double) As Boolean
 
+        Protected Shared ReadOnly sample_mz As Double() = New Double() {
+            50, 100, 200, 300,
+            400, 500, 600, 700, 800, 900,
+            1000,
+            2000
+        }
+
         ''' <summary>
         ''' try to convert the mass dalton error as ppm error for 
         ''' compares the da tolerance with the ppm tolerance in 
@@ -136,6 +147,7 @@ Namespace Ms1
         ''' </summary>
         ''' <returns></returns>
         Public MustOverride Function GetErrorPPM() As Double
+        Public MustOverride Function GetErrorDalton() As Double
 
         ''' <summary>
         ''' 将分子质量误差值转换为百分比得分
@@ -154,6 +166,31 @@ Namespace Ms1
         Public MustOverride Function MassErrorDescription(mz1#, mz2#) As String
 
         Protected MustOverride Function Scale(scaler As Double) As Tolerance
+
+        ''' <summary>
+        ''' Represents the method that compares two mass value.
+        ''' </summary>
+        ''' <param name="mass1"></param>
+        ''' <param name="mass2"></param>
+        ''' <returns>
+        ''' A signed integer that indicates the relative values of x and y, as shown in the
+        ''' following table.
+        ''' 
+        ''' |Value         |Meaning             |
+        ''' |--------------|--------------------|
+        ''' |Less than 0   |x is less than y.   |
+        ''' |0             |x equals y.         |
+        ''' |Greater than 0|x is greater than y.|
+        ''' </returns>
+        Public Function Compares(mass1 As Double, mass2 As Double) As Integer
+            If Equals(mass1, mass2) Then
+                Return 0
+            ElseIf mass1 > mass2 Then
+                Return 1
+            Else
+                Return -1
+            End If
+        End Function
 
         ''' <summary>
         ''' 判断目标分子质量误差是否符合当前的误差要求

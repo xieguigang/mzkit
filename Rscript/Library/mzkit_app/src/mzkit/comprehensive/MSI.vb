@@ -72,6 +72,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.TissueMorphology
+Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells
 Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection
@@ -713,6 +714,11 @@ Module MSI
             ) _
             .OrderBy(Function(s) s.pvalue) _
             .ToArray
+        ElseIf TypeOf raw Is MzMatrix Then
+            Return IonStat _
+                .DoStat(DirectCast(raw, MzMatrix), grid_size, parallel) _
+                .OrderBy(Function(s) s.pvalue) _
+                .ToArray
         Else
             Dim layers = pipeline.TryCreatePipeline(Of SingleIonLayer)(raw, env)
 
@@ -847,7 +853,13 @@ Module MSI
     ''' </param>
     ''' <param name="mzError">The mass tolerance of the ion m/z</param>
     ''' <param name="env"></param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' the data format of the two kind of the output data result is keeps the same:
+    ''' 
+    ''' + for a raw matrix object, the column is the ion features and the rows is the spatial spots.
+    ''' + for a dataset collection vector, the column is also the ion features and the 
+    '''   rows is the spatial spots.
+    ''' </returns>
     ''' <example>
     ''' let raw = open.mzpack("/path/to/rawdata.mzPack");
     ''' let ionsSet = list(ion1 = 100.0321, ion2 = 563.2254, ion3 = 336.9588);
@@ -855,11 +867,13 @@ Module MSI
     ''' MSI::peakMatrix(raw, ionSet = ionsSet, mzError = "da:0.05");
     ''' </example>
     <ExportAPI("peakMatrix")>
+    <RApiReturn(GetType(MzMatrix), GetType(DataSet))>
     Public Function PeakMatrix(raw As mzPack,
                                Optional topN As Integer = 3,
                                Optional mzError As Object = "da:0.05",
                                <RRawVectorArgument>
                                Optional ionSet As Object = Nothing,
+                               Optional raw_matrix As Boolean = False,
                                Optional env As Environment = Nothing) As Object
 
         Dim err = Math.getTolerance(mzError, env)
@@ -868,8 +882,18 @@ Module MSI
             Return err.TryCast(Of Message)
         End If
 
+        Call base.print($"extract ion feature data with mass tolerance: {err.TryCast(Of Tolerance).ToString}",, env)
+
+        If raw_matrix Then
+            Call base.print("the raw ions feature matrix object will be returned!",, env)
+        End If
+
         If Not ionSet Is Nothing Then
-            Return raw.GetPeakMatrix(ionSet, err.TryCast(Of Tolerance), env)
+            Return raw.GetPeakMatrix(ionSet, err.TryCast(Of Tolerance), raw_matrix, env)
+        ElseIf raw_matrix Then
+            Dim topIons As Double() = raw.GetMzIndex(mzdiff:=err.TryCast(Of Tolerance).GetErrorDalton, topN:=topN)
+            Dim m = Deconvolute.PeakMatrix.CreateMatrix(raw, err.TryCast(Of Tolerance).GetErrorDalton, 0, mzSet:=topIons)
+            Return m
         Else
             Return raw _
                 .TopIonsPeakMatrix(topN, err.TryCast(Of Tolerance)) _
@@ -878,7 +902,10 @@ Module MSI
     End Function
 
     <Extension>
-    Private Function GetPeakMatrix(raw As mzPack, ionSet As Object, err As Tolerance, env As Environment) As DataSet()
+    Private Function GetPeakMatrix(raw As mzPack, ionSet As Object, err As Tolerance,
+                                   rawMatrix As Boolean,
+                                   env As Environment) As Object
+
         Dim ions As Dictionary(Of String, Double)
 
         If TypeOf ionSet Is list Then
@@ -898,9 +925,13 @@ Module MSI
                               End Function)
         End If
 
-        Return raw _
-            .SelectivePeakMatrix(ions, err) _
-            .ToArray
+        If rawMatrix Then
+            Return Deconvolute.PeakMatrix.CreateMatrix(raw, err.GetErrorDalton, 0, mzSet:=ions.Values.ToArray)
+        Else
+            Return raw _
+                .SelectivePeakMatrix(ions, err) _
+                .ToArray
+        End If
     End Function
 
     ''' <summary>
@@ -1081,13 +1112,16 @@ Module MSI
                                <RRawVectorArgument>
                                Optional dims As Object = Nothing,
                                Optional res As Double = 17,
+                               Optional noise_cutoff As Double = 1,
                                Optional env As Environment = Nothing) As Object
         Dim scans As ScanMS1()
         Dim msi_dims As Size = InteropArgumentHelper.getSize(dims, env, "0,0").SizeParser
         Dim metadata As Metadata = Nothing
 
         If TypeOf file Is rDataframe Then
-            scans = DirectCast(file, rDataframe).packDf.ToArray
+            scans = DirectCast(file, rDataframe) _
+                .packDf(noise_cutoff) _
+                .ToArray
         Else
             Dim buf = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Read, env)
 
@@ -1095,7 +1129,9 @@ Module MSI
                 Return buf.TryCast(Of Message)
             End If
 
-            scans = New StreamReader(buf.TryCast(Of Stream)).packFile.ToArray
+            scans = New StreamReader(buf.TryCast(Of Stream)) _
+                .packFile(noise_cutoff) _
+                .ToArray
         End If
 
         If Not msi_dims.IsEmpty Then
@@ -1120,7 +1156,7 @@ Module MSI
         }
     End Function
 
-    Private Function scan(xy As Integer(), ionsMz As Double(), v As Double(), ByRef ti As Double) As ScanMS1
+    Private Function scan(xy As Integer(), ionsMz As Double(), v As Double(), ByRef ti As Double, noise_cutoff As Double) As ScanMS1
         Dim ms As ms2() = ionsMz _
             .Select(Function(mzi, i)
                         Return New ms2 With {
@@ -1128,13 +1164,14 @@ Module MSI
                             .intensity = v(i)
                         }
                     End Function) _
-            .Where(Function(m) m.intensity > 1) _
+            .Where(Function(m) m.intensity > noise_cutoff) _
             .OrderByDescending(Function(m) m.intensity) _
             .ToArray
 
         If ms.IsNullOrEmpty Then
             Return Nothing
-        Else
+            ' zero means do not removes noise
+        ElseIf noise_cutoff > 0 Then
             Dim maxinto As Double = ms(0).intensity
 
             ms = ms _
@@ -1160,7 +1197,7 @@ Module MSI
     End Function
 
     <Extension>
-    Private Iterator Function packDf(df As rDataframe) As IEnumerable(Of ScanMS1)
+    Private Iterator Function packDf(df As rDataframe, noise_cutoff As Double) As IEnumerable(Of ScanMS1)
         Dim ionsMz As Double() = CLRVector.asNumeric(df.colnames)
         Dim ti As Double = 0
 
@@ -1176,12 +1213,12 @@ Module MSI
                 .ToArray
             Dim v As Double() = CLRVector.asNumeric(row.value)
 
-            Yield scan(xy, ionsMz, v, ti)
+            Yield scan(xy, ionsMz, v, ti, noise_cutoff)
         Next
     End Function
 
     <Extension>
-    Private Iterator Function packFile(read As StreamReader) As IEnumerable(Of ScanMS1)
+    Private Iterator Function packFile(read As StreamReader, noise_cutoff As Double) As IEnumerable(Of ScanMS1)
         Dim ionsMz As Double() = RowObject.TryParse(read.ReadLine) _
             .Skip(1) _
             .Select(Function(si) Val(si)) _
@@ -1206,7 +1243,7 @@ Module MSI
                 .Select(Function(si) Val(si)) _
                 .ToArray
 
-            Yield scan(xy, ionsMz, v, ti)
+            Yield scan(xy, ionsMz, v, ti, noise_cutoff)
         Loop
     End Function
 

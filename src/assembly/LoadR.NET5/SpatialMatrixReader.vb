@@ -101,6 +101,12 @@ Public Class SpatialMatrixReader : Implements IdataframeReader, IReflector
         }
     End Function
 
+    ''' <summary>
+    ''' get a list of the spatial expression vector
+    ''' </summary>
+    ''' <param name="index"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     Public Function getRow(index As Object, env As Environment) As Object Implements IdataframeReader.getRow
         Dim xy As String() = CLRVector.asCharacter(index)
 
@@ -129,5 +135,9 @@ Public Class SpatialMatrixReader : Implements IdataframeReader, IReflector
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function getRowNames() As String() Implements IdataframeReader.getRowNames
         Return spatialIndex.Keys.ToArray
+    End Function
+
+    Public Function getMatrix() As MzMatrix
+        Return m
     End Function
 End Class

@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Extract the ion data matrix</title>
+    <title>scale matrix for each spot/cell sample</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <style rel="stylesheet" type="text/css">
@@ -148,12 +148,12 @@
 
         <table style="width: 100%;">
             <tr>
-                <td>peakMatrix {MSI}</td>
+                <td>apply.scale {SingleCells}</td>
                 <td style="text-align: right;">R Documentation</td>
             </tr>
         </table>
 
-        <h2>Extract the ion data matrix</h2>
+        <h2>scale matrix for each spot/cell sample</h2>
 
         <h3>Description</h3>
 
@@ -162,35 +162,19 @@
         <h3>Usage</h3>
 
         <div style="width: 100%; padding-left: 3%; color: black;">
-            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>peakMatrix</strong>(<i>raw</i>,
-    <i>topN</i> = <span style='color: green;'>3</span>,
-    <i>mzError</i> = <span style='color: brown;'><strong>"da:0.05"</strong></span>,
-    <i>ionSet</i> = <span style='color: blue !important;'>NULL</span>,
-    <i>raw.matrix</i> = <span style='color: blue !important;'>FALSE</span>);</code></pre>
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>apply.scale</strong>(<i>x</i>, <i>scaler</i>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
 
         <table>
             
-<dt>raw</dt>
+<dt>x</dt>
 <dd><p><p>-</p></p></dd>
 
 
-<dt>topN</dt>
-<dd><p><p>select top N ion feature in each spot and then union the ion features as <br />
- the features set, this parameter only works when the <strong><code>ionSet</code></strong> <br />
- parameter is empty or null.</p></p></dd>
-
-
-<dt>ionSet</dt>
-<dd><p><p>A tuple list of the ion dataset range, the tuple list object should <br />
- be in data format of [unique_id => mz]. Or this parameter value could also<br />
- be a numeric vector of the target m/z feature values</p></p></dd>
-
-
-<dt>mzError</dt>
-<dd><p><p>The mass tolerance of the ion m/z</p></p></dd>
+<dt>scaler</dt>
+<dd><p><p>-</p></p></dd>
 
 
 <dt>env</dt>
@@ -206,24 +190,15 @@
 
         <h3>Value</h3>
 
-        <p>the data format of the two kind of the output data result is keeps the same:</p>
+        this function returns data object of type <i>any</i> kind.
 
-<ul>
-<li>for a raw matrix object, the column is the ion features and the rows is the spatial spots.</li>
-<li>for a dataset collection vector, the column is also the ion features and the <br />
-rows is the spatial spots.</li>
-</ul>
+        <h3 style="display: none;">Examples</h3>
 
-        <h3 style="display: block;">Examples</h3>
-
-        <pre><code>let raw = open.mzpack("/path/to/rawdata.mzPack");
- let ionsSet = list(ion1 = 100.0321, ion2 = 563.2254, ion3 = 336.9588);
- 
- MSI::peakMatrix(raw, ionSet = ionsSet, mzError = "da:0.05");</code></pre>
+        
 
         <hr />
-        <div style="text-align: center;">[Package <em>MSI</em> version 1.0.0.0 <a
-                href="../MSI.html">Index</a>]
+        <div style="text-align: center;">[Package <em>SingleCells</em> version 1.0.0.0 <a
+                href="../SingleCells.html">Index</a>]
         </div>
     </div>
 </body>
