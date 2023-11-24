@@ -207,15 +207,15 @@ Module SingleCells
     ''' <summary>
     ''' scale matrix for each spot/cell sample
     ''' </summary>
-    ''' <param name="m"></param>
+    ''' <param name="x"></param>
     ''' <param name="scaler"></param>
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("apply.scale")>
-    Public Function rowApplyScale(m As MzMatrix, scaler As RFunction, Optional env As Environment = Nothing) As Object
+    Public Function rowApplyScale(x As Object, scaler As RFunction, Optional env As Environment = Nothing) As Object
         Dim lambda As Func(Of Double(), [Variant](Of Message, Double())) =
-            Function(x)
-                Dim result As Object = scaler.Invoke(arguments:=New Object() {x, env}, env)
+            Function(xi)
+                Dim result As Object = scaler.Invoke(arguments:=New Object() {xi, env}, env)
 
                 If TypeOf result Is Message Then
                     Return DirectCast(result, Message)
@@ -225,6 +225,18 @@ Module SingleCells
             End Function
         Dim scaled As New List(Of PixelData)
         Dim v As [Variant](Of Message, Double())
+        Dim m As MzMatrix
+
+        If x Is Nothing Then
+            Return Nothing
+        End If
+        If TypeOf x Is MzMatrix Then
+            m = x
+        ElseIf TypeOf x Is SpatialMatrixReader Then
+            m = DirectCast(x, SpatialMatrixReader).getMatrix
+        Else
+            Return Message.InCompatibleType(GetType(MzMatrix), x.GetType, env)
+        End If
 
         For Each spot As PixelData In m.matrix
             v = lambda(spot.intensity)

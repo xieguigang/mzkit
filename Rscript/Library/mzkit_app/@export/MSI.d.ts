@@ -207,6 +207,11 @@ declare namespace MSI {
      * @param env -
      * 
      * + default value Is ``null``.
+     * @return the data format of the two kind of the output data result is keeps the same:
+     *  
+     *  + for a raw matrix object, the column is the ion features and the rows is the spatial spots.
+     *  + for a dataset collection vector, the column is also the ion features and the 
+     *    rows is the spatial spots.
    */
    function peakMatrix(raw: object, topN?: object, mzError?: any, ionSet?: any, raw_matrix?: boolean, env?: object): object|object;
    /**
