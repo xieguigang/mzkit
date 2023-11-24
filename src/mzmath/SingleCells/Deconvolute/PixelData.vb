@@ -79,7 +79,7 @@ Namespace Deconvolute
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
-            Return $"[{X},{Y}]"
+            Return $"[{X},{Y}] {label} total_ions:{intensity.Sum}"
         End Function
 
     End Class

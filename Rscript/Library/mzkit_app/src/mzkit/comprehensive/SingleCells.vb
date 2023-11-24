@@ -264,7 +264,7 @@ Module SingleCells
             scaled.Add(spot)
 
             If (++i Mod d) = 0 Then
-                Call VBDebugger.EchoLine($"[{i}/{spots}] {(i / spots * 100).ToString("F2")}% ... {StringFormats.ReadableElapsedTime((Now - t0).TotalMilliseconds)}")
+                Call VBDebugger.EchoLine($"[{i}/{spots}] ({spot.ToString}) {(i / spots * 100).ToString("F2")}% ... {StringFormats.ReadableElapsedTime((Now - t0).TotalMilliseconds)}")
             End If
         Next
 

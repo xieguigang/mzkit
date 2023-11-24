@@ -1112,13 +1112,16 @@ Module MSI
                                <RRawVectorArgument>
                                Optional dims As Object = Nothing,
                                Optional res As Double = 17,
+                               Optional noise_cutoff As Double = 1,
                                Optional env As Environment = Nothing) As Object
         Dim scans As ScanMS1()
         Dim msi_dims As Size = InteropArgumentHelper.getSize(dims, env, "0,0").SizeParser
         Dim metadata As Metadata = Nothing
 
         If TypeOf file Is rDataframe Then
-            scans = DirectCast(file, rDataframe).packDf.ToArray
+            scans = DirectCast(file, rDataframe) _
+                .packDf(noise_cutoff) _
+                .ToArray
         Else
             Dim buf = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Read, env)
 
@@ -1126,7 +1129,9 @@ Module MSI
                 Return buf.TryCast(Of Message)
             End If
 
-            scans = New StreamReader(buf.TryCast(Of Stream)).packFile.ToArray
+            scans = New StreamReader(buf.TryCast(Of Stream)) _
+                .packFile(noise_cutoff) _
+                .ToArray
         End If
 
         If Not msi_dims.IsEmpty Then
@@ -1151,7 +1156,7 @@ Module MSI
         }
     End Function
 
-    Private Function scan(xy As Integer(), ionsMz As Double(), v As Double(), ByRef ti As Double) As ScanMS1
+    Private Function scan(xy As Integer(), ionsMz As Double(), v As Double(), ByRef ti As Double, noise_cutoff As Double) As ScanMS1
         Dim ms As ms2() = ionsMz _
             .Select(Function(mzi, i)
                         Return New ms2 With {
@@ -1159,7 +1164,7 @@ Module MSI
                             .intensity = v(i)
                         }
                     End Function) _
-            .Where(Function(m) m.intensity > 1) _
+            .Where(Function(m) m.intensity > noise_cutoff) _
             .OrderByDescending(Function(m) m.intensity) _
             .ToArray
 
@@ -1191,7 +1196,7 @@ Module MSI
     End Function
 
     <Extension>
-    Private Iterator Function packDf(df As rDataframe) As IEnumerable(Of ScanMS1)
+    Private Iterator Function packDf(df As rDataframe, noise_cutoff As Double) As IEnumerable(Of ScanMS1)
         Dim ionsMz As Double() = CLRVector.asNumeric(df.colnames)
         Dim ti As Double = 0
 
@@ -1207,12 +1212,12 @@ Module MSI
                 .ToArray
             Dim v As Double() = CLRVector.asNumeric(row.value)
 
-            Yield scan(xy, ionsMz, v, ti)
+            Yield scan(xy, ionsMz, v, ti, noise_cutoff)
         Next
     End Function
 
     <Extension>
-    Private Iterator Function packFile(read As StreamReader) As IEnumerable(Of ScanMS1)
+    Private Iterator Function packFile(read As StreamReader, noise_cutoff As Double) As IEnumerable(Of ScanMS1)
         Dim ionsMz As Double() = RowObject.TryParse(read.ReadLine) _
             .Skip(1) _
             .Select(Function(si) Val(si)) _
@@ -1237,7 +1242,7 @@ Module MSI
                 .Select(Function(si) Val(si)) _
                 .ToArray
 
-            Yield scan(xy, ionsMz, v, ti)
+            Yield scan(xy, ionsMz, v, ti, noise_cutoff)
         Loop
     End Function
 
