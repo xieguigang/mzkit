@@ -14,13 +14,13 @@ declare namespace SingleCells {
        * scale matrix for each spot/cell sample
        * 
        * 
-        * @param m -
+        * @param x -
         * @param scaler -
         * @param env -
         * 
         * + default value Is ``null``.
       */
-      function scale(m: object, scaler: object, env?: object): any;
+      function scale(x: any, scaler: object, env?: object): any;
    }
    module as {
       /**
