@@ -1170,7 +1170,8 @@ Module MSI
 
         If ms.IsNullOrEmpty Then
             Return Nothing
-        Else
+            ' zero means do not removes noise
+        ElseIf noise_cutoff > 0 Then
             Dim maxinto As Double = ms(0).intensity
 
             ms = ms _

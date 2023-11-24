@@ -179,11 +179,13 @@ declare namespace MSI {
      * + default value Is ``null``.
      * @param res 
      * + default value Is ``17``.
+     * @param noise_cutoff 
+     * + default value Is ``1``.
      * @param env -
      * 
      * + default value Is ``null``.
    */
-   function pack_matrix(file: any, dims?: any, res?: number, env?: object): any;
+   function pack_matrix(file: any, dims?: any, res?: number, noise_cutoff?: number, env?: object): any;
    /**
     * Extract the ion data matrix
     * 
