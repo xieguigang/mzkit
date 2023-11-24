@@ -60,12 +60,15 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells
 Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.genomics.Analysis.HTS.DataFrame
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
+Imports SMRUCC.Rsharp.Runtime.Components.[Interface]
 Imports SMRUCC.Rsharp.Runtime.Internal.[Object]
 Imports SMRUCC.Rsharp.Runtime.Interop
+Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports HTSMatrix = SMRUCC.genomics.Analysis.HTS.DataFrame.Matrix
 Imports Rdataframe = SMRUCC.Rsharp.Runtime.Internal.[Object].dataframe
 Imports SingleCellMath = BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute.Math
@@ -199,6 +202,51 @@ Module SingleCells
     <Extension>
     Private Function getSpatialLabels(x As MzMatrix) As String()
         Return x.matrix.Select(Function(r) $"{r.X},{r.Y}").ToArray
+    End Function
+
+    ''' <summary>
+    ''' scale matrix for each spot/cell sample
+    ''' </summary>
+    ''' <param name="m"></param>
+    ''' <param name="scaler"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("apply.scale")>
+    Public Function rowApplyScale(m As MzMatrix, scaler As RFunction, Optional env As Environment = Nothing) As Object
+        Dim lambda As Func(Of Double(), [Variant](Of Message, Double())) =
+            Function(x)
+                Dim result As Object = scaler.Invoke(arguments:=New Object() {x, env}, env)
+
+                If TypeOf result Is Message Then
+                    Return DirectCast(result, Message)
+                Else
+                    Return CLRVector.asNumeric(result)
+                End If
+            End Function
+        Dim scaled As New List(Of PixelData)
+        Dim v As [Variant](Of Message, Double())
+
+        For Each spot As PixelData In m.matrix
+            v = lambda(spot.intensity)
+
+            If v Like GetType(Message) Then
+                Return v.TryCast(Of Message)
+            End If
+
+            spot = New PixelData With {
+                .label = spot.label,
+                .X = spot.X,
+                .Y = spot.Y,
+                .intensity = v.TryCast(Of Double())
+            }
+            scaled.Add(spot)
+        Next
+
+        Return New MzMatrix With {
+            .matrix = scaled.ToArray,
+            .mz = m.mz.ToArray,
+            .tolerance = m.tolerance
+        }
     End Function
 
     ''' <summary>
