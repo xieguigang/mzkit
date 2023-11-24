@@ -240,6 +240,11 @@ Module SingleCells
             Return Message.InCompatibleType(GetType(MzMatrix), x.GetType, env)
         End If
 
+        Dim t0 = Now
+        Dim spots As Integer = m.matrix.Length
+        Dim d As Integer = spots / 25
+        Dim i As i32 = 0
+
         For Each spot As PixelData In m.matrix
             v = lambda(spot.intensity)
 
@@ -257,6 +262,10 @@ Module SingleCells
                 .intensity = into
             }
             scaled.Add(spot)
+
+            If (++i Mod d) = 0 Then
+                Call VBDebugger.EchoLine($"[{i}/{spots}] {(i / spots * 100).ToString("F2")}% ... {StringFormats.ReadableElapsedTime((Now - t0).TotalMilliseconds)}")
+            End If
         Next
 
         Return New MzMatrix With {
