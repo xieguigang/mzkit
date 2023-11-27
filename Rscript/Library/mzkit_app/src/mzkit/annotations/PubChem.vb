@@ -63,6 +63,7 @@ Imports BioNovoGene.BioDeep.Chemistry.NCBI
 Imports BioNovoGene.BioDeep.Chemistry.NCBI.MeSH
 Imports BioNovoGene.BioDeep.Chemistry.NCBI.PubChem
 Imports BioNovoGene.BioDeep.Chemistry.NCBI.PubChem.Graph
+Imports BioNovoGene.BioDeep.Chemistry.NCBI.PubChem.Web
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection
@@ -397,6 +398,11 @@ Module PubChemToolKit
         Else
             Return file.LoadFromXml(Of PugViewRecord)
         End If
+    End Function
+
+    <ExportAPI("read.webquery")>
+    Public Function readWebQuerySummary(file As String) As pipeline
+        Return QueryXml.Load(file).DoCall(AddressOf pipeline.CreateFromPopulator)
     End Function
 
     ''' <summary>
