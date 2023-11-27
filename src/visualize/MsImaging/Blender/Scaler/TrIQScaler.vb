@@ -82,7 +82,11 @@ Namespace Blender.Scaler
             Dim q As Double = TrIQ.FindThreshold(into, threshold)
             Dim v As New Vector(into)
 
-            v(v > q) = Vector.Scalar(q)
+            If into.Any AndAlso into.Max > 0 AndAlso q = 0.0 Then
+                ' do nothing
+            Else
+                v(v > q) = Vector.Scalar(q)
+            End If
 
             Return v
         End Function
