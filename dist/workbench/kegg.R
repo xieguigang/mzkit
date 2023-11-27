@@ -15,7 +15,7 @@ for(metabo in hits) {
     str(metabo);
     # stop();
 
-    let names = metabo$cmpdsynonym$cmpdsynonym;
+    let names = metabo$cmpdsynonym;
 
     # print(names);
 
@@ -35,10 +35,6 @@ for(metabo in hits) {
     let chembl_id = names[names == $"CHEMBL\d+"];
     let drugbank_id = names[names == $"DB\d{5}"];
     let annotation = metabo$annotation;
-
-    if (is.list(annotation)) {
-        annotation = annotation$sub_annotation;
-    }
 
     let db = [];
     let id = [];
@@ -84,10 +80,10 @@ for(metabo in hits) {
     id = append(id, metabo$cid);
     link = append(link, "");
 
-    if (nchar(metabo$meshheadings) > 0) {
-        db = append(db, "MeSH");
+    if (length(metabo$meshheadings) > 0) {
+        db = append(db, rep("MeSH", length(metabo$meshheadings)));
         id = append(id, metabo$meshheadings);
-        link = append(link, "");
+        link = append(link, rep("", length(metabo$meshheadings)));
     }    
 
     let kegg_compound = repository::compound(

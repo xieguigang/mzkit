@@ -99,6 +99,10 @@ Namespace NCBI.PubChem.Web
 		End Function
 
 		Private Shared Iterator Function GetText(elements As XmlNode()) As IEnumerable(Of String)
+			If elements Is Nothing Then
+				Return
+			End If
+
 			For Each xml As XmlNode In elements
 				If xml.NodeType = XmlNodeType.Text Then
 					Yield xml.InnerText
