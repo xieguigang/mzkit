@@ -65,6 +65,7 @@ Imports BioNovoGene.BioDeep.Chemistry.NCBI.PubChem
 Imports BioNovoGene.BioDeep.Chemistry.NCBI.PubChem.Graph
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.csv.IO.Linq
@@ -110,8 +111,9 @@ Module PubChemToolKit
     ''' <summary>
     ''' read pubmed data table files
     ''' </summary>
-    ''' <param name="file"></param>
-    ''' <param name="lazy"></param>
+    ''' <param name="file">A collection of the pubmed database ascii text file</param>
+    ''' <param name="lazy">just create a lazy loader instead of read all 
+    ''' content into memory at once?</param>
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("read.pubmed")>
@@ -122,36 +124,45 @@ Module PubChemToolKit
                 .AsLinq(Of PubMed)(silent:=True)).IteratesALL _
                 .DoCall(AddressOf pipeline.CreateFromPopulator)
         Else
-            Return file.Select(Function(path) path.LoadCsv(Of PubMed)(mute:=True)).IteratesALL.ToArray
+            Return file _
+                .Select(Function(path) path.LoadCsv(Of PubMed)(mute:=True)) _
+                .IteratesALL _
+                .ToArray
         End If
     End Function
 
+    ''' <summary>
+    ''' Request the metabolite structure image via the pubchem image_fly api
+    ''' </summary>
+    ''' <param name="cid"></param>
+    ''' <param name="size"></param>
+    ''' <param name="ignores_invalid_CID"></param>
+    ''' <param name="env"></param>
+    ''' <returns>A tuple list of the image data for the input pubchem metabolite cid query</returns>
     <ExportAPI("image_fly")>
     Public Function ImageFlyGetImages(<RRawVectorArgument>
                                       cid As Object,
                                       <RRawVectorArgument>
                                       Optional size As Object = "500,500",
-                                      Optional ignoresInvalidCid As Boolean = False,
+                                      Optional ignores_invalid_CID As Boolean = False,
                                       Optional env As Environment = Nothing) As Object
 
         Dim ids As String() = CLRVector.asCharacter(cid)
-        Dim invalids = ids.Where(Function(id) Not id.IsPattern("\d+")).ToArray
+        Dim invalids As Index(Of String) = ids _
+            .Where(Function(id) Not id.IsPattern("\d+")) _
+            .Indexing
         Dim images As New list
-        Dim sizeVector As Double()
-
-        If TypeOf size Is String OrElse TypeOf size Is String() Then
-            With CLRVector.asCharacter(size).First.SizeParser
-                sizeVector = { .Width, .Height}
-            End With
-        ElseIf TypeOf size Is Double() Then
-            sizeVector = size
-        Else
-            Return Internal.debug.stop(Message.InCompatibleType(GetType(Double), size.GetType, env), env)
-        End If
-
+        Dim sizeVector As Integer() = InteropArgumentHelper _
+            .getSize(size, env, [default]:="500,500") _
+            .SizeParser _
+            .ToArray
         Dim img As Image
 
         For Each id As String In ids
+            If ignores_invalid_CID AndAlso id Like invalids Then
+                Continue For
+            End If
+
             img = ImageFly.GetImage(id, sizeVector(0), sizeVector(1), doBgTransparent:=False)
 
             Call Thread.Sleep(1000)
@@ -204,9 +215,9 @@ Module PubChemToolKit
     ''' <summary>
     ''' query cid from pubchem database
     ''' </summary>
-    ''' <param name="name"></param>
-    ''' <param name="cache"></param>
-    ''' <param name="offline"></param>
+    ''' <param name="name">any search term for query the pubchem database</param>
+    ''' <param name="cache">the cache fs for the online pubchem database</param>
+    ''' <param name="offline">running the search query handler in offline mode?</param>
     ''' <param name="interval">
     ''' the time sleep interval in ms
     ''' </param>
@@ -248,13 +259,19 @@ Module PubChemToolKit
     ''' <summary>
     ''' Generate the url for get pubchem pugviews data object
     ''' </summary>
-    ''' <param name="cid"></param>
-    ''' <returns></returns>
+    ''' <param name="cid">The pubchem compound cid, should be an integer value</param>
+    ''' <returns>A url for get the pubchem data in pugview format</returns>
     <ExportAPI("pubchem_url")>
     Public Function pubchemUrl(cid As String) As String
         Return WebQuery.pugViewApi(cid)
     End Function
 
+    ''' <summary>
+    ''' Query the compound related biological context information from pubchem
+    ''' </summary>
+    ''' <param name="cid"></param>
+    ''' <param name="cache"></param>
+    ''' <returns></returns>
     <ExportAPI("query.knowlegde_graph")>
     Public Function QueryKnowledgeGraph(cid As String, Optional cache As String = "./graph_kb") As list
         Dim geneSet As MeshGraph() = WebGraph.Query(cid, PubChem.Graph.Types.ChemicalGeneSymbolNeighbor, cache)
