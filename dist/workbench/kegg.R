@@ -27,6 +27,10 @@ for(metabo in hits) {
         next;
     }
 
+    if (length(kegg_id) > 1) {
+        stop(kegg_id);
+    }
+
     let name = metabo$cmpdname;
     let formula = metabo$mf; 
     let cas_number = names[names == $"\d+([-]\d+){2}"];
