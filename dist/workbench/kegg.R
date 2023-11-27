@@ -12,7 +12,7 @@ const kegg_compounds = list();
 
 for(metabo in hits) {
     metabo = as.list(metabo);
-    str(metabo);
+    # str(metabo);
     # stop();
 
     let names = metabo$cmpdsynonym;
@@ -21,7 +21,7 @@ for(metabo in hits) {
 
     let kegg_id = as.character(names[names == $"C\d{5}"]);
 
-    print(kegg_id);
+    # print(kegg_id);
 
     if ( (length(kegg_id) == 0 )|| (nchar(kegg_id) == 0)) {
         next;
@@ -97,9 +97,11 @@ for(metabo in hits) {
         )
     );
 
-    print(xml(kegg_compound));
+    # print(xml(kegg_compound));
 
     kegg_compounds[[kegg_id]] = kegg_compound;
+
+    print(`${kegg_id} - ${name}`);
 
     # stop();
 }
