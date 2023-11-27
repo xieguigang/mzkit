@@ -2,7 +2,6 @@
 Imports System.Runtime.CompilerServices
 Imports System.Xml
 Imports System.Xml.Serialization
-Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text.Xml.Linq
 
 Namespace NCBI.PubChem.Web
