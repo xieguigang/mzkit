@@ -1,5 +1,6 @@
 ﻿
 Imports System.Runtime.CompilerServices
+Imports System.Xml
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text.Xml.Linq
@@ -50,16 +51,33 @@ Namespace NCBI.PubChem.Web
 		Public Property gpidcnt As Double
 		Public Property gpfamilycnt As Double
 		Public Property neighbortype As String
-		Public Property meshheadings As String
+		Public Property meshheadings As Object
 		Public Property sidsrcname As sidsrcname
-
-		<XmlElement("annotation")>
 		Public Property annotation As Object
 
 		<MethodImpl(MethodImplOptions.AggressiveInlining)>
 		Public Shared Iterator Function Load(filepath As String) As IEnumerable(Of QueryXml)
-			For Each metabo As QueryXml In LoadUltraLargeXMLDataSet(Of QueryXml)(filepath, typeName:="row", variants:={GetType(String), GetType(annotation)})
+			For Each metabo As QueryXml In filepath.LoadUltraLargeXMLDataSet(Of QueryXml)(
+				typeName:="row",
+				variants:={}
+			)
+				Dim t_anno As XmlNode() = metabo.annotation
+				Dim t_mesh As XmlNode() = metabo.meshheadings
+
+				metabo.annotation = GetText(t_anno).ToArray
+				metabo.meshheadings = GetText(t_mesh).ToArray
+
 				Yield metabo
+			Next
+		End Function
+
+		Private Shared Iterator Function GetText(elements As XmlNode()) As IEnumerable(Of String)
+			For Each xml As XmlNode In elements
+				If xml.NodeType = XmlNodeType.Text Then
+					Yield xml.InnerText
+				Else
+					Yield xml.ChildNodes(0).InnerText
+				End If
 			Next
 		End Function
 
@@ -91,18 +109,6 @@ Namespace NCBI.PubChem.Web
 		<MethodImpl(MethodImplOptions.AggressiveInlining)>
 		Public Overrides Function ToString() As String
 			Return sidsrcname.GetJson
-		End Function
-
-	End Class
-
-	Public Class annotation
-
-		<XmlElement("sub-annotation")>
-		Public Property sub_annotation As String()
-
-		<MethodImpl(MethodImplOptions.AggressiveInlining)>
-		Public Overrides Function ToString() As String
-			Return sub_annotation.GetJson
 		End Function
 
 	End Class
