@@ -21,6 +21,15 @@ for(metabo in hits) {
     let kegg_id = names[names == $"C\d{5}"];
     let name = metabo$cmpdname;
     let formula = metabo$mf; 
+    let cas_number = names[names == $"\d+([-]\d+){2}"];
+
+    let db = [];
+    let id = [];
+    let link = [];
+
+    db = append(db, rep("CAS", length(cas_number)));
+    id = append(id, cas_number);
+    link = append(link, rep("", length(cas_number)));
 
     print(kegg_id);
 
@@ -30,11 +39,11 @@ for(metabo in hits) {
         formula = formula,
         exactMass = formula::eval(formula),         
         DBLinks = data.frame(
-        
+            db, id, link
         )
     );
 
-    str(xml(kegg_compound));
+    print(xml(kegg_compound));
 
     stop();
 }
