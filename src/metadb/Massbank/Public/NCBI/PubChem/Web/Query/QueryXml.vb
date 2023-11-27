@@ -21,7 +21,6 @@ Namespace NCBI.PubChem.Web
 
 		Public Property cid As Integer
 		Public Property cmpdname As String
-		Public Property cmpdsynonym As sub_cmpdsynonym
 		Public Property mw As Double
 		Public Property mf As String
 		Public Property polararea As Double
@@ -51,9 +50,27 @@ Namespace NCBI.PubChem.Web
 		Public Property gpidcnt As Double
 		Public Property gpfamilycnt As Double
 		Public Property neighbortype As String
+
+		''' <summary>
+		''' a string array
+		''' </summary>
+		''' <returns></returns>
 		Public Property meshheadings As Object
-		Public Property sidsrcname As sidsrcname
+		''' <summary>
+		''' a string array
+		''' </summary>
+		''' <returns></returns>
+		Public Property sidsrcname As Object
+		''' <summary>
+		''' a string array
+		''' </summary>
+		''' <returns></returns>
 		Public Property annotation As Object
+		''' <summary>
+		''' a string array
+		''' </summary>
+		''' <returns></returns>
+		Public Property cmpdsynonym As Object
 
 		<MethodImpl(MethodImplOptions.AggressiveInlining)>
 		Public Shared Iterator Function Load(filepath As String) As IEnumerable(Of QueryXml)
@@ -67,9 +84,13 @@ Namespace NCBI.PubChem.Web
 				' this operation for unify such variant type problem
 				Dim t_anno As XmlNode() = metabo.annotation
 				Dim t_mesh As XmlNode() = metabo.meshheadings
+				Dim t_sids As XmlNode() = metabo.sidsrcname
+				Dim t_name As XmlNode() = metabo.cmpdsynonym
 
 				metabo.annotation = GetText(t_anno).ToArray
 				metabo.meshheadings = GetText(t_mesh).ToArray
+				metabo.sidsrcname = GetText(t_sids).ToArray
+				metabo.cmpdsynonym = GetText(t_name).ToArray
 
 				Yield metabo
 			Next
@@ -88,31 +109,6 @@ Namespace NCBI.PubChem.Web
 		<MethodImpl(MethodImplOptions.AggressiveInlining)>
 		Public Overrides Function ToString() As String
 			Return Me.GetXml
-		End Function
-
-	End Class
-
-	<XmlType("sub-cmpdsynonym")>
-	Public Class sub_cmpdsynonym
-
-		<XmlElement("sub-cmpdsynonym")>
-		Public Property cmpdsynonym As String()
-
-		<MethodImpl(MethodImplOptions.AggressiveInlining)>
-		Public Overrides Function ToString() As String
-			Return cmpdsynonym.GetJson
-		End Function
-
-	End Class
-
-	Public Class sidsrcname
-
-		<XmlElement("sub-sidsrcname")>
-		Public Property sidsrcname As String()
-
-		<MethodImpl(MethodImplOptions.AggressiveInlining)>
-		Public Overrides Function ToString() As String
-			Return sidsrcname.GetJson
 		End Function
 
 	End Class
