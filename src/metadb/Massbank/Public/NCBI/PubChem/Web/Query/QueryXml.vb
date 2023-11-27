@@ -61,6 +61,10 @@ Namespace NCBI.PubChem.Web
 				typeName:="row",
 				variants:={}
 			)
+				' some data field may be variant type:
+				' could be a single string value
+				' or a string array list object
+				' this operation for unify such variant type problem
 				Dim t_anno As XmlNode() = metabo.annotation
 				Dim t_mesh As XmlNode() = metabo.meshheadings
 
