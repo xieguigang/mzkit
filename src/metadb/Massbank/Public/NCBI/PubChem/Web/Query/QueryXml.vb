@@ -19,7 +19,7 @@ Namespace NCBI.PubChem.Web
 	Public Class QueryXml
 
 		Public Property cid As Integer
-		Public Property cmpdname As String
+		Public Property cmpdname As Object
 		Public Property mw As Double
 		Public Property mf As String
 		Public Property polararea As Double
@@ -87,7 +87,9 @@ Namespace NCBI.PubChem.Web
 				Dim t_mesh As XmlNode() = metabo.meshheadings
 				Dim t_sids As XmlNode() = metabo.sidsrcname
 				Dim t_name As XmlNode() = metabo.cmpdsynonym
+				Dim t_cname As XmlNode() = metabo.cmpdname
 
+				metabo.cmpdname = GetText(t_cname).ToArray
 				metabo.annotation = GetText(t_anno).ToArray
 				metabo.meshheadings = GetText(t_mesh).ToArray
 				metabo.sidsrcname = GetText(t_sids).ToArray
