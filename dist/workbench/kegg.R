@@ -23,13 +23,14 @@ for(metabo in hits) {
 
     # print(kegg_id);
 
-    if ( (length(kegg_id) == 0 )|| (nchar(kegg_id) == 0)) {
+    if ( length(kegg_id) == 0 ) {
         next;
     }
 
-    if (length(kegg_id) > 1) {
-        stop(kegg_id);
-    }
+    # if (length(kegg_id) > 1) {
+    #     # stop(kegg_id);
+    #     kegg_id = kegg_id[1];
+    # }
 
     let name = metabo$cmpdname;
     let formula = metabo$mf; 
@@ -90,20 +91,24 @@ for(metabo in hits) {
         link = append(link, rep("", length(metabo$meshheadings)));
     }    
 
-    let kegg_compound = repository::compound(
-        entry = kegg_id,
-        name = name,
-        formula = formula,
-        exactMass = formula::eval(formula),         
-        remarks = annotation,
-        DBLinks = data.frame(
-            db, id, link
-        )
-    );
+    for(keg in kegg_id) {
+        let kegg_compound = repository::compound(
+            entry = keg,
+            name = name,
+            formula = formula,
+            exactMass = formula::eval(formula),         
+            remarks = annotation,
+            DBLinks = data.frame(
+                db, id, link
+            )
+        );
 
-    # print(xml(kegg_compound));
+        # print(xml(kegg_compound));
 
-    kegg_compounds[[kegg_id]] = kegg_compound;
+        kegg_compounds[[keg]] = kegg_compound;
+    }
+
+
 
     print(`${kegg_id} - ${name}`);
 
