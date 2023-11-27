@@ -52,11 +52,12 @@ Namespace NCBI.PubChem.Web
 		Public Property neighbortype As String
 		Public Property meshheadings As String
 		Public Property sidsrcname As sidsrcname
-		Public Property annotation As annotation
+
+		Public Property annotation As Object
 
 		<MethodImpl(MethodImplOptions.AggressiveInlining)>
 		Public Shared Function Load(filepath As String) As IEnumerable(Of QueryXml)
-			Return LoadUltraLargeXMLDataSet(Of QueryXml)(filepath, typeName:="row")
+			Return LoadUltraLargeXMLDataSet(Of QueryXml)(filepath, typeName:="row", variants:={GetType(String), GetType(annotation)})
 		End Function
 
 		<MethodImpl(MethodImplOptions.AggressiveInlining)>
