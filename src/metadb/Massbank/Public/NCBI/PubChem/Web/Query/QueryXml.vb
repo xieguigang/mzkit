@@ -78,6 +78,8 @@ Namespace NCBI.PubChem.Web
 				typeName:="row",
 				variants:={}
 			)
+				' 20231127
+				'
 				' some data field may be variant type:
 				' could be a single string value
 				' or a string array list object
