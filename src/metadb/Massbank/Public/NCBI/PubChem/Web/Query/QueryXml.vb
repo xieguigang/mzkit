@@ -53,11 +53,14 @@ Namespace NCBI.PubChem.Web
 		Public Property meshheadings As String
 		Public Property sidsrcname As sidsrcname
 
+		<XmlElement("annotation")>
 		Public Property annotation As Object
 
 		<MethodImpl(MethodImplOptions.AggressiveInlining)>
-		Public Shared Function Load(filepath As String) As IEnumerable(Of QueryXml)
-			Return LoadUltraLargeXMLDataSet(Of QueryXml)(filepath, typeName:="row", variants:={GetType(String), GetType(annotation)})
+		Public Shared Iterator Function Load(filepath As String) As IEnumerable(Of QueryXml)
+			For Each metabo As QueryXml In LoadUltraLargeXMLDataSet(Of QueryXml)(filepath, typeName:="row", variants:={GetType(String), GetType(annotation)})
+				Yield metabo
+			Next
 		End Function
 
 		<MethodImpl(MethodImplOptions.AggressiveInlining)>
