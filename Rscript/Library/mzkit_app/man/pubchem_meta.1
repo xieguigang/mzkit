@@ -1,15 +1,19 @@
-﻿.TH PUBCHEM_META 1 2023-Nov "" "pubchem_meta"
+﻿.TH PUBCHEM_META 1 2023-Nov "" "Helper script for run pubchem database query"
 .SH NAME
 pubchem_meta \- pubchem_meta(term)
 .SH SYNOPSIS
 \fIpubchem_meta(term)\fR
 .SH OPTIONS
 .PP
-\fBterm\fB \fR\- . 
+\fBterm\fB \fR\- . any search term string for run online pubchem database query. a character vector value could be the metabolite name, CAS number, etc.
+.PP
+.SH VALUE
+.PP
+a tuple list of the possible metabolite matches of the input search term.
 .PP
 .SH FILES
 .PP
-SMRUCC/R#.declare_function.pubchem_meta at pugView.R:line 7
+SMRUCC/R#.declare_function.pubchem_meta at pugView.R:line 15
 .PP
 .SH COPYRIGHT
 Copyright © xieguigang, MIT Licensed 2023

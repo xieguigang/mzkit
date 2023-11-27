@@ -1,12 +1,33 @@
 .\" man page create by R# package system.
 .TH PUBCHEM_KIT 1 2000-Jan "image_fly" "image_fly"
 .SH NAME
-image_fly \- 
+image_fly \- Request the metabolite structure image via the pubchem image_fly api
 .SH SYNOPSIS
 \fIimage_fly(\fBcid\fR as any, 
 \fBsize\fR as any = "500,500", 
-\fBignoresInvalidCid\fR as boolean = FALSE, 
+\fBignores_invalid_CID\fR as boolean = FALSE, 
 [\fB<Environment>\fR]);\fR
+.SH DESCRIPTION
+.PP
+Request the metabolite structure image via the pubchem image_fly api
+.PP
+.SH OPTIONS
+.PP
+\fBcid\fB \fR\- -. 
+.PP
+.PP
+\fBsize\fB \fR\- -. 
+.PP
+.PP
+\fBignores_invalid_CID\fB \fR\- -. 
+.PP
+.PP
+\fBenv\fB \fR\- -. 
+.PP
+.SH VALUE
+.PP
+A tuple list of the image data for the input pubchem metabolite cid query
+.PP
 .SH SEE ALSO
 pubchem_kit
 .SH FILES

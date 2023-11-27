@@ -13,11 +13,11 @@ declare namespace pubchem_kit {
     * query cid from pubchem database
     * 
     * 
-     * @param name -
-     * @param cache -
+     * @param name any search term for query the pubchem database
+     * @param cache the cache fs for the online pubchem database
      * 
      * + default value Is ``'./.pubchem'``.
-     * @param offline -
+     * @param offline running the search query handler in offline mode?
      * 
      * + default value Is ``false``.
      * @param interval the time sleep interval in ms
@@ -28,11 +28,22 @@ declare namespace pubchem_kit {
    */
    function CID(name: string, cache?: any, offline?: boolean, interval?: object, env?: object): string;
    /**
-     * @param size default value Is ``'500,500'``.
-     * @param ignoresInvalidCid default value Is ``false``.
-     * @param env default value Is ``null``.
+    * Request the metabolite structure image via the pubchem image_fly api
+    * 
+    * 
+     * @param cid -
+     * @param size -
+     * 
+     * + default value Is ``'500,500'``.
+     * @param ignores_invalid_CID -
+     * 
+     * + default value Is ``false``.
+     * @param env -
+     * 
+     * + default value Is ``null``.
+     * @return A tuple list of the image data for the input pubchem metabolite cid query
    */
-   function image_fly(cid: any, size?: any, ignoresInvalidCid?: boolean, env?: object): any;
+   function image_fly(cid: any, size?: any, ignores_invalid_CID?: boolean, env?: object): any;
    /**
     * create MeSH ontology gsea background based on the mesh tree
     * 
@@ -59,7 +70,8 @@ declare namespace pubchem_kit {
     * Generate the url for get pubchem pugviews data object
     * 
     * 
-     * @param cid -
+     * @param cid The pubchem compound cid, should be an integer value
+     * @return A url for get the pubchem data in pugview format
    */
    function pubchem_url(cid: string): string;
    /**
@@ -96,7 +108,13 @@ declare namespace pubchem_kit {
       */
       function external(cid: string, cache?: any, interval?: object, env?: object): object;
       /**
-        * @param cache default value Is ``'./graph_kb'``.
+       * Query the compound related biological context information from pubchem
+       * 
+       * 
+        * @param cid -
+        * @param cache -
+        * 
+        * + default value Is ``'./graph_kb'``.
       */
       function knowlegde_graph(cid: string, cache?: string): object;
    }
@@ -109,8 +127,9 @@ declare namespace pubchem_kit {
        * read pubmed data table files
        * 
        * 
-        * @param file -
-        * @param lazy -
+        * @param file A collection of the pubmed database ascii text file
+        * @param lazy just create a lazy loader instead of read all 
+        *  content into memory at once?
         * 
         * + default value Is ``true``.
         * @param env -
@@ -125,6 +144,9 @@ declare namespace pubchem_kit {
         * @param file the file path or the xml text content
       */
       function pugView(file: string): object;
+      /**
+      */
+      function webquery(file: string): object;
    }
    /**
     * parse the pubchem sid map data file
