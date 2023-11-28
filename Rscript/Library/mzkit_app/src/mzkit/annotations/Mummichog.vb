@@ -71,7 +71,7 @@ Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.genomics.Analysis.HTS.GSEA
 Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
-Imports SMRUCC.genomics.Assembly.KEGG.WebServices
+Imports SMRUCC.genomics.Assembly.KEGG.WebServices.XML
 Imports SMRUCC.genomics.Model.Network.KEGG.ReactionNetwork
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
@@ -374,7 +374,7 @@ Module Mummichog
         End Sub
 
         Public Overrides Function CreateGraphModel(map As Map) As NetworkGraph
-            Dim allIdSet = map.shapes _
+            Dim allIdSet = map.shapes.mapdata _
                 .Select(Function(a) a.IDVector) _
                 .IteratesALL _
                 .Distinct _
