@@ -103,6 +103,9 @@ declare namespace massbank {
       */
       function ChEBI_entity(xml: string): object;
    }
+   /**
+   */
+   function rankingNames(x: any): any;
    module read {
       /**
        * read lipidmaps messagepack repository file
