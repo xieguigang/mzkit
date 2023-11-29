@@ -24,8 +24,8 @@ Namespace MetaLib
             End If
 
             ' avoid the chemical formula string
-            If name.IsPattern("([A-Za-z]{1,2}(\d+)?)+") Then
-                eval /= 3
+            If name.IsPattern("([A-Z][a-z]?(\d+)?)+") Then
+                eval /= 1.356
             End If
 
             ' avoid the database id
