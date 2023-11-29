@@ -23,6 +23,11 @@ Namespace MetaLib
                 eval = 10 / name.Length
             End If
 
+            ' avoid the database id
+            If name.IsPattern("[a-zA-Z]+\d+") Then
+                eval /= 2.3
+            End If
+
             Dim count As Integer = Aggregate c As Char
                                    In symbols
                                    Into Sum(name.Count(c))
