@@ -8,7 +8,7 @@ Namespace MetaLib
         ReadOnly empty_symbols As Index(Of String) = {".", "_", "?"}
         ReadOnly symbols As Char() = {"-", "/", "\", ":", "<", ">", "?", "(", ")", "[", "]", "{", "}", "|", ";", ",", "'", """"c, "."}
 
-        Public Function Score(name As String) As Double
+        Public Function Score(name As String, Optional maxLen As Integer = 24) As Double
             If name.StringEmpty(testEmptyFactor:=True) OrElse name Like empty_symbols Then
                 Return -1
             End If
@@ -17,16 +17,16 @@ Namespace MetaLib
 
             If name.Length < 3 Then
                 eval = 1
-            ElseIf name.Length < 32 Then
+            ElseIf name.Length < maxLen Then
                 eval = 10
             Else
-                eval = 3
+                eval = 10 / name.Length
             End If
 
             Dim count As Integer = Aggregate c As Char
                                    In symbols
                                    Into Sum(name.Count(c))
-            eval /= count
+            eval /= (count + 1)
 
             Return eval
         End Function
