@@ -7,6 +7,12 @@ Namespace MetaLib
     Public Module NameRanking
 
         ReadOnly empty_symbols As Index(Of String) = {".", "_", "?"}
+
+        ''' <summary>
+        ''' the white space is exclude from the symbol list, due to 
+        ''' the reason of the white space is recommended in the 
+        ''' common name, example as: "Magneson I"
+        ''' </summary>
         ReadOnly symbols As Char() = {"-", "/", "\", ":", "<", ">", "?", "(", ")", "[", "]", "{", "}", "|", ";", ",", "'", """"c, ".", "_"}
 
         Public Function Score(name As String, Optional maxLen As Integer = 32) As Double
@@ -48,7 +54,7 @@ Namespace MetaLib
             Dim count As Integer = Aggregate c As Char
                                    In symbols
                                    Into Sum(name.Count(c))
-            eval /= (count + 1)
+            eval /= (count / 3 + 1)
 
             Return eval
         End Function

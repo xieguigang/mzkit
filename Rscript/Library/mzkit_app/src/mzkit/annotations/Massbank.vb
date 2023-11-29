@@ -669,6 +669,11 @@ Module Massbank
     <ExportAPI("rankingNames")>
     Public Function rankingNames(<RRawVectorArgument> x As Object) As Object
         Dim names As String() = CLRVector.asCharacter(x)
+
+        If names.IsNullOrEmpty Then
+            Return Nothing
+        End If
+
         Dim ranking = NameRanking.Ranking(names).ToArray
         Dim name As String = ranking.First.value
         Dim synonym As New list With {.slots = New Dictionary(Of String, Object)}
