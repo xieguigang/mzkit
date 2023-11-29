@@ -67,7 +67,7 @@ Namespace TMIC.HMDB.Repository
                        Optional interval As Integer = -1,
                        Optional offline As Boolean = False)
 
-            MyBase.New(url:=Function(id) $"http://www.hmdb.ca/metabolites/{id.FormatHMDBId}.xml",
+            MyBase.New(url:=Function(id) $"http://www.hmdb.ca/metabolites/{id.FormatHMDB}.xml",
                        contextGuid:=Function(id) id,
                        parser:=AddressOf ParseXml,
                        prefix:=Function(id) Mid(id.Match("\d+").ParseInteger.ToString, 1, 2),
