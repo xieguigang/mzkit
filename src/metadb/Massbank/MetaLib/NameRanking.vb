@@ -6,9 +6,9 @@ Namespace MetaLib
     Public Module NameRanking
 
         ReadOnly empty_symbols As Index(Of String) = {".", "_", "?"}
-        ReadOnly symbols As Char() = {"-", "/", "\", ":", "<", ">", "?", "(", ")", "[", "]", "{", "}", "|", ";", ",", "'", """"c, "."}
+        ReadOnly symbols As Char() = {"-", "/", "\", ":", "<", ">", "?", "(", ")", "[", "]", "{", "}", "|", ";", ",", "'", """"c, ".", "_"}
 
-        Public Function Score(name As String, Optional maxLen As Integer = 24) As Double
+        Public Function Score(name As String, Optional maxLen As Integer = 32) As Double
             If name.StringEmpty(testEmptyFactor:=True) OrElse name Like empty_symbols Then
                 Return -1
             End If
@@ -23,9 +23,25 @@ Namespace MetaLib
                 eval = 10 / name.Length
             End If
 
+            ' avoid the chemical formula string
+            If name.IsPattern("([A-Za-z]{1,2}(\d+)?)+") Then
+                eval /= 3
+            End If
+
             ' avoid the database id
-            If name.IsPattern("[a-zA-Z]+\d+") Then
+            If name.IsPattern("[a-zA-Z]+\s*\d+") Then
                 eval /= 2.3
+            End If
+            If name.All(Function(c)
+                            If Char.IsLetter(c) AndAlso Char.IsUpper(c) Then
+                                Return True
+                            ElseIf c = " "c Then
+                                Return True
+                            Else
+                                Return False
+                            End If
+                        End Function) Then
+                eval *= 0.953
             End If
 
             Dim count As Integer = Aggregate c As Char
