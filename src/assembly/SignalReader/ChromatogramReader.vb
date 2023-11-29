@@ -24,8 +24,8 @@ Public Module ChromatogramReader
 
         For i As Integer = 0 To rawfiles.Length - 1
             samples(i) = Resampler.CreateSampler(
-                x:=rawfiles(i).GetTime,
-                y:=rawfiles(i).GetIntensity
+                x:=rawfiles(i).GetTime.ToArray,
+                y:=rawfiles(i).GetIntensity.ToArray
             )
         Next
 
