@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.ComponentModel.Collection
+﻿Imports System.Text.RegularExpressions
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 
 Namespace MetaLib
@@ -24,7 +25,7 @@ Namespace MetaLib
             End If
 
             ' avoid the chemical formula string
-            If name.IsPattern("([A-Z][a-z]?(\d+)?)+") Then
+            If name.IsPattern("([A-Z]([a-z]?)(\d+)?)+", RegexOptions.Singleline) Then
                 eval /= 1.356
             End If
 
