@@ -61,7 +61,7 @@ Namespace MetaLib.Models
     Public Module XrefExtensions
 
         <Extension>
-        Public Function FormatChEbiID(id As String) As String
+        Public Function FormatChEBI(id As String) As String
             id = id.Match("\d+")
 
             If Val(id) <= 0 Then
@@ -72,7 +72,7 @@ Namespace MetaLib.Models
         End Function
 
         <Extension>
-        Public Function FormatHMDBId(id As String) As String
+        Public Function FormatHMDB(id As String) As String
             If Not xref.IsHMDB(id) Then
                 Return ""
             Else

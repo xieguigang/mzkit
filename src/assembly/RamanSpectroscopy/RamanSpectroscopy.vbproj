@@ -3,6 +3,7 @@
   <PropertyGroup>
     <RootNamespace>RamanSpectroscopy</RootNamespace>
     <TargetFramework>net6.0</TargetFramework>
+    <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
   <ItemGroup>

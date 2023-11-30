@@ -4,6 +4,14 @@ imports "graphquery" from "webKit";
 
 require(REnv);
 
+#' Helper script for run pubchem database query
+#' 
+#' @param term any search term string for run online pubchem database query.
+#'     a character vector value could be the metabolite name, CAS number, etc.
+#' 
+#' @return a tuple list of the possible metabolite matches of the input
+#'     search term.
+#'   
 const pubchem_meta = function(term) {
     const cache = getOption("pubchem.http_cache") || stop("the 'pubchem.http_cache' location is not set!");
     const sleep = getOption("http.sleep") || 3;
@@ -30,6 +38,8 @@ const pubchem_meta = function(term) {
     } 
 }
 
+#' Parse the compound information
+#' 
 const parsePubchemMeta = function(document) {
     const pugView_query = getQuery("pubchem.graphquery");
     const section_data  = getQuery("section_data.graphquery");

@@ -113,7 +113,7 @@ Namespace Chromatogram
 
         Public Shared Iterator Function Zip(rt As Double(), intensity As Double()) As IEnumerable(Of ChromatogramTick)
             For i As Integer = 0 To rt.Length - 1
-                Yield New ChromatogramTick(rt(i), intensity(i))
+                Yield New ChromatogramTick(rt(i), If(intensity(i) < 0, 0, intensity(i)))
             Next
         End Function
     End Class

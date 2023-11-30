@@ -58,7 +58,7 @@ Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Linq
 Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
-Imports SMRUCC.genomics.Assembly.KEGG.WebServices
+Imports SMRUCC.genomics.Assembly.KEGG.WebServices.XML
 Imports SMRUCC.genomics.ComponentModel.EquaionModel.DefaultTypes
 
 Public MustInherit Class MapGraphPopulator
@@ -121,7 +121,7 @@ Public Module KEGG
     ''' </returns>
     <Extension>
     Friend Function graphModel(map As Map, reactions As Dictionary(Of String, Reaction)) As NetworkGraph
-        Dim allShapes As String() = map.shapes _
+        Dim allShapes As String() = map.shapes.mapdata _
             .Select(Function(a) a.IDVector) _
             .IteratesALL _
             .Distinct _
