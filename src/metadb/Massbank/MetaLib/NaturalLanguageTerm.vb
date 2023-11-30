@@ -81,7 +81,8 @@ Namespace MetaLib
         ''' </summary>
         ''' <param name="text"></param>
         ''' <returns></returns>
-        <Extension> Public Function ParseVendorName(text As String) As String
+        <Extension>
+        Public Function ParseVendorName(text As String) As String
             Static prefix$() = {"Thermo", "Waters", "Agilent"}
 
             For Each name As String In prefix
@@ -98,7 +99,7 @@ Namespace MetaLib
 
             If isNamePattern(postfix) Then
                 Return postfix
-            ElseIf postfix = Trim(text) Then
+            ElseIf postfix = Strings.Trim(text) Then
                 postfix = Strings.Split(text).FirstOrDefault
 
                 If isNamePattern(postfix) Then
