@@ -1,5 +1,7 @@
 ﻿
+Imports System.Drawing
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML.ControlVocabulary
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 
 Namespace MarkupData.imzML
 
@@ -13,8 +15,32 @@ Namespace MarkupData.imzML
         ''' </summary>
         ''' <returns></returns>
         Public Property cv As cvList
+        Public Property guid As String
+        Public Property format As Format
+        Public Property ibd_checksum As String
+        Public Property sourcefiles As String()
+        ''' <summary>
+        ''' software name => version
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property softwares As NamedValue(Of String)()
 
+#Region "ms-imaging specific metadata"
 
+        Public Property direction1 As String
+        Public Property direction2 As String
+        Public Property dims As Size
+        Public Property physical_size As Size
+        Public Property resolution As Size
+
+#End Region
+
+#Region "ms instrument"
+        Public Property ms_instrument As String
+        Public Property ms_source As String
+        Public Property ms_analyzer As String
+        Public Property ms_detector As String
+#End Region
 
         ''' <summary>
         ''' 
