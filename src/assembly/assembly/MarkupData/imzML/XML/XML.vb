@@ -68,14 +68,6 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 
 Namespace MarkupData.imzML
 
-    Public Class PointF3D : Implements Imaging.PointF3D
-
-        Public Property X As Double Implements Imaging.PointF3D.X
-        Public Property Y As Double Implements Imaging.PointF3D.Y
-        Public Property Z As Double Implements Imaging.PointF3D.Z
-
-    End Class
-
     <XmlType("indexedmzML", [Namespace]:=mzML.indexedmzML.xmlns)>
     Public Class XML
 
