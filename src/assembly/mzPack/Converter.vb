@@ -169,7 +169,7 @@ mzXML:      Return New mzPack With {
         ElseIf xml.ExtensionSuffix("mzML") Then
 mzML:       Return LoadMzML(xml, tolerance, intocutoff, progress)
         ElseIf xml.ExtensionSuffix("imzML") Then
-imzML:      Return LoadimzML(xml, Sub(p, msg) progress($"{msg}...{p}%"))
+imzML:      Return LoadimzML(xml, intocutoff, Sub(p, msg) progress($"{msg}...{p}%"))
         Else
             If Not prefer.StringEmpty Then
                 Select Case prefer.ToLower
