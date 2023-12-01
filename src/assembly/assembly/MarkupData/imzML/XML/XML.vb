@@ -74,6 +74,11 @@ Namespace MarkupData.imzML
         <XmlAttribute>
         Public Property version As String
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function ParseMetadata(imzml As String) As imzMLMetadata
+            Return imzMLMetadata.ReadHeaders(imzml)
+        End Function
+
         ''' <summary>
         ''' just load the scan meta from the imzML file
         ''' </summary>
@@ -81,7 +86,9 @@ Namespace MarkupData.imzML
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function LoadScans(file As String) As IEnumerable(Of ScanData)
-            Return mzML.indexedmzML.LoadScans(file).Select(Function(scan) New ScanData(scan))
+            Return mzML.indexedmzML _
+                .LoadScans(file) _
+                .Select(Function(scan) New ScanData(scan))
         End Function
 
         Public Shared Sub Get3DPositionXYZ(spectrum As mzML.spectrum, ByRef x As Double, ByRef y As Double, ByRef z As Double)

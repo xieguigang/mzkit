@@ -52,7 +52,11 @@ Namespace MarkupData.imzML
         Public Shared Function ReadHeaders(imzml As String) As imzMLMetadata
             Dim cv As cvList = LoadUltraLargeXMLDataSet(Of cvList)(imzml, typeName:=NameOf(cvList)).FirstOrDefault
             Dim desc As fileDescription = LoadUltraLargeXMLDataSet(Of fileDescription)(imzml, typeName:=NameOf(fileDescription)).FirstOrDefault
-            Dim softwares As softwareList
+            Dim softwares As softwareList = LoadUltraLargeXMLDataSet(Of softwareList)(imzml, typeName:=NameOf(softwareList)).FirstOrDefault
+            Dim scanMeta As scanSettingsList = LoadUltraLargeXMLDataSet(Of scanSettingsList)(imzml, typeName:=NameOf(scanSettingsList)).FirstOrDefault
+            Dim instrument As instrumentConfigurationList = LoadUltraLargeXMLDataSet(Of instrumentConfigurationList)(imzml, typeName:=NameOf(instrumentConfigurationList)).FirstOrDefault
+
+            Return New imzMLMetadata
         End Function
     End Class
 End Namespace
