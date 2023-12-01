@@ -88,6 +88,7 @@ Namespace MarkupData.imzML
         Public Shared Function LoadScans(file As String) As IEnumerable(Of ScanData)
             Return mzML.indexedmzML _
                 .LoadScans(file) _
+                .ToArray _
                 .AsParallel _
                 .Select(Function(scan) New ScanData(scan)) _
                 .OrderBy(Function(s) s.spotID)
