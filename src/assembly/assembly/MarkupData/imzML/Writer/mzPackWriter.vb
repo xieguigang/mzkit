@@ -195,13 +195,13 @@ Namespace MarkupData.imzML
                         <cvParam cvRef="MS" accession="MS:1000576" name="no compression"/>
                         <cvParam cvRef="MS" accession="MS:1000514" name="m/z array" unitCvRef="MS" unitAccession="MS:1000040" unitName="m/z"/>
                         <cvParam cvRef="IMS" accession="IMS:1000101" name="external data" value="true"/>
-                        <cvParam cvRef="MS" accession="MS:1000521" name="32-bit float"/>
+                        <cvParam cvRef="MS" accession="MS:1000521" name="64-bit float"/>
                     </referenceableParamGroup>
                     <referenceableParamGroup id="intensityArray">
                         <cvParam cvRef="MS" accession="MS:1000576" name="no compression"/>
                         <cvParam cvRef="MS" accession="MS:1000515" name="intensity array" unitCvRef="MS" unitAccession="MS:1000131" unitName="number of detector counts"/>
                         <cvParam cvRef="IMS" accession="IMS:1000101" name="external data" value="true"/>
-                        <cvParam cvRef="MS" accession="MS:1000521" name="32-bit float"/>
+                        <cvParam cvRef="MS" accession="MS:1000521" name="64-bit float"/>
                     </referenceableParamGroup>
                     <referenceableParamGroup id="scan1">
                         <cvParam cvRef="MS" accession="MS:1000093" name="increasing m/z scan"/>
