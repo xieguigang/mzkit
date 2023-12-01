@@ -113,6 +113,7 @@ for(metabo in hits) {
     print(`${kegg_id} - ${name}`);
 
     # stop();
+    break;
 }
 
 repository::write.msgpack(unlist(kegg_compounds), file = "E:\\compounds\\compounds.msgpack");
