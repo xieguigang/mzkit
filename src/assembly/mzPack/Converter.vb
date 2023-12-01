@@ -184,7 +184,8 @@ imzML:      Return LoadimzML(xml, Sub(p, msg) progress($"{msg}...{p}%"))
 
     Public Function LoadimzML(xml As String, Optional progress As RunSlavePipeline.SetProgressEventHandler = Nothing) As mzPack
         Dim scans As New List(Of ScanMS1)
-        Dim ibd As New ibdReader(xml.ChangeSuffix("ibd").Open(FileMode.Open, doClear:=False, [readOnly]:=True), Format.Continuous)
+        Dim ibdStream As Stream = xml.ChangeSuffix("ibd").Open(FileMode.Open, doClear:=False, [readOnly]:=True)
+        Dim ibd As New ibdReader(ibdStream, Format.Continuous)
         Dim pixel As ScanMS1
         Dim ms As ms2()
         Dim allscans As ScanData() = imzML.XML.LoadScans(xml).ToArray
