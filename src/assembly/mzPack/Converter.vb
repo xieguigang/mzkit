@@ -183,7 +183,20 @@ imzML:      Return LoadimzML(xml, Sub(p, msg) progress($"{msg}...{p}%"))
         End If
     End Function
 
-    Public Function LoadimzML(xml As String, Optional progress As RunSlavePipeline.SetProgressEventHandler = Nothing) As mzPack
+    ''' <summary>
+    ''' load imzML rawdata and construct a new mzpack object
+    ''' </summary>
+    ''' <param name="xml"></param>
+    ''' <param name="noiseCutoff">
+    ''' the intensity cutoff value for the scan peaks data, value 
+    ''' in range [0,1), is a percentage value cutoff.
+    ''' </param>
+    ''' <param name="progress"></param>
+    ''' <returns></returns>
+    Public Function LoadimzML(xml As String,
+                              Optional noiseCutoff As Double = 0,
+                              Optional progress As RunSlavePipeline.SetProgressEventHandler = Nothing) As mzPack
+
         Dim scans As New List(Of ScanMS1)
         Dim metadata As imzMLMetadata = imzMLMetadata.ReadHeaders(imzml:=xml)
         Dim ibdStream As Stream = xml.ChangeSuffix("ibd").Open(FileMode.Open, doClear:=False, [readOnly]:=True)
@@ -197,13 +210,30 @@ imzML:      Return LoadimzML(xml, Sub(p, msg) progress($"{msg}...{p}%"))
         Dim msiMetadata As New Dictionary(Of String, String)
         Dim ptag As String
         Dim filename As String = metadata.sourcefiles.First.FileName
+        Dim mz As Double() = Nothing
+        Dim intensity As Double() = Nothing
+        Dim maxinto As Double
 
         msiMetadata!width = metadata.dims.Width
         msiMetadata!height = metadata.dims.Height
         msiMetadata!resolution = (metadata.resolution.Width + metadata.resolution.Height) / 2
 
         For Each scan As ScanData In allscans
-            ms = ibd.GetMSMS(scan)
+            Call ibd.GetMSVector(scan, mz, intensity)
+
+            If noiseCutoff > 0 AndAlso intensity.Length > 0 Then
+                maxinto = intensity.Max
+                ms = mz _
+                    .Select(Function(mzi, offset) New ms2(mzi, intensity(offset))) _
+                    .AsParallel _
+                    .Where(Function(a) a.intensity / maxinto >= noiseCutoff) _
+                    .ToArray
+            Else
+                ms = mz _
+                    .Select(Function(mzi, offset) New ms2(mzi, intensity(offset))) _
+                    .ToArray
+            End If
+
             ptag = If(scan.polarity = IonModes.Positive, "+", If(scan.polarity = IonModes.Negative, "-", "?"))
             pixel = New ScanMS1 With {
                 .meta = New Dictionary(Of String, String) From {

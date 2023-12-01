@@ -61,6 +61,7 @@
 
 Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports System.Runtime.InteropServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.Data.IO
 
@@ -152,6 +153,11 @@ Namespace MarkupData.imzML
                 }
             Next
         End Function
+
+        Public Sub GetMSVector(scan As ScanData, <Out> ByRef mz As Double(), <Out> ByRef intensity As Double())
+            mz = ReadArray(scan.MzPtr)
+            intensity = ReadArray(scan.IntPtr)
+        End Sub
 
         ''' <summary>
         ''' Get spectrum data of a pixel point
