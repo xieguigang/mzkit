@@ -84,10 +84,17 @@ Imports Microsoft.VisualBasic.Language.Default
 
 Namespace MarkupData.mzML.ControlVocabulary
 
+    ''' <summary>
+    ''' a set of the control vocabulary that used in current dataset
+    ''' </summary>
     Public Class cvList : Inherits List
 
         <XmlElement(NameOf(cv))>
         Public Property list As cv()
+
+        Public Overrides Function ToString() As String
+            Return list.JoinBy("; ")
+        End Function
 
     End Class
 

@@ -55,14 +55,10 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML.IonTargeted
-Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Text.Xml.Linq
-Imports Microsoft.VisualBasic.Math
 
 Namespace MarkupData.mzML
 
@@ -131,16 +127,6 @@ Namespace MarkupData.mzML
         <Extension>
         Public Function LoadChromatogramList(path As String) As IEnumerable(Of chromatogram)
             Return path.LoadXmlDataSet(Of chromatogram)(, xmlns:=indexedmzML.xmlns)
-        End Function
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension>
-        Public Function MRMTargetMz(selector As IMRMSelector) As Double
-            Return selector _
-                .isolationWindow _
-                .cvParams _
-                .KeyItem("isolation window target m/z") _
-                .value
         End Function
 
         ''' <summary>

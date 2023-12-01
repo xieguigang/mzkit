@@ -111,6 +111,9 @@ Namespace MarkupData.mzML
 
     End Class
 
+    ''' <summary>
+    ''' an abstract xml data list in mzML file
+    ''' </summary>
     Public Class List
 
         <XmlAttribute> Public Property count As Integer
