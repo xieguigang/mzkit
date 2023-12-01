@@ -88,7 +88,9 @@ Namespace MarkupData.imzML
         Public Shared Function LoadScans(file As String) As IEnumerable(Of ScanData)
             Return mzML.indexedmzML _
                 .LoadScans(file) _
-                .Select(Function(scan) New ScanData(scan))
+                .AsParallel _
+                .Select(Function(scan) New ScanData(scan)) _
+                .OrderBy(Function(s) s.spotID)
         End Function
 
         Public Shared Sub Get3DPositionXYZ(spectrum As mzML.spectrum, ByRef x As Double, ByRef y As Double, ByRef z As Double)
