@@ -59,10 +59,14 @@
 
 Namespace MarkupData
 
+    ''' <summary>
+    ''' the xml file data types that supported in mzkit currently
+    ''' </summary>
     Public Enum XmlFileTypes As Byte
         mzXML
         mzML
         imzML
         mzData
+        nmrML
     End Enum
 End Namespace

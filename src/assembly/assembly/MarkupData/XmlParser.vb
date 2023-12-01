@@ -59,6 +59,9 @@ Imports Microsoft.VisualBasic.Text.Xml.Linq
 
 Namespace MarkupData
 
+    ''' <summary>
+    ''' A unify xml file data parser
+    ''' </summary>
     Public Class XmlParser
 
         ReadOnly bin As StreamReader
