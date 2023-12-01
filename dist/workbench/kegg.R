@@ -7,7 +7,8 @@ imports "pubchem_kit" from "mzkit";
 imports "formula" from "mzkit";
 imports "repository" from "kegg_kit";
 
-const hits = read.webquery("E:\\PubChem_compound_text_kegg.xml");
+const hits = read.webquery("E:\\PubChem_compound_text_drugbank.xml");
+# const hits = read.webquery("E:\\PubChem_compound_text_kegg.xml");
 const kegg_compounds = list();
 
 for(metabo in hits) {
@@ -20,10 +21,14 @@ for(metabo in hits) {
     # print(names);
 
     let kegg_id = as.character(names[names == $"C\d{5}"]);
+    let drugbank_id = names[names == $"DB\d{5}"];
 
     # print(kegg_id);
 
-    if ( length(kegg_id) == 0 ) {
+    # if ( length(kegg_id) == 0 ) {
+    #     next;
+    # }
+    if (length(drugbank_id) == 0) {
         next;
     }
 
@@ -38,7 +43,6 @@ for(metabo in hits) {
     let hmdb_id = names[names == $"HMDB\d+"];
     let chebi_id = names[names == $"CHEBI[:]\d+"];
     let chembl_id = names[names == $"CHEMBL\d+"];
-    let drugbank_id = names[names == $"DB\d{5}"];
     let annotation = metabo$annotation;
 
     let db = [];
@@ -61,9 +65,13 @@ for(metabo in hits) {
         link = append(link, "");
     }
 
-    db = append(db, rep("DrugBank", length(drugbank_id)));
-    id = append(id, drugbank_id);
-    link = append(link, rep("", length(drugbank_id)));
+    db = append(db, rep("KEGG", length(kegg_id )));
+    id = append(id, kegg_id );
+    link = append(link, rep("", length(kegg_id )));
+
+    # db = append(db, rep("DrugBank", length(drugbank_id)));
+    # id = append(id, drugbank_id);
+    # link = append(link, rep("", length(drugbank_id)));
 
     db = append(db, rep("ChEMBL", length(chembl_id)));
     id = append(id, chembl_id);
@@ -91,7 +99,7 @@ for(metabo in hits) {
         link = append(link, rep("", length(metabo$meshheadings)));
     }    
 
-    for(keg in kegg_id) {
+    for(keg in drugbank_id ) {
         let kegg_compound = repository::compound(
             entry = keg,
             name = name,
@@ -110,9 +118,10 @@ for(metabo in hits) {
 
 
 
-    print(`${kegg_id} - ${name}`);
+    print(`${drugbank_id } - ${name}`);
 
     # stop();
+    # break;
 }
 
-repository::write.msgpack(unlist(kegg_compounds), file = "E:\\compounds\\compounds.msgpack");
+repository::write.msgpack(unlist(kegg_compounds), file = "E:\\compounds\\drugbank.msgpack");

@@ -66,11 +66,23 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML.Control
 
 Namespace MarkupData.mzML
 
-    Public Class instrumentConfiguration
+    Public Class instrumentConfigurationList : Inherits List
 
-        <XmlAttribute> Public Property id As String
+        <XmlElement>
+        Public Property instrumentConfiguration As instrumentConfiguration()
+
+    End Class
+
+    Public Class instrumentConfiguration : Inherits Params
+
+        <XmlAttribute>
+        Public Property id As String
 
         Public Property componentList As componentList
+
+        Public Overrides Function ToString() As String
+            Return id
+        End Function
 
     End Class
 

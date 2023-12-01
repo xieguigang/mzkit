@@ -61,6 +61,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.SignalReader
 Imports Microsoft.VisualBasic.CommandLine.InteropService.Pipeline
@@ -168,7 +169,7 @@ mzXML:      Return New mzPack With {
         ElseIf xml.ExtensionSuffix("mzML") Then
 mzML:       Return LoadMzML(xml, tolerance, intocutoff, progress)
         ElseIf xml.ExtensionSuffix("imzML") Then
-imzML:      Return LoadimzML(xml, Sub(p, msg) progress($"{msg}...{p}%"))
+imzML:      Return LoadimzML(xml, intocutoff, Sub(p, msg) progress($"{msg}...{p}%"))
         Else
             If Not prefer.StringEmpty Then
                 Select Case prefer.ToLower
@@ -182,25 +183,65 @@ imzML:      Return LoadimzML(xml, Sub(p, msg) progress($"{msg}...{p}%"))
         End If
     End Function
 
-    Public Function LoadimzML(xml As String, Optional progress As RunSlavePipeline.SetProgressEventHandler = Nothing) As mzPack
+    ''' <summary>
+    ''' load imzML rawdata and construct a new mzpack object
+    ''' </summary>
+    ''' <param name="xml"></param>
+    ''' <param name="noiseCutoff">
+    ''' the intensity cutoff value for the scan peaks data, value 
+    ''' in range [0,1), is a percentage value cutoff.
+    ''' </param>
+    ''' <param name="progress"></param>
+    ''' <returns></returns>
+    Public Function LoadimzML(xml As String,
+                              Optional noiseCutoff As Double = 0,
+                              Optional progress As RunSlavePipeline.SetProgressEventHandler = Nothing) As mzPack
+
         Dim scans As New List(Of ScanMS1)
-        Dim ibd As New ibdReader(xml.ChangeSuffix("ibd").Open(FileMode.Open, doClear:=False, [readOnly]:=True), Format.Continuous)
+        Dim metadata As imzMLMetadata = imzMLMetadata.ReadHeaders(imzml:=xml)
+        Dim ibdStream As Stream = xml.ChangeSuffix("ibd").Open(FileMode.Open, doClear:=False, [readOnly]:=True)
+        Dim ibd As New ibdReader(ibdStream, metadata.format)
         Dim pixel As ScanMS1
         Dim ms As ms2()
         Dim allscans As ScanData() = imzML.XML.LoadScans(xml).ToArray
         Dim i As Integer = 0
         Dim d As Integer = allscans.Length / 100 * 8
         Dim j As i32 = 0
+        Dim msiMetadata As New Dictionary(Of String, String)
+        Dim ptag As String
+        Dim filename As String = metadata.sourcefiles.First.FileName
+        Dim mz As Double() = Nothing
+        Dim intensity As Double() = Nothing
+        Dim maxinto As Double
+
+        msiMetadata!width = metadata.dims.Width
+        msiMetadata!height = metadata.dims.Height
+        msiMetadata!resolution = (metadata.resolution.Width + metadata.resolution.Height) / 2
 
         For Each scan As ScanData In allscans
-            ms = ibd.GetMSMS(scan)
+            Call ibd.GetMSVector(scan, mz, intensity)
+
+            If noiseCutoff > 0 AndAlso intensity.Length > 0 Then
+                maxinto = intensity.Max
+                ms = mz _
+                    .Select(Function(mzi, offset) New ms2(mzi, intensity(offset))) _
+                    .AsParallel _
+                    .Where(Function(a) a.intensity / maxinto >= noiseCutoff) _
+                    .ToArray
+            Else
+                ms = mz _
+                    .Select(Function(mzi, offset) New ms2(mzi, intensity(offset))) _
+                    .ToArray
+            End If
+
+            ptag = If(scan.polarity = IonModes.Positive, "+", If(scan.polarity = IonModes.Negative, "-", "?"))
             pixel = New ScanMS1 With {
                 .meta = New Dictionary(Of String, String) From {
                     {"x", scan.x},
                     {"y", scan.y}
                 },
                 .TIC = scan.totalIon,
-                .scan_id = $"[MS1][{scan.x},{scan.y}] totalIon: {scan.totalIon.ToString("G2")}",
+                .scan_id = $"[MS1][{scan.x},{scan.y}] [{filename}] {ptag} {scan.spotID} npeaks: {ms.Length} totalIon: {scan.totalIon.ToString("G2")} [{scan.mass.Min} - {scan.mass.Max}]",
                 .mz = ms.Select(Function(m) m.mz).ToArray,
                 .into = ms.Select(Function(m) m.intensity).ToArray
             }
@@ -217,7 +258,9 @@ imzML:      Return LoadimzML(xml, Sub(p, msg) progress($"{msg}...{p}%"))
 
         Return New mzPack With {
             .MS = scans.ToArray,
-            .source = SolveTagSource(xml)
+            .source = If(metadata.sourcefiles.FirstOrDefault, SolveTagSource(xml)),
+            .Application = FileApplicationClass.MSImaging,
+            .metadata = msiMetadata
         }
     End Function
 

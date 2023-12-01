@@ -57,6 +57,9 @@
 
 Namespace MarkupData.mzML
 
+    ''' <summary>
+    ''' the UV scan data model
+    ''' </summary>
     Public Class UVScan
 
         Public Property wavelength As Double()

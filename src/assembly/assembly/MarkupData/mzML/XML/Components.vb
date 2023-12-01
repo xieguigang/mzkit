@@ -79,9 +79,13 @@
 Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML.ControlVocabulary
+Imports Microsoft.VisualBasic.Linq
 
 Namespace MarkupData.mzML
 
+    ''' <summary>
+    ''' the file content information
+    ''' </summary>
     Public Class fileDescription
 
         Public Property fileContent As Params
@@ -100,6 +104,16 @@ Namespace MarkupData.mzML
         <XmlElement("sourceFile")>
         Public Property sourceFile As SourceFile()
 
+        ''' <summary>
+        ''' get a collection of the source file path
+        ''' </summary>
+        ''' <returns></returns>
+        Public Iterator Function GetFileList() As IEnumerable(Of String)
+            For Each file As SourceFile In sourceFile.SafeQuery
+                Yield file.name
+            Next
+        End Function
+
     End Class
 
     Public Class SourceFile : Inherits Params
@@ -111,6 +125,9 @@ Namespace MarkupData.mzML
 
     End Class
 
+    ''' <summary>
+    ''' an abstract xml data list in mzML file
+    ''' </summary>
     Public Class List
 
         <XmlAttribute> Public Property count As Integer

@@ -81,16 +81,38 @@ Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.Language.Default
+Imports Microsoft.VisualBasic.Linq
 
 Namespace MarkupData.mzML.ControlVocabulary
 
+    ''' <summary>
+    ''' a set of the control vocabulary that used in current dataset
+    ''' </summary>
     Public Class cvList : Inherits List
 
         <XmlElement(NameOf(cv))>
         Public Property list As cv()
 
+        Public Overrides Function ToString() As String
+            Return list.JoinBy("; ")
+        End Function
+
     End Class
 
+    ''' <summary>
+    ''' The Controlled Vocabularies (CV's) of the Proteomic Standard Initiative
+    ''' (PSI) provide a consensus annotation system to standardize the meaning, 
+    ''' syntax and formalism of terms used across proteomics, as required by the
+    ''' PSI Working Groups. Each PSI working group develops the CV's required 
+    ''' by the technology or data type it aims to standardize, following common 
+    ''' recommendations for devoplement and maintenance. At the PSI meeting in 
+    ''' Washington (Science 296, 827), it was decided that all PSI working groups 
+    ''' should adopt the same CV's standardizing some overlapping concepts (units
+    ''' and resources). Finally, we propose a common mapping schema to describe 
+    ''' for each data file schema the associations between its specific elements
+    ''' and the PSI CV's or other external ontology resources. Such mappings 
+    ''' support the validation of XML files.
+    ''' </summary>
     Public Structure cv
 
         <XmlAttribute> Public Property id As String
@@ -104,11 +126,24 @@ Namespace MarkupData.mzML.ControlVocabulary
         End Function
     End Structure
 
+    ''' <summary>
+    ''' a collection of the standard parameters and user defined parameters
+    ''' </summary>
     Public Class Params
 
         <XmlElement(NameOf(cvParam))> Public Property cvParams As cvParam()
         <XmlElement(NameOf(cvTerm))> Public Property cvTerm As cvParam()
         <XmlElement(NameOf(userParam))> Public Property userParams As userParam()
+
+        Public Function FindVocabulary(accession As String) As cvParam
+            For Each par As cvParam In cvParams.SafeQuery
+                If par.accession = accession Then
+                    Return par
+                End If
+            Next
+
+            Return Nothing
+        End Function
 
     End Class
 
@@ -125,7 +160,8 @@ Namespace MarkupData.mzML.ControlVocabulary
     End Class
 
     ''' <summary>
-    ''' [<see cref="cvParam.name"/> => <see cref="cvParam"/>]
+    ''' a named parameter value,  
+    ''' value indexed by name [<see cref="cvParam.name"/> => <see cref="cvParam"/>]
     ''' </summary>
     Public Class cvParam : Implements INamedValue
 

@@ -68,19 +68,16 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 
 Namespace MarkupData.imzML
 
-    Public Class PointF3D : Implements Imaging.PointF3D
-
-        Public Property X As Double Implements Imaging.PointF3D.X
-        Public Property Y As Double Implements Imaging.PointF3D.Y
-        Public Property Z As Double Implements Imaging.PointF3D.Z
-
-    End Class
-
     <XmlType("indexedmzML", [Namespace]:=mzML.indexedmzML.xmlns)>
     Public Class XML
 
         <XmlAttribute>
         Public Property version As String
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function ParseMetadata(imzml As String) As imzMLMetadata
+            Return imzMLMetadata.ReadHeaders(imzml)
+        End Function
 
         ''' <summary>
         ''' just load the scan meta from the imzML file
@@ -89,7 +86,12 @@ Namespace MarkupData.imzML
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function LoadScans(file As String) As IEnumerable(Of ScanData)
-            Return mzML.indexedmzML.LoadScans(file).Select(Function(scan) New ScanData(scan))
+            Return mzML.indexedmzML _
+                .LoadScans(file) _
+                .ToArray _
+                .AsParallel _
+                .Select(Function(scan) New ScanData(scan)) _
+                .OrderBy(Function(s) s.spotID)
         End Function
 
         Public Shared Sub Get3DPositionXYZ(spectrum As mzML.spectrum, ByRef x As Double, ByRef y As Double, ByRef z As Double)

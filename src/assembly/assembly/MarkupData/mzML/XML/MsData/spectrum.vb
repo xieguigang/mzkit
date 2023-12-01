@@ -59,6 +59,7 @@
 Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
@@ -103,6 +104,18 @@ Namespace MarkupData.mzML
                     Return (mz(Scan0), into(Scan0))
                 Else
                     Return (0, 0)
+                End If
+            End Get
+        End Property
+
+        Public ReadOnly Property polarity As IonModes
+            Get
+                If cvParams.Any(Function(cv) cv.name = "positive scan") Then
+                    Return IonModes.Positive
+                ElseIf cvParams.Any(Function(cv) cv.name = "negative scan") Then
+                    Return IonModes.Negative
+                Else
+                    Return IonModes.Unknown
                 End If
             End Get
         End Property

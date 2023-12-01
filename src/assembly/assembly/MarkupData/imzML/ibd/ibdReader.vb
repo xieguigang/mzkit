@@ -61,6 +61,7 @@
 
 Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports System.Runtime.InteropServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.Data.IO
 
@@ -101,6 +102,10 @@ Namespace MarkupData.imzML
             End Get
         End Property
 
+        ''' <summary>
+        ''' the ibd file size
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property size As Long
             Get
                 If stream.BaseStream Is Nothing Then
@@ -149,6 +154,11 @@ Namespace MarkupData.imzML
             Next
         End Function
 
+        Public Sub GetMSVector(scan As ScanData, <Out> ByRef mz As Double(), <Out> ByRef intensity As Double())
+            mz = ReadArray(scan.MzPtr)
+            intensity = ReadArray(scan.IntPtr)
+        End Sub
+
         ''' <summary>
         ''' Get spectrum data of a pixel point
         ''' </summary>
@@ -188,9 +198,9 @@ Namespace MarkupData.imzML
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Function Open(ibd As String) As ibdReader
+        Public Shared Function Open(ibd As String, Optional format As Format = Format.Processed) As ibdReader
             Dim file As Stream = ibd.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
-            Dim reader As New ibdReader(file, Format.Processed)
+            Dim reader As New ibdReader(file, format)
 
             Return reader
         End Function
