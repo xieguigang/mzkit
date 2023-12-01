@@ -186,13 +186,18 @@ imzML:      Return LoadimzML(xml, Sub(p, msg) progress($"{msg}...{p}%"))
         Dim scans As New List(Of ScanMS1)
         Dim metadata As imzMLMetadata = imzMLMetadata.ReadHeaders(imzml:=xml)
         Dim ibdStream As Stream = xml.ChangeSuffix("ibd").Open(FileMode.Open, doClear:=False, [readOnly]:=True)
-        Dim ibd As New ibdReader(ibdStream, Format.Continuous)
+        Dim ibd As New ibdReader(ibdStream, metadata.format)
         Dim pixel As ScanMS1
         Dim ms As ms2()
         Dim allscans As ScanData() = imzML.XML.LoadScans(xml).ToArray
         Dim i As Integer = 0
         Dim d As Integer = allscans.Length / 100 * 8
         Dim j As i32 = 0
+        Dim msiMetadata As New Dictionary(Of String, String)
+
+        msiMetadata!width = metadata.dims.Width
+        msiMetadata!height = metadata.dims.Height
+        msiMetadata!resolution = (metadata.resolution.Width + metadata.resolution.Height) / 2
 
         For Each scan As ScanData In allscans
             ms = ibd.GetMSMS(scan)
@@ -219,7 +224,9 @@ imzML:      Return LoadimzML(xml, Sub(p, msg) progress($"{msg}...{p}%"))
 
         Return New mzPack With {
             .MS = scans.ToArray,
-            .source = SolveTagSource(xml)
+            .source = If(metadata.sourcefiles.FirstOrDefault, SolveTagSource(xml)),
+            .Application = FileApplicationClass.MSImaging,
+            .metadata = msiMetadata
         }
     End Function
 
