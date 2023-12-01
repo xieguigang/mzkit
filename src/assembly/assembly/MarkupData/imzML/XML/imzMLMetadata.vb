@@ -1,5 +1,6 @@
 ﻿
 Imports System.Drawing
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML.ControlVocabulary
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Text.Xml.Linq
@@ -50,7 +51,8 @@ Namespace MarkupData.imzML
         ''' <returns></returns>
         Public Shared Function ReadHeaders(imzml As String) As imzMLMetadata
             Dim cv As cvList = LoadUltraLargeXMLDataSet(Of cvList)(imzml, typeName:=NameOf(cvList)).FirstOrDefault
-
+            Dim desc As fileDescription = LoadUltraLargeXMLDataSet(Of fileDescription)(imzml, typeName:=NameOf(fileDescription)).FirstOrDefault
+            Dim softwares As softwareList
         End Function
     End Class
 End Namespace

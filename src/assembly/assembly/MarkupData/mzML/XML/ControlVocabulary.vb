@@ -125,6 +125,9 @@ Namespace MarkupData.mzML.ControlVocabulary
         End Function
     End Structure
 
+    ''' <summary>
+    ''' a collection of the standard parameters and user defined parameters
+    ''' </summary>
     Public Class Params
 
         <XmlElement(NameOf(cvParam))> Public Property cvParams As cvParam()

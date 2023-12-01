@@ -82,6 +82,9 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML.Control
 
 Namespace MarkupData.mzML
 
+    ''' <summary>
+    ''' the file content information
+    ''' </summary>
     Public Class fileDescription
 
         Public Property fileContent As Params
