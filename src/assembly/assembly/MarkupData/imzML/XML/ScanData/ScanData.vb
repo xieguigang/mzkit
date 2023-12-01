@@ -85,7 +85,9 @@
 #End Region
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 
 Namespace MarkupData.imzML
 
@@ -98,13 +100,30 @@ Namespace MarkupData.imzML
         Public Property MzPtr As ibdPtr Implements ImageScan.MzPtr
         Public Property IntPtr As ibdPtr Implements ImageScan.IntPtr
 
+        Public Property spotID As Integer
+        Public Property polarity As IonModes
+
+        ''' <summary>
+        ''' [lowest observed m/z, highest observed m/z]
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property mass As DoubleRange
+
         Sub New(scan As spectrum)
             If Not scan.cvParams Is Nothing Then
+                Dim lowMass As Double = scan.FindVocabulary("MS:1000528")?.value
+                Dim highMass As Double = scan.FindVocabulary("MS:1000527")?.value
+
                 totalIon = Double.Parse(scan.cvParams.KeyItem("total ion current")?.value)
+                mass = New DoubleRange(lowMass, highMass)
             End If
 
-            x = Integer.Parse(scan.scanList.scans(Scan0).cvParams.KeyItem("position x")?.value)
-            y = Integer.Parse(scan.scanList.scans(Scan0).cvParams.KeyItem("position y")?.value)
+            Dim scanInfo As mzML.scan = scan.scanList.scans(0)
+
+            polarity = scan.polarity
+            spotID = scan.index
+            x = Integer.Parse(scanInfo.cvParams.KeyItem("position x")?.value)
+            y = Integer.Parse(scanInfo.cvParams.KeyItem("position y")?.value)
             MzPtr = ibdPtr.ParsePtr(scan.binaryDataArrayList(Scan0))
             IntPtr = ibdPtr.ParsePtr(scan.binaryDataArrayList(1))
         End Sub

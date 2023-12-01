@@ -61,6 +61,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.SignalReader
 Imports Microsoft.VisualBasic.CommandLine.InteropService.Pipeline
@@ -194,6 +195,8 @@ imzML:      Return LoadimzML(xml, Sub(p, msg) progress($"{msg}...{p}%"))
         Dim d As Integer = allscans.Length / 100 * 8
         Dim j As i32 = 0
         Dim msiMetadata As New Dictionary(Of String, String)
+        Dim ptag As String
+        Dim filename As String = metadata.sourcefiles.First.FileName
 
         msiMetadata!width = metadata.dims.Width
         msiMetadata!height = metadata.dims.Height
@@ -201,13 +204,14 @@ imzML:      Return LoadimzML(xml, Sub(p, msg) progress($"{msg}...{p}%"))
 
         For Each scan As ScanData In allscans
             ms = ibd.GetMSMS(scan)
+            ptag = If(scan.polarity = IonModes.Positive, "+", If(scan.polarity = IonModes.Negative, "-", "?"))
             pixel = New ScanMS1 With {
                 .meta = New Dictionary(Of String, String) From {
                     {"x", scan.x},
                     {"y", scan.y}
                 },
                 .TIC = scan.totalIon,
-                .scan_id = $"[MS1][{scan.x},{scan.y}] totalIon: {scan.totalIon.ToString("G2")}",
+                .scan_id = $"[MS1][{scan.x},{scan.y}] [{filename}] {ptag} {scan.spotID} npeaks: {ms.Length} totalIon: {scan.totalIon.ToString("G2")} [{scan.mass.Min} - {scan.mass.Max}]",
                 .mz = ms.Select(Function(m) m.mz).ToArray,
                 .into = ms.Select(Function(m) m.intensity).ToArray
             }
