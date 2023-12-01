@@ -79,6 +79,7 @@
 Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML.ControlVocabulary
+Imports Microsoft.VisualBasic.Linq
 
 Namespace MarkupData.mzML
 
@@ -102,6 +103,16 @@ Namespace MarkupData.mzML
 
         <XmlElement("sourceFile")>
         Public Property sourceFile As SourceFile()
+
+        ''' <summary>
+        ''' get a collection of the source file path
+        ''' </summary>
+        ''' <returns></returns>
+        Public Iterator Function GetFileList() As IEnumerable(Of String)
+            For Each file As SourceFile In sourceFile.SafeQuery
+                Yield file.name
+            Next
+        End Function
 
     End Class
 

@@ -81,6 +81,7 @@ Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.Language.Default
+Imports Microsoft.VisualBasic.Linq
 
 Namespace MarkupData.mzML.ControlVocabulary
 
@@ -134,6 +135,16 @@ Namespace MarkupData.mzML.ControlVocabulary
         <XmlElement(NameOf(cvTerm))> Public Property cvTerm As cvParam()
         <XmlElement(NameOf(userParam))> Public Property userParams As userParam()
 
+        Public Function FindVocabulary(accession As String) As cvParam
+            For Each par As cvParam In cvParams.SafeQuery
+                If par.accession = accession Then
+                    Return par
+                End If
+            Next
+
+            Return Nothing
+        End Function
+
     End Class
 
     Public Class userParam : Implements INamedValue
@@ -149,7 +160,8 @@ Namespace MarkupData.mzML.ControlVocabulary
     End Class
 
     ''' <summary>
-    ''' [<see cref="cvParam.name"/> => <see cref="cvParam"/>]
+    ''' a named parameter value,  
+    ''' value indexed by name [<see cref="cvParam.name"/> => <see cref="cvParam"/>]
     ''' </summary>
     Public Class cvParam : Implements INamedValue
 

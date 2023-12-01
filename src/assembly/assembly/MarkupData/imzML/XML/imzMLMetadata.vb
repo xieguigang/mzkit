@@ -1,7 +1,9 @@
 ﻿
 Imports System.Drawing
+Imports System.Runtime.InteropServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML.ControlVocabulary
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Text.Xml.Linq
 
@@ -52,11 +54,85 @@ Namespace MarkupData.imzML
         Public Shared Function ReadHeaders(imzml As String) As imzMLMetadata
             Dim cv As cvList = LoadUltraLargeXMLDataSet(Of cvList)(imzml, typeName:=NameOf(cvList)).FirstOrDefault
             Dim desc As fileDescription = LoadUltraLargeXMLDataSet(Of fileDescription)(imzml, typeName:=NameOf(fileDescription)).FirstOrDefault
-            Dim softwares As softwareList = LoadUltraLargeXMLDataSet(Of softwareList)(imzml, typeName:=NameOf(softwareList)).FirstOrDefault
+            Dim softwares As softwareList = LoadUltraLargeXMLDataSet(Of softwareList)(imzml, typeName:=NameOf(mzML.softwareList)).FirstOrDefault
             Dim scanMeta As scanSettingsList = LoadUltraLargeXMLDataSet(Of scanSettingsList)(imzml, typeName:=NameOf(scanSettingsList)).FirstOrDefault
             Dim instrument As instrumentConfigurationList = LoadUltraLargeXMLDataSet(Of instrumentConfigurationList)(imzml, typeName:=NameOf(instrumentConfigurationList)).FirstOrDefault
 
-            Return New imzMLMetadata
+            Dim guid As String = Nothing
+            Dim format As Format = Nothing
+            Dim checksum As String = Nothing
+
+            Call GetFileContents(desc?.fileContent, guid, format, checksum)
+
+            Dim softwareList As NamedValue(Of String)() = softwares.ToArray
+            Dim instrumentName As String = Nothing
+            Dim source As String = Nothing
+            Dim analyzer As String = Nothing
+            Dim detector As String = Nothing
+
+            Call GetInstrument(instrument.instrumentConfiguration.FirstOrDefault, instrumentName, source, analyzer, detector)
+
+            Dim settings = scanMeta.scanSettings.First
+            Dim dir1 As String = settings.FindVocabulary("IMS:1000401")?.name
+            Dim dir2 As String = settings.FindVocabulary("IMS:1000490")?.name
+            Dim dim1 As Integer = settings.FindVocabulary("IMS:1000042")?.value
+            Dim dim2 As Integer = settings.FindVocabulary("IMS:1000043")?.value
+            Dim size1 As Integer = settings.FindVocabulary("IMS:1000044")?.value
+            Dim size2 As Integer = settings.FindVocabulary("IMS:1000045")?.value
+            Dim res1 As Double = settings.FindVocabulary("IMS:1000046")?.value
+            Dim res2 As Double = settings.FindVocabulary("IMS:1000047")?.value
+
+            Return New imzMLMetadata With {
+                .cv = cv,
+                .sourcefiles = desc.sourceFileList.GetFileList.ToArray,
+                .guid = guid,
+                .format = format,
+                .ibd_checksum = checksum,
+                .softwares = softwareList,
+                .ms_instrument = instrumentName,
+                .ms_analyzer = analyzer,
+                .ms_detector = detector,
+                .ms_source = source,
+                .dims = New Size(dim1, dim2),
+                .direction1 = dir1,
+                .direction2 = dir2,
+                .physical_size = New Size(size1, size2),
+                .resolution = New Size(res1, res2)
+            }
         End Function
+
+        Private Shared Sub GetInstrument(ms As instrumentConfiguration,
+                                         <Out> ByRef instrument As String,
+                                         <Out> ByRef source As String,
+                                         <Out> ByRef analyzer As String,
+                                         <Out> ByRef detector As String)
+            If Not ms Is Nothing Then
+                instrument = ms.cvParams.First.name
+                source = ms.componentList.source.cvParams.First.name
+                analyzer = ms.componentList.analyzer.First.cvParams.First.name
+                detector = ms.componentList.detector.First.cvParams.First.name
+            End If
+        End Sub
+
+        Private Shared Sub GetFileContents(content As Params,
+                                           <Out> ByRef guid As String,
+                                           <Out> ByRef format As Format,
+                                           <Out> ByRef checksum As String)
+
+            If Not content Is Nothing Then
+                Dim format_str As String = content.FindVocabulary("IMS:1000030")?.value
+
+                guid = content.FindVocabulary("IMS:1000080")?.value
+                checksum = content.FindVocabulary("IMS:1000090")?.value
+
+                If Not format_str.StringEmpty Then
+                    If format_str.ToLower = "continuous" Then
+                        format = Format.Continuous
+                    Else
+                        format = Format.Processed
+                    End If
+                End If
+            End If
+        End Sub
     End Class
 End Namespace
