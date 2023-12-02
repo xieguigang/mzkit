@@ -34,7 +34,11 @@ Namespace MetaLib
             If name.IsPattern("([A-Z]([a-z]?)(\d+)?)+", RegexOptions.Singleline) Then
                 eval /= 1.356
             End If
-
+            ' is number?
+            ' avoid the number as name
+            If name.IsPattern("\d+(\.\d+)?") Then
+                eval /= 10000
+            End If
             ' avoid the database id
             If name.IsPattern("[a-zA-Z]+\s*\d+") Then
                 eval /= 2.3
