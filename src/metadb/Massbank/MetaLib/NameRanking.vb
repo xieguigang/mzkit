@@ -22,7 +22,7 @@ Namespace MetaLib
 
             Dim eval As Double
 
-            If name.Length < 3 Then
+            If name.Length < 4 Then
                 eval = 1
             ElseIf name.Length < maxLen Then
                 eval = 10 * (maxLen / name.Length)
