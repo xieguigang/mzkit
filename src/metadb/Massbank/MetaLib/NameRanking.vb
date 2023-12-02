@@ -25,7 +25,7 @@ Namespace MetaLib
             If name.Length < 3 Then
                 eval = 1
             ElseIf name.Length < maxLen Then
-                eval = 10
+                eval = 10 * (maxLen / name.Length)
             Else
                 eval = 10 / name.Length
             End If
