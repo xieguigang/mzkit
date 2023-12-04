@@ -105,11 +105,14 @@ Module library
     <ExportAPI("xref")>
     Public Function xref(<RRawVectorArgument> Optional chebi As Object = Nothing,
                          <RRawVectorArgument> Optional KEGG As Object = Nothing,
+                         <RRawVectorArgument> Optional KEGGdrug As Object = Nothing,
                          <RRawVectorArgument> Optional pubchem As Object = Nothing,
                          <RRawVectorArgument> Optional HMDB As Object = Nothing,
                          <RRawVectorArgument> Optional metlin As Object = Nothing,
                          <RRawVectorArgument> Optional DrugBank As Object = Nothing,
                          <RRawVectorArgument> Optional ChEMBL As Object = Nothing,
+                         <RRawVectorArgument> Optional chemspider As Object = Nothing,
+                         <RRawVectorArgument> Optional foodb As Object = Nothing,
                          <RRawVectorArgument> Optional Wikipedia As Object = Nothing,
                          <RRawVectorArgument> Optional lipidmaps As Object = Nothing,
                          <RRawVectorArgument> Optional MeSH As Object = Nothing,
@@ -121,6 +124,14 @@ Module library
                          <RRawVectorArgument> Optional InChI As Object = Nothing,
                          <RRawVectorArgument> Optional SMILES As Object = Nothing) As xref
 
+        Dim keggSet As String() = CLRVector.asCharacter(KEGG).SafeQuery.ToArray
+        Dim kegg_id As String = keggSet.Where(Function(id) id.IsPattern("C\d+")).JoinBy("; ").ToArray
+        Dim kegg_drug As String = keggSet _
+            .Where(Function(id) id.IsPattern("D\d+")) _
+            .JoinIterates(CLRVector.asCharacter(KEGGdrug)) _
+            .Distinct _
+            .JoinBy("; ")
+
         Return New xref With {
             .CAS = CLRVector.asCharacter(CAS),
             .chebi = CLRVector.asCharacter(chebi).JoinBy("; "),
@@ -130,7 +141,7 @@ Module library
             .HMDB = CLRVector.asCharacter(HMDB).JoinBy("; "),
             .InChI = CLRVector.asCharacter(InChI).JoinBy("; "),
             .InChIkey = CLRVector.asCharacter(InChIkey).JoinBy("; "),
-            .KEGG = CLRVector.asCharacter(KEGG).JoinBy("; "),
+            .KEGG = kegg_id,
             .KNApSAcK = CLRVector.asCharacter(KNApSAcK).JoinBy("; "),
             .lipidmaps = CLRVector.asCharacter(lipidmaps).JoinBy("; "),
             .MeSH = CLRVector.asCharacter(MeSH).JoinBy("; "),
@@ -138,7 +149,10 @@ Module library
             .metlin = CLRVector.asCharacter(metlin).JoinBy("; "),
             .pubchem = CLRVector.asCharacter(pubchem).JoinBy("; "),
             .SMILES = CLRVector.asCharacter(SMILES).JoinBy("; "),
-            .Wikipedia = CLRVector.asCharacter(Wikipedia).JoinBy("; ")
+            .Wikipedia = CLRVector.asCharacter(Wikipedia).JoinBy("; "),
+            .chemspider = CLRVector.asCharacter(chemspider).JoinBy("; "),
+            .foodb = CLRVector.asCharacter(foodb).JoinBy("; "),
+            .KEGGdrug = kegg_drug
         }
     End Function
 

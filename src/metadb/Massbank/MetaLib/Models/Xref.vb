@@ -83,30 +83,33 @@ Namespace MetaLib.Models
         ''' <returns></returns>
         <MessagePackMember(0)> Public Property chebi As String
         <MessagePackMember(1)> Public Property KEGG As String
+        <MessagePackMember(2)> Public Property KEGGdrug As String
         ''' <summary>
         ''' The pubchem cid
         ''' </summary>
         ''' <returns></returns>
-        <MessagePackMember(2)> Public Property pubchem As String
-        <MessagePackMember(3)> Public Property HMDB As String
-        <MessagePackMember(4)> Public Property metlin As String
-        <MessagePackMember(5)> Public Property DrugBank As String
-        <MessagePackMember(6)> Public Property ChEMBL As String
-        <MessagePackMember(7)> Public Property Wikipedia As String
-        <MessagePackMember(8)> Public Property lipidmaps As String
-        <MessagePackMember(9)> Public Property MeSH As String
-        <MessagePackMember(10)> Public Property ChemIDplus As String
-        <MessagePackMember(11)> Public Property MetaCyc As String
-        <MessagePackMember(12)> Public Property KNApSAcK As String
+        <MessagePackMember(3)> Public Property pubchem As String
+        <MessagePackMember(4)> Public Property HMDB As String
+        <MessagePackMember(5)> Public Property metlin As String
+        <MessagePackMember(6)> Public Property DrugBank As String
+        <MessagePackMember(7)> Public Property ChEMBL As String
+        <MessagePackMember(8)> Public Property Wikipedia As String
+        <MessagePackMember(9)> Public Property lipidmaps As String
+        <MessagePackMember(10)> Public Property MeSH As String
+        <MessagePackMember(11)> Public Property ChemIDplus As String
+        <MessagePackMember(12)> Public Property MetaCyc As String
+        <MessagePackMember(13)> Public Property KNApSAcK As String
+        <MessagePackMember(14)> Public Property foodb As String
+        <MessagePackMember(15)> Public Property chemspider As String
         ''' <summary>
         ''' Multiple CAS id may exists
         ''' </summary>
         ''' <returns></returns>
         <XmlElement>
-        <MessagePackMember(13)> Public Property CAS As String()
-        <MessagePackMember(14)> Public Property InChIkey As String
-        <MessagePackMember(15)> Public Property InChI As String
-        <MessagePackMember(16)> Public Property SMILES As String
+        <MessagePackMember(16)> Public Property CAS As String()
+        <MessagePackMember(17)> Public Property InChIkey As String
+        <MessagePackMember(18)> Public Property InChI As String
+        <MessagePackMember(19)> Public Property SMILES As String
 
         Sub New()
         End Sub
