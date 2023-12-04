@@ -81,6 +81,48 @@ Imports MetaData = BioNovoGene.BioDeep.Chemistry.MetaLib.Models.MetaInfo
 <RTypeExport("xref", GetType(xref))>
 Module library
 
+    ''' <summary>
+    ''' Create the database cross reference links
+    ''' </summary>
+    ''' <param name="chebi"></param>
+    ''' <param name="KEGG"></param>
+    ''' <param name="pubchem"></param>
+    ''' <param name="HMDB"></param>
+    ''' <param name="metlin"></param>
+    ''' <param name="DrugBank"></param>
+    ''' <param name="ChEMBL"></param>
+    ''' <param name="Wikipedia"></param>
+    ''' <param name="lipidmaps"></param>
+    ''' <param name="MeSH"></param>
+    ''' <param name="ChemIDplus"></param>
+    ''' <param name="MetaCyc"></param>
+    ''' <param name="KNApSAcK"></param>
+    ''' <param name="CAS"></param>
+    ''' <param name="InChIkey"></param>
+    ''' <param name="InChI"></param>
+    ''' <param name="SMILES"></param>
+    ''' <returns></returns>
+    <ExportAPI("xref")>
+    Public Function xref(<RRawVectorArgument> Optional chebi As Object = Nothing,
+                         <RRawVectorArgument> Optional KEGG As Object = Nothing,
+                         <RRawVectorArgument> Optional pubchem As Object = Nothing,
+                         <RRawVectorArgument> Optional HMDB As Object = Nothing,
+                         <RRawVectorArgument> Optional metlin As Object = Nothing,
+                         <RRawVectorArgument> Optional DrugBank As Object = Nothing,
+                         <RRawVectorArgument> Optional ChEMBL As Object = Nothing,
+                         <RRawVectorArgument> Optional Wikipedia As Object = Nothing,
+                         <RRawVectorArgument> Optional lipidmaps As Object = Nothing,
+                         <RRawVectorArgument> Optional MeSH As Object = Nothing,
+                         <RRawVectorArgument> Optional ChemIDplus As Object = Nothing,
+                         <RRawVectorArgument> Optional MetaCyc As Object = Nothing,
+                         <RRawVectorArgument> Optional KNApSAcK As Object = Nothing,
+                         <RRawVectorArgument> Optional CAS As Object = Nothing,
+                         <RRawVectorArgument> Optional InChIkey As Object = Nothing,
+                         <RRawVectorArgument> Optional InChI As Object = Nothing,
+                         <RRawVectorArgument> Optional SMILES As Object = Nothing) As xref
+
+    End Function
+
     <ExportAPI("assert.adducts")>
     <RApiReturn(GetType(MzCalculator))>
     Public Function assertAdducts(formula As String,

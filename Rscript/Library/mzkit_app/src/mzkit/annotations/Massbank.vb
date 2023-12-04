@@ -66,6 +66,7 @@ Imports BioNovoGene.BioDeep.Chemistry.MetaLib
 Imports BioNovoGene.BioDeep.Chemistry.MetaLib.Models
 Imports BioNovoGene.BioDeep.Chemistry.TMIC
 Imports BioNovoGene.BioDeep.Chemoinformatics
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports BioNovoGene.BioDeep.Chemoinformatics.NaturalProduct
 Imports BioNovoGene.BioDeep.Chemoinformatics.SDF
 Imports Microsoft.VisualBasic.CommandLine.Reflection
@@ -683,5 +684,55 @@ Module Massbank
         Next
 
         Return New list(("name", CObj(name)), ("synonym", CObj(synonym)))
+    End Function
+
+    ''' <summary>
+    ''' construct a new metabolite annotation information data
+    ''' </summary>
+    ''' <param name="xref">
+    ''' the database cross reference links of current metabolite.
+    ''' </param>
+    ''' <returns></returns>
+    ''' <example>
+    ''' imports ["massbank", "annotation"] from "mzkit";
+    ''' 
+    ''' # an example of create metabolite annotation data
+    ''' # for 'ATP'.
+    ''' 
+    ''' let xrefs = annotation::xref(
+    '''     KEGG = 'C00002',
+    '''     CAS = '56-65-5',
+    '''     pubchem = '3304',
+    '''     chebi = '15422',
+    '''     KNApSAcK = 'C00001491'
+    ''' );
+    ''' let metabo = metabo_anno(
+    '''     id = "ATP",
+    '''     formula = "C10H16N5O13P3",
+    '''     name = "ATP",
+    '''     xref = xrefs,
+    '''     synonym = ['ATP' 'Adenosine 5'-triphosphate']
+    ''' );
+    ''' 
+    ''' print(JSON::json_encode(metabo));
+    ''' </example>
+    <ExportAPI("metabo_anno")>
+    <RApiReturn(GetType(MetaLib))>
+    Public Function meta_anno(id As String, formula As String, name As String,
+                              Optional iupac_name As String = Nothing,
+                              Optional xref As xref = Nothing,
+                              <RRawVectorArgument> Optional synonym As Object = Nothing,
+                              <RRawVectorArgument> Optional desc As Object = Nothing) As Object
+
+        Return New MetaLib With {
+            .ID = id,
+            .formula = formula,
+            .name = name,
+            .IUPACName = iupac_name,
+            .synonym = CLRVector.asCharacter(synonym),
+            .description = desc,
+            .xref = xref,
+            .exact_mass = FormulaScanner.EvaluateExactMass(formula)
+        }
     End Function
 End Module
