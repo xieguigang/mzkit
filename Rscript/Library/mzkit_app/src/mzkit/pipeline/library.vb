@@ -121,6 +121,25 @@ Module library
                          <RRawVectorArgument> Optional InChI As Object = Nothing,
                          <RRawVectorArgument> Optional SMILES As Object = Nothing) As xref
 
+        Return New xref With {
+            .CAS = CLRVector.asCharacter(CAS),
+            .chebi = CLRVector.asCharacter(chebi).JoinBy("; "),
+            .ChEMBL = CLRVector.asCharacter(ChEMBL).JoinBy("; "),
+            .ChemIDplus = CLRVector.asCharacter(ChemIDplus).JoinBy("; "),
+            .DrugBank = CLRVector.asCharacter(DrugBank).JoinBy("; "),
+            .HMDB = CLRVector.asCharacter(HMDB).JoinBy("; "),
+            .InChI = CLRVector.asCharacter(InChI).JoinBy("; "),
+            .InChIkey = CLRVector.asCharacter(InChIkey).JoinBy("; "),
+            .KEGG = CLRVector.asCharacter(KEGG).JoinBy("; "),
+            .KNApSAcK = CLRVector.asCharacter(KNApSAcK).JoinBy("; "),
+            .lipidmaps = CLRVector.asCharacter(lipidmaps).JoinBy("; "),
+            .MeSH = CLRVector.asCharacter(MeSH).JoinBy("; "),
+            .MetaCyc = CLRVector.asCharacter(MetaCyc).JoinBy("; "),
+            .metlin = CLRVector.asCharacter(metlin).JoinBy("; "),
+            .pubchem = CLRVector.asCharacter(pubchem).JoinBy("; "),
+            .SMILES = CLRVector.asCharacter(SMILES).JoinBy("; "),
+            .Wikipedia = CLRVector.asCharacter(Wikipedia).JoinBy("; ")
+        }
     End Function
 
     <ExportAPI("assert.adducts")>
