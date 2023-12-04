@@ -377,7 +377,10 @@ Module library
                          <RRawVectorArgument> Optional CAS As Object = Nothing,
                          <RRawVectorArgument> Optional InChIkey As Object = Nothing,
                          <RRawVectorArgument> Optional InChI As Object = Nothing,
-                         <RRawVectorArgument> Optional SMILES As Object = Nothing) As xref
+                         <RRawVectorArgument> Optional SMILES As Object = Nothing,
+                         <RListObjectArgument>
+                         Optional extras As list = Nothing,
+                         Optional env As Environment = Nothing) As xref
 
         Dim keggSet As String() = CLRVector.asCharacter(KEGG).SafeQuery.ToArray
         Dim kegg_id As String = keggSet.Where(Function(id) id.IsPattern("C\d+")).JoinBy("; ").ToArray
@@ -386,6 +389,7 @@ Module library
             .JoinIterates(CLRVector.asCharacter(KEGGdrug)) _
             .Distinct _
             .JoinBy("; ")
+        Dim additionals As Dictionary(Of String, String()) = extras.AsGeneric(Of String())(env)
 
         Return New xref With {
             .CAS = CLRVector.asCharacter(CAS),
@@ -407,7 +411,8 @@ Module library
             .Wikipedia = CLRVector.asCharacter(Wikipedia).JoinBy("; "),
             .chemspider = CLRVector.asCharacter(chemspider).JoinBy("; "),
             .foodb = CLRVector.asCharacter(foodb).JoinBy("; "),
-            .KEGGdrug = kegg_drug
+            .KEGGdrug = kegg_drug,
+            .extras = additionals
         }
     End Function
 

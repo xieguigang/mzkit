@@ -111,6 +111,12 @@ Namespace MetaLib.Models
         <MessagePackMember(18)> Public Property InChI As String
         <MessagePackMember(19)> Public Property SMILES As String
 
+        ''' <summary>
+        ''' other additional database id set
+        ''' </summary>
+        ''' <returns></returns>
+        <MessagePackMember(20)> Public Property extras As Dictionary(Of String, String())
+
         Sub New()
         End Sub
 
