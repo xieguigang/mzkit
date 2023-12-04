@@ -730,7 +730,7 @@ Module Massbank
             .name = name,
             .IUPACName = iupac_name,
             .synonym = CLRVector.asCharacter(synonym),
-            .description = desc,
+            .description = CLRVector.asCharacter(desc).JoinBy(vbCrLf),
             .xref = xref,
             .exact_mass = FormulaScanner.EvaluateExactMass(formula)
         }
