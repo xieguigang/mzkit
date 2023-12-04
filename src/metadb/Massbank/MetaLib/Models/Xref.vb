@@ -78,7 +78,7 @@ Namespace MetaLib.Models
     Public Class xref
 
         ''' <summary>
-        ''' chebi主编号
+        ''' chebi main id, Chemical Entities of Biological Interest (ChEBI)
         ''' </summary>
         ''' <returns></returns>
         <MessagePackMember(0)> Public Property chebi As String
