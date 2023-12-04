@@ -89,6 +89,21 @@ declare namespace massbank {
    /**
    */
    function lipid_profiles(categry: object, enrich: object): any;
+   /**
+    * construct a new metabolite annotation information data
+    * 
+    * 
+     * @param iupac_name 
+     * + default value Is ``null``.
+     * @param xref the database cross reference links of current metabolite.
+     * 
+     * + default value Is ``null``.
+     * @param synonym 
+     * + default value Is ``null``.
+     * @param desc 
+     * + default value Is ``null``.
+   */
+   function metabo_anno(id: string, formula: string, name: string, iupac_name?: string, xref?: object, synonym?: any, desc?: any): object;
    module mona {
       /**
        * Extract the annotation metadata from the MONA comment data
