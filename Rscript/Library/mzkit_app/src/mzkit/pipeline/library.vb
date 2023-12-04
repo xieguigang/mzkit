@@ -101,7 +101,22 @@ Module library
     ''' <param name="InChIkey"></param>
     ''' <param name="InChI"></param>
     ''' <param name="SMILES"></param>
+    ''' <param name="chemspider"></param>
+    ''' <param name="foodb"></param>
+    ''' <param name="KEGGdrug"></param>
     ''' <returns></returns>
+    ''' <example>
+    ''' # an example of create metabolite annotation data
+    ''' # for 'ATP'.
+    ''' 
+    ''' let xrefs = annotation::xref(
+    '''     KEGG = 'C00002',
+    '''     CAS = '56-65-5',
+    '''     pubchem = '3304',
+    '''     chebi = '15422',
+    '''     KNApSAcK = 'C00001491'
+    ''' );
+    ''' </example>
     <ExportAPI("xref")>
     Public Function xref(<RRawVectorArgument> Optional chebi As Object = Nothing,
                          <RRawVectorArgument> Optional KEGG As Object = Nothing,
