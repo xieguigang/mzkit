@@ -366,6 +366,10 @@ declare namespace annotation {
      *  In the open source chemistry community.
      * 
      * + default value Is ``null``.
+     * @param extras 
+     * + default value Is ``null``.
+     * @param env 
+     * + default value Is ``null``.
    */
-   function xref(chebi?: any, KEGG?: any, KEGGdrug?: any, pubchem?: any, HMDB?: any, metlin?: any, DrugBank?: any, ChEMBL?: any, chemspider?: any, foodb?: any, Wikipedia?: any, lipidmaps?: any, MeSH?: any, ChemIDplus?: any, MetaCyc?: any, KNApSAcK?: any, CAS?: any, InChIkey?: any, InChI?: any, SMILES?: any): object;
+   function xref(chebi?: any, KEGG?: any, KEGGdrug?: any, pubchem?: any, HMDB?: any, metlin?: any, DrugBank?: any, ChEMBL?: any, chemspider?: any, foodb?: any, Wikipedia?: any, lipidmaps?: any, MeSH?: any, ChemIDplus?: any, MetaCyc?: any, KNApSAcK?: any, CAS?: any, InChIkey?: any, InChI?: any, SMILES?: any, extras?: object, env?: object): object;
 }
