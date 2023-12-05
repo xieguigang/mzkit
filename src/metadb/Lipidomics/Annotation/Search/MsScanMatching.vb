@@ -651,7 +651,7 @@ Public NotInheritable Class MsScanMatching
             Case LbmClass.CerP
                 Return LipidMsmsCharacterization.JudgeIfCeramidePhosphate(msScanProp, ms2tol, refMz, totalCarbon, totalDbBond, sn1Carbon, sn1Carbon, sn1DbBond, sn1DbBond, adduct)
 
-                ''' 2019/11/25 add
+                ' 2019/11/25 add
             Case LbmClass.SMGDG
                 Return LipidMsmsCharacterization.JudgeIfSmgdg(msScanProp, ms2tol, refMz, totalCarbon, totalDbBond, sn1Carbon, sn1Carbon, sn1DbBond, sn1DbBond, adduct)
             Case LbmClass.EtherSMGDG

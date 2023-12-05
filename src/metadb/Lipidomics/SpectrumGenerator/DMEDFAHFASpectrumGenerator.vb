@@ -111,7 +111,7 @@ New SpectrumPeak(adduct.ConvertToMz(lipid.Mass - C2NH7), 50.0R, "Precursor - C2N
         Dim abundance = 25.0R
         spectrum.AddRange(spectrumGenerator.GetAcylDoubleBondSpectrum(lipid, acylChain(0), adduct, nlMass, abundance))
 
-        ''' Dehydroxy HFA chain spectrum 
+        ' Dehydroxy HFA chain spectrum 
         If acylChain(1).Oxidized.Oxidises.Count = 1 Then
             nlMass = acylChain(0).Mass + H2O * acylChain(1).Oxidized.Count - HydrogenMass
             Dim hfaOx = acylChain(1).Oxidized.Oxidises

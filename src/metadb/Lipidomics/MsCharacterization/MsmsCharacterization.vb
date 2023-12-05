@@ -1932,7 +1932,7 @@ Public NotInheritable Class LipidMsmsCharacterization
                 '    var molecule = getLipidAnnotaionAsLevel1("PE", LbmClass.PE, totalCarbon, totalDoubleBond, score, "");
                 '    candidates.Add(molecule);
                 '}
-                '''
+                '
                 Return LipidMsmsCharacterizationUtility.returnAnnotationResult("PE", LbmClass.PE, "", theoreticalMz, adduct, totalCarbon, totalDoubleBond, 0, candidates, 2)
                 'addMT
             ElseIf Equals(adduct.AdductIonName, "[M+Na]+") Then
@@ -2171,7 +2171,7 @@ Public NotInheritable Class LipidMsmsCharacterization
                 '    var molecule = getLipidAnnotaionAsLevel1("PS", LbmClass.PS, totalCarbon, totalDoubleBond, score, "");
                 '    candidates.Add(molecule);
                 '}
-                '''
+                '
                 Return LipidMsmsCharacterizationUtility.returnAnnotationResult("PS", LbmClass.PS, "", theoreticalMz, adduct, totalCarbon, totalDoubleBond, 0, candidates, 2)
             End If
         End If

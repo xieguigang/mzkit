@@ -15,7 +15,7 @@ Public Class LipidMolecule
     ''' 0: incorrect, 
     ''' 1: submolecular level, 
     ''' 2: acyl level, 
-    ''' 3: acyl & positional level 
+    ''' 3: acyl &amp; positional level 
     ''' </summary>
     ''' <returns></returns>
     Public Property AnnotationLevel As Integer
