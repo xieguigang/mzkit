@@ -22,10 +22,10 @@ Namespace MetaLib
 
             Dim eval As Double
 
-            If name.Length < 3 Then
+            If name.Length < 4 Then
                 eval = 1
             ElseIf name.Length < maxLen Then
-                eval = 10
+                eval = 10 * (maxLen / name.Length)
             Else
                 eval = 10 / name.Length
             End If
@@ -34,7 +34,11 @@ Namespace MetaLib
             If name.IsPattern("([A-Z]([a-z]?)(\d+)?)+", RegexOptions.Singleline) Then
                 eval /= 1.356
             End If
-
+            ' is number?
+            ' avoid the number as name
+            If name.IsPattern("\d+(\.\d+)?") Then
+                eval /= 10000
+            End If
             ' avoid the database id
             If name.IsPattern("[a-zA-Z]+\s*\d+") Then
                 eval /= 2.3
