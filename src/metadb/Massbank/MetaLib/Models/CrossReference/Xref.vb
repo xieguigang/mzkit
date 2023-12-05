@@ -167,8 +167,17 @@ Namespace MetaLib.CrossReference
             Return CrossReference.Join(Me, another)
         End Function
 
+        ''' <summary>
+        ''' Convert a cross reference set as a database id collection
+        ''' </summary>
+        ''' <param name="parseList">
+        ''' this parameter will treat the xref id as a set of the id 
+        ''' collection, where the id set elements is seperated by the 
+        ''' ``;`` symbol.
+        ''' </param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function PopulateXrefs() As IEnumerable(Of NamedValue(Of String))
+        Public Function PopulateXrefs(Optional parseList As Boolean = False) As IEnumerable(Of NamedValue(Of String))
             Return Me.PullCollection
         End Function
 

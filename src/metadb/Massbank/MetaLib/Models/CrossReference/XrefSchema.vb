@@ -39,6 +39,7 @@ Namespace MetaLib.CrossReference
                                       .Distinct _
                                       .ToArray
                               End Function)
+
             Dim union As New xref With {
                 .CAS = setAB.TryPopOut("cas"),
                 .chebi = setAB.TryPopOut("chebi").JoinBy("; "),
@@ -70,6 +71,11 @@ Namespace MetaLib.CrossReference
         ''' Convert a cross reference set as a database id collection
         ''' </summary>
         ''' <param name="xref"></param>
+        ''' <param name="parseList">
+        ''' this parameter will treat the xref id as a set of the id 
+        ''' collection, where the id set elements is seperated by the 
+        ''' ``;`` symbol.
+        ''' </param>
         ''' <returns></returns>
         <Extension>
         Public Iterator Function PullCollection(xref As xref, Optional parseList As Boolean = False) As IEnumerable(Of NamedValue(Of String))
@@ -107,6 +113,5 @@ Namespace MetaLib.CrossReference
                 Next
             End If
         End Function
-
     End Module
 End Namespace
