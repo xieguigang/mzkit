@@ -177,8 +177,22 @@ Namespace MetaLib.CrossReference
         ''' </param>
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function PopulateXrefs(Optional parseList As Boolean = False) As IEnumerable(Of NamedValue(Of String))
-            Return Me.PullCollection(parseList)
+        Public Function PopulateXrefs(Optional parseList As Boolean = False,
+                                      Optional exclude_struct As Boolean = False) As IEnumerable(Of NamedValue(Of String))
+
+            Static structs As Index(Of String) = New String() {
+                NameOf(SMILES),
+                NameOf(InChIkey),
+                NameOf(InChI)
+            }
+
+            If Not exclude_struct Then
+                Return Me.PullCollection(parseList)
+            Else
+                Return From xref As NamedValue(Of String)
+                       In Me.PullCollection
+                       Where Not xref.Name Like structs
+            End If
         End Function
 
         Public Overrides Function ToString() As String
