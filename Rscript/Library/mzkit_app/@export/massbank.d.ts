@@ -58,6 +58,16 @@ declare namespace massbank {
          function mapping(repository: any, env?: object): object;
       }
    }
+   /**
+    * generates the inchikey hashcode based on the given inchi data
+    * 
+    * 
+     * @param inchi -
+     * @param env -
+     * 
+     * + default value Is ``null``.
+   */
+   function inchikey(inchi: any, env?: object): any;
    module lipid {
       /**
        * Create lipid class helper for annotation
