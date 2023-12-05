@@ -30,7 +30,40 @@ Namespace MetaLib.CrossReference
         ''' <param name="b"></param>
         ''' <returns></returns>
         Public Function Join(a As xref, b As xref) As xref
+            Dim setAB As Dictionary(Of String, String()) = a.PullCollection _
+                .JoinIterates(b.PullCollection) _
+                .GroupBy(Function(i) i.Name.ToLower) _
+                .ToDictionary(Function(i) i.Key,
+                              Function(i)
+                                  Return i.Select(Function(id) id.Value) _
+                                      .Distinct _
+                                      .ToArray
+                              End Function)
+            Dim union As New xref With {
+                .CAS = setAB.TryPopOut("cas"),
+                .chebi = setAB.TryPopOut("chebi").JoinBy("; "),
+                .ChEMBL = setAB.TryPopOut("chembl").JoinBy("; "),
+                .ChemIDplus = setAB.TryPopOut("chemidplus").JoinBy("; "),
+                .chemspider = setAB.TryPopOut("chemspider").JoinBy("; "),
+                .DrugBank = setAB.TryPopOut("drugbank").JoinBy("; "),
+                .foodb = setAB.TryPopOut("foodb").JoinBy("; "),
+                .HMDB = setAB.TryPopOut("hmdb").JoinBy("; "),
+                .InChI = setAB.TryPopOut("inchi").JoinBy("; "),
+                .InChIkey = setAB.TryPopOut("inchikey").JoinBy("; "),
+                .KEGG = setAB.TryPopOut("kegg").JoinBy("; "),
+                .KEGGdrug = setAB.TryPopOut("keggdrug").JoinBy("; "),
+                .KNApSAcK = setAB.TryPopOut("knapsack").JoinBy("; "),
+                .lipidmaps = setAB.TryPopOut("lipidmaps").JoinBy("; "),
+                .MeSH = setAB.TryPopOut("mesh").JoinBy("; "),
+                .MetaCyc = setAB.TryPopOut("metacyc").JoinBy("; "),
+                .metlin = setAB.TryPopOut("metlin").JoinBy("; "),
+                .pubchem = setAB.TryPopOut("pubchem").JoinBy("; "),
+                .SMILES = setAB.TryPopOut("smiles").JoinBy("; "),
+                .Wikipedia = setAB.TryPopOut("wikipedia").JoinBy("; "),
+                .extras = setAB
+            }
 
+            Return union
         End Function
 
         ''' <summary>
