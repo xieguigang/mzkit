@@ -1756,7 +1756,7 @@ Public NotInheritable Class LipidMsmsCharacterization
                         End If
                     Next
                 Next
-                '''add MT
+                'add MT
                 'if (candidates.Count == 0)
                 '{
                 '    var score = 0;
@@ -1864,7 +1864,7 @@ Public NotInheritable Class LipidMsmsCharacterization
                         End If
                     Next
                 Next
-                '''add MT
+                'add MT
                 'if (candidates.Count == 0)
                 '{
                 '    var score = 0;
@@ -1925,14 +1925,14 @@ Public NotInheritable Class LipidMsmsCharacterization
                         End If
                     Next
                 Next
-                '''add MT
+                ' add MT
                 'if (candidates.Count == 0)
                 '{
                 '    var score = 0;
                 '    var molecule = getLipidAnnotaionAsLevel1("PE", LbmClass.PE, totalCarbon, totalDoubleBond, score, "");
                 '    candidates.Add(molecule);
                 '}
-                '''
+                '
                 Return LipidMsmsCharacterizationUtility.returnAnnotationResult("PE", LbmClass.PE, "", theoreticalMz, adduct, totalCarbon, totalDoubleBond, 0, candidates, 2)
                 'addMT
             ElseIf Equals(adduct.AdductIonName, "[M+Na]+") Then
@@ -2095,7 +2095,7 @@ Public NotInheritable Class LipidMsmsCharacterization
                         End If
                     Next
                 Next
-                '''add MT
+                'add MT
                 'if (candidates.Count == 0)
                 '{
                 '    var score = 0;
@@ -2164,14 +2164,14 @@ Public NotInheritable Class LipidMsmsCharacterization
                         End If
                     Next
                 Next
-                '''add MT
+                'add MT
                 'if (candidates.Count == 0)
                 '{
                 '    var score = 0;
                 '    var molecule = getLipidAnnotaionAsLevel1("PS", LbmClass.PS, totalCarbon, totalDoubleBond, score, "");
                 '    candidates.Add(molecule);
                 '}
-                '''
+                '
                 Return LipidMsmsCharacterizationUtility.returnAnnotationResult("PS", LbmClass.PS, "", theoreticalMz, adduct, totalCarbon, totalDoubleBond, 0, candidates, 2)
             End If
         End If
@@ -2336,14 +2336,14 @@ Public NotInheritable Class LipidMsmsCharacterization
                         End If
                     Next
                 Next
-                '''add MT
+                'add MT
                 'if (candidates.Count == 0)
                 '{
                 '    var score = 0;
                 '    var molecule = getLipidAnnotaionAsLevel1("PG", LbmClass.PG, totalCarbon, totalDoubleBond, score, "");
                 '    candidates.Add(molecule);
                 '}
-                '''
+                '
                 Return LipidMsmsCharacterizationUtility.returnAnnotationResult("PG", LbmClass.PG, "", theoreticalMz, adduct, totalCarbon, totalDoubleBond, 0, candidates, 2)
             ElseIf Equals(adduct.AdductIonName, "[M+Na]+") Then
                 ' seek -171.005851 (C3H8O6P) - 22.9892207 (Na+)
@@ -2453,7 +2453,7 @@ Public NotInheritable Class LipidMsmsCharacterization
                         End If
                     Next
                 Next
-                '''add MT
+                'add MT
                 'if (candidates.Count == 0)
                 '{
                 '    var score = 0;
@@ -2574,14 +2574,14 @@ Public NotInheritable Class LipidMsmsCharacterization
                         End If
                     Next
                 Next
-                '''add MT
+                'add MT
                 'if (candidates.Count == 0)
                 '{
                 '    var score = 0;
                 '    var molecule = getLipidAnnotaionAsLevel1("PI", LbmClass.PI, totalCarbon, totalDoubleBond, score, "");
                 '    candidates.Add(molecule);
                 '}
-                '''
+                '
 
                 Return LipidMsmsCharacterizationUtility.returnAnnotationResult("PI", LbmClass.PI, "", theoreticalMz, adduct, totalCarbon, totalDoubleBond, 0, candidates, 2)
             End If
@@ -2595,7 +2595,7 @@ Public NotInheritable Class LipidMsmsCharacterization
         If maxSnCarbon > totalCarbon Then maxSnCarbon = totalCarbon
         If maxSnDoubleBond > totalDoubleBond Then maxSnDoubleBond = totalDoubleBond
         If adduct.IonMode = IonModes.Positive Then ' positive ion mode 
-            If Equals(adduct.AdductIonName, "[M+H]+") Then ''' not found in lipidDbProject-Pos
+            If Equals(adduct.AdductIonName, "[M+H]+") Then ' not found in lipidDbProject-Pos
                 ' check [M-C2H8NO4P+H]+  
                 Dim threshold = 1
                 Dim diagnosticMz = theoreticalMz - 141.019094261
@@ -2705,14 +2705,14 @@ Public NotInheritable Class LipidMsmsCharacterization
         If maxSnDoubleBond > totalDoubleBond Then maxSnDoubleBond = totalDoubleBond
         If adduct.IonMode = IonModes.Positive Then ' positive ion mode  //// not found in lipidDbProject-Pos
             If Equals(adduct.AdductIonName, "[M+H]+") Then
-                ''' check -141.019094261 (C2H8NO4P)
+                ' check -141.019094261 (C2H8NO4P)
                 'var threshold = 1.0;
                 'var diagnosticMz = theoreticalMz - 141.019094261;
 
                 'var isClassIonFound = LipidMsmsCharacterizationUtility.isDiagnosticFragmentExist(spectrum, ms2Tolerance, diagnosticMz, threshold);
                 'if (isClassIonFound == true) return null;  // reject PE
 
-                ''' from here, acyl level annotation is executed. 
+                ' from here, acyl level annotation is executed. 
                 'var candidates = new List<LipidMolecule>();
                 'for (int sn1Carbon = minSnCarbon; sn1Carbon <= maxSnCarbon; sn1Carbon++)
                 '{
@@ -2738,12 +2738,12 @@ Public NotInheritable Class LipidMsmsCharacterization
                 '        }
                 '    }
                 '}
-                '''if (candidates.Count == 0)
-                '''{
-                '''    var score = 0;
-                '''    var molecule = getLipidAnnotaionAsLevel1("LNAPE", LbmClass.LNAPE, totalCarbon, totalDoubleBond, score, "");
-                '''    candidates.Add(molecule);
-                '''}
+                'if (candidates.Count == 0)
+                '{
+                '    var score = 0;
+                '    var molecule = getLipidAnnotaionAsLevel1("LNAPE", LbmClass.LNAPE, totalCarbon, totalDoubleBond, score, "");
+                '    candidates.Add(molecule);
+                '}
                 'return LipidMsmsCharacterizationUtility.returnAnnotationResult("LNAPE", LbmClass.LNAPE, "", theoreticalMz, adduct,
                 '    totalCarbon, totalDoubleBond, 0, candidates, 2);
             End If
@@ -3328,7 +3328,7 @@ New SpectrumPeak() With {
             ElseIf Equals(adduct.AdductIonName, "[M+Na]+") Then
                 ' from here, acyl level annotation is executed.
                 Dim candidates = New List(Of LipidMolecule)()
-                ''' DG[M+Na]+ is cannot determine acyl chain
+                ' DG[M+Na]+ is cannot determine acyl chain
                 'for (int sn1Carbon = minSn1Carbon; sn1Carbon <= maxSn1Carbon; sn1Carbon++)
                 '{
                 '    for (int sn1Double = minSn1DoubleBond; sn1Double <= maxSn1DoubleBond; sn1Double++)
@@ -3378,12 +3378,12 @@ New SpectrumPeak() With {
                 '        }
                 '    }
                 '}
-                '''if (candidates == null || candidates.Count == 0)
-                '''{
-                '''    var score = 0;
-                '''    var molecule0 = getLipidAnnotaionAsLevel1("DAG", LbmClass.DAG, totalCarbon, totalDoubleBond, score, "");
-                '''    candidates.Add(molecule0);
-                '''}
+                'if (candidates == null || candidates.Count == 0)
+                '{
+                '    var score = 0;
+                '    var molecule0 = getLipidAnnotaionAsLevel1("DAG", LbmClass.DAG, totalCarbon, totalDoubleBond, score, "");
+                '    candidates.Add(molecule0);
+                '}
 
                 'if (candidates == null || candidates.Count == 0)
                 '    return null;
@@ -5804,9 +5804,9 @@ New SpectrumPeak() With {
             ElseIf Equals(adduct.AdductIonName, "[M+Na]+") Then
                 ' 
                 'var candidates = new List<LipidMolecule>();
-                '''var score = 0;
-                '''var molecule = getLipidAnnotaionAsLevel1("TAG", LbmClass.EtherTAG, totalCarbon, totalDoubleBond, score, "e");
-                '''candidates.Add(molecule);
+                'var score = 0;
+                'var molecule = getLipidAnnotaionAsLevel1("TAG", LbmClass.EtherTAG, totalCarbon, totalDoubleBond, score, "e");
+                'candidates.Add(molecule);
 
                 'return LipidMsmsCharacterizationUtility.returnAnnotationResult("TAG", LbmClass.EtherTAG, "e", theoreticalMz, adduct,
                 '        totalCarbon, totalDoubleBond, 0, candidates);
@@ -11533,7 +11533,7 @@ New SpectrumPeak() With {
                 ' seek [C11H17NO8-H]-  as 290.0875914768
                 Dim threshold1 = 0.01
                 Dim diagnosticMz1 = 12 * 11 + 8 * H2O + NitrogenMass
-                ''' seek [M-C11H17NO8-H]-
+                ' seek [M-C11H17NO8-H]-
                 'var threshold2 = 0.01;
                 'var diagnosticMz2 = theoreticalMz - diagnosticMz1 - MassDiffDictionary.HydrogenMass;
 
@@ -11606,7 +11606,7 @@ New SpectrumPeak() With {
             ' seek [C11H17NO8-H]-  as 290.0875914768
             Dim threshold1 = 0.01
             Dim diagnosticMz1 = 12 * 11 + 8 * H2O + NitrogenMass
-            ''' seek [M-C11H17NO8-H]-
+            ' seek [M-C11H17NO8-H]-
             'var threshold2 = 0.01;
             'var diagnosticMz2 = theoreticalMz - diagnosticMz1 - MassDiffDictionary.HydrogenMass;
 
@@ -11673,7 +11673,7 @@ New SpectrumPeak() With {
             ' seek [C11H17NO8-H]-  as 290.0875914768
             Dim threshold1 = 0.01
             Dim diagnosticMz1 = 12 * 11 + 8 * H2O + NitrogenMass
-            ''' seek [M-C11H17NO8-H]-
+            ' seek [M-C11H17NO8-H]-
             'var threshold2 = 0.01;
             'var diagnosticMz2 = theoreticalMz - diagnosticMz1 - MassDiffDictionary.HydrogenMass;
 
@@ -11697,7 +11697,7 @@ New SpectrumPeak() With {
             ' seek [C11H17NO8-H]-  as 290.0875914768
             Dim threshold1 = 0.01
             Dim diagnosticMz1 = 12 * 11 + 8 * H2O + NitrogenMass
-            ''' seek [M-C11H17NO8-H]-
+            ' seek [M-C11H17NO8-H]-
             'var threshold2 = 0.01;
             'var diagnosticMz2 = theoreticalMz - diagnosticMz1 - MassDiffDictionary.HydrogenMass;
 
@@ -11721,7 +11721,7 @@ New SpectrumPeak() With {
             ' seek [C11H17NO8-H]-  as 290.0875914768
             Dim threshold1 = 0.01
             Dim diagnosticMz1 = 12 * 11 + 8 * H2O + NitrogenMass
-            ''' seek [M-C11H17NO8-H]-
+            ' seek [M-C11H17NO8-H]-
             'var threshold2 = 0.01;
             'var diagnosticMz2 = theoreticalMz - diagnosticMz1 - MassDiffDictionary.HydrogenMass;
 
@@ -11790,7 +11790,7 @@ New SpectrumPeak() With {
             Dim diagnosticMz1 = 12 * 11 + 8 * H2O + NitrogenMass
             Dim isClassIon1Found = LipidMsmsCharacterizationUtility.isDiagnosticFragmentExist(spectrum, ms2Tolerance, diagnosticMz1, threshold1)
             If isClassIon1Found <> True Then Return Nothing
-            ''' seek  [C11H17NO8-H]- *2 as 581.19 must be not found
+            ' seek  [C11H17NO8-H]- *2 as 581.19 must be not found
             Dim threshold2 = 0.1
             Dim diagnosticMz2 = diagnosticMz1 * 2 + HydrogenMass
             Dim isClassIon2Found = LipidMsmsCharacterizationUtility.isDiagnosticFragmentExist(spectrum, ms2Tolerance, diagnosticMz2, threshold2)
@@ -11861,7 +11861,7 @@ New SpectrumPeak() With {
             Dim diagnosticMz1 = 12 * 11 + 8 * H2O + NitrogenMass
             Dim isClassIon1Found = LipidMsmsCharacterizationUtility.isDiagnosticFragmentExist(spectrum, ms2Tolerance, diagnosticMz1, threshold1)
             If isClassIon1Found <> True Then Return Nothing
-            ''' seek  [C11H17NO8-H]- *2 as 581.19
+            ' seek  [C11H17NO8-H]- *2 as 581.19
             Dim threshold2 = 0.01
             Dim diagnosticMz2 = diagnosticMz1 * 2 + HydrogenMass
             Dim isClassIon2Found = LipidMsmsCharacterizationUtility.isDiagnosticFragmentExist(spectrum, ms2Tolerance, diagnosticMz2, threshold2)
@@ -11930,7 +11930,7 @@ New SpectrumPeak() With {
             Dim diagnosticMz1 = 12 * 11 + 8 * H2O + NitrogenMass
             Dim isClassIon1Found = LipidMsmsCharacterizationUtility.isDiagnosticFragmentExist(spectrum, ms2Tolerance, diagnosticMz1, threshold1)
             If isClassIon1Found <> True Then Return Nothing
-            ''' seek  [C11H17NO8-H]- *2 as 581.19
+            ' seek  [C11H17NO8-H]- *2 as 581.19
             Dim threshold2 = 0.1
             Dim diagnosticMz2 = diagnosticMz1 * 2 + HydrogenMass
             Dim isClassIon2Found = LipidMsmsCharacterizationUtility.isDiagnosticFragmentExist(spectrum, ms2Tolerance, diagnosticMz2, threshold2)
@@ -12784,7 +12784,7 @@ New SpectrumPeak() With {
                 Dim threshold1 = 10
                 Dim diagnosticMz1 = diagnosticMz - HydrogenMass * 2
 
-                ''' seek C3H4NO2-
+                ' seek C3H4NO2-
                 'var threshold2 = 1;
                 'var diagnosticMz2 = 12 * 3 + MassDiffDictionary.HydrogenMass * 4 + MassDiffDictionary.NitrogenMass + MassDiffDictionary.OxygenMass * 2 + Electron;
 
@@ -14853,7 +14853,7 @@ New SpectrumPeak() With {
                 Dim diagnosticMz = 142.02636999999999
                 Dim diagnosticCutoff = 10.0
 
-                ''' precursor - C2H8NO4P
+                ' precursor - C2H8NO4P
                 'var diagnosticMz2 = theoreticalMz - 142.02637 + Proton;
                 'var diagnosticCutoff2 = 0.1;
 
@@ -15966,7 +15966,7 @@ New SpectrumPeak() With {
             ElseIf Equals(adduct.AdductIonName, "[M+Na]+") Then
                 ' from here, acyl level annotation is executed.
                 Dim candidates = New List(Of LipidMolecule)()
-                ''' DG[M+Na]+ is cannot determine acyl chain
+                ' DG[M+Na]+ is cannot determine acyl chain
 
 
                 Return LipidMsmsCharacterizationUtility.returnAnnotationResult("DG_d5", LbmClass.DG_d5, String.Empty, theoreticalMz, adduct, totalCarbon, totalDoubleBond, 0, candidates, 2)

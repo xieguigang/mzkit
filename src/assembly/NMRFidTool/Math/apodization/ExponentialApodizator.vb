@@ -108,7 +108,7 @@ Namespace fidMath.Apodization
         ''' performs the exponential apodization with specified line broadening.
         ''' </summary>
         ''' <param name="lineBroadening"> </param>
-        ''' <exceptioncref="Exception"> </exception>
+        ''' <exception cref="Exception"> </exception>
         Protected Friend Overloads Overrides Function calculateFactor(i As Integer, lineBroadening As Double) As Double
             Return Math.Exp(-i * spectrum.Proc.DwellTime * lineBroadening * Math.PI)
         End Function

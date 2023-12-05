@@ -55,11 +55,19 @@
 
 Imports System.Runtime.CompilerServices
 
-Namespace MetaLib.Models
+Namespace MetaLib.CrossReference
 
+    ''' <summary>
+    ''' helper function for re-format the input id string to canonical format
+    ''' </summary>
     <HideModuleName>
     Public Module XrefExtensions
 
+        ''' <summary>
+        ''' helper function for re-format the input chebi id string to canonical format
+        ''' </summary>
+        ''' <param name="id"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function FormatChEBI(id As String) As String
             id = id.Match("\d+")
@@ -71,9 +79,14 @@ Namespace MetaLib.Models
             End If
         End Function
 
+        ''' <summary>
+        ''' helper function for re-format the input hmdb id string to canonical format
+        ''' </summary>
+        ''' <param name="id"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function FormatHMDB(id As String) As String
-            If Not xref.IsHMDB(id) Then
+            If Not CrossReference.IsHMDB(id) Then
                 Return ""
             Else
                 id = id.Match("\d+").ParseInteger.ToString

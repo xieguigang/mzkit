@@ -9,7 +9,7 @@ Public Class SeparatedChains
     ''' </summary>
     ''' <param name="chains"></param>
     ''' <param name="description"></param>
-    ''' <exceptioncref="ArgumentException"></exception>
+    ''' <exception cref="ArgumentException"></exception>
     Public Sub New(chains As IChain(), description As LipidDescription)
         If chains.Length = 0 Then
             Throw New ArgumentException(NameOf(chains))
@@ -28,7 +28,7 @@ Public Class SeparatedChains
     ''' </summary>
     ''' <param name="chains"></param>
     ''' <param name="description"></param>
-    ''' <exceptioncref="ArgumentException"></exception>
+    ''' <exception cref="ArgumentException"></exception>
     Public Sub New(chains As (IChain, Integer)(), description As LipidDescription)
         If chains.Length = 0 Then
             Throw New ArgumentException(NameOf(chains))

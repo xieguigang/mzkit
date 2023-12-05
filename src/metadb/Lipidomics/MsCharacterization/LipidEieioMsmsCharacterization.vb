@@ -256,7 +256,7 @@ Public NotInheritable Class LipidEieioMsmsCharacterization
                 End If
                 Return LipidMsmsCharacterizationUtility.returnAnnotationResult("PC", LbmClass.PC, "", theoreticalMz, adduct, totalCarbon, totalDoubleBond, 0, candidates, 2)
             ElseIf Equals(adduct.AdductIonName, "[M+Na]+") Then
-                ''' seek 184.07332 (C5H15NO4P)
+                ' seek 184.07332 (C5H15NO4P)
                 'var diagnosticMz = 184.07332;
                 ' seek [M+Na -C5H14NO4P]+
                 Dim diagnosticMz2 = theoreticalMz - C5H14NO4P
@@ -1096,7 +1096,7 @@ New SpectrumPeak() With {
                 Dim isClassIonFound3 = LipidMsmsCharacterizationUtility.isDiagnosticFragmentExist(spectrum, ms2Tolerance, Gly_O, threshold)
                 If Not isClassIonFound OrElse Not isClassIonFound2 OrElse Not isClassIonFound3 Then Return Nothing
 
-                ''' seek PreCursor -141(C2H8NO4P)
+                ' seek PreCursor -141(C2H8NO4P)
                 'var threshold = 2.5;
                 'var diagnosticMz = theoreticalMz - 141.019094;
 

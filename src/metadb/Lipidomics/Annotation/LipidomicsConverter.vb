@@ -3260,7 +3260,7 @@ Public Module LipidomicsConverter
         ElseIf chainString.Contains("(") Then ' e.g. 18:1(1OH,3OH), 18:2(2OH)
             Dim chain = chainString.Split("("c)(0)
             Dim oxidizedmoiety = chainString.Split("("c)(1).Replace(")", String.Empty) '2OH 
-            '''modified by MT 2020/12/11 & 2021/01/12
+            'modified by MT 2020/12/11 & 2021/01/12
             'var expectedOxCount = oxidizedmoiety.Replace("O", string.Empty).Replace("H", string.Empty).Replace("(", string.Empty).Replace(")", string.Empty);
             'if (expectedOxCount == string.Empty || expectedOxCount == "")
             '{

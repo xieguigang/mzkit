@@ -1,64 +1,64 @@
 ﻿#Region "Microsoft.VisualBasic::7e74028fcef40889d8514c489d732468, mzkit\src\metadb\Massbank\Public\NCBI\PubChem\CIDSynonym.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 153
-    '    Code Lines: 108
-    ' Comment Lines: 26
-    '   Blank Lines: 19
-    '     File Size: 5.56 KB
+' Summaries:
 
 
-    '     Class CIDSynonym
-    ' 
-    '         Properties: CID, IsCAS, IsChEBI, IsHMDB, IsKEGG
-    '                     Synonym
-    ' 
-    '         Function: LoadMetaInfo, LoadNames, ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 153
+'    Code Lines: 108
+' Comment Lines: 26
+'   Blank Lines: 19
+'     File Size: 5.56 KB
+
+
+'     Class CIDSynonym
+' 
+'         Properties: CID, IsCAS, IsChEBI, IsHMDB, IsKEGG
+'                     Synonym
+' 
+'         Function: LoadMetaInfo, LoadNames, ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Xml.Serialization
 Imports BioNovoGene.BioDeep.Chemistry.MetaLib
-Imports BioNovoGene.BioDeep.Chemistry.MetaLib.Models
+Imports BioNovoGene.BioDeep.Chemistry.MetaLib.CrossReference
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Text
 
@@ -84,25 +84,25 @@ Namespace NCBI.PubChem
 
         Public ReadOnly Property IsChEBI As Boolean
             Get
-                Return xref.IsChEBI(Synonym)
+                Return CrossReference.IsChEBI(Synonym)
             End Get
         End Property
 
         Public ReadOnly Property IsCAS As Boolean
             Get
-                Return xref.IsCASNumber(Synonym)
+                Return CrossReference.IsCASNumber(Synonym)
             End Get
         End Property
 
         Public ReadOnly Property IsHMDB As Boolean
             Get
-                Return xref.IsHMDB(Synonym)
+                Return CrossReference.IsHMDB(Synonym)
             End Get
         End Property
 
         Public ReadOnly Property IsKEGG As Boolean
             Get
-                Return xref.IsKEGG(Synonym)
+                Return CrossReference.IsKEGG(Synonym)
             End Get
         End Property
 
@@ -111,10 +111,10 @@ Namespace NCBI.PubChem
         End Function
 
         Shared ReadOnly patterns As Func(Of String, Boolean)() = {
-            AddressOf xref.IsCASNumber,
-            AddressOf xref.IsChEBI,
-            AddressOf xref.IsHMDB,
-            AddressOf xref.IsKEGG
+            AddressOf CrossReference.IsCASNumber,
+            AddressOf CrossReference.IsChEBI,
+            AddressOf CrossReference.IsHMDB,
+            AddressOf CrossReference.IsKEGG
         }
 
         ''' <summary>

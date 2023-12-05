@@ -15,7 +15,7 @@ Public Class LipidMolecule
     ''' 0: incorrect, 
     ''' 1: submolecular level, 
     ''' 2: acyl level, 
-    ''' 3: acyl & positional level 
+    ''' 3: acyl &amp; positional level 
     ''' </summary>
     ''' <returns></returns>
     Public Property AnnotationLevel As Integer
@@ -402,7 +402,7 @@ Public NotInheritable Class LipidAnnotation
                 Case LbmClass.CerP
                     result = LipidMsmsCharacterization.JudgeIfCeramidePhosphate(msScanProp, ms2tol, refMz, totalCarbon, totalDbBond, sn1MinCarbon, sn1MaxCarbon, sn1MinDbBond, sn1MaxDbBond, adduct)
 
-                    ''' 2019/11/25 add
+                    ' 2019/11/25 add
                 Case LbmClass.SMGDG
                     result = LipidMsmsCharacterization.JudgeIfSmgdg(msScanProp, ms2tol, refMz, totalCarbon, totalDbBond, sn1MinCarbon, sn1MaxCarbon, sn1MinDbBond, sn1MaxDbBond, adduct)
                 Case LbmClass.EtherSMGDG

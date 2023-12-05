@@ -22,3 +22,4 @@ Metabolite annotation database toolkit
 + [parse.ChEBI_entity](massbank/parse.ChEBI_entity.1) 
 + [extract_chebi_compounds](massbank/extract_chebi_compounds.1) extract the chebi annotation data from the chebi ontology data
 + [rankingNames](massbank/rankingNames.1) 
++ [metabo_anno](massbank/metabo_anno.1) construct a new metabolite annotation information data

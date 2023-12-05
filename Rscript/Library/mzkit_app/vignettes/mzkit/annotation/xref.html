@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Create the database cross reference links</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <style rel="stylesheet" type="text/css">
+        @media screen {
+            .container {
+                padding-right: 10px;
+                padding-left: 10px;
+                margin-right: auto;
+                margin-left: auto;
+                max-width: 900px;
+            }
+        }
+
+        .rimage img {
+            /* from knitr - for examples and demos */
+            width: 96%;
+            margin-left: 2%;
+        }
+
+        .katex {
+            font-size: 1.1em;
+        }
+
+        code {
+            color: rgb(194, 42, 42);
+            background: inherit;
+            font-style: italic;
+            font-weight: bold;
+        }
+
+        pre code {
+            color: rgb(54, 54, 54);
+            font-style: normal;
+        }
+
+        body {
+            line-height: 1.4;
+            background: white;
+            color: black;
+        }
+
+        a:link {
+            background: white;
+            color: blue;
+        }
+
+        a:visited {
+            background: white;
+            color: rgb(50%, 0%, 50%);
+        }
+
+        h1 {
+            background: white;
+            color: rgb(55%, 55%, 55%);
+            font-family: monospace;
+            font-size: 1.4em;
+            /* x-large; */
+            text-align: center;
+        }
+
+        h2 {
+            background: white;
+            color: rgb(40%, 40%, 40%);
+            font-family: monospace;
+            font-size: 1.2em;
+            /* large; */
+            text-align: center;
+        }
+
+        h3 {
+            background: white;
+            color: rgb(40%, 40%, 40%);
+            font-family: monospace;
+            font-size: 1.2em;
+            /* large; */
+        }
+
+        h4 {
+            background: white;
+            color: rgb(40%, 40%, 40%);
+            font-family: monospace;
+            font-style: italic;
+            font-size: 1.2em;
+            /* large; */
+        }
+
+        h5 {
+            background: white;
+            color: rgb(40%, 40%, 40%);
+            font-family: monospace;
+        }
+
+        h6 {
+            background: white;
+            color: rgb(40%, 40%, 40%);
+            font-family: monospace;
+            font-style: italic;
+        }
+
+        img.toplogo {
+            width: 4em;
+            vertical-align: middle;
+        }
+
+        img.arrow {
+            width: 30px;
+            height: 30px;
+            border: 0;
+        }
+
+        span.acronym {
+            font-size: small;
+        }
+
+        span.env {
+            font-family: monospace;
+        }
+
+        span.file {
+            font-family: monospace;
+        }
+
+        span.option {
+            font-family: monospace;
+        }
+
+        span.pkg {
+            font-weight: bold;
+        }
+
+        span.samp {
+            font-family: monospace;
+        }
+
+        div.vignettes a:hover {
+            background: rgb(85%, 85%, 85%);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+
+        <table style="width: 100%;">
+            <tr>
+                <td>xref {annotation}</td>
+                <td style="text-align: right;">R Documentation</td>
+            </tr>
+        </table>
+
+        <h2>Create the database cross reference links</h2>
+
+        <h3>Description</h3>
+
+        
+
+        <h3>Usage</h3>
+
+        <div style="width: 100%; padding-left: 3%; color: black;">
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>xref</strong>(
+    <i>chebi</i> = <span style='color: blue !important;'>NULL</span>,
+    <i>KEGG</i> = <span style='color: blue !important;'>NULL</span>,
+    <i>KEGGdrug</i> = <span style='color: blue !important;'>NULL</span>,
+    <i>pubchem</i> = <span style='color: blue !important;'>NULL</span>,
+    <i>HMDB</i> = <span style='color: blue !important;'>NULL</span>,
+    <i>metlin</i> = <span style='color: blue !important;'>NULL</span>,
+    <i>DrugBank</i> = <span style='color: blue !important;'>NULL</span>,
+    <i>ChEMBL</i> = <span style='color: blue !important;'>NULL</span>,
+    <i>chemspider</i> = <span style='color: blue !important;'>NULL</span>,
+    <i>foodb</i> = <span style='color: blue !important;'>NULL</span>,
+    <i>Wikipedia</i> = <span style='color: blue !important;'>NULL</span>,
+    <i>lipidmaps</i> = <span style='color: blue !important;'>NULL</span>,
+    <i>MeSH</i> = <span style='color: blue !important;'>NULL</span>,
+    <i>ChemIDplus</i> = <span style='color: blue !important;'>NULL</span>,
+    <i>MetaCyc</i> = <span style='color: blue !important;'>NULL</span>,
+    <i>KNApSAcK</i> = <span style='color: blue !important;'>NULL</span>,
+    <i>CAS</i> = <span style='color: blue !important;'>NULL</span>,
+    <i>InChIkey</i> = <span style='color: blue !important;'>NULL</span>,
+    <i>InChI</i> = <span style='color: blue !important;'>NULL</span>,
+    <i>SMILES</i> = <span style='color: blue !important;'>NULL</span>,
+    <i>...</i> = <span style='color: blue !important;'>NULL</span>);</code></pre>
+        </div>
+
+        <h3>Arguments</h3>
+
+        <table>
+            
+<dt>chebi</dt>
+<dd><p><p>Chemical Entities of Biological Interest (ChEBI)</p>
+
+<p>Chemical Entities of Biological Interest, also known as ChEBI, is <br />
+ a chemical database and ontology of molecular entities focused on <br />
+ 'small' chemical compounds, that is part of the Open Biomedical <br />
+ Ontologies (OBO) effort at the European Bioinformatics Institute <br />
+ (EBI). The term "molecular entity" refers to any "constitutionally <br />
+ or isotopically distinct atom, molecule, ion, ion pair, radical, <br />
+ radical ion, complex, conformer, etc., identifiable as a separately <br />
+ distinguishable entity". The molecular entities in question are <br />
+ either products of nature or synthetic products which have potential <br />
+ bioactivity. Molecules directly encoded by the genome, such as <br />
+ nucleic acids, proteins and peptides derived from proteins by <br />
+ proteolytic cleavage, are not as a rule included in ChEBI.</p>
+
+<p>ChEBI uses nomenclature, symbolism And terminology endorsed by the <br />
+ International Union Of Pure And Applied Chemistry (IUPAC) And <br />
+ nomenclature committee Of the International Union Of Biochemistry <br />
+ And Molecular Biology (NC-IUBMB).</p></p></dd>
+
+
+<dt>KEGG</dt>
+<dd><p><p>KEGG (Kyoto Encyclopedia of Genes and Genomes) is <br />
+ a collection of databases dealing with genomes, biological pathways, <br />
+ diseases, drugs, and chemical substances. KEGG is utilized for <br />
+ bioinformatics research and education, including data analysis in genomics, <br />
+ metagenomics, metabolomics and other omics studies, modeling and simulation <br />
+ in systems biology, and translational research in drug development.</p>
+
+<p>The KEGG database project was initiated In 1995 by Minoru Kanehisa, <br />
+ professor at the Institute For Chemical Research, Kyoto University, <br />
+ under the Then ongoing Japanese Human Genome Program. Foreseeing the need <br />
+ For a computerized resource that can be used For biological interpretation <br />
+ Of genome sequence data, he started developing the KEGG PATHWAY database. <br />
+ It Is a collection Of manually drawn KEGG pathway maps representing <br />
+ experimental knowledge On metabolism And various other functions Of the <br />
+ cell And the organism. Each pathway map contains a network Of molecular <br />
+ interactions And reactions And Is designed To link genes In the genome <br />
+ To gene products (mostly proteins) In the pathway. This has enabled the <br />
+ analysis called KEGG pathway mapping, whereby the gene content In the <br />
+ genome Is compared With the KEGG PATHWAY database To examine which <br />
+ pathways And associated functions are likely To be encoded In the <br />
+ genome.</p>
+
+<p>According to the developers, KEGG Is a "computer representation" of the <br />
+ biological system. It integrates building blocks And wiring diagrams of <br />
+ the system—more specifically, genetic building blocks of genes And proteins, <br />
+ chemical building blocks of small molecules And reactions, And wiring <br />
+ diagrams of molecular interaction And reaction networks. This concept <br />
+ Is realized in the following databases of KEGG, which are categorized <br />
+ into systems, genomic, chemical, And health information.</p></p></dd>
+
+
+<dt>pubchem</dt>
+<dd><p><p>PubChem is a database of chemical molecules and <br />
+ their activities against biological assays. The system is maintained by <br />
+ the National Center for Biotechnology Information (NCBI), a component of <br />
+ the National Library of Medicine, which is part of the United States National <br />
+ Institutes of Health (NIH). PubChem can be accessed for free through a web <br />
+ user interface. Millions of compound structures and descriptive datasets <br />
+ can be freely downloaded via FTP. PubChem contains multiple substance descriptions <br />
+ and small molecules with fewer than 100 atoms and 1,000 bonds. More than <br />
+ 80 database vendors contribute to the growing PubChem database.</p></p></dd>
+
+
+<dt>HMDB</dt>
+<dd><p><p>The Human Metabolome Database (HMDB) is a comprehensive, <br />
+ high-quality, freely accessible, online database of small molecule metabolites <br />
+ found in the human body. It bas been created by the Human Metabolome Project <br />
+ funded by Genome Canada and is one of the first dedicated metabolomics <br />
+ databases. The HMDB facilitates human metabolomics research, including the <br />
+ identification and characterization of human metabolites using NMR spectroscopy, <br />
+ GC-MS spectrometry and LC/MS spectrometry. To aid in this discovery process, <br />
+ the HMDB contains three kinds of data: 1) chemical data, 2) clinical data, and <br />
+ 3) molecular biology/biochemistry data (Fig. 1–3). The chemical data includes <br />
+ 41,514 metabolite structures with detailed descriptions along with nearly <br />
+ 10,000 NMR, GC-MS and LC/MS spectra.</p></p></dd>
+
+
+<dt>metlin</dt>
+<dd><p><p>The METLIN Metabolite and Chemical Entity Database is the <br />
+ largest repository of experimental tandem mass spectrometry and neutral loss data <br />
+ acquired from standards. The tandem mass spectrometry data on over 870,000 molecular <br />
+ standards (as of August 16, 2022) is provided to facilitate the identification <br />
+ of chemical entities from tandem mass spectrometry experiments. In addition to the <br />
+ identification of known molecules, it is also useful for identifying unknowns using <br />
+ its similarity searching technology. All tandem mass spectrometry data comes from <br />
+ the experimental analysis of standards at multiple collision energies and in both <br />
+ positive and negative ionization modes.</p>
+
+<p>METLIN serves as a data management system to assist in metabolite And chemical <br />
+ entity identification by providing public access to its repository of comprehensive <br />
+ MS/MS And neutral loss data. METLIN's annotated list of molecular standards include <br />
+ metabolites and other chemical entities, searching METLIN can be done based on a <br />
+ molecule's tandem mass spectrometry data, neutral loss masses, precursor mass, <br />
+ chemical formula, and structure within the METLIN website. Each molecule is linked<br />
+ to outside resources such as the Kyoto Encyclopedia of Genes and Genomes (KEGG) for <br />
+ further reference and inquiry. The METLIN database was developed and is maintained <br />
+ solely by the Siuzdak laboratory at The Scripps Research Institute.</p></p></dd>
+
+
+<dt>DrugBank</dt>
+<dd><p><p>The DrugBank database is a comprehensive, freely accessible, <br />
+ online database containing information on drugs and drug targets created and maintained <br />
+ by the University of Alberta and The Metabolomics Innovation Centre located in Alberta, <br />
+ Canada. As both a bioinformatics and a cheminformatics resource, DrugBank combines <br />
+ detailed drug (i.e. chemical, pharmacological and pharmaceutical) data with <br />
+ comprehensive drug target (i.e. sequence, structure, and pathway) information. DrugBank <br />
+ has used content from Wikipedia; Wikipedia also often links to Drugbank, posing <br />
+ potential circular reporting issues.</p></p></dd>
+
+
+<dt>ChEMBL</dt>
+<dd><p><p>ChEMBL or ChEMBLdb is a manually curated chemical database of <br />
+ bioactive molecules with drug inducing properties. It is maintained by the European <br />
+ Bioinformatics Institute (EBI), of the European Molecular Biology Laboratory (EMBL), <br />
+ based at the Wellcome Trust Genome Campus, Hinxton, UK.</p>
+
+<p>The database, originally known As StARlite, was developed by a biotechnology company <br />
+ called Inpharmatica Ltd. later acquired by Galapagos NV. The data was acquired For <br />
+ EMBL In 2008 With an award from The Wellcome Trust, resulting In the creation Of the <br />
+ ChEMBL chemogenomics group at EMBL-EBI, led by John Overington.</p></p></dd>
+
+
+<dt>Wikipedia</dt>
+<dd><p><p>Wikipedia is a free-content online encyclopedia written and <br />
+ maintained by a community of volunteers, collectively known as Wikipedians, through<br />
+ open collaboration and using a wiki-based editing system called MediaWiki. Wikipedia <br />
+ is the largest and most-read reference work in history. It has consistently been one <br />
+ of the 10 most popular websites in the world, and, as of 2023, ranks as the 4th most <br />
+ viewed website by Semrush. Founded by Jimmy Wales and Larry Sanger on January 15, <br />
+ 2001, it is hosted by the Wikimedia Foundation, an American nonprofit organization.</p></p></dd>
+
+
+<dt>lipidmaps</dt>
+<dd><p><p>LIPID MAPS (Lipid Metabolites and Pathways Strategy) is a web <br />
+ portal designed to be a gateway to Lipidomics resources. The resource has spearheaded <br />
+ a classification of biological lipids, dividing them into eight general categories. <br />
+ LIPID MAPS provides standardised methodologies for mass spectrometry analysis of lipids, e.g. </p>
+
+<p>LIPID MAPS has been cited As evidence Of a growing appreciation Of the study Of lipid<br />
+ metabolism And the rapid development And standardisation Of the lipidomics field </p>
+
+<p>Key LIPID MAPS resources include:</p>
+
+<ol>
+<li>LIPID MAPS Structure Database (LMSD) - a database Of structures And annotations Of <br />
+biologically relevant lipids, containing over 46000 different lipids. The paper <br />
+describing this resource has, according To PubMed, been cited more than 200 times.</li>
+<li>LIPID MAPS In-Silico Structure Database (LMISSD) - a database Of computationally <br />
+predicted lipids generated by expansion Of headgroups For commonly occurring lipid <br />
+classes</li>
+<li><p>LIPID MAPS Gene/Proteome Database (LMPD) - a database Of genes And gene products <br />
+which are involved In lipid metabolism</p>
+
+<p>Tools available from LIPID MAPS enable scientists To identify likely lipids In their <br />
+samples from mass spectrometry data, a common method To analyse lipids In biological <br />
+specimens. In particular, LipidFinder enables analysis Of MS data. Tutorials And <br />
+educational material On lipids are also available at the site.</p>
+
+<p>In January 2020, LIPID MAPS became an ELIXIR service.</p></li>
+</ol></p></dd>
+
+
+<dt>MeSH</dt>
+<dd><p><p>Medical Subject Headings (MeSH) is a comprehensive controlled <br />
+ vocabulary for the purpose of indexing journal articles and books in the life sciences. <br />
+ It serves as a thesaurus that facilitates searching. Created and updated by the <br />
+ United States National Library of Medicine (NLM), it is used by the MEDLINE/PubMed <br />
+ article database and by NLM's catalog of book holdings. MeSH is also used by <br />
+ ClinicalTrials.gov registry to classify which diseases are studied by trials registered <br />
+ in ClinicalTrials.</p>
+
+<p>MeSH was introduced In the 1960S, With the NLM's own index catalogue and the subject<br />
+ headings of the Quarterly Cumulative Index Medicus (1940 edition) as precursors. <br />
+ The yearly printed version of MeSH was discontinued in 2007; MeSH is now available <br />
+ only online. It can be browsed and downloaded free of charge through PubMed. Originally <br />
+ in English, MeSH has been translated into numerous other languages and allows <br />
+ retrieval of documents from different origins.</p></p></dd>
+
+
+<dt>ChemIDplus</dt>
+<dd><p><p>ChemIDplus (Chemical Identification Plus Database)</p>
+
+<p>ChemIDplus was a dictionary Of over 400,000 chemicals (names, synonyms, And structures). <br />
+ ChemIDplus includes links To NLM And other databases And resources, including links To <br />
+ federal, state And international agencies. NLM makes a subset Of ChemIDplus data available <br />
+ For download. The ChemIDplus Subset does Not include the Structure Or the toxicity data <br />
+ available from the NLM web versions Of the database. </p></p></dd>
+
+
+<dt>MetaCyc</dt>
+<dd><p><p>The MetaCyc database is one of the largest metabolic pathways <br />
+ and enzymes databases currently available. The data in the database is manually <br />
+ curated from the scientific literature, and covers all domains of life. MetaCyc has <br />
+ extensive information about chemical compounds, reactions, metabolic pathways and <br />
+ enzymes. The data have been curated from more than 58,000 publications.</p>
+
+<p>MetaCyc has been designed For multiple types Of uses. It Is often used As an extensive <br />
+ online encyclopedia Of metabolism. In addition, MetaCyc Is used As a reference data <br />
+ Set For computationally predicting the metabolic network Of organisms from their sequenced <br />
+ genomes; it has been used To perform pathway predictions For thousands Of organisms, <br />
+ including those In the BioCyc Database Collection. MetaCyc Is also used In metabolic <br />
+ engineering And metabolomics research.</p>
+
+<p>MetaCyc includes mini reviews For pathways And enzymes that provide background information <br />
+ As well As relevant literature references. It also provides extensive data On individual <br />
+ enzymes, describing their subunit Structure, cofactors, activators And inhibitors, <br />
+ substrate specificity, And, When available, kinetic constants. MetaCyc data On metabolites <br />
+ includes chemical structures, predicted Standard energy Of formation, And links To external <br />
+ databases. Reactions In MetaCyc are presented In a visual display that includes the <br />
+ structures Of all components. The reactions are balanced And include EC numbers, reaction <br />
+ direction, predicted atom mappings that describe the correspondence between atoms In <br />
+ the reactant compounds And the product compounds, And computed Gibbs free energy.</p>
+
+<p>All objects In MetaCyc are clickable And provide easy access To related objects. For example,<br />
+ the page For L-lysine lists all Of the reactions In which L-lysine participates, <br />
+ As well As the enzymes that catalyze them And pathways In which these reactions take place.</p></p></dd>
+
+
+<dt>KNApSAcK</dt>
+<dd><p><p>KNApSAcK: A Comprehensive Species-Metabolite Relationship Database</p></p></dd>
+
+
+<dt>CAS</dt>
+<dd><p><p>A CAS Registry Number (also referred to as CAS RN or informally CAS <br />
+ Number) is a unique identification number assigned by the Chemical Abstracts Service <br />
+ (CAS) in the US to every chemical substance described in the open scientific literature. <br />
+ It includes all substances described since 1957, plus some substances from as far <br />
+ back as the early 1800s. It is a chemical database that includes organic and inorganic <br />
+ compounds, minerals, isotopes, alloys, mixtures, and nonstructurable materials <br />
+ (UVCBs, substances of unknown or variable composition, complex reaction products, <br />
+ or biological origin). CAS RNs are generally serial numbers (with a check digit), <br />
+ so they do not contain any information about the structures themselves the way <br />
+ SMILES and InChI strings do.</p>
+
+<p>The registry maintained by CAS Is an authoritative collection Of disclosed chemical <br />
+ substance information. It identifies more than 204 million unique organic And inorganic <br />
+ substances And 70 million protein And DNA sequences, plus additional information about <br />
+ Each substance. It Is updated With around 15,000 additional New substances daily.<br />
+ A collection Of almost 500 thousand CAS registry numbers are made available under a <br />
+ CC BY-NC license at ACS Commons Chemistry.</p></p></dd>
+
+
+<dt>InChIkey</dt>
+<dd><p><p>The International Chemical Identifier (InChI /ˈɪntʃiː/ IN-chee <br />
+ or /ˈɪŋkiː/ ING-kee) is a textual identifier for chemical substances, designed to<br />
+ provide a standard way to encode molecular information and to facilitate the search <br />
+ for such information in databases and on the web. Initially developed by the International<br />
+ Union of Pure and Applied Chemistry (IUPAC) and National Institute of Standards and <br />
+ Technology (NIST) from 2000 to 2005, the format and algorithms are non-proprietary. <br />
+ Since May 2009, it has been developed by the InChI Trust, a nonprofit charity from <br />
+ the United Kingdom which works to implement and promote the use of InChI.</p></p></dd>
+
+
+<dt>InChI</dt>
+<dd><p><p>The International Chemical Identifier (InChI /ˈɪntʃiː/ IN-chee <br />
+ or /ˈɪŋkiː/ ING-kee) is a textual identifier for chemical substances, designed to<br />
+ provide a standard way to encode molecular information and to facilitate the search <br />
+ for such information in databases and on the web. Initially developed by the International<br />
+ Union of Pure and Applied Chemistry (IUPAC) and National Institute of Standards and <br />
+ Technology (NIST) from 2000 to 2005, the format and algorithms are non-proprietary. <br />
+ Since May 2009, it has been developed by the InChI Trust, a nonprofit charity from <br />
+ the United Kingdom which works to implement and promote the use of InChI.</p></p></dd>
+
+
+<dt>SMILES</dt>
+<dd><p><p>The simplified molecular-input line-entry system (SMILES) is <br />
+ a specification in the form of a line notation for describing the structure of <br />
+ chemical species using short ASCII strings. SMILES strings can be imported by <br />
+ most molecule editors for conversion back into two-dimensional drawings or three-dimensional <br />
+ models of the molecules.</p>
+
+<p>The original SMILES specification was initiated In the 1980S. It has since been <br />
+ modified And extended. In 2007, an open standard called OpenSMILES was developed <br />
+ In the open source chemistry community.</p></p></dd>
+
+
+<dt>chemspider</dt>
+<dd><p><p>ChemSpider is a freely accessible online database of <br />
+ chemicals owned by the Royal Society of Chemistry. It contains information on more than 100 <br />
+ million molecules from over 270 data sources, each of them receiving a unique identifier <br />
+ called ChemSpider Identifier.</p></p></dd>
+
+
+<dt>foodb</dt>
+<dd><p><p>FooDB (The Food Database) is a freely available, open-access <br />
+ database containing chemical (micronutrient and macronutrient) composition data on <br />
+ common, unprocessed foods. It also contains extensive data on flavour and aroma <br />
+ constituents, food additives as well as positive and negative health effects <br />
+ associated with food constituents. The database contains information on more than<br />
+ 28,000 chemicals found in more than 1000 raw or unprocessed food products. The <br />
+ data in FooDB was collected from many sources including textbooks, scientific journals, <br />
+ on-line food composition or nutrient databases, flavour and aroma databases <br />
+ and various on-line metabolomic databases. This literature-derived information has<br />
+ been combined with experimentally derived data measured on thousands of compounds <br />
+ from more than 40 very common food products through the Alberta Food Metabolome <br />
+ Project which is led by David S. Wishart. Users are able to browse through the FooDB <br />
+ data by food source, name, descriptors or function. Chemical structures and molecular <br />
+ weights for compounds in FooDB may be searched via a specialized chemical structure <br />
+ search utility. Users are able to view the content of FooDB using two different <br />
+ “Viewing” options: FoodView, which lists foods by their chemical compounds, or ChemView,<br />
+ which lists chemicals by their food sources. Knowledge about the precise chemical <br />
+ composition of foods can be used to guide public health policies, assist food companies <br />
+ with improved food labelling, help dieticians prepare better dietary plans, <br />
+ support nutraceutical companies with their submissions of health claims and guide <br />
+ consumer choices with regard to food purchases.</p></p></dd>
+
+
+<dt>KEGGdrug</dt>
+<dd><p><p>KEGG DRUG is a comprehensive drug information resource for <br />
+ approved drugs in Japan, USA and Europe, unified based on the chemical structure <br />
+ and/or the chemical component of active ingredients. Each KEGG DRUG entry is <br />
+ identified by the D number and associated with KEGG original annotations including <br />
+ therapeutic targets, drug metabolism, and other molecular interaction network <br />
+ information.</p></p></dd>
+
+        </table>
+
+
+        <h3 style="display: none;">Details</h3>
+
+        
+
+
+        <h3>Value</h3>
+
+        this function returns data object of type <a href="/clr/BioNovoGene/BioDeep/Chemistry/MetaLib/CrossReference/xref.html">xref</a>.
+
+        <h3 style="display: block;">Examples</h3>
+
+        <pre><code># an example of create metabolite annotation data
+ # for 'ATP'.
+ 
+ let xrefs = annotation::xref(
+     KEGG = 'C00002',
+     CAS = '56-65-5',
+     pubchem = '3304',
+     chebi = '15422',
+     KNApSAcK = 'C00001491'
+ );</code></pre>
+
+        <hr />
+        <div style="text-align: center;">[Package <em>annotation</em> version 1.0.0.0 <a
+                href="../annotation.html">Index</a>]
+        </div>
+    </div>
+</body>
+
+</html>
