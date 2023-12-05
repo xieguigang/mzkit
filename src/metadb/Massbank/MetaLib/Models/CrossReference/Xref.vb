@@ -178,7 +178,7 @@ Namespace MetaLib.CrossReference
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function PopulateXrefs(Optional parseList As Boolean = False) As IEnumerable(Of NamedValue(Of String))
-            Return Me.PullCollection
+            Return Me.PullCollection(parseList)
         End Function
 
         Public Overrides Function ToString() As String
