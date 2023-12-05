@@ -1233,7 +1233,7 @@ Public NotInheritable Class MsScanMatching
             Case LbmClass.CerP
                 Return LipidMsmsCharacterization.JudgeIfCeramidePhosphate(msScanProp, ms2tol, refMz, totalCarbon, totalDbBond, sn1Carbon, sn1Carbon, sn1DbBond, sn1DbBond, adduct)
 
-                ''' 2019/11/25 add
+                ' 2019/11/25 add
             Case LbmClass.SMGDG
                 Return LipidMsmsCharacterization.JudgeIfSmgdg(msScanProp, ms2tol, refMz, totalCarbon, totalDbBond, sn1Carbon, sn1Carbon, sn1DbBond, sn1DbBond, adduct)
             Case LbmClass.EtherSMGDG
@@ -1470,10 +1470,10 @@ Public NotInheritable Class MsScanMatching
     ''' double[] [0]m/z[1]intensity
     ''' 
     ''' </summary>
-    ''' <param name="peaks1">
+    ''' <param name="msScanProp">
     ''' Add the experimental MS/MS spectrum.
     ''' </param>
-    ''' <param name="refSpec">
+    ''' <param name="molMsRef">
     ''' Add the theoretical MS/MS spectrum. The theoretical MS/MS spectrum is supposed to be retreived in MSP parcer.
     ''' </param>
     ''' <param name="bin">

@@ -162,7 +162,7 @@ Namespace fidMath.Apodization
         ''' This also correspondes to one of the alternative ways of defining the standard gaussian distribution,
         ''' according to wikipedia. </summary>
         ''' <param name="lbGauss"> </param>
-        ''' <exceptioncref="Exception"> </exception>
+        ''' <exception cref="Exception"> </exception>
         Public Overridable Function gaussianBramer2001(lbGauss As Double) As Double()
             Dim data = New Double(processing.TdEffective - 1) {}
             Dim time As Double

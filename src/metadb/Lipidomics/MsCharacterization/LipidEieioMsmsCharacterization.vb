@@ -256,7 +256,7 @@ Public NotInheritable Class LipidEieioMsmsCharacterization
                 End If
                 Return LipidMsmsCharacterizationUtility.returnAnnotationResult("PC", LbmClass.PC, "", theoreticalMz, adduct, totalCarbon, totalDoubleBond, 0, candidates, 2)
             ElseIf Equals(adduct.AdductIonName, "[M+Na]+") Then
-                ''' seek 184.07332 (C5H15NO4P)
+                ' seek 184.07332 (C5H15NO4P)
                 'var diagnosticMz = 184.07332;
                 ' seek [M+Na -C5H14NO4P]+
                 Dim diagnosticMz2 = theoreticalMz - C5H14NO4P

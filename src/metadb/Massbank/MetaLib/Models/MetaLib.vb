@@ -56,6 +56,7 @@
 
 #End Region
 
+Imports BioNovoGene.BioDeep.Chemistry.MetaLib.CrossReference
 Imports BioNovoGene.BioDeep.Chemoinformatics
 Imports Microsoft.VisualBasic.Data.IO.MessagePack.Serialization
 

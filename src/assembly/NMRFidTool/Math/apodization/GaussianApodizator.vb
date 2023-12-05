@@ -100,7 +100,7 @@ Namespace fidMath.Apodization
         ''' In Vogt 2004: W(i)=exp(-lb*(i*dw)^2))
         ''' In Wikipedia: W(i)=exp(-1/2*(((n-(N-1)/2))/(sigma * (N-1)/2))^2))
         ''' </summary>
-        ''' <exceptioncref="Exception"> </exception>
+        ''' <exception cref="Exception"> </exception>
         Protected Friend Overloads Overrides Function calculateFactor(i As Integer) As Double
             spectrum.Proc.LineBroadening = 0.1
             Return calculateFactor(i, 0.1)
@@ -109,7 +109,7 @@ Namespace fidMath.Apodization
         ''' <summary>
         ''' performs the guassian apodization with specified line broadning. </summary>
         ''' <param name="lbGauss"> </param>
-        ''' <exceptioncref="Exception"> </exception>
+        ''' <exception cref="Exception"> </exception>
         Protected Friend Overloads Overrides Function calculateFactor(i As Integer, lbGauss As Double) As Double
 
             If lbGauss = 0 Then

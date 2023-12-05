@@ -63,6 +63,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MSP
 Imports BioNovoGene.BioDeep.Chemistry
 Imports BioNovoGene.BioDeep.Chemistry.LipidMaps
 Imports BioNovoGene.BioDeep.Chemistry.MetaLib
+Imports BioNovoGene.BioDeep.Chemistry.MetaLib.CrossReference
 Imports BioNovoGene.BioDeep.Chemistry.MetaLib.Models
 Imports BioNovoGene.BioDeep.Chemistry.TMIC
 Imports BioNovoGene.BioDeep.Chemoinformatics
