@@ -389,7 +389,23 @@ Module library
             .JoinIterates(CLRVector.asCharacter(KEGGdrug)) _
             .Distinct _
             .JoinBy("; ")
-        Dim additionals As Dictionary(Of String, String()) = extras.AsGeneric(Of String())(env)
+        Dim additionals As Dictionary(Of String, String()) = extras _
+            .AsGeneric(Of String())(env) _
+            .Select(Function(a)
+                        Return (
+                            a.Key,
+                            a.Value.SafeQuery _
+                                .Where(Function(si) Not si.StringEmpty(testEmptyFactor:=True)) _
+                                .ToArray
+                        )
+                    End Function) _
+            .Where(Function(a)
+                       Return Not a.ToArray.IsNullOrEmpty
+                   End Function) _
+            .ToDictionary(Function(a) a.Key,
+                          Function(a)
+                              Return a.ToArray
+                          End Function)
 
         Return New xref With {
             .CAS = CLRVector.asCharacter(CAS),
