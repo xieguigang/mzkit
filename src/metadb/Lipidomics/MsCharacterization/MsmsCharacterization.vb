@@ -1756,7 +1756,7 @@ Public NotInheritable Class LipidMsmsCharacterization
                         End If
                     Next
                 Next
-                '''add MT
+                'add MT
                 'if (candidates.Count == 0)
                 '{
                 '    var score = 0;
@@ -2164,7 +2164,7 @@ Public NotInheritable Class LipidMsmsCharacterization
                         End If
                     Next
                 Next
-                '''add MT
+                'add MT
                 'if (candidates.Count == 0)
                 '{
                 '    var score = 0;
@@ -2453,7 +2453,7 @@ Public NotInheritable Class LipidMsmsCharacterization
                         End If
                     Next
                 Next
-                '''add MT
+                'add MT
                 'if (candidates.Count == 0)
                 '{
                 '    var score = 0;
@@ -11790,7 +11790,7 @@ New SpectrumPeak() With {
             Dim diagnosticMz1 = 12 * 11 + 8 * H2O + NitrogenMass
             Dim isClassIon1Found = LipidMsmsCharacterizationUtility.isDiagnosticFragmentExist(spectrum, ms2Tolerance, diagnosticMz1, threshold1)
             If isClassIon1Found <> True Then Return Nothing
-            ''' seek  [C11H17NO8-H]- *2 as 581.19 must be not found
+            ' seek  [C11H17NO8-H]- *2 as 581.19 must be not found
             Dim threshold2 = 0.1
             Dim diagnosticMz2 = diagnosticMz1 * 2 + HydrogenMass
             Dim isClassIon2Found = LipidMsmsCharacterizationUtility.isDiagnosticFragmentExist(spectrum, ms2Tolerance, diagnosticMz2, threshold2)
@@ -15966,7 +15966,7 @@ New SpectrumPeak() With {
             ElseIf Equals(adduct.AdductIonName, "[M+Na]+") Then
                 ' from here, acyl level annotation is executed.
                 Dim candidates = New List(Of LipidMolecule)()
-                ''' DG[M+Na]+ is cannot determine acyl chain
+                ' DG[M+Na]+ is cannot determine acyl chain
 
 
                 Return LipidMsmsCharacterizationUtility.returnAnnotationResult("DG_d5", LbmClass.DG_d5, String.Empty, theoreticalMz, adduct, totalCarbon, totalDoubleBond, 0, candidates, 2)
