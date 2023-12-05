@@ -1,5 +1,5 @@
 ﻿Imports System.Runtime.CompilerServices
-Imports BioNovoGene.BioDeep.Chemistry.MetaLib.Models
+Imports BioNovoGene.BioDeep.Chemistry.MetaLib.CrossReference
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text.Parser
