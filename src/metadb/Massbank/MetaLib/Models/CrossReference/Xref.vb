@@ -63,6 +63,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
 Imports BioNovoGene.BioDeep.Chemistry.TMIC
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.IO.MessagePack.Serialization
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
@@ -268,5 +269,9 @@ Namespace MetaLib.Models
                 Return a.Join(b)
             End If
         End Operator
+
+        Public Iterator Function PopulateXrefs() As IEnumerable(Of NamedValue(Of String))
+
+        End Function
     End Class
 End Namespace
