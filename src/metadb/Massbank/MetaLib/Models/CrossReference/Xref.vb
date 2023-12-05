@@ -59,6 +59,7 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
 Imports BioNovoGene.BioDeep.Chemistry.TMIC
 Imports Microsoft.VisualBasic.ComponentModel.Collection
@@ -73,7 +74,8 @@ Imports SMRUCC.genomics.Assembly.ELIXIR.EBI.ChEBI.XML
 Namespace MetaLib.CrossReference
 
     ''' <summary>
-    ''' 对某一个物质在数据库之间的相互引用编号
+    ''' The database cross reference set of a specific metabolite object.
+    ''' (对某一个物质在数据库之间的相互引用编号)
     ''' </summary>
     Public Class xref
 
@@ -120,6 +122,10 @@ Namespace MetaLib.CrossReference
         Sub New()
         End Sub
 
+        ''' <summary>
+        ''' extract the cross reference id set from a chebi metabolite data
+        ''' </summary>
+        ''' <param name="chebi"></param>
         Sub New(chebi As ChEBIEntity)
             Me.chebi = chebi.chebiId
             Me.KEGG = chebi.FindDatabaseLinkValue(AccessionTypes.KEGG_Compound)
@@ -134,6 +140,10 @@ Namespace MetaLib.CrossReference
                 .ToArray
         End Sub
 
+        ''' <summary>
+        ''' extract the cross reference id set from a hmdb metabolite data
+        ''' </summary>
+        ''' <param name="meta"></param>
         Sub New(meta As HMDB.MetaDb)
             Me.chebi = "CHEBI:" & meta.chebi_id
             Me.KEGG = Strings.Trim(meta.kegg_id).Trim(ASCII.TAB)
@@ -147,41 +157,19 @@ Namespace MetaLib.CrossReference
 
         ''' <summary>
         ''' This function will fill current <see cref="xref"/> object with 
-        ''' additional property data from <paramref name="add"/> data object.
+        ''' additional property data from <paramref name="another"/> data object.
         ''' </summary>
-        ''' <param name="add"></param>
-        ''' <returns></returns>
-        Public Function Join(add As xref) As xref
-            If IsEmptyXrefId(chebi) Then
-                chebi = add.chebi
-            End If
-            If KEGG.StringEmpty Then
-                KEGG = add.KEGG
-            End If
-            If IsEmptyXrefId(pubchem) Then
-                pubchem = add.pubchem
-            End If
-            If HMDB.StringEmpty Then
-                HMDB = add.HMDB
-            End If
-            If IsEmptyXrefId(metlin) Then
-                metlin = add.metlin
-            End If
-            If Wikipedia.StringEmpty Then
-                Wikipedia = add.Wikipedia
-            End If
-            If CAS.IsNullOrEmpty Then
-                CAS = add.CAS.ToArray
-            End If
-            If InChI.StringEmpty Then
-                InChI = add.InChI
-                InChIkey = add.InChIkey
-            End If
-            If SMILES.StringEmpty Then
-                SMILES = add.SMILES
-            End If
+        ''' <param name="another"></param>
+        ''' <returns>construct a new cross reference set data object</returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function Join(another As xref) As xref
+            Return CrossReference.Join(Me, another)
+        End Function
 
-            Return Me
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function PopulateXrefs() As IEnumerable(Of NamedValue(Of String))
+            Return Me.PullCollection
         End Function
 
         Public Overrides Function ToString() As String
@@ -203,9 +191,5 @@ Namespace MetaLib.CrossReference
                 Return a.Join(b)
             End If
         End Operator
-
-        Public Iterator Function PopulateXrefs() As IEnumerable(Of NamedValue(Of String))
-
-        End Function
     End Class
 End Namespace

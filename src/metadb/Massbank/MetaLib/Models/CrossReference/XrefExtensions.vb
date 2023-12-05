@@ -86,7 +86,7 @@ Namespace MetaLib.CrossReference
         ''' <returns></returns>
         <Extension>
         Public Function FormatHMDB(id As String) As String
-            If Not xref.IsHMDB(id) Then
+            If Not CrossReference.IsHMDB(id) Then
                 Return ""
             Else
                 id = id.Match("\d+").ParseInteger.ToString
