@@ -736,4 +736,15 @@ Module Massbank
             .exact_mass = FormulaScanner.EvaluateExactMass(formula)
         }
     End Function
+
+    ''' <summary>
+    ''' generates the inchikey hashcode based on the given inchi data
+    ''' </summary>
+    ''' <param name="inchi"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("inchikey")>
+    Public Function inchikey(<RRawVectorArgument> inchi As Object, Optional env As Environment = Nothing) As Object
+        Return env.EvaluateFramework(Of String, String)(inchi, eval:=AddressOf IUPAC.MakeHashCode)
+    End Function
 End Module

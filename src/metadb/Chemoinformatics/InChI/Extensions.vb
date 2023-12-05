@@ -56,7 +56,15 @@
 Namespace IUPAC
 
     <HideModuleName>
-    Module Extensions
+    Public Module Extensions
 
+        ''' <summary>
+        ''' function for generates the inchikey based on the inchi string data
+        ''' </summary>
+        ''' <param name="inchi"></param>
+        ''' <returns></returns>
+        Public Function MakeHashCode(inchi As String) As String
+
+        End Function
     End Module
 End Namespace
