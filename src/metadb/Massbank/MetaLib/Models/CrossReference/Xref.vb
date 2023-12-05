@@ -71,7 +71,7 @@ Imports Microsoft.VisualBasic.Text
 Imports SMRUCC.genomics.Assembly.ELIXIR.EBI.ChEBI
 Imports SMRUCC.genomics.Assembly.ELIXIR.EBI.ChEBI.XML
 
-Namespace MetaLib.Models
+Namespace MetaLib.CrossReference
 
     ''' <summary>
     ''' 对某一个物质在数据库之间的相互引用编号
