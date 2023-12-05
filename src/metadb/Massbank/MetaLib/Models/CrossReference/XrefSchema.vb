@@ -82,7 +82,7 @@ Namespace MetaLib.CrossReference
             For Each slot In strings
                 Dim str As String = slot.Value.GetValue(xref)
 
-                If CrossReference.IsEmptyXrefId(str) Then
+                If CrossReference.IsEmptyXrefId(str) AndAlso CrossReference.IsEmptyIdString(str) Then
                     Continue For
                 End If
 
@@ -100,6 +100,10 @@ Namespace MetaLib.CrossReference
 
                 If Not strs.IsNullOrEmpty Then
                     For Each id As String In strs
+                        If CrossReference.IsEmptyXrefId(id) AndAlso CrossReference.IsEmptyIdString(id) Then
+                            Continue For
+                        End If
+
                         Yield New NamedValue(Of String)(arr.Key, id)
                     Next
                 End If

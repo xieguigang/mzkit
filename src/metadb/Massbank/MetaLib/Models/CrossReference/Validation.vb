@@ -8,16 +8,30 @@ Namespace MetaLib.CrossReference
     ''' </summary>
     Public Module Validation
 
-        ReadOnly emptySymbols As Index(Of String) = {"null", "na", "n/a", "inf", "nan"}
+        ReadOnly emptySymbols As Index(Of String) = {"null", "na", "n/a", "inf", "nan", "-"}
 
+        ''' <summary>
+        ''' test for the id with integer part
+        ''' </summary>
+        ''' <param name="id">example as 'HMDB0000001'</param>
+        ''' <returns></returns>
         Public Function IsEmptyXrefId(id As String) As Boolean
-            If id.StringEmpty OrElse id.ToLower Like emptySymbols Then
+            If id.StringEmpty(testEmptyFactor:=True) OrElse id.ToLower Like emptySymbols Then
                 Return True
             ElseIf id.Match("\d+").ParseInteger <= 0 Then
                 Return True
             End If
 
             Return False
+        End Function
+
+        ''' <summary>
+        ''' test for the id without integer part
+        ''' </summary>
+        ''' <param name="id">example as 'ATP'</param>
+        ''' <returns></returns>
+        Public Function IsEmptyIdString(id As String) As Boolean
+            Return id.StringEmpty(testEmptyFactor:=True) OrElse id.ToLower Like emptySymbols
         End Function
 
         Public Function IsEmpty(xref As xref, Optional includeStruct As Boolean = False) As Boolean
