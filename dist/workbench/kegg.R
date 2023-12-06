@@ -7,7 +7,7 @@ imports "pubchem_kit" from "mzkit";
 imports "formula" from "mzkit";
 imports "repository" from "kegg_kit";
 
-const hits = read.webquery("E:\\PubChem_compound_text_kegg drug.xml");
+const hits = read.webquery("E:\\PubChem_compound_text_chebi.xml");
 # const hits = read.webquery("E:\\PubChem_compound_text_kegg.xml");
 const kegg_compounds = list();
 
@@ -22,16 +22,17 @@ for(metabo in hits) {
 
     let kegg_id = as.character(names[names == $"C\d{5}"]);
     let drugbank_id = names[names == $"DB\d{5}"];
-    let drug_id = as.character(names[names == $"D\d{5}"]);
+    # let drug_id = as.character(names[names == $"D\d{5}"]);
+    let drug_id = metabo$cid;
 
     # print(kegg_id);
 
     # if ( length(kegg_id) == 0 ) {
     #     next;
     # }
-    if (length(drug_id) == 0) {
-        next;
-    }
+    # if (length(drug_id) == 0) {
+    #     next;
+    # }
 
     # if (length(kegg_id) > 1) {
     #     # stop(kegg_id);
@@ -125,4 +126,4 @@ for(metabo in hits) {
     # break;
 }
 
-repository::write.msgpack(unlist(kegg_compounds), file = "E:\\compounds\\kegg_drug.msgpack");
+repository::write.msgpack(unlist(kegg_compounds), file = "E:\\compounds\\chebi.msgpack");
