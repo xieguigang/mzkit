@@ -225,7 +225,13 @@ Namespace Formula
                 End If
             End If
 
-            If CountsByElement.Keys.Union(fb.CountsByElement.Keys).Count <> CountsByElement.Count Then
+            If CountsByElement.Count <> fb.CountsByElement.Count Then
+                Return False
+            End If
+
+            Dim union As Integer = CountsByElement.Keys.Union(fb.CountsByElement.Keys).Count
+
+            If union <> CountsByElement.Count OrElse union <> fb.CountsByElement.Count Then
                 ' has different element composition
                 Return False
             End If
