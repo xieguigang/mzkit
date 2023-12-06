@@ -231,7 +231,7 @@ Namespace Formula
             End If
 
             For Each atom As String In CountsByElement.Keys
-                If CountsByElement(atom) <> fb.CountsByElement(fb) Then
+                If CountsByElement(atom) <> fb.CountsByElement(atom) Then
                     Return False
                 End If
             Next
