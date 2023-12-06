@@ -15,14 +15,14 @@ Namespace MetaLib
         ''' </summary>
         ReadOnly symbols As Char() = {"-", "/", "\", ":", "<", ">", "?", "(", ")", "[", "]", "{", "}", "|", ";", ",", "'", """"c, ".", "_"}
 
-        Public Function Score(name As String, Optional maxLen As Integer = 32) As Double
+        Public Function Score(name As String, Optional maxLen As Integer = 32, Optional minLen As Integer = 5) As Double
             If name.StringEmpty(testEmptyFactor:=True) OrElse name Like empty_symbols Then
                 Return -1
             End If
 
             Dim eval As Double
 
-            If name.Length < 4 Then
+            If name.Length < minLen Then
                 eval = 1
             ElseIf name.Length < maxLen Then
                 eval = 10 * (maxLen / name.Length)
@@ -63,10 +63,10 @@ Namespace MetaLib
             Return eval
         End Function
 
-        Public Function Ranking(names As IEnumerable(Of String)) As IEnumerable(Of NumericTagged(Of String))
+        Public Function Ranking(names As IEnumerable(Of String), Optional maxLen As Integer = 32, Optional minLen As Integer = 5) As IEnumerable(Of NumericTagged(Of String))
             Return From name As String
                    In names
-                   Let score As Double = NameRanking.Score(name)
+                   Let score As Double = NameRanking.Score(name, maxLen, minLen)
                    Select out = New NumericTagged(Of String)(score, name)
                    Order By out.tag Descending
         End Function

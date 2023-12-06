@@ -670,16 +670,22 @@ Module Massbank
     End Function
 
     <ExportAPI("rankingNames")>
-    Public Function rankingNames(<RRawVectorArgument> x As Object) As Object
+    Public Function rankingNames(<RRawVectorArgument>
+                                 x As Object,
+                                 Optional max_len As Integer = 32,
+                                 Optional min_len As Integer = 5) As Object
+
         Dim names As String() = CLRVector.asCharacter(x)
 
         If names.IsNullOrEmpty Then
             Return Nothing
         End If
 
-        Dim ranking = NameRanking.Ranking(names).ToArray
+        Dim ranking = NameRanking.Ranking(names, maxLen:=max_len, minLen:=min_len).ToArray
         Dim name As String = ranking.First.value
-        Dim synonym As New list With {.slots = New Dictionary(Of String, Object)}
+        Dim synonym As New list With {
+            .slots = New Dictionary(Of String, Object)
+        }
 
         For Each eval As NumericTagged(Of String) In ranking
             Call synonym.add(eval.value, eval.tag)
