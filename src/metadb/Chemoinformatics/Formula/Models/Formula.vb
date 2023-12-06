@@ -208,7 +208,17 @@ Namespace Formula
             Return EmpiricalFormula
         End Function
 
+        ''' <summary>
+        ''' check the given formula <paramref name="fb"/> is equals to current formula object?
+        ''' </summary>
+        ''' <param name="fb"></param>
+        ''' <param name="isIgnoreHydrogen"></param>
+        ''' <returns></returns>
         Public Function EqualsTo(fb As Formula, Optional isIgnoreHydrogen As Boolean = False) As Boolean
+            If Me Is fb Then
+                Return True
+            End If
+
             If Not isIgnoreHydrogen Then
                 If Me!H <> fb!H Then
                     Return False
@@ -228,6 +238,24 @@ Namespace Formula
 
             Return True
         End Function
+
+        ''' <summary>
+        ''' check <paramref name="f1"/> equals to <paramref name="f2"/> via <see cref="EqualsTo(Formula, Boolean)"/> function.
+        ''' </summary>
+        ''' <param name="f1"></param>
+        ''' <param name="f2"></param>
+        ''' <returns></returns>
+        Public Shared Operator =(f1 As Formula, f2 As Formula) As Boolean
+            If f1 Is Nothing OrElse f2 Is Nothing Then
+                Return False
+            End If
+
+            Return f1.EqualsTo(f2)
+        End Operator
+
+        Public Shared Operator <>(f1 As Formula, f2 As Formula) As Boolean
+            Return Not (f1 = f2)
+        End Operator
 
         Public Shared Operator *(composition As Formula, n%) As Formula
             Dim newFormula$ = $"({composition}){n}"
