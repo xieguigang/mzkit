@@ -129,8 +129,10 @@ declare namespace massbank {
       function ChEBI_entity(xml: string): object;
    }
    /**
+     * @param max_len default value Is ``32``.
+     * @param min_len default value Is ``5``.
    */
-   function rankingNames(x: any): any;
+   function rankingNames(x: any, max_len?: object, min_len?: object): any;
    module read {
       /**
        * read lipidmaps messagepack repository file
