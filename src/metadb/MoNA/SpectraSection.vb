@@ -140,12 +140,8 @@ Public Class SpectraSection : Inherits MetaInfo
         Me.ID = metadata.accession
         Me.name = metadata.name
         Me.IUPACName = metadata.name
-        Me.formula = If(metadata.molecular_formula, metadata.derivative_formula)
         Me.exact_mass = metadata.exact_mass
-
-        If Not formula.StringEmpty AndAlso formula.IndexOf(","c) > 0 Then
-            formula = formula.Split(","c).First
-        End If
+        Me.formula = metadata.GetFormula
     End Sub
 
     ''' <summary>

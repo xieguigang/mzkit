@@ -282,6 +282,16 @@ Public Class MetaData
     Public Property copyright As String
     Public Property comment As String()
 
+    Public Function GetFormula() As String
+        Dim formula As String = If(molecular_formula, derivative_formula)
+
+        If (Not formula.StringEmpty) AndAlso formula.IndexOf(","c) > 0 Then
+            formula = formula.Split(","c).First
+        End If
+
+        Return formula
+    End Function
+
     Public Overrides Function ToString() As String
         Return $"{accession}: {name}"
     End Function
