@@ -200,9 +200,15 @@
 
         this function returns data object in these one of the listed data types: <a href="/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/MarkupData/imzML/MSISummary.html">MSISummary</a>, <a href="/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/MarkupData/imzML/iPixelIntensity.html">iPixelIntensity</a>.
 
-        <h3 style="display: none;">Examples</h3>
+        <h3 style="display: block;">Examples</h3>
 
-        
+        <pre><code>let rawdata = open.mzpack("/path/to/rawdata.mzPack");
+ let spots = read.csv("/path/to/region.csv");
+ let into = MSI_summary(rawdata, x = as.integer(spots$x), y = as.integer(spots$y), as.vector = TRUE);
+ 
+ print(as.data.frame(into));
+ print("view of the intensity vector:");
+ print([into]::totalIon);</code></pre>
 
         <hr />
         <div style="text-align: center;">[Package <em>MSI</em> version 1.0.0.0 <a
