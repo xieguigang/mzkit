@@ -604,6 +604,15 @@ Module MSI
     ''' of the MSI data(width and height)
     ''' </param>
     ''' <returns></returns>
+    ''' <example>
+    ''' let rawdata = open.mzpack("/path/to/rawdata.mzPack");
+    ''' let spots = read.csv("/path/to/region.csv");
+    ''' let into = MSI_summary(rawdata, x = as.integer(spots$x), y = as.integer(spots$y), as.vector = TRUE);
+    ''' 
+    ''' print(as.data.frame(into));
+    ''' print("view of the intensity vector:");
+    ''' print([into]::totalIon);
+    ''' </example>
     <ExportAPI("MSI_summary")>
     <RApiReturn(GetType(MSISummary), GetType(iPixelIntensity))>
     Public Function MSI_summary(raw As mzPack,
