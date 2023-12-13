@@ -135,8 +135,9 @@ Module Massbank
     ''' read MoNA database file.
     ''' </summary>
     ''' <param name="rawfile">
-    ''' the database reader is switched automatically 
-    ''' based on this file path its extension name.
+    ''' a vector of the mona database file, could be a set of multiple mona database file.
+    ''' the database reader is switched automatically based on this file path its 
+    ''' extension name.
     ''' </param>
     ''' <param name="env"></param>
     ''' <returns>
