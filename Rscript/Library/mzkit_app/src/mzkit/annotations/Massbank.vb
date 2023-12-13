@@ -145,26 +145,37 @@ Module Massbank
     ''' </returns>
     <ExportAPI("read.MoNA")>
     <RApiReturn(GetType(SpectraSection))>
-    Public Function readMoNA(rawfile As String,
+    Public Function readMoNA(rawfile As String(),
                              Optional skipSpectraInfo As Boolean = False,
                              Optional is_gcms As Boolean = False,
                              Optional env As Environment = Nothing) As pipeline
 
+        If rawfile.IsNullOrEmpty Then
+            Return Nothing
+        End If
+
+        For Each file As String In rawfile
+            If Not file.ExtensionSuffix("sdf", "msp") Then
+                Return Internal.debug.stop($"the given file data type(*.{file.ExtensionSuffix}) is not supported yet! " & file, env)
+            End If
+        Next
+
+        Dim pullAll As IEnumerable(Of SpectraSection) = rawfile _
+            .Select(Function(path)
+                        Return path.readMoNA(skipSpectraInfo, is_gcms)
+                    End Function) _
+            .IteratesALL
+
+        Return pipeline.CreateFromPopulator(pullAll)
+    End Function
+
+    <Extension>
+    Private Function readMoNA(rawfile As String, skipSpectraInfo As Boolean, is_gcms As Boolean) As IEnumerable(Of SpectraSection)
         Select Case rawfile.ExtensionSuffix.ToLower
-            Case "sdf"
-                Return SDFReader _
-                    .ParseFile(
-                        path:=rawfile,
-                        skipSpectraInfo:=skipSpectraInfo,
-                        isGcms:=is_gcms
-                    ) _
-                    .DoCall(AddressOf pipeline.CreateFromPopulator)
-            Case "msp"
-                Return MspReader _
-                    .ParseFile(rawfile, parseMs2:=Not skipSpectraInfo) _
-                    .DoCall(AddressOf pipeline.CreateFromPopulator)
+            Case "sdf" : Return SDFReader.ParseFile(path:=rawfile, skipSpectraInfo:=skipSpectraInfo, isGcms:=is_gcms)
+            Case "msp" : Return MspReader.ParseFile(rawfile, parseMs2:=Not skipSpectraInfo)
             Case Else
-                Return Internal.debug.stop(New NotSupportedException(rawfile.ExtensionSuffix), env)
+                Throw New NotImplementedException
         End Select
     End Function
 
