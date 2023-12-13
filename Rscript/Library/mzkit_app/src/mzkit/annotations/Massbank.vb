@@ -149,6 +149,7 @@ Module Massbank
     Public Function readMoNA(rawfile As String(),
                              Optional skipSpectraInfo As Boolean = False,
                              Optional is_gcms As Boolean = False,
+                             Optional verbose As Boolean = True,
                              Optional env As Environment = Nothing) As pipeline
 
         If rawfile.IsNullOrEmpty Then
@@ -163,6 +164,9 @@ Module Massbank
 
         Dim pullAll As IEnumerable(Of SpectraSection) = rawfile _
             .Select(Function(path)
+                        If verbose Then
+                            Call VBDebugger.EchoLine($"read: {path.GetFullPath}...")
+                        End If
                         Return path.readMoNA(skipSpectraInfo, is_gcms)
                     End Function) _
             .IteratesALL
