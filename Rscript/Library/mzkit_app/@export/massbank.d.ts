@@ -160,13 +160,15 @@ declare namespace massbank {
         * + default value Is ``false``.
         * @param is_gcms 
         * + default value Is ``false``.
+        * @param verbose 
+        * + default value Is ``true``.
         * @param env -
         * 
         * + default value Is ``null``.
         * @return a linq pipeline for populate the spectrum data 
         *  from the MoNA database.
       */
-      function MoNA(rawfile: string, skipSpectraInfo?: boolean, is_gcms?: boolean, env?: object): object;
+      function MoNA(rawfile: string, skipSpectraInfo?: boolean, is_gcms?: boolean, verbose?: boolean, env?: object): object;
       /**
        * read metabolite data in a given sdf data file.
        * 
