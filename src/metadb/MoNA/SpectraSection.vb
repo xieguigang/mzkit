@@ -120,14 +120,27 @@ Public Class SpectraSection : Inherits MetaInfo
         End Get
     End Property
 
-    Public ReadOnly Property libtype As Integer
+    Public ReadOnly Property libtype As IonModes
         Get
             If SpectraInfo.precursor_type.StringEmpty Then
-                Return 1
+                Return Provider.ParseIonMode(SpectraInfo.ion_mode, allowsUnknown:=True)
             ElseIf SpectraInfo.precursor_type.Last = "+"c Then
-                Return 1
+                Return IonModes.Positive
             Else
-                Return -1
+                Return IonModes.Negative
+            End If
+        End Get
+    End Property
+
+    Public ReadOnly Property ms_level As Integer
+        Get
+            Dim meta = MetaDB
+            Dim mslevel As String = meta.ms_level
+
+            If mslevel.StringEmpty Then
+                Return 2
+            Else
+                Return CInt(Val(mslevel.Match("\d+")))
             End If
         End Get
     End Property

@@ -153,19 +153,22 @@ declare namespace massbank {
        * read MoNA database file.
        * 
        * 
-        * @param rawfile the database reader is switched automatically 
-        *  based on this file path its extension name.
+        * @param rawfile a vector of the mona database file, could be a set of multiple mona database file.
+        *  the database reader is switched automatically based on this file path its 
+        *  extension name.
         * @param skipSpectraInfo 
         * + default value Is ``false``.
         * @param is_gcms 
         * + default value Is ``false``.
+        * @param verbose 
+        * + default value Is ``true``.
         * @param env -
         * 
         * + default value Is ``null``.
         * @return a linq pipeline for populate the spectrum data 
         *  from the MoNA database.
       */
-      function MoNA(rawfile: string, skipSpectraInfo?: boolean, is_gcms?: boolean, env?: object): object;
+      function MoNA(rawfile: string, skipSpectraInfo?: boolean, is_gcms?: boolean, verbose?: boolean, env?: object): object;
       /**
        * read metabolite data in a given sdf data file.
        * 

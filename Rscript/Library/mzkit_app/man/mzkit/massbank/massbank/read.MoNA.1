@@ -6,6 +6,7 @@ read.MoNA \- read MoNA database file.
 \fIread.MoNA(\fBrawfile\fR as string, 
 \fBskipSpectraInfo\fR as boolean = FALSE, 
 \fBis_gcms\fR as boolean = FALSE, 
+\fBverbose\fR as boolean = TRUE, 
 [\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
@@ -14,8 +15,9 @@ read MoNA database file.
 .SH OPTIONS
 .PP
 \fBrawfile\fB \fR\- 
- the database reader is switched automatically 
- based on this file path its extension name.
+ a vector of the mona database file, could be a set of multiple mona database file.
+ the database reader is switched automatically based on this file path its 
+ extension name.
 . 
 .PP
 .PP

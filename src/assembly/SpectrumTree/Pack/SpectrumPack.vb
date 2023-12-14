@@ -61,7 +61,7 @@ Namespace PackLib
                 Dim path As String = $"/massSet/{mass.name}.bcode"
                 Dim bcode As String = mass.ToBEncodeString
 
-                Call file.WriteText(bcode, path)
+                Call file.WriteText(bcode, path, allocate:=False)
 
                 For Each p As Integer In mass.spectrum
                     ' 20230407
