@@ -230,8 +230,16 @@ Namespace Ms1.PrecursorType
                 Case "-", "-1", "n", "neg", "negative"
                     Return IonModes.Negative
                 Case Else
-                    Dim msg As String = $"unsure how to parse the given string '{mode}' as ion mode!"
+                    Dim msg As String
+
+                    If mode.StringEmpty Then
+                        msg = "the given ion mode string is empty!"
+                    Else
+                        msg = $"unsure how to parse the given string '{mode}' as ion mode!"
+                    End If
+
                     Call VBDebugger.WriteLine("InvalidExpressionException: " & msg)
+
                     If allowsUnknown Then
                         Return IonModes.Unknown
                     Else

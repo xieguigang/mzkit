@@ -164,7 +164,8 @@
         <div style="width: 100%; padding-left: 3%; color: black;">
             <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>read.MoNA</strong>(<i>rawfile</i>,
     <i>skipSpectraInfo</i> = <span style='color: blue !important;'>FALSE</span>,
-    <i>is.gcms</i> = <span style='color: blue !important;'>FALSE</span>);</code></pre>
+    <i>is.gcms</i> = <span style='color: blue !important;'>FALSE</span>,
+    <i>verbose</i> = <span style='color: blue !important;'>TRUE</span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
@@ -172,8 +173,9 @@
         <table>
             
 <dt>rawfile</dt>
-<dd><p><p>the database reader is switched automatically <br />
- based on this file path its extension name.</p></p></dd>
+<dd><p><p>a vector of the mona database file, could be a set of multiple mona database file.<br />
+ the database reader is switched automatically based on this file path its <br />
+ extension name.</p></p></dd>
 
 
 <dt>env</dt>
