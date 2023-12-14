@@ -109,6 +109,19 @@ Namespace MetaLib.Models
         <MessagePackMember(15)> Public Property pathways As String()
         <MessagePackMember(16)> Public Property samples As BiosampleSource()
 
+        Sub New()
+        End Sub
+
+        Sub New([class] As ICompoundClass)
+            If Not [class] Is Nothing Then
+                Me.kingdom = [class].kingdom
+                Me.super_class = [class].super_class
+                Me.[class] = [class].class
+                Me.sub_class = [class].sub_class
+                Me.molecular_framework = [class].molecular_framework
+            End If
+        End Sub
+
         Public Overrides Function ToString() As String
             Return name
         End Function
