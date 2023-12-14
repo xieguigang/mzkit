@@ -112,6 +112,10 @@ Namespace MetaLib.Models
         Sub New()
         End Sub
 
+        ''' <summary>
+        ''' creator a metabolite annotation data with compound class assigned
+        ''' </summary>
+        ''' <param name="class">the compound class data</param>
         Sub New([class] As ICompoundClass)
             If Not [class] Is Nothing Then
                 Me.kingdom = [class].kingdom
