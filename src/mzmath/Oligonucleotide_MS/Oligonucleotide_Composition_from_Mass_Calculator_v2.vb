@@ -1,5 +1,6 @@
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports Microsoft.VisualBasic.Math.Statistics
 
 Public Class Composition
 
@@ -78,7 +79,66 @@ Public Class Composition
         End If
     End Function
 
-    Sub FindCompositions(Mass() As Double, Optional Monoisotopic As Boolean = True)
+    Private Class Dim4
+
+        Public Cells As Long()
+
+    End Class
+
+    Public Class Output
+
+        ''' <summary>
+        ''' 1
+        ''' </summary>
+        Public ObservedMass As Double
+        ''' <summary>
+        ''' 2
+        ''' </summary>
+        Public TheoreticalMass As Double
+        ''' <summary>
+        ''' 3
+        ''' </summary>
+        Public Errorppm As Double
+        ''' <summary>
+        ''' 4
+        ''' </summary>
+        Public OfpA As Integer
+        ''' <summary>
+        ''' 5
+        ''' </summary>
+        Public OfpG As Integer
+        ''' <summary>
+        ''' 6
+        ''' </summary>
+        Public OfpC As Integer
+        ''' <summary>
+        ''' 7
+        ''' </summary>
+        Public OfpV As Integer
+        ''' <summary>
+        ''' 8
+        ''' </summary>
+        Public Modification As String
+        ''' <summary>
+        ''' 10
+        ''' </summary>
+        Public OfBases As Integer
+
+        Public Sub SetBaseNumber(i As Integer, n As Integer)
+            Select Case i
+                Case 1 : OfpA = n
+                Case 2 : OfpG = n
+                Case 3 : OfpC = n
+                Case 4 : OfpV = n
+
+                Case Else
+                    Throw New OutOfMemoryException(i)
+            End Select
+        End Sub
+
+    End Class
+
+    Public Iterator Function FindCompositions(Mass() As Double, Optional Monoisotopic As Boolean = True) As IEnumerable(Of Output)
 
         Dim j As Long, k As Long, m As Long, n As Long, q As Long, p As Long
         Dim ii As Long, jj As Long, kk As Long, mm As Long, nn As Long, qq As Long, pp As Long
@@ -88,7 +148,6 @@ Public Class Composition
         Dim stng1 As String, stng2 As String
         Dim var1 As Object
         Dim rng1 As Range
-        Dim outputwrite() As Object
         Dim tempcheck() As Boolean
         Dim columnover As Long, columnover2 As Long
         Dim Massin As Mass() = Mass.Select(Function(mz) New Mass(mz)).ToArray
@@ -116,9 +175,9 @@ Public Class Composition
             If thing1 < lowbasemass Then lowbasemass = thing1
         Next i
 
-        Dim combins() As Long
+        Dim combins() As Dim4
         Dim topways As Long, bottomways As Long
-        Dim nextindex() As Long, sumaccross() As Long
+        Dim nextindex() As Dim4, sumaccross() As Dim4
         Dim Nmatch As Long, matches() As Object, Ncats As Long
 
         ' outputs
@@ -136,54 +195,54 @@ Public Class Composition
                 For m = lng1 To lng2
                     topways = m + Nbases - 1
                     bottomways = m
-                    lng3 = WorksheetFunction.Combin(topways, bottomways)
-                    ReDim combins(lng3, 4)
-                    ReDim nextindex(lng3, 4)
-                    ReDim sumaccross(lng3, 4)
+                    lng3 = SpecialFunctions.Combination(topways, bottomways)
+                    ReDim combins(lng3 - 1)
+                    ReDim nextindex(lng3 - 1)
+                    ReDim sumaccross(lng3 - 1)
                     lng4 = 0
                     For n = 0 To lng3 - 1
                         lng5 = bottomways - lng4     'value
                         lng6 = bottomways - lng5     'remainder
-                        lng7 = WorksheetFunction.Combin(lng6 + Nbases - 2, lng6)
+                        lng7 = SpecialFunctions.Combination(lng6 + Nbases - 2, lng6)
                         For p = 1 To lng7
                             n = n + 1
-                            combins(n, 1) = lng5
-                            nextindex(n, 1) = lng7
-                            sumaccross(n, 1) = combins(n, 1)
+                            combins(n).Cells(1) = lng5
+                            nextindex(n).Cells(1) = lng7
+                            sumaccross(n).Cells(1) = combins(n).Cells(1)
                         Next p
                         lng4 = lng4 + 1
                         n = n - 1
                     Next n
                     For q = 2 To Nbases
                         For n = 0 To lng3 - 1
-                            lngg2 = sumaccross(n + 1, q - 1)
+                            lngg2 = sumaccross(n + 1).Cells(q - 1)
                             lngg3 = m - lngg2
                             lngg4 = 0
-                            For ii = 1 To nextindex(n + 1, q - 1)
+                            For ii = 1 To nextindex(n + 1).Cells(q - 1)
                                 lngg5 = lngg3 - lngg4   'value
                                 lngg6 = lngg3 - lngg5   'remainder
                                 If lngg6 <= 0 Then
                                     n = n + 1
-                                    combins(n, q) = lngg5
-                                    nextindex(n, q) = 1
-                                    sumaccross(n, q) = sumaccross(n, q - 1) + combins(n, q)
+                                    combins(n).Cells(q) = lngg5
+                                    nextindex(n).Cells(q) = 1
+                                    sumaccross(n).Cells(q) = sumaccross(n).Cells(q - 1) + combins(n).Cells(q)
                                 Else
                                     topways = lngg6 + Nbases - q - 1
                                     If topways >= 0 Then
-                                        lngg7 = WorksheetFunction.Combin(topways, lngg6)
+                                        lngg7 = SpecialFunctions.Combination(topways, lngg6)
                                         For jj = 1 To lngg7
                                             n = n + 1
                                             ii = ii + 1
-                                            combins(n, q) = lngg5
-                                            nextindex(n, q) = lngg7
-                                            sumaccross(n, q) = sumaccross(n, q - 1) + combins(n, q)
+                                            combins(n).Cells(q) = lngg5
+                                            nextindex(n).Cells(q) = lngg7
+                                            sumaccross(n).Cells(q) = sumaccross(n).Cells(q - 1) + combins(n).Cells(q)
                                         Next jj
                                         ii = ii - 1
                                     Else
                                         n = n + 1
-                                        combins(n, q) = lngg5
-                                        nextindex(n, q) = 1
-                                        sumaccross(n, q) = sumaccross(n, q - 1) + combins(n, q)
+                                        combins(n).Cells(q) = lngg5
+                                        nextindex(n).Cells(q) = 1
+                                        sumaccross(n).Cells(q) = sumaccross(n).Cells(q - 1) + combins(n).Cells(q)
                                     End If
                                 End If
                                 lngg4 = lngg4 + 1
@@ -196,10 +255,10 @@ Public Class Composition
                     For n = 1 To lng3
                         thing3 = thing1 + water
                         For jj = 1 To Nbases
-                            thing3 = thing3 + bases(jj, 3) * combins(n, jj)
+                            thing3 = thing3 + bases(jj).isotopic * combins(n).Cells(jj)
                         Next jj
-                        If thing3 <= Massin(k, 3) Then
-                            If thing3 >= Massin(k, 2) Then
+                        If thing3 <= Massin(k).range.Max Then
+                            If thing3 >= Massin(k).range.Min Then
                                 tempcheck(n) = True
                                 Nmatch = Nmatch + 1
                             End If
@@ -207,84 +266,34 @@ Public Class Composition
                     Next n
                     If Nmatch > 0 Then
                         Ncats = Ncats + 1
-                        ReDim outputwrite(0 To Nmatch - 1, 0 To Nbases + 5)
+                        ' ReDim outputwrite(0 To Nmatch - 1, 0 To Nbases + 5)
+                        Dim outputwrite As New Output
                         nn = 0
                         For ii = 1 To lng3
                             If tempcheck(ii) Then
-                                outputwrite(nn, 0) = Massin(k, 1)
+                                outputwrite.ObservedMass = Massin(k).mass
                                 thing3 = thing1 + water
                                 For jj = 1 To Nbases
-                                    thing3 = thing3 + bases(jj, 3) * combins(ii, jj)
+                                    thing3 = thing3 + bases(jj).isotopic * combins(ii).Cells(jj)
                                 Next jj
-                                outputwrite(nn, 1) = thing3
-                                outputwrite(nn, 2) = (Massin(k, 1) - thing3) / thing3 * 1000000.0#
+                                outputwrite.TheoreticalMass = thing3
+                                outputwrite.Errorppm = (Massin(k).mass - thing3) / thing3 * 1000000.0#
                                 lngg7 = 0
                                 For kk = 1 To Nbases
-                                    outputwrite(nn, kk + 2) = combins(ii, kk)
-                                    lngg7 = lngg7 + combins(ii, kk)
+                                    outputwrite.SetBaseNumber(kk, combins(ii).Cells(kk))
+                                    lngg7 = lngg7 + combins(ii).Cells(kk)
                                 Next kk
-                                outputwrite(nn, Nbases + 3) = mods(j, 1)
-                                outputwrite(nn, Nbases + 5) = lngg7
+                                outputwrite.Modification = mods(j).name
+                                outputwrite.OfBases = lngg7
                                 nn = nn + 1
                             End If
                         Next ii
-                    Set rng1 = Range(Cells(1, columnover + 1), Cells(Nmatch, columnover + Nbases + 6))
-                    rng1 = outputwrite
+
+                        Yield outputwrite
                         columnover = columnover + Nbases + 6
                     End If
                 Next m
             Next j
-            lngg3 = Nbases + 6
-            For i = 1 To Ncats - 1
-                lngg2 = (i - 1) * lngg3 + lngg3 + 1
-                lngg1 = WorksheetFunction.Count(Columns(lngg2))
-                Range(Cells(1, lngg2), Cells(lngg1, lngg2 + lngg3 - 1)).Select
-                Selection.Cut
-                lngg4 = WorksheetFunction.Count(Columns(1))
-                Cells(lngg4 + 1, 1).Select
-                ActiveSheet.Paste
-            Next i
-            lngg1 = WorksheetFunction.Count(Columns(1))
-            If lngg1 > 0 Then
-                Range(Cells(1, 1), Cells(lngg1, lngg3)).Select
-                Selection.Cut
-                ThisWorkbook.Worksheets(3).Activate
-                Cells(2, 1 + columnover2).Select
-                ActiveSheet.Paste
-                ReDim outputwrite(0 To 0, 0 To lngg3 - 1)
-                outputwrite(0, 0) = "Observed Mass"
-                outputwrite(0, 1) = "Theoretical Mass"
-                outputwrite(0, 2) = "Error (ppm)"
-                For kk = 1 To Nbases
-                    outputwrite(0, kk + 2) = "# of " & bases(kk, 1)
-                Next kk
-                outputwrite(0, Nbases + 3) = "Modification"
-                outputwrite(0, Nbases + 5) = "# of Bases"
-            Set rng1 = Range(Cells(1, 1 + columnover2), Cells(1, lngg3 + columnover2))
-            rng1 = outputwrite
-                Columns(1 + columnover2).NumberFormat = "0.000"
-                Columns(2 + columnover2).NumberFormat = "0.000"
-                Columns(3 + columnover2).NumberFormat = "0.0"
-            
-            Set rng1 = Range(Cells(2, 1 + columnover2), Cells(lngg1 + 1, lngg3 + columnover2))
-            rng1.Select
-                Columns(3 + columnover2).Activate
-                ActiveWorkbook.Worksheets(3).Sort.SortFields.Clear
-                ActiveWorkbook.Worksheets(3).Sort.SortFields.Add2 Key:=Columns(3 + columnover2) _
-                , SortOn:=xlSortOnValues, Order:=xlAscending, DataOption:=xlSortNormal
-            With ActiveWorkbook.Worksheets(3).Sort
-                    .SetRange rng1
-                .Header = xlNo
-                    .MatchCase = False
-                    .Orientation = xlTopToBottom
-                    .SortMethod = xlPinYin
-                    .Apply
-                End With
-            End If
-
-            columnover2 = columnover2 + lngg3 + 1
         Next k
-
-
-    End Sub
+    End Function
 End Class
