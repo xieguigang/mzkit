@@ -1,8 +1,8 @@
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Statistics
 Imports Microsoft.VisualBasic.Serialization.JSON
-Imports Microsoft.VisualBasic.Linq
 
 ''' <summary>
 ''' Oligonucleotide_Composition_from_Mass_Calculator_v2
