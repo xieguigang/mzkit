@@ -37,7 +37,7 @@
     ''' </summary>
     Public OfBases As Integer
 
-    Public Sub SetBaseNumber(i As Integer, n As Integer)
+    Friend Sub SetBaseNumber(i As Integer, n As Integer)
         Select Case i
             Case 1 : OfpA = n
             Case 2 : OfpG = n
