@@ -106,6 +106,7 @@ Public Class Composition
         Dim Nbases = 4
 
         Dim mods() As Element = If(Monoisotopic, MonoisotopicModifications(), AverageMassModifications()).ToArray
+        Dim Nmods As Integer = mods.Length
         Dim lowbasemass As Double, highbasemass As Double
         lowbasemass = 1000000000.0#
         highbasemass = 0
@@ -123,26 +124,14 @@ Public Class Composition
         ' outputs
         columnover2 = 0
         For k = 1 To Nmassin
-            ThisWorkbook.Worksheets(2).Activate
-            Cells.Select
-            Selection.ClearContents
-            Selection.Font.Bold = False
-            Selection.NumberFormat = "General"
-            With Selection.Interior
-                .Pattern = xlNone
-                .TintAndShade = 0
-                .PatternTintAndShade = 0
-            End With
-            With Selection.Borders
-                .LineStyle = xlNone
-            End With
+
             columnover = 0
             Ncats = 0
-            For j = 1 To Nmods
-                thing1 = mods(j, 2)
-                thing2 = Massin(k, 2) - thing1
+            For j = 0 To Nmods - 1
+                thing1 = mods(j).isotopic
+                thing2 = Massin(k).range.Min - thing1
                 lng1 = Int(thing2 / highbasemass) + 1
-                thing2 = Massin(k, 3) - thing1
+                thing2 = Massin(k).range.Max - thing1
                 lng2 = Int(thing2 / lowbasemass) + 1
                 For m = lng1 To lng2
                     topways = m + Nbases - 1
