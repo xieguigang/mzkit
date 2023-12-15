@@ -67,7 +67,7 @@ Public Module GCMSConvertor
 
     Public Function ConvertGCMS(agilentGC As netCDFReader, Optional println As Action(Of String) = Nothing) As mzPack
         If println Is Nothing Then
-            println = AddressOf Console.WriteLine
+            println = AddressOf VBDebugger.EchoLine
         End If
 
         Call println("get TIC data...")
@@ -127,6 +127,13 @@ Public Module GCMSConvertor
 
     Const intensity_values As String = "intensity_values"
 
+    ''' <summary>
+    ''' read "intensity_values"
+    ''' </summary>
+    ''' <param name="agilentGC"></param>
+    ''' <param name="point_count"></param>
+    ''' <param name="println"></param>
+    ''' <returns></returns>
     <Extension>
     Private Iterator Function readIntoMatrix(agilentGC As netCDFReader, point_count As integers, println As Action(Of String)) As IEnumerable(Of Double())
         Dim into As ICDFDataVector = Nothing
@@ -163,6 +170,13 @@ Public Module GCMSConvertor
         End If
     End Function
 
+    ''' <summary>
+    ''' read ``mass_values``
+    ''' </summary>
+    ''' <param name="agilentGC"></param>
+    ''' <param name="point_count"></param>
+    ''' <param name="println"></param>
+    ''' <returns></returns>
     <Extension>
     Private Iterator Function readMzMatrix(agilentGC As netCDFReader, point_count As integers, println As Action(Of String)) As IEnumerable(Of Double())
         Dim offset As Integer = Scan0
