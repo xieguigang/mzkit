@@ -1,4 +1,16 @@
 ﻿Imports System.IO
+Imports System.IO
+Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.TablePrinter
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.TablePrinter.Flags
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Linq
+Imports SMRUCC.Rsharp.Interpreter
+Imports SMRUCC.Rsharp.Runtime.Components
+Imports SMRUCC.Rsharp.Runtime.Internal.Object
+Imports SMRUCC.Rsharp.Runtime.Internal.[Object].Converts
+Imports SMRUCC.Rsharp.Runtime.Interop
+Imports stdNum = System.Math
 
 Public Class OligonucleotideCompositionOutput
 
@@ -54,10 +66,26 @@ Public Class OligonucleotideCompositionOutput
     ''' <summary>
     ''' print table
     ''' </summary>
-    ''' <param name="output"></param>
+    ''' <param name="outputs"></param>
     ''' <param name="dev"></param>
-    Public Shared Sub Print(output As IEnumerable(Of OligonucleotideCompositionOutput), dev As TextWriter)
-        Call tablep
+    Public Shared Sub Print(outputs As IEnumerable(Of OligonucleotideCompositionOutput), dev As TextWriter)
+        Dim content As ConsoleTableBaseData = ConsoleTableBaseData.FromColumnHeaders(
+            "Observed Mass", "Theoretical Mass", "Error (ppm)",
+            "# of pA", "# of pG", "# of pC", "# of pV", "Modification",
+            "",
+            "# of Bases"
+        )
+
+        For Each hit As OligonucleotideCompositionOutput In outputs
+
+        Next
+
+        Call ConsoleTableBuilder _
+            .From(content) _
+            .WithFormat(ConsoleTableBuilderFormat.Minimal) _
+            .Export _
+            .ToString() _
+            .DoCall(AddressOf dev.WriteLine)
         Call dev.Flush()
     End Sub
 
