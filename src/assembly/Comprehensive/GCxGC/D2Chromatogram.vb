@@ -67,6 +67,9 @@ Imports Microsoft.VisualBasic.DataStorage.netCDF.DataVector
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 
+''' <summary>
+''' A data model for GCxGC 2d chromatogram
+''' </summary>
 Public Class D2Chromatogram
 
     Public Property scan_time As Double
@@ -103,6 +106,12 @@ Public Class D2Chromatogram
         Return $"{intensity.ToString("G3")}@{scan_time.ToString("F2")}"
     End Function
 
+    ''' <summary>
+    ''' Export GCxGC data in mzkit cdf format
+    ''' </summary>
+    ''' <param name="gcxgc"></param>
+    ''' <param name="file"></param>
+    ''' <returns></returns>
     Public Shared Function EncodeCDF(gcxgc As IEnumerable(Of D2Chromatogram), file As Stream) As Boolean
         Using writer As New CDFWriter(file)
             Dim i As i32 = 1
@@ -134,9 +143,14 @@ Public Class D2Chromatogram
         Return True
     End Function
 
+    ''' <summary>
+    ''' Processing the cdf file export result which is produced via the <see cref="EncodeCDF"/> function
+    ''' </summary>
+    ''' <param name="file">the cdf file in mzkit format</param>
+    ''' <returns></returns>
     Public Shared Iterator Function DecodeCDF(file As Stream) As IEnumerable(Of D2Chromatogram)
         Using reader As New netCDFReader(file)
-            Dim nscans As Integer = reader.FindAttribute("nscans")
+            Dim nscans As Integer = reader("nscans")
             Dim names As variable() = reader.variables
 
             For i As Integer = 0 To nscans - 1

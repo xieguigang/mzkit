@@ -84,6 +84,7 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Components.Interface
+Imports SMRUCC.Rsharp.Runtime.Internal.Invokes
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
@@ -447,13 +448,16 @@ Module MzWeb
             Return Internal.debug.stop("the required file object can not be nothing!", env)
         End If
         If TypeOf file Is String Then
-            Dim mzpack As mzPack = openFromFile(file)
+            Dim mzpack As mzPack = openFromFile(file, env:=env)
 
             If mzpack.source.StringEmpty Then
                 mzpack.source = DirectCast(file, String).FileName
             End If
 
             Return mzpack
+        ElseIf TypeOf file Is Stream Then
+            Dim stream As Stream = file
+            Return mzPack.ReadAll(file:=stream)
         Else
             Return Internal.debug.stop(New NotImplementedException($"unsure for how to handling '{file.GetType.FullName}' as a file stream for read mzpack data!"), env)
         End If
@@ -469,7 +473,10 @@ Module MzWeb
     ''' </param>
     ''' <returns></returns>
     <ExportAPI("open_mzpack.xml")>
-    Public Function openFromFile(file As String, Optional prefer As String = Nothing) As mzPack
+    Public Function openFromFile(file As String,
+                                 Optional prefer As String = Nothing,
+                                 Optional env As Environment = Nothing) As mzPack
+
         If file.ExtensionSuffix("mzXML", "mzML", "imzML", "xml") Then
             Return Converter.LoadRawFileAuto(
                 xml:=file,
@@ -485,16 +492,28 @@ Module MzWeb
             End Using
 #End If
         ElseIf file.ExtensionSuffix("cdf") Then
-            ' convert MSI cdf to mzpack
             Using cdf As New netCDFReader(file)
-                Return New mzPack With {
-                    .MS = cdf.CreateMs1.ToArray,
-                    .Application = FileApplicationClass.MSImaging,
-                    .source = file.FileName,
-                    .Scanners = New Dictionary(Of String, ChromatogramOverlap),
-                    .Chromatogram = Nothing,
-                    .Thumbnail = Nothing
-                }
+                If cdf.IsLecoGCMS Then
+                    Dim println As Action(Of String) = Sub(line) base.print(line,, env)
+                    Dim sig As ScanMS1() = GCMSConvertor.LoadMs1Scans(cdf, println).ToArray
+
+                    Return New mzPack With {
+                        .MS = sig,
+                        .Application = FileApplicationClass.GCMS,
+                        .source = file.FileName
+                    }
+                Else
+                    ' convert MSI cdf to mzpack
+                    ' cdf for save MS-imaging
+                    Return New mzPack With {
+                        .MS = cdf.CreateMs1.ToArray,
+                        .Application = FileApplicationClass.MSImaging,
+                        .source = file.FileName,
+                        .Scanners = New Dictionary(Of String, ChromatogramOverlap),
+                        .Chromatogram = Nothing,
+                        .Thumbnail = Nothing
+                    }
+                End If
             End Using
         Else
             Using stream As Stream = file.Open(FileMode.Open, doClear:=False, [readOnly]:=True)

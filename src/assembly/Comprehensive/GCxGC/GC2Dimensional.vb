@@ -69,6 +69,16 @@ Imports stdNum = System.Math
 Public Module GC2Dimensional
 
     ''' <summary>
+    ''' test if the given cdf file is in gc-ms file format
+    ''' </summary>
+    ''' <param name="cdf"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function IsLecoGCMS(cdf As netCDFReader) As Boolean
+
+    End Function
+
+    ''' <summary>
     ''' Function To calculate 2D RT from the 1D RT
     ''' </summary>
     ''' <param name="rt"></param>

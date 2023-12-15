@@ -189,9 +189,13 @@ Module GCxGC
     ''' <summary>
     ''' read GCxGC 2D Chromatogram data from a given netcdf file.
     ''' </summary>
-    ''' <param name="file"></param>
+    ''' <param name="file">
+    ''' this function used for parse the cdf file format for both mzkit format or LECO format
+    ''' </param>
     ''' <param name="env"></param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' A data model for GCxGC 2d chromatogram
+    ''' </returns>
     <ExportAPI("read.cdf")>
     <RApiReturn(GetType(D2Chromatogram))>
     Public Function readCDF(<RRawVectorArgument> file As Object, Optional env As Environment = Nothing) As Object
