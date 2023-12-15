@@ -136,7 +136,7 @@ Public Class D2Chromatogram
 
     Public Shared Iterator Function DecodeCDF(file As Stream) As IEnumerable(Of D2Chromatogram)
         Using reader As New netCDFReader(file)
-            Dim nscans As Integer = reader.getAttribute("nscans")
+            Dim nscans As Integer = reader.FindAttribute("nscans")
             Dim names As variable() = reader.variables
 
             For i As Integer = 0 To nscans - 1
