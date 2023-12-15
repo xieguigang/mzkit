@@ -72,12 +72,14 @@ Public Module GCMSConvertor
         End If
 
         Call println("load metadata attributes of current GC-MS file:")
+        Call println("")
 
         For Each attr As attribute In agilentGC.globalAttributes
             println(attr.ToString)
             metadata(attr.name) = attr.value
         Next
 
+        Call println("")
         Call println("get TIC data...")
 
         Dim scan_time As doubles = agilentGC.getDataVariable("scan_acquisition_time")
