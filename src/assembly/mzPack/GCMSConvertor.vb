@@ -65,9 +65,18 @@ Imports std = System.Math
 Public Module GCMSConvertor
 
     Public Function ConvertGCMS(agilentGC As netCDFReader, Optional println As Action(Of String) = Nothing) As mzPack
+        Dim metadata As New Dictionary(Of String, String)
+
         If println Is Nothing Then
             println = AddressOf VBDebugger.EchoLine
         End If
+
+        Call println("load metadata attributes of current GC-MS file:")
+
+        For Each attr As attribute In agilentGC.globalAttributes
+            println(attr.ToString)
+            metadata(attr.name) = attr.value
+        Next
 
         Call println("get TIC data...")
 
@@ -81,7 +90,8 @@ Public Module GCMSConvertor
                 .scan_time = scan_time,
                 .BPC = totalIons,
                 .TIC = totalIons
-            }
+            },
+            .metadata = metadata
         }
     End Function
 
