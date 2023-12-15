@@ -1,6 +1,7 @@
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Math.Statistics
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 ''' <summary>
 ''' Oligonucleotide_Composition_from_Mass_Calculator_v2
@@ -63,12 +64,16 @@ Public Class Composition
     End Function
 
     Private Shared Iterator Function MonoisotopicModifications() As IEnumerable(Of Element)
+        ' first element is zero, means no modification
+        Yield New Element("", 0)
         Yield New Element("minus p", -79.9663)
         Yield New Element("plus p", 79.9663)
         Yield New Element("cp", -18.0106)
     End Function
 
     Private Shared Iterator Function AverageMassModifications() As IEnumerable(Of Element)
+        ' first element is zero, means no modification
+        Yield New Element("", 0)
         Yield New Element("minus p", -79.9799)
         Yield New Element("plus p", 79.9799)
         Yield New Element("cp", -18.0153)
@@ -88,6 +93,14 @@ Public Class Composition
     Private Class Dim4
 
         Public Cells As Long()
+
+        Sub New()
+            Cells = New Long(4) {}
+        End Sub
+
+        Public Overrides Function ToString() As String
+            Return Cells.GetJson
+        End Function
 
     End Class
 
@@ -188,7 +201,7 @@ Public Class Composition
 
         ' outputs
         columnover2 = 0
-        For k = 1 To Nmassin
+        For k = 0 To Nmassin - 1
 
             columnover = 0
             Ncats = 0
@@ -211,44 +224,49 @@ Public Class Composition
                         lng6 = bottomways - lng5     'remainder
                         lng7 = SpecialFunctions.Combination(lng6 + Nbases - 2, lng6)
                         For p = 1 To lng7
-                            n = n + 1
+                            combins(n) = New Dim4
+                            nextindex(n) = New Dim4
+                            sumaccross(n) = New Dim4
+
                             combins(n).Cells(1) = lng5
                             nextindex(n).Cells(1) = lng7
                             sumaccross(n).Cells(1) = combins(n).Cells(1)
+
+                            n = n + 1
                         Next p
                         lng4 = lng4 + 1
                         n = n - 1
                     Next n
-                    For q = 2 To Nbases
+                    For q = 1 To Nbases - 1
                         For n = 0 To lng3 - 1
-                            lngg2 = sumaccross(n + 1).Cells(q - 1)
+                            lngg2 = sumaccross(n).Cells(q)
                             lngg3 = m - lngg2
                             lngg4 = 0
-                            For ii = 1 To nextindex(n + 1).Cells(q - 1)
+                            For ii = 1 To nextindex(n).Cells(q)
                                 lngg5 = lngg3 - lngg4   'value
                                 lngg6 = lngg3 - lngg5   'remainder
                                 If lngg6 <= 0 Then
+                                    combins(n).Cells(q + 1) = lngg5
+                                    nextindex(n).Cells(q + 1) = 1
+                                    sumaccross(n).Cells(q + 1) = sumaccross(n).Cells(q) + combins(n).Cells(q + 1)
                                     n = n + 1
-                                    combins(n).Cells(q) = lngg5
-                                    nextindex(n).Cells(q) = 1
-                                    sumaccross(n).Cells(q) = sumaccross(n).Cells(q - 1) + combins(n).Cells(q)
                                 Else
-                                    topways = lngg6 + Nbases - q - 1
+                                    topways = lngg6 + Nbases - q - 1 - 1
                                     If topways >= 0 Then
                                         lngg7 = SpecialFunctions.Combination(topways, lngg6)
                                         For jj = 1 To lngg7
-                                            n = n + 1
                                             ii = ii + 1
-                                            combins(n).Cells(q) = lngg5
-                                            nextindex(n).Cells(q) = lngg7
-                                            sumaccross(n).Cells(q) = sumaccross(n).Cells(q - 1) + combins(n).Cells(q)
+                                            combins(n).Cells(q + 1) = lngg5
+                                            nextindex(n).Cells(q + 1) = lngg7
+                                            sumaccross(n).Cells(q + 1) = sumaccross(n).Cells(q) + combins(n).Cells(q + 1)
+                                            n = n + 1
                                         Next jj
                                         ii = ii - 1
                                     Else
+                                        combins(n).Cells(q + 1) = lngg5
+                                        nextindex(n).Cells(q + 1) = 1
+                                        sumaccross(n).Cells(q + 1) = sumaccross(n).Cells(q) + combins(n).Cells(q + 1)
                                         n = n + 1
-                                        combins(n).Cells(q) = lngg5
-                                        nextindex(n).Cells(q) = 1
-                                        sumaccross(n).Cells(q) = sumaccross(n).Cells(q - 1) + combins(n).Cells(q)
                                     End If
                                 End If
                                 lngg4 = lngg4 + 1
@@ -258,10 +276,10 @@ Public Class Composition
                     Next q
                     ReDim tempcheck(lng3)
                     Nmatch = 0
-                    For n = 1 To lng3
+                    For n = 0 To lng3 - 1
                         thing3 = thing1 + water
-                        For jj = 1 To Nbases
-                            thing3 = thing3 + bases(jj).isotopic * combins(n).Cells(jj)
+                        For jj = 0 To Nbases - 1
+                            thing3 = thing3 + bases(jj).isotopic * combins(n).Cells(jj + 1)
                         Next jj
                         If thing3 <= Massin(k).range.Max Then
                             If thing3 >= Massin(k).range.Min Then
@@ -275,12 +293,12 @@ Public Class Composition
                         ' ReDim outputwrite(0 To Nmatch - 1, 0 To Nbases + 5)
                         Dim outputwrite As New Output
                         nn = 0
-                        For ii = 1 To lng3
+                        For ii = 0 To lng3 - 1
                             If tempcheck(ii) Then
                                 outputwrite.ObservedMass = Massin(k).mass
                                 thing3 = thing1 + water
-                                For jj = 1 To Nbases
-                                    thing3 = thing3 + bases(jj).isotopic * combins(ii).Cells(jj)
+                                For jj = 0 To Nbases - 1
+                                    thing3 = thing3 + bases(jj).isotopic * combins(ii).Cells(jj + 1)
                                 Next jj
                                 outputwrite.TheoreticalMass = thing3
                                 outputwrite.Errorppm = (Massin(k).mass - thing3) / thing3 * 1000000.0#
