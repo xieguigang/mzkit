@@ -1,4 +1,6 @@
-﻿Public Class OligonucleotideCompositionOutput
+﻿Imports System.IO
+
+Public Class OligonucleotideCompositionOutput
 
     ''' <summary>
     ''' 1
@@ -47,6 +49,16 @@
             Case Else
                 Throw New OutOfMemoryException(i)
         End Select
+    End Sub
+
+    ''' <summary>
+    ''' print table
+    ''' </summary>
+    ''' <param name="output"></param>
+    ''' <param name="dev"></param>
+    Public Shared Sub Print(output As IEnumerable(Of OligonucleotideCompositionOutput), dev As TextWriter)
+        Call tablep
+        Call dev.Flush()
     End Sub
 
 End Class

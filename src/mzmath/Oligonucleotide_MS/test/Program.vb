@@ -17,8 +17,9 @@ Module Program
         ' 1838.297	1838.297	0.0	0	1	3	2	minus p		6
         ' 2798.420	2798.420	0.0	0	1	3	5	minus p		9
 
-        For Each hit In result
-            Call hit.GetJson.DoCall(AddressOf Console.WriteLine)
-        Next
+        'For Each hit In result
+        '    Call hit.GetJson.DoCall(AddressOf Console.WriteLine)
+        'Next
+        Call OligonucleotideCompositionOutput.Print(result, dev:=App.StdOut)
     End Sub
 End Module
