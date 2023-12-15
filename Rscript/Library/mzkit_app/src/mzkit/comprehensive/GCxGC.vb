@@ -90,6 +90,23 @@ Module GCxGC
             .ToArray
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="rawdata"></param>
+    ''' <param name="modtime"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    ''' <example>
+    ''' require(mzkit);
+    ''' 
+    ''' imports "GCxGC" from "mzkit";
+    ''' 
+    ''' let rawdata = open.mzpack(file = "/path/to/leco_gcms.cdf");
+    ''' let gcxgc = GCxGC::demodulate_2D(rawdata, modtime = 4);
+    ''' 
+    ''' write.mzPack(gcxgc, file = "/file/to/save/gcxgc_rawdata.mzPack");
+    ''' </example>
     <ExportAPI("demodulate_2D")>
     Public Function Demodulate2D(rawdata As Object, modtime As Double, Optional env As Environment = Nothing) As Object
         If rawdata Is Nothing Then
