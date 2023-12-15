@@ -33,10 +33,11 @@ declare namespace GCxGC {
        * read GCxGC 2D Chromatogram data from a given netcdf file.
        * 
        * 
-        * @param file -
+        * @param file this function used for parse the cdf file format for both mzkit format or LECO format
         * @param env -
         * 
         * + default value Is ``null``.
+        * @return A data model for GCxGC 2d chromatogram
       */
       function cdf(file: any, env?: object): object;
    }
