@@ -56,7 +56,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Ms1
 
@@ -96,17 +96,17 @@ Namespace Ms1
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function Equals(mz1 As Double, mz2 As Double) As Boolean
-            Return stdNum.Abs(mz1 - mz2) <= DeltaTolerance
+            Return std.Abs(mz1 - mz2) <= DeltaTolerance
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function AsScore(mz1 As Double, mz2 As Double) As Double
-            Return 1 - (stdNum.Abs(mz1 - mz2) / DeltaTolerance)
+            Return 1 - (std.Abs(mz1 - mz2) / DeltaTolerance)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function MassError(mz1 As Double, mz2 As Double) As Double
-            Return stdNum.Abs(mz1 - mz2)
+            Return std.Abs(mz1 - mz2)
         End Function
 
         Public Overrides Function ToString() As String
