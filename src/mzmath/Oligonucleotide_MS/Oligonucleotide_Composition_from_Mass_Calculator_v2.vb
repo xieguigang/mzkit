@@ -1,8 +1,86 @@
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+
 Public Class Composition
 
-    Sub FindCompositions()
+    ReadOnly ppmthresh As Double
+    ReadOnly baseTable As Dictionary(Of String, Element)
 
-        Dim i As Long, j As Long, k As Long, m As Long, n As Long, q As Long, p As Long
+    Private Shared Iterator Function MonoisotopicBases() As IEnumerable(Of Element)
+        Yield New Element("A", 329.0525)
+        Yield New Element("G", 345.0474)
+        Yield New Element("C", 305.0413)
+        Yield New Element("V", 320.041)
+    End Function
+
+    Private Shared Iterator Function AverageMassBases() As IEnumerable(Of Element)
+        Yield New Element("A", 329.2091)
+        Yield New Element("G", 345.2085)
+        Yield New Element("C", 305.1841)
+        Yield New Element("V", 320.1957)
+    End Function
+
+    ' Cells(row_id, column_id)
+
+    Private Class Mass
+
+        Public ReadOnly Property mass As Double
+        Public Property range As DoubleRange
+
+        Sub New(mass As Double)
+            Me.mass = mass
+        End Sub
+
+    End Class
+
+    Private Shared Iterator Function MonoisotopicElements() As IEnumerable(Of Element)
+        Yield New Element("C", 12)
+        Yield New Element("H", 1.007825)
+        Yield New Element("N", 14.003074)
+        Yield New Element("O", 15.994915)
+        Yield New Element("P", 30.973762)
+        Yield New Element("S", 31.972071)
+        Yield New Element("Water", 18.010565)
+        Yield New Element("Proton", 1.0072765)
+    End Function
+
+    Private Shared Iterator Function AverageMassElements() As IEnumerable(Of Element)
+        Yield New Element("C", 12.011)
+        Yield New Element("H", 1.00794)
+        Yield New Element("N", 14.00674)
+        Yield New Element("O", 15.9994)
+        Yield New Element("P", 30.973762)
+        Yield New Element("S", 32.066)
+        Yield New Element("Water", 18.01528)
+        Yield New Element("Proton", 1)
+    End Function
+
+    Private Shared Iterator Function MonoisotopicModifications() As IEnumerable(Of Element)
+        Yield New Element("minus p", -79.9663)
+        Yield New Element("plus p", 79.9663)
+        Yield New Element("cp", -18.0106)
+    End Function
+
+    Private Shared Iterator Function AverageMassModifications() As IEnumerable(Of Element)
+        Yield New Element("minus p", -79.9799)
+        Yield New Element("plus p", 79.9799)
+        Yield New Element("cp", -18.0153)
+    End Function
+
+    Private Shared Function GetMass(id As String, monoisotopic As Boolean) As Double
+        Static _monoisotopic As Dictionary(Of String, Element) = MonoisotopicElements.ToDictionary(Function(a) a.name)
+        Static _average_mass As Dictionary(Of String, Element) = AverageMassElements.ToDictionary(Function(a) a.name)
+
+        If monoisotopic Then
+            Return _monoisotopic(id).isotopic
+        Else
+            Return _average_mass(id).isotopic
+        End If
+    End Function
+
+    Sub FindCompositions(Mass() As Double, Optional Monoisotopic As Boolean = True)
+
+        Dim j As Long, k As Long, m As Long, n As Long, q As Long, p As Long
         Dim ii As Long, jj As Long, kk As Long, mm As Long, nn As Long, qq As Long, pp As Long
         Dim lng1 As Long, lng2 As Long, lng3 As Long, lng4 As Long, lng5 As Long, lng6 As Long, lng7 As Long
         Dim lngg1 As Long, lngg2 As Long, lngg3 As Long, lngg4 As Long, lngg5 As Long, lngg6 As Long, lngg7 As Long
@@ -13,95 +91,26 @@ Public Class Composition
         Dim outputwrite() As Object
         Dim tempcheck() As Boolean
         Dim columnover As Long, columnover2 As Long
+        Dim Massin As Mass() = Mass.Select(Function(mz) New Mass(mz)).ToArray
+        Dim Nmassin As Long = Massin.Length
 
-        ThisWorkbook.Worksheets(1).Activate
-
-        Dim Nmassin As Long, Massin() As Double
-        Nmassin = 0
-        For i = 1 To 10000
-            If Len(Cells(i + 1, 1)) > 0 Then
-                Nmassin = Nmassin + 1
-            Else
-                i = 10000
-            End If
-        Next i
-        ReDim Massin(Nmassin, 3)
-        For i = 1 To Nmassin
-            Massin(i, 1) = Cells(i + 1, 1)
-        Next i
-
-        Dim ppmthresh As Double
-        ppmthresh = Cells(2, 4)
-        For i = 1 To Nmassin
-            thing1 = Massin(i, 1)
+        For i As Integer = 0 To Nmassin - 1
+            thing1 = Massin(i).mass
             thing2 = thing1 / 1000000.0# * ppmthresh
-            Massin(i, 2) = thing1 - thing2
-            Massin(i, 3) = thing1 + thing2
+            Massin(i).range = New DoubleRange(thing1 - thing2, thing1 + thing2)
         Next i
 
-        Dim Monoisotopic As Boolean
-        If Cells(2, 6) = "Monoisotopic" Then
-            Monoisotopic = True
-        Else
-            Monoisotopic = False
-        End If
+        Dim water As Double = GetMass("Water", Monoisotopic)
 
-        Dim water As Double
-        If Monoisotopic Then
-            water = Cells(8, 20)
-        Else
-            water = Cells(8, 21)
-        End If
+        Dim bases() As Element = If(Monoisotopic, MonoisotopicBases(), AverageMassBases()).ToArray
+        Dim Nbases = 4
 
-        Dim bases() As Object, Nbases As Long
-        Nbases = 4
-        ReDim bases(Nbases, 3)
-        If Monoisotopic Then
-            For i = 1 To Nbases
-                bases(i, 1) = Cells(i + 2, 9)
-                bases(i, 2) = Cells(i + 2, 10)
-                bases(i, 3) = Cells(i + 2, 11)
-            Next i
-        Else
-            For i = 1 To Nbases
-                bases(i, 1) = Cells(i + 2, 9)
-                bases(i, 2) = Cells(i + 2, 10)
-                bases(i, 3) = Cells(i + 2, 12)
-            Next i
-        End If
-
-        Dim mods() As Object, Nmods As Long
-        Nmods = 1
-        For i = 1 To 10000
-            If Len(Cells(i + 1, 15)) > 0 Then
-                Nmods = Nmods + 1
-            Else
-                i = 10000
-            End If
-        Next i
-        k = 1
-        ReDim mods(Nmods, 2)
-        mods(1, 1) = ""
-        mods(1, 2) = 0
-        For i = 1 To 10000
-            If Len(Cells(i + 1, 15)) > 0 Then
-                k = k + 1
-                mods(k, 1) = Cells(i + 1, 15)
-                If Monoisotopic Then
-                    mods(k, 2) = Cells(i + 1, 16)
-                Else
-                    mods(k, 2) = Cells(i + 1, 17)
-                End If
-            Else
-                i = 10000
-            End If
-        Next i
-
+        Dim mods() As Element = If(Monoisotopic, MonoisotopicModifications(), AverageMassModifications()).ToArray
         Dim lowbasemass As Double, highbasemass As Double
         lowbasemass = 1000000000.0#
         highbasemass = 0
-        For i = 1 To Nbases
-            thing1 = bases(i, 3)
+        For i = 0 To Nbases - 1
+            thing1 = bases(i).isotopic
             If thing1 > highbasemass Then highbasemass = thing1
             If thing1 < lowbasemass Then lowbasemass = thing1
         Next i
@@ -111,20 +120,7 @@ Public Class Composition
         Dim nextindex() As Long, sumaccross() As Long
         Dim Nmatch As Long, matches() As Object, Ncats As Long
 
-        ThisWorkbook.Worksheets(3).Activate
-        Cells.Select
-        Selection.ClearContents
-        Selection.Font.Bold = False
-        Selection.NumberFormat = "General"
-        With Selection.Interior
-            .Pattern = xlNone
-            .TintAndShade = 0
-            .PatternTintAndShade = 0
-        End With
-        With Selection.Borders
-            .LineStyle = xlNone
-        End With
-
+        ' outputs
         columnover2 = 0
         For k = 1 To Nmassin
             ThisWorkbook.Worksheets(2).Activate
