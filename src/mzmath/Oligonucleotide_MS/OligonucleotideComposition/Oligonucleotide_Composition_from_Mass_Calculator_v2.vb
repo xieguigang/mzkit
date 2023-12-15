@@ -60,40 +60,23 @@ Public Class Composition
         Public Overrides Function ToString() As String
             Return Cells.GetJson
         End Function
-
     End Class
 
     Public Iterator Function FindCompositions(ParamArray Mass() As Double) As IEnumerable(Of OligonucleotideCompositionOutput)
-        Dim j As Long, k As Long, m As Long, n As Long, q As Long, p As Long
-        Dim ii As Long, jj As Long, kk As Long, mm As Long, nn As Long, qq As Long, pp As Long
-        Dim lng1 As Long, lng2 As Long, lng3 As Long, lng4 As Long, lng5 As Long, lng6 As Long, lng7 As Long
-        Dim lngg1 As Long, lngg2 As Long, lngg3 As Long, lngg4 As Long, lngg5 As Long, lngg6 As Long, lngg7 As Long
-        Dim thing1 As Double, thing2 As Double, thing3 As Double, thing4 As Double
-        Dim stng1 As String, stng2 As String
-        Dim var1 As Object
-        Dim rng1 As Range
-
-        Dim columnover As Long, columnover2 As Long
         Dim Massin As MassWindow() = Mass.Select(Function(mz) New MassWindow(mz, ppmthresh)).ToArray
         Dim Nmassin As Long = Massin.Length
-        Dim lowbasemass As Double, highbasemass As Double
-        lowbasemass = 1000000000.0#
-        highbasemass = 0
-        For i = 0 To Nbases - 1
-            thing1 = bases(i).isotopic
+        Dim lowbasemass As Double = 1000000000.0#, highbasemass As Double = 0
+
+        For i As Integer = 0 To Nbases - 1
+            Dim thing1 As Double = bases(i).isotopic
+
             If thing1 > highbasemass Then highbasemass = thing1
             If thing1 < lowbasemass Then lowbasemass = thing1
-        Next i
+        Next
 
-
-        Dim topways As Long, bottomways As Long
-
-        Dim Nmatch As Long, matches() As Object, Ncats As Long
-
-        ' outputs
-        columnover2 = 0
-        For k = 0 To Nmassin - 1
-            For Each hit As OligonucleotideCompositionOutput In FindCompositions(Massin(k))
+        For k As Integer = 0 To Nmassin - 1
+            ' outputs
+            For Each hit As OligonucleotideCompositionOutput In FindCompositions(Massin(k), lowbasemass, highbasemass)
                 Yield hit
             Next
         Next
@@ -110,7 +93,7 @@ Public Class Composition
         Dim lng5, lng6, lng7 As Integer
         Dim tempcheck() As Boolean
 
-        For j = 0 To Nmods - 1
+        For j As Integer = 0 To Nmods - 1
             thing1 = mods(j).isotopic
             thing2 = Massin.mzmin - thing1
             lng1 = Int(thing2 / highbasemass) + 1
@@ -127,7 +110,7 @@ Public Class Composition
                 ReDim nextindex(lng3 - 1)
                 ReDim sumaccross(lng3 - 1)
 
-                For n = 0 To lng3 - 1
+                For n As Integer = 0 To lng3 - 1
                     lng5 = bottomways - lng4     'value
                     lng6 = bottomways - lng5     'remainder
                     lng7 = SpecialFunctions.Combination(lng6 + Nbases - 2, lng6)
@@ -145,8 +128,8 @@ Public Class Composition
                     lng4 = lng4 + 1
                     n = n - 1
                 Next n
-                For q = 1 To Nbases - 1
-                    For n = 0 To lng3 - 1
+                For q As Integer = 1 To Nbases - 1
+                    For n As Integer = 0 To lng3 - 1
                         Dim lngg2 = sumaccross(n).Cells(q)
                         Dim lngg3 = m - lngg2
                         Dim lngg4 = 0
@@ -183,9 +166,10 @@ Public Class Composition
                         n = n - 1
                     Next n
                 Next q
+
                 ReDim tempcheck(lng3)
 
-                For n = 0 To lng3 - 1
+                For n As Integer = 0 To lng3 - 1
                     Dim thing3 = thing1 + water
                     For jj = 0 To Nbases - 1
                         thing3 = thing3 + bases(jj).isotopic * combins(n).Cells(jj + 1)
@@ -196,6 +180,7 @@ Public Class Composition
                         End If
                     End If
                 Next n
+
                 If tempcheck.Any(Function(t) t) Then
                     Dim outputwrite As New OligonucleotideCompositionOutput
 
@@ -203,13 +188,13 @@ Public Class Composition
                         If tempcheck(ii) Then
                             outputwrite.ObservedMass = Massin.mass
                             Dim thing3 = thing1 + water
-                            For jj = 0 To Nbases - 1
+                            For jj As Integer = 0 To Nbases - 1
                                 thing3 = thing3 + bases(jj).isotopic * combins(ii).Cells(jj + 1)
                             Next jj
                             outputwrite.TheoreticalMass = thing3
                             outputwrite.Errorppm = (Massin.mass - thing3) / thing3 * 1000000.0#
-                            Dim lngg7 = 0
-                            For kk = 1 To Nbases
+                            Dim lngg7 As Integer = 0
+                            For kk As Integer = 1 To Nbases
                                 outputwrite.SetBaseNumber(kk, combins(ii).Cells(kk))
                                 lngg7 = lngg7 + combins(ii).Cells(kk)
                             Next kk
