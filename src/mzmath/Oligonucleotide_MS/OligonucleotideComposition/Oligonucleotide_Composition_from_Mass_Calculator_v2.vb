@@ -192,7 +192,7 @@ Public Class Composition
                                 thing3 = thing3 + bases(jj).isotopic * combins(ii).Cells(jj + 1)
                             Next jj
                             outputwrite.TheoreticalMass = thing3
-                            outputwrite.Errorppm = (Massin.mass - thing3) / thing3 * 1000000.0#
+                            outputwrite.ErrorPpm = (Massin.mass - thing3) / thing3 * 1000000.0#
                             Dim lngg7 As Integer = 0
                             For kk As Integer = 1 To Nbases
                                 outputwrite.SetBaseNumber(kk, combins(ii).Cells(kk))

@@ -3,39 +3,39 @@
     ''' <summary>
     ''' 1
     ''' </summary>
-    Public ObservedMass As Double
+    Public Property ObservedMass As Double
     ''' <summary>
     ''' 2
     ''' </summary>
-    Public TheoreticalMass As Double
+    Public Property TheoreticalMass As Double
     ''' <summary>
     ''' 3
     ''' </summary>
-    Public Errorppm As Double
+    Public Property ErrorPpm As Double
     ''' <summary>
     ''' 4
     ''' </summary>
-    Public OfpA As Integer
+    Public Property OfpA As Integer
     ''' <summary>
     ''' 5
     ''' </summary>
-    Public OfpG As Integer
+    Public Property OfpG As Integer
     ''' <summary>
     ''' 6
     ''' </summary>
-    Public OfpC As Integer
+    Public Property OfpC As Integer
     ''' <summary>
     ''' 7
     ''' </summary>
-    Public OfpV As Integer
+    Public Property OfpV As Integer
     ''' <summary>
     ''' 8
     ''' </summary>
-    Public Modification As String
+    Public Property Modification As String
     ''' <summary>
     ''' 10
     ''' </summary>
-    Public OfBases As Integer
+    Public Property OfBases As Integer
 
     Friend Sub SetBaseNumber(i As Integer, n As Integer)
         Select Case i
