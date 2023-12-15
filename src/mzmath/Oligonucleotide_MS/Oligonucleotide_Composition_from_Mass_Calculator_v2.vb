@@ -2,10 +2,17 @@ Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Math.Statistics
 
+''' <summary>
+''' Oligonucleotide_Composition_from_Mass_Calculator_v2
+''' </summary>
 Public Class Composition
 
     ReadOnly ppmthresh As Double
     ReadOnly baseTable As Dictionary(Of String, Element)
+
+    Sub New(ppm As Double)
+        ppmthresh = ppm
+    End Sub
 
     Private Shared Iterator Function MonoisotopicBases() As IEnumerable(Of Element)
         Yield New Element("A", 329.0525)
