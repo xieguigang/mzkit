@@ -8,7 +8,6 @@ Imports Microsoft.VisualBasic.Math.Statistics
 Public Class Composition
 
     ReadOnly ppmthresh As Double
-    ReadOnly baseTable As Dictionary(Of String, Element)
 
     Sub New(ppm As Double)
         ppmthresh = ppm
