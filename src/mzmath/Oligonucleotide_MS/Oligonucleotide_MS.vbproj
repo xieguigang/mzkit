@@ -34,6 +34,25 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="logs\**" />
+    <EmbeddedResource Remove="logs\**" />
+    <None Remove="logs\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Oligonucleotide_Mapping_UV_Annotation_Tool_v11.vb" />
+    <Compile Remove="Oligonucleotide_MS2_Spectrum_Matcher_v11.vb" />
+    <Compile Remove="Oligonucleotide_MS_Peak_ID_Given_Sequence_v8.vb" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Oligonucleotide_Composition_from_Mass_Calculator_v2.xlsm" />
+    <None Remove="Oligonucleotide_Mapping_UV_Annotation_Tool_v11.xlsm" />
+    <None Remove="Oligonucleotide_MS2_Spectrum_Matcher_v11.xlsm" />
+    <None Remove="Oligonucleotide_MS_Peak_ID_Given_Sequence_v8.xlsm" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\..\..\GCModeller\src\GCModeller\core\Bio.Assembly\biocore-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\Math\Math.NET5.vbproj" />
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj" />
