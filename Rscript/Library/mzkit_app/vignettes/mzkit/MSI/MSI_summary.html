@@ -202,7 +202,7 @@
 
         <h3 style="display: block;">Examples</h3>
 
-        <pre><code> let rawdata = open.mzpack("/path/to/rawdata.mzPack");
+        <pre><code id="example_r"> let rawdata = open.mzpack("/path/to/rawdata.mzPack");
  let spots = read.csv("/path/to/region.csv");
  let into = MSI_summary(rawdata, x = as.integer(spots$x), y = as.integer(spots$y), as.vector = TRUE);
  
