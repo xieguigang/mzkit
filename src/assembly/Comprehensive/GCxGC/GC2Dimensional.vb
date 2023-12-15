@@ -137,6 +137,15 @@ Public Module GC2Dimensional
         }
     End Function
 
+    <Extension>
+    Public Function Demodulate2D(rawdata As mzPack, modtime As Double) As mzPack
+        Return New mzPack With {
+            .MS = rawdata.MS.Demodulate2D(modtime),
+            .Application = FileApplicationClass.GCxGC,
+            .source = "LECO GCxGC CDF"
+        }
+    End Function
+
     ''' <summary>
     ''' converts 1D signal into 2D with xp x yp dimensions
     ''' </summary>
