@@ -54,14 +54,13 @@
 
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
-Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.DataStorage.netCDF
 Imports Microsoft.VisualBasic.DataStorage.netCDF.Components
 Imports Microsoft.VisualBasic.DataStorage.netCDF.Data
 Imports Microsoft.VisualBasic.DataStorage.netCDF.DataVector
 Imports Microsoft.VisualBasic.Linq
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Public Module GCMSConvertor
 
@@ -112,7 +111,7 @@ Public Module GCMSConvertor
             Dim BPC As Double = inti.Max
             ' 20210328
             ' fix bugs fix mzkit_win32: required [MS1] prefix for indicate MS1
-            Dim scan_id As String = $"[MS1] {i + 1}.scan_time={stdNum.Round(scan_time(i))}, m/z={mzi(which.Max(inti))}({BPC.ToString("G3")})"
+            Dim scan_id As String = $"[MS1] {i + 1}.scan_time={std.Round(scan_time(i))}, m/z={mzi(which.Max(inti))}({BPC.ToString("G3")})"
 
             Yield New ScanMS1 With {
                 .TIC = totalIons(i),

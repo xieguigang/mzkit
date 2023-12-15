@@ -75,7 +75,11 @@ Public Module GC2Dimensional
     ''' <returns></returns>
     <Extension>
     Public Function IsLecoGCMS(cdf As netCDFReader) As Boolean
-        For Each name As String In {"mass_values", "intensity_values"}
+        For Each name As String In New String() {
+            "mass_values", "intensity_values",
+            "scan_acquisition_time", "total_intensity",
+            "point_count"
+        }
             If Not cdf.dataVariableExists(name) Then
                 Return False
             End If
