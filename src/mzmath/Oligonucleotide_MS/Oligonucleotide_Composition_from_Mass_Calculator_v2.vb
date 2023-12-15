@@ -8,9 +8,9 @@ Public Class Composition
         Dim lngg1 As Long, lngg2 As Long, lngg3 As Long, lngg4 As Long, lngg5 As Long, lngg6 As Long, lngg7 As Long
         Dim thing1 As Double, thing2 As Double, thing3 As Double, thing4 As Double
         Dim stng1 As String, stng2 As String
-        Dim var1 As Variant
+        Dim var1 As Object
         Dim rng1 As Range
-        Dim outputwrite() As Variant
+        Dim outputwrite() As Object
         Dim tempcheck() As Boolean
         Dim columnover As Long, columnover2 As Long
 
@@ -53,7 +53,7 @@ Public Class Composition
             water = Cells(8, 21)
         End If
 
-        Dim bases() As Variant, Nbases As Long
+        Dim bases() As Object, Nbases As Long
         Nbases = 4
         ReDim bases(Nbases, 3)
         If Monoisotopic Then
@@ -70,7 +70,7 @@ Public Class Composition
             Next i
         End If
 
-        Dim mods() As Variant, Nmods As Long
+        Dim mods() As Object, Nmods As Long
         Nmods = 1
         For i = 1 To 10000
             If Len(Cells(i + 1, 15)) > 0 Then
@@ -109,7 +109,7 @@ Public Class Composition
         Dim combins() As Long
         Dim topways As Long, bottomways As Long
         Dim nextindex() As Long, sumaccross() As Long
-        Dim Nmatch As Long, matches() As Variant, Ncats As Long
+        Dim Nmatch As Long, matches() As Object, Ncats As Long
 
         ThisWorkbook.Worksheets(3).Activate
         Cells.Select

@@ -46,24 +46,24 @@ Sub IDUVPeaksMakePeptideTable()
         Dim stng1 As String, stng2 As String, stng3 As String, stng4 As String, stng5 As String, stng6 As String
         Dim thing1 As Double, thing2 As Double, thing3 As Double
         Dim thing4 As Double, thing5 As Double
-        Dim var1 As Variant
+        Dim var1 As Object
         Dim rng1 As Range, rng2 As Range, rng3 As Range, rng4 As Range
         Dim rng5 As Range, rng6 As Range
-        Dim outputwrite() As Variant
+        Dim outputwrite() As Object
         Dim tempcheck() As Boolean
         Dim check As Boolean
         Dim stngarray() As String, lngarray() As Long
 
         Dim tighten As Double
         Dim NBPFrows As Long, NBPFcols As Long, MaxPeak As Double, dex As Long, dex2 As Long
-        Dim BPFcomps() As Variant
+        Dim BPFcomps() As Object
         Dim IsExpected As Boolean, MoreThanOne As Boolean
         Dim coverage() As Boolean
         Dim UseNons As Boolean
         Dim rawfile As String, TICthresh As Double
-        Dim NallowedMods As Long, AllowedMods() As Variant
-        Dim Noligothry As Long, Oligothry() As Variant
-        Dim construct() As Variant
+        Dim NallowedMods As Long, AllowedMods() As Object
+        Dim Noligothry As Long, Oligothry() As Object
+        Dim construct() As Object
         Dim ppmthresh As Double, Confthresh As Double, Structurethresh As Double, NeedMS2 As Boolean
         Dim starttime As Double, endtime As Double, UVarea_thresh As Double
         Dim UVpeakBasePeakThresh As Double
@@ -72,7 +72,7 @@ Sub IDUVPeaksMakePeptideTable()
         Dim PPApp As Object 'As PowerPoint.Application
         Dim PPPres As Object 'As PowerPoint.Presentation
         Dim PPSlide As Object 'As PowerPoint.Slide
-        Dim Shp As Variant
+        Dim Shp As Object
         Dim topleftxppt As Double, topleftyppt As Double
         Dim axisfontsize As Double
         Dim xT As Double, yT As Double, offsetleft As Double, offsettop As Double
@@ -82,14 +82,14 @@ Sub IDUVPeaksMakePeptideTable()
         Dim textboxwidth As Double, textboxheight As Double, fontsz As Double
         Dim MajorU As Double, MinorU As Double
         Dim baselineshift As Double, heightppt As Double, widthppt As Double
-        Dim Npoints As Long, chromatogram() As Variant
+        Dim Npoints As Long, chromatogram() As Object
         Dim localmaxwindow As Double
-        Dim Nannots As Long, annots() As Variant, calltemp() As String
-        Dim NtableUVrows As Long, tableUV() As Variant
-        Dim table2() As Variant
+        Dim Nannots As Long, annots() As Object, calltemp() As String
+        Dim NtableUVrows As Long, tableUV() As Object
+        Dim table2() As Object
         Dim alignment() As Double
         Dim maxUVpeak As Double
-        Dim Nuvpeaks As Long, Nuvcols As Long, uvpeaks() As Variant
+        Dim Nuvpeaks As Long, Nuvcols As Long, uvpeaks() As Object
         Dim startshift As Double, endshift As Double, shiftincrement As Double, timeshift As Double
         Dim scorebefore As Double, bestshift As Double, currentscore As Double
         Dim Ntable2cols As Long, table2header() As String
@@ -684,7 +684,7 @@ foundlabel1:
         Cells(1, covwidth + 5) = "% coverage by features between " & starttime & " and " & endtime & " min"
         Cells(2, covwidth + 5) = thing1
 
-        Dim NFilingMassTableRows As Long, FilingMassTable() As Variant
+        Dim NFilingMassTableRows As Long, FilingMassTable() As Object
         NFilingMassTableRows = Noligothry
         For i = 1 To NBPFrows
             stng1 = BPFcomps(i, 22)
@@ -742,7 +742,7 @@ foundlabel1:
         '12+Nsamples    Peak area of 1st sample
 
         ThisWorkbook.Worksheets(3).Activate
-        Dim bases() As Variant
+        Dim bases() As Object
         ReDim bases(4, 2)
         For i = 1 To 4
             For j = 1 To 2

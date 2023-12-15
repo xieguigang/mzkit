@@ -7,9 +7,9 @@ Public Class MS_Peak_ID
         Dim lngg1 As Long, lngg2 As Long, lngg3 As Long, lngg4 As Long, lngg5 As Long, lngg6 As Long, lngg7 As Long
         Dim thing1 As Double, thing2 As Double, thing3 As Double, thing4 As Double
         Dim stng1 As String, stng2 As String
-        Dim var1 As Variant
+        Dim var1 As Object
         Dim rng1 As Range
-        Dim outputwrite() As Variant
+        Dim outputwrite() As Object
         Dim tempcheck() As Boolean
         Dim OHthing As Double, Hthing As Double
         Dim OHstng As String, Hstng As String
@@ -52,7 +52,7 @@ Public Class MS_Peak_ID
             phosphate = 79.979902
         End If
 
-        Dim bases() As Variant, Nbases As Long
+        Dim bases() As Object, Nbases As Long
         Nbases = 4
         ReDim bases(Nbases, 3)
         If Monoisotopic Then
@@ -69,8 +69,8 @@ Public Class MS_Peak_ID
             Next i
         End If
 
-        Dim end5() As Variant, Nend5 As Long
-        Dim end3() As Variant, Nend3 As Long
+        Dim end5() As Object, Nend5 As Long
+        Dim end3() As Object, Nend3 As Long
         Nend5 = 0
         Nend3 = 0
         For i = 1 To 10000
@@ -139,7 +139,7 @@ Public Class MS_Peak_ID
 
         'Create theoretical list of nomisses
 
-        Dim nomisses() As Variant, Nnomisses As Long
+        Dim nomisses() As Object, Nnomisses As Long
         Nnomisses = ConstructLength - Len(WorksheetFunction.Substitute(Construct, cutsite1, "")) + 1
         ReDim nomisses(Nnomisses, 4)    'sequence, start, stop, length
         If cutsite1side3 Then
@@ -183,7 +183,7 @@ Public Class MS_Peak_ID
             nomisses(Nnomisses, 4) = nomisses(i, 3) - nomisses(i, 2) + 1
         End If
 
-        Dim misses() As Variant, Nmisses As Long, missends() As Long
+        Dim misses() As Object, Nmisses As Long, missends() As Long
         Nmisses = 0
         For i = 1 To Nmiss
             For j = 1 To Nnomisses - i
@@ -219,7 +219,7 @@ Public Class MS_Peak_ID
             Next j
         Next i
 
-        Dim digest() As Variant, Ndigest As Long
+        Dim digest() As Object, Ndigest As Long
         Ndigest = Nnomisses + Nmisses + (Nend5 - 1) * (1 + Nmiss) + (Nend3 - 1) * (1 + Nmiss)
         ReDim digest(Ndigest, 8)
         n = 0
@@ -378,9 +378,9 @@ Public Class MS_Peak_ID
         Dim lngg1 As Long, lngg2 As Long, lngg3 As Long, lngg4 As Long, lngg5 As Long, lngg6 As Long, lngg7 As Long
         Dim thing1 As Double, thing2 As Double, thing3 As Double, thing4 As Double
         Dim stng1 As String, stng2 As String
-        Dim var1 As Variant
+        Dim var1 As Object
         Dim rng1 As Range
-        Dim outputwrite() As Variant
+        Dim outputwrite() As Object
         Dim tempcheck() As Boolean
 
         Dim coveragecolor As Long
@@ -402,7 +402,7 @@ Public Class MS_Peak_ID
         ThisWorkbook.Worksheets(4).Activate
         lng1 = Intersect(ActiveSheet.UsedRange, Columns(1)).Count
 
-        Dim Nmatches As Long, matches() As Variant
+        Dim Nmatches As Long, matches() As Object
         For i = 1 To lng1
             If Len(Cells(i + 1, 1)) > 0 Then Nmatches = Nmatches + 1
         Next i
@@ -505,9 +505,9 @@ Public Class MS_Peak_ID
         Dim lngg1 As Long, lngg2 As Long, lngg3 As Long, lngg4 As Long, lngg5 As Long, lngg6 As Long, lngg7 As Long
         Dim thing1 As Double, thing2 As Double, thing3 As Double, thing4 As Double
         Dim stng1 As String, stng2 As String
-        Dim var1 As Variant
+        Dim var1 As Object
         Dim rng1 As Range
-        Dim outputwrite() As Variant
+        Dim outputwrite() As Object
         Dim tempcheck() As Boolean
         Dim OHthing As Double, Hthing As Double
         Dim OHstng As String, Hstng As String
@@ -572,7 +572,7 @@ Public Class MS_Peak_ID
             phosphate = 79.979902
         End If
 
-        Dim bases() As Variant, Nbases As Long
+        Dim bases() As Object, Nbases As Long
         Nbases = 4
         ReDim bases(Nbases, 3)
         If Monoisotopic Then
@@ -589,8 +589,8 @@ Public Class MS_Peak_ID
             Next i
         End If
 
-        Dim end5() As Variant, Nend5 As Long
-        Dim end3() As Variant, Nend3 As Long
+        Dim end5() As Object, Nend5 As Long
+        Dim end3() As Object, Nend3 As Long
         Nend5 = 0
         Nend3 = 0
         For i = 1 To 10000
@@ -659,7 +659,7 @@ Public Class MS_Peak_ID
 
         'Create theoretical list of nomisses
 
-        Dim nomisses() As Variant, Nnomisses As Long
+        Dim nomisses() As Object, Nnomisses As Long
         Nnomisses = ConstructLength - Len(WorksheetFunction.Substitute(Construct, cutsite1, "")) + 1
         ReDim nomisses(Nnomisses, 4)    'sequence, start, stop, length
         If cutsite1side3 Then
@@ -703,7 +703,7 @@ Public Class MS_Peak_ID
             nomisses(Nnomisses, 4) = nomisses(i, 3) - nomisses(i, 2) + 1
         End If
 
-        Dim misses() As Variant, Nmisses As Long, missends() As Long
+        Dim misses() As Object, Nmisses As Long, missends() As Long
         Nmisses = 0
         For i = 1 To Nmiss
             For j = 1 To Nnomisses - i
@@ -739,7 +739,7 @@ Public Class MS_Peak_ID
             Next j
         Next i
 
-        Dim digest() As Variant, Ndigest As Long
+        Dim digest() As Object, Ndigest As Long
         Ndigest = Nnomisses + Nmisses + (Nend5 - 1) * (1 + Nmiss) + (Nend3 - 1) * (1 + Nmiss)
         ReDim digest(Ndigest, 8)
         n = 0
@@ -891,7 +891,7 @@ Public Class MS_Peak_ID
 
         'Match theoertical masses to observed masses
 
-        Dim Nadducts As Long, adducts() As Variant
+        Dim Nadducts As Long, adducts() As Object
         Nadducts = 1 ' 4
         ReDim adducts(Nadducts, 2)
         If Nadducts > 1 Then
@@ -911,7 +911,7 @@ Public Class MS_Peak_ID
         adducts(1, 1) = ""
         adducts(1, 2) = 0
 
-        Dim matches() As Variant, Nmatches As Long
+        Dim matches() As Object, Nmatches As Long
         Nmatches = 0
         For i = 1 To Nmassin
             For j = 1 To Ndigest

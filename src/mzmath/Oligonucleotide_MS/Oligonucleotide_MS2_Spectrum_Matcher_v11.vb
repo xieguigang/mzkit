@@ -7,46 +7,46 @@ Public Class MS2_Spectrum_Matcher
         Dim lng1 As Long, lng2 As Long, lng3 As Long, lng4 As Long
         Dim stng1 As String, stng2 As String, stng3 As String, stng4 As String, stng5 As String
         Dim thing1 As Double, thing2 As Double, thing3 As Double, thing4 As Double, thing5 As Double, thing6 As Double
-        Dim var1 As Variant
+        Dim var1 As Object
         Dim rng1 As Range, rng2 As Range, rng3 As Range, rng4 As Range, rng5 As Range, rng6 As Range, rng7 As Range, rng8 As Range
         Dim check As Boolean
-        Dim outputwrite() As Variant, temp() As Variant, tempcheck() As Boolean
+        Dim outputwrite() As Object, temp() As Object, tempcheck() As Boolean
 
-        Dim fragments() As Variant, Nfragments As Long
-        Dim ladder3() As Variant, Nladder3 As Long
-        Dim ladder5() As Variant, Nladder5 As Long
+        Dim fragments() As Object, Nfragments As Long
+        Dim ladder3() As Object, Nladder3 As Long
+        Dim ladder5() As Object, Nladder5 As Long
         Dim fragmentnames() As String
         Dim fragmentmeta() As Long
         Dim fragmentmass() As Double
         Dim fragmentcol() As String, Nfragmentcol As Long
         Dim startres As Long, endres As Long
         Dim startxy As Long, isprofile As Boolean, filetext As String, scantext As String, scannum As String
-        Dim Npeaks As Long, maxint As Long, peaks() As Variant, beforecheck As Boolean
+        Dim Npeaks As Long, maxint As Long, peaks() As Object, beforecheck As Boolean
         Dim carbon As Double, hydrogen As Double, nitrogen As Double, oxygen As Double, phosphorus As Double, sulfur As Double, proton As Double, water As Double
-        Dim Nbases As Long, oligo() As Variant
+        Dim Nbases As Long, oligo() As Object
         Dim MolecularMass As Double
         Dim composition(6) As Double
         Dim precursorCS As Long
         Dim basenames() As String, Nbasenames As Long
-        Dim wxyz() As Variant, Nwxyz As Long
-        Dim abcd() As Variant, Nabcd As Long
-        Dim aB() As Variant, NaB As Long
+        Dim wxyz() As Object, Nwxyz As Long
+        Dim abcd() As Object, Nabcd As Long
+        Dim aB() As Object, NaB As Long
         Dim neutralnames() As String
         Dim neutralmeta() As Long
         Dim neutralmass() As Double
         Dim Nneutrals As Long
         Dim Nneutralcols As Long
         Dim neutralcols() As String
-        Dim Nmasses As Long, masses() As Variant
-        Dim Nuniquemasses As Long, uniquemasses() As Variant
+        Dim Nmasses As Long, masses() As Object
+        Dim Nuniquemasses As Long, uniquemasses() As Object
         Dim peakthresh As Double, Aplus1 As Double
         Dim basepeakint As Double, aplus1tol As Double, aplus1frac As Double, CS As Long
         Dim matchtol As Double
-        Dim plotpeaks() As Variant, gapx As Double, gapy As Double
+        Dim plotpeaks() As Object, gapx As Double, gapy As Double
         Dim Nkinds As Long, kinds() As String, labelthresh As Double, labelbin As Double
         Dim basesonly As String
         Dim sequence_name As String
-        Dim NbasesInSequence As Long, BasesInSequence() As Variant
+        Dim NbasesInSequence As Long, BasesInSequence() As Object
         Dim sequence_mass As Double, sequence_longname As String
         Dim ignoreinternals As Boolean
         Dim RT As String
@@ -160,7 +160,7 @@ Public Class MS2_Spectrum_Matcher
 
         ThisWorkbook.Worksheets(1).Activate
 
-        Dim colors() As Variant, Ncolors As Long
+        Dim colors() As Object, Ncolors As Long
         Ncolors = 10
         ReDim colors(Ncolors, 2)
         For i = 1 To Ncolors
@@ -185,7 +185,7 @@ Public Class MS2_Spectrum_Matcher
         basesonly = sequence_name
 
         stng1 = ""
-        Dim oligoends() As Variant
+        Dim oligoends() As Object
         ReDim oligoends(2, 9)
         Nbases = Cells(4, 2) - 1
         ReDim oligo(Nbases, 9)
@@ -267,8 +267,8 @@ Public Class MS2_Spectrum_Matcher
             If Cells(38 + i, 26) = "3'" And InStr(Cells(38 + i, 25), "-") = 0 And Cells(38 + i, 33) Then Nabcd = Nabcd + 1
             If Cells(38 + i, 26) = "3'" And InStr(Cells(38 + i, 25), "-") > 0 And Cells(38 + i, 33) Then NaB = Nbasenames
         Next i
-        Dim wxyz_s() As Variant
-        Dim abcd_s() As Variant
+        Dim wxyz_s() As Object
+        Dim abcd_s() As Object
 
         If NaB > 0 Then ReDim aB(NaB, 8)
         If Nwxyz > 0 Then
@@ -944,7 +944,7 @@ outCSloop:
 
         'match peaks
 
-        Dim peakmatch() As Variant
+        Dim peakmatch() As Object
         ReDim peakmatch(Npeaks, 6)
 
         ThisWorkbook.Worksheets(4).Activate
@@ -1423,7 +1423,7 @@ outCSloop:
         lng2 = WorksheetFunction.CountIf(Columns(8), kinds(2))
         lng3 = WorksheetFunction.Count(Columns(1))
         lng4 = WorksheetFunction.CountIf(Columns(9), "base loss")
-        Dim observedLadder() As Variant, NobservedLadder As Long
+        Dim observedLadder() As Object, NobservedLadder As Long
         'NobservedLadder = lng1 + lng2 - lng4
         NobservedLadder = 0
         For i = 1 To lng3
@@ -1498,7 +1498,7 @@ outCSloop:
                 observedLadder(i, 15) = Mid(stng3, 2, lng1 - 2)
             End If
         Next i
-        Dim chartions() As String, chartions2() As Variant
+        Dim chartions() As String, chartions2() As Object
         ReDim chartions(Nbases, 12)
         ReDim chartions2(Nbases, 12)
         For i = 1 To NobservedLadder
