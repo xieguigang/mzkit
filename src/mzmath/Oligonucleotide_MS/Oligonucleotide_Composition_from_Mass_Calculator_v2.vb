@@ -1,8 +1,8 @@
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
-Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Math.Statistics
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.Linq
 
 ''' <summary>
 ''' Oligonucleotide_Composition_from_Mass_Calculator_v2
@@ -10,66 +10,29 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Public Class Composition
 
     ReadOnly ppmthresh As Double
+    ReadOnly water As Double = GetMass("Water", True)
+    ReadOnly mods() As Element
+    ReadOnly bases() As Element
 
-    Sub New(ppm As Double)
-        ppmthresh = ppm
+    Sub New(ppm As Double, Optional modifications As IEnumerable(Of Element) = Nothing, Optional Monoisotopic As Boolean = True)
+        Me.bases = MassDefault.GetBases(Monoisotopic).ToArray
+        Me.ppmthresh = ppm
+        Me.water = GetMass("Water", Monoisotopic)
+
+        If modifications Is Nothing Then
+            mods = MassDefault.GetModifications(Monoisotopic).ToArray
+        Else
+            mods = New Element() {
+                MassDefault.zero
+            } _
+                .JoinIterates(modifications) _
+                .ToArray
+        End If
     End Sub
 
-    Private Shared Iterator Function MonoisotopicBases() As IEnumerable(Of Element)
-        Yield New Element("A", 329.0525)
-        Yield New Element("G", 345.0474)
-        Yield New Element("C", 305.0413)
-        Yield New Element("V", 320.041)
-    End Function
-
-    Private Shared Iterator Function AverageMassBases() As IEnumerable(Of Element)
-        Yield New Element("A", 329.2091)
-        Yield New Element("G", 345.2085)
-        Yield New Element("C", 305.1841)
-        Yield New Element("V", 320.1957)
-    End Function
-
-    Private Shared Iterator Function MonoisotopicElements() As IEnumerable(Of Element)
-        Yield New Element("C", 12)
-        Yield New Element("H", 1.007825)
-        Yield New Element("N", 14.003074)
-        Yield New Element("O", 15.994915)
-        Yield New Element("P", 30.973762)
-        Yield New Element("S", 31.972071)
-        Yield New Element("Water", 18.010565)
-        Yield New Element("Proton", 1.0072765)
-    End Function
-
-    Private Shared Iterator Function AverageMassElements() As IEnumerable(Of Element)
-        Yield New Element("C", 12.011)
-        Yield New Element("H", 1.00794)
-        Yield New Element("N", 14.00674)
-        Yield New Element("O", 15.9994)
-        Yield New Element("P", 30.973762)
-        Yield New Element("S", 32.066)
-        Yield New Element("Water", 18.01528)
-        Yield New Element("Proton", 1)
-    End Function
-
-    Private Shared Iterator Function MonoisotopicModifications() As IEnumerable(Of Element)
-        ' first element is zero, means no modification
-        Yield New Element("", 0)
-        Yield New Element("minus p", -79.9663)
-        Yield New Element("plus p", 79.9663)
-        Yield New Element("cp", -18.0106)
-    End Function
-
-    Private Shared Iterator Function AverageMassModifications() As IEnumerable(Of Element)
-        ' first element is zero, means no modification
-        Yield New Element("", 0)
-        Yield New Element("minus p", -79.9799)
-        Yield New Element("plus p", 79.9799)
-        Yield New Element("cp", -18.0153)
-    End Function
-
     Private Shared Function GetMass(id As String, monoisotopic As Boolean) As Double
-        Static _monoisotopic As Dictionary(Of String, Element) = MonoisotopicElements.ToDictionary(Function(a) a.name)
-        Static _average_mass As Dictionary(Of String, Element) = AverageMassElements.ToDictionary(Function(a) a.name)
+        Static _monoisotopic As Dictionary(Of String, Element) = GetElements(True).ToDictionary(Function(a) a.name)
+        Static _average_mass As Dictionary(Of String, Element) = GetElements(False).ToDictionary(Function(a) a.name)
 
         If monoisotopic Then
             Return _monoisotopic(id).isotopic
@@ -92,60 +55,7 @@ Public Class Composition
 
     End Class
 
-    Public Class Output
-
-        ''' <summary>
-        ''' 1
-        ''' </summary>
-        Public ObservedMass As Double
-        ''' <summary>
-        ''' 2
-        ''' </summary>
-        Public TheoreticalMass As Double
-        ''' <summary>
-        ''' 3
-        ''' </summary>
-        Public Errorppm As Double
-        ''' <summary>
-        ''' 4
-        ''' </summary>
-        Public OfpA As Integer
-        ''' <summary>
-        ''' 5
-        ''' </summary>
-        Public OfpG As Integer
-        ''' <summary>
-        ''' 6
-        ''' </summary>
-        Public OfpC As Integer
-        ''' <summary>
-        ''' 7
-        ''' </summary>
-        Public OfpV As Integer
-        ''' <summary>
-        ''' 8
-        ''' </summary>
-        Public Modification As String
-        ''' <summary>
-        ''' 10
-        ''' </summary>
-        Public OfBases As Integer
-
-        Public Sub SetBaseNumber(i As Integer, n As Integer)
-            Select Case i
-                Case 1 : OfpA = n
-                Case 2 : OfpG = n
-                Case 3 : OfpC = n
-                Case 4 : OfpV = n
-
-                Case Else
-                    Throw New OutOfMemoryException(i)
-            End Select
-        End Sub
-
-    End Class
-
-    Public Iterator Function FindCompositions(Mass() As Double, Optional Monoisotopic As Boolean = True) As IEnumerable(Of Output)
+    Public Iterator Function FindCompositions(Mass() As Double) As IEnumerable(Of OligonucleotideCompositionOutput)
 
         Dim j As Long, k As Long, m As Long, n As Long, q As Long, p As Long
         Dim ii As Long, jj As Long, kk As Long, mm As Long, nn As Long, qq As Long, pp As Long
@@ -159,12 +69,11 @@ Public Class Composition
         Dim columnover As Long, columnover2 As Long
         Dim Massin As MassWindow() = Mass.Select(Function(mz) New MassWindow(mz, ppmthresh)).ToArray
         Dim Nmassin As Long = Massin.Length
-        Dim water As Double = GetMass("Water", Monoisotopic)
 
-        Dim bases() As Element = If(Monoisotopic, MonoisotopicBases(), AverageMassBases()).ToArray
+
         Dim Nbases = 4
 
-        Dim mods() As Element = If(Monoisotopic, MonoisotopicModifications(), AverageMassModifications()).ToArray
+
         Dim Nmods As Integer = mods.Length
         Dim lowbasemass As Double, highbasemass As Double
         lowbasemass = 1000000000.0#
@@ -272,7 +181,7 @@ Public Class Composition
                     If Nmatch > 0 Then
                         Ncats = Ncats + 1
                         ' ReDim outputwrite(0 To Nmatch - 1, 0 To Nbases + 5)
-                        Dim outputwrite As New Output
+                        Dim outputwrite As New OligonucleotideCompositionOutput
                         nn = 0
                         For ii = 0 To lng3 - 1
                             If tempcheck(ii) Then
