@@ -1,3 +1,4 @@
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Math.Statistics
@@ -27,19 +28,6 @@ Public Class Composition
         Yield New Element("C", 305.1841)
         Yield New Element("V", 320.1957)
     End Function
-
-    ' Cells(row_id, column_id)
-
-    Private Class Mass
-
-        Public ReadOnly Property mass As Double
-        Public Property range As DoubleRange
-
-        Sub New(mass As Double)
-            Me.mass = mass
-        End Sub
-
-    End Class
 
     Private Shared Iterator Function MonoisotopicElements() As IEnumerable(Of Element)
         Yield New Element("C", 12)
@@ -169,15 +157,8 @@ Public Class Composition
         Dim rng1 As Range
         Dim tempcheck() As Boolean
         Dim columnover As Long, columnover2 As Long
-        Dim Massin As Mass() = Mass.Select(Function(mz) New Mass(mz)).ToArray
+        Dim Massin As MassWindow() = Mass.Select(Function(mz) New MassWindow(mz, ppmthresh)).ToArray
         Dim Nmassin As Long = Massin.Length
-
-        For i As Integer = 0 To Nmassin - 1
-            thing1 = Massin(i).mass
-            thing2 = thing1 / 1000000.0# * ppmthresh
-            Massin(i).range = New DoubleRange(thing1 - thing2, thing1 + thing2)
-        Next i
-
         Dim water As Double = GetMass("Water", Monoisotopic)
 
         Dim bases() As Element = If(Monoisotopic, MonoisotopicBases(), AverageMassBases()).ToArray
@@ -207,9 +188,9 @@ Public Class Composition
             Ncats = 0
             For j = 0 To Nmods - 1
                 thing1 = mods(j).isotopic
-                thing2 = Massin(k).range.Min - thing1
+                thing2 = Massin(k).mzmin - thing1
                 lng1 = Int(thing2 / highbasemass) + 1
-                thing2 = Massin(k).range.Max - thing1
+                thing2 = Massin(k).mzmax - thing1
                 lng2 = Int(thing2 / lowbasemass) + 1
                 For m = lng1 To lng2
                     topways = m + Nbases - 1
@@ -281,8 +262,8 @@ Public Class Composition
                         For jj = 0 To Nbases - 1
                             thing3 = thing3 + bases(jj).isotopic * combins(n).Cells(jj + 1)
                         Next jj
-                        If thing3 <= Massin(k).range.Max Then
-                            If thing3 >= Massin(k).range.Min Then
+                        If thing3 <= Massin(k).mzmax Then
+                            If thing3 >= Massin(k).mzmin Then
                                 tempcheck(n) = True
                                 Nmatch = Nmatch + 1
                             End If
