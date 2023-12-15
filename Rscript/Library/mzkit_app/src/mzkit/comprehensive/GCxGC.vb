@@ -1,55 +1,55 @@
 ﻿#Region "Microsoft.VisualBasic::d1d79b3c7b489b65e6afae5aeb41b56c, mzkit\Rscript\Library\mzkit\comprehensive\GCxGC.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 151
-    '    Code Lines: 101
-    ' Comment Lines: 33
-    '   Blank Lines: 17
-    '     File Size: 5.85 KB
+' Summaries:
 
 
-    ' Module GCxGC
-    ' 
-    '     Function: create2DPeaks, extractTIC, extractXIC, readCDF, saveCDF
-    '               TIC1D, TIC2D
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 151
+'    Code Lines: 101
+' Comment Lines: 33
+'   Blank Lines: 17
+'     File Size: 5.85 KB
+
+
+' Module GCxGC
+' 
+'     Function: create2DPeaks, extractTIC, extractXIC, readCDF, saveCDF
+'               TIC1D, TIC2D
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -60,6 +60,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.DataStorage.netCDF
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
@@ -87,6 +88,38 @@ Module GCxGC
                         }
                     End Function) _
             .ToArray
+    End Function
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="rawdata"></param>
+    ''' <param name="modtime"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    ''' <example>
+    ''' require(mzkit);
+    ''' 
+    ''' imports "GCxGC" from "mzkit";
+    ''' 
+    ''' let rawdata = open.mzpack(file = "/path/to/leco_gcms.cdf");
+    ''' let gcxgc = GCxGC::demodulate_2D(rawdata, modtime = 4);
+    ''' 
+    ''' write.mzPack(gcxgc, file = "/file/to/save/gcxgc_rawdata.mzPack");
+    ''' </example>
+    <ExportAPI("demodulate_2D")>
+    Public Function Demodulate2D(rawdata As Object, modtime As Double, Optional env As Environment = Nothing) As Object
+        If rawdata Is Nothing Then
+            Return Nothing
+        End If
+
+        If TypeOf rawdata Is netCDFReader Then
+            Return GC2Dimensional.ToMzPack(agilentGC:=rawdata, modtime:=modtime)
+        ElseIf TypeOf rawdata Is mzPack Then
+            Return DirectCast(rawdata, mzPack).Demodulate2D(modtime)
+        Else
+            Return Internal.debug.stop("invalid rawdata type!", env)
+        End If
     End Function
 
     ''' <summary>

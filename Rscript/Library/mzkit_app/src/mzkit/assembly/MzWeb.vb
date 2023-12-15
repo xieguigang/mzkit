@@ -495,13 +495,9 @@ Module MzWeb
             Using cdf As New netCDFReader(file)
                 If cdf.IsLecoGCMS Then
                     Dim println As Action(Of String) = Sub(line) base.print(line,, env)
-                    Dim sig As ScanMS1() = GCMSConvertor.LoadMs1Scans(cdf, println).ToArray
-
-                    Return New mzPack With {
-                        .MS = sig,
-                        .Application = FileApplicationClass.GCMS,
-                        .source = file.FileName
-                    }
+                    Dim sig As mzPack = GCMSConvertor.ConvertGCMS(cdf, println)
+                    sig.source = file.FileName
+                    Return sig
                 Else
                     ' convert MSI cdf to mzpack
                     ' cdf for save MS-imaging

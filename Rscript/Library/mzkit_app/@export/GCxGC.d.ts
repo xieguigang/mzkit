@@ -10,6 +10,16 @@
 */
 declare namespace GCxGC {
    /**
+    * 
+    * 
+     * @param rawdata -
+     * @param modtime -
+     * @param env -
+     * 
+     * + default value Is ``null``.
+   */
+   function demodulate_2D(rawdata: any, modtime: number, env?: object): any;
+   /**
     * extract GCxGC 2d peaks from the mzpack raw data file
     * 
     * > this function will extract the TIC data by default.

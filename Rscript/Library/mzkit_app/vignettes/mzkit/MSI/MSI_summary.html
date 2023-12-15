@@ -140,6 +140,34 @@
         div.vignettes a:hover {
             background: rgb(85%, 85%, 85%);
         }
+
+        .character {
+            color: brown;
+        }
+
+        .comment {
+            color: green;
+            font-style: italic;
+        }
+
+        .number {
+            color: skyblue;
+        }
+
+        .keyword {
+            color: blue;
+            font-weight: bold;
+        }
+
+        .operator {
+            color: gray;
+            font-weight: bold;
+        }
+
+        .bracket {
+            color: rgb(197, 1, 197);
+            font-weight: bold;
+        }
     </style>
 </head>
 
@@ -202,7 +230,7 @@
 
         <h3 style="display: block;">Examples</h3>
 
-        <pre><code>let rawdata = open.mzpack("/path/to/rawdata.mzPack");
+        <pre><code id="example_r"> let rawdata = open.mzpack("/path/to/rawdata.mzPack");
  let spots = read.csv("/path/to/region.csv");
  let into = MSI_summary(rawdata, x = as.integer(spots$x), y = as.integer(spots$y), as.vector = TRUE);
  
@@ -216,5 +244,16 @@
         </div>
     </div>
 </body>
+
+<script type="text/javascript" src="../../.assets/R_syntax.js"></script>
+<script type="text/javascript">
+    let example_code = document.getElementById("example_r");
+    let highlights_str = highlights(example_code.innerText);
+
+    console.log(example_code.innerText);
+    console.log(highlights_str);
+
+    example_code.innerHTML = highlights_str;
+</script>
 
 </html>

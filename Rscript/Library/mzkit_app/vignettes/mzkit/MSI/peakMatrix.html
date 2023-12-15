@@ -140,6 +140,34 @@
         div.vignettes a:hover {
             background: rgb(85%, 85%, 85%);
         }
+
+        .character {
+            color: brown;
+        }
+
+        .comment {
+            color: green;
+            font-style: italic;
+        }
+
+        .number {
+            color: skyblue;
+        }
+
+        .keyword {
+            color: blue;
+            font-weight: bold;
+        }
+
+        .operator {
+            color: gray;
+            font-weight: bold;
+        }
+
+        .bracket {
+            color: rgb(197, 1, 197);
+            font-weight: bold;
+        }
     </style>
 </head>
 
@@ -216,7 +244,7 @@ rows is the spatial spots.</li>
 
         <h3 style="display: block;">Examples</h3>
 
-        <pre><code>let raw = open.mzpack("/path/to/rawdata.mzPack");
+        <pre><code id="example_r"> let raw = open.mzpack("/path/to/rawdata.mzPack");
  let ionsSet = list(ion1 = 100.0321, ion2 = 563.2254, ion3 = 336.9588);
  
  MSI::peakMatrix(raw, ionSet = ionsSet, mzError = "da:0.05");</code></pre>
@@ -227,5 +255,16 @@ rows is the spatial spots.</li>
         </div>
     </div>
 </body>
+
+<script type="text/javascript" src="../../.assets/R_syntax.js"></script>
+<script type="text/javascript">
+    let example_code = document.getElementById("example_r");
+    let highlights_str = highlights(example_code.innerText);
+
+    console.log(example_code.innerText);
+    console.log(highlights_str);
+
+    example_code.innerHTML = highlights_str;
+</script>
 
 </html>
