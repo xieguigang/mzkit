@@ -191,7 +191,7 @@ Public Module GCMSConvertor
     <Extension>
     Private Iterator Function readMzMatrix(agilentGC As netCDFReader, point_count As integers, println As Action(Of String)) As IEnumerable(Of Double())
         Dim offset As Integer = Scan0
-        Dim mz As shorts = Nothing
+        Dim mz As New floats
 
         Call println("read m/z matrix, may takes a long time to run...")
         Call agilentGC.getDataVariable("mass_values", mz)
