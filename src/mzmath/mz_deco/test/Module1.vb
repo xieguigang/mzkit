@@ -66,6 +66,23 @@ Module Module1
         Call multipleTest()
     End Sub
 
+    Sub align_test()
+        Dim debugfiles = {
+        "G:\tmp\pos_mzPack\QC3.dat",
+"G:\tmp\pos_mzPack\QC1.dat",
+"G:\tmp\pos_mzPack\QC2.dat"
+        }
+        Dim samples As New List(Of NamedCollection(Of PeakFeature))
+
+        For Each file As String In debugfiles
+            samples.Add(New NamedCollection(Of PeakFeature)(file.BaseName, SaveSample.ReadSample(file.Open(FileMode.Open, doClear:=False, [readOnly]:=True))))
+        Next
+
+        Dim xcms_peaks = PeakAlignment.CreateMatrix(samples).ToArray
+
+        Pause()
+    End Sub
+
     Sub multipleTest()
         Dim filepath As String() = {"G:\tmp\pos_mzPack\QC3.mzPack",
 "G:\tmp\pos_mzPack\QC1.mzPack",
@@ -87,7 +104,7 @@ Module Module1
             Call SaveSample.DumpSample(peaktable, debug.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False))
         Next
 
-        Dim xcms_peaks = PeakAlignment.CreateMatrix(samples).ToArray
+
 
         Pause()
     End Sub
