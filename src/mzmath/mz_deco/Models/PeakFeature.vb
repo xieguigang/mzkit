@@ -57,6 +57,7 @@
 #End Region
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Math.SignalProcessing.COW
 Imports std = System.Math
 
@@ -68,8 +69,9 @@ Public Class PeakFeature
     Implements IROI
     Implements IPeak2D
     Implements IMs1Scan
+    Implements INamedValue
 
-    Public Property xcms_id As String Implements IPeak2D.ID
+    Public Property xcms_id As String Implements IPeak2D.ID, INamedValue.Key
 
     Public Property mz As Double Implements IMs1Scan.mz, IPeak2D.Dimension1
 
