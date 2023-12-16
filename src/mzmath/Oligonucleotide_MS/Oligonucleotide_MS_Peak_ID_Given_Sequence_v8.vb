@@ -485,12 +485,11 @@ Public Class MS_Peak_ID
 
 
 
-    Sub MatchMassesToOligoSequence()
+    Sub MatchMassesToOligoSequence(obs As Double(), seq As FastaSeq)
+        Dim digest = maketheorylist(seq).ToArray
 
-        getmatches()
-
-        getcoverage()
-
+        getmatches(obs, digest)
+        getcoverage(-1, seq)
     End Sub
 
     Private Sub getmatches(obs As Double(), digest As TheoreticalDigestMass())
