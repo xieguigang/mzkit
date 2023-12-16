@@ -1,20 +1,20 @@
 ﻿Imports Microsoft.VisualBasic.Serialization.JSON
 
-Friend Class VB6DimensionVector
+Friend Class VB6DimensionVector(Of T)
 
-    Public Cells As Long()
+    Public Cells As T()
 
-    Default Public Property Item(i As Integer) As Long
+    Default Public Property Item(i As Integer) As T
         Get
             Return Cells(i)
         End Get
-        Set(value As Long)
-            Cells(i) = value
+        Set
+            Cells(i) = Value
         End Set
     End Property
 
     Sub New(n As Integer)
-        Cells = New Long(n) {}
+        Cells = New T(n) {}
     End Sub
 
     Public Overrides Function ToString() As String

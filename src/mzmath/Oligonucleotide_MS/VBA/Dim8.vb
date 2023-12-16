@@ -1,4 +1,4 @@
-﻿Friend Class Dim8 : Inherits VB6DimensionVector
+﻿Friend Class Dim8 : Inherits VB6DimensionVector(Of Object)
 
     Sub New()
         Call MyBase.New(8)

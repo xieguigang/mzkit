@@ -4,7 +4,7 @@
 ''' <remarks>
 ''' 1. sequence, start, stop, length
 ''' </remarks>
-Friend Class Dim4 : Inherits VB6DimensionVector
+Friend Class Dim4 : Inherits VB6DimensionVector(Of Integer)
 
     Sub New()
         Call MyBase.New(4)

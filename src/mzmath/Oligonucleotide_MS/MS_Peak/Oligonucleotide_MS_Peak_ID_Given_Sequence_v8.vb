@@ -198,14 +198,14 @@ Public Class MS_Peak_ID
                 digest(n)(j) = nomisses(i)(j)
             Next j
             If digest(n)(2) = 1 Then
-                digest(n)(5) = end5(1, 1)
+                digest(n)(5) = end5(1).name
                 digest(n)(6) = Hstng
-                digest(n)(7) = end5(1, 2) + Hthing
+                digest(n)(7) = end5(1).mass + Hthing
             Else
                 If digest(n)(3) = ConstructLength Then
                     digest(n)(5) = OHstng
-                    digest(n)(6) = end3(1, 1)
-                    digest(n)(7) = OHthing + end3(1, 2)
+                    digest(n)(6) = end3(1).name
+                    digest(n)(7) = OHthing + end3(1).mass
                 Else
                     digest(n)(5) = OHstng
                     digest(n)(6) = Hstng
@@ -220,14 +220,14 @@ Public Class MS_Peak_ID
                 digest(n)(j) = misses(i)(j)
             Next j
             If digest(n)(2) = 1 Then
-                digest(n)(5) = end5(1, 1)
+                digest(n)(5) = end5(1).name
                 digest(n)(6) = Hstng
-                digest(n)(7) = end5(1, 2) + Hthing
+                digest(n)(7) = end5(1).mass + Hthing
             Else
                 If digest(n)(3) = ConstructLength Then
                     digest(n)(5) = OHstng
-                    digest(n)(6) = end3(1, 1)
-                    digest(n)(7) = OHthing + end3(1, 2)
+                    digest(n)(6) = end3(1).name
+                    digest(n)(7) = OHthing + end3(1).mass
                 Else
                     digest(n)(5) = OHstng
                     digest(n)(6) = Hstng
@@ -241,9 +241,9 @@ Public Class MS_Peak_ID
             For k = 1 To 4
                 digest(n)(k) = nomisses(1)(k)
             Next k
-            digest(n)(5) = end5(j, 1)
+            digest(n)(5) = end5(j).name
             digest(n)(6) = Hstng
-            digest(n)(7) = end5(j, 2) + Hthing
+            digest(n)(7) = end5(j).mass + Hthing
             digest(n)(8) = Namestring & 1
         Next j
         For j = 2 To Nend3
@@ -252,8 +252,8 @@ Public Class MS_Peak_ID
                 digest(n)(k) = nomisses(Nnomisses)(k)
             Next k
             digest(n)(5) = OHstng
-            digest(n)(6) = end3(j, 1)
-            digest(n)(7) = OHthing + end3(j, 2)
+            digest(n)(6) = end3(j).name
+            digest(n)(7) = OHthing + end3(j).mass
             digest(n)(8) = Namestring & Nnomisses
         Next j
         lng1 = 0
@@ -264,9 +264,9 @@ Public Class MS_Peak_ID
                 For k = 1 To 4
                     digest(n)(k) = misses(m)(k)
                 Next k
-                digest(n)(5) = end5(j, 1)
+                digest(n)(5) = end5(j).name
                 digest(n)(6) = Hstng
-                digest(n)(7) = end5(j, 2) + Hthing
+                digest(n)(7) = end5(j).mass + Hthing
                 digest(n)(8) = Namestring & misses(m)(5) & "-" & misses(m)(6)
             Next j
             m = missends(i)(2)
@@ -276,15 +276,16 @@ Public Class MS_Peak_ID
                     digest(n)(k) = misses(m)(k)
                 Next k
                 digest(n)(5) = OHstng
-                digest(n)(6) = end3(j, 1)
-                digest(n)(7) = OHthing + end3(j, 2)
+                digest(n)(6) = end3(j).name
+                digest(n)(7) = OHthing + end3(j).mass
                 digest(n)(8) = Namestring & misses(m)(5) & "-" & misses(m)(6)
             Next j
         Next i
         For i = 1 To Ndigest
             For k = 1 To Nbases
-                lng1 = digest(i)(4) - Len(digest(i)(1).replace(bases(k, 1), ""))
-                digest(i)(7) = digest(i)(7) + lng1 * bases(k, 3)
+                ' sequence
+                lng1 = digest(i)(4) - Len(CStr(digest(i)(1)).Replace(bases(k).name, ""))
+                digest(i)(7) = digest(i)(7) + lng1 * bases(k).isotopic
             Next k
         Next i
 
