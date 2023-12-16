@@ -254,6 +254,13 @@ Namespace mzData.mzWebCache
             End Using
         End Sub
 
+        ''' <summary>
+        ''' read all ms2 scan products inside a given scan in ms1 level
+        ''' </summary>
+        ''' <param name="scanId">
+        ''' the scan id which could be unsed for point to the target ms1 scan data
+        ''' </param>
+        ''' <returns></returns>
         Public Function ReadScan2(scanId As String) As ScanMS2()
             Dim size As Integer = pointTo(scanId)
             Dim data As ScanMS2()
@@ -295,6 +302,11 @@ Namespace mzData.mzWebCache
             Return dataSize
         End Function
 
+        ''' <summary>
+        ''' chekc if there is any scan in ms2 level exists in current data file?
+        ''' </summary>
+        ''' <param name="sampling"></param>
+        ''' <returns></returns>
         Public Function hasMs2(Optional sampling As Integer = 64) As Boolean Implements IMzPackReader.hasMs2
             For Each scanId As String In EnumerateIndex.Take(sampling)
                 Call pointTo(scanId)
@@ -326,6 +338,8 @@ Namespace mzData.mzWebCache
             BPC = file.ReadDouble
             TIC = file.ReadDouble
         End Sub
+
+
 
         Public Function ReadScan(scanId As String, Optional skipProducts As Boolean = False) As ScanMS1 Implements IMzPackReader.ReadScan
             Dim ms1 As New ScanMS1 With {.scan_id = scanId}

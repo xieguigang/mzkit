@@ -55,12 +55,30 @@
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Linq
 
 Module Module1
 
     Sub Main()
+        Call multipleTest()
+    End Sub
+
+    Sub multipleTest()
+        Dim filepath As String() = {"G:\tmp\pos_mzPack\QC3.mzPack",
+"G:\tmp\pos_mzPack\QC1.mzPack",
+"G:\tmp\pos_mzPack\QC2.mzPack"}
+
+        Dim samples As New List(Of NamedCollection(Of PeakFeature))
+
+        For Each file As String In filepath
+            Dim bin As New BinaryStreamReader(file)
+            Dim raw = bin.hasMs2
+        Next
+    End Sub
+
+    Sub singleTest()
         Using file As New BinaryStreamReader("E:\test.mzPack")
             Dim dataMS1 As ScanMS1() = file.EnumerateIndex _
                 .Select(Function(id) file.ReadScan(id, skipProducts:=True)) _
