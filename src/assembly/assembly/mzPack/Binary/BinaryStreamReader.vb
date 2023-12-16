@@ -72,9 +72,6 @@
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
-#If UNIX = 0 Then
-Imports Microsoft.VisualBasic.ApplicationServices
-#End If
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
