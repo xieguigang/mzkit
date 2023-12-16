@@ -68,6 +68,7 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
+Imports SMRUCC.Rsharp.Runtime.Internal.Invokes
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 
@@ -243,21 +244,39 @@ Module mzDeco
                                   Optional env As Environment = Nothing) As Object
 
         Dim mzErr = Math.getTolerance(mzdiff, env, [default]:="da:0.001")
-        Dim samplePeaks = pipeline.TryCreatePipeline(Of PeakFeature)(samples, env)
+        Dim sampleData As NamedCollection(Of PeakFeature)() = Nothing
 
         If mzErr Like GetType(Message) Then
             Return mzErr.TryCast(Of Message)
-        ElseIf samplePeaks.isError Then
-            Return samplePeaks.getError
         End If
 
-        Dim sampleData As NamedCollection(Of PeakFeature)() = samplePeaks _
-            .populates(Of PeakFeature)(env) _
-            .GroupBy(Function(a) a.rawfile) _
-            .Select(Function(i)
-                        Return New NamedCollection(Of PeakFeature)(i.Key, i.ToArray)
-                    End Function) _
-            .ToArray
+        If TypeOf samples Is list Then
+            Dim ls = DirectCast(samples, list).AsGeneric(Of PeakFeature())(env)
+
+            If ls.All(Function(a) a.Value Is Nothing) Then
+            Else
+                sampleData = ls _
+                    .Select(Function(a) New NamedCollection(Of PeakFeature)(a.Key, a.Value)) _
+                    .ToArray
+            End If
+        End If
+
+        If sampleData.IsNullOrEmpty Then
+            Dim samplePeaks = pipeline.TryCreatePipeline(Of PeakFeature)(samples, env)
+
+            If samplePeaks.isError Then
+                Return samplePeaks.getError
+            End If
+
+            sampleData = samplePeaks _
+                .populates(Of PeakFeature)(env) _
+                .GroupBy(Function(a) a.rawfile) _
+                .Select(Function(i)
+                            Return New NamedCollection(Of PeakFeature)(i.Key, i.ToArray)
+                        End Function) _
+                .ToArray
+        End If
+
         Dim peaktable As xcms2() = sampleData _
             .CreateMatrix() _
             .ToArray
