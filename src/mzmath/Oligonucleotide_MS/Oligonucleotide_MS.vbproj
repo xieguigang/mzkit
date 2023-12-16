@@ -45,7 +45,7 @@
   <ItemGroup>
     <Compile Remove="Oligonucleotide_Mapping_UV_Annotation_Tool_v11.vb" />
     <Compile Remove="Oligonucleotide_MS2_Spectrum_Matcher_v11.vb" />
-    <Compile Remove="Oligonucleotide_MS_Peak_ID_Given_Sequence_v8.vb" />
+
   </ItemGroup>
 
   <ItemGroup>

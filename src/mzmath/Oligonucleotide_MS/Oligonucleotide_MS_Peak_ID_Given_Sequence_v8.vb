@@ -1,4 +1,39 @@
 Public Class MS_Peak_ID
+
+    ''' <summary>
+    ''' ppm threshold
+    ''' </summary>
+    ReadOnly ppmthresh As Double = 5
+    ''' <summary>
+    ''' Base cutsite
+    ''' </summary>
+    ReadOnly cutsite1 As String
+    ''' <summary>
+    ''' Which side? true for 3'
+    ''' </summary>
+    ReadOnly cutsite1side3 As Boolean
+    ''' <summary>
+    ''' Where does phosphate go at cutsite? true for ``3' of previous base``
+    ''' </summary>
+    ReadOnly cutsite1Pwith3 As Boolean
+    ''' <summary>
+    ''' # Missed Cleavage Sites
+    ''' </summary>
+    ReadOnly Nmiss As Long
+
+    Sub New(Optional ppm As Double = 5,
+            Optional miss_sites As Long = 0,
+            Optional Base_cutsite As String = "A|T|G|C",
+            Optional which_side As String = "3'|5'",
+            Optional phosphate_site As String = "3' of previous base|5' of next base")
+
+        cutsite1side3 = which_side.Split("|"c).First = "3'"
+        cutsite1 = Base_cutsite.Split("|"c).First
+        cutsite1Pwith3 = phosphate_site.Split("|"c).First = "3' of previous base"
+        ppmthresh = ppm
+        Nmiss = miss_sites
+    End Sub
+
     Sub maketheorylist()
 
         Dim i As Long, j As Long, k As Long, m As Long, n As Long, q As Long, p As Long
@@ -13,7 +48,7 @@ Public Class MS_Peak_ID
         Dim tempcheck() As Boolean
         Dim OHthing As Double, Hthing As Double
         Dim OHstng As String, Hstng As String
-        Dim cutsite1side3 As Boolean, cutsite1Pwith3 As Boolean
+
         Dim phosphate As Double
         Dim Namestring As String
 
@@ -24,20 +59,6 @@ Public Class MS_Peak_ID
 
         ThisWorkbook.Worksheets(1).Activate
 
-        Dim cutsite1 As String, Nmiss As Long
-        cutsite1 = Cells(4, 4)
-        If Cells(6, 4) = "3'" Then
-            cutsite1side3 = True
-        Else
-            cutsite1side3 = False
-        End If
-        If Cells(8, 4) = "3' of previous base" Then
-            cutsite1Pwith3 = True
-        Else
-            cutsite1Pwith3 = False
-        End If
-
-        Nmiss = Cells(10, 4)
 
         Dim Monoisotopic As Boolean
         If Cells(2, 6) = "Monoisotopic" Then
@@ -491,9 +512,9 @@ Public Class MS_Peak_ID
     End Sub
     Sub MatchMassesToOligoSequence()
 
-        getmatches
+        getmatches()
 
-        getcoverage
+        getcoverage()
 
     End Sub
 
@@ -550,8 +571,7 @@ Public Class MS_Peak_ID
             Massin(i, 1) = Cells(i + 1, 1)
         Next i
 
-        Dim ppmthresh As Double
-        ppmthresh = Cells(2, 4)
+
         For i = 1 To Nmassin
             thing1 = Massin(i, 1)
             thing2 = thing1 / 1000000.0# * ppmthresh
