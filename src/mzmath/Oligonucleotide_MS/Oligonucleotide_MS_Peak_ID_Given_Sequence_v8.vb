@@ -40,6 +40,7 @@ Public Class MS_Peak_ID
         ppmthresh = ppm
         Nmiss = miss_sites
         Me.Monoisotopic = Monoisotopic
+        Me.bases = MassDefault.GetBases(Monoisotopic).ToArray
     End Sub
 
     Sub maketheorylist()

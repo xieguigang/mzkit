@@ -15,6 +15,16 @@ Module MassDefault
         Return If(monoisotopic, MonoisotopicModifications(), AverageMassModifications())
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="monoisotopic"></param>
+    ''' <returns>
+    ''' + Adenosine monophosphate
+    ''' + Guanosine monophosphate
+    ''' + Cytidine monophosphate
+    ''' + N1-Me-Pseudo-UMP
+    ''' </returns>
     Public Function GetBases(monoisotopic As Boolean) As IEnumerable(Of Element)
         Return If(monoisotopic, MonoisotopicBases(), AverageMassBases())
     End Function
@@ -23,14 +33,14 @@ Module MassDefault
         Yield New Element("A", 329.0525)
         Yield New Element("G", 345.0474)
         Yield New Element("C", 305.0413)
-        Yield New Element("V", 320.041)
+        Yield New Element("T", 320.041)
     End Function
 
     Private Iterator Function AverageMassBases() As IEnumerable(Of Element)
         Yield New Element("A", 329.2091)
         Yield New Element("G", 345.2085)
         Yield New Element("C", 305.1841)
-        Yield New Element("V", 320.1957)
+        Yield New Element("T", 320.1957)
     End Function
 
     Private Iterator Function MonoisotopicElements() As IEnumerable(Of Element)
