@@ -14,6 +14,10 @@
         Me.mass = mass
     End Sub
 
+    Public Overrides Function ToString() As String
+        Return $"{[end]}'  {name} = {mass}"
+    End Function
+
     Public Shared Iterator Function MonoisotopicMass() As IEnumerable(Of GroupMass)
         Yield New GroupMass(5, "p-", 79.966331)
         Yield New GroupMass(5, "HO-", 17.00274)
