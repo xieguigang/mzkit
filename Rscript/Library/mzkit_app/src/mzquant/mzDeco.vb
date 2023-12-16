@@ -243,6 +243,14 @@ Module mzDeco
     ''' <param name="norm"></param>
     ''' <param name="env"></param>
     ''' <returns></returns>
+    ''' <example>
+    ''' let peaksdata = lapply(files, function(ms1) {
+    '''     mz_deco(ms1, tolerance = "da:0.01", peak.width = [3,30]);
+    ''' });
+    ''' let peaktable = peak_alignment(samples = peaksdata);
+    ''' 
+    ''' write.csv(peaktable, file = "/path/to/peaktable.csv", row.names = TRUE);
+    ''' </example>
     <ExportAPI("peak_alignment")>
     <RApiReturn(GetType(xcms2))>
     Public Function peakAlignment(<RRawVectorArgument>
