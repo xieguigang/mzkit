@@ -109,11 +109,27 @@ Public Module PeakAlignment
         Dim targets = rawdata.Where(Function(sample) sample.name <> refer.name).ToArray
         Dim peaktable As New Dictionary(Of String, xcms2)
 
+        For Each point As PeakFeature In refer
+            peaktable.Add(point.xcms_id, New xcms2 With {
+                .ID = point.xcms_id,
+                .mz = point.mz,
+                .mzmin = point.mz,
+                .mzmax = point.mz,
+                .rt = point.rt,
+                .rtmin = point.rtmin,
+                .rtmax = point.rtmax,
+                .npeaks = 0,
+                .Properties = New Dictionary(Of String, Double) From {
+                    {refer.name, point.area}
+                }
+            })
+        Next
+
         For Each sample As NamedCollection(Of PeakFeature) In targets
             Dim aligns = cow.CorrelationOptimizedWarping(refer.AsList, sample.AsList).ToArray
 
             For Each point As PeakFeature In aligns
-
+                Call peaktable(point.xcms_id).Add(sample.name, point.area)
             Next
         Next
 

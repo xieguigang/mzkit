@@ -81,7 +81,7 @@ Module Module1
 
         Dim xcms_peaks = PeakAlignment.CreateMatrix(samples).ToArray
 
-        Pause()
+        Call xcms_peaks.SaveTo("G:\tmp\pos.csv")
     End Sub
 
     Sub multipleTest()
