@@ -2,6 +2,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports SMRUCC.genomics.SequenceModel.FASTA
+Imports SMRUCC.genomics.SequenceModel.NucleotideModels
 
 Public Class MS_Peak_ID
 
@@ -108,7 +109,7 @@ Public Class MS_Peak_ID
 
         'Create theoretical list of nomisses
 
-        Dim nomisses() As Dim4, Nnomisses As Long
+        Dim nomisses() As SimpleSegment, Nnomisses As Long
         Nnomisses = ConstructLength - Len(Construct.Replace(cutsite1, "")) + 1
         ReDim nomisses(Nnomisses)    ' sequence, start, stop, length
         If cutsite1side3 Then
@@ -116,40 +117,40 @@ Public Class MS_Peak_ID
             lng2 = 0
             For i = 1 To Nnomisses - 1
                 lng1 = InStr(stng1, cutsite1)
-                nomisses(i)(1) = Left(stng1, lng1)
+                nomisses(i).SequenceData = Left(stng1, lng1)
                 stng1 = Right(stng1, Len(stng1) - lng1)
-                nomisses(i)(2) = lng2 + 1
-                nomisses(i)(3) = lng2 + lng1
-                nomisses(i)(4) = nomisses(i)(3) - nomisses(i)(2) + 1
-                lng2 = lng2 + nomisses(i)(4)
+                nomisses(i).Start = lng2 + 1
+                nomisses(i).Ends = lng2 + lng1
+                ' nomisses(i)(4) = nomisses(i)(3) - nomisses(i)(2) + 1
+                lng2 = lng2 + nomisses(i).Length
             Next i
-            nomisses(Nnomisses)(1) = stng1
-            nomisses(Nnomisses)(2) = lng2 + 1
-            nomisses(Nnomisses)(3) = ConstructLength
-            nomisses(Nnomisses)(4) = nomisses(i)(3) - nomisses(i)(2) + 1
+            nomisses(Nnomisses).SequenceData = stng1
+            nomisses(Nnomisses).Start = lng2 + 1
+            nomisses(Nnomisses).Ends = ConstructLength
+            ' nomisses(Nnomisses)(4) = nomisses(i)(3) - nomisses(i)(2) + 1
         Else
             stng1 = Construct
             lng2 = 0
             lng1 = InStr(stng1, cutsite1)
-            nomisses(1)(1) = Left(stng1, lng1 - 1)
-            nomisses(1)(2) = 1
-            nomisses(1)(3) = lng1 - 1
-            nomisses(1)(4) = nomisses(i)(3) - nomisses(i)(2) + 1
+            nomisses(1).SequenceData = Left(stng1, lng1 - 1)
+            nomisses(1).Start = 1
+            nomisses(1).Ends = lng1 - 1
+            ' nomisses(1)(4) = nomisses(i)(3) - nomisses(i)(2) + 1
             stng1 = Right(stng1, Len(stng1) - lng1)
-            lng2 = lng2 + nomisses(1)(4)
+            lng2 = lng2 + nomisses(1).Length
             For i = 2 To Nnomisses - 1
                 lng1 = InStr(stng1, cutsite1)
-                nomisses(i)(1) = cutsite1 & Left(stng1, lng1 - 1)
+                nomisses(i).SequenceData = cutsite1 & Left(stng1, lng1 - 1)
                 stng1 = Right(stng1, Len(stng1) - lng1)
-                nomisses(i)(2) = lng2 + 1
-                nomisses(i)(3) = lng2 + lng1
-                nomisses(i)(4) = nomisses(i)(3) - nomisses(i)(2) + 1
-                lng2 = lng2 + nomisses(i)(4)
+                nomisses(i).Start = lng2 + 1
+                nomisses(i).Ends = lng2 + lng1
+                ' nomisses(i)(4) = nomisses(i)(3) - nomisses(i)(2) + 1
+                lng2 = lng2 + nomisses(i).Length
             Next i
-            nomisses(Nnomisses)(1) = cutsite1 & stng1
-            nomisses(Nnomisses)(2) = lng2 + 1
-            nomisses(Nnomisses)(3) = ConstructLength
-            nomisses(Nnomisses)(4) = nomisses(i)(3) - nomisses(i)(2) + 1
+            nomisses(Nnomisses).SequenceData = cutsite1 & stng1
+            nomisses(Nnomisses).Start = lng2 + 1
+            nomisses(Nnomisses).Ends = ConstructLength
+            ' nomisses(Nnomisses)(4) = nomisses(i)(3) - nomisses(i)(2) + 1
         End If
 
         Dim misses() As Dim6, Nmisses As Long, missends() As Dim2
@@ -167,13 +168,13 @@ Public Class MS_Peak_ID
         For i = 1 To Nmiss
             For j = 1 To Nnomisses - i
                 k = k + 1
-                stng1 = nomisses(j)(1)
+                stng1 = nomisses(j).SequenceData
                 For m = j + 1 To j + i
-                    stng1 = stng1 & nomisses(m)(1)
+                    stng1 = stng1 & nomisses(m).SequenceData
                 Next m
                 misses(k)(1) = stng1
-                misses(k)(2) = nomisses(j)(2)
-                misses(k)(3) = nomisses(m - 1)(3)
+                misses(k)(2) = nomisses(j).Start
+                misses(k)(3) = nomisses(m - 1).Ends
                 misses(k)(4) = misses(k)(3) - misses(k)(2) + 1
                 misses(k)(5) = j
                 misses(k)(6) = m - 1
@@ -194,9 +195,12 @@ Public Class MS_Peak_ID
         n = 0
         For i = 1 To Nnomisses
             n = n + 1
-            For j = 1 To 4
-                digest(n)(j) = nomisses(i)(j)
-            Next j
+
+            digest(n)(1) = nomisses(i).SequenceData
+            digest(n)(2) = nomisses(i).Start
+            digest(n)(3) = nomisses(i).Ends
+            digest(n)(4) = nomisses(i).Length
+
             If digest(n)(2) = 1 Then
                 digest(n)(5) = end5(1).name
                 digest(n)(6) = Hstng
