@@ -374,6 +374,10 @@ Namespace mzData.mzWebCache
             Return ms1
         End Function
 
+        Public Overrides Function ToString() As String
+            Return $"{filepath} [{EnumerateIndex.Count} ms1_scans]"
+        End Function
+
         Private Iterator Function populateMs2Products(nsize As Integer) As IEnumerable(Of ScanMS2)
             For i As Integer = 0 To nsize - 1
                 Yield file.ReadScanMs2
