@@ -247,8 +247,13 @@ Public Class MS_Peak_ID
             End If
             digest(n)(8) = Namestring & misses(i)(5) & "-" & misses(i)(6)
         Next i
-        For j = 2 To Nend5
+
+        For j = 1 To Nend5 - 1
             n = n + 1
+
+            If digest(n) Is Nothing Then
+                digest(n) = New Dim8
+            End If
 
             digest(n)(1) = nomisses(1).SequenceData
             digest(n)(2) = nomisses(1).Start
@@ -299,7 +304,7 @@ Public Class MS_Peak_ID
             Next j
         Next i
         For i = 1 To Ndigest
-            For k = 1 To Nbases
+            For k = 0 To Nbases - 1
                 ' sequence
                 lng1 = digest(i)(4) - Len(CStr(digest(i)(1)).Replace(bases(k).name, ""))
                 digest(i)(7) = digest(i)(7) + lng1 * bases(k).isotopic
