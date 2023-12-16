@@ -55,6 +55,7 @@
     <None Remove="Oligonucleotide_MS2_Spectrum_Matcher_v11.xlsm" />
     <None Remove="Oligonucleotide_MS_Peak_ID_Given_Sequence_v8.xlsm" />
     <None Remove="~%24Oligonucleotide_Composition_from_Mass_Calculator_v2.xlsm" />
+    <None Remove="~%24Oligonucleotide_MS_Peak_ID_Given_Sequence_v8.xlsm" />
   </ItemGroup>
 
   <ItemGroup>

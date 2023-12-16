@@ -20,9 +20,11 @@ Public Class MS_Peak_ID
     ''' # Missed Cleavage Sites
     ''' </summary>
     ReadOnly Nmiss As Long
+    ReadOnly Monoisotopic As Boolean
 
     Sub New(Optional ppm As Double = 5,
             Optional miss_sites As Long = 0,
+            Optional Monoisotopic As Boolean = True,
             Optional Base_cutsite As String = "A|T|G|C",
             Optional which_side As String = "3'|5'",
             Optional phosphate_site As String = "3' of previous base|5' of next base")
@@ -32,6 +34,7 @@ Public Class MS_Peak_ID
         cutsite1Pwith3 = phosphate_site.Split("|"c).First = "3' of previous base"
         ppmthresh = ppm
         Nmiss = miss_sites
+        Me.Monoisotopic = Monoisotopic
     End Sub
 
     Sub maketheorylist()
@@ -59,15 +62,11 @@ Public Class MS_Peak_ID
 
         ThisWorkbook.Worksheets(1).Activate
 
-
-        Dim Monoisotopic As Boolean
-        If Cells(2, 6) = "Monoisotopic" Then
-            Monoisotopic = True
+        If Monoisotopic Then
             OHthing = 17.00273965
             Hthing = 1.007825032
             phosphate = 79.96633089
         Else
-            Monoisotopic = False
             OHthing = 17.00734
             Hthing = 1.00794
             phosphate = 79.979902
