@@ -162,6 +162,9 @@ Namespace Chromatogram
 
         <Extension>
         Private Iterator Function JointPeaks(raw As SignalPeak()) As IEnumerable(Of SignalPeak)
+            Dim q2 As Double
+
+            ' re-order data by rt asc
             raw = raw.OrderBy(Function(t) t.rtmin).ToArray
 
             Dim dt As Double() = raw _
@@ -174,10 +177,15 @@ Namespace Chromatogram
                         End Function) _
                 .OrderBy(Function(a) a) _
                 .ToArray
-            Dim q2 As Double = dt(dt.Length * (3 / 4)) * 1.25
             Dim jointPeak As New List(Of SignalPeak) From {
                 raw(0)
             }
+
+            If dt.Length > 2 Then
+                q2 = dt(dt.Length * (3 / 4)) * 1.25
+            Else
+                q2 = 0
+            End If
 
             For i As Integer = 1 To raw.Length - 1
                 If raw(i).rtmin - raw(i - 1).rtmax <= q2 Then
