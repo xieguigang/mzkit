@@ -102,16 +102,21 @@ Public Module PeakAlignment
     ''' <param name="samples">the peak collection for each sample file, a sample </param>
     ''' <returns></returns>
     <Extension>
-    Public Iterator Function CreateMatrix(samples As IEnumerable(Of NamedCollection(Of PeakFeature))) As IEnumerable(Of xcms2)
+    Public Function CreateMatrix(samples As IEnumerable(Of NamedCollection(Of PeakFeature))) As IEnumerable(Of xcms2)
         Dim cow As New CowAlignment(Of PeakFeature)(AddressOf CreatePeak)
         Dim rawdata = samples.ToArray
         Dim refer = rawdata.PickReferenceSampleMaxIntensity
         Dim targets = rawdata.Where(Function(sample) sample.name <> refer.name).ToArray
+        Dim peaktable As New Dictionary(Of String, xcms2)
 
         For Each sample As NamedCollection(Of PeakFeature) In targets
-            Dim aligns = cow.CorrelationOptimizedWarping(refer.AsList, sample.AsList)
+            Dim aligns = cow.CorrelationOptimizedWarping(refer.AsList, sample.AsList).ToArray
 
+            For Each point As PeakFeature In aligns
 
+            Next
         Next
+
+        Return peaktable.Values
     End Function
 End Module
