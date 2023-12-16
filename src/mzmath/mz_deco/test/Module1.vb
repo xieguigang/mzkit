@@ -78,8 +78,12 @@ Module Module1
             Dim scans = raw.Select(Function(d) d.GetMs1Scans).IteratesALL.ToArray
             Dim peaktable As PeakFeature() = scans.GetMzGroups(mzdiff:=Tolerance.DeltaMass(0.05)).DecoMzGroups(New Double() {3, 30}, quantile:=0.1, sn:=1).ToArray
 
-
+            Call samples.Add(New NamedCollection(Of PeakFeature)(file.BaseName, peaktable))
         Next
+
+        Dim xcms_peaks = PeakAlignment.CreateMatrix(samples).ToArray
+
+        Pause()
     End Sub
 
     Sub singleTest()
