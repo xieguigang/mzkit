@@ -57,7 +57,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
-Imports stdNum = System.Math
+Imports std = System.Math
 
 ''' <summary>
 ''' 峰对齐操作主要是针对保留时间漂移进行矫正
@@ -104,15 +104,15 @@ Public Module PeakAlignment
             Next
 
             Dim peak As New xcms2 With {
-                .mz = stdNum.Round(mzRange.Average, 4),
+                .mz = std.Round(mzRange.Average, 4),
                 .mzmin = mzRange.Min,
                 .mzmax = mzRange.Max,
-                .rt = stdNum.Round(rtRange.Average),
-                .rtmin = stdNum.Round(rtRange.Min),
-                .rtmax = stdNum.Round(rtRange.Max),
+                .rt = std.Round(rtRange.Average),
+                .rtmin = std.Round(rtRange.Min),
+                .rtmax = std.Round(rtRange.Max),
                 .npeaks = row.Length,
                 .Properties = peakAreas,
-                .ID = $"M{stdNum.Round(.mz)}T{stdNum.Round(.rt)}"
+                .ID = $"M{std.Round(.mz)}T{std.Round(.rt)}"
             }
 
             Yield peak
