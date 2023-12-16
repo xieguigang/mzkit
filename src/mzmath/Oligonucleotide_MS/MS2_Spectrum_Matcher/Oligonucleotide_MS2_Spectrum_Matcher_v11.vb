@@ -1,4 +1,5 @@
 'v11 added back in precursor minus base fragment ions
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 
 Public Class MS2_Spectrum_Matcher
@@ -106,58 +107,17 @@ Public Class MS2_Spectrum_Matcher
             .Where(Function(f) f.intensity >= minint) _
             .ToArray
 
-        Npeaks = peaks.Length
-
-
         If isprofile Then
-            'A peak is defined as having an apex that is bigger than the preceding two points and next two points
-            Dim Npeaks2 As Long
-            ReDim tempcheck(Npeaks)
-            Npeaks2 = 0
-            For i = 3 To Npeaks - 2
-                If peaks(i, 2) > peaks(i - 1, 2) Then
-                    If peaks(i, 2) > peaks(i - 2, 2) Then
-                        If peaks(i, 2) > peaks(i + 1, 2) Then
-                            If peaks(i, 2) > peaks(i + 2, 2) Then
-                                Npeaks2 = Npeaks2 + 1
-                                tempcheck(i) = True
-                                i = i + 2
-                            End If
-                        End If
-                    End If
-                End If
-            Next i
-            'The peak centroid is calculated for the 5 points
-            Dim peaks2() As Double
-            ReDim peaks2(Npeaks2, 2)
-            n = 0
-            For i = 3 To Npeaks - 2
-                If tempcheck(i) Then
-                    n = n + 1
-                    thing1 = 0
-                    thing2 = 0
-                    For j = -2 To 2
-                        thing1 = thing1 + peaks(i + j, 2)
-                        thing2 = thing2 + peaks(i + j, 1) * peaks(i + j, 2)
-                    Next j
-                    peaks2(n, 1) = thing2 / thing1  'centroid m/z
-                    peaks2(n, 2) = peaks(i, 2)      'intensity
-                End If
-            Next i
-            ReDim peaks(Npeaks2, 2)
-            For i = 1 To Npeaks2
-                peaks(i, 1) = peaks2(i, 1)
-                peaks(i, 2) = peaks2(i, 2)
-            Next i
-            Npeaks = Npeaks2
-            ReDim peaks2(1)
-            ReDim tempcheck(1)
+            ' make spectrum data centroid
+            peaks = peaks _
+                .Centroid(Tolerance.DeltaMass(0.01), New RelativeIntensityCutoff(0)) _
+                .ToArray
         End If
 
-        ReDim Preserve peaks(Npeaks, 4)
-        'Read in oligonucleotide
+        Npeaks = peaks.Length
 
-        ThisWorkbook.Worksheets(1).Activate
+        'Read in oligonucleotide
+        ' ThisWorkbook.Worksheets(1).Activate
 
         Dim colors() As Object, Ncolors As Long
         Ncolors = 10
