@@ -27,7 +27,7 @@ Public Class MS2_Spectrum_Matcher
         Dim fragmentcol() As String, Nfragmentcol As Long
         Dim startres As Long, endres As Long
         Dim startxy As Long, isprofile As Boolean, filetext As String, scantext As String, scannum As String
-        Dim Npeaks As Long, maxint As Long, peaks() As Object, beforecheck As Boolean
+        Dim Npeaks As Long, maxint As Long, beforecheck As Boolean
         Dim carbon As Double, hydrogen As Double, nitrogen As Double, oxygen As Double, phosphorus As Double, sulfur As Double, proton As Double, water As Double
         Dim Nbases As Long, oligo() As Object
         Dim MolecularMass As Double
@@ -101,26 +101,14 @@ Public Class MS2_Spectrum_Matcher
         lng1 = spectrum.fragments
         maxint = spectrum.mzInto.Select(Function(f) f.intensity).Max
         ReDim tempcheck(lng1)
-        Dim minint As Double
-        minint = maxint * 0.0001
-        Npeaks = 0
-        For i = 1 To lng1
-            j = i + startxy - 1
-            If Cells(j, 2) > minint Then
-                tempcheck(i) = True
-                Npeaks = Npeaks + 1
-            End If
-        Next i
-        ReDim peaks(Npeaks, 2)
-        n = 0
-        For i = 1 To lng1
-            If tempcheck(i) Then
-                n = n + 1
-                j = i + startxy - 1
-                peaks(n, 1) = Cells(j, 1)
-                peaks(n, 2) = Cells(j, 2)
-            End If
-        Next i
+        Dim minint As Double = maxint * 0.0001
+        Dim peaks() As ms2 = spectrum.mzInto _
+            .Where(Function(f) f.intensity >= minint) _
+            .ToArray
+
+        Npeaks = peaks.Length
+
+
         If isprofile Then
             'A peak is defined as having an apex that is bigger than the preceding two points and next two points
             Dim Npeaks2 As Long
