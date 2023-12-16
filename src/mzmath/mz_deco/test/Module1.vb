@@ -63,7 +63,8 @@ Imports Microsoft.VisualBasic.Linq
 Module Module1
 
     Sub Main()
-        Call multipleTest()
+        ' Call multipleTest()
+        Call align_test()
     End Sub
 
     Sub align_test()

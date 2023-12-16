@@ -35,7 +35,7 @@ Public Module SaveSample
         Dim n As Integer = rd.ReadInt32
         rd.BaseStream.Seek(Scan0, SeekOrigin.Begin)
 
-        For i As Integer = 0 To n
+        For i As Integer = 1 To n
             Yield New PeakFeature With {
                 .xcms_id = rd.ReadString,
                 .rawfile = rd.ReadString,
