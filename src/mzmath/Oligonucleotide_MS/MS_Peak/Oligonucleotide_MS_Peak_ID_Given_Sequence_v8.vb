@@ -36,7 +36,7 @@ Public Class MS_Peak_ID
     Sub New(Optional ppm As Double = 5,
             Optional miss_sites As Long = 0,
             Optional Monoisotopic As Boolean = True,
-            Optional Base_cutsite As String = "A|T|G|C",
+            Optional Base_cutsite As String = "G|A|T|C",
             Optional which_side As String = "3'|5'",
             Optional phosphate_site As String = "3' of previous base|5' of next base")
 

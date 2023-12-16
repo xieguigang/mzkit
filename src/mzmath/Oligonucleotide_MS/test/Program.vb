@@ -1,5 +1,4 @@
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Oligonucleotide_MS
-Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Linq
 Imports SMRUCC.genomics.SequenceModel.FASTA
 
