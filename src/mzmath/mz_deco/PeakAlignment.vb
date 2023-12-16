@@ -57,6 +57,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.SignalProcessing.COW
 Imports std = System.Math
 
 ''' <summary>
@@ -67,55 +68,37 @@ Imports std = System.Math
 ''' </summary>
 Public Module PeakAlignment
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Private Function CreatePeak(id As String, mz As Double, rt As Double, intensity As Double) As PeakFeature
+        Return New PeakFeature With {
+            .xcms_id = id,
+            .mz = mz,
+            .rt = rt,
+            .area = intensity,
+            .maxInto = intensity
+        }
+    End Function
+
     <Extension>
-    Public Iterator Function CreateMatrix(samples As IEnumerable(Of NamedCollection(Of PeakFeature)),
-                                          mzdiff As Tolerance,
-                                          Optional rt_win As Double = 30) As IEnumerable(Of xcms2)
-        Dim tag_peaks = samples _
-            .Select(Iterator Function(peaks) As IEnumerable(Of (sample As String, peak As PeakFeature))
-                        For Each peak As PeakFeature In peaks
-                            Yield (peaks.name, peak)
-                        Next
-                    End Function) _
-            .IteratesALL _
-            .GroupBy(Function(x) x.peak.mz, mzdiff) _
-            .ToArray
-        Dim rt_groups = tag_peaks _
-            .AsParallel _
-            .Select(Function(mz_group)
-                        Return mz_group.GroupBy(Function(i) i.peak.rt, offsets:=rt_win).ToArray
-                    End Function) _
-            .ToArray
+    Public Function PickReferenceSample(samples As IEnumerable(Of NamedCollection(Of PeakFeature))) As NamedCollection(Of PeakFeature)
 
-        For Each row In rt_groups.IteratesALL
-            Dim mzRange As Double() = row.Select(Function(i) i.peak.mz).ToArray
-            Dim rtRange As Double() = row _
-                .Select(Function(i) {i.peak.rt, i.peak.rtmax, i.peak.rtmin}) _
-                .IteratesALL _
-                .ToArray
-            Dim peakAreas As New Dictionary(Of String, Double)
+    End Function
 
-            For Each sample In row
-                If peakAreas.ContainsKey(sample.sample) Then
-                    peakAreas(sample.sample) += sample.peak.area
-                Else
-                    peakAreas(sample.sample) = sample.peak.area
-                End If
-            Next
+    ''' <summary>
+    ''' Make peak alignment via COW alignment algorithm.
+    ''' </summary>
+    ''' <param name="samples">the peak collection for each sample file, a sample </param>
+    ''' <returns></returns>
+    <Extension>
+    Public Iterator Function CreateMatrix(samples As IEnumerable(Of NamedCollection(Of PeakFeature))) As IEnumerable(Of xcms2)
+        Dim cow As New CowAlignment(Of PeakFeature)(AddressOf CreatePeak)
+        Dim rawdata = samples.ToArray
+        Dim refer = rawdata.PickReferenceSample
+        Dim targets = rawdata.Where(Function(sample) sample.name <> refer.name).ToArray
 
-            Dim peak As New xcms2 With {
-                .mz = std.Round(mzRange.Average, 4),
-                .mzmin = mzRange.Min,
-                .mzmax = mzRange.Max,
-                .rt = std.Round(rtRange.Average),
-                .rtmin = std.Round(rtRange.Min),
-                .rtmax = std.Round(rtRange.Max),
-                .npeaks = row.Length,
-                .Properties = peakAreas,
-                .ID = $"M{std.Round(.mz)}T{std.Round(.rt)}"
-            }
+        For Each sample As NamedCollection(Of PeakFeature) In targets
+            Dim aligns = cow.CorrelationOptimizedWarping(0, 0, 0, refer.AsList, sample.AsList, BorderLimit.Gaussian)
 
-            Yield peak
         Next
     End Function
 End Module

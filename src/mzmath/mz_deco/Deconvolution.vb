@@ -62,7 +62,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports scan = BioNovoGene.Analytical.MassSpectrometry.Math.IMs1Scan
-Imports stdNum = System.Math
+Imports std = System.Math
 
 ''' <summary>
 ''' #### 解卷积计算步骤
@@ -91,7 +91,7 @@ Public Module Deconvolution
             snThreshold:=sn_threshold
         )
             Yield New PeakFeature With {
-                .mz = stdNum.Round(mzpoints.mz, 4),
+                .mz = std.Round(mzpoints.mz, 4),
                 .baseline = ROI.baseline,
                 .integration = ROI.integration,
                 .maxInto = ROI.maxInto,
@@ -144,7 +144,7 @@ Public Module Deconvolution
         Dim timePoints As NamedCollection(Of T)() = rawGroup _
             .GroupBy(Function(ti) ti.rt,
                      Function(a, b)
-                         Return stdNum.Abs(a - b) <= rtwin
+                         Return std.Abs(a - b) <= rtwin
                      End Function) _
             .ToArray
         Dim xic As ChromatogramTick() = timePoints _
@@ -194,7 +194,7 @@ Public Module Deconvolution
             .Where(Function(peak) peak.nticks >= nticks) _
             .GroupBy(Function(m)
                          ' 产生xcms id编号的Mxx部分
-                         Return stdNum.Round(m.mz).ToString
+                         Return std.Round(m.mz).ToString
                      End Function) _
             .ToArray
         Dim guid As New Dictionary(Of String, Counter)
@@ -203,7 +203,7 @@ Public Module Deconvolution
         For Each mzId As IGrouping(Of String, PeakFeature) In features
             Dim mId As String = mzId.Key
             Dim rtIdgroup = mzId _
-                .GroupBy(Function(m) stdNum.Round(m.rt).ToString) _
+                .GroupBy(Function(m) std.Round(m.rt).ToString) _
                 .ToArray
 
             For Each rtgroup As IGrouping(Of String, PeakFeature) In rtIdgroup
