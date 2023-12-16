@@ -1,6 +1,7 @@
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports SMRUCC.genomics.SequenceModel.FASTA
 Imports SMRUCC.genomics.SequenceModel.NucleotideModels
 
@@ -421,6 +422,13 @@ Public Class MS_Peak_ID
         Dim digest As TheoreticalDigestMass() = maketheorylist(seq).ToArray
         Dim matches = getmatches(obs, digest)
 
+        ' print debug view
+        Call Match.Print(matches.Item1, App.StdOut)
+
+        For Each mass In matches.Item2
+            Call Console.WriteLine(mass.ToString)
+        Next
+
         Return getcoverage(matches.Item1, seq)
     End Function
 
@@ -481,6 +489,7 @@ Public Class MS_Peak_ID
                     If thing1 >= Massin(i).mzmin Then
                         If thing1 <= Massin(i).mzmax Then
                             n = n + 1
+                            matches(n) = New Match
                             matches(n).ObservedMass = Massin(i).mass
                             matches(n).Sequence = digest(j)(1)
                             matches(n).Start = digest(j)(2)
@@ -499,19 +508,23 @@ Public Class MS_Peak_ID
                     End If
                 Next k
             Next j
-            If stng1 <> "" Then massinmatch(i + 1) = Left(stng1, Len(stng1) - 2)
+
+            If stng1 <> "" Then
+                massinmatch(i + 1) = Left(stng1, Len(stng1) - 2)
+            End If
         Next i
 
         Dim lng1 = Nmatches
         Dim lng2 = 11
 
         Dim temp As Boolean() = New Boolean(lng1) {}
-        Dim outputwrite = matches
+        Dim outputwrite As Match() = matches
 
-        For i = 1 To lng1
+        For i As Integer = 1 To lng1
             If Not temp(i) Then
                 Dim stng1 = outputwrite(i).Sequence
                 Dim lng3 = 1
+
                 For j = i + 1 To lng1
                     If Not temp(j) Then
                         If outputwrite(j).Sequence = stng1 Then
@@ -530,12 +543,23 @@ Public Class MS_Peak_ID
             End If
         Next i
 
+        Dim MatchedInputList As New List(Of MatchedInput)
+
         lng1 = Nmassin
         lng2 = 2
-        Dim MatchedInputList As New List(Of MatchedInput)
-        For i = 1 To lng1
-            MatchedInputList.Add(New MatchedInput With {.ObservedMass = Massin(i).mass, .Match = massinmatch(i)})
+
+        For i As Integer = 0 To lng1 - 1
+            MatchedInputList.Add(New MatchedInput With {
+                .ObservedMass = Massin(i).mass,
+                .Match = massinmatch(i + 1).StringSplit("\s*,\s*")
+            })
         Next i
+
+        ' skip first null element due to the reason of
+        ' vb6 array is start from base 1
+        outputwrite = outputwrite _
+            .Skip(1) _
+            .ToArray
 
         Return (outputwrite, MatchedInputList.ToArray)
     End Function
@@ -544,6 +568,10 @@ End Class
 Public Class MatchedInput
 
     Public Property ObservedMass As Double
-    Public Property Match As String
+    Public Property Match As String()
+
+    Public Overrides Function ToString() As String
+        Return $"{ObservedMass}: {Match.GetJson }"
+    End Function
 
 End Class

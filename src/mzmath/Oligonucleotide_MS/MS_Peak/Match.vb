@@ -1,57 +1,91 @@
-﻿
+﻿Imports System.IO
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.TablePrinter
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.TablePrinter.Flags
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
+Imports Microsoft.VisualBasic.Linq
+
 Public Class Match
 
     ''' <summary>
     ''' 1
     ''' </summary>
-    Public ObservedMass As Double
+    <Column("Observed Mass")> Public Property ObservedMass As Double
     ''' <summary>
     ''' 2
     ''' </summary>
-    Public Sequence As String
+    <Column("Sequence")> Public Property Sequence As String
     ''' <summary>
     ''' 3
     ''' </summary>
-    Public Start As Integer
+    <Column("Start")> Public Property Start As Integer
     ''' <summary>
     ''' 4
     ''' </summary>
-    Public Ends As Integer
+    <Column("End")> Public Property Ends As Integer
     ''' <summary>
     ''' 5
     ''' </summary>
-    Public Length As Integer
+    <Column("Length")> Public Property Length As Integer
     ''' <summary>
     ''' 6
     ''' </summary>
-    Public End5 As String
+    <Column("5' End")> Public Property End5 As String
     ''' <summary>
     ''' 7
     ''' </summary>
-    Public End3 As String
+    <Column("3' End")> Public Property End3 As String
     ''' <summary>
     ''' 8
     ''' </summary>
-    Public Adduct As String
+    <Column("Adduct")> Public Property Adduct As String
     ''' <summary>
     ''' 9
     ''' </summary>
-    Public TheoreticalMass As Double
+    <Column("Theoretical Mass")> Public Property TheoreticalMass As Double
     ''' <summary>
     ''' 10
     ''' </summary>
-    Public Errorppm As Double
+    <Column("Error (ppm)")> Public Property Errorppm As Double
     ''' <summary>
     ''' 11
     ''' </summary>
-    Public Name As String
+    <Column("Name")> Public Property Name As String
     ''' <summary>
     ''' 12
     ''' </summary>
-    Public Frequency As Double
+    <Column("Frequency")> Public Property Frequency As Double
     ''' <summary>
     ''' 13
     ''' </summary>
-    Public f1StOccurance As String
+    <Column("1st Occurance")> Public Property f1StOccurance As String
+
+    ''' <summary>
+    ''' print table
+    ''' </summary>
+    ''' <param name="outputs"></param>
+    ''' <param name="dev"></param>
+    Public Shared Sub Print(outputs As IEnumerable(Of Match), dev As TextWriter)
+        Dim content As ConsoleTableBaseData = ConsoleTableBaseData.FromColumnHeaders(
+            "Observed Mass", "Sequence", "Start", "End", "Length", "5' End", "3' End",
+            "Adduct", "Theoretical Mass", "Error (ppm)",
+            "Name", "Frequency", "1st Occurance"
+        )
+
+        For Each hit As Match In outputs
+            Call content.AppendLine(
+                hit.ObservedMass, hit.Sequence, hit.Start, hit.Ends, hit.Length, hit.End5, hit.End3,
+                hit.Adduct, hit.TheoreticalMass, hit.Errorppm,
+                hit.Name, hit.Frequency, hit.f1StOccurance
+            )
+        Next
+
+        Call ConsoleTableBuilder _
+            .From(content) _
+            .WithFormat(ConsoleTableBuilderFormat.Minimal) _
+            .Export _
+            .ToString() _
+            .DoCall(AddressOf dev.WriteLine)
+        Call dev.Flush()
+    End Sub
 
 End Class
