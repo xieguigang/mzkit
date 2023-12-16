@@ -71,6 +71,9 @@ Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 
+''' <summary>
+''' 
+''' </summary>
 <Package("mzDeco")>
 <RTypeExport("peak_feature", GetType(PeakFeature))>
 Module mzDeco
@@ -144,10 +147,13 @@ Module mzDeco
     ''' <example>
     ''' require(mzkit);
     ''' 
+    ''' imports "mzDeco" from "mz_quantify";
+    ''' 
     ''' let rawdata = open.mzpack("/path/to/rawdata.mzXML");
     ''' let ms1 = rawdata |> ms1_scans();
     ''' let peaks = mz_deco(ms1, tolerance = "da:0.01", peak.width = [3,30]);
     ''' 
+    ''' write.peaks(peaks, file = "/data/save_debug.dat");
     ''' </example>
     <ExportAPI("mz_deco")>
     <RApiReturn(GetType(PeakFeature))>
