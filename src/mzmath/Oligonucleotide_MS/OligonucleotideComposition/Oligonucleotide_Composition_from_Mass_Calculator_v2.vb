@@ -2,7 +2,6 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Statistics
-Imports Microsoft.VisualBasic.Serialization.JSON
 
 ''' <summary>
 ''' Oligonucleotide_Composition_from_Mass_Calculator_v2
@@ -45,22 +44,6 @@ Public Class Composition
             Return _average_mass(id).isotopic
         End If
     End Function
-
-    ''' <summary>
-    ''' helper for simulate vb6 array
-    ''' </summary>
-    Private Class Dim4
-
-        Public Cells As Long()
-
-        Sub New()
-            Cells = New Long(4) {}
-        End Sub
-
-        Public Overrides Function ToString() As String
-            Return Cells.GetJson
-        End Function
-    End Class
 
     Public Iterator Function FindCompositions(ParamArray Mass() As Double) As IEnumerable(Of OligonucleotideCompositionOutput)
         Dim Massin As MassWindow() = Mass.Select(Function(mz) New MassWindow(mz, ppmthresh)).ToArray

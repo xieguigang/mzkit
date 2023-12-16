@@ -1,3 +1,5 @@
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
+
 Public Class MS_Peak_ID
 
     ''' <summary>
@@ -21,6 +23,9 @@ Public Class MS_Peak_ID
     ''' </summary>
     ReadOnly Nmiss As Long
     ReadOnly Monoisotopic As Boolean
+    ReadOnly bases() As Element
+
+    Const Nbases As Long = 4
 
     Sub New(Optional ppm As Double = 5,
             Optional miss_sites As Long = 0,
@@ -72,22 +77,6 @@ Public Class MS_Peak_ID
             phosphate = 79.979902
         End If
 
-        Dim bases() As Object, Nbases As Long
-        Nbases = 4
-        ReDim bases(Nbases, 3)
-        If Monoisotopic Then
-            For i = 1 To Nbases
-                bases(i, 1) = Cells(i + 2, 9)
-                bases(i, 2) = Cells(i + 2, 10)
-                bases(i, 3) = Cells(i + 2, 11)
-            Next i
-        Else
-            For i = 1 To Nbases
-                bases(i, 1) = Cells(i + 2, 9)
-                bases(i, 2) = Cells(i + 2, 10)
-                bases(i, 3) = Cells(i + 2, 12)
-            Next i
-        End If
 
         Dim end5() As Object, Nend5 As Long
         Dim end3() As Object, Nend3 As Long
