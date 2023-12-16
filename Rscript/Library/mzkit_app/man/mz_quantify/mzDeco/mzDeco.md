@@ -2,7 +2,8 @@
 
 
 
-+ [mz.deco](mzDeco/mz.deco.1) Chromatogram data deconvolution
-+ [read.peakFeatures](mzDeco/read.peakFeatures.1) 
++ [mz_deco](mzDeco/mz_deco.1) Chromatogram data deconvolution
++ [write.peaks](mzDeco/write.peaks.1) write peak debug data
++ [read.peakFeatures](mzDeco/read.peakFeatures.1) read the peak feature table data
 + [peak_alignment](mzDeco/peak_alignment.1) 
 + [mz.groups](mzDeco/mz.groups.1) do ``m/z`` grouping under the given tolerance

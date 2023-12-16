@@ -10,24 +10,6 @@
 declare namespace mzDeco {
    module mz {
       /**
-       * Chromatogram data deconvolution
-       * 
-       * 
-        * @param ms1 a collection of the ms1 data or the mzpack raw data object
-        * @param tolerance -
-        * 
-        * + default value Is ``'ppm:20'``.
-        * @param baseline 
-        * + default value Is ``0.65``.
-        * @param peakwidth 
-        * + default value Is ``'3,20'``.
-        * @param parallel 
-        * + default value Is ``false``.
-        * @param env 
-        * + default value Is ``null``.
-      */
-      function deco(ms1: any, tolerance?: any, baseline?: number, peakwidth?: any, parallel?: boolean, env?: object): object;
-      /**
        * do ``m/z`` grouping under the given tolerance
        * 
        * 
@@ -43,6 +25,25 @@ declare namespace mzDeco {
       function groups(ms1: any, mzdiff?: any, env?: object): object;
    }
    /**
+    * Chromatogram data deconvolution
+    * 
+    * 
+     * @param ms1 a collection of the ms1 data or the mzpack raw data object
+     * @param tolerance -
+     * 
+     * + default value Is ``'ppm:20'``.
+     * @param baseline 
+     * + default value Is ``0.65``.
+     * @param peak_width 
+     * + default value Is ``'3,20'``.
+     * @param parallel 
+     * + default value Is ``false``.
+     * @param env 
+     * + default value Is ``null``.
+     * @return a vector of the peak deconvolution data
+   */
+   function mz_deco(ms1: any, tolerance?: any, baseline?: number, peak_width?: any, parallel?: boolean, env?: object): object;
+   /**
      * @param mzdiff default value Is ``'da:0.001'``.
      * @param rt_win default value Is ``30``.
      * @param norm default value Is ``false``.
@@ -51,7 +52,28 @@ declare namespace mzDeco {
    function peak_alignment(samples: any, mzdiff?: any, rt_win?: number, norm?: boolean, env?: object): object;
    module read {
       /**
+       * read the peak feature table data
+       * 
+       * 
+        * @param file -
+        * @param readBin does the given data file is in binary format not a csv table file, 
+        *  and this function should be parsed as a binary data file?
+        * 
+        * + default value Is ``false``.
       */
-      function peakFeatures(file: string): object;
+      function peakFeatures(file: string, readBin?: boolean): object;
+   }
+   module write {
+      /**
+       * write peak debug data
+       * 
+       * 
+        * @param peaks -
+        * @param file -
+        * @param env -
+        * 
+        * + default value Is ``null``.
+      */
+      function peaks(peaks: any, file: any, env?: object): any;
    }
 }
