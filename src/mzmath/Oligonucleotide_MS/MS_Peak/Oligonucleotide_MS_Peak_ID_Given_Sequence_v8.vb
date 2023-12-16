@@ -58,20 +58,9 @@ Public Class MS_Peak_ID
     End Sub
 
     Public Iterator Function maketheorylist(seq As FastaSeq) As IEnumerable(Of TheoreticalDigestMass)
-
-        Dim j As Long, k As Long, m As Long, n As Long, q As Long, p As Long
-        Dim ii As Long, jj As Long, kk As Long, mm As Long, nn As Long, qq As Long, pp As Long
-        Dim lng1 As Long, lng2 As Long, lng3 As Long, lng4 As Long, lng5 As Long, lng6 As Long, lng7 As Long
-        Dim lngg1 As Long, lngg2 As Long, lngg3 As Long, lngg4 As Long, lngg5 As Long, lngg6 As Long, lngg7 As Long
-        Dim thing1 As Double, thing2 As Double, thing3 As Double, thing4 As Double
-        Dim stng1 As String, stng2 As String
-        Dim var1 As Object
-        Dim rng1 As Range
-        Dim outputwrite() As Object
-        Dim tempcheck() As Boolean
         Dim OHthing As Double, Hthing As Double
         Dim OHstng As String, Hstng As String
-
+        Dim lng1 = 0
         Dim phosphate As Double
         Dim Namestring As String
 
@@ -97,7 +86,7 @@ Public Class MS_Peak_ID
         lowbasemass = 1000000000.0#
         highbasemass = 0
         For i = 0 To Nbases - 1
-            thing1 = bases(i).isotopic
+            Dim thing1 = bases(i).isotopic
             If thing1 > highbasemass Then highbasemass = thing1
             If thing1 < lowbasemass Then lowbasemass = thing1
         Next i
@@ -118,8 +107,8 @@ Public Class MS_Peak_ID
         Next
 
         If cutsite1side3 Then
-            stng1 = Construct
-            lng2 = 0
+            Dim stng1 = Construct
+            Dim lng2 = 0
             For i = 1 To Nnomisses - 1
                 lng1 = InStr(stng1, cutsite1)
                 nomisses(i).SequenceData = Left(stng1, lng1)
@@ -134,8 +123,8 @@ Public Class MS_Peak_ID
             nomisses(Nnomisses).Ends = ConstructLength
             ' nomisses(Nnomisses)(4) = nomisses(i)(3) - nomisses(i)(2) + 1
         Else
-            stng1 = Construct
-            lng2 = 0
+            Dim stng1 = Construct
+            Dim lng2 = 0
             lng1 = InStr(stng1, cutsite1)
             nomisses(1).SequenceData = Left(stng1, lng1 - 1)
             nomisses(1).Start = 1
@@ -167,13 +156,15 @@ Public Class MS_Peak_ID
         Next i
         ReDim misses(Nmisses)
         ReDim missends(Nmiss)
-        k = 0
-        q = 0
-        p = 0
-        For i = 1 To Nmiss
+        Dim k = 0
+        Dim q = 0
+        Dim p = 0
+        Dim m As Integer = 0
+
+        For i As Integer = 1 To Nmiss
             For j = 1 To Nnomisses - i
                 k = k + 1
-                stng1 = nomisses(j).SequenceData
+                Dim stng1 = nomisses(j).SequenceData
                 For m = j + 1 To j + i
                     stng1 = stng1 & nomisses(m).SequenceData
                 Next m
@@ -197,7 +188,7 @@ Public Class MS_Peak_ID
         Dim digest() As Dim8, Ndigest As Long
         Ndigest = Nnomisses + Nmisses + (Nend5 - 1) * (1 + Nmiss) + (Nend3 - 1) * (1 + Nmiss)
         ReDim digest(Ndigest)
-        n = 0
+        Dim n = 0
 
         For i = 1 To Nnomisses
             n = n + 1
@@ -318,7 +309,7 @@ Public Class MS_Peak_ID
         'the theoretical masses are 80 Da too big.
 
         If cutsite1Pwith3 Then
-            For i = 1 To Ndigest
+            For i As Integer = 1 To Ndigest
                 If digest(i)(2) = 1 Then
                     digest(i)(7) = digest(i)(7) + phosphate
                 End If
@@ -329,10 +320,7 @@ Public Class MS_Peak_ID
         End If
 
         ' output and export the digest result
-        lng1 = Ndigest
-        lng2 = 8
-
-        For i = 1 To lng1
+        For i As Integer = 1 To Ndigest
             Yield New TheoreticalDigestMass With {
                 .Sequence = digest(i)(1),
                 .Start = digest(i)(2),
