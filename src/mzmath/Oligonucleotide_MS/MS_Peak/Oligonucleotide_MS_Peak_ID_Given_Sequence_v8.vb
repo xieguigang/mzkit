@@ -59,7 +59,7 @@ Public Class MS_Peak_ID
 
     Public Iterator Function maketheorylist(seq As FastaSeq) As IEnumerable(Of TheoreticalDigestMass)
 
-        Dim i As Long, j As Long, k As Long, m As Long, n As Long, q As Long, p As Long
+        Dim j As Long, k As Long, m As Long, n As Long, q As Long, p As Long
         Dim ii As Long, jj As Long, kk As Long, mm As Long, nn As Long, qq As Long, pp As Long
         Dim lng1 As Long, lng2 As Long, lng3 As Long, lng4 As Long, lng5 As Long, lng6 As Long, lng7 As Long
         Dim lngg1 As Long, lngg2 As Long, lngg3 As Long, lngg4 As Long, lngg5 As Long, lngg6 As Long, lngg7 As Long
@@ -112,6 +112,11 @@ Public Class MS_Peak_ID
         Dim nomisses() As SimpleSegment, Nnomisses As Long
         Nnomisses = ConstructLength - Len(Construct.Replace(cutsite1, "")) + 1
         ReDim nomisses(Nnomisses)    ' sequence, start, stop, length
+
+        For i As Integer = 0 To nomisses.Length - 1
+            nomisses(i) = New SimpleSegment
+        Next
+
         If cutsite1side3 Then
             stng1 = Construct
             lng2 = 0
@@ -193,9 +198,11 @@ Public Class MS_Peak_ID
         Ndigest = Nnomisses + Nmisses + (Nend5 - 1) * (1 + Nmiss) + (Nend3 - 1) * (1 + Nmiss)
         ReDim digest(Ndigest)
         n = 0
+
         For i = 1 To Nnomisses
             n = n + 1
 
+            digest(n) = New Dim8
             digest(n)(1) = nomisses(i).SequenceData
             digest(n)(2) = nomisses(i).Start
             digest(n)(3) = nomisses(i).Ends
@@ -208,8 +215,8 @@ Public Class MS_Peak_ID
             Else
                 If digest(n)(3) = ConstructLength Then
                     digest(n)(5) = OHstng
-                    digest(n)(6) = end3(1).name
-                    digest(n)(7) = OHthing + end3(1).mass
+                    digest(n)(6) = end3(0).name
+                    digest(n)(7) = OHthing + end3(0).mass
                 Else
                     digest(n)(5) = OHstng
                     digest(n)(6) = Hstng
@@ -230,8 +237,8 @@ Public Class MS_Peak_ID
             Else
                 If digest(n)(3) = ConstructLength Then
                     digest(n)(5) = OHstng
-                    digest(n)(6) = end3(1).name
-                    digest(n)(7) = OHthing + end3(1).mass
+                    digest(n)(6) = end3(0).name
+                    digest(n)(7) = OHthing + end3(0).mass
                 Else
                     digest(n)(5) = OHstng
                     digest(n)(6) = Hstng
