@@ -70,6 +70,7 @@
 #End Region
 
 Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
 #If UNIX = 0 Then
 Imports Microsoft.VisualBasic.ApplicationServices
@@ -198,6 +199,8 @@ Namespace mzData.mzWebCache
         ''' <returns>
         ''' returns NULL if the meta data is not found
         ''' </returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetMetadata(index As String) As Dictionary(Of String, String) Implements IMzPackReader.GetMetadata
             Return metadata.TryGetValue(index)
         End Function
@@ -339,7 +342,11 @@ Namespace mzData.mzWebCache
             TIC = file.ReadDouble
         End Sub
 
-
+        Public Iterator Function LoadAllScans(Optional skipProducts As Boolean = False) As IEnumerable(Of ScanMS1)
+            For Each scan_id As String In EnumerateIndex
+                Yield ReadScan(scan_id, skipProducts)
+            Next
+        End Function
 
         Public Function ReadScan(scanId As String, Optional skipProducts As Boolean = False) As ScanMS1 Implements IMzPackReader.ReadScan
             Dim ms1 As New ScanMS1 With {.scan_id = scanId}
