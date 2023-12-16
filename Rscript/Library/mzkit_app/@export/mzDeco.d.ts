@@ -36,13 +36,15 @@ declare namespace mzDeco {
      * + default value Is ``0.65``.
      * @param peak_width 
      * + default value Is ``'3,20'``.
+     * @param joint 
+     * + default value Is ``true``.
      * @param parallel 
      * + default value Is ``false``.
      * @param env 
      * + default value Is ``null``.
      * @return a vector of the peak deconvolution data
    */
-   function mz_deco(ms1: any, tolerance?: any, baseline?: number, peak_width?: any, parallel?: boolean, env?: object): object;
+   function mz_deco(ms1: any, tolerance?: any, baseline?: number, peak_width?: any, joint?: boolean, parallel?: boolean, env?: object): object;
    /**
     * Do COW peak alignment and export peaktable
     * 

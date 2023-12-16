@@ -164,6 +164,7 @@ Module mzDeco
                             Optional baseline# = 0.65,
                             <RRawVectorArgument>
                             Optional peak_width As Object = "3,20",
+                            Optional joint As Boolean = True,
                             Optional parallel As Boolean = False,
                             Optional env As Environment = Nothing) As Object
 
@@ -182,7 +183,8 @@ Module mzDeco
             .DecoMzGroups(
                 peakwidth:=rtRange.TryCast(Of DoubleRange),
                 quantile:=baseline,
-                parallel:=parallel
+                parallel:=parallel,
+                joint:=joint
             ) _
             .ToArray
     End Function
