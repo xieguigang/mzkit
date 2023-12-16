@@ -52,6 +52,7 @@
 
 #End Region
 
+Imports System.IO
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
@@ -139,21 +140,29 @@ Module mzDeco
     ''' a collection of the ms1 data or the mzpack raw data object
     ''' </param>
     ''' <param name="tolerance"></param>
-    ''' <returns></returns>
-    <ExportAPI("mz.deco")>
-    <RApiReturn(GetType(PeakFeature()))>
+    ''' <returns>a vector of the peak deconvolution data</returns>
+    ''' <example>
+    ''' require(mzkit);
+    ''' 
+    ''' let rawdata = open.mzpack("/path/to/rawdata.mzXML");
+    ''' let ms1 = rawdata |> ms1_scans();
+    ''' let peaks = mz_deco(ms1, tolerance = "da:0.01", peak.width = [3,30]);
+    ''' 
+    ''' </example>
+    <ExportAPI("mz_deco")>
+    <RApiReturn(GetType(PeakFeature))>
     Public Function mz_deco(<RRawVectorArgument>
                             ms1 As Object,
                             Optional tolerance As Object = "ppm:20",
                             Optional baseline# = 0.65,
                             <RRawVectorArgument>
-                            Optional peakwidth As Object = "3,20",
+                            Optional peak_width As Object = "3,20",
                             Optional parallel As Boolean = False,
                             Optional env As Environment = Nothing) As Object
 
         Dim ms1_scans As IEnumerable(Of IMs1Scan) = ms1Scans(ms1)
         Dim errors As [Variant](Of Tolerance, Message) = Math.getTolerance(tolerance, env)
-        Dim rtRange = ApiArgumentHelpers.GetDoubleRange(peakwidth, env, [default]:="3,20")
+        Dim rtRange = ApiArgumentHelpers.GetDoubleRange(peak_width, env, [default]:="3,20")
 
         If errors Like GetType(Message) Then
             Return errors.TryCast(Of Message)
@@ -171,9 +180,51 @@ Module mzDeco
             .ToArray
     End Function
 
+    ''' <summary>
+    ''' write peak debug data
+    ''' </summary>
+    ''' <param name="peaks"></param>
+    ''' <param name="file"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("write.peaks")>
+    Public Function dumpPeaks(<RRawVectorArgument> peaks As Object, file As Object, Optional env As Environment = Nothing) As Object
+        Dim peakSet = pipeline.TryCreatePipeline(Of PeakFeature)(peaks, env)
+        Dim buf = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Write, env)
+
+        If peakSet.isError Then
+            Return peakSet.getError
+        ElseIf buf Like GetType(Message) Then
+            Return buf.TryCast(Of Message)
+        End If
+
+        Call SaveSample.DumpSample(peakSet.populates(Of PeakFeature)(env), buf.TryCast(Of Stream))
+
+        If TypeOf file Is String Then
+            Call buf.TryCast(Of Stream).Dispose()
+        End If
+
+        Return Nothing
+    End Function
+
+    ''' <summary>
+    ''' read the peak feature table data
+    ''' </summary>
+    ''' <param name="file"></param>
+    ''' <param name="readBin">
+    ''' does the given data file is in binary format not a csv table file, 
+    ''' and this function should be parsed as a binary data file?
+    ''' </param>
+    ''' <returns></returns>
     <ExportAPI("read.peakFeatures")>
-    Public Function readPeakData(file As String) As PeakFeature()
-        Return file.LoadCsv(Of PeakFeature)(mute:=True).ToArray
+    Public Function readPeakData(file As String, Optional readBin As Boolean = False) As PeakFeature()
+        If readBin Then
+            Using buf As Stream = file.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
+                Return SaveSample.ReadSample(buf).ToArray
+            End Using
+        Else
+            Return file.LoadCsv(Of PeakFeature)(mute:=True).ToArray
+        End If
     End Function
 
     <ExportAPI("peak_alignment")>

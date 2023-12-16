@@ -83,11 +83,13 @@ Public Module Deconvolution
     <Extension>
     Public Iterator Function GetPeakGroups(mzpoints As MzGroup, peakwidth As DoubleRange,
                                            Optional quantile# = 0.65,
-                                           Optional sn_threshold As Double = 3) As IEnumerable(Of PeakFeature)
+                                           Optional sn_threshold As Double = 3,
+                                           Optional joint As Boolean = True) As IEnumerable(Of PeakFeature)
 
         For Each ROI As ROI In mzpoints.XIC.Shadows.PopulateROI(
             peakwidth:=peakwidth,
             baselineQuantile:=quantile,
+            joint:=joint,
             snThreshold:=sn_threshold
         )
             Yield New PeakFeature With {
@@ -103,17 +105,6 @@ Public Module Deconvolution
                 .area = ROI.ticks.Select(Function(t) t.Intensity).Sum
             }
         Next
-    End Function
-
-
-    <Extension>
-    Private Function localMax(window As IEnumerable(Of ChromatogramTick)) As ChromatogramTick
-        Return window.OrderByDescending(Function(t) t.Intensity).First
-    End Function
-
-    <Extension>
-    Private Function localMin(window As IEnumerable(Of ChromatogramTick)) As ChromatogramTick
-        Return window.OrderBy(Function(t) t.Intensity).First
     End Function
 
     ''' <summary>
@@ -182,13 +173,14 @@ Public Module Deconvolution
                                           Optional quantile# = 0.65,
                                           Optional sn As Double = 3,
                                           Optional nticks As Integer = 6,
+                                          Optional joint As Boolean = True,
                                           Optional parallel As Boolean = False) As IEnumerable(Of PeakFeature)
 
         Dim groupData As MzGroup() = mzgroups.ToArray
         Dim features As IGrouping(Of String, PeakFeature)() = groupData _
             .Populate(parallel) _
             .Select(Function(mz)
-                        Return mz.GetPeakGroups(peakwidth, quantile, sn)
+                        Return mz.GetPeakGroups(peakwidth, quantile, sn, joint:=joint)
                     End Function) _
             .IteratesALL _
             .Where(Function(peak) peak.nticks >= nticks) _
