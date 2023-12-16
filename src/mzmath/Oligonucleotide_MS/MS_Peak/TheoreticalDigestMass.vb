@@ -1,4 +1,9 @@
-﻿
+﻿Imports System.IO
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.TablePrinter
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.TablePrinter.Flags
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
+Imports Microsoft.VisualBasic.Linq
+
 ''' <summary>
 ''' digest
 ''' </summary>
@@ -16,35 +21,35 @@ Public Class TheoreticalDigestMass
     ''' <summary>
     ''' 1
     ''' </summary>
-    Public Sequence As String
+    <Column("Sequence")> Public Property Sequence As String
     ''' <summary>
     ''' 2
     ''' </summary>
-    Public Start As Integer
+    <Column("Start")> Public Property Start As Integer
     ''' <summary>
     ''' 3
     ''' </summary>
-    Public Ends As Integer
+    <Column("End")> Public Property Ends As Integer
     ''' <summary>
     ''' 4
     ''' </summary>
-    Public Length As Integer
+    <Column("Length")> Public Property Length As Integer
     ''' <summary>
     ''' 5
     ''' </summary>
-    Public End5 As String
+    <Column("5' End")> Public Property End5 As String
     ''' <summary>
     ''' 6
     ''' </summary>
-    Public End3 As String
+    <Column("3' End")> Public Property End3 As String
     ''' <summary>
     ''' 7
     ''' </summary>
-    Public TheoreticalMass As Double
+    <Column("Theoretical Mass")> Public Property TheoreticalMass As Double
     ''' <summary>
     ''' 8
     ''' </summary>
-    Public Name As String
+    <Column("Name")> Public Property Name As String
 
     Default Public ReadOnly Property Item(i As Integer) As Object
         Get
@@ -63,5 +68,33 @@ Public Class TheoreticalDigestMass
             End Select
         End Get
     End Property
+
+    ''' <summary>
+    ''' print table
+    ''' </summary>
+    ''' <param name="outputs"></param>
+    ''' <param name="dev"></param>
+    Public Shared Sub Print(outputs As IEnumerable(Of TheoreticalDigestMass), dev As TextWriter)
+        Dim content As ConsoleTableBaseData = ConsoleTableBaseData.FromColumnHeaders(
+            "Sequence", "Start", "End", "Length", "5' End", "3' End", "Theoretical Mass", "Name"
+        )
+
+        For Each hit As TheoreticalDigestMass In outputs
+            Call content.AppendLine(
+                hit.Sequence, hit.Start, hit.Ends, hit.Length,
+                hit.End5, hit.End3,
+                hit.TheoreticalMass,
+                hit.Name
+            )
+        Next
+
+        Call ConsoleTableBuilder _
+            .From(content) _
+            .WithFormat(ConsoleTableBuilderFormat.Minimal) _
+            .Export _
+            .ToString() _
+            .DoCall(AddressOf dev.WriteLine)
+        Call dev.Flush()
+    End Sub
 
 End Class

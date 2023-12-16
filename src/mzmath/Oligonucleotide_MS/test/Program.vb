@@ -34,5 +34,8 @@ Module Program
 
         Dim digest As New MS_Peak_ID
         Dim result = digest.maketheorylist(demo(0)).ToArray
+
+        Call TheoreticalDigestMass.Print(result, dev:=App.StdOut)
+
     End Sub
 End Module
