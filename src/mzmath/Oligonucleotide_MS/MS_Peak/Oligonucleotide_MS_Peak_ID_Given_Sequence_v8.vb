@@ -209,9 +209,9 @@ Public Class MS_Peak_ID
             digest(n)(4) = nomisses(i).Length
 
             If digest(n)(2) = 1 Then
-                digest(n)(5) = end5(1).name
+                digest(n)(5) = end5(0).name
                 digest(n)(6) = Hstng
-                digest(n)(7) = end5(1).mass + Hthing
+                digest(n)(7) = end5(0).mass + Hthing
             Else
                 If digest(n)(3) = ConstructLength Then
                     digest(n)(5) = OHstng
@@ -231,9 +231,9 @@ Public Class MS_Peak_ID
                 digest(n)(j) = misses(i)(j)
             Next j
             If digest(n)(2) = 1 Then
-                digest(n)(5) = end5(1).name
+                digest(n)(5) = end5(0).name
                 digest(n)(6) = Hstng
-                digest(n)(7) = end5(1).mass + Hthing
+                digest(n)(7) = end5(0).mass + Hthing
             Else
                 If digest(n)(3) = ConstructLength Then
                     digest(n)(5) = OHstng
