@@ -45,7 +45,7 @@ Public Class Match
     ''' <summary>
     ''' 10
     ''' </summary>
-    <Column("Error (ppm)")> Public Property Errorppm As Double
+    <Column("Error (ppm)")> Public Property ErrorPpm As Double
     ''' <summary>
     ''' 11
     ''' </summary>
@@ -58,6 +58,14 @@ Public Class Match
     ''' 13
     ''' </summary>
     <Column("1st Occurance")> Public Property f1StOccurance As String
+
+    Public Overrides Function ToString() As String
+        Return {
+            ObservedMass, Sequence, Start, Ends, Length, End5, End3,
+            Adduct, TheoreticalMass, ErrorPpm,
+            Name, Frequency, f1StOccurance
+        }.JoinBy(", ")
+    End Function
 
     ''' <summary>
     ''' print table
@@ -74,7 +82,7 @@ Public Class Match
         For Each hit As Match In outputs
             Call content.AppendLine(
                 hit.ObservedMass, hit.Sequence, hit.Start, hit.Ends, hit.Length, hit.End5, hit.End3,
-                hit.Adduct, hit.TheoreticalMass, hit.Errorppm,
+                hit.Adduct, hit.TheoreticalMass, hit.ErrorPpm,
                 hit.Name, hit.Frequency, hit.f1StOccurance
             )
         Next

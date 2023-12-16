@@ -499,7 +499,7 @@ Public Class MS_Peak_ID
                             matches(n).End3 = digest(j)(6)
                             matches(n).Adduct = adducts(k).name
                             matches(n).TheoreticalMass = thing1
-                            matches(n).Errorppm = (Massin(i).mass - thing1) / thing1 * 1000000.0#
+                            matches(n).ErrorPpm = (Massin(i).mass - thing1) / thing1 * 1000000.0#
                             Dim stng2 = digest(j).Start & digest(j).Sequence & digest(j).Ends
                             If k > 1 Then stng2 = stng2 & "(" & adducts(k).name & ")"
                             stng1 = stng1 & stng2 & ", "
