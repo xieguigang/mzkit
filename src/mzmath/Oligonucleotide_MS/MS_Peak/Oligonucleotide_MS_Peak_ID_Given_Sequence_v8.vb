@@ -418,7 +418,7 @@ Public Class MS_Peak_ID
     End Class
 
     Public Function MatchMassesToOligoSequence(obs As Double(), seq As FastaSeq)
-        Dim digest = maketheorylist(seq).ToArray
+        Dim digest As TheoreticalDigestMass() = maketheorylist(seq).ToArray
         Dim matches = getmatches(obs, digest)
 
         Return getcoverage(matches.Item1, seq)

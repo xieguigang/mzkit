@@ -3,6 +3,7 @@ Imports Microsoft.VisualBasic.ApplicationServices.Terminal.TablePrinter
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.TablePrinter.Flags
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 ''' <summary>
 ''' digest
@@ -68,6 +69,10 @@ Public Class TheoreticalDigestMass
             End Select
         End Get
     End Property
+
+    Public Overrides Function ToString() As String
+        Return Me.GetJson
+    End Function
 
     ''' <summary>
     ''' print table
