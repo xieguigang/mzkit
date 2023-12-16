@@ -54,7 +54,53 @@ Public Class MS_Peak_ID
         Nend3 = end3.Length
     End Sub
 
-    Sub maketheorylist(seq As FastaSeq)
+    Public Class TheoreticalDigestMass
+
+        ' outputwrite(0, 0) = "Sequence"
+        ' outputwrite(0, 1) = "Start"
+        ' outputwrite(0, 2) = "End"
+        ' outputwrite(0, 3) = "Length"
+        ' outputwrite(0, 4) = "5' End"
+        ' outputwrite(0, 5) = "3' End"
+        ' outputwrite(0, 6) = "Theoretical Mass"
+        ' outputwrite(0, 7) = "Name"
+
+        ''' <summary>
+        ''' 1
+        ''' </summary>
+        Public Sequence As String
+        ''' <summary>
+        ''' 2
+        ''' </summary>
+        Public Start As Integer
+        ''' <summary>
+        ''' 3
+        ''' </summary>
+        Public Ends As Integer
+        ''' <summary>
+        ''' 4
+        ''' </summary>
+        Public Length As Integer
+        ''' <summary>
+        ''' 5
+        ''' </summary>
+        Public End5 As String
+        ''' <summary>
+        ''' 6
+        ''' </summary>
+        Public End3 As String
+        ''' <summary>
+        ''' 7
+        ''' </summary>
+        Public TheoreticalMass As Double
+        ''' <summary>
+        ''' 8
+        ''' </summary>
+        Public Name As String
+
+    End Class
+
+    Public Iterator Function maketheorylist(seq As FastaSeq) As IEnumerable(Of TheoreticalDigestMass)
 
         Dim i As Long, j As Long, k As Long, m As Long, n As Long, q As Long, p As Long
         Dim ii As Long, jj As Long, kk As Long, mm As Long, nn As Long, qq As Long, pp As Long
@@ -198,7 +244,7 @@ Public Class MS_Peak_ID
             If digest(n)(2) = 1 Then
                 digest(n)(5) = end5(1, 1)
                 digest(n)(6) = Hstng
-                digest(n)( 7) = end5(1, 2) + Hthing
+                digest(n)(7) = end5(1, 2) + Hthing
             Else
                 If digest(n)(3) = ConstructLength Then
                     digest(n)(5) = OHstng
@@ -303,40 +349,23 @@ Public Class MS_Peak_ID
             Next i
         End If
 
-        ThisWorkbook.Worksheets(3).Activate
-        Cells.Select
-        Selection.ClearContents
-        Selection.Font.Bold = False
-        Selection.NumberFormat = "General"
-        With Selection.Interior
-            .Pattern = xlNone
-            .TintAndShade = 0
-            .PatternTintAndShade = 0
-        End With
-        With Selection.Borders
-            .LineStyle = xlNone
-        End With
+        ' output and export the digest result
         lng1 = Ndigest
         lng2 = 8
-        ReDim outputwrite(0 To lng1, 0 To lng2 - 1)
-        outputwrite(0, 0) = "Sequence"
-        outputwrite(0, 1) = "Start"
-        outputwrite(0, 2) = "End"
-        outputwrite(0, 3) = "Length"
-        outputwrite(0, 4) = "5' End"
-        outputwrite(0, 5) = "3' End"
-        outputwrite(0, 6) = "Theoretical Mass"
-        outputwrite(0, 7) = "Name"
-        For i = 1 To lng1
-            For j = 1 To lng2
-                outputwrite(i, j - 1) = digest(i, j)
-            Next j
-        Next i
-    Set rng1 = Range(Cells(1, 1), Cells(lng1 + 1, lng2))
-    rng1 = outputwrite
-        Columns(7).NumberFormat = "0.0000"
 
-    End Sub
+        For i = 1 To lng1
+            Yield New TheoreticalDigestMass With {
+                .Sequence = digest(i)(1),
+                .Start = digest(i)(2),
+                .Ends = digest(i)(1),
+                .Length = digest(i)(1),
+                .End5 = digest(i)(1),
+                .End3 = digest(i)(1),
+                .TheoreticalMass = digest(i)(1),
+                .Name = digest(i)(1)
+            }
+        Next
+    End Function
     Sub getcoverage()
 
         Dim i As Long, j As Long, k As Long, m As Long, n As Long, q As Long, p As Long
