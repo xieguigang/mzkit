@@ -444,16 +444,15 @@ Public Class MS_Peak_ID
                 adducts(4).isotopic = 17.03061
             End If
         End If
-        adducts(1).name = ""
-        adducts(1).isotopic = 0
+        adducts(1) = New Element("", 0)
 
         Dim Nmassin = obs.Length
         Dim Massin As MassWindow() = obs.Select(Function(m) New MassWindow(m, ppmthresh)).ToArray
         Dim Ndigest = digest.Length
         Dim matches() As Match, Nmatches As Long
         Nmatches = 0
-        For i = 1 To Nmassin
-            For j = 1 To Ndigest
+        For i As Integer = 0 To Nmassin - 1
+            For j As Integer = 0 To Ndigest - 1
                 For k = 1 To Nadducts
                     Dim thing1 = digest(j)(7) + adducts(k).isotopic
                     If thing1 >= Massin(i).mzmin Then
@@ -474,9 +473,9 @@ Public Class MS_Peak_ID
         Dim massinmatch() As String
         ReDim massinmatch(Nmassin)
         Dim n = 0
-        For i = 1 To Nmassin
+        For i As Integer = 0 To Nmassin - 1
             Dim stng1 = ""
-            For j = 1 To Ndigest
+            For j As Integer = 0 To Ndigest - 1
                 For k = 1 To Nadducts
                     Dim thing1 = digest(j)(7) + adducts(k).isotopic
                     If thing1 >= Massin(i).mzmin Then
@@ -500,7 +499,7 @@ Public Class MS_Peak_ID
                     End If
                 Next k
             Next j
-            If stng1 <> "" Then massinmatch(i) = Left(stng1, Len(stng1) - 2)
+            If stng1 <> "" Then massinmatch(i + 1) = Left(stng1, Len(stng1) - 2)
         Next i
 
         Dim lng1 = Nmatches
