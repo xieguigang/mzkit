@@ -55,70 +55,6 @@ Public Class MS_Peak_ID
         Nend3 = end3.Length
     End Sub
 
-    Public Class TheoreticalDigestMass
-
-        ' outputwrite(0, 0) = "Sequence"
-        ' outputwrite(0, 1) = "Start"
-        ' outputwrite(0, 2) = "End"
-        ' outputwrite(0, 3) = "Length"
-        ' outputwrite(0, 4) = "5' End"
-        ' outputwrite(0, 5) = "3' End"
-        ' outputwrite(0, 6) = "Theoretical Mass"
-        ' outputwrite(0, 7) = "Name"
-
-        ''' <summary>
-        ''' 1
-        ''' </summary>
-        Public Sequence As String
-        ''' <summary>
-        ''' 2
-        ''' </summary>
-        Public Start As Integer
-        ''' <summary>
-        ''' 3
-        ''' </summary>
-        Public Ends As Integer
-        ''' <summary>
-        ''' 4
-        ''' </summary>
-        Public Length As Integer
-        ''' <summary>
-        ''' 5
-        ''' </summary>
-        Public End5 As String
-        ''' <summary>
-        ''' 6
-        ''' </summary>
-        Public End3 As String
-        ''' <summary>
-        ''' 7
-        ''' </summary>
-        Public TheoreticalMass As Double
-        ''' <summary>
-        ''' 8
-        ''' </summary>
-        Public Name As String
-
-        Default Public ReadOnly Property Item(i As Integer) As Object
-            Get
-                Select Case i
-                    Case 1 : Return Sequence
-                    Case 2 : Return Start
-                    Case 3 : Return Ends
-                    Case 4 : Return Length
-                    Case 5 : Return End5
-                    Case 6 : Return End3
-                    Case 7 : Return TheoreticalMass
-                    Case 8 : Return Name
-
-                    Case Else
-                        Throw New NotImplementedException(i)
-                End Select
-            End Get
-        End Property
-
-    End Class
-
     Public Iterator Function maketheorylist(seq As FastaSeq) As IEnumerable(Of TheoreticalDigestMass)
 
         Dim i As Long, j As Long, k As Long, m As Long, n As Long, q As Long, p As Long
@@ -482,9 +418,6 @@ Public Class MS_Peak_ID
 
     End Sub
 
-
-
-
     Sub MatchMassesToOligoSequence(obs As Double(), seq As FastaSeq)
         Dim digest = maketheorylist(seq).ToArray
 
@@ -518,7 +451,7 @@ Public Class MS_Peak_ID
         Dim Nmassin = obs.Length
         Dim Massin As MassWindow() = obs.Select(Function(m) New MassWindow(m, ppmthresh)).ToArray
         Dim Ndigest = digest.Length
-        Dim matches() As Object, Nmatches As Long
+        Dim matches() As Match, Nmatches As Long
         Nmatches = 0
         For i = 1 To Nmassin
             For j = 1 To Ndigest
@@ -538,7 +471,7 @@ Public Class MS_Peak_ID
             Return
         End If
 
-        ReDim matches(Nmatches, 11)
+        ReDim matches(Nmatches)
         Dim massinmatch() As String
         ReDim massinmatch(Nmassin)
         Dim n = 0
@@ -546,19 +479,19 @@ Public Class MS_Peak_ID
             Dim stng1 = ""
             For j = 1 To Ndigest
                 For k = 1 To Nadducts
-                    Dim thing1 = digest(j, 7) + adducts(k, 2)
-                    If thing1 >= Massin(i, 2) Then
-                        If thing1 <= Massin(i, 3) Then
+                    Dim thing1 = digest(j)(7) + adducts(k).isotopic
+                    If thing1 >= Massin(i).mzmin Then
+                        If thing1 <= Massin(i).mzmax Then
                             n = n + 1
-                            matches(n, 1) = Massin(i, 1)
+                            matches(n, 1) = Massin(i).mass
                             For m = 1 To 6
                                 matches(n, m + 1) = digest(j, m)
                             Next m
-                            matches(n, 8) = adducts(k, 1)
+                            matches(n, 8) = adducts(k).name
                             matches(n, 9) = thing1
-                            matches(n, 10) = (Massin(i, 1) - thing1) / thing1 * 1000000.0#
+                            matches(n, 10) = (Massin(i).mass - thing1) / thing1 * 1000000.0#
                             Dim stng2 = digest(j, 2) & digest(j, 1) & digest(j, 3)
-                            If k > 1 Then stng2 = stng2 & "(" & adducts(k, 1) & ")"
+                            If k > 1 Then stng2 = stng2 & "(" & adducts(k).name & ")"
                             stng1 = stng1 & stng2 & ", "
                             matches(n, 11) = digest(j, 8)
                         End If
