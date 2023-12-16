@@ -33,11 +33,21 @@ Module Program
         }
 
         Dim digest As New MS_Peak_ID
-        Dim result = digest.maketheorylist(demo(0)).ToArray
+        ' Dim result = digest.maketheorylist(demo(0)).ToArray
 
-        Call TheoreticalDigestMass.Print(result, dev:=App.StdOut)
+        ' Call TheoreticalDigestMass.Print(result, dev:=App.StdOut)
 
-        Dim digest_result = digest.MatchMassesToOligoSequence({2247.3163}, demo(0))
+        Dim digest_result As DigestResult = digest.MatchMassesToOligoSequence({2247.3163, 2798.42, 3889.555564682}, demo(1))
+
+        Call Console.WriteLine(digest_result.nt.GenerateDocument(200))
+        Call Console.WriteLine($"coverage: {digest_result.coverage}")
+
+        Call TheoreticalDigestMass.Print(digest_result.digest, App.StdOut)
+        Call Match.Print(digest_result.matches, App.StdOut)
+
+        For Each hit In digest_result.mass_hits
+            Call Console.WriteLine(hit.ToString)
+        Next
 
 
     End Sub

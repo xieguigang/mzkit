@@ -344,55 +344,20 @@ Public Class MS_Peak_ID
     ''' (matrix, "Sequence Coverage (%)")
     ''' </remarks>
     Private Function getcoverage(matches As Match(), seq As FastaSeq) As (hit As Boolean(), coverage As Double)
-        Dim i As Long, j As Long, k As Long, m As Long, n As Long, q As Long, p As Long
-        Dim ii As Long, jj As Long, kk As Long, mm As Long, nn As Long, qq As Long, pp As Long
-        Dim lng1 As Long, lng2 As Long, lng3 As Long, lng4 As Long, lng5 As Long, lng6 As Long, lng7 As Long
-        Dim lngg1 As Long, lngg2 As Long, lngg3 As Long, lngg4 As Long, lngg5 As Long, lngg6 As Long, lngg7 As Long
-        Dim thing1 As Double, thing2 As Double, thing3 As Double, thing4 As Double
-        Dim stng1 As String, stng2 As String
-        Dim var1 As Object
-        Dim rng1 As Range
-        Dim outputwrite()() As Cell
-        Dim tempcheck() As Boolean
-
         ' set sequence inputs
-
         Dim Construct As String = seq.SequenceData
         Dim ConstructName As String = seq.Title
         Dim ConstructLength As Long = seq.Length
 
         ' output matches
-        lng1 = 0 ' Intersect(ActiveSheet.UsedRange, Columns(1)).Count
-
         Dim Nmatches As Long = matches.Length
 
-        ' Matched Input List
-
-        Dim Ncolumns As Long, Nrows As Long
-        Dim colorme() As Long
-
-        'Write sequence in fasta format
-
-        Ncolumns = 50
-        Nrows = Int(ConstructLength / Ncolumns) + 1
-        outputwrite = RectangularArray.Matrix(Of Cell)(Nrows, Ncolumns)
-
-
-        For i = 1 To ConstructLength
-            stng1 = Mid(Construct, i, 1)
-            j = (i - 1) Mod Ncolumns + 1
-            k = Int((i - 1) / Ncolumns)
-            outputwrite(k)(j) = New Cell(i, stng1)
-
-        Next i
-
-
-        'Determine coverage
-        'Map coverage
+        ' Determine coverage
+        ' Map coverage
         Dim Ncovered As Long, PercentCovered As Double, SequenceCoverage() As Boolean
         ReDim SequenceCoverage(ConstructLength)
         Ncovered = 0
-        For i = 1 To Nmatches
+        For i = 0 To Nmatches - 1
             For j = matches(i).Start To matches(i).Ends
                 If Not SequenceCoverage(j) Then
                     SequenceCoverage(j) = True
@@ -405,31 +370,28 @@ Public Class MS_Peak_ID
         Return (SequenceCoverage, PercentCovered)
     End Function
 
-    Public Class Cell
-
-        Public N As String
-        Public i As Integer
-        Public hit As Boolean
-
-        Sub New(i As Integer, c As String)
-            Me.i = i
-            Me.N = c
-        End Sub
-
-    End Class
-
-    Public Function MatchMassesToOligoSequence(obs As Double(), seq As FastaSeq)
+    Public Function MatchMassesToOligoSequence(obs As Double(), seq As FastaSeq) As DigestResult
         Dim digest As TheoreticalDigestMass() = maketheorylist(seq).ToArray
         Dim matches = getmatches(obs, digest)
 
         ' print debug view
-        Call Match.Print(matches.Item1, App.StdOut)
+        'Call Match.Print(matches.Item1, App.StdOut)
 
-        For Each mass In matches.Item2
-            Call Console.WriteLine(mass.ToString)
-        Next
+        'For Each mass In matches.Item2
+        '    Call Console.WriteLine(mass.ToString)
+        'Next
 
-        Return getcoverage(matches.Item1, seq)
+        Dim coverage = getcoverage(matches.Item1, seq)
+
+        Return New DigestResult With {
+            .coverage = coverage.coverage,
+            .digest = digest,
+            .hit_sites = coverage.hit,
+            .mass = obs,
+            .mass_hits = matches.Item2,
+            .matches = matches.Item1,
+            .nt = seq
+        }
     End Function
 
     Private Function getmatches(obs As Double(), digest As TheoreticalDigestMass()) As (Match(), MatchedInput())
@@ -537,7 +499,7 @@ Public Class MS_Peak_ID
                 outputwrite(i).Frequency = lng3
                 For j = i + 1 To lng1
                     If outputwrite(j).Sequence = stng1 Then
-                        outputwrite(j).Name = lng3
+                        outputwrite(j).Frequency = lng3
                     End If
                 Next j
             End If
