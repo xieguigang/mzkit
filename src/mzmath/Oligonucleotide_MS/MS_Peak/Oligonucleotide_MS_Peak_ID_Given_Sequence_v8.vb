@@ -1,7 +1,6 @@
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports Microsoft.VisualBasic.ComponentModel.Collection
-Imports Microsoft.VisualBasic.Serialization.JSON
 Imports SMRUCC.genomics.SequenceModel.FASTA
 Imports SMRUCC.genomics.SequenceModel.NucleotideModels
 
@@ -10,7 +9,7 @@ Public Class MS_Peak_ID
     ''' <summary>
     ''' ppm threshold
     ''' </summary>
-    ReadOnly ppmthresh As Double = 5
+    ReadOnly ppm As Double = 5
     ''' <summary>
     ''' Base cutsite
     ''' </summary>
@@ -45,8 +44,9 @@ Public Class MS_Peak_ID
         cutsite1side3 = which_side.Split("|"c).First = "3'"
         cutsite1 = Base_cutsite.Split("|"c).First
         cutsite1Pwith3 = phosphate_site.Split("|"c).First = "3' of previous base"
-        ppmthresh = ppm
-        Nmiss = miss_sites
+
+        Me.ppm = ppm
+        Me.Nmiss = miss_sites
         Me.Monoisotopic = Monoisotopic
         Me.bases = MassDefault.GetBases(Monoisotopic).ToArray
 
@@ -58,20 +58,15 @@ Public Class MS_Peak_ID
         Nend3 = end3.Length
     End Sub
 
-    Public Iterator Function maketheorylist(seq As FastaSeq) As IEnumerable(Of TheoreticalDigestMass)
+    Const OHstng = "HO-"
+    Const Hstng = "-H"
+
+    Public Iterator Function MakeTheoryList(seq As FastaSeq, Optional NameString As String = "R") As IEnumerable(Of TheoreticalDigestMass)
         Dim OHthing As Double, Hthing As Double
-        Dim OHstng As String, Hstng As String
-        Dim lng1 = 0
+        Dim lng1 As Integer = 0
         Dim phosphate As Double
-        Dim Namestring As String
-
-        Namestring = "R"
-
-        OHstng = "HO-"
-        Hstng = "-H"
 
         ' set up inputs and parameters
-
         If Monoisotopic Then
             OHthing = 17.00273965
             Hthing = 1.007825032
@@ -82,11 +77,11 @@ Public Class MS_Peak_ID
             phosphate = 79.979902
         End If
 
-
         Dim lowbasemass As Double, highbasemass As Double
         lowbasemass = 1000000000.0#
         highbasemass = 0
-        For i = 0 To Nbases - 1
+
+        For i As Integer = 0 To Nbases - 1
             Dim thing1 = bases(i).isotopic
             If thing1 > highbasemass Then highbasemass = thing1
             If thing1 < lowbasemass Then lowbasemass = thing1
@@ -99,9 +94,11 @@ Public Class MS_Peak_ID
 
         'Create theoretical list of nomisses
 
-        Dim nomisses() As SimpleSegment, Nnomisses As Long
-        Nnomisses = ConstructLength - Len(Construct.Replace(cutsite1, "")) + 1
-        ReDim nomisses(Nnomisses)    ' sequence, start, stop, length
+        Dim nomisses() As SimpleSegment
+        Dim Nnomisses = ConstructLength - Len(Construct.Replace(cutsite1, "")) + 1
+
+        ' sequence, start, stop, length
+        ReDim nomisses(Nnomisses)
 
         For i As Integer = 0 To nomisses.Length - 1
             nomisses(i) = New SimpleSegment
@@ -148,15 +145,18 @@ Public Class MS_Peak_ID
             ' nomisses(Nnomisses)(4) = nomisses(i)(3) - nomisses(i)(2) + 1
         End If
 
-        Dim misses() As Dim6, Nmisses As Long, missends() As Dim2
-        Nmisses = 0
-        For i = 1 To Nmiss
-            For j = 1 To Nnomisses - i
+        Dim misses() As Dim6, missends() As Dim2
+        Dim Nmisses = 0
+
+        For i As Integer = 1 To Nmiss
+            For j As Integer = 1 To Nnomisses - i
                 Nmisses = Nmisses + 1
             Next j
         Next i
+
         ReDim misses(Nmisses)
         ReDim missends(Nmiss)
+
         Dim k = 0
         Dim q = 0
         Dim p = 0
@@ -186,12 +186,13 @@ Public Class MS_Peak_ID
             Next j
         Next i
 
-        Dim digest() As Dim8, Ndigest As Long
-        Ndigest = Nnomisses + Nmisses + (Nend5 - 1) * (1 + Nmiss) + (Nend3 - 1) * (1 + Nmiss)
-        ReDim digest(Ndigest)
+        Dim digest() As Dim8
+        Dim Ndigest = Nnomisses + Nmisses + (Nend5 - 1) * (1 + Nmiss) + (Nend3 - 1) * (1 + Nmiss)
         Dim n = 0
 
-        For i = 1 To Nnomisses
+        ReDim digest(Ndigest)
+
+        For i As Integer = 1 To Nnomisses
             n = n + 1
 
             digest(n) = New Dim8
@@ -215,9 +216,10 @@ Public Class MS_Peak_ID
                     digest(n)(7) = OHthing + Hthing
                 End If
             End If
-            digest(n)(8) = Namestring & n
+            digest(n)(8) = NameString & n
         Next i
-        For i = 1 To Nmisses
+
+        For i As Integer = 1 To Nmisses
             n = n + 1
             For j = 1 To 4
                 digest(n)(j) = misses(i)(j)
@@ -237,10 +239,10 @@ Public Class MS_Peak_ID
                     digest(n)(7) = OHthing + Hthing
                 End If
             End If
-            digest(n)(8) = Namestring & misses(i)(5) & "-" & misses(i)(6)
+            digest(n)(8) = NameString & misses(i)(5) & "-" & misses(i)(6)
         Next i
 
-        For j = 1 To Nend5 - 1
+        For j As Integer = 1 To Nend5 - 1
             n = n + 1
 
             If digest(n) Is Nothing Then
@@ -255,7 +257,7 @@ Public Class MS_Peak_ID
             digest(n)(5) = end5(j).name
             digest(n)(6) = Hstng
             digest(n)(7) = end5(j).mass + Hthing
-            digest(n)(8) = Namestring & 1
+            digest(n)(8) = NameString & 1
         Next j
         For j = 2 To Nend3
             n = n + 1
@@ -268,7 +270,7 @@ Public Class MS_Peak_ID
             digest(n)(5) = OHstng
             digest(n)(6) = end3(j).name
             digest(n)(7) = OHthing + end3(j).mass
-            digest(n)(8) = Namestring & Nnomisses
+            digest(n)(8) = NameString & Nnomisses
         Next j
         lng1 = 0
         For i = 1 To Nmiss
@@ -281,7 +283,7 @@ Public Class MS_Peak_ID
                 digest(n)(5) = end5(j).name
                 digest(n)(6) = Hstng
                 digest(n)(7) = end5(j).mass + Hthing
-                digest(n)(8) = Namestring & misses(m)(5) & "-" & misses(m)(6)
+                digest(n)(8) = NameString & misses(m)(5) & "-" & misses(m)(6)
             Next j
             m = missends(i)(2)
             For j = 2 To Nend3
@@ -292,7 +294,7 @@ Public Class MS_Peak_ID
                 digest(n)(5) = OHstng
                 digest(n)(6) = end3(j).name
                 digest(n)(7) = OHthing + end3(j).mass
-                digest(n)(8) = Namestring & misses(m)(5) & "-" & misses(m)(6)
+                digest(n)(8) = NameString & misses(m)(5) & "-" & misses(m)(6)
             Next j
         Next i
         For i = 1 To Ndigest
@@ -335,7 +337,6 @@ Public Class MS_Peak_ID
         Next
     End Function
 
-
     ''' <summary>
     ''' 
     ''' </summary>
@@ -343,7 +344,7 @@ Public Class MS_Peak_ID
     ''' <remarks>
     ''' (matrix, "Sequence Coverage (%)")
     ''' </remarks>
-    Private Function getcoverage(matches As Match(), seq As FastaSeq) As (hit As Boolean(), coverage As Double)
+    Private Function GetCoverage(matches As Match(), seq As FastaSeq) As (hit As Boolean(), coverage As Double)
         ' set sequence inputs
         Dim Construct As String = seq.SequenceData
         Dim ConstructName As String = seq.Title
@@ -371,8 +372,8 @@ Public Class MS_Peak_ID
     End Function
 
     Public Function MatchMassesToOligoSequence(obs As Double(), seq As FastaSeq) As DigestResult
-        Dim digest As TheoreticalDigestMass() = maketheorylist(seq).ToArray
-        Dim matches = getmatches(obs, digest)
+        Dim digest As TheoreticalDigestMass() = MakeTheoryList(seq).ToArray
+        Dim matches = GetMatches(obs, digest)
 
         ' print debug view
         'Call Match.Print(matches.Item1, App.StdOut)
@@ -381,7 +382,7 @@ Public Class MS_Peak_ID
         '    Call Console.WriteLine(mass.ToString)
         'Next
 
-        Dim coverage = getcoverage(matches.Item1, seq)
+        Dim coverage = GetCoverage(matches.Item1, seq)
 
         Return New DigestResult With {
             .coverage = coverage.coverage,
@@ -394,7 +395,7 @@ Public Class MS_Peak_ID
         }
     End Function
 
-    Private Function getmatches(obs As Double(), digest As TheoreticalDigestMass()) As (Match(), MatchedInput())
+    Private Function GetMatches(obs As Double(), digest As TheoreticalDigestMass()) As (Match(), MatchedInput())
         'Match theoertical masses to observed masses
 
         Dim Nadducts As Long, adducts() As Element
@@ -417,7 +418,7 @@ Public Class MS_Peak_ID
         adducts(1) = New Element("", 0)
 
         Dim Nmassin = obs.Length
-        Dim Massin As MassWindow() = obs.Select(Function(m) New MassWindow(m, ppmthresh)).ToArray
+        Dim Massin As MassWindow() = obs.Select(Function(m) New MassWindow(m, ppm)).ToArray
         Dim Ndigest = digest.Length
         Dim matches() As Match, Nmatches As Long
         Nmatches = 0
@@ -525,15 +526,4 @@ Public Class MS_Peak_ID
 
         Return (outputwrite, MatchedInputList.ToArray)
     End Function
-End Class
-
-Public Class MatchedInput
-
-    Public Property ObservedMass As Double
-    Public Property Match As String()
-
-    Public Overrides Function ToString() As String
-        Return $"{ObservedMass}: {Match.GetJson }"
-    End Function
-
 End Class
