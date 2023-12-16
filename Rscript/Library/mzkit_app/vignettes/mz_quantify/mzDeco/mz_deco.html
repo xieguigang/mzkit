@@ -224,9 +224,13 @@
 
         <pre><code id="example_r"> require(mzkit);
  
+ imports "mzDeco" from "mz_quantify";
+ 
  let rawdata = open.mzpack("/path/to/rawdata.mzXML");
  let ms1 = rawdata |> ms1_scans();
- let peaks = mz_deco(ms1, tolerance = "da:0.01", peak.width = [3,30]);</code></pre>
+ let peaks = mz_deco(ms1, tolerance = "da:0.01", peak.width = [3,30]);
+ 
+ write.peaks(peaks, file = "/data/save_debug.dat");</code></pre>
 
         <hr />
         <div style="text-align: center;">[Package <em>mzDeco</em> version 1.0.0.0 <a
