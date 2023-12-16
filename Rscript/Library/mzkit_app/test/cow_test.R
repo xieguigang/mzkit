@@ -7,6 +7,10 @@ let samples = lapply(cachefiles, function(path) {
     read.peakFeatures(path, readBin = TRUE);
 });
 
-names(samples) = basename(samples);
+names(samples) = basename(cachefiles);
 
-str(samples);
+print(names(samples));
+
+let peaktable = peak_alignment(samples = samples);
+
+write.csv(peaktable, file = "G:\\tmp\\pos.csv", row.names = TRUE);
