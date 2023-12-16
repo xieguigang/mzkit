@@ -6,6 +6,11 @@ Module MassDefault
     Friend ReadOnly zero As New Element("", 0)
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function GetGroupMass(monoisotopic As Boolean) As IEnumerable(Of GroupMass)
+        Return If(monoisotopic, GroupMass.MonoisotopicMass, GroupMass.AverageMass)
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function GetElements(monoisotopic As Boolean) As IEnumerable(Of Element)
         Return If(monoisotopic, MonoisotopicElements(), AverageMassElements())
     End Function
@@ -25,6 +30,8 @@ Module MassDefault
     ''' + Cytidine monophosphate
     ''' + N1-Me-Pseudo-UMP
     ''' </returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function GetBases(monoisotopic As Boolean) As IEnumerable(Of Element)
         Return If(monoisotopic, MonoisotopicBases(), AverageMassBases())
     End Function
