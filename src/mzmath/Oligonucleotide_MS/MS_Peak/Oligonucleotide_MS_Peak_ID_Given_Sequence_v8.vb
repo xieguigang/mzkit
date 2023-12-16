@@ -242,9 +242,12 @@ Public Class MS_Peak_ID
         Next i
         For j = 2 To Nend5
             n = n + 1
-            For k = 1 To 4
-                digest(n)(k) = nomisses(1)(k)
-            Next k
+
+            digest(n)(1) = nomisses(1).SequenceData
+            digest(n)(2) = nomisses(1).Start
+            digest(n)(3) = nomisses(1).Ends
+            digest(n)(4) = nomisses(1).Length
+
             digest(n)(5) = end5(j).name
             digest(n)(6) = Hstng
             digest(n)(7) = end5(j).mass + Hthing
@@ -252,9 +255,12 @@ Public Class MS_Peak_ID
         Next j
         For j = 2 To Nend3
             n = n + 1
-            For k = 1 To 4
-                digest(n)(k) = nomisses(Nnomisses)(k)
-            Next k
+
+            digest(n)(1) = nomisses(Nnomisses).SequenceData
+            digest(n)(2) = nomisses(Nnomisses).Start
+            digest(n)(3) = nomisses(Nnomisses).Ends
+            digest(n)(4) = nomisses(Nnomisses).Length
+
             digest(n)(5) = OHstng
             digest(n)(6) = end3(j).name
             digest(n)(7) = OHthing + end3(j).mass
