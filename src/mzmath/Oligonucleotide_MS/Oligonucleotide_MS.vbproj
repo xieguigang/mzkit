@@ -35,15 +35,14 @@
 
   <ItemGroup>
     <Compile Remove="logs\**" />
+    <Compile Remove="MS2_Spectrum_Matcher\**" />
     <Compile Remove="test\**" />
     <EmbeddedResource Remove="logs\**" />
+    <EmbeddedResource Remove="MS2_Spectrum_Matcher\**" />
     <EmbeddedResource Remove="test\**" />
     <None Remove="logs\**" />
+    <None Remove="MS2_Spectrum_Matcher\**" />
     <None Remove="test\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Remove="Oligonucleotide_Mapping_UV_Annotation_Tool_v11.vb" />
   </ItemGroup>
 
   <ItemGroup>
