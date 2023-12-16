@@ -9,8 +9,8 @@ Public Module SaveSample
         Dim n As Integer = 0
 
         For Each point As PeakFeature In sample
-            Call bin.Write(point.xcms_id)
-            Call bin.Write(point.rawfile)
+            Call bin.Write(If(point.xcms_id, ""))
+            Call bin.Write(If(point.rawfile, ""))
             Call bin.Write(point.mz)
             Call bin.Write(point.rt)
             Call bin.Write(point.rtmin)
