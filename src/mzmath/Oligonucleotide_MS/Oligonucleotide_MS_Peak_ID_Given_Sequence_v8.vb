@@ -1,3 +1,4 @@
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports SMRUCC.genomics.SequenceModel.FASTA
 
@@ -97,6 +98,24 @@ Public Class MS_Peak_ID
         ''' 8
         ''' </summary>
         Public Name As String
+
+        Default Public ReadOnly Property Item(i As Integer) As Object
+            Get
+                Select Case i
+                    Case 1 : Return Sequence
+                    Case 2 : Return Start
+                    Case 3 : Return Ends
+                    Case 4 : Return Length
+                    Case 5 : Return End5
+                    Case 6 : Return End3
+                    Case 7 : Return TheoreticalMass
+                    Case 8 : Return Name
+
+                    Case Else
+                        Throw New NotImplementedException(i)
+                End Select
+            End Get
+        End Property
 
     End Class
 
@@ -366,7 +385,7 @@ Public Class MS_Peak_ID
             }
         Next
     End Function
-    Sub getcoverage()
+    Sub getcoverage(coveragecolor As Long, seq As FastaSeq)
 
         Dim i As Long, j As Long, k As Long, m As Long, n As Long, q As Long, p As Long
         Dim ii As Long, jj As Long, kk As Long, mm As Long, nn As Long, qq As Long, pp As Long
@@ -379,55 +398,32 @@ Public Class MS_Peak_ID
         Dim outputwrite() As Object
         Dim tempcheck() As Boolean
 
-        Dim coveragecolor As Long
+        ' set sequence inputs
 
-        ThisWorkbook.Worksheets(1).Activate
-        coveragecolor = Cells(23, 4).Interior.Color
+        Dim Construct As String = seq.SequenceData
+        Dim ConstructName As String = seq.Title
+        Dim ConstructLength As Long = seq.Length
 
-        ThisWorkbook.Worksheets(2).Activate
-        Dim Construct As String, ConstructName As String, ConstructLength As Long
-        For i = 1 To 100
-            If Len(Cells(i + 1, 5)) > 0 Then
-                Construct = Cells(i + 1, 4)
-                ConstructName = Cells(i + 1, 1)
-                ConstructLength = Len(Construct)
-                i = 100
-            End If
-        Next i
-
+        ' output matches
         ThisWorkbook.Worksheets(4).Activate
-        lng1 = Intersect(ActiveSheet.UsedRange, Columns(1)).Count
+        lng1 = 0 ' Intersect(ActiveSheet.UsedRange, Columns(1)).Count
 
-        Dim Nmatches As Long, matches() As Object
+        Dim Nmatches As Long, matches() As Dim2
         For i = 1 To lng1
             If Len(Cells(i + 1, 1)) > 0 Then Nmatches = Nmatches + 1
         Next i
-        ReDim matches(Nmatches, 2)
+        ReDim matches(Nmatches)
         n = 0
         For i = 1 To lng1
             If Len(Cells(i + 1, 1)) > 0 Then
                 n = n + 1
-                matches(n, 1) = Cells(i + 1, 3)
-                matches(n, 2) = Cells(i + 1, 4)
+                matches(n)(1) = Cells(i + 1, 3)
+                matches(n)(2) = Cells(i + 1, 4)
             End If
         Next i
 
+        ' Matched Input List
         ThisWorkbook.Worksheets(6).Activate
-        Cells.Select
-        Selection.ClearContents
-        Selection.Font.Bold = False
-        Selection.Font.Color = RGB(0, 0, 0)
-        Selection.Font.Strikethrough = False
-        Cells.Font.Size = 12
-        With Selection.Interior
-            .Pattern = xlNone
-            .TintAndShade = 0
-            .PatternTintAndShade = 0
-            .Color = RGB(255, 255, 255)
-        End With
-        With Selection.Borders
-            .LineStyle = xlNone
-        End With
 
         Dim Ncolumns As Long, Nrows As Long
         Dim colorme() As Long
@@ -485,6 +481,10 @@ Public Class MS_Peak_ID
 
 
     End Sub
+
+
+
+
     Sub MatchMassesToOligoSequence()
 
         getmatches()
@@ -493,427 +493,40 @@ Public Class MS_Peak_ID
 
     End Sub
 
-    Private Sub getmatches()
-
-        Dim i As Long, j As Long, k As Long, m As Long, n As Long, q As Long, p As Long
-        Dim ii As Long, jj As Long, kk As Long, mm As Long, nn As Long, qq As Long, pp As Long
-        Dim lng1 As Long, lng2 As Long, lng3 As Long, lng4 As Long, lng5 As Long, lng6 As Long, lng7 As Long
-        Dim lngg1 As Long, lngg2 As Long, lngg3 As Long, lngg4 As Long, lngg5 As Long, lngg6 As Long, lngg7 As Long
-        Dim thing1 As Double, thing2 As Double, thing3 As Double, thing4 As Double
-        Dim stng1 As String, stng2 As String
-        Dim var1 As Object
-        Dim rng1 As Range
-        Dim outputwrite() As Object
-        Dim tempcheck() As Boolean
-        Dim OHthing As Double, Hthing As Double
-        Dim OHstng As String, Hstng As String
-        Dim cutsite1side3 As Boolean, cutsite1Pwith3 As Boolean
-        Dim phosphate As Double
-        Dim Namestring As String
-
-        Namestring = "R"
-        OHstng = "HO-"
-        Hstng = "-H"
-
-        Dim cutsite1 As String, Nmiss As Long
-        cutsite1 = Cells(4, 4)
-        If Cells(6, 4) = "3'" Then
-            cutsite1side3 = True
-        Else
-            cutsite1side3 = False
-        End If
-        If Cells(8, 4) = "3' of previous base" Then
-            cutsite1Pwith3 = True
-        Else
-            cutsite1Pwith3 = False
-        End If
-
-        Nmiss = Cells(10, 4)
-
-        ThisWorkbook.Worksheets(1).Activate
-
-        Dim Nmassin As Long, Massin() As Double
-        Nmassin = 0
-        For i = 1 To 500000
-            If Len(Cells(i + 1, 1)) > 0 Then
-                Nmassin = Nmassin + 1
-            Else
-                i = 500000
-            End If
-        Next i
-        ReDim Massin(Nmassin, 3)
-        For i = 1 To Nmassin
-            Massin(i, 1) = Cells(i + 1, 1)
-        Next i
-
-
-        For i = 1 To Nmassin
-            thing1 = Massin(i, 1)
-            thing2 = thing1 / 1000000.0# * ppmthresh
-            Massin(i, 2) = thing1 - thing2
-            Massin(i, 3) = thing1 + thing2
-        Next i
-
-        Dim Monoisotopic As Boolean
-        If Cells(2, 6) = "Monoisotopic" Then
-            Monoisotopic = True
-            OHthing = 17.00273965
-            Hthing = 1.007825032
-            phosphate = 79.96633089
-        Else
-            Monoisotopic = False
-            OHthing = 17.00734
-            Hthing = 1.00794
-            phosphate = 79.979902
-        End If
-
-        Dim bases() As Object, Nbases As Long
-        Nbases = 4
-        ReDim bases(Nbases, 3)
-        If Monoisotopic Then
-            For i = 1 To Nbases
-                bases(i, 1) = Cells(i + 2, 9)
-                bases(i, 2) = Cells(i + 2, 10)
-                bases(i, 3) = Cells(i + 2, 11)
-            Next i
-        Else
-            For i = 1 To Nbases
-                bases(i, 1) = Cells(i + 2, 9)
-                bases(i, 2) = Cells(i + 2, 10)
-                bases(i, 3) = Cells(i + 2, 12)
-            Next i
-        End If
-
-        Dim end5() As Object, Nend5 As Long
-        Dim end3() As Object, Nend3 As Long
-        Nend5 = 0
-        Nend3 = 0
-        For i = 1 To 10000
-            If Len(Cells(i + 1, 14)) > 0 Then
-                If Cells(i + 1, 14) = "5'" Then
-                    Nend5 = Nend5 + 1
-                Else
-                    If Cells(i + 1, 14) = "3'" Then
-                        Nend3 = Nend3 + 1
-                    End If
-                End If
-            Else
-                i = 10000
-            End If
-        Next i
-        j = 0
-        k = 0
-        If Nend5 > 0 Then ReDim end5(Nend5, 2)
-        If Nend3 > 0 Then ReDim end3(Nend3, 2)
-        For i = 1 To 10000
-            If Len(Cells(i + 1, 14)) > 0 Then
-                If Cells(i + 1, 14) = "5'" Then
-                    j = j + 1
-                    end5(j, 1) = Cells(i + 1, 15)
-                    If Monoisotopic Then
-                        end5(j, 2) = Cells(i + 1, 16)
-                    Else
-                        end5(j, 2) = Cells(i + 1, 17)
-                    End If
-                Else
-                    If Cells(i + 1, 14) = "3'" Then
-                        k = k + 1
-                        end3(k, 1) = Cells(i + 1, 15)
-                        If Monoisotopic Then
-                            end3(k, 2) = Cells(i + 1, 16)
-                        Else
-                            end3(k, 2) = Cells(i + 1, 17)
-                        End If
-                    End If
-                End If
-            Else
-                i = 10000
-            End If
-        Next i
-
-        Dim lowbasemass As Double, highbasemass As Double
-        lowbasemass = 1000000000.0#
-        highbasemass = 0
-        For i = 1 To Nbases
-            thing1 = bases(i, 3)
-            If thing1 > highbasemass Then highbasemass = thing1
-            If thing1 < lowbasemass Then lowbasemass = thing1
-        Next i
-
-        ThisWorkbook.Worksheets(2).Activate
-        Dim Construct As String, ConstructName As String, ConstructLength As Long
-        For i = 1 To 100
-            If Len(Cells(i + 1, 5)) > 0 Then
-                Construct = Cells(i + 1, 4)
-                ConstructName = Cells(i + 1, 1)
-                ConstructLength = Len(Construct)
-                i = 100
-            End If
-        Next i
-
-
-        'Create theoretical list of nomisses
-
-        Dim nomisses() As Object, Nnomisses As Long
-        Nnomisses = ConstructLength - Len(WorksheetFunction.Substitute(Construct, cutsite1, "")) + 1
-        ReDim nomisses(Nnomisses, 4)    'sequence, start, stop, length
-        If cutsite1side3 Then
-            stng1 = Construct
-            lng2 = 0
-            For i = 1 To Nnomisses - 1
-                lng1 = InStr(stng1, cutsite1)
-                nomisses(i, 1) = Left(stng1, lng1)
-                stng1 = Right(stng1, Len(stng1) - lng1)
-                nomisses(i, 2) = lng2 + 1
-                nomisses(i, 3) = lng2 + lng1
-                nomisses(i, 4) = nomisses(i, 3) - nomisses(i, 2) + 1
-                lng2 = lng2 + nomisses(i, 4)
-            Next i
-            nomisses(Nnomisses, 1) = stng1
-            nomisses(Nnomisses, 2) = lng2 + 1
-            nomisses(Nnomisses, 3) = ConstructLength
-            nomisses(Nnomisses, 4) = nomisses(i, 3) - nomisses(i, 2) + 1
-        Else
-            stng1 = Construct
-            lng2 = 0
-            lng1 = InStr(stng1, cutsite1)
-            nomisses(1, 1) = Left(stng1, lng1 - 1)
-            nomisses(1, 2) = 1
-            nomisses(1, 3) = lng1 - 1
-            nomisses(1, 4) = nomisses(i, 3) - nomisses(i, 2) + 1
-            stng1 = Right(stng1, Len(stng1) - lng1)
-            lng2 = lng2 + nomisses(1, 4)
-            For i = 2 To Nnomisses - 1
-                lng1 = InStr(stng1, cutsite1)
-                nomisses(i, 1) = cutsite1 & Left(stng1, lng1 - 1)
-                stng1 = Right(stng1, Len(stng1) - lng1)
-                nomisses(i, 2) = lng2 + 1
-                nomisses(i, 3) = lng2 + lng1
-                nomisses(i, 4) = nomisses(i, 3) - nomisses(i, 2) + 1
-                lng2 = lng2 + nomisses(i, 4)
-            Next i
-            nomisses(Nnomisses, 1) = cutsite1 & stng1
-            nomisses(Nnomisses, 2) = lng2 + 1
-            nomisses(Nnomisses, 3) = ConstructLength
-            nomisses(Nnomisses, 4) = nomisses(i, 3) - nomisses(i, 2) + 1
-        End If
-
-        Dim misses() As Object, Nmisses As Long, missends() As Long
-        Nmisses = 0
-        For i = 1 To Nmiss
-            For j = 1 To Nnomisses - i
-                Nmisses = Nmisses + 1
-            Next j
-        Next i
-        ReDim misses(Nmisses, 6)
-        ReDim missends(Nmiss, 2)
-        k = 0
-        q = 0
-        p = 0
-        For i = 1 To Nmiss
-            For j = 1 To Nnomisses - i
-                k = k + 1
-                stng1 = nomisses(j, 1)
-                For m = j + 1 To j + i
-                    stng1 = stng1 & nomisses(m, 1)
-                Next m
-                misses(k, 1) = stng1
-                misses(k, 2) = nomisses(j, 2)
-                misses(k, 3) = nomisses(m - 1, 3)
-                misses(k, 4) = misses(k, 3) - misses(k, 2) + 1
-                misses(k, 5) = j
-                misses(k, 6) = m - 1
-                If misses(k, 2) = 1 Then
-                    p = p + 1
-                    missends(p, 1) = k
-                End If
-                If misses(k, 3) = ConstructLength Then
-                    q = q + 1
-                    missends(q, 2) = k
-                End If
-            Next j
-        Next i
-
-        Dim digest() As Object, Ndigest As Long
-        Ndigest = Nnomisses + Nmisses + (Nend5 - 1) * (1 + Nmiss) + (Nend3 - 1) * (1 + Nmiss)
-        ReDim digest(Ndigest, 8)
-        n = 0
-        For i = 1 To Nnomisses
-            n = n + 1
-            For j = 1 To 4
-                digest(n, j) = nomisses(i, j)
-            Next j
-            If digest(n, 2) = 1 Then
-                digest(n, 5) = end5(1, 1)
-                digest(n, 6) = Hstng
-                digest(n, 7) = end5(1, 2) + Hthing
-            Else
-                If digest(n, 3) = ConstructLength Then
-                    digest(n, 5) = OHstng
-                    digest(n, 6) = end3(1, 1)
-                    digest(n, 7) = OHthing + end3(1, 2)
-                Else
-                    digest(n, 5) = OHstng
-                    digest(n, 6) = Hstng
-                    digest(n, 7) = OHthing + Hthing
-                End If
-            End If
-            digest(n, 8) = Namestring & n
-        Next i
-        For i = 1 To Nmisses
-            n = n + 1
-            For j = 1 To 4
-                digest(n, j) = misses(i, j)
-            Next j
-            If digest(n, 2) = 1 Then
-                digest(n, 5) = end5(1, 1)
-                digest(n, 6) = Hstng
-                digest(n, 7) = end5(1, 2) + Hthing
-            Else
-                If digest(n, 3) = ConstructLength Then
-                    digest(n, 5) = OHstng
-                    digest(n, 6) = end3(1, 1)
-                    digest(n, 7) = OHthing + end3(1, 2)
-                Else
-                    digest(n, 5) = OHstng
-                    digest(n, 6) = Hstng
-                    digest(n, 7) = OHthing + Hthing
-                End If
-            End If
-            digest(n, 8) = Namestring & misses(i, 5) & "-" & misses(i, 6)
-        Next i
-        For j = 2 To Nend5
-            n = n + 1
-            For k = 1 To 4
-                digest(n, k) = nomisses(1, k)
-            Next k
-            digest(n, 5) = end5(j, 1)
-            digest(n, 6) = Hstng
-            digest(n, 7) = end5(j, 2) + Hthing
-            digest(n, 8) = Namestring & 1
-        Next j
-        For j = 2 To Nend3
-            n = n + 1
-            For k = 1 To 4
-                digest(n, k) = nomisses(Nnomisses, k)
-            Next k
-            digest(n, 5) = OHstng
-            digest(n, 6) = end3(j, 1)
-            digest(n, 7) = OHthing + end3(j, 2)
-            digest(n, 8) = Namestring & Nnomisses
-        Next j
-        lng1 = 0
-        For i = 1 To Nmiss
-            m = missends(i, 1)
-            For j = 2 To Nend5
-                n = n + 1
-                For k = 1 To 4
-                    digest(n, k) = misses(m, k)
-                Next k
-                digest(n, 5) = end5(j, 1)
-                digest(n, 6) = Hstng
-                digest(n, 7) = end5(j, 2) + Hthing
-                digest(n, 8) = Namestring & misses(m, 5) & "-" & misses(m, 6)
-            Next j
-            m = missends(i, 2)
-            For j = 2 To Nend3
-                n = n + 1
-                For k = 1 To 4
-                    digest(n, k) = misses(m, k)
-                Next k
-                digest(n, 5) = OHstng
-                digest(n, 6) = end3(j, 1)
-                digest(n, 7) = OHthing + end3(j, 2)
-                digest(n, 8) = Namestring & misses(m, 5) & "-" & misses(m, 6)
-            Next j
-        Next i
-        For i = 1 To Ndigest
-            For k = 1 To Nbases
-                lng1 = digest(i, 4) - Len(WorksheetFunction.Substitute(digest(i, 1), bases(k, 1), ""))
-                digest(i, 7) = digest(i, 7) + lng1 * bases(k, 3)
-            Next k
-        Next i
-
-        'Make end corrections. The algorithm above has presumed that phosphate remains on the 5' side of the right fragment.
-        'For internal fragments, it doesn't matter if this isn't correct. For fragments starting at the 5' terminus or
-        'ending at the 3' terminus, it matters. If instead the phosphate remains on the 3' side of the left fragment,
-        'then for 5' terminus fragments the theoretical masses are 80 Da too small. Similarly, for 3' terminus fragments,
-        'the theoretical masses are 80 Da too big.
-
-        If cutsite1Pwith3 Then
-            For i = 1 To Ndigest
-                If digest(i, 2) = 1 Then
-                    digest(i, 7) = digest(i, 7) + phosphate
-                End If
-                If digest(i, 3) = ConstructLength Then
-                    digest(i, 7) = digest(i, 7) - phosphate
-                End If
-            Next i
-        End If
-
-        ThisWorkbook.Worksheets(3).Activate
-        Cells.Select
-        Selection.ClearContents
-        Selection.Font.Bold = False
-        Selection.NumberFormat = "General"
-        With Selection.Interior
-            .Pattern = xlNone
-            .TintAndShade = 0
-            .PatternTintAndShade = 0
-        End With
-        With Selection.Borders
-            .LineStyle = xlNone
-        End With
-        lng1 = Ndigest
-        lng2 = 8
-        ReDim outputwrite(0 To lng1, 0 To lng2 - 1)
-        outputwrite(0, 0) = "Sequence"
-        outputwrite(0, 1) = "Start"
-        outputwrite(0, 2) = "End"
-        outputwrite(0, 3) = "Length"
-        outputwrite(0, 4) = "5' End"
-        outputwrite(0, 5) = "3' End"
-        outputwrite(0, 6) = "Theoretical Mass"
-        outputwrite(0, 7) = "Name"
-        For i = 1 To lng1
-            For j = 1 To lng2
-                outputwrite(i, j - 1) = digest(i, j)
-            Next j
-        Next i
-    Set rng1 = Range(Cells(1, 1), Cells(lng1 + 1, lng2))
-    rng1 = outputwrite
-        Columns(7).NumberFormat = "0.0000"
-
+    Private Sub getmatches(obs As Double(), digest As TheoreticalDigestMass())
         'Match theoertical masses to observed masses
 
-        Dim Nadducts As Long, adducts() As Object
+        Dim Nadducts As Long, adducts() As Element
         Nadducts = 1 ' 4
-        ReDim adducts(Nadducts, 2)
+        ReDim adducts(Nadducts)
         If Nadducts > 1 Then
-            adducts(2, 1) = "Na+"
-            adducts(3, 1) = "K+"
-            adducts(4, 1) = "NH4+"
+            adducts(2).name = "Na+"
+            adducts(3).name = "K+"
+            adducts(4).name = "NH4+"
             If Monoisotopic Then
-                adducts(2, 2) = 21.98194425
-                adducts(3, 2) = 37.95588165
-                adducts(4, 2) = 17.0265491
+                adducts(2).isotopic = 21.98194425
+                adducts(3).isotopic = 37.95588165
+                adducts(4).isotopic = 17.0265491
             Else
-                adducts(2, 2) = 21.981799
-                adducts(3, 2) = 38.09033
-                adducts(4, 2) = 17.03061
+                adducts(2).isotopic = 21.981799
+                adducts(3).isotopic = 38.09033
+                adducts(4).isotopic = 17.03061
             End If
         End If
-        adducts(1, 1) = ""
-        adducts(1, 2) = 0
+        adducts(1).name = ""
+        adducts(1).isotopic = 0
 
+        Dim Nmassin = obs.Length
+        Dim Massin As MassWindow() = obs.Select(Function(m) New MassWindow(m, ppmthresh)).ToArray
+        Dim Ndigest = digest.Length
         Dim matches() As Object, Nmatches As Long
         Nmatches = 0
         For i = 1 To Nmassin
             For j = 1 To Ndigest
                 For k = 1 To Nadducts
-                    thing1 = digest(j, 7) + adducts(k, 2)
-                    If thing1 >= Massin(i, 2) Then
-                        If thing1 <= Massin(i, 3) Then
+                    Dim thing1 = digest(j)(7) + adducts(k).isotopic
+                    If thing1 >= Massin(i).mzmin Then
+                        If thing1 <= Massin(i).mzmax Then
                             Nmatches = Nmatches + 1
                         End If
                     End If
@@ -921,21 +534,20 @@ Public Class MS_Peak_ID
             Next j
         Next i
 
-
+        ' no matches
         If Nmatches = 0 Then
-            MsgBox("No Matches")
-            End
+            Return
         End If
 
         ReDim matches(Nmatches, 11)
         Dim massinmatch() As String
         ReDim massinmatch(Nmassin)
-        n = 0
+        Dim n = 0
         For i = 1 To Nmassin
-            stng1 = ""
+            Dim stng1 = ""
             For j = 1 To Ndigest
                 For k = 1 To Nadducts
-                    thing1 = digest(j, 7) + adducts(k, 2)
+                    Dim thing1 = digest(j, 7) + adducts(k, 2)
                     If thing1 >= Massin(i, 2) Then
                         If thing1 <= Massin(i, 3) Then
                             n = n + 1
@@ -946,7 +558,7 @@ Public Class MS_Peak_ID
                             matches(n, 8) = adducts(k, 1)
                             matches(n, 9) = thing1
                             matches(n, 10) = (Massin(i, 1) - thing1) / thing1 * 1000000.0#
-                            stng2 = digest(j, 2) & digest(j, 1) & digest(j, 3)
+                            Dim stng2 = digest(j, 2) & digest(j, 1) & digest(j, 3)
                             If k > 1 Then stng2 = stng2 & "(" & adducts(k, 1) & ")"
                             stng1 = stng1 & stng2 & ", "
                             matches(n, 11) = digest(j, 8)
