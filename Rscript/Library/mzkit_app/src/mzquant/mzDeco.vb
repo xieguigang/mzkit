@@ -202,7 +202,7 @@ Module mzDeco
                     End Function) _
             .ToArray
         Dim peaktable As xcms2() = sampleData _
-            .CreateMatrix(mzErr.TryCast(Of Tolerance), rt_win:=rt_win) _
+            .CreateMatrix() _
             .ToArray
         Dim id As String() = peaktable.Select(Function(i) i.ID).uniqueNames
         Dim sampleNames As String() = sampleData.Keys.ToArray
