@@ -44,10 +44,22 @@ declare namespace mzDeco {
    */
    function mz_deco(ms1: any, tolerance?: any, baseline?: number, peak_width?: any, parallel?: boolean, env?: object): object;
    /**
-     * @param mzdiff default value Is ``'da:0.001'``.
-     * @param rt_win default value Is ``30``.
-     * @param norm default value Is ``false``.
-     * @param env default value Is ``null``.
+    * Do COW peak alignment and export peaktable
+    * 
+    * 
+     * @param samples -
+     * @param mzdiff -
+     * 
+     * + default value Is ``'da:0.001'``.
+     * @param rt_win -
+     * 
+     * + default value Is ``30``.
+     * @param norm -
+     * 
+     * + default value Is ``false``.
+     * @param env -
+     * 
+     * + default value Is ``null``.
    */
    function peak_alignment(samples: any, mzdiff?: any, rt_win?: number, norm?: boolean, env?: object): object;
    module read {

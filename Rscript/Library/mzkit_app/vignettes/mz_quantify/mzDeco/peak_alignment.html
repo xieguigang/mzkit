@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>peak_alignment</title>
+    <title>Do COW peak alignment and export peaktable</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <style rel="stylesheet" type="text/css">
@@ -181,11 +181,11 @@
             </tr>
         </table>
 
-        <h2>peak_alignment</h2>
+        <h2>Do COW peak alignment and export peaktable</h2>
 
         <h3>Description</h3>
 
-        peak_alignment
+        
 
         <h3>Usage</h3>
 
@@ -200,6 +200,25 @@
 
         <table>
             
+<dt>samples</dt>
+<dd><p><p>-</p></p></dd>
+
+
+<dt>mzdiff</dt>
+<dd><p><p>-</p></p></dd>
+
+
+<dt>rt.win</dt>
+<dd><p><p>-</p></p></dd>
+
+
+<dt>norm</dt>
+<dd><p><p>-</p></p></dd>
+
+
+<dt>env</dt>
+<dd><p><p>-</p></p></dd>
+
         </table>
 
 
@@ -212,9 +231,14 @@
 
         this function returns data object of type <a href="/clr/BioNovoGene/Analytical/MassSpectrometry/Math/xcms2.html">xcms2</a>.
 
-        <h3 style="display: none;">Examples</h3>
+        <h3 style="display: block;">Examples</h3>
 
-        
+        <pre><code id="example_r"> let peaksdata = lapply(files, function(ms1) {
+     mz_deco(ms1, tolerance = "da:0.01", peak.width = [3,30]);
+ });
+ let peaktable = peak_alignment(samples = peaksdata);
+ 
+ write.csv(peaktable, file = "/path/to/peaktable.csv", row.names = TRUE);</code></pre>
 
         <hr />
         <div style="text-align: center;">[Package <em>mzDeco</em> version 1.0.0.0 <a
