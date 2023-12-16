@@ -109,7 +109,7 @@ Public Module PeakAlignment
         Dim targets = rawdata.Where(Function(sample) sample.name <> refer.name).ToArray
 
         For Each sample As NamedCollection(Of PeakFeature) In targets
-            Dim aligns = cow.CorrelationOptimizedWarping(0, 0, 0, refer.AsList, sample.AsList, BorderLimit.Gaussian)
+            Dim aligns = cow.CorrelationOptimizedWarping(refer.AsList, 5, sample.AsList)
 
         Next
     End Function
