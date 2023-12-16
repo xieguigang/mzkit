@@ -27,6 +27,9 @@ Public Class MS_Peak_ID
 
     Const Nbases As Long = 4
 
+    ReadOnly end5() As GroupMass, Nend5 As Long
+    ReadOnly end3() As GroupMass, Nend3 As Long
+
     Sub New(Optional ppm As Double = 5,
             Optional miss_sites As Long = 0,
             Optional Monoisotopic As Boolean = True,
@@ -41,6 +44,13 @@ Public Class MS_Peak_ID
         Nmiss = miss_sites
         Me.Monoisotopic = Monoisotopic
         Me.bases = MassDefault.GetBases(Monoisotopic).ToArray
+
+        Dim groups = MassDefault.GetGroupMass(Monoisotopic).ToArray
+
+        end5 = groups.Where(Function(a) a.end = 5).ToArray
+        end3 = groups.Where(Function(a) a.end = 3).ToArray
+        Nend5 = end5.Length
+        Nend3 = end3.Length
     End Sub
 
     Sub maketheorylist()
@@ -66,7 +76,7 @@ Public Class MS_Peak_ID
         OHstng = "HO-"
         Hstng = "-H"
 
-        ThisWorkbook.Worksheets(1).Activate
+        ' set up inputs and parameters
 
         If Monoisotopic Then
             OHthing = 17.00273965
@@ -79,58 +89,11 @@ Public Class MS_Peak_ID
         End If
 
 
-        Dim end5() As Object, Nend5 As Long
-        Dim end3() As Object, Nend3 As Long
-        Nend5 = 0
-        Nend3 = 0
-        For i = 1 To 10000
-            If Len(Cells(i + 1, 14)) > 0 Then
-                If Cells(i + 1, 14) = "5'" Then
-                    Nend5 = Nend5 + 1
-                Else
-                    If Cells(i + 1, 14) = "3'" Then
-                        Nend3 = Nend3 + 1
-                    End If
-                End If
-            Else
-                i = 10000
-            End If
-        Next i
-        j = 0
-        k = 0
-        If Nend5 > 0 Then ReDim end5(Nend5, 2)
-        If Nend3 > 0 Then ReDim end3(Nend3, 2)
-        For i = 1 To 10000
-            If Len(Cells(i + 1, 14)) > 0 Then
-                If Cells(i + 1, 14) = "5'" Then
-                    j = j + 1
-                    end5(j, 1) = Cells(i + 1, 15)
-                    If Monoisotopic Then
-                        end5(j, 2) = Cells(i + 1, 16)
-                    Else
-                        end5(j, 2) = Cells(i + 1, 17)
-                    End If
-                Else
-                    If Cells(i + 1, 14) = "3'" Then
-                        k = k + 1
-                        end3(k, 1) = Cells(i + 1, 15)
-                        If Monoisotopic Then
-                            end3(k, 2) = Cells(i + 1, 16)
-                        Else
-                            end3(k, 2) = Cells(i + 1, 17)
-                        End If
-                    End If
-                End If
-            Else
-                i = 10000
-            End If
-        Next i
-
         Dim lowbasemass As Double, highbasemass As Double
         lowbasemass = 1000000000.0#
         highbasemass = 0
-        For i = 1 To Nbases
-            thing1 = bases(i, 3)
+        For i = 0 To Nbases - 1
+            thing1 = bases(i).isotopic
             If thing1 > highbasemass Then highbasemass = thing1
             If thing1 < lowbasemass Then lowbasemass = thing1
         Next i
