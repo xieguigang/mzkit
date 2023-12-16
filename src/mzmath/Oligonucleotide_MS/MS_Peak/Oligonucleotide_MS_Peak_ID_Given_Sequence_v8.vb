@@ -336,12 +336,12 @@ Public Class MS_Peak_ID
             Yield New TheoreticalDigestMass With {
                 .Sequence = digest(i)(1),
                 .Start = digest(i)(2),
-                .Ends = digest(i)(1),
-                .Length = digest(i)(1),
-                .End5 = digest(i)(1),
-                .End3 = digest(i)(1),
-                .TheoreticalMass = digest(i)(1),
-                .Name = digest(i)(1)
+                .Ends = digest(i)(3),
+                .Length = digest(i)(4),
+                .End5 = digest(i)(5),
+                .End3 = digest(i)(6),
+                .TheoreticalMass = digest(i)(7),
+                .Name = digest(i)(8)
             }
         Next
     End Function
