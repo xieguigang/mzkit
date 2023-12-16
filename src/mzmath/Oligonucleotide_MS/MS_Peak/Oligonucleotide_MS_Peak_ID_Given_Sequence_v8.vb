@@ -1,5 +1,6 @@
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports SMRUCC.genomics.SequenceModel.FASTA
 
 Public Class MS_Peak_ID
@@ -47,7 +48,7 @@ Public Class MS_Peak_ID
         Me.Monoisotopic = Monoisotopic
         Me.bases = MassDefault.GetBases(Monoisotopic).ToArray
 
-        Dim groups = MassDefault.GetGroupMass(Monoisotopic).ToArray
+        Dim groups As GroupMass() = MassDefault.GetGroupMass(Monoisotopic).ToArray
 
         end5 = groups.Where(Function(a) a.end = 5).ToArray
         end3 = groups.Where(Function(a) a.end = 3).ToArray
@@ -321,8 +322,16 @@ Public Class MS_Peak_ID
             }
         Next
     End Function
-    Sub getcoverage(coveragecolor As Long, seq As FastaSeq)
 
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="seq"></param>
+    ''' <remarks>
+    ''' (matrix, "Sequence Coverage (%)")
+    ''' </remarks>
+    Private Function getcoverage(matches As Match(), seq As FastaSeq) As (hit As Boolean(), coverage As Double)
         Dim i As Long, j As Long, k As Long, m As Long, n As Long, q As Long, p As Long
         Dim ii As Long, jj As Long, kk As Long, mm As Long, nn As Long, qq As Long, pp As Long
         Dim lng1 As Long, lng2 As Long, lng3 As Long, lng4 As Long, lng5 As Long, lng6 As Long, lng7 As Long
@@ -331,7 +340,7 @@ Public Class MS_Peak_ID
         Dim stng1 As String, stng2 As String
         Dim var1 As Object
         Dim rng1 As Range
-        Dim outputwrite() As Object
+        Dim outputwrite()() As Cell
         Dim tempcheck() As Boolean
 
         ' set sequence inputs
@@ -341,25 +350,11 @@ Public Class MS_Peak_ID
         Dim ConstructLength As Long = seq.Length
 
         ' output matches
-        ThisWorkbook.Worksheets(4).Activate
         lng1 = 0 ' Intersect(ActiveSheet.UsedRange, Columns(1)).Count
 
-        Dim Nmatches As Long, matches() As Dim2
-        For i = 1 To lng1
-            If Len(Cells(i + 1, 1)) > 0 Then Nmatches = Nmatches + 1
-        Next i
-        ReDim matches(Nmatches)
-        n = 0
-        For i = 1 To lng1
-            If Len(Cells(i + 1, 1)) > 0 Then
-                n = n + 1
-                matches(n)(1) = Cells(i + 1, 3)
-                matches(n)(2) = Cells(i + 1, 4)
-            End If
-        Next i
+        Dim Nmatches As Long = matches.Length
 
         ' Matched Input List
-        ThisWorkbook.Worksheets(6).Activate
 
         Dim Ncolumns As Long, Nrows As Long
         Dim colorme() As Long
@@ -368,31 +363,25 @@ Public Class MS_Peak_ID
 
         Ncolumns = 50
         Nrows = Int(ConstructLength / Ncolumns) + 1
-        ReDim outputwrite(0 To Nrows - 1, 0 To Ncolumns + 1)
-        ReDim colorme(ConstructLength, 2)
+        outputwrite = RectangularArray.Matrix(Of Cell)(Nrows, Ncolumns)
+
+
         For i = 1 To ConstructLength
             stng1 = Mid(Construct, i, 1)
             j = (i - 1) Mod Ncolumns + 1
             k = Int((i - 1) / Ncolumns)
-            outputwrite(k, j) = stng1
-            colorme(i, 1) = k + 1    'row
-            colorme(i, 2) = j + 1    'column
+            outputwrite(k)(j) = New Cell(i, stng1)
+
         Next i
-        For i = 1 To Nrows
-            outputwrite(i - 1, 0) = (i - 1) * Ncolumns + 1
-            outputwrite(i - 1, Ncolumns + 1) = outputwrite(i - 1, 0) + Ncolumns - 1
-        Next i
-        outputwrite(Nrows - 1, Ncolumns + 1) = ConstructLength
-    Set rng1 = Range(Cells(1, 1), Cells(Nrows, Ncolumns + 2))
-    rng1 = outputwrite
+
 
         'Determine coverage
-
+        'Map coverage
         Dim Ncovered As Long, PercentCovered As Double, SequenceCoverage() As Boolean
         ReDim SequenceCoverage(ConstructLength)
         Ncovered = 0
         For i = 1 To Nmatches
-            For j = matches(i, 1) To matches(i, 2)
+            For j = matches(i).Start To matches(i).Ends
                 If Not SequenceCoverage(j) Then
                     SequenceCoverage(j) = True
                     Ncovered = Ncovered + 1
@@ -401,31 +390,30 @@ Public Class MS_Peak_ID
         Next i
         PercentCovered = Ncovered / ConstructLength * 100
 
-        'Map coverage
+        Return (SequenceCoverage, PercentCovered)
+    End Function
 
-        For i = 1 To ConstructLength
-            If SequenceCoverage(i) Then
-                m = colorme(i, 1)   'row for residue j
-                n = colorme(i, 2)   'column for residue j
-                Cells(m, n).Interior.Color = coveragecolor
-                Cells(m, n).Font.TintAndShade = 0
-            End If
-        Next i
+    Public Class Cell
 
-        Cells(1, Ncolumns + 4) = "Sequence Coverage (%)"
-        Cells(2, Ncolumns + 4) = PercentCovered
+        Public N As String
+        Public i As Integer
+        Public hit As Boolean
 
+        Sub New(i As Integer, c As String)
+            Me.i = i
+            Me.N = c
+        End Sub
 
-    End Sub
+    End Class
 
-    Sub MatchMassesToOligoSequence(obs As Double(), seq As FastaSeq)
+    Public Function MatchMassesToOligoSequence(obs As Double(), seq As FastaSeq)
         Dim digest = maketheorylist(seq).ToArray
+        Dim matches = getmatches(obs, digest)
 
-        getmatches(obs, digest)
-        getcoverage(-1, seq)
-    End Sub
+        Return getcoverage(matches.Item1, seq)
+    End Function
 
-    Private Sub getmatches(obs As Double(), digest As TheoreticalDigestMass())
+    Private Function getmatches(obs As Double(), digest As TheoreticalDigestMass()) As (Match(), MatchedInput())
         'Match theoertical masses to observed masses
 
         Dim Nadducts As Long, adducts() As Element
@@ -468,7 +456,7 @@ Public Class MS_Peak_ID
 
         ' no matches
         If Nmatches = 0 Then
-            Return
+            Return Nothing
         End If
 
         ReDim matches(Nmatches)
@@ -483,17 +471,20 @@ Public Class MS_Peak_ID
                     If thing1 >= Massin(i).mzmin Then
                         If thing1 <= Massin(i).mzmax Then
                             n = n + 1
-                            matches(n, 1) = Massin(i).mass
-                            For m = 1 To 6
-                                matches(n, m + 1) = digest(j, m)
-                            Next m
-                            matches(n, 8) = adducts(k).name
-                            matches(n, 9) = thing1
-                            matches(n, 10) = (Massin(i).mass - thing1) / thing1 * 1000000.0#
-                            Dim stng2 = digest(j, 2) & digest(j, 1) & digest(j, 3)
+                            matches(n).ObservedMass = Massin(i).mass
+                            matches(n).Sequence = digest(j)(1)
+                            matches(n).Start = digest(j)(2)
+                            matches(n).Ends = digest(j)(3)
+                            matches(n).Length = digest(j)(4)
+                            matches(n).End5 = digest(j)(5)
+                            matches(n).End3 = digest(j)(6)
+                            matches(n).Adduct = adducts(k).name
+                            matches(n).TheoreticalMass = thing1
+                            matches(n).Errorppm = (Massin(i).mass - thing1) / thing1 * 1000000.0#
+                            Dim stng2 = digest(j).Start & digest(j).Sequence & digest(j).Ends
                             If k > 1 Then stng2 = stng2 & "(" & adducts(k).name & ")"
                             stng1 = stng1 & stng2 & ", "
-                            matches(n, 11) = digest(j, 8)
+                            matches(n).Name = digest(j).Name
                         End If
                     End If
                 Next k
@@ -501,94 +492,48 @@ Public Class MS_Peak_ID
             If stng1 <> "" Then massinmatch(i) = Left(stng1, Len(stng1) - 2)
         Next i
 
-        ThisWorkbook.Worksheets(4).Activate
-        Cells.Select
-        Selection.ClearContents
-        Selection.Font.Bold = False
-        Selection.NumberFormat = "General"
-        With Selection.Interior
-            .Pattern = xlNone
-            .TintAndShade = 0
-            .PatternTintAndShade = 0
-        End With
-        With Selection.Borders
-            .LineStyle = xlNone
-        End With
-        lng1 = Nmatches
-        lng2 = 11
-        ReDim outputwrite(0 To lng1, 0 To lng2 + 1)
-        outputwrite(0, 0) = "Observed Mass"
-        outputwrite(0, 1) = "Sequence"
-        outputwrite(0, 2) = "Start"
-        outputwrite(0, 3) = "End"
-        outputwrite(0, 4) = "Length"
-        outputwrite(0, 5) = "5' End"
-        outputwrite(0, 6) = "3' End"
-        outputwrite(0, 7) = "Adduct"
-        outputwrite(0, 8) = "Theoretical Mass"
-        outputwrite(0, 9) = "Error (ppm)"
-        outputwrite(0, 10) = "Name"
-        outputwrite(0, 11) = "Frequency"
-        outputwrite(0, 12) = "1st Occurance"
-        For i = 1 To lng1
-            For j = 1 To lng2
-                outputwrite(i, j - 1) = matches(i, j)
-            Next j
-        Next i
-        ReDim temp(lng1)
+        Dim lng1 = Nmatches
+        Dim lng2 = 11
+
+        Dim temp As Boolean() = New Boolean(lng1) {}
+        Dim outputwrite = matches
+
         For i = 1 To lng1
             If Not temp(i) Then
-                stng1 = outputwrite(i, 1)
-                lng3 = 1
+                Dim stng1 = outputwrite(i).Sequence
+                Dim lng3 = 1
                 For j = i + 1 To lng1
                     If Not temp(j) Then
-                        If outputwrite(j, 1) = stng1 Then
+                        If outputwrite(j).Sequence = stng1 Then
                             lng3 = lng3 + 1
                             temp(j) = True
                         End If
                     End If
                 Next j
-                outputwrite(i, 12) = "x"
-                outputwrite(i, 11) = lng3
+                outputwrite(i).f1StOccurance = "x"
+                outputwrite(i).Frequency = lng3
                 For j = i + 1 To lng1
-                    If outputwrite(j, 1) = stng1 Then
-                        outputwrite(j, 11) = lng3
+                    If outputwrite(j).Sequence = stng1 Then
+                        outputwrite(j).Name = lng3
                     End If
                 Next j
             End If
         Next i
-    Set rng1 = Range(Cells(1, 1), Cells(lng1 + 1, lng2 + 2))
-    rng1 = outputwrite
-        Columns(1).NumberFormat = "0.0000"
-        Columns(9).NumberFormat = "0.0000"
-        Columns(10).NumberFormat = "0.0"
-        Columns(11).NumberFormat = "0"
 
-        ThisWorkbook.Worksheets(5).Activate
-        Cells.Select
-        Selection.ClearContents
-        Selection.Font.Bold = False
-        Selection.NumberFormat = "General"
-        With Selection.Interior
-            .Pattern = xlNone
-            .TintAndShade = 0
-            .PatternTintAndShade = 0
-        End With
-        With Selection.Borders
-            .LineStyle = xlNone
-        End With
         lng1 = Nmassin
         lng2 = 2
-        ReDim outputwrite(0 To lng1, 0 To lng2 - 1)
-        outputwrite(0, 0) = "Observed Mass"
-        outputwrite(0, 1) = "Match"
+        Dim MatchedInputList As New List(Of MatchedInput)
         For i = 1 To lng1
-            outputwrite(i, 0) = Massin(i, 1)
-            outputwrite(i, 1) = massinmatch(i)
+            MatchedInputList.Add(New MatchedInput With {.ObservedMass = Massin(i).mass, .Match = massinmatch(i)})
         Next i
-    Set rng1 = Range(Cells(1, 1), Cells(lng1 + 1, lng2))
-    rng1 = outputwrite
-        Columns(1).NumberFormat = "0.0000"
 
-    End Sub
+        Return (outputwrite, MatchedInputList.ToArray)
+    End Function
+End Class
+
+Public Class MatchedInput
+
+    Public Property ObservedMass As Double
+    Public Property Match As String
+
 End Class
