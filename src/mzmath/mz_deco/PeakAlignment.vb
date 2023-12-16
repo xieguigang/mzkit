@@ -80,8 +80,22 @@ Public Module PeakAlignment
     End Function
 
     <Extension>
-    Public Function PickReferenceSample(samples As IEnumerable(Of NamedCollection(Of PeakFeature))) As NamedCollection(Of PeakFeature)
+    Public Function PickReferenceSampleMaxIntensity(samples As IEnumerable(Of NamedCollection(Of PeakFeature))) As NamedCollection(Of PeakFeature)
+        Dim maxinto As Double = Double.MinValue
+        Dim refer As NamedCollection(Of PeakFeature) = Nothing
 
+        For Each sample As NamedCollection(Of PeakFeature) In samples
+            Dim into As Double = Aggregate peak In sample Into Average(peak.maxInto)
+            Dim area As Double = Aggregate peak In sample Into Sum(peak.area)
+            Dim rank As Double = into * area
+
+            If rank > maxinto Then
+                maxinto = rank
+                refer = sample
+            End If
+        Next
+
+        Return refer
     End Function
 
     ''' <summary>
@@ -93,7 +107,7 @@ Public Module PeakAlignment
     Public Iterator Function CreateMatrix(samples As IEnumerable(Of NamedCollection(Of PeakFeature))) As IEnumerable(Of xcms2)
         Dim cow As New CowAlignment(Of PeakFeature)(AddressOf CreatePeak)
         Dim rawdata = samples.ToArray
-        Dim refer = rawdata.PickReferenceSample
+        Dim refer = rawdata.PickReferenceSampleMaxIntensity
         Dim targets = rawdata.Where(Function(sample) sample.name <> refer.name).ToArray
 
         For Each sample As NamedCollection(Of PeakFeature) In targets
