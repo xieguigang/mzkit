@@ -71,7 +71,7 @@ Public Class TheoreticalDigestMass
     End Property
 
     Public Overrides Function ToString() As String
-        Return Me.GetJson
+        Return $"{Sequence}({Length}bits) [{Start}...{Ends}] 5':{End5} 3':{End3}  {TheoreticalMass}@{Name}"
     End Function
 
     ''' <summary>
