@@ -52,12 +52,15 @@ Public Class MS2_Spectrum_Matcher
         Dim RT As String
 
         Aplus1 = 1.002736   'based on the theoretical isotopic distribution of C268 H342 N98 O194 P28
-        ThisWorkbook.Worksheets(1).Activate
-        precursorCS = Abs(Cells(13, 1))
-        sequence_mass = Cells(9, 1)
-        stng1 = Cells(7, 1)
-        sequence_longname = WorksheetFunction.Substitute(stng1, "-", "")
-        ignoreinternals = Cells(21, 1)
+
+        ' Input Oligonucleotide
+        ' ThisWorkbook.Worksheets(1).Activate
+        ' Precursor Charge State (assumed to be negative)
+        precursorCS = 3 ' Abs(Cells(13, 1))
+        sequence_mass = 4474.6441        ' Cells(9, 1)
+        stng1 = "5-Arp-Arp-Crp-Vrp-Vrp-Crp-Arp-Arp-Crp-Vrp-Vrp-Crp-Arp-Arp-3" ' Cells(7, 1)
+        sequence_longname = stng1.Replace("-", "")
+        ignoreinternals = True
 
         Nkinds = 3
         ReDim kinds(3)
@@ -67,25 +70,27 @@ Public Class MS2_Spectrum_Matcher
         labelbin = 1   'Da
 
         'Get spectrum
+        ' spectrum input
+        ' ThisWorkbook.Worksheets(2).Activate
 
-        ThisWorkbook.Worksheets(2).Activate
+        ' COLUMNS A-B ARE FOR PASTING AN INDIVIDUAL MS2 SPECTRUM.  ALL OTHER CELLS ON THIS WORKSHEET CAN BE MODIFIED/DELETED AS DESIRED, EXCEPT CELL F2.
+        ' <--STARTING ROW OF XY DATA.  FOR XCALIBUR-COPIED SPECTRA, START ROW IS 8 IF YOU PASTE IN CELL A1.
+        startxy = 9 ' Cells(2, 6)                   'must be entered if not 1 in cell F2 of 2nd worksheet
+        isprofile = False
 
-        startxy = Cells(2, 6)                   'must be entered if not 1 in cell F2 of 2nd worksheet
-        If Cells(4, 6) = "Profile" Then
-            isprofile = True
-        Else
-            isprofile = False
-        End If
         If startxy < 1 Then
             startxy = 1
             filetext = ""
             scantext = ""
             scannum = ""
         Else
-            filetext = Cells(2, 1)
-            scantext = Cells(3, 1)
-            scannum = Cells(4, 1)
-            RT = Cells(5, 1)
+            ' file name
+            filetext = "20220525_WRMnew_B.raw"
+            ' spectrum scan id
+            scantext = "FTMS - c ESI d Full ms2 1490.8749@hcd30.00 [156.0000-2000.0000]"
+            ' scan number
+            scannum = "Scan #: 39256-39398"
+            RT = "RT: 191.98-192.64"
         End If
         lng1 = Columns(1).SpecialCells(xlCellTypeConstants).Count - startxy + 1
         maxint = WorksheetFunction.Max(Columns(2))

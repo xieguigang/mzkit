@@ -36,15 +36,15 @@
   <ItemGroup>
     <Compile Remove="logs\**" />
     <Compile Remove="Mapping_UV_Annotation\**" />
-    <Compile Remove="MS2_Spectrum_Matcher\**" />
+
     <Compile Remove="test\**" />
     <EmbeddedResource Remove="logs\**" />
     <EmbeddedResource Remove="Mapping_UV_Annotation\**" />
-    <EmbeddedResource Remove="MS2_Spectrum_Matcher\**" />
+  
     <EmbeddedResource Remove="test\**" />
     <None Remove="logs\**" />
     <None Remove="Mapping_UV_Annotation\**" />
-    <None Remove="MS2_Spectrum_Matcher\**" />
+ 
     <None Remove="test\**" />
   </ItemGroup>
 
