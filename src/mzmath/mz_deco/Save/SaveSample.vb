@@ -26,6 +26,7 @@ Public Module SaveSample
         Next
 
         Call bin.Write(n)
+        Call bin.BaseStream.Flush()
     End Sub
 
     Public Iterator Function ReadSample(file As Stream) As IEnumerable(Of PeakFeature)
