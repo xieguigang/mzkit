@@ -1,7 +1,13 @@
 'v11 added back in precursor minus base fragment ions
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+
 Public Class MS2_Spectrum_Matcher
 
-    Sub test_MS2match()
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="spectrum">the spectrum input</param>
+    Sub test_MS2match(spectrum As PeakMs2)
 
         Dim i As Long, j As Long, k As Long, m As Long, n As Long, p As Long, q As Long
         Dim lng1 As Long, lng2 As Long, lng3 As Long, lng4 As Long
@@ -92,8 +98,8 @@ Public Class MS2_Spectrum_Matcher
             scannum = "Scan #: 39256-39398"
             RT = "RT: 191.98-192.64"
         End If
-        lng1 = Columns(1).SpecialCells(xlCellTypeConstants).Count - startxy + 1
-        maxint = WorksheetFunction.Max(Columns(2))
+        lng1 = spectrum.fragments
+        maxint = spectrum.mzInto.Select(Function(f) f.intensity).Max
         ReDim tempcheck(lng1)
         Dim minint As Double
         minint = maxint * 0.0001
