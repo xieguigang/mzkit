@@ -37,5 +37,8 @@ Module Program
 
         Call TheoreticalDigestMass.Print(result, dev:=App.StdOut)
 
+        Dim digest_result = digest.MatchMassesToOligoSequence({2247.3163}, demo(0))
+
+
     End Sub
 End Module
