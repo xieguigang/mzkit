@@ -76,7 +76,10 @@ Module Module1
             Dim bin As New BinaryStreamReader(file)
             Dim raw = bin.LoadAllScans(skipProducts:=True).ToArray
             Dim scans = raw.Select(Function(d) d.GetMs1Scans).IteratesALL.ToArray
-            Dim peaktable As PeakFeature() = scans.GetMzGroups(mzdiff:=Tolerance.DeltaMass(0.05)).DecoMzGroups(New Double() {3, 30}, quantile:=0.1, sn:=1).ToArray
+            Dim peaktable As PeakFeature() = scans _
+                .GetMzGroups(mzdiff:=Tolerance.DeltaMass(0.05)) _
+                .DecoMzGroups(New Double() {3, 30}, quantile:=0.1, sn:=1) _
+                .ToArray
 
             Call samples.Add(New NamedCollection(Of PeakFeature)(file.BaseName, peaktable))
         Next
