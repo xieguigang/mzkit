@@ -234,6 +234,15 @@ Module mzDeco
         End If
     End Function
 
+    ''' <summary>
+    ''' Do COW peak alignment and export peaktable
+    ''' </summary>
+    ''' <param name="samples"></param>
+    ''' <param name="mzdiff"></param>
+    ''' <param name="rt_win"></param>
+    ''' <param name="norm"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("peak_alignment")>
     <RApiReturn(GetType(xcms2))>
     Public Function peakAlignment(<RRawVectorArgument>

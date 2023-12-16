@@ -125,11 +125,25 @@ Public Module PeakAlignment
             })
         Next
 
+        Dim peak As xcms2
+
         For Each sample As NamedCollection(Of PeakFeature) In targets
             Dim aligns = cow.CorrelationOptimizedWarping(refer.AsList, sample.AsList).ToArray
 
             For Each point As PeakFeature In aligns
-                Call peaktable(point.xcms_id).Add(sample.name, point.area)
+                peak = peaktable(point.xcms_id)
+                peak.Add(sample.name, point.area)
+
+                If point.area > 0 Then
+                    peak.npeaks += 1
+                End If
+
+                If point.mz < peak.mzmin Then
+                    peak.mzmin = point.mz
+                End If
+                If point.mz > peak.mzmax Then
+                    peak.mzmax = point.mz
+                End If
             Next
         Next
 
