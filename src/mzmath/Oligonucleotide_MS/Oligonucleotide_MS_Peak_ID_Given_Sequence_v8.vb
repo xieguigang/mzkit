@@ -294,11 +294,11 @@ Public Class MS_Peak_ID
 
         If cutsite1Pwith3 Then
             For i = 1 To Ndigest
-                If digest(i, 2) = 1 Then
-                    digest(i, 7) = digest(i, 7) + phosphate
+                If digest(i)(2) = 1 Then
+                    digest(i)(7) = digest(i)(7) + phosphate
                 End If
-                If digest(i, 3) = ConstructLength Then
-                    digest(i, 7) = digest(i, 7) - phosphate
+                If digest(i)(3) = ConstructLength Then
+                    digest(i)(7) = digest(i)(7) - phosphate
                 End If
             Next i
         End If
