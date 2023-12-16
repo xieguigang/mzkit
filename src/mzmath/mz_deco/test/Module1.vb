@@ -70,7 +70,7 @@ Module Module1
                 .IteratesALL _
                 .ToArray
 
-            Dim peaktable As PeakFeature() = scans.GetMzGroups(mzdiff:=Tolerance.DeltaMass(0.05)).DecoMzGroups({3, 30}, quantile:=0.1, sn:=1).ToArray
+            Dim peaktable As PeakFeature() = scans.GetMzGroups(mzdiff:=Tolerance.DeltaMass(0.05)).DecoMzGroups(New Double() {3, 30}, quantile:=0.1, sn:=1).ToArray
 
 
             Call peaktable.SaveTo("E:/test_peaktable.csv")
