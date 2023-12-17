@@ -243,10 +243,10 @@ Module mzDeco
     ''' (COW-TIC). This approach works successfully on chromatograms 
     ''' containing few compounds and having a well-defined TIC.
     ''' </summary>
-    ''' <param name="samples"></param>
+    ''' <param name="samples">should be a set of sample file data, which could be extract from the ``mz_deco`` function.</param>
     ''' <param name="mzdiff"></param>
     ''' <param name="rt_win"></param>
-    ''' <param name="norm"></param>
+    ''' <param name="norm">do total ion sum normalization after peak alignment and the peaktable object has been exported?</param>
     ''' <param name="env"></param>
     ''' <returns></returns>
     ''' <example>
