@@ -199,7 +199,11 @@
         <table>
             
 <dt>file</dt>
-<dd><p><p>imML/mzPack</p></p></dd>
+<dd><p><p>imML/mzPack, or a single ion layer of the ms-imaging rawdata</p></p></dd>
+
+
+<dt>count</dt>
+<dd><p><p>get the pixel count number instead of get the canvas dimension size of the ms-imaging.</p></p></dd>
 
         </table>
 
@@ -215,9 +219,18 @@
  if the count is set to FALSE, by default; otherwise this function will return an integer value for<br />
  indicates the real pixel counts number if the count parameter is set to TRUE.</p> the list data also has some specificied data fields: <code>list(w, h)</code>.
 
-        <h3 style="display: none;">Examples</h3>
+        <h3 style="display: block;">Examples</h3>
 
-        
+        <pre><code id="example_r"> let layer = MSI::as.layer(x, context = 100.0013);
+ let counts = MSI::pixels(layer, count = TRUE);
+ let canvas_size = MSI::pixels(layer, count = FALSE);
+ 
+ print("the data pixels of current ion layer:");
+ print(counts);
+ print("the canvas dimension size of the ms-imaging:");
+ str(canvas_size);
+ print("the pixel number of the ms-imaging canvas:");
+ print(canvas_size$w * canvas_size$h);</code></pre>
 
         <hr />
         <div style="text-align: center;">[Package <em>MSI</em> version 1.0.0.0 <a

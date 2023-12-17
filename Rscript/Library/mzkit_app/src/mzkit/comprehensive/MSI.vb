@@ -518,7 +518,8 @@ Module MSI
     ''' <summary>
     ''' open the reader for the imzML ms-imaging file
     ''' </summary>
-    ''' <param name="file">the file path to the specific imzML metadata file for load for run ms-imaging analysis.</param>
+    ''' <param name="file">the file path to the specific imzML metadata file for load 
+    ''' for run ms-imaging analysis.</param>
     ''' <param name="env"></param>
     ''' <returns>
     ''' this function returns a tuple list object that contains 2 slot elements inside:
@@ -527,6 +528,10 @@ Module MSI
     ''' 2. ibd: is the binary data reader wrapper object for the corresponding 
     '''       ``ibd`` file of the given input imzML file.
     ''' </returns>
+    ''' <example>
+    ''' # the msi_rawdata.ibd file should be in the same folder with the input imzml file.
+    ''' let imzml = open.imzML(file = "/path/to/msi_rawdata.imzML");
+    ''' </example>
     <ExportAPI("open.imzML")>
     <RApiReturn("scans", "ibd")>
     Public Function open_imzML(file As String, Optional env As Environment = Nothing) As Object
@@ -563,6 +568,13 @@ Module MSI
     ''' the ion polarity mode value
     ''' </param>
     ''' <returns></returns>
+    ''' <example>
+    ''' let msi_rawdata = open.mzpack(file = "/path/to/msi_rawdata.mzPack");
+    ''' 
+    ''' # convert the mzpack object into imzML format
+    ''' msi_rawdata
+    ''' |> write.imzML(file = "/path/to/msi_rawdata.imzML");
+    ''' </example>
     <ExportAPI("write.imzML")>
     Public Function write_imzML(mzpack As mzPack, file As String,
                                 Optional res As Double = 17,

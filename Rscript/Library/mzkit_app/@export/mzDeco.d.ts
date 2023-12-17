@@ -55,14 +55,14 @@ declare namespace mzDeco {
     *  containing few compounds and having a well-defined TIC.
     * 
     * 
-     * @param samples -
+     * @param samples should be a set of sample file data, which could be extract from the ``mz_deco`` function.
      * @param mzdiff -
      * 
      * + default value Is ``'da:0.001'``.
      * @param rt_win -
      * 
      * + default value Is ``30``.
-     * @param norm -
+     * @param norm do total ion sum normalization after peak alignment and the peaktable object has been exported?
      * 
      * + default value Is ``false``.
      * @param env -
