@@ -5,6 +5,7 @@
 // ref=mzkit.mzDeco@mz_quantify, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 
 /**
+ * Extract peak and signal data from rawdata
  * 
 */
 declare namespace mzDeco {
@@ -47,6 +48,11 @@ declare namespace mzDeco {
    function mz_deco(ms1: any, tolerance?: any, baseline?: number, peak_width?: any, joint?: boolean, parallel?: boolean, env?: object): object;
    /**
     * Do COW peak alignment and export peaktable
+    *  
+    *  Correlation optimized warping (COW) based on the total ion 
+    *  current (TIC) is a widely used time alignment algorithm 
+    *  (COW-TIC). This approach works successfully on chromatograms 
+    *  containing few compounds and having a well-defined TIC.
     * 
     * 
      * @param samples -

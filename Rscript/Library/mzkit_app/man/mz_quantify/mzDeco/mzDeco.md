@@ -1,6 +1,6 @@
 # mzDeco
 
-
+Extract peak and signal data from rawdata
 
 + [mz_deco](mzDeco/mz_deco.1) Chromatogram data deconvolution
 + [write.peaks](mzDeco/write.peaks.1) write peak debug data

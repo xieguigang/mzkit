@@ -10,7 +10,7 @@
     <meta name="keywords" content="R#; mzDeco; mz_quantify" />
     <meta name="generator" content="https://github.com/rsharp-lang" />
     <meta name="theme-color" content="#333" />
-    <meta name="description" content="..." />
+    <meta name="description" content="Extract peak and signal data from rawdata..." />
     <meta class="foundation-data-attribute-namespace" />
     <meta class="foundation-mq-xxlarge" />
     <meta class="foundation-mq-xlarge" />
@@ -63,10 +63,10 @@ table caption {font-size:14px;font-weight:bolder;}
     <p style="     font-size: 1.125em;     line-height: .8em;     margin-left: 0.5%;     background-color: #fbfbfb;     padding: 24px; ">
       <code>
         <span style="color: blue;">require</span>(<span style="color: black; font-weight: bold;">mzkit</span>);
-                               <br /><br /><span style="color: green;">{$desc_comments}</span><br /><span style="color: blue;">imports</span><span style="color: brown"> "mzDeco"</span><span style="color: blue;"> from</span><span style="color: brown"> "mz_quantify"</span>;
+                               <br /><br /><span style="color: green;">#' Extract peak and signal data from rawdata</span><br /><span style="color: blue;">imports</span><span style="color: brown"> "mzDeco"</span><span style="color: blue;"> from</span><span style="color: brown"> "mz_quantify"</span>;
                            </code>
     </p>
-    <p></p>
+    <p><p>Extract peak and signal data from rawdata</p></p>
     <blockquote>
       <p style="font-style: italic; font-size: 0.9em;">
                            
@@ -96,7 +96,12 @@ table caption {font-size:14px;font-weight:bolder;}
   <td id="peak_alignment">
     <a href="./mzDeco/peak_alignment.html">peak_alignment</a>
   </td>
-  <td><p>Do COW peak alignment and export peaktable</p></td>
+  <td><p>Do COW peak alignment and export peaktable</p>
+
+<p>Correlation optimized warping (COW) based on the total ion <br />
+ current (TIC) is a widely used time alignment algorithm <br />
+ (COW-TIC). This approach works successfully on chromatograms <br />
+ containing few compounds and having a well-defined TIC.</p></td>
 </tr>
 <tr>
   <td id="mz.groups">

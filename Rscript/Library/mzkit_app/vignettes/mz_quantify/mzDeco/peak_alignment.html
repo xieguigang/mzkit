@@ -185,7 +185,7 @@
 
         <h3>Description</h3>
 
-        
+        <p><br /> Correlation optimized warping (COW) based on the total ion <br /> current (TIC) is a widely used time alignment algorithm <br /> (COW-TIC). This approach works successfully on chromatograms <br /> containing few compounds and having a well-defined TIC.</p>
 
         <h3>Usage</h3>
 
@@ -238,7 +238,9 @@
  });
  let peaktable = peak_alignment(samples = peaksdata);
  
- write.csv(peaktable, file = "/path/to/peaktable.csv", row.names = TRUE);</code></pre>
+ write.csv(peaktable, 
+     file = "/path/to/peaktable.csv", 
+     row.names = TRUE);</code></pre>
 
         <hr />
         <div style="text-align: center;">[Package <em>mzDeco</em> version 1.0.0.0 <a
