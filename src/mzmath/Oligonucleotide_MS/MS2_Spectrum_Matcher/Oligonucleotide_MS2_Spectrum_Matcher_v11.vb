@@ -237,20 +237,8 @@ Public Class MS2_Spectrum_Matcher
         Next i
         MolecularMass = thing1 + composition(1) * carbon + composition(2) * hydrogen + composition(3) * nitrogen + composition(4) * oxygen + composition(5) * phosphorus + composition(6) * sulfur
 
-        Nbasenames = 0
-        For i = 1 To 5
-            If Len(Cells(i + 2, 24)) > 0 Then
-                Nbasenames = Nbasenames + 1
-            End If
-        Next i
-        ReDim basenames(Nbasenames)
-        j = 0
-        For i = 1 To 5
-            If Len(Cells(i + 2, 24)) > 0 Then
-                j = j + 1
-                basenames(j) = Cells(i + 2, 24)
-            End If
-        Next i
+        Nbasenames = 4
+        basenames = {"A", "G", "V", "C"}
 
         'Readin fragments
 
