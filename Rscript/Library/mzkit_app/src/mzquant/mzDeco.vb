@@ -68,12 +68,11 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
-Imports SMRUCC.Rsharp.Runtime.Internal.Invokes
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 
 ''' <summary>
-''' 
+''' Extract peak and signal data from rawdata
 ''' </summary>
 <Package("mzDeco")>
 <RTypeExport("peak_feature", GetType(PeakFeature))>
@@ -238,6 +237,11 @@ Module mzDeco
 
     ''' <summary>
     ''' Do COW peak alignment and export peaktable
+    ''' 
+    ''' Correlation optimized warping (COW) based on the total ion 
+    ''' current (TIC) is a widely used time alignment algorithm 
+    ''' (COW-TIC). This approach works successfully on chromatograms 
+    ''' containing few compounds and having a well-defined TIC.
     ''' </summary>
     ''' <param name="samples"></param>
     ''' <param name="mzdiff"></param>
@@ -251,7 +255,9 @@ Module mzDeco
     ''' });
     ''' let peaktable = peak_alignment(samples = peaksdata);
     ''' 
-    ''' write.csv(peaktable, file = "/path/to/peaktable.csv", row.names = TRUE);
+    ''' write.csv(peaktable, 
+    '''     file = "/path/to/peaktable.csv", 
+    '''     row.names = TRUE);
     ''' </example>
     <ExportAPI("peak_alignment")>
     <RApiReturn(GetType(xcms2))>
