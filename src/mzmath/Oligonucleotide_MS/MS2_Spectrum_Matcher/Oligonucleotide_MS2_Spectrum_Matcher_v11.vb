@@ -1,6 +1,8 @@
 'v11 added back in precursor minus base fragment ions
+Imports System.Runtime.Intrinsics
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports System.Math
 
 Public Class MS2_Spectrum_Matcher
 
@@ -30,7 +32,7 @@ Public Class MS2_Spectrum_Matcher
         Dim startxy As Long, isprofile As Boolean, filetext As String, scantext As String, scannum As String
         Dim Npeaks As Long, maxint As Long, beforecheck As Boolean
         Dim carbon As Double, hydrogen As Double, nitrogen As Double, oxygen As Double, phosphorus As Double, sulfur As Double, proton As Double, water As Double
-        Dim Nbases As Long, oligo() As Object
+        Dim Nbases As Long, oligo() As Dim9
         Dim MolecularMass As Double
         Dim composition(6) As Double
         Dim precursorCS As Long
@@ -119,84 +121,118 @@ Public Class MS2_Spectrum_Matcher
         'Read in oligonucleotide
         ' ThisWorkbook.Worksheets(1).Activate
 
-        Dim colors() As Object, Ncolors As Long
-        Ncolors = 10
-        ReDim colors(Ncolors, 2)
-        For i = 1 To Ncolors
-            colors(i, 1) = Cells(i + 3, 37)
-            colors(i, 2) = Cells(i + 3, 37).Interior.Color
-        Next i
+        Dim colors() As ColorMap = {
+            New ColorMap("0", 0),
+            New ColorMap("0.25", 1),
+            New ColorMap("0.5", 2),
+            New ColorMap("1", 3),
+            New ColorMap("2", 4),
+            New ColorMap("4", 5),
+            New ColorMap("8", 6),
+            New ColorMap("16", 7),
+            New ColorMap("32", 8),
+            New ColorMap("100", 9)
+        }
+        Dim Ncolors As Long = 10
 
 
-        carbon = Cells(33, 25)
-        hydrogen = Cells(33, 26)
-        nitrogen = Cells(33, 27)
-        oxygen = Cells(33, 28)
-        phosphorus = Cells(33, 29)
-        sulfur = Cells(33, 30)
-        proton = Cells(33, 32)
+        carbon = 12
+        hydrogen = 1.007825
+        nitrogen = 14.003074
+        oxygen = 15.994915
+        phosphorus = 30.973762
+        sulfur = 31.97207117
+        proton = 1.007276467
         water = oxygen + hydrogen * 2
-        peakthresh = Cells(17, 1)
-        matchtol = Cells(19, 1)
+        ' Peak Annotation Threshold (Minimum % Base Peak)
+        peakthresh = 0.2
+        ' Match Tolerance (ppm)
+        matchtol = 20
         labelthresh = peakthresh
         aplus1tol = 10 'matchtol * 1.5 'ppm
-        sequence_name = Cells(5, 1)
+        ' 1-Letter Sequence
+        sequence_name = "AACVVCAACVVCAA"
         basesonly = sequence_name
 
         stng1 = ""
-        Dim oligoends() As Object
-        ReDim oligoends(2, 9)
-        Nbases = Cells(4, 2) - 1
-        ReDim oligo(Nbases, 9)
+        Dim oligoends() As Dim9
+        ReDim oligoends(2)
+        Nbases = sequence_name.Length - 1
+        ReDim oligo(Nbases)
+
+        Dim seq53 = {"Arp", "Arp", "Crp", "Vrp", "Vrp", "Crp", "Arp", "Arp", "Crp", "Vrp", "Vrp", "Crp", "Arp", "Arp"}
+
+        ' 5
+        ' Arp
+        ' Arp
+        ' Crp
+        ' Vrp
+        ' Vrp
+        ' Crp
+        ' Arp
+        ' Arp
+        ' Crp
+        ' Vrp
+        ' Vrp
+        ' Crp
+        ' Arp
+        ' Arp
+        ' 3
+
+        Dim list = Dim9.List
+
         For i = 1 To Nbases
-            oligo(i, 1) = Cells(i + 6, 3)   'base name
+            oligo(i)(1) = seq53(i - 1)   'base name
             stng1 = stng1 & Mid(sequence_name, i, 1)
-            oligo(i, 8) = Cells(i + 6, 4)   'modification mass
-            If oligo(i, 8) <> 0 Then
-                If oligo(i, 8) < 0 Then
-                    stng1 = stng1 & "(-" & Abs(Round(oligo(i, 8), 0)) & ")"
+            oligo(i)(8) = 0   'modification mass
+            If oligo(i)(8) <> 0 Then
+                If oligo(i)(8) < 0 Then
+                    stng1 = stng1 & "(-" & Abs(Round(oligo(i)(8), 0)) & ")"
                 Else
-                    stng1 = stng1 & "(+" & Round(oligo(i, 8), 0) & ")"
+                    stng1 = stng1 & "(+" & Round(oligo(i)(8), 0) & ")"
                 End If
             End If
-            oligo(i, 2) = Cells(i + 6, 13)  '# carbons
-            oligo(i, 3) = Cells(i + 6, 14)  '# hydrogens
-            oligo(i, 4) = Cells(i + 6, 15)  '# nitrogens
-            oligo(i, 5) = Cells(i + 6, 16)  '# oxygens
-            oligo(i, 6) = Cells(i + 6, 17)  '# phosphorus atoms
-            oligo(i, 7) = Cells(i + 6, 18)  '# sulfur atoms
-            oligo(i, 9) = oligo(i, 8) + oligo(i, 2) * carbon + oligo(i, 3) * hydrogen + oligo(i, 4) * nitrogen + oligo(i, 5) * oxygen + oligo(i, 6) * phosphorus + oligo(i, 7) * sulfur
+
+            Dim cells = list(seq53(i - 1))
+
+            oligo(i)(2) = cells(0)  '# carbons
+            oligo(i)(3) = cells(1)  '# hydrogens
+            oligo(i)(4) = cells(2)  '# nitrogens
+            oligo(i)(5) = cells(3)  '# oxygens
+            oligo(i)(6) = cells(4)  '# phosphorus atoms
+            oligo(i)(7) = cells(5)  '# sulfur atoms
+            oligo(i)(9) = oligo(i)(8) + oligo(i)(2) * carbon + oligo(i)(3) * hydrogen + oligo(i)(4) * nitrogen + oligo(i)(5) * oxygen + oligo(i)(6) * phosphorus + oligo(i)(7) * sulfur
         Next i
         sequence_name = stng1
-        oligoends(1, 1) = Cells(6, 3)
-        oligoends(1, 1) = Cells(6, 3)   'base name
-        oligoends(1, 8) = Cells(6, 4)   'modification mass
-        oligoends(1, 2) = Cells(6, 13)  '# carbons
-        oligoends(1, 3) = Cells(6, 14)  '# hydrogens
-        oligoends(1, 4) = Cells(6, 15)  '# nitrogens
-        oligoends(1, 5) = Cells(6, 16)  '# oxygens
-        oligoends(1, 6) = Cells(6, 17)  '# phosphorus atoms
-        oligoends(1, 7) = Cells(6, 18)  '# sulfur atoms
-        oligoends(1, 9) = oligoends(1, 8) + oligoends(1, 2) * carbon + oligoends(1, 3) * hydrogen + oligoends(1, 4) * nitrogen + oligoends(1, 5) * oxygen + oligoends(1, 6) * phosphorus + oligoends(1, 7) * sulfur
-        oligoends(2, 1) = Cells(7 + Nbases, 3)   'base name
-        oligoends(2, 8) = Cells(7 + Nbases, 4)   'modification mass
-        oligoends(2, 2) = Cells(7 + Nbases, 13)  '# carbons
-        oligoends(2, 3) = Cells(7 + Nbases, 14)  '# hydrogens
-        oligoends(2, 4) = Cells(7 + Nbases, 15)  '# nitrogens
-        oligoends(2, 5) = Cells(7 + Nbases, 16)  '# oxygens
-        oligoends(2, 6) = Cells(7 + Nbases, 17)  '# phosphorus atoms
-        oligoends(2, 7) = Cells(7 + Nbases, 18)  '# sulfur atoms
-        oligoends(2, 9) = oligoends(2, 8) + oligoends(2, 2) * carbon + oligoends(2, 3) * hydrogen + oligoends(2, 4) * nitrogen + oligoends(2, 5) * oxygen + oligoends(2, 6) * phosphorus + oligoends(2, 7) * sulfur
-        thing1 = oligoends(1, 8) + oligoends(2, 8)
+        oligoends(1)(1) = Cells(6, 3)
+        oligoends(1)(1) = Cells(6, 3)   'base name
+        oligoends(1)(8) = Cells(6, 4)   'modification mass
+        oligoends(1)(2) = Cells(6, 13)  '# carbons
+        oligoends(1)(3) = Cells(6, 14)  '# hydrogens
+        oligoends(1)(4) = Cells(6, 15)  '# nitrogens
+        oligoends(1)(5) = Cells(6, 16)  '# oxygens
+        oligoends(1)(6) = Cells(6, 17)  '# phosphorus atoms
+        oligoends(1)(7) = Cells(6, 18)  '# sulfur atoms
+        oligoends(1)(9) = oligoends(1)(8) + oligoends(1)(2) * carbon + oligoends(1)(3) * hydrogen + oligoends(1)(4) * nitrogen + oligoends(1)(5) * oxygen + oligoends(1)(6) * phosphorus + oligoends(1)(7) * sulfur
+        oligoends(2)(1) = Cells(7 + Nbases, 3)   'base name
+        oligoends(2)(8) = Cells(7 + Nbases, 4)   'modification mass
+        oligoends(2)(2) = Cells(7 + Nbases, 13)  '# carbons
+        oligoends(2)(3) = Cells(7 + Nbases, 14)  '# hydrogens
+        oligoends(2)(4) = Cells(7 + Nbases, 15)  '# nitrogens
+        oligoends(2)(5) = Cells(7 + Nbases, 16)  '# oxygens
+        oligoends(2)(6) = Cells(7 + Nbases, 17)  '# phosphorus atoms
+        oligoends(2)(7) = Cells(7 + Nbases, 18)  '# sulfur atoms
+        oligoends(2)(9) = oligoends(2)(8) + oligoends(2)(2) * carbon + oligoends(2)(3) * hydrogen + oligoends(2)(4) * nitrogen + oligoends(2)(5) * oxygen + oligoends(2)(6) * phosphorus + oligoends(2)(7) * sulfur
+        thing1 = oligoends(1)(8) + oligoends(2)(8)
         For i = 1 To Nbases
-            thing1 = thing1 + oligo(i, 8)
+            thing1 = thing1 + oligo(i)(8)
             For j = 1 To 6
-                composition(j) = composition(j) + oligo(i, j + 1)
+                composition(j) = composition(j) + oligo(i)(j + 1)
             Next j
         Next i
         For i = 1 To 2
             For j = 1 To 6
-                composition(j) = composition(j) + oligoends(i, j + 1)
+                composition(j) = composition(j) + oligoends(i)(j + 1)
             Next j
         Next i
         MolecularMass = thing1 + composition(1) * carbon + composition(2) * hydrogen + composition(3) * nitrogen + composition(4) * oxygen + composition(5) * phosphorus + composition(6) * sulfur
