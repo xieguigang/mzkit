@@ -161,8 +161,10 @@ declare namespace mzweb {
         *  suffix name is ``XML``. value of this parameter could be imzml/mzml/mzxml
         * 
         * + default value Is ``null``.
+        * @param env 
+        * + default value Is ``null``.
       */
-      function xml(file: string, prefer?: string): object;
+      function xml(file: string, prefer?: string, env?: object): object;
    }
    /**
     * write binary format of mzweb stream data
