@@ -61,12 +61,32 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.TagData
 Imports Microsoft.VisualBasic.DataStorage.netCDF
 Imports Microsoft.VisualBasic.Linq
-Imports stdNum = System.Math
+Imports std = System.Math
 
 ''' <summary>
 ''' GCxGC assembly data
 ''' </summary>
 Public Module GC2Dimensional
+
+    ''' <summary>
+    ''' test if the given cdf file is in gc-ms file format
+    ''' </summary>
+    ''' <param name="cdf"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function IsLecoGCMS(cdf As netCDFReader) As Boolean
+        For Each name As String In New String() {
+            "mass_values", "intensity_values",
+            "scan_acquisition_time", "total_intensity",
+            "point_count"
+        }
+            If Not cdf.dataVariableExists(name) Then
+                Return False
+            End If
+        Next
+
+        Return True
+    End Function
 
     ''' <summary>
     ''' Function To calculate 2D RT from the 1D RT
@@ -77,7 +97,7 @@ Public Module GC2Dimensional
     ''' <returns></returns>
     Public Function Convert2dRT(rt As Double, Modtime As Double, Optional delay_time As Double = 0) As Double
         Dim rt_adj = rt - delay_time
-        Dim rt_2d = rt_adj - (Modtime * stdNum.Floor(rt_adj / Modtime))
+        Dim rt_2d = rt_adj - (Modtime * std.Floor(rt_adj / Modtime))
 
         Return rt_2d
     End Function
@@ -102,18 +122,38 @@ Public Module GC2Dimensional
                              Optional sam_rate As Double = Double.NaN) As mzPack
 
         Dim println As Action(Of String) = AddressOf Console.WriteLine
-        Dim sig As ScanMS1() = GCMSConvertor.LoadMs1Scans(agilentGC, println).ToArray
+        Dim raw1D As mzPack = GCMSConvertor.ConvertGCMS(agilentGC, println)
 
         ' agilentGC.ToString
         '
         ' 2022-01-12
         ' build string based on the internal data vector
         ' will cause the out of memory error
-
-        Return New mzPack With {
-            .MS = sig.Demodulate2D(modtime, sam_rate),
+        Dim gc2D As New mzPack With {
+            .MS = raw1D.MS.Demodulate2D(modtime, sam_rate),
             .Application = FileApplicationClass.GCxGC,
-            .source = "LECO GCxGC CDF"
+            .source = $"LECO GCxGC({raw1D.source})",
+            .Thumbnail = raw1D.Thumbnail,
+            .Scanners = raw1D.Scanners,
+            .Annotations = raw1D.Annotations,
+            .Chromatogram = raw1D.Chromatogram,
+            .metadata = raw1D.metadata
+        }
+
+        Return gc2D
+    End Function
+
+    <Extension>
+    Public Function Demodulate2D(rawdata As mzPack, modtime As Double) As mzPack
+        Return New mzPack With {
+            .MS = rawdata.MS.Demodulate2D(modtime),
+            .Application = FileApplicationClass.GCxGC,
+            .source = "LECO GCxGC CDF",
+            .metadata = rawdata.metadata,
+            .Chromatogram = rawdata.Chromatogram,
+            .Annotations = rawdata.Annotations,
+            .Scanners = rawdata.Scanners,
+            .Thumbnail = rawdata.Thumbnail
         }
     End Function
 
@@ -271,13 +311,13 @@ Public Module GC2Dimensional
 
         ' Pad matrix so it can be resized
         Dim xp = CInt(modtime * rate)
-        Dim yp = CInt(stdNum.Ceiling(numpoints / xp))
+        Dim yp = CInt(std.Ceiling(numpoints / xp))
 
         Call Console.WriteLine($"Dimension1: {xp}")
         Call Console.WriteLine($"Dimension2: {yp}")
         Call Console.WriteLine()
 
-        Dim delta As Integer = stdNum.Abs(xp * yp - numpoints)
+        Dim delta As Integer = std.Abs(xp * yp - numpoints)
 
         If delta <> 0 Then
             Dim msg As String = $"the last {delta} signals points will be omitted."

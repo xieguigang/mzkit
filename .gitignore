@@ -284,3 +284,5 @@ Rscript/Library/mzkit_app/test/peakdata.csv
 Rscript/Library/mzkit_app/test/cluster_1/cluster.pack
 Rscript/Library/mzkit_app/test/cluster_1/spectrum.dat
 dist/Rscript/single_cells/brain1.dat
+/Rscript/Library/mzkit_app/test/D1.cdf
+/Rscript/Library/mzkit_app/test/D1.mzPack
