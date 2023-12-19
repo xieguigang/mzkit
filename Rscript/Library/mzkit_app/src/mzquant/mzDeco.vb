@@ -214,7 +214,7 @@ Module mzDeco
                 Return Internal.debug.stop("no ion m/z feature was provided!", env)
             End If
 
-            Dim dtw_aligned = pool.DtwXIC(feature, errors.TryCast(Of Tolerance))
+            Dim dtw_aligned = pool.DtwXIC(feature, errors.TryCast(Of Tolerance)).ToArray
 
         Else
             Dim ms1_scans As IEnumerable(Of IMs1Scan) = ms1Scans(ms1)

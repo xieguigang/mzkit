@@ -115,6 +115,14 @@ Public Class MzGroup
         End Get
     End Property
 
+    Sub New()
+    End Sub
+
+    Sub New(mz As Double, xic As IEnumerable(Of ChromatogramTick))
+        _mz = mz
+        _XIC = xic.ToArray
+    End Sub
+
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overrides Function ToString() As String
         Return mz
