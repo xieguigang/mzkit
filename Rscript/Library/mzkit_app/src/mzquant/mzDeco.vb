@@ -433,5 +433,36 @@ Module mzDeco
         Return pool
     End Function
 
-
+    ''' <summary>
+    ''' debug used only
+    ''' </summary>
+    ''' <param name="pool"></param>
+    ''' <param name="mz"></param>
+    ''' <param name="dtw"></param>
+    ''' <param name="mzdiff"></param>
+    ''' <returns></returns>
+    <ExportAPI("pull_xic")>
+    Public Function pull_xic(pool As XICPool, mz As Double,
+                             Optional dtw As Boolean = True,
+                             Optional mzdiff As Double = 0.01) As Object
+        If dtw Then
+            Return New list With {
+                .slots = pool _
+                    .DtwXIC(mz, Tolerance.DeltaMass(mzdiff)) _
+                    .ToDictionary(Function(a) a.Name,
+                                  Function(a)
+                                      Return CObj(a.Value)
+                                  End Function)
+            }
+        Else
+            Return New list With {
+                .slots = pool _
+                    .GetXICMatrix(mz, Tolerance.DeltaMass(mzdiff)) _
+                    .ToDictionary(Function(a) a.Name,
+                                  Function(a)
+                                      Return CObj(a.Value)
+                                  End Function)
+            }
+        End If
+    End Function
 End Module

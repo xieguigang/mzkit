@@ -73,10 +73,13 @@ Public Class XICPool
         For Each query In signals2.Skip(1)
             Dim dtw As New Dtw({refer, query}, preprocessor:=IPreprocessor.Normalization)
             Dim align_dt As Point() = dtw.GetPath.ToArray
+            Dim tick As New List(Of ChromatogramTick)
 
             For Each point In align_dt
-
+                tick.Add(New ChromatogramTick(rt(point.X), query.Strength(point.Y)))
             Next
+
+            Yield New NamedValue(Of MzGroup)(query.reference, New MzGroup(mz, tick))
         Next
     End Function
 
