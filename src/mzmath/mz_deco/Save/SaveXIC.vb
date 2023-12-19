@@ -17,6 +17,8 @@ Public Module SaveXIC
                 Call bin.Write(point.Time)
                 Call bin.Write(point.Intensity)
             Next
+
+            n += 1
         Next
 
         Call bin.Write(n)
