@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Chromatogram data deconvolution</title>
+    <title>xic_pool</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <style rel="stylesheet" type="text/css">
@@ -176,40 +176,27 @@
 
         <table style="width: 100%;">
             <tr>
-                <td>mz_deco {mzDeco}</td>
+                <td>xic_pool {mzDeco}</td>
                 <td style="text-align: right;">R Documentation</td>
             </tr>
         </table>
 
-        <h2>Chromatogram data deconvolution</h2>
+        <h2>xic_pool</h2>
 
         <h3>Description</h3>
 
-        
+        xic_pool
 
         <h3>Usage</h3>
 
         <div style="width: 100%; padding-left: 3%; color: black;">
-            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>mz_deco</strong>(<i>ms1</i>,
-    <i>tolerance</i> = <span style='color: brown;'><strong>"ppm:20"</strong></span>,
-    <i>baseline</i> = <span style='color: green;'>0.65</span>,
-    <i>peak.width</i> = <span style='color: brown;'><strong>"3,20"</strong></span>,
-    <i>joint</i> = <span style='color: blue !important;'>TRUE</span>,
-    <i>parallel</i> = <span style='color: blue !important;'>FALSE</span>,
-    <i>feature</i> = <span style='color: blue !important;'>NULL</span>);</code></pre>
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>xic_pool</strong>(<i>files</i>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
 
         <table>
             
-<dt>ms1</dt>
-<dd><p><p>a collection of the ms1 data or the mzpack raw data object</p></p></dd>
-
-
-<dt>tolerance</dt>
-<dd><p><p>-</p></p></dd>
-
         </table>
 
 
@@ -220,19 +207,11 @@
 
         <h3>Value</h3>
 
-        <p>a vector of the peak deconvolution data</p>
+        this function returns data object of type <a href="/clr/BioNovoGene/Analytical/MassSpectrometry/Math/XICPool.html">XICPool</a>.
 
-        <h3 style="display: block;">Examples</h3>
+        <h3 style="display: none;">Examples</h3>
 
-        <pre><code id="example_r"> require(mzkit);
- 
- imports "mzDeco" from "mz_quantify";
- 
- let rawdata = open.mzpack("/path/to/rawdata.mzXML");
- let ms1 = rawdata |> ms1_scans();
- let peaks = mz_deco(ms1, tolerance = "da:0.01", peak.width = [3,30]);
- 
- write.peaks(peaks, file = "/data/save_debug.dat");</code></pre>
+        
 
         <hr />
         <div style="text-align: center;">[Package <em>mzDeco</em> version 1.0.0.0 <a

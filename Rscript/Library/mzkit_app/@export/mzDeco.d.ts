@@ -41,11 +41,13 @@ declare namespace mzDeco {
      * + default value Is ``true``.
      * @param parallel 
      * + default value Is ``false``.
+     * @param feature 
+     * + default value Is ``null``.
      * @param env 
      * + default value Is ``null``.
      * @return a vector of the peak deconvolution data
    */
-   function mz_deco(ms1: any, tolerance?: any, baseline?: number, peak_width?: any, joint?: boolean, parallel?: boolean, env?: object): object;
+   function mz_deco(ms1: any, tolerance?: any, baseline?: number, peak_width?: any, joint?: boolean, parallel?: boolean, feature?: number, env?: object): object;
    /**
     * Do COW peak alignment and export peaktable
     *  
@@ -70,6 +72,20 @@ declare namespace mzDeco {
      * + default value Is ``null``.
    */
    function peak_alignment(samples: any, mzdiff?: any, rt_win?: number, norm?: boolean, env?: object): object;
+   /**
+    * debug used only
+    * 
+    * 
+     * @param pool -
+     * @param mz -
+     * @param dtw -
+     * 
+     * + default value Is ``true``.
+     * @param mzdiff -
+     * 
+     * + default value Is ``0.01``.
+   */
+   function pull_xic(pool: object, mz: number, dtw?: boolean, mzdiff?: number): any;
    module read {
       /**
        * read the peak feature table data
@@ -96,4 +112,7 @@ declare namespace mzDeco {
       */
       function peaks(peaks: any, file: any, env?: object): any;
    }
+   /**
+   */
+   function xic_pool(files: string): object;
 }
