@@ -195,9 +195,9 @@ Module mzDeco
                             Optional peak_width As Object = "3,20",
                             Optional joint As Boolean = True,
                             Optional parallel As Boolean = False,
+                            Optional feature As Double? = Nothing,
                             Optional env As Environment = Nothing) As Object
 
-        Dim ms1_scans As IEnumerable(Of IMs1Scan) = ms1Scans(ms1)
         Dim errors As [Variant](Of Tolerance, Message) = Math.getTolerance(tolerance, env)
         Dim rtRange = ApiArgumentHelpers.GetDoubleRange(peak_width, env, [default]:="3,20")
 
@@ -207,15 +207,28 @@ Module mzDeco
             Return rtRange.TryCast(Of Message)
         End If
 
-        Return ms1_scans _
-            .GetMzGroups(mzdiff:=errors) _
-            .DecoMzGroups(
-                peakwidth:=rtRange.TryCast(Of DoubleRange),
-                quantile:=baseline,
-                parallel:=parallel,
-                joint:=joint
-            ) _
-            .ToArray
+        If TypeOf ms1 Is XICPool Then
+            Dim pool As XICPool = DirectCast(ms1, XICPool)
+
+            If feature Is Nothing Then
+                Return Internal.debug.stop("no ion m/z feature was provided!", env)
+            End If
+
+            Dim dtw_aligned = pool.DtwXIC(feature, errors.TryCast(Of Tolerance))
+
+        Else
+            Dim ms1_scans As IEnumerable(Of IMs1Scan) = ms1Scans(ms1)
+
+            Return ms1_scans _
+                .GetMzGroups(mzdiff:=errors) _
+                .DecoMzGroups(
+                    peakwidth:=rtRange.TryCast(Of DoubleRange),
+                    quantile:=baseline,
+                    parallel:=parallel,
+                    joint:=joint
+                ) _
+                .ToArray
+        End If
     End Function
 
     ''' <summary>
@@ -419,4 +432,6 @@ Module mzDeco
 
         Return pool
     End Function
+
+
 End Module
