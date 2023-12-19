@@ -34,4 +34,11 @@ Public Class XICPool
         Next
     End Function
 
+    Public Function DtwXIC(mz As Double, mzdiff As Tolerance) As NamedValue(Of MzGroup)()
+        Dim rawdata = GetXICMatrix(mz, mzdiff).ToArray
+        ' make the length equals to each other
+
+
+    End Function
+
 End Class

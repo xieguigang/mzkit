@@ -403,4 +403,20 @@ Module mzDeco
             Throw New NotImplementedException
         End If
     End Function
+
+    <ExportAPI("xic_pool")>
+    <RApiReturn(GetType(XICPool))>
+    Public Function XICpool(files As String()) As Object
+        Dim pool As New XICPool
+        Dim group As MzGroup()
+
+        For Each file As String In files
+            Using s As Stream = file.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
+                group = SaveXIC.ReadSample(s).ToArray
+                pool.Add(file.BaseName, group)
+            End Using
+        Next
+
+        Return pool
+    End Function
 End Module
