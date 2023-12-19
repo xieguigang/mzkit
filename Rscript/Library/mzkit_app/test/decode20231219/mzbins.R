@@ -4,7 +4,7 @@ imports "mzDeco" from "mz_quantify";
 
 let files = list.files("E:\\lipids-XCMS3-rt\\raw\\pos_mzPack", pattern = "*.xic");
 
-let xic_data = lapply(files[1:3], path -> readBin(path, what = "mz_group"));
+let xic_data = lapply(files, path -> readBin(path, what = "mz_group"));
 let mz = lapply(xic_data, function(pack, i) {
     data.frame(
         mz = [pack]::mz,
