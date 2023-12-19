@@ -89,6 +89,26 @@ Public Class MzGroup
         End Get
     End Property
 
+    Public ReadOnly Property TIC As Double
+        Get
+            Return Aggregate t As ChromatogramTick
+                   In XIC
+                   Into Sum(t.Intensity)
+        End Get
+    End Property
+
+    Public ReadOnly Property MaxInto As Double
+        Get
+            If size = 0 Then
+                Return 0
+            Else
+                Return Aggregate t As ChromatogramTick
+                       In XIC
+                       Into Max(t.Intensity)
+            End If
+        End Get
+    End Property
+
     Public Overrides Function ToString() As String
         Return mz
     End Function
