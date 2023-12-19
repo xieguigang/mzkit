@@ -1,5 +1,4 @@
 ﻿Imports System.Runtime.CompilerServices
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.SignalReader.ChromatogramReader
@@ -85,8 +84,8 @@ Public Module MRM
     End Function
 
     <Extension>
-    Private Iterator Function DecodeRaw(mzml As IEnumerable(Of chromatogram)) As IEnumerable(Of NamedCollection(Of ChromatogramTick))
-        For Each c As chromatogram In mzml
+    Private Iterator Function DecodeRaw(mzml As IEnumerable(Of chromatogramRaw)) As IEnumerable(Of NamedCollection(Of ChromatogramTick))
+        For Each c As chromatogramRaw In mzml
             Dim id As String
 
             If c.id.TextEquals("TIC") OrElse c.id.TextEquals("BPC") Then

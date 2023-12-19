@@ -54,6 +54,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.DataStorage.netCDF
 Imports Microsoft.VisualBasic.DataStorage.netCDF.Components
@@ -88,7 +89,7 @@ Public Module GCMSConvertor
         Return New mzPack With {
             .Application = FileApplicationClass.GCMS,
             .MS = LoadMs1Scans(agilentGC, println).ToArray,
-            .Chromatogram = New DataReader.Chromatogram With {
+            .Chromatogram = New Chromatogram With {
                 .scan_time = scan_time,
                 .BPC = totalIons,
                 .TIC = totalIons
