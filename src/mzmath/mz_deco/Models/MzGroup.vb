@@ -138,4 +138,8 @@ Public Class MzGroup
         }
     End Function
 
+    Public Function CreateChromatogram() As Chromatogram
+
+    End Function
+
 End Class

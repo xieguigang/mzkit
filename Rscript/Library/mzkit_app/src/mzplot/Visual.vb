@@ -88,6 +88,7 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
+Imports SMRUCC.Rsharp.Runtime.Internal.Invokes
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
@@ -458,31 +459,8 @@ Module Visual
         End If
     End Function
 
-    ''' <summary>
-    ''' plot raw XIC matrix based on a given sequence of ms1 scans data
-    ''' </summary>
-    ''' <param name="ms1_scans">all ms1 scan point data for create XIC overlaps</param>
-    ''' <param name="mzwidth">mz tolerance for create XIC data</param>
-    ''' <param name="env"></param>
-    ''' <returns></returns>
-    <ExportAPI("raw_snapshot3D")>
-    Public Function Snapshot3D(<RRawVectorArgument>
-                               ms1_scans As Object,
-                               Optional mzwidth As Object = "da:0.3",
-                               Optional noise_cutoff As Double = 0.5,
-                               <RRawVectorArgument>
-                               Optional size As Object = "1600,1200",
-                               Optional env As Environment = Nothing) As Object
-
-        Dim points As pipeline = pipeline.TryCreatePipeline(Of ms1_scan)(ms1_scans, env)
-        Dim mzErr = Math.getTolerance(mzwidth, env)
-
-        If points.isError Then
-            Return points.getError
-        ElseIf mzErr Like GetType(Message) Then
-            Return mzErr.TryCast(Of Message)
-        End If
-
+    <Extension>
+    Private Function assembleOverlaps(points As pipeline, mzErr As [Variant](Of Tolerance, Message), noise_cutoff As Double, env As Environment) As ChromatogramOverlap
         Dim XIC As New ChromatogramOverlap
         Dim scan As ms1_scan()
         Dim chr As Chromatogram
@@ -514,6 +492,45 @@ Module Visual
                 XIC.TIC(Val(mz.name).ToString("F4")) = chr
             End If
         Next
+
+        Return XIC
+    End Function
+
+    ''' <summary>
+    ''' plot raw XIC matrix based on a given sequence of ms1 scans data
+    ''' </summary>
+    ''' <param name="ms1_scans">all ms1 scan point data for create XIC overlaps</param>
+    ''' <param name="mzwidth">mz tolerance for create XIC data</param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("raw_snapshot3D")>
+    Public Function Snapshot3D(<RRawVectorArgument>
+                               ms1_scans As Object,
+                               Optional mzwidth As Object = "da:0.3",
+                               Optional noise_cutoff As Double = 0.5,
+                               <RRawVectorArgument>
+                               Optional size As Object = "1600,1200",
+                               Optional env As Environment = Nothing) As Object
+
+        Dim points As pipeline = pipeline.TryCreatePipeline(Of ms1_scan)(ms1_scans, env)
+        Dim mzErr As [Variant](Of Tolerance, Message) = Math.getTolerance(mzwidth, env)
+        Dim XIC As ChromatogramOverlap
+
+        If mzErr Like GetType(Message) Then
+            Return mzErr.TryCast(Of Message)
+        End If
+        If points.isError Then
+            If TypeOf ms1_scans Is list AndAlso DirectCast(ms1_scans, list).data _
+                .All(Function(xi) TypeOf xi Is MzGroup) Then
+
+                Dim groupList = DirectCast(ms1_scans, list).AsGeneric(Of MzGroup)(env)
+
+            Else
+                Return points.getError
+            End If
+        Else
+            XIC = points.assembleOverlaps(mzErr, noise_cutoff, env)
+        End If
 
         Dim args As New list With {
             .slots = New Dictionary(Of String, Object) From {
