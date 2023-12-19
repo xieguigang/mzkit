@@ -8,4 +8,6 @@ let mzbins = read.csv("E:\\lipids-XCMS3-rt\\raw\\pos_mzbins.csv", row.names = 1,
 
 print(mzbins);
 
-let matrix = mz_deco(pool ,feature = 711.5664, tolerance = "da:0.01");
+let raw_xic = pull_xic(pool , mz = 711.5664, dtw = FALSE);
+let dtw_xic = pull_xic(pool, mz = 711.5664, dtw = TRUE);
+
