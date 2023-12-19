@@ -76,6 +76,7 @@ Imports SMRUCC.Rsharp.Runtime.Interop
 ''' </summary>
 <Package("mzDeco")>
 <RTypeExport("peak_feature", GetType(PeakFeature))>
+<RTypeExport("mz_group", GetType(MzGroup))>
 Module mzDeco
 
     Sub Main()
