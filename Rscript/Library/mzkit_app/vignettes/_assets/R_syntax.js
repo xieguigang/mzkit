@@ -1,6 +1,11 @@
 var Token;
 (function (Token) {
     Token.html_color = /"[#][a-zA-Z0-9]{6}"/ig;
+    /**
+     * pattern for match the number token
+    */
+    Token.number_regexp = /[-]?\d+(\.\d+)?([eE][-]?\d+)?/ig;
+    Token.symbol_name = /[a-zA-Z_\.]/ig;
     function renderTextSet(chars) {
         var set = {};
         for (var _i = 0, chars_1 = chars; _i < chars_1.length; _i++) {
@@ -212,7 +217,8 @@ var TokenParser = /** @class */ (function () {
     };
     TokenParser.prototype.measureToken = function (push_next) {
         var text = this.buf.join("");
-        var test_symbol = text.match(/[a-zA-Z_\.]/ig);
+        var test_symbol = text.match(Token.symbol_name);
+        var test_number = text.match(Token.number_regexp);
         this.buf = [];
         if (push_next) {
             this.buf.push(push_next);
@@ -235,6 +241,12 @@ var TokenParser = /** @class */ (function () {
                 type: "keyword"
             };
         }
+        else if (test_number && (test_number.length > 0)) {
+            return {
+                text: text,
+                type: "number"
+            };
+        }
         else if (test_symbol && (test_symbol.length > 0)) {
             // symbol
             return {
@@ -251,7 +263,7 @@ var TokenParser = /** @class */ (function () {
         else {
             return {
                 text: text,
-                type: "number"
+                type: "undefined"
             };
         }
     };
@@ -286,10 +298,10 @@ function highlights(str, verbose) {
                 html = html + escape_op(t.text);
                 break;
             case "color":
-                html = html + ("<span class=\"color\" style=\"font-style: italic; background-color: " + t.text.replace(/'/ig, "").replace(/"/ig, "") + "; color: white; font-weight: bold;\">" + t.text + "</span>");
+                html = html + "<span class=\"color\" style=\"font-style: italic; background-color: ".concat(t.text.replace(/'/ig, "").replace(/"/ig, ""), "; color: white; font-weight: bold;\">").concat(t.text, "</span>");
                 break;
             default:
-                html = html + ("<span class=\"" + t.type + "\">" + t.text + "</span>");
+                html = html + "<span class=\"".concat(t.type, "\">").concat(t.text, "</span>");
         }
     }
     return html;

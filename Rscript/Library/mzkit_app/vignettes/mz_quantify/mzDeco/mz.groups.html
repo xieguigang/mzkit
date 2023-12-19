@@ -199,11 +199,11 @@
         <table>
             
 <dt>ms1</dt>
-<dd><p><p>-</p></p></dd>
+<dd><p><p>a LCMS mzpack rawdata object or a collection of the ms1 point data</p></p></dd>
 
 
 <dt>mzdiff</dt>
-<dd><p><p>-</p></p></dd>
+<dd><p><p>the mass tolerance error for extract the XIC from the rawdata set</p></p></dd>
 
 
 <dt>env</dt>
@@ -221,9 +221,10 @@
 
         <p>create a list of XIC dataset for run downstream deconv operation</p>
 
-        <h3 style="display: none;">Examples</h3>
+        <h3 style="display: block;">Examples</h3>
 
-        
+        <pre><code id="example_r"> let rawdata = open.mzpack(file = "/path/to/rawdata.mzpack");
+ let XIC = mz.groups(ms1 = rawdata, mzdiff = "ppm:20");</code></pre>
 
         <hr />
         <div style="text-align: center;">[Package <em>mzDeco</em> version 1.0.0.0 <a

@@ -14,8 +14,8 @@ declare namespace mzDeco {
        * do ``m/z`` grouping under the given tolerance
        * 
        * 
-        * @param ms1 -
-        * @param mzdiff -
+        * @param ms1 a LCMS mzpack rawdata object or a collection of the ms1 point data
+        * @param mzdiff the mass tolerance error for extract the XIC from the rawdata set
         * 
         * + default value Is ``'ppm:20'``.
         * @param env -
