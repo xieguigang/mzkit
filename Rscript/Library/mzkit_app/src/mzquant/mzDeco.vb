@@ -68,6 +68,7 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
+Imports SMRUCC.Rsharp.Runtime.Internal
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 
@@ -82,7 +83,18 @@ Module mzDeco
     Sub Main()
         Call Internal.Object.Converts.addHandler(GetType(PeakFeature()), AddressOf peaktable)
         Call Internal.Object.Converts.addHandler(GetType(xcms2()), AddressOf peaksetMatrix)
+
+        Call generic.add("readBin.mz_group", GetType(Stream), AddressOf readXIC)
+        Call generic.add("readBin.peak_feature", GetType(Stream), AddressOf readSamples)
     End Sub
+
+    Private Function readSamples(file As Stream, args As list, env As Environment) As Object
+        Return SaveSample.ReadSample(file).ToArray
+    End Function
+
+    Private Function readXIC(file As Stream, args As list, env As Environment) As Object
+        Return SaveXIC.ReadSample(file).ToArray
+    End Function
 
     Private Function peaksetMatrix(peakset As xcms2(), args As list, env As Environment) As dataframe
         Dim table As New dataframe With {
