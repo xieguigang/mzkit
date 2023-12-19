@@ -5,6 +5,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.SignalReader.ChromatogramReader
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.SignalProcessing
 Imports chromatogramRaw = BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML.chromatogram
 
