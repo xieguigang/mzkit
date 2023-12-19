@@ -54,6 +54,7 @@
 
 Imports System.Xml.Serialization
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 
 ''' <summary>
 ''' XIC dataset that used for deconv
@@ -75,6 +76,18 @@ Public Class MzGroup
     ''' <returns></returns>
     <XmlElement>
     Public Property XIC As ChromatogramTick()
+
+    Public ReadOnly Property size As Integer
+        Get
+            Return XIC.TryCount
+        End Get
+    End Property
+
+    Public ReadOnly Property rt As DoubleRange
+        Get
+            Return New DoubleRange(From t As ChromatogramTick In XIC Select t.Time)
+        End Get
+    End Property
 
     Public Overrides Function ToString() As String
         Return mz
