@@ -65,6 +65,7 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.TagData
 
 Namespace Chromatogram
@@ -78,11 +79,13 @@ Namespace Chromatogram
         ''' The signal tick time in second
         ''' </summary>
         ''' <returns></returns>
-        Public Property Time As Double Implements ITimeSignal.time
+        <XmlAttribute> Public Property Time As Double Implements ITimeSignal.time
+
         ''' <summary>
         ''' number of detector counts
         ''' </summary>
         ''' <returns></returns>
+        <XmlText>
         Public Property Intensity As Double Implements ITimeSignal.intensity
 
         Sub New()

@@ -337,12 +337,19 @@ Module mzDeco
     ''' <summary>
     ''' do ``m/z`` grouping under the given tolerance
     ''' </summary>
-    ''' <param name="ms1"></param>
-    ''' <param name="mzdiff"></param>
+    ''' <param name="ms1">
+    ''' a LCMS mzpack rawdata object or a collection of the ms1 point data
+    ''' </param>
+    ''' <param name="mzdiff">the mass tolerance error for extract the XIC from the rawdata set</param>
     ''' <param name="env"></param>
     ''' <returns>
     ''' create a list of XIC dataset for run downstream deconv operation
     ''' </returns>
+    ''' <example>
+    ''' let rawdata = open.mzpack(file = "/path/to/rawdata.mzpack");
+    ''' let XIC = mz.groups(ms1 = rawdata, mzdiff = "ppm:20");
+    ''' 
+    ''' </example>
     <ExportAPI("mz.groups")>
     <RApiReturn(GetType(MzGroup()))>
     Public Function mz_groups(<RRawVectorArgument>
