@@ -86,7 +86,24 @@ Module mzDeco
 
         Call generic.add("readBin.mz_group", GetType(Stream), AddressOf readXIC)
         Call generic.add("readBin.peak_feature", GetType(Stream), AddressOf readSamples)
+
+        Call generic.add("writeBin", GetType(MzGroup()), AddressOf writeXIC)
+        Call generic.add("writeBin", GetType(PeakFeature()), AddressOf writeSamples)
     End Sub
+
+    Private Function writeSamples(samples As PeakFeature(), args As list, env As Environment) As Object
+        Dim con As Stream = args!con
+        Call SaveSample.DumpSample(samples, con)
+        Call con.Flush()
+        Return True
+    End Function
+
+    Private Function writeXIC(xic As MzGroup(), args As list, env As Environment) As Object
+        Dim con As Stream = args!con
+        Call SaveXIC.DumpSample(xic, con)
+        Call con.Flush()
+        Return True
+    End Function
 
     Private Function readSamples(file As Stream, args As list, env As Environment) As Object
         Return SaveSample.ReadSample(file).ToArray
