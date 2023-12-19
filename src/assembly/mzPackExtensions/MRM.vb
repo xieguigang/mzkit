@@ -6,8 +6,8 @@ Imports BioNovoGene.Analytical.MassSpectrometry.SignalReader.ChromatogramReader
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.SignalProcessing
+Imports chromatogramRaw = BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML.chromatogram
 
 ''' <summary>
 ''' convert mzML MRM data to mzPack
@@ -15,7 +15,7 @@ Imports Microsoft.VisualBasic.Math.SignalProcessing
 Public Module MRM
 
     <Extension>
-    Public Function ConvertMzMLFile(mzml As IEnumerable(Of chromatogram),
+    Public Function ConvertMzMLFile(mzml As IEnumerable(Of chromatogramRaw),
                                     Optional source As String = Nothing,
                                     Optional size As Integer = -1) As mzPack
 

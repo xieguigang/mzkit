@@ -88,7 +88,7 @@ Public Class mzPack : Implements IMZPack
     ''' TIC/BPC
     ''' </summary>
     ''' <returns></returns>
-    Public Property Chromatogram As DataReader.Chromatogram
+    Public Property Chromatogram As Chromatogram
     ''' <summary>
     ''' the file name of the raw data source file
     ''' </summary>

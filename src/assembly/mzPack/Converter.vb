@@ -69,7 +69,8 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.SignalProcessing
-Imports stdNum = System.Math
+Imports chromatogramObj = BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram.Chromatogram
+Imports std = System.Math
 
 Public Module Converter
 
@@ -91,7 +92,7 @@ Public Module Converter
     Public Function LoadMgf(file As String) As mzPack
         Dim data = MgfReader.ReadIons(file).IonPeaks.ToArray
         Dim rt_scans = data _
-            .GroupBy(Function(t) Val(t.rt), Function(a, b) stdNum.Abs(a - b) <= 2) _
+            .GroupBy(Function(t) Val(t.rt), Function(a, b) std.Abs(a - b) <= 2) _
             .OrderBy(Function(d) Val(d.name)) _
             .ToArray
         Dim ms1 = rt_scans _
@@ -121,7 +122,7 @@ Public Module Converter
     Public Function LoadMsp(file As String) As mzPack
         Dim msp As MspData() = MspData.Load(file).ToArray
         Dim rt_scans = msp _
-            .GroupBy(Function(t) Val(t.RetentionTime), Function(a, b) stdNum.Abs(a - b) <= 2) _
+            .GroupBy(Function(t) Val(t.RetentionTime), Function(a, b) std.Abs(a - b) <= 2) _
             .OrderBy(Function(d) Val(d.name)) _
             .ToArray
         Dim ms1 = rt_scans _
@@ -284,7 +285,7 @@ imzML:      Return LoadimzML(xml, intocutoff, Sub(p, msg) progress($"{msg}...{p}
                 .Time = scan_time,
                 .Intensity = TIC
             }
-            UV(scanId) = New DataReader.Chromatogram With {
+            UV(scanId) = New chromatogramObj With {
                 .TIC = time_scan.Strength,
                 .scan_time = time_scan.Measures,
                 .BPC = .TIC
@@ -297,7 +298,7 @@ imzML:      Return LoadimzML(xml, intocutoff, Sub(p, msg) progress($"{msg}...{p}
 
         Dim PDAPlot As New ChromatogramOverlap
 
-        PDAPlot("PDA") = New DataReader.Chromatogram With {
+        PDAPlot("PDA") = New chromatogramObj With {
             .scan_time = PDA.Select(Function(t) t.Time).ToArray,
             .TIC = PDA.Select(Function(t) t.Intensity).ToArray,
             .BPC = .TIC
@@ -326,8 +327,8 @@ imzML:      Return LoadimzML(xml, intocutoff, Sub(p, msg) progress($"{msg}...{p}
         End If
 
         Dim time_scans As ChromatogramOverlap = mzpack.Scanners(ExtractUVData.UVScanType)
-        Dim PDA As DataReader.Chromatogram = mzpack.Scanners!PDA!PDA
-        Dim scan As DataReader.Chromatogram
+        Dim PDA As chromatogramObj = mzpack.Scanners!PDA!PDA
+        Dim scan As chromatogramObj
         Dim UV As UVScan
 
         For Each timeId As SeqValue(Of String) In time_scans.overlaps.Keys.SeqIterator
