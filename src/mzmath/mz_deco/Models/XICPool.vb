@@ -3,6 +3,8 @@ Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.SignalProcessing
 Imports Microsoft.VisualBasic.Math.SignalProcessing.NDtw
 Imports Microsoft.VisualBasic.Math.SignalProcessing.NDtw.Preprocessing
@@ -45,6 +47,15 @@ Public Class XICPool
             .OrderByDescending(Function(a) a.Value.MaxInto) _
             .Select(Function(x) x.Value.CreateSignal(x.Name)) _
             .ToArray
+        Dim rt As Double() = signals.Select(Function(s) s.Measures) _
+            .IteratesALL _
+            .OrderBy(Function(ti) ti) _
+            .ToArray
+        Dim diff_rt As Double() = NumberGroups.diff(rt).OrderByDescending(Function(dt) dt).ToArray
+        Dim sampler As Resampler() = signals _
+            .Select(Function(sig) Resampler.CreateSampler(sig)) _
+            .ToArray
+
         Dim dtw As New Dtw(signals, preprocessor:=IPreprocessor.Normalization)
         Dim align_dt As Point() = dtw.GetPath.ToArray
 
