@@ -138,8 +138,12 @@ Public Class MzGroup
         }
     End Function
 
-    Public Function CreateChromatogram() As Chromatogram
-
+    Public Function CreateChromatogram() As Chromatogram.Chromatogram
+        Return New Chromatogram.Chromatogram() With {
+            .scan_time = XIC.Select(Function(a) a.Time).ToArray,
+            .BPC = XIC.Select(Function(a) a.Intensity).ToArray,
+            .TIC = .BPC
+        }
     End Function
 
 End Class

@@ -523,8 +523,11 @@ Module Visual
             If TypeOf ms1_scans Is list AndAlso DirectCast(ms1_scans, list).data _
                 .All(Function(xi) TypeOf xi Is MzGroup) Then
 
-                Dim groupList = DirectCast(ms1_scans, list).AsGeneric(Of MzGroup)(env)
+                XIC = New ChromatogramOverlap
 
+                For Each group In DirectCast(ms1_scans, list).AsGeneric(Of MzGroup)(env)
+
+                Next
             Else
                 Return points.getError
             End If
