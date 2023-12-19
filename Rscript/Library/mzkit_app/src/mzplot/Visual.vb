@@ -526,7 +526,7 @@ Module Visual
                 XIC = New ChromatogramOverlap
 
                 For Each group In DirectCast(ms1_scans, list).AsGeneric(Of MzGroup)(env)
-
+                    XIC(group.Key) = group.Value.CreateChromatogram
                 Next
             Else
                 Return points.getError
