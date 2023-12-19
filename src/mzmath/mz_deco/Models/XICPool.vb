@@ -47,19 +47,41 @@ Public Class XICPool
             .OrderByDescending(Function(a) a.Value.MaxInto) _
             .Select(Function(x) x.Value.CreateSignal(x.Name)) _
             .ToArray
-        Dim rt As Double() = signals.Select(Function(s) s.Measures) _
-            .IteratesALL _
-            .OrderBy(Function(ti) ti) _
-            .ToArray
-        Dim diff_rt As Double() = NumberGroups.diff(rt).OrderByDescending(Function(dt) dt).ToArray
-        Dim sampler As Resampler() = signals _
-            .Select(Function(sig) Resampler.CreateSampler(sig)) _
-            .ToArray
+        Dim rt As Double() = Rt_vector(signals)
+        Dim signals2 As GeneralSignal() = signals _
+            .Select(Function(sig)
+                        Dim sample = Resampler.CreateSampler(sig)
+                        Dim intensity As Double() = sample.GetVector(rt)
+                        Dim resample As New GeneralSignal With {
+                            .Measures = rt.ToArray,
+                            .description = sig.description,
+                            .measureUnit = sig.measureUnit,
+                            .meta = sig.meta,
+                            .reference = sig.reference,
+                            .Strength = intensity,
+                            .weight = sig.weight
+                        }
 
+                        Return resample
+                    End Function) _
+            .ToArray
         Dim dtw As New Dtw(signals, preprocessor:=IPreprocessor.Normalization)
         Dim align_dt As Point() = dtw.GetPath.ToArray
 
 
+    End Function
+
+    Private Function Rt_vector(signals As GeneralSignal()) As Double()
+        Dim rt As Double() = signals.Select(Function(s) s.Measures) _
+            .IteratesALL _
+            .OrderBy(Function(ti) ti) _
+            .ToArray
+        Dim diff_rt As Double = NumberGroups.diff(rt) _
+            .OrderByDescending(Function(dt) dt) _
+            .Skip(rt.Length * 0.1) _
+            .Average
+
+        Return seq2(rt.Min, rt.Max, by:=diff_rt)
     End Function
 
 End Class
