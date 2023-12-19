@@ -1,7 +1,11 @@
-﻿Imports System.Runtime.CompilerServices
+﻿Imports System.Drawing
+Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Math.SignalProcessing
+Imports Microsoft.VisualBasic.Math.SignalProcessing.NDtw
+Imports Microsoft.VisualBasic.Math.SignalProcessing.NDtw.Preprocessing
 
 Public Class XICPool
 
@@ -37,6 +41,12 @@ Public Class XICPool
     Public Function DtwXIC(mz As Double, mzdiff As Tolerance) As NamedValue(Of MzGroup)()
         Dim rawdata = GetXICMatrix(mz, mzdiff).ToArray
         ' make the length equals to each other
+        Dim signals As GeneralSignal() = rawdata _
+            .OrderByDescending(Function(a) a.Value.MaxInto) _
+            .Select(Function(x) x.Value.CreateSignal(x.Name)) _
+            .ToArray
+        Dim dtw As New Dtw(signals, preprocessor:=IPreprocessor.Normalization)
+        Dim align_dt As Point() = dtw.GetPath.ToArray
 
 
     End Function

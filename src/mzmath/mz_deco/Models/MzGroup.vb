@@ -52,9 +52,11 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports Microsoft.VisualBasic.Math.SignalProcessing
 
 ''' <summary>
 ''' XIC dataset that used for deconv
@@ -78,18 +80,21 @@ Public Class MzGroup
     Public Property XIC As ChromatogramTick()
 
     Public ReadOnly Property size As Integer
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
             Return XIC.TryCount
         End Get
     End Property
 
     Public ReadOnly Property rt As DoubleRange
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
             Return New DoubleRange(From t As ChromatogramTick In XIC Select t.Time)
         End Get
     End Property
 
     Public ReadOnly Property TIC As Double
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
             Return Aggregate t As ChromatogramTick
                    In XIC
@@ -98,6 +103,7 @@ Public Class MzGroup
     End Property
 
     Public ReadOnly Property MaxInto As Double
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
             If size = 0 Then
                 Return 0
@@ -109,8 +115,19 @@ Public Class MzGroup
         End Get
     End Property
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overrides Function ToString() As String
         Return mz
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function CreateSignal(name As String) As GeneralSignal
+        Return New GeneralSignal With {
+            .reference = name,
+            .weight = 1,
+            .Strength = XIC.Select(Function(ti) ti.Intensity).ToArray,
+            .Measures = XIC.Select(Function(ti) ti.Time).ToArray
+        }
     End Function
 
 End Class
