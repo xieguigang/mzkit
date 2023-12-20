@@ -49,6 +49,9 @@ Public Class XICPool
     Public Shared Iterator Function DtwXIC(rawdata As NamedValue(Of MzGroup)()) As IEnumerable(Of NamedValue(Of MzGroup))
         ' make the length equals to each other
         Dim orders = rawdata _
+            .Select(Function(a)
+                        Return New NamedValue(Of MzGroup)(a.Name, a.Value.TrimRTScatter)
+                    End Function) _
             .OrderByDescending(Function(a) a.Value.MaxInto) _
             .ToArray
         Dim signals As GeneralSignal() = orders _
