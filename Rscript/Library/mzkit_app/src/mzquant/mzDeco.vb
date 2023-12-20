@@ -227,6 +227,7 @@ Module mzDeco
                     rtRange:=rtRange.TryCast(Of DoubleRange),
                     baseline:=baseline,
                     joint:=joint)
+
         ElseIf TypeOf ms1 Is list Then
             Dim ls_xic = DirectCast(ms1, list) _
                 .AsGeneric(Of MzGroup)(env) _
@@ -234,10 +235,6 @@ Module mzDeco
                 .ToArray
 
             If Not ls_xic.All(Function(a) a.Value Is Nothing) Then
-                ls_xic = BioNovoGene.Analytical.MassSpectrometry.Math.XICPool _
-                        .DtwXIC(rawdata:=ls_xic) _
-                        .ToArray
-
                 Return ls_xic.extractAlignedPeaks(
                     rtRange:=rtRange.TryCast(Of DoubleRange),
                     baseline:=baseline,
