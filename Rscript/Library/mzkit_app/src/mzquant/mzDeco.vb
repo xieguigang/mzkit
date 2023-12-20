@@ -186,7 +186,7 @@ Module mzDeco
     ''' write.peaks(peaks, file = "/data/save_debug.dat");
     ''' </example>
     <ExportAPI("mz_deco")>
-    <RApiReturn(GetType(PeakFeature))>
+    <RApiReturn(GetType(PeakFeature), GetType(xcms2))>
     Public Function mz_deco(<RRawVectorArgument>
                             ms1 As Object,
                             Optional tolerance As Object = "ppm:20",
@@ -214,11 +214,30 @@ Module mzDeco
                 Return Internal.debug.stop("no ion m/z feature was provided!", env)
             End If
 
+            ' extract the aligned data
             Dim dtw_aligned = pool.DtwXIC(feature, errors.TryCast(Of Tolerance)).ToArray
+            ' and then export the peaks and area data
+            Dim peaksSet = dtw_aligned _
+                .Select(Function(sample)
+                            Dim peaks = sample.Value.GetPeakGroups(
+                                    peakwidth:=rtRange.TryCast(Of DoubleRange),
+                                    quantile:=baseline,
+                                    sn_threshold:=0,
+                                    joint:=joint) _
+                                .ExtractFeatureGroups _
+                                .ToArray
 
+                            Return New NamedCollection(Of PeakFeature)(sample.Name, peaks)
+                        End Function) _
+                .ToArray
+            Dim xcms As xcms2() = peaksSet.XcmsTable.ToArray
+
+            Return xcms
         Else
             Dim ms1_scans As IEnumerable(Of IMs1Scan) = ms1Scans(ms1)
 
+            ' usually used for make extract features
+            ' for a single sample file
             Return ms1_scans _
                 .GetMzGroups(mzdiff:=errors) _
                 .DecoMzGroups(
@@ -268,7 +287,8 @@ Module mzDeco
     ''' </param>
     ''' <returns></returns>
     <ExportAPI("read.peakFeatures")>
-    Public Function readPeakData(file As String, Optional readBin As Boolean = False) As PeakFeature()
+    <RApiReturn(GetType(PeakFeature))>
+    Public Function readPeakData(file As String, Optional readBin As Boolean = False) As Object
         If readBin Then
             Using buf As Stream = file.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
                 Return SaveSample.ReadSample(buf).ToArray

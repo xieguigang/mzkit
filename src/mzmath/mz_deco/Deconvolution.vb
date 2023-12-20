@@ -178,28 +178,36 @@ Public Module Deconvolution
     ''' <param name="quantile#"></param>
     ''' <returns></returns>
     <Extension>
-    Public Iterator Function DecoMzGroups(mzgroups As IEnumerable(Of MzGroup), peakwidth As DoubleRange,
-                                          Optional quantile# = 0.65,
-                                          Optional sn As Double = 3,
-                                          Optional nticks As Integer = 6,
-                                          Optional joint As Boolean = True,
-                                          Optional parallel As Boolean = False) As IEnumerable(Of PeakFeature)
+    Public Function DecoMzGroups(mzgroups As IEnumerable(Of MzGroup), peakwidth As DoubleRange,
+                                 Optional quantile# = 0.65,
+                                 Optional sn As Double = 3,
+                                 Optional nticks As Integer = 6,
+                                 Optional joint As Boolean = True,
+                                 Optional parallel As Boolean = False) As IEnumerable(Of PeakFeature)
 
         Dim groupData As MzGroup() = mzgroups.ToArray
-        Dim features As IGrouping(Of String, PeakFeature)() = groupData _
+        Dim features As PeakFeature() = groupData _
             .Populate(parallel) _
             .Select(Function(mz)
                         Return mz.GetPeakGroups(peakwidth, quantile, sn, joint:=joint)
                     End Function) _
             .IteratesALL _
             .Where(Function(peak) peak.nticks >= nticks) _
+            .ToArray
+
+        Return features.ExtractFeatureGroups
+    End Function
+
+    <Extension>
+    Public Iterator Function ExtractFeatureGroups(peaks As IEnumerable(Of PeakFeature)) As IEnumerable(Of PeakFeature)
+        Dim guid As New Dictionary(Of String, Counter)
+        Dim uid As String
+        Dim features As IGrouping(Of String, PeakFeature)() = peaks _
             .GroupBy(Function(m)
                          ' 产生xcms id编号的Mxx部分
                          Return std.Round(m.mz).ToString
                      End Function) _
             .ToArray
-        Dim guid As New Dictionary(Of String, Counter)
-        Dim uid As String
 
         For Each mzId As IGrouping(Of String, PeakFeature) In features
             Dim mId As String = mzId.Key
