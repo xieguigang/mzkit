@@ -67,9 +67,6 @@ declare namespace mzDeco {
      * @param mzdiff -
      * 
      * + default value Is ``'da:0.001'``.
-     * @param rt_win -
-     * 
-     * + default value Is ``30``.
      * @param norm do total ion sum normalization after peak alignment and the peaktable object has been exported?
      * 
      * + default value Is ``false``.
@@ -77,7 +74,7 @@ declare namespace mzDeco {
      * 
      * + default value Is ``null``.
    */
-   function peak_alignment(samples: any, mzdiff?: any, rt_win?: number, norm?: boolean, env?: object): object;
+   function peak_alignment(samples: any, mzdiff?: any, norm?: boolean, env?: object): object;
    /**
     * debug used only
     * 
