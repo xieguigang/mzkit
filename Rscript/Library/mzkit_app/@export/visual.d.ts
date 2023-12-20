@@ -141,9 +141,11 @@ declare namespace visual {
      * + default value Is ``0.5``.
      * @param size 
      * + default value Is ``'1600,1200'``.
+     * @param colors 
+     * + default value Is ``'paper'``.
      * @param env -
      * 
      * + default value Is ``null``.
    */
-   function raw_snapshot3D(ms1_scans: any, mzwidth?: any, noise_cutoff?: number, size?: any, env?: object): any;
+   function raw_snapshot3D(ms1_scans: any, mzwidth?: any, noise_cutoff?: number, size?: any, colors?: any, env?: object): any;
 }
