@@ -178,8 +178,12 @@ Namespace Chromatogram
                 .Select(Function(twoPeak)
                             Dim p0 = twoPeak.First
                             Dim p1 = twoPeak.Last
+                            Dim d1 = std.Abs(p1.rtmin - p0.rtmax)
+                            Dim d2 = std.Abs(p1.rtmin - p0.rtmin)
+                            Dim d3 = std.Abs(p1.rtmax - p0.rtmax)
+                            Dim d4 = std.Abs(p1.rtmax - p0.rtmin)
 
-                            Return std.Abs(p1.rtmin - p0.rtmax)
+                            Return {d1, d2, d3, d4}.Min
                         End Function) _
                 .OrderBy(Function(a) a) _
                 .ToArray
@@ -187,11 +191,12 @@ Namespace Chromatogram
                 raw(0)
             }
 
-            If dt.Length > 2 Then
-                q2 = dt(dt.Length * (3 / 4)) * 1.25
-            Else
-                q2 = 0
-            End If
+            'If dt.Length > 2 Then
+            '    q2 = dt(dt.Length * (3 / 4)) * 1.25
+            'Else
+            '    q2 = 0
+            'End If
+            q2 = dt.Average
 
             For i As Integer = 1 To raw.Length - 1
                 If raw(i).rtmin - raw(i - 1).rtmax <= q2 Then
