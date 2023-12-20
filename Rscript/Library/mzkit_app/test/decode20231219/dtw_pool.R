@@ -17,7 +17,7 @@ for(mz in mzbins$mz) {
     let dtw_xic = pull_xic(pool, mz = mz, dtw = TRUE);
     let key = md5(as.character(mz));
 
-    bitmap(file = `E:/biodeep/lipids-XCMS3-rt/raw/test_QC_dtw_xic/${substr(key, 5,6)}/${mz}.png`) {
+    bitmap(file = `E:/biodeep/lipids-XCMS3-rt/raw/test_QC_dtw_xic_plot/${substr(key, 5,6)}/${mz}.png`) {
         raw_snapshot3D(dtw_xic);
     }
 
