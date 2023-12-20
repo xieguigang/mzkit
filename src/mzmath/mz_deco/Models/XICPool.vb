@@ -41,11 +41,17 @@ Public Class XICPool
         Next
     End Function
 
-    Public Iterator Function DtwXIC(mz As Double, mzdiff As Tolerance) As IEnumerable(Of NamedValue(Of MzGroup))
-        Dim rawdata = GetXICMatrix(mz, mzdiff).ToArray
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function DtwXIC(mz As Double, mzdiff As Tolerance) As IEnumerable(Of NamedValue(Of MzGroup))
+        Return DtwXIC(GetXICMatrix(mz, mzdiff).ToArray)
+    End Function
+
+    Public Shared Iterator Function DtwXIC(rawdata As NamedValue(Of MzGroup)()) As IEnumerable(Of NamedValue(Of MzGroup))
         ' make the length equals to each other
-        Dim signals As GeneralSignal() = rawdata _
+        Dim orders = rawdata _
             .OrderByDescending(Function(a) a.Value.MaxInto) _
+            .ToArray
+        Dim signals As GeneralSignal() = orders _
             .Select(Function(x) x.Value.CreateSignal(x.Name)) _
             .ToArray
         Dim rt As Double() = Rt_vector(signals)
@@ -67,23 +73,34 @@ Public Class XICPool
                     End Function) _
             .ToArray
         Dim refer = signals2(0)
+        Dim offset As Integer = 1
 
-        Yield New NamedValue(Of MzGroup)(refer.reference, New MzGroup(mz, refer.GetTimeSignals(Function(ti, into) New ChromatogramTick(ti, into))))
+        Yield New NamedValue(Of MzGroup)(
+            name:=refer.reference,
+            value:=New MzGroup(
+                mz:=orders(0).Value.mz,
+                xic:=refer.GetTimeSignals(Function(ti, into)
+                                              Return New ChromatogramTick(ti, into)
+                                          End Function))
+            )
 
-        For Each query In signals2.Skip(1)
+        For Each query As GeneralSignal In signals2.Skip(1)
             Dim dtw As New Dtw({refer, query}, preprocessor:=IPreprocessor.Normalization)
             Dim align_dt As Point() = dtw.GetPath.ToArray
             Dim tick As New List(Of ChromatogramTick)
+            Dim mz As Double = orders(offset).Value.mz
 
             For Each point In align_dt
                 tick.Add(New ChromatogramTick(rt(point.X), query.Strength(point.Y)))
             Next
 
+            offset += 1
+
             Yield New NamedValue(Of MzGroup)(query.reference, New MzGroup(mz, tick))
         Next
     End Function
 
-    Private Function Rt_vector(signals As GeneralSignal()) As Double()
+    Private Shared Function Rt_vector(signals As GeneralSignal()) As Double()
         Dim rt As Double() = signals.Select(Function(s) s.Measures) _
             .IteratesALL _
             .OrderBy(Function(ti) ti) _

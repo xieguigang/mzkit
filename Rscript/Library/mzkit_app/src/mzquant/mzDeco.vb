@@ -53,6 +53,7 @@
 #End Region
 
 Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
@@ -215,25 +216,32 @@ Module mzDeco
             End If
 
             ' extract the aligned data
-            Dim dtw_aligned = pool.DtwXIC(feature, errors.TryCast(Of Tolerance)).ToArray
-            ' and then export the peaks and area data
-            Dim peaksSet = dtw_aligned _
-                .Select(Function(sample)
-                            Dim peaks = sample.Value.GetPeakGroups(
-                                    peakwidth:=rtRange.TryCast(Of DoubleRange),
-                                    quantile:=baseline,
-                                    sn_threshold:=0,
-                                    joint:=joint) _
-                                .ExtractFeatureGroups _
-                                .ToArray
-
-                            Return New NamedCollection(Of PeakFeature)(sample.Name, peaks)
-                        End Function) _
+            Return pool.DtwXIC(feature, errors.TryCast(Of Tolerance)) _
+                .ToArray _
+                .extractAlignedPeaks(
+                    rtRange:=rtRange.TryCast(Of DoubleRange),
+                    baseline:=baseline,
+                    joint:=joint)
+        ElseIf TypeOf ms1 Is list Then
+            Dim ls_xic = DirectCast(ms1, list) _
+                .AsGeneric(Of MzGroup)(env) _
+                .Select(Function(a) New NamedValue(Of MzGroup)(a.Key, a.Value)) _
                 .ToArray
-            Dim xcms As xcms2() = peaksSet.XcmsTable.ToArray
 
-            Return xcms
+            If Not ls_xic.All(Function(a) a.Value Is Nothing) Then
+                ls_xic = BioNovoGene.Analytical.MassSpectrometry.Math.XICPool _
+                        .DtwXIC(rawdata:=ls_xic) _
+                        .ToArray
+
+                Return ls_xic.extractAlignedPeaks(
+                    rtRange:=rtRange.TryCast(Of DoubleRange),
+                    baseline:=baseline,
+                    joint:=joint)
+            Else
+                GoTo extract_ms1
+            End If
         Else
+extract_ms1:
             Dim ms1_scans As IEnumerable(Of IMs1Scan) = ms1Scans(ms1)
 
             ' usually used for make extract features
@@ -248,6 +256,27 @@ Module mzDeco
                 ) _
                 .ToArray
         End If
+    End Function
+
+    <Extension>
+    Private Function extractAlignedPeaks(dtw_aligned As NamedValue(Of MzGroup)(), rtRange As DoubleRange, baseline As Double, joint As Boolean) As xcms2()
+        ' and then export the peaks and area data
+        Dim peaksSet As NamedCollection(Of PeakFeature)() = dtw_aligned _
+            .Select(Function(sample)
+                        Dim peaks = sample.Value.GetPeakGroups(
+                                peakwidth:=rtRange,
+                                quantile:=baseline,
+                                sn_threshold:=0,
+                                joint:=joint) _
+                            .ExtractFeatureGroups _
+                            .ToArray
+
+                        Return New NamedCollection(Of PeakFeature)(sample.Name, peaks)
+                    End Function) _
+            .ToArray
+        Dim xcms As xcms2() = peaksSet.XcmsTable.ToArray
+
+        Return xcms
     End Function
 
     ''' <summary>
@@ -308,7 +337,6 @@ Module mzDeco
     ''' </summary>
     ''' <param name="samples">should be a set of sample file data, which could be extract from the ``mz_deco`` function.</param>
     ''' <param name="mzdiff"></param>
-    ''' <param name="rt_win"></param>
     ''' <param name="norm">do total ion sum normalization after peak alignment and the peaktable object has been exported?</param>
     ''' <param name="env"></param>
     ''' <returns></returns>
@@ -327,7 +355,6 @@ Module mzDeco
     Public Function peakAlignment(<RRawVectorArgument>
                                   samples As Object,
                                   Optional mzdiff As Object = "da:0.001",
-                                  Optional rt_win As Double = 30,
                                   Optional norm As Boolean = False,
                                   Optional env As Environment = Nothing) As Object
 
