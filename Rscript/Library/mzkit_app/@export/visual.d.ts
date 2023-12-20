@@ -140,7 +140,7 @@ declare namespace visual {
      * @param noise_cutoff 
      * + default value Is ``0.5``.
      * @param size 
-     * + default value Is ``'1600,1200'``.
+     * + default value Is ``'1920,1200'``.
      * @param colors 
      * + default value Is ``'paper'``.
      * @param show_legends 

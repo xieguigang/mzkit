@@ -508,7 +508,7 @@ Module Visual
                                Optional mzwidth As Object = "da:0.3",
                                Optional noise_cutoff As Double = 0.5,
                                <RRawVectorArgument>
-                               Optional size As Object = "1600,1200",
+                               Optional size As Object = "1920,1200",
                                Optional colors As Object = "paper",
                                Optional show_legends As Boolean = True,
                                Optional env As Environment = Nothing) As Object
@@ -543,7 +543,8 @@ Module Visual
                 {"parallel", True},
                 {"colors", colors},
                 {"opacity", 60},
-                {"size", size}
+                {"size", size},
+                {"padding", "padding:100px 400px 125px 150px;"}
             }
         }
 
