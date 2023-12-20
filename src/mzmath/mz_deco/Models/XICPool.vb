@@ -89,7 +89,7 @@ Public Class XICPool
             )
 
         For Each query As GeneralSignal In signals2.Skip(1)
-            Dim dtw As New Dtw({refer, query}, preprocessor:=IPreprocessor.Normalization)
+            Dim dtw As New Dtw({refer, query}, preprocessor:=IPreprocessor.None)
             Dim align_dt As Point() = dtw.GetPath.ToArray
             Dim tick As New List(Of ChromatogramTick)
             Dim mz As Double = orders(offset).Value.mz
