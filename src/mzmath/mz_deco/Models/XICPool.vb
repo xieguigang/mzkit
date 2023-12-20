@@ -52,6 +52,7 @@ Public Class XICPool
             .Select(Function(a)
                         Return New NamedValue(Of MzGroup)(a.Name, a.Value.TrimRTScatter)
                     End Function) _
+            .Where(Function(a) a.Value.size >= 3) _
             .OrderByDescending(Function(a) a.Value.MaxInto) _
             .ToArray
         Dim signals As GeneralSignal() = orders _
