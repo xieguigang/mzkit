@@ -12,6 +12,10 @@ let pool = xic_pool(files);
 let raw_xic = pull_xic(pool , mz = 711.5664, dtw = FALSE);
 let dtw_xic = pull_xic(pool, mz = 711.5664, dtw = TRUE);
 
+for(name in names(dtw_xic)) {
+    writeBin(dtw_xic[[name]], con = `E:\biodeep\lipids-XCMS3-rt\raw\test_QC_dtw_xic\${name}.XIC`);
+}
+
 bitmap(file = "E:\biodeep\lipids-XCMS3-rt\raw\test_QC_raw_xic.png") {
     raw_snapshot3D(raw_xic);
 }
