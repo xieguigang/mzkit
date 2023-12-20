@@ -226,7 +226,7 @@ Module mzDeco
                 .extractAlignedPeaks(
                     rtRange:=rtRange.TryCast(Of DoubleRange),
                     baseline:=baseline,
-                    joint:=joint)
+                    joint:=joint, xic_align:=True)
 
         ElseIf TypeOf ms1 Is list Then
             Dim ls_xic = DirectCast(ms1, list) _
@@ -238,7 +238,7 @@ Module mzDeco
                 Return ls_xic.extractAlignedPeaks(
                     rtRange:=rtRange.TryCast(Of DoubleRange),
                     baseline:=baseline,
-                    joint:=joint)
+                    joint:=joint, xic_align:=True)
             Else
                 GoTo extract_ms1
             End If
@@ -261,7 +261,7 @@ extract_ms1:
     End Function
 
     <Extension>
-    Private Function extractAlignedPeaks(dtw_aligned As NamedValue(Of MzGroup)(), rtRange As DoubleRange, baseline As Double, joint As Boolean) As xcms2()
+    Private Function extractAlignedPeaks(dtw_aligned As NamedValue(Of MzGroup)(), rtRange As DoubleRange, baseline As Double, joint As Boolean, xic_align As Boolean) As xcms2()
         ' and then export the peaks and area data
         Dim peaksSet As NamedCollection(Of PeakFeature)() = dtw_aligned _
             .Select(Function(sample)
@@ -276,7 +276,15 @@ extract_ms1:
                         Return New NamedCollection(Of PeakFeature)(sample.Name, peaks)
                     End Function) _
             .ToArray
-        Dim xcms As xcms2() = peaksSet.XcmsTable.ToArray
+        Dim xcms As xcms2()
+
+        If xic_align Then
+            xcms = peaksSet _
+                .XicTable(rtwin:=rtRange.Max) _
+                .ToArray
+        Else
+            xcms = peaksSet.XcmsTable.ToArray
+        End If
 
         Return xcms
     End Function

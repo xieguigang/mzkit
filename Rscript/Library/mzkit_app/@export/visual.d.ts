@@ -141,6 +141,8 @@ declare namespace visual {
      * + default value Is ``0.5``.
      * @param size 
      * + default value Is ``'1920,1200'``.
+     * @param padding 
+     * + default value Is ``'padding:100px 300px 125px 150px;'``.
      * @param colors 
      * + default value Is ``'paper'``.
      * @param show_legends 
@@ -149,5 +151,5 @@ declare namespace visual {
      * 
      * + default value Is ``null``.
    */
-   function raw_snapshot3D(ms1_scans: any, mzwidth?: any, noise_cutoff?: number, size?: any, colors?: any, show_legends?: boolean, env?: object): any;
+   function raw_snapshot3D(ms1_scans: any, mzwidth?: any, noise_cutoff?: number, size?: any, padding?: any, colors?: any, show_legends?: boolean, env?: object): any;
 }
