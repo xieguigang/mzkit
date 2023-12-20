@@ -510,6 +510,7 @@ Module Visual
                                <RRawVectorArgument>
                                Optional size As Object = "1600,1200",
                                Optional colors As Object = "paper",
+                               Optional show_legends As Boolean = True,
                                Optional env As Environment = Nothing) As Object
 
         Dim points As pipeline = pipeline.TryCreatePipeline(Of ms1_scan)(ms1_scans, env)
@@ -538,7 +539,7 @@ Module Visual
         Dim args As New list With {
             .slots = New Dictionary(Of String, Object) From {
                 {"show.labels", False},
-                {"show.legends", False},
+                {"show.legends", show_legends},
                 {"parallel", True},
                 {"colors", colors},
                 {"opacity", 60},
