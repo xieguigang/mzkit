@@ -199,7 +199,7 @@ Module mzDeco
                             Optional baseline# = 0.65,
                             <RRawVectorArgument>
                             Optional peak_width As Object = "3,20",
-                            Optional joint As Boolean = True,
+                            Optional joint As Boolean = False,
                             Optional parallel As Boolean = False,
                             Optional feature As Double? = Nothing,
                             Optional env As Environment = Nothing) As Object
