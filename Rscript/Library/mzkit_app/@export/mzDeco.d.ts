@@ -44,7 +44,7 @@ declare namespace mzDeco {
      * @param peak_width 
      * + default value Is ``'3,20'``.
      * @param joint 
-     * + default value Is ``true``.
+     * + default value Is ``false``.
      * @param parallel 
      * + default value Is ``false``.
      * @param feature 
