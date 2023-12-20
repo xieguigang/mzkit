@@ -57,10 +57,11 @@ Public Class XICPool
         Dim signals As GeneralSignal() = orders _
             .Select(Function(x) x.Value.CreateSignal(x.Name)) _
             .ToArray
-        Dim rt As Double() = Rt_vector(signals)
+        Dim diff_rt As Double = Nothing
+        Dim rt As Double() = Rt_vector(signals, diff_rt)
         Dim signals2 As GeneralSignal() = signals _
             .Select(Function(sig)
-                        Dim sample = Resampler.CreateSampler(sig)
+                        Dim sample = Resampler.CreateSampler(sig, max_dx:=diff_rt * 5)
                         Dim intensity As Double() = sample.GetVector(rt)
                         Dim resample As New GeneralSignal With {
                             .Measures = rt.ToArray,
@@ -103,12 +104,13 @@ Public Class XICPool
         Next
     End Function
 
-    Private Shared Function Rt_vector(signals As GeneralSignal()) As Double()
+    Private Shared Function Rt_vector(signals As GeneralSignal(), ByRef diff_rt As Double) As Double()
         Dim rt As Double() = signals.Select(Function(s) s.Measures) _
             .IteratesALL _
             .OrderBy(Function(ti) ti) _
             .ToArray
-        Dim diff_rt As Double = NumberGroups.diff(rt) _
+
+        diff_rt = NumberGroups.diff(rt) _
             .OrderByDescending(Function(dt) dt) _
             .Skip(rt.Length * 0.1) _
             .Average
