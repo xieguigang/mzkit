@@ -196,7 +196,7 @@ Namespace Chromatogram
             'Else
             '    q2 = 0
             'End If
-            q2 = dt.Average
+            q2 = dt.Average * (3 / 4)
 
             For i As Integer = 1 To raw.Length - 1
                 If raw(i).rtmin - raw(i - 1).rtmax <= q2 Then
