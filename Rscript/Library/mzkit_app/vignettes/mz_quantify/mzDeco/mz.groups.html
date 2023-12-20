@@ -191,7 +191,8 @@
 
         <div style="width: 100%; padding-left: 3%; color: black;">
             <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>mz.groups</strong>(<i>ms1</i>,
-    <i>mzdiff</i> = <span style='color: brown;'><strong>"ppm:20"</strong></span>);</code></pre>
+    <i>mzdiff</i> = <span style='color: brown;'><strong>"ppm:20"</strong></span>,
+    <i>rtwin</i> = <span style='color: green;'>0.05</span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
@@ -206,15 +207,21 @@
 <dd><p><p>the mass tolerance error for extract the XIC from the rawdata set</p></p></dd>
 
 
+<dt>rtwin</dt>
+<dd><p><p>the rt tolerance window size for merge data points</p></p></dd>
+
+
 <dt>env</dt>
 <dd><p><p>-</p></p></dd>
 
         </table>
 
 
-        <h3 style="display: none;">Details</h3>
+        <h3 style="display: block;">Details</h3>
 
-        
+        <p>the ion mz value is generated via the max intensity point in each ion <br />
+ feature group, and the xic data has already been re-order via the <br />
+ time asc.</p>
 
 
         <h3>Value</h3>

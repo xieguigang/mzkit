@@ -13,17 +13,23 @@ declare namespace mzDeco {
       /**
        * do ``m/z`` grouping under the given tolerance
        * 
+       * > the ion mz value is generated via the max intensity point in each ion 
+       * >  feature group, and the xic data has already been re-order via the 
+       * >  time asc.
        * 
         * @param ms1 a LCMS mzpack rawdata object or a collection of the ms1 point data
         * @param mzdiff the mass tolerance error for extract the XIC from the rawdata set
         * 
         * + default value Is ``'ppm:20'``.
+        * @param rtwin the rt tolerance window size for merge data points
+        * 
+        * + default value Is ``0.05``.
         * @param env -
         * 
         * + default value Is ``null``.
         * @return create a list of XIC dataset for run downstream deconv operation
       */
-      function groups(ms1: any, mzdiff?: any, env?: object): object;
+      function groups(ms1: any, mzdiff?: any, rtwin?: number, env?: object): object;
    }
    /**
     * Chromatogram data deconvolution

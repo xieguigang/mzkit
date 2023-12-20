@@ -509,6 +509,7 @@ Module Visual
                                Optional noise_cutoff As Double = 0.5,
                                <RRawVectorArgument>
                                Optional size As Object = "1600,1200",
+                               Optional colors As Object = "paper",
                                Optional env As Environment = Nothing) As Object
 
         Dim points As pipeline = pipeline.TryCreatePipeline(Of ms1_scan)(ms1_scans, env)
@@ -539,7 +540,7 @@ Module Visual
                 {"show.labels", False},
                 {"show.legends", False},
                 {"parallel", True},
-                {"colors", "Spectral:c8"},
+                {"colors", colors},
                 {"opacity", 60},
                 {"size", size}
             }
