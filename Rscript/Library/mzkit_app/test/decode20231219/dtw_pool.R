@@ -19,3 +19,8 @@ bitmap(file = "E:\biodeep\lipids-XCMS3-rt\raw\test_QC_raw_xic.png") {
 bitmap(file = "E:\biodeep\lipids-XCMS3-rt\raw\test_QC_dtw_xic.png") {
     raw_snapshot3D(dtw_xic);
 }
+
+pool 
+|> mz_deco(feature = 711.5664)
+|> write.csv(file = "E:\biodeep\lipids-XCMS3-rt\raw\test_QC_dtw_xic.csv")
+;
