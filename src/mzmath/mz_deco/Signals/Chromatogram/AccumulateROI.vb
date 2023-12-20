@@ -232,15 +232,19 @@ Namespace Chromatogram
 
             Dim base = Aggregate part In peaks Into Average(part.baseline)
             Dim a = Aggregate part In peaks Into Sum(part.integration)
+            ' may includes the duplicated points?
+            Dim points As ITimeSignal() = peaks _
+                .Select(Function(i) i.region) _
+                .IteratesALL _
+                .GroupBy(Function(ai) ai.time) _
+                .Select(Function(ag) ag.First) _
+                .OrderBy(Function(ti) ti.time) _
+                .ToArray
 
             Return New SignalPeak With {
                 .baseline = base,
                 .integration = a,
-                .region = peaks _
-                    .Select(Function(i) i.region) _
-                    .IteratesALL _
-                    .OrderBy(Function(ti) ti.time) _
-                    .ToArray
+                .region = points
             }
         End Function
     End Module

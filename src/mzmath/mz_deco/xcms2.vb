@@ -76,7 +76,18 @@ Public Class xcms2 : Inherits DynamicPropertyBase(Of Double)
     Public Property rt As Double
     Public Property rtmin As Double
     Public Property rtmax As Double
-    Public Property npeaks As Integer
+
+    ''' <summary>
+    ''' this feature has n sample data(value should be a positive number)
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property npeaks As Integer
+        Get
+            Return Properties _
+                .Where(Function(s) s.Value > 0) _
+                .Count
+        End Get
+    End Property
 
     'Public Shared Function Load(file As String) As xcms2()
     '    Return DataSet _
@@ -96,7 +107,6 @@ Public Class xcms2 : Inherits DynamicPropertyBase(Of Double)
             .mz = mz,
             .mzmax = mzmax,
             .mzmin = mzmin,
-            .npeaks = npeaks,
             .rt = rt,
             .rtmax = rtmax,
             .rtmin = rtmin,
