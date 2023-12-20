@@ -62,6 +62,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 ''' <summary>
 ''' the peak table format table file model of xcms version 2
@@ -82,6 +83,10 @@ Public Class xcms2 : Inherits DynamicPropertyBase(Of Double)
     '        .LoadDataSet(Of xcms2)(file, uidMap:=NameOf(ID)) _
     '        .ToArray
     'End Function
+
+    Public Overrides Function ToString() As String
+        Return $"{ID}  {mz.ToString("F4")}@{rt.ToString("F4")}  {npeaks}peaks: {Properties.Keys.GetJson}"
+    End Function
 
     Friend Function totalPeakSum() As xcms2
         Dim totalSum As Double = Properties.Values.Sum
