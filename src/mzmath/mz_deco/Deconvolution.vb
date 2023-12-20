@@ -86,7 +86,13 @@ Public Module Deconvolution
                                            Optional sn_threshold As Double = 3,
                                            Optional joint As Boolean = True) As IEnumerable(Of PeakFeature)
 
-        For Each ROI As ROI In mzpoints.XIC.Shadows.PopulateROI(
+        ' removes the possible zero or negative points
+        Dim valids = mzpoints.XIC _
+            .Where(Function(ti) ti.Intensity > 0) _
+            .OrderBy(Function(ti) ti.Time) _
+            .ToArray
+
+        For Each ROI As ROI In valids.Shadows.PopulateROI(
             peakwidth:=peakwidth,
             baselineQuantile:=quantile,
             joint:=joint,
