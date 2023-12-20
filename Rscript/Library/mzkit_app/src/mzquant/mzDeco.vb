@@ -384,6 +384,7 @@ Module mzDeco
     ''' a LCMS mzpack rawdata object or a collection of the ms1 point data
     ''' </param>
     ''' <param name="mzdiff">the mass tolerance error for extract the XIC from the rawdata set</param>
+    ''' <param name="rtwin">the rt tolerance window size for merge data points</param>
     ''' <param name="env"></param>
     ''' <returns>
     ''' create a list of XIC dataset for run downstream deconv operation
@@ -393,14 +394,22 @@ Module mzDeco
     ''' let XIC = mz.groups(ms1 = rawdata, mzdiff = "ppm:20");
     ''' 
     ''' </example>
+    ''' <remarks>
+    ''' the ion mz value is generated via the max intensity point in each ion 
+    ''' feature group, and the xic data has already been re-order via the 
+    ''' time asc.
+    ''' </remarks>
     <ExportAPI("mz.groups")>
     <RApiReturn(GetType(MzGroup()))>
     Public Function mz_groups(<RRawVectorArgument>
                               ms1 As Object,
                               Optional mzdiff As Object = "ppm:20",
+                              Optional rtwin As Double = 0.05,
                               Optional env As Environment = Nothing) As Object
 
-        Return ms1Scans(ms1).GetMzGroups(mzdiff:=Math.getTolerance(mzdiff, env)).ToArray
+        Return ms1Scans(ms1) _
+            .GetMzGroups(mzdiff:=Math.getTolerance(mzdiff, env), rtwin:=rtwin) _
+            .ToArray
     End Function
 
     Private Function ms1Scans(ms1 As Object) As IEnumerable(Of IMs1Scan)

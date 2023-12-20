@@ -129,6 +129,14 @@ Public Module Deconvolution
         Next
     End Function
 
+    ''' <summary>
+    ''' the ion m/z is evaluated via the highest intensity point,
+    '''  and the XIC has been re-order by time asc
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="group"></param>
+    ''' <param name="rtwin"></param>
+    ''' <returns></returns>
     <Extension>
     Private Function GetMzGroups(Of T As scan)(group As NamedCollection(Of T), rtwin As Double) As MzGroup
         Dim rawGroup As T() = group.ToArray
@@ -152,6 +160,7 @@ Public Module Deconvolution
                     End Function) _
             .OrderBy(Function(ti) ti.Time) _
             .ToArray
+        ' set ion m/z value by max intensity in current group
         Dim mzPoint As T = rawGroup _
             .OrderByDescending(Function(d) d.intensity) _
             .First
