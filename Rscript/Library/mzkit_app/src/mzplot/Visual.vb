@@ -509,6 +509,8 @@ Module Visual
                                Optional noise_cutoff As Double = 0.5,
                                <RRawVectorArgument>
                                Optional size As Object = "1920,1200",
+                               <RRawVectorArgument>
+                               Optional padding As Object = "padding:100px 300px 125px 150px;",
                                Optional colors As Object = "paper",
                                Optional show_legends As Boolean = True,
                                Optional env As Environment = Nothing) As Object
@@ -544,7 +546,7 @@ Module Visual
                 {"colors", colors},
                 {"opacity", 60},
                 {"size", size},
-                {"padding", "padding:100px 400px 125px 150px;"}
+                {"padding", InteropArgumentHelper.getPadding(padding, "padding:100px 300px 125px 150px;")}
             }
         }
 

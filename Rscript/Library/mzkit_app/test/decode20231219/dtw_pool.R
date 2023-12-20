@@ -25,6 +25,6 @@ bitmap(file = "E:\biodeep\lipids-XCMS3-rt\raw\test_QC_dtw_xic.png") {
 }
 
 pool 
-|> mz_deco(feature = 711.5664)
+|> mz_deco(feature = 711.5664, joint = TRUE, peak.width = [3,60])
 |> write.csv(file = "E:\biodeep\lipids-XCMS3-rt\raw\test_QC_dtw_xic.csv")
 ;
