@@ -176,14 +176,7 @@ Namespace Chromatogram
             Dim dt As Double() = raw _
                 .SlideWindows(winSize:=2, offset:=1) _
                 .Select(Function(twoPeak)
-                            Dim p0 = twoPeak.First
-                            Dim p1 = twoPeak.Last
-                            Dim d1 = std.Abs(p1.rtmin - p0.rtmax)
-                            Dim d2 = std.Abs(p1.rtmin - p0.rtmin)
-                            Dim d3 = std.Abs(p1.rtmax - p0.rtmax)
-                            Dim d4 = std.Abs(p1.rtmax - p0.rtmin)
-
-                            Return {d1, d2, d3, d4}.Min
+                            Return AccumulateROI.dt(p0:=twoPeak.First, p1:=twoPeak.Last)
                         End Function) _
                 .OrderBy(Function(a) a) _
                 .ToArray
@@ -199,7 +192,7 @@ Namespace Chromatogram
             q2 = dt.Average * (3 / 4)
 
             For i As Integer = 1 To raw.Length - 1
-                If raw(i).rtmin - raw(i - 1).rtmax <= q2 Then
+                If AccumulateROI.dt(raw(i), raw(i - 1)) <= q2 Then
                     jointPeak.Add(raw(i))
                 Else
                     If jointPeak.Count > 0 Then
@@ -215,6 +208,21 @@ Namespace Chromatogram
             If jointPeak.Count > 0 Then
                 Yield AccumulateROI.JointPeak(jointPeak)
             End If
+        End Function
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="p1">p(i)</param>
+        ''' <param name="p0">p(i-1)</param>
+        ''' <returns></returns>
+        Private Function dt(p1 As SignalPeak, p0 As SignalPeak) As Double
+            Dim d1 = std.Abs(p1.rtmin - p0.rtmax)
+            Dim d2 = std.Abs(p1.rtmin - p0.rtmin)
+            Dim d3 = std.Abs(p1.rtmax - p0.rtmax)
+            Dim d4 = std.Abs(p1.rtmax - p0.rtmin)
+
+            Return {d1, d2, d3, d4}.Min
         End Function
 
         Private Function JointPeak(peaks As List(Of SignalPeak)) As SignalPeak
