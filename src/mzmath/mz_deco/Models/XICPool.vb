@@ -61,7 +61,7 @@ Public Class XICPool
         Dim rt As Double() = Rt_vector(signals, diff_rt)
         Dim signals2 As GeneralSignal() = signals _
             .Select(Function(sig)
-                        Dim sample = Resampler.CreateSampler(sig, max_dx:=diff_rt * 5)
+                        Dim sample = Resampler.CreateSampler(sig, max_dx:=diff_rt * 10)
                         Dim intensity As Double() = sample(x:=rt)
                         Dim resample As New GeneralSignal With {
                             .Measures = rt.ToArray,
