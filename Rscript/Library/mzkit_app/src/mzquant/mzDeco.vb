@@ -88,6 +88,7 @@ Module mzDeco
         Call generic.add("readBin.mz_group", GetType(Stream), AddressOf readXIC)
         Call generic.add("readBin.peak_feature", GetType(Stream), AddressOf readSamples)
 
+        Call generic.add("writeBin", GetType(MzGroup), AddressOf writeXIC1)
         Call generic.add("writeBin", GetType(MzGroup()), AddressOf writeXIC)
         Call generic.add("writeBin", GetType(PeakFeature()), AddressOf writeSamples)
     End Sub
@@ -97,6 +98,10 @@ Module mzDeco
         Call SaveSample.DumpSample(samples, con)
         Call con.Flush()
         Return True
+    End Function
+
+    Private Function writeXIC1(xic As MzGroup, args As list, env As Environment) As Object
+        Return writeXIC({xic}, args, env)
     End Function
 
     Private Function writeXIC(xic As MzGroup(), args As list, env As Environment) As Object
