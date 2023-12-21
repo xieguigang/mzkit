@@ -80,17 +80,22 @@ declare namespace mzDeco {
    */
    function peak_alignment(samples: any, mzdiff?: any, norm?: boolean, env?: object): object;
    /**
-    * debug used only
+    * extract a collection of xic data for a specific ion feature
+    *  
+    *  this function is debug used only
     * 
     * 
      * @param pool -
-     * @param mz -
+     * @param mz the ion feature m/z value
      * @param dtw -
      * 
      * + default value Is ``true``.
      * @param mzdiff -
      * 
      * + default value Is ``0.01``.
+     * @return a tuple list object that contains the xic data across
+     *  multiple sample data files for a speicifc ion feature
+     *  m/z.
    */
    function pull_xic(pool: object, mz: number, dtw?: boolean, mzdiff?: number): any;
    module read {

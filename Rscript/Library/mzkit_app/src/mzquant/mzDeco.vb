@@ -582,13 +582,38 @@ extract_ms1:
     End Function
 
     ''' <summary>
-    ''' debug used only
+    ''' extract a collection of xic data for a specific ion feature
+    ''' 
+    ''' this function is debug used only
     ''' </summary>
     ''' <param name="pool"></param>
-    ''' <param name="mz"></param>
+    ''' <param name="mz">the ion feature m/z value</param>
     ''' <param name="dtw"></param>
     ''' <param name="mzdiff"></param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' a tuple list object that contains the xic data across
+    ''' multiple sample data files for a speicifc ion feature
+    ''' m/z.
+    ''' </returns>
+    ''' <example>
+    ''' require(mzkit);
+    '''
+    ''' imports "mzDeco" from "mz_quantify";
+    ''' imports "visual" from "mzplot";
+    ''' 
+    ''' let files = list.files("/path/to/debug_data_dir/", pattern = "*.xic");
+    ''' let pool = xic_pool(files);
+    ''' let dtw_xic = pull_xic(pool, mz = 100.0011, dtw = TRUE);
+    ''' 
+    ''' bitmap(file = "/path/to/save_image.png") {
+    '''     raw_snapshot3D(dtw_xic);
+    ''' }
+    '''
+    ''' dtw_xic
+    ''' |> mz_deco(joint = TRUE, peak.width = [3,60])
+    ''' |> write.csv(file = "/path/to/export_peakstable.csv")
+    ''' ;
+    ''' </example>
     <ExportAPI("pull_xic")>
     Public Function pull_xic(pool As XICPool, mz As Double,
                              Optional dtw As Boolean = True,

@@ -8,4 +8,4 @@ Extract peak and signal data from rawdata
 + [peak_alignment](mzDeco/peak_alignment.1) Do COW peak alignment and export peaktable
 + [mz.groups](mzDeco/mz.groups.1) do ``m/z`` grouping under the given tolerance
 + [xic_pool](mzDeco/xic_pool.1) 
-+ [pull_xic](mzDeco/pull_xic.1) debug used only
++ [pull_xic](mzDeco/pull_xic.1) extract a collection of xic data for a specific ion feature

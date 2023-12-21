@@ -1,7 +1,7 @@
 .\" man page create by R# package system.
 .TH MZDECO 1 2000-Jan "pull_xic" "pull_xic"
 .SH NAME
-pull_xic \- debug used only
+pull_xic \- extract a collection of xic data for a specific ion feature
 .SH SYNOPSIS
 \fIpull_xic(\fBpool\fR as <generic> XICPool, 
 \fBmz\fR as double, 
@@ -9,20 +9,28 @@ pull_xic \- debug used only
 \fBmzdiff\fR as double = 0.01);\fR
 .SH DESCRIPTION
 .PP
-debug used only
+extract a collection of xic data for a specific ion feature
+ 
+ this function is debug used only
 .PP
 .SH OPTIONS
 .PP
 \fBpool\fB \fR\- -. 
 .PP
 .PP
-\fBmz\fB \fR\- -. 
+\fBmz\fB \fR\- the ion feature m/z value. 
 .PP
 .PP
 \fBdtw\fB \fR\- -. 
 .PP
 .PP
 \fBmzdiff\fB \fR\- -. 
+.PP
+.SH VALUE
+.PP
+a tuple list object that contains the xic data across
+ multiple sample data files for a speicifc ion feature
+ m/z.
 .PP
 .SH SEE ALSO
 mzDeco
