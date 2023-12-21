@@ -72,6 +72,7 @@ Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
+Imports SMRUCC.Rsharp.Runtime.Vectorization
 
 ''' <summary>
 ''' Extract peak and signal data from rawdata
@@ -172,14 +173,41 @@ Module mzDeco
         Return table
     End Function
 
+    <Extension>
+    Private Function xic_deco(pool As XICPool, features_mz As Double(),
+                              errors As Tolerance,
+                              rtRange As DoubleRange,
+                              baseline As Double,
+                              joint As Boolean) As xcms2()
+
+        If features_mz.Length = 1 Then
+            ' extract the aligned data
+            Return pool.DtwXIC(features_mz(0), errors) _
+                .ToArray _
+                .extractAlignedPeaks(
+                    rtRange:=rtRange,
+                    baseline:=baseline,
+                    joint:=joint, xic_align:=True)
+        Else
+            ' run parallel task for extract the aligned xic data
+            Throw New NotImplementedException
+        End If
+    End Function
+
     ''' <summary>
     ''' Chromatogram data deconvolution
     ''' </summary>
     ''' <param name="ms1">
-    ''' a collection of the ms1 data or the mzpack raw data object
+    ''' a collection of the ms1 data or the mzpack raw data object, this parameter could also be
+    ''' a XIC pool object which contains a collection of the ion XIC data for run deconvolution.
     ''' </param>
-    ''' <param name="tolerance"></param>
-    ''' <returns>a vector of the peak deconvolution data</returns>
+    ''' <param name="tolerance">the mass tolerance for extract the XIC data for run deconvolution.</param>
+    ''' <param name="feature">
+    ''' a numeric vector of target feature ion m/z value for extract the XIC data.
+    ''' </param>
+    ''' <returns>a vector of the peak deconvolution data,
+    ''' in format of xcms peak table liked or mzkit <see cref="PeakFeature"/>
+    ''' data object.</returns>
     ''' <example>
     ''' require(mzkit);
     ''' 
@@ -201,7 +229,8 @@ Module mzDeco
                             Optional peak_width As Object = "3,20",
                             Optional joint As Boolean = False,
                             Optional parallel As Boolean = False,
-                            Optional feature As Double? = Nothing,
+                            <RRawVectorArgument>
+                            Optional feature As Object = Nothing,
                             Optional env As Environment = Nothing) As Object
 
         Dim errors As [Variant](Of Tolerance, Message) = Math.getTolerance(tolerance, env)
@@ -215,19 +244,16 @@ Module mzDeco
 
         If TypeOf ms1 Is XICPool Then
             Dim pool As XICPool = DirectCast(ms1, XICPool)
+            Dim features_mz As Double() = CLRVector.asNumeric(feature)
 
-            If feature Is Nothing Then
+            If features_mz.IsNullOrEmpty Then
                 Return Internal.debug.stop("no ion m/z feature was provided!", env)
+            Else
+                Return pool.xic_deco(features_mz,
+                                     errors.TryCast(Of Tolerance),
+                                     rtRange.TryCast(Of DoubleRange),
+                                     baseline, joint)
             End If
-
-            ' extract the aligned data
-            Return pool.DtwXIC(feature, errors.TryCast(Of Tolerance)) _
-                .ToArray _
-                .extractAlignedPeaks(
-                    rtRange:=rtRange.TryCast(Of DoubleRange),
-                    baseline:=baseline,
-                    joint:=joint, xic_align:=True)
-
         ElseIf TypeOf ms1 Is list Then
             Dim ls_xic = DirectCast(ms1, list) _
                 .AsGeneric(Of MzGroup)(env) _
