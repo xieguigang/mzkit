@@ -9,6 +9,12 @@ let mzbins = read.csv("E:\biodeep\lipids-XCMS3-rt\raw\pos_mzbins.csv", row.names
 
 print(mzbins);
 
+const demo1 = 150.14962768554688;
+const demo2 = 711.5664;
+
+let raw_xic = pull_xic(pool , mz = demo1, dtw = FALSE);
+let dtw_xic = pull_xic(pool, mz = demo1, dtw = TRUE);
+
 let peaktable = [];
 
 for(mz in mzbins$mz) {
@@ -29,8 +35,7 @@ for(mz in mzbins$mz) {
 
 write.csv(peaktable, file = "E:\biodeep\lipids-XCMS3-rt\raw\test_QC_dtw_xic.csv");
 
-# let raw_xic = pull_xic(pool , mz = 711.5664, dtw = FALSE);
-# let dtw_xic = pull_xic(pool, mz = 711.5664, dtw = TRUE);
+
 
 # for(name in names(dtw_xic)) {
 #     writeBin(dtw_xic[[name]], con = `E:/biodeep/lipids-XCMS3-rt/raw/test_QC_dtw_xic/${name}.XIC`);
