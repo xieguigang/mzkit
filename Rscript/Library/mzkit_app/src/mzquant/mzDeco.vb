@@ -182,6 +182,8 @@ Module mzDeco
                               joint As Boolean,
                               parallel As Boolean) As xcms2()
 
+        VectorTask.n_threads = App.CPUCoreNumbers
+
         If features_mz.Length = 1 Then
             ' extract the aligned data
             Return pool.DtwXIC(features_mz(0), errors) _
