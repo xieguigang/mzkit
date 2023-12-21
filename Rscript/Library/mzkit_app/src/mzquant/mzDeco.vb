@@ -278,7 +278,8 @@ Module mzDeco
     ''' 
     ''' let rawdata = open.mzpack("/path/to/rawdata.mzXML");
     ''' let ms1 = rawdata |> ms1_scans();
-    ''' let peaks = mz_deco(ms1, tolerance = "da:0.01", peak.width = [3,30]);
+    ''' let peaks = mz_deco(ms1, tolerance = "da:0.01", peak.width = [3,30], 
+    '''    dtw = TRUE);
     ''' 
     ''' write.peaks(peaks, file = "/data/save_debug.dat");
     ''' </example>
