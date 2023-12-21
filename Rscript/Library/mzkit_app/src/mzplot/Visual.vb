@@ -508,7 +508,11 @@ Module Visual
                                Optional mzwidth As Object = "da:0.3",
                                Optional noise_cutoff As Double = 0.5,
                                <RRawVectorArgument>
-                               Optional size As Object = "1600,1200",
+                               Optional size As Object = "1920,1200",
+                               <RRawVectorArgument>
+                               Optional padding As Object = "padding:100px 300px 125px 150px;",
+                               Optional colors As Object = "paper",
+                               Optional show_legends As Boolean = True,
                                Optional env As Environment = Nothing) As Object
 
         Dim points As pipeline = pipeline.TryCreatePipeline(Of ms1_scan)(ms1_scans, env)
@@ -537,11 +541,12 @@ Module Visual
         Dim args As New list With {
             .slots = New Dictionary(Of String, Object) From {
                 {"show.labels", False},
-                {"show.legends", False},
+                {"show.legends", show_legends},
                 {"parallel", True},
-                {"colors", "Spectral:c8"},
+                {"colors", colors},
                 {"opacity", 60},
-                {"size", size}
+                {"size", size},
+                {"padding", InteropArgumentHelper.getPadding(padding, "padding:100px 300px 125px 150px;")}
             }
         }
 

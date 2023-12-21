@@ -125,7 +125,9 @@ Public Class MzGroup
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overrides Function ToString() As String
-        Return mz
+        With rt
+            Return mz.ToString("F4") & $"@{size} points [{ .Min.ToString("F2")}s ~ { .Max.ToString("F2")}s]"
+        End With
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>

@@ -118,7 +118,6 @@ Public Module PeakAlignment
                 .rt = point.rt,
                 .rtmin = point.rtmin,
                 .rtmax = point.rtmax,
-                .npeaks = 0,
                 .Properties = New Dictionary(Of String, Double) From {
                     {refer.name, point.area}
                 }
@@ -133,10 +132,6 @@ Public Module PeakAlignment
             For Each point As PeakFeature In aligns
                 peak = peaktable(point.xcms_id)
                 peak.Add(sample.name, point.area)
-
-                If point.area > 0 Then
-                    peak.npeaks += 1
-                End If
 
                 If point.mz < peak.mzmin Then
                     peak.mzmin = point.mz

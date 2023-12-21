@@ -53,6 +53,7 @@
 #End Region
 
 Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
@@ -64,6 +65,7 @@ Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp
 Imports SMRUCC.Rsharp.Runtime
@@ -71,6 +73,7 @@ Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
+Imports SMRUCC.Rsharp.Runtime.Vectorization
 
 ''' <summary>
 ''' Extract peak and signal data from rawdata
@@ -87,6 +90,7 @@ Module mzDeco
         Call generic.add("readBin.mz_group", GetType(Stream), AddressOf readXIC)
         Call generic.add("readBin.peak_feature", GetType(Stream), AddressOf readSamples)
 
+        Call generic.add("writeBin", GetType(MzGroup), AddressOf writeXIC1)
         Call generic.add("writeBin", GetType(MzGroup()), AddressOf writeXIC)
         Call generic.add("writeBin", GetType(PeakFeature()), AddressOf writeSamples)
     End Sub
@@ -96,6 +100,10 @@ Module mzDeco
         Call SaveSample.DumpSample(samples, con)
         Call con.Flush()
         Return True
+    End Function
+
+    Private Function writeXIC1(xic As MzGroup, args As list, env As Environment) As Object
+        Return writeXIC({xic}, args, env)
     End Function
 
     Private Function writeXIC(xic As MzGroup(), args As list, env As Environment) As Object
@@ -166,14 +174,96 @@ Module mzDeco
         Return table
     End Function
 
+    <Extension>
+    Private Function xic_deco(pool As XICPool, features_mz As Double(),
+                              errors As Tolerance,
+                              rtRange As DoubleRange,
+                              baseline As Double,
+                              joint As Boolean,
+                              parallel As Boolean) As xcms2()
+
+        VectorTask.n_threads = App.CPUCoreNumbers
+
+        If features_mz.Length = 1 Then
+            ' extract the aligned data
+            Return pool.DtwXIC(features_mz(0), errors) _
+                .ToArray _
+                .extractAlignedPeaks(
+                    rtRange:=rtRange,
+                    baseline:=baseline,
+                    joint:=joint, xic_align:=True)
+        Else
+            Dim task As New xic_deco_task(pool, features_mz, errors, rtRange, baseline, joint)
+
+            If parallel Then
+                Call task.Run()
+            Else
+                Call task.Solve()
+            End If
+
+            Return task.out.ToArray
+        End If
+    End Function
+
+    Private Class xic_deco_task : Inherits VectorTask
+
+        Dim pool As (mz As Double, samples As NamedValue(Of MzGroup)())(),
+            rtRange As DoubleRange,
+            baseline As Double,
+            joint As Boolean
+
+
+        Public ReadOnly out As New List(Of xcms2)
+
+        Public Sub New(pool As XICPool, features_mz As Double(),
+                       errors As Tolerance,
+                       rtRange As DoubleRange,
+                       baseline As Double,
+                       joint As Boolean)
+
+            Call MyBase.New(features_mz.Length, verbose:=True)
+
+            Me.pool = features_mz _
+                .Select(Function(mz)
+                            Return (mz, pool.GetXICMatrix(mz, errors).ToArray)
+                        End Function) _
+                .ToArray
+            Me.rtRange = rtRange
+            Me.baseline = baseline
+            Me.joint = joint
+        End Sub
+
+        Protected Overrides Sub Solve(start As Integer, ends As Integer, cpu_id As Integer)
+            For i As Integer = start To ends
+                Dim samples_xic = pool(i).samples
+                Dim result = BioNovoGene.Analytical.MassSpectrometry.Math.XICPool.DtwXIC(samples_xic) _
+                      .ToArray _
+                      .extractAlignedPeaks(
+                          rtRange:=rtRange,
+                          baseline:=baseline,
+                          joint:=joint, xic_align:=True)
+
+                SyncLock out
+                    Call out.AddRange(result)
+                End SyncLock
+            Next
+        End Sub
+    End Class
+
     ''' <summary>
     ''' Chromatogram data deconvolution
     ''' </summary>
     ''' <param name="ms1">
-    ''' a collection of the ms1 data or the mzpack raw data object
+    ''' a collection of the ms1 data or the mzpack raw data object, this parameter could also be
+    ''' a XIC pool object which contains a collection of the ion XIC data for run deconvolution.
     ''' </param>
-    ''' <param name="tolerance"></param>
-    ''' <returns>a vector of the peak deconvolution data</returns>
+    ''' <param name="tolerance">the mass tolerance for extract the XIC data for run deconvolution.</param>
+    ''' <param name="feature">
+    ''' a numeric vector of target feature ion m/z value for extract the XIC data.
+    ''' </param>
+    ''' <returns>a vector of the peak deconvolution data,
+    ''' in format of xcms peak table liked or mzkit <see cref="PeakFeature"/>
+    ''' data object.</returns>
     ''' <example>
     ''' require(mzkit);
     ''' 
@@ -186,16 +276,17 @@ Module mzDeco
     ''' write.peaks(peaks, file = "/data/save_debug.dat");
     ''' </example>
     <ExportAPI("mz_deco")>
-    <RApiReturn(GetType(PeakFeature))>
+    <RApiReturn(GetType(PeakFeature), GetType(xcms2))>
     Public Function mz_deco(<RRawVectorArgument>
                             ms1 As Object,
                             Optional tolerance As Object = "ppm:20",
                             Optional baseline# = 0.65,
                             <RRawVectorArgument>
                             Optional peak_width As Object = "3,20",
-                            Optional joint As Boolean = True,
+                            Optional joint As Boolean = False,
                             Optional parallel As Boolean = False,
-                            Optional feature As Double? = Nothing,
+                            <RRawVectorArgument>
+                            Optional feature As Object = Nothing,
                             Optional env As Environment = Nothing) As Object
 
         Dim errors As [Variant](Of Tolerance, Message) = Math.getTolerance(tolerance, env)
@@ -209,16 +300,36 @@ Module mzDeco
 
         If TypeOf ms1 Is XICPool Then
             Dim pool As XICPool = DirectCast(ms1, XICPool)
+            Dim features_mz As Double() = CLRVector.asNumeric(feature)
 
-            If feature Is Nothing Then
+            If features_mz.IsNullOrEmpty Then
                 Return Internal.debug.stop("no ion m/z feature was provided!", env)
+            Else
+                Return pool.xic_deco(features_mz,
+                                     errors.TryCast(Of Tolerance),
+                                     rtRange.TryCast(Of DoubleRange),
+                                     baseline, joint, parallel)
             End If
+        ElseIf TypeOf ms1 Is list Then
+            Dim ls_xic = DirectCast(ms1, list) _
+                .AsGeneric(Of MzGroup)(env) _
+                .Select(Function(a) New NamedValue(Of MzGroup)(a.Key, a.Value)) _
+                .ToArray
 
-            Dim dtw_aligned = pool.DtwXIC(feature, errors.TryCast(Of Tolerance)).ToArray
-
+            If Not ls_xic.All(Function(a) a.Value Is Nothing) Then
+                Return ls_xic.extractAlignedPeaks(
+                    rtRange:=rtRange.TryCast(Of DoubleRange),
+                    baseline:=baseline,
+                    joint:=joint, xic_align:=True)
+            Else
+                GoTo extract_ms1
+            End If
         Else
+extract_ms1:
             Dim ms1_scans As IEnumerable(Of IMs1Scan) = ms1Scans(ms1)
 
+            ' usually used for make extract features
+            ' for a single sample file
             Return ms1_scans _
                 .GetMzGroups(mzdiff:=errors) _
                 .DecoMzGroups(
@@ -229,6 +340,35 @@ Module mzDeco
                 ) _
                 .ToArray
         End If
+    End Function
+
+    <Extension>
+    Private Function extractAlignedPeaks(dtw_aligned As NamedValue(Of MzGroup)(), rtRange As DoubleRange, baseline As Double, joint As Boolean, xic_align As Boolean) As xcms2()
+        ' and then export the peaks and area data
+        Dim peaksSet As NamedCollection(Of PeakFeature)() = dtw_aligned _
+            .Select(Function(sample)
+                        Dim peaks = sample.Value.GetPeakGroups(
+                                peakwidth:=rtRange,
+                                quantile:=baseline,
+                                sn_threshold:=0,
+                                joint:=joint) _
+                            .ExtractFeatureGroups _
+                            .ToArray
+
+                        Return New NamedCollection(Of PeakFeature)(sample.Name, peaks)
+                    End Function) _
+            .ToArray
+        Dim xcms As xcms2()
+
+        If xic_align Then
+            xcms = peaksSet _
+                .XicTable(rtwin:=rtRange.Max) _
+                .ToArray
+        Else
+            xcms = peaksSet.XcmsTable.ToArray
+        End If
+
+        Return xcms
     End Function
 
     ''' <summary>
@@ -268,7 +408,8 @@ Module mzDeco
     ''' </param>
     ''' <returns></returns>
     <ExportAPI("read.peakFeatures")>
-    Public Function readPeakData(file As String, Optional readBin As Boolean = False) As PeakFeature()
+    <RApiReturn(GetType(PeakFeature))>
+    Public Function readPeakData(file As String, Optional readBin As Boolean = False) As Object
         If readBin Then
             Using buf As Stream = file.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
                 Return SaveSample.ReadSample(buf).ToArray
@@ -288,7 +429,6 @@ Module mzDeco
     ''' </summary>
     ''' <param name="samples">should be a set of sample file data, which could be extract from the ``mz_deco`` function.</param>
     ''' <param name="mzdiff"></param>
-    ''' <param name="rt_win"></param>
     ''' <param name="norm">do total ion sum normalization after peak alignment and the peaktable object has been exported?</param>
     ''' <param name="env"></param>
     ''' <returns></returns>
@@ -307,7 +447,6 @@ Module mzDeco
     Public Function peakAlignment(<RRawVectorArgument>
                                   samples As Object,
                                   Optional mzdiff As Object = "da:0.001",
-                                  Optional rt_win As Double = 30,
                                   Optional norm As Boolean = False,
                                   Optional env As Environment = Nothing) As Object
 
@@ -384,6 +523,7 @@ Module mzDeco
     ''' a LCMS mzpack rawdata object or a collection of the ms1 point data
     ''' </param>
     ''' <param name="mzdiff">the mass tolerance error for extract the XIC from the rawdata set</param>
+    ''' <param name="rtwin">the rt tolerance window size for merge data points</param>
     ''' <param name="env"></param>
     ''' <returns>
     ''' create a list of XIC dataset for run downstream deconv operation
@@ -393,14 +533,22 @@ Module mzDeco
     ''' let XIC = mz.groups(ms1 = rawdata, mzdiff = "ppm:20");
     ''' 
     ''' </example>
+    ''' <remarks>
+    ''' the ion mz value is generated via the max intensity point in each ion 
+    ''' feature group, and the xic data has already been re-order via the 
+    ''' time asc.
+    ''' </remarks>
     <ExportAPI("mz.groups")>
     <RApiReturn(GetType(MzGroup()))>
     Public Function mz_groups(<RRawVectorArgument>
                               ms1 As Object,
                               Optional mzdiff As Object = "ppm:20",
+                              Optional rtwin As Double = 0.05,
                               Optional env As Environment = Nothing) As Object
 
-        Return ms1Scans(ms1).GetMzGroups(mzdiff:=Math.getTolerance(mzdiff, env)).ToArray
+        Return ms1Scans(ms1) _
+            .GetMzGroups(mzdiff:=Math.getTolerance(mzdiff, env), rtwin:=rtwin) _
+            .ToArray
     End Function
 
     Private Function ms1Scans(ms1 As Object) As IEnumerable(Of IMs1Scan)

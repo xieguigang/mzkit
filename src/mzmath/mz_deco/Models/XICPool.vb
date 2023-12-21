@@ -41,18 +41,29 @@ Public Class XICPool
         Next
     End Function
 
-    Public Iterator Function DtwXIC(mz As Double, mzdiff As Tolerance) As IEnumerable(Of NamedValue(Of MzGroup))
-        Dim rawdata = GetXICMatrix(mz, mzdiff).ToArray
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function DtwXIC(mz As Double, mzdiff As Tolerance) As IEnumerable(Of NamedValue(Of MzGroup))
+        Return DtwXIC(GetXICMatrix(mz, mzdiff).ToArray)
+    End Function
+
+    Public Shared Iterator Function DtwXIC(rawdata As NamedValue(Of MzGroup)()) As IEnumerable(Of NamedValue(Of MzGroup))
         ' make the length equals to each other
-        Dim signals As GeneralSignal() = rawdata _
+        Dim orders = rawdata _
+            .Select(Function(a)
+                        Return New NamedValue(Of MzGroup)(a.Name, a.Value.TrimRTScatter)
+                    End Function) _
+            .Where(Function(a) a.Value.size >= 3) _
             .OrderByDescending(Function(a) a.Value.MaxInto) _
+            .ToArray
+        Dim signals As GeneralSignal() = orders _
             .Select(Function(x) x.Value.CreateSignal(x.Name)) _
             .ToArray
-        Dim rt As Double() = Rt_vector(signals)
+        Dim diff_rt As Double = Nothing
+        Dim rt As Double() = Rt_vector(signals, diff_rt)
         Dim signals2 As GeneralSignal() = signals _
             .Select(Function(sig)
-                        Dim sample = Resampler.CreateSampler(sig)
-                        Dim intensity As Double() = sample.GetVector(rt)
+                        Dim sample = Resampler.CreateSampler(sig, max_dx:=3)
+                        Dim intensity As Double() = sample(x:=rt)
                         Dim resample As New GeneralSignal With {
                             .Measures = rt.ToArray,
                             .description = sig.description,
@@ -66,34 +77,60 @@ Public Class XICPool
                         Return resample
                     End Function) _
             .ToArray
-        Dim refer = signals2(0)
 
-        Yield New NamedValue(Of MzGroup)(refer.reference, New MzGroup(mz, refer.GetTimeSignals(Function(ti, into) New ChromatogramTick(ti, into))))
+        If signals2.Length = 0 Then
+            Return
+        End If
 
-        For Each query In signals2.Skip(1)
-            Dim dtw As New Dtw({refer, query}, preprocessor:=IPreprocessor.Normalization)
+        Dim refer As GeneralSignal = signals2(0)
+        Dim offset As Integer = 1
+
+        Yield New NamedValue(Of MzGroup)(
+            name:=refer.reference,
+            value:=New MzGroup(
+                mz:=orders(0).Value.mz,
+                xic:=refer.GetTimeSignals(Function(ti, into)
+                                              Return New ChromatogramTick(ti, into)
+                                          End Function))
+            )
+
+        For Each query As GeneralSignal In signals2.Skip(1)
+            Dim dtw As New Dtw({refer, query}, preprocessor:=IPreprocessor.None)
             Dim align_dt As Point() = dtw.GetPath.ToArray
             Dim tick As New List(Of ChromatogramTick)
+            Dim mz As Double = orders(offset).Value.mz
 
             For Each point In align_dt
                 tick.Add(New ChromatogramTick(rt(point.X), query.Strength(point.Y)))
             Next
 
+            offset += 1
+
             Yield New NamedValue(Of MzGroup)(query.reference, New MzGroup(mz, tick))
         Next
     End Function
 
-    Private Function Rt_vector(signals As GeneralSignal()) As Double()
+    Private Shared Function Rt_vector(signals As GeneralSignal(), ByRef diff_rt As Double) As Double()
         Dim rt As Double() = signals.Select(Function(s) s.Measures) _
             .IteratesALL _
             .OrderBy(Function(ti) ti) _
             .ToArray
-        Dim diff_rt As Double = NumberGroups.diff(rt) _
-            .OrderByDescending(Function(dt) dt) _
-            .Skip(rt.Length * 0.1) _
-            .Average
+        Dim diff_v = NumberGroups.diff(rt)
 
-        Return seq2(rt.Min, rt.Max, by:=diff_rt)
+        diff_rt = 0
+
+        If diff_v.Length = 0 Then
+            Return {}
+        ElseIf diff_v.Length = 1 Then
+            Return seq2(rt.Min, rt.Max, by:=diff_v.First)
+        Else
+            diff_rt = diff_v _
+                .OrderByDescending(Function(dt) dt) _
+                .Skip(rt.Length * 0.1) _
+                .Average
+
+            Return seq2(rt.Min, rt.Max, by:=diff_rt)
+        End If
     End Function
 
 End Class

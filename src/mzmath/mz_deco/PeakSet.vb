@@ -26,7 +26,6 @@ Public Class PeakSet
                             .mz = pk.mz,
                             .mzmax = pk.mzmax,
                             .mzmin = pk.mzmin,
-                            .npeaks = pk.npeaks,
                             .rt = pk.rt,
                             .rtmax = pk.rtmax,
                             .rtmin = pk.rtmin,

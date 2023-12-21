@@ -7,9 +7,9 @@ mz_deco \- Chromatogram data deconvolution
 \fBtolerance\fR as any = "ppm:20", 
 \fBbaseline\fR as double = 0.65, 
 \fBpeak_width\fR as any = "3,20", 
-\fBjoint\fR as boolean = TRUE, 
+\fBjoint\fR as boolean = FALSE, 
 \fBparallel\fR as boolean = FALSE, 
-\fBfeature\fR as double = \fB<NULL>\fR, 
+\fBfeature\fR as any = \fB<NULL>\fR, 
 [\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
@@ -18,15 +18,23 @@ Chromatogram data deconvolution
 .SH OPTIONS
 .PP
 \fBms1\fB \fR\- 
- a collection of the ms1 data or the mzpack raw data object
+ a collection of the ms1 data or the mzpack raw data object, this parameter could also be
+ a XIC pool object which contains a collection of the ion XIC data for run deconvolution.
 . 
 .PP
 .PP
-\fBtolerance\fB \fR\- -. 
+\fBtolerance\fB \fR\- the mass tolerance for extract the XIC data for run deconvolution.. 
+.PP
+.PP
+\fBfeature\fB \fR\- 
+ a numeric vector of target feature ion m/z value for extract the XIC data.
+. 
 .PP
 .SH VALUE
 .PP
-a vector of the peak deconvolution data
+a vector of the peak deconvolution data,
+ in format of xcms peak table liked or mzkit @\fBT:BioNovoGene.Analytical.MassSpectrometry.Math.PeakFeature\fR
+ data object.
 .PP
 .SH SEE ALSO
 mzDeco
