@@ -207,11 +207,11 @@ Module mzDeco
 
     Private Class xic_deco_task : Inherits VectorTask
 
-        Dim pool As XICPool, features_mz As Double(),
-            errors As Tolerance,
+        Dim pool As (mz As Double, samples As NamedValue(Of MzGroup)())(),
             rtRange As DoubleRange,
             baseline As Double,
             joint As Boolean
+
 
         Public ReadOnly out As New List(Of xcms2)
 
@@ -223,9 +223,11 @@ Module mzDeco
 
             Call MyBase.New(features_mz.Length, verbose:=True)
 
-            Me.pool = pool
-            Me.features_mz = features_mz
-            Me.errors = errors
+            Me.pool = features_mz _
+                .Select(Function(mz)
+                            Return (mz, pool.GetXICMatrix(mz, errors).ToArray)
+                        End Function) _
+                .ToArray
             Me.rtRange = rtRange
             Me.baseline = baseline
             Me.joint = joint
@@ -233,7 +235,8 @@ Module mzDeco
 
         Protected Overrides Sub Solve(start As Integer, ends As Integer, cpu_id As Integer)
             For i As Integer = start To ends
-                Dim result = pool.DtwXIC(features_mz(i), errors) _
+                Dim samples_xic = pool(i).samples
+                Dim result = BioNovoGene.Analytical.MassSpectrometry.Math.XICPool.DtwXIC(samples_xic) _
                       .ToArray _
                       .extractAlignedPeaks(
                           rtRange:=rtRange,
