@@ -65,6 +65,7 @@ Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp
 Imports SMRUCC.Rsharp.Runtime
@@ -178,7 +179,8 @@ Module mzDeco
                               errors As Tolerance,
                               rtRange As DoubleRange,
                               baseline As Double,
-                              joint As Boolean) As xcms2()
+                              joint As Boolean,
+                              parallel As Boolean) As xcms2()
 
         If features_mz.Length = 1 Then
             ' extract the aligned data
@@ -189,10 +191,59 @@ Module mzDeco
                     baseline:=baseline,
                     joint:=joint, xic_align:=True)
         Else
-            ' run parallel task for extract the aligned xic data
-            Throw New NotImplementedException
+            Dim task As New xic_deco_task(pool, features_mz, errors, rtRange, baseline, joint)
+
+            If parallel Then
+                Call task.Run()
+            Else
+                Call task.Solve()
+            End If
+
+            Return task.out.ToArray
         End If
     End Function
+
+    Private Class xic_deco_task : Inherits VectorTask
+
+        Dim pool As XICPool, features_mz As Double(),
+            errors As Tolerance,
+            rtRange As DoubleRange,
+            baseline As Double,
+            joint As Boolean
+
+        Public ReadOnly out As New List(Of xcms2)
+
+        Public Sub New(pool As XICPool, features_mz As Double(),
+                       errors As Tolerance,
+                       rtRange As DoubleRange,
+                       baseline As Double,
+                       joint As Boolean)
+
+            Call MyBase.New(features_mz.Length)
+
+            Me.pool = pool
+            Me.features_mz = features_mz
+            Me.errors = errors
+            Me.rtRange = rtRange
+            Me.baseline = baseline
+            Me.joint = joint
+        End Sub
+
+        Protected Overrides Sub Solve(start As Integer, ends As Integer, cpu_id As Integer)
+            For i As Integer = start To ends
+                Dim result = pool.DtwXIC(features_mz(i), errors) _
+                      .ToArray _
+                      .extractAlignedPeaks(
+                          rtRange:=rtRange,
+                          baseline:=baseline,
+                          joint:=joint, xic_align:=True)
+
+                SyncLock out
+                    Call out.AddRange(result)
+                End SyncLock
+            Next
+        End Sub
+    End Class
 
     ''' <summary>
     ''' Chromatogram data deconvolution
@@ -252,7 +303,7 @@ Module mzDeco
                 Return pool.xic_deco(features_mz,
                                      errors.TryCast(Of Tolerance),
                                      rtRange.TryCast(Of DoubleRange),
-                                     baseline, joint)
+                                     baseline, joint, parallel)
             End If
         ElseIf TypeOf ms1 Is list Then
             Dim ls_xic = DirectCast(ms1, list) _
