@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>peak_alignment</title>
+    <title>Do COW peak alignment and export peaktable</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <style rel="stylesheet" type="text/css">
@@ -181,18 +181,17 @@
             </tr>
         </table>
 
-        <h2>peak_alignment</h2>
+        <h2>Do COW peak alignment and export peaktable</h2>
 
         <h3>Description</h3>
 
-        peak_alignment
+        <p><br /> Correlation optimized warping (COW) based on the total ion <br /> current (TIC) is a widely used time alignment algorithm <br /> (COW-TIC). This approach works successfully on chromatograms <br /> containing few compounds and having a well-defined TIC.</p>
 
         <h3>Usage</h3>
 
         <div style="width: 100%; padding-left: 3%; color: black;">
             <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>peak_alignment</strong>(<i>samples</i>,
     <i>mzdiff</i> = <span style='color: brown;'><strong>"da:0.001"</strong></span>,
-    <i>rt.win</i> = <span style='color: green;'>30</span>,
     <i>norm</i> = <span style='color: blue !important;'>FALSE</span>);</code></pre>
         </div>
 
@@ -200,6 +199,21 @@
 
         <table>
             
+<dt>samples</dt>
+<dd><p><p>should be a set of sample file data, which could be extract from the <code>mz_deco</code> function.</p></p></dd>
+
+
+<dt>mzdiff</dt>
+<dd><p><p>-</p></p></dd>
+
+
+<dt>norm</dt>
+<dd><p><p>do total ion sum normalization after peak alignment and the peaktable object has been exported?</p></p></dd>
+
+
+<dt>env</dt>
+<dd><p><p>-</p></p></dd>
+
         </table>
 
 
@@ -210,11 +224,18 @@
 
         <h3>Value</h3>
 
-        this function returns data object of type <a href="/clr/BioNovoGene/Analytical/MassSpectrometry/Math/xcms2.html">xcms2</a>.
+        this function returns data object of type <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/xcms2.html">xcms2</a>.
 
-        <h3 style="display: none;">Examples</h3>
+        <h3 style="display: block;">Examples</h3>
 
-        
+        <pre><code id="example_r"> let peaksdata = lapply(files, function(ms1) {
+     mz_deco(ms1, tolerance = "da:0.01", peak.width = [3,30]);
+ });
+ let peaktable = peak_alignment(samples = peaksdata);
+ 
+ write.csv(peaktable, 
+     file = "/path/to/peaktable.csv", 
+     row.names = TRUE);</code></pre>
 
         <hr />
         <div style="text-align: center;">[Package <em>mzDeco</em> version 1.0.0.0 <a

@@ -62,7 +62,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports scan = BioNovoGene.Analytical.MassSpectrometry.Math.IMs1Scan
-Imports stdNum = System.Math
+Imports std = System.Math
 
 ''' <summary>
 ''' #### 解卷积计算步骤
@@ -74,6 +74,33 @@ Imports stdNum = System.Math
 ''' </summary>
 Public Module Deconvolution
 
+    <Extension>
+    Public Function TrimRTScatter(xic As MzGroup, Optional rtwin As Double = 15, Optional min_points As Integer = 5) As MzGroup
+        Dim dt_groups = xic.XIC.GroupBy(Function(ti) ti.Time, offsets:=rtwin).ToArray
+        Dim filter = dt_groups.Where(Function(d) d.Length >= min_points).ToArray
+        Dim no_scatter As ChromatogramTick() = filter.Select(Function(a) a.value).IteratesALL.OrderBy(Function(a) a.Time).ToArray
+        Dim raw_peaks = no_scatter.Shadows.PopulateROI(
+            peakwidth:=New DoubleRange(0, rtwin * 2),
+            baselineQuantile:=0.65,
+            joint:=False,
+            snThreshold:=0
+        ).Select(Function(a)
+                     Return (a, rsd:=a.ticks.IntensityArray.RSD * 100)
+                 End Function) _
+         .Where (Function(a) a.rsd > 10) _
+         .OrderByDescending(Function (a) a.rsd) _
+         .ToArray
+
+        no_scatter = raw_peaks _
+            .Select(Function(a) a.Item1.ticks) _
+            .IteratesALL _
+            .Distinct _
+            .OrderBy(Function(a) a.Time) _
+            .ToArray
+
+        Return New MzGroup(xic.mz, no_scatter)
+    End Function
+
     ''' <summary>
     ''' All of the mz value in <paramref name="mzpoints"/> should be equals
     ''' </summary>
@@ -83,15 +110,23 @@ Public Module Deconvolution
     <Extension>
     Public Iterator Function GetPeakGroups(mzpoints As MzGroup, peakwidth As DoubleRange,
                                            Optional quantile# = 0.65,
-                                           Optional sn_threshold As Double = 3) As IEnumerable(Of PeakFeature)
+                                           Optional sn_threshold As Double = 3,
+                                           Optional joint As Boolean = True) As IEnumerable(Of PeakFeature)
 
-        For Each ROI As ROI In mzpoints.XIC.Shadows.PopulateROI(
+        ' removes the possible zero or negative points
+        Dim valids = mzpoints.XIC _
+            .Where(Function(ti) ti.Intensity > 0) _
+            .OrderBy(Function(ti) ti.Time) _
+            .ToArray
+
+        For Each ROI As ROI In valids.Shadows.PopulateROI(
             peakwidth:=peakwidth,
             baselineQuantile:=quantile,
+            joint:=joint,
             snThreshold:=sn_threshold
         )
             Yield New PeakFeature With {
-                .mz = stdNum.Round(mzpoints.mz, 4),
+                .mz = std.Round(mzpoints.mz, 4),
                 .baseline = ROI.baseline,
                 .integration = ROI.integration,
                 .maxInto = ROI.maxInto,
@@ -103,17 +138,6 @@ Public Module Deconvolution
                 .area = ROI.ticks.Select(Function(t) t.Intensity).Sum
             }
         Next
-    End Function
-
-
-    <Extension>
-    Private Function localMax(window As IEnumerable(Of ChromatogramTick)) As ChromatogramTick
-        Return window.OrderByDescending(Function(t) t.Intensity).First
-    End Function
-
-    <Extension>
-    Private Function localMin(window As IEnumerable(Of ChromatogramTick)) As ChromatogramTick
-        Return window.OrderBy(Function(t) t.Intensity).First
     End Function
 
     ''' <summary>
@@ -138,13 +162,21 @@ Public Module Deconvolution
         Next
     End Function
 
+    ''' <summary>
+    ''' the ion m/z is evaluated via the highest intensity point,
+    '''  and the XIC has been re-order by time asc
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="group"></param>
+    ''' <param name="rtwin"></param>
+    ''' <returns></returns>
     <Extension>
     Private Function GetMzGroups(Of T As scan)(group As NamedCollection(Of T), rtwin As Double) As MzGroup
         Dim rawGroup As T() = group.ToArray
         Dim timePoints As NamedCollection(Of T)() = rawGroup _
             .GroupBy(Function(ti) ti.rt,
                      Function(a, b)
-                         Return stdNum.Abs(a - b) <= rtwin
+                         Return std.Abs(a - b) <= rtwin
                      End Function) _
             .ToArray
         Dim xic As ChromatogramTick() = timePoints _
@@ -161,6 +193,7 @@ Public Module Deconvolution
                     End Function) _
             .OrderBy(Function(ti) ti.Time) _
             .ToArray
+        ' set ion m/z value by max intensity in current group
         Dim mzPoint As T = rawGroup _
             .OrderByDescending(Function(d) d.intensity) _
             .First
@@ -178,32 +211,41 @@ Public Module Deconvolution
     ''' <param name="quantile#"></param>
     ''' <returns></returns>
     <Extension>
-    Public Iterator Function DecoMzGroups(mzgroups As IEnumerable(Of MzGroup), peakwidth As DoubleRange,
-                                          Optional quantile# = 0.65,
-                                          Optional sn As Double = 3,
-                                          Optional nticks As Integer = 6,
-                                          Optional parallel As Boolean = False) As IEnumerable(Of PeakFeature)
+    Public Function DecoMzGroups(mzgroups As IEnumerable(Of MzGroup), peakwidth As DoubleRange,
+                                 Optional quantile# = 0.65,
+                                 Optional sn As Double = 3,
+                                 Optional nticks As Integer = 6,
+                                 Optional joint As Boolean = True,
+                                 Optional parallel As Boolean = False) As IEnumerable(Of PeakFeature)
 
         Dim groupData As MzGroup() = mzgroups.ToArray
-        Dim features As IGrouping(Of String, PeakFeature)() = groupData _
+        Dim features As PeakFeature() = groupData _
             .Populate(parallel) _
             .Select(Function(mz)
-                        Return mz.GetPeakGroups(peakwidth, quantile, sn)
+                        Return mz.GetPeakGroups(peakwidth, quantile, sn, joint:=joint)
                     End Function) _
             .IteratesALL _
             .Where(Function(peak) peak.nticks >= nticks) _
-            .GroupBy(Function(m)
-                         ' 产生xcms id编号的Mxx部分
-                         Return stdNum.Round(m.mz).ToString
-                     End Function) _
             .ToArray
+
+        Return features.ExtractFeatureGroups
+    End Function
+
+    <Extension>
+    Public Iterator Function ExtractFeatureGroups(peaks As IEnumerable(Of PeakFeature)) As IEnumerable(Of PeakFeature)
         Dim guid As New Dictionary(Of String, Counter)
         Dim uid As String
+        Dim features As IGrouping(Of String, PeakFeature)() = peaks _
+            .GroupBy(Function(m)
+                         ' 产生xcms id编号的Mxx部分
+                         Return std.Round(m.mz).ToString
+                     End Function) _
+            .ToArray
 
         For Each mzId As IGrouping(Of String, PeakFeature) In features
             Dim mId As String = mzId.Key
             Dim rtIdgroup = mzId _
-                .GroupBy(Function(m) stdNum.Round(m.rt).ToString) _
+                .GroupBy(Function(m) std.Round(m.rt).ToString) _
                 .ToArray
 
             For Each rtgroup As IGrouping(Of String, PeakFeature) In rtIdgroup

@@ -106,8 +106,14 @@ Namespace Formula
         Sub New()
         End Sub
 
-        Sub New(i As Integer)
-            id = i
+        Sub New(name As String, mass As Double)
+            Me.symbol = name
+            Me.name = name
+            Me.isotopic = mass
+        End Sub
+
+        Sub New(id As Integer)
+            Me.id = id
         End Sub
 
         Public Overrides Function ToString() As String

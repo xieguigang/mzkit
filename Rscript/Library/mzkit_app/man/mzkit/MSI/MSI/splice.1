@@ -11,10 +11,17 @@ split the raw 2D MSI data into multiple parts with given parts
 .PP
 .SH OPTIONS
 .PP
-\fBraw\fB \fR\- -. 
+\fBraw\fB \fR\- the mzpack rawdata object that used for run ms-imaging data analysis.. 
 .PP
 .PP
-\fBpartition\fB \fR\- -. 
+\fBpartition\fB \fR\- this parameter indicates that how many blocks that will be splice 
+ into parts on width dimension and column dimension. the number of the pixels in each 
+ partition block will be evaluated from this parameter.. 
+.PP
+.SH VALUE
+.PP
+A collection of the ms-imaging mzpack object that split from multiple 
+ parts based on the input **`raw`** data mzpack inputs.
 .PP
 .SH SEE ALSO
 MSI

@@ -1,6 +1,10 @@
 # MSI
 
 MS-Imaging data handler
+ 
+ Mass spectrometry imaging (MSI) is a technique used in mass spectrometry
+ to visualize the spatial distribution of molecules, as biomarkers, 
+ metabolites, peptides or proteins by their molecular masses.
 
 + [scale](MSI/scale.1) scale the spatial matrix by column
 + [msi_metadata](MSI/msi_metadata.1) get ms-imaging metadata

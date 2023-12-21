@@ -59,7 +59,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.TagData
 Imports Microsoft.VisualBasic.Math
-Imports stdNum = System.Math
+Imports std = System.Math
 
 ''' <summary>
 ''' A TICPoint [mz, rt, intensity]
@@ -71,7 +71,7 @@ Public Class ms1_scan : Implements IMs1, IMs1Scan, INumericKey, ITimeSignal
     <XmlAttribute> Public Property intensity As Double Implements IMs1Scan.intensity, ITimeSignal.intensity
 
     Public Overrides Function ToString() As String
-        Return $"{mz.ToString("F4")}@{stdNum.Round(scan_time)} ({intensity})"
+        Return $"{mz.ToString("F4")}@{std.Round(scan_time)} ({intensity})"
     End Function
 
     ''' <summary>

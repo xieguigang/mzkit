@@ -29,10 +29,20 @@ cast the pixel collection to a ion imaging layer data
  data if this parameter leaves blank(or NULL) by default.. 
 .PP
 .PP
-\fBstrict\fB \fR\- -. 
+\fBstrict\fB \fR\- 
+ if the input \fB**`dims`**\fR produce invalid dimension size
+ value, example as dimension size is equals to ZERO [0,0], then in strict 
+ mode, the dimension value will be evaluated from the input raw data
+ automatically for ensure that the dimension size of the generated layer 
+ data object is not empty.
+. 
 .PP
 .PP
 \fBenv\fB \fR\- -. 
+.PP
+.SH VALUE
+.PP
+A ms-imaging layer object that could be used for run ms-imaging rendering.
 .PP
 .SH SEE ALSO
 MSI

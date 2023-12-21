@@ -56,11 +56,24 @@
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports Microsoft.VisualBasic.ComponentModel.Algorithm
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
-Imports stdNum = System.Math
+Imports std = System.Math
 
 <HideModuleName> Public Module Extensions
+
+    <Extension>
+    Public Function CreateMzIndex(mzSet As Double(), Optional win_size As Double = 1) As BlockSearchFunction(Of (mz As Double, Integer))
+        Call VBDebugger.EchoLine($"tolerance window size: {win_size}")
+
+        Return New BlockSearchFunction(Of (mz As Double, Integer))(
+            data:=mzSet.Select(Function(mzi, i) (mzi, i)),
+            eval:=Function(i) i.mz,
+            tolerance:=win_size,
+            fuzzy:=True
+        )
+    End Function
 
     ''' <summary>
     ''' 将响应强度低于一定值的碎片进行删除
@@ -86,7 +99,7 @@ Imports stdNum = System.Math
     ''' <returns></returns>
     <Extension>
     Public Function TrimBaseline(ms2 As IEnumerable(Of ms2)) As ms2()
-        Dim intoGroups = ms2.GroupBy(Function(m) m.intensity, Function(a, b) stdNum.Abs(a - b) <= 0.00001)
+        Dim intoGroups = ms2.GroupBy(Function(m) m.intensity, Function(a, b) std.Abs(a - b) <= 0.00001)
         Dim result As ms2() = intoGroups _
             .Where(Function(i) i.Length = 1) _
             .Select(Function(g) g.First) _

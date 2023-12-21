@@ -217,7 +217,11 @@
 
 
 <dt>strict</dt>
-<dd><p><p>-</p></p></dd>
+<dd><p><p>if the input <code>**`dims`**</code> produce invalid dimension size<br />
+ value, example as dimension size is equals to ZERO [0,0], then in strict <br />
+ mode, the dimension value will be evaluated from the input raw data<br />
+ automatically for ensure that the dimension size of the generated layer <br />
+ data object is not empty.</p></p></dd>
 
 
 <dt>env</dt>
@@ -233,11 +237,19 @@
 
         <h3>Value</h3>
 
-        this function returns data object of type <a href="/clr/BioNovoGene/Analytical/MassSpectrometry/MsImaging/SingleIonLayer.html">SingleIonLayer</a>.
+        <p>A ms-imaging layer object that could be used for run ms-imaging rendering.</p>
 
-        <h3 style="display: none;">Examples</h3>
+        <h3 style="display: block;">Examples</h3>
 
-        
+        <pre><code id="example_r"> imports "SingleCells" from "mzkit";
+ imports "MsImaging" from "mzplot";
+ 
+ let msi = SingleCells::read.mz_matrix("/path/to/msi_matrix.mat");
+ let layer = MSI::as.layer(x, context = 100.0013);
+ 
+ bitmap(file = "/path/to/save.png") {
+     plot(layer);
+ }</code></pre>
 
         <hr />
         <div style="text-align: center;">[Package <em>MSI</em> version 1.0.0.0 <a

@@ -198,7 +198,8 @@
         <table>
             
 <dt>file</dt>
-<dd><p><p>the file path to the specific imzML metadata file for load for run ms-imaging analysis.</p></p></dd>
+<dd><p><p>the file path to the specific imzML metadata file for load <br />
+ for run ms-imaging analysis.</p></p></dd>
 
 
 <dt>env</dt>
@@ -222,9 +223,10 @@
    <code>ibd</code> file of the given input imzML file.</li>
 </ol> the list data also has some specificied data fields: <code>list(scans, ibd)</code>.
 
-        <h3 style="display: none;">Examples</h3>
+        <h3 style="display: block;">Examples</h3>
 
-        
+        <pre><code id="example_r"> # the msi_rawdata.ibd file should be in the same folder with the input imzml file.
+ let imzml = open.imzML(file = "/path/to/msi_rawdata.imzML");</code></pre>
 
         <hr />
         <div style="text-align: center;">[Package <em>MSI</em> version 1.0.0.0 <a
