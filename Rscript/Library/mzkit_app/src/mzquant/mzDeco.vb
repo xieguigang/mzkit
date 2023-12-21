@@ -180,6 +180,7 @@ Module mzDeco
                               rtRange As DoubleRange,
                               baseline As Double,
                               joint As Boolean,
+                              dtw As Boolean,
                               parallel As Boolean) As xcms2()
 
         VectorTask.n_threads = App.CPUCoreNumbers
@@ -193,7 +194,7 @@ Module mzDeco
                     baseline:=baseline,
                     joint:=joint, xic_align:=True)
         Else
-            Dim task As New xic_deco_task(pool, features_mz, errors, rtRange, baseline, joint)
+            Dim task As New xic_deco_task(pool, features_mz, errors, rtRange, baseline, joint, dtw)
 
             If parallel Then
                 Call task.Run()
@@ -211,7 +212,7 @@ Module mzDeco
             rtRange As DoubleRange,
             baseline As Double,
             joint As Boolean
-
+        Dim dtw As Boolean
 
         Public ReadOnly out As New List(Of xcms2)
 
@@ -219,7 +220,8 @@ Module mzDeco
                        errors As Tolerance,
                        rtRange As DoubleRange,
                        baseline As Double,
-                       joint As Boolean)
+                       joint As Boolean,
+                       dtw As Boolean)
 
             Call MyBase.New(features_mz.Length, verbose:=True)
 
@@ -228,6 +230,7 @@ Module mzDeco
                             Return (mz, pool.GetXICMatrix(mz, errors).ToArray)
                         End Function) _
                 .ToArray
+            Me.dtw = dtw
             Me.rtRange = rtRange
             Me.baseline = baseline
             Me.joint = joint
@@ -236,12 +239,16 @@ Module mzDeco
         Protected Overrides Sub Solve(start As Integer, ends As Integer, cpu_id As Integer)
             For i As Integer = start To ends
                 Dim samples_xic = pool(i).samples
-                Dim result = BioNovoGene.Analytical.MassSpectrometry.Math.XICPool.DtwXIC(samples_xic) _
-                      .ToArray _
-                      .extractAlignedPeaks(
-                          rtRange:=rtRange,
-                          baseline:=baseline,
-                          joint:=joint, xic_align:=True)
+
+                If dtw Then
+                    samples_xic = XICPool.DtwXIC(samples_xic).ToArray
+                End If
+
+                Dim result As xcms2() = samples_xic _
+                    .extractAlignedPeaks(
+                        rtRange:=rtRange,
+                        baseline:=baseline,
+                        joint:=joint, xic_align:=True)
 
                 SyncLock out
                     Call out.AddRange(result)
@@ -285,6 +292,7 @@ Module mzDeco
                             Optional peak_width As Object = "3,20",
                             Optional joint As Boolean = False,
                             Optional parallel As Boolean = False,
+                            Optional dtw As Boolean = False,
                             <RRawVectorArgument>
                             Optional feature As Object = Nothing,
                             Optional env As Environment = Nothing) As Object
@@ -308,7 +316,7 @@ Module mzDeco
                 Return pool.xic_deco(features_mz,
                                      errors.TryCast(Of Tolerance),
                                      rtRange.TryCast(Of DoubleRange),
-                                     baseline, joint, parallel)
+                                     baseline, joint, dtw, parallel)
             End If
         ElseIf TypeOf ms1 Is list Then
             Dim ls_xic = DirectCast(ms1, list) _
@@ -317,6 +325,10 @@ Module mzDeco
                 .ToArray
 
             If Not ls_xic.All(Function(a) a.Value Is Nothing) Then
+                If dtw Then
+                    ls_xic = XICPool.DtwXIC(rawdata:=ls_xic).ToArray
+                End If
+
                 Return ls_xic.extractAlignedPeaks(
                     rtRange:=rtRange.TryCast(Of DoubleRange),
                     baseline:=baseline,
@@ -567,7 +579,7 @@ extract_ms1:
 
     <ExportAPI("xic_pool")>
     <RApiReturn(GetType(XICPool))>
-    Public Function XICpool(files As String()) As Object
+    Public Function XICpool_func(files As String()) As Object
         Dim pool As New XICPool
         Dim group As MzGroup()
 
