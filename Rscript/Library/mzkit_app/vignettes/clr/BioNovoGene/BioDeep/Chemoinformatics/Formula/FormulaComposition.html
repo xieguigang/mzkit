@@ -28,11 +28,12 @@
 
         <pre>
             <code id="clr_ts">
-#namespace BioNovoGene.BioDeep.Chemoinformatics.Formula
+# namespace BioNovoGene.BioDeep.Chemoinformatics.Formula
 export class FormulaComposition {
    charge: double;
    ppm: double;
    massdiff: double;
+   # Hydrogen/Carbon element ratio
    HCRatio: double;
    CountsByElement: list;
    EmpiricalFormula: string;

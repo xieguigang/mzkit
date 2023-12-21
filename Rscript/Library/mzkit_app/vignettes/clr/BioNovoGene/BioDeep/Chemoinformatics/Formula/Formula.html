@@ -33,11 +33,15 @@
 
         <pre>
             <code id="clr_ts">
-#namespace BioNovoGene.BioDeep.Chemoinformatics.Formula
+# namespace BioNovoGene.BioDeep.Chemoinformatics.Formula
 export class Formula {
+   # atom_count_tuples
    CountsByElement: list;
+   # get formula string
    EmpiricalFormula: string;
+   # get all elements label that parse from current formula object
    Elements: string;
+   # sum all isotopic mass of the atom elements.
    ExactMass: double;
 }
 </code>

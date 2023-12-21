@@ -48,11 +48,14 @@
 
         <pre>
             <code id="clr_ts">
-#namespace SMRUCC.Rsharp.Runtime.Internal.Object
+# namespace SMRUCC.Rsharp.Runtime.Internal.Object
 export class dataframe {
+   # 长度为1或者长度为n
    columns: list;
    rownames: string;
+   # get all keys names of @``P:SMRUCC.Rsharp.Runtime.Internal.Object.dataframe.columns`` data
    colnames: string;
+   # column @``P:System.Array.Length``
    nrows: integer;
    ncols: integer;
 }

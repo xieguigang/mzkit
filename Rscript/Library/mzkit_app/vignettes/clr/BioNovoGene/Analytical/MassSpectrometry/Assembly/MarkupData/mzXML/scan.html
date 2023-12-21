@@ -28,11 +28,20 @@
 
         <pre>
             <code id="clr_ts">
-#namespace BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
+# namespace BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
 export class scan {
+   # The scan number
    num: integer;
    scanType: string;
+   # ``profile`` and ``centroid`` in Mass Spectrometry?
+   #  
+   #  1. Profile means the continuous wave form in a mass spectrum.
+   #    + Number of data points Is large.
+   #  2. Centroid means the peaks in a profile data Is changed to bars.
+   #    + location of the bar Is center of the profile peak.
+   #    + height of the bar Is area of the profile peak.
    centroided: string;
+   # 当前的质谱碎片的等级,一级质谱,二级质谱或者msn等级的质谱
    msLevel: integer;
    peaksCount: integer;
    polarity: string;
@@ -46,6 +55,7 @@ export class scan {
    msInstrumentID: string;
    precursorMz: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/MarkupData/mzXML/precursorMz.html">precursorMz</a>;
    peaks: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/MarkupData/mzXML/peaks.html">peaks</a>;
+   # parse of the data field: @``P:BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML.scan.retentionTime``
    ScanTime: double;
 }
 </code>

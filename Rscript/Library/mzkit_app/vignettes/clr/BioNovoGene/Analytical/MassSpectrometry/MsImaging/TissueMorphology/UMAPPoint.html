@@ -28,13 +28,17 @@
 
         <pre>
             <code id="clr_ts">
-#namespace BioNovoGene.Analytical.MassSpectrometry.MsImaging.TissueMorphology
+# namespace BioNovoGene.Analytical.MassSpectrometry.MsImaging.TissueMorphology
 export class UMAPPoint {
+   # the spatial point of current spot if it is the sptial data, value
+   #  of this property is empty for the single cell data
    Pixel: <a href="/vignettes/clr/System/Drawing/Point.html">Point</a>;
+   # the cell label of current spot
    label: string;
    x: double;
    y: double;
    z: double;
+   # the cell cluster data
    class: string;
 }
 </code>

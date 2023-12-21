@@ -29,11 +29,13 @@
 
         <pre>
             <code id="clr_ts">
-#namespace BioNovoGene.BioDeep.Chemistry.MetaLib.CrossReference
+# namespace BioNovoGene.BioDeep.Chemistry.MetaLib.CrossReference
 export class xref {
+   # chebi main id, Chemical Entities of Biological Interest (ChEBI)
    chebi: string;
    KEGG: string;
    KEGGdrug: string;
+   # The pubchem cid
    pubchem: string;
    HMDB: string;
    metlin: string;
@@ -47,10 +49,12 @@ export class xref {
    KNApSAcK: string;
    foodb: string;
    chemspider: string;
+   # Multiple CAS id may exists
    CAS: string;
    InChIkey: string;
    InChI: string;
    SMILES: string;
+   # other additional database id set
    extras: list;
 }
 </code>

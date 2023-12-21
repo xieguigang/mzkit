@@ -30,19 +30,26 @@
 
         <pre>
             <code id="clr_ts">
-#namespace BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MGF
+# namespace BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MGF
 export class Ions {
    Title: string;
+   # The meta data collection in the title property
    Meta: list;
+   # MS1 rt in seconds format
    RtInSeconds: double;
+   # charge state
    Charge: integer;
+   # Database entries to be searched
    Accession: string;
    Instrument: string;
    Rawfile: string;
+   # Hierarchical scan range identifier
    Locus: string;
+   # Element sequence
    Sequence: string;
    Database: string;
    PepMass: <a href="/vignettes/clr/Microsoft/VisualBasic/Text/Xml/Models/NamedValue.html">NamedValue</a>;
+   # MS/MS peaks
    Peaks: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/ms2.html">ms2[]</a>;
 }
 </code>

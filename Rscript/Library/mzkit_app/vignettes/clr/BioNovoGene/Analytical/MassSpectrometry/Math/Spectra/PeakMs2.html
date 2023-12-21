@@ -28,19 +28,29 @@
 
         <pre>
             <code id="clr_ts">
-#namespace BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+# namespace BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 export class PeakMs2 {
+   # The precursor ``m/z`` value.
+   #  (一级母离子的``m/z``)
    mz: double;
+   # 一级母离子的出峰时间
    rt: double;
+   # 一级母离子的响应强度
    intensity: double;
+   # 原始数据文件名
    file: string;
+   # 数据扫描编号
    scan: string;
    activation: string;
    collisionEnergy: double;
+   # A unique variable name, meaning could be different with .
    lib_guid: string;
+   # adducts type of the @``P:BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.PeakMs2.mz`` value.
    precursor_type: string;
+   # 二级碎片信息
    mzInto: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/ms2.html">ms2[]</a>;
    meta: list;
+   # 获取得到二级碎片的响应强度值的和,这个响应强度值是和其对应的一级母离子的响应强度值是呈正相关的
    Ms2Intensity: double;
    fragments: integer;
 }

@@ -28,11 +28,14 @@
 
         <pre>
             <code id="clr_ts">
-#namespace BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
+# namespace BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 export class Chromatogram {
    scan_time: double;
+   # total ion current
    TIC: double;
+   # base peak intensity
    BPC: double;
+   # the length of @``P:BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram.Chromatogram.scan_time`` data points.
    length: integer;
    maxInto: double;
 }
