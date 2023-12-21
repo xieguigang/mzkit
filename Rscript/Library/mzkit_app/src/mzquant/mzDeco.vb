@@ -219,7 +219,7 @@ Module mzDeco
                        baseline As Double,
                        joint As Boolean)
 
-            Call MyBase.New(features_mz.Length)
+            Call MyBase.New(features_mz.Length, verbose:=True)
 
             Me.pool = pool
             Me.features_mz = features_mz

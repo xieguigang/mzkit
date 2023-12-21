@@ -84,10 +84,15 @@ Public Module Deconvolution
             baselineQuantile:=0.65,
             joint:=False,
             snThreshold:=0
-        ).ToArray
+        ).Select(Function(a)
+                     Return (a, rsd:=a.ticks.IntensityArray.RSD * 100)
+                 End Function) _
+         .Where (Function(a) a.rsd > 10) _
+         .OrderByDescending(Function (a) a.rsd) _
+         .ToArray
 
         no_scatter = raw_peaks _
-            .Select(Function(a) a.ticks) _
+            .Select(Function(a) a.Item1.ticks) _
             .IteratesALL _
             .Distinct _
             .OrderBy(Function(a) a.Time) _

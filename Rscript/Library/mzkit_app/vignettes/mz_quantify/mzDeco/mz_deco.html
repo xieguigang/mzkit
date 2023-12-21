@@ -204,11 +204,16 @@
         <table>
             
 <dt>ms1</dt>
-<dd><p><p>a collection of the ms1 data or the mzpack raw data object</p></p></dd>
+<dd><p><p>a collection of the ms1 data or the mzpack raw data object, this parameter could also be<br />
+ a XIC pool object which contains a collection of the ion XIC data for run deconvolution.</p></p></dd>
 
 
 <dt>tolerance</dt>
-<dd><p><p>-</p></p></dd>
+<dd><p><p>the mass tolerance for extract the XIC data for run deconvolution.</p></p></dd>
+
+
+<dt>feature</dt>
+<dd><p><p>a numeric vector of target feature ion m/z value for extract the XIC data.</p></p></dd>
 
         </table>
 
@@ -220,7 +225,9 @@
 
         <h3>Value</h3>
 
-        <p>a vector of the peak deconvolution data</p>
+        <p>a vector of the peak deconvolution data,<br />
+ in format of xcms peak table liked or mzkit @<code>T:BioNovoGene.Analytical.MassSpectrometry.Math.PeakFeature</code><br />
+ data object.</p>
 
         <h3 style="display: block;">Examples</h3>
 

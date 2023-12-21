@@ -26,7 +26,7 @@ print(mzraw);
 
 # make centroid 
 mzraw = libraryMatrix(data.frame(mz = mzraw$mz, into = mzraw$TIC));
-mzraw = centroid(mzraw, tolerance = "da:0.01", intoCutoff = 0.001);
+mzraw = centroid(mzraw, tolerance = "da:0.01", intoCutoff = 0.0001);
 mzraw = as.data.frame(mzraw);
 
 print(mzraw);

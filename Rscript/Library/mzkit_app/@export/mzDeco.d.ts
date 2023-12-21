@@ -35,8 +35,9 @@ declare namespace mzDeco {
     * Chromatogram data deconvolution
     * 
     * 
-     * @param ms1 a collection of the ms1 data or the mzpack raw data object
-     * @param tolerance -
+     * @param ms1 a collection of the ms1 data or the mzpack raw data object, this parameter could also be
+     *  a XIC pool object which contains a collection of the ion XIC data for run deconvolution.
+     * @param tolerance the mass tolerance for extract the XIC data for run deconvolution.
      * 
      * + default value Is ``'ppm:20'``.
      * @param baseline 
@@ -47,13 +48,16 @@ declare namespace mzDeco {
      * + default value Is ``false``.
      * @param parallel 
      * + default value Is ``false``.
-     * @param feature 
+     * @param feature a numeric vector of target feature ion m/z value for extract the XIC data.
+     * 
      * + default value Is ``null``.
      * @param env 
      * + default value Is ``null``.
-     * @return a vector of the peak deconvolution data
+     * @return a vector of the peak deconvolution data,
+     *  in format of xcms peak table liked or mzkit @``T:BioNovoGene.Analytical.MassSpectrometry.Math.PeakFeature``
+     *  data object.
    */
-   function mz_deco(ms1: any, tolerance?: any, baseline?: number, peak_width?: any, joint?: boolean, parallel?: boolean, feature?: number, env?: object): object|object;
+   function mz_deco(ms1: any, tolerance?: any, baseline?: number, peak_width?: any, joint?: boolean, parallel?: boolean, feature?: any, env?: object): object|object;
    /**
     * Do COW peak alignment and export peaktable
     *  
