@@ -1,0 +1,15 @@
+<title>SIDMap</title>
+<p>This is a listing of all (live) SIDs with their source names and
+ registry identifiers, and the standardized CID If present. It Is 
+ a gzipped text file where Each line contains at least three
+ columns: SID, tab, source name, tab, registry identifier; then
+ a fourth column Of tab, CID If there Is a standardized CID For 
+ the given SID.</p>
+<pre><code id="ts">#namespace BioNovoGene.BioDeep.Chemistry.NCBI.PubChem
+export class SIDMap {
+   SID: integer;
+   sourceName: string;
+   registryIdentifier: string;
+   CID: integer;
+}
+</code></pre>
