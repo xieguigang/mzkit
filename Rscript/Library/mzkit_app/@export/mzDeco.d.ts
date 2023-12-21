@@ -48,6 +48,8 @@ declare namespace mzDeco {
      * + default value Is ``false``.
      * @param parallel 
      * + default value Is ``false``.
+     * @param dtw 
+     * + default value Is ``false``.
      * @param feature a numeric vector of target feature ion m/z value for extract the XIC data.
      * 
      * + default value Is ``null``.
@@ -57,7 +59,7 @@ declare namespace mzDeco {
      *  in format of xcms peak table liked or mzkit @``T:BioNovoGene.Analytical.MassSpectrometry.Math.PeakFeature``
      *  data object.
    */
-   function mz_deco(ms1: any, tolerance?: any, baseline?: number, peak_width?: any, joint?: boolean, parallel?: boolean, feature?: any, env?: object): object|object;
+   function mz_deco(ms1: any, tolerance?: any, baseline?: number, peak_width?: any, joint?: boolean, parallel?: boolean, dtw?: boolean, feature?: any, env?: object): object|object;
    /**
     * Do COW peak alignment and export peaktable
     *  

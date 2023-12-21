@@ -61,7 +61,10 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 ''' <summary>
@@ -95,6 +98,30 @@ Public Class xcms2 : Inherits DynamicPropertyBase(Of Double)
     '        .ToArray
     'End Function
 
+    Public Shared Iterator Function MakeUniqueId(peaktable As IEnumerable(Of xcms2)) As IEnumerable(Of xcms2)
+        Dim guid As New Dictionary(Of String, Counter)
+        Dim uid As String
+
+        For Each feature As xcms2 In peaktable
+            uid = feature.ID
+
+            If Not guid.ContainsKey(uid) Then
+                guid.Add(uid, 0)
+            End If
+
+            If guid(uid).Value = 0 Then
+                feature.ID = uid
+            Else
+                feature.ID = uid & "_" & guid(uid).ToString
+            End If
+
+            Call guid(uid).Hit()
+
+            Yield feature
+        Next
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overrides Function ToString() As String
         Return $"{ID}  {mz.ToString("F4")}@{rt.ToString("F4")}  {npeaks}peaks: {Properties.Keys.GetJson}"
     End Function
