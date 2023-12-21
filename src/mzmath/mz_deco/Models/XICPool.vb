@@ -77,7 +77,12 @@ Public Class XICPool
                         Return resample
                     End Function) _
             .ToArray
-        Dim refer = signals2(0)
+
+        If signals2.Length = 0 Then
+            Return
+        End If
+
+        Dim refer As GeneralSignal = signals2(0)
         Dim offset As Integer = 1
 
         Yield New NamedValue(Of MzGroup)(
