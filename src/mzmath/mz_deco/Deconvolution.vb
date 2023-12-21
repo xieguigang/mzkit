@@ -78,9 +78,9 @@ Public Module Deconvolution
     Public Function TrimRTScatter(xic As MzGroup, Optional rtwin As Double = 15, Optional min_points As Integer = 5) As MzGroup
         Dim dt_groups = xic.XIC.GroupBy(Function(ti) ti.Time, offsets:=rtwin).ToArray
         Dim filter = dt_groups.Where(Function(d) d.Length >= min_points).ToArray
-        Dim no_scatter As New MzGroup(xic.mz, filter.Select(Function(a) a.value).IteratesALL.OrderBy(Function(a) a.Time))
+        Dim no_scatter As ChromatogramTick() = filter.Select(Function(a) a.value).IteratesALL.OrderBy(Function(a) a.Time).ToArray
 
-        Return no_scatter
+        Return New MzGroup(xic.mz, no_scatter)
     End Function
 
     ''' <summary>
