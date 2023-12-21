@@ -202,7 +202,7 @@ Module mzDeco
                 Call task.Solve()
             End If
 
-            Return task.out.ToArray
+            Return xcms2.MakeUniqueId(task.out).ToArray
         End If
     End Function
 
