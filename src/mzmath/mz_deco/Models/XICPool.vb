@@ -110,13 +110,22 @@ Public Class XICPool
             .IteratesALL _
             .OrderBy(Function(ti) ti) _
             .ToArray
+        Dim diff_v = NumberGroups.diff(rt)
 
-        diff_rt = NumberGroups.diff(rt) _
-            .OrderByDescending(Function(dt) dt) _
-            .Skip(rt.Length * 0.1) _
-            .Average
+        diff_rt = 0
 
-        Return seq2(rt.Min, rt.Max, by:=diff_rt)
+        If diff_v.Length = 0 Then
+            Return {}
+        ElseIf diff_v.Length = 1 Then
+            Return seq2(rt.Min, rt.Max, by:=diff_v.First)
+        Else
+            diff_rt = diff_v _
+                .OrderByDescending(Function(dt) dt) _
+                .Skip(rt.Length * 0.1) _
+                .Average
+
+            Return seq2(rt.Min, rt.Max, by:=diff_rt)
+        End If
     End Function
 
 End Class
