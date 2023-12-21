@@ -1,0 +1,15 @@
+<title>MetaInfo</title>
+<p>the very basic metabolite annotation data model</p>
+<pre><code id="ts">#namespace BioNovoGene.BioDeep.Chemistry.MetaLib.Models
+export class MetaInfo {
+   ID: string;
+   formula: string;
+   exact_mass: double;
+   name: string;
+   IUPACName: string;
+   description: string;
+   synonym: string;
+   xref: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/MetaLib/CrossReference/xref.html">xref</a>;
+   GetXrefId: string;
+}
+</code></pre>

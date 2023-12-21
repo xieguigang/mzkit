@@ -1,0 +1,29 @@
+<title>ChEBIEntity</title>
+<p>The complete entity including synonyms, database links and chemical structures.
+ (ChEBI数据库之中的一个对某种代谢物的完整的描述的数据模型，
+ @``T:Microsoft.VisualBasic.ComponentModel.Collection.Generic.INamedValue``的主键为@``P:SMRUCC.genomics.Assembly.ELIXIR.EBI.ChEBI.XML.ChEBIEntity.chebiId``主ID)</p>
+<pre><code id="ts">#namespace SMRUCC.genomics.Assembly.ELIXIR.EBI.ChEBI.XML
+export class ChEBIEntity {
+   chebiId: string;
+   chebiAsciiName: string;
+   definition: string;
+   status: string;
+   smiles: string;
+   inchi: string;
+   inchiKey: string;
+   charge: integer;
+   mass: double;
+   entityStar: integer;
+   Synonyms: <a href="/vignettes/clr/SMRUCC/genomics/Assembly/ELIXIR/EBI/ChEBI/XML/Synonyms[].html">Synonyms[]</a>;
+   IupacNames: <a href="/vignettes/clr/SMRUCC/genomics/Assembly/ELIXIR/EBI/ChEBI/XML/Synonyms[].html">Synonyms[]</a>;
+   Citations: <a href="/vignettes/clr/SMRUCC/genomics/Assembly/ELIXIR/EBI/ChEBI/XML/Synonyms[].html">Synonyms[]</a>;
+   Formulae: <a href="/vignettes/clr/SMRUCC/genomics/Assembly/ELIXIR/EBI/ChEBI/XML/Formulae.html">Formulae</a>;
+   SecondaryChEBIIds: string;
+   RegistryNumbers: <a href="/vignettes/clr/SMRUCC/genomics/Assembly/ELIXIR/EBI/ChEBI/XML/RegistryNumbers[].html">RegistryNumbers[]</a>;
+   ChemicalStructures: <a href="/vignettes/clr/SMRUCC/genomics/Assembly/ELIXIR/EBI/ChEBI/XML/ChemicalStructures[].html">ChemicalStructures[]</a>;
+   DatabaseLinks: <a href="/vignettes/clr/SMRUCC/genomics/Assembly/ELIXIR/EBI/ChEBI/XML/DatabaseLinks[].html">DatabaseLinks[]</a>;
+   OntologyParents: <a href="/vignettes/clr/SMRUCC/genomics/Assembly/ELIXIR/EBI/ChEBI/XML/OntologyParents[].html">OntologyParents[]</a>;
+   OntologyChildren: <a href="/vignettes/clr/SMRUCC/genomics/Assembly/ELIXIR/EBI/ChEBI/XML/OntologyParents[].html">OntologyParents[]</a>;
+   CompoundOrigins: <a href="/vignettes/clr/SMRUCC/genomics/Assembly/ELIXIR/EBI/ChEBI/XML/CompoundOrigin[].html">CompoundOrigin[]</a>;
+}
+</code></pre>

@@ -1,0 +1,24 @@
+<title>MetaLib</title>
+<p>对``chebi/kegg/pubchem/HMDB/metlin``的物质注释信息整合库，这个数据库只要为了生成编号，名称之类的注释信息而构建的</p>
+<pre><code id="ts">#namespace BioNovoGene.BioDeep.Chemistry.MetaLib.Models
+export class MetaLib {
+   chemical: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemoinformatics/ChemicalDescriptor.html">ChemicalDescriptor</a>;
+   kingdom: string;
+   super_class: string;
+   class: string;
+   sub_class: string;
+   molecular_framework: string;
+   organism: string;
+   pathways: string;
+   samples: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/MetaLib/Models/BiosampleSource[].html">BiosampleSource[]</a>;
+   ID: string;
+   formula: string;
+   exact_mass: double;
+   name: string;
+   IUPACName: string;
+   description: string;
+   synonym: string;
+   xref: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/MetaLib/CrossReference/xref.html">xref</a>;
+   GetXrefId: string;
+}
+</code></pre>

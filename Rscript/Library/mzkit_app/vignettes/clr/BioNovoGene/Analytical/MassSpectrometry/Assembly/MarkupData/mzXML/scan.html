@@ -1,0 +1,23 @@
+<title>scan</title>
+<p>一个一级或者二级的扫描结果数据的模型</p>
+<pre><code id="ts">#namespace BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
+export class scan {
+   num: integer;
+   scanType: string;
+   centroided: string;
+   msLevel: integer;
+   peaksCount: integer;
+   polarity: string;
+   retentionTime: string;
+   basePeakMz: double;
+   basePeakIntensity: double;
+   totIonCurrent: double;
+   collisionEnergy: string;
+   lowMz: double;
+   highMz: double;
+   msInstrumentID: string;
+   precursorMz: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/MarkupData/mzXML/precursorMz.html">precursorMz</a>;
+   peaks: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/MarkupData/mzXML/peaks.html">peaks</a>;
+   ScanTime: double;
+}
+</code></pre>

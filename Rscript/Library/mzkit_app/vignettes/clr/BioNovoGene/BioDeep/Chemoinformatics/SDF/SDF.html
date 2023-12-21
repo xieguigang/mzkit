@@ -1,0 +1,19 @@
+<title>SDF</title>
+<p>#### Structure-data file
+ 
+ SDF or Structures Data File is a common file format developed by Molecular Design Limited 
+ to handle a list of molecular structures with associated properties. 
+ The file format has been published (Dalby et al., J. Chem. Inf. Comput. Sci. 1992, 32: 244-255).
+ 
+ + LMSD Structure-data file (http://www.lipidmaps.org/resources/downloads/index.html)
+ + PubChem FTP SDF(ftp://ftp.ncbi.nlm.nih.gov/pubchem/Compound/CURRENT-Full/SDF)</p>
+<pre><code id="ts">#namespace BioNovoGene.BioDeep.Chemoinformatics.SDF
+export class SDF {
+   ID: string;
+   Software: string;
+   name: string;
+   Comment: string;
+   Structure: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemoinformatics/SDF/Models/Structure.html">Structure</a>;
+   MetaData: <a href="/vignettes/clr/System/Collections/Generic/Dictionary`2[[System/String, System/Private/CoreLib, Version=6/0/0/0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System/String[], System/Private/CoreLib, Version=6/0/0/0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]].html">Dictionary`2</a>;
+}
+</code></pre>
