@@ -79,6 +79,19 @@ Public Module Deconvolution
         Dim dt_groups = xic.XIC.GroupBy(Function(ti) ti.Time, offsets:=rtwin).ToArray
         Dim filter = dt_groups.Where(Function(d) d.Length >= min_points).ToArray
         Dim no_scatter As ChromatogramTick() = filter.Select(Function(a) a.value).IteratesALL.OrderBy(Function(a) a.Time).ToArray
+        Dim raw_peaks = no_scatter.Shadows.PopulateROI(
+            peakwidth:=New DoubleRange(0, rtwin * 2),
+            baselineQuantile:=0.65,
+            joint:=False,
+            snThreshold:=0
+        ).ToArray
+
+        no_scatter = raw_peaks _
+            .Select(Function(a) a.ticks) _
+            .IteratesALL _
+            .Distinct _
+            .OrderBy(Function(a) a.Time) _
+            .ToArray
 
         Return New MzGroup(xic.mz, no_scatter)
     End Function
