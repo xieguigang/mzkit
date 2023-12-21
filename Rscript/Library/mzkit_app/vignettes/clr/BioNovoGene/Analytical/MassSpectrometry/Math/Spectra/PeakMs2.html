@@ -1,6 +1,34 @@
-<title>PeakMs2</title>
-<p>将mzXML文件之中的每一个ms2 scan转换而来</p>
-<pre><code id="ts">#namespace BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.PeakMs2</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <table style="width: 100%;">
+            <tr>
+                <td>PeakMs2 {BioNovoGene.Analytical.MassSpectrometry.Math.Spectra}</td>
+                <td style="text-align: right;">.NET clr documentation</td>
+            </tr>
+        </table>
+
+        <h2>PeakMs2</h2>
+
+        <h3>Description</h3>
+
+        将mzXML文件之中的每一个ms2 scan转换而来
+
+        <h3>Declare</h3>        
+
+        <pre>
+            <code id="clr_ts">
+#namespace BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 export class PeakMs2 {
    mz: double;
    rt: double;
@@ -12,8 +40,22 @@ export class PeakMs2 {
    lib_guid: string;
    precursor_type: string;
    mzInto: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/ms2.html">ms2[]</a>;
-   meta: <a href="/vignettes/clr/System/Collections/Generic/Dictionary`2.html">Dictionary`2</a>;
+   meta: list;
    Ms2Intensity: double;
    fragments: integer;
 }
-</code></pre>
+</code>
+        </pre>
+
+        <hr />
+        <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a
+                href="../{$package}.html">Index</a>]
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="https://mzkit.org/assets/js/R_syntax.js"></script>
+<script type="text/javascript" src="https://mzkit.org/assets/js/highlights.js"></script>
+<script type="text/javascript">r_highlights("clr_ts");</script>
+
+</html>

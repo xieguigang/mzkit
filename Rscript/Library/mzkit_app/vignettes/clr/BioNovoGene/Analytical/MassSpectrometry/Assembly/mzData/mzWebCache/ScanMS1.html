@@ -1,12 +1,40 @@
-<title>ScanMS1</title>
-<p>MS scan</p>
-<pre><code id="ts">#namespace BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache.ScanMS1</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <table style="width: 100%;">
+            <tr>
+                <td>ScanMS1 {BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache}</td>
+                <td style="text-align: right;">.NET clr documentation</td>
+            </tr>
+        </table>
+
+        <h2>ScanMS1</h2>
+
+        <h3>Description</h3>
+
+        MS scan
+
+        <h3>Declare</h3>        
+
+        <pre>
+            <code id="clr_ts">
+#namespace BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 export class ScanMS1 {
    rt: double;
    TIC: double;
    BPC: double;
    products: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/mzWebCache/ScanMS2.html">ScanMS2[]</a>;
-   meta: <a href="/vignettes/clr/System/Collections/Generic/Dictionary`2.html">Dictionary`2</a>;
+   meta: list;
    value: string;
    scan_id: string;
    mz: double;
@@ -14,4 +42,18 @@ export class ScanMS1 {
    MRM: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/MRM.html">MRM[]</a>;
    size: integer;
 }
-</code></pre>
+</code>
+        </pre>
+
+        <hr />
+        <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a
+                href="../{$package}.html">Index</a>]
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="https://mzkit.org/assets/js/R_syntax.js"></script>
+<script type="text/javascript" src="https://mzkit.org/assets/js/highlights.js"></script>
+<script type="text/javascript">r_highlights("clr_ts");</script>
+
+</html>
