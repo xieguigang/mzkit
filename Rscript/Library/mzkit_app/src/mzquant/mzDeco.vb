@@ -77,6 +77,15 @@ Imports SMRUCC.Rsharp.Runtime.Vectorization
 
 ''' <summary>
 ''' Extract peak and signal data from rawdata
+''' 
+''' Data processing is the computational process of converting raw LC-MS 
+''' data to biological knowledge and involves multiple processes including 
+''' raw data deconvolution and the chemical identification of metabolites.
+''' 
+''' The process of data deconvolution, sometimes called peak picking, is 
+''' in itself a complex process caused by the complexity of the data and 
+''' variation introduced during the process of data acquisition related to 
+''' mass-to-charge ratio, retention time and chromatographic peak area.
 ''' </summary>
 <Package("mzDeco")>
 <RTypeExport("peak_feature", GetType(PeakFeature))>
@@ -204,6 +213,16 @@ Module mzDeco
 
             Return xcms2.MakeUniqueId(task.out).ToArray
         End If
+    End Function
+
+    <ExportAPI("read.xcms_peaks")>
+    Public Function readXcmsPeaks(file As String) As PeakSet
+        Return New PeakSet With {.peaks = file.LoadCsv(Of xcms2)().ToArray}
+    End Function
+
+    <ExportAPI("peak_subset")>
+    Public Function peakSubset(peaktable As PeakSet, sampleNames As String()) As PeakSet
+        Return peaktable.Subset(sampleNames)
     End Function
 
     Private Class xic_deco_task : Inherits VectorTask
