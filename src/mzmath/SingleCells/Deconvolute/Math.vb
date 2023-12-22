@@ -102,7 +102,9 @@ Namespace Deconvolute
         ''' <returns>
         ''' m/z data vector has been re-order ascding
         ''' </returns>
-        Public Function GetMzIndex(raw As IMZPack, mzdiff As Double, freq As Double, Optional fast As Boolean = True) As Double()
+        Public Function GetMzIndex(raw As IMZPack, mzdiff As Double, freq As Double,
+                                   Optional fast As Boolean = True,
+                                   Optional verbose As Boolean = False) As Double()
             If fast Then
                 Dim scanMz As New List(Of Double())
 
@@ -113,7 +115,7 @@ Namespace Deconvolute
                 scanMz.Shuffle
                 VectorTask.n_threads = App.CPUCoreNumbers
 
-                Dim par As New IndexTask(scanMz, mzdiff)
+                Dim par As New IndexTask(scanMz, mzdiff, verbose)
                 Dim subgroups = DirectCast(par.Run(), IndexTask).groups
                 Dim merge = subgroups.IteratesALL _
                     .Where(Function(n) n.Length > 0) _
@@ -149,8 +151,8 @@ Namespace Deconvolute
             Friend ReadOnly groups As NamedCollection(Of Double)()()
             Friend ReadOnly mzdiff As Double
 
-            Sub New(blocks As List(Of Double()), mzdiff As Double)
-                Call MyBase.New(blocks.Count)
+            Sub New(blocks As List(Of Double()), mzdiff As Double, verbose As Boolean)
+                Call MyBase.New(blocks.Count, verbose)
 
                 Me.blocks = blocks
                 Me.mzdiff = mzdiff

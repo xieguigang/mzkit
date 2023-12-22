@@ -76,13 +76,15 @@ Namespace Deconvolute
                                      Optional mzdiff As Double = 0.001,
                                      Optional freq As Double = 0.01,
                                      Optional mzSet As Double() = Nothing,
-                                     Optional fastBin As Boolean = True) As MzMatrix
+                                     Optional fastBin As Boolean = True,
+                                     Optional verbose As Boolean = False) As MzMatrix
 
             If mzSet.IsNullOrEmpty Then
                 mzSet = GetMzIndex(
                     raw:=raw,
                     mzdiff:=mzdiff, freq:=freq,
-                    fast:=fastBin
+                    fast:=fastBin,
+                    verbose:=verbose
                 )
             End If
 
