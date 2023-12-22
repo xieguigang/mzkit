@@ -2,7 +2,7 @@ require(mzkit);
 
 imports "mzDeco" from "mz_quantify";
 
-let files = list.files("E:\\biodeep\\lipids-XCMS3-rt\\raw\\pos_mzPack", pattern = "*.xic");
+let files = list.files("E:\\biodeep\\lipids-XCMS3-rt\\raw\\neg_mzPack", pattern = "*.xic");
 
 print(files);
 
@@ -26,9 +26,9 @@ print(mzraw);
 
 # make centroid 
 mzraw = libraryMatrix(data.frame(mz = mzraw$mz, into = mzraw$TIC));
-mzraw = centroid(mzraw, tolerance = "da:0.01", intoCutoff = 0.0001);
+mzraw = centroid(mzraw, tolerance = "da:0.01", intoCutoff = 0);
 mzraw = as.data.frame(mzraw);
 
 print(mzraw);
 
-write.csv(mzraw, "E:\biodeep\lipids-XCMS3-rt\raw\pos_mzbins.csv", row.names = TRUE);
+write.csv(mzraw, "E:\biodeep\lipids-XCMS3-rt\raw\neg_mzbins.csv", row.names = TRUE);
