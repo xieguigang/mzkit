@@ -13,6 +13,15 @@ Cast the ion feature matrix as the GCModeller expression matrix object
 .PP
 \fBx\fB \fR\- -. 
 .PP
+.SH VALUE
+.PP
+the gcmodeller expression matrix object, each @\fBT:SMRUCC.genomics.Analysis.HTS.DataFrame.DataFrameRow\fR element inside the 
+ generated matrix object is the expression vector of all metabolite ion features. which means
+ the matrix format from this function outputs should be:
+ 
+ 1. cell labels, or spatial location in rows
+ 2. and ion features in columns.
+.PP
 .SH SEE ALSO
 SingleCells
 .SH FILES

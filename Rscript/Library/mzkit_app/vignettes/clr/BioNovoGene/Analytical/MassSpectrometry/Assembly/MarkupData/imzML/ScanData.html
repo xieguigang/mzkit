@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>BioNovoGene.BioDeep.Chemoinformatics.Formula.FormulaComposition</title>
+    <title>BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML.ScanData</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
@@ -13,34 +13,32 @@
 
         <table style="width: 100%;">
             <tr>
-                <td>FormulaComposition {BioNovoGene.BioDeep.Chemoinformatics.Formula}</td>
+                <td>ScanData {BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML}</td>
                 <td style="text-align: right;">.NET clr documentation</td>
             </tr>
         </table>
 
-        <h2>FormulaComposition</h2>
+        <h2>ScanData</h2>
 
         <h3>Description</h3>
 
-        the formula search result
+        a 2D single pixel pointer data in the generated image
 
         <h3>Declare</h3>        
 
         <pre>
             <code id="clr_ts">
-# namespace BioNovoGene.BioDeep.Chemoinformatics.Formula
-export class FormulaComposition {
-   # the charge value of current formula
-   charge: double;
-   # the ppm error between the theriocal mass value and the input mass value
-   ppm: double;
-   massdiff: double;
-   # Hydrogen/Carbon element ratio
-   HCRatio: double;
-   CountsByElement: list;
-   EmpiricalFormula: string;
-   Elements: string;
-   ExactMass: double;
+# namespace BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
+export class ScanData {
+   MzPtr: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/MarkupData/imzML/ibdPtr.html">ibdPtr</a>;
+   IntPtr: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/MarkupData/imzML/ibdPtr.html">ibdPtr</a>;
+   spotID: integer;
+   polarity: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Ms1/PrecursorType/IonModes.html">IonModes</a>;
+   # [lowest observed m/z, highest observed m/z]
+   mass: <a href="/vignettes/clr/Microsoft/VisualBasic/ComponentModel/Ranges/Model/DoubleRange.html">DoubleRange</a>;
+   totalIon: double;
+   x: integer;
+   y: integer;
 }
 </code>
         </pre>

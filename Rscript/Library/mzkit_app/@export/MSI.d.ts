@@ -56,7 +56,7 @@ declare namespace MSI {
        * 
        * 
         * @param x the matrix object
-        * @param mzdiff -
+        * @param mzdiff the mass tolerance error in @``T:BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.DAmethod``
         * 
         * + default value Is ``0.01``.
         * @param dims the dimension size of the ms-imaging spatial data
@@ -65,7 +65,7 @@ declare namespace MSI {
         * @param env 
         * + default value Is ``null``.
       */
-      function spatial_layers(x: object, mzdiff?: number, dims?: any, env?: object): any;
+      function spatial_layers(x: object, mzdiff?: number, dims?: any, env?: object): object;
    }
    /**
     * calculate the X scale
@@ -175,9 +175,9 @@ declare namespace MSI {
         * + default value Is ``null``.
         * @return this function returns a tuple list object that contains 2 slot elements inside:
         *  
-        *  1. scans: is the [x,y] spatial scans data
+        *  1. scans: is the [x,y] spatial scans data: @``T:BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML.ScanData``.
         *  2. ibd: is the binary data reader wrapper object for the corresponding 
-        *        ``ibd`` file of the given input imzML file.
+        *        ``ibd`` file of the given input imzML file: @``T:BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML.ibdReader``.
       */
       function imzML(file: string, env?: object): object;
    }
@@ -332,11 +332,32 @@ declare namespace MSI {
         * 
         * + default value Is ``null``.
       */
-      function scans(raw: string, y?: object, correction?: object, env?: object): any;
+      function scans(raw: string, y?: object, correction?: object, env?: object): object;
    }
    /**
-     * @param n default value Is ``32``.
-     * @param coverage default value Is ``0.3``.
+    * make expression bootstrapping of current ion layer
+    * 
+    * > Bootstrapping is a statistical procedure that resamples a single dataset to create
+    * >  many simulated samples. This process allows you to calculate standard errors, 
+    * >  construct confidence intervals, and perform hypothesis testing for numerous types of
+    * >  sample statistics. Bootstrap methods are alternative approaches to traditional 
+    * >  hypothesis testing and are notable for being easier to understand and valid for more 
+    * >  conditions.
+    * 
+     * @param layer The target ion layer to run expression bootstraping
+     * @param tissue A collection of the @``T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.TissueMorphology.TissueRegion`` object.
+     * @param n Get n sample points for each tissue region
+     * 
+     * + default value Is ``32``.
+     * @param coverage The region area coverage for the bootstrapping.
+     * 
+     * + default value Is ``0.3``.
+     * @return A tuple list object that contains the expression data for each @``T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.TissueMorphology.TissueRegion``:
+     *  
+     *  1. the tuple key is the label of the tissue region data,
+     *  2. the tuple value is the numeric expression vector that sampling from 
+     *     the corrisponding tissue region, the vector size is equals to the 
+     *     parameter ``n``.
    */
    function sample_bootstraping(layer: object, tissue: object, n?: object, coverage?: number): any;
    /**
@@ -352,7 +373,7 @@ declare namespace MSI {
      * + default value Is ``null``.
      * @return A new dataframe data after scaled
    */
-   function scale(m: object, factor: any, env?: object): any;
+   function scale(m: object, factor: any, env?: object): object;
    /**
     * combine each row scan summary vector as the pixels 2D matrix
     * 
@@ -422,6 +443,6 @@ declare namespace MSI {
         * 
         * + default value Is ``null``.
       */
-      function imzML(mzpack: object, file: string, res?: number, ionMode?: object): any;
+      function imzML(mzpack: object, file: string, res?: number, ionMode?: object): boolean;
    }
 }
