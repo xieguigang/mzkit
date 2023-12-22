@@ -140,6 +140,34 @@
         div.vignettes a:hover {
             background: rgb(85%, 85%, 85%);
         }
+
+        .character {
+            color: brown;
+        }
+
+        .comment {
+            color: green;
+            font-style: italic;
+        }
+
+        .number {
+            color: skyblue;
+        }
+
+        .keyword {
+            color: blue;
+            font-weight: bold;
+        }
+
+        .operator {
+            color: gray;
+            font-weight: bold;
+        }
+
+        .bracket {
+            color: rgb(197, 1, 197);
+            font-weight: bold;
+        }
     </style>
 </head>
 
@@ -186,7 +214,7 @@
 
         <h3>Value</h3>
 
-        this function returns data object of type <a href="/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/MarkupData/imzML/MSISummary.html">MSISummary</a>.
+        this function returns data object of type <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/MarkupData/imzML/MSISummary.html">MSISummary</a>.
 
         <h3 style="display: none;">Examples</h3>
 
@@ -198,5 +226,16 @@
         </div>
     </div>
 </body>
+
+<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
+<script type="text/javascript">
+    let example_code = document.getElementById("example_r");
+    let highlights_str = highlights(example_code.innerText);
+
+    console.log(example_code.innerText);
+    console.log(highlights_str);
+
+    example_code.innerHTML = highlights_str;
+</script>
 
 </html>

@@ -69,6 +69,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
@@ -195,9 +196,9 @@ Module MzWeb
             Dim scanPip As pipeline = DirectCast(scans, pipeline)
 
             If scanPip.elementType Like GetType(mzXML.scan) Then
-                Return Chromatogram.GetChromatogram(scanPip.populates(Of scan)(env))
+                Return ChromatogramBuffer.GetChromatogram(scanPip.populates(Of scan)(env))
             ElseIf scanPip.elementType Like GetType(mzML.spectrum) Then
-                Return Chromatogram.GetChromatogram(scanPip.populates(Of mzML.spectrum)(env))
+                Return ChromatogramBuffer.GetChromatogram(scanPip.populates(Of mzML.spectrum)(env))
             Else
                 Return Message.InCompatibleType(GetType(mzXML.scan), scanPip.elementType, env)
             End If

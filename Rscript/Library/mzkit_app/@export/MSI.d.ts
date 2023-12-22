@@ -6,6 +6,10 @@
 
 /**
  * MS-Imaging data handler
+ *  
+ *  Mass spectrometry imaging (MSI) is a technique used in mass spectrometry
+ *  to visualize the spatial distribution of molecules, as biomarkers, 
+ *  metabolites, peptides or proteins by their molecular masses.
  * 
 */
 declare namespace MSI {
@@ -25,12 +29,17 @@ declare namespace MSI {
         *  data if this parameter leaves blank(or NULL) by default.
         * 
         * + default value Is ``null``.
-        * @param strict -
+        * @param strict if the input ``**`dims`**`` produce invalid dimension size
+        *  value, example as dimension size is equals to ZERO [0,0], then in strict 
+        *  mode, the dimension value will be evaluated from the input raw data
+        *  automatically for ensure that the dimension size of the generated layer 
+        *  data object is not empty.
         * 
         * + default value Is ``true``.
         * @param env -
         * 
         * + default value Is ``null``.
+        * @return A ms-imaging layer object that could be used for run ms-imaging rendering.
       */
       function layer(x: any, context?: any, dims?: any, strict?: boolean, env?: object): object;
    }
@@ -122,8 +131,11 @@ declare namespace MSI {
    /**
     * get ms-imaging metadata
     * 
+    * > the input raw data object could be also a file path to the ms-imaging mzpack 
+    * >  rawdata, but only version 2 mzPack data file will be supported for load 
+    * >  metadata.
     * 
-     * @param raw -
+     * @param raw should be a mzPack rawdata object which is used for the ms-imaging application.
      * @param env 
      * + default value Is ``null``.
    */
@@ -156,7 +168,8 @@ declare namespace MSI {
        * open the reader for the imzML ms-imaging file
        * 
        * 
-        * @param file the file path to the specific imzML metadata file for load for run ms-imaging analysis.
+        * @param file the file path to the specific imzML metadata file for load 
+        *  for run ms-imaging analysis.
         * @param env -
         * 
         * + default value Is ``null``.
@@ -240,9 +253,9 @@ declare namespace MSI {
     * get pixels [x,y] tags collection for a specific ion
     * 
     * 
-     * @param raw -
-     * @param mz -
-     * @param tolerance -
+     * @param raw a ms-imaging rawdata object in mzpack format.
+     * @param mz a m/z numeric value
+     * @param tolerance the mass tolerance error for match the ion in the rawdata.
      * 
      * + default value Is ``'da:0.1'``.
      * @param env -
@@ -289,8 +302,9 @@ declare namespace MSI {
     * get pixels size from the raw data file
     * 
     * 
-     * @param file imML/mzPack
-     * @param count 
+     * @param file imML/mzPack, or a single ion layer of the ms-imaging rawdata
+     * @param count get the pixel count number instead of get the canvas dimension size of the ms-imaging.
+     * 
      * + default value Is ``false``.
      * @param env 
      * + default value Is ``null``.
@@ -327,12 +341,14 @@ declare namespace MSI {
     * scale the spatial matrix by column
     * 
     * 
-     * @param m -
+     * @param m a dataframe object that contains the spot expression data. 
+     *  should be in format of: spot in column and ion features in rows.
      * @param factor the size of this numeric vector should be equals to the 
      *  ncol of the given dataframe input **`m`**.
      * @param env -
      * 
      * + default value Is ``null``.
+     * @return A new dataframe data after scaled
    */
    function scale(m: object, factor: any, env?: object): any;
    /**
@@ -380,10 +396,14 @@ declare namespace MSI {
     * split the raw 2D MSI data into multiple parts with given parts
     * 
     * 
-     * @param raw -
-     * @param partition -
+     * @param raw the mzpack rawdata object that used for run ms-imaging data analysis.
+     * @param partition this parameter indicates that how many blocks that will be splice 
+     *  into parts on width dimension and column dimension. the number of the pixels in each 
+     *  partition block will be evaluated from this parameter.
      * 
      * + default value Is ``5``.
+     * @return A collection of the ms-imaging mzpack object that split from multiple 
+     *  parts based on the input **`raw`** data mzpack inputs.
    */
    function splice(raw: object, partition?: object): object;
    module write {

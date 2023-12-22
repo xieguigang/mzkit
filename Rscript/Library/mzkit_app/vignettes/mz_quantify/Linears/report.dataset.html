@@ -140,6 +140,34 @@
         div.vignettes a:hover {
             background: rgb(85%, 85%, 85%);
         }
+
+        .character {
+            color: brown;
+        }
+
+        .comment {
+            color: green;
+            font-style: italic;
+        }
+
+        .number {
+            color: skyblue;
+        }
+
+        .keyword {
+            color: blue;
+            font-weight: bold;
+        }
+
+        .operator {
+            color: gray;
+            font-weight: bold;
+        }
+
+        .bracket {
+            color: rgb(197, 1, 197);
+            font-weight: bold;
+        }
     </style>
 </head>
 
@@ -208,7 +236,7 @@ ion_id1 {
 
         <h3>Value</h3>
 
-        this function returns data object in these one of the listed data types: <a href="/clr/mzkit/LinearDataSet.html">LinearDataSet</a>, <a href="/clr/mzkit/QCData.html">QCData</a>.
+        this function returns data object in these one of the listed data types: <a href="/vignettes/clr/mzkit/LinearDataSet.html">LinearDataSet</a>, <a href="/vignettes/clr/mzkit/QCData.html">QCData</a>.
 
         <h3 style="display: none;">Examples</h3>
 
@@ -220,5 +248,16 @@ ion_id1 {
         </div>
     </div>
 </body>
+
+<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
+<script type="text/javascript">
+    let example_code = document.getElementById("example_r");
+    let highlights_str = highlights(example_code.innerText);
+
+    console.log(example_code.innerText);
+    console.log(highlights_str);
+
+    example_code.innerHTML = highlights_str;
+</script>
 
 </html>

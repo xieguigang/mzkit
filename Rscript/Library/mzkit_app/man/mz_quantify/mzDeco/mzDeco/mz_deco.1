@@ -1,0 +1,45 @@
+.\" man page create by R# package system.
+.TH MZDECO 1 2000-Jan "mz_deco" "mz_deco"
+.SH NAME
+mz_deco \- Chromatogram data deconvolution
+.SH SYNOPSIS
+\fImz_deco(\fBms1\fR as any, 
+\fBtolerance\fR as any = "ppm:20", 
+\fBbaseline\fR as double = 0.65, 
+\fBpeak_width\fR as any = "3,20", 
+\fBjoint\fR as boolean = FALSE, 
+\fBparallel\fR as boolean = FALSE, 
+\fBdtw\fR as boolean = FALSE, 
+\fBfeature\fR as any = \fB<NULL>\fR, 
+[\fB<Environment>\fR]);\fR
+.SH DESCRIPTION
+.PP
+Chromatogram data deconvolution
+.PP
+.SH OPTIONS
+.PP
+\fBms1\fB \fR\- 
+ a collection of the ms1 data or the mzpack raw data object, this parameter could also be
+ a XIC pool object which contains a collection of the ion XIC data for run deconvolution.
+. 
+.PP
+.PP
+\fBtolerance\fB \fR\- the mass tolerance for extract the XIC data for run deconvolution.. 
+.PP
+.PP
+\fBfeature\fB \fR\- 
+ a numeric vector of target feature ion m/z value for extract the XIC data.
+. 
+.PP
+.SH VALUE
+.PP
+a vector of the peak deconvolution data,
+ in format of xcms peak table liked or mzkit @\fBT:BioNovoGene.Analytical.MassSpectrometry.Math.PeakFeature\fR
+ data object.
+.PP
+.SH SEE ALSO
+mzDeco
+.SH FILES
+.PP
+mz_quantify.dll
+.PP

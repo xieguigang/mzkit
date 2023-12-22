@@ -140,6 +140,34 @@
         div.vignettes a:hover {
             background: rgb(85%, 85%, 85%);
         }
+
+        .character {
+            color: brown;
+        }
+
+        .comment {
+            color: green;
+            font-style: italic;
+        }
+
+        .number {
+            color: skyblue;
+        }
+
+        .keyword {
+            color: blue;
+            font-weight: bold;
+        }
+
+        .operator {
+            color: gray;
+            font-weight: bold;
+        }
+
+        .bracket {
+            color: rgb(197, 1, 197);
+            font-weight: bold;
+        }
     </style>
 </head>
 
@@ -171,11 +199,13 @@
         <table>
             
 <dt>raw</dt>
-<dd><p><p>-</p></p></dd>
+<dd><p><p>the mzpack rawdata object that used for run ms-imaging data analysis.</p></p></dd>
 
 
 <dt>partition</dt>
-<dd><p><p>-</p></p></dd>
+<dd><p><p>this parameter indicates that how many blocks that will be splice <br />
+ into parts on width dimension and column dimension. the number of the pixels in each <br />
+ partition block will be evaluated from this parameter.</p></p></dd>
 
         </table>
 
@@ -187,11 +217,13 @@
 
         <h3>Value</h3>
 
-        this function returns data object of type <a href="/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzPack[].html">mzPack[]</a>.
+        <p>A collection of the ms-imaging mzpack object that split from multiple <br />
+ parts based on the input <strong><code>raw</code></strong> data mzpack inputs.</p>
 
-        <h3 style="display: none;">Examples</h3>
+        <h3 style="display: block;">Examples</h3>
 
-        
+        <pre><code id="example_r"> let rawdata = open.mzpack("/path/to/msi_rawdata.mzPack");
+ let parts = MSI::splice(rawdata, partition = 6);</code></pre>
 
         <hr />
         <div style="text-align: center;">[Package <em>MSI</em> version 1.0.0.0 <a
@@ -199,5 +231,16 @@
         </div>
     </div>
 </body>
+
+<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
+<script type="text/javascript">
+    let example_code = document.getElementById("example_r");
+    let highlights_str = highlights(example_code.innerText);
+
+    console.log(example_code.innerText);
+    console.log(highlights_str);
+
+    example_code.innerHTML = highlights_str;
+</script>
 
 </html>

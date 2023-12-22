@@ -140,6 +140,34 @@
         div.vignettes a:hover {
             background: rgb(85%, 85%, 85%);
         }
+
+        .character {
+            color: brown;
+        }
+
+        .comment {
+            color: green;
+            font-style: italic;
+        }
+
+        .number {
+            color: skyblue;
+        }
+
+        .keyword {
+            color: blue;
+            font-weight: bold;
+        }
+
+        .operator {
+            color: gray;
+            font-weight: bold;
+        }
+
+        .bracket {
+            color: rgb(197, 1, 197);
+            font-weight: bold;
+        }
     </style>
 </head>
 
@@ -170,19 +198,21 @@
         <table>
             
 <dt>raw</dt>
-<dd><p><p>-</p></p></dd>
+<dd><p><p>should be a mzPack rawdata object which is used for the ms-imaging application.</p></p></dd>
 
         </table>
 
 
-        <h3 style="display: none;">Details</h3>
+        <h3 style="display: block;">Details</h3>
 
-        
+        <p>the input raw data object could be also a file path to the ms-imaging mzpack <br />
+ rawdata, but only version 2 mzPack data file will be supported for load <br />
+ metadata.</p>
 
 
         <h3>Value</h3>
 
-        this function returns data object of type <a href="/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/Comprehensive/MsImaging/Metadata.html">Metadata</a>.
+        this function returns data object of type <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/Comprehensive/MsImaging/Metadata.html">Metadata</a>.
 
         <h3 style="display: block;">Examples</h3>
 
@@ -197,5 +227,16 @@
         </div>
     </div>
 </body>
+
+<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
+<script type="text/javascript">
+    let example_code = document.getElementById("example_r");
+    let highlights_str = highlights(example_code.innerText);
+
+    console.log(example_code.innerText);
+    console.log(highlights_str);
+
+    example_code.innerHTML = highlights_str;
+</script>
 
 </html>

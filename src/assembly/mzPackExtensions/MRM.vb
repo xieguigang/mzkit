@@ -1,5 +1,4 @@
 ﻿Imports System.Runtime.CompilerServices
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.SignalReader.ChromatogramReader
@@ -8,6 +7,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.SignalProcessing
+Imports chromatogramRaw = BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML.chromatogram
 
 ''' <summary>
 ''' convert mzML MRM data to mzPack
@@ -15,7 +15,7 @@ Imports Microsoft.VisualBasic.Math.SignalProcessing
 Public Module MRM
 
     <Extension>
-    Public Function ConvertMzMLFile(mzml As IEnumerable(Of chromatogram),
+    Public Function ConvertMzMLFile(mzml As IEnumerable(Of chromatogramRaw),
                                     Optional source As String = Nothing,
                                     Optional size As Integer = -1) As mzPack
 
@@ -85,8 +85,8 @@ Public Module MRM
     End Function
 
     <Extension>
-    Private Iterator Function DecodeRaw(mzml As IEnumerable(Of chromatogram)) As IEnumerable(Of NamedCollection(Of ChromatogramTick))
-        For Each c As chromatogram In mzml
+    Private Iterator Function DecodeRaw(mzml As IEnumerable(Of chromatogramRaw)) As IEnumerable(Of NamedCollection(Of ChromatogramTick))
+        For Each c As chromatogramRaw In mzml
             Dim id As String
 
             If c.id.TextEquals("TIC") OrElse c.id.TextEquals("BPC") Then

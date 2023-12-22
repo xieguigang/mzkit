@@ -107,6 +107,10 @@ Imports vector = Microsoft.VisualBasic.Math.LinearAlgebra.Vector
 
 ''' <summary>
 ''' MS-Imaging data handler
+''' 
+''' Mass spectrometry imaging (MSI) is a technique used in mass spectrometry
+''' to visualize the spatial distribution of molecules, as biomarkers, 
+''' metabolites, peptides or proteins by their molecular masses. 
 ''' </summary>
 <Package("MSI")>
 Module MSI
@@ -144,12 +148,23 @@ Module MSI
     ''' <summary>
     ''' scale the spatial matrix by column
     ''' </summary>
-    ''' <param name="m"></param>
+    ''' <param name="m">a dataframe object that contains the spot expression data. 
+    ''' should be in format of: spot in column and ion features in rows.</param>
     ''' <param name="factor">the size of this numeric vector should be equals to the 
     ''' ncol of the given dataframe input <paramref name="m"/>.
     ''' </param>
     ''' <param name="env"></param>
-    ''' <returns></returns>
+    ''' <returns>A new dataframe data after scaled</returns>
+    ''' <example>
+    ''' let factor = get_factors();
+    ''' let mat = get_matrix();
+    ''' 
+    ''' if (length(factor) != ncol(mat)) {
+    '''     stop("the length of the factor vector should be equals to the column feature size of the given dataframe!");
+    ''' } else {
+    '''     mat &lt;- MSI::scale(mat, factor);
+    ''' }
+    ''' </example>
     <ExportAPI("scale")>
     Public Function scale(m As rDataframe, <RRawVectorArgument> factor As Object, Optional env As Environment = Nothing) As Object
         Dim f As Double() = CLRVector.asNumeric(factor)
@@ -165,6 +180,7 @@ Module MSI
 
         For i As Integer = 0 To cols.Length - 1
             name = cols(i)
+            ' scale current column field by a speicifc factor f(i)
             v = CLRVector.asNumeric(m.columns(name))
             v = SIMD.Divide.f64_op_divide_f64_scalar(v, v.Sum)
             v = SIMD.Multiply.f64_scalar_op_multiply_f64(f(i), v)
@@ -177,8 +193,13 @@ Module MSI
     ''' <summary>
     ''' get ms-imaging metadata
     ''' </summary>
-    ''' <param name="raw"></param>
+    ''' <param name="raw">should be a mzPack rawdata object which is used for the ms-imaging application.</param>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' the input raw data object could be also a file path to the ms-imaging mzpack 
+    ''' rawdata, but only version 2 mzPack data file will be supported for load 
+    ''' metadata.
+    ''' </remarks>
     ''' <example>
     ''' let rawdata = open.mzpack(file = "./rawdata.mzPack");
     ''' let msi_data = msi_metadata(rawdata);
@@ -231,9 +252,28 @@ Module MSI
     ''' <param name="dims">the dimension size of the ms-imaging layer data,
     ''' this dimension size will be evaluated based on the input pixel collection
     ''' data if this parameter leaves blank(or NULL) by default.</param>
-    ''' <param name="strict"></param>
+    ''' <param name="strict">
+    ''' if the input ``<paramref name="dims"/>`` produce invalid dimension size
+    ''' value, example as dimension size is equals to ZERO [0,0], then in strict 
+    ''' mode, the dimension value will be evaluated from the input raw data
+    ''' automatically for ensure that the dimension size of the generated layer 
+    ''' data object is not empty.
+    ''' </param>
     ''' <param name="env"></param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' A ms-imaging layer object that could be used for run ms-imaging rendering.
+    ''' </returns>
+    ''' <example>
+    ''' imports "SingleCells" from "mzkit";
+    ''' imports "MsImaging" from "mzplot";
+    ''' 
+    ''' let msi = SingleCells::read.mz_matrix("/path/to/msi_matrix.mat");
+    ''' let layer = MSI::as.layer(x, context = 100.0013);
+    ''' 
+    ''' bitmap(file = "/path/to/save.png") {
+    '''     plot(layer);
+    ''' }
+    ''' </example>
     <ExportAPI("as.layer")>
     <RApiReturn(GetType(SingleIonLayer))>
     Public Function asMSILayer(<RRawVectorArgument> x As Object,
@@ -281,11 +321,21 @@ Module MSI
     ''' <summary>
     ''' split the raw 2D MSI data into multiple parts with given parts
     ''' </summary>
-    ''' <param name="raw"></param>
-    ''' <param name="partition"></param>
-    ''' <returns></returns>
+    ''' <param name="raw">the mzpack rawdata object that used for run ms-imaging data analysis.</param>
+    ''' <param name="partition">this parameter indicates that how many blocks that will be splice 
+    ''' into parts on width dimension and column dimension. the number of the pixels in each 
+    ''' partition block will be evaluated from this parameter.</param>
+    ''' <returns>
+    ''' A collection of the ms-imaging mzpack object that split from multiple 
+    ''' parts based on the input <paramref name="raw"/> data mzpack inputs.
+    ''' </returns>
+    ''' <example>
+    ''' let rawdata = open.mzpack("/path/to/msi_rawdata.mzPack");
+    ''' let parts = MSI::splice(rawdata, partition = 6);
+    ''' </example>
     <ExportAPI("splice")>
-    Public Function splice(raw As mzPack, Optional partition As Integer = 5) As mzPack()
+    <RApiReturn(GetType(mzPack))>
+    Public Function splice(raw As mzPack, Optional partition As Integer = 5) As Object
         Dim sampler As New PixelsSampler(New ReadRawPack(raw))
         Dim sampling As Size = sampler.MeasureSamplingSize(resolution:=partition)
         Dim samples As NamedCollection(Of PixelScan)() = sampler.SamplingRaw(sampling).ToArray
@@ -309,13 +359,19 @@ Module MSI
     ''' <summary>
     ''' get pixels [x,y] tags collection for a specific ion
     ''' </summary>
-    ''' <param name="raw"></param>
-    ''' <param name="mz"></param>
-    ''' <param name="tolerance"></param>
+    ''' <param name="raw">a ms-imaging rawdata object in mzpack format.</param>
+    ''' <param name="mz">a m/z numeric value</param>
+    ''' <param name="tolerance">the mass tolerance error for match the ion in the rawdata.</param>
     ''' <param name="env"></param>
     ''' <returns>
     ''' a character vector of the pixel [x,y] tags.
     ''' </returns>
+    ''' <example>
+    ''' let rawdata = open.mzpack("/path/to/msi_rawdata.mzPack");
+    ''' let xy = MSI::pixelId(rawdata, mz = 100.0023, tolerance = "da:0.01");
+    ''' 
+    ''' print(xy);
+    ''' </example>
     <ExportAPI("pixelId")>
     <RApiReturn(GetType(String))>
     Public Function pixelId(raw As mzPack, mz As Double,
@@ -343,13 +399,28 @@ Module MSI
     ''' get pixels size from the raw data file
     ''' </summary>
     ''' <param name="file">
-    ''' imML/mzPack
+    ''' imML/mzPack, or a single ion layer of the ms-imaging rawdata
+    ''' </param>
+    ''' <param name="count">
+    ''' get the pixel count number instead of get the canvas dimension size of the ms-imaging.
     ''' </param>
     ''' <returns>
     ''' this function will returns the pixels in dimension size(a tuple list data with slot keys w and h) 
     ''' if the count is set to FALSE, by default; otherwise this function will return an integer value for
     ''' indicates the real pixel counts number if the count parameter is set to TRUE.
     ''' </returns>
+    ''' <example>
+    ''' let layer = MSI::as.layer(x, context = 100.0013);
+    ''' let counts = MSI::pixels(layer, count = TRUE);
+    ''' let canvas_size = MSI::pixels(layer, count = FALSE);
+    ''' 
+    ''' print("the data pixels of current ion layer:");
+    ''' print(counts);
+    ''' print("the canvas dimension size of the ms-imaging:");
+    ''' str(canvas_size);
+    ''' print("the pixel number of the ms-imaging canvas:");
+    ''' print(canvas_size$w * canvas_size$h);
+    ''' </example>
     <ExportAPI("pixels")>
     <RApiReturn("w", "h")>
     Public Function pixels(file As Object,
@@ -368,7 +439,7 @@ Module MSI
             If count Then
                 Return layer.MSILayer.Length
             Else
-                Return layer.DimensionSize
+                Return layer.DimensionSize.size_toList
             End If
         ElseIf TypeOf file Is TissueRegion Then
             Dim region As TissueRegion = file
@@ -376,7 +447,7 @@ Module MSI
             If count Then
                 Return region.nsize
             Else
-                Return region.GetRectangle.Size
+                Return region.GetRectangle.Size.size_toList
             End If
         Else
             Return Internal.debug.stop("unsupported file!", env)
@@ -447,7 +518,8 @@ Module MSI
     ''' <summary>
     ''' open the reader for the imzML ms-imaging file
     ''' </summary>
-    ''' <param name="file">the file path to the specific imzML metadata file for load for run ms-imaging analysis.</param>
+    ''' <param name="file">the file path to the specific imzML metadata file for load 
+    ''' for run ms-imaging analysis.</param>
     ''' <param name="env"></param>
     ''' <returns>
     ''' this function returns a tuple list object that contains 2 slot elements inside:
@@ -456,6 +528,10 @@ Module MSI
     ''' 2. ibd: is the binary data reader wrapper object for the corresponding 
     '''       ``ibd`` file of the given input imzML file.
     ''' </returns>
+    ''' <example>
+    ''' # the msi_rawdata.ibd file should be in the same folder with the input imzml file.
+    ''' let imzml = open.imzML(file = "/path/to/msi_rawdata.imzML");
+    ''' </example>
     <ExportAPI("open.imzML")>
     <RApiReturn("scans", "ibd")>
     Public Function open_imzML(file As String, Optional env As Environment = Nothing) As Object
@@ -492,6 +568,13 @@ Module MSI
     ''' the ion polarity mode value
     ''' </param>
     ''' <returns></returns>
+    ''' <example>
+    ''' let msi_rawdata = open.mzpack(file = "/path/to/msi_rawdata.mzPack");
+    ''' 
+    ''' # convert the mzpack object into imzML format
+    ''' msi_rawdata
+    ''' |> write.imzML(file = "/path/to/msi_rawdata.imzML");
+    ''' </example>
     <ExportAPI("write.imzML")>
     Public Function write_imzML(mzpack As mzPack, file As String,
                                 Optional res As Double = 17,

@@ -1,0 +1,81 @@
+<div class="content clearfix">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><h2 align="center">
+	 </h2>
+<h2 align="center">
+	<span lang="en-us" xml:lang="en-us">Giorgio Tomasi, Thomas Skov and Frans van den Berg</span></h2>
+<h2 align="left">
+	<span lang="en-us" xml:lang="en-us">Introduction</span></h2>
+<p align="left">
+	<span lang="en-us" xml:lang="en-us">Many analytical signals based on time-trajectories show artifacts appear as shifts. Of the many algorithms developed to correct for these artifacts DTW (named Dynamic Multi-way Warping - DMW - to distinguish it form other implementations) and COW are implemented as Matlab code.</span></p>
+<h2 align="left">
+	<span lang="en-us" xml:lang="en-us">Reference</span></h2>
+<p align="left">
+	<span lang="en-us" xml:lang="en-us">Main reference for alignment:<br /><b>Correlation Optimized Warping and Dynamic Time Warping as Preprocessing Methods for Chromatographic Data</b><br />
+	Tomasi, G., van den Berg, F., Andersson, C., Journal of Chemometrics 18(2004)231-241</span></p>
+<p align="left">
+	<span lang="en-us" xml:lang="en-us">Automatic selection of COW parameters by "optim_cow.m"<b>:<br />
+	Automated Alignment of Chromatographic Data</b><br />
+	Skov T, van den Berg F, Tomasi G, Bro R (2006) Automated alignment of chromatographic data, Journal of Chemometrics, 20 (11-12): 484-497</span></p>
+<h2 align="left">
+	 </h2>
+<h2 align="left">
+	<span lang="en-us" xml:lang="en-us">Source</span></h2>
+<p>
+	<span lang="en-us" xml:lang="en-us"><font size="1">        <a href="http://models.life.ku.dk/sites/default/files/WarpingTB.zip" style="text-decoration: none">Download DTW and COW</a> (small fixes 070821, all cosmetic)</font></span></p>
+<h2>
+	 </h2>
+<h2>
+	<span lang="en-us" xml:lang="en-us">Theory</span></h2>
+<p>
+	<span lang="en-us" xml:lang="en-us">You can learn more about the two correction methods on <a href="http://www.models.life.ku.dk/matlab/dtw_cow/default.asp" style="text-decoration: none">this page</a>.</span></p>
+<p>
+	<span lang="en-us" xml:lang="en-us">• Small fix in "optim_cow" to make it backwards compatible with Matlab version 6.5.</span></p>
+<p>
+	<span lang="en-us" xml:lang="en-us">• A much faster implementation (also closer to the original paper); new function "cow_apply" to apply an (old) computed warping path to new data; scripts changed to new functionality (061219).</span></p>
+<p>
+	<span lang="en-us" xml:lang="en-us">• A<font size="1"> new function for automatic selection of segment length and slack size (the two parameters in COW) called "optim_cow.m" has been added (060802); an example script (number six) illustrates it's use. Details on the optimization can be found in the second reference and in the figures below and/or from <a href="/sites/default/files/Report_optim_cow.pdf" style="text-decoration: none">this report (PDF)</a>.</font></span></p>
+<table border="0" bordercolor="#111111" cellpadding="0" cellspacing="0" style="border-collapse: collapse" width="100%"><tbody><tr><td width="25%">
+				<span lang="en-us" xml:lang="en-us"><font size="1"><a href="/sites/default/files/optim_cow01.png"><img src="/drupal6/sites/default/files/th_optim_cow01.jpg" style="border-right: 0px solid; border-top: 0px solid; border-left: 0px solid; width: 200px; border-bottom: 0px solid; height: 150px" /></a></font></span></td>
+<td width="25%">
+				<span lang="en-us" xml:lang="en-us"><font size="1"><a href="/sites/default/files/optim_cow02.png"><img src="/drupal6/sites/default/files/th_optim_cow02.jpg" style="border-right: 0px solid; border-top: 0px solid; border-left: 0px solid; width: 162px; border-bottom: 0px solid; height: 150px" /></a></font></span></td>
+<td width="25%">
+				<span lang="en-us" xml:lang="en-us"><font size="1"><a href="/sites/default/files/optim_cow03.png"><img src="/drupal6/sites/default/files/th_optim_cow03.jpg" style="border-right: 0px solid; border-top: 0px solid; border-left: 0px solid; width: 181px; border-bottom: 0px solid; height: 150px" /></a></font></span></td>
+<td width="25%">
+				<span lang="en-us" xml:lang="en-us"><font size="1"><a href="/sites/default/files/optim_cow04.png"><img src="/drupal6/sites/default/files/th_optim_cow04.jpg" style="border-right: 0px solid; border-top: 0px solid; border-left: 0px solid; width: 205px; border-bottom: 0px solid; height: 150px" /></a></font></span></td>
+</tr><tr><td width="25%">
+				<span lang="en-us" xml:lang="en-us"><font size="1">Contour plot of the Warping effect with initial search grid and six further optimizations.
+<p>				 </p></font></span></td>
+<td width="25%">
+				<span lang="en-us" xml:lang="en-us"><font size="1">Simplex/EVOP local optimzation principle applied to global grid optima.
+<p>
+				 </p></font></span></td>
+<td width="25%">
+				<span lang="en-us" xml:lang="en-us"><font size="1">Illustration of three combinations of segment and slack on one peak. This illustrates how improper selection of segment length and slack size can change the area/shape of a peak.</font></span></td>
+<td width="25%">
+				<font size="1">Raw <span lang="en-us" xml:lang="en-us">and aligned chromatograms using best combination found: "Warping effect" = "Simplicity" + "Peak factor"
+<p>				 </p></span></font></td>
+</tr></tbody></table><p>
+	 </p>
+<p>
+	<span lang="en-us" xml:lang="en-us">• Rather silly mistake in "coshift" for correction in 2D landscapes fixed (060206); should work now.</span></p>
+<p>
+	<span lang="en-us" xml:lang="en-us">• Based on some clever tricks by GT (051001), COW had become a lot faster! Also, a function for finding a good reference from a series of objects has been added ("ref_select.m"; work on this is still in progress). 051003 - small bug-fixes (only active when manual segment indexing is used), added fourth example script to illustrate the potential of manual segment indexing.</span></p>
+<p>
+	<span lang="en-us" xml:lang="en-us">• In the new release (050509) some minor adjustments have been made plus a third sample script is added to show how the diagnostics output can be used to corrected a signal (so, correction based on previous alignment operation, e.g. in the case of a multi-channel measurement).</span></p>
+<p>
+	<span lang="en-us" xml:lang="en-us">• In the new release (050106) some diagnostic-plotting adjustments have been made, a second sample script is added and - most important - the English spelling has been corrected!</span></p>
+<p>
+	<span lang="en-us" xml:lang="en-us">• In the new release (041207) some (minor) errors have been corrected, a simple "linear" shift routine for vectors and matrices is added (and improved a little in December), and we have included a small sample script to illustrate use of the code.</span></p>
+</div></div></div>  </div>
+
+  <div class="clearfix">
+          <div class="links"></div>
+    
+      </div>
+
+</div>
+  </div>
+</div>
+  </div>
+          </div>
+                          </div></div></div></div>

@@ -63,6 +63,7 @@
 #End Region
 
 Imports System.Text.RegularExpressions
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
@@ -76,7 +77,7 @@ Namespace MarkupData
     ''' 这个模块主要是为了桌面软件可以尽可能快的加载原始数据文件的索引信息
     ''' 而额外的基于最基础的字符串操作编写的
     ''' </remarks>
-    Public Class FastSeekIndex : Inherits DataReader.Chromatogram
+    Public Class FastSeekIndex : Inherits Chromatogram
 
         Public Property indexId As String()
         Public Property Ms2Index As Dictionary(Of String, Double)

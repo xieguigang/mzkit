@@ -129,7 +129,7 @@ Public Module Ms1FeatureExtensions
     ''' <summary>
     ''' Function to calculate m/z window given an ion and ppm tolerance
     ''' </summary>
-    ''' <param name="mz">m/z</param>
+    ''' <param name="mz">m/z or mass value</param>
     ''' <param name="ppm">ppm tolerance for the m/z window</param>
     ''' <returns>A tuple of length 2 with min m/z and max m/z</returns>
     Public Function MzWindow(mz As Double, ppm As Double) As (lowerMz As Double, upperMz As Double)
