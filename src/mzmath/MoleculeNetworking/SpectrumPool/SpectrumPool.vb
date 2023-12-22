@@ -58,6 +58,10 @@ Namespace PoolData
             End Get
         End Property
 
+        ''' <summary>
+        ''' get the <see cref="Metadata"/> collection of each cluster
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property ClusterInfo As IEnumerable(Of Metadata)
             Get
                 Return metadata.AllClusterMembers
