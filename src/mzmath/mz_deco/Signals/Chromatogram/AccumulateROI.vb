@@ -176,10 +176,7 @@ Namespace Chromatogram
             Dim dt As Double() = raw _
                 .SlideWindows(winSize:=2, offset:=1) _
                 .Select(Function(twoPeak)
-                            Dim p0 = twoPeak.First
-                            Dim p1 = twoPeak.Last
-
-                            Return std.Abs(p1.rtmin - p0.rtmax)
+                            Return AccumulateROI.dt(p0:=twoPeak.First, p1:=twoPeak.Last)
                         End Function) _
                 .OrderBy(Function(a) a) _
                 .ToArray
@@ -187,14 +184,15 @@ Namespace Chromatogram
                 raw(0)
             }
 
-            If dt.Length > 2 Then
-                q2 = dt(dt.Length * (3 / 4)) * 1.25
-            Else
-                q2 = 0
-            End If
+            'If dt.Length > 2 Then
+            '    q2 = dt(dt.Length * (3 / 4)) * 1.25
+            'Else
+            '    q2 = 0
+            'End If
+            q2 = dt.Average * (3 / 4)
 
             For i As Integer = 1 To raw.Length - 1
-                If raw(i).rtmin - raw(i - 1).rtmax <= q2 Then
+                If AccumulateROI.dt(raw(i), raw(i - 1)) <= q2 Then
                     jointPeak.Add(raw(i))
                 Else
                     If jointPeak.Count > 0 Then
@@ -212,6 +210,21 @@ Namespace Chromatogram
             End If
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="p1">p(i)</param>
+        ''' <param name="p0">p(i-1)</param>
+        ''' <returns></returns>
+        Private Function dt(p1 As SignalPeak, p0 As SignalPeak) As Double
+            Dim d1 = std.Abs(p1.rtmin - p0.rtmax)
+            Dim d2 = std.Abs(p1.rtmin - p0.rtmin)
+            Dim d3 = std.Abs(p1.rtmax - p0.rtmax)
+            Dim d4 = std.Abs(p1.rtmax - p0.rtmin)
+
+            Return {d1, d2, d3, d4}.Min
+        End Function
+
         Private Function JointPeak(peaks As List(Of SignalPeak)) As SignalPeak
             If peaks.Count = 1 Then
                 Return peaks.First
@@ -219,15 +232,19 @@ Namespace Chromatogram
 
             Dim base = Aggregate part In peaks Into Average(part.baseline)
             Dim a = Aggregate part In peaks Into Sum(part.integration)
+            ' may includes the duplicated points?
+            Dim points As ITimeSignal() = peaks _
+                .Select(Function(i) i.region) _
+                .IteratesALL _
+                .GroupBy(Function(ai) ai.time) _
+                .Select(Function(ag) ag.First) _
+                .OrderBy(Function(ti) ti.time) _
+                .ToArray
 
             Return New SignalPeak With {
                 .baseline = base,
                 .integration = a,
-                .region = peaks _
-                    .Select(Function(i) i.region) _
-                    .IteratesALL _
-                    .OrderBy(Function(ti) ti.time) _
-                    .ToArray
+                .region = points
             }
         End Function
     End Module
