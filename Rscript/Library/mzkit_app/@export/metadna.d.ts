@@ -42,15 +42,27 @@ declare namespace metadna {
        * create seeds from mgf file data
        * 
        * 
-        * @param seeds -
+        * @param seeds A set of the mzkit @``T:BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.PeakMs2`` clr object that could 
+        *  be used for the seeds for run the metadna annotation.
         * @param env -
         * 
         * + default value Is ``null``.
       */
       function seeds(seeds: any, env?: object): object;
       /**
-        * @param unique default value Is ``false``.
-        * @param env default value Is ``null``.
+       * Extract the annotation result from metaDNA algorithm module as data table
+       * 
+       * 
+        * @param metaDNA -
+        * @param result -
+        * @param unique -
+        * 
+        * + default value Is ``false``.
+        * @param env -
+        * 
+        * + default value Is ``null``.
+        * @return A collection of the @``T:BioNovoGene.BioDeep.MetaDNA.MetaDNAResult`` data objects that could be
+        *  used for represented as the result table.
       */
       function table(metaDNA: object, result: any, unique?: boolean, env?: object): object;
       /**
@@ -59,8 +71,17 @@ declare namespace metadna {
    }
    module DIA {
       /**
-        * @param seeds default value Is ``null``.
-        * @param env default value Is ``null``.
+       * apply of the metadna annotation workflow
+       * 
+       * 
+        * @param metaDNA -
+        * @param sample -
+        * @param seeds -
+        * 
+        * + default value Is ``null``.
+        * @param env -
+        * 
+        * + default value Is ``null``.
       */
       function infer(metaDNA: object, sample: any, seeds?: any, env?: object): object;
    }
@@ -82,26 +103,29 @@ declare namespace metadna {
    }
    module load {
       /**
+       * Set kegg compound library
        * 
        * 
         * @param metadna -
-        * @param kegg a collection of the kegg compound data.
+        * @param kegg should be a collection of the @``T:SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject.Compound`` data.
         * @param env -
         * 
         * + default value Is ``null``.
       */
       function kegg(metadna: object, kegg: any, env?: object): object;
       /**
+       * set the kegg reaction class data links for the compounds
        * 
        * 
         * @param metadna -
-        * @param links a collection of the reaction class data
+        * @param links should be a collection of the @``T:SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject.ReactionClass`` data
         * @param env -
         * 
         * + default value Is ``null``.
       */
       function kegg_network(metadna: object, links: any, env?: object): object;
       /**
+       * set ms2 spectrum data for run the annotation
        * 
        * 
         * @param metadna -
@@ -113,16 +137,38 @@ declare namespace metadna {
       function raw(metadna: object, sample: any, env?: object): object;
    }
    /**
-     * @param ms1ppm default value Is ``'ppm:20'``.
-     * @param mzwidth default value Is ``'da:0.3'``.
-     * @param dotcutoff default value Is ``0.5``.
-     * @param allowMs1 default value Is ``true``.
-     * @param maxIterations default value Is ``1000``.
-     * @param env default value Is ``null``.
+    * Create an algorithm module for run metaDNA inferance
+    * 
+    * 
+     * @param ms1ppm the mass tolerance error for matches the ms1 ion
+     * 
+     * + default value Is ``'ppm:20'``.
+     * @param mzwidth -
+     * 
+     * + default value Is ``'da:0.3'``.
+     * @param dotcutoff -
+     * 
+     * + default value Is ``0.5``.
+     * @param allowMs1 -
+     * 
+     * + default value Is ``true``.
+     * @param maxIterations -
+     * 
+     * + default value Is ``1000``.
+     * @param env -
+     * 
+     * + default value Is ``null``.
    */
    function metadna(ms1ppm?: any, mzwidth?: any, dotcutoff?: number, allowMs1?: boolean, maxIterations?: object, env?: object): object;
    /**
-     * @param env default value Is ``null``.
+    * Configs the precursor adducts range for the metaDNA algorithm
+    * 
+    * 
+     * @param metadna -
+     * @param precursorTypes -
+     * @param env -
+     * 
+     * + default value Is ``null``.
    */
    function range(metadna: object, precursorTypes: any, env?: object): object;
    module reaction_class {
@@ -134,6 +180,8 @@ declare namespace metadna {
         * @param env -
         * 
         * + default value Is ``null``.
+        * @return A collection of the reaction class table for provides 
+        *  the data links between the compounds.
       */
       function table(file: string, env?: object): object;
    }
@@ -156,8 +204,8 @@ declare namespace metadna {
        * get result alignments raw data for data plots.
        * 
        * 
-        * @param DIAinfer -
-        * @param table -
+        * @param DIAinfer the result candidates of clr data type in mzkit: @``T:BioNovoGene.BioDeep.MetaDNA.Infer.CandidateInfer``
+        * @param table the @``T:BioNovoGene.BioDeep.MetaDNA.MetaDNAResult`` data table
         * @param env -
         * 
         * + default value Is ``null``.

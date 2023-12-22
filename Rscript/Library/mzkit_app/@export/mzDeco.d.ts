@@ -6,6 +6,15 @@
 
 /**
  * Extract peak and signal data from rawdata
+ *  
+ *  Data processing is the computational process of converting raw LC-MS 
+ *  data to biological knowledge and involves multiple processes including 
+ *  raw data deconvolution and the chemical identification of metabolites.
+ *  
+ *  The process of data deconvolution, sometimes called peak picking, is 
+ *  in itself a complex process caused by the complexity of the data and 
+ *  variation introduced during the process of data acquisition related to 
+ *  mass-to-charge ratio, retention time and chromatographic peak area.
  * 
 */
 declare namespace mzDeco {
@@ -82,6 +91,9 @@ declare namespace mzDeco {
    */
    function peak_alignment(samples: any, mzdiff?: any, norm?: boolean, env?: object): object;
    /**
+   */
+   function peak_subset(peaktable: object, sampleNames: string): object;
+   /**
     * extract a collection of xic data for a specific ion feature
     *  
     *  this function is debug used only
@@ -112,6 +124,14 @@ declare namespace mzDeco {
         * + default value Is ``false``.
       */
       function peakFeatures(file: string, readBin?: boolean): object;
+      /**
+       * read the peaktable file that in xcms2 output format
+       * 
+       * 
+        * @param file -
+        * @return A collection set of the @``T:BioNovoGene.Analytical.MassSpectrometry.Math.xcms2`` peak features data object
+      */
+      function xcms_peaks(file: string): object;
    }
    module write {
       /**
