@@ -113,7 +113,7 @@ Namespace Deconvolute
                 Next
 
                 scanMz.Shuffle
-                VectorTask.n_threads = App.CPUCoreNumbers
+                ' VectorTask.n_threads = App.CPUCoreNumbers
 
                 Dim par As New IndexTask(scanMz, mzdiff, verbose)
                 Dim subgroups = DirectCast(par.Run(), IndexTask).groups
