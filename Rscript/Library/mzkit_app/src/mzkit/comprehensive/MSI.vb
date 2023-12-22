@@ -166,6 +166,7 @@ Module MSI
     ''' }
     ''' </example>
     <ExportAPI("scale")>
+    <RApiReturn(GetType(rDataframe))>
     Public Function scale(m As rDataframe, <RRawVectorArgument> factor As Object, Optional env As Environment = Nothing) As Object
         Dim f As Double() = CLRVector.asNumeric(factor)
         Dim v As Double()
@@ -524,9 +525,9 @@ Module MSI
     ''' <returns>
     ''' this function returns a tuple list object that contains 2 slot elements inside:
     ''' 
-    ''' 1. scans: is the [x,y] spatial scans data
+    ''' 1. scans: is the [x,y] spatial scans data: <see cref="ScanData"/>.
     ''' 2. ibd: is the binary data reader wrapper object for the corresponding 
-    '''       ``ibd`` file of the given input imzML file.
+    '''       ``ibd`` file of the given input imzML file: <see cref="ibdReader"/>.
     ''' </returns>
     ''' <example>
     ''' # the msi_rawdata.ibd file should be in the same folder with the input imzml file.
@@ -576,6 +577,7 @@ Module MSI
     ''' |> write.imzML(file = "/path/to/msi_rawdata.imzML");
     ''' </example>
     <ExportAPI("write.imzML")>
+    <RApiReturn(TypeCodes.boolean)>
     Public Function write_imzML(mzpack As mzPack, file As String,
                                 Optional res As Double = 17,
                                 Optional ionMode As IonModes = IonModes.Positive) As Object
@@ -602,6 +604,7 @@ Module MSI
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("row.scans")>
+    <RApiReturn(GetType(iPixelIntensity))>
     Public Function rowScans(raw As String(),
                              Optional y As Integer = 0,
                              Optional correction As Correction = Nothing,
@@ -753,7 +756,8 @@ Module MSI
     ''' <param name="hasMs2"></param>
     ''' <returns></returns>
     <ExportAPI("correction")>
-    Public Function Correction(totalTime As Double, pixels As Integer, Optional hasMs2 As Boolean = False) As Correction
+    <RApiReturn(GetType(Correction))>
+    Public Function Correction(totalTime As Double, pixels As Integer, Optional hasMs2 As Boolean = False) As Object
         If hasMs2 Then
             Return New ScanMs2Correction(totalTime, pixels)
         Else
@@ -1385,6 +1389,29 @@ Module MSI
         Return df
     End Function
 
+    ''' <summary>
+    ''' make expression bootstrapping of current ion layer
+    ''' </summary>
+    ''' <param name="layer">The target ion layer to run expression bootstraping</param>
+    ''' <param name="tissue">A collection of the <see cref="TissueRegion"/> object.</param>
+    ''' <param name="n">Get n sample points for each tissue region</param>
+    ''' <param name="coverage">The region area coverage for the bootstrapping.</param>
+    ''' <returns>
+    ''' A tuple list object that contains the expression data for each <see cref="TissueRegion"/>:
+    ''' 
+    ''' 1. the tuple key is the label of the tissue region data,
+    ''' 2. the tuple value is the numeric expression vector that sampling from 
+    '''    the corrisponding tissue region, the vector size is equals to the 
+    '''    parameter ``n``.
+    ''' </returns>
+    ''' <remarks>
+    ''' Bootstrapping is a statistical procedure that resamples a single dataset to create
+    ''' many simulated samples. This process allows you to calculate standard errors, 
+    ''' construct confidence intervals, and perform hypothesis testing for numerous types of
+    ''' sample statistics. Bootstrap methods are alternative approaches to traditional 
+    ''' hypothesis testing and are notable for being easier to understand and valid for more 
+    ''' conditions.
+    ''' </remarks>
     <ExportAPI("sample_bootstraping")>
     Public Function SampleBootstraping(layer As SingleIonLayer, tissue As TissueRegion(),
                                        Optional n As Integer = 32,
@@ -1397,12 +1424,13 @@ Module MSI
     ''' cast the rawdata matrix as the ms-imaging ion layer
     ''' </summary>
     ''' <param name="x">the matrix object</param>
-    ''' <param name="mzdiff"></param>
+    ''' <param name="mzdiff">the mass tolerance error in <see cref="DAmethod"/></param>
     ''' <param name="dims">
     ''' the dimension size of the ms-imaging spatial data
     ''' </param>
     ''' <returns></returns>
     <ExportAPI("cast.spatial_layers")>
+    <RApiReturn(GetType(SingleIonLayer))>
     Public Function castSpatialLayers(x As MzMatrix,
                                       Optional mzdiff As Double = 0.01,
                                       <RRawVectorArgument>
@@ -1421,7 +1449,9 @@ Module MSI
                 .ToArray
         End If
 
-        Return New MsImaging.MatrixReader(x).ForEachLayer(mz, dims:=size).ToArray
+        Return New MsImaging.MatrixReader(x) _
+            .ForEachLayer(mz, dims:=size) _
+            .ToArray
     End Function
 End Module
 

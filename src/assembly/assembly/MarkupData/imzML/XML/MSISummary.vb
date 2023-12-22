@@ -92,12 +92,20 @@ Namespace MarkupData.imzML
         ''' <returns></returns>
         Public Property size As Size
 
+        ''' <summary>
+        ''' the range of the x axis: [min, max]
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property x As Double()
             Get
                 Return New DoubleRange(rowScans.IteratesALL.Select(Function(p) p.x)).MinMax
             End Get
         End Property
 
+        ''' <summary>
+        ''' the range of the y axis: [min, max]
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property y As Double()
             Get
                 Return New DoubleRange(rowScans.Select(Function(r) r(0).y)).MinMax
