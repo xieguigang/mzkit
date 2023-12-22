@@ -1115,12 +1115,14 @@ Module MSI
                                 Optional mzdiff As Double = 0.001,
                                 Optional q As Double = 0.01,
                                 Optional fast_bin As Boolean = True,
+                                Optional verbose As Boolean = False,
                                 Optional env As Environment = Nothing) As Object
 
         Dim matrix As MzMatrix = SingleCellMatrix.CreateMatrix(
             raw, mzdiff,
             freq:=q,
-            fastBin:=fast_bin
+            fastBin:=fast_bin,
+            verbose:=verbose
         )
         Dim println = env.WriteLineHandler
 

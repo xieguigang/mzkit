@@ -289,6 +289,8 @@ declare namespace MSI {
      * + default value Is ``0.01``.
      * @param fast_bin 
      * + default value Is ``true``.
+     * @param verbose 
+     * + default value Is ``false``.
      * @param env -
      * 
      * + default value Is ``null``.
@@ -297,7 +299,7 @@ declare namespace MSI {
      *  otherwise the matrix object itself will be returns from 
      *  the function.
    */
-   function pixelMatrix(raw: object, file?: any, mzdiff?: number, q?: number, fast_bin?: boolean, env?: object): boolean|object;
+   function pixelMatrix(raw: object, file?: any, mzdiff?: number, q?: number, fast_bin?: boolean, verbose?: boolean, env?: object): boolean|object;
    /**
     * get pixels size from the raw data file
     * 

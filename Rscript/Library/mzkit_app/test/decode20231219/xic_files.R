@@ -2,7 +2,7 @@ require(mzkit);
 
 imports "mzDeco" from "mz_quantify";
 
-let files = list.files("E:\\lipids-XCMS3-rt\\raw\\pos_mzPack", pattern = "*.mzPack");
+let files = list.files("E:\\biodeep\\lipids-XCMS3-rt\\raw\\neg_mzPack", pattern = "*.mzPack");
 
 print(basename(files));
 
