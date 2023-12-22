@@ -115,6 +115,10 @@ Namespace Deconvolute
                 scanMz.Shuffle
                 ' VectorTask.n_threads = App.CPUCoreNumbers
 
+                If verbose Then
+                    Call VBDebugger.EchoLine($"processing {scanMz.Count} ion feature blocks...")
+                End If
+
                 Dim par As New IndexTask(scanMz, mzdiff, verbose)
                 Dim subgroups = DirectCast(par.Run(), IndexTask).groups
                 Dim merge = subgroups.IteratesALL _
