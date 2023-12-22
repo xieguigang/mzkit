@@ -22,7 +22,9 @@ var Token;
         "if", "else", "for", "break", "while",
         "function", "return",
         "let", "const",
-        "stop", "invisible"
+        "stop", "invisible",
+        "export", "namespace", "class",
+        "string", "double", "integer", "list"
     ]);
 })(Token || (Token = {}));
 ///<reference path="token.ts" />
@@ -298,10 +300,10 @@ function highlights(str, verbose) {
                 html = html + escape_op(t.text);
                 break;
             case "color":
-                html = html + "<span class=\"color\" style=\"font-style: italic; background-color: ".concat(t.text.replace(/'/ig, "").replace(/"/ig, ""), "; color: white; font-weight: bold;\">").concat(t.text, "</span>");
+                html = html + ("<span class=\"color\" style=\"font-style: italic; background-color: " + t.text.replace(/'/ig, "").replace(/"/ig, "") + "; color: white; font-weight: bold;\">" + t.text + "</span>");
                 break;
             default:
-                html = html + "<span class=\"".concat(t.type, "\">").concat(t.text, "</span>");
+                html = html + ("<span class=\"" + t.type + "\">" + t.text + "</span>");
         }
     }
     return html;
