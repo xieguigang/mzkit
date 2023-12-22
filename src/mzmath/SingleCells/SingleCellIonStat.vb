@@ -64,15 +64,38 @@ Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Quantile
 
+''' <summary>
+''' A ion stat information from a single cell data
+''' </summary>
 Public Class SingleCellIonStat
 
+    ''' <summary>
+    ''' the ion feature m/z value
+    ''' </summary>
+    ''' <returns></returns>
     Public Property mz As Double
+    ''' <summary>
+    ''' the cell numbers that contains this ion feature.
+    ''' </summary>
+    ''' <returns></returns>
     Public Property cells As Integer
+    ''' <summary>
+    ''' the max intensity value of current ion feature.
+    ''' </summary>
+    ''' <returns></returns>
     Public Property maxIntensity As Double
+    ''' <summary>
+    ''' the cell label id which has the max intensity of current ion feature.
+    ''' </summary>
+    ''' <returns></returns>
     Public Property baseCell As String
     Public Property Q1Intensity As Double
     Public Property Q2Intensity As Double
     Public Property Q3Intensity As Double
+    ''' <summary>
+    ''' RSD value of the intensity value of current ion feature across multiple cells
+    ''' </summary>
+    ''' <returns></returns>
     Public Property RSD As Double
 
     Public Shared Function DoIonStats(raw As IMZPack, Optional da As Double = 0.01, Optional parallel As Boolean = True) As IEnumerable(Of SingleCellIonStat)
