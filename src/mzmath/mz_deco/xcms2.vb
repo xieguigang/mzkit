@@ -63,6 +63,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Serialization.JSON
@@ -71,11 +72,32 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 ''' the peak table format table file model of xcms version 2
 ''' </summary>
 Public Class xcms2 : Inherits DynamicPropertyBase(Of Double)
+    Implements INamedValue
 
-    Public Property ID As String
+    ''' <summary>
+    ''' the feature unique id
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property ID As String Implements INamedValue.Key
+    ''' <summary>
+    ''' the ion m/z
+    ''' </summary>
+    ''' <returns></returns>
     Public Property mz As Double
+    ''' <summary>
+    ''' the min of ion m/z value
+    ''' </summary>
+    ''' <returns></returns>
     Public Property mzmin As Double
+    ''' <summary>
+    ''' the max of the ion m/z value
+    ''' </summary>
+    ''' <returns></returns>
     Public Property mzmax As Double
+    ''' <summary>
+    ''' the rt value in max peak data point
+    ''' </summary>
+    ''' <returns></returns>
     Public Property rt As Double
     Public Property rtmin As Double
     Public Property rtmax As Double

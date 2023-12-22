@@ -79,6 +79,9 @@ Imports REnv = SMRUCC.Rsharp.Runtime
 Imports Rlist = SMRUCC.Rsharp.Runtime.Internal.Object.list
 Imports std = System.Math
 
+''' <summary>
+''' targeted linears
+''' </summary>
 <Package("Linears")>
 Module Linears
 

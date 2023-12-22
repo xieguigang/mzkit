@@ -215,8 +215,14 @@ Module mzDeco
         End If
     End Function
 
+    ''' <summary>
+    ''' read the peaktable file that in xcms2 output format
+    ''' </summary>
+    ''' <param name="file"></param>
+    ''' <returns>A collection set of the <see cref="xcms2"/> peak features data object</returns>
     <ExportAPI("read.xcms_peaks")>
-    Public Function readXcmsPeaks(file As String) As PeakSet
+    <RApiReturn(GetType(PeakSet))>
+    Public Function readXcmsPeaks(file As String) As Object
         Return New PeakSet With {.peaks = file.LoadCsv(Of xcms2)().ToArray}
     End Function
 
