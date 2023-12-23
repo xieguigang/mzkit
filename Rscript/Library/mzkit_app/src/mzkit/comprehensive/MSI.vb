@@ -153,6 +153,9 @@ Module MSI
     ''' <param name="factor">the size of this numeric vector should be equals to the 
     ''' ncol of the given dataframe input <paramref name="m"/>.
     ''' </param>
+    ''' <param name="bpc">
+    ''' scle by bpc or scale by tic?
+    ''' </param>
     ''' <param name="env"></param>
     ''' <returns>A new dataframe data after scaled</returns>
     ''' <example>
@@ -167,7 +170,10 @@ Module MSI
     ''' </example>
     <ExportAPI("scale")>
     <RApiReturn(GetType(rDataframe))>
-    Public Function scale(m As rDataframe, <RRawVectorArgument> factor As Object, Optional env As Environment = Nothing) As Object
+    Public Function scale(m As rDataframe, <RRawVectorArgument> factor As Object,
+                          Optional bpc As Boolean = False,
+                          Optional env As Environment = Nothing) As Object
+
         Dim f As Double() = CLRVector.asNumeric(factor)
         Dim v As Double()
         Dim cols As String() = m.colnames
@@ -179,14 +185,29 @@ Module MSI
 
         m = New rDataframe(m)
 
-        For i As Integer = 0 To cols.Length - 1
-            name = cols(i)
-            ' scale current column field by a speicifc factor f(i)
-            v = CLRVector.asNumeric(m.columns(name))
-            v = SIMD.Divide.f64_op_divide_f64_scalar(v, v.Sum)
-            v = SIMD.Multiply.f64_scalar_op_multiply_f64(f(i), v)
-            m.columns(name) = ReLU.ReLU(v)
-        Next
+        If bpc Then
+            For i As Integer = 0 To cols.Length - 1
+                name = cols(i)
+                ' scale current column field by a speicifc factor f(i)
+                v = CLRVector.asNumeric(m.columns(name))
+                ' relative max norm
+                v = SIMD.Divide.f64_op_divide_f64_scalar(v, v.Max)
+                ' then scale to a max factor
+                v = SIMD.Multiply.f64_scalar_op_multiply_f64(f(i), v)
+                m.columns(name) = ReLU.ReLU(v)
+            Next
+        Else
+            For i As Integer = 0 To cols.Length - 1
+                name = cols(i)
+                ' scale current column field by a speicifc factor f(i)
+                v = CLRVector.asNumeric(m.columns(name))
+                ' total sum norm
+                v = SIMD.Divide.f64_op_divide_f64_scalar(v, v.Sum)
+                ' then scale to a total factor
+                v = SIMD.Multiply.f64_scalar_op_multiply_f64(f(i), v)
+                m.columns(name) = ReLU.ReLU(v)
+            Next
+        End If
 
         Return m
     End Function
