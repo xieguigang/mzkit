@@ -75,6 +75,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.TissueMorphology
 Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells
 Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
@@ -1172,6 +1173,45 @@ Module MSI
         Call println("matrix created!")
 
         Return True
+    End Function
+
+    ''' <summary>
+    ''' sum pixels for create pixel spot convolution
+    ''' </summary>
+    ''' <param name="mat">A matrix liked dataframe object that contains the 
+    ''' molecule expression data on each spatial spots, data object should 
+    ''' in format of spatial spot in columns and molecule feature in rows.
+    ''' </param>
+    ''' <returns></returns>
+    <ExportAPI("levels.convolution")>
+    Public Function level_convolution(mat As rDataframe, Optional clusters As Integer = 6, Optional win_size As Integer = 3) As rDataframe
+        Dim spatial_vector = mat.columns.AsParallel _
+            .Select(Function(a)
+                        Return (spot_id:=a.Key, vec:=CLRVector.asNumeric(a.Value))
+                    End Function) _
+            .OrderByDescending(Function(a) a.vec.Sum) _
+            .ToArray
+        Dim cluster_groups = spatial_vector.Split(spatial_vector.Length / clusters + 1)
+        Dim convolution As New rDataframe With {
+            .columns = New Dictionary(Of String, Array),
+            .rownames = mat.getRowNames
+        }
+
+        For Each cluster In cluster_groups
+            Dim slides = cluster.SlideWindows(winSize:=win_size).ToArray
+
+            For Each cov In slides
+                Dim v As Double() = cov.First.vec
+
+                For Each vi In cov.Skip(1)
+                    v = SIMD.Add.f64_op_add_f64(v, vi.vec)
+                Next
+
+                Call convolution.add(cov.First.spot_id, v)
+            Next
+        Next
+
+        Return convolution
     End Function
 
     ''' <summary>
