@@ -111,14 +111,20 @@ declare namespace MoleculeNetworking {
      * @param rtwin -
      * 
      * + default value Is ``30``.
-     * @param wrap_peaks -
+     * @param wrap_peaks wraping the networking node data as the spectrum peak object?
      * 
      * + default value Is ``false``.
      * @param env -
      * 
      * + default value Is ``null``.
+     * @return the value type of this function is affects by the **`wrap_peaks`** parameter:
+     *  
+     *  1. for wrap_peaks is set to false by default, a vector of the raw @``T:BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.MoleculeNetworking.NetworkingNode`` 
+     *     which is extract from the cluster data will be returns
+     *  2. otherwise the spectrum peaks data will be returns if the parameter 
+     *     value is set to value true.
    */
-   function splitClusterRT(clusters: any, rtwin?: number, wrap_peaks?: boolean, env?: object): any;
+   function splitClusterRT(clusters: any, rtwin?: number, wrap_peaks?: boolean, env?: object): object|object;
    /**
     * do spectrum data clustering
     * 
@@ -141,7 +147,7 @@ declare namespace MoleculeNetworking {
     * makes the spectrum data its unique id reference uniqued!
     * 
     * 
-     * @param ions -
+     * @param ions A collection of the mzkit spectrum object
    */
    function uniqueNames(ions: object): object;
 }

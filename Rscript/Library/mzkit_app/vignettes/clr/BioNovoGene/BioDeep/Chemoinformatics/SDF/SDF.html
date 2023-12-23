@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>BioNovoGene.BioDeep.Chemoinformatics.SDF.SDF</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <table style="width: 100%;">
+            <tr>
+                <td>SDF {BioNovoGene.BioDeep.Chemoinformatics.SDF}</td>
+                <td style="text-align: right;">.NET clr documentation</td>
+            </tr>
+        </table>
+
+        <h2>SDF</h2>
+
+        <h3>Description</h3>
+
+        #### Structure-data file
+ 
+ SDF or Structures Data File is a common file format developed by Molecular Design Limited 
+ to handle a list of molecular structures with associated properties. 
+ The file format has been published (Dalby et al., J. Chem. Inf. Comput. Sci. 1992, 32: 244-255).
+ 
+ + LMSD Structure-data file (http://www.lipidmaps.org/resources/downloads/index.html)
+ + PubChem FTP SDF(ftp://ftp.ncbi.nlm.nih.gov/pubchem/Compound/CURRENT-Full/SDF)
+
+        <h3>Declare</h3>        
+
+        <pre>
+            <code id="clr_ts">
+# namespace BioNovoGene.BioDeep.Chemoinformatics.SDF
+export class SDF {
+   # The name of the molecule
+   ID: string;
+   # Details of the software used to generate the compound structure
+   Software: string;
+   name: string;
+   Comment: string;
+   Structure: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemoinformatics/SDF/Models/Structure.html">Structure</a>;
+   # the metadata that could be used as the annotation information of current molecule.
+   MetaData: list;
+}
+</code>
+        </pre>
+
+        <hr />
+        <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a
+                href="../{$package}.html">Index</a>]
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
+<script type="text/javascript" src="../../_assets/highlights.js"></script>
+<script type="text/javascript">r_highlights("clr_ts");</script>
+
+</html>

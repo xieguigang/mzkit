@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative.IonPeakTableRow</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <table style="width: 100%;">
+            <tr>
+                <td>IonPeakTableRow {BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative}</td>
+                <td style="text-align: right;">.NET clr documentation</td>
+            </tr>
+        </table>
+
+        <h2>IonPeakTableRow</h2>
+
+        <h3>Description</h3>
+
+        
+
+        <h3>Declare</h3>        
+
+        <pre>
+            <code id="clr_ts">
+# namespace BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative
+export class IonPeakTableRow {
+   # 标志物物质编号
+   ID: string;
+   # 通用名称
+   Name: string;
+   # 保留时间的下限
+   rtmin: double;
+   # 保留时间的上限
+   rtmax: double;
+   # 浓度
+   content: double;
+   # 最大的信号响应值
+   maxinto: double;
+   # 内标的最大信号响应值
+   maxinto_IS: double;
+   # 峰面积
+   TPA: double;
+   # 内标的峰面积
+   TPA_IS: double;
+   # 内标编号
+   IS: string;
+   # 信号基线水平
+   base: double;
+   # 实验数据的原始文件名
+   raw: string;
+}
+</code>
+        </pre>
+
+        <hr />
+        <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a
+                href="../{$package}.html">Index</a>]
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
+<script type="text/javascript" src="../../_assets/highlights.js"></script>
+<script type="text/javascript">r_highlights("clr_ts");</script>
+
+</html>

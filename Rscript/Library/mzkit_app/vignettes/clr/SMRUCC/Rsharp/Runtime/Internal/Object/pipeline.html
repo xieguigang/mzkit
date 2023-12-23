@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>SMRUCC.Rsharp.Runtime.Internal.Object.pipeline</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <table style="width: 100%;">
+            <tr>
+                <td>pipeline {SMRUCC.Rsharp.Runtime.Internal.Object}</td>
+                <td style="text-align: right;">.NET clr documentation</td>
+            </tr>
+        </table>
+
+        <h2>pipeline</h2>
+
+        <h3>Description</h3>
+
+        The R# data pipeline
+ 
+ this model object is a kind of wrapper of the .net clr @``T:System.Collections.IEnumerable`` interface
+
+        <h3>Declare</h3>        
+
+        <pre>
+            <code id="clr_ts">
+# namespace SMRUCC.Rsharp.Runtime.Internal.Object
+export class pipeline {
+   # The action will be called after finish loop on the sequence. 
+   #  Null value of this property will be ignored
+   pipeFinalize: <a href="/vignettes/clr/System/Action.html">Action</a>;
+   # contains an error message in the pipeline populator or 
+   #  the pipeline data is an error message. You can get the
+   #  error message via function @``M:SMRUCC.Rsharp.Runtime.Internal.Object.pipeline.getError`` when
+   #  this property value is TRUE
+   isError: boolean;
+   # current data pipeline is a data message?
+   isMessage: boolean;
+   elementType: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Interop/RType.html">RType</a>;
+}
+</code>
+        </pre>
+
+        <hr />
+        <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a
+                href="../{$package}.html">Index</a>]
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
+<script type="text/javascript" src="../../_assets/highlights.js"></script>
+<script type="text/javascript">r_highlights("clr_ts");</script>
+
+</html>

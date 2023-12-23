@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject.Compound</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <table style="width: 100%;">
+            <tr>
+                <td>Compound {SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject}</td>
+                <td style="text-align: right;">.NET clr documentation</td>
+            </tr>
+        </table>
+
+        <h2>Compound</h2>
+
+        <h3>Description</h3>
+
+        A data model for the KEGG compound.
+
+        <h3>Declare</h3>        
+
+        <pre>
+            <code id="clr_ts">
+# namespace SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
+export class Compound {
+   # KEGG compound ID: ``cpd:C\d+``
+   entry: string;
+   # the metabolite common names
+   commonNames: string;
+   formula: string;
+   molWeight: double;
+   exactMass: double;
+   # The @``P:SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject.Compound.entry``[compound] was involved in these reactions. (http://www.kegg.jp/dbget-bin/www_bget?rn:[KEGG_Reaction_ID])
+   reactionId: string;
+   pathway: <a href="/vignettes/clr/Microsoft/VisualBasic/Text/Xml/Models/NamedValue.html">NamedValue[]</a>;
+   Module: <a href="/vignettes/clr/Microsoft/VisualBasic/Text/Xml/Models/NamedValue.html">NamedValue[]</a>;
+   remarks: string;
+   enzyme: string;
+   category: <a href="/vignettes/clr/SMRUCC/genomics/Assembly/KEGG/DBGET/BriteHEntry/BriteTerm.html">BriteTerm[]</a>;
+   DbLinks: <a href="/vignettes/clr/SMRUCC/genomics/ComponentModel/DBLinkBuilder/DBLink.html">DBLink[]</a>;
+   # 2D分子结构数据
+   KCF: string;
+   # A png image that encoded in base64 string format
+   Image: string;
+   Stylesheet: <a href="/vignettes/clr/Microsoft/VisualBasic/ComponentModel/XmlStyleProcessor.html">XmlStyleProcessor</a>;
+   TypeComment: <a href="/vignettes/clr/System/Xml/XmlComment.html">XmlComment</a>;
+}
+</code>
+        </pre>
+
+        <hr />
+        <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a
+                href="../{$package}.html">Index</a>]
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
+<script type="text/javascript" src="../../_assets/highlights.js"></script>
+<script type="text/javascript">r_highlights("clr_ts");</script>
+
+</html>

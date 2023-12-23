@@ -68,11 +68,43 @@ Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Interop
 
 ''' <summary>
-''' Processing GCxGC comprehensive chromatogram data
+''' Comprehensive two-dimensional gas chromatography
+''' 
+''' Processing GCxGC comprehensive chromatogram data: Comprehensive Two-dimensional gas chromatography, 
+''' or GC×GC is a multidimensional gas chromatography technique that was originally described in 1984 
+''' by J. Calvin Giddings and first successfully implemented in 1991 by Professor Phillips and his 
+''' student Zaiyou Liu.
+'''
+''' GC×GC utilizes two different columns With two different stationary phases. In GC×GC, all Of the 
+''' effluent from the first dimension column Is diverted To the second dimension column via a modulator. 
+''' The modulator quickly traps, Then "injects" the effluent from the first dimension column onto the second 
+''' dimension. This process creates a retention plane Of the 1St dimension separation x 2nd dimension 
+''' separation.
+'''
+''' The Oil And Gas Industry were early adopters Of the technology For the complex oil samples To determine
+''' the many different types Of Hydrocarbons And its isomers. Nowadays In these types Of samples it has been 
+''' reported that over 30000 different compounds could be identified In a crude oil With this Comprehensive 
+''' Chromatography Technology (CCT).
+'''
+''' The CCT evolved from a technology only used In academic R&amp;D laboratories, into a more robust technology 
+''' used In many different industrial labs. Comprehensive Chromatography Is used In forensics, food And flavor, 
+''' environmental, metabolomics, biomarkers And clinical applications. Some Of the most well-established 
+''' research groups In the world that are found In Australia, Italy, the Netherlands, Canada, United States,
+''' And Brazil use this analytical technique.
 ''' </summary>
 <Package("GCxGC")>
 Module GCxGC
 
+    ''' <summary>
+    ''' Demodulate the 1D TIC to 2D data
+    ''' </summary>
+    ''' <param name="TIC"></param>
+    ''' <param name="modtime">
+    ''' The time required to complete a cycle is called the period of modulation (modulation time)
+    ''' and is actually the time in between two hot pulses, which typically lasts between 2 and 10 
+    ''' seconds is related to the time needed for the compounds to eluted in 2D.
+    ''' </param>
+    ''' <returns></returns>
     <ExportAPI("TIC2D")>
     Public Function TIC2D(TIC As ChromatogramTick(), modtime As Double) As D2Chromatogram()
         Return TIC.Demodulate2D(modtime)
@@ -91,7 +123,7 @@ Module GCxGC
     End Function
 
     ''' <summary>
-    ''' 
+    ''' Demodulate the 1D rawdata input as 2D data
     ''' </summary>
     ''' <param name="rawdata"></param>
     ''' <param name="modtime"></param>
@@ -108,6 +140,7 @@ Module GCxGC
     ''' write.mzPack(gcxgc, file = "/file/to/save/gcxgc_rawdata.mzPack");
     ''' </example>
     <ExportAPI("demodulate_2D")>
+    <RApiReturn(GetType(mzPack))>
     Public Function Demodulate2D(rawdata As Object, modtime As Double, Optional env As Environment = Nothing) As Object
         If rawdata Is Nothing Then
             Return Nothing
@@ -209,6 +242,7 @@ Module GCxGC
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("save.cdf")>
+    <RApiReturn(TypeCodes.boolean)>
     Public Function saveCDF(TIC As D2Chromatogram(), <RRawVectorArgument> file As Object, Optional env As Environment = Nothing) As Object
         Dim filestream As [Variant](Of Stream, Message) = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Write, env)
 

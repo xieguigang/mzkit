@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Microsoft.VisualBasic.Imaging.Driver.GraphicsData</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <table style="width: 100%;">
+            <tr>
+                <td>GraphicsData {Microsoft.VisualBasic.Imaging.Driver}</td>
+                <td style="text-align: right;">.NET clr documentation</td>
+            </tr>
+        </table>
+
+        <h2>GraphicsData</h2>
+
+        <h3>Description</h3>
+
+        gdi+ images: @``T:System.Drawing.Image``, @``T:System.Drawing.Bitmap`` / SVG image: @``T:Microsoft.VisualBasic.Imaging.SVG.XML.SVGXml``
+
+        <h3>Declare</h3>        
+
+        <pre>
+            <code id="clr_ts">
+# namespace Microsoft.VisualBasic.Imaging.Driver
+export class GraphicsData {
+   # The graphics engine driver type indicator, 
+   #  
+   #  + for @``F:Microsoft.VisualBasic.Imaging.Driver.Drivers.GDI`` -> @``T:Microsoft.VisualBasic.Imaging.Driver.ImageData``(@``T:System.Drawing.Image``, @``T:System.Drawing.Bitmap``)
+   #  + for @``F:Microsoft.VisualBasic.Imaging.Driver.Drivers.SVG`` -> @``T:Microsoft.VisualBasic.Imaging.Driver.SVGData``(@``T:Microsoft.VisualBasic.Imaging.SVG.XML.SVGXml``)
+   #  
+   #  (驱动程序的类型)
+   Driver: <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/Driver/Drivers.html">Drivers</a>;
+   content_type: string;
+   # The image size
+   Layout: <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/Drawing2D/GraphicsRegion.html">GraphicsRegion</a>;
+   Width: integer;
+   Height: integer;
+}
+</code>
+        </pre>
+
+        <hr />
+        <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a
+                href="../{$package}.html">Index</a>]
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
+<script type="text/javascript" src="../../_assets/highlights.js"></script>
+<script type="text/javascript">r_highlights("clr_ts");</script>
+
+</html>

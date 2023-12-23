@@ -1,6 +1,6 @@
 # Linears
 
-
+targeted linears
 
 + [lines.table](Linears/lines.table.1) export the table data of the reference linears
 + [write.points](Linears/write.points.1) save reference point data into a given table file

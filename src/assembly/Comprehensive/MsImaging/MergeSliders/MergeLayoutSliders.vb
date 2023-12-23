@@ -47,7 +47,7 @@ Public Module MergeLayoutSliders
             Dim maxHeight As Double = averageHeight
 
             For Each col As String In row
-                If col.IsPattern("\s+") Then
+                If col.IsPattern("\s+") OrElse col.StringEmpty Then
                     ' is a blank space, just offset the box
                     left += padding.Width * 2 + averageWidth
                 Else

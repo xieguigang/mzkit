@@ -21,8 +21,8 @@ require(GCModeller);
 const .onLoad = function() {
   cat("\n");
 
-  print(description(package = "mzkit")$title);
-  print(description(package = "mzkit")$description);
+  print(.Internal::description(package = "mzkit")$title);
+  print(.Internal::description(package = "mzkit")$description);
   
   cat("\n");
   

@@ -9,6 +9,9 @@ Imports Microsoft.VisualBasic.Math.Distributions
 
 Namespace PoolData
 
+    ''' <summary>
+    ''' A helper module for run DIA infer of the unknow spectrum in the cluster
+    ''' </summary>
     Public Class DIAInfer
 
         ReadOnly pool As HttpTreeFs

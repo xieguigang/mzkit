@@ -1,9 +1,20 @@
 ﻿Imports Microsoft.VisualBasic.Linq
 
+''' <summary>
+''' A collection of the xcms2 peak features data
+''' </summary>
 Public Class PeakSet
 
+    ''' <summary>
+    ''' the ROI peaks data
+    ''' </summary>
+    ''' <returns></returns>
     Public Property peaks As xcms2()
 
+    ''' <summary>
+    ''' the samples names in current ROI peak set
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property sampleNames As String()
         Get
             Return peaks.Select(Function(pk) pk.Properties.Keys).IteratesALL.Distinct.ToArray

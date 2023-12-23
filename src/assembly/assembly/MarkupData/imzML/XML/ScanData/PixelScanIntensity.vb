@@ -17,7 +17,15 @@ Namespace MarkupData.imzML
         ''' </summary>
         ''' <returns></returns>
         Public Property totalIon As Double Implements IMSIPixel.intensity, Pixel.Scale
+        ''' <summary>
+        ''' the x axis position
+        ''' </summary>
+        ''' <returns></returns>
         Public Property x As Integer Implements IMSIPixel.x, RasterPixel.X
+        ''' <summary>
+        ''' the y axis position
+        ''' </summary>
+        ''' <returns></returns>
         Public Property y As Integer Implements IMSIPixel.y, RasterPixel.Y
 
         Sub New()

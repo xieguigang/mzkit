@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>SMRUCC.Rsharp.Runtime.Internal.Object.dataframe</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <table style="width: 100%;">
+            <tr>
+                <td>dataframe {SMRUCC.Rsharp.Runtime.Internal.Object}</td>
+                <td style="text-align: right;">.NET clr documentation</td>
+            </tr>
+        </table>
+
+        <h2>dataframe</h2>
+
+        <h3>Description</h3>
+
+        A data frame, a matrix-like structure whose columns 
+ may be of differing types (numeric, logical, factor 
+ and character and so on).
+ 
+ How the names Of the data frame are created Is complex, 
+ And the rest Of this paragraph Is only the basic 
+ story. If the arguments are all named And simple objects 
+ (Not lists, matrices Of data frames) Then the argument 
+ names give the column names. For an unnamed simple 
+ argument, a deparsed version Of the argument Is used 
+ As the name (With an enclosing I(...) removed). For a 
+ named matrix/list/data frame argument With more than 
+ one named column, the names Of the columns are the name 
+ Of the argument followed by a dot And the column name 
+ inside the argument: If the argument Is unnamed, the 
+ argument's column names are used. For a named or unnamed 
+ matrix/list/data frame argument that contains a single 
+ column, the column name in the result is the column 
+ name in the argument. Finally, the names are adjusted 
+ to be unique and syntactically valid unless 
+ ``check.names = FALSE``.
+
+        <h3>Declare</h3>        
+
+        <pre>
+            <code id="clr_ts">
+# namespace SMRUCC.Rsharp.Runtime.Internal.Object
+export class dataframe {
+   # 长度为1或者长度为n
+   columns: list;
+   rownames: string;
+   # get all keys names of @``P:SMRUCC.Rsharp.Runtime.Internal.Object.dataframe.columns`` data
+   colnames: string;
+   # column @``P:System.Array.Length``
+   nrows: integer;
+   ncols: integer;
+}
+</code>
+        </pre>
+
+        <hr />
+        <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a
+                href="../{$package}.html">Index</a>]
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
+<script type="text/javascript" src="../../_assets/highlights.js"></script>
+<script type="text/javascript">r_highlights("clr_ts");</script>
+
+</html>

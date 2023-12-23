@@ -3,6 +3,9 @@ Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
 
+''' <summary>
+''' A lazy binary data matrix reader for the singlecells/spatial data
+''' </summary>
 Public Class MatrixReader : Implements IDisposable
 
     ''' <summary>
@@ -14,9 +17,25 @@ Public Class MatrixReader : Implements IDisposable
     ''' </summary>
     ReadOnly scan0 As Long
 
+    ''' <summary>
+    ''' the description text of the mass tolerance error
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property tolerance As String
+    ''' <summary>
+    ''' number of the ion features
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property featureSize As Integer
+    ''' <summary>
+    ''' A numeric vector of the ion features m/z
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property ionSet As Double()
+    ''' <summary>
+    ''' the number of the single cells or spatial spot data
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property spots As Integer
 
     Dim disposedValue As Boolean

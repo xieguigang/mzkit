@@ -68,9 +68,25 @@ Namespace MsImaging
     ''' </summary>
     Public Class Metadata
 
+        ''' <summary>
+        ''' the max scan number in x axis
+        ''' </summary>
+        ''' <returns></returns>
         Public Property scan_x As Integer
+        ''' <summary>
+        ''' the max rows in y axis
+        ''' </summary>
+        ''' <returns></returns>
         Public Property scan_y As Integer
+        ''' <summary>
+        ''' the spatial resolution
+        ''' </summary>
+        ''' <returns></returns>
         Public Property resolution As Double
+        ''' <summary>
+        ''' the ion m/z value range of the scan result.
+        ''' </summary>
+        ''' <returns></returns>
         Public Property mass_range As DoubleRange
 
         ''' <summary>
@@ -80,6 +96,10 @@ Namespace MsImaging
         ''' <returns></returns>
         Public Property [class] As String
 
+        ''' <summary>
+        ''' the calculated physical width of the sample slider data
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property physical_width As Double
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
@@ -87,6 +107,10 @@ Namespace MsImaging
             End Get
         End Property
 
+        ''' <summary>
+        ''' the calculated physical height of the sample slider data
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property physical_height As Double
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get

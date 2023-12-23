@@ -27,11 +27,12 @@ Public Module MolecularSpectrumPool
     ''' <param name="split">hex, max=15</param>
     ''' <returns></returns>
     <ExportAPI("createPool")>
+    <RApiReturn(GetType(SpectrumPool))>
     Public Function createPool(link As String,
                                Optional level As Double = 0.9,
                                Optional split As Integer = 9,
                                Optional name As String = "no_named",
-                               Optional desc As String = "no_information") As SpectrumPool
+                               Optional desc As String = "no_information") As Object
 
         Return SpectrumPool.Create(link, level, split:=split, name:=name, desc:=desc)
     End Function
@@ -88,10 +89,11 @@ Public Module MolecularSpectrumPool
     ''' for the inference analysis.
     ''' </remarks>
     <ExportAPI("infer")>
+    <RApiReturn(GetType(PeakMs2))>
     Public Function inferReferenceSpectrum(dia As DIAInfer, cluster_id As String,
                                            Optional reference_id As String() = Nothing,
                                            Optional formula As String() = Nothing,
-                                           Optional name As String() = Nothing) As PeakMs2()
+                                           Optional name As String() = Nothing) As Object
 
         If reference_id.IsNullOrEmpty OrElse formula.IsNullOrEmpty Then
             Return dia.InferCluster(cluster_id).ToArray
@@ -164,7 +166,23 @@ Public Module MolecularSpectrumPool
     ''' </summary>
     ''' <param name="pool"></param>
     ''' <param name="path"></param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' A dataframe object that contains the metadata of each spectrum inside the given 
+    ''' cluster tree, this includes:
+    ''' 
+    ''' 1. biodeep_id: metabolite unique reference id inside the biodeep database
+    ''' 2. name: the metabolite common name
+    ''' 3. formula: the chemical formula of the current metabolite
+    ''' 4. adducts: the precursor adducts of the metabolite addociated with the spectrum precursor ion
+    ''' 5. mz: the precursor ion m/z
+    ''' 6. rt: the lcms rt in data unit of seconds
+    ''' 7. intensity: the ion intensity value
+    ''' 8. source: the rawdata file source of current spectrum ion comes from
+    ''' 9. biosample: the biological sample source
+    ''' 10. organism: the biological species source
+    ''' 11. project: the public project id, example as the metabolights project id
+    ''' 12. instrument: the instrument name of the spectrum, could be extract from the metabolights project metadata.
+    ''' </returns>
     <ExportAPI("getClusterInfo")>
     Public Function getClusterInfo(pool As SpectrumPool, Optional path As String = Nothing) As Object
         Dim tokens = path.Trim("\"c, "/"c).StringSplit("[\\/]+")
@@ -228,7 +246,8 @@ Public Module MolecularSpectrumPool
     ''' <param name="spectral"></param>
     ''' <param name="prefix"></param>
     ''' <param name="env"></param>
-    ''' <returns></returns>
+    ''' <returns>A collection of the mzkit <see cref="PeakMs2"/> clr object
+    ''' which has the lib guid data assigned.</returns>
     <ExportAPI("set_conservedGuid")>
     Public Function SetConservedGuid(<RRawVectorArgument>
                                      spectral As Object,
@@ -330,6 +349,7 @@ Public Module MolecularSpectrumPool
     ''' do nothing when running upon a cloud service
     ''' </remarks>
     <ExportAPI("commit")>
+    <RApiReturn(GetType(SpectrumPool))>
     Public Function commit(pool As SpectrumPool) As Object
         Call pool.Commit()
         Return pool

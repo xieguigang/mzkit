@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative.StandardCurve</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <table style="width: 100%;">
+            <tr>
+                <td>StandardCurve {BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative}</td>
+                <td style="text-align: right;">.NET clr documentation</td>
+            </tr>
+        </table>
+
+        <h2>StandardCurve</h2>
+
+        <h3>Description</h3>
+
+        The linear model of the targeted metabolism model data.(标准曲线模型)
+
+        <h3>Declare</h3>        
+
+        <pre>
+            <code id="clr_ts">
+# namespace BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative
+export class StandardCurve {
+   # The metabolite name or database id
+   name: string;
+   # 该代谢物的线性回归模型
+   linear: <a href="/vignettes/clr/Microsoft/VisualBasic/Data/Bootstrapping/IFitted.html">IFitted</a>;
+   points: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/LinearQuantitative/Linear/ReferencePoint.html">ReferencePoint[]</a>;
+   blankControls: double;
+   # The internal standards
+   IS: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/LinearQuantitative/IS.html">IS</a>;
+   arguments: <i>any</i> kind;
+   # This linear model is required calibration by internal standards or not?
+   #  (在进行线性回归计算的时候是否需要内标校正？)
+   requireISCalibration: boolean;
+   isWeighted: boolean;
+   isValid: boolean;
+}
+</code>
+        </pre>
+
+        <hr />
+        <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a
+                href="../{$package}.html">Index</a>]
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
+<script type="text/javascript" src="../../_assets/highlights.js"></script>
+<script type="text/javascript">r_highlights("clr_ts");</script>
+
+</html>

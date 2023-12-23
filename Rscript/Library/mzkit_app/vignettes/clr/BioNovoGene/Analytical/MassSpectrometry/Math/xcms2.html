@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>BioNovoGene.Analytical.MassSpectrometry.Math.xcms2</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <table style="width: 100%;">
+            <tr>
+                <td>xcms2 {BioNovoGene.Analytical.MassSpectrometry.Math}</td>
+                <td style="text-align: right;">.NET clr documentation</td>
+            </tr>
+        </table>
+
+        <h2>xcms2</h2>
+
+        <h3>Description</h3>
+
+        the peak table format table file model of xcms version 2
+
+        <h3>Declare</h3>        
+
+        <pre>
+            <code id="clr_ts">
+# namespace BioNovoGene.Analytical.MassSpectrometry.Math
+export class xcms2 {
+   # the feature unique id
+   ID: string;
+   # the ion m/z
+   mz: double;
+   # the min of ion m/z value
+   mzmin: double;
+   # the max of the ion m/z value
+   mzmax: double;
+   # the rt value in max peak data point
+   rt: double;
+   rtmin: double;
+   rtmax: double;
+   # this feature has n sample data(value should be a positive number)
+   npeaks: integer;
+   Properties: list;
+}
+</code>
+        </pre>
+
+        <hr />
+        <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a
+                href="../{$package}.html">Index</a>]
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
+<script type="text/javascript" src="../../_assets/highlights.js"></script>
+<script type="text/javascript">r_highlights("clr_ts");</script>
+
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>BioNovoGene.Analytical.MassSpectrometry.Math.MRM.MRMArguments</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <table style="width: 100%;">
+            <tr>
+                <td>MRMArguments {BioNovoGene.Analytical.MassSpectrometry.Math.MRM}</td>
+                <td style="text-align: right;">.NET clr documentation</td>
+            </tr>
+        </table>
+
+        <h2>MRMArguments</h2>
+
+        <h3>Description</h3>
+
+        
+
+        <h3>Declare</h3>        
+
+        <pre>
+            <code id="clr_ts">
+# namespace BioNovoGene.Analytical.MassSpectrometry.Math.MRM
+export class MRMArguments {
+   # ``{@``P:BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative.Standards.ID``, @``P:BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative.Standards.Factor``}``，这个是为了计算亮氨酸和异亮氨酸这类无法被区分的物质的峰面积所需要的
+   TPAFactors: list;
+   # m/z tolerance for match ion pair
+   tolerance: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Ms1/Tolerance.html">Tolerance</a>;
+   timeWindowSize: double;
+   angleThreshold: double;
+   baselineQuantile: double;
+   integratorTicks: integer;
+   peakAreaMethod: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/LinearQuantitative/PeakAreaMethods.html">PeakAreaMethods</a>;
+   peakwidth: <a href="/vignettes/clr/Microsoft/VisualBasic/ComponentModel/Ranges/Model/DoubleRange.html">DoubleRange</a>;
+   sn_threshold: double;
+   bspline_degree: integer;
+   bspline_density: integer;
+   strict: boolean;
+}
+</code>
+        </pre>
+
+        <hr />
+        <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a
+                href="../{$package}.html">Index</a>]
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
+<script type="text/javascript" src="../../_assets/highlights.js"></script>
+<script type="text/javascript">r_highlights("clr_ts");</script>
+
+</html>

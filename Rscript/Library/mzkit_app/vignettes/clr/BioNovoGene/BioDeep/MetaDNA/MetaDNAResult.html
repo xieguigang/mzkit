@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>BioNovoGene.BioDeep.MetaDNA.MetaDNAResult</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <table style="width: 100%;">
+            <tr>
+                <td>MetaDNAResult {BioNovoGene.BioDeep.MetaDNA}</td>
+                <td style="text-align: right;">.NET clr documentation</td>
+            </tr>
+        </table>
+
+        <h2>MetaDNAResult</h2>
+
+        <h3>Description</h3>
+
+        table output of the metaDNA infer annotation result
+
+        <h3>Declare</h3>        
+
+        <pre>
+            <code id="clr_ts">
+# namespace BioNovoGene.BioDeep.MetaDNA
+export class MetaDNAResult {
+   # the unique id of ms1 parent ion
+   ROI_id: string;
+   # the unique id of ms2 spectrum peaks
+   query_id: string;
+   mz: double;
+   rt: double;
+   intensity: double;
+   KEGGId: string;
+   exactMass: double;
+   formula: string;
+   name: string;
+   precursorType: string;
+   # calculated m/z value based on @``P:BioNovoGene.BioDeep.MetaDNA.MetaDNAResult.mz`` and @``P:BioNovoGene.BioDeep.MetaDNA.MetaDNAResult.precursorType``
+   mzCalc: double;
+   ppm: double;
+   # the score match of ms1 @``P:BioNovoGene.BioDeep.MetaDNA.MetaDNAResult.rt`` and rt value of the KEGG compound reference
+   rt_adjust: double;
+   inferLevel: string;
+   forward: double;
+   reverse: double;
+   jaccard: double;
+   mirror: double;
+   parentTrace: double;
+   inferSize: integer;
+   score1: double;
+   score2: double;
+   pvalue: double;
+   seed: string;
+   partnerKEGGId: string;
+   KEGG_reaction: string;
+   reaction: string;
+   fileName: string;
+}
+</code>
+        </pre>
+
+        <hr />
+        <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a
+                href="../{$package}.html">Index</a>]
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
+<script type="text/javascript" src="../../_assets/highlights.js"></script>
+<script type="text/javascript">r_highlights("clr_ts");</script>
+
+</html>

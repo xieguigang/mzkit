@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Microsoft.VisualBasic.Data.visualize.Network.Graph.NetworkGraph</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <table style="width: 100%;">
+            <tr>
+                <td>NetworkGraph {Microsoft.VisualBasic.Data.visualize.Network.Graph}</td>
+                <td style="text-align: right;">.NET clr documentation</td>
+            </tr>
+        </table>
+
+        <h2>NetworkGraph</h2>
+
+        <h3>Description</h3>
+
+        The network graph object model
+
+        <h3>Declare</h3>        
+
+        <pre>
+            <code id="clr_ts">
+# namespace Microsoft.VisualBasic.Data.visualize.Network.Graph
+export class NetworkGraph {
+   # Returns the set of all Nodes that have emanating Edges.
+   #  This therefore returns all Nodes that will be visible in the drawing.
+   #  (这个属性之中是没有任何孤立的节点的)
+   connectedNodes: <a href="/vignettes/clr/Microsoft/VisualBasic/Data/visualize/Network/Graph/Node.html">Node[]</a>;
+   pinnedNodes: <a href="/vignettes/clr/Microsoft/VisualBasic/Data/visualize/Network/Graph/Node.html">Node[]</a>;
+   size: <a href="/vignettes/clr/System/ValueTuple`2.html">ValueTuple`2</a>;
+   vertex: <a href="/vignettes/clr/System/Collections/Generic/IEnumerable`1.html">IEnumerable`1</a>;
+   graphEdges: <a href="/vignettes/clr/System/Collections/Generic/IEnumerable`1.html">IEnumerable`1</a>;
+}
+</code>
+        </pre>
+
+        <hr />
+        <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a
+                href="../{$package}.html">Index</a>]
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
+<script type="text/javascript" src="../../_assets/highlights.js"></script>
+<script type="text/javascript">r_highlights("clr_ts");</script>
+
+</html>
