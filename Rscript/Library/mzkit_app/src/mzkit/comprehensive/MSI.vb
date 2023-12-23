@@ -1232,6 +1232,7 @@ Module MSI
                                Optional dims As Object = Nothing,
                                Optional res As Double = 17,
                                Optional noise_cutoff As Double = 1,
+                               Optional source_tag As String = "pack_matrix",
                                Optional env As Environment = Nothing) As Object
         Dim scans As ScanMS1()
         Dim msi_dims As Size = InteropArgumentHelper.getSize(dims, env, "0,0").SizeParser
@@ -1268,8 +1269,10 @@ Module MSI
         End If
 
         Return New mzPack With {
-            .MS = scans.Where(Function(s) Not s Is Nothing).ToArray,
-            .source = NameOf(packMatrix),
+            .MS = scans _
+                .Where(Function(s) Not s Is Nothing) _
+                .ToArray,
+            .source = source_tag,
             .Application = FileApplicationClass.MSImaging,
             .metadata = If(metadata Is Nothing, Nothing, metadata.GetMetadata)
         }
