@@ -368,12 +368,15 @@ declare namespace MSI {
      *  should be in format of: spot in column and ion features in rows.
      * @param factor the size of this numeric vector should be equals to the 
      *  ncol of the given dataframe input **`m`**.
+     * @param bpc scle by bpc or scale by tic?
+     * 
+     * + default value Is ``false``.
      * @param env -
      * 
      * + default value Is ``null``.
      * @return A new dataframe data after scaled
    */
-   function scale(m: object, factor: any, env?: object): object;
+   function scale(m: object, factor: any, bpc?: boolean, env?: object): object;
    /**
     * combine each row scan summary vector as the pixels 2D matrix
     * 
