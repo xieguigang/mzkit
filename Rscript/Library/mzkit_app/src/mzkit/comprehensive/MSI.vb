@@ -75,6 +75,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.TissueMorphology
 Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells
 Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
@@ -153,6 +154,9 @@ Module MSI
     ''' <param name="factor">the size of this numeric vector should be equals to the 
     ''' ncol of the given dataframe input <paramref name="m"/>.
     ''' </param>
+    ''' <param name="bpc">
+    ''' scle by bpc or scale by tic?
+    ''' </param>
     ''' <param name="env"></param>
     ''' <returns>A new dataframe data after scaled</returns>
     ''' <example>
@@ -167,7 +171,10 @@ Module MSI
     ''' </example>
     <ExportAPI("scale")>
     <RApiReturn(GetType(rDataframe))>
-    Public Function scale(m As rDataframe, <RRawVectorArgument> factor As Object, Optional env As Environment = Nothing) As Object
+    Public Function scale(m As rDataframe, <RRawVectorArgument> factor As Object,
+                          Optional bpc As Boolean = False,
+                          Optional env As Environment = Nothing) As Object
+
         Dim f As Double() = CLRVector.asNumeric(factor)
         Dim v As Double()
         Dim cols As String() = m.colnames
@@ -179,14 +186,29 @@ Module MSI
 
         m = New rDataframe(m)
 
-        For i As Integer = 0 To cols.Length - 1
-            name = cols(i)
-            ' scale current column field by a speicifc factor f(i)
-            v = CLRVector.asNumeric(m.columns(name))
-            v = SIMD.Divide.f64_op_divide_f64_scalar(v, v.Sum)
-            v = SIMD.Multiply.f64_scalar_op_multiply_f64(f(i), v)
-            m.columns(name) = ReLU.ReLU(v)
-        Next
+        If bpc Then
+            For i As Integer = 0 To cols.Length - 1
+                name = cols(i)
+                ' scale current column field by a speicifc factor f(i)
+                v = CLRVector.asNumeric(m.columns(name))
+                ' relative max norm
+                v = SIMD.Divide.f64_op_divide_f64_scalar(v, v.Max)
+                ' then scale to a max factor
+                v = SIMD.Multiply.f64_scalar_op_multiply_f64(f(i), v)
+                m.columns(name) = ReLU.ReLU(v)
+            Next
+        Else
+            For i As Integer = 0 To cols.Length - 1
+                name = cols(i)
+                ' scale current column field by a speicifc factor f(i)
+                v = CLRVector.asNumeric(m.columns(name))
+                ' total sum norm
+                v = SIMD.Divide.f64_op_divide_f64_scalar(v, v.Sum)
+                ' then scale to a total factor
+                v = SIMD.Multiply.f64_scalar_op_multiply_f64(f(i), v)
+                m.columns(name) = ReLU.ReLU(v)
+            Next
+        End If
 
         Return m
     End Function
@@ -1161,6 +1183,45 @@ Module MSI
     ''' in format of spatial spot in columns and molecule feature in rows.
     ''' </param>
     ''' <returns></returns>
+    <ExportAPI("levels.convolution")>
+    Public Function level_convolution(mat As rDataframe, Optional clusters As Integer = 6, Optional win_size As Integer = 3) As rDataframe
+        Dim spatial_vector = mat.columns.AsParallel _
+            .Select(Function(a)
+                        Return (spot_id:=a.Key, vec:=CLRVector.asNumeric(a.Value))
+                    End Function) _
+            .OrderByDescending(Function(a) a.vec.Sum) _
+            .ToArray
+        Dim cluster_groups = spatial_vector.Split(spatial_vector.Length / clusters + 1)
+        Dim convolution As New rDataframe With {
+            .columns = New Dictionary(Of String, Array),
+            .rownames = mat.getRowNames
+        }
+
+        For Each cluster In cluster_groups
+            Dim slides = cluster.SlideWindows(winSize:=win_size).ToArray
+
+            For Each cov In slides
+                Dim v As Double() = cov.First.vec
+
+                For Each vi In cov.Skip(1)
+                    v = SIMD.Add.f64_op_add_f64(v, vi.vec)
+                Next
+
+                Call convolution.add(cov.First.spot_id, v)
+            Next
+        Next
+
+        Return convolution
+    End Function
+
+    ''' <summary>
+    ''' sum pixels for create pixel spot convolution
+    ''' </summary>
+    ''' <param name="mat">A matrix liked dataframe object that contains the 
+    ''' molecule expression data on each spatial spots, data object should 
+    ''' in format of spatial spot in columns and molecule feature in rows.
+    ''' </param>
+    ''' <returns></returns>
     <ExportAPI("spatial.convolution")>
     Public Function spatialConvolution(mat As rDataframe, Optional win_size As Integer = 2, Optional steps As Integer = 1) As rDataframe
         Dim spatial As Grid(Of SpotVector) = Grid(Of SpotVector).Create(SpotVector.LoadDataFrame(mat))
@@ -1211,6 +1272,7 @@ Module MSI
                                Optional dims As Object = Nothing,
                                Optional res As Double = 17,
                                Optional noise_cutoff As Double = 1,
+                               Optional source_tag As String = "pack_matrix",
                                Optional env As Environment = Nothing) As Object
         Dim scans As ScanMS1()
         Dim msi_dims As Size = InteropArgumentHelper.getSize(dims, env, "0,0").SizeParser
@@ -1247,8 +1309,10 @@ Module MSI
         End If
 
         Return New mzPack With {
-            .MS = scans.Where(Function(s) Not s Is Nothing).ToArray,
-            .source = NameOf(packMatrix),
+            .MS = scans _
+                .Where(Function(s) Not s Is Nothing) _
+                .ToArray,
+            .source = source_tag,
             .Application = FileApplicationClass.MSImaging,
             .metadata = If(metadata Is Nothing, Nothing, metadata.GetMetadata)
         }

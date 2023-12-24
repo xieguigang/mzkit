@@ -118,6 +118,21 @@ declare namespace MSI {
      * + default value Is ``null``.
    */
    function ionStat(raw: any, grid_size?: object, da?: number, parallel?: boolean, env?: object): object;
+   module levels {
+      /**
+       * sum pixels for create pixel spot convolution
+       * 
+       * 
+        * @param mat A matrix liked dataframe object that contains the 
+        *  molecule expression data on each spatial spots, data object should 
+        *  in format of spatial spot in columns and molecule feature in rows.
+        * @param clusters 
+        * + default value Is ``6``.
+        * @param win_size 
+        * + default value Is ``3``.
+      */
+      function convolution(mat: object, clusters?: object, win_size?: object): object;
+   }
    /**
     * evaluate the moran index for each ion layer
     * 
@@ -194,11 +209,13 @@ declare namespace MSI {
      * + default value Is ``17``.
      * @param noise_cutoff 
      * + default value Is ``1``.
+     * @param source_tag 
+     * + default value Is ``'pack_matrix'``.
      * @param env -
      * 
      * + default value Is ``null``.
    */
-   function pack_matrix(file: any, dims?: any, res?: number, noise_cutoff?: number, env?: object): any;
+   function pack_matrix(file: any, dims?: any, res?: number, noise_cutoff?: number, source_tag?: string, env?: object): any;
    /**
     * Extract the ion data matrix
     * 
@@ -368,12 +385,15 @@ declare namespace MSI {
      *  should be in format of: spot in column and ion features in rows.
      * @param factor the size of this numeric vector should be equals to the 
      *  ncol of the given dataframe input **`m`**.
+     * @param bpc scle by bpc or scale by tic?
+     * 
+     * + default value Is ``false``.
      * @param env -
      * 
      * + default value Is ``null``.
      * @return A new dataframe data after scaled
    */
-   function scale(m: object, factor: any, env?: object): object;
+   function scale(m: object, factor: any, bpc?: boolean, env?: object): object;
    /**
     * combine each row scan summary vector as the pixels 2D matrix
     * 

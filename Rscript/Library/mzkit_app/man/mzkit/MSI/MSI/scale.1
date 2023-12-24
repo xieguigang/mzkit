@@ -1,10 +1,11 @@
 .\" man page create by R# package system.
-.TH MSI 1 2000-Jan "scale" "scale"
+.TH MSI 1 2000-1月 "scale" "scale"
 .SH NAME
 scale \- scale the spatial matrix by column
 .SH SYNOPSIS
 \fIscale(\fBm\fR as <generic> dataframe, 
 \fBfactor\fR as any, 
+\fBbpc\fR as boolean = FALSE, 
 [\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
@@ -18,6 +19,11 @@ scale the spatial matrix by column
 .PP
 \fBfactor\fB \fR\- the size of this numeric vector should be equals to the 
  ncol of the given dataframe input **`m`**.
+. 
+.PP
+.PP
+\fBbpc\fB \fR\- 
+ scle by bpc or scale by tic?
 . 
 .PP
 .PP

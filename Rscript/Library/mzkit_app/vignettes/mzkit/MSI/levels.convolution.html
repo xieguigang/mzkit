@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>pack the matrix file as the MSI mzpack</title>
+    <title>sum pixels for create pixel spot convolution</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
@@ -13,12 +13,12 @@
 
         <table style="width: 100%;">
             <tr>
-                <td>pack_matrix {MSI}</td>
+                <td>levels.convolution {MSI}</td>
                 <td style="text-align: right;">R Documentation</td>
             </tr>
         </table>
 
-        <h2>pack the matrix file as the MSI mzpack</h2>
+        <h2>sum pixels for create pixel spot convolution</h2>
 
         <h3>Description</h3>
 
@@ -27,25 +27,19 @@
         <h3>Usage</h3>
 
         <div style="width: 100%; padding-left: 3%; color: black;">
-            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>pack_matrix</strong>(<i>file</i>,
-    <i>dims</i> = <span style='color: blue !important;'>NULL</span>,
-    <i>res</i> = <span style='color: green;'>17</span>,
-    <i>noise.cutoff</i> = <span style='color: green;'>1</span>,
-    <i>source.tag</i> = <span style='color: brown;'><strong>"pack_matrix"</strong></span>);</code></pre>
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>levels.convolution</strong>(<i>mat</i>,
+    <i>clusters</i> = <span style='color: green;'>6</span>,
+    <i>win.size</i> = <span style='color: green;'>3</span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
 
         <table>
             
-<dt>file</dt>
-<dd><p><p>the file resource reference to the csv table file, and the<br />
- csv file should be in format of ion peaks features in column<br />
- and spatial spot id in rows</p></p></dd>
-
-
-<dt>env</dt>
-<dd><p><p>-</p></p></dd>
+<dt>mat</dt>
+<dd><p><p>A matrix liked dataframe object that contains the <br />
+ molecule expression data on each spatial spots, data object should <br />
+ in format of spatial spot in columns and molecule feature in rows.</p></p></dd>
 
         </table>
 
@@ -57,7 +51,7 @@
 
         <h3>Value</h3>
 
-        this function returns data object of type <i>any</i> kind.<h4>clr value class</h4><ul><li><i>any</i> kind</li></ul>
+        this function returns data object of type <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Internal/Object/dataframe.html">dataframe</a>.<h4>clr value class</h4><ul><li><a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Internal/Object/dataframe.html">dataframe</a></li></ul>
 
         <h3 style="display: none;">Examples</h3>
 

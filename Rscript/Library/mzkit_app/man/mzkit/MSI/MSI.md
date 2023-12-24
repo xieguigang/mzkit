@@ -27,6 +27,7 @@ MS-Imaging data handler
 + [pixelIons](MSI/pixelIons.1) get number of ions in each pixel scans
 + [getMatrixIons](MSI/getMatrixIons.1) get matrix ions feature m/z vector
 + [pixelMatrix](MSI/pixelMatrix.1) dumping raw data matrix as text table file.
++ [levels.convolution](MSI/levels.convolution.1) sum pixels for create pixel spot convolution
 + [spatial.convolution](MSI/spatial.convolution.1) sum pixels for create pixel spot convolution
 + [pack_matrix](MSI/pack_matrix.1) pack the matrix file as the MSI mzpack
 + [moran_I](MSI/moran_I.1) evaluate the moran index for each ion layer
