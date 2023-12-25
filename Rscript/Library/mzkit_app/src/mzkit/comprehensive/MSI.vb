@@ -98,6 +98,7 @@ Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Internal.Object.Converts
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
+Imports any = Microsoft.VisualBasic.Scripting
 Imports imzML = BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML.XML
 Imports rDataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
 Imports REnv = SMRUCC.Rsharp.Runtime
@@ -539,6 +540,43 @@ Module MSI
     End Function
 
     ''' <summary>
+    ''' get or set the dimension size of the ms-imaging mzpack raw data object
+    ''' </summary>
+    ''' <param name="raw"></param>
+    ''' <param name="dims"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("dimension_size")>
+    Public Function dimension_size(raw As mzPack,
+                                   <RByRefValueAssign>
+                                   <RRawVectorArgument>
+                                   Optional dims As Object = Nothing,
+                                   Optional env As Environment = Nothing) As Object
+
+        If dims Is Nothing Then
+            ' just get dimension size
+            Return getmzPackMetadata(raw, env)
+        Else
+            Dim sizeVal As String = InteropArgumentHelper.getSize(dims, env, "0,0")
+
+            If sizeVal = "0,0" Then
+                Return Internal.debug.stop($"invalid dimension size value input: {any.ToString(dims)}", env)
+            End If
+
+            Dim dimsVal As Size = sizeVal.SizeParser
+
+            If raw.metadata Is Nothing Then
+                raw.metadata = New Dictionary(Of String, String)
+            End If
+
+            raw.metadata("width") = dimsVal.Width
+            raw.metadata("height") = dimsVal.Height
+
+            Return raw
+        End If
+    End Function
+
+    ''' <summary>
     ''' open the reader for the imzML ms-imaging file
     ''' </summary>
     ''' <param name="file">the file path to the specific imzML metadata file for load 
@@ -590,24 +628,39 @@ Module MSI
     ''' <param name="ionMode">
     ''' the ion polarity mode value
     ''' </param>
+    ''' <param name="dims">
+    ''' an integer vector for set the size of the ms-imaging canvas dimension
+    ''' </param>
     ''' <returns></returns>
     ''' <example>
     ''' let msi_rawdata = open.mzpack(file = "/path/to/msi_rawdata.mzPack");
     ''' 
     ''' # convert the mzpack object into imzML format
     ''' msi_rawdata
-    ''' |> write.imzML(file = "/path/to/msi_rawdata.imzML");
+    ''' |> write.imzML(file = "/path/to/msi_rawdata.imzML", dims = [500, 450]);
     ''' </example>
     <ExportAPI("write.imzML")>
     <RApiReturn(TypeCodes.boolean)>
     Public Function write_imzML(mzpack As mzPack, file As String,
                                 Optional res As Double = 17,
-                                Optional ionMode As IonModes = IonModes.Positive) As Object
+                                Optional ionMode As IonModes = IonModes.Positive,
+                                <RRawVectorArgument>
+                                Optional dims As Object = Nothing,
+                                Optional env As Environment = Nothing) As Object
+
+        Dim dimSize As String = InteropArgumentHelper.getSize(dims, env, "0,0")
+        Dim dimsVal As Size? = Nothing
+
+        If Not dimSize = "0,0" Then
+            dimsVal = dimSize.SizeParser
+        End If
 
         Return imzXMLWriter.WriteXML(
             mzpack, output:=file,
             res:=res,
-            ionMode:=ionMode)
+            ionMode:=ionMode,
+            dims:=dimsVal
+        )
     End Function
 
     ''' <summary>
