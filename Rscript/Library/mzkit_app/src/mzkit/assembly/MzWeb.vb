@@ -65,6 +65,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.Comprehensive
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.DataReader
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
@@ -784,32 +785,37 @@ Module MzWeb
     ''' convert assembly file to mzpack format data object
     ''' </summary>
     ''' <param name="assembly"></param>
-    ''' <param name="env"></param>
-    ''' <param name="modtime">
-    ''' [GCxGC]
-    ''' the modulation time of the chromatographic run. 
-    ''' modulation period in time unit 'seconds'.
-    ''' </param>
-    ''' <param name="sample_rate">
-    ''' [GCxGC]
-    ''' the sampling rate of the equipment.
-    ''' If sam_rate is missing, the sampling rate is calculated by the dividing 1 by
-    ''' the difference of two adjacent scan time.
+    ''' <param name="args">
+    ''' 1. modtime: [GCxGC] the modulation time of the chromatographic run. 
+    '''    modulation period in time unit 'seconds'.
+    ''' 2. sample_rate: [GCxGC] the sampling rate of the equipment.
+    '''    If sam_rate is missing, the sampling rate is calculated by the dividing 1 by
+    '''    the difference of two adjacent scan time.
+    ''' 3. imzml: [MS-Imaging] the pixel spot scan metadata collection for
+    '''    read ms data from the ibd file, the corresponding assembly object should
+    '''    be a <see cref="ibdReader"/> object
+    ''' 4. dims: [MS-Imaging] the canvas dimension size value for the ms-imaging
+    '''    heatmap rendering
     ''' </param>
     ''' <returns></returns>
     <ExportAPI("as.mzpack")>
     <RApiReturn(GetType(mzPack))>
     Public Function ToMzPack(assembly As Object,
-                             Optional modtime As Double = -1,
-                             Optional sample_rate As Double = Double.NaN,
+                             <RListObjectArgument>
+                             Optional args As list = Nothing,
                              Optional env As Environment = Nothing) As Object
 
         If TypeOf assembly Is netCDFReader Then
+            Dim modtime As Double = args.getValue({"modtime", "modulation"}, env, [default]:=-1.0)
+            Dim sample_rate As Double = args.getValue({"sample_rate", "sample.rate"}, env, [default]:=Double.NaN)
+
             Return GC2Dimensional.ToMzPack(
                 agilentGC:=assembly,
                 modtime:=modtime,
                 sam_rate:=sample_rate
             )
+        ElseIf TypeOf assembly Is ibdReader Then
+
         Else
             Return Message.InCompatibleType(GetType(netCDFReader), assembly.GetType, env)
         End If
