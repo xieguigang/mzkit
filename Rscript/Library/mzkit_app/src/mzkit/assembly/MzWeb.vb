@@ -815,7 +815,9 @@ Module MzWeb
                 sam_rate:=sample_rate
             )
         ElseIf TypeOf assembly Is ibdReader Then
+            Dim ibd As ibdReader = DirectCast(assembly, ibdReader)
 
+            Throw New NotImplementedException
         Else
             Return Message.InCompatibleType(GetType(netCDFReader), assembly.GetType, env)
         End If
