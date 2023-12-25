@@ -590,24 +590,39 @@ Module MSI
     ''' <param name="ionMode">
     ''' the ion polarity mode value
     ''' </param>
+    ''' <param name="dims">
+    ''' an integer vector for set the size of the ms-imaging canvas dimension
+    ''' </param>
     ''' <returns></returns>
     ''' <example>
     ''' let msi_rawdata = open.mzpack(file = "/path/to/msi_rawdata.mzPack");
     ''' 
     ''' # convert the mzpack object into imzML format
     ''' msi_rawdata
-    ''' |> write.imzML(file = "/path/to/msi_rawdata.imzML");
+    ''' |> write.imzML(file = "/path/to/msi_rawdata.imzML", dims = [500, 450]);
     ''' </example>
     <ExportAPI("write.imzML")>
     <RApiReturn(TypeCodes.boolean)>
     Public Function write_imzML(mzpack As mzPack, file As String,
                                 Optional res As Double = 17,
-                                Optional ionMode As IonModes = IonModes.Positive) As Object
+                                Optional ionMode As IonModes = IonModes.Positive,
+                                <RRawVectorArgument>
+                                Optional dims As Object = Nothing,
+                                Optional env As Environment = Nothing) As Object
+
+        Dim dimSize As String = InteropArgumentHelper.getSize(dims, env, "0,0")
+        Dim dimsVal As Size? = Nothing
+
+        If Not dimSize = "0,0" Then
+            dimsVal = dimSize.SizeParser
+        End If
 
         Return imzXMLWriter.WriteXML(
             mzpack, output:=file,
             res:=res,
-            ionMode:=ionMode)
+            ionMode:=ionMode,
+            dims:=dimsVal
+        )
     End Function
 
     ''' <summary>
