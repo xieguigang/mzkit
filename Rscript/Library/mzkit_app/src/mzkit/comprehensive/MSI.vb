@@ -98,6 +98,7 @@ Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Internal.Object.Converts
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
+Imports any = Microsoft.VisualBasic.Scripting
 Imports imzML = BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML.XML
 Imports rDataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
 Imports REnv = SMRUCC.Rsharp.Runtime
@@ -536,6 +537,43 @@ Module MSI
                 {"h", meta.scan_y}
             }
         }
+    End Function
+
+    ''' <summary>
+    ''' get or set the dimension size of the ms-imaging mzpack raw data object
+    ''' </summary>
+    ''' <param name="raw"></param>
+    ''' <param name="dims"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("dimension_size")>
+    Public Function dimension_size(raw As mzPack,
+                                   <RByRefValueAssign>
+                                   <RRawVectorArgument>
+                                   Optional dims As Object = Nothing,
+                                   Optional env As Environment = Nothing) As Object
+
+        If dims Is Nothing Then
+            ' just get dimension size
+            Return getmzPackMetadata(raw, env)
+        Else
+            Dim sizeVal As String = InteropArgumentHelper.getSize(dims, env, "0,0")
+
+            If sizeVal = "0,0" Then
+                Return Internal.debug.stop($"invalid dimension size value input: {any.ToString(dims)}", env)
+            End If
+
+            Dim dimsVal As Size = sizeVal.SizeParser
+
+            If raw.metadata Is Nothing Then
+                raw.metadata = New Dictionary(Of String, String)
+            End If
+
+            raw.metadata("width") = dimsVal.Width
+            raw.metadata("height") = dimsVal.Height
+
+            Return raw
+        End If
     End Function
 
     ''' <summary>
