@@ -12,6 +12,7 @@ MS-Imaging data handler
 + [splice](MSI/splice.1) split the raw 2D MSI data into multiple parts with given parts
 + [pixelId](MSI/pixelId.1) get pixels [x,y] tags collection for a specific ion
 + [pixels](MSI/pixels.1) get pixels size from the raw data file
++ [dimension_size](MSI/dimension_size.1) get or set the dimension size of the ms-imaging mzpack raw data object
 + [open.imzML](MSI/open.imzML.1) open the reader for the imzML ms-imaging file
 + [write.imzML](MSI/write.imzML.1) Save and write the given ms-imaging mzpack object as imzML file
 + [row.scans](MSI/row.scans.1) each raw data file is a row scan data

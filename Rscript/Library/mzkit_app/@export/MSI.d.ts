@@ -79,6 +79,19 @@ declare namespace MSI {
    */
    function correction(totalTime: number, pixels: object, hasMs2?: boolean): object;
    /**
+    * get or set the dimension size of the ms-imaging mzpack raw data object
+    * 
+    * 
+     * @param raw -
+     * @param dims -
+     * 
+     * + default value Is ``null``.
+     * @param env -
+     * 
+     * + default value Is ``null``.
+   */
+   function dimension_size(raw: object, dims?: any, env?: object): any;
+   /**
     * get matrix ions feature m/z vector
     * 
     * 
@@ -462,7 +475,12 @@ declare namespace MSI {
         * @param ionMode the ion polarity mode value
         * 
         * + default value Is ``null``.
+        * @param dims an integer vector for set the size of the ms-imaging canvas dimension
+        * 
+        * + default value Is ``null``.
+        * @param env 
+        * + default value Is ``null``.
       */
-      function imzML(mzpack: object, file: string, res?: number, ionMode?: object): boolean;
+      function imzML(mzpack: object, file: string, res?: number, ionMode?: object, dims?: any, env?: object): boolean;
    }
 }
