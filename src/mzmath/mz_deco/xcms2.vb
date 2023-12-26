@@ -107,6 +107,7 @@ Public Class xcms2 : Inherits DynamicPropertyBase(Of Double)
     ''' </summary>
     ''' <returns></returns>
     Public ReadOnly Property npeaks As Integer
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
             Return Properties _
                 .Where(Function(s) s.Value > 0) _
@@ -120,6 +121,11 @@ Public Class xcms2 : Inherits DynamicPropertyBase(Of Double)
     '        .ToArray
     'End Function
 
+    ''' <summary>
+    ''' just make the <see cref="xcms2.ID"/> unique
+    ''' </summary>
+    ''' <param name="peaktable"></param>
+    ''' <returns></returns>
     Public Shared Iterator Function MakeUniqueId(peaktable As IEnumerable(Of xcms2)) As IEnumerable(Of xcms2)
         Dim guid As New Dictionary(Of String, Counter)
         Dim uid As String

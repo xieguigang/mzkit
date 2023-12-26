@@ -226,8 +226,17 @@ Module mzDeco
         Return New PeakSet With {.peaks = file.LoadCsv(Of xcms2)().ToArray}
     End Function
 
+    ''' <summary>
+    ''' make sample column projection
+    ''' </summary>
+    ''' <param name="peaktable">A xcms liked peaktable object, is a collection 
+    ''' of the <see cref="xcms2"/> peak feature data.</param>
+    ''' <param name="sampleNames">A character vector of the sample names for make 
+    ''' the peaktable projection.</param>
+    ''' <returns>A sub-table of the input original peaktable data</returns>
     <ExportAPI("peak_subset")>
-    Public Function peakSubset(peaktable As PeakSet, sampleNames As String()) As PeakSet
+    <RApiReturn(GetType(PeakSet))>
+    Public Function peakSubset(peaktable As PeakSet, sampleNames As String()) As Object
         Return peaktable.Subset(sampleNames)
     End Function
 
@@ -381,7 +390,12 @@ extract_ms1:
     End Function
 
     <Extension>
-    Private Function extractAlignedPeaks(dtw_aligned As NamedValue(Of MzGroup)(), rtRange As DoubleRange, baseline As Double, joint As Boolean, xic_align As Boolean) As xcms2()
+    Private Function extractAlignedPeaks(dtw_aligned As NamedValue(Of MzGroup)(),
+                                         rtRange As DoubleRange,
+                                         baseline As Double,
+                                         joint As Boolean,
+                                         xic_align As Boolean) As xcms2()
+
         ' and then export the peaks and area data
         Dim peaksSet As NamedCollection(Of PeakFeature)() = dtw_aligned _
             .Select(Function(sample)
