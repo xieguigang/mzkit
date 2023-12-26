@@ -1,10 +1,27 @@
 .\" man page create by R# package system.
 .TH MZDECO 1 2000-Jan "peak_subset" "peak_subset"
 .SH NAME
-peak_subset \- 
+peak_subset \- make sample column projection
 .SH SYNOPSIS
 \fIpeak_subset(\fBpeaktable\fR as <generic> PeakSet, 
 \fBsampleNames\fR as string);\fR
+.SH DESCRIPTION
+.PP
+make sample column projection
+.PP
+.SH OPTIONS
+.PP
+\fBpeaktable\fB \fR\- A xcms liked peaktable object, is a collection 
+ of the @\fBT:BioNovoGene.Analytical.MassSpectrometry.Math.xcms2\fR peak feature data.. 
+.PP
+.PP
+\fBsampleNames\fB \fR\- A character vector of the sample names for make 
+ the peaktable projection.. 
+.PP
+.SH VALUE
+.PP
+A sub-table of the input original peaktable data
+.PP
 .SH SEE ALSO
 mzDeco
 .SH FILES
