@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Save and write the given ms-imaging mzpack object as imzML file</title>
+    <title>get or set the dimension size of the ms-imaging mzpack raw data object</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
@@ -13,12 +13,12 @@
 
         <table style="width: 100%;">
             <tr>
-                <td>write.imzML {MSI}</td>
+                <td>dimension_size {MSI}</td>
                 <td style="text-align: right;">R Documentation</td>
             </tr>
         </table>
 
-        <h2>Save and write the given ms-imaging mzpack object as imzML file</h2>
+        <h2>get or set the dimension size of the ms-imaging mzpack raw data object</h2>
 
         <h3>Description</h3>
 
@@ -27,9 +27,7 @@
         <h3>Usage</h3>
 
         <div style="width: 100%; padding-left: 3%; color: black;">
-            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>write.imzML</strong>(<i>mzpack</i>, <i>file</i>,
-    <i>res</i> = <span style='color: green;'>17</span>,
-    <i>ionMode</i> = Positive,
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>dimension_size</strong>(<i>raw</i>,
     <i>dims</i> = <span style='color: blue !important;'>NULL</span>);</code></pre>
         </div>
 
@@ -37,24 +35,16 @@
 
         <table>
             
-<dt>mzpack</dt>
+<dt>raw</dt>
 <dd><p><p>-</p></p></dd>
-
-
-<dt>file</dt>
-<dd><p><p>-</p></p></dd>
-
-
-<dt>res</dt>
-<dd><p><p>the spatial resolution value</p></p></dd>
-
-
-<dt>ionMode</dt>
-<dd><p><p>the ion polarity mode value</p></p></dd>
 
 
 <dt>dims</dt>
-<dd><p><p>an integer vector for set the size of the ms-imaging canvas dimension</p></p></dd>
+<dd><p><p>-</p></p></dd>
+
+
+<dt>env</dt>
+<dd><p><p>-</p></p></dd>
 
         </table>
 
@@ -66,15 +56,11 @@
 
         <h3>Value</h3>
 
-        this function returns data object of type boolean.<h4>clr value class</h4><ul><li>boolean</li></ul>
+        this function returns data object of type <i>any</i> kind.<h4>clr value class</h4><ul><li><i>any</i> kind</li></ul>
 
-        <h3 style="display: block;">Examples</h3>
+        <h3 style="display: none;">Examples</h3>
 
-        <pre><code id="example_r"> let msi_rawdata = open.mzpack(file = "/path/to/msi_rawdata.mzPack");
- 
- # convert the mzpack object into imzML format
- msi_rawdata
- |> write.imzML(file = "/path/to/msi_rawdata.imzML", dims = [500, 450]);</code></pre>
+        
 
         <hr />
         <div style="text-align: center;">[Package <em>MSI</em> version 1.0.0.0 <a

@@ -1,11 +1,10 @@
 .\" man page create by R# package system.
-.TH MZWEB 1 2000-1月 "as.mzpack" "as.mzpack"
+.TH MZWEB 1 2000-Jan "as.mzpack" "as.mzpack"
 .SH NAME
 as.mzpack \- convert assembly file to mzpack format data object
 .SH SYNOPSIS
 \fIas.mzpack(\fBassembly\fR as any, 
-\fBmodtime\fR as double = -1, 
-\fBsample_rate\fR as double = NAN, 
+..., 
 [\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
@@ -16,21 +15,17 @@ convert assembly file to mzpack format data object
 \fBassembly\fB \fR\- -. 
 .PP
 .PP
-\fBenv\fB \fR\- -. 
-.PP
-.PP
-\fBmodtime\fB \fR\- 
- [GCxGC]
- the modulation time of the chromatographic run. 
- modulation period in time unit 'seconds'.
-. 
-.PP
-.PP
-\fBsample_rate\fB \fR\- 
- [GCxGC]
- the sampling rate of the equipment.
- If sam_rate is missing, the sampling rate is calculated by the dividing 1 by
- the difference of two adjacent scan time.
+\fBargs\fB \fR\- 
+ 1. modtime: [GCxGC] the modulation time of the chromatographic run. 
+    modulation period in time unit 'seconds'.
+ 2. sample_rate: [GCxGC] the sampling rate of the equipment.
+    If sam_rate is missing, the sampling rate is calculated by the dividing 1 by
+    the difference of two adjacent scan time.
+ 3. imzml: [MS-Imaging] the pixel spot scan metadata collection for
+    read ms data from the ibd file, the corresponding assembly object should
+    be a @\fBT:BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML.ibdReader\fR object
+ 4. dims: [MS-Imaging] the canvas dimension size value for the ms-imaging
+    heatmap rendering
 . 
 .PP
 .SH SEE ALSO

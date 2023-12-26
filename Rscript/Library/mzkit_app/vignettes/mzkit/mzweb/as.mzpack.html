@@ -28,8 +28,7 @@
 
         <div style="width: 100%; padding-left: 3%; color: black;">
             <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>as.mzpack</strong>(<i>assembly</i>,
-    <i>modtime</i> = <span style='color: green;'>-1</span>,
-    <i>sample.rate</i> = <span style='color: green;'>NaN</span>);</code></pre>
+    <i>...</i> = <span style='color: blue !important;'>NULL</span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
@@ -40,21 +39,19 @@
 <dd><p><p>-</p></p></dd>
 
 
-<dt>env</dt>
-<dd><p><p>-</p></p></dd>
-
-
-<dt>modtime</dt>
-<dd><p><p>[GCxGC]<br />
- the modulation time of the chromatographic run. <br />
- modulation period in time unit 'seconds'.</p></p></dd>
-
-
-<dt>sample.rate</dt>
-<dd><p><p>[GCxGC]<br />
- the sampling rate of the equipment.<br />
- If sam_rate is missing, the sampling rate is calculated by the dividing 1 by<br />
- the difference of two adjacent scan time.</p></p></dd>
+<dt>args</dt>
+<dd><p><ol>
+<li>modtime: [GCxGC] the modulation time of the chromatographic run. <br />
+modulation period in time unit 'seconds'.</li>
+<li>sample_rate: [GCxGC] the sampling rate of the equipment.<br />
+If sam_rate is missing, the sampling rate is calculated by the dividing 1 by<br />
+the difference of two adjacent scan time.</li>
+<li>imzml: [MS-Imaging] the pixel spot scan metadata collection for<br />
+read ms data from the ibd file, the corresponding assembly object should<br />
+be a @<code>T:BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML.ibdReader</code> object</li>
+<li>dims: [MS-Imaging] the canvas dimension size value for the ms-imaging<br />
+heatmap rendering</li>
+</ol></p></dd>
 
         </table>
 

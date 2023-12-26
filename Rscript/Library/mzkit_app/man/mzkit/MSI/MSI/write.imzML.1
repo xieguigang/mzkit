@@ -1,12 +1,14 @@
 .\" man page create by R# package system.
-.TH MSI 1 2000-1月 "write.imzML" "write.imzML"
+.TH MSI 1 2000-Jan "write.imzML" "write.imzML"
 .SH NAME
 write.imzML \- Save and write the given ms-imaging mzpack object as imzML file
 .SH SYNOPSIS
 \fIwrite.imzML(\fBmzpack\fR as <generic> mzPack, 
 \fBfile\fR as string, 
 \fBres\fR as double = 17, 
-\fBionMode\fR as <integer> IonModes = [Positive]);\fR
+\fBionMode\fR as <integer> IonModes = [Positive], 
+\fBdims\fR as any = \fB<NULL>\fR, 
+[\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
 Save and write the given ms-imaging mzpack object as imzML file
@@ -26,6 +28,11 @@ Save and write the given ms-imaging mzpack object as imzML file
 .PP
 \fBionMode\fB \fR\- 
  the ion polarity mode value
+. 
+.PP
+.PP
+\fBdims\fB \fR\- 
+ an integer vector for set the size of the ms-imaging canvas dimension
 . 
 .PP
 .SH SEE ALSO
