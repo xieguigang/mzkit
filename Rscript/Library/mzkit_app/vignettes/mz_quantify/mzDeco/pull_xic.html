@@ -29,7 +29,8 @@
         <div style="width: 100%; padding-left: 3%; color: black;">
             <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>pull_xic</strong>(<i>pool</i>, <i>mz</i>,
     <i>dtw</i> = <span style='color: blue !important;'>TRUE</span>,
-    <i>mzdiff</i> = <span style='color: green;'>0.01</span>);</code></pre>
+    <i>mzdiff</i> = <span style='color: green;'>0.01</span>,
+    <i>strict</i> = <span style='color: blue !important;'>FALSE</span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
@@ -37,7 +38,7 @@
         <table>
             
 <dt>pool</dt>
-<dd><p><p>-</p></p></dd>
+<dd><p><p>should be type of @<code>T:BioNovoGene.Analytical.MassSpectrometry.Math.XICPool</code> or peak collection @<code>T:BioNovoGene.Analytical.MassSpectrometry.Math.PeakSet</code> object.</p></p></dd>
 
 
 <dt>mz</dt>
@@ -45,7 +46,7 @@
 
 
 <dt>dtw</dt>
-<dd><p><p>-</p></p></dd>
+<dd><p><p>this parameter will not working when the data pool type is clr type @<code>T:BioNovoGene.Analytical.MassSpectrometry.Math.PeakSet</code></p></p></dd>
 
 
 <dt>mzdiff</dt>
