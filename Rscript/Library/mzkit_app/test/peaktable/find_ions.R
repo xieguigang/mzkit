@@ -11,4 +11,6 @@ let test_ion = table |> ionPeaks(
     rt_win = 90
 );
 
-print(as.data.frame(test_ion));
+# str();
+
+write.csv(as.data.frame(test_ion), file = "D:\\pos_test.csv", row.names = TRUE);
