@@ -237,8 +237,17 @@ Module mzDeco
     ''' <returns>A collection set of the <see cref="xcms2"/> peak features data object</returns>
     <ExportAPI("read.xcms_peaks")>
     <RApiReturn(GetType(PeakSet))>
-    Public Function readXcmsPeaks(file As String) As Object
-        Return New PeakSet With {.peaks = file.LoadCsv(Of xcms2)().ToArray}
+    Public Function readXcmsPeaks(file As String,
+                                  Optional tsv As Boolean = False,
+                                  Optional general_method As Boolean = False) As Object
+
+        If Not general_method Then
+            Return SaveXcms.ReadTextTable(file, tsv)
+        Else
+            Return New PeakSet With {
+                .peaks = file.LoadCsv(Of xcms2)().ToArray
+            }
+        End If
     End Function
 
     <ExportAPI("peak_subset")>
