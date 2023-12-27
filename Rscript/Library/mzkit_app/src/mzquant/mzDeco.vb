@@ -90,6 +90,8 @@ Imports SMRUCC.Rsharp.Runtime.Vectorization
 <Package("mzDeco")>
 <RTypeExport("peak_feature", GetType(PeakFeature))>
 <RTypeExport("mz_group", GetType(MzGroup))>
+<RTypeExport("peak_set", GetType(PeakSet))>
+<RTypeExport("xcms2", GetType(xcms2))>
 Module mzDeco
 
     Sub Main()
@@ -98,11 +100,24 @@ Module mzDeco
 
         Call generic.add("readBin.mz_group", GetType(Stream), AddressOf readXIC)
         Call generic.add("readBin.peak_feature", GetType(Stream), AddressOf readSamples)
+        Call generic.add("readBin.peak_set", GetType(Stream), AddressOf readPeaktable)
 
         Call generic.add("writeBin", GetType(MzGroup), AddressOf writeXIC1)
         Call generic.add("writeBin", GetType(MzGroup()), AddressOf writeXIC)
         Call generic.add("writeBin", GetType(PeakFeature()), AddressOf writeSamples)
+        Call generic.add("writeBin", GetType(PeakSet), AddressOf writePeaktable)
     End Sub
+
+    Private Function writePeaktable(table As PeakSet, args As list, env As Environment) As Object
+        Dim con As Stream = args!con
+        Call SaveXcms.DumpSample(table, con)
+        Call con.Flush()
+        Return True
+    End Function
+
+    Private Function readPeaktable(file As Stream, args As list, env As Environment) As Object
+        Return SaveXcms.ReadSample(file)
+    End Function
 
     Private Function writeSamples(samples As PeakFeature(), args As list, env As Environment) As Object
         Dim con As Stream = args!con
