@@ -36,8 +36,9 @@ Public Module SaveXcms
         Call headers.Delete("npeaks", ".")
         Call headers.Delete("maxinto")
 
+        Dim offsets = headers.ToArray
         Dim peaks As xcms2() = s _
-            .GetPeaks(deli, ID, mz, mzmin, mzmax, rt, rtmin, rtmax, peaks:=headers.ToArray) _
+            .GetPeaks(deli, ID, mz, mzmin, mzmax, rt, rtmin, rtmax, peaks:=offsets) _
             .ToArray
 
         Call buf.Dispose()
@@ -78,7 +79,11 @@ Public Module SaveXcms
                 .rtmin = If(rtmin > -1, Val(t(rtmin)), .rt)
             }
 
+            For Each sample As SeqValue(Of String) In peaks
+                pk(sample.value) = Val(t(sample))
+            Next
 
+            Yield pk
         Loop
     End Function
 
