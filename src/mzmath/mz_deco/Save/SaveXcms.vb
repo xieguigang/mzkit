@@ -87,4 +87,65 @@ Public Module SaveXcms
         Loop
     End Function
 
+    <Extension>
+    Public Sub DumpSample(sample As PeakSet, file As Stream)
+        Dim bin As New BinaryWriter(file)
+        Dim sampleNames As String() = sample.sampleNames
+
+        Call bin.Write(sample.ROIs)
+        Call bin.Write(sampleNames.Length)
+
+        For Each name As String In sampleNames
+            Call bin.Write(name)
+        Next
+
+        For Each pk As xcms2 In sample.peaks
+            Call bin.Write(pk.ID)
+            Call bin.Write(pk.mz)
+            Call bin.Write(pk.rt)
+            Call bin.Write(pk.mzmin)
+            Call bin.Write(pk.mzmax)
+            Call bin.Write(pk.rtmin)
+            Call bin.Write(pk.rtmax)
+
+            For Each name As String In sampleNames
+                Call bin.Write(pk(name))
+            Next
+        Next
+
+        Call bin.Flush()
+    End Sub
+
+    Public Function ReadSample(file As Stream) As PeakSet
+        Dim rd As New BinaryReader(file)
+        Dim ROIs As Integer = rd.ReadInt32
+        Dim samples As Integer = rd.ReadInt32
+        Dim names As String() = New String(samples - 1) {}
+        Dim peaks As xcms2() = New xcms2(ROIs - 1) {}
+        Dim pk As xcms2
+
+        For i As Integer = 0 To samples - 1
+            names(i) = rd.ReadString
+        Next
+
+        For i As Integer = 0 To ROIs - 1
+            pk = New xcms2 With {
+                .ID = rd.ReadString,
+                .mz = rd.ReadDouble,
+                .rt = rd.ReadDouble,
+                .mzmin = rd.ReadDouble,
+                .mzmax = rd.ReadDouble,
+                .rtmin = rd.ReadDouble,
+                .rtmax = rd.ReadDouble
+            }
+
+            For offset As Integer = 0 To samples - 1
+                pk(names(offset)) = rd.ReadDouble
+            Next
+
+            peaks(i) = pk
+        Next
+
+        Return New PeakSet With {.peaks = peaks}
+    End Function
 End Module

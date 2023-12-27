@@ -21,10 +21,21 @@ Public Class PeakSet
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
             Return peaks _
+                .SafeQuery _
                 .Select(Function(pk) pk.Properties.Keys) _
                 .IteratesALL _
                 .Distinct _
                 .ToArray
+        End Get
+    End Property
+
+    ''' <summary>
+    ''' get number of the ROI peaks in current dataset
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property ROIs As Integer
+        Get
+            Return peaks.TryCount
         End Get
     End Property
 
