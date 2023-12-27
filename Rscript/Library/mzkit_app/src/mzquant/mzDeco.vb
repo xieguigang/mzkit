@@ -255,7 +255,7 @@ Module mzDeco
         Return peaktable.Subset(sampleNames)
     End Function
 
-    <ExportAPI("ionPeaks")>
+    <ExportAPI("find_xcms_ionPeaks")>
     <RApiReturn(GetType(xcms2))>
     Public Function get_ionPeak(peaktable As PeakSet, mz As Double, rt As Double,
                                 Optional mzdiff As Double = 0.01,

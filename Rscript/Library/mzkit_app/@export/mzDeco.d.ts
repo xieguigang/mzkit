@@ -18,6 +18,11 @@
  * 
 */
 declare namespace mzDeco {
+   /**
+     * @param mzdiff default value Is ``0.01``.
+     * @param rt_win default value Is ``90``.
+   */
+   function find_xcms_ionPeaks(peaktable: object, mz: number, rt: number, mzdiff?: number, rt_win?: number): object;
    module mz {
       /**
        * do ``m/z`` grouping under the given tolerance
