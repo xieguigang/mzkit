@@ -648,9 +648,9 @@ extract_ms1:
     ''' 
     ''' this function is debug used only
     ''' </summary>
-    ''' <param name="pool"></param>
+    ''' <param name="pool">should be type of <see cref="XICPool"/> or peak collection <see cref="PeakSet"/> object.</param>
     ''' <param name="mz">the ion feature m/z value</param>
-    ''' <param name="dtw"></param>
+    ''' <param name="dtw">this parameter will not working when the data pool type is clr type <see cref="PeakSet"/></param>
     ''' <param name="mzdiff"></param>
     ''' <returns>
     ''' a tuple list object that contains the xic data across
@@ -677,27 +677,52 @@ extract_ms1:
     ''' ;
     ''' </example>
     <ExportAPI("pull_xic")>
-    Public Function pull_xic(pool As XICPool, mz As Double,
+    Public Function pull_xic(pool As Object, mz As Double,
                              Optional dtw As Boolean = True,
-                             Optional mzdiff As Double = 0.01) As Object
-        If dtw Then
-            Return New list With {
-                .slots = pool _
-                    .DtwXIC(mz, Tolerance.DeltaMass(mzdiff)) _
-                    .ToDictionary(Function(a) a.Name,
-                                  Function(a)
-                                      Return CObj(a.Value)
-                                  End Function)
-            }
-        Else
-            Return New list With {
-                .slots = pool _
-                    .GetXICMatrix(mz, Tolerance.DeltaMass(mzdiff)) _
-                    .ToDictionary(Function(a) a.Name,
-                                  Function(a)
-                                      Return CObj(a.Value)
-                                  End Function)
-            }
+                             Optional mzdiff As Double = 0.01,
+                             Optional strict As Boolean = False,
+                             Optional env As Environment = Nothing) As Object
+        If pool Is Nothing Then
+            Return Message.NullOrStrict(strict, NameOf(pool), env)
         End If
+
+        If TypeOf pool Is XICPool Then
+            If dtw Then
+                Return DirectCast(pool, XICPool).xic_dtw_list(mz, mzdiff)
+            Else
+                Return DirectCast(pool, XICPool).xic_matrix_list(mz, mzdiff)
+            End If
+        ElseIf TypeOf pool Is PeakSet Then
+            Return DirectCast(pool, PeakSet) _
+                .FilterMz(mz, mzdiff) _
+                .OrderBy(Function(i) i.rt) _
+                .ToArray
+        Else
+            Return Message.InCompatibleType(GetType(XICPool), pool.GetType, env)
+        End If
+    End Function
+
+    <Extension>
+    Private Function xic_dtw_list(pool As XICPool, mz As Double, mzdiff As Double) As list
+        Return New list With {
+            .slots = pool _
+                .DtwXIC(mz, Tolerance.DeltaMass(mzdiff)) _
+                .ToDictionary(Function(a) a.Name,
+                              Function(a)
+                                  Return CObj(a.Value)
+                              End Function)
+        }
+    End Function
+
+    <Extension>
+    Private Function xic_matrix_list(pool As XICPool, mz As Double, mzdiff As Double) As list
+        Return New list With {
+            .slots = pool _
+                .GetXICMatrix(mz, Tolerance.DeltaMass(mzdiff)) _
+                .ToDictionary(Function(a) a.Name,
+                                Function(a)
+                                    Return CObj(a.Value)
+                                End Function)
+        }
     End Function
 End Module

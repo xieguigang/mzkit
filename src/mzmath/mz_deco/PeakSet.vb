@@ -64,6 +64,12 @@ Public Class PeakSet
         Me.rt = rt.CreateMzIndex(win_size:=60)
     End Sub
 
+    ''' <summary>
+    ''' get XIC data
+    ''' </summary>
+    ''' <param name="mz"></param>
+    ''' <param name="mzdiff"></param>
+    ''' <returns></returns>
     Public Iterator Function FilterMz(mz As Double, mzdiff As Double) As IEnumerable(Of xcms2)
         For Each hit As (mz As Double, Integer) In Me.mz.Search((mz, -1))
             If hit.Item2 > -1 AndAlso std.Abs(hit.mz - mz) <= mzdiff Then
