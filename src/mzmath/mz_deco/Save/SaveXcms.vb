@@ -37,7 +37,7 @@ Public Module SaveXcms
         Call headers.Delete("maxinto")
 
         Dim peaks As xcms2() = s _
-            .GetPeaks(deli, ID, mz, mzmin, mzmax, rt, rtmin, rtmax, peaks:=headers) _
+            .GetPeaks(deli, ID, mz, mzmin, mzmax, rt, rtmin, rtmax, peaks:=headers.ToArray) _
             .ToArray
 
         Call buf.Dispose()
@@ -50,7 +50,7 @@ Public Module SaveXcms
                                        ID As Integer,
                                        mz As Integer, mzmin As Integer, mzmax As Integer,
                                        rt As Integer, rtmin As Integer, rtmax As Integer,
-                                       peaks As Index(Of String)) As IEnumerable(Of xcms2)
+                                       peaks As SeqValue(Of String)()) As IEnumerable(Of xcms2)
 
         Dim str As Value(Of String) = ""
         Dim t As String()
@@ -77,6 +77,8 @@ Public Module SaveXcms
                 .rtmax = If(rtmax > -1, Val(t(rtmax)), .rt),
                 .rtmin = If(rtmin > -1, Val(t(rtmin)), .rt)
             }
+
+
         Loop
     End Function
 
