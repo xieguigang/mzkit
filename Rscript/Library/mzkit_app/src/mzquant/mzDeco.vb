@@ -255,6 +255,15 @@ Module mzDeco
         Return peaktable.Subset(sampleNames)
     End Function
 
+    <ExportAPI("ionPeaks")>
+    <RApiReturn(GetType(xcms2))>
+    Public Function get_ionPeak(peaktable As PeakSet, mz As Double, rt As Double,
+                                Optional mzdiff As Double = 0.01,
+                                Optional rt_win As Double = 90) As Object
+
+        Return peaktable.FindIonSet(mz, rt, mzdiff, rt_win).ToArray
+    End Function
+
     Private Class xic_deco_task : Inherits VectorTask
 
         Dim pool As (mz As Double, samples As NamedValue(Of MzGroup)())(),
