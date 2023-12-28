@@ -127,7 +127,7 @@ Module Massbank
     ''' <param name="msp">A metabolite data which is parse from the MONA msp dataset</param>
     ''' <returns></returns>
     <ExportAPI("mona.msp_metadata")>
-    <RApiReturn(GetType(MetaData))>
+    <RApiReturn(GetType(BioNovoGene.BioDeep.Chemistry.MetaData))>
     Public Function monaMSP(msp As MspData) As Object
         Return msp.GetMetadata
     End Function
