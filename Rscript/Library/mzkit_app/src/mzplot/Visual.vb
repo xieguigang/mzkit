@@ -635,7 +635,7 @@ Module Visual
     ''' <summary>
     ''' visual of the UV spectrum
     ''' </summary>
-    ''' <param name="timeSignals"></param>
+    ''' <param name="timeSignals">should be a collection of the signal data: <see cref="GeneralSignal"/></param>
     ''' <param name="is_spectrum"></param>
     ''' <param name="size"></param>
     ''' <param name="padding"></param>
