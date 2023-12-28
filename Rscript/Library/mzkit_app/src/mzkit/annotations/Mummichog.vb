@@ -344,7 +344,13 @@ Module Mummichog
     ''' all of the network topology information
     ''' </summary>
     ''' <param name="background"></param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' A tuple list object that contains elements inside each slot data:
+    ''' 
+    ''' 1. name: the pathway map id
+    ''' 2. desc: the pathway map names
+    ''' 3. model: the network graph object that will be used as the model for run enrichment
+    ''' </returns>
     <ExportAPI("fromGseaBackground")>
     Public Function fromGseaBackground(background As Background, Optional min_size As Integer = 3) As list
         Dim gset As New Dictionary(Of String, Object)
@@ -397,8 +403,8 @@ Module Mummichog
     ''' <summary>
     ''' create kegg pathway network graph background model
     ''' </summary>
-    ''' <param name="maps"></param>
-    ''' <param name="reactions"></param>
+    ''' <param name="maps">A collection of the kegg <see cref="Map"/> clr object</param>
+    ''' <param name="reactions">A collection of the kegg <see cref="Reaction"/> clr object</param>
     ''' <returns></returns>
     <ExportAPI("kegg_background")>
     Public Function CreateKEGGBackground(maps As Map(), reactions As Reaction(), Optional alternative As Boolean = False) As list
