@@ -522,6 +522,7 @@ Module Visual
         If mzErr Like GetType(Message) Then
             Return mzErr.TryCast(Of Message)
         End If
+
         If points.isError Then
             If TypeOf ms1_scans Is list AndAlso DirectCast(ms1_scans, list).data _
                 .All(Function(xi) TypeOf xi Is MzGroup) Then
@@ -531,6 +532,8 @@ Module Visual
                 For Each group In DirectCast(ms1_scans, list).AsGeneric(Of MzGroup)(env)
                     XIC(group.Key) = group.Value.CreateChromatogram
                 Next
+            ElseIf TypeOf ms1_scans Is ChromatogramOverlap Then
+                XIC = DirectCast(ms1_scans, ChromatogramOverlap)
             Else
                 Return points.getError
             End If
