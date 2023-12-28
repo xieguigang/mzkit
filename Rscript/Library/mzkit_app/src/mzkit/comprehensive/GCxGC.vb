@@ -106,7 +106,8 @@ Module GCxGC
     ''' </param>
     ''' <returns></returns>
     <ExportAPI("TIC2D")>
-    Public Function TIC2D(TIC As ChromatogramTick(), modtime As Double) As D2Chromatogram()
+    <RApiReturn(GetType(D2Chromatogram))>
+    Public Function TIC2D(TIC As ChromatogramTick(), modtime As Double) As Object
         Return TIC.Demodulate2D(modtime)
     End Function
 

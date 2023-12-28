@@ -11,9 +11,22 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Serialization.Bencoding
 Imports SMRUCC.Rsharp.Runtime
+Imports SMRUCC.Rsharp.Runtime.Interop
 Imports list = SMRUCC.Rsharp.Runtime.Internal.Object.list
 Imports RDataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
 
+''' <summary>
+''' ### Simplified molecular-input line-entry system
+''' 
+''' The simplified molecular-input line-entry system (SMILES) is a specification in the 
+''' form of a line notation for describing the structure of chemical species using short
+''' ASCII strings. SMILES strings can be imported by most molecule editors for conversion
+''' back into two-dimensional drawings or three-dimensional models of the molecules.
+'''
+''' The original SMILES specification was initiated In the 1980S. It has since been 
+''' modified And extended. In 2007, an open standard called OpenSMILES was developed In
+''' the open source chemistry community.
+''' </summary>
 <Package("SMILES", Category:=APICategories.UtilityTools)>
 Module SMILESTool
 
@@ -45,12 +58,14 @@ Module SMILESTool
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <ExportAPI("parse")>
+    <RApiReturn(GetType(ChemicalFormula))>
     Public Function parseSMILES(SMILES As String, Optional strict As Boolean = True) As ChemicalFormula
         Return ParseChain.ParseGraph(SMILES, strict)
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <ExportAPI("as.formula")>
+    <RApiReturn(GetType(Formula))>
     Public Function asFormula(SMILES As ChemicalFormula, Optional canonical As Boolean = True) As Formula
         Return SMILES.GetFormula(canonical)
     End Function

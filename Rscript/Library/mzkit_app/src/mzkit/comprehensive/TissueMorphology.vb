@@ -370,6 +370,7 @@ Module TissueMorphology
     ''' this function used for generates the tissue map segment plot data for some special charts
     ''' </remarks>
     <ExportAPI("intersect_layer")>
+    <RApiReturn(GetType(TissueRegion))>
     Public Function intersect(layer As SingleIonLayer, tissues As TissueRegion(), Optional trim_suffix As Boolean = False) As Object
         Dim missing As New List(Of Point)
         Dim intersectList As New List(Of TissueRegion)
@@ -444,6 +445,7 @@ Module TissueMorphology
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("UMAPsample")>
+    <RApiReturn(GetType(UMAPPoint))>
     Public Function createUMAPsample(<RRawVectorArgument>
                                      points As Object,
                                      x As Double(),
@@ -451,7 +453,7 @@ Module TissueMorphology
                                      z As Double(),
                                      cluster As String(),
                                      Optional is_singlecells As Boolean = False,
-                                     Optional env As Environment = Nothing) As UMAPPoint()
+                                     Optional env As Environment = Nothing) As Object
 
         Dim pixels As String() = CLRVector.asCharacter(points)
         Dim umap As UMAPPoint() = pixels _
@@ -688,6 +690,11 @@ Module TissueMorphology
         Return mapping
     End Function
 
+    ''' <summary>
+    ''' Split the spatial mapping by tissue label data
+    ''' </summary>
+    ''' <param name="mapping"></param>
+    ''' <returns>A tuple list of the <see cref="SpatialMapping"/> object</returns>
     <ExportAPI("splitMapping")>
     <RApiReturn(GetType(list))>
     Public Function SplitMapping(mapping As SpatialMapping) As Object
@@ -722,6 +729,7 @@ Module TissueMorphology
     ''' </param>
     ''' <returns></returns>
     <ExportAPI("gridding")>
+    <RApiReturn(GetType(SpotMap))>
     Public Function gridding(mapping As SpatialMapping,
                              Optional gridSize As Integer = 6,
                              Optional label As String = Nothing) As Object

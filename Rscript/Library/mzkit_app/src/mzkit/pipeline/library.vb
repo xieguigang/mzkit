@@ -358,6 +358,7 @@ Module library
     ''' );
     ''' </example>
     <ExportAPI("xref")>
+    <RApiReturn(GetType(xref))>
     Public Function xref(<RRawVectorArgument> Optional chebi As Object = Nothing,
                          <RRawVectorArgument> Optional KEGG As Object = Nothing,
                          <RRawVectorArgument> Optional KEGGdrug As Object = Nothing,
