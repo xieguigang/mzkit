@@ -69,6 +69,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv
+Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
@@ -96,8 +97,8 @@ Module data
         Call Internal.Object.Converts.makeDataframe.addHandler(GetType(ms2()), AddressOf getMSMSTable)
     End Sub
 
-    Private Function TICTable(TIC As ChromatogramTick(), args As list, env As Environment) As dataframe
-        Dim table As New dataframe With {.columns = New Dictionary(Of String, Array)}
+    Private Function TICTable(TIC As ChromatogramTick(), args As list, env As Environment) As DataFrame
+        Dim table As New DataFrame With {.columns = New Dictionary(Of String, Array)}
 
         table.columns("time") = TIC.Select(Function(t) t.Time).ToArray
         table.columns("intensity") = TIC.Select(Function(t) t.Intensity).ToArray
@@ -106,8 +107,8 @@ Module data
     End Function
 
     <Extension>
-    Private Function getMSMSTable(matrix As ms2(), args As list, env As Environment) As dataframe
-        Dim table As New dataframe With {.columns = New Dictionary(Of String, Array)}
+    Private Function getMSMSTable(matrix As ms2(), args As list, env As Environment) As DataFrame
+        Dim table As New DataFrame With {.columns = New Dictionary(Of String, Array)}
 
         table.columns("mz") = matrix.Select(Function(m) m.mz).ToArray
         table.columns("intensity") = matrix.Select(Function(m) m.intensity).ToArray
@@ -117,12 +118,12 @@ Module data
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Private Function LibraryTable(matrix As LibraryMatrix, args As list, env As Environment) As dataframe
+    Private Function LibraryTable(matrix As LibraryMatrix, args As list, env As Environment) As DataFrame
         Return getMSMSTable(matrix.ms2, args, env)
     End Function
 
-    Private Function XICTable(XIC As ms1_scan(), args As list, env As Environment) As dataframe
-        Dim table As New dataframe With {.columns = New Dictionary(Of String, Array)}
+    Private Function XICTable(XIC As ms1_scan(), args As list, env As Environment) As DataFrame
+        Dim table As New DataFrame With {.columns = New Dictionary(Of String, Array)}
 
         table.columns("mz") = XIC.Select(Function(a) a.mz).ToArray
         table.columns("scan_time") = XIC.Select(Function(a) a.scan_time).ToArray
@@ -131,8 +132,8 @@ Module data
         Return table
     End Function
 
-    Private Function getIonsSummaryTable(peaks As PeakMs2(), args As list, env As Environment) As dataframe
-        Dim df As New dataframe With {
+    Private Function getIonsSummaryTable(peaks As PeakMs2(), args As list, env As Environment) As DataFrame
+        Dim df As New DataFrame With {
             .columns = New Dictionary(Of String, Array)
         }
 
@@ -461,8 +462,8 @@ Module data
                             Return New ms2 With {.mz = mzi, .intensity = into(i)}
                         End Function) _
                 .ToArray
-        ElseIf TypeOf matrix Is dataframe Then
-            MS = DirectCast(matrix, dataframe).MsdataFromDf.ToArray
+        ElseIf TypeOf matrix Is DataFrame Then
+            MS = DirectCast(matrix, DataFrame).MsdataFromDf.ToArray
         Else
             Dim data As pipeline = pipeline.TryCreatePipeline(Of ms2)(matrix, env)
 
@@ -482,7 +483,7 @@ Module data
     End Function
 
     <Extension>
-    Private Function MsdataFromDf(ms2 As dataframe) As IEnumerable(Of ms2)
+    Private Function MsdataFromDf(ms2 As DataFrame) As IEnumerable(Of ms2)
         Dim mz As Double() = ms2.getVector(Of Double)("mz", "m/z")
         Dim into As Double() = ms2.getVector(Of Double)("into", "intensity")
         Dim annotation As String() = ms2.getVector(Of String)("annotation")
@@ -585,7 +586,7 @@ Module data
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("XIC")>
-    <RApiReturn(GetType(ms1_scan), GetType(ChromatogramTick))>
+    <RApiReturn(GetType(ms1_scan), GetType(ChromatogramTick), GetType(ChromatogramOverlap))>
     Public Function XIC(<RRawVectorArgument> ms1 As Object, mz#,
                         Optional tolerance As Object = "ppm:20",
                         Optional env As Environment = Nothing) As Object
@@ -616,6 +617,45 @@ Module data
 
                     Return list
                 End If
+            ElseIf TypeOf ms1 Is PeakSet Then
+                Dim pkset As PeakSet = ms1
+                Dim da As Double = mzdiff.GetErrorDalton
+                Dim peaks = pkset.FilterMz(mz, mzdiff:=da).ToArray
+                Dim overlaps As New ChromatogramOverlap
+                Dim sample_names As String() = peaks.Split(peaks.Length / 8) _
+                    .AsParallel _
+                    .Select(Function(a) a.PropertyNames) _
+                    .IteratesALL _
+                    .Distinct _
+                    .ToArray
+                Dim peak_rt = peaks _
+                    .GroupBy(Function(a) a.rt, offsets:=0.5) _
+                    .OrderBy(Function(a) Val(a.name)) _
+                    .ToArray
+                Dim rt As Double() = peak_rt _
+                    .Select(Function(a) Val(a.name)) _
+                    .ToArray
+
+                For Each name As String In sample_names
+                    Dim tic As Double() = peak_rt _
+                        .Select(Function(a)
+                                    Return Aggregate ti As xcms2 In a Into Sum(ti(name))
+                                End Function) _
+                        .ToArray
+                    Dim bpc As Double() = peak_rt _
+                        .Select(Function(a)
+                                    Return Aggregate ti As xcms2 In a Into Max(ti(name))
+                                End Function) _
+                        .ToArray
+
+                    overlaps.overlaps(name) = New Chromatogram With {
+                        .BPC = bpc,
+                        .scan_time = rt,
+                        .TIC = tic
+                    }
+                Next
+
+                Return overlaps
             Else
                 Return ms1_scans.getError
             End If
