@@ -80,6 +80,7 @@ Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
+Imports rDataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
 Imports REnv = SMRUCC.Rsharp.Runtime
 
 ''' <summary>
@@ -97,8 +98,8 @@ Module data
         Call Internal.Object.Converts.makeDataframe.addHandler(GetType(ms2()), AddressOf getMSMSTable)
     End Sub
 
-    Private Function TICTable(TIC As ChromatogramTick(), args As list, env As Environment) As DataFrame
-        Dim table As New DataFrame With {.columns = New Dictionary(Of String, Array)}
+    Private Function TICTable(TIC As ChromatogramTick(), args As list, env As Environment) As rDataframe
+        Dim table As New rDataframe With {.columns = New Dictionary(Of String, Array)}
 
         table.columns("time") = TIC.Select(Function(t) t.Time).ToArray
         table.columns("intensity") = TIC.Select(Function(t) t.Intensity).ToArray
@@ -107,8 +108,8 @@ Module data
     End Function
 
     <Extension>
-    Private Function getMSMSTable(matrix As ms2(), args As list, env As Environment) As DataFrame
-        Dim table As New DataFrame With {.columns = New Dictionary(Of String, Array)}
+    Private Function getMSMSTable(matrix As ms2(), args As list, env As Environment) As rDataframe
+        Dim table As New rDataframe With {.columns = New Dictionary(Of String, Array)}
 
         table.columns("mz") = matrix.Select(Function(m) m.mz).ToArray
         table.columns("intensity") = matrix.Select(Function(m) m.intensity).ToArray
@@ -118,12 +119,12 @@ Module data
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Private Function LibraryTable(matrix As LibraryMatrix, args As list, env As Environment) As DataFrame
+    Private Function LibraryTable(matrix As LibraryMatrix, args As list, env As Environment) As rDataframe
         Return getMSMSTable(matrix.ms2, args, env)
     End Function
 
-    Private Function XICTable(XIC As ms1_scan(), args As list, env As Environment) As DataFrame
-        Dim table As New DataFrame With {.columns = New Dictionary(Of String, Array)}
+    Private Function XICTable(XIC As ms1_scan(), args As list, env As Environment) As rDataframe
+        Dim table As New rDataframe With {.columns = New Dictionary(Of String, Array)}
 
         table.columns("mz") = XIC.Select(Function(a) a.mz).ToArray
         table.columns("scan_time") = XIC.Select(Function(a) a.scan_time).ToArray
@@ -132,8 +133,8 @@ Module data
         Return table
     End Function
 
-    Private Function getIonsSummaryTable(peaks As PeakMs2(), args As list, env As Environment) As DataFrame
-        Dim df As New DataFrame With {
+    Private Function getIonsSummaryTable(peaks As PeakMs2(), args As list, env As Environment) As rDataframe
+        Dim df As New rDataframe With {
             .columns = New Dictionary(Of String, Array)
         }
 
@@ -462,8 +463,8 @@ Module data
                             Return New ms2 With {.mz = mzi, .intensity = into(i)}
                         End Function) _
                 .ToArray
-        ElseIf TypeOf matrix Is DataFrame Then
-            MS = DirectCast(matrix, DataFrame).MsdataFromDf.ToArray
+        ElseIf TypeOf matrix Is rDataframe Then
+            MS = DirectCast(matrix, rDataframe).MsdataFromDf.ToArray
         Else
             Dim data As pipeline = pipeline.TryCreatePipeline(Of ms2)(matrix, env)
 
@@ -483,7 +484,7 @@ Module data
     End Function
 
     <Extension>
-    Private Function MsdataFromDf(ms2 As DataFrame) As IEnumerable(Of ms2)
+    Private Function MsdataFromDf(ms2 As rDataframe) As IEnumerable(Of ms2)
         Dim mz As Double() = ms2.getVector(Of Double)("mz", "m/z")
         Dim into As Double() = ms2.getVector(Of Double)("into", "intensity")
         Dim annotation As String() = ms2.getVector(Of String)("annotation")
