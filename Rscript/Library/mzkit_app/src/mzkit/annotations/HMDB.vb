@@ -216,7 +216,7 @@ Module HMDBTools
     ''' <summary>
     ''' save the hmdb database as a csv table file
     ''' </summary>
-    ''' <param name="hmdb"></param>
+    ''' <param name="hmdb">A collection of the HMDB <see cref="TMIC.HMDB.metabolite"/>.</param>
     ''' <param name="file">
     ''' this function will returns a huge metabolite table
     ''' if this parameter value default null
@@ -243,6 +243,13 @@ Module HMDBTools
         Return True
     End Function
 
+    ''' <summary>
+    ''' Extract the chemical taxonomy data
+    ''' </summary>
+    ''' <param name="metabolite">the HMDB metabolite data</param>
+    ''' <returns>
+    ''' A character vector that contains the taxonomy information from the <see cref="TMIC.HMDB.metabolite"/>
+    ''' </returns>
     <ExportAPI("chemical_taxonomy")>
     Public Function chemical_taxonomy(metabolite As TMIC.HMDB.metabolite) As String()
         If metabolite.taxonomy Is Nothing Then
@@ -267,6 +274,7 @@ Module HMDBTools
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("biospecimen_slicer")>
+    <RApiReturn(GetType(TMIC.HMDB.metabolite))>
     Public Function biospecimen_slicer(hmdb As pipeline, locations As BioSamples, Optional env As Environment = Nothing) As Object
         Dim locationIndex As Index(Of String) = locations.GetSampleLocations.Indexing
 

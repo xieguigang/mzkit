@@ -7,6 +7,31 @@
 /**
  * toolkit for handling of the ncbi pubchem data
  * 
+ * > PubChem is a database of chemical molecules and their activities against biological assays. 
+ * >  The system is maintained by the National Center for Biotechnology Information (NCBI), a 
+ * >  component of the National Library of Medicine, which is part of the United States National 
+ * >  Institutes of Health (NIH). PubChem can be accessed for free through a web user interface. 
+ * >  Millions of compound structures and descriptive datasets can be freely downloaded via FTP. 
+ * >  PubChem contains multiple substance descriptions and small molecules with fewer than 100 
+ * >  atoms and 1,000 bonds. More than 80 database vendors contribute to the growing PubChem 
+ * >  database.
+ * >  
+ * >  ##### History
+ * >  PubChem was released In 2004 As a component Of the Molecular Libraries Program (MLP) Of the
+ * >  NIH. As Of November 2015, PubChem contains more than 150 million depositor-provided substance 
+ * >  descriptions, 60 million unique chemical structures, And 225 million biological activity test 
+ * >  results (from over 1 million assay experiments performed On more than 2 million small-molecules 
+ * >  covering almost 10,000 unique protein target sequences that correspond To more than 5,000 genes).
+ * >  It also contains RNA interference (RNAi) screening assays that target over 15,000 genes.
+ * >  
+ * >  As of August 2018, PubChem contains 247.3 million substance descriptions, 96.5 million unique 
+ * >  chemical structures, contributed by 629 data sources from 40 countries. It also contains 237 
+ * >  million bioactivity test results from 1.25 million biological assays, covering >10,000 target 
+ * >  protein sequences.
+ * > 
+ * >  As of 2020, with data integration from over 100 New sources, PubChem contains more than 293 
+ * >  million depositor-provided substance descriptions, 111 million unique chemical structures,
+ * >  And 271 million bioactivity data points from 1.2 million biological assays experiments.
 */
 declare namespace pubchem_kit {
    /**
@@ -25,13 +50,15 @@ declare namespace pubchem_kit {
      * + default value Is ``-1``.
      * @param env 
      * + default value Is ``null``.
+     * @return A character vector of the pubchem cid that matches the given input ``name``.
    */
    function CID(name: string, cache?: any, offline?: boolean, interval?: object, env?: object): string;
    /**
     * Request the metabolite structure image via the pubchem image_fly api
     * 
     * 
-     * @param cid -
+     * @param cid A character vector of the pubchem cid for get the molecular 
+     *  structure data image.
      * @param size -
      * 
      * + default value Is ``'500,500'``.
@@ -43,7 +70,7 @@ declare namespace pubchem_kit {
      * + default value Is ``null``.
      * @return A tuple list of the image data for the input pubchem metabolite cid query
    */
-   function image_fly(cid: any, size?: any, ignores_invalid_CID?: boolean, env?: object): any;
+   function image_fly(cid: any, size?: any, ignores_invalid_CID?: boolean, env?: object): object;
    /**
     * create MeSH ontology gsea background based on the mesh tree
     * 
@@ -55,6 +82,11 @@ declare namespace pubchem_kit {
    */
    function mesh_background(mesh: object, clusters?: object): object;
    /**
+    * gets the level1 term label of the mesh tree
+    * 
+    * 
+     * @param mesh -
+     * @return A character vector of the ontology term label
    */
    function mesh_level1(mesh: object): string;
    module metadata {
@@ -88,8 +120,9 @@ declare namespace pubchem_kit {
      * @param env -
      * 
      * + default value Is ``null``.
+     * @return A collection of the pubchem pug view object that contains the metabolite annotation information.
    */
-   function pugView(cid: any, cacheFolder?: string, offline?: boolean, env?: object): any;
+   function pugView(cid: any, cacheFolder?: string, offline?: boolean, env?: object): object;
    module query {
       /**
        * query of the pathways, taxonomy and reaction 
@@ -115,14 +148,27 @@ declare namespace pubchem_kit {
         * @param cache -
         * 
         * + default value Is ``'./graph_kb'``.
+        * @return A tuple list of the knowledge data that associated with the given pubchem metabolite:
+        *  
+        *  1. genes: the co-occurance genes with the compound 
+        *  2. disease: a list of the related disease with the compound
+        *  3. compounds: the co-occurance compound data
+        *  
+        *  all of the slot data is a collection of the pubchem @``T:BioNovoGene.BioDeep.Chemistry.NCBI.PubChem.Graph.MeshGraph`` clr object
       */
       function knowlegde_graph(cid: string, cache?: string): object;
    }
    module read {
       /**
-        * @param env default value Is ``null``.
+       * Parse the mesh ontology tree
+       * 
+       * 
+        * @param file A text file data that contains the mesh ontology tree data
+        * @param env -
+        * 
+        * + default value Is ``null``.
       */
-      function mesh_tree(file: any, env?: object): any;
+      function mesh_tree(file: any, env?: object): object;
       /**
        * read pubmed data table files
        * 
@@ -145,6 +191,10 @@ declare namespace pubchem_kit {
       */
       function pugView(file: string): object;
       /**
+       * 
+       * 
+        * @param file -
+        * @return A collection of the pubchem query summary download result file
       */
       function webquery(file: string): object;
    }
@@ -159,6 +209,9 @@ declare namespace pubchem_kit {
      * @param dbfilter filter out the sid map data with a specific given db name
      * 
      * + default value Is ``null``.
+     * @return A collection of the map data that could be used for get the
+     *  knowledge base id mapping from external database, and map between the 
+     *  pubchem sid and cid.
    */
    function SID_map(sidMapText: string, skipNoCID?: boolean, dbfilter?: string): object;
 }

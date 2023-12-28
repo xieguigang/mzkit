@@ -90,6 +90,8 @@ Imports SMRUCC.Rsharp.Runtime.Vectorization
 <Package("mzDeco")>
 <RTypeExport("peak_feature", GetType(PeakFeature))>
 <RTypeExport("mz_group", GetType(MzGroup))>
+<RTypeExport("peak_set", GetType(PeakSet))>
+<RTypeExport("xcms2", GetType(xcms2))>
 Module mzDeco
 
     Sub Main()
@@ -98,11 +100,24 @@ Module mzDeco
 
         Call generic.add("readBin.mz_group", GetType(Stream), AddressOf readXIC)
         Call generic.add("readBin.peak_feature", GetType(Stream), AddressOf readSamples)
+        Call generic.add("readBin.peak_set", GetType(Stream), AddressOf readPeaktable)
 
         Call generic.add("writeBin", GetType(MzGroup), AddressOf writeXIC1)
         Call generic.add("writeBin", GetType(MzGroup()), AddressOf writeXIC)
         Call generic.add("writeBin", GetType(PeakFeature()), AddressOf writeSamples)
+        Call generic.add("writeBin", GetType(PeakSet), AddressOf writePeaktable)
     End Sub
+
+    Private Function writePeaktable(table As PeakSet, args As list, env As Environment) As Object
+        Dim con As Stream = args!con
+        Call SaveXcms.DumpSample(table, con)
+        Call con.Flush()
+        Return True
+    End Function
+
+    Private Function readPeaktable(file As Stream, args As list, env As Environment) As Object
+        Return SaveXcms.ReadSample(file)
+    End Function
 
     Private Function writeSamples(samples As PeakFeature(), args As list, env As Environment) As Object
         Dim con As Stream = args!con
@@ -222,13 +237,31 @@ Module mzDeco
     ''' <returns>A collection set of the <see cref="xcms2"/> peak features data object</returns>
     <ExportAPI("read.xcms_peaks")>
     <RApiReturn(GetType(PeakSet))>
-    Public Function readXcmsPeaks(file As String) As Object
-        Return New PeakSet With {.peaks = file.LoadCsv(Of xcms2)().ToArray}
+    Public Function readXcmsPeaks(file As String,
+                                  Optional tsv As Boolean = False,
+                                  Optional general_method As Boolean = False) As Object
+
+        If Not general_method Then
+            Return SaveXcms.ReadTextTable(file, tsv)
+        Else
+            Return New PeakSet With {
+                .peaks = file.LoadCsv(Of xcms2)().ToArray
+            }
+        End If
     End Function
 
     <ExportAPI("peak_subset")>
     Public Function peakSubset(peaktable As PeakSet, sampleNames As String()) As PeakSet
         Return peaktable.Subset(sampleNames)
+    End Function
+
+    <ExportAPI("find_xcms_ionPeaks")>
+    <RApiReturn(GetType(xcms2))>
+    Public Function get_ionPeak(peaktable As PeakSet, mz As Double, rt As Double,
+                                Optional mzdiff As Double = 0.01,
+                                Optional rt_win As Double = 90) As Object
+
+        Return peaktable.FindIonSet(mz, rt, mzdiff, rt_win).ToArray
     End Function
 
     Private Class xic_deco_task : Inherits VectorTask
@@ -624,9 +657,9 @@ extract_ms1:
     ''' 
     ''' this function is debug used only
     ''' </summary>
-    ''' <param name="pool"></param>
+    ''' <param name="pool">should be type of <see cref="XICPool"/> or peak collection <see cref="PeakSet"/> object.</param>
     ''' <param name="mz">the ion feature m/z value</param>
-    ''' <param name="dtw"></param>
+    ''' <param name="dtw">this parameter will not working when the data pool type is clr type <see cref="PeakSet"/></param>
     ''' <param name="mzdiff"></param>
     ''' <returns>
     ''' a tuple list object that contains the xic data across
@@ -653,27 +686,52 @@ extract_ms1:
     ''' ;
     ''' </example>
     <ExportAPI("pull_xic")>
-    Public Function pull_xic(pool As XICPool, mz As Double,
+    Public Function pull_xic(pool As Object, mz As Double,
                              Optional dtw As Boolean = True,
-                             Optional mzdiff As Double = 0.01) As Object
-        If dtw Then
-            Return New list With {
-                .slots = pool _
-                    .DtwXIC(mz, Tolerance.DeltaMass(mzdiff)) _
-                    .ToDictionary(Function(a) a.Name,
-                                  Function(a)
-                                      Return CObj(a.Value)
-                                  End Function)
-            }
-        Else
-            Return New list With {
-                .slots = pool _
-                    .GetXICMatrix(mz, Tolerance.DeltaMass(mzdiff)) _
-                    .ToDictionary(Function(a) a.Name,
-                                  Function(a)
-                                      Return CObj(a.Value)
-                                  End Function)
-            }
+                             Optional mzdiff As Double = 0.01,
+                             Optional strict As Boolean = False,
+                             Optional env As Environment = Nothing) As Object
+        If pool Is Nothing Then
+            Return Message.NullOrStrict(strict, NameOf(pool), env)
         End If
+
+        If TypeOf pool Is XICPool Then
+            If dtw Then
+                Return DirectCast(pool, XICPool).xic_dtw_list(mz, mzdiff)
+            Else
+                Return DirectCast(pool, XICPool).xic_matrix_list(mz, mzdiff)
+            End If
+        ElseIf TypeOf pool Is PeakSet Then
+            Return DirectCast(pool, PeakSet) _
+                .FilterMz(mz, mzdiff) _
+                .OrderBy(Function(i) i.rt) _
+                .ToArray
+        Else
+            Return Message.InCompatibleType(GetType(XICPool), pool.GetType, env)
+        End If
+    End Function
+
+    <Extension>
+    Private Function xic_dtw_list(pool As XICPool, mz As Double, mzdiff As Double) As list
+        Return New list With {
+            .slots = pool _
+                .DtwXIC(mz, Tolerance.DeltaMass(mzdiff)) _
+                .ToDictionary(Function(a) a.Name,
+                              Function(a)
+                                  Return CObj(a.Value)
+                              End Function)
+        }
+    End Function
+
+    <Extension>
+    Private Function xic_matrix_list(pool As XICPool, mz As Double, mzdiff As Double) As list
+        Return New list With {
+            .slots = pool _
+                .GetXICMatrix(mz, Tolerance.DeltaMass(mzdiff)) _
+                .ToDictionary(Function(a) a.Name,
+                                Function(a)
+                                    Return CObj(a.Value)
+                                End Function)
+        }
     End Function
 End Module

@@ -5,6 +5,7 @@
 // ref=mzkit.Tissue@mzplot, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 
 /**
+ * 
 */
 declare namespace tissue {
    /**
@@ -18,10 +19,23 @@ declare namespace tissue {
    */
    function RSD(layer: object, nbags?: object, nsamples?: object): number;
    /**
-     * @param colors default value Is ``null``.
-     * @param gridSize default value Is ``25``.
-     * @param tolerance default value Is ``15``.
-     * @param densityGrid default value Is ``5``.
+    * analysis the HE-stain image by blocks
+    * 
+    * 
+     * @param tissue -
+     * @param colors -
+     * 
+     * + default value Is ``null``.
+     * @param gridSize -
+     * 
+     * + default value Is ``25``.
+     * @param tolerance -
+     * 
+     * + default value Is ``15``.
+     * @param densityGrid -
+     * 
+     * + default value Is ``5``.
+     * @return the collection of the image blocks analysis result
    */
    function scan_tissue(tissue: object, colors?: string, gridSize?: object, tolerance?: object, densityGrid?: object): object;
 }

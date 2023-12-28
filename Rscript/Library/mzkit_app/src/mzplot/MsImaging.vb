@@ -127,8 +127,9 @@ Module MsImaging
     ''' default is split layer into multiple sample source
     ''' </param>
     ''' <param name="env"></param>
-    ''' <returns></returns>
+    ''' <returns>A tuple list of the single ion ms-imaging layer objects</returns>
     <ExportAPI("split.layer")>
+    <RApiReturn(GetType(SingleIonLayer))>
     Public Function splitLayer(<RRawVectorArgument> x As Object,
                                <RListObjectArgument>
                                args As list,
@@ -208,17 +209,18 @@ Module MsImaging
     End Function
 
     ''' <summary>
-    ''' Contrast optimization of mass
-    ''' spectrometry imaging(MSI) data
-    ''' visualization by threshold intensity
-    ''' quantization (TrIQ)
+    ''' Contrast optimization of mass spectrometry imaging(MSI) data
+    ''' visualization by threshold intensity quantization (TrIQ)
     ''' </summary>
     ''' <param name="data">
     ''' A ms-imaging ion layer data or a numeric vector of the intensity data.
     ''' </param>
     ''' <param name="q">cutoff threshold of the intensity numeric vector</param>
     ''' <param name="env"></param>
-    ''' <returns></returns>
+    ''' <returns>A signal intensity value range [min, max]</returns>
+    ''' <remarks>
+    ''' this function works based on the <see cref="TrIQThreshold"/> clr module
+    ''' </remarks>
     <ExportAPI("TrIQ")>
     <RApiReturn(GetType(Double))>
     Public Function TrIQRange(<RRawVectorArgument>
@@ -255,7 +257,8 @@ Module MsImaging
     ''' <param name="min"></param>
     ''' <returns></returns>
     <ExportAPI("intensityLimits")>
-    Public Function LimitIntensityRange(data As SingleIonLayer, max As Double, Optional min As Double = 0) As SingleIonLayer
+    <RApiReturn(GetType(SingleIonLayer))>
+    Public Function LimitIntensityRange(data As SingleIonLayer, max As Double, Optional min As Double = 0) As Object
         data.MSILayer = data.MSILayer _
             .Select(Function(p)
                         If p.intensity > max Then
@@ -334,7 +337,7 @@ Module MsImaging
     ''' </summary>
     ''' <param name="file"></param>
     ''' <param name="env"></param>
-    ''' <returns></returns>
+    ''' <returns>A spatial ion xic reader object for MSI visual</returns>
     <ExportAPI("read.mzImage")>
     <RApiReturn(GetType(XICReader))>
     Public Function openIndexedCacheFile(<RRawVectorArgument> file As Object, Optional env As Environment = Nothing) As Object
@@ -350,9 +353,9 @@ Module MsImaging
     ''' <summary>
     ''' Extract a spectrum matrix object from MSI data by a given set of m/z values
     ''' </summary>
-    ''' <param name="viewer"></param>
-    ''' <param name="mz"></param>
-    ''' <param name="tolerance"></param>
+    ''' <param name="viewer">A ms-imaging <see cref="Drawer"/> canvas object, which contains the ms-imaging rawdata.</param>
+    ''' <param name="mz">A numeric vector that used as the ion m/z value for extract the imaging layer data from the drawer canvas.</param>
+    ''' <param name="tolerance">the mass tolerance error</param>
     ''' <param name="title"></param>
     ''' <param name="env"></param>
     ''' <returns>A spectrum matrix data of m/z value assocated with the intensity value</returns>
@@ -533,7 +536,10 @@ Module MsImaging
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("tag_layers")>
-    Public Function tagLayers(layer As SingleIonLayer, <RRawVectorArgument> segments As Object, Optional env As Environment = Nothing) As Object
+    <RApiReturn(GetType(SingleIonLayer))>
+    Public Function tagLayers(layer As SingleIonLayer, <RRawVectorArgument> segments As Object,
+                              Optional env As Environment = Nothing) As Object
+
         Dim pointCluster As pipeline = pipeline.TryCreatePipeline(Of TissueRegion)(segments, env)
 
         If pointCluster.isError Then
@@ -903,8 +909,16 @@ Module MsImaging
     ''' <summary>
     ''' get the default ms-imaging filter pipeline
     ''' </summary>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' A raster filter pipeline that consist with modules with orders:
+    ''' 
+    ''' 1. <see cref="DenoiseScaler"/>
+    ''' 2. <see cref="TrIQScaler"/>
+    ''' 3. <see cref="KNNScaler"/>
+    ''' 4. <see cref="SoftenScaler"/>
+    ''' </returns>
     <ExportAPI("defaultFilter")>
+    <RApiReturn(GetType(RasterPipeline))>
     Public Function defaultFilter() As RasterPipeline
         ' denoise_scale() > TrIQ_scale(0.8) > knn_scale() > soften_scale()
         Return New DenoiseScaler() _
@@ -1081,7 +1095,14 @@ Module MsImaging
     ''' </param>
     ''' <param name="densityCut"></param>
     ''' <param name="env"></param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' A dataframe object that contains data fields:
+    ''' 
+    ''' 1. mz: the ion mz vector
+    ''' 2. density: the average spatial density of current ion mz layer
+    ''' 3. layer: a mzkit clr <see cref="SingleIonLayer"/> object that could be used for ms-imaging visualization
+    ''' 
+    ''' </returns>
     <ExportAPI("MeasureMSIions")>
     <RApiReturn(GetType(Double), GetType(dataframe))>
     Public Function getMSIIons(raw As mzPack,

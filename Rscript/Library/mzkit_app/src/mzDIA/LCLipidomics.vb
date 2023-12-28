@@ -33,6 +33,8 @@ Module LCLipidomics
 
         Dim precursor_type As AdductIon
 
-        Return LipidMassLibraryGenerator.GetIons(lipidclass, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, maxOxygen).ToArray
+        Return LipidMassLibraryGenerator _
+            .GetIons(lipidclass, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, maxOxygen) _
+            .ToArray
     End Function
 End Module

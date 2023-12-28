@@ -8,6 +8,15 @@ defaultFilter \- get the default ms-imaging filter pipeline
 .PP
 get the default ms-imaging filter pipeline
 .PP
+.SH VALUE
+.PP
+A raster filter pipeline that consist with modules with orders:
+ 
+ 1. @\fBT:BioNovoGene.Analytical.MassSpectrometry.MsImaging.Blender.Scaler.DenoiseScaler\fR
+ 2. @\fBT:BioNovoGene.Analytical.MassSpectrometry.MsImaging.Blender.Scaler.TrIQScaler\fR
+ 3. @\fBT:BioNovoGene.Analytical.MassSpectrometry.MsImaging.Blender.Scaler.KNNScaler\fR
+ 4. @\fBT:BioNovoGene.Analytical.MassSpectrometry.MsImaging.Blender.Scaler.SoftenScaler\fR
+.PP
 .SH SEE ALSO
 MsImaging
 .SH FILES

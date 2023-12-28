@@ -33,6 +33,11 @@ declare namespace Mummichog {
      * @param background -
      * @param min_size 
      * + default value Is ``3``.
+     * @return A tuple list object that contains elements inside each slot data:
+     *  
+     *  1. name: the pathway map id
+     *  2. desc: the pathway map names
+     *  3. model: the network graph object that will be used as the model for run enrichment
    */
    function fromGseaBackground(background: object, min_size?: object): object;
    /**
@@ -47,8 +52,8 @@ declare namespace Mummichog {
     * create kegg pathway network graph background model
     * 
     * 
-     * @param maps -
-     * @param reactions -
+     * @param maps A collection of the kegg @``T:SMRUCC.genomics.Assembly.KEGG.WebServices.XML.Map`` clr object
+     * @param reactions A collection of the kegg @``T:SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject.Reaction`` clr object
      * @param alternative 
      * + default value Is ``false``.
    */

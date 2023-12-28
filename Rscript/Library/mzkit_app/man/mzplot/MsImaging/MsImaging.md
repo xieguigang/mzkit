@@ -11,7 +11,7 @@
  prepared.
 
 + [split.layer](MsImaging/split.layer.1) split the ms-imaging layer into multiple parts
-+ [TrIQ](MsImaging/TrIQ.1) Contrast optimization of mass
++ [TrIQ](MsImaging/TrIQ.1) Contrast optimization of mass spectrometry imaging(MSI) data
 + [intensityLimits](MsImaging/intensityLimits.1) trim the intensity data value in a pixels of a ion MS-Imaging layer
 + [write.mzImage](MsImaging/write.mzImage.1) write mzImage data file
 + [read.mzImage](MsImaging/read.mzImage.1) open the existed mzImage cache file

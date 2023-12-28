@@ -49,15 +49,21 @@ declare namespace MsImaging {
     * get the default ms-imaging filter pipeline
     * 
     * 
+     * @return A raster filter pipeline that consist with modules with orders:
+     *  
+     *  1. @``T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.Blender.Scaler.DenoiseScaler``
+     *  2. @``T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.Blender.Scaler.TrIQScaler``
+     *  3. @``T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.Blender.Scaler.KNNScaler``
+     *  4. @``T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.Blender.Scaler.SoftenScaler``
    */
    function defaultFilter(): object;
    /**
     * Extract a spectrum matrix object from MSI data by a given set of m/z values
     * 
     * 
-     * @param viewer -
-     * @param mz -
-     * @param tolerance -
+     * @param viewer A ms-imaging @``T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.Drawer`` canvas object, which contains the ms-imaging rawdata.
+     * @param mz A numeric vector that used as the ion m/z value for extract the imaging layer data from the drawer canvas.
+     * @param tolerance the mass tolerance error
      * 
      * + default value Is ``'ppm:20'``.
      * @param title -
@@ -173,6 +179,11 @@ declare namespace MsImaging {
      * @param env -
      * 
      * + default value Is ``null``.
+     * @return A dataframe object that contains data fields:
+     *  
+     *  1. mz: the ion mz vector
+     *  2. density: the average spatial density of current ion mz layer
+     *  3. layer: a mzkit clr @``T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.SingleIonLayer`` object that could be used for ms-imaging visualization
    */
    function MeasureMSIions(raw: object, gridSize?: object, mzdiff?: any, keepsLayer?: boolean, densityCut?: number, qcut?: number, intoCut?: number, env?: object): number|object;
    /**
@@ -245,6 +256,7 @@ declare namespace MsImaging {
         * @param env -
         * 
         * + default value Is ``null``.
+        * @return A spatial ion xic reader object for MSI visual
       */
       function mzImage(file: any, env?: object): object;
    }
@@ -321,8 +333,9 @@ declare namespace MsImaging {
         * @param env -
         * 
         * + default value Is ``null``.
+        * @return A tuple list of the single ion ms-imaging layer objects
       */
-      function layer(x: any, args: object, env?: object): any;
+      function layer(x: any, args: object, env?: object): object;
    }
    /**
     * merge multiple layers via intensity sum
@@ -348,13 +361,12 @@ declare namespace MsImaging {
      * 
      * + default value Is ``null``.
    */
-   function tag_layers(layer: object, segments: any, env?: object): any;
+   function tag_layers(layer: object, segments: any, env?: object): object;
    /**
-    * Contrast optimization of mass
-    *  spectrometry imaging(MSI) data
-    *  visualization by threshold intensity
-    *  quantization (TrIQ)
+    * Contrast optimization of mass spectrometry imaging(MSI) data
+    *  visualization by threshold intensity quantization (TrIQ)
     * 
+    * > this function works based on the @``T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.Blender.TrIQThreshold`` clr module
     * 
      * @param data A ms-imaging ion layer data or a numeric vector of the intensity data.
      * @param q cutoff threshold of the intensity numeric vector
@@ -365,6 +377,7 @@ declare namespace MsImaging {
      * @param env -
      * 
      * + default value Is ``null``.
+     * @return A signal intensity value range [min, max]
    */
    function TrIQ(data: any, q?: number, levels?: object, env?: object): number;
    /**
