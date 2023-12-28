@@ -19,8 +19,13 @@ declare namespace hmdb_kit {
      * 
      * + default value Is ``null``.
    */
-   function biospecimen_slicer(hmdb: object, locations: object, env?: object): any;
+   function biospecimen_slicer(hmdb: object, locations: object, env?: object): object;
    /**
+    * Extract the chemical taxonomy data
+    * 
+    * 
+     * @param metabolite the HMDB metabolite data
+     * @return A character vector that contains the taxonomy information from the @``T:BioNovoGene.BioDeep.Chemistry.TMIC.HMDB.metabolite``
    */
    function chemical_taxonomy(metabolite: object): string;
    module export {
@@ -28,7 +33,7 @@ declare namespace hmdb_kit {
        * save the hmdb database as a csv table file
        * 
        * 
-        * @param hmdb -
+        * @param hmdb A collection of the HMDB @``T:BioNovoGene.BioDeep.Chemistry.TMIC.HMDB.metabolite``.
         * @param file this function will returns a huge metabolite table
         *  if this parameter value default null
         * 
