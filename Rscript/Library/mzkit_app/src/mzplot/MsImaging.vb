@@ -398,6 +398,11 @@ Module MsImaging
     ''' <param name="y"></param>
     ''' <param name="tolerance"></param>
     ''' <param name="threshold"></param>
+    ''' <param name="composed">
+    ''' by default a union ion spectrum object will be generates based on the given spatial spots data,
+    ''' for set this parameter value to false, then a tuple list object data that contains the ms1 
+    ''' spectrum data for each spatial spots will be returns.
+    ''' </param>
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("MS1")>
@@ -405,6 +410,7 @@ Module MsImaging
     Public Function GetMsMatrx(viewer As Drawer, x As Integer(), y As Integer(),
                                Optional tolerance As Object = "da:0.1",
                                Optional threshold As Double = 0.01,
+                               Optional composed As Boolean = True,
                                Optional env As Environment = Nothing) As Object
 
         Dim ms As New List(Of ms2)
@@ -416,17 +422,36 @@ Module MsImaging
             Return Internal.debug.stop("the vector size of x should be equals to vector y!", env)
         End If
 
-        For i As Integer = 0 To x.Length - 1
-            ms += viewer.ReadXY(x(i), y(i))
-        Next
+        If composed Then
+            For i As Integer = 0 To x.Length - 1
+                ms += viewer.ReadXY(x(i), y(i))
+            Next
 
-        Return New LibraryMatrix With {
-            .centroid = True,
-            .ms2 = ms.ToArray _
-                .Centroid(errors.TryCast(Of Tolerance), New RelativeIntensityCutoff(threshold)) _
-                .ToArray,
-            .name = "MS1"
-        }
+            Return New LibraryMatrix With {
+                .centroid = True,
+                .ms2 = ms.ToArray _
+                    .Centroid(errors.TryCast(Of Tolerance), New RelativeIntensityCutoff(threshold)) _
+                    .ToArray,
+                .name = "MS1"
+            }
+        Else
+            Dim tuples As New list With {.slots = New Dictionary(Of String, Object)}
+
+            For i As Integer = 0 To x.Length - 1
+                ms.Clear()
+                ms.AddRange(viewer.ReadXY(x(i), y(i)))
+
+                tuples.add($"{x(i)},{y(i)}", New LibraryMatrix With {
+                    .centroid = True,
+                    .ms2 = ms.ToArray _
+                        .Centroid(errors.TryCast(Of Tolerance), New RelativeIntensityCutoff(threshold)) _
+                        .ToArray,
+                    .name = $"[MS1] {x(i)},{y(i)}"
+                })
+            Next
+
+            Return tuples
+        End If
     End Function
 
     ''' <summary>
@@ -455,14 +480,16 @@ Module MsImaging
     End Function
 
     ''' <summary>
-    ''' get a pixel data
+    ''' get the spatial spot pixel data
     ''' </summary>
-    ''' <param name="data"></param>
-    ''' <param name="x"></param>
-    ''' <param name="y"></param>
-    ''' <returns></returns>
+    ''' <param name="data">the rawdata source for the ms-imaging.</param>
+    ''' <param name="x">an integer vector for x axis</param>
+    ''' <param name="y">an integer vector for y axis</param>
+    ''' <returns>
+    ''' A collection of the spatial spot data
+    ''' </returns>
     <ExportAPI("pixel")>
-    <RApiReturn(GetType(ibdPixel))>
+    <RApiReturn(GetType(ibdPixel), GetType(PixelScan), GetType(iPixelIntensity))>
     Public Function GetPixel(data As Object, x As Integer(), y As Integer(), Optional env As Environment = Nothing) As Object
         If x.Length = 1 AndAlso y.Length = 1 Then
             If TypeOf data Is XICReader Then
@@ -494,6 +521,10 @@ Module MsImaging
     ''' <summary>
     ''' load the raw pixels data from imzML file 
     ''' </summary>
+    ''' <param name="imzML">
+    ''' the ms-imaging rawdata source, could be a rawdata rendering wrapper <see cref="Drawer"/>,
+    ''' or a indexed <see cref="XICReader"/> for specific ions collection.
+    ''' </param>
     ''' <param name="mz">a collection of ion m/z value for rendering on one image</param>
     ''' <param name="tolerance">m/z tolerance error for get layer data</param>
     ''' <param name="skip_zero"></param>
@@ -532,13 +563,16 @@ Module MsImaging
     ''' <summary>
     ''' set cluster tags to the pixel tag property data
     ''' </summary>
-    ''' <param name="layer"></param>
-    ''' <param name="segments"></param>
+    ''' <param name="layer">A ms-imaging render layer object that contains a collection of the spatial spot data.</param>
+    ''' <param name="segments">A collection of the <see cref="TissueRegion"/> data, the tissue region label 
+    ''' string value will be assigned to the corresponding spatial spot its sample tag value.</param>
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("tag_layers")>
     <RApiReturn(GetType(SingleIonLayer))>
-    Public Function tagLayers(layer As SingleIonLayer, <RRawVectorArgument> segments As Object,
+    Public Function tagLayers(layer As SingleIonLayer,
+                              <RRawVectorArgument>
+                              segments As Object,
                               Optional env As Environment = Nothing) As Object
 
         Dim pointCluster As pipeline = pipeline.TryCreatePipeline(Of TissueRegion)(segments, env)
@@ -633,10 +667,10 @@ Module MsImaging
     ''' rendering ions MSI in (R,G,B) color channels
     ''' </summary>
     ''' <param name="viewer"></param>
-    ''' <param name="r"></param>
-    ''' <param name="g"></param>
-    ''' <param name="b"></param>
-    ''' <param name="tolerance"></param>
+    ''' <param name="r">the ion m/z value for the color red channel</param>
+    ''' <param name="g">the ion m/z value for the color green channel</param>
+    ''' <param name="b">the ion m/z value for the color blue channel</param>
+    ''' <param name="tolerance">the ion m/z mass tolerance error</param>
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("rgb")>
