@@ -95,6 +95,7 @@ Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Invokes
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
+Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports PixelData = BioNovoGene.Analytical.MassSpectrometry.MsImaging.PixelData
 Imports Point2D = System.Drawing.Point
 
@@ -917,6 +918,9 @@ Module MsImaging
     ''' 3. <see cref="KNNScaler"/>
     ''' 4. <see cref="SoftenScaler"/>
     ''' </returns>
+    ''' <remarks>
+    ''' denoise_scale() &gt; TrIQ_scale(0.8) &gt; knn_scale() &gt; soften_scale()
+    ''' </remarks>
     <ExportAPI("defaultFilter")>
     <RApiReturn(GetType(RasterPipeline))>
     Public Function defaultFilter() As RasterPipeline
@@ -927,6 +931,13 @@ Module MsImaging
             .Then(New SoftenScaler)
     End Function
 
+    <ExportAPI("parseFilters")>
+    Public Function parseFilters(<RRawVectorArgument> filters As Object) As RasterPipeline
+        Dim filters_str As String() = CLRVector.asCharacter(filters)
+        Dim raster As RasterPipeline = RasterPipeline.Parse(filters_str)
+        Return raster
+    End Function
+
     ''' <summary>
     ''' MS-imaging of the MSI summary data result.
     ''' </summary>
@@ -935,8 +946,9 @@ Module MsImaging
     ''' 2. <see cref="SingleIonLayer"/>
     ''' </param>
     ''' <param name="intensity"></param>
-    ''' <param name="colorSet"><see cref="ScalerPalette"/></param>
-    ''' <param name="defaultFill"></param>
+    ''' <param name="colorSet">a enum flag value for rendering the spatial heatmap colors,
+    ''' all flags see the clr enum: <see cref="ScalerPalette"/></param>
+    ''' <param name="defaultFill">the color value for the spots which those intensity value is missing(ZERO or NaN)</param>
     ''' <param name="pixelSize"></param>
     ''' <param name="background">
     ''' all of the pixels in this index parameter data value will 
@@ -947,6 +959,10 @@ Module MsImaging
     ''' do size overrides, default parameter value nothing means the
     ''' size is evaluated based on the dimension <paramref name="dims"/> 
     ''' of the ms-imaging raw data and the <paramref name="pixelSize"/>
+    ''' </param>
+    ''' <param name="dims">
+    ''' the raw ms-imaging canvas dimension size, should be an integer vector that contains 
+    ''' two elements inside: canvas width and canvas height value.
     ''' </param>
     ''' <param name="env"></param>
     ''' <returns></returns>
