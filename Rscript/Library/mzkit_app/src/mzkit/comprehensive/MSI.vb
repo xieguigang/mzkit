@@ -1570,6 +1570,23 @@ Module MSI
             .ForEachLayer(mz, dims:=size) _
             .ToArray
     End Function
+
+    ''' <summary>
+    ''' Create mzpack object for ms-imaging in 3D
+    ''' </summary>
+    ''' <param name="x">the z axis value should be encoded in the <see cref="mzPack.source"/> tag</param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("z_assembler")>
+    Public Function z_assembler(<RRawVectorArgument> x As Object, file As Object, Optional env As Environment = Nothing) As Object
+        Dim pull As pipeline = pipeline.TryCreatePipeline(Of mzPack)(x, env)
+
+        If pull.isError Then
+            Return pull.getError
+        End If
+
+
+    End Function
 End Module
 
 Public Class SpotVector : Implements IPoint2D
