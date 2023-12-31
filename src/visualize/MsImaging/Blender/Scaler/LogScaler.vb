@@ -56,20 +56,20 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Blender.Scaler
 
     Public Class LogScaler : Inherits Scaler
 
-        Public Property base As Double = stdNum.E
+        Public Property base As Double = std.E
 
         Sub New(base As Double)
             Me.base = base
         End Sub
 
         Sub New()
-            Call Me.New(base:=stdNum.E)
+            Call Me.New(base:=std.E)
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
