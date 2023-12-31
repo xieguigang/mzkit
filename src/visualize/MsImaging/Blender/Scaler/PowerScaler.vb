@@ -1,11 +1,12 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Namespace Blender.Scaler
 
     Public Class PowerScaler : Inherits Scaler
 
-        Public Property pow As Double = 2
+        <XmlAttribute> Public Property pow As Double = 2
 
         Sub New()
             Call Me.New(p:=2)
