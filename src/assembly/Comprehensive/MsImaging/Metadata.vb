@@ -79,6 +79,11 @@ Namespace MsImaging
         ''' <returns></returns>
         Public Property scan_y As Integer
         ''' <summary>
+        ''' only works for mzkit application <see cref="FileApplicationClass.MSImaging3D"/>
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property scan_z As Integer
+        ''' <summary>
         ''' the spatial resolution
         ''' </summary>
         ''' <returns></returns>
