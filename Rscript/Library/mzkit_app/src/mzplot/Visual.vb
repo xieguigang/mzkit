@@ -126,7 +126,7 @@ Module Visual
             .Select(Function(file) New NamedCollection(Of RtShift)(file.Key, file)) _
             .ToArray
         Dim rt_range As New DoubleRange(rt_shifts.Select(Function(a) a.refer_rt))
-        Dim res As Double = args.getValue({"res"}, env, [default]:=500)
+        Dim res As Double = args.getValue({"res"}, env, [default]:=1000)
         Dim dt As Double = (rt_range.Max - rt_range.Min) / res
         Dim x_axis As Double() = seq(rt_range.Min, rt_range.Max, by:=dt).ToArray
         Dim lines As New List(Of SerialData)
@@ -134,6 +134,7 @@ Module Visual
         Dim padding As String = InteropArgumentHelper.getPadding(args.getByName("padding"), "padding: 100px 200px 200px 200px;")
         Dim colorSet = args.getValue({"colorSet", "colors"}, env, "paper")
         Dim colors As Color() = Designer.GetColors(colorSet, n:=samples.Length + 1)
+        Dim fill_color As String = RColorPalette.getColor(args.getBySynonyms("fill", "grid.fill"), "lightgray")
         Dim idx As i32 = 0
 
         For Each sample As NamedCollection(Of RtShift) In samples
@@ -158,7 +159,10 @@ Module Visual
             })
         Next
 
-        Return Scatter.Plot(lines, size:=size, padding:=padding, drawLine:=True, fill:=False)
+        Return Scatter.Plot(lines, size:=size, padding:=padding, drawLine:=True, fill:=False,
+                            Xlabel:="retention time(s)", Ylabel:="RT shift(s)",
+                            XtickFormat:="F0", YtickFormat:="G4",
+                            gridFill:=fill_color)
     End Function
 
     Private Function plotAlignments(aligns As AlignmentOutput, args As list, env As Environment) As Object
