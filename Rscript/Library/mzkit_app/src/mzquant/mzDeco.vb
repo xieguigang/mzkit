@@ -358,7 +358,11 @@ Module mzDeco
     ''' </param>
     ''' <returns>a vector of the peak deconvolution data,
     ''' in format of xcms peak table liked or mzkit <see cref="PeakFeature"/>
-    ''' data object.</returns>
+    ''' data object.
+    ''' 
+    ''' the result data vector may contains the rt shift data result, where you can get this shift
+    ''' value via the ``rt.shift`` attribute name, rt shift data model is clr type: <see cref="RtShift"/>.
+    ''' </returns>
     ''' <example>
     ''' require(mzkit);
     ''' 
