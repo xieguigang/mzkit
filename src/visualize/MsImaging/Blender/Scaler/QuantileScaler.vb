@@ -59,18 +59,30 @@ Imports Microsoft.VisualBasic.Math.Quantile
 
 Namespace Blender.Scaler
 
+    ''' <summary>
+    ''' fill the lower bound with a specific threshold value
+    ''' </summary>
     Public Class QuantileScaler : Inherits Scaler
 
         ReadOnly q As Double
+        ReadOnly percentail As Boolean
 
-        Sub New(Optional q As Double = 0.5)
+        Sub New(Optional q As Double = 0.5, Optional percentail As Boolean = False)
             Me.q = q
+            Me.percentail = percentail
         End Sub
 
         Public Overrides Function DoIntensityScale(into() As Double) As Double()
-            Dim quantile As QuantileEstimationGK = into.GKQuantile
-            Dim cutoff As Double = quantile.Query(q)
             Dim v As New Vector(into)
+            Dim cutoff As Double
+
+            If percentail Then
+                cutoff = v.Max * q
+            Else
+                cutoff = into _
+                    .GKQuantile _
+                    .Query(q)
+            End If
 
             v(v > cutoff) = Vector.Scalar(cutoff)
 
