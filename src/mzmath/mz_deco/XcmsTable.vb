@@ -2,6 +2,7 @@
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports std = System.Math
 
 ''' <summary>
@@ -56,7 +57,10 @@ Public Module XcmsTable
     ''' <param name="rtwin"></param>
     ''' <returns></returns>
     <Extension>
-    Public Iterator Function XicTable(samples As IEnumerable(Of NamedCollection(Of PeakFeature)), Optional rtwin As Double = 20) As IEnumerable(Of xcms2)
+    Public Iterator Function XicTable(samples As IEnumerable(Of NamedCollection(Of PeakFeature)),
+                                      Optional rtwin As Double = 20,
+                                      Optional rt_shifts As List(Of RtShift) = Nothing) As IEnumerable(Of xcms2)
+
         Dim pool As New List(Of PeakFeature)
 
         For Each sample In samples
@@ -69,9 +73,14 @@ Public Module XcmsTable
         ' group by rt
         Dim rt_groups = pool.GroupBy(Function(a) a.rt, offsets:=rtwin).ToArray
 
+        If rt_shifts Is Nothing Then
+            rt_shifts = New List(Of RtShift)
+        End If
+
         For Each group In rt_groups
             Dim mz As Double() = group.Select(Function(a) a.mz).ToArray
             Dim rt As Double() = group.Select(Function(a) a.rt).ToArray
+            ' the reference rt
             Dim max_rt As Double = rt(which.Max(group.Select(Function(a) a.maxInto)))
             Dim xcms As New xcms2 With {
                 .mz = mz.Average,
@@ -86,9 +95,32 @@ Public Module XcmsTable
 
             For Each sample In group
                 xcms(sample.rawfile) = sample.area
+                rt_shifts.Add(New RtShift With {
+                    .refer_rt = max_rt,
+                    .sample = sample.rawfile,
+                    .sample_rt = sample.rt
+                })
             Next
 
             Yield xcms
         Next
     End Function
 End Module
+
+Public Class RtShift
+
+    Public Property sample As String
+    Public Property refer_rt As Double
+    Public Property sample_rt As Double
+
+    Public ReadOnly Property shift As Double
+        Get
+            Return sample_rt - refer_rt
+        End Get
+    End Property
+
+    Public Overrides Function ToString() As String
+        Return Me.GetJson
+    End Function
+
+End Class

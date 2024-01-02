@@ -74,6 +74,7 @@ Imports SMRUCC.Rsharp.Runtime.Internal
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
+Imports vec = SMRUCC.Rsharp.Runtime.Internal.Object.vector
 
 ''' <summary>
 ''' Extract peak and signal data from rawdata
@@ -198,6 +199,18 @@ Module mzDeco
         Return table
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="pool"></param>
+    ''' <param name="features_mz"></param>
+    ''' <param name="errors"></param>
+    ''' <param name="rtRange"></param>
+    ''' <param name="baseline"></param>
+    ''' <param name="joint"></param>
+    ''' <param name="dtw"></param>
+    ''' <param name="parallel"></param>
+    ''' <returns>a vector of <see cref="xcms2"/></returns>
     <Extension>
     Private Function xic_deco(pool As XICPool, features_mz As Double(),
                               errors As Tolerance,
@@ -205,7 +218,7 @@ Module mzDeco
                               baseline As Double,
                               joint As Boolean,
                               dtw As Boolean,
-                              parallel As Boolean) As xcms2()
+                              parallel As Boolean) As Object
 
         VectorTask.n_threads = App.CPUCoreNumbers
 
@@ -226,7 +239,13 @@ Module mzDeco
                 Call task.Solve()
             End If
 
-            Return xcms2.MakeUniqueId(task.out).ToArray
+            Dim result = xcms2.MakeUniqueId(task.out).ToArray
+            Dim vec As New vec(result, RType.GetRSharpType(GetType(xcms2)))
+            Dim rt_diff As Object
+
+            Call vec.setAttribute("rt.shift", rt_diff)
+
+            Return vec
         End If
     End Function
 

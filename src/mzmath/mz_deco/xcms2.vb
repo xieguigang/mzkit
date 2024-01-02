@@ -120,6 +120,11 @@ Public Class xcms2 : Inherits DynamicPropertyBase(Of Double)
     '        .ToArray
     'End Function
 
+    ''' <summary>
+    ''' just assign the xcms id unique!
+    ''' </summary>
+    ''' <param name="peaktable"></param>
+    ''' <returns></returns>
     Public Shared Iterator Function MakeUniqueId(peaktable As IEnumerable(Of xcms2)) As IEnumerable(Of xcms2)
         Dim guid As New Dictionary(Of String, Counter)
         Dim uid As String
