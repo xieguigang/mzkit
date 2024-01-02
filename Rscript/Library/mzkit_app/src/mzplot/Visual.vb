@@ -128,7 +128,7 @@ Module Visual
         Dim rt_range As New DoubleRange(rt_shifts.Select(Function(a) a.refer_rt))
         Dim res As Double = args.getValue({"res"}, env, [default]:=1000)
         Dim dt As Double = (rt_range.Max - rt_range.Min) / res
-        Dim x_axis As Double() = seq(rt_range.Min, rt_range.Max, by:=dt)
+        Dim x_axis As Double() = seq(rt_range.Min, rt_range.Max, by:=dt).ToArray
         Dim lines As New List(Of SerialData)
         Dim size As String = InteropArgumentHelper.getSize(args.getByName("size"), env, "3800,3000")
         Dim padding As String = InteropArgumentHelper.getPadding(args.getByName("padding"), "padding: 100px 200px 200px 200px;")
