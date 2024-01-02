@@ -22,7 +22,7 @@
 
         <h3>Description</h3>
 
-        gdi+ images: @``T:System.Drawing.Image``, @``T:System.Drawing.Bitmap`` / SVG image: @``T:Microsoft.VisualBasic.Imaging.SVG.XML.SVGXml``
+        <p>gdi+ images: <a href="/vignettes/clr/System/Drawing/Image.html">Image</a>, <a href="/vignettes/clr/System/Drawing/Bitmap.html">Bitmap</a> / SVG image: <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/SVG/XML/SVGXml.html">SVGXml</a></p>
 
         <h3>Declare</h3>        
 
@@ -31,11 +31,13 @@
 # namespace Microsoft.VisualBasic.Imaging.Driver
 export class GraphicsData {
    # The graphics engine driver type indicator, 
-   #  
-   #  + for @``F:Microsoft.VisualBasic.Imaging.Driver.Drivers.GDI`` -> @``T:Microsoft.VisualBasic.Imaging.Driver.ImageData``(@``T:System.Drawing.Image``, @``T:System.Drawing.Bitmap``)
-   #  + for @``F:Microsoft.VisualBasic.Imaging.Driver.Drivers.SVG`` -> @``T:Microsoft.VisualBasic.Imaging.Driver.SVGData``(@``T:Microsoft.VisualBasic.Imaging.SVG.XML.SVGXml``)
-   #  
-   #  (驱动程序的类型)
+   # 
+   # <ul>
+   # <li>for @<code>F:Microsoft.VisualBasic.Imaging.Driver.Drivers.GDI</code> -> <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/Driver/ImageData.html">ImageData</a>(<a href="/vignettes/clr/System/Drawing/Image.html">Image</a>, <a href="/vignettes/clr/System/Drawing/Bitmap.html">Bitmap</a>)</li>
+   # <li>for @<code>F:Microsoft.VisualBasic.Imaging.Driver.Drivers.SVG</code> -> <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/Driver/SVGData.html">SVGData</a>(<a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/SVG/XML/SVGXml.html">SVGXml</a>)
+   # 
+   # (驱动程序的类型)</li>
+   # </ul>
    Driver: <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/Driver/Drivers.html">Drivers</a>;
    content_type: string;
    # The image size

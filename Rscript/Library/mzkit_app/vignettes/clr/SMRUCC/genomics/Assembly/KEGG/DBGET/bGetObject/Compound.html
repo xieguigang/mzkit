@@ -22,7 +22,7 @@
 
         <h3>Description</h3>
 
-        A data model for the KEGG compound.
+        <p>A data model for the KEGG compound.</p>
 
         <h3>Declare</h3>        
 
@@ -30,14 +30,14 @@
             <code id="clr_ts">
 # namespace SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
 export class Compound {
-   # KEGG compound ID: ``cpd:C\d+``
+   # KEGG compound ID: <code>cpd:C\d+</code>
    entry: string;
    # the metabolite common names
    commonNames: string;
    formula: string;
    molWeight: double;
    exactMass: double;
-   # The @``P:SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject.Compound.entry``[compound] was involved in these reactions. (http://www.kegg.jp/dbget-bin/www_bget?rn:[KEGG_Reaction_ID])
+   # The @<code>P:SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject.Compound.entry</code>[compound] was involved in these reactions. (<a href="http://www.kegg.jp/dbget-bin/www_bget?rn:[KEGG_Reaction_ID]">http://www.kegg.jp/dbget-bin/www_bget?rn:[KEGG_Reaction_ID]</a>)
    reactionId: string;
    pathway: <a href="/vignettes/clr/Microsoft/VisualBasic/Text/Xml/Models/NamedValue.html">NamedValue[]</a>;
    Module: <a href="/vignettes/clr/Microsoft/VisualBasic/Text/Xml/Models/NamedValue.html">NamedValue[]</a>;

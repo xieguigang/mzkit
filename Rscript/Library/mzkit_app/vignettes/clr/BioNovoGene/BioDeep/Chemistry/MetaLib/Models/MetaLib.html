@@ -22,7 +22,7 @@
 
         <h3>Description</h3>
 
-        对``chebi/kegg/pubchem/HMDB/metlin``的物质注释信息整合库，这个数据库只要为了生成编号，名称之类的注释信息而构建的
+        <p>对<code>chebi/kegg/pubchem/HMDB/metlin</code>的物质注释信息整合库，这个数据库只要为了生成编号，名称之类的注释信息而构建的</p>
 
         <h3>Declare</h3>        
 
@@ -37,7 +37,7 @@ export class MetaLib {
    sub_class: string;
    molecular_framework: string;
    organism: string;
-   # 包含有这个物质的KEGG pathway的编号的集合，只有当@``P:BioNovoGene.BioDeep.Chemistry.MetaLib.CrossReference.xref.KEGG``
+   # 包含有这个物质的KEGG pathway的编号的集合，只有当@<code>P:BioNovoGene.BioDeep.Chemistry.MetaLib.CrossReference.xref.KEGG</code>
    #  存在值的时候才会存在这个属性
    pathways: string;
    samples: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/MetaLib/Models/BiosampleSource.html">BiosampleSource[]</a>;
