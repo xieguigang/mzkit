@@ -126,7 +126,7 @@ Module Visual
             .Select(Function(file) New NamedCollection(Of RtShift)(file.Key, file)) _
             .ToArray
         Dim rt_range As New DoubleRange(rt_shifts.Select(Function(a) a.refer_rt))
-        Dim res As Double = args.getValue({"res"}, env, [default]:=1000)
+        Dim res As Double = args.getValue({"res"}, env, [default]:=500)
         Dim dt As Double = (rt_range.Max - rt_range.Min) / res
         Dim x_axis As Double() = seq(rt_range.Min, rt_range.Max, by:=dt).ToArray
         Dim lines As New List(Of SerialData)
@@ -137,8 +137,9 @@ Module Visual
         Dim idx As i32 = 0
 
         For Each sample As NamedCollection(Of RtShift) In samples
-            Dim rt As Double() = sample.Select(Function(a) a.sample_rt).ToArray
-            Dim shift As Double() = sample.Select(Function(a) a.shift).ToArray
+            Dim rawdata As RtShift() = sample.OrderBy(Function(a) a.refer_rt).ToArray
+            Dim rt As Double() = rawdata.Select(Function(a) a.sample_rt).ToArray
+            Dim shift As Double() = rawdata.Select(Function(a) a.shift).ToArray
             Dim shifts As New GeneralSignal(rt, shift)
             Dim align As Resampler = Resampler.CreateSampler(shifts, max_dx:=5)
             Dim shift_points = align(x_axis).Select(Function(dti, i) New PointData(x_axis(i), dti)).ToArray
