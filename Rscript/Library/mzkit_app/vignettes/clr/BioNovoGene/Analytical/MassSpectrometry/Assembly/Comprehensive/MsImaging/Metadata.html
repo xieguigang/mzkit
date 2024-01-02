@@ -34,7 +34,9 @@ export class Metadata {
    scan_x: integer;
    # the max rows in y axis
    scan_y: integer;
-   # the spatial resolution
+   # only works for mzkit application @``F:BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache.FileApplicationClass.MSImaging3D``
+   scan_z: integer;
+   # the spatial resolution, usually be the average resolution on x and y axis
    resolution: double;
    # the ion m/z value range of the scan result.
    mass_range: <a href="/vignettes/clr/Microsoft/VisualBasic/ComponentModel/Ranges/Model/DoubleRange.html">DoubleRange</a>;

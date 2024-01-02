@@ -17,6 +17,10 @@ A raster filter pipeline that consist with modules with orders:
  3. @\fBT:BioNovoGene.Analytical.MassSpectrometry.MsImaging.Blender.Scaler.KNNScaler\fR
  4. @\fBT:BioNovoGene.Analytical.MassSpectrometry.MsImaging.Blender.Scaler.SoftenScaler\fR
 .PP
+.SH DETAILS
+.PP
+denoise_scale() > TrIQ_scale(0.8) > knn_scale() > soften_scale()
+.PP
 .SH SEE ALSO
 MsImaging
 .SH FILES

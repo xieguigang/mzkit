@@ -48,6 +48,7 @@ declare namespace MsImaging {
    /**
     * get the default ms-imaging filter pipeline
     * 
+    * > denoise_scale() > TrIQ_scale(0.8) > knn_scale() > soften_scale()
     * 
      * @return A raster filter pipeline that consist with modules with orders:
      *  
@@ -103,6 +104,8 @@ declare namespace MsImaging {
     * load the raw pixels data from imzML file
     * 
     * 
+     * @param imzML the ms-imaging rawdata source, could be a rawdata rendering wrapper @``T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.Drawer``,
+     *  or a indexed @``T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.IndexedCache.XICReader`` for specific ions collection.
      * @param mz a collection of ion m/z value for rendering on one image
      * @param tolerance m/z tolerance error for get layer data
      * 
@@ -199,11 +202,16 @@ declare namespace MsImaging {
      * @param threshold -
      * 
      * + default value Is ``0.01``.
+     * @param composed by default a union ion spectrum object will be generates based on the given spatial spots data,
+     *  for set this parameter value to false, then a tuple list object data that contains the ms1 
+     *  spectrum data for each spatial spots will be returns.
+     * 
+     * + default value Is ``true``.
      * @param env -
      * 
      * + default value Is ``null``.
    */
-   function MS1(viewer: object, x: object, y: object, tolerance?: any, threshold?: number, env?: object): object;
+   function MS1(viewer: object, x: object, y: object, tolerance?: any, threshold?: number, composed?: boolean, env?: object): object;
    /**
      * @param samplingRegion default value Is ``true``.
    */
@@ -237,16 +245,20 @@ declare namespace MsImaging {
    */
    function MSIlayer(viewer: object, mz: number, tolerance?: any, split?: boolean, env?: object): object;
    /**
-    * get a pixel data
+   */
+   function parseFilters(filters: any): object;
+   /**
+    * get the spatial spot pixel data
     * 
     * 
-     * @param data -
-     * @param x -
-     * @param y -
+     * @param data the rawdata source for the ms-imaging.
+     * @param x an integer vector for x axis
+     * @param y an integer vector for y axis
      * @param env 
      * + default value Is ``null``.
+     * @return A collection of the spatial spot data
    */
-   function pixel(data: any, x: object, y: object, env?: object): object;
+   function pixel(data: any, x: object, y: object, env?: object): object|object|object;
    module read {
       /**
        * open the existed mzImage cache file
@@ -269,10 +281,11 @@ declare namespace MsImaging {
      * @param intensity -
      * 
      * + default value Is ``null``.
-     * @param colorSet @``T:Microsoft.VisualBasic.Imaging.Drawing2D.Colors.ScalerPalette``
+     * @param colorSet a enum flag value for rendering the spatial heatmap colors,
+     *  all flags see the clr enum: @``T:Microsoft.VisualBasic.Imaging.Drawing2D.Colors.ScalerPalette``
      * 
      * + default value Is ``'viridis:turbo'``.
-     * @param defaultFill -
+     * @param defaultFill the color value for the spots which those intensity value is missing(ZERO or NaN)
      * 
      * + default value Is ``'Transparent'``.
      * @param pixelSize -
@@ -292,7 +305,9 @@ declare namespace MsImaging {
      * + default value Is ``null``.
      * @param colorLevels 
      * + default value Is ``255``.
-     * @param dims 
+     * @param dims the raw ms-imaging canvas dimension size, should be an integer vector that contains 
+     *  two elements inside: canvas width and canvas height value.
+     * 
      * + default value Is ``null``.
      * @param env -
      * 
@@ -304,12 +319,12 @@ declare namespace MsImaging {
     * 
     * 
      * @param viewer -
-     * @param r -
-     * @param g -
-     * @param b -
+     * @param r the ion m/z value for the color red channel
+     * @param g the ion m/z value for the color green channel
+     * @param b the ion m/z value for the color blue channel
      * @param background 
      * + default value Is ``'black'``.
-     * @param tolerance -
+     * @param tolerance the ion m/z mass tolerance error
      * 
      * + default value Is ``'da:0.1'``.
      * @param maxCut 
@@ -355,8 +370,9 @@ declare namespace MsImaging {
     * set cluster tags to the pixel tag property data
     * 
     * 
-     * @param layer -
-     * @param segments -
+     * @param layer A ms-imaging render layer object that contains a collection of the spatial spot data.
+     * @param segments A collection of the @``T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.TissueMorphology.TissueRegion`` data, the tissue region label 
+     *  string value will be assigned to the corresponding spatial spot its sample tag value.
      * @param env -
      * 
      * + default value Is ``null``.

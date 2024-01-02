@@ -824,12 +824,20 @@ Module MSI
     End Function
 
     ''' <summary>
-    ''' calculate the X scale
+    ''' calculate the X axis scale
     ''' </summary>
-    ''' <param name="totalTime"></param>
-    ''' <param name="pixels"></param>
-    ''' <param name="hasMs2"></param>
-    ''' <returns></returns>
+    ''' <param name="totalTime">the max rt of the y scan data</param>
+    ''' <param name="pixels">the average pixels of all your y scan data</param>
+    ''' <param name="hasMs2">does the ms-imaging raw data contains any ms scan data in ms2 level?</param>
+    ''' <returns>
+    ''' A x axis correction function wrapper, the clr object type of this 
+    ''' function return value is determined based on the flag parameter
+    ''' <paramref name="hasMs2"/>:
+    ''' 
+    ''' 1. for has ms2 data inside your ms-imaging rawdata, a <see cref="ScanMs2Correction"/> object should be used,
+    ''' 2. for has no ms2 data, a <see cref="ScanTimeCorrection"/> object is used 
+    '''    for run x axis correction based on the average rt diff.
+    ''' </returns>
     <ExportAPI("correction")>
     <RApiReturn(GetType(Correction))>
     Public Function Correction(totalTime As Double, pixels As Integer, Optional hasMs2 As Boolean = False) As Object
@@ -1115,6 +1123,7 @@ Module MSI
     ''' <param name="env"></param>
     ''' <returns>returns the raw matrix data that contains the peak samples.</returns>
     <ExportAPI("peakSamples")>
+    <RApiReturn(GetType(DataSet))>
     Public Function peakSamples(raw As mzPack,
                                 Optional resolution As Integer = 100,
                                 Optional mzError As Object = "da:0.05",
@@ -1145,11 +1154,16 @@ Module MSI
     ''' <summary>
     ''' get number of ions in each pixel scans
     ''' </summary>
-    ''' <param name="raw"></param>
-    ''' <returns></returns>
+    ''' <param name="raw">
+    ''' should be a mzpack object that contains multiple spatial spot scans data.
+    ''' </param>
+    ''' <returns>an integer vector of the number of ions in each spatial spot scans</returns>
     <ExportAPI("pixelIons")>
-    Public Function PixelIons(raw As mzPack) As Integer()
-        Return raw.MS.Select(Function(scan) scan.size).ToArray
+    <RApiReturn(TypeCodes.integer)>
+    Public Function PixelIons(raw As mzPack) As Object
+        Return raw.MS _
+            .Select(Function(scan) scan.size) _
+            .ToArray
     End Function
 
     ''' <summary>
@@ -1569,6 +1583,23 @@ Module MSI
         Return New MsImaging.MatrixReader(x) _
             .ForEachLayer(mz, dims:=size) _
             .ToArray
+    End Function
+
+    ''' <summary>
+    ''' Create mzpack object for ms-imaging in 3D
+    ''' </summary>
+    ''' <param name="x">the z axis value should be encoded in the <see cref="mzPack.source"/> tag</param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("z_assembler")>
+    Public Function z_assembler(<RRawVectorArgument> x As Object, file As Object, Optional env As Environment = Nothing) As Object
+        Dim pull As pipeline = pipeline.TryCreatePipeline(Of mzPack)(x, env)
+
+        If pull.isError Then
+            Return pull.getError
+        End If
+
+
     End Function
 End Module
 
