@@ -137,12 +137,15 @@ Module Visual
         Dim idx As i32 = 0
 
         For Each sample As NamedCollection(Of RtShift) In samples
-            Dim rawdata As RtShift() = sample.OrderBy(Function(a) a.refer_rt).ToArray
-            Dim rt As Double() = rawdata.Select(Function(a) a.sample_rt).ToArray
-            Dim shift As Double() = rawdata.Select(Function(a) a.shift).ToArray
-            Dim shifts As New GeneralSignal(rt, shift)
-            Dim align As Resampler = Resampler.CreateSampler(shifts, max_dx:=5)
-            Dim shift_points = align(x_axis).Select(Function(dti, i) New PointData(x_axis(i), dti)).ToArray
+            Dim points = sample _
+                .GroupBy(Function(a) a.refer_rt, offsets:=dt) _
+                .OrderBy(Function(a) Val(a.name)) _
+                .ToArray
+            Dim shift_points = points _
+                .Select(Function(dti)
+                            Return New PointData(Val(dti.name), Aggregate pt In dti Into Sum(pt.shift))
+                        End Function) _
+                .ToArray
 
             lines.Add(New SerialData With {
                 .lineType = DashStyle.Solid,
