@@ -22,7 +22,7 @@
 
         <h3>Description</h3>
 
-        table output of the metaDNA infer annotation result
+        <p>table output of the metaDNA infer annotation result</p>
 
         <h3>Declare</h3>        
 
@@ -42,10 +42,10 @@ export class MetaDNAResult {
    formula: string;
    name: string;
    precursorType: string;
-   # calculated m/z value based on @``P:BioNovoGene.BioDeep.MetaDNA.MetaDNAResult.mz`` and @``P:BioNovoGene.BioDeep.MetaDNA.MetaDNAResult.precursorType``
+   # calculated m/z value based on @<code>P:BioNovoGene.BioDeep.MetaDNA.MetaDNAResult.mz</code> and @<code>P:BioNovoGene.BioDeep.MetaDNA.MetaDNAResult.precursorType</code>
    mzCalc: double;
    ppm: double;
-   # the score match of ms1 @``P:BioNovoGene.BioDeep.MetaDNA.MetaDNAResult.rt`` and rt value of the KEGG compound reference
+   # the score match of ms1 @<code>P:BioNovoGene.BioDeep.MetaDNA.MetaDNAResult.rt</code> and rt value of the KEGG compound reference
    rt_adjust: double;
    inferLevel: string;
    forward: double;
