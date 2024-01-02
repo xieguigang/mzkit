@@ -93,6 +93,7 @@ Imports vec = SMRUCC.Rsharp.Runtime.Internal.Object.vector
 <RTypeExport("mz_group", GetType(MzGroup))>
 <RTypeExport("peak_set", GetType(PeakSet))>
 <RTypeExport("xcms2", GetType(xcms2))>
+<RTypeExport("rt_shift", GetType(RtShift))>
 Module mzDeco
 
     Sub Main()
