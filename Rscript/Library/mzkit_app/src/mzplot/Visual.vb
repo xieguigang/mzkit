@@ -134,7 +134,7 @@ Module Visual
         Dim padding As String = InteropArgumentHelper.getPadding(args.getByName("padding"), "padding: 100px 200px 200px 200px;")
         Dim colorSet = args.getValue({"colorSet", "colors"}, env, "paper")
         Dim colors As Color() = Designer.GetColors(colorSet, n:=samples.Length + 1)
-        Dim i As i32 = 0
+        Dim idx As i32 = 0
 
         For Each sample As NamedCollection(Of RtShift) In samples
             Dim rt As Double() = sample.Select(Function(a) a.sample_rt).ToArray
@@ -150,7 +150,7 @@ Module Visual
                 .shape = LegendStyles.Square,
                 .title = sample.name,
                 .width = 2,
-                .color = colors(++i)
+                .color = colors(++idx)
             })
         Next
 
