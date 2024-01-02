@@ -229,7 +229,7 @@ Module mzDeco
                 .extractAlignedPeaks(
                     rtRange:=rtRange,
                     baseline:=baseline,
-                    joint:=joint, xic_align:=True)
+                    joint:=joint, xic_align:=True, rt_shifts:=Nothing)
         Else
             Dim task As New xic_deco_task(pool, features_mz, errors, rtRange, baseline, joint, dtw)
 
@@ -241,7 +241,7 @@ Module mzDeco
 
             Dim result = xcms2.MakeUniqueId(task.out).ToArray
             Dim vec As New vec(result, RType.GetRSharpType(GetType(xcms2)))
-            Dim rt_diff As Object
+            Dim rt_diff As RtShift() = task.rt_shifts.ToArray
 
             Call vec.setAttribute("rt.shift", rt_diff)
 
@@ -292,6 +292,7 @@ Module mzDeco
         Dim dtw As Boolean
 
         Public ReadOnly out As New List(Of xcms2)
+        Public ReadOnly rt_shifts As New List(Of RtShift)
 
         Public Sub New(pool As XICPool, features_mz As Double(),
                        errors As Tolerance,
@@ -314,8 +315,11 @@ Module mzDeco
         End Sub
 
         Protected Overrides Sub Solve(start As Integer, ends As Integer, cpu_id As Integer)
+            Dim rt_shifts As New List(Of RtShift)
+
             For i As Integer = start To ends
                 Dim samples_xic = pool(i).samples
+                Dim shifts As New List(Of RtShift)
 
                 If dtw Then
                     samples_xic = XICPool.DtwXIC(samples_xic).ToArray
@@ -325,12 +329,19 @@ Module mzDeco
                     .extractAlignedPeaks(
                         rtRange:=rtRange,
                         baseline:=baseline,
-                        joint:=joint, xic_align:=True)
+                        joint:=joint, xic_align:=True,
+                        rt_shifts:=shifts)
+
+                rt_shifts.AddRange(shifts)
 
                 SyncLock out
                     Call out.AddRange(result)
                 End SyncLock
             Next
+
+            SyncLock Me.rt_shifts
+                Me.rt_shifts.AddRange(rt_shifts)
+            End SyncLock
         End Sub
     End Class
 
@@ -410,7 +421,7 @@ Module mzDeco
                 Return ls_xic.extractAlignedPeaks(
                     rtRange:=rtRange.TryCast(Of DoubleRange),
                     baseline:=baseline,
-                    joint:=joint, xic_align:=True)
+                    joint:=joint, xic_align:=True, rt_shifts:=Nothing)
             Else
                 GoTo extract_ms1
             End If
@@ -433,7 +444,12 @@ extract_ms1:
     End Function
 
     <Extension>
-    Private Function extractAlignedPeaks(dtw_aligned As NamedValue(Of MzGroup)(), rtRange As DoubleRange, baseline As Double, joint As Boolean, xic_align As Boolean) As xcms2()
+    Private Function extractAlignedPeaks(dtw_aligned As NamedValue(Of MzGroup)(), rtRange As DoubleRange,
+                                         baseline As Double,
+                                         joint As Boolean,
+                                         xic_align As Boolean,
+                                         ByRef rt_shifts As List(Of RtShift)) As xcms2()
+
         ' and then export the peaks and area data
         Dim peaksSet As NamedCollection(Of PeakFeature)() = dtw_aligned _
             .Select(Function(sample)
@@ -452,7 +468,7 @@ extract_ms1:
 
         If xic_align Then
             xcms = peaksSet _
-                .XicTable(rtwin:=rtRange.Max) _
+                .XicTable(rtwin:=rtRange.Max, rt_shifts:=rt_shifts) _
                 .ToArray
         Else
             xcms = peaksSet.XcmsTable.ToArray
