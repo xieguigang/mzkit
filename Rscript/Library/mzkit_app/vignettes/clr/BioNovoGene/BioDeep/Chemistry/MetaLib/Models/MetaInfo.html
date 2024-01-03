@@ -24,12 +24,21 @@
 
         <p>the very basic metabolite annotation data model</p>
 
+<p>this data model includes the metabolite annotation information, includes:</p>
+
+<ol>
+<li>basic metabolite information, example as formula, name, etc</li>
+<li>database cross reference: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/MetaLib/Models/MetaInfo.html">MetaInfo</a>.<a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/MetaLib/CrossReference/xref.html">xref</a></li>
+</ol>
+
         <h3>Declare</h3>        
 
         <pre>
             <code id="clr_ts">
 # namespace BioNovoGene.BioDeep.Chemistry.MetaLib.Models
 export class MetaInfo {
+   # The database cross reference of current metabolite and the molecule structure data.
+   xref: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/MetaLib/CrossReference/xref.html">xref</a>;
    # 该物质在整合库之中的唯一标识符
    ID: string;
    formula: string;
@@ -38,8 +47,6 @@ export class MetaInfo {
    IUPACName: string;
    description: string;
    synonym: string;
-   # The database cross reference of current metabolite and the molecule structure data.
-   xref: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/MetaLib/CrossReference/xref.html">xref</a>;
 }
 </code>
         </pre>
