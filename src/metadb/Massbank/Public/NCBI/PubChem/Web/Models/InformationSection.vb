@@ -75,6 +75,8 @@ Namespace NCBI.PubChem
 
     ''' <summary>
     ''' A folder liked data structure that used for store the annotation information in category.
+    ''' 
+    ''' each annotation information is save in categoried data <see cref="Sections"/>.
     ''' </summary>
     Public MustInherit Class InformationSection
 
