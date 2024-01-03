@@ -22,14 +22,14 @@
 
         <h3>Description</h3>
 
-        <p>A data model for the KEGG compound.</p>
+        <p>A data model for the KEGG compound.</p><br /><p>this class extends from <a href="/vignettes/clr/Microsoft/VisualBasic/ComponentModel/XmlDataModel.html">XmlDataModel</a> class.</p>
 
         <h3>Declare</h3>        
 
         <pre>
             <code id="clr_ts">
 # namespace SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
-export class Compound {
+export class Compound extends <a href="/vignettes/clr/Microsoft/VisualBasic/ComponentModel/XmlDataModel.html">XmlDataModel</a> {
    # KEGG compound ID: <code>cpd:C\d+</code>
    entry: string;
    # the metabolite common names

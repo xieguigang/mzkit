@@ -30,6 +30,8 @@
             <code id="clr_ts">
 # namespace BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MSP
 export class MspData {
+   # 如果这个文件是来自于MoNA数据库的话, 则在这里是物质的注释信息
+   Comments: <a href="/vignettes/clr/System/Collections/Specialized/NameValueCollection.html">NameValueCollection</a>;
    Name: string;
    Synonyms: string;
    # <code>DB&#35;</code>
@@ -46,8 +48,6 @@ export class MspData {
    Collision_energy: string;
    RetentionTime: string;
    Peaks: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/ms2.html">ms2[]</a>;
-   # 如果这个文件是来自于MoNA数据库的话, 则在这里是物质的注释信息
-   Comments: <a href="/vignettes/clr/System/Collections/Specialized/NameValueCollection.html">NameValueCollection</a>;
 }
 </code>
         </pre>

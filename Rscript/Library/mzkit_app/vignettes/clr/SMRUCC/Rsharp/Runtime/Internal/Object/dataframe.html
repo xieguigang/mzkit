@@ -92,14 +92,14 @@
   <p>Chambers, J. M. (1992) Data for models. Chapter 3 of <br />
    Statistical Models in S eds J. M. Chambers and T. J. <br />
    Hastie, Wadsworth &amp; Brooks/Cole.</p>
-</blockquote>
+</blockquote><br /><p>this class extends from <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/RsharpDataObject.html">RsharpDataObject</a> class.</p>
 
         <h3>Declare</h3>        
 
         <pre>
             <code id="clr_ts">
 # namespace SMRUCC.Rsharp.Runtime.Internal.Object
-export class dataframe {
+export class dataframe extends <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/RsharpDataObject.html">RsharpDataObject</a> {
    # 长度为1或者长度为n
    columns: list;
    rownames: string;
