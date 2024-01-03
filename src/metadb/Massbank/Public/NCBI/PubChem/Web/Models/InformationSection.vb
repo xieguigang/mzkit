@@ -74,12 +74,16 @@ Imports System.Xml.Serialization
 Namespace NCBI.PubChem
 
     ''' <summary>
-    ''' 类似于Folder
+    ''' A folder liked data structure that used for store the annotation information in category.
     ''' </summary>
     Public MustInherit Class InformationSection
 
         Dim sectionTable As Dictionary(Of String, Section)
 
+        ''' <summary>
+        ''' the information sections
+        ''' </summary>
+        ''' <returns></returns>
         <XmlElement("Section")>
         Public Property Sections As Section()
             Get
@@ -106,8 +110,18 @@ Namespace NCBI.PubChem
         End Property
     End Class
 
+    ''' <summary>
+    ''' A general data model for show the annotation information
+    ''' </summary>
+    ''' <remarks>
+    ''' A category data
+    ''' </remarks>
     Public Class Section : Inherits InformationSection
 
+        ''' <summary>
+        ''' the category title
+        ''' </summary>
+        ''' <returns></returns>
         Public Property TOCHeading As String
         Public Property Description As String
         Public Property HintGroupSubsectionsByReference As Boolean

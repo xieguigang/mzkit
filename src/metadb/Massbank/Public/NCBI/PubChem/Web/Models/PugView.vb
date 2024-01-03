@@ -59,6 +59,13 @@ Imports System.Xml.Serialization
 
 Namespace NCBI.PubChem
 
+    ''' <summary>
+    ''' the metabolite annotation data xml in pubchem database
+    ''' </summary>
+    ''' <remarks>
+    ''' the cross database reference information source is inside 
+    ''' the <see cref="Reference"/> data.
+    ''' </remarks>
     <XmlRoot("Record", [Namespace]:="http://pubchem.ncbi.nlm.nih.gov/pug_view")>
     Public Class PugViewRecord : Inherits InformationSection
 
