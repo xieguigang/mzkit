@@ -90,6 +90,7 @@ Imports std = System.Math
 ''' bionovogene MS-imaging analysis pipeline.
 ''' </summary>
 <Package("TissueMorphology")>
+<RTypeExport("umap_point", GetType(UMAPPoint))>
 Module TissueMorphology
 
     Sub New()
