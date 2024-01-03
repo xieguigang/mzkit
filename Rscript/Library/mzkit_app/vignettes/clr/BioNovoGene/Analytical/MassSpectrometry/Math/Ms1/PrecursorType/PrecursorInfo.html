@@ -22,7 +22,7 @@
 
         <h3>Description</h3>
 
-        
+        <p>a ion m/z data model, includes the adducts data and <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Ms1/PrecursorType/IonModes.html">IonModes</a> polarity data.</p>
 
         <h3>Declare</h3>        
 
@@ -30,13 +30,16 @@
             <code id="clr_ts">
 # namespace BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 export class PrecursorInfo {
+   # the precursor adducts information
    precursor_type: string;
    charge: double;
    M: double;
+   # the exact mass value of the <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Ms1/PrecursorType/PrecursorInfo.html">PrecursorInfo</a>.<a href="#">precursor_type</a> adducts information.
    adduct: double;
    # mz or exact mass
    mz: string;
-   ionMode: integer;
+   # the ion polarity data, related to the <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Ms1/PrecursorType/PrecursorInfo.html">PrecursorInfo</a>.<a href="#">charge</a> value
+   ionMode: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Ms1/PrecursorType/IonModes.html">IonModes</a>;
 }
 </code>
         </pre>

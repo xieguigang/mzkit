@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Microsoft.VisualBasic.Math.Statistics.Hypothesis.FishersExact.FishersExactPvalues</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <table style="width: 100%;">
+            <tr>
+                <td>FishersExactPvalues {Microsoft.VisualBasic.Math.Statistics.Hypothesis.FishersExact}</td>
+                <td style="text-align: right;">.NET clr documentation</td>
+            </tr>
+        </table>
+
+        <h2>FishersExactPvalues</h2>
+
+        <h3>Description</h3>
+
+        <p><code>FishersExactPvalues</code> holds the pvalues calculated by the <code>fishers_exact</code> function.</p>
+
+        <h3>Declare</h3>        
+
+        <pre>
+            <code id="clr_ts">
+# namespace Microsoft.VisualBasic.Math.Statistics.Hypothesis.FishersExact
+export class FishersExactPvalues {
+   # pvalue for the two-tailed test. Use this when there Is no prior alternative.
+   two_tail_pvalue: double;
+   # pvalue for the "left" Or "lesser" tail. Use this when the alternative to
+   #  independence Is that there Is negative association between the variables.
+   #  That Is, the observations tend to lie in lower left And upper right.
+   less_pvalue: double;
+   # Use this when the alternative to independence Is that there Is positive
+   #  association between the variables. That Is, the observations tend to lie
+   #  in upper left And lower right.
+   greater_pvalue: double;
+   # [a,b,c,d]
+   matrix: integer;
+   hyper_state: <a href="/vignettes/clr/Microsoft/VisualBasic/Math/Statistics/Hypothesis/FishersExact/HyperState.html">HyperState</a>;
+}
+</code>
+        </pre>
+
+        <hr />
+        <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a
+                href="../{$package}.html">Index</a>]
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="https://mzkit.org/assets/js/R_syntax.js"></script>
+<script type="text/javascript" src="https://mzkit.org/assets/js/highlights.js"></script>
+<script type="text/javascript">r_highlights("clr_ts");</script>
+
+</html>

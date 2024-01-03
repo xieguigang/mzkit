@@ -22,7 +22,9 @@
 
         <h3>Description</h3>
 
-        
+        <p>a spectrum file format data</p>
+
+<p>a collection of the spectrum peaks <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/ms2.html">ms2</a> data.</p>
 
         <h3>Declare</h3>        
 
@@ -30,6 +32,7 @@
             <code id="clr_ts">
 # namespace BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MSP
 export class MspData {
+   # the metabolite name
    Name: string;
    Synonyms: string;
    # <code>DB&#35;</code>
@@ -45,6 +48,7 @@ export class MspData {
    Ion_mode: string;
    Collision_energy: string;
    RetentionTime: string;
+   # the spectrum data
    Peaks: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/ms2.html">ms2[]</a>;
    # 如果这个文件是来自于MoNA数据库的话, 则在这里是物质的注释信息
    Comments: <a href="/vignettes/clr/System/Collections/Specialized/NameValueCollection.html">NameValueCollection</a>;
