@@ -72,9 +72,6 @@ declare namespace mzDeco {
      * @return a vector of the peak deconvolution data,
      *  in format of xcms peak table liked or mzkit @``T:BioNovoGene.Analytical.MassSpectrometry.Math.PeakFeature``
      *  data object.
-     *  
-     *  the result data vector may contains the rt shift data result, where you can get this shift
-     *  value via the ``rt.shift`` attribute name, rt shift data model is clr type: @``T:BioNovoGene.Analytical.MassSpectrometry.Math.RtShift``.
    */
    function mz_deco(ms1: any, tolerance?: any, baseline?: number, peak_width?: any, joint?: boolean, parallel?: boolean, dtw?: boolean, feature?: any, env?: object): object|object;
    /**
