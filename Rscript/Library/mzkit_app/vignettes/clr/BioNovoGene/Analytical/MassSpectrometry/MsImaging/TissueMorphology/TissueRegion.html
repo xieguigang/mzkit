@@ -32,7 +32,7 @@
 
 <ol>
 <li>label could be used as the sample group name</li>
-<li>color is the clr @<code>P:BioNovoGene.Analytical.MassSpectrometry.MsImaging.TissueMorphology.TissueRegion.color</code> data, could be used as the sample group color for chartting plot</li>
+<li>color is the clr <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/MsImaging/TissueMorphology/TissueRegion.html">TissueRegion</a>.<a href="/vignettes/clr/System/Drawing/Color.html">color</a> data, could be used as the sample group color for chartting plot</li>
 <li>the points consist the sample data for run the different expression analysis</li>
 </ol>
 
@@ -42,13 +42,13 @@
             <code id="clr_ts">
 # namespace BioNovoGene.Analytical.MassSpectrometry.MsImaging.TissueMorphology
 export class TissueRegion {
+   color: <a href="/vignettes/clr/System/Drawing/Color.html">Color</a>;
    # the unique id or the unique tissue tag name
    label: string;
-   color: <a href="/vignettes/clr/System/Drawing/Color.html">Color</a>;
    # a collection of the pixels which is belongs to
    #  current Tissue Morphology region.
    points: <a href="/vignettes/clr/System/Drawing/Point.html">Point[]</a>;
-   # the sample tags of the @<code>P:BioNovoGene.Analytical.MassSpectrometry.MsImaging.TissueMorphology.TissueRegion.points</code>
+   # the sample tags of the <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/MsImaging/TissueMorphology/TissueRegion.html">TissueRegion</a>.<a href="/vignettes/clr/System/Drawing/Point.html">points</a>
    tags: string;
    # the pixel point count of the current region
    nsize: integer;

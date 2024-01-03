@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>BioNovoGene.BioDeep.Chemistry.TMIC.HMDB.metabolite</title>
+    <title>BioNovoGene.BioDeep.Chemistry.TMIC.HMDB.MetaReference</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
@@ -13,36 +13,24 @@
 
         <table style="width: 100%;">
             <tr>
-                <td>metabolite {BioNovoGene.BioDeep.Chemistry.TMIC.HMDB}</td>
+                <td>MetaReference {BioNovoGene.BioDeep.Chemistry.TMIC.HMDB}</td>
                 <td style="text-align: right;">.NET clr documentation</td>
             </tr>
         </table>
 
-        <h2>metabolite</h2>
+        <h2>MetaReference</h2>
 
         <h3>Description</h3>
 
-        <p>当前这个对象类型的<a href="/vignettes/clr/Microsoft/VisualBasic/ComponentModel/DataSourceModel/Repository/IKeyedEntity`1.html">IKeyedEntity`1</a>.<a href="/vignettes/clr/Microsoft/VisualBasic/ComponentModel/DataSourceModel/Repository/TKeyType.html">Key</a>接口主键为<a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/TMIC/HMDB/MetaReference.html">MetaReference</a>.<a href="#">accession</a>属性</p>
+        <p>主要是为了简化数据额存储</p>
 
         <h3>Declare</h3>        
 
         <pre>
             <code id="clr_ts">
 # namespace BioNovoGene.BioDeep.Chemistry.TMIC.HMDB
-export class metabolite {
-   version: string;
-   creation_date: string;
-   update_date: string;
-   # 固态还是液态？
-   state: string;
-   experimental_properties: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/TMIC/HMDB/Properties.html">Properties</a>;
-   predicted_properties: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/TMIC/HMDB/Properties.html">Properties</a>;
-   diseases: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/TMIC/HMDB/disease.html">disease[]</a>;
-   normal_concentrations: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/TMIC/HMDB/concentration.html">concentration[]</a>;
-   abnormal_concentrations: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/TMIC/HMDB/concentration.html">concentration[]</a>;
-   ontology: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/TMIC/HMDB/ontology.html">ontology</a>;
-   general_references: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/TMIC/HMDB/reference.html">reference[]</a>;
-   protein_associations: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/TMIC/HMDB/protein.html">protein[]</a>;
+export class MetaReference {
+   # hmdb的主编号
    accession: string;
    secondary_accessions: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/TMIC/HMDB/secondary_accessions.html">secondary_accessions</a>;
    name: string;

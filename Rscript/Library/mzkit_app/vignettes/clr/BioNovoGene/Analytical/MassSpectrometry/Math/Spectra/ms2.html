@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>SMRUCC.genomics.Analysis.HTS.DataFrame.Matrix</title>
+    <title>BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.ms2</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
@@ -13,33 +13,31 @@
 
         <table style="width: 100%;">
             <tr>
-                <td>Matrix {SMRUCC.genomics.Analysis.HTS.DataFrame}</td>
+                <td>ms2 {BioNovoGene.Analytical.MassSpectrometry.Math.Spectra}</td>
                 <td style="text-align: right;">.NET clr documentation</td>
             </tr>
         </table>
 
-        <h2>Matrix</h2>
+        <h2>ms2</h2>
 
         <h3>Description</h3>
 
-        <p>a data matrix of samples in column and gene features in row</p>
+        <p>A spectra fragment with m/z and into data.</p>
+
+<p>[mz, into, annotation]</p>
 
         <h3>Declare</h3>        
 
         <pre>
             <code id="clr_ts">
-# namespace SMRUCC.genomics.Analysis.HTS.DataFrame
-export class Matrix {
-   # the tag data of current expression matrix
-   tag: string;
-   # sample id of <a href="/vignettes/clr/SMRUCC/genomics/Analysis/HTS/DataFrame/DataFrameRow.html">DataFrameRow</a>.<a href="#">experiments</a>
-   sampleID: string;
-   # gene list, vector element is the sample data
-   expression: <a href="/vignettes/clr/SMRUCC/genomics/Analysis/HTS/DataFrame/DataFrameRow.html">DataFrameRow[]</a>;
-   # the row numbers of the expression matrix(number of genes)
-   size: integer;
-   # get all gene id list
-   rownames: string;
+# namespace BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+export class ms2 {
+   # Relative intensity.(percentage)
+   intensity: double;
+   # Molecular fragment m/z.(or the mass value)
+   mz: double;
+   # Peak annotation data or something else
+   Annotation: string;
 }
 </code>
         </pre>
