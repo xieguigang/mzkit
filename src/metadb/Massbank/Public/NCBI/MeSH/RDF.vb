@@ -57,6 +57,9 @@
 
 Namespace NCBI.MeSH
 
+    ''' <summary>
+    ''' the mesh tree
+    ''' </summary>
     Public Class Term
 
         Public Property term As String

@@ -69,6 +69,13 @@ Namespace Spectra
     ''' </summary>
     ''' <remarks>
     ''' [mz, into, annotation]
+    ''' 
+    ''' the mass spectrum data model that based on this peak collection has:
+    ''' 
+    ''' + <see cref="PeakMs2"/>
+    ''' + <see cref="PeakList"/>
+    ''' 
+    ''' a more complex of this spectrum peak data model is <see cref="SpectrumPeak"/> object
     ''' </remarks>
     Public Class ms2 : Implements IMzAnnotation, INumericKey, ISpectrumPeak
         Implements IComparable
