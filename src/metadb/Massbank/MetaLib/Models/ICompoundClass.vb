@@ -82,5 +82,26 @@ Namespace MetaLib.Models
         ''' </returns>
         Public MustOverride Function EnumerateId() As IEnumerable(Of String)
 
+        ''' <summary>
+        ''' populate the class structure data in string array:
+        ''' 
+        ''' 1. <see cref="ICompoundClass.kingdom"/>
+        ''' 2. <see cref="ICompoundClass.super_class"/>
+        ''' 3. <see cref="ICompoundClass.class"/>
+        ''' 4. <see cref="ICompoundClass.sub_class"/>
+        ''' 5. <see cref="ICompoundClass.molecular_framework"/>
+        ''' </summary>
+        ''' <param name="c"></param>
+        ''' <returns></returns>
+        Public Shared Iterator Function ToSet(c As ICompoundClass) As IEnumerable(Of String)
+            If Not c Is Nothing Then
+                Yield c.kingdom
+                Yield c.super_class
+                Yield c.class
+                Yield c.sub_class
+                Yield c.molecular_framework
+            End If
+        End Function
+
     End Class
 End Namespace
