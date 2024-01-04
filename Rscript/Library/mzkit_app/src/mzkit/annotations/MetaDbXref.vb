@@ -88,6 +88,9 @@ Imports REnv = SMRUCC.Rsharp.Runtime
 ''' <summary>
 ''' Metabolite annotation database search engine
 ''' </summary>
+''' <remarks>
+''' this library module mainly address of the ion m/z database search problem
+''' </remarks>
 <Package("metadb")>
 Module MetaDbXref
 
