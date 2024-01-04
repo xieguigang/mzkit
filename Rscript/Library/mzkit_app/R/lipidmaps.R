@@ -31,10 +31,10 @@ const lipidmaps_repo = function(repofile = system.file("data/LIPIDMAPS.msgpack",
 #' 
 #'    https://lipidmaps.org/files/?file=LMSD&ext=sdf.zip
 #' 
-const load_LMSD = function(filepath) {
+const load_LMSD = function(filepath, lazy = FALSE) {
     let dataset = read.SDF(file = filepath, parseStruct = FALSE, 
-              lazy = FALSE);
-    let lipids = as.lipidmaps(dataset, lazy = FALSE);
-    let class_data = lipid.class(lipids); 
-
+              lazy = lazy);
+    let lipids = as.lipidmaps(dataset, lazy = lazy);
+    
+    lipids;
 }
