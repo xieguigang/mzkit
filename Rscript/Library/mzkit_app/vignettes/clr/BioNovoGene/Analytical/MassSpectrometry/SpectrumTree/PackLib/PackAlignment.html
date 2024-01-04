@@ -22,7 +22,11 @@
 
         <h3>Description</h3>
 
-        <br /><p>this class extends from <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/SpectrumTree/Query/Ms2Search.html">Ms2Search</a> class.</p>
+        <p>alignment the query spectrum to the reference spectrum</p>
+
+<p>the data <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/SpectrumTree/PackLib/PackAlignment.html">PackAlignment</a>.<a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/SpectrumTree/PackLib/SpectrumReader.html">spectrum</a> is the file stream connection<br />
+ to the reference database file, spectrum could be get via id<br />
+ based on the id elements inside <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/SpectrumTree/PackLib/PackAlignment.html">PackAlignment</a>.<a href="#">libnames</a> list.</p><br /><p>this class extends from <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/SpectrumTree/Query/Ms2Search.html">Ms2Search</a> class.</p>
 
         <h3>Declare</h3>        
 
@@ -30,6 +34,11 @@
             <code id="clr_ts">
 # namespace BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.PackLib
 export class PackAlignment extends <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/SpectrumTree/Query/Ms2Search.html">Ms2Search</a> {
+   # a stream data reader for the reference spectrum
+   spectrum: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/SpectrumTree/PackLib/SpectrumReader.html">SpectrumReader</a>;
+   libnames: string;
+   # cutoff of the cos similarity
+   dotcutoff: double;
 }
 </code>
         </pre>
