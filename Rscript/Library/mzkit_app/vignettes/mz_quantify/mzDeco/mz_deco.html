@@ -5,7 +5,7 @@
     <title>Chromatogram data deconvolution</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-    <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
+    <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
 </head>
 
 <body>
@@ -65,7 +65,10 @@
 
         <p>a vector of the peak deconvolution data,<br />
  in format of xcms peak table liked or mzkit <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/PeakFeature.html">PeakFeature</a><br />
- data object.</p><h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/PeakFeature.html">PeakFeature</a></li><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/xcms2.html">xcms2</a></li></ul>
+ data object.</p>
+
+<p>the result data vector may contains the rt shift data result, where you can get this shift<br />
+ value via the <code>rt.shift</code> attribute name, rt shift data model is clr type: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/RtShift.html">RtShift</a>.</p><h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/PeakFeature.html">PeakFeature</a></li><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/xcms2.html">xcms2</a></li></ul>
 
         <h3 style="display: block;">Examples</h3>
 
@@ -87,8 +90,8 @@
     </div>
 </body>
 
-<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
-<script type="text/javascript" src="../../_assets/highlights.js"></script>
+<script type="text/javascript" src="https://mzkit.org/assets/js/R_syntax.js"></script>
+<script type="text/javascript" src="https://mzkit.org/assets/js/highlights.js"></script>
 <script type="text/javascript">r_highlights("example_r");</script>
 
 </html>

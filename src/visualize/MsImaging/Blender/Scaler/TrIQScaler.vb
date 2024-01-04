@@ -55,6 +55,7 @@
 #End Region
 
 Imports System.ComponentModel
+Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors.Scaler
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
@@ -68,6 +69,7 @@ Namespace Blender.Scaler
         ''' <returns></returns>
         ''' 
         <Description("The TrIQ threshold.")>
+        <XmlAttribute>
         Public Property threshold As Double
 
         Sub New(threshold As Double)

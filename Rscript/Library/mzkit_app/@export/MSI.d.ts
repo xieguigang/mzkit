@@ -68,14 +68,21 @@ declare namespace MSI {
       function spatial_layers(x: object, mzdiff?: number, dims?: any, env?: object): object;
    }
    /**
-    * calculate the X scale
+    * calculate the X axis scale
     * 
     * 
-     * @param totalTime -
-     * @param pixels -
-     * @param hasMs2 -
+     * @param totalTime the max rt of the y scan data
+     * @param pixels the average pixels of all your y scan data
+     * @param hasMs2 does the ms-imaging raw data contains any ms scan data in ms2 level?
      * 
      * + default value Is ``false``.
+     * @return A x axis correction function wrapper, the clr object type of this 
+     *  function return value is determined based on the flag parameter
+     *  **`hasMs2`**:
+     *  
+     *  1. for has ms2 data inside your ms-imaging rawdata, a @``T:BioNovoGene.Analytical.MassSpectrometry.Assembly.Comprehensive.MsImaging.ScanMs2Correction`` object should be used,
+     *  2. for has no ms2 data, a @``T:BioNovoGene.Analytical.MassSpectrometry.Assembly.Comprehensive.MsImaging.ScanTimeCorrection`` object is used 
+     *     for run x axis correction based on the average rt diff.
    */
    function correction(totalTime: number, pixels: object, hasMs2?: boolean): object;
    /**
@@ -278,7 +285,7 @@ declare namespace MSI {
      * + default value Is ``null``.
      * @return returns the raw matrix data that contains the peak samples.
    */
-   function peakSamples(raw: object, resolution?: object, mzError?: any, cutoff?: number, env?: object): any;
+   function peakSamples(raw: object, resolution?: object, mzError?: any, cutoff?: number, env?: object): object;
    /**
     * get pixels [x,y] tags collection for a specific ion
     * 
@@ -298,7 +305,8 @@ declare namespace MSI {
     * get number of ions in each pixel scans
     * 
     * 
-     * @param raw -
+     * @param raw should be a mzpack object that contains multiple spatial spot scans data.
+     * @return an integer vector of the number of ions in each spatial spot scans
    */
    function pixelIons(raw: object): object;
    /**
@@ -483,4 +491,14 @@ declare namespace MSI {
       */
       function imzML(mzpack: object, file: string, res?: number, ionMode?: object, dims?: any, env?: object): boolean;
    }
+   /**
+    * Create mzpack object for ms-imaging in 3D
+    * 
+    * 
+     * @param x the z axis value should be encoded in the @``P:BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack.source`` tag
+     * @param env -
+     * 
+     * + default value Is ``null``.
+   */
+   function z_assembler(x: any, file: any, env?: object): any;
 }

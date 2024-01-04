@@ -5,7 +5,7 @@
     <title>BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML.scan</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-    <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
+    <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
 </head>
 
 <body>
@@ -22,7 +22,7 @@
 
         <h3>Description</h3>
 
-        一个一级或者二级的扫描结果数据的模型
+        <p>一个一级或者二级的扫描结果数据的模型</p>
 
         <h3>Declare</h3>        
 
@@ -33,13 +33,21 @@ export class scan {
    # The scan number
    num: integer;
    scanType: string;
-   # ``profile`` and ``centroid`` in Mass Spectrometry?
-   #  
-   #  1. Profile means the continuous wave form in a mass spectrum.
-   #    + Number of data points Is large.
-   #  2. Centroid means the peaks in a profile data Is changed to bars.
-   #    + location of the bar Is center of the profile peak.
-   #    + height of the bar Is area of the profile peak.
+   # <code>profile</code> and <code>centroid</code> in Mass Spectrometry?
+   # 
+   # <ol>
+   # <li>Profile means the continuous wave form in a mass spectrum.
+   # 
+   # <ul>
+   # <li>Number of data points Is large.</li>
+   # </ul></li>
+   # <li>Centroid means the peaks in a profile data Is changed to bars.
+   # 
+   # <ul>
+   # <li>location of the bar Is center of the profile peak.</li>
+   # <li>height of the bar Is area of the profile peak.</li>
+   # </ul></li>
+   # </ol>
    centroided: string;
    # 当前的质谱碎片的等级,一级质谱,二级质谱或者msn等级的质谱
    msLevel: integer;
@@ -55,7 +63,7 @@ export class scan {
    msInstrumentID: string;
    precursorMz: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/MarkupData/mzXML/precursorMz.html">precursorMz</a>;
    peaks: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/MarkupData/mzXML/peaks.html">peaks</a>;
-   # parse of the data field: @``P:BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML.scan.retentionTime``
+   # parse of the data field: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/MarkupData/mzXML/scan.html">scan</a>.<a href="#">retentionTime</a>
    ScanTime: double;
 }
 </code>
@@ -68,8 +76,8 @@ export class scan {
     </div>
 </body>
 
-<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
-<script type="text/javascript" src="../../_assets/highlights.js"></script>
+<script type="text/javascript" src="https://mzkit.org/assets/js/R_syntax.js"></script>
+<script type="text/javascript" src="https://mzkit.org/assets/js/highlights.js"></script>
 <script type="text/javascript">r_highlights("clr_ts");</script>
 
 </html>

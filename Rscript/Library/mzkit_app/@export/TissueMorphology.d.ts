@@ -26,7 +26,7 @@ declare namespace TissueMorphology {
      * 
      * + default value Is ``null``.
    */
-   function gridding(mapping: object, gridSize?: object, label?: string): any;
+   function gridding(mapping: object, gridSize?: object, label?: string): object;
    /**
     * extract the missing tissue pixels based on the ion layer data
     * 
@@ -37,7 +37,7 @@ declare namespace TissueMorphology {
      * @param trim_suffix 
      * + default value Is ``false``.
    */
-   function intersect_layer(layer: object, tissues: object, trim_suffix?: boolean): any;
+   function intersect_layer(layer: object, tissues: object, trim_suffix?: boolean): object;
    /**
     * load tissue region polygon data
     * 
@@ -79,6 +79,11 @@ declare namespace TissueMorphology {
       function spatialMapping(file: string, remove_suffix?: boolean, env?: object): object;
    }
    /**
+    * Split the spatial mapping by tissue label data
+    * 
+    * 
+     * @param mapping -
+     * @return A tuple list of the @``T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.TissueMorphology.SpatialMapping`` object
    */
    function splitMapping(mapping: object): object;
    /**

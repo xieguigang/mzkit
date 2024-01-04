@@ -11,14 +11,14 @@
  prepared.
 
 + [split.layer](MsImaging/split.layer.1) split the ms-imaging layer into multiple parts
-+ [TrIQ](MsImaging/TrIQ.1) Contrast optimization of mass
++ [TrIQ](MsImaging/TrIQ.1) Contrast optimization of mass spectrometry imaging(MSI) data
 + [intensityLimits](MsImaging/intensityLimits.1) trim the intensity data value in a pixels of a ion MS-Imaging layer
 + [write.mzImage](MsImaging/write.mzImage.1) write mzImage data file
 + [read.mzImage](MsImaging/read.mzImage.1) open the existed mzImage cache file
 + [FilterMz](MsImaging/FilterMz.1) Extract a spectrum matrix object from MSI data by a given set of m/z values
 + [MS1](MsImaging/MS1.1) get the ms1 spectrum data in a specific pixel position
 + [viewer](MsImaging/viewer.1) load imzML data into the ms-imaging render
-+ [pixel](MsImaging/pixel.1) get a pixel data
++ [pixel](MsImaging/pixel.1) get the spatial spot pixel data
 + [ionLayers](MsImaging/ionLayers.1) load the raw pixels data from imzML file
 + [tag_layers](MsImaging/tag_layers.1) set cluster tags to the pixel tag property data
 + [sum_layers](MsImaging/sum_layers.1) merge multiple layers via intensity sum
@@ -31,6 +31,7 @@
 + [layer](MsImaging/layer.1) render a ms-imaging layer by a specific ``m/z`` scan.
 + [MSI_summary.scaleMax](MsImaging/MSI_summary.scaleMax.1) 
 + [defaultFilter](MsImaging/defaultFilter.1) get the default ms-imaging filter pipeline
++ [parseFilters](MsImaging/parseFilters.1) 
 + [render](MsImaging/render.1) MS-imaging of the MSI summary data result.
 + [as.pixels](MsImaging/as.pixels.1) extract the pixel [x,y] information for all of
 + [MeasureMSIions](MsImaging/MeasureMSIions.1) 

@@ -7,6 +7,19 @@
 /**
  * The mass spectrum assembly file read/write library module.
  * 
+ * > #### Mass spectrometry data format
+ * >  
+ * >  Mass spectrometry is a scientific technique for measuring the mass-to-charge ratio of ions.
+ * >  It is often coupled to chromatographic techniques such as gas- or liquid chromatography and 
+ * >  has found widespread adoption in the fields of analytical chemistry and biochemistry where 
+ * >  it can be used to identify and characterize small molecules and proteins (proteomics). The 
+ * >  large volume of data produced in a typical mass spectrometry experiment requires that computers 
+ * >  be used for data storage and processing. Over the years, different manufacturers of mass 
+ * >  spectrometers have developed various proprietary data formats for handling such data which 
+ * >  makes it difficult for academic scientists to directly manipulate their data. To address this 
+ * >  limitation, several open, XML-based data formats have recently been developed by the Trans-Proteomic
+ * >  Pipeline at the Institute for Systems Biology to facilitate data manipulation and innovation 
+ * >  in the public sector.
 */
 declare namespace assembly {
    module file {
@@ -68,7 +81,7 @@ declare namespace assembly {
       /**
         * @param env default value Is ``null``.
       */
-      function xml_seek(file: string, env?: object): any;
+      function xml_seek(file: string, env?: object): object;
    }
    /**
     * get polarity data for each ms2 scans
@@ -112,11 +125,21 @@ declare namespace assembly {
       */
       function msl(file: string, unit?: object): object;
       /**
-        * @param parseMs2 default value Is ``true``.
+       * 
+       * 
+        * @param file -
+        * @param parseMs2 -
+        * 
+        * + default value Is ``true``.
       */
-      function msp(file: string, parseMs2?: boolean): any;
+      function msp(file: string, parseMs2?: boolean): object;
    }
    /**
+    * get all scan id from the ms xml file
+    * 
+    * 
+     * @param file -
+     * @return A character vector of the scan id for read ms data
    */
    function scan_id(file: object): string;
    /**

@@ -128,6 +128,7 @@ Module Massbank
     ''' <param name="msp">A metabolite data which is parse from the MONA msp dataset</param>
     ''' <returns></returns>
     <ExportAPI("mona.msp_metadata")>
+    <RApiReturn(GetType(BioNovoGene.BioDeep.Chemistry.MetaData))>
     Public Function monaMSP(msp As MspData) As Object
         Return msp.GetMetadata
     End Function
@@ -220,7 +221,7 @@ Module Massbank
     ''' <summary>
     ''' save lipidmaps data repository.
     ''' </summary>
-    ''' <param name="lipidmaps"></param>d
+    ''' <param name="lipidmaps">A collection of the lipidmaps metabolite <see cref="LipidMaps.MetaData"/></param>
     ''' <param name="file"></param>
     ''' <param name="env"></param>
     ''' <returns></returns>
@@ -288,6 +289,7 @@ Module Massbank
     End Function
 
     <ExportAPI("lipid_classprofiles")>
+    <RApiReturn(GetType(ClassProfiles))>
     Public Function castToClassProfiles(lipid_class As LipidMapsCategory) As ClassProfiles
         Return New ClassProfiles With {
             .Catalogs = lipid_class.Class
@@ -295,6 +297,7 @@ Module Massbank
     End Function
 
     <ExportAPI("lipid_profiles")>
+    <RApiReturn(GetType(CatalogProfiles))>
     Public Function lipidProfiles(categry As LipidMapsCategory, enrich As EnrichmentResult()) As Object
         Return categry.CreateEnrichmentProfiles(enrich)
     End Function
@@ -412,6 +415,7 @@ Module Massbank
     ''' let lipids = dataset |> as.lipidmaps();
     ''' </example>
     <ExportAPI("as.lipidmaps")>
+    <RApiReturn(GetType(LipidMaps.MetaData))>
     Public Function toLipidMaps(<RRawVectorArgument>
                                 sdf As Object,
                                 Optional asList As Boolean = False,
@@ -594,7 +598,8 @@ Module Massbank
     End Function
 
     <ExportAPI("chebi.secondary2main.mapping")>
-    Public Function chebiSecondary2Main(repository As String) As Dictionary(Of String, String())
+    <RApiReturn(GetType(String))>
+    Public Function chebiSecondary2Main(repository As String) As Object
         Return ChEBIRepo.ScanEntities(repository) _
             .GroupBy(Function(c) c.chebiId) _
             .Select(Function(c) c.First) _
@@ -607,10 +612,7 @@ Module Massbank
     End Function
 
     <ExportAPI("hmdb.secondary2main.mapping")>
-    Public Function hmdbSecondary2Main(<RRawVectorArgument>
-                                       repository As Object,
-                                       Optional env As Environment = Nothing) As Dictionary(Of String, String())
-
+    Public Function hmdbSecondary2Main(<RRawVectorArgument> repository As Object, Optional env As Environment = Nothing) As Object
         Dim metabolites As pipeline
 
         If TypeOf repository Is pipeline Then
@@ -724,9 +726,10 @@ Module Massbank
     ''' <summary>
     ''' extract the chebi annotation data from the chebi ontology data
     ''' </summary>
-    ''' <param name="chebi"></param>
+    ''' <param name="chebi">the chebi ontology data, in clr type: <see cref="OBOFile"/></param>
     ''' <returns></returns>
     <ExportAPI("extract_chebi_compounds")>
+    <RApiReturn(GetType(MetaInfo))>
     Public Function ExtractChebiCompounds(chebi As OBOFile) As MetaInfo()
         Return chebi _
             .DoCall(AddressOf ChEBIObo.ImportsMetabolites) _
@@ -734,6 +737,7 @@ Module Massbank
     End Function
 
     <ExportAPI("rankingNames")>
+    <RApiReturn("name", "synonym")>
     Public Function rankingNames(<RRawVectorArgument>
                                  x As Object,
                                  Optional max_len As Integer = 32,
@@ -815,6 +819,7 @@ Module Massbank
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("inchikey")>
+    <RApiReturn(GetType(InChIKey))>
     Public Function inchikey(<RRawVectorArgument> inchi As Object, Optional env As Environment = Nothing) As Object
         Return env.EvaluateFramework(Of String, InChIKey)(inchi, eval:=AddressOf IUPAC.MakeHashCode)
     End Function

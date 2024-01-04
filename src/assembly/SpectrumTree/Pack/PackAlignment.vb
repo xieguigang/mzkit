@@ -2,18 +2,47 @@
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
 Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.Query
 Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.Tree
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace PackLib
 
+    ''' <summary>
+    ''' alignment the query spectrum to the reference spectrum
+    ''' </summary>
+    ''' <remarks>
+    ''' the data <see cref="spectrum"/> is the file stream connection
+    ''' to the reference database file, spectrum could be get via id
+    ''' based on the id elements inside <see cref="libnames"/> list.
+    ''' </remarks>
     Public Class PackAlignment : Inherits Ms2Search
 
-        ReadOnly spectrum As SpectrumReader
-
+        ''' <summary>
+        ''' a stream data reader for the reference spectrum
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property spectrum As SpectrumReader
         ''' <summary>
         ''' cutoff of the cos similarity
         ''' </summary>
-        Dim dotcutoff As Double = 0.6
+        Public ReadOnly Property dotcutoff As Double = 0.6
+        Public ReadOnly Property libnames As String()
+            Get
+                Return spectrum.GetAllLibNames.ToArray
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' the library size, get the number of the spectrum in current reference library
+        ''' </summary>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' map from <see cref="SpectrumReader.nspectrum"/>
+        ''' </remarks>
+        Public ReadOnly Property size As Integer
+            Get
+                Return spectrum.nspectrum
+            End Get
+        End Property
 
         Sub New(pack As SpectrumReader, Optional dotcutoff As Double = 0.6)
             Call MyBase.New
@@ -43,7 +72,7 @@ Namespace PackLib
             For Each hit As BlockNode In candidates
                 Dim align = GlobalAlignment.CreateAlignment(centroid, hit.centroid, da).ToArray
                 Dim score = CosAlignment.GetCosScore(align)
-                Dim min = stdNum.Min(score.forward, score.reverse)
+                Dim min = std.Min(score.forward, score.reverse)
 
                 ' if the spectrum cos dotcutoff
                 ' matches the cutoff threshold
@@ -89,7 +118,7 @@ Namespace PackLib
         ''' <param name="hit_group"></param>
         ''' <returns></returns>
         Private Function reportClusterHit(centroid() As ms2, hit_group As IGrouping(Of String, ___tmp)) As ClusterHit
-            Dim desc = hit_group.OrderByDescending(Function(n) stdNum.Min(n.forward, n.reverse)).ToArray
+            Dim desc = hit_group.OrderByDescending(Function(n) std.Min(n.forward, n.reverse)).ToArray
             Dim max = desc.First
             Dim forward = desc.Select(Function(n) n.forward).ToArray
             Dim reverse = desc.Select(Function(n) n.reverse).ToArray

@@ -74,6 +74,10 @@ Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 ''' <summary>
 ''' Union of the spectrum data and the metabolite annotation metadata
 ''' </summary>
+''' <remarks>
+''' this data object used for union the metabolite annotation <see cref="MetaData"/> and 
+''' the spectrum data(<see cref="SpectraInfo"/>).
+''' </remarks>
 Public Class SpectraSection : Inherits MetaInfo
 
     ''' <summary>
@@ -198,6 +202,9 @@ End Class
 ''' <summary>
 ''' The reference spectra data which is parsed from the MoNA database
 ''' </summary>
+''' <remarks>
+''' is a collection of the mass spectrum <see cref="ms2"/> data.
+''' </remarks>
 Public Class SpectraInfo
 
     Public Property MsLevel As String

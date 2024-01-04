@@ -1,7 +1,7 @@
 .\" man page create by R# package system.
 .TH MSIMAGING 1 2000-Jan "pixel" "pixel"
 .SH NAME
-pixel \- get a pixel data
+pixel \- get the spatial spot pixel data
 .SH SYNOPSIS
 \fIpixel(\fBdata\fR as any, 
 \fBx\fR as integer, 
@@ -9,17 +9,21 @@ pixel \- get a pixel data
 [\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
-get a pixel data
+get the spatial spot pixel data
 .PP
 .SH OPTIONS
 .PP
-\fBdata\fB \fR\- -. 
+\fBdata\fB \fR\- the rawdata source for the ms-imaging.. 
 .PP
 .PP
-\fBx\fB \fR\- -. 
+\fBx\fB \fR\- an integer vector for x axis. 
 .PP
 .PP
-\fBy\fB \fR\- -. 
+\fBy\fB \fR\- an integer vector for y axis. 
+.PP
+.SH VALUE
+.PP
+A collection of the spatial spot data
 .PP
 .SH SEE ALSO
 MsImaging

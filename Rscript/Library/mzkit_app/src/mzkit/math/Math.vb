@@ -289,7 +289,8 @@ Module MzMath
     ''' <param name="mode"></param>
     ''' <returns></returns>
     <ExportAPI("exact_mass")>
-    Public Function exact_mass(mz As Double, Optional mode As Object = "+") As PrecursorInfo()
+    <RApiReturn(GetType(PrecursorInfo))>
+    Public Function exact_mass(mz As Double, Optional mode As Object = "+") As Object
         Return MzCalculator.EvaluateAll(mz, any.ToString(mode, "+"), True).ToArray
     End Function
 
@@ -343,6 +344,7 @@ Module MzMath
     End Function
 
     <ExportAPI("jaccard")>
+    <RApiReturn(GetType(Double))>
     Public Function jaccard(query As Double(), ref As Double(),
                             Optional tolerance As Object = "da:0.3",
                             Optional env As Environment = Nothing) As Object
@@ -385,6 +387,7 @@ Module MzMath
     ''' 
     ''' </remarks>
     <ExportAPI("spectral_entropy")>
+    <RApiReturn(TypeCodes.double)>
     Public Function spectrumEntropy(x As LibraryMatrix,
                                     Optional ref As LibraryMatrix = Nothing,
                                     Optional tolerance As Object = "da:0.3",
@@ -424,6 +427,7 @@ Module MzMath
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("jaccardSet")>
+    <RApiReturn("intersect", "union")>
     Public Function jaccardSet(query As Double(), ref As Double(),
                                Optional tolerance As Object = "da:0.3",
                                Optional env As Environment = Nothing)
@@ -488,6 +492,7 @@ Module MzMath
     End Function
 
     <ExportAPI("cosine.pairwise")>
+    <RApiReturn(GetType(AlignmentOutput))>
     Public Function cosine_pairwise(<RRawVectorArgument> query As Object, <RRawVectorArgument> ref As Object,
                                     Optional tolerance As Object = "da:0.3",
                                     Optional intocutoff As Double = 0.05,
@@ -568,7 +573,8 @@ Module MzMath
     ''' <param name="tree">the spectra molecule networking tree</param>
     ''' <returns></returns>
     <ExportAPI("cluster.nodes")>
-    Public Function GetClusters(tree As SpectrumTreeCluster) As SpectrumCluster()
+    <RApiReturn(GetType(SpectrumCluster))>
+    Public Function GetClusters(tree As SpectrumTreeCluster) As Object
         Return tree.PopulateClusters.ToArray
     End Function
 
@@ -799,8 +805,10 @@ Module MzMath
     ''' </summary>
     ''' <param name="threshold"></param>
     ''' <param name="method"></param>
-    ''' <returns></returns>
+    ''' <returns>the value clr type of this function is determine based on 
+    ''' the <paramref name="method"/> parameter value.</returns>
     <ExportAPI("tolerance")>
+    <RApiReturn(GetType(PPMmethod), GetType(DAmethod))>
     Public Function createTolerance(threshold As Double,
                                     <RRawVectorArgument(GetType(String))>
                                     Optional method As Object = "ppm|da",
@@ -828,6 +836,7 @@ Module MzMath
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("sequenceOrder")>
+    <RApiReturn(GetType(ms1_scan))>
     Public Function sequenceOrder(<RRawVectorArgument> scans As Object,
                                   Optional mzwidth As Object = "da:0.1",
                                   Optional rtwidth As Double = 60,
@@ -857,6 +866,7 @@ Module MzMath
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("precursor_types")>
+    <RApiReturn(GetType(MzCalculator))>
     Public Function precursorTypes(<RRawVectorArgument> types As Object, Optional env As Environment = Nothing) As Object
         Return env.EvaluateFramework(Of String, MzCalculator)(
             types, Function(type)

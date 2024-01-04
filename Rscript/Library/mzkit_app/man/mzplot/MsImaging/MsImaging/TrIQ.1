@@ -1,7 +1,7 @@
 .\" man page create by R# package system.
 .TH MSIMAGING 1 2000-Jan "TrIQ" "TrIQ"
 .SH NAME
-TrIQ \- Contrast optimization of mass
+TrIQ \- Contrast optimization of mass spectrometry imaging(MSI) data
 .SH SYNOPSIS
 \fITrIQ(\fBdata\fR as any, 
 \fBq\fR as double = 0.6, 
@@ -9,10 +9,8 @@ TrIQ \- Contrast optimization of mass
 [\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
-Contrast optimization of mass
- spectrometry imaging(MSI) data
- visualization by threshold intensity
- quantization (TrIQ)
+Contrast optimization of mass spectrometry imaging(MSI) data
+ visualization by threshold intensity quantization (TrIQ)
 .PP
 .SH OPTIONS
 .PP
@@ -25,6 +23,14 @@ Contrast optimization of mass
 .PP
 .PP
 \fBenv\fB \fR\- -. 
+.PP
+.SH VALUE
+.PP
+A signal intensity value range [min, max]
+.PP
+.SH DETAILS
+.PP
+this function works based on the @\fBT:BioNovoGene.Analytical.MassSpectrometry.MsImaging.Blender.TrIQThreshold\fR clr module
 .PP
 .SH SEE ALSO
 MsImaging

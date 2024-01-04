@@ -59,7 +59,9 @@ Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports SMRUCC.Rsharp.Interpreter
 Imports SMRUCC.Rsharp.Runtime
+Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Components.Interface
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 
@@ -145,6 +147,8 @@ Public Class ChromatogramOverlap : Implements RNames, RNameIndex
     ''' <returns>
     ''' <see cref="Chromatogram"/>
     ''' </returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function getByName(name As String) As Object Implements RNameIndex.getByName
         Return overlaps.TryGetValue(name)
     End Function
@@ -161,10 +165,50 @@ Public Class ChromatogramOverlap : Implements RNames, RNameIndex
     End Function
 
     Public Function setByName(name As String, value As Object, envir As Environment) As Object Implements RNameIndex.setByName
-        Throw New NotImplementedException()
+        If value Is Nothing Then
+            Call overlaps.Remove(name)
+            Return Nothing
+        End If
+        If Not TypeOf value Is Chromatogram Then
+            Return Message.InCompatibleType(GetType(Chromatogram), value.GetType, envir)
+        Else
+            overlaps(name) = value
+        End If
+
+        Return value
     End Function
 
     Public Function setByName(names() As String, value As Array, envir As Environment) As Object Implements RNameIndex.setByName
-        Throw New NotImplementedException()
+        Dim result As Object
+
+        If value.IsNullOrEmpty Then
+            For Each name As String In names
+                Call overlaps.Remove(name)
+            Next
+
+            Return Nothing
+        ElseIf value.Length = 1 Then
+            Dim scalar = value.GetValue(0)
+
+            For Each name As String In names
+                result = setByName(name, scalar, envir)
+
+                If Program.isException(result) Then
+                    Return result
+                End If
+            Next
+
+            Return scalar
+        Else
+            For i As Integer = 0 To names.Length - 1
+                result = setByName(names(i), value.GetValue(i), envir)
+
+                If Program.isException(result) Then
+                    Return result
+                End If
+            Next
+
+            Return value
+        End If
     End Function
 End Class

@@ -204,7 +204,7 @@ declare namespace data {
      * 
      * + default value Is ``null``.
    */
-   function XIC(ms1: any, mz: number, tolerance?: any, env?: object): object|object;
+   function XIC(ms1: any, mz: number, tolerance?: any, env?: object): object|object|object;
    /**
     * grouping of the ms1 scan points by m/z data
     * 

@@ -110,6 +110,11 @@ Namespace SDF
 
         <XmlText>
         Public Property Comment As String
+
+        ''' <summary>
+        ''' The molecular structure.
+        ''' </summary>
+        ''' <returns></returns>
         Public Property [Structure] As [Structure]
 
         ''' <summary>

@@ -2,10 +2,10 @@
 <html>
 
 <head>
-    <title>calculate the X scale</title>
+    <title>calculate the X axis scale</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-    <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
+    <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
 </head>
 
 <body>
@@ -18,7 +18,7 @@
             </tr>
         </table>
 
-        <h2>calculate the X scale</h2>
+        <h2>calculate the X axis scale</h2>
 
         <h3>Description</h3>
 
@@ -36,15 +36,15 @@
         <table>
             
 <dt>totalTime</dt>
-<dd><p><p>-</p></p></dd>
+<dd><p><p>the max rt of the y scan data</p></p></dd>
 
 
 <dt>pixels</dt>
-<dd><p><p>-</p></p></dd>
+<dd><p><p>the average pixels of all your y scan data</p></p></dd>
 
 
 <dt>hasMs2</dt>
-<dd><p><p>-</p></p></dd>
+<dd><p><p>does the ms-imaging raw data contains any ms scan data in ms2 level?</p></p></dd>
 
         </table>
 
@@ -56,7 +56,15 @@
 
         <h3>Value</h3>
 
-        this function returns data object of type <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/Comprehensive/MsImaging/Correction.html">Correction</a>.<h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/Comprehensive/MsImaging/Correction.html">Correction</a></li></ul>
+        <p>A x axis correction function wrapper, the clr object type of this <br />
+ function return value is determined based on the flag parameter<br />
+ <strong><code>hasMs2</code></strong>:</p>
+
+<ol>
+<li>for has ms2 data inside your ms-imaging rawdata, a <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/Comprehensive/MsImaging/ScanMs2Correction.html">ScanMs2Correction</a> object should be used,</li>
+<li>for has no ms2 data, a <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/Comprehensive/MsImaging/ScanTimeCorrection.html">ScanTimeCorrection</a> object is used <br />
+for run x axis correction based on the average rt diff.</li>
+</ol><h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/Comprehensive/MsImaging/Correction.html">Correction</a></li></ul>
 
         <h3 style="display: none;">Examples</h3>
 
@@ -69,8 +77,8 @@
     </div>
 </body>
 
-<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
-<script type="text/javascript" src="../../_assets/highlights.js"></script>
+<script type="text/javascript" src="https://mzkit.org/assets/js/R_syntax.js"></script>
+<script type="text/javascript" src="https://mzkit.org/assets/js/highlights.js"></script>
 <script type="text/javascript">r_highlights("example_r");</script>
 
 </html>

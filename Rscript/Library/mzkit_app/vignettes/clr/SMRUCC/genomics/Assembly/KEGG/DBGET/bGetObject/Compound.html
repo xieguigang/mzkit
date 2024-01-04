@@ -5,7 +5,7 @@
     <title>SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject.Compound</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-    <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
+    <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
 </head>
 
 <body>
@@ -22,22 +22,22 @@
 
         <h3>Description</h3>
 
-        A data model for the KEGG compound.
+        <p>A data model for the KEGG compound.</p><br /><p>this class extends from <a href="/vignettes/clr/Microsoft/VisualBasic/ComponentModel/XmlDataModel.html">XmlDataModel</a> class.</p>
 
         <h3>Declare</h3>        
 
         <pre>
             <code id="clr_ts">
 # namespace SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
-export class Compound {
-   # KEGG compound ID: ``cpd:C\d+``
+export class Compound extends <a href="/vignettes/clr/Microsoft/VisualBasic/ComponentModel/XmlDataModel.html">XmlDataModel</a> {
+   # KEGG compound ID: <code>cpd:C\d+</code>
    entry: string;
    # the metabolite common names
    commonNames: string;
    formula: string;
    molWeight: double;
    exactMass: double;
-   # The @``P:SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject.Compound.entry``[compound] was involved in these reactions. (http://www.kegg.jp/dbget-bin/www_bget?rn:[KEGG_Reaction_ID])
+   # The <a href="/vignettes/clr/SMRUCC/genomics/Assembly/KEGG/DBGET/bGetObject/Compound.html">Compound</a>.<a href="#">entry</a>[compound] was involved in these reactions. (<a href="http://www.kegg.jp/dbget-bin/www_bget?rn:[KEGG_Reaction_ID]">http://www.kegg.jp/dbget-bin/www_bget?rn:[KEGG_Reaction_ID]</a>)
    reactionId: string;
    pathway: <a href="/vignettes/clr/Microsoft/VisualBasic/Text/Xml/Models/NamedValue.html">NamedValue[]</a>;
    Module: <a href="/vignettes/clr/Microsoft/VisualBasic/Text/Xml/Models/NamedValue.html">NamedValue[]</a>;
@@ -62,8 +62,8 @@ export class Compound {
     </div>
 </body>
 
-<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
-<script type="text/javascript" src="../../_assets/highlights.js"></script>
+<script type="text/javascript" src="https://mzkit.org/assets/js/R_syntax.js"></script>
+<script type="text/javascript" src="https://mzkit.org/assets/js/highlights.js"></script>
 <script type="text/javascript">r_highlights("clr_ts");</script>
 
 </html>

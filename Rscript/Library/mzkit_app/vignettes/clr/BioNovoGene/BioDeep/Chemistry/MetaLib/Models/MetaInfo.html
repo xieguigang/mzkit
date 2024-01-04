@@ -5,7 +5,7 @@
     <title>BioNovoGene.BioDeep.Chemistry.MetaLib.Models.MetaInfo</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-    <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
+    <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
 </head>
 
 <body>
@@ -22,7 +22,14 @@
 
         <h3>Description</h3>
 
-        the very basic metabolite annotation data model
+        <p>the very basic metabolite annotation data model</p>
+
+<p>this data model includes the metabolite annotation information, includes:</p>
+
+<ol>
+<li>basic metabolite information, example as formula, name, etc</li>
+<li>database cross reference: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/MetaLib/Models/MetaInfo.html">MetaInfo</a>.<a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/MetaLib/CrossReference/xref.html">xref</a></li>
+</ol>
 
         <h3>Declare</h3>        
 
@@ -30,6 +37,8 @@
             <code id="clr_ts">
 # namespace BioNovoGene.BioDeep.Chemistry.MetaLib.Models
 export class MetaInfo {
+   # The database cross reference of current metabolite and the molecule structure data.
+   xref: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/MetaLib/CrossReference/xref.html">xref</a>;
    # 该物质在整合库之中的唯一标识符
    ID: string;
    formula: string;
@@ -38,8 +47,6 @@ export class MetaInfo {
    IUPACName: string;
    description: string;
    synonym: string;
-   # The database cross reference of current metabolite and the molecule structure data.
-   xref: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/MetaLib/CrossReference/xref.html">xref</a>;
 }
 </code>
         </pre>
@@ -51,8 +58,8 @@ export class MetaInfo {
     </div>
 </body>
 
-<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
-<script type="text/javascript" src="../../_assets/highlights.js"></script>
+<script type="text/javascript" src="https://mzkit.org/assets/js/R_syntax.js"></script>
+<script type="text/javascript" src="https://mzkit.org/assets/js/highlights.js"></script>
 <script type="text/javascript">r_highlights("clr_ts");</script>
 
 </html>

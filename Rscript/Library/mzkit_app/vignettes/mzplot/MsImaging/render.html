@@ -5,7 +5,7 @@
     <title>MS-imaging of the MSI summary data result.</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-    <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
+    <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
 </head>
 
 <body>
@@ -45,8 +45,8 @@
             
 <dt>data</dt>
 <dd><p><ol>
-<li>@<code>T:BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML.MSISummary</code></li>
-<li>@<code>T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.SingleIonLayer</code></li>
+<li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/MarkupData/imzML/MSISummary.html">MSISummary</a></li>
+<li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/MsImaging/SingleIonLayer.html">SingleIonLayer</a></li>
 </ol></p></dd>
 
 
@@ -55,11 +55,12 @@
 
 
 <dt>colorSet</dt>
-<dd><p><p>@<code>T:Microsoft.VisualBasic.Imaging.Drawing2D.Colors.ScalerPalette</code></p></p></dd>
+<dd><p><p>a enum flag value for rendering the spatial heatmap colors,<br />
+ all flags see the clr enum: <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/Drawing2D/Colors/ScalerPalette.html">ScalerPalette</a></p></p></dd>
 
 
 <dt>defaultFill</dt>
-<dd><p><p>-</p></p></dd>
+<dd><p><p>the color value for the spots which those intensity value is missing(ZERO or NaN)</p></p></dd>
 
 
 <dt>pixelSize</dt>
@@ -76,6 +77,11 @@
 <dd><p><p>do size overrides, default parameter value nothing means the<br />
  size is evaluated based on the dimension <strong><code>dims</code></strong> <br />
  of the ms-imaging raw data and the <strong><code>pixelSize</code></strong></p></p></dd>
+
+
+<dt>dims</dt>
+<dd><p><p>the raw ms-imaging canvas dimension size, should be an integer vector that contains <br />
+ two elements inside: canvas width and canvas height value.</p></p></dd>
 
 
 <dt>env</dt>
@@ -104,8 +110,8 @@
     </div>
 </body>
 
-<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
-<script type="text/javascript" src="../../_assets/highlights.js"></script>
+<script type="text/javascript" src="https://mzkit.org/assets/js/R_syntax.js"></script>
+<script type="text/javascript" src="https://mzkit.org/assets/js/highlights.js"></script>
 <script type="text/javascript">r_highlights("example_r");</script>
 
 </html>

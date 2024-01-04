@@ -18,6 +18,11 @@
  * 
 */
 declare namespace mzDeco {
+   /**
+     * @param mzdiff default value Is ``0.01``.
+     * @param rt_win default value Is ``90``.
+   */
+   function find_xcms_ionPeaks(peaktable: object, mz: number, rt: number, mzdiff?: number, rt_win?: number): object;
    module mz {
       /**
        * do ``m/z`` grouping under the given tolerance
@@ -67,6 +72,9 @@ declare namespace mzDeco {
      * @return a vector of the peak deconvolution data,
      *  in format of xcms peak table liked or mzkit @``T:BioNovoGene.Analytical.MassSpectrometry.Math.PeakFeature``
      *  data object.
+     *  
+     *  the result data vector may contains the rt shift data result, where you can get this shift
+     *  value via the ``rt.shift`` attribute name, rt shift data model is clr type: @``T:BioNovoGene.Analytical.MassSpectrometry.Math.RtShift``.
    */
    function mz_deco(ms1: any, tolerance?: any, baseline?: number, peak_width?: any, joint?: boolean, parallel?: boolean, dtw?: boolean, feature?: any, env?: object): object|object;
    /**
@@ -107,19 +115,23 @@ declare namespace mzDeco {
     *  this function is debug used only
     * 
     * 
-     * @param pool -
+     * @param pool should be type of @``T:BioNovoGene.Analytical.MassSpectrometry.Math.XICPool`` or peak collection @``T:BioNovoGene.Analytical.MassSpectrometry.Math.PeakSet`` object.
      * @param mz the ion feature m/z value
-     * @param dtw -
+     * @param dtw this parameter will not working when the data pool type is clr type @``T:BioNovoGene.Analytical.MassSpectrometry.Math.PeakSet``
      * 
      * + default value Is ``true``.
      * @param mzdiff -
      * 
      * + default value Is ``0.01``.
+     * @param strict 
+     * + default value Is ``false``.
+     * @param env 
+     * + default value Is ``null``.
      * @return a tuple list object that contains the xic data across
      *  multiple sample data files for a speicifc ion feature
      *  m/z.
    */
-   function pull_xic(pool: object, mz: number, dtw?: boolean, mzdiff?: number): any;
+   function pull_xic(pool: any, mz: number, dtw?: boolean, mzdiff?: number, strict?: boolean, env?: object): any;
    module read {
       /**
        * read the peak feature table data
@@ -137,9 +149,13 @@ declare namespace mzDeco {
        * 
        * 
         * @param file -
+        * @param tsv 
+        * + default value Is ``false``.
+        * @param general_method 
+        * + default value Is ``false``.
         * @return A collection set of the @``T:BioNovoGene.Analytical.MassSpectrometry.Math.xcms2`` peak features data object
       */
-      function xcms_peaks(file: string): object;
+      function xcms_peaks(file: string, tsv?: boolean, general_method?: boolean): object;
    }
    module write {
       /**

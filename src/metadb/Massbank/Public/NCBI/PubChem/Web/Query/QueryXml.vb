@@ -13,12 +13,18 @@ Namespace NCBI.PubChem.Web
     ''' [Download]
     ''' Summary (Search Results)
     ''' XML format
+    ''' 
+    ''' this xml data model is a kind of summary of the pubchem <see cref="PugViewRecord"/> xml data.
     ''' </remarks>
     ''' 
     <XmlType("row"), XmlRoot("row")>
     Public Class QueryXml
 
         Public Property cid As Integer
+        ''' <summary>
+        ''' a string array
+        ''' </summary>
+        ''' <returns></returns>
         Public Property cmpdname As Object
         Public Property mw As Double
         Public Property mf As String

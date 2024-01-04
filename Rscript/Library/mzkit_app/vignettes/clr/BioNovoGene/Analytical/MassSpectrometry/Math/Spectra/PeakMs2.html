@@ -5,7 +5,7 @@
     <title>BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.PeakMs2</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-    <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
+    <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
 </head>
 
 <body>
@@ -22,7 +22,10 @@
 
         <h3>Description</h3>
 
-        将mzXML文件之中的每一个ms2 scan转换而来
+        <p>将mzXML文件之中的每一个ms2 scan转换而来</p>
+
+<p>A union data model of the ms1 annotation data <br />
+ associated with the ms2 peak scan data.</p>
 
         <h3>Declare</h3>        
 
@@ -30,8 +33,8 @@
             <code id="clr_ts">
 # namespace BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 export class PeakMs2 {
-   # The precursor ``m/z`` value.
-   #  (一级母离子的``m/z``)
+   # The precursor <code>m/z</code> value.
+   #  (一级母离子的<code>m/z</code>)
    mz: double;
    # 一级母离子的出峰时间
    rt: double;
@@ -45,7 +48,7 @@ export class PeakMs2 {
    collisionEnergy: double;
    # A unique variable name, meaning could be different with .
    lib_guid: string;
-   # adducts type of the @``P:BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.PeakMs2.mz`` value.
+   # adducts type of the <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/PeakMs2.html">PeakMs2</a>.<a href="#">mz</a> value.
    precursor_type: string;
    # 二级碎片信息
    mzInto: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/ms2.html">ms2[]</a>;
@@ -64,8 +67,8 @@ export class PeakMs2 {
     </div>
 </body>
 
-<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
-<script type="text/javascript" src="../../_assets/highlights.js"></script>
+<script type="text/javascript" src="https://mzkit.org/assets/js/R_syntax.js"></script>
+<script type="text/javascript" src="https://mzkit.org/assets/js/highlights.js"></script>
 <script type="text/javascript">r_highlights("clr_ts");</script>
 
 </html>

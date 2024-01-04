@@ -54,6 +54,18 @@ Namespace PackLib
         End Property
 
         ''' <summary>
+        ''' get the number of the spectrum in current reference library
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property nspectrum As Integer
+            Get
+                Return DirectCast(file.GetObject("/spectrum/"), StreamGroup) _
+                    .ListFiles _
+                    .Count
+            End Get
+        End Property
+
+        ''' <summary>
         ''' open the database file in readonly mode
         ''' </summary>
         ''' <param name="target_uuid">
@@ -309,7 +321,7 @@ Namespace PackLib
         Public Overrides Function ToString() As String
             Dim name As String = metadata.TryGetValue("name", [default]:="Spectrum Reference Library")
             Dim n_mass As Integer = DirectCast(file.GetObject("/massSet/"), StreamGroup).files.Length
-            Dim n_spectrum As Integer = DirectCast(file.GetObject("/spectrum/"), StreamGroup).ListFiles.Count
+            Dim n_spectrum As Integer = nspectrum
 
             Return $"[{name}] {n_mass} metabolites, {n_spectrum} spectrum"
         End Function

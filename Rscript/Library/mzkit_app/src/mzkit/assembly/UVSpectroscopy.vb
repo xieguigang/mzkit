@@ -107,6 +107,7 @@ Module UVSpectroscopy
     End Function
 
     <ExportAPI("as.UVtime_signals")>
+    <RApiReturn(GetType(GeneralSignal))>
     Public Function translateToTimeSignals(<RRawVectorArgument> rawscans As Object, Optional rawfile As String = "UVraw", Optional env As Environment = Nothing) As Object
         Dim raw As pipeline = pipeline.TryCreatePipeline(Of GeneralSignal)(rawscans, env)
 
@@ -158,7 +159,14 @@ Module UVSpectroscopy
         Return True
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="file"></param>
+    ''' <param name="env"></param>
+    ''' <returns>A tuple list of the signal data</returns>
     <ExportAPI("read.UVsignals")>
+    <RApiReturn(GetType(GeneralSignal))>
     Public Function ReadSignals(file As Object, Optional env As Environment = Nothing) As Object
         Dim filestream As [Variant](Of Stream, Message) = GetFileStream(file, FileAccess.Read, env)
 

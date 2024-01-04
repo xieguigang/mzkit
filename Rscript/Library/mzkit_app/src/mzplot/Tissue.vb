@@ -57,11 +57,24 @@ Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.TissueMorphology.HEMap
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.HeatMap
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports SMRUCC.Rsharp.Runtime.Interop
 
 <Package("tissue")>
 Module Tissue
 
+    ''' <summary>
+    ''' analysis the HE-stain image by blocks
+    ''' </summary>
+    ''' <param name="tissue"></param>
+    ''' <param name="colors"></param>
+    ''' <param name="gridSize"></param>
+    ''' <param name="tolerance"></param>
+    ''' <param name="densityGrid"></param>
+    ''' <returns>
+    ''' the collection of the image blocks analysis result
+    ''' </returns>
     <ExportAPI("scan_tissue")>
+    <RApiReturn(GetType(Cell))>
     Public Function scanTissue(tissue As Image, Optional colors As String() = Nothing,
                                Optional gridSize As Integer = 25,
                                Optional tolerance As Integer = 15,
@@ -78,6 +91,7 @@ Module Tissue
     End Function
 
     <ExportAPI("heatmap_layer")>
+    <RApiReturn(GetType(PixelData))>
     Public Function getTargets(tissue As Cell(),
                                Optional heatmap As Layers = Layers.Density,
                                Optional target As String = "black") As PixelData()

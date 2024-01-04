@@ -84,12 +84,26 @@ Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports mzXMLAssembly = BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
-Imports REnv = SMRUCC.Rsharp.Runtime
 Imports Rlist = SMRUCC.Rsharp.Runtime.Internal.Object.list
 
 ''' <summary>
 ''' The mass spectrum assembly file read/write library module.
 ''' </summary>
+''' <remarks>
+''' #### Mass spectrometry data format
+''' 
+''' Mass spectrometry is a scientific technique for measuring the mass-to-charge ratio of ions.
+''' It is often coupled to chromatographic techniques such as gas- or liquid chromatography and 
+''' has found widespread adoption in the fields of analytical chemistry and biochemistry where 
+''' it can be used to identify and characterize small molecules and proteins (proteomics). The 
+''' large volume of data produced in a typical mass spectrometry experiment requires that computers 
+''' be used for data storage and processing. Over the years, different manufacturers of mass 
+''' spectrometers have developed various proprietary data formats for handling such data which 
+''' makes it difficult for academic scientists to directly manipulate their data. To address this 
+''' limitation, several open, XML-based data formats have recently been developed by the Trans-Proteomic
+''' Pipeline at the Institute for Systems Biology to facilitate data manipulation and innovation 
+''' in the public sector.
+''' </remarks>
 <Package("assembly", Category:=APICategories.UtilityTools)>
 Module Assembly
 
@@ -207,6 +221,7 @@ Module Assembly
     ''' <param name="unit"></param>
     ''' <returns></returns>
     <ExportAPI("read.msl")>
+    <RApiReturn(GetType(MSLIon))>
     Public Function ReadMslIons(file$, Optional unit As TimeScales = TimeScales.Second) As MSLIon()
         Return MSL.FileReader.Load(file, unit).ToArray
     End Function
@@ -228,7 +243,14 @@ Module Assembly
         Return MgfReader.StreamParser(buf.TryCast(Of Stream)).ToArray
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="file"></param>
+    ''' <param name="parseMs2"></param>
+    ''' <returns></returns>
     <ExportAPI("read.msp")>
+    <RApiReturn(GetType(MspData))>
     Public Function readMsp(file As String, Optional parseMs2 As Boolean = True) As Object
         Return MspData.Load(file, ms2:=parseMs2).DoCall(AddressOf pipeline.CreateFromPopulator)
     End Function
@@ -264,6 +286,7 @@ Module Assembly
     End Function
 
     <ExportAPI("open.xml_seek")>
+    <RApiReturn(GetType(XmlSeek))>
     Public Function openXmlSeeks(file As String, Optional env As Environment = Nothing) As Object
         If Not file.FileExists Then
             Return Internal.debug.stop({
@@ -276,16 +299,23 @@ Module Assembly
     End Function
 
     <ExportAPI("seek")>
+    <RApiReturn(GetType(MSScan))>
     Public Function Seek(file As XmlSeek, key As String) As MSScan
         Return file.ReadScan(key)
     End Function
 
+    ''' <summary>
+    ''' get all scan id from the ms xml file
+    ''' </summary>
+    ''' <param name="file"></param>
+    ''' <returns>A character vector of the scan id for read ms data</returns>
     <ExportAPI("scan_id")>
     Public Function ScanIds(file As XmlSeek) As String()
         Return file.IndexKeys
     End Function
 
     <ExportAPI("load_index")>
+    <RApiReturn(GetType(FastSeekIndex))>
     Public Function LoadIndex(file As String) As FastSeekIndex
         Return FastSeekIndex.LoadIndex(file)
     End Function

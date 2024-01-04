@@ -70,7 +70,15 @@ Namespace NCBI.PubChem
     Public Class SIDMap
 
         Public Property SID As Integer
+        ''' <summary>
+        ''' the source database name, example as: KEGG, ChEBI, etc
+        ''' </summary>
+        ''' <returns></returns>
         Public Property sourceName As String
+        ''' <summary>
+        ''' the external database id, example as KEGG id, HMDB id or something.
+        ''' </summary>
+        ''' <returns></returns>
         Public Property registryIdentifier As String
         Public Property CID As Integer
 

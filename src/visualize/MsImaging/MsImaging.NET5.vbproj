@@ -13,6 +13,8 @@
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
 
     <OutputPath>../../../Rscript\Library\mzkit_app\assembly\</OutputPath>
+
+    <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

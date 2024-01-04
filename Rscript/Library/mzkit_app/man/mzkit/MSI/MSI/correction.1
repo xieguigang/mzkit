@@ -1,24 +1,34 @@
 .\" man page create by R# package system.
 .TH MSI 1 2000-Jan "correction" "correction"
 .SH NAME
-correction \- calculate the X scale
+correction \- calculate the X axis scale
 .SH SYNOPSIS
 \fIcorrection(\fBtotalTime\fR as double, 
 \fBpixels\fR as integer, 
 \fBhasMs2\fR as boolean = FALSE);\fR
 .SH DESCRIPTION
 .PP
-calculate the X scale
+calculate the X axis scale
 .PP
 .SH OPTIONS
 .PP
-\fBtotalTime\fB \fR\- -. 
+\fBtotalTime\fB \fR\- the max rt of the y scan data. 
 .PP
 .PP
-\fBpixels\fB \fR\- -. 
+\fBpixels\fB \fR\- the average pixels of all your y scan data. 
 .PP
 .PP
-\fBhasMs2\fB \fR\- -. 
+\fBhasMs2\fB \fR\- does the ms-imaging raw data contains any ms scan data in ms2 level?. 
+.PP
+.SH VALUE
+.PP
+A x axis correction function wrapper, the clr object type of this 
+ function return value is determined based on the flag parameter
+ **`hasMs2`**:
+ 
+ 1. for has ms2 data inside your ms-imaging rawdata, a @\fBT:BioNovoGene.Analytical.MassSpectrometry.Assembly.Comprehensive.MsImaging.ScanMs2Correction\fR object should be used,
+ 2. for has no ms2 data, a @\fBT:BioNovoGene.Analytical.MassSpectrometry.Assembly.Comprehensive.MsImaging.ScanTimeCorrection\fR object is used 
+    for run x axis correction based on the average rt diff.
 .PP
 .SH SEE ALSO
 MSI

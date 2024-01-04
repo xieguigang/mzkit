@@ -71,7 +71,7 @@ declare namespace visual {
        * visual of the UV spectrum
        * 
        * 
-        * @param timeSignals -
+        * @param timeSignals should be a collection of the signal data: @``T:Microsoft.VisualBasic.Math.SignalProcessing.GeneralSignal``
         * @param is_spectrum -
         * 
         * + default value Is ``false``.
