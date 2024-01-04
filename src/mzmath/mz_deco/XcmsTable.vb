@@ -78,10 +78,6 @@ Public Module XcmsTable
             rt_shifts = New List(Of RtShift)
         End If
 
-        If rt_shifts Is Nothing Then
-            rt_shifts = New List(Of RtShift)
-        End If
-
         For Each group As NamedCollection(Of PeakFeature) In rt_groups
             Dim mz As Double() = group.Select(Function(a) a.mz).ToArray
             Dim rt As Double() = group.Select(Function(a) a.rt).ToArray
