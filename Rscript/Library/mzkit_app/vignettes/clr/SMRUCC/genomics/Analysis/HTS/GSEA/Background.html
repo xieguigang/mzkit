@@ -5,7 +5,7 @@
     <title>SMRUCC.genomics.Analysis.HTS.GSEA.Background</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-    <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
+    <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
 </head>
 
 <body>
@@ -33,8 +33,6 @@
             <code id="clr_ts">
 # namespace SMRUCC.genomics.Analysis.HTS.GSEA
 export class Background extends <a href="/vignettes/clr/Microsoft/VisualBasic/ComponentModel/XmlDataModel.html">XmlDataModel</a> {
-   # a collection of the functional related genesets.
-   clusters: <a href="/vignettes/clr/SMRUCC/genomics/Analysis/HTS/GSEA/Cluster.html">Cluster[]</a>;
    name: string;
    # A brief unique id code. Such as kegg organism code or ncbi taxonomy id.
    id: string;
@@ -42,6 +40,8 @@ export class Background extends <a href="/vignettes/clr/Microsoft/VisualBasic/Co
    build: <a href="/vignettes/clr/System/DateTime.html">DateTime</a>;
    # The number of genes in this background genome.
    size: integer;
+   # a collection of the functional related genesets.
+   clusters: <a href="/vignettes/clr/SMRUCC/genomics/Analysis/HTS/GSEA/Cluster.html">Cluster[]</a>;
    Stylesheet: <a href="/vignettes/clr/Microsoft/VisualBasic/ComponentModel/XmlStyleProcessor.html">XmlStyleProcessor</a>;
    TypeComment: <a href="/vignettes/clr/System/Xml/XmlComment.html">XmlComment</a>;
 }
@@ -55,8 +55,8 @@ export class Background extends <a href="/vignettes/clr/Microsoft/VisualBasic/Co
     </div>
 </body>
 
-<script type="text/javascript" src="https://mzkit.org/assets/js/R_syntax.js"></script>
-<script type="text/javascript" src="https://mzkit.org/assets/js/highlights.js"></script>
+<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
+<script type="text/javascript" src="../../_assets/highlights.js"></script>
 <script type="text/javascript">r_highlights("clr_ts");</script>
 
 </html>

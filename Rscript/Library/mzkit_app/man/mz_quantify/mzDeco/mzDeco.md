@@ -13,6 +13,7 @@ Extract peak and signal data from rawdata
 
 + [read.xcms_peaks](mzDeco/read.xcms_peaks.1) read the peaktable file that in xcms2 output format
 + [peak_subset](mzDeco/peak_subset.1) make sample column projection
++ [find_xcms_ionPeaks](mzDeco/find_xcms_ionPeaks.1) 
 + [mz_deco](mzDeco/mz_deco.1) Chromatogram data deconvolution
 + [write.peaks](mzDeco/write.peaks.1) write peak debug data
 + [read.peakFeatures](mzDeco/read.peakFeatures.1) read the peak feature table data
