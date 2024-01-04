@@ -351,6 +351,27 @@ Module Massbank
     End Function
 
     ''' <summary>
+    ''' gets the metabolite id collection from lipidmaps database
+    ''' </summary>
+    ''' <param name="lipidmaps">A lipidmaps database related dataset object</param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("lipidmaps_id")>
+    Public Function lipidmaps_id(lipidmaps As Object, Optional env As Environment = Nothing) As Object
+        If lipidmaps Is Nothing Then
+            Return Nothing
+        End If
+
+        If TypeOf lipidmaps Is LipidClassReader Then
+            Return DirectCast(lipidmaps, LipidClassReader) _
+                .EnumerateId _
+                .ToArray
+        Else
+            Return Message.InCompatibleType(GetType(LipidClassReader), lipidmaps.GetType, env)
+        End If
+    End Function
+
+    ''' <summary>
     ''' populate lipidmaps meta data objects from the loaded sdf data stream
     ''' </summary>
     ''' <param name="sdf">
