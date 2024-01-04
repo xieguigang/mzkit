@@ -22,7 +22,7 @@
 
         <h3>Description</h3>
 
-        the mzpack metadata format for ms-imaging raw data
+        
 
         <h3>Declare</h3>        
 
@@ -30,20 +30,12 @@
             <code id="clr_ts">
 # namespace BioNovoGene.Analytical.MassSpectrometry.Assembly.Comprehensive.MsImaging
 export class Metadata {
-   # the max scan number in x axis
    scan_x: integer;
-   # the max rows in y axis
    scan_y: integer;
-   # the spatial resolution
    resolution: double;
-   # the ion m/z value range of the scan result.
    mass_range: <a href="/vignettes/clr/Microsoft/VisualBasic/ComponentModel/Ranges/Model/DoubleRange.html">DoubleRange</a>;
-   # the string name of @``T:BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache.FileApplicationClass``, 
-   #  not the description id value
    class: string;
-   # the calculated physical width of the sample slider data
    physical_width: double;
-   # the calculated physical height of the sample slider data
    physical_height: double;
 }
 </code>

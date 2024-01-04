@@ -22,7 +22,7 @@
 
         <h3>Description</h3>
 
-        table output of the metaDNA infer annotation result
+        
 
         <h3>Declare</h3>        
 
@@ -30,9 +30,7 @@
             <code id="clr_ts">
 # namespace BioNovoGene.BioDeep.MetaDNA
 export class MetaDNAResult {
-   # the unique id of ms1 parent ion
    ROI_id: string;
-   # the unique id of ms2 spectrum peaks
    query_id: string;
    mz: double;
    rt: double;
@@ -42,10 +40,8 @@ export class MetaDNAResult {
    formula: string;
    name: string;
    precursorType: string;
-   # calculated m/z value based on @``P:BioNovoGene.BioDeep.MetaDNA.MetaDNAResult.mz`` and @``P:BioNovoGene.BioDeep.MetaDNA.MetaDNAResult.precursorType``
    mzCalc: double;
    ppm: double;
-   # the score match of ms1 @``P:BioNovoGene.BioDeep.MetaDNA.MetaDNAResult.rt`` and rt value of the KEGG compound reference
    rt_adjust: double;
    inferLevel: string;
    forward: double;

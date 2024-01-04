@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>get ms scan information metadata list</title>
+    <title>scaninfo</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
@@ -18,11 +18,11 @@
             </tr>
         </table>
 
-        <h2>get ms scan information metadata list</h2>
+        <h2>scaninfo</h2>
 
         <h3>Description</h3>
 
-        
+        scaninfo
 
         <h3>Usage</h3>
 
@@ -34,13 +34,6 @@
 
         <table>
             
-<dt>mzpack</dt>
-<dd><p><p>A mzpack data lazy reader object that created via <code>mzpack</code> function.</p></p></dd>
-
-
-<dt>index</dt>
-<dd><p><p>the scan id of the target ms1 scan data</p></p></dd>
-
         </table>
 
 
@@ -53,16 +46,9 @@
 
         this function returns data object of type list.<h4>clr value class</h4><ul><li>list</li></ul>
 
-        <h3 style="display: block;">Examples</h3>
+        <h3 style="display: none;">Examples</h3>
 
-        <pre><code id="example_r"> let rawdata = open.mzpack(file = "./rawdata.mzPack");
- let scan_id = mzPack::ls(mzpack = rawdata);
- 
- print(scan_id);
- 
- for(id in scan_id) {
-     str(mzPack::scaninfo(rawdata, id));
- }</code></pre>
+        
 
         <hr />
         <div style="text-align: center;">[Package <em>mzPack</em> version 1.0.0.0 <a

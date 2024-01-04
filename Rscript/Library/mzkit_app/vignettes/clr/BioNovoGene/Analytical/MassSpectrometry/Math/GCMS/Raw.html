@@ -22,7 +22,7 @@
 
         <h3>Description</h3>
 
-        从CDF文件之中所读取出来的最原始的数据
+        
 
         <h3>Declare</h3>        
 
@@ -31,13 +31,9 @@
 # namespace BioNovoGene.Analytical.MassSpectrometry.Math.GCMS
 export class Raw {
    title: string;
-   # the global attribute in netcdf file
    attributes: list;
-   # [气相色谱数据] 按照从开始到结束升序排序过了的
    times: double;
-   # [气相色谱数据] 相应强度是和@``P:BioNovoGene.Analytical.MassSpectrometry.Math.GCMS.Raw.times``一一对应的
    tic: double;
-   # 质谱扫描的结果数据
    ms: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/ms1_scan[].html">ms1_scan[][]</a>;
    mz: double;
    fileName: string;

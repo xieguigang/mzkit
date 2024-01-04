@@ -1,38 +1,13 @@
 .\" man page create by R# package system.
 .TH ANNOTATION 1 2000-Jan "checkInSourceFragments" "checkInSourceFragments"
 .SH NAME
-checkInSourceFragments \- Check the ms1 parent ion is generated via the in-source fragment or not
+checkInSourceFragments \- 
 .SH SYNOPSIS
 \fIcheckInSourceFragments(\fBms1\fR as any, 
 \fBms2\fR as any, 
 \fBda\fR as double = 0.1, 
 \fBrt_win\fR as double = 5, 
 [\fB<Environment>\fR]);\fR
-.SH DESCRIPTION
-.PP
-Check the ms1 parent ion is generated via the in-source fragment or not
-.PP
-.SH OPTIONS
-.PP
-\fBms1\fB \fR\- 
- the ms1 peaktable dataset, it could be a xcms peaktable object dataframe, 
- a collection of ms1 scan with unique id tagged.
-. 
-.PP
-.PP
-\fBms2\fB \fR\- 
- the ms2 products list
-. 
-.PP
-.PP
-\fBenv\fB \fR\- -. 
-.PP
-.SH VALUE
-.PP
-a tuple key-value pair list object that contains the flags for each ms1 ion
- corresponding slot value TRUE means the key ion is a possible in-source
- fragment ion data, otherwise slot value FALSE means not.
-.PP
 .SH SEE ALSO
 annotation
 .SH FILES

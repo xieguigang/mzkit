@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Demodulate the 1D rawdata input as 2D data</title>
+    <title>demodulate_2D</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
@@ -18,11 +18,11 @@
             </tr>
         </table>
 
-        <h2>Demodulate the 1D rawdata input as 2D data</h2>
+        <h2>demodulate_2D</h2>
 
         <h3>Description</h3>
 
-        
+        demodulate_2D
 
         <h3>Usage</h3>
 
@@ -34,17 +34,6 @@
 
         <table>
             
-<dt>rawdata</dt>
-<dd><p><p>-</p></p></dd>
-
-
-<dt>modtime</dt>
-<dd><p><p>-</p></p></dd>
-
-
-<dt>env</dt>
-<dd><p><p>-</p></p></dd>
-
         </table>
 
 
@@ -57,16 +46,9 @@
 
         this function returns data object of type <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzPack.html">mzPack</a>.<h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzPack.html">mzPack</a></li></ul>
 
-        <h3 style="display: block;">Examples</h3>
+        <h3 style="display: none;">Examples</h3>
 
-        <pre><code id="example_r"> require(mzkit);
- 
- imports "GCxGC" from "mzkit";
- 
- let rawdata = open.mzpack(file = "/path/to/leco_gcms.cdf");
- let gcxgc = GCxGC::demodulate_2D(rawdata, modtime = 4);
- 
- write.mzPack(gcxgc, file = "/file/to/save/gcxgc_rawdata.mzPack");</code></pre>
+        
 
         <hr />
         <div style="text-align: center;">[Package <em>GCxGC</em> version 1.0.0.0 <a

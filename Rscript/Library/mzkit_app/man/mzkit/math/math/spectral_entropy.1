@@ -1,52 +1,13 @@
 .\" man page create by R# package system.
 .TH MATH 4 2000-Jan "spectral_entropy" "spectral_entropy"
 .SH NAME
-spectral_entropy \- Search spectra with entropy similarity
+spectral_entropy \- 
 .SH SYNOPSIS
 \fIspectral_entropy(\fBx\fR as <generic> LibraryMatrix, 
 \fBref\fR as <generic> LibraryMatrix = \fB<NULL>\fR, 
 \fBtolerance\fR as any = "da:0.3", 
 \fBintocutoff\fR as double = 0.05, 
 [\fB<Environment>\fR]);\fR
-.SH DESCRIPTION
-.PP
-Search spectra with entropy similarity
-.PP
-.SH OPTIONS
-.PP
-\fBx\fB \fR\- target spectral data that used for calculate the entropy value. 
-.PP
-.PP
-\fBref\fB \fR\- 
- if this parameter is not nothing, then the spectral similarity score will
- be evaluated from this function.
-. 
-.PP
-.PP
-\fBtolerance\fB \fR\- 
- the mass tolerance error to make the spectrum data centroid
- 
- To calculate spectral entropy, the spectrum need to be centroid first. When you are
- focusing on fragment ion's information, the precursor ion may need to be removed 
- from the spectrum before calculating spectral entropy. If isotope peak exitsted on
- the MS/MS spectrum, the isotope peak should be removed fist as the isotope peak does
- not contain useful information for identifing molecule.
-. 
-.PP
-.PP
-\fBintocutoff\fB \fR\- 
- the percentage relative intensity value that used for removes the noise ion fragment peaks
-. 
-.PP
-.PP
-\fBenv\fB \fR\- -. 
-.PP
-.SH DETAILS
-.PP
-Li, Y., Kind, T., Folz, J. et al. Spectral entropy outperforms MS/MS dot product
- similarity for small-molecule compound identification. Nat Methods 18, 1524–1531
- (2021). https://doi.org/10.1038/s41592-021-01331-z
-.PP
 .SH SEE ALSO
 math
 .SH FILES

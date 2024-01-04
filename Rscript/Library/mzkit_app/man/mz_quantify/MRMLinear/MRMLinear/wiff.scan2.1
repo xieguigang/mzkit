@@ -1,7 +1,7 @@
 .\" man page create by R# package system.
 .TH MRMLINEAR 2 2000-Jan "wiff.scan2" "wiff.scan2"
 .SH NAME
-wiff.scan2 \- Scan the raw file data
+wiff.scan2 \- 
 .SH SYNOPSIS
 \fIwiff.scan2(\fBwiffConverts\fR as string, 
 \fBions\fR as <generic> IonPair[], 
@@ -9,38 +9,6 @@ wiff.scan2 \- Scan the raw file data
 \fBrtshifts\fR as <generic> RTAlignment[] = \fB<NULL>\fR, 
 \fBremovesWiffName\fR as boolean = TRUE, 
 [\fB<Environment>\fR]);\fR
-.SH DESCRIPTION
-.PP
-Scan the raw file data
- 
- Get the peak area data of the metabolites in each given sample 
- data files
-.PP
-.SH OPTIONS
-.PP
-\fBwiffConverts\fB \fR\- 
- A directory that contains the mzML files which are converts from 
- the given wiff raw file.
-. 
-.PP
-.PP
-\fBions\fB \fR\- Ion pairs definition data.. 
-.PP
-.PP
-\fBpeakAreaMethod\fB \fR\- -. 
-.PP
-.PP
-\fBTPAFactors\fB \fR\- -. 
-.PP
-.PP
-\fBremovesWiffName\fB \fR\- -. 
-.PP
-.PP
-\fBrtshifts\fB \fR\- 
- For the calibration of the linear model reference points used only, 
- **DO NOT apply this parameter for the user sample data!**
-. 
-.PP
 .SH SEE ALSO
 MRMLinear
 .SH FILES

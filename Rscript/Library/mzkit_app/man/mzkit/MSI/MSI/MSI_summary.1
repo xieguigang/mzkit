@@ -1,7 +1,7 @@
 .\" man page create by R# package system.
 .TH MSI 1 2000-Jan "MSI_summary" "MSI_summary"
 .SH NAME
-MSI_summary \- Fetch MSI summary data
+MSI_summary \- 
 .SH SYNOPSIS
 \fIMSI_summary(\fBraw\fR as <generic> mzPack, 
 \fBx\fR as integer = \fB<NULL>\fR, 
@@ -9,28 +9,6 @@ MSI_summary \- Fetch MSI summary data
 \fBas_vector\fR as boolean = FALSE, 
 \fBdims\fR as any = \fB<NULL>\fR, 
 [\fB<Environment>\fR]);\fR
-.SH DESCRIPTION
-.PP
-Fetch MSI summary data
-.PP
-.SH OPTIONS
-.PP
-\fBraw\fB \fR\- -. 
-.PP
-.PP
-\fBas_vector\fB \fR\- 
- returns the raw vector of @\fBT:BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML.iPixelIntensity\fR if set this
- parameter value to value TRUE, or its wrapper object @\fBT:BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML.MSISummary\fR 
- if set this parameter value to FALSE by default.
-. 
-.PP
-.PP
-\fBdims\fB \fR\- 
- overrides the MSI data its scan dimension value? This parameter value is
- a numeric vector with two integer element that represents the dimension
- of the MSI data(width and height)
-. 
-.PP
 .SH SEE ALSO
 MSI
 .SH FILES

@@ -22,7 +22,7 @@
 
         <h3>Description</h3>
 
-        A basic metabolite annotation data model
+        
 
         <h3>Declare</h3>        
 
@@ -30,13 +30,9 @@
             <code id="clr_ts">
 # namespace BioNovoGene.BioDeep.Chemoinformatics
 export class MetaboliteAnnotation {
-   # the unique reference id of current metabolite
    Id: string;
-   # common name of the current metabolite
    CommonName: string;
-   # exact mass value of current metabolite, which it could be evaluated from the @``P:BioNovoGene.BioDeep.Chemoinformatics.MetaboliteAnnotation.Formula``
    ExactMass: double;
-   # atom compositions of current metabolite
    Formula: string;
 }
 </code>

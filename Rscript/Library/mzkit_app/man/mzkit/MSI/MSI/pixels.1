@@ -1,32 +1,11 @@
 .\" man page create by R# package system.
 .TH MSI 1 2000-Jan "pixels" "pixels"
 .SH NAME
-pixels \- get pixels size from the raw data file
+pixels \- 
 .SH SYNOPSIS
 \fIpixels(\fBfile\fR as any, 
 \fBcount\fR as boolean = FALSE, 
 [\fB<Environment>\fR]);\fR
-.SH DESCRIPTION
-.PP
-get pixels size from the raw data file
-.PP
-.SH OPTIONS
-.PP
-\fBfile\fB \fR\- 
- imML/mzPack, or a single ion layer of the ms-imaging rawdata
-. 
-.PP
-.PP
-\fBcount\fB \fR\- 
- get the pixel count number instead of get the canvas dimension size of the ms-imaging.
-. 
-.PP
-.SH VALUE
-.PP
-this function will returns the pixels in dimension size(a tuple list data with slot keys w and h) 
- if the count is set to FALSE, by default; otherwise this function will return an integer value for
- indicates the real pixel counts number if the count parameter is set to TRUE.
-.PP
 .SH SEE ALSO
 MSI
 .SH FILES

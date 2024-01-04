@@ -1,33 +1,12 @@
 .\" man page create by R# package system.
 .TH MRMLINEAR 2 2000-Jan "wiff.rawfiles" "wiff.rawfiles"
 .SH NAME
-wiff.rawfiles \- Create model of the MRM raw files
+wiff.rawfiles \- 
 .SH SYNOPSIS
 \fIwiff.rawfiles(\fBconvertDir\fR as any, 
 \fBpatternOfRef\fR as string = ".+[-]CAL[-]?\d+", 
 \fBpatternOfBlank\fR as string = "KB[-]?(\d+)?", 
 [\fB<Environment>\fR]);\fR
-.SH DESCRIPTION
-.PP
-Create model of the MRM raw files
-.PP
-.SH OPTIONS
-.PP
-\fBconvertDir\fB \fR\- 
- A directory data object for read MRM sample raw files. If the parameter value is
- a \fBlist\fR, then it should contains at least two fields: \fBsamples\fR and \fBreference\fR.
- The balnks raw data should be contains in reference files directory.
-. 
-.PP
-.PP
-\fBpatternOfRef\fB \fR\- File name pattern for filter reference data.. 
-.PP
-.PP
-\fBpatternOfBlank\fB \fR\- File name pattern for filter blank controls.. 
-.PP
-.PP
-\fBenv\fB \fR\- -. 
-.PP
 .SH SEE ALSO
 MRMLinear
 .SH FILES

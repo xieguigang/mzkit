@@ -22,7 +22,7 @@
 
         <h3>Description</h3>
 
-        the peak table format table file model of xcms version 2
+        
 
         <h3>Declare</h3>        
 
@@ -30,19 +30,13 @@
             <code id="clr_ts">
 # namespace BioNovoGene.Analytical.MassSpectrometry.Math
 export class xcms2 {
-   # the feature unique id
    ID: string;
-   # the ion m/z
    mz: double;
-   # the min of ion m/z value
    mzmin: double;
-   # the max of the ion m/z value
    mzmax: double;
-   # the rt value in max peak data point
    rt: double;
    rtmin: double;
    rtmax: double;
-   # this feature has n sample data(value should be a positive number)
    npeaks: integer;
    Properties: list;
 }

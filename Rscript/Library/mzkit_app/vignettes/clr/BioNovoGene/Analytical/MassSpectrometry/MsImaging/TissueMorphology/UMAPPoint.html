@@ -22,7 +22,7 @@
 
         <h3>Description</h3>
 
-        3d scatter data point, a spatial spot or a single cell data
+        
 
         <h3>Declare</h3>        
 
@@ -30,15 +30,11 @@
             <code id="clr_ts">
 # namespace BioNovoGene.Analytical.MassSpectrometry.MsImaging.TissueMorphology
 export class UMAPPoint {
-   # the spatial point of current spot if it is the sptial data, value
-   #  of this property is empty for the single cell data
    Pixel: <a href="/vignettes/clr/System/Drawing/Point.html">Point</a>;
-   # the cell label of current spot
    label: string;
    x: double;
    y: double;
    z: double;
-   # the cell cluster data
    class: string;
 }
 </code>

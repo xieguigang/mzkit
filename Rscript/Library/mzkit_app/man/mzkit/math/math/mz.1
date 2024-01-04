@@ -1,30 +1,11 @@
 .\" man page create by R# package system.
 .TH MATH 4 2000-Jan "mz" "mz"
 .SH NAME
-mz \- evaluate all m/z for all known precursor type.
+mz \- 
 .SH SYNOPSIS
 \fImz(\fBmass\fR as double, 
 \fBmode\fR as any = "+", 
 [\fB<Environment>\fR]);\fR
-.SH DESCRIPTION
-.PP
-evaluate all m/z for all known precursor type.
-.PP
-.SH OPTIONS
-.PP
-\fBmass\fB \fR\- the target exact mass value. 
-.PP
-.PP
-\fBmode\fB \fR\- 
- this parameter could be two type of data:
- 
- 1. character of value \fB+\fR or \fB-\fR, means evaluate all m/z for all known precursor types in given ion mode
- 2. character of value in precursor type format means calculate mz for the target precursor type
- 3. mzcalculator type means calculate mz for the traget precursor type
- 4. a list of the mz calculator object and a list of corresponding mz value will be evaluated.
- 
-. 
-.PP
 .SH SEE ALSO
 math
 .SH FILES

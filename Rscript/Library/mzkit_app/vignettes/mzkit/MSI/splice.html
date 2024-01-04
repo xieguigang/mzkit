@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>split the raw 2D MSI data into multiple parts with given parts</title>
+    <title>splice</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
@@ -18,11 +18,11 @@
             </tr>
         </table>
 
-        <h2>split the raw 2D MSI data into multiple parts with given parts</h2>
+        <h2>splice</h2>
 
         <h3>Description</h3>
 
-        
+        splice
 
         <h3>Usage</h3>
 
@@ -35,15 +35,6 @@
 
         <table>
             
-<dt>raw</dt>
-<dd><p><p>the mzpack rawdata object that used for run ms-imaging data analysis.</p></p></dd>
-
-
-<dt>partition</dt>
-<dd><p><p>this parameter indicates that how many blocks that will be splice <br />
- into parts on width dimension and column dimension. the number of the pixels in each <br />
- partition block will be evaluated from this parameter.</p></p></dd>
-
         </table>
 
 
@@ -54,13 +45,11 @@
 
         <h3>Value</h3>
 
-        <p>A collection of the ms-imaging mzpack object that split from multiple <br />
- parts based on the input <strong><code>raw</code></strong> data mzpack inputs.</p><h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzPack.html">mzPack</a></li></ul>
+        this function returns data object of type <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzPack.html">mzPack</a>.<h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzPack.html">mzPack</a></li></ul>
 
-        <h3 style="display: block;">Examples</h3>
+        <h3 style="display: none;">Examples</h3>
 
-        <pre><code id="example_r"> let rawdata = open.mzpack("/path/to/msi_rawdata.mzPack");
- let parts = MSI::splice(rawdata, partition = 6);</code></pre>
+        
 
         <hr />
         <div style="text-align: center;">[Package <em>MSI</em> version 1.0.0.0 <a

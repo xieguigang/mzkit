@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>normalized the peak intensity data, do [0,1] scaled.</title>
+    <title>norm_msdata</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
@@ -18,11 +18,11 @@
             </tr>
         </table>
 
-        <h2>normalized the peak intensity data, do [0,1] scaled.</h2>
+        <h2>norm_msdata</h2>
 
         <h3>Description</h3>
 
-        
+        norm_msdata
 
         <h3>Usage</h3>
 
@@ -35,21 +35,6 @@
 
         <table>
             
-<dt>msdata</dt>
-<dd><p><p>Should be a collection of the @<code>T:BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.LibraryMatrix</code> object.</p></p></dd>
-
-
-<dt>sum</dt>
-<dd><p><p>the intensity normalization method to be used in this function, <br />
- set this parameter value to TRUE means use the total ion <br />
- normalization method, and the default value FALSE means used <br />
- the max intensity value for normalize the intensity value <br />
- to a relative percentage value.</p></p></dd>
-
-
-<dt>env</dt>
-<dd><p><p>-</p></p></dd>
-
         </table>
 
 
@@ -60,8 +45,7 @@
 
         <h3>Value</h3>
 
-        <p>A collection of the <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/LibraryMatrix.html">LibraryMatrix</a> <br />
- object with the intensity value for each ms2 peak normalized.</p><h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/LibraryMatrix.html">LibraryMatrix</a></li></ul>
+        this function returns data object of type <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/LibraryMatrix.html">LibraryMatrix</a>.<h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/LibraryMatrix.html">LibraryMatrix</a></li></ul>
 
         <h3 style="display: none;">Examples</h3>
 

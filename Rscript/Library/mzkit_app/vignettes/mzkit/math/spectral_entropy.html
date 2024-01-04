@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Search spectra with entropy similarity</title>
+    <title>spectral_entropy</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
@@ -18,11 +18,11 @@
             </tr>
         </table>
 
-        <h2>Search spectra with entropy similarity</h2>
+        <h2>spectral_entropy</h2>
 
         <h3>Description</h3>
 
-        
+        spectral_entropy
 
         <h3>Usage</h3>
 
@@ -37,40 +37,12 @@
 
         <table>
             
-<dt>x</dt>
-<dd><p><p>target spectral data that used for calculate the entropy value</p></p></dd>
-
-
-<dt>ref</dt>
-<dd><p><p>if this parameter is not nothing, then the spectral similarity score will<br />
- be evaluated from this function.</p></p></dd>
-
-
-<dt>tolerance</dt>
-<dd><p><p>the mass tolerance error to make the spectrum data centroid</p>
-
-<p>To calculate spectral entropy, the spectrum need to be centroid first. When you are<br />
- focusing on fragment ion's information, the precursor ion may need to be removed <br />
- from the spectrum before calculating spectral entropy. If isotope peak exitsted on<br />
- the MS/MS spectrum, the isotope peak should be removed fist as the isotope peak does<br />
- not contain useful information for identifing molecule.</p></p></dd>
-
-
-<dt>intocutoff</dt>
-<dd><p><p>the percentage relative intensity value that used for removes the noise ion fragment peaks</p></p></dd>
-
-
-<dt>env</dt>
-<dd><p><p>-</p></p></dd>
-
         </table>
 
 
-        <h3 style="display: block;">Details</h3>
+        <h3 style="display: none;">Details</h3>
 
-        <p>Li, Y., Kind, T., Folz, J. et al. Spectral entropy outperforms MS/MS dot product<br />
- similarity for small-molecule compound identification. Nat Methods 18, 1524–1531<br />
- (2021). <a href="https://doi.org/10.1038/s41592-021-01331-z">https://doi.org/10.1038/s41592-021-01331-z</a></p>
+        
 
 
         <h3>Value</h3>

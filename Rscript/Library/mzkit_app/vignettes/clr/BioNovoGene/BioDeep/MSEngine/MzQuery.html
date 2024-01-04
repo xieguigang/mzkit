@@ -22,7 +22,7 @@
 
         <h3>Description</h3>
 
-        query result of a ms1 m/z ion
+        
 
         <h3>Declare</h3>        
 
@@ -30,17 +30,11 @@
             <code id="clr_ts">
 # namespace BioNovoGene.BioDeep.MSEngine
 export class MzQuery {
-   # the source ``m/z`` value
    mz: double;
-   # the evaluated theoretical m/z value based 
-   #  on the precursor type and formula string 
-   #  data.
    mz_ref: double;
    ppm: double;
    precursorType: string;
-   # the unique id of the target query result metabolite
    unique_id: string;
-   # used in MSJointConnection peak list annotation.
    score: double;
    name: string;
 }

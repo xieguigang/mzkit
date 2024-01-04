@@ -1,36 +1,11 @@
 .\" man page create by R# package system.
 .TH MATH 4 2000-Jan "intensity_vec" "intensity_vec"
 .SH NAME
-intensity_vec \- Extract an intensity vector based on a given peak index
+intensity_vec \- 
 .SH SYNOPSIS
 \fIintensity_vec(\fBms\fR as any, 
 \fBmzSet\fR as <generic> BlockSearchFunction`1, 
 [\fB<Environment>\fR]);\fR
-.SH DESCRIPTION
-.PP
-Extract an intensity vector based on a given peak index
-.PP
-.SH OPTIONS
-.PP
-\fBms\fB \fR\- -. 
-.PP
-.PP
-\fBmzSet\fB \fR\- 
- A peak index object, which could be generated based 
- on a given set of the peak m/z vector via the 
- function \fBmz_index\fR.
-. 
-.PP
-.SH VALUE
-.PP
-the returns value of this function is based on the input **`ms`** data:
- 
- 1. for a single msdata object, then this function just returns a intensity numeric vector
- 2. for a collection of the msdata object, then this function will returns a
-    dataframe object that each row is the element corresponding in the input msdata
-    collection and each column is the m/z peak intensity value across the input
-    msdata collection.
-.PP
 .SH SEE ALSO
 math
 .SH FILES

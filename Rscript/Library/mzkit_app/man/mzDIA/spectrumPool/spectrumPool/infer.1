@@ -1,38 +1,13 @@
 .\" man page create by R# package system.
 .TH SPECTRUMPOOL 1 2000-Jan "infer" "infer"
 .SH NAME
-infer \- Infer and make annotation to a specific cluster
+infer \- 
 .SH SYNOPSIS
 \fIinfer(\fBdia\fR as <generic> DIAInfer, 
 \fBcluster_id\fR as string, 
 \fBreference_id\fR as string = \fB<NULL>\fR, 
 \fBformula\fR as string = \fB<NULL>\fR, 
 \fBname\fR as string = \fB<NULL>\fR);\fR
-.SH DESCRIPTION
-.PP
-Infer and make annotation to a specific cluster
-.PP
-.SH OPTIONS
-.PP
-\fBdia\fB \fR\- -. 
-.PP
-.PP
-\fBcluster_id\fB \fR\- -. 
-.PP
-.PP
-\fBreference_id\fB \fR\- 
- the spectrum reference id, if this parameter is missing, then 
- the spectrum inference will be based on the reference cluster hits
- annotation result
-. 
-.PP
-.SH DETAILS
-.PP
-workflow for reference id inference: the alignment should be perfermance
- at first for the cluster spectrum and the reference specturm, and then
- get the reference id list as candidates, then finally use this function
- for the inference analysis.
-.PP
 .SH SEE ALSO
 spectrumPool
 .SH FILES

@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Converts profiles peak data to peak data in centroid mode.</title>
+    <title>centroid</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
@@ -18,11 +18,11 @@
             </tr>
         </table>
 
-        <h2>Converts profiles peak data to peak data in centroid mode.</h2>
+        <h2>centroid</h2>
 
         <h3>Description</h3>
 
-        <p><br /> profile and centroid in Mass Spectrometry?<br /> <br /> 1. Profile means the continuous wave form in a mass spectrum.<br />   + Number of data points Is large.<br /> 2. Centroid means the peaks in a profile data Is changed to bars.<br />   + location of the bar Is center of the profile peak.<br />   + height of the bar Is area of the profile peak.</p>
+        centroid
 
         <h3>Usage</h3>
 
@@ -37,17 +37,6 @@
 
         <table>
             
-<dt>ions</dt>
-<dd><p><p>value of this parameter could be </p>
-
-<ul>
-<li>a collection of peakMs2 data </li>
-<li>a library matrix data </li>
-<li>or a dataframe object which should contains at least <code>mz</code> and <code>intensity</code> columns.</li>
-<li>or just a m/z vector</li>
-<li>also could be a mzpack data object</li>
-</ul></p></dd>
-
         </table>
 
 
@@ -58,11 +47,11 @@
 
         <h3>Value</h3>
 
-        <p>Peaks data in centroid mode or a new m/z vector in centroid.</p><h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/PeakMs2.html">PeakMs2</a></li><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/LibraryMatrix.html">LibraryMatrix</a></li><li>double</li></ul>
+        this function returns data object in these one of the listed data types: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/PeakMs2.html">PeakMs2</a>, <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/LibraryMatrix.html">LibraryMatrix</a>, double.<h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/PeakMs2.html">PeakMs2</a></li><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/LibraryMatrix.html">LibraryMatrix</a></li><li>double</li></ul>
 
-        <h3 style="display: block;">Examples</h3>
+        <h3 style="display: none;">Examples</h3>
 
-        <pre><code id="example_r"> print(centroid([452.7627 67.563 457.336 347.8 242.3], tolerance = "da:0.1"));</code></pre>
+        
 
         <hr />
         <div style="text-align: center;">[Package <em>math</em> version 1.0.0.0 <a

@@ -1,44 +1,12 @@
 .\" man page create by R# package system.
 .TH MOLECULENETWORKING 1 2000-Jan "splitClusterRT" "splitClusterRT"
 .SH NAME
-splitClusterRT \- Split each cluster data into multiple parts by a givne rt window
+splitClusterRT \- 
 .SH SYNOPSIS
 \fIsplitClusterRT(\fBclusters\fR as any, 
 \fBrtwin\fR as double = 30, 
 \fBwrap_peaks\fR as boolean = FALSE, 
 [\fB<Environment>\fR]);\fR
-.SH DESCRIPTION
-.PP
-Split each cluster data into multiple parts by a givne rt window
-.PP
-.SH OPTIONS
-.PP
-\fBclusters\fB \fR\- -. 
-.PP
-.PP
-\fBrtwin\fB \fR\- -. 
-.PP
-.PP
-\fBwrap_peaks\fB \fR\- 
- wraping the networking node data as the spectrum peak object?
-. 
-.PP
-.PP
-\fBenv\fB \fR\- -. 
-.PP
-.SH VALUE
-.PP
-the value type of this function is affects by the **`wrap_peaks`** parameter:
- 
- 1. for wrap_peaks is set to false by default, a vector of the raw @\fBT:BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.MoleculeNetworking.NetworkingNode\fR 
-    which is extract from the cluster data will be returns
- 2. otherwise the spectrum peaks data will be returns if the parameter 
-    value is set to value true.
-.PP
-.SH DETAILS
-.PP
-This function works for the small molecular networking analysis
-.PP
 .SH SEE ALSO
 MoleculeNetworking
 .SH FILES

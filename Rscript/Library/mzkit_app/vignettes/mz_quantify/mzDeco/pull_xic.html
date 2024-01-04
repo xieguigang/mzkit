@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>extract a collection of xic data for a specific ion feature</title>
+    <title>pull_xic</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
@@ -18,11 +18,11 @@
             </tr>
         </table>
 
-        <h2>extract a collection of xic data for a specific ion feature</h2>
+        <h2>pull_xic</h2>
 
         <h3>Description</h3>
 
-        <p><br /> this function is debug used only</p>
+        pull_xic
 
         <h3>Usage</h3>
 
@@ -36,21 +36,6 @@
 
         <table>
             
-<dt>pool</dt>
-<dd><p><p>-</p></p></dd>
-
-
-<dt>mz</dt>
-<dd><p><p>the ion feature m/z value</p></p></dd>
-
-
-<dt>dtw</dt>
-<dd><p><p>-</p></p></dd>
-
-
-<dt>mzdiff</dt>
-<dd><p><p>-</p></p></dd>
-
         </table>
 
 
@@ -61,29 +46,11 @@
 
         <h3>Value</h3>
 
-        <p>a tuple list object that contains the xic data across<br />
- multiple sample data files for a speicifc ion feature<br />
- m/z.</p><h4>clr value class</h4><ul><li><i>any</i> kind</li></ul>
+        this function returns data object of type <i>any</i> kind.<h4>clr value class</h4><ul><li><i>any</i> kind</li></ul>
 
-        <h3 style="display: block;">Examples</h3>
+        <h3 style="display: none;">Examples</h3>
 
-        <pre><code id="example_r"> require(mzkit);
-
- imports "mzDeco" from "mz_quantify";
- imports "visual" from "mzplot";
- 
- let files = list.files("/path/to/debug_data_dir/", pattern = "*.xic");
- let pool = xic_pool(files);
- let dtw_xic = pull_xic(pool, mz = 100.0011, dtw = TRUE);
- 
- bitmap(file = "/path/to/save_image.png") {
-     raw_snapshot3D(dtw_xic);
- }
-
- dtw_xic
- |> mz_deco(joint = TRUE, peak.width = [3,60])
- |> write.csv(file = "/path/to/export_peakstable.csv")
- ;</code></pre>
+        
 
         <hr />
         <div style="text-align: center;">[Package <em>mzDeco</em> version 1.0.0.0 <a

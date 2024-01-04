@@ -1,7 +1,7 @@
 .\" man page create by R# package system.
 .TH MZWEB 1 2000-Jan "ms2_peaks" "ms2_peaks"
 .SH NAME
-ms2_peaks \- extract ms2 peaks data from the mzpack data object
+ms2_peaks \- 
 .SH SYNOPSIS
 \fIms2_peaks(\fBmzpack\fR as <generic> mzPack, 
 \fBprecursorMz\fR as double = NAN, 
@@ -12,34 +12,6 @@ ms2_peaks \- extract ms2 peaks data from the mzpack data object
 \fBfilter_empty\fR as boolean = TRUE, 
 \fBinto_cutoff\fR as any = 0, 
 [\fB<Environment>\fR]);\fR
-.SH DESCRIPTION
-.PP
-extract ms2 peaks data from the mzpack data object
-.PP
-.SH OPTIONS
-.PP
-\fBmzpack\fB \fR\- -. 
-.PP
-.PP
-\fBprecursorMz\fB \fR\- 
- if the precursor m/z data is assign by this parameter
- value, then this function will extract the ms2 xic data
- only
-. 
-.PP
-.PP
-\fBtolerance\fB \fR\- 
- ppm toleracne error for extract ms2 xic data.
-. 
-.PP
-.PP
-\fBcentroid\fB \fR\- 
- and also convert the data to centroid mode? 
-. 
-.PP
-.PP
-\fBenv\fB \fR\- -. 
-.PP
 .SH SEE ALSO
 mzweb
 .SH FILES

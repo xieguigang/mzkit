@@ -1,28 +1,10 @@
 .\" man page create by R# package system.
 .TH MSI 1 2000-Jan "splice" "splice"
 .SH NAME
-splice \- split the raw 2D MSI data into multiple parts with given parts
+splice \- 
 .SH SYNOPSIS
 \fIsplice(\fBraw\fR as <generic> mzPack, 
 \fBpartition\fR as integer = 5);\fR
-.SH DESCRIPTION
-.PP
-split the raw 2D MSI data into multiple parts with given parts
-.PP
-.SH OPTIONS
-.PP
-\fBraw\fB \fR\- the mzpack rawdata object that used for run ms-imaging data analysis.. 
-.PP
-.PP
-\fBpartition\fB \fR\- this parameter indicates that how many blocks that will be splice 
- into parts on width dimension and column dimension. the number of the pixels in each 
- partition block will be evaluated from this parameter.. 
-.PP
-.SH VALUE
-.PP
-A collection of the ms-imaging mzpack object that split from multiple 
- parts based on the input **`raw`** data mzpack inputs.
-.PP
 .SH SEE ALSO
 MSI
 .SH FILES

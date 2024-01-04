@@ -1,37 +1,10 @@
 .\" man page create by R# package system.
 .TH SINGLECELLS 1 2000-Jan "open.matrix" "open.matrix"
 .SH NAME
-open.matrix \- open a single cell data matrix reader
+open.matrix \- 
 .SH SYNOPSIS
 \fIopen.matrix(\fBfile\fR as any, 
 [\fB<Environment>\fR]);\fR
-.SH DESCRIPTION
-.PP
-open a single cell data matrix reader
-.PP
-.SH OPTIONS
-.PP
-\fBfile\fB \fR\- -. 
-.PP
-.PP
-\fBenv\fB \fR\- -. 
-.PP
-.SH VALUE
-.PP
-A tuple list that contains the data elements:
- 
- 1. tolerance: the mass tolerance description for seperates the ion features
- 2. featureSize: the number of the ion features in the raw data file
- 3. ionSet: a numeric vector of the ion features m/z value.
- 4. spots: the number of the spots that read from the rawdata matrix file
- 5. reader: the rawdata @\fBT:BioNovoGene.Analytical.MassSpectrometry.SingleCells.MatrixReader\fR
-.PP
-.SH DETAILS
-.PP
-this function open a lazy reader of the matrix, for load all 
- data into memory at once, use the \fBread.mz_matrix\fR 
- function.
-.PP
 .SH SEE ALSO
 SingleCells
 .SH FILES

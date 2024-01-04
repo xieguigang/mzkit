@@ -1,43 +1,13 @@
 .\" man page create by R# package system.
 .TH SPECTRUMTREE 1 2000-Jan "addBucket" "addBucket"
 .SH NAME
-addBucket \- push the reference spectrum data into the spectrum reference tree library
+addBucket \- 
 .SH SYNOPSIS
 \fIaddBucket(\fBtree\fR as any, 
 \fBx\fR as any, 
 \fBignore_error\fR as boolean = FALSE, 
 ..., 
 [\fB<Environment>\fR]);\fR
-.SH DESCRIPTION
-.PP
-push the reference spectrum data into the spectrum reference tree library
-.PP
-.SH OPTIONS
-.PP
-\fBtree\fB \fR\- 
- The reference spectrum database, which the spectrum data 
- is store in family tree style
-. 
-.PP
-.PP
-\fBx\fB \fR\- 
- A new spectrum data to push into the reference database
-. 
-.PP
-.PP
-\fBargs\fB \fR\- 
- additional parameters for create the spectrum library in spectrum pack format:
- 
- 1. uuid, BioDeepID, biodeep_id is used for the metabolite unique reference id
- 2. chemical_formula, formula is used for the metabolite exact mass value
- 
- and the spectrum input of x should be the same metabolite if save data as 
- the spectrum pack data.
-. 
-.PP
-.PP
-\fBenv\fB \fR\- -. 
-.PP
 .SH SEE ALSO
 spectrumTree
 .SH FILES

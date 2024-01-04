@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>scale the spatial matrix by column</title>
+    <title>scale</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
@@ -18,11 +18,11 @@
             </tr>
         </table>
 
-        <h2>scale the spatial matrix by column</h2>
+        <h2>scale</h2>
 
         <h3>Description</h3>
 
-        
+        scale
 
         <h3>Usage</h3>
 
@@ -35,23 +35,6 @@
 
         <table>
             
-<dt>m</dt>
-<dd><p><p>a dataframe object that contains the spot expression data. <br />
- should be in format of: spot in column and ion features in rows.</p></p></dd>
-
-
-<dt>factor</dt>
-<dd><p><p>the size of this numeric vector should be equals to the <br />
- ncol of the given dataframe input <strong><code>m</code></strong>.</p></p></dd>
-
-
-<dt>bpc</dt>
-<dd><p><p>scle by bpc or scale by tic?</p></p></dd>
-
-
-<dt>env</dt>
-<dd><p><p>-</p></p></dd>
-
         </table>
 
 
@@ -62,18 +45,11 @@
 
         <h3>Value</h3>
 
-        <p>A new dataframe data after scaled</p><h4>clr value class</h4><ul><li><a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Internal/Object/dataframe.html">dataframe</a></li></ul>
+        this function returns data object of type <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Internal/Object/dataframe.html">dataframe</a>.<h4>clr value class</h4><ul><li><a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Internal/Object/dataframe.html">dataframe</a></li></ul>
 
-        <h3 style="display: block;">Examples</h3>
+        <h3 style="display: none;">Examples</h3>
 
-        <pre><code id="example_r"> let factor = get_factors();
- let mat = get_matrix();
- 
- if (length(factor) != ncol(mat)) {
-     stop("the length of the factor vector should be equals to the column feature size of the given dataframe!");
- } else {
-     mat <- MSI::scale(mat, factor);
- }</code></pre>
+        
 
         <hr />
         <div style="text-align: center;">[Package <em>MSI</em> version 1.0.0.0 <a
