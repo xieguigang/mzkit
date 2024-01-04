@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>metabo_anno</title>
+    <title>construct a new metabolite annotation information data</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
@@ -18,11 +18,11 @@
             </tr>
         </table>
 
-        <h2>metabo_anno</h2>
+        <h2>construct a new metabolite annotation information data</h2>
 
         <h3>Description</h3>
 
-        metabo_anno
+        
 
         <h3>Usage</h3>
 
@@ -38,6 +38,9 @@
 
         <table>
             
+<dt>xref</dt>
+<dd><p><p>the database cross reference links of current metabolite.</p></p></dd>
+
         </table>
 
 
@@ -50,9 +53,29 @@
 
         this function returns data object of type <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/MetaLib/Models/MetaLib.html">MetaLib</a>.<h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/MetaLib/Models/MetaLib.html">MetaLib</a></li></ul>
 
-        <h3 style="display: none;">Examples</h3>
+        <h3 style="display: block;">Examples</h3>
 
-        
+        <pre><code id="example_r"> imports ["massbank", "annotation"] from "mzkit";
+ 
+ # an example of create metabolite annotation data
+ # for 'ATP'.
+ 
+ let xrefs = annotation::xref(
+     KEGG = 'C00002',
+     CAS = '56-65-5',
+     pubchem = '3304',
+     chebi = '15422',
+     KNApSAcK = 'C00001491'
+ );
+ let metabo = metabo_anno(
+     id = "ATP",
+     formula = "C10H16N5O13P3",
+     name = "ATP",
+     xref = xrefs,
+     synonym = ['ATP' 'Adenosine 5'-triphosphate']
+ );
+ 
+ print(JSON::json_encode(metabo));</code></pre>
 
         <hr />
         <div style="text-align: center;">[Package <em>massbank</em> version 1.0.0.0 <a

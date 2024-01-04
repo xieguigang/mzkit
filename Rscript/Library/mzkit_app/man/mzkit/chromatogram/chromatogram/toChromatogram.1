@@ -1,10 +1,33 @@
 .\" man page create by R# package system.
 .TH CHROMATOGRAM 1 2000-Jan "toChromatogram" "toChromatogram"
 .SH NAME
-toChromatogram \- 
+toChromatogram \- Convert chromatogram tick point data to a chromatogram object
 .SH SYNOPSIS
 \fItoChromatogram(\fBticks\fR as any, 
 [\fB<Environment>\fR]);\fR
+.SH DESCRIPTION
+.PP
+Convert chromatogram tick point data to a chromatogram object
+.PP
+.SH OPTIONS
+.PP
+\fBticks\fB \fR\- 
+ A vector of the @\fBT:BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram.ChromatogramTick\fR object or a dataframe object.
+ 
+ If the data input is a dataframe object, then the data fields is
+ required for create the chromatogram object:
+ 
+ 1. rt,RT,retention_time: used for represents the retention time data, data should be in time data unit seconds
+ 2. basePeak,BPC: used for represents the base peak ion intensity value
+ 3. totalIon,TIC: used for represents the total ions intensity value
+ 4. into,intensity: used for represents the ion intensity value if the basePeak or total ion data is not specific
+. 
+.PP
+.SH VALUE
+.PP
+A chromatogram data object, which could be used for do 
+ chromatogram overlaps or data plot visualization.
+.PP
 .SH SEE ALSO
 chromatogram
 .SH FILES

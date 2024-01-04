@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>as.mzpack</title>
+    <title>convert assembly file to mzpack format data object</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
@@ -18,11 +18,11 @@
             </tr>
         </table>
 
-        <h2>as.mzpack</h2>
+        <h2>convert assembly file to mzpack format data object</h2>
 
         <h3>Description</h3>
 
-        as.mzpack
+        
 
         <h3>Usage</h3>
 
@@ -35,6 +35,24 @@
 
         <table>
             
+<dt>assembly</dt>
+<dd><p><p>-</p></p></dd>
+
+
+<dt>args</dt>
+<dd><p><ol>
+<li>modtime: [GCxGC] the modulation time of the chromatographic run. <br />
+modulation period in time unit 'seconds'.</li>
+<li>sample_rate: [GCxGC] the sampling rate of the equipment.<br />
+If sam_rate is missing, the sampling rate is calculated by the dividing 1 by<br />
+the difference of two adjacent scan time.</li>
+<li>imzml: [MS-Imaging] the pixel spot scan metadata collection for<br />
+read ms data from the ibd file, the corresponding assembly object should<br />
+be a @<code>T:BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML.ibdReader</code> object</li>
+<li>dims: [MS-Imaging] the canvas dimension size value for the ms-imaging<br />
+heatmap rendering</li>
+</ol></p></dd>
+
         </table>
 
 

@@ -22,7 +22,7 @@
 
         <h3>Description</h3>
 
-        
+        m/z calculator for a given ion precursor type
 
         <h3>Declare</h3>        
 
@@ -31,9 +31,12 @@
 # namespace BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 export class MzCalculator {
    name: string;
+   # 电荷量的符号无所谓,计算出来的m/z结果值总是正数
    charge: integer;
    M: integer;
+   # 是可能会出现负数的加和结果，例如[M-H2O]的adducts为-18
    adducts: double;
+   # only one of the char +/-
    mode: string;
    IsEmpty: boolean;
 }

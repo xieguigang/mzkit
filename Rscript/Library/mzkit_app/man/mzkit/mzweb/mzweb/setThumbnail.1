@@ -1,11 +1,38 @@
 .\" man page create by R# package system.
 .TH MZWEB 1 2000-Jan "setThumbnail" "setThumbnail"
 .SH NAME
-setThumbnail \- 
+setThumbnail \- set thumbnail image to the raw data file
 .SH SYNOPSIS
 \fIsetThumbnail(\fBmzpack\fR as <generic> mzPack, 
 \fBthumb\fR as any, 
 [\fB<Environment>\fR]);\fR
+.SH DESCRIPTION
+.PP
+set thumbnail image to the raw data file
+.PP
+.SH OPTIONS
+.PP
+\fBmzpack\fB \fR\- -. 
+.PP
+.PP
+\fBthumb\fB \fR\- 
+ Thumbnail image object data can be a gdi+ image or 
+ bitmap or a gdi+ canvas object in type @\fBT:Microsoft.VisualBasic.Imaging.Driver.ImageData\fR.
+ And also this parameter could be a lambda function that
+ could be used for invoke and generates the image data.
+. 
+.PP
+.SH VALUE
+.PP
+returns a modified mzpack data object with Thumbnail 
+ property data has been updated.
+.PP
+.SH DETAILS
+.PP
+the parameter value of the **`thumb`** lambda
+ function will be **`mzpack`** parameter value
+ input
+.PP
 .SH SEE ALSO
 mzweb
 .SH FILES

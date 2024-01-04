@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>addBucket</title>
+    <title>push the reference spectrum data into the spectrum reference tree library</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
@@ -18,11 +18,11 @@
             </tr>
         </table>
 
-        <h2>addBucket</h2>
+        <h2>push the reference spectrum data into the spectrum reference tree library</h2>
 
         <h3>Description</h3>
 
-        addBucket
+        
 
         <h3>Usage</h3>
 
@@ -36,6 +36,30 @@
 
         <table>
             
+<dt>tree</dt>
+<dd><p><p>The reference spectrum database, which the spectrum data <br />
+ is store in family tree style</p></p></dd>
+
+
+<dt>x</dt>
+<dd><p><p>A new spectrum data to push into the reference database</p></p></dd>
+
+
+<dt>args</dt>
+<dd><p><p>additional parameters for create the spectrum library in spectrum pack format:</p>
+
+<ol>
+<li>uuid, BioDeepID, biodeep_id is used for the metabolite unique reference id</li>
+<li><p>chemical_formula, formula is used for the metabolite exact mass value</p>
+
+<p>and the spectrum input of x should be the same metabolite if save data as <br />
+the spectrum pack data.</p></li>
+</ol></p></dd>
+
+
+<dt>env</dt>
+<dd><p><p>-</p></p></dd>
+
         </table>
 
 

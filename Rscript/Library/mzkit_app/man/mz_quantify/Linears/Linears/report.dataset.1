@@ -1,12 +1,44 @@
 .\" man page create by R# package system.
 .TH LINEARS 1 2000-Jan "report.dataset" "report.dataset"
 .SH NAME
-report.dataset \- 
+report.dataset \- Create targeted linear dataset object for do linear quantification data report.
 .SH SYNOPSIS
 \fIreport.dataset(\fBstandardCurve\fR as <generic> StandardCurve[], 
 \fBsamples\fR as <generic> QuantifyScan[], 
 \fBQC_dataset\fR as string = \fB<NULL>\fR, 
 \fBionsRaw\fR as list = \fB<NULL>\fR);\fR
+.SH DESCRIPTION
+.PP
+Create targeted linear dataset object for do linear quantification data report.
+.PP
+.SH OPTIONS
+.PP
+\fBstandardCurve\fB \fR\- -. 
+.PP
+.PP
+\fBsamples\fB \fR\- -. 
+.PP
+.PP
+\fBQC_dataset\fB \fR\- 
+ Regular expression pattern string for match QC sample files
+. 
+.PP
+.PP
+\fBionsRaw\fB \fR\- 
+ A list of ions ChromatogramTick data for run ion data plots.
+ the list data structure in format looks like:
+ 
+ \fB
+ { 
+    ion_id1 {
+        sample1: ChromatogramTick[],
+        sample2: ChromatogramTick[],
+        ...
+    }
+ }
+ \fR`
+. 
+.PP
 .SH SEE ALSO
 Linears
 .SH FILES

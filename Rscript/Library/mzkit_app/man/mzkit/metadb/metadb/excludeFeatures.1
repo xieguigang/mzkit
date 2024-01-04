@@ -1,7 +1,7 @@
 .\" man page create by R# package system.
 .TH METADB 1 2000-Jan "excludeFeatures" "excludeFeatures"
 .SH NAME
-excludeFeatures \- 
+excludeFeatures \- removes all of the annotation result which is not
 .SH SYNOPSIS
 \fIexcludeFeatures(\fBquery\fR as list, 
 \fBid\fR as string, 
@@ -10,6 +10,39 @@ excludeFeatures \-
 \fBincludes_metal_ions\fR as boolean = FALSE, 
 \fBexcludes\fR as boolean = FALSE, 
 [\fB<Environment>\fR]);\fR
+.SH DESCRIPTION
+.PP
+removes all of the annotation result which is not 
+ hits in the given \fBid\fR set.
+.PP
+.SH OPTIONS
+.PP
+\fBquery\fB \fR\- -. 
+.PP
+.PP
+\fBid\fB \fR\- the required compound id set that should be hit!. 
+.PP
+.PP
+\fBfield\fB \fR\- -. 
+.PP
+.PP
+\fBmetadb\fB \fR\- -. 
+.PP
+.PP
+\fBincludes_metal_ions\fB \fR\- 
+ removes metabolite annotation result which has metal
+ ions inside formula string by default.
+. 
+.PP
+.PP
+\fBexcludes\fB \fR\- 
+ reverse the logical of select the annotation result 
+ based on the given **`id`** set.
+. 
+.PP
+.PP
+\fBenv\fB \fR\- -. 
+.PP
 .SH SEE ALSO
 metadb
 .SH FILES

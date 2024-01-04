@@ -1,10 +1,30 @@
 .\" man page create by R# package system.
 .TH SPECTRUMPOOL 1 2000-Jan "conservedGuid" "conservedGuid"
 .SH NAME
-conservedGuid \- 
+conservedGuid \- generates the guid for the spectrum with unknown annotation
 .SH SYNOPSIS
 \fIconservedGuid(\fBspectral\fR as any, 
 [\fB<Environment>\fR]);\fR
+.SH DESCRIPTION
+.PP
+generates the guid for the spectrum with unknown annotation
+.PP
+.SH OPTIONS
+.PP
+\fBspectral\fB \fR\- -. 
+.PP
+.SH DETAILS
+.PP
+the conserved guid is generated based on the md5 hashcode of contents:
+ 
+ 1. mz(F4):into
+ 2. mz1(F4)
+ 3. rt(F2)
+ 4. biosample
+ 5. organism
+ 6. instrument
+ 7. precursor_type
+.PP
 .SH SEE ALSO
 spectrumPool
 .SH FILES

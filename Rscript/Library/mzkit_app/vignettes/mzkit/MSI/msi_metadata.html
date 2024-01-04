@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>msi_metadata</title>
+    <title>get ms-imaging metadata</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
@@ -18,11 +18,11 @@
             </tr>
         </table>
 
-        <h2>msi_metadata</h2>
+        <h2>get ms-imaging metadata</h2>
 
         <h3>Description</h3>
 
-        msi_metadata
+        
 
         <h3>Usage</h3>
 
@@ -34,21 +34,29 @@
 
         <table>
             
+<dt>raw</dt>
+<dd><p><p>should be a mzPack rawdata object which is used for the ms-imaging application.</p></p></dd>
+
         </table>
 
 
-        <h3 style="display: none;">Details</h3>
+        <h3 style="display: block;">Details</h3>
 
-        
+        <p>the input raw data object could be also a file path to the ms-imaging mzpack <br />
+ rawdata, but only version 2 mzPack data file will be supported for load <br />
+ metadata.</p>
 
 
         <h3>Value</h3>
 
         this function returns data object of type <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/Comprehensive/MsImaging/Metadata.html">Metadata</a>.<h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/Comprehensive/MsImaging/Metadata.html">Metadata</a></li></ul>
 
-        <h3 style="display: none;">Examples</h3>
+        <h3 style="display: block;">Examples</h3>
 
-        
+        <pre><code id="example_r"> let rawdata = open.mzpack(file = "./rawdata.mzPack");
+ let msi_data = msi_metadata(rawdata);
+ 
+ str(as.list(as.object(msi_data)$GetMetadata()));</code></pre>
 
         <hr />
         <div style="text-align: center;">[Package <em>MSI</em> version 1.0.0.0 <a

@@ -1,7 +1,7 @@
 .\" man page create by R# package system.
 .TH SPECTRUMTREE 1 2000-Jan "query" "query"
 .SH NAME
-query \- 
+query \- do spectrum family alignment via cos similarity
 .SH SYNOPSIS
 \fIquery(\fBtree\fR as <generic> Ms2Search, 
 \fBx\fR as any, 
@@ -9,6 +9,45 @@ query \-
 \fBtreeSearch\fR as boolean = FALSE, 
 \fBtop_hits\fR as integer = 3, 
 [\fB<Environment>\fR]);\fR
+.SH DESCRIPTION
+.PP
+do spectrum family alignment via cos similarity
+.PP
+.SH OPTIONS
+.PP
+\fBtree\fB \fR\- 
+ The reference spectrum tree object to search 
+. 
+.PP
+.PP
+\fBx\fB \fR\- 
+ The query spectrum data from the sample raw data files
+. 
+.PP
+.PP
+\fBmaxdepth\fB \fR\- 
+ The max depth of the tree search
+. 
+.PP
+.PP
+\fBtreeSearch\fB \fR\- 
+ Do alignment in family tree search mode?
+. 
+.PP
+.PP
+\fBtop_hits\fB \fR\- 
+ the top n hits of the candidate result populated for the each query input,
+ set this parameter value to zero or negative value means no limits.
+. 
+.PP
+.PP
+\fBenv\fB \fR\- -. 
+.PP
+.SH VALUE
+.PP
+function returns nothing means no query hits or the 
+ given input query sample data **`x`**
+.PP
 .SH SEE ALSO
 spectrumTree
 .SH FILES

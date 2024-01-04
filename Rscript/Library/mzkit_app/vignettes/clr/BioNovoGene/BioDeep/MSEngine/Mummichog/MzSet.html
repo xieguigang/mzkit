@@ -22,7 +22,7 @@
 
         <h3>Description</h3>
 
-        
+        The collection of the ion query result
 
         <h3>Declare</h3>        
 
@@ -30,8 +30,11 @@
             <code id="clr_ts">
 # namespace BioNovoGene.BioDeep.MSEngine.Mummichog
 export class MzSet {
+   # The target ion m/z value
    mz: double;
+   # the metabolite annotation query result, contains all candidates
    query: <a href="/vignettes/clr/BioNovoGene/BioDeep/MSEngine/MzQuery.html">MzQuery[]</a>;
+   # the candidate size of current m/z matches result
    size: integer;
 }
 </code>

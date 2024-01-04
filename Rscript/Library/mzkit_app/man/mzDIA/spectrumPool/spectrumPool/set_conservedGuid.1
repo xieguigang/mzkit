@@ -1,11 +1,30 @@
 .\" man page create by R# package system.
 .TH SPECTRUMPOOL 1 2000-Jan "set_conservedGuid" "set_conservedGuid"
 .SH NAME
-set_conservedGuid \- 
+set_conservedGuid \- generate and set conserved guid for each spectrum data
 .SH SYNOPSIS
 \fIset_conservedGuid(\fBspectral\fR as any, 
 \fBprefix\fR as string = \fB<NULL>\fR, 
 [\fB<Environment>\fR]);\fR
+.SH DESCRIPTION
+.PP
+generate and set conserved guid for each spectrum data
+.PP
+.SH OPTIONS
+.PP
+\fBspectral\fB \fR\- -. 
+.PP
+.PP
+\fBprefix\fB \fR\- -. 
+.PP
+.PP
+\fBenv\fB \fR\- -. 
+.PP
+.SH VALUE
+.PP
+A collection of the mzkit @\fBT:BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.PeakMs2\fR clr object
+ which has the lib guid data assigned.
+.PP
 .SH SEE ALSO
 spectrumPool
 .SH FILES

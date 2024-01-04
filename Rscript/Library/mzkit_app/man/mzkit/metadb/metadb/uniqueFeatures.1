@@ -1,7 +1,7 @@
 .\" man page create by R# package system.
 .TH METADB 1 2000-Jan "uniqueFeatures" "uniqueFeatures"
 .SH NAME
-uniqueFeatures \- 
+uniqueFeatures \- unique of the peak annotation features
 .SH SYNOPSIS
 \fIuniqueFeatures(\fBquery\fR as list, 
 \fBuniqueByScore\fR as boolean = FALSE, 
@@ -10,6 +10,36 @@ uniqueFeatures \-
 \fBremovesZERO\fR as boolean = FALSE, 
 \fBverbose\fR as boolean = FALSE, 
 [\fB<Environment>\fR]);\fR
+.SH DESCRIPTION
+.PP
+unique of the peak annotation features
+.PP
+.SH OPTIONS
+.PP
+\fBquery\fB \fR\- 
+ all query result that comes from the ms1_search function.
+. 
+.PP
+.PP
+\fBscoreFactors\fB \fR\- 
+ the reference name this score data must be 
+ generated via the @\fBM:BioNovoGene.BioDeep.MSEngine.MzQuery.ReferenceKey(BioNovoGene.BioDeep.MSEngine.MzQuery,System.String)\fR 
+ function.
+. 
+.PP
+.PP
+\fBformat\fB \fR\- 
+ the numeric format of the mz value for generate the reference key
+. 
+.PP
+.PP
+\fBremovesZERO\fB \fR\- 
+ removes all metabolites with ZERO score?
+. 
+.PP
+.PP
+\fBenv\fB \fR\- -. 
+.PP
 .SH SEE ALSO
 metadb
 .SH FILES

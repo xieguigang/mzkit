@@ -1,7 +1,7 @@
 .\" man page create by R# package system.
 .TH MSI 1 2000-Jan "pixelMatrix" "pixelMatrix"
 .SH NAME
-pixelMatrix \- 
+pixelMatrix \- dumping raw data matrix as text table file.
 .SH SYNOPSIS
 \fIpixelMatrix(\fBraw\fR as <generic> mzPack, 
 \fBfile\fR as any = \fB<NULL>\fR, 
@@ -10,6 +10,39 @@ pixelMatrix \-
 \fBfast_bin\fR as boolean = TRUE, 
 \fBverbose\fR as boolean = FALSE, 
 [\fB<Environment>\fR]);\fR
+.SH DESCRIPTION
+.PP
+dumping raw data matrix as text table file.
+.PP
+.SH OPTIONS
+.PP
+\fBraw\fB \fR\- -. 
+.PP
+.PP
+\fBfile\fB \fR\- -. 
+.PP
+.PP
+\fBmzdiff\fB \fR\- 
+ the mass tolerance width for extract the feature ions
+. 
+.PP
+.PP
+\fBq\fB \fR\- 
+ the frequence threshold for filter the feature ions, this 
+ value range of this parameter should be inside [0,1] which
+ means percentage cutoff.
+. 
+.PP
+.PP
+\fBenv\fB \fR\- -. 
+.PP
+.SH VALUE
+.PP
+This function returns a logical value TRUE if the 
+ given **`file`** stream buffer is not missing,
+ otherwise the matrix object itself will be returns from 
+ the function.
+.PP
 .SH SEE ALSO
 MSI
 .SH FILES

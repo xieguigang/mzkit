@@ -1,11 +1,25 @@
 .\" man page create by R# package system.
 .TH MZPACK 1 2000-Jan "pack_ms1" "pack_ms1"
 .SH NAME
-pack_ms1 \- 
+pack_ms1 \- pack a given ms2 spectrum collection as a single ms1 scan product
 .SH SYNOPSIS
 \fIpack_ms1(\fBms2\fR as any, 
 \fBscan_id1\fR as string = \fB<NULL>\fR, 
 [\fB<Environment>\fR]);\fR
+.SH DESCRIPTION
+.PP
+pack a given ms2 spectrum collection as a single ms1 scan product
+.PP
+.SH OPTIONS
+.PP
+\fBms2\fB \fR\- a collection of the ms2 spectrum data. 
+.PP
+.PP
+\fBscan_id1\fB \fR\- the scan id which will be specificed to the result scan ms1 object. 
+.PP
+.PP
+\fBenv\fB \fR\- -. 
+.PP
 .SH SEE ALSO
 mzPack
 .SH FILES

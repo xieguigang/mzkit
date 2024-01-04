@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>libraryMatrix</title>
+    <title>Create a library matrix object</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
@@ -18,11 +18,11 @@
             </tr>
         </table>
 
-        <h2>libraryMatrix</h2>
+        <h2>Create a library matrix object</h2>
 
         <h3>Description</h3>
 
-        libraryMatrix
+        
 
         <h3>Usage</h3>
 
@@ -39,6 +39,18 @@
 
         <table>
             
+<dt>matrix</dt>
+<dd><p><p>for a dataframe object, should contains column data:<br />
+ mz, into and annotation.</p></p></dd>
+
+
+<dt>title</dt>
+<dd><p><p>-</p></p></dd>
+
+
+<dt>env</dt>
+<dd><p><p>-</p></p></dd>
+
         </table>
 
 
@@ -49,11 +61,15 @@
 
         <h3>Value</h3>
 
-        this function returns data object of type <i>any</i> kind.<h4>clr value class</h4><ul><li><i>any</i> kind</li></ul>
+        <p>A simple mzkit spectrum peak list object</p><h4>clr value class</h4><ul><li><i>any</i> kind</li></ul>
 
-        <h3 style="display: none;">Examples</h3>
+        <h3 style="display: block;">Examples</h3>
 
-        
+        <pre><code id="example_r"> libraryMatrix(mz = [100 101], intensity = [100 35]);
+ 
+ # or construct from a dataframe
+ let data = data.frame(mz = [100 101], into = [100 35]);
+ let msPeaks = libraryMatrix(data);</code></pre>
 
         <hr />
         <div style="text-align: center;">[Package <em>data</em> version 1.0.0.0 <a

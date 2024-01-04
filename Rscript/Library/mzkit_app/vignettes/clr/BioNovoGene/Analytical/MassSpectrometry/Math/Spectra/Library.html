@@ -22,7 +22,7 @@
 
         <h3>Description</h3>
 
-        
+        MS2 fragment matrix
 
         <h3>Declare</h3>        
 
@@ -30,10 +30,15 @@
             <code id="clr_ts">
 # namespace BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 export class Library {
+   # Fragment ID in this matrix.
    ID: string;
+   # 前体离子的m/z
    PrecursorMz: double;
+   # 碎片的m/z
    ProductMz: double;
+   # 当前的这个碎片的信号强度
    LibraryIntensity: double;
+   # library name
    Name: string;
 }
 </code>

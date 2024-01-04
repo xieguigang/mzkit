@@ -7,12 +7,23 @@
 // ref=mzkit.plotNMR@mzplot, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 
 /**
+ * 
+ * plot NMR spectrum data
+ * 
 */
 declare namespace NMR {
    /**
+    * get all acquisition data in the raw data file
+    * 
+    * 
+     * @param nmrML -
    */
    function acquisition(nmrML: object): object;
    /**
+    * Read Free Induction Decay data matrix
+    * 
+    * 
+     * @param data -
    */
    function FID(data: object): object;
    /**
@@ -30,6 +41,11 @@ declare namespace NMR {
       function nmrML(file: string): object;
    }
    /**
+    * 
+    * 
+     * @param spectrum -
+     * @param nmrML -
+     * @return a matrix of [ppm => intensity]
    */
    function spectrum(spectrum: object, nmrML: object): object;
    /**

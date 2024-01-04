@@ -1,12 +1,37 @@
 .\" man page create by R# package system.
 .TH GCXGC 1 2000-Jan "extract_2D_peaks" "extract_2D_peaks"
 .SH NAME
-extract_2D_peaks \- 
+extract_2D_peaks \- extract GCxGC 2d peaks from the mzpack raw data file
 .SH SYNOPSIS
 \fIextract_2D_peaks(\fBraw\fR as <generic> mzPack, 
 \fBmz\fR as double = NAN, 
 \fBmzdiff\fR as any = "ppm:30", 
 [\fB<Environment>\fR]);\fR
+.SH DESCRIPTION
+.PP
+extract GCxGC 2d peaks from the mzpack raw data file
+.PP
+.SH OPTIONS
+.PP
+\fBraw\fB \fR\- -. 
+.PP
+.PP
+\fBmz\fB \fR\- 
+ target mz value for extract XIC data. NA means extract 
+ TIC data by default.
+. 
+.PP
+.PP
+\fBmzdiff\fB \fR\- 
+ the mz tolerance error for match the intensity data for
+ extract XIC data if the **`mz`** is not 
+ \fBNA\fR value.
+. 
+.PP
+.SH DETAILS
+.PP
+this function will extract the TIC data by default.
+.PP
 .SH SEE ALSO
 GCxGC
 .SH FILES

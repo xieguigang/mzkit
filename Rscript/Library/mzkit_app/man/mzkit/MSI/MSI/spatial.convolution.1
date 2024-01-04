@@ -1,11 +1,22 @@
 .\" man page create by R# package system.
 .TH MSI 1 2000-Jan "spatial.convolution" "spatial.convolution"
 .SH NAME
-spatial.convolution \- 
+spatial.convolution \- sum pixels for create pixel spot convolution
 .SH SYNOPSIS
 \fIspatial.convolution(\fBmat\fR as <generic> dataframe, 
 \fBwin_size\fR as integer = 2, 
 \fBsteps\fR as integer = 1);\fR
+.SH DESCRIPTION
+.PP
+sum pixels for create pixel spot convolution
+.PP
+.SH OPTIONS
+.PP
+\fBmat\fB \fR\- A matrix liked dataframe object that contains the 
+ molecule expression data on each spatial spots, data object should 
+ in format of spatial spot in columns and molecule feature in rows.
+. 
+.PP
 .SH SEE ALSO
 MSI
 .SH FILES

@@ -1,13 +1,32 @@
 .\" man page create by R# package system.
 .TH MATH 4 2000-Jan "spectrum.compares" "spectrum.compares"
 .SH NAME
-spectrum.compares \- 
+spectrum.compares \- create a delegate function pointer that apply for compares spectrums theirs similarity.
 .SH SYNOPSIS
 \fIspectrum.compares(\fBtolerance\fR as any = "da:0.1", 
 \fBequals_score\fR as double = 0.85, 
 \fBgt_score\fR as double = 0.6, 
 \fBscore_aggregate\fR as <integer> ScoreAggregates = [min], 
 [\fB<Environment>\fR]);\fR
+.SH DESCRIPTION
+.PP
+create a delegate function pointer that apply for compares spectrums theirs similarity.
+.PP
+.SH OPTIONS
+.PP
+\fBtolerance\fB \fR\- -. 
+.PP
+.PP
+\fBequals_score\fB \fR\- -. 
+.PP
+.PP
+\fBgt_score\fB \fR\- -. 
+.PP
+.PP
+\fBscore_aggregate\fB \fR\- 
+ \fB@\fRT:System.Func`3````
+. 
+.PP
 .SH SEE ALSO
 math
 .SH FILES

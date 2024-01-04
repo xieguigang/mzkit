@@ -1,12 +1,30 @@
 .\" man page create by R# package system.
 .TH FORMULA 4 2000-Jan "candidates" "candidates"
 .SH NAME
-candidates \- 
+candidates \- find all of the candidate chemical formulas by a
 .SH SYNOPSIS
 \fIcandidates(\fBmass\fR as double, 
 \fBppm\fR as double = 5, 
 ..., 
 [\fB<Environment>\fR]);\fR
+.SH DESCRIPTION
+.PP
+find all of the candidate chemical formulas by a 
+ specific exact mass value and a specific mass 
+ tolerance value in ppm
+.PP
+.SH OPTIONS
+.PP
+\fBmass\fB \fR\- the exact mass value. 
+.PP
+.PP
+\fBppm\fB \fR\- the mass tolerance value in ppm. 
+.PP
+.PP
+\fBcandidateElements\fB \fR\- 
+ a list configuration of the formula candidates
+. 
+.PP
 .SH SEE ALSO
 formula
 .SH FILES

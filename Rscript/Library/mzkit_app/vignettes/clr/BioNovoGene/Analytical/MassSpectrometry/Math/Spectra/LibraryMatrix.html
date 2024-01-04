@@ -22,7 +22,7 @@
 
         <h3>Description</h3>
 
-        
+        The @``P:BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.LibraryMatrix.ms2`` library matrix object model
 
         <h3>Declare</h3>        
 
@@ -30,13 +30,19 @@
             <code id="clr_ts">
 # namespace BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 export class LibraryMatrix {
+   # The list of molecular fragment
    ms2: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/ms2.html">ms2[]</a>;
    name: string;
+   # mass spectrometry data in centroid mode?
    centroid: boolean;
    parentMz: double;
+   # get the numeric vector of the @``P:BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.ms2.intensity`` value
    intensity: <a href="/vignettes/clr/Microsoft/VisualBasic/Math/LinearAlgebra/Vector.html">Vector</a>;
+   # sum of @``P:BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.LibraryMatrix.intensity``
    totalIon: double;
+   # evaluates the spectrum peaks' shannon entropy value based on the @``P:BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.LibraryMatrix.intensity``
    entropy: double;
+   # get all ms2 fragment peaks m/z values
    mz: double;
    Length: integer;
    IsScalar: boolean;

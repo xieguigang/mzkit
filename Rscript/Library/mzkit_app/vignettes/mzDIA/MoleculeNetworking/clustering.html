@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>clustering</title>
+    <title>Do spectrum clustering on a small bundle of the ms2 spectrum from a single raw data file</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
@@ -18,11 +18,11 @@
             </tr>
         </table>
 
-        <h2>clustering</h2>
+        <h2>Do spectrum clustering on a small bundle of the ms2 spectrum from a single raw data file</h2>
 
         <h3>Description</h3>
 
-        clustering
+        
 
         <h3>Usage</h3>
 
@@ -39,12 +39,48 @@
 
         <table>
             
+<dt>ions</dt>
+<dd><p><p>-</p></p></dd>
+
+
+<dt>mzdiff1</dt>
+<dd><p><p>the mzdiff tolerance value for group the ms2 spectrum via the precursor m/z,<br />
+ for precursor m/z comes from the ms1 deconvolution peaktable, tolerance error<br />
+ should be smaller in ppm unit; <br />
+ for precursor m/z comes from the ms2 parent ion m/z, tolerance error should <br />
+ be larger in da unit.</p></p></dd>
+
+
+<dt>mzdiff2</dt>
+<dd><p><p>the mzdiff tolerance value for do ms2 peak centroid or peak matches for do the<br />
+ cos similarity score evaluation, should be larger tolerance value in unit da,<br />
+ value of this tolerance parameter could be da:0.3</p></p></dd>
+
+
+<dt>intocutoff</dt>
+<dd><p><p>intensity cutoff value for make spectrum centroid</p></p></dd>
+
+
+<dt>tree.identical</dt>
+<dd><p><p>score cutoff for assert that spectrum in the binary tree<br />
+ is in the same cluster node</p></p></dd>
+
+
+<dt>tree.right</dt>
+<dd><p><p>score cutoff for assert that spectrum in the binary tree should be put into the right<br />
+ node.</p></p></dd>
+
+
+<dt>env</dt>
+<dd><p><p>-</p></p></dd>
+
         </table>
 
 
-        <h3 style="display: none;">Details</h3>
+        <h3 style="display: block;">Details</h3>
 
-        
+        <p>this workflow usually used for processing the ms2 spectrum inside a <br />
+ single raw data file</p>
 
 
         <h3>Value</h3>

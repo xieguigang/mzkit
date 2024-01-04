@@ -22,7 +22,7 @@
 
         <h3>Description</h3>
 
-        
+        The linear model of the targeted metabolism model data.(标准曲线模型)
 
         <h3>Declare</h3>        
 
@@ -30,12 +30,17 @@
             <code id="clr_ts">
 # namespace BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative
 export class StandardCurve {
+   # The metabolite name or database id
    name: string;
+   # 该代谢物的线性回归模型
    linear: <a href="/vignettes/clr/Microsoft/VisualBasic/Data/Bootstrapping/IFitted.html">IFitted</a>;
    points: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/LinearQuantitative/Linear/ReferencePoint.html">ReferencePoint[]</a>;
    blankControls: double;
+   # The internal standards
    IS: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/LinearQuantitative/IS.html">IS</a>;
    arguments: <i>any</i> kind;
+   # This linear model is required calibration by internal standards or not?
+   #  (在进行线性回归计算的时候是否需要内标校正？)
    requireISCalibration: boolean;
    isWeighted: boolean;
    isValid: boolean;

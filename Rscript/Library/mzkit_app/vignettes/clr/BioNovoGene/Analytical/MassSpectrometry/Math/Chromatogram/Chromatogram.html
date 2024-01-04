@@ -22,7 +22,7 @@
 
         <h3>Description</h3>
 
-        
+        A data union model of TIC/BPC
 
         <h3>Declare</h3>        
 
@@ -31,8 +31,11 @@
 # namespace BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 export class Chromatogram {
    scan_time: double;
+   # total ion current
    TIC: double;
+   # base peak intensity
    BPC: double;
+   # the length of @``P:BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram.Chromatogram.scan_time`` data points.
    length: integer;
    maxInto: double;
 }

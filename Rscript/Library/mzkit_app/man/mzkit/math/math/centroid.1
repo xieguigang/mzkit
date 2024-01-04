@@ -1,13 +1,42 @@
 .\" man page create by R# package system.
 .TH MATH 4 2000-Jan "centroid" "centroid"
 .SH NAME
-centroid \- 
+centroid \- Converts profiles peak data to peak data in centroid mode.
 .SH SYNOPSIS
 \fIcentroid(\fBions\fR as any, 
 \fBtolerance\fR as any = "da:0.1", 
 \fBintoCutoff\fR as double = 0.05, 
 \fBparallel\fR as boolean = FALSE, 
 [\fB<Environment>\fR]);\fR
+.SH DESCRIPTION
+.PP
+Converts profiles peak data to peak data in centroid mode.
+ 
+ profile and centroid in Mass Spectrometry?
+ 
+ 1. Profile means the continuous wave form in a mass spectrum.
+   + Number of data points Is large.
+ 2. Centroid means the peaks in a profile data Is changed to bars.
+   + location of the bar Is center of the profile peak.
+   + height of the bar Is area of the profile peak.
+.PP
+.SH OPTIONS
+.PP
+\fBions\fB \fR\- 
+ value of this parameter could be 
+ 
+ + a collection of peakMs2 data 
+ + a library matrix data 
+ + or a dataframe object which should contains at least \fBmz\fR and \fBintensity\fR columns.
+ + or just a m/z vector
+ + also could be a mzpack data object
+ 
+. 
+.PP
+.SH VALUE
+.PP
+Peaks data in centroid mode or a new m/z vector in centroid.
+.PP
 .SH SEE ALSO
 math
 .SH FILES

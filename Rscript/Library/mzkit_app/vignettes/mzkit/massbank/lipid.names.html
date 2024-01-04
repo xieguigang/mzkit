@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>lipid.names</title>
+    <title>Create lipid name helper for annotation</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
@@ -18,11 +18,11 @@
             </tr>
         </table>
 
-        <h2>lipid.names</h2>
+        <h2>Create lipid name helper for annotation</h2>
 
         <h3>Description</h3>
 
-        lipid.names
+        
 
         <h3>Usage</h3>
 
@@ -34,6 +34,13 @@
 
         <table>
             
+<dt>lipidmaps</dt>
+<dd><p><p>-</p></p></dd>
+
+
+<dt>env</dt>
+<dd><p><p>-</p></p></dd>
+
         </table>
 
 
@@ -46,9 +53,14 @@
 
         this function returns data object of type <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/MetaLib/Models/CompoundNameReader.html">CompoundNameReader</a>.<h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/MetaLib/Models/CompoundNameReader.html">CompoundNameReader</a></li></ul>
 
-        <h3 style="display: none;">Examples</h3>
+        <h3 style="display: block;">Examples</h3>
 
-        
+        <pre><code id="example_r"> # cast sdf dataset to lipidmaps data object
+ let dataset = read.SDF(file = "./example.sdf", lazy = FALSE);
+ let lipids = dataset |> as.lipidmaps();
+ 
+ # create annotation helper
+ let lipidnames = lipid.names(lipids);</code></pre>
 
         <hr />
         <div style="text-align: center;">[Package <em>massbank</em> version 1.0.0.0 <a

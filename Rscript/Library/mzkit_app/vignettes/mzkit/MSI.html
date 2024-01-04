@@ -10,7 +10,7 @@
     <meta name="keywords" content="R#; MSI; mzkit" />
     <meta name="generator" content="https://github.com/rsharp-lang" />
     <meta name="theme-color" content="#333" />
-    <meta name="description" content="..." />
+    <meta name="description" content="MS-Imaging data handler Mass spectrometry imaging (MSI) is a tec..." />
     <meta class="foundation-data-attribute-namespace" />
     <meta class="foundation-mq-xxlarge" />
     <meta class="foundation-mq-xlarge" />
@@ -63,10 +63,14 @@ table caption {font-size:14px;font-weight:bolder;}
     <p style="     font-size: 1.125em;     line-height: .8em;     margin-left: 0.5%;     background-color: #fbfbfb;     padding: 24px; ">
       <code>
         <span style="color: blue;">require</span>(<span style="color: black; font-weight: bold;">mzkit</span>);
-                               <br /><br /><span style="color: green;">{$desc_comments}</span><br /><span style="color: blue;">imports</span><span style="color: brown"> "MSI"</span><span style="color: blue;"> from</span><span style="color: brown"> "mzkit"</span>;
+                               <br /><br /><span style="color: green;">#' MS-Imaging data handler</span><br /><span style="color: blue;">imports</span><span style="color: brown"> "MSI"</span><span style="color: blue;"> from</span><span style="color: brown"> "mzkit"</span>;
                            </code>
     </p>
-    <p></p>
+    <p><p>MS-Imaging data handler</p>
+
+<p>Mass spectrometry imaging (MSI) is a technique used in mass spectrometry<br />
+ to visualize the spatial distribution of molecules, as biomarkers, <br />
+ metabolites, peptides or proteins by their molecular masses.</p></p>
     <blockquote>
       <p style="font-style: italic; font-size: 0.9em;">
                            
@@ -78,85 +82,85 @@ table caption {font-size:14px;font-weight:bolder;}
   <td id="scale">
     <a href="./MSI/scale.html">scale</a>
   </td>
-  <td></td>
+  <td><p>scale the spatial matrix by column</p></td>
 </tr>
 <tr>
   <td id="msi_metadata">
     <a href="./MSI/msi_metadata.html">msi_metadata</a>
   </td>
-  <td></td>
+  <td><p>get ms-imaging metadata</p></td>
 </tr>
 <tr>
   <td id="as.layer">
     <a href="./MSI/as.layer.html">as.layer</a>
   </td>
-  <td></td>
+  <td><p>cast the pixel collection to a ion imaging layer data</p></td>
 </tr>
 <tr>
   <td id="splice">
     <a href="./MSI/splice.html">splice</a>
   </td>
-  <td></td>
+  <td><p>split the raw 2D MSI data into multiple parts with given parts</p></td>
 </tr>
 <tr>
   <td id="pixelId">
     <a href="./MSI/pixelId.html">pixelId</a>
   </td>
-  <td></td>
+  <td><p>get pixels [x,y] tags collection for a specific ion</p></td>
 </tr>
 <tr>
   <td id="pixels">
     <a href="./MSI/pixels.html">pixels</a>
   </td>
-  <td></td>
+  <td><p>get pixels size from the raw data file</p></td>
 </tr>
 <tr>
   <td id="dimension_size">
     <a href="./MSI/dimension_size.html">dimension_size</a>
   </td>
-  <td></td>
+  <td><p>get or set the dimension size of the ms-imaging mzpack raw data object</p></td>
 </tr>
 <tr>
   <td id="open.imzML">
     <a href="./MSI/open.imzML.html">open.imzML</a>
   </td>
-  <td></td>
+  <td><p>open the reader for the imzML ms-imaging file</p></td>
 </tr>
 <tr>
   <td id="write.imzML">
     <a href="./MSI/write.imzML.html">write.imzML</a>
   </td>
-  <td></td>
+  <td><p>Save and write the given ms-imaging mzpack object as imzML file</p></td>
 </tr>
 <tr>
   <td id="row.scans">
     <a href="./MSI/row.scans.html">row.scans</a>
   </td>
-  <td></td>
+  <td><p>each raw data file is a row scan data</p></td>
 </tr>
 <tr>
   <td id="MSI_summary">
     <a href="./MSI/MSI_summary.html">MSI_summary</a>
   </td>
-  <td></td>
+  <td><p>Fetch MSI summary data</p></td>
 </tr>
 <tr>
   <td id="correction">
     <a href="./MSI/correction.html">correction</a>
   </td>
-  <td></td>
+  <td><p>calculate the X scale</p></td>
 </tr>
 <tr>
   <td id="basePeakMz">
     <a href="./MSI/basePeakMz.html">basePeakMz</a>
   </td>
-  <td></td>
+  <td><p>Get the mass spectrum data of the MSI base peak data</p></td>
 </tr>
 <tr>
   <td id="ionStat">
     <a href="./MSI/ionStat.html">ionStat</a>
   </td>
-  <td></td>
+  <td><p>Extract the ion features inside a MSI raw data slide sample file</p></td>
 </tr>
 <tr>
   <td id="ions_jointmatrix">
@@ -168,79 +172,79 @@ table caption {font-size:14px;font-weight:bolder;}
   <td id="scans2D">
     <a href="./MSI/scans2D.html">scans2D</a>
   </td>
-  <td></td>
+  <td><p>combine each row scan raw data files as the pixels 2D matrix</p></td>
 </tr>
 <tr>
   <td id="scanMatrix">
     <a href="./MSI/scanMatrix.html">scanMatrix</a>
   </td>
-  <td></td>
+  <td><p>combine each row scan summary vector as the pixels 2D matrix</p></td>
 </tr>
 <tr>
   <td id="peakMatrix">
     <a href="./MSI/peakMatrix.html">peakMatrix</a>
   </td>
-  <td></td>
+  <td><p>Extract the ion data matrix</p></td>
 </tr>
 <tr>
   <td id="peakSamples">
     <a href="./MSI/peakSamples.html">peakSamples</a>
   </td>
-  <td></td>
+  <td><p>split the raw MSI 2D data into multiple parts with given resolution parts</p></td>
 </tr>
 <tr>
   <td id="pixelIons">
     <a href="./MSI/pixelIons.html">pixelIons</a>
   </td>
-  <td></td>
+  <td><p>get number of ions in each pixel scans</p></td>
 </tr>
 <tr>
   <td id="getMatrixIons">
     <a href="./MSI/getMatrixIons.html">getMatrixIons</a>
   </td>
-  <td></td>
+  <td><p>get matrix ions feature m/z vector</p></td>
 </tr>
 <tr>
   <td id="pixelMatrix">
     <a href="./MSI/pixelMatrix.html">pixelMatrix</a>
   </td>
-  <td></td>
+  <td><p>dumping raw data matrix as text table file.</p></td>
 </tr>
 <tr>
   <td id="levels.convolution">
     <a href="./MSI/levels.convolution.html">levels.convolution</a>
   </td>
-  <td></td>
+  <td><p>sum pixels for create pixel spot convolution</p></td>
 </tr>
 <tr>
   <td id="spatial.convolution">
     <a href="./MSI/spatial.convolution.html">spatial.convolution</a>
   </td>
-  <td></td>
+  <td><p>sum pixels for create pixel spot convolution</p></td>
 </tr>
 <tr>
   <td id="pack_matrix">
     <a href="./MSI/pack_matrix.html">pack_matrix</a>
   </td>
-  <td></td>
+  <td><p>pack the matrix file as the MSI mzpack</p></td>
 </tr>
 <tr>
   <td id="moran_I">
     <a href="./MSI/moran_I.html">moran_I</a>
   </td>
-  <td></td>
+  <td><p>evaluate the moran index for each ion layer</p></td>
 </tr>
 <tr>
   <td id="sample_bootstraping">
     <a href="./MSI/sample_bootstraping.html">sample_bootstraping</a>
   </td>
-  <td></td>
+  <td><p>make expression bootstrapping of current ion layer</p></td>
 </tr>
 <tr>
   <td id="cast.spatial_layers">
     <a href="./MSI/cast.spatial_layers.html">cast.spatial_layers</a>
   </td>
-  <td></td>
+  <td><p>cast the rawdata matrix as the ms-imaging ion layer</p></td>
 </tr></tbody>
       </table>
     </div>

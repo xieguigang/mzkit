@@ -1,7 +1,7 @@
 .\" man page create by R# package system.
 .TH DATA 1 2000-Jan "libraryMatrix" "libraryMatrix"
 .SH NAME
-libraryMatrix \- 
+libraryMatrix \- Create a library matrix object
 .SH SYNOPSIS
 \fIlibraryMatrix(\fBmatrix\fR as any = \fB<NULL>\fR, 
 \fBtitle\fR as string = "MS Matrix", 
@@ -9,6 +9,27 @@ libraryMatrix \-
 \fBcentroid\fR as boolean = FALSE, 
 ..., 
 [\fB<Environment>\fR]);\fR
+.SH DESCRIPTION
+.PP
+Create a library matrix object
+.PP
+.SH OPTIONS
+.PP
+\fBmatrix\fB \fR\- 
+ for a dataframe object, should contains column data:
+ mz, into and annotation.
+. 
+.PP
+.PP
+\fBtitle\fB \fR\- -. 
+.PP
+.PP
+\fBenv\fB \fR\- -. 
+.PP
+.SH VALUE
+.PP
+A simple mzkit spectrum peak list object
+.PP
 .SH SEE ALSO
 data
 .SH FILES

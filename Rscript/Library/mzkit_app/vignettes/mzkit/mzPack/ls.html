@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>ls</title>
+    <title>Get object list inside the MS packdata</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
@@ -18,11 +18,11 @@
             </tr>
         </table>
 
-        <h2>ls</h2>
+        <h2>Get object list inside the MS packdata</h2>
 
         <h3>Description</h3>
 
-        ls
+        
 
         <h3>Usage</h3>
 
@@ -34,21 +34,33 @@
 
         <table>
             
+<dt>mzpack</dt>
+<dd><p><p>-</p></p></dd>
+
+
+<dt>env</dt>
+<dd><p><p>-</p></p></dd>
+
         </table>
 
 
-        <h3 style="display: none;">Details</h3>
+        <h3 style="display: block;">Details</h3>
 
-        
+        <p>show all ms1 scan id in a mzpack data object or <br />
+ show all raw data file names in a mzwork data <br />
+ package.</p>
 
 
         <h3>Value</h3>
 
         this function returns data object of type string.<h4>clr value class</h4><ul><li>string</li></ul>
 
-        <h3 style="display: none;">Examples</h3>
+        <h3 style="display: block;">Examples</h3>
 
-        
+        <pre><code id="example_r"> let rawdata = open.mzpack(file = "./rawdata.mzPack");
+ let scan_id = mzPack::ls(mzpack = rawdata);
+ 
+ print(scan_id);</code></pre>
 
         <hr />
         <div style="text-align: center;">[Package <em>mzPack</em> version 1.0.0.0 <a

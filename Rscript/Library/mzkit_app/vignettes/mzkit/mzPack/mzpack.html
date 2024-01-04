@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>mzpack</title>
+    <title>open a mzpack data object reader, not read all data into memory in one time.</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
@@ -18,11 +18,11 @@
             </tr>
         </table>
 
-        <h2>mzpack</h2>
+        <h2>open a mzpack data object reader, not read all data into memory in one time.</h2>
 
         <h3>Description</h3>
 
-        mzpack
+        
 
         <h3>Usage</h3>
 
@@ -34,17 +34,26 @@
 
         <table>
             
+<dt>file</dt>
+<dd><p><p>the file path for the mzpack file or the mzpack data object it self</p></p></dd>
+
+
+<dt>env</dt>
+<dd><p><p>-</p></p></dd>
+
         </table>
 
 
-        <h3 style="display: none;">Details</h3>
+        <h3 style="display: block;">Details</h3>
 
-        
+        <p>a in-memory reader wrapper will be created if the given file object <br />
+ is a in-memory mzpack object itself</p>
 
 
         <h3>Value</h3>
 
-        this function returns data object of type <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/mzWebCache/IMzPackReader.html">IMzPackReader</a>.<h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/mzWebCache/IMzPackReader.html">IMzPackReader</a></li></ul>
+        <p>the ms scan data can be load into memory in lazy <br />
+ require by a given scan id of the target ms1 scan</p><h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/mzWebCache/IMzPackReader.html">IMzPackReader</a></li></ul>
 
         <h3 style="display: none;">Examples</h3>
 

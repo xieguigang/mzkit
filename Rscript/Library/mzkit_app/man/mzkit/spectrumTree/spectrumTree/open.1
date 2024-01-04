@@ -1,13 +1,41 @@
 .\" man page create by R# package system.
 .TH SPECTRUMTREE 1 2000-Jan "open" "open"
 .SH NAME
-open \- 
+open \- open the spectrum reference database
 .SH SYNOPSIS
 \fIopen(\fBfile\fR as any, 
 \fBdotcutoff\fR as double = 0.6, 
 \fBadducts\fR as any = ["[M]+","[M+H]+"], 
 \fBtarget_uuid\fR as any = \fB<NULL>\fR, 
 [\fB<Environment>\fR]);\fR
+.SH DESCRIPTION
+.PP
+open the spectrum reference database
+ 
+ open the reference spectrum database file and 
+ then create a host to run spectrum cluster 
+ search
+.PP
+.SH OPTIONS
+.PP
+\fBfile\fB \fR\- -. 
+.PP
+.PP
+\fBenv\fB \fR\- -. 
+.PP
+.PP
+\fBtarget_uuid\fB \fR\- 
+ a character vector of the target metabolite biodeep_id, default value
+ is NULL means load all reference spectrum from the required reference 
+ database file. this function will just load a subset of the reference 
+ spectrum data from the database file is this parameter value is not 
+ NULL.
+. 
+.PP
+.SH DETAILS
+.PP
+the data format is test via the magic header
+.PP
 .SH SEE ALSO
 spectrumTree
 .SH FILES

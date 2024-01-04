@@ -1,13 +1,45 @@
 .\" man page create by R# package system.
 .TH METADNA 2 2000-Jan "annotationSet" "annotationSet"
 .SH NAME
-annotationSet \- 
+annotationSet \- Create the kegg compound ms1 annotation query engine.
 .SH SYNOPSIS
 \fIannotationSet(\fBkegg\fR as any, 
 \fBprecursors\fR as any = "[M]+|[M+H]+|[M+H-H2O]+", 
 \fBmzdiff\fR as any = "ppm:20", 
 \fBexcludes\fR as any = \fB<NULL>\fR, 
 [\fB<Environment>\fR]);\fR
+.SH DESCRIPTION
+.PP
+Create the kegg compound ms1 annotation query engine.
+.PP
+.SH OPTIONS
+.PP
+\fBkegg\fB \fR\- 
+ a set of kegg compound data
+. 
+.PP
+.PP
+\fBprecursors\fB \fR\- 
+ a character vector of the ms1 precursor ion names or 
+ a list of the given mzcalculator object models.
+. 
+.PP
+.PP
+\fBmzdiff\fB \fR\- 
+ the mass tolerance value to match between the 
+ experiment m/z value and the reference m/z value
+ which is calculated from the compound exact mass
+ with a given specific ion precursor type.
+. 
+.PP
+.PP
+\fBenv\fB \fR\- -. 
+.PP
+.SH VALUE
+.PP
+a data query engine model to run ms1 data search 
+ for the kegg metaolite compounds.
+.PP
 .SH SEE ALSO
 metadna
 .SH FILES

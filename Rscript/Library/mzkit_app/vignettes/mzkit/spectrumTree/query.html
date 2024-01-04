@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>query</title>
+    <title>do spectrum family alignment via cos similarity</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
@@ -18,11 +18,11 @@
             </tr>
         </table>
 
-        <h2>query</h2>
+        <h2>do spectrum family alignment via cos similarity</h2>
 
         <h3>Description</h3>
 
-        query
+        
 
         <h3>Usage</h3>
 
@@ -37,6 +37,30 @@
 
         <table>
             
+<dt>tree</dt>
+<dd><p><p>The reference spectrum tree object to search </p></p></dd>
+
+
+<dt>x</dt>
+<dd><p><p>The query spectrum data from the sample raw data files</p></p></dd>
+
+
+<dt>maxdepth</dt>
+<dd><p><p>The max depth of the tree search</p></p></dd>
+
+
+<dt>treeSearch</dt>
+<dd><p><p>Do alignment in family tree search mode?</p></p></dd>
+
+
+<dt>top.hits</dt>
+<dd><p><p>the top n hits of the candidate result populated for the each query input,<br />
+ set this parameter value to zero or negative value means no limits.</p></p></dd>
+
+
+<dt>env</dt>
+<dd><p><p>-</p></p></dd>
+
         </table>
 
 
@@ -47,7 +71,8 @@
 
         <h3>Value</h3>
 
-        this function returns data object of type <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/SpectrumTree/Query/ClusterHit.html">ClusterHit</a>.<h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/SpectrumTree/Query/ClusterHit.html">ClusterHit</a></li></ul>
+        <p>function returns nothing means no query hits or the <br />
+ given input query sample data <strong><code>x</code></strong></p><h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/SpectrumTree/Query/ClusterHit.html">ClusterHit</a></li></ul>
 
         <h3 style="display: none;">Examples</h3>
 

@@ -1,10 +1,27 @@
 .\" man page create by R# package system.
 .TH SINGLECELLS 1 2000-Jan "as.expression" "as.expression"
 .SH NAME
-as.expression \- 
+as.expression \- Cast the ion feature matrix as the GCModeller expression matrix object
 .SH SYNOPSIS
 \fIas.expression(\fBx\fR as <generic> MzMatrix, 
 \fBsingle_cell\fR as boolean = FALSE);\fR
+.SH DESCRIPTION
+.PP
+Cast the ion feature matrix as the GCModeller expression matrix object
+.PP
+.SH OPTIONS
+.PP
+\fBx\fB \fR\- -. 
+.PP
+.SH VALUE
+.PP
+the gcmodeller expression matrix object, each @\fBT:SMRUCC.genomics.Analysis.HTS.DataFrame.DataFrameRow\fR element inside the 
+ generated matrix object is the expression vector of all metabolite ion features. which means
+ the matrix format from this function outputs should be:
+ 
+ 1. cell labels, or spatial location in rows
+ 2. and ion features in columns.
+.PP
 .SH SEE ALSO
 SingleCells
 .SH FILES

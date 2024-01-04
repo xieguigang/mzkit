@@ -1,7 +1,7 @@
 .\" man page create by R# package system.
 .TH MUMMICHOG 1 2000-Jan "peakList_annotation" "peakList_annotation"
 .SH NAME
-peakList_annotation \- 
+peakList_annotation \- do ms1 peaks annotation
 .SH SYNOPSIS
 \fIpeakList_annotation(\fBbackground\fR as list, 
 \fBcandidates\fR as <generic> MzSet[], 
@@ -14,6 +14,35 @@ peakList_annotation \-
 \fBpop_size\fR as integer = 100, 
 \fBmutation_rate\fR as double = 0.3, 
 [\fB<Environment>\fR]);\fR
+.SH DESCRIPTION
+.PP
+do ms1 peaks annotation
+ 
+ Do ms1 peak list annotation based on the given biological context information
+.PP
+.SH OPTIONS
+.PP
+\fBbackground\fB \fR\- 
+ the enrichment and network topology graph mode list
+. 
+.PP
+.PP
+\fBcandidates\fB \fR\- 
+ a set of m/z search result list based on the given background model
+. 
+.PP
+.PP
+\fBminhit\fB \fR\- -. 
+.PP
+.PP
+\fBpermutation\fB \fR\- -. 
+.PP
+.PP
+\fBmodelSize\fB \fR\- -. 
+.PP
+.PP
+\fBenv\fB \fR\- -. 
+.PP
 .SH SEE ALSO
 Mummichog
 .SH FILES

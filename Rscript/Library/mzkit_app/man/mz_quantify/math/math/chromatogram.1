@@ -1,12 +1,31 @@
 .\" man page create by R# package system.
 .TH MATH 1 2000-Jan "chromatogram" "chromatogram"
 .SH NAME
-chromatogram \- 
+chromatogram \- Create a chromatogram data from a dataframe object
 .SH SYNOPSIS
 \fIchromatogram(\fBx\fR as any = \fB<NULL>\fR, 
 \fBtime\fR as any = "Time", 
 \fBinto\fR as any = "Intensity", 
 [\fB<Environment>\fR]);\fR
+.SH DESCRIPTION
+.PP
+Create a chromatogram data from a dataframe object
+.PP
+.SH OPTIONS
+.PP
+\fBx\fB \fR\- Should be a dataframe object that contains 
+ the required data field for construct the chromatogram data.
+. 
+.PP
+.PP
+\fBtime\fB \fR\- the column name for get the rt field vector data. 
+.PP
+.PP
+\fBinto\fB \fR\- the column name for get the signal intensity field vector data. 
+.PP
+.PP
+\fBenv\fB \fR\- -. 
+.PP
 .SH SEE ALSO
 math
 .SH FILES

@@ -1,13 +1,49 @@
 .\" man page create by R# package system.
 .TH MSI 1 2000-Jan "as.layer" "as.layer"
 .SH NAME
-as.layer \- 
+as.layer \- cast the pixel collection to a ion imaging layer data
 .SH SYNOPSIS
 \fIas.layer(\fBx\fR as any, 
 \fBcontext\fR as any = "MSIlayer", 
 \fBdims\fR as any = \fB<NULL>\fR, 
 \fBstrict\fR as boolean = TRUE, 
 [\fB<Environment>\fR]);\fR
+.SH DESCRIPTION
+.PP
+cast the pixel collection to a ion imaging layer data
+.PP
+.SH OPTIONS
+.PP
+\fBx\fB \fR\- Should be a collection of the ms-imaging pixel data 
+ object, or a mz matrix object. 
+.PP
+.PP
+\fBcontext\fB \fR\- 
+ the ms-imaging layer title, must be a valid mz numeric value if the input x 
+ is a mz matrix object
+. 
+.PP
+.PP
+\fBdims\fB \fR\- the dimension size of the ms-imaging layer data,
+ this dimension size will be evaluated based on the input pixel collection
+ data if this parameter leaves blank(or NULL) by default.. 
+.PP
+.PP
+\fBstrict\fB \fR\- 
+ if the input \fB**`dims`**\fR produce invalid dimension size
+ value, example as dimension size is equals to ZERO [0,0], then in strict 
+ mode, the dimension value will be evaluated from the input raw data
+ automatically for ensure that the dimension size of the generated layer 
+ data object is not empty.
+. 
+.PP
+.PP
+\fBenv\fB \fR\- -. 
+.PP
+.SH VALUE
+.PP
+A ms-imaging layer object that could be used for run ms-imaging rendering.
+.PP
 .SH SEE ALSO
 MSI
 .SH FILES

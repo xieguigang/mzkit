@@ -22,7 +22,7 @@
 
         <h3>Description</h3>
 
-        
+        the formula search result
 
         <h3>Declare</h3>        
 
@@ -30,9 +30,12 @@
             <code id="clr_ts">
 # namespace BioNovoGene.BioDeep.Chemoinformatics.Formula
 export class FormulaComposition {
+   # the charge value of current formula
    charge: double;
+   # the ppm error between the theriocal mass value and the input mass value
    ppm: double;
    massdiff: double;
+   # Hydrogen/Carbon element ratio
    HCRatio: double;
    CountsByElement: list;
    EmpiricalFormula: string;

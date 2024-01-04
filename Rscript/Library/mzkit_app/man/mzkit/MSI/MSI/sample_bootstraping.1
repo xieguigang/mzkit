@@ -1,12 +1,47 @@
 .\" man page create by R# package system.
 .TH MSI 1 2000-Jan "sample_bootstraping" "sample_bootstraping"
 .SH NAME
-sample_bootstraping \- 
+sample_bootstraping \- make expression bootstrapping of current ion layer
 .SH SYNOPSIS
 \fIsample_bootstraping(\fBlayer\fR as <generic> SingleIonLayer, 
 \fBtissue\fR as <generic> TissueRegion[], 
 \fBn\fR as integer = 32, 
 \fBcoverage\fR as double = 0.3);\fR
+.SH DESCRIPTION
+.PP
+make expression bootstrapping of current ion layer
+.PP
+.SH OPTIONS
+.PP
+\fBlayer\fB \fR\- The target ion layer to run expression bootstraping. 
+.PP
+.PP
+\fBtissue\fB \fR\- A collection of the @\fBT:BioNovoGene.Analytical.MassSpectrometry.MsImaging.TissueMorphology.TissueRegion\fR object.. 
+.PP
+.PP
+\fBn\fB \fR\- Get n sample points for each tissue region. 
+.PP
+.PP
+\fBcoverage\fB \fR\- The region area coverage for the bootstrapping.. 
+.PP
+.SH VALUE
+.PP
+A tuple list object that contains the expression data for each @\fBT:BioNovoGene.Analytical.MassSpectrometry.MsImaging.TissueMorphology.TissueRegion\fR:
+ 
+ 1. the tuple key is the label of the tissue region data,
+ 2. the tuple value is the numeric expression vector that sampling from 
+    the corrisponding tissue region, the vector size is equals to the 
+    parameter \fBn\fR.
+.PP
+.SH DETAILS
+.PP
+Bootstrapping is a statistical procedure that resamples a single dataset to create
+ many simulated samples. This process allows you to calculate standard errors, 
+ construct confidence intervals, and perform hypothesis testing for numerous types of
+ sample statistics. Bootstrap methods are alternative approaches to traditional 
+ hypothesis testing and are notable for being easier to understand and valid for more 
+ conditions.
+.PP
 .SH SEE ALSO
 MSI
 .SH FILES

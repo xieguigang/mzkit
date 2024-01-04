@@ -1,12 +1,34 @@
 .\" man page create by R# package system.
 .TH MZDECO 1 2000-Jan "peak_alignment" "peak_alignment"
 .SH NAME
-peak_alignment \- 
+peak_alignment \- Do COW peak alignment and export peaktable
 .SH SYNOPSIS
 \fIpeak_alignment(\fBsamples\fR as any, 
 \fBmzdiff\fR as any = "da:0.001", 
 \fBnorm\fR as boolean = FALSE, 
 [\fB<Environment>\fR]);\fR
+.SH DESCRIPTION
+.PP
+Do COW peak alignment and export peaktable
+ 
+ Correlation optimized warping (COW) based on the total ion 
+ current (TIC) is a widely used time alignment algorithm 
+ (COW-TIC). This approach works successfully on chromatograms 
+ containing few compounds and having a well-defined TIC.
+.PP
+.SH OPTIONS
+.PP
+\fBsamples\fB \fR\- should be a set of sample file data, which could be extract from the \fBmz_deco\fR function.. 
+.PP
+.PP
+\fBmzdiff\fB \fR\- -. 
+.PP
+.PP
+\fBnorm\fB \fR\- do total ion sum normalization after peak alignment and the peaktable object has been exported?. 
+.PP
+.PP
+\fBenv\fB \fR\- -. 
+.PP
 .SH SEE ALSO
 mzDeco
 .SH FILES

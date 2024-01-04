@@ -5,23 +5,53 @@
 // ref=mzkit.PubChemToolKit@mzkit, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 
 /**
+ * toolkit for handling of the ncbi pubchem data
+ * 
 */
 declare namespace pubchem_kit {
    /**
-     * @param cache default value Is ``'./.pubchem'``.
-     * @param offline default value Is ``false``.
-     * @param interval default value Is ``-1``.
-     * @param env default value Is ``null``.
+    * query cid from pubchem database
+    * 
+    * 
+     * @param name any search term for query the pubchem database
+     * @param cache the cache fs for the online pubchem database
+     * 
+     * + default value Is ``'./.pubchem'``.
+     * @param offline running the search query handler in offline mode?
+     * 
+     * + default value Is ``false``.
+     * @param interval the time sleep interval in ms
+     * 
+     * + default value Is ``-1``.
+     * @param env 
+     * + default value Is ``null``.
    */
    function CID(name: string, cache?: any, offline?: boolean, interval?: object, env?: object): string;
    /**
-     * @param size default value Is ``'500,500'``.
-     * @param ignores_invalid_CID default value Is ``false``.
-     * @param env default value Is ``null``.
+    * Request the metabolite structure image via the pubchem image_fly api
+    * 
+    * 
+     * @param cid -
+     * @param size -
+     * 
+     * + default value Is ``'500,500'``.
+     * @param ignores_invalid_CID -
+     * 
+     * + default value Is ``false``.
+     * @param env -
+     * 
+     * + default value Is ``null``.
+     * @return A tuple list of the image data for the input pubchem metabolite cid query
    */
    function image_fly(cid: any, size?: any, ignores_invalid_CID?: boolean, env?: object): any;
    /**
-     * @param clusters default value Is ``null``.
+    * create MeSH ontology gsea background based on the mesh tree
+    * 
+    * 
+     * @param mesh -
+     * @param clusters Create the mesh background about another topic
+     * 
+     * + default value Is ``null``.
    */
    function mesh_background(mesh: object, clusters?: object): object;
    /**
@@ -29,27 +59,62 @@ declare namespace pubchem_kit {
    function mesh_level1(mesh: object): string;
    module metadata {
       /**
+       * extract the compound annotation data
+       * 
+       * 
+        * @param pugView -
       */
       function pugView(pugView: object): object;
    }
    /**
+    * Generate the url for get pubchem pugviews data object
+    * 
+    * 
+     * @param cid The pubchem compound cid, should be an integer value
+     * @return A url for get the pubchem data in pugview format
    */
    function pubchem_url(cid: string): string;
    /**
-     * @param cacheFolder default value Is ``'./pubchem_cache'``.
-     * @param offline default value Is ``false``.
-     * @param env default value Is ``null``.
+    * query pubchem data via a given cid value
+    * 
+    * 
+     * @param cid -
+     * @param cacheFolder A cache directory path to the pubchem xml files
+     * 
+     * + default value Is ``'./pubchem_cache'``.
+     * @param offline -
+     * 
+     * + default value Is ``false``.
+     * @param env -
+     * 
+     * + default value Is ``null``.
    */
    function pugView(cid: any, cacheFolder?: string, offline?: boolean, env?: object): any;
    module query {
       /**
-        * @param cache default value Is ``'./pubchem/'``.
-        * @param interval default value Is ``-1``.
-        * @param env default value Is ``null``.
+       * query of the pathways, taxonomy and reaction 
+       *  data from the pubchem database.
+       * 
+       * 
+        * @param cid -
+        * @param cache A local dir path for the cache data or a filesystem wrapper object
+        * 
+        * + default value Is ``'./pubchem/'``.
+        * @param interval the sleep time interval in ms
+        * 
+        * + default value Is ``-1``.
+        * @param env 
+        * + default value Is ``null``.
       */
       function external(cid: string, cache?: any, interval?: object, env?: object): object;
       /**
-        * @param cache default value Is ``'./graph_kb'``.
+       * Query the compound related biological context information from pubchem
+       * 
+       * 
+        * @param cid -
+        * @param cache -
+        * 
+        * + default value Is ``'./graph_kb'``.
       */
       function knowlegde_graph(cid: string, cache?: string): object;
    }
@@ -59,11 +124,24 @@ declare namespace pubchem_kit {
       */
       function mesh_tree(file: any, env?: object): any;
       /**
-        * @param lazy default value Is ``true``.
-        * @param env default value Is ``null``.
+       * read pubmed data table files
+       * 
+       * 
+        * @param file A collection of the pubmed database ascii text file
+        * @param lazy just create a lazy loader instead of read all 
+        *  content into memory at once?
+        * 
+        * + default value Is ``true``.
+        * @param env -
+        * 
+        * + default value Is ``null``.
       */
       function pubmed(file: string, lazy?: boolean, env?: object): object;
       /**
+       * read xml text and then parse as pugview record data object
+       * 
+       * 
+        * @param file the file path or the xml text content
       */
       function pugView(file: string): object;
       /**
@@ -71,8 +149,16 @@ declare namespace pubchem_kit {
       function webquery(file: string): object;
    }
    /**
-     * @param skipNoCID default value Is ``true``.
-     * @param dbfilter default value Is ``null``.
+    * parse the pubchem sid map data file
+    * 
+    * 
+     * @param sidMapText -
+     * @param skipNoCID skip of the sid map item which has no cid assigned yet?
+     * 
+     * + default value Is ``true``.
+     * @param dbfilter filter out the sid map data with a specific given db name
+     * 
+     * + default value Is ``null``.
    */
    function SID_map(sidMapText: string, skipNoCID?: boolean, dbfilter?: string): object;
 }

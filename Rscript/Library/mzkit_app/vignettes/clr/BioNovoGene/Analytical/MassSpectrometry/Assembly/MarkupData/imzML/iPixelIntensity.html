@@ -22,7 +22,7 @@
 
         <h3>Description</h3>
 
-        
+        A pixel spot scan summary data in MSI
 
         <h3>Declare</h3>        
 
@@ -30,11 +30,17 @@
             <code id="clr_ts">
 # namespace BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
 export class iPixelIntensity {
+   # The max intensity in current spot
    basePeakIntensity: double;
+   # The average intensity in current spot
    average: double;
+   # The ions m/z which it is the max intensity value inside current spot
    basePeakMz: double;
+   # the min intensity value of current spot
    min: double;
+   # the 50% quantile intensity of current spot
    median: double;
+   # the number of the ions in current spot
    numIons: integer;
    totalIon: double;
    x: integer;

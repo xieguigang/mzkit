@@ -22,7 +22,7 @@
 
         <h3>Description</h3>
 
-        
+        total ions/base peak/average intensity
 
         <h3>Declare</h3>        
 
@@ -30,9 +30,13 @@
             <code id="clr_ts">
 # namespace BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
 export class MSISummary {
+   # [x,y]
    rowScans: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/MarkupData/imzML/iPixelIntensity[].html">iPixelIntensity[][]</a>;
+   # the MALDI scan dimension size
    size: <a href="/vignettes/clr/System/Drawing/Size.html">Size</a>;
+   # the range of the x axis: [min, max]
    x: double;
+   # the range of the y axis: [min, max]
    y: double;
 }
 </code>

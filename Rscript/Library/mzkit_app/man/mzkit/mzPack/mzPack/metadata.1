@@ -1,10 +1,21 @@
 .\" man page create by R# package system.
 .TH MZPACK 1 2000-Jan "metadata" "metadata"
 .SH NAME
-metadata \- 
+metadata \- get metadata list from a specific ms1 scan
 .SH SYNOPSIS
 \fImetadata(\fBmzpack\fR as <generic> IMzPackReader, 
 \fBindex\fR as string);\fR
+.SH DESCRIPTION
+.PP
+get metadata list from a specific ms1 scan
+.PP
+.SH OPTIONS
+.PP
+\fBmzpack\fB \fR\- A mzpack data lazy reader object that created via \fBmzpack\fR function.. 
+.PP
+.PP
+\fBindex\fB \fR\- the scan id of the target ms1 scan data. 
+.PP
 .SH SEE ALSO
 mzPack
 .SH FILES

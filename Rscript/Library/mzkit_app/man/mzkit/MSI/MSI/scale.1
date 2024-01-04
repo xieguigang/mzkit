@@ -1,12 +1,38 @@
 .\" man page create by R# package system.
 .TH MSI 1 2000-Jan "scale" "scale"
 .SH NAME
-scale \- 
+scale \- scale the spatial matrix by column
 .SH SYNOPSIS
 \fIscale(\fBm\fR as <generic> dataframe, 
 \fBfactor\fR as any, 
 \fBbpc\fR as boolean = FALSE, 
 [\fB<Environment>\fR]);\fR
+.SH DESCRIPTION
+.PP
+scale the spatial matrix by column
+.PP
+.SH OPTIONS
+.PP
+\fBm\fB \fR\- a dataframe object that contains the spot expression data. 
+ should be in format of: spot in column and ion features in rows.. 
+.PP
+.PP
+\fBfactor\fB \fR\- the size of this numeric vector should be equals to the 
+ ncol of the given dataframe input **`m`**.
+. 
+.PP
+.PP
+\fBbpc\fB \fR\- 
+ scle by bpc or scale by tic?
+. 
+.PP
+.PP
+\fBenv\fB \fR\- -. 
+.PP
+.SH VALUE
+.PP
+A new dataframe data after scaled
+.PP
 .SH SEE ALSO
 MSI
 .SH FILES

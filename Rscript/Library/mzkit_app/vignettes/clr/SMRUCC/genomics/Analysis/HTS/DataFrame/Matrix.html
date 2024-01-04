@@ -22,7 +22,7 @@
 
         <h3>Description</h3>
 
-        
+        a data matrix of samples in column and gene features in row
 
         <h3>Declare</h3>        
 
@@ -30,10 +30,15 @@
             <code id="clr_ts">
 # namespace SMRUCC.genomics.Analysis.HTS.DataFrame
 export class Matrix {
+   # the tag data of current expression matrix
    tag: string;
+   # sample id of @``P:SMRUCC.genomics.Analysis.HTS.DataFrame.DataFrameRow.experiments``
    sampleID: string;
+   # gene list, vector element is the sample data
    expression: <a href="/vignettes/clr/SMRUCC/genomics/Analysis/HTS/DataFrame/DataFrameRow.html">DataFrameRow[]</a>;
+   # the row numbers of the expression matrix(number of genes)
    size: integer;
+   # get all gene id list
    rownames: string;
 }
 </code>

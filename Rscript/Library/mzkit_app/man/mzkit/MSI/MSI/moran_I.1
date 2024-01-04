@@ -1,9 +1,22 @@
 .\" man page create by R# package system.
 .TH MSI 1 2000-Jan "moran_I" "moran_I"
 .SH NAME
-moran_I \- 
+moran_I \- evaluate the moran index for each ion layer
 .SH SYNOPSIS
 \fImoran_I(\fBx\fR as <generic> dataframe);\fR
+.SH DESCRIPTION
+.PP
+evaluate the moran index for each ion layer
+.PP
+.SH OPTIONS
+.PP
+\fBx\fB \fR\- 
+ A spatial expression data matrix, should be in format of:
+ 
+ 1. the spatial spot xy in row names, and
+ 2. the ions feature m/z label in col names
+. 
+.PP
 .SH SEE ALSO
 MSI
 .SH FILES

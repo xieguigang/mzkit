@@ -1,10 +1,29 @@
 .\" man page create by R# package system.
 .TH SINGLECELLS 1 2000-Jan "read.mz_matrix" "read.mz_matrix"
 .SH NAME
-read.mz_matrix \- 
+read.mz_matrix \- load the data matrix into memory at once
 .SH SYNOPSIS
 \fIread.mz_matrix(\fBfile\fR as any, 
 [\fB<Environment>\fR]);\fR
+.SH DESCRIPTION
+.PP
+load the data matrix into memory at once
+.PP
+.SH OPTIONS
+.PP
+\fBfile\fB \fR\- 
+ a file connection to the matrix file or the matrix lazy 
+ reader object which is created via the function 
+ \fBopen.matrix\fR.
+. 
+.PP
+.PP
+\fBenv\fB \fR\- -. 
+.PP
+.SH DETAILS
+.PP
+for create a lazy data reader of the matrix, use the \fBopen.matrix\fR function.
+.PP
 .SH SEE ALSO
 SingleCells
 .SH FILES

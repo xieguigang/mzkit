@@ -1,12 +1,33 @@
 .\" man page create by R# package system.
 .TH DATA 1 2000-Jan "XIC" "XIC"
 .SH NAME
-XIC \- 
+XIC \- get chromatogram data for a specific metabolite with given m/z from the ms1 scans data.
 .SH SYNOPSIS
 \fIXIC(\fBms1\fR as any, 
 \fBmz\fR as double, 
 \fBtolerance\fR as any = "ppm:20", 
 [\fB<Environment>\fR]);\fR
+.SH DESCRIPTION
+.PP
+get chromatogram data for a specific metabolite with given m/z from the ms1 scans data.
+.PP
+.SH OPTIONS
+.PP
+\fBms1\fB \fR\- a sequence data of ms1 scans. 
+.PP
+.PP
+\fBmz\fB \fR\- target mz value. 
+.PP
+.PP
+\fBtolerance\fB \fR\- 
+ tolerance value in unit \fBppm\fR or \fBda\fR for 
+ extract \fBm/z\fR data from the given ms1 ion 
+ scans.
+. 
+.PP
+.PP
+\fBenv\fB \fR\- -. 
+.PP
 .SH SEE ALSO
 data
 .SH FILES

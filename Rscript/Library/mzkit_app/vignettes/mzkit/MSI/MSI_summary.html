@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>MSI_summary</title>
+    <title>Fetch MSI summary data</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
@@ -18,11 +18,11 @@
             </tr>
         </table>
 
-        <h2>MSI_summary</h2>
+        <h2>Fetch MSI summary data</h2>
 
         <h3>Description</h3>
 
-        MSI_summary
+        
 
         <h3>Usage</h3>
 
@@ -38,6 +38,21 @@
 
         <table>
             
+<dt>raw</dt>
+<dd><p><p>-</p></p></dd>
+
+
+<dt>as.vector</dt>
+<dd><p><p>returns the raw vector of @<code>T:BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML.iPixelIntensity</code> if set this<br />
+ parameter value to value TRUE, or its wrapper object @<code>T:BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML.MSISummary</code> <br />
+ if set this parameter value to FALSE by default.</p></p></dd>
+
+
+<dt>dims</dt>
+<dd><p><p>overrides the MSI data its scan dimension value? This parameter value is<br />
+ a numeric vector with two integer element that represents the dimension<br />
+ of the MSI data(width and height)</p></p></dd>
+
         </table>
 
 
@@ -50,9 +65,15 @@
 
         this function returns data object in these one of the listed data types: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/MarkupData/imzML/MSISummary.html">MSISummary</a>, <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/MarkupData/imzML/iPixelIntensity.html">iPixelIntensity</a>.<h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/MarkupData/imzML/MSISummary.html">MSISummary</a></li><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/MarkupData/imzML/iPixelIntensity.html">iPixelIntensity</a></li></ul>
 
-        <h3 style="display: none;">Examples</h3>
+        <h3 style="display: block;">Examples</h3>
 
-        
+        <pre><code id="example_r"> let rawdata = open.mzpack("/path/to/rawdata.mzPack");
+ let spots = read.csv("/path/to/region.csv");
+ let into = MSI_summary(rawdata, x = as.integer(spots$x), y = as.integer(spots$y), as.vector = TRUE);
+ 
+ print(as.data.frame(into));
+ print("view of the intensity vector:");
+ print([into]::totalIon);</code></pre>
 
         <hr />
         <div style="text-align: center;">[Package <em>MSI</em> version 1.0.0.0 <a

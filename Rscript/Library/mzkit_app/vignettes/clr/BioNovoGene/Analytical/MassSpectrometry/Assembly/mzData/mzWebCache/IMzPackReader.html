@@ -22,7 +22,8 @@
 
         <h3>Description</h3>
 
-        
+        a unify reader interface for @``T:BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache.BinaryStreamReader`` read 
+ data from file or read data from ``mzPack`` in-memory data object.
 
         <h3>Declare</h3>        
 
@@ -30,7 +31,9 @@
             <code id="clr_ts">
 # namespace BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 export class IMzPackReader {
+   # get all scan ms1 data its scan id collection
    EnumerateIndex: <a href="/vignettes/clr/System/Collections/Generic/IEnumerable`1.html">IEnumerable`1</a>;
+   # the source file name of current raw data file
    source: string;
    rtmax: double;
 }

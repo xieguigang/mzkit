@@ -1,12 +1,33 @@
 .\" man page create by R# package system.
 .TH MSI 1 2000-Jan "pixelId" "pixelId"
 .SH NAME
-pixelId \- 
+pixelId \- get pixels [x,y] tags collection for a specific ion
 .SH SYNOPSIS
 \fIpixelId(\fBraw\fR as <generic> mzPack, 
 \fBmz\fR as double, 
 \fBtolerance\fR as any = "da:0.1", 
 [\fB<Environment>\fR]);\fR
+.SH DESCRIPTION
+.PP
+get pixels [x,y] tags collection for a specific ion
+.PP
+.SH OPTIONS
+.PP
+\fBraw\fB \fR\- a ms-imaging rawdata object in mzpack format.. 
+.PP
+.PP
+\fBmz\fB \fR\- a m/z numeric value. 
+.PP
+.PP
+\fBtolerance\fB \fR\- the mass tolerance error for match the ion in the rawdata.. 
+.PP
+.PP
+\fBenv\fB \fR\- -. 
+.PP
+.SH VALUE
+.PP
+a character vector of the pixel [x,y] tags.
+.PP
 .SH SEE ALSO
 MSI
 .SH FILES

@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>splitClusterRT</title>
+    <title>Split each cluster data into multiple parts by a givne rt window</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
@@ -18,11 +18,11 @@
             </tr>
         </table>
 
-        <h2>splitClusterRT</h2>
+        <h2>Split each cluster data into multiple parts by a givne rt window</h2>
 
         <h3>Description</h3>
 
-        splitClusterRT
+        
 
         <h3>Usage</h3>
 
@@ -36,17 +36,39 @@
 
         <table>
             
+<dt>clusters</dt>
+<dd><p><p>-</p></p></dd>
+
+
+<dt>rtwin</dt>
+<dd><p><p>-</p></p></dd>
+
+
+<dt>wrap.peaks</dt>
+<dd><p><p>wraping the networking node data as the spectrum peak object?</p></p></dd>
+
+
+<dt>env</dt>
+<dd><p><p>-</p></p></dd>
+
         </table>
 
 
-        <h3 style="display: none;">Details</h3>
+        <h3 style="display: block;">Details</h3>
 
-        
+        <p>This function works for the small molecular networking analysis</p>
 
 
         <h3>Value</h3>
 
-        this function returns data object in these one of the listed data types: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/PeakMs2.html">PeakMs2</a>, <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/MoleculeNetworking/NetworkingNode.html">NetworkingNode</a>.<h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/PeakMs2.html">PeakMs2</a></li><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/MoleculeNetworking/NetworkingNode.html">NetworkingNode</a></li></ul>
+        <p>the value type of this function is affects by the <strong><code>wrap_peaks</code></strong> parameter:</p>
+
+<ol>
+<li>for wrap_peaks is set to false by default, a vector of the raw <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/MoleculeNetworking/NetworkingNode.html">NetworkingNode</a> <br />
+which is extract from the cluster data will be returns</li>
+<li>otherwise the spectrum peaks data will be returns if the parameter <br />
+value is set to value true.</li>
+</ol><h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/PeakMs2.html">PeakMs2</a></li><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/MoleculeNetworking/NetworkingNode.html">NetworkingNode</a></li></ul>
 
         <h3 style="display: none;">Examples</h3>
 

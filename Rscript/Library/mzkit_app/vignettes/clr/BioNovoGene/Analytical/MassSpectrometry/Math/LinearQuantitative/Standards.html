@@ -22,7 +22,8 @@
 
         <h3>Description</h3>
 
-        
+        The standard curve concentration gradient data.
+ (标准品的标准曲线的浓度梯度信息)
 
         <h3>Declare</h3>        
 
@@ -32,9 +33,12 @@
 export class Standards {
    ID: string;
    Name: string;
+   # 标准曲线的浓度梯度信息
    C: list;
    ISTD: string;
+   # 内标的编号，需要使用这个编号来分别找到离子对和浓度信息
    IS: string;
+   # 系数因子，值位于[0,1]区间，默认是1
    Factor: double;
 }
 </code>

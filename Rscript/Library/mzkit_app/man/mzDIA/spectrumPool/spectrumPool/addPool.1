@@ -1,7 +1,7 @@
 .\" man page create by R# package system.
 .TH SPECTRUMPOOL 1 2000-Jan "addPool" "addPool"
 .SH NAME
-addPool \- 
+addPool \- add sample peaks data to spectrum pool
 .SH SYNOPSIS
 \fIaddPool(\fBpool\fR as <generic> SpectrumPool, 
 \fBx\fR as any, 
@@ -12,6 +12,33 @@ addPool \-
 \fBfile\fR as string = "unknown", 
 \fBfilename_overrides\fR as boolean = FALSE, 
 [\fB<Environment>\fR]);\fR
+.SH DESCRIPTION
+.PP
+add sample peaks data to spectrum pool
+.PP
+.SH OPTIONS
+.PP
+\fBpool\fB \fR\- -. 
+.PP
+.PP
+\fBx\fB \fR\- 
+ the spectrum data collection
+. 
+.PP
+.PP
+\fBbiosample\fB \fR\- -. 
+.PP
+.PP
+\fBorganism\fB \fR\- -. 
+.PP
+.PP
+\fBenv\fB \fR\- -. 
+.PP
+.SH DETAILS
+.PP
+the spectrum data for run clustering should be 
+ processed into centroid mode at first!
+.PP
 .SH SEE ALSO
 spectrumPool
 .SH FILES

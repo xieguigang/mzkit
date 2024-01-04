@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>open.imzML</title>
+    <title>open the reader for the imzML ms-imaging file</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
@@ -18,11 +18,11 @@
             </tr>
         </table>
 
-        <h2>open.imzML</h2>
+        <h2>open the reader for the imzML ms-imaging file</h2>
 
         <h3>Description</h3>
 
-        open.imzML
+        
 
         <h3>Usage</h3>
 
@@ -34,6 +34,14 @@
 
         <table>
             
+<dt>file</dt>
+<dd><p><p>the file path to the specific imzML metadata file for load <br />
+ for run ms-imaging analysis.</p></p></dd>
+
+
+<dt>env</dt>
+<dd><p><p>-</p></p></dd>
+
         </table>
 
 
@@ -44,11 +52,18 @@
 
         <h3>Value</h3>
 
-        this function returns data object of type list. the list data also has some specificied data fields: <code>list(scans, ibd)</code>.<h4>clr value class</h4><ul><li>list</li></ul>
+        <p>this function returns a tuple list object that contains 2 slot elements inside:</p>
 
-        <h3 style="display: none;">Examples</h3>
+<ol>
+<li>scans: is the [x,y] spatial scans data: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/MarkupData/imzML/ScanData.html">ScanData</a>.</li>
+<li>ibd: is the binary data reader wrapper object for the corresponding <br />
+   <code>ibd</code> file of the given input imzML file: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/MarkupData/imzML/ibdReader.html">ibdReader</a>.</li>
+</ol> the list data also has some specificied data fields: <code>list(scans, ibd)</code>.<h4>clr value class</h4><ul><li>list</li></ul>
 
-        
+        <h3 style="display: block;">Examples</h3>
+
+        <pre><code id="example_r"> # the msi_rawdata.ibd file should be in the same folder with the input imzml file.
+ let imzml = open.imzML(file = "/path/to/msi_rawdata.imzML");</code></pre>
 
         <hr />
         <div style="text-align: center;">[Package <em>MSI</em> version 1.0.0.0 <a

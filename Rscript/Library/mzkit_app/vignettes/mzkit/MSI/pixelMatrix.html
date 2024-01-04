@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>pixelMatrix</title>
+    <title>dumping raw data matrix as text table file.</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
@@ -18,11 +18,11 @@
             </tr>
         </table>
 
-        <h2>pixelMatrix</h2>
+        <h2>dumping raw data matrix as text table file.</h2>
 
         <h3>Description</h3>
 
-        pixelMatrix
+        
 
         <h3>Usage</h3>
 
@@ -39,6 +39,27 @@
 
         <table>
             
+<dt>raw</dt>
+<dd><p><p>-</p></p></dd>
+
+
+<dt>file</dt>
+<dd><p><p>-</p></p></dd>
+
+
+<dt>mzdiff</dt>
+<dd><p><p>the mass tolerance width for extract the feature ions</p></p></dd>
+
+
+<dt>q</dt>
+<dd><p><p>the frequence threshold for filter the feature ions, this <br />
+ value range of this parameter should be inside [0,1] which<br />
+ means percentage cutoff.</p></p></dd>
+
+
+<dt>env</dt>
+<dd><p><p>-</p></p></dd>
+
         </table>
 
 
@@ -49,7 +70,10 @@
 
         <h3>Value</h3>
 
-        this function returns data object in these one of the listed data types: boolean, <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/SingleCells/Deconvolute/MzMatrix.html">MzMatrix</a>.<h4>clr value class</h4><ul><li>boolean</li><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/SingleCells/Deconvolute/MzMatrix.html">MzMatrix</a></li></ul>
+        <p>This function returns a logical value TRUE if the <br />
+ given <strong><code>file</code></strong> stream buffer is not missing,<br />
+ otherwise the matrix object itself will be returns from <br />
+ the function.</p><h4>clr value class</h4><ul><li>boolean</li><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/SingleCells/Deconvolute/MzMatrix.html">MzMatrix</a></li></ul>
 
         <h3 style="display: none;">Examples</h3>
 

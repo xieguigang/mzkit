@@ -22,7 +22,8 @@
 
         <h3>Description</h3>
 
-        
+        the unify in-memory data model of the mzkit MS data model.
+ (mzPack文件格式模型)
 
         <h3>Declare</h3>        
 
@@ -30,19 +31,26 @@
             <code id="clr_ts">
 # namespace BioNovoGene.Analytical.MassSpectrometry.Assembly
 export class mzPack {
+   # 一般为二维散点图
    Thumbnail: <a href="/vignettes/clr/System/Drawing/Image.html">Image</a>;
    MS: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/mzWebCache/ScanMS1.html">ScanMS1[]</a>;
    Application: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/mzWebCache/FileApplicationClass.html">FileApplicationClass</a>;
+   # TIC/BPC
    Chromatogram: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Chromatogram/Chromatogram.html">Chromatogram</a>;
+   # the file name of the raw data source file
    source: string;
    metadata: list;
+   # 其他的扫描器数据，例如紫外扫描
    Scanners: list;
+   # m/z annotation
    Annotations: list;
    rtmin: double;
    rtmax: double;
    totalIons: double;
    maxIntensity: double;
+   # get size of the ms1 scan data
    size: integer;
+   # get number of total ms2 scan data
    CountMs2: integer;
 }
 </code>

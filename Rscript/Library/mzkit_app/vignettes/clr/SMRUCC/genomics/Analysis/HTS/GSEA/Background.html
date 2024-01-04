@@ -22,7 +22,7 @@
 
         <h3>Description</h3>
 
-        
+        假设基因组是有许多个功能聚类的集合构成的
 
         <h3>Declare</h3>        
 
@@ -31,9 +31,11 @@
 # namespace SMRUCC.genomics.Analysis.HTS.GSEA
 export class Background {
    name: string;
+   # A brief unique id code. Such as kegg organism code or ncbi taxonomy id.
    id: string;
    comments: string;
    build: <a href="/vignettes/clr/System/DateTime.html">DateTime</a>;
+   # The number of genes in this background genome.
    size: integer;
    clusters: <a href="/vignettes/clr/SMRUCC/genomics/Analysis/HTS/GSEA/Cluster.html">Cluster[]</a>;
    Stylesheet: <a href="/vignettes/clr/Microsoft/VisualBasic/ComponentModel/XmlStyleProcessor.html">XmlStyleProcessor</a>;

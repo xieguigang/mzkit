@@ -22,7 +22,7 @@
 
         <h3>Description</h3>
 
-        
+        Region of interest
 
         <h3>Declare</h3>        
 
@@ -30,13 +30,21 @@
             <code id="clr_ts">
 # namespace BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 export class ROI {
+   # 这个区域的起始和结束的时间点
    time: <a href="/vignettes/clr/Microsoft/VisualBasic/ComponentModel/Ranges/Model/DoubleRange.html">DoubleRange</a>;
+   # 出峰达到峰高最大值@``P:BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram.ROI.maxInto``的时间点
    rt: double;
+   # 这个区域的最大峰高度
    maxInto: double;
+   # 在这个ROI时间窗区域内的色谱图数据
    ticks: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Chromatogram/ChromatogramTick.html">ChromatogramTick[]</a>;
+   # 所计算出来的基线的响应强度
    baseline: double;
+   # 当前的这个ROI的峰面积积分值
    integration: double;
+   # 噪声的面积积分百分比
    noise: double;
+   # 信噪比
    snRatio: double;
    peakWidth: double;
 }

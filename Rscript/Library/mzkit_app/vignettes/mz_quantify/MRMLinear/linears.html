@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>linears</title>
+    <title>Create linear fitting based on the wiff raw scan data.</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
@@ -18,11 +18,11 @@
             </tr>
         </table>
 
-        <h2>linears</h2>
+        <h2>Create linear fitting based on the wiff raw scan data.</h2>
 
         <h3>Description</h3>
 
-        linears
+        
 
         <h3>Usage</h3>
 
@@ -38,12 +38,34 @@
 
         <table>
             
+<dt>rawScan</dt>
+<dd><p><p>The wiff raw scan data which are extract by function: <code>wiff.scans</code>.</p></p></dd>
+
+
+<dt>calibrates</dt>
+<dd><p><p>-</p></p></dd>
+
+
+<dt>[ISvector]</dt>
+<dd><p><p>-</p></p></dd>
+
+
+<dt>maxDeletions</dt>
+<dd><p><p>Max number of the reference points that delete automatically by <br />
+ the linear modelling program.</p>
+
+<ul>
+<li>negative value means auto</li>
+<li>zero means no deletion</li>
+<li>positive means the max allowed point numbers for auto deletion by the program</li>
+</ul></p></dd>
+
         </table>
 
 
-        <h3 style="display: none;">Details</h3>
+        <h3 style="display: block;">Details</h3>
 
-        
+        <p>20200106 checked, test success</p>
 
 
         <h3>Value</h3>

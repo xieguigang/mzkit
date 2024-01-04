@@ -22,7 +22,9 @@
 
         <h3>Description</h3>
 
-        
+        The R# data pipeline
+ 
+ this model object is a kind of wrapper of the .net clr @``T:System.Collections.IEnumerable`` interface
 
         <h3>Declare</h3>        
 
@@ -30,8 +32,15 @@
             <code id="clr_ts">
 # namespace SMRUCC.Rsharp.Runtime.Internal.Object
 export class pipeline {
+   # The action will be called after finish loop on the sequence. 
+   #  Null value of this property will be ignored
    pipeFinalize: <a href="/vignettes/clr/System/Action.html">Action</a>;
+   # contains an error message in the pipeline populator or 
+   #  the pipeline data is an error message. You can get the
+   #  error message via function @``M:SMRUCC.Rsharp.Runtime.Internal.Object.pipeline.getError`` when
+   #  this property value is TRUE
    isError: boolean;
+   # current data pipeline is a data message?
    isMessage: boolean;
    elementType: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Interop/RType.html">RType</a>;
 }

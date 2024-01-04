@@ -1,10 +1,34 @@
 .\" man page create by R# package system.
 .TH FORMULA 4 2000-Jan "eval" "eval"
 .SH NAME
-eval \- 
+eval \- Evaluate formula exact mass
 .SH SYNOPSIS
 \fIeval(\fBformula\fR as any, 
 [\fB<Environment>\fR]);\fR
+.SH DESCRIPTION
+.PP
+Evaluate formula exact mass
+ 
+ evaluate exact mass for the given formula strings.
+.PP
+.SH OPTIONS
+.PP
+\fBformula\fB \fR\- 
+ a vector of the character formulas.
+. 
+.PP
+.SH VALUE
+.PP
+the result data type is keeps the same as the given data type of the
+ **`formula`** parameter: this function returns a numeric 
+ vector if the given **`formula`** is a character vector,
+ or this function returns a key-value pair tuple list if the given
+ **`formula`** is a list.
+.PP
+.SH DETAILS
+.PP
+-1 will be return if the given formula is empty or error/invalid
+.PP
 .SH SEE ALSO
 formula
 .SH FILES

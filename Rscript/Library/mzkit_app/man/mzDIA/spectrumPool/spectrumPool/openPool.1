@@ -1,12 +1,36 @@
 .\" man page create by R# package system.
 .TH SPECTRUMPOOL 1 2000-Jan "openPool" "openPool"
 .SH NAME
-openPool \- 
+openPool \- open the spectrum pool from a given resource link
 .SH SYNOPSIS
 \fIopenPool(\fBlink\fR as string, 
 \fBmodel_id\fR as string = \fB<NULL>\fR, 
 \fBscore_overrides\fR as double = \fB<NULL>\fR, 
 [\fB<Environment>\fR]);\fR
+.SH DESCRIPTION
+.PP
+open the spectrum pool from a given resource link
+.PP
+.SH OPTIONS
+.PP
+\fBlink\fB \fR\- 
+ the resource string to the spectrum pool, this resource string could be
+ a local file or a remote cloud services endpoint
+. 
+.PP
+.PP
+\fBmodel_id\fB \fR\- 
+ the model id, this parameter works for open the model in the cloud service
+. 
+.PP
+.PP
+\fBscore_overrides\fB \fR\- 
+ WARNING: this optional parameter will overrides the mode score 
+ level when this parameter has a positive numeric value in 
+ range \fB(0,1]\fR. it is dangers to overrides the score parameter
+ in the exists model.
+. 
+.PP
 .SH SEE ALSO
 spectrumPool
 .SH FILES

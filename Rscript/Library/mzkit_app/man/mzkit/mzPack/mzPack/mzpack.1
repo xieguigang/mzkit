@@ -1,10 +1,33 @@
 .\" man page create by R# package system.
 .TH MZPACK 1 2000-Jan "mzpack" "mzpack"
 .SH NAME
-mzpack \- 
+mzpack \- open a mzpack data object reader, not read all data into memory in one time.
 .SH SYNOPSIS
 \fImzpack(\fBfile\fR as any, 
 [\fB<Environment>\fR]);\fR
+.SH DESCRIPTION
+.PP
+open a mzpack data object reader, not read all data into memory in one time.
+.PP
+.SH OPTIONS
+.PP
+\fBfile\fB \fR\- 
+ the file path for the mzpack file or the mzpack data object it self
+. 
+.PP
+.PP
+\fBenv\fB \fR\- -. 
+.PP
+.SH VALUE
+.PP
+the ms scan data can be load into memory in lazy 
+ require by a given scan id of the target ms1 scan
+.PP
+.SH DETAILS
+.PP
+a in-memory reader wrapper will be created if the given file object 
+ is a in-memory mzpack object itself
+.PP
 .SH SEE ALSO
 mzPack
 .SH FILES

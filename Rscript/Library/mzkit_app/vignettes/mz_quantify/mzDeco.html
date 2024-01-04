@@ -10,7 +10,7 @@
     <meta name="keywords" content="R#; mzDeco; mz_quantify" />
     <meta name="generator" content="https://github.com/rsharp-lang" />
     <meta name="theme-color" content="#333" />
-    <meta name="description" content="..." />
+    <meta name="description" content="Extract peak and signal data from rawdata Data processing is the..." />
     <meta class="foundation-data-attribute-namespace" />
     <meta class="foundation-mq-xxlarge" />
     <meta class="foundation-mq-xlarge" />
@@ -63,10 +63,19 @@ table caption {font-size:14px;font-weight:bolder;}
     <p style="     font-size: 1.125em;     line-height: .8em;     margin-left: 0.5%;     background-color: #fbfbfb;     padding: 24px; ">
       <code>
         <span style="color: blue;">require</span>(<span style="color: black; font-weight: bold;">mzkit</span>);
-                               <br /><br /><span style="color: green;">{$desc_comments}</span><br /><span style="color: blue;">imports</span><span style="color: brown"> "mzDeco"</span><span style="color: blue;"> from</span><span style="color: brown"> "mz_quantify"</span>;
+                               <br /><br /><span style="color: green;">#' Extract peak and signal data from rawdata</span><br /><span style="color: blue;">imports</span><span style="color: brown"> "mzDeco"</span><span style="color: blue;"> from</span><span style="color: brown"> "mz_quantify"</span>;
                            </code>
     </p>
-    <p></p>
+    <p><p>Extract peak and signal data from rawdata</p>
+
+<p>Data processing is the computational process of converting raw LC-MS <br />
+ data to biological knowledge and involves multiple processes including <br />
+ raw data deconvolution and the chemical identification of metabolites.</p>
+
+<p>The process of data deconvolution, sometimes called peak picking, is <br />
+ in itself a complex process caused by the complexity of the data and <br />
+ variation introduced during the process of data acquisition related to <br />
+ mass-to-charge ratio, retention time and chromatographic peak area.</p></p>
     <blockquote>
       <p style="font-style: italic; font-size: 0.9em;">
                            
@@ -78,43 +87,48 @@ table caption {font-size:14px;font-weight:bolder;}
   <td id="read.xcms_peaks">
     <a href="./mzDeco/read.xcms_peaks.html">read.xcms_peaks</a>
   </td>
-  <td></td>
+  <td><p>read the peaktable file that in xcms2 output format</p></td>
 </tr>
 <tr>
   <td id="peak_subset">
     <a href="./mzDeco/peak_subset.html">peak_subset</a>
   </td>
-  <td></td>
+  <td><p>make sample column projection</p></td>
 </tr>
 <tr>
   <td id="mz_deco">
     <a href="./mzDeco/mz_deco.html">mz_deco</a>
   </td>
-  <td></td>
+  <td><p>Chromatogram data deconvolution</p></td>
 </tr>
 <tr>
   <td id="write.peaks">
     <a href="./mzDeco/write.peaks.html">write.peaks</a>
   </td>
-  <td></td>
+  <td><p>write peak debug data</p></td>
 </tr>
 <tr>
   <td id="read.peakFeatures">
     <a href="./mzDeco/read.peakFeatures.html">read.peakFeatures</a>
   </td>
-  <td></td>
+  <td><p>read the peak feature table data</p></td>
 </tr>
 <tr>
   <td id="peak_alignment">
     <a href="./mzDeco/peak_alignment.html">peak_alignment</a>
   </td>
-  <td></td>
+  <td><p>Do COW peak alignment and export peaktable</p>
+
+<p>Correlation optimized warping (COW) based on the total ion <br />
+ current (TIC) is a widely used time alignment algorithm <br />
+ (COW-TIC). This approach works successfully on chromatograms <br />
+ containing few compounds and having a well-defined TIC.</p></td>
 </tr>
 <tr>
   <td id="mz.groups">
     <a href="./mzDeco/mz.groups.html">mz.groups</a>
   </td>
-  <td></td>
+  <td><p>do <code>m/z</code> grouping under the given tolerance</p></td>
 </tr>
 <tr>
   <td id="xic_pool">
@@ -126,7 +140,9 @@ table caption {font-size:14px;font-weight:bolder;}
   <td id="pull_xic">
     <a href="./mzDeco/pull_xic.html">pull_xic</a>
   </td>
-  <td></td>
+  <td><p>extract a collection of xic data for a specific ion feature</p>
+
+<p>this function is debug used only</p></td>
 </tr></tbody>
       </table>
     </div>

@@ -1,11 +1,25 @@
 .\" man page create by R# package system.
 .TH MZWEB 1 2000-Jan "open_mzpack.xml" "open_mzpack.xml"
 .SH NAME
-open_mzpack.xml \- 
+open_mzpack.xml \- open mzpack data from a raw data file in xml file format.
 .SH SYNOPSIS
 \fIopen_mzpack.xml(\fBfile\fR as string, 
 \fBprefer\fR as string = \fB<NULL>\fR, 
 [\fB<Environment>\fR]);\fR
+.SH DESCRIPTION
+.PP
+open mzpack data from a raw data file in xml file format.
+.PP
+.SH OPTIONS
+.PP
+\fBfile\fB \fR\- -. 
+.PP
+.PP
+\fBprefer\fB \fR\- 
+ the prefer file format used when the given **`file`** its extension
+ suffix name is \fBXML\fR. value of this parameter could be imzml/mzml/mzxml
+. 
+.PP
 .SH SEE ALSO
 mzweb
 .SH FILES
