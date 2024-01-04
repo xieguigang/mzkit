@@ -13,6 +13,7 @@
 	  <Company>PANOMIX</Company>
 	  <UseApplicationFramework>True</UseApplicationFramework>
 	  <Description>Molecular Networking Generator for library data inference</Description>
+	  <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0|AnyCPU'">
