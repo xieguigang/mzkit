@@ -339,7 +339,7 @@ Module Massbank
     ''' let class = lipid.class(lipids);
     ''' </example>
     <ExportAPI("lipid.class")>
-    <RApiReturn(GetType(ClassReader))>
+    <RApiReturn(GetType(LipidClassReader))>
     Public Function lipidClassReader(<RRawVectorArgument> lipidmaps As Object, Optional env As Environment = Nothing) As Object
         Dim lipids As pipeline = pipeline.TryCreatePipeline(Of LipidMaps.MetaData)(lipidmaps, env)
 

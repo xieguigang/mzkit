@@ -72,5 +72,15 @@ Namespace MetaLib.Models
 
         Public MustOverride Function GetClass(id As String) As CompoundClass
 
+        ''' <summary>
+        ''' try to enumerate all the reference id inside current 
+        ''' class data index pool
+        ''' </summary>
+        ''' <returns>
+        ''' a collection of the metabolite reference id, which could be used 
+        ''' for get the compound class data via the <see cref="GetClass(String)"/> method.
+        ''' </returns>
+        Public MustOverride Function EnumerateId() As IEnumerable(Of String)
+
     End Class
 End Namespace
