@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Create lipid class helper for annotation</title>
+    <title>gets the metabolite id collection from lipidmaps database</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
@@ -13,12 +13,12 @@
 
         <table style="width: 100%;">
             <tr>
-                <td>lipid.class {massbank}</td>
+                <td>lipidmaps_id {massbank}</td>
                 <td style="text-align: right;">R Documentation</td>
             </tr>
         </table>
 
-        <h2>Create lipid class helper for annotation</h2>
+        <h2>gets the metabolite id collection from lipidmaps database</h2>
 
         <h3>Description</h3>
 
@@ -27,7 +27,7 @@
         <h3>Usage</h3>
 
         <div style="width: 100%; padding-left: 3%; color: black;">
-            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>lipid.class</strong>(<i>lipidmaps</i>);</code></pre>
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>lipidmaps_id</strong>(<i>lipidmaps</i>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
@@ -35,7 +35,7 @@
         <table>
             
 <dt>lipidmaps</dt>
-<dd><p><p>-</p></p></dd>
+<dd><p><p>A lipidmaps database related dataset object</p></p></dd>
 
 
 <dt>env</dt>
@@ -51,16 +51,11 @@
 
         <h3>Value</h3>
 
-        this function returns data object of type <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/LipidMaps/LipidClassReader.html">LipidClassReader</a>.<h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/LipidMaps/LipidClassReader.html">LipidClassReader</a></li></ul>
+        this function returns data object of type <i>any</i> kind.<h4>clr value class</h4><ul><li><i>any</i> kind</li></ul>
 
-        <h3 style="display: block;">Examples</h3>
+        <h3 style="display: none;">Examples</h3>
 
-        <pre><code id="example_r"> # cast sdf dataset to lipidmaps data object
- let dataset = read.SDF(file = "./example.sdf", lazy = FALSE);
- let lipids = dataset |> as.lipidmaps();
- 
- # create annotation helper
- let class = lipid.class(lipids);</code></pre>
+        
 
         <hr />
         <div style="text-align: center;">[Package <em>massbank</em> version 1.0.0.0 <a
