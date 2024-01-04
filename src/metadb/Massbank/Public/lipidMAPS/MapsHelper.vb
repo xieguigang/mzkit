@@ -121,6 +121,11 @@ Namespace LipidMaps
                 Return Nothing
             End If
         End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overrides Function EnumerateId() As IEnumerable(Of String)
+            Return index.Keys
+        End Function
     End Class
 
     Public Class LipidNameReader : Inherits CompoundNameReader
