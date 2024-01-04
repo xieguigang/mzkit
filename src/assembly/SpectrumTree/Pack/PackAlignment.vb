@@ -31,6 +31,19 @@ Namespace PackLib
             End Get
         End Property
 
+        ''' <summary>
+        ''' the library size, get the number of the spectrum in current reference library
+        ''' </summary>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' map from <see cref="SpectrumReader.nspectrum"/>
+        ''' </remarks>
+        Public ReadOnly Property size As Integer
+            Get
+                Return spectrum.nspectrum
+            End Get
+        End Property
+
         Sub New(pack As SpectrumReader, Optional dotcutoff As Double = 0.6)
             Call MyBase.New
 
