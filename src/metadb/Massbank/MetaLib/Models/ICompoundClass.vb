@@ -103,5 +103,26 @@ Namespace MetaLib.Models
             End If
         End Function
 
+        Public Shared Function GetLastNode(c As ICompoundClass) As String
+            If c Is Nothing Then
+                Return Nothing
+            End If
+
+            If Not c.molecular_framework.StringEmpty Then
+                Return c.molecular_framework
+            End If
+            If Not c.sub_class.StringEmpty Then
+                Return c.sub_class
+            End If
+            If Not c.class.StringEmpty Then
+                Return c.class
+            End If
+            If Not c.super_class.StringEmpty Then
+                Return c.super_class
+            End If
+
+            Return c.kingdom
+        End Function
+
     End Class
 End Namespace
