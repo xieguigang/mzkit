@@ -562,6 +562,17 @@ Module MSI
     ''' <param name="dims"></param>
     ''' <param name="env"></param>
     ''' <returns></returns>
+    ''' <example>
+    ''' # get dimension size value
+    ''' let size = dimension_size(mzpack_rawdata);
+    ''' str(size);
+    ''' 
+    ''' # set new dimension size to the ms-imaging mzpack object
+    ''' dimension_size(mzpack_rawdata) = [525, 600];
+    ''' 
+    ''' let new_size = dimension_size(mzpack_rawdata);
+    ''' str(new_size);
+    ''' </example>
     <ExportAPI("dimension_size")>
     Public Function dimension_size(raw As mzPack,
                                    <RByRefValueAssign>
