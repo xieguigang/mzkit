@@ -93,6 +93,7 @@ Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports SMRUCC.Rsharp
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
+Imports SMRUCC.Rsharp.Runtime.Internal
 Imports SMRUCC.Rsharp.Runtime.Internal.Invokes
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Internal.Object.Converts
@@ -120,7 +121,21 @@ Module MSI
 
     Sub New()
         Call Internal.Object.Converts.makeDataframe.addHandler(GetType(IonStat()), AddressOf getStatTable)
+
+        Call generic.add("readBin.msi_layer", GetType(Stream), AddressOf readPeaklayer)
+        Call generic.add("writeBin", GetType(SingleIonLayer), AddressOf writePeaklayer)
     End Sub
+
+    Private Function writePeaklayer(layer As SingleIonLayer, args As list, env As Environment) As Object
+        Dim con As Stream = args!con
+        Call LayerFile.SaveLayer(layer, con)
+        Call con.Flush()
+        Return True
+    End Function
+
+    Private Function readPeaklayer(file As Stream, args As list, env As Environment) As Object
+        Return LayerFile.ParseLayer(file)
+    End Function
 
     Private Function getStatTable(ions As IonStat(), args As list, env As Environment) As rDataframe
         Dim table As New rDataframe With {
