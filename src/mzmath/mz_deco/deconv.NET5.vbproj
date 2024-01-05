@@ -15,6 +15,7 @@
     <PackageIcon>Flask.png</PackageIcon>
     <PackageIconUrl />
     <Title>Chromatogram Math</Title>
+    <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
