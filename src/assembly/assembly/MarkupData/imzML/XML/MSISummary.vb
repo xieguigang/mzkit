@@ -79,7 +79,7 @@ Namespace MarkupData.imzML
     Public Class MSISummary
 
         ''' <summary>
-        ''' [x,y]
+        ''' [x,y], each row array may be in different size!
         ''' </summary>
         ''' <returns></returns>
         ''' <remarks>
