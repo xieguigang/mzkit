@@ -121,72 +121,77 @@ Public Class PixelData : Implements IMSIPixel, IPoint2D, HeatMapPixel, RasterPix
 
     Public Shared Function GetBuffer(data As PixelData()) As Byte()
         Using buf As New MemoryStream, file As New BinaryDataWriter(buf)
-            Call file.Write(data.Length)
-            Call file.Write(data.Select(Function(i) i.x).ToArray)
-            Call file.Write(data.Select(Function(i) i.y).ToArray)
-            Call file.Write(data.Select(Function(i) i.intensity).ToArray)
-            Call file.Write(data.Select(Function(i) i.level).ToArray)
-            Call file.Write(data.Select(Function(i) i.mz).ToArray)
-
-            Dim tags As String() = data.Select(Function(i) If(i.sampleTag, "")).ToArray
-
-            If tags.Distinct.Count = 1 Then
-                Call file.Write(-1)
-                Call file.Write(If(tags(Scan0), "sample"), BinaryStringFormat.ZeroTerminated)
-            Else
-                Dim tagIndex = tags.Distinct.Indexing
-
-                Call file.Write(tagIndex.Count)
-                Call file.Write(tagIndex.Objects.GetJson, BinaryStringFormat.ZeroTerminated)
-                Call file.Write(tags.Select(Function(str) tagIndex.IndexOf(str)).ToArray)
-            End If
-
+            Call GetBuffer(data, file)
             Call file.Flush()
 
             Return buf.ToArray
         End Using
     End Function
 
+    Public Shared Sub GetBuffer(data As PixelData(), file As BinaryDataWriter)
+        Call file.Write(data.Length)
+        Call file.Write(data.Select(Function(i) i.x).ToArray)
+        Call file.Write(data.Select(Function(i) i.y).ToArray)
+        Call file.Write(data.Select(Function(i) i.intensity).ToArray)
+        Call file.Write(data.Select(Function(i) i.level).ToArray)
+        Call file.Write(data.Select(Function(i) i.mz).ToArray)
+
+        Dim tags As String() = data.Select(Function(i) If(i.sampleTag, "")).ToArray
+
+        If tags.Distinct.Count = 1 Then
+            Call file.Write(-1)
+            Call file.Write(If(tags(Scan0), "sample"), BinaryStringFormat.ZeroTerminated)
+        Else
+            Dim tagIndex = tags.Distinct.Indexing
+
+            Call file.Write(tagIndex.Count)
+            Call file.Write(tagIndex.Objects.GetJson, BinaryStringFormat.ZeroTerminated)
+            Call file.Write(tags.Select(Function(str) tagIndex.IndexOf(str)).ToArray)
+        End If
+    End Sub
+
     Public Shared Function Parse(data As Byte()) As PixelData()
         Using file As New BinaryDataReader(New MemoryStream(data))
-            Dim size As Integer = file.ReadInt32
-            Dim x As Integer() = file.ReadInt32s(size)
-            Dim y As Integer() = file.ReadInt32s(size)
-            Dim intensity As Double() = file.ReadDoubles(size)
-            Dim level As Double() = file.ReadDoubles(size)
-            Dim mz As Double() = file.ReadDoubles(size)
-            Dim flag As Integer = file.ReadInt32
-            Dim tags As String()
-
-            If flag = -1 Then
-                ' one for all
-                Dim tagAll As String = file.ReadString(BinaryStringFormat.ZeroTerminated)
-
-                tags = tagAll.Replicate(size).ToArray
-            Else
-                Dim tagVector As String() = file _
-                    .ReadString(BinaryStringFormat.ZeroTerminated) _
-                    .LoadJSON(Of String())
-
-                tags = file _
-                    .ReadInt32s(size) _
-                    .Select(Function(i) tagVector(i)) _
-                    .ToArray
-            End If
-
-            Return x _
-                .Select(Function(xi, i)
-                            Return New PixelData With {
-                                .x = xi,
-                                .y = y(i),
-                                .intensity = intensity(i),
-                                .level = level(i),
-                                .mz = mz(i),
-                                .sampleTag = tags(i)
-                            }
-                        End Function) _
-                .ToArray
+            Return Parse(file).ToArray
         End Using
+    End Function
+
+    Public Shared Iterator Function Parse(file As BinaryDataReader) As IEnumerable(Of PixelData)
+        Dim size As Integer = file.ReadInt32
+        Dim x As Integer() = file.ReadInt32s(size)
+        Dim y As Integer() = file.ReadInt32s(size)
+        Dim intensity As Double() = file.ReadDoubles(size)
+        Dim level As Double() = file.ReadDoubles(size)
+        Dim mz As Double() = file.ReadDoubles(size)
+        Dim flag As Integer = file.ReadInt32
+        Dim tags As String()
+
+        If flag = -1 Then
+            ' one for all
+            Dim tagAll As String = file.ReadString(BinaryStringFormat.ZeroTerminated)
+
+            tags = tagAll.Replicate(size).ToArray
+        Else
+            Dim tagVector As String() = file _
+                .ReadString(BinaryStringFormat.ZeroTerminated) _
+                .LoadJSON(Of String())
+
+            tags = file _
+                .ReadInt32s(size) _
+                .Select(Function(i) tagVector(i)) _
+                .ToArray
+        End If
+
+        For i As Integer = 0 To x.Length - 1
+            Yield New PixelData With {
+                .x = x(i),
+                .y = y(i),
+                .intensity = intensity(i),
+                .level = level(i),
+                .mz = mz(i),
+                .sampleTag = tags(i)
+            }
+        Next
     End Function
 
     ''' <summary>
