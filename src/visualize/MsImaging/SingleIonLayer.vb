@@ -65,27 +65,53 @@ Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Quantile
 
+''' <summary>
+''' a collection of the <see cref="PixelData"/> spots, the spot pixel
+''' data was used to the spatial heatmap rendering.
+''' </summary>
 Public Class SingleIonLayer
 
+    ''' <summary>
+    ''' the layer tag label, usually be a single ion m/z value.
+    ''' </summary>
+    ''' <returns></returns>
     Public Property IonMz As String
+    ''' <summary>
+    ''' the spatial spot data collection, that used for create spatial heatmap rendering.
+    ''' </summary>
+    ''' <returns></returns>
     Public Property MSILayer As PixelData()
 
     ''' <summary>
-    ''' the canvas size of the MSI plot output
+    ''' the canvas size of the MSI plot output, it indicates the max scan x and 
+    ''' max scan y of the <see cref="MSILayer"/> heatmap.
     ''' </summary>
     ''' <returns></returns>
     Public Property DimensionSize As Size
 
+    ''' <summary>
+    ''' check is there some missing spot data inside the <see cref="MSILayer"/> by 
+    ''' simply measuring the collection size.
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property hasZeroPixels As Boolean
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
-            Return DimensionSize.Width * DimensionSize.Height > MSILayer.Length
+            Return DimensionSize.Area > size
         End Get
     End Property
 
+    ''' <summary>
+    ''' get the max intensity value inside the <see cref="MSILayer"/>
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property maxinto As Double
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
+            If MSILayer.IsNullOrEmpty Then
+                Return 0
+            End If
+
             Return Aggregate p As PixelData
                    In MSILayer
                    Into Max(p.intensity)
@@ -114,18 +140,41 @@ Public Class SingleIonLayer
         End Get
     End Property
 
+    ''' <summary>
+    ''' check if the spot data has multiple sample label data tags
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property hasMultipleSamples As Boolean
         Get
             Return sampleTags.Length > 1
         End Get
     End Property
 
+    ''' <summary>
+    ''' get the sample tags of the spatial spots
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property sampleTags As String()
         Get
             Return MSILayer _
                 .Select(Function(a) a.sampleTag) _
                 .Distinct _
                 .ToArray
+        End Get
+    End Property
+
+    ''' <summary>
+    ''' count the number of the pixel spots in current metabolite 
+    ''' ion ms-imaging layer.
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property size As Integer
+        Get
+            If MSILayer.IsNullOrEmpty Then
+                Return 0
+            Else
+                Return MSILayer.Length
+            End If
         End Get
     End Property
 

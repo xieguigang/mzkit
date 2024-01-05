@@ -115,6 +115,7 @@ Imports vector = Microsoft.VisualBasic.Math.LinearAlgebra.Vector
 ''' metabolites, peptides or proteins by their molecular masses. 
 ''' </summary>
 <Package("MSI")>
+<RTypeExport("msi_layer", GetType(SingleIonLayer))>
 Module MSI
 
     Sub New()
