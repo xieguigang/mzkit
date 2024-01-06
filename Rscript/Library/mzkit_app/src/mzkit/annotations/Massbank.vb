@@ -98,6 +98,7 @@ Imports REnv = SMRUCC.Rsharp.Runtime.Internal.Invokes.base
 ''' Metabolite annotation database toolkit
 ''' </summary>
 <Package("massbank")>
+<RTypeExport("lipidmaps", GetType(LipidMaps.MetaData))>
 Module Massbank
 
     Sub New()
@@ -342,14 +343,61 @@ Module Massbank
     ''' let class = lipid.class(lipids);
     ''' </example>
     <ExportAPI("lipid.class")>
-    <RApiReturn(GetType(ClassReader))>
-    Public Function lipidClassReader(<RRawVectorArgument> lipidmaps As Object, Optional env As Environment = Nothing) As Object
-        Dim lipids As pipeline = pipeline.TryCreatePipeline(Of LipidMaps.MetaData)(lipidmaps, env)
+    <RApiReturn(GetType(LipidClassReader), GetType(CompoundClass))>
+    Public Function lipidClassReader(<RRawVectorArgument> lipidmaps As Object,
+                                     Optional id As Object = Nothing,
+                                     Optional env As Environment = Nothing) As Object
 
-        If lipids.isError Then
-            Return lipids.getError
+        If TypeOf lipidmaps Is LipidClassReader Then
+            Dim idset As String() = CLRVector.asCharacter(id)
+
+            ' get the lipidmaps class data via given id
+            If idset.IsNullOrEmpty Then
+                Return Nothing
+            ElseIf idset.Length = 1 Then
+                Return DirectCast(lipidmaps, LipidClassReader).GetClass(idset(0))
+            Else
+                Dim lipiddata As LipidClassReader = lipidmaps
+                Dim out As New list With {
+                    .slots = New Dictionary(Of String, Object)
+                }
+
+                For Each id_str As String In idset
+                    Call out.add(id_str, lipiddata.GetClass(id_str))
+                Next
+
+                Return out
+            End If
         Else
-            Return New LipidMaps.LipidClassReader(lipids.populates(Of LipidMaps.MetaData)(env))
+            ' build the lipidmaps class index object
+            Dim lipids As pipeline = pipeline.TryCreatePipeline(Of LipidMaps.MetaData)(lipidmaps, env)
+
+            If lipids.isError Then
+                Return lipids.getError
+            Else
+                Return New LipidMaps.LipidClassReader(lipids.populates(Of LipidMaps.MetaData)(env))
+            End If
+        End If
+    End Function
+
+    ''' <summary>
+    ''' gets the metabolite id collection from lipidmaps database
+    ''' </summary>
+    ''' <param name="lipidmaps">A lipidmaps database related dataset object</param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("lipidmaps_id")>
+    Public Function lipidmaps_id(lipidmaps As Object, Optional env As Environment = Nothing) As Object
+        If lipidmaps Is Nothing Then
+            Return Nothing
+        End If
+
+        If TypeOf lipidmaps Is LipidClassReader Then
+            Return DirectCast(lipidmaps, LipidClassReader) _
+                .EnumerateId _
+                .ToArray
+        Else
+            Return Message.InCompatibleType(GetType(LipidClassReader), lipidmaps.GetType, env)
         End If
     End Function
 

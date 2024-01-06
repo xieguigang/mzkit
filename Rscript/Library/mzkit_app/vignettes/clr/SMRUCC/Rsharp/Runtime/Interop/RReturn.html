@@ -22,14 +22,14 @@
 
         <h3>Description</h3>
 
-        <p>VB.NET api to R# function invoke result wrapper, with additional warning, debug, errors messages, etc</p>
+        <p>VB.NET api to R# function invoke result wrapper, with additional warning, debug, errors messages, etc</p><br /><p>this class extends from <a href="/vignettes/clr/Microsoft/VisualBasic/Language/Value`1.html">Value`1</a> class.</p>
 
         <h3>Declare</h3>        
 
         <pre>
             <code id="clr_ts">
 # namespace SMRUCC.Rsharp.Runtime.Interop
-export class RReturn {
+export class RReturn extends <a href="/vignettes/clr/Microsoft/VisualBasic/Language/Value`1.html">Value`1</a> {
    messages: <a href="/vignettes/clr/Microsoft/VisualBasic/Language/List`1.html">List`1</a>;
    type: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Interop/RType.html">RType</a>;
    # Change the Print Mode to Invisible

@@ -22,25 +22,25 @@
 
         <h3>Description</h3>
 
-        <p>The @<code>P:BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.LibraryMatrix.ms2</code> library matrix object model</p>
+        <p>The <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/LibraryMatrix.html">LibraryMatrix</a>.<a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/ms2.html">ms2</a> library matrix object model</p><br /><p>this class extends from <a href="/vignettes/clr/Microsoft/VisualBasic/Math/Scripting/IVector`1.html">IVector`1</a> class.</p>
 
         <h3>Declare</h3>        
 
         <pre>
             <code id="clr_ts">
 # namespace BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
-export class LibraryMatrix {
+export class LibraryMatrix extends <a href="/vignettes/clr/Microsoft/VisualBasic/Math/Scripting/IVector`1.html">IVector`1</a> {
    # The list of molecular fragment
    ms2: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/ms2.html">ms2[]</a>;
    name: string;
    # mass spectrometry data in centroid mode?
    centroid: boolean;
    parentMz: double;
-   # get the numeric vector of the @<code>P:BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.ms2.intensity</code> value
+   # get the numeric vector of the <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/ms2.html">ms2</a>.<a href="#">intensity</a> value
    intensity: <a href="/vignettes/clr/Microsoft/VisualBasic/Math/LinearAlgebra/Vector.html">Vector</a>;
-   # sum of @<code>P:BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.LibraryMatrix.intensity</code>
+   # sum of <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/LibraryMatrix.html">LibraryMatrix</a>.<a href="/vignettes/clr/Microsoft/VisualBasic/Math/LinearAlgebra/Vector.html">intensity</a>
    totalIon: double;
-   # evaluates the spectrum peaks' shannon entropy value based on the @<code>P:BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.LibraryMatrix.intensity</code>
+   # evaluates the spectrum peaks' shannon entropy value based on the <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/LibraryMatrix.html">LibraryMatrix</a>.<a href="/vignettes/clr/Microsoft/VisualBasic/Math/LinearAlgebra/Vector.html">intensity</a>
    entropy: double;
    # get all ms2 fragment peaks m/z values
    mz: double;

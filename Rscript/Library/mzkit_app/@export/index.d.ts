@@ -88,6 +88,10 @@ declare namespace mzkit {
    */
    function lipidmaps_repo(repofile?: any, gsea?: any, category?: any): object;
    /**
+     * @param lazy default value Is ``false``.
+   */
+   function load_LMSD(filepath: any, lazy?: any): object;
+   /**
    */
    function loadTree(files: string): object;
    /**

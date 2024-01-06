@@ -84,7 +84,6 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
-Imports Microsoft.VisualBasic.ComponentModel
 
 Namespace TMIC.HMDB.Spectra
 

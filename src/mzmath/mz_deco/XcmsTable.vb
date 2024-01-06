@@ -2,6 +2,7 @@
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.Quantile
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports std = System.Math
 
@@ -63,8 +64,8 @@ Public Module XcmsTable
 
         Dim pool As New List(Of PeakFeature)
 
-        For Each sample In samples
-            For Each peak In sample
+        For Each sample As NamedCollection(Of PeakFeature) In samples
+            For Each peak As PeakFeature In sample
                 peak.rawfile = sample.name
                 pool.Add(peak)
             Next
@@ -77,24 +78,25 @@ Public Module XcmsTable
             rt_shifts = New List(Of RtShift)
         End If
 
-        For Each group In rt_groups
+        For Each group As NamedCollection(Of PeakFeature) In rt_groups
             Dim mz As Double() = group.Select(Function(a) a.mz).ToArray
             Dim rt As Double() = group.Select(Function(a) a.rt).ToArray
             ' the reference rt
             Dim max_rt As Double = rt(which.Max(group.Select(Function(a) a.maxInto)))
+            Dim rt_quart As DataQuartile = rt.Quartile
             Dim xcms As New xcms2 With {
                 .mz = mz.Average,
                 .mzmin = mz.Min,
                 .mzmax = mz.Max,
                 .rt = max_rt,
-                .rtmax = rt.Max,
-                .rtmin = rt.Min,
+                .rtmax = rt_quart.Q3,
+                .rtmin = rt_quart.Q1,
                 .ID = $"M{std.Round(.mz)}T{std.Round(.rt)}",
                 .Properties = New Dictionary(Of String, Double)
             }
 
-            For Each sample In group
-                xcms(sample.rawfile) = sample.area
+            For Each sample As PeakFeature In group
+                xcms(sample.rawfile) = xcms(name:=sample.rawfile) + sample.area
                 rt_shifts.Add(New RtShift With {
                     .refer_rt = max_rt,
                     .sample = sample.rawfile,

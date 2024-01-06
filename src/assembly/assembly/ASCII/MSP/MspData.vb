@@ -68,8 +68,18 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 
 Namespace ASCII.MSP
 
+    ''' <summary>
+    ''' a spectrum file format data
+    ''' </summary>
+    ''' <remarks>
+    ''' a collection of the spectrum peaks <see cref="ms2"/> data.
+    ''' </remarks>
     Public Class MspData : Implements INamedValue, IFormulaProvider
 
+        ''' <summary>
+        ''' the metabolite name
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Name As String
         Public Property Synonyms As String()
 
@@ -91,6 +101,10 @@ Namespace ASCII.MSP
         Public Property Collision_energy As String
         Public Property RetentionTime As String
 
+        ''' <summary>
+        ''' the spectrum data
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Peaks As ms2()
 
         ''' <summary>

@@ -93,6 +93,7 @@ Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports SMRUCC.Rsharp
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
+Imports SMRUCC.Rsharp.Runtime.Internal
 Imports SMRUCC.Rsharp.Runtime.Internal.Invokes
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Internal.Object.Converts
@@ -115,11 +116,40 @@ Imports vector = Microsoft.VisualBasic.Math.LinearAlgebra.Vector
 ''' metabolites, peptides or proteins by their molecular masses. 
 ''' </summary>
 <Package("MSI")>
+<RTypeExport("msi_layer", GetType(SingleIonLayer))>
+<RTypeExport("msi_summary", GetType(MSISummary))>
 Module MSI
 
     Sub New()
         Call Internal.Object.Converts.makeDataframe.addHandler(GetType(IonStat()), AddressOf getStatTable)
+
+        Call generic.add("readBin.msi_layer", GetType(Stream), AddressOf readPeaklayer)
+        Call generic.add("readBin.msi_summary", GetType(Stream), AddressOf readSummarylayer)
+        Call generic.add("writeBin", GetType(MSISummary), AddressOf writeSummarylayer)
+        Call generic.add("writeBin", GetType(SingleIonLayer), AddressOf writePeaklayer)
     End Sub
+
+    Private Function writeSummarylayer(layer As MSISummary, args As list, env As Environment) As Object
+        Dim con As Stream = args!con
+        Call LayerFile.SaveMSISummary(layer, con)
+        Call con.Flush()
+        Return True
+    End Function
+
+    Private Function readSummarylayer(file As Stream, args As list, env As Environment) As Object
+        Return LayerFile.LoadSummaryLayer(file)
+    End Function
+
+    Private Function writePeaklayer(layer As SingleIonLayer, args As list, env As Environment) As Object
+        Dim con As Stream = args!con
+        Call LayerFile.SaveLayer(layer, con)
+        Call con.Flush()
+        Return True
+    End Function
+
+    Private Function readPeaklayer(file As Stream, args As list, env As Environment) As Object
+        Return LayerFile.ParseLayer(file)
+    End Function
 
     Private Function getStatTable(ions As IonStat(), args As list, env As Environment) As rDataframe
         Dim table As New rDataframe With {
@@ -546,6 +576,17 @@ Module MSI
     ''' <param name="dims"></param>
     ''' <param name="env"></param>
     ''' <returns></returns>
+    ''' <example>
+    ''' # get dimension size value
+    ''' let size = dimension_size(mzpack_rawdata);
+    ''' str(size);
+    ''' 
+    ''' # set new dimension size to the ms-imaging mzpack object
+    ''' dimension_size(mzpack_rawdata) = [525, 600];
+    ''' 
+    ''' let new_size = dimension_size(mzpack_rawdata);
+    ''' str(new_size);
+    ''' </example>
     <ExportAPI("dimension_size")>
     Public Function dimension_size(raw As mzPack,
                                    <RByRefValueAssign>
@@ -768,7 +809,9 @@ Module MSI
     ''' <example>
     ''' let rawdata = open.mzpack("/path/to/rawdata.mzPack");
     ''' let spots = read.csv("/path/to/region.csv");
-    ''' let into = MSI_summary(rawdata, x = as.integer(spots$x), y = as.integer(spots$y), as.vector = TRUE);
+    ''' let into = MSI_summary(rawdata, x = as.integer(spots$x), 
+    '''       y = as.integer(spots$y), 
+    '''       as.vector = TRUE);
     ''' 
     ''' print(as.data.frame(into));
     ''' print("view of the intensity vector:");

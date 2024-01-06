@@ -7,6 +7,7 @@
 /**
  * Metabolite annotation database search engine
  * 
+ * > this library module mainly address of the ion m/z database search problem
 */
 declare namespace metadb {
    module annotationStream {
@@ -184,6 +185,7 @@ declare namespace metadb {
    /**
     * verify that the given cas registry number is correct or not
     * 
+    * > based on the @``M:BioNovoGene.BioDeep.Chemoinformatics.CASNumber.Verify(System.String)`` clr function.
     * 
      * @param num -
      * @param env -

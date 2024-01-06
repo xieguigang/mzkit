@@ -11,6 +11,8 @@
 	  <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 	  <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
 	  <PackageLicenseFile>LICENSE</PackageLicenseFile>
+	  <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
+	  <GenerateDocumentationFile>True</GenerateDocumentationFile>
 
   </PropertyGroup>
 

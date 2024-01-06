@@ -74,11 +74,13 @@ declare namespace massbank {
        * 
        * 
         * @param lipidmaps -
+        * @param id 
+        * + default value Is ``null``.
         * @param env -
         * 
         * + default value Is ``null``.
       */
-      function class(lipidmaps: any, env?: object): object;
+      function class(lipidmaps: any, id?: any, env?: object): object|object;
       /**
       */
       function nameMaps(lipidmaps: object): object;
@@ -99,6 +101,16 @@ declare namespace massbank {
    /**
    */
    function lipid_profiles(categry: object, enrich: object): object;
+   /**
+    * gets the metabolite id collection from lipidmaps database
+    * 
+    * 
+     * @param lipidmaps A lipidmaps database related dataset object
+     * @param env -
+     * 
+     * + default value Is ``null``.
+   */
+   function lipidmaps_id(lipidmaps: any, env?: object): any;
    /**
     * construct a new metabolite annotation information data
     * 

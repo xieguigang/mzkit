@@ -270,8 +270,17 @@ Module mzDeco
         End If
     End Function
 
+    ''' <summary>
+    ''' make sample column projection
+    ''' </summary>
+    ''' <param name="peaktable">A xcms liked peaktable object, is a collection 
+    ''' of the <see cref="xcms2"/> peak feature data.</param>
+    ''' <param name="sampleNames">A character vector of the sample names for make 
+    ''' the peaktable projection.</param>
+    ''' <returns>A sub-table of the input original peaktable data</returns>
     <ExportAPI("peak_subset")>
-    Public Function peakSubset(peaktable As PeakSet, sampleNames As String()) As PeakSet
+    <RApiReturn(GetType(PeakSet))>
+    Public Function peakSubset(peaktable As PeakSet, sampleNames As String()) As Object
         Return peaktable.Subset(sampleNames)
     End Function
 

@@ -24,20 +24,20 @@
 
         <p>The R# data pipeline</p>
 
-<p>this model object is a kind of wrapper of the .net clr <a href="/vignettes/clr/System/Collections/IEnumerable.html">IEnumerable</a> interface</p>
+<p>this model object is a kind of wrapper of the .net clr <a href="/vignettes/clr/System/Collections/IEnumerable.html">IEnumerable</a> interface</p><br /><p>this class extends from <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/RsharpDataObject.html">RsharpDataObject</a> class.</p>
 
         <h3>Declare</h3>        
 
         <pre>
             <code id="clr_ts">
 # namespace SMRUCC.Rsharp.Runtime.Internal.Object
-export class pipeline {
+export class pipeline extends <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/RsharpDataObject.html">RsharpDataObject</a> {
    # The action will be called after finish loop on the sequence. 
    #  Null value of this property will be ignored
    pipeFinalize: <a href="/vignettes/clr/System/Action.html">Action</a>;
    # contains an error message in the pipeline populator or 
    #  the pipeline data is an error message. You can get the
-   #  error message via function @<code>M:SMRUCC.Rsharp.Runtime.Internal.Object.pipeline.getError</code> when
+   #  error message via function <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Internal/Object/pipeline.html">pipeline</a>.<a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/Message.html">getError</a> when
    #  this property value is TRUE
    isError: boolean;
    # current data pipeline is a data message?

@@ -69,6 +69,12 @@ Namespace MetaLib.Models
     ''' <summary>
     ''' the very basic metabolite annotation data model
     ''' </summary>
+    ''' <remarks>
+    ''' this data model includes the metabolite annotation information, includes:
+    ''' 
+    ''' 1. basic metabolite information, example as formula, name, etc
+    ''' 2. database cross reference: <see cref="xref"/>
+    ''' </remarks>
     Public Class MetaInfo : Implements INamedValue
         Implements IEquatable(Of MetaInfo)
 

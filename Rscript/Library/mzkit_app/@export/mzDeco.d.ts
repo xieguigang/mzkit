@@ -99,6 +99,14 @@ declare namespace mzDeco {
    */
    function peak_alignment(samples: any, mzdiff?: any, norm?: boolean, env?: object): object;
    /**
+    * make sample column projection
+    * 
+    * 
+     * @param peaktable A xcms liked peaktable object, is a collection 
+     *  of the @``T:BioNovoGene.Analytical.MassSpectrometry.Math.xcms2`` peak feature data.
+     * @param sampleNames A character vector of the sample names for make 
+     *  the peaktable projection.
+     * @return A sub-table of the input original peaktable data
    */
    function peak_subset(peaktable: object, sampleNames: string): object;
    /**

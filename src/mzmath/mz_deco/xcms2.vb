@@ -107,6 +107,7 @@ Public Class xcms2 : Inherits DynamicPropertyBase(Of Double)
     ''' </summary>
     ''' <returns></returns>
     Public ReadOnly Property npeaks As Integer
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
             Return Properties _
                 .Where(Function(s) s.Value > 0) _
@@ -121,7 +122,7 @@ Public Class xcms2 : Inherits DynamicPropertyBase(Of Double)
     'End Function
 
     ''' <summary>
-    ''' just assign the xcms id unique!
+    ''' just make the <see cref="xcms2.ID"/> unique
     ''' </summary>
     ''' <param name="peaktable"></param>
     ''' <returns></returns>

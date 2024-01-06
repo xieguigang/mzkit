@@ -77,6 +77,10 @@ Namespace Ms1.PrecursorType
     ''' <summary>
     ''' m/z calculator for a given ion precursor type
     ''' </summary>
+    ''' <remarks>
+    ''' this precursor adduct data model could be used for construct 
+    ''' the <see cref="PrecursorInfo"/> data.
+    ''' </remarks>
     Public Class MzCalculator
 
         Const ElectronMassInDalton = 0.0005485799
@@ -97,6 +101,9 @@ Namespace Ms1.PrecursorType
         ''' only one of the char +/-
         ''' </summary>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' equals to the <see cref="IonModes"/>
+        ''' </remarks>
         Public Property mode As Char
 
         Public ReadOnly Property IsEmpty As Boolean
@@ -235,12 +242,23 @@ Namespace Ms1.PrecursorType
         End Function
     End Class
 
+    ''' <summary>
+    ''' a ion m/z data model, includes the adducts data and <see cref="IonModes"/> polarity data.
+    ''' </summary>
     Public Class PrecursorInfo
 
+        ''' <summary>
+        ''' the precursor adducts information
+        ''' </summary>
+        ''' <returns></returns>
         <XmlAttribute>
         Public Property precursor_type As String
         Public Property charge As Double
         Public Property M As Double
+        ''' <summary>
+        ''' the exact mass value of the <see cref="precursor_type"/> adducts information.
+        ''' </summary>
+        ''' <returns></returns>
         Public Property adduct As Double
 
         ''' <summary>
@@ -249,7 +267,11 @@ Namespace Ms1.PrecursorType
         ''' <returns></returns>
         <Column(Name:="m/z")>
         Public Property mz As String
-        Public Property ionMode As Integer
+        ''' <summary>
+        ''' the ion polarity data, related to the <see cref="charge"/> value
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property ionMode As IonModes
 
         Sub New()
         End Sub

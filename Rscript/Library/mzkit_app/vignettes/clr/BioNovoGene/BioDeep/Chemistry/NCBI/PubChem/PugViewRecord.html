@@ -22,18 +22,21 @@
 
         <h3>Description</h3>
 
-        
+        <p>the metabolite annotation data xml in pubchem database</p>
+
+<p>the cross database reference information source is inside <br />
+ the <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/NCBI/PubChem/PugViewRecord.html">PugViewRecord</a>.<a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/NCBI/PubChem/Reference.html">Reference</a> data.</p><br /><p>this class extends from <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/NCBI/PubChem/InformationSection.html">InformationSection</a> class.</p>
 
         <h3>Declare</h3>        
 
         <pre>
             <code id="clr_ts">
 # namespace BioNovoGene.BioDeep.Chemistry.NCBI.PubChem
-export class PugViewRecord {
+export class PugViewRecord extends <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/NCBI/PubChem/InformationSection.html">InformationSection</a> {
+   Reference: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/NCBI/PubChem/Reference.html">Reference[]</a>;
    RecordType: string;
    RecordNumber: string;
    RecordTitle: string;
-   Reference: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/NCBI/PubChem/Reference.html">Reference[]</a>;
    Sections: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/NCBI/PubChem/Section.html">Section[]</a>;
 }
 </code>
