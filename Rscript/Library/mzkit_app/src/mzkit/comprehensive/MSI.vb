@@ -82,6 +82,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Data.GraphTheory.GridGraph
 Imports Microsoft.VisualBasic.Emit.Delegates
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.HeatMap
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.ComponentModel.Activations
@@ -1643,6 +1644,36 @@ Module MSI
         End If
 
 
+    End Function
+
+    ''' <summary>
+    ''' cast the ms-imaging layer data to raster object 
+    ''' 
+    ''' use this function for cast raster object, for do spatial heatmap rendering in another method.
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <param name="layer">
+    ''' the layer type for create the raster object, this parameter only works 
+    ''' for when the data type of <paramref name="x"/> is <see cref="MSISummary"/>.
+    ''' </param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("raster")>
+    <RApiReturn(GetType(RasterMatrix))>
+    Public Function asRaster(x As Object,
+                             Optional layer As IntensitySummary = IntensitySummary.Total,
+                             Optional env As Environment = Nothing) As Object
+        If x Is Nothing Then
+            Return x
+        End If
+
+        If TypeOf x Is SingleIonLayer Then
+            Return DirectCast(x, SingleIonLayer).AsRaster
+        ElseIf TypeOf x Is MSISummary Then
+            Return DirectCast(x, MSISummary).AsRaster(kind:=layer)
+        Else
+            Return Message.InCompatibleType(GetType(SingleIonLayer), x.GetType, env)
+        End If
     End Function
 End Module
 
