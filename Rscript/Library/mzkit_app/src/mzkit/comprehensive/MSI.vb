@@ -121,7 +121,7 @@ Imports vector = Microsoft.VisualBasic.Math.LinearAlgebra.Vector
 <RTypeExport("msi_summary", GetType(MSISummary))>
 Module MSI
 
-    Sub New()
+    Friend Sub Main()
         Call Internal.Object.Converts.makeDataframe.addHandler(GetType(IonStat()), AddressOf getStatTable)
 
         Call generic.add("readBin.msi_layer", GetType(Stream), AddressOf readPeaklayer)
