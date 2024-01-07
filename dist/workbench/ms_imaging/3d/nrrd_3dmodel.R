@@ -24,7 +24,8 @@ for(path in source) {
     |> nrrd()
     ;
 
-    print(path);
+    # print(path);
+    NULL;
 }
 
 close(nrrd);
