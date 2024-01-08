@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Microsoft.VisualBasic.Math.LinearAlgebra.Matrix.NumericMatrix</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <table style="width: 100%;">
+            <tr>
+                <td>NumericMatrix {Microsoft.VisualBasic.Math.LinearAlgebra.Matrix}</td>
+                <td style="text-align: right;">.NET clr documentation</td>
+            </tr>
+        </table>
+
+        <h2>NumericMatrix</h2>
+
+        <h3>Description</h3>
+
+        <h3>.NET GeneralMatrix class.</h3>
+
+<p>The .NET <a href="/vignettes/clr/Microsoft/VisualBasic/Math/LinearAlgebra/Matrix/GeneralMatrix.html">GeneralMatrix</a> Class provides the fundamental operations of numerical<br />
+ linear algebra.  Various constructors create Matrices from two dimensional<br />
+ arrays of double precision floating point numbers.  Various "gets" and<br />
+ "sets" provide access to submatrices and matrix elements.  Several methods <br />
+ implement basic matrix arithmetic, including matrix addition and<br />
+ multiplication, matrix norms, and element-by-element array operations.<br />
+ Methods for reading and printing matrices are also included.  All the<br />
+ operations in this version of the <a href="/vignettes/clr/Microsoft/VisualBasic/Math/LinearAlgebra/Matrix/GeneralMatrix.html">GeneralMatrix</a> Class involve real matrices.<br />
+ Complex matrices may be handled in a future version.</p>
+
+<p>Five fundamental matrix decompositions, which consist of pairs or triples<br />
+ of matrices, permutation vectors, and the like, produce results in five<br />
+ decomposition classes.  These decompositions are accessed by the <a href="/vignettes/clr/Microsoft/VisualBasic/Math/LinearAlgebra/Matrix/GeneralMatrix.html">GeneralMatrix</a><br />
+ class to compute solutions of simultaneous linear equations, determinants,<br />
+ inverses and other matrix functions.  </p>
+
+<p>The five decompositions are:</p>
+
+<ul>
+<li><a href="/vignettes/clr/Microsoft/VisualBasic/Math/LinearAlgebra/Matrix/CholeskyDecomposition.html">CholeskyDecomposition</a> of symmetric, positive definite matrices.</li>
+<li><a href="/vignettes/clr/Microsoft/VisualBasic/Math/LinearAlgebra/Matrix/LUDecomposition.html">LUDecomposition</a> of rectangular matrices.</li>
+<li><a href="/vignettes/clr/Microsoft/VisualBasic/Math/LinearAlgebra/Matrix/QRDecomposition.html">QRDecomposition</a> of rectangular matrices.</li>
+<li><a href="/vignettes/clr/Microsoft/VisualBasic/Math/LinearAlgebra/Matrix/SingularValueDecomposition.html">SingularValueDecomposition</a> of rectangular matrices.</li>
+<li><p><a href="/vignettes/clr/Microsoft/VisualBasic/Math/LinearAlgebra/Matrix/EigenvalueDecomposition.html">EigenvalueDecomposition</a> of both symmetric and nonsymmetric square matrices.</p>
+
+<p>Example of use:</p>
+
+<p>Solve a linear system A x = b and compute the residual norm, <code>||b - A x||</code>.</p></li>
+</ul>
+
+<pre><code class="csharp">double[][] vals;
+GeneralMatrix A = New NumericMatrix(vals);
+GeneralMatrix b = GeneralMatrix.Random(3,1);
+GeneralMatrix x = A.Solve(b);
+GeneralMatrix r = A.Multiply(x).Subtract(b);
+double rnorm = r.NormInf();
+</code></pre>
+
+<p>Access the internal two-dimensional array.<br />
+ Pointer to the two-dimensional array of matrix elements.<br />
+ this numeric matrix object consist with a collection of <a href="/vignettes/clr/Microsoft/VisualBasic/Math/LinearAlgebra/Vector.html">Vector</a> as rows.</p><br /><p>this class extends from <a href="/vignettes/clr/Microsoft/VisualBasic/Language/Vectorization/Vector`1.html">Vector`1</a> class.</p>
+
+        <h3>Declare</h3>        
+
+        <pre>
+            <code id="clr_ts">
+# namespace Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
+export class NumericMatrix extends <a href="/vignettes/clr/Microsoft/VisualBasic/Language/Vectorization/Vector`1.html">Vector`1</a> {
+   # Make a one-dimensional column packed copy of the internal array.
+   ColumnPackedCopy: double;
+   # Make a one-dimensional row packed copy of the internal array.
+   RowPackedCopy: double;
+   # Get row dimension.
+   RowDimension: integer;
+   # Get column dimension.
+   ColumnDimension: integer;
+   # get [n,m] shape data
+   Dimension: <a href="/vignettes/clr/System/Drawing/Size.html">Size</a>;
+   DiagonalVector: <a href="/vignettes/clr/Microsoft/VisualBasic/Math/LinearAlgebra/Vector.html">Vector</a>;
+   Length: integer;
+   IsScalar: boolean;
+   Array: <a href="/vignettes/clr/System/Double[].html">Double[][]</a>;
+   Last: double;
+   First: double;
+}
+</code>
+        </pre>
+
+        <hr />
+        <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a
+                href="../{$package}.html">Index</a>]
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="https://mzkit.org/assets/js/R_syntax.js"></script>
+<script type="text/javascript" src="https://mzkit.org/assets/js/highlights.js"></script>
+<script type="text/javascript">r_highlights("clr_ts");</script>
+
+</html>

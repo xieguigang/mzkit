@@ -1,67 +1,69 @@
 ﻿#Region "Microsoft.VisualBasic::a723b944a08b7a9fd966ed34a293bd6a, mzkit\src\visualize\MsImaging\Extensions.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 236
-    '    Code Lines: 178
-    ' Comment Lines: 30
-    '   Blank Lines: 28
-    '     File Size: 8.25 KB
+' Summaries:
 
 
-    ' Module Extensions
-    ' 
-    '     Function: DensityCut, GetPixelKeys, (+2 Overloads) PixelScanPadding, Reset, ScanMeltdown
-    '               Shape
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 236
+'    Code Lines: 178
+' Comment Lines: 30
+'   Blank Lines: 28
+'     File Size: 8.25 KB
+
+
+' Module Extensions
+' 
+'     Function: DensityCut, GetPixelKeys, (+2 Overloads) PixelScanPadding, Reset, ScanMeltdown
+'               Shape
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.GraphTheory.GridGraph
 Imports Microsoft.VisualBasic.DataMining.DensityQuery
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.HeatMap
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -304,5 +306,31 @@ Public Module Extensions
             .Annotations = MSI.Annotations,
             .metadata = MSI.metadata
         }
+    End Function
+
+    ''' <summary>
+    ''' cast ion layer data to raster matrix object
+    ''' </summary>
+    ''' <param name="layer"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function AsRaster(layer As SingleIonLayer) As RasterMatrix
+        Dim dims As Size = layer.DimensionSize
+        Dim matrix As RasterMatrix = RasterMatrix.CreateDenseMatrix(layer.MSILayer, dims.Width, dims.Height)
+        Return matrix
+    End Function
+
+    ''' <summary>
+    ''' cast ion layer data to raster matrix object
+    ''' </summary>
+    ''' <param name="layer"></param>
+    ''' <param name="kind"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function AsRaster(layer As MSISummary, kind As IntensitySummary) As RasterMatrix
+        Dim heatmap As IEnumerable(Of PixelScanIntensity) = layer.GetLayer(summary:=kind)
+        Dim dims As Size = layer.size
+        Dim matrix As RasterMatrix = RasterMatrix.CreateDenseMatrix(heatmap, dims.Width, dims.Height)
+        Return matrix
     End Function
 End Module
