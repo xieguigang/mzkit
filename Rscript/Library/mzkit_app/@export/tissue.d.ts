@@ -45,6 +45,25 @@ declare namespace tissue {
    */
    function heatmap_layer(tissue: object, heatmap?: object, target?: string): object;
    /**
+    * extract the possible nucleus pixel points from the image
+    * 
+    * 
+     * @param tissue the H&E stain image
+     * @param nucleus the target color of the nucleus
+     * 
+     * + default value Is ``["#8230b8","#903ab5"]``.
+     * @param tolerance 
+     * + default value Is ``13``.
+     * @param env -
+     * 
+     * + default value Is ``null``.
+     * @return a dataframe object that contains the nucleus pixel location 
+     *  result, this result dataframe object contains at least two data 
+     *  fields: ``x`` and ``y``. such geometry pixel position could be used 
+     *  for the downstream data analysis pipeline.
+   */
+   function mark_nucleus(tissue: object, nucleus?: any, tolerance?: number, env?: object): any;
+   /**
     * evaluate the spatial RSD of a specific channel
     * 
     * 

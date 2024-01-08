@@ -21,5 +21,6 @@ tools for HE-stain image analysis
  constituents.
 
 + [scan_tissue](tissue/scan_tissue.1) analysis the HE-stain image by blocks
++ [mark_nucleus](tissue/mark_nucleus.1) extract the possible nucleus pixel points from the image
 + [heatmap_layer](tissue/heatmap_layer.1) generates heatmap value
 + [RSD](tissue/RSD.1) evaluate the spatial RSD of a specific channel
