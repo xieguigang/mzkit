@@ -24,7 +24,7 @@
 
         <p>The R# data pipeline</p>
 
-<p>this model object is a kind of wrapper of the .net clr <a href="/vignettes/clr/System/Collections/IEnumerable.html">IEnumerable</a> interface</p><br /><p>this class extends from <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/RsharpDataObject.html">RsharpDataObject</a> class.</p>
+<p>this model object is a kind of wrapper of the .net clr <a href="/vignettes/clr/System/Collections/IEnumerable.html">IEnumerable</a> interface</p>
 
         <h3>Declare</h3>        
 
@@ -46,6 +46,15 @@ export class pipeline extends <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Comp
 }
 </code>
         </pre>
+
+        <h3>.NET clr type reference tree</h3>
+
+        <ol>
+<li>this class extends from <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/RsharpDataObject.html">RsharpDataObject</a> class: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/RsharpDataObject.html">RsharpDataObject</a></li>
+<li>use by <i>property</i> member <code>pipeFinalize</code>: <a href="/vignettes/clr/System/Action.html">Action</a></li>
+<li>use by <i>property</i> member <code>elementType</code>: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Interop/RType.html">RType</a></li>
+</ol>
+
 
         <hr />
         <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a

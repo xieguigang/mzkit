@@ -30,7 +30,7 @@
 <li><a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/TMIC/HMDB/taxonomy.html">taxonomy</a>.<a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/TMIC/HMDB/alternative_parents.html">alternative_parents</a></li>
 <li><a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/TMIC/HMDB/taxonomy.html">taxonomy</a>.<a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/TMIC/HMDB/substituents.html">substituents</a></li>
 <li><a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/TMIC/HMDB/taxonomy.html">taxonomy</a>.<a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/TMIC/HMDB/external_descriptors.html">external_descriptors</a></li>
-</ul><br /><p>this class extends from <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/MetaLib/Models/CompoundClass.html">CompoundClass</a> class.</p>
+</ul>
 
         <h3>Declare</h3>        
 
@@ -38,11 +38,11 @@
             <code id="clr_ts">
 # namespace BioNovoGene.BioDeep.Chemistry.TMIC.HMDB
 export class taxonomy extends <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/MetaLib/Models/CompoundClass.html">CompoundClass</a> {
-   description: string;
-   direct_parent: string;
    alternative_parents: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/TMIC/HMDB/alternative_parents.html">alternative_parents</a>;
    substituents: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/TMIC/HMDB/substituents.html">substituents</a>;
    external_descriptors: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/TMIC/HMDB/external_descriptors.html">external_descriptors</a>;
+   description: string;
+   direct_parent: string;
    kingdom: string;
    super_class: string;
    class: string;
@@ -51,6 +51,16 @@ export class taxonomy extends <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemis
 }
 </code>
         </pre>
+
+        <h3>.NET clr type reference tree</h3>
+
+        <ol>
+<li>this class extends from <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/MetaLib/Models/CompoundClass.html">CompoundClass</a> class: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/MetaLib/Models/CompoundClass.html">CompoundClass</a></li>
+<li>use by <i>property</i> member <code>alternative_parents</code>: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/TMIC/HMDB/alternative_parents.html">alternative_parents</a></li>
+<li>use by <i>property</i> member <code>substituents</code>: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/TMIC/HMDB/substituents.html">substituents</a></li>
+<li>use by <i>property</i> member <code>external_descriptors</code>: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/TMIC/HMDB/external_descriptors.html">external_descriptors</a></li>
+</ol>
+
 
         <hr />
         <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a
