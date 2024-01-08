@@ -13,7 +13,7 @@ Module LCLipidomics
     ''' <summary>
     ''' meansrue lipid ions
     ''' </summary>
-    ''' <param name="lipidclass"></param>
+    ''' <param name="lipidclass">configs of the target lipid <see cref="LbmClass"/> for run spectrum peaks generation</param>
     ''' <param name="adduct"></param>
     ''' <param name="minCarbonCount"></param>
     ''' <param name="maxCarbonCount"></param>

@@ -13,7 +13,7 @@ declare namespace lipidomics {
     * meansrue lipid ions
     * 
     * 
-     * @param lipidclass -
+     * @param lipidclass configs of the target lipid @``T:BioNovoGene.Analytical.MassSpectrometry.Lipidomics.LbmClass`` for run spectrum peaks generation
      * @param adduct -
      * @param minCarbonCount -
      * @param maxCarbonCount -
