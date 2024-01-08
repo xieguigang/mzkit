@@ -14,7 +14,7 @@ Module LCLipidomics
     ''' meansrue lipid ions
     ''' </summary>
     ''' <param name="lipidclass">configs of the target lipid <see cref="LbmClass"/> for run spectrum peaks generation</param>
-    ''' <param name="adduct"></param>
+    ''' <param name="adduct">a precursor adducts data which could be generates via the ``adduct`` function.</param>
     ''' <param name="minCarbonCount"></param>
     ''' <param name="maxCarbonCount"></param>
     ''' <param name="minDoubleBond"></param>
@@ -36,5 +36,15 @@ Module LCLipidomics
         Return LipidMassLibraryGenerator _
             .GetIons(lipidclass, adduct, minCarbonCount, maxCarbonCount, minDoubleBond, maxDoubleBond, maxOxygen) _
             .ToArray
+    End Function
+
+    ''' <summary>
+    ''' create the adduct ion data model
+    ''' </summary>
+    ''' <returns></returns>
+    <ExportAPI("adduct")>
+    <RApiReturn(GetType(AdductIon))>
+    Public Function adductIon(<RRawVectorArgument> adduct As Object, Optional env As Environment = Nothing) As Object
+        Throw New NotImplementedException
     End Function
 End Module
