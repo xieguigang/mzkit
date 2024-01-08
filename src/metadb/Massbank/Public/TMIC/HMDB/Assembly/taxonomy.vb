@@ -146,6 +146,9 @@ Namespace TMIC.HMDB
         <XmlElement> Public Property substituent As String()
     End Structure
 
+    ''' <summary>
+    ''' a collection of the <see cref="ontology_term"/>
+    ''' </summary>
     Public Class ontology
 
         <XmlElement>
