@@ -201,8 +201,8 @@ Namespace HEMap
         <Extension>
         Public Iterator Function ScanColor(image As Image, targets As Color(), Optional tolerance As Double = 15) As IEnumerable(Of (target As Color, pos As Point))
             Using bitmap As BitmapBuffer = BitmapBuffer.FromImage(image)
-                For i As Integer = 1 To bitmap.Width
-                    For j As Integer = 1 To bitmap.Height
+                For i As Integer = 1 To bitmap.Width - 1
+                    For j As Integer = 1 To bitmap.Height - 1
                         Dim pixel As Color = bitmap.GetPixel(i, j)
                         Dim xy As New Point(i, j)
 
