@@ -8,7 +8,7 @@ let image_raster = readImage("D:\\demo_test.PNG");
 let nucleus_xy = mark_nucleus(image_raster, nucleus = ["#8230b8" "#903ab5" "#8826b1" "#9026ae" "#c23ec5"], 
     tolerance = 16);
 
-let maps = scan_tissue(tissue =image_raster, colors = "#8230b8",
+let maps = scan_tissue(tissue =image_raster, colors = ["#8230b8" "#903ab5" "#8826b1" "#9026ae" "#c23ec5"],
                                grid.size = 10,
                                tolerance = 15,
                                density.grid = 5);
