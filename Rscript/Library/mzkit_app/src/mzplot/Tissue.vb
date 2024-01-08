@@ -55,9 +55,14 @@
 Imports System.Drawing
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.TissueMorphology.HEMap
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.HeatMap
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports SMRUCC.Rsharp.Runtime.Components
+Imports SMRUCC.Rsharp.Runtime.Internal.[Object]
 Imports SMRUCC.Rsharp.Runtime.Interop
+Imports SMRUCC.Rsharp.Runtime.Vectorization
 
 ''' <summary>
 ''' tools for HE-stain image analysis
@@ -132,8 +137,28 @@ Module Tissue
     ''' fields: ``x`` and ``y``. such geometry pixel position could be used 
     ''' for the downstream data analysis pipeline.</returns>
     <ExportAPI("mark_nucleus")>
-    Public Function mark_nucleus(tissue As Image, Optional nucleus As Object = "", Optional env As Environment = Nothing) As Object
+    Public Function mark_nucleus(tissue As Image,
+                                 <RRawVectorArgument(TypeCodes.string)>
+                                 Optional nucleus As Object = "#8230b8|#903ab5",
+                                 Optional tolerance As Double = 13,
+                                 Optional env As Environment = Nothing) As Object
 
+        Dim nucleus_colors = CLRVector.asCharacter(nucleus) _
+            .SafeQuery _
+            .Select(Function(c) c.TranslateColor) _
+            .ToArray
+        Dim scan_xy = tissue.ScanColor(targets:=nucleus_colors, tolerance) _
+            .Select(Function(a) a.pos) _
+            .Distinct _
+            .ToArray
+        Dim nucleus_df As New dataframe With {
+            .columns = New Dictionary(Of String, Array)
+        }
+
+        Call nucleus_df.add("x", scan_xy.Select(Function(p) p.X))
+        Call nucleus_df.add("y", scan_xy.Select(Function(p) p.Y))
+
+        Return nucleus_df
     End Function
 
     ''' <summary>

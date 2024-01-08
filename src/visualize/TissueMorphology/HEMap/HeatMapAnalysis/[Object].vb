@@ -72,6 +72,15 @@ Namespace HEMap
         Public Property Density As Double
         Public Property Ratio As Double
 
+        ''' <summary>
+        ''' do target color matches and then evaluate the layer data
+        ''' </summary>
+        ''' <param name="rect"></param>
+        ''' <param name="target"></param>
+        ''' <param name="gridSize"></param>
+        ''' <param name="tolerance"></param>
+        ''' <param name="densityGrid"></param>
+        ''' <returns></returns>
         Public Shared Function Eval(rect As Grid(Of Color),
                                     target As Color,
                                     gridSize As Integer,
