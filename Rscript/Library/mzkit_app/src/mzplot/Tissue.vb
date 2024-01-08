@@ -59,6 +59,7 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.HeatMap
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.[Object]
 Imports SMRUCC.Rsharp.Runtime.Interop
@@ -88,6 +89,49 @@ Imports SMRUCC.Rsharp.Runtime.Vectorization
 <Package("tissue")>
 <RTypeExport("he_map", GetType(HEMapScan))>
 Module Tissue
+
+    Sub Main()
+        Call Internal.Object.Converts.makeDataframe.addHandler(GetType(HEMapScan), AddressOf blockMapDf)
+        Call Internal.Object.Converts.makeDataframe.addHandler(GetType(Cell()), AddressOf blockMapDf)
+    End Sub
+
+    Private Function blockMapDf(cells As HEMapScan, args As list, env As Environment) As dataframe
+        Return cellsDf(cells.Blocks, args, env)
+    End Function
+
+    Private Function cellsDf(cells As Cell(), args As list, env As Environment) As dataframe
+        Dim df As New dataframe With {
+            .columns = New Dictionary(Of String, Array),
+            .rownames = cells _
+                .Select(Function(c) $"{c.X},{c.Y}") _
+                .ToArray
+        }
+
+        Call df.add("physic_x", cells.Select(Function(c) c.X))
+        Call df.add("physic_y", cells.Select(Function(c) c.Y))
+        Call df.add("block_x", cells.Select(Function(c) c.ScaleX))
+        Call df.add("block_y", cells.Select(Function(c) c.ScaleY))
+        Call df.add("r", cells.Select(Function(c) c.R))
+        Call df.add("g", cells.Select(Function(c) c.G))
+        Call df.add("b", cells.Select(Function(c) c.B))
+        Call df.add("black_pixels", cells.Select(Function(c) c.black.Pixels))
+        Call df.add("black_density", cells.Select(Function(c) c.black.Density))
+        Call df.add("black_ratio", cells.Select(Function(c) c.black.Ratio))
+
+        Dim all_colors As String() = cells _
+            .Select(Function(c) c.layers.Keys) _
+            .IteratesALL _
+            .Distinct _
+            .ToArray
+
+        For Each color As String In all_colors
+            Call df.add($"{color}_pixels", cells.Select(Function(c) c.GetChannelValue(color, Layers.Pixels)))
+            Call df.add($"{color}_density", cells.Select(Function(c) c.GetChannelValue(color, Layers.Density)))
+            Call df.add($"{color}_ratio", cells.Select(Function(c) c.GetChannelValue(color, Layers.Ratio)))
+        Next
+
+        Return df
+    End Function
 
     ''' <summary>
     ''' analysis the HE-stain image by blocks

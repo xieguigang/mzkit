@@ -67,6 +67,10 @@ Namespace HEMap
     ''' <summary>
     ''' layer object data
     ''' </summary>
+    ''' <remarks>
+    ''' a tuple data of pixels, density, ratio of the target channel in a 
+    ''' speicifc block data.
+    ''' </remarks>
     Public Class [Object]
 
         <XmlAttribute> Public Property Pixels As Integer

@@ -120,5 +120,19 @@ Namespace HEMap
             End Get
         End Property
 
+        Public Function GetChannelValue(layer As String, target As Layers) As Double
+            If Not layers.ContainsKey(layer) Then
+                Return 0.0
+            End If
+
+            Select Case target
+                Case HEMap.Layers.Density : Return layers(layer).Density
+                Case HEMap.Layers.Pixels : Return layers(layer).Pixels
+                Case HEMap.Layers.Ratio : Return layers(layer).Ratio
+            End Select
+
+            Throw New InvalidProgramException("this error will never happends!")
+        End Function
+
     End Class
 End Namespace
