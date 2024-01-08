@@ -55,6 +55,12 @@
 
 Namespace HEMap
 
+    ''' <summary>
+    ''' A cell block on the image
+    ''' </summary>
+    ''' <remarks>
+    ''' the channel layers data of the colors is consist with the <see cref="HEMap.[Object]"/> collection.
+    ''' </remarks>
     Public Class Cell
 
         ''' <summary>
@@ -94,6 +100,10 @@ Namespace HEMap
 
         Public Property layers As New Dictionary(Of String, [Object])
 
+        ''' <summary>
+        ''' does current cell block is in color black?
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property isBlack As Boolean
             Get
                 Return Black.Ratio > 0.975

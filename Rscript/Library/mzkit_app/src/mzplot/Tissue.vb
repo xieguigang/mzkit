@@ -95,13 +95,13 @@ Module Tissue
     ''' the collection of the image blocks analysis result
     ''' </returns>
     <ExportAPI("scan_tissue")>
-    <RApiReturn(GetType(Cell))>
+    <RApiReturn(GetType(HEMapScan))>
     Public Function scanTissue(tissue As Image, Optional colors As String() = Nothing,
                                Optional grid_size As Integer = 25,
                                Optional tolerance As Integer = 15,
-                               Optional density_grid As Integer = 5) As Cell()
+                               Optional density_grid As Integer = 5) As Object
 
-        Return HistologicalImage.GridScan(
+        Dim cells As Cell() = HistologicalImage.GridScan(
             target:=tissue,
             colors:=colors,
             gridSize:=grid_size,
@@ -109,6 +109,16 @@ Module Tissue
             densityGrid:=density_grid
         ) _
         .ToArray
+
+        Return New HEMapScan With {
+            .Blocks = cells,
+            .channels = colors,
+            .physical_dims = tissue.Size,
+            .block_dims = New Size(
+                .physical_dims.Width / grid_size,
+                .physical_dims.Height / grid_size
+            )
+        }
     End Function
 
     ''' <summary>
@@ -124,7 +134,7 @@ Module Tissue
     ''' <returns></returns>
     <ExportAPI("heatmap_layer")>
     <RApiReturn(GetType(PixelData))>
-    Public Function getTargets(tissue As Cell(),
+    Public Function getTargets(tissue As HEMapScan,
                                Optional heatmap As Layers = Layers.Density,
                                Optional target As String = "black") As Object
 
