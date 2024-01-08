@@ -1,5 +1,5 @@
-require(mzkit);
 require(clustering);
+require(mzkit);
 
 imports "tissue" from "mzplot";
 
@@ -17,7 +17,7 @@ bitmap(file = `${@dir}/raw_raster.png`) {
 
 rownames(nucleus_xy) = `${nucleus_xy$x},${nucleus_xy$y}`;
 
-nucleus_xy = dbscan(nucleus_xy, eps = 1.125, minPts = 2);
+nucleus_xy = knn(nucleus_xy, k = 9, jaccard = 0.65);
 nucleus_xy = as.data.frame([nucleus_xy]::cluster);
 
 print(nucleus_xy, max.print = 6);
