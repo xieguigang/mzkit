@@ -51,7 +51,7 @@ declare namespace tissue {
      * @param tissue the H&E stain image
      * @param nucleus the target color of the nucleus
      * 
-     * + default value Is ``["#8230b8","#903ab5"]``.
+     * + default value Is ``["#8230b8","#903ab5","#8826b1","#9026ae","#c23ec5"]``.
      * @param tolerance 
      * + default value Is ``13``.
      * @param env -
