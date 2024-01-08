@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>BioNovoGene.Analytical.MassSpectrometry.MsImaging.TissueMorphology.HEMap.HEMapScan</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <table style="width: 100%;">
+            <tr>
+                <td>HEMapScan {BioNovoGene.Analytical.MassSpectrometry.MsImaging.TissueMorphology.HEMap}</td>
+                <td style="text-align: right;">.NET clr documentation</td>
+            </tr>
+        </table>
+
+        <h2>HEMapScan</h2>
+
+        <h3>Description</h3>
+
+        <p>the scan result of the HE stain image</p>
+
+<p>the entire image was divided into multiple blocks <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/MsImaging/TissueMorphology/HEMap/Cell.html">Cell</a> at first,<br />
+ and then the specific color channel layer data was evaluated for run downstream <br />
+ data analysis</p>
+
+<p>this model is consist with a collection of the block <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/MsImaging/TissueMorphology/HEMap/Cell.html">Cell</a> scan <br />
+ result.</p>
+
+        <h3>Declare</h3>        
+
+        <pre>
+            <code id="clr_ts">
+# namespace BioNovoGene.Analytical.MassSpectrometry.MsImaging.TissueMorphology.HEMap
+export class HEMapScan {
+   # the image analysis data
+   Blocks: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/MsImaging/TissueMorphology/HEMap/Cell.html">Cell[]</a>;
+   # the physical dimension size of the raw image input
+   physical_dims: <a href="/vignettes/clr/System/Drawing/Size.html">Size</a>;
+   # the block dimension of <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/MsImaging/TissueMorphology/HEMap/HEMapScan.html">HEMapScan</a>.<a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/MsImaging/TissueMorphology/HEMap/Cell.html">Blocks</a> result
+   block_dims: <a href="/vignettes/clr/System/Drawing/Size.html">Size</a>;
+   # the color channels for run the scanning analysis.
+   channels: string;
+}
+</code>
+        </pre>
+
+        <hr />
+        <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a
+                href="../{$package}.html">Index</a>]
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="https://mzkit.org/assets/js/R_syntax.js"></script>
+<script type="text/javascript" src="https://mzkit.org/assets/js/highlights.js"></script>
+<script type="text/javascript">r_highlights("clr_ts");</script>
+
+</html>
