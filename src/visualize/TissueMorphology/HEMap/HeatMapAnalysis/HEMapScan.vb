@@ -1,5 +1,6 @@
 ﻿Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Data.GraphTheory.GridGraph
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.HeatMap
 
 Namespace HEMap
@@ -41,6 +42,10 @@ Namespace HEMap
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetHeatMapLayer(heatmap As Layers, channel As String) As PixelData()
             Return Blocks.GetHeatMapLayer(heatmap, channel)
+        End Function
+
+        Public Function CreateSpatialLookup() As Grid(Of Cell)
+            Return Grid(Of Cell).Create(Blocks)
         End Function
     End Class
 End Namespace

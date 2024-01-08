@@ -139,6 +139,20 @@ Namespace HEMap
             End Using
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="block">the current block data</param>
+        ''' <param name="sx"></param>
+        ''' <param name="sy"></param>
+        ''' <param name="i">image physical x</param>
+        ''' <param name="j">image physical y</param>
+        ''' <param name="gridSize"></param>
+        ''' <param name="tolerance"></param>
+        ''' <param name="densityGrid"></param>
+        ''' <param name="colors"></param>
+        ''' <param name="colorData"></param>
+        ''' <returns></returns>
         <Extension>
         Private Function CellEvaluation(block As Color()(),
                                         ByRef sx As Integer,

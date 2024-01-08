@@ -86,6 +86,7 @@ Imports SMRUCC.Rsharp.Runtime.Vectorization
 ''' constituents.
 ''' </summary>
 <Package("tissue")>
+<RTypeExport("he_map", GetType(HEMapScan))>
 Module Tissue
 
     ''' <summary>

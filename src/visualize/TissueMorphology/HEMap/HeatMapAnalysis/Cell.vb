@@ -53,6 +53,8 @@
 
 #End Region
 
+Imports Microsoft.VisualBasic.Data.GraphTheory.GridGraph
+
 Namespace HEMap
 
     ''' <summary>
@@ -61,21 +63,29 @@ Namespace HEMap
     ''' <remarks>
     ''' the channel layers data of the colors is consist with the <see cref="HEMap.[Object]"/> collection.
     ''' </remarks>
-    Public Class Cell
+    Public Class Cell : Implements IPoint2D
+
+        ''' <summary>
+        ''' the physical image x
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property X As Integer
+        ''' <summary>
+        ''' the physical image y
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Y As Integer
 
         ''' <summary>
         ''' the location X of the grid
         ''' </summary>
         ''' <returns></returns>
-        Public Property X As Integer
-        ''' <summary>
+        Public Property ScaleX As Integer Implements IPoint2D.X
+        ''' <summary> 
         ''' the location Y of the grid
         ''' </summary>
         ''' <returns></returns>
-        Public Property Y As Integer
-
-        Public Property ScaleX As Integer
-        Public Property ScaleY As Integer
+        Public Property ScaleY As Integer Implements IPoint2D.Y
 
         ''' <summary>
         ''' average value of Red channel
@@ -96,7 +106,7 @@ Namespace HEMap
         ''' 
         ''' </summary>
         ''' <returns></returns>
-        Public Property Black As [Object]
+        Public Property black As [Object]
 
         Public Property layers As New Dictionary(Of String, [Object])
 
@@ -106,7 +116,7 @@ Namespace HEMap
         ''' <returns></returns>
         Public ReadOnly Property isBlack As Boolean
             Get
-                Return Black.Ratio > 0.975
+                Return black.Ratio > 0.975
             End Get
         End Property
 
