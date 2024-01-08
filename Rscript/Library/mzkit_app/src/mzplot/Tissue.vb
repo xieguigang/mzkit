@@ -122,6 +122,21 @@ Module Tissue
     End Function
 
     ''' <summary>
+    ''' extract the possible nucleus pixel points from the image
+    ''' </summary>
+    ''' <param name="tissue">the H&amp;E stain image</param>
+    ''' <param name="nucleus">the target color of the nucleus</param>
+    ''' <param name="env"></param>
+    ''' <returns>a dataframe object that contains the nucleus pixel location 
+    ''' result, this result dataframe object contains at least two data 
+    ''' fields: ``x`` and ``y``. such geometry pixel position could be used 
+    ''' for the downstream data analysis pipeline.</returns>
+    <ExportAPI("mark_nucleus")>
+    Public Function mark_nucleus(tissue As Image, Optional nucleus As Object = "", Optional env As Environment = Nothing) As Object
+
+    End Function
+
+    ''' <summary>
     ''' generates heatmap value
     ''' 
     ''' convert a specific <see cref="Layers"/> channel inside the tissue 
