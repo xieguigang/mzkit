@@ -4,7 +4,8 @@ require(clustering);
 imports "tissue" from "mzplot";
 
 let image_raster = readImage("D:\\demo_test.PNG");
-let nucleus_xy = mark_nucleus(image_raster, tolerance = 20);
+let nucleus_xy = mark_nucleus(image_raster, nucleus = ["#8230b8" "#903ab5" "#8826b1" "#9026ae" "#c23ec5"], 
+    tolerance = 16);
 
 print(nucleus_xy, max.print = 6);
 

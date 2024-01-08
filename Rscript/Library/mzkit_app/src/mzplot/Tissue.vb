@@ -140,7 +140,7 @@ Module Tissue
     <ExportAPI("mark_nucleus")>
     Public Function mark_nucleus(tissue As Image,
                                  <RRawVectorArgument(TypeCodes.string)>
-                                 Optional nucleus As Object = "#8230b8|#903ab5",
+                                 Optional nucleus As Object = "#8230b8|#903ab5|#8826b1|#9026ae|#c23ec5",
                                  Optional tolerance As Double = 13,
                                  Optional env As Environment = Nothing) As Object
 
