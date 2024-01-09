@@ -306,7 +306,7 @@ Module SingleCells
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("cell_matrix")>
-    <RApiReturn(GetType(HTSMatrix), GetType(MzMatrix))>
+    <RApiReturn(GetType(HTSMatrix))>
     Public Function cellMatrix(<RRawVectorArgument> raw As Object,
                                Optional mzdiff As Double = 0.005,
                                Optional freq As Double = 0.001,
