@@ -770,7 +770,7 @@ Module MzMath
 
         Dim mz As Double() = CLRVector.asNumeric(msdata.getBySynonym("mz", "m/z", "MZ"))
         Dim into As Double() = CLRVector.asNumeric(msdata.getBySynonym("into", "intensity"))
-        Dim annos As String() = CLRVector.asCharacter(msdata.getBySynonym("annotation", "text", "metadata"))
+        Dim annos As String() = CLRVector.asCharacter(msdata.getBySynonym("annotation", "text", "metadata", "info"))
 
         If mz.IsNullOrEmpty Then
             Return Internal.debug.stop("mz column in dataframe should be 'mz' or 'm/z'!", env)
