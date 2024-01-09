@@ -324,47 +324,50 @@ Public Class PeakAssign : Inherits Plot
 
         Call g.DrawString(title, titleFont, Brushes.Black, location)
 
-        Call d3js.forcedirectedLabeler(
-                ejectFactor:=2,
-                dist:=$"50,{canvas.Width / 2}",
-                condenseFactor:=100,
-                avoidRegions:={}' {New RectangleF(rect.Left, rect.Bottom - rect.Height * 0.2, rect.Width, rect.Height * 0.2)}
-             ) _
-           .Labels(labels) _
-           .Anchors(anchors) _
-           .Width(rect.Width) _
-           .Height(rect.Height) _
-           .WithOffset(rect.Location) _
-           .Start(showProgress:=False, nsweeps:=2500)
+        If theme.drawLabels Then
+            Dim labelBrush As Brush = theme.tagColor.GetBrush
+            Dim labelConnector As Pen = Stroke.TryParse(theme.tagLinkStroke)
+            Dim connectorLead As Pen = Stroke.TryParse(theme.tagLinkStroke)
 
-        Dim labelBrush As Brush = theme.tagColor.GetBrush
-        Dim labelConnector As Pen = Stroke.TryParse(theme.tagLinkStroke)
-        Dim connectorLead As Pen = Stroke.TryParse(theme.tagLinkStroke)
+            Call d3js.forcedirectedLabeler(
+                    ejectFactor:=2,
+                    dist:=$"50,{canvas.Width / 2}",
+                    condenseFactor:=100,
+                    avoidRegions:={}' {New RectangleF(rect.Left, rect.Bottom - rect.Height * 0.2, rect.Width, rect.Height * 0.2)}
+                 ) _
+               .Labels(labels) _
+               .Anchors(anchors) _
+               .Width(rect.Width) _
+               .Height(rect.Height) _
+               .WithOffset(rect.Location) _
+               .Start(showProgress:=False, nsweeps:=2500)
 
-        labelConnector.EndCap = LineCap.ArrowAnchor
+            labelConnector.EndCap = LineCap.ArrowAnchor
 
-        For Each i As SeqValue(Of Label) In labels.SeqIterator
-            If i.value.pinned Then
-                Continue For
-            End If
+            ' show the annotation labels
+            For Each i As SeqValue(Of Label) In labels.SeqIterator
+                If i.value.pinned Then
+                    Continue For
+                End If
 
-            Dim a As PointF = i.value.GetTextAnchor(anchors(i))
-            Dim b As PointF = anchors(i)
-            Dim c As New PointF With {.X = a.X - (a.X - b.X) * 0.65, .Y = a.Y}
+                Dim a As PointF = i.value.GetTextAnchor(anchors(i))
+                Dim b As PointF = anchors(i)
+                Dim c As New PointF With {.X = a.X - (a.X - b.X) * 0.65, .Y = a.Y}
 
-            If a.Y >= i.value.rectangle.Bottom Then
-                Call g.DrawLine(labelConnector, a, b)
-            Else
-                Call g.DrawLine(connectorLead, a, c)
-                Call g.DrawLine(labelConnector, c, b)
-            End If
+                If a.Y >= i.value.rectangle.Bottom Then
+                    Call g.DrawLine(labelConnector, a, b)
+                Else
+                    Call g.DrawLine(connectorLead, a, c)
+                    Call g.DrawLine(labelConnector, c, b)
+                End If
 
-            If images.ContainsKey(i.value.text) Then
-                Call g.DrawImage(images(i.value.text).img, i.value.rectangle)
-            Else
-                Call g.DrawString(i.value.text, labelFont, labelBrush, i.value)
-            End If
-        Next
+                If images.ContainsKey(i.value.text) Then
+                    Call g.DrawImage(images(i.value.text).img, i.value.rectangle)
+                Else
+                    Call g.DrawString(i.value.text, labelFont, labelBrush, i.value)
+                End If
+            Next
+        End If
     End Sub
 
     Public Shared Function DrawSpectrumPeaks(matrix As LibraryMatrix,
@@ -396,13 +399,14 @@ Public Class PeakAssign : Inherits Plot
             .axisTickCSS = axisTicksCSS,
             .axisStroke = axisStroke,
             .axisLabelCSS = axisLabelCSS,
-            .tagLinkStroke = connectorStroke
+            .tagLinkStroke = connectorStroke,
+            .drawLabels = showAnnotationText
         }
         Dim app As New PeakAssign(
             title:=title Or matrix.name.AsDefault,
             matrix:=matrix.ms2,
             barHighlight:=barHighlight,
-            labelIntensity:=If(showAnnotationText, labelIntensity, Single.MaxValue),
+            labelIntensity:=labelIntensity, ' If(showAnnotationText, labelIntensity, Single.MaxValue),
             theme:=theme,
             images:=images
         ) With {
