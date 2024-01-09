@@ -139,9 +139,19 @@ Namespace Spectra
         <Extension>
         Public Function CentroidMode([lib] As LibraryMatrix,
                                      tolerance As Tolerance,
-                                     Optional cutoff As LowAbundanceTrimming = Nothing) As LibraryMatrix
+                                     Optional cutoff As LowAbundanceTrimming = Nothing,
+                                     Optional sum As Boolean = False) As LibraryMatrix
 
-            [lib].ms2 = [lib].ms2.Centroid(tolerance, cutoff Or LowAbundanceTrimming.Default).ToArray
+            If sum Then
+                [lib].ms2 = [lib].ms2 _
+                    .CentroidSum(tolerance, cutoff Or LowAbundanceTrimming.Default) _
+                    .ToArray
+            Else
+                [lib].ms2 = [lib].ms2 _
+                    .Centroid(tolerance, cutoff Or LowAbundanceTrimming.Default) _
+                    .ToArray
+            End If
+
             [lib].centroid = True
 
             Return [lib]

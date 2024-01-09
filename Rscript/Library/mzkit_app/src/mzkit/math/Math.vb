@@ -665,6 +665,7 @@ Module MzMath
                              Optional tolerance As Object = "da:0.1",
                              Optional intoCutoff As Double = 0.05,
                              Optional parallel As Boolean = False,
+                             Optional aggregate_sum As Boolean = False,
                              Optional env As Environment = Nothing) As Object
 
         Dim inputType As Type = ions.GetType
@@ -736,7 +737,7 @@ Module MzMath
 
             Return ms2
         ElseIf inputType Is GetType(dataframe) Then
-            Return DirectCast(ions, dataframe).centroidDataframe(errors, threshold, env)
+            Return DirectCast(ions, dataframe).centroidDataframe(errors, threshold, aggregate_sum, env)
         ElseIf inputType Is GetType(ScanMS1) Then
             Dim scan1 As ScanMS1 = DirectCast(ions, ScanMS1)
             Dim msdata As ms2() = scan1 _
@@ -764,6 +765,7 @@ Module MzMath
     Private Function centroidDataframe(msdata As dataframe,
                                        errors As Tolerance,
                                        threshold As LowAbundanceTrimming,
+                                       aggregate_sum As Boolean,
                                        env As Environment) As Object
 
         Dim mz As Double() = CLRVector.asNumeric(msdata.getBySynonym("mz", "m/z", "MZ"))
@@ -790,7 +792,7 @@ Module MzMath
                 .ToArray
         }
 
-        Return ms2.CentroidMode(errors, threshold)
+        Return ms2.CentroidMode(errors, threshold, sum:=aggregate_sum)
     End Function
 
     ''' <summary>
