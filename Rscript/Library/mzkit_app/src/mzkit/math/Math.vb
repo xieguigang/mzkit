@@ -761,26 +761,18 @@ Module MzMath
     End Function
 
     <Extension>
-    Private Function centroidDataframe(data As dataframe,
+    Private Function centroidDataframe(msdata As dataframe,
                                        errors As Tolerance,
                                        threshold As LowAbundanceTrimming,
                                        env As Environment) As Object
 
-        Dim mz As Double(), into As Double()
+        Dim mz As Double() = CLRVector.asNumeric(msdata.getBySynonym("mz", "m/z", "MZ"))
+        Dim into As Double() = CLRVector.asNumeric(msdata.getBySynonym("into", "intensity"))
+        Dim annos As String() = CLRVector.asCharacter(msdata.getBySynonym("annotation", "text", "metadata"))
 
-        If data.hasName("mz") Then
-            mz = CLRVector.asNumeric(data!mz)
-        ElseIf data.hasName("m/z") Then
-            mz = CLRVector.asNumeric(data("m/z"))
-        Else
+        If mz.IsNullOrEmpty Then
             Return Internal.debug.stop("mz column in dataframe should be 'mz' or 'm/z'!", env)
-        End If
-
-        If data.hasName("into") Then
-            into = CLRVector.asNumeric(data!into)
-        ElseIf data.hasName("intensity") Then
-            into = CLRVector.asNumeric(data!intensity)
-        Else
+        ElseIf into.IsNullOrEmpty Then
             Return Internal.debug.stop("intensity column in dataframe should be 'into' or 'intensity'!", env)
         End If
 
@@ -791,7 +783,8 @@ Module MzMath
                 .Select(Function(mzi, i)
                             Return New ms2 With {
                                 .mz = mzi,
-                                .intensity = into(i)
+                                .intensity = into(i),
+                                .Annotation = annos.ElementAtOrNull(i)
                             }
                         End Function) _
                 .ToArray
