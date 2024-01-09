@@ -3,7 +3,7 @@
 .SH NAME
 cell_matrix \- export single cell expression matrix from the raw data scans
 .SH SYNOPSIS
-\fIcell_matrix(\fBraw\fR as <generic> mzPack, 
+\fIcell_matrix(\fBraw\fR as any, 
 \fBmzdiff\fR as double = 0.005, 
 \fBfreq\fR as double = 0.001, 
 [\fB<Environment>\fR]);\fR
@@ -13,7 +13,8 @@ export single cell expression matrix from the raw data scans
 .PP
 .SH OPTIONS
 .PP
-\fBraw\fB \fR\- -. 
+\fBraw\fB \fR\- the raw data for make epxression matrix, could be a mzkit @\fBT:BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack\fR object, 
+ or a tuple list of the msdata @\fBT:BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.LibraryMatrix\fR. 
 .PP
 .PP
 \fBmzdiff\fB \fR\- -. 
