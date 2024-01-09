@@ -57,10 +57,13 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells
 Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.ComponentModel.Activations
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.genomics.Analysis.HTS.DataFrame
@@ -297,33 +300,69 @@ Module SingleCells
     ''' <summary>
     ''' export single cell expression matrix from the raw data scans
     ''' </summary>
-    ''' <param name="raw"></param>
+    ''' <param name="raw">the raw data for make epxression matrix, could be a mzkit <see cref="mzPack"/> object, 
+    ''' or a tuple list of the msdata <see cref="BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.LibraryMatrix"/></param>
     ''' <param name="mzdiff"></param>
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("cell_matrix")>
-    <RApiReturn(GetType(HTSMatrix))>
-    Public Function cellMatrix(raw As mzPack,
+    <RApiReturn(GetType(HTSMatrix), GetType(MzMatrix))>
+    Public Function cellMatrix(<RRawVectorArgument> raw As Object,
                                Optional mzdiff As Double = 0.005,
                                Optional freq As Double = 0.001,
                                Optional env As Environment = Nothing) As Object
 
         Dim singleCells As New List(Of DataFrameRow)
-        Dim mzSet As Double() = SingleCellMath.GetMzIndex(raw:=raw, mzdiff:=mzdiff, freq:=freq)
+        Dim mzSet As Double()
+        Dim source As String
 
-        For Each cell_scan As DataFrameRow In SingleCellMatrix.ExportScans(Of DataFrameRow)(raw, mzSet)
-            cell_scan.geneID = cell_scan.geneID _
-                .Replace("[MS1]", "") _
-                .Trim
-            singleCells.Add(cell_scan)
-        Next
+        If raw Is Nothing Then
+            Return Nothing
+        End If
+
+        If TypeOf raw Is mzPack Then
+            Dim mzpack As mzPack = DirectCast(raw, mzPack)
+
+            source = mzpack.source
+            mzSet = SingleCellMath.GetMzIndex(
+                raw:=mzpack,
+                mzdiff:=mzdiff,
+                freq:=freq
+            )
+
+            For Each cell_scan As DataFrameRow In SingleCellMatrix.ExportScans(Of DataFrameRow)(mzpack, mzSet)
+                cell_scan.geneID = cell_scan.geneID _
+                    .Replace("[MS1]", "") _
+                    .Trim
+                singleCells.Add(cell_scan)
+            Next
+        ElseIf TypeOf raw Is list Then
+            Dim msdata As Dictionary(Of String, LibraryMatrix) = DirectCast(raw, list).AsGeneric(Of LibraryMatrix)(env)
+
+            source = "msdata"
+            mzSet = msdata.Values _
+                .IteratesALL _
+                .ToArray _
+                .Centroid(Tolerance.DeltaMass(mzdiff), New RelativeIntensityCutoff(0)) _
+                .Select(Function(mzi) mzi.mz) _
+                .ToArray
+
+            For Each cell_scan As DataFrameRow In SingleCellMatrix.ExportScans(Of DataFrameRow)(msdata.Values, mzSet)
+                cell_scan.geneID = cell_scan.geneID _
+                    .Replace("[MS1]", "") _
+                    .Trim
+                singleCells.Add(cell_scan)
+            Next
+        Else
+            Return Message.InCompatibleType(GetType(mzPack), raw.GetType, env)
+        End If
 
         Return New HTSMatrix With {
             .expression = singleCells.ToArray,
             .sampleID = mzSet _
                 .Select(Function(mzi) mzi.ToString("F4")) _
                 .ToArray,
-            .tag = raw.source
+            .tag = source
         }
     End Function
 
