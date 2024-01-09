@@ -65,10 +65,12 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.Comprehensive
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.DataReader
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
@@ -84,6 +86,7 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Components.Interface
+Imports SMRUCC.Rsharp.Runtime.Internal.Invokes
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
@@ -194,9 +197,9 @@ Module MzWeb
             Dim scanPip As pipeline = DirectCast(scans, pipeline)
 
             If scanPip.elementType Like GetType(mzXML.scan) Then
-                Return Chromatogram.GetChromatogram(scanPip.populates(Of scan)(env))
+                Return ChromatogramBuffer.GetChromatogram(scanPip.populates(Of scan)(env))
             ElseIf scanPip.elementType Like GetType(mzML.spectrum) Then
-                Return Chromatogram.GetChromatogram(scanPip.populates(Of mzML.spectrum)(env))
+                Return ChromatogramBuffer.GetChromatogram(scanPip.populates(Of mzML.spectrum)(env))
             Else
                 Return Message.InCompatibleType(GetType(mzXML.scan), scanPip.elementType, env)
             End If
@@ -447,13 +450,16 @@ Module MzWeb
             Return Internal.debug.stop("the required file object can not be nothing!", env)
         End If
         If TypeOf file Is String Then
-            Dim mzpack As mzPack = openFromFile(file)
+            Dim mzpack As mzPack = openFromFile(file, env:=env)
 
             If mzpack.source.StringEmpty Then
                 mzpack.source = DirectCast(file, String).FileName
             End If
 
             Return mzpack
+        ElseIf TypeOf file Is Stream Then
+            Dim stream As Stream = file
+            Return mzPack.ReadAll(file:=stream)
         Else
             Return Internal.debug.stop(New NotImplementedException($"unsure for how to handling '{file.GetType.FullName}' as a file stream for read mzpack data!"), env)
         End If
@@ -469,7 +475,10 @@ Module MzWeb
     ''' </param>
     ''' <returns></returns>
     <ExportAPI("open_mzpack.xml")>
-    Public Function openFromFile(file As String, Optional prefer As String = Nothing) As mzPack
+    Public Function openFromFile(file As String,
+                                 Optional prefer As String = Nothing,
+                                 Optional env As Environment = Nothing) As mzPack
+
         If file.ExtensionSuffix("mzXML", "mzML", "imzML", "xml") Then
             Return Converter.LoadRawFileAuto(
                 xml:=file,
@@ -485,16 +494,24 @@ Module MzWeb
             End Using
 #End If
         ElseIf file.ExtensionSuffix("cdf") Then
-            ' convert MSI cdf to mzpack
             Using cdf As New netCDFReader(file)
-                Return New mzPack With {
-                    .MS = cdf.CreateMs1.ToArray,
-                    .Application = FileApplicationClass.MSImaging,
-                    .source = file.FileName,
-                    .Scanners = New Dictionary(Of String, ChromatogramOverlap),
-                    .Chromatogram = Nothing,
-                    .Thumbnail = Nothing
-                }
+                If cdf.IsLecoGCMS Then
+                    Dim println As Action(Of String) = Sub(line) base.print(line,, env)
+                    Dim sig As mzPack = GCMSConvertor.ConvertGCMS(cdf, println)
+                    sig.source = file.FileName
+                    Return sig
+                Else
+                    ' convert MSI cdf to mzpack
+                    ' cdf for save MS-imaging
+                    Return New mzPack With {
+                        .MS = cdf.CreateMs1.ToArray,
+                        .Application = FileApplicationClass.MSImaging,
+                        .source = file.FileName,
+                        .Scanners = New Dictionary(Of String, ChromatogramOverlap),
+                        .Chromatogram = Nothing,
+                        .Thumbnail = Nothing
+                    }
+                End If
             End Using
         Else
             Using stream As Stream = file.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
@@ -768,32 +785,39 @@ Module MzWeb
     ''' convert assembly file to mzpack format data object
     ''' </summary>
     ''' <param name="assembly"></param>
-    ''' <param name="env"></param>
-    ''' <param name="modtime">
-    ''' [GCxGC]
-    ''' the modulation time of the chromatographic run. 
-    ''' modulation period in time unit 'seconds'.
-    ''' </param>
-    ''' <param name="sample_rate">
-    ''' [GCxGC]
-    ''' the sampling rate of the equipment.
-    ''' If sam_rate is missing, the sampling rate is calculated by the dividing 1 by
-    ''' the difference of two adjacent scan time.
+    ''' <param name="args">
+    ''' 1. modtime: [GCxGC] the modulation time of the chromatographic run. 
+    '''    modulation period in time unit 'seconds'.
+    ''' 2. sample_rate: [GCxGC] the sampling rate of the equipment.
+    '''    If sam_rate is missing, the sampling rate is calculated by the dividing 1 by
+    '''    the difference of two adjacent scan time.
+    ''' 3. imzml: [MS-Imaging] the pixel spot scan metadata collection for
+    '''    read ms data from the ibd file, the corresponding assembly object should
+    '''    be a <see cref="ibdReader"/> object
+    ''' 4. dims: [MS-Imaging] the canvas dimension size value for the ms-imaging
+    '''    heatmap rendering
     ''' </param>
     ''' <returns></returns>
     <ExportAPI("as.mzpack")>
     <RApiReturn(GetType(mzPack))>
     Public Function ToMzPack(assembly As Object,
-                             Optional modtime As Double = -1,
-                             Optional sample_rate As Double = Double.NaN,
+                             <RListObjectArgument>
+                             Optional args As list = Nothing,
                              Optional env As Environment = Nothing) As Object
 
         If TypeOf assembly Is netCDFReader Then
+            Dim modtime As Double = args.getValue({"modtime", "modulation"}, env, [default]:=-1.0)
+            Dim sample_rate As Double = args.getValue({"sample_rate", "sample.rate"}, env, [default]:=Double.NaN)
+
             Return GC2Dimensional.ToMzPack(
                 agilentGC:=assembly,
                 modtime:=modtime,
                 sam_rate:=sample_rate
             )
+        ElseIf TypeOf assembly Is ibdReader Then
+            Dim ibd As ibdReader = DirectCast(assembly, ibdReader)
+
+            Throw New NotImplementedException
         Else
             Return Message.InCompatibleType(GetType(netCDFReader), assembly.GetType, env)
         End If

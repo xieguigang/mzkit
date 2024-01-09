@@ -11,7 +11,8 @@ open the reader for the imzML ms-imaging file
 .PP
 .SH OPTIONS
 .PP
-\fBfile\fB \fR\- the file path to the specific imzML metadata file for load for run ms-imaging analysis.. 
+\fBfile\fB \fR\- the file path to the specific imzML metadata file for load 
+ for run ms-imaging analysis.. 
 .PP
 .PP
 \fBenv\fB \fR\- -. 
@@ -20,9 +21,9 @@ open the reader for the imzML ms-imaging file
 .PP
 this function returns a tuple list object that contains 2 slot elements inside:
  
- 1. scans: is the [x,y] spatial scans data
+ 1. scans: is the [x,y] spatial scans data: @\fBT:BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML.ScanData\fR.
  2. ibd: is the binary data reader wrapper object for the corresponding 
-       \fBibd\fR file of the given input imzML file.
+       \fBibd\fR file of the given input imzML file: @\fBT:BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML.ibdReader\fR.
 .PP
 .SH SEE ALSO
 MSI

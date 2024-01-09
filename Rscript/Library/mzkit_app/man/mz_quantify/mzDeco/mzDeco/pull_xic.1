@@ -1,0 +1,42 @@
+.\" man page create by R# package system.
+.TH MZDECO 1 2000-Jan "pull_xic" "pull_xic"
+.SH NAME
+pull_xic \- extract a collection of xic data for a specific ion feature
+.SH SYNOPSIS
+\fIpull_xic(\fBpool\fR as any, 
+\fBmz\fR as double, 
+\fBdtw\fR as boolean = TRUE, 
+\fBmzdiff\fR as double = 0.01, 
+\fBstrict\fR as boolean = FALSE, 
+[\fB<Environment>\fR]);\fR
+.SH DESCRIPTION
+.PP
+extract a collection of xic data for a specific ion feature
+ 
+ this function is debug used only
+.PP
+.SH OPTIONS
+.PP
+\fBpool\fB \fR\- should be type of @\fBT:BioNovoGene.Analytical.MassSpectrometry.Math.XICPool\fR or peak collection @\fBT:BioNovoGene.Analytical.MassSpectrometry.Math.PeakSet\fR object.. 
+.PP
+.PP
+\fBmz\fB \fR\- the ion feature m/z value. 
+.PP
+.PP
+\fBdtw\fB \fR\- this parameter will not working when the data pool type is clr type @\fBT:BioNovoGene.Analytical.MassSpectrometry.Math.PeakSet\fR. 
+.PP
+.PP
+\fBmzdiff\fB \fR\- -. 
+.PP
+.SH VALUE
+.PP
+a tuple list object that contains the xic data across
+ multiple sample data files for a speicifc ion feature
+ m/z.
+.PP
+.SH SEE ALSO
+mzDeco
+.SH FILES
+.PP
+mz_quantify.dll
+.PP

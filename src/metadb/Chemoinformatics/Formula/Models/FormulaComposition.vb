@@ -63,7 +63,15 @@ Namespace Formula
     ''' </summary>
     Public Class FormulaComposition : Inherits Formula
 
+        ''' <summary>
+        ''' the charge value of current formula
+        ''' </summary>
+        ''' <returns></returns>
         Public Property charge As Double
+        ''' <summary>
+        ''' the ppm error between the theriocal mass value and the input mass value
+        ''' </summary>
+        ''' <returns></returns>
         Public Property ppm As Double
         Public Property massdiff As Double
 

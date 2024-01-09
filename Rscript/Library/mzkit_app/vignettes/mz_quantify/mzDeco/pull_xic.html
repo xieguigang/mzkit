@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>extract a collection of xic data for a specific ion feature</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <table style="width: 100%;">
+            <tr>
+                <td>pull_xic {mzDeco}</td>
+                <td style="text-align: right;">R Documentation</td>
+            </tr>
+        </table>
+
+        <h2>extract a collection of xic data for a specific ion feature</h2>
+
+        <h3>Description</h3>
+
+        <p><br /> this function is debug used only</p>
+
+        <h3>Usage</h3>
+
+        <div style="width: 100%; padding-left: 3%; color: black;">
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>pull_xic</strong>(<i>pool</i>, <i>mz</i>,
+    <i>dtw</i> = <span style='color: blue !important;'>TRUE</span>,
+    <i>mzdiff</i> = <span style='color: green;'>0.01</span>,
+    <i>strict</i> = <span style='color: blue !important;'>FALSE</span>);</code></pre>
+        </div>
+
+        <h3>Arguments</h3>
+
+        <table>
+            
+<dt>pool</dt>
+<dd><p><p>should be type of <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/XICPool.html">XICPool</a> or peak collection <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/PeakSet.html">PeakSet</a> object.</p></p></dd>
+
+
+<dt>mz</dt>
+<dd><p><p>the ion feature m/z value</p></p></dd>
+
+
+<dt>dtw</dt>
+<dd><p><p>this parameter will not working when the data pool type is clr type <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/PeakSet.html">PeakSet</a></p></p></dd>
+
+
+<dt>mzdiff</dt>
+<dd><p><p>-</p></p></dd>
+
+        </table>
+
+
+        <h3 style="display: none;">Details</h3>
+
+        
+
+        <h3 style="display: block">Authors</h3>
+
+        BioNovoGene
+
+        <h3>Value</h3>
+
+        <p>a tuple list object that contains the xic data across<br />
+ multiple sample data files for a speicifc ion feature<br />
+ m/z.</p><h4>clr value class</h4><ul><li><i>any</i> kind</li></ul>
+
+        <h3 style="display: block;">Examples</h3>
+
+        <pre><code id="example_r"> require(mzkit);
+
+ imports "mzDeco" from "mz_quantify";
+ imports "visual" from "mzplot";
+ 
+ let files = list.files("/path/to/debug_data_dir/", pattern = "*.xic");
+ let pool = xic_pool(files);
+ let dtw_xic = pull_xic(pool, mz = 100.0011, dtw = TRUE);
+ 
+ bitmap(file = "/path/to/save_image.png") {
+     raw_snapshot3D(dtw_xic);
+ }
+
+ dtw_xic
+ |> mz_deco(joint = TRUE, peak.width = [3,60])
+ |> write.csv(file = "/path/to/export_peakstable.csv")
+ ;</code></pre>
+
+        <hr />
+        <div style="text-align: center;">[Package <em>mzDeco</em> version 1.0.0.0 <a
+                href="../mzDeco.html">Index</a>]
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="https://mzkit.org/assets/js/R_syntax.js"></script>
+<script type="text/javascript" src="https://mzkit.org/assets/js/highlights.js"></script>
+<script type="text/javascript">r_highlights("example_r");</script>
+
+</html>

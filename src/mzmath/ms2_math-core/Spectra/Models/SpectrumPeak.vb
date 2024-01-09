@@ -45,7 +45,7 @@
     ''' A more details of the spectrum peak model than <see cref="ms2"/> object
     ''' </summary>
     ''' <remarks>
-    ''' MS-DIAL model
+    ''' MS-DIAL model, use the property <see cref="SpectrumComment"/> for set the metabolite related information 
     ''' </remarks>
     Public Class SpectrumPeak : Inherits ms2
         Implements ISpectrumPeak

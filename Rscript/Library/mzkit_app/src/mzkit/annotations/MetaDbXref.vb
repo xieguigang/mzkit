@@ -88,6 +88,9 @@ Imports REnv = SMRUCC.Rsharp.Runtime
 ''' <summary>
 ''' Metabolite annotation database search engine
 ''' </summary>
+''' <remarks>
+''' this library module mainly address of the ion m/z database search problem
+''' </remarks>
 <Package("metadb")>
 Module MetaDbXref
 
@@ -174,12 +177,17 @@ Module MetaDbXref
     ''' <param name="num"></param>
     ''' <param name="env"></param>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' based on the <see cref="CASNumber.Verify"/> clr function.
+    ''' </remarks>
     <ExportAPI("verify_cas_number")>
+    <RApiReturn(GetType(Boolean))>
     Public Function VerifyCASNumber(<RRawVectorArgument> num As Object, Optional env As Environment = Nothing) As Object
         Return SMRUCC.Rsharp.EvaluateFramework(Of String, Boolean)(env, num, AddressOf CASNumber.Verify)
     End Function
 
     <ExportAPI("parseLipidName")>
+    <RApiReturn(GetType(LipidName))>
     Public Function ParseLipidName(<RRawVectorArgument>
                                    name As Object,
                                    Optional keepsRaw As Boolean = False,
@@ -346,6 +354,7 @@ Module MetaDbXref
     ''' <param name="ion">A precursor type string, example as ``[M+H]``.</param>
     ''' <returns></returns>
     <ExportAPI("precursorIon")>
+    <RApiReturn(GetType(MzCalculator))>
     Public Function ParsePrecursorIon(ion As String) As MzCalculator
         Return ParseMzCalculator(ion, ion.Last)
     End Function
@@ -798,6 +807,7 @@ Module MetaDbXref
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("has.metal_ion")>
+    <RApiReturn(GetType(Boolean))>
     Public Function TestMetaIon(<RRawVectorArgument> formula As Object, Optional env As Environment = Nothing) As Object
         Return env.EvaluateFramework(Of String, Boolean)(formula, Function(f) MetalIons.HasMetalIon(f))
     End Function

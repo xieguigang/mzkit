@@ -1,4 +1,8 @@
-﻿Public Enum LbmClass
+﻿
+''' <summary>
+''' enumerates the lipid structure class
+''' </summary>
+Public Enum LbmClass
     Undefined
     Others
     Unknown

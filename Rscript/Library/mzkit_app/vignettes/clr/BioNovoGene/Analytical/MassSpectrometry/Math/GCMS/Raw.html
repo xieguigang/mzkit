@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>BioNovoGene.Analytical.MassSpectrometry.Math.GCMS.Raw</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <table style="width: 100%;">
+            <tr>
+                <td>Raw {BioNovoGene.Analytical.MassSpectrometry.Math.GCMS}</td>
+                <td style="text-align: right;">.NET clr documentation</td>
+            </tr>
+        </table>
+
+        <h2>Raw</h2>
+
+        <h3>Description</h3>
+
+        <p>从CDF文件之中所读取出来的最原始的数据</p>
+
+        <h3>Declare</h3>        
+
+        <pre>
+            <code id="clr_ts">
+# namespace BioNovoGene.Analytical.MassSpectrometry.Math.GCMS
+export class Raw {
+   title: string;
+   # the global attribute in netcdf file
+   attributes: list;
+   # [气相色谱数据] 按照从开始到结束升序排序过了的
+   times: double;
+   # [气相色谱数据] 相应强度是和<a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/GCMS/Raw.html">Raw</a>.<a href="#">times</a>一一对应的
+   tic: double;
+   # 质谱扫描的结果数据
+   ms: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/ms1_scan[].html">ms1_scan[][]</a>;
+   mz: double;
+   fileName: string;
+}
+</code>
+        </pre>
+
+        <h3>.NET clr type reference tree</h3>
+
+        <ol>
+<li>use by <i>property</i> member <code>attributes</code>: list</li>
+<li>use by <i>property</i> member <code>ms</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/ms1_scan[].html">ms1_scan[]</a></li>
+</ol>
+
+
+        <hr />
+        <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a
+                href="../{$package}.html">Index</a>]
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="https://mzkit.org/assets/js/R_syntax.js"></script>
+<script type="text/javascript" src="https://mzkit.org/assets/js/highlights.js"></script>
+<script type="text/javascript">r_highlights("clr_ts");</script>
+
+</html>

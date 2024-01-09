@@ -1,54 +1,54 @@
 ﻿#Region "Microsoft.VisualBasic::939cf287b770cf913a2f692d6d9ad2c7, mzkit\src\assembly\mzPack\GCMSConvertor.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 125
-    '    Code Lines: 101
-    ' Comment Lines: 2
-    '   Blank Lines: 22
-    '     File Size: 5.06 KB
+' Summaries:
 
 
-    ' Module GCMSConvertor
-    ' 
-    '     Function: ConvertGCMS, CreateMSScans, LoadMs1Scans, readIntoMatrix, readMzMatrix
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 125
+'    Code Lines: 101
+' Comment Lines: 2
+'   Blank Lines: 22
+'     File Size: 5.06 KB
+
+
+' Module GCMSConvertor
+' 
+'     Function: ConvertGCMS, CreateMSScans, LoadMs1Scans, readIntoMatrix, readMzMatrix
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -61,15 +61,26 @@ Imports Microsoft.VisualBasic.DataStorage.netCDF.Components
 Imports Microsoft.VisualBasic.DataStorage.netCDF.Data
 Imports Microsoft.VisualBasic.DataStorage.netCDF.DataVector
 Imports Microsoft.VisualBasic.Linq
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Public Module GCMSConvertor
 
     Public Function ConvertGCMS(agilentGC As netCDFReader, Optional println As Action(Of String) = Nothing) As mzPack
+        Dim metadata As New Dictionary(Of String, String)
+
         If println Is Nothing Then
-            println = AddressOf Console.WriteLine
+            println = AddressOf VBDebugger.EchoLine
         End If
 
+        Call println("load metadata attributes of current GC-MS file:")
+        Call println("")
+
+        For Each attr As attribute In agilentGC.globalAttributes
+            println(attr.ToString)
+            metadata(attr.name) = attr.value
+        Next
+
+        Call println("")
         Call println("get TIC data...")
 
         Dim scan_time As doubles = agilentGC.getDataVariable("scan_acquisition_time")
@@ -78,11 +89,12 @@ Public Module GCMSConvertor
         Return New mzPack With {
             .Application = FileApplicationClass.GCMS,
             .MS = LoadMs1Scans(agilentGC, println).ToArray,
-            .Chromatogram = New DataReader.Chromatogram With {
+            .Chromatogram = New Chromatogram With {
                 .scan_time = scan_time,
                 .BPC = totalIons,
                 .TIC = totalIons
-            }
+            },
+            .metadata = metadata
         }
     End Function
 
@@ -112,7 +124,7 @@ Public Module GCMSConvertor
             Dim BPC As Double = inti.Max
             ' 20210328
             ' fix bugs fix mzkit_win32: required [MS1] prefix for indicate MS1
-            Dim scan_id As String = $"[MS1] {i + 1}.scan_time={stdNum.Round(scan_time(i))}, m/z={mzi(which.Max(inti))}({BPC.ToString("G3")})"
+            Dim scan_id As String = $"[MS1] {i + 1}.scan_time={std.Round(scan_time(i))}, m/z={mzi(which.Max(inti))}({BPC.ToString("G3")})"
 
             Yield New ScanMS1 With {
                 .TIC = totalIons(i),
@@ -127,6 +139,13 @@ Public Module GCMSConvertor
 
     Const intensity_values As String = "intensity_values"
 
+    ''' <summary>
+    ''' read "intensity_values"
+    ''' </summary>
+    ''' <param name="agilentGC"></param>
+    ''' <param name="point_count"></param>
+    ''' <param name="println"></param>
+    ''' <returns></returns>
     <Extension>
     Private Iterator Function readIntoMatrix(agilentGC As netCDFReader, point_count As integers, println As Action(Of String)) As IEnumerable(Of Double())
         Dim into As ICDFDataVector = Nothing
@@ -163,6 +182,13 @@ Public Module GCMSConvertor
         End If
     End Function
 
+    ''' <summary>
+    ''' read ``mass_values``
+    ''' </summary>
+    ''' <param name="agilentGC"></param>
+    ''' <param name="point_count"></param>
+    ''' <param name="println"></param>
+    ''' <returns></returns>
     <Extension>
     Private Iterator Function readMzMatrix(agilentGC As netCDFReader, point_count As integers, println As Action(Of String)) As IEnumerable(Of Double())
         Dim offset As Integer = Scan0

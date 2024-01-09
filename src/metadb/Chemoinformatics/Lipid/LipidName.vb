@@ -57,9 +57,25 @@
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.Linq
 
+''' <summary>
+''' the lipid name data
+''' </summary>
+''' <remarks>
+''' the function <see cref="ParseLipidName"/> could be used for parse the lipid name string into 
+''' the class name with the multiple <see cref="Chain"/> information. the lipid name that we parsed
+''' should not be a common name.
+''' </remarks>
 Public Class LipidName
 
+    ''' <summary>
+    ''' the main class of current lipid metabolite
+    ''' </summary>
+    ''' <returns></returns>
     Public Property className As String
+    ''' <summary>
+    ''' the carbon chains of current lipid data
+    ''' </summary>
+    ''' <returns></returns>
     Public Property chains As Chain()
 
     Public ReadOnly Property hasStructureInfo As Boolean

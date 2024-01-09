@@ -110,7 +110,17 @@ Namespace SDF
 
         <XmlText>
         Public Property Comment As String
+
+        ''' <summary>
+        ''' The molecular structure.
+        ''' </summary>
+        ''' <returns></returns>
         Public Property [Structure] As [Structure]
+
+        ''' <summary>
+        ''' the metadata that could be used as the annotation information of current molecule.
+        ''' </summary>
+        ''' <returns></returns>
         Public Property MetaData As Dictionary(Of String, String())
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

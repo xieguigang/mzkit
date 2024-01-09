@@ -55,6 +55,7 @@
 #End Region
 
 Imports System.ComponentModel
+Imports System.Xml.Serialization
 
 Namespace Blender.Scaler
 
@@ -65,6 +66,7 @@ Namespace Blender.Scaler
         ''' </summary>
         ''' <returns></returns>
         <Description("The density cutoff that treate some pixel as the noise pixels.")>
+        <XmlAttribute>
         Public Property q As Double
 
         Sub New(q As Double)

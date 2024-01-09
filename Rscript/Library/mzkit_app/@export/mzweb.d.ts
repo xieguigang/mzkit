@@ -15,22 +15,22 @@ declare namespace mzweb {
        * 
        * 
         * @param assembly -
-        * @param modtime [GCxGC]
-        *  the modulation time of the chromatographic run. 
-        *  modulation period in time unit 'seconds'.
-        * 
-        * + default value Is ``-1``.
-        * @param sample_rate [GCxGC]
-        *  the sampling rate of the equipment.
-        *  If sam_rate is missing, the sampling rate is calculated by the dividing 1 by
-        *  the difference of two adjacent scan time.
-        * 
-        * + default value Is ``NaN``.
-        * @param env -
+        * @param args 1. modtime: [GCxGC] the modulation time of the chromatographic run. 
+        *     modulation period in time unit 'seconds'.
+        *  2. sample_rate: [GCxGC] the sampling rate of the equipment.
+        *     If sam_rate is missing, the sampling rate is calculated by the dividing 1 by
+        *     the difference of two adjacent scan time.
+        *  3. imzml: [MS-Imaging] the pixel spot scan metadata collection for
+        *     read ms data from the ibd file, the corresponding assembly object should
+        *     be a @``T:BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML.ibdReader`` object
+        *  4. dims: [MS-Imaging] the canvas dimension size value for the ms-imaging
+        *     heatmap rendering
         * 
         * + default value Is ``null``.
+        * @param env 
+        * + default value Is ``null``.
       */
-      function mzpack(assembly: any, modtime?: number, sample_rate?: number, env?: object): object;
+      function mzpack(assembly: any, args?: object, env?: object): object;
    }
    module load {
       /**
@@ -161,8 +161,10 @@ declare namespace mzweb {
         *  suffix name is ``XML``. value of this parameter could be imzml/mzml/mzxml
         * 
         * + default value Is ``null``.
+        * @param env 
+        * + default value Is ``null``.
       */
-      function xml(file: string, prefer?: string): object;
+      function xml(file: string, prefer?: string, env?: object): object;
    }
    /**
     * write binary format of mzweb stream data

@@ -74,6 +74,10 @@ Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 ''' <summary>
 ''' Union of the spectrum data and the metabolite annotation metadata
 ''' </summary>
+''' <remarks>
+''' this data object used for union the metabolite annotation <see cref="MetaData"/> and 
+''' the spectrum data(<see cref="SpectraInfo"/>).
+''' </remarks>
 Public Class SpectraSection : Inherits MetaInfo
 
     ''' <summary>
@@ -120,14 +124,27 @@ Public Class SpectraSection : Inherits MetaInfo
         End Get
     End Property
 
-    Public ReadOnly Property libtype As Integer
+    Public ReadOnly Property libtype As IonModes
         Get
             If SpectraInfo.precursor_type.StringEmpty Then
-                Return 1
+                Return Provider.ParseIonMode(SpectraInfo.ion_mode, allowsUnknown:=True)
             ElseIf SpectraInfo.precursor_type.Last = "+"c Then
-                Return 1
+                Return IonModes.Positive
             Else
-                Return -1
+                Return IonModes.Negative
+            End If
+        End Get
+    End Property
+
+    Public ReadOnly Property ms_level As Integer
+        Get
+            Dim meta = MetaDB
+            Dim mslevel As String = meta.ms_level
+
+            If mslevel.StringEmpty Then
+                Return 2
+            Else
+                Return CInt(Val(mslevel.Match("\d+")))
             End If
         End Get
     End Property
@@ -185,6 +202,9 @@ End Class
 ''' <summary>
 ''' The reference spectra data which is parsed from the MoNA database
 ''' </summary>
+''' <remarks>
+''' is a collection of the mass spectrum <see cref="ms2"/> data.
+''' </remarks>
 Public Class SpectraInfo
 
     Public Property MsLevel As String

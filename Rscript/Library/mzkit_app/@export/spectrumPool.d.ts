@@ -54,7 +54,7 @@ declare namespace spectrumPool {
     * 
      * @param pool -
    */
-   function commit(pool: object): any;
+   function commit(pool: object): object;
    /**
     * generates the guid for the spectrum with unknown annotation
     * 
@@ -98,6 +98,21 @@ declare namespace spectrumPool {
      * @param path -
      * 
      * + default value Is ``null``.
+     * @return A dataframe object that contains the metadata of each spectrum inside the given 
+     *  cluster tree, this includes:
+     *  
+     *  1. biodeep_id: metabolite unique reference id inside the biodeep database
+     *  2. name: the metabolite common name
+     *  3. formula: the chemical formula of the current metabolite
+     *  4. adducts: the precursor adducts of the metabolite addociated with the spectrum precursor ion
+     *  5. mz: the precursor ion m/z
+     *  6. rt: the lcms rt in data unit of seconds
+     *  7. intensity: the ion intensity value
+     *  8. source: the rawdata file source of current spectrum ion comes from
+     *  9. biosample: the biological sample source
+     *  10. organism: the biological species source
+     *  11. project: the public project id, example as the metabolights project id
+     *  12. instrument: the instrument name of the spectrum, could be extract from the metabolights project metadata.
    */
    function getClusterInfo(pool: object, path?: string): any;
    /**
@@ -172,6 +187,8 @@ declare namespace spectrumPool {
      * @param env -
      * 
      * + default value Is ``null``.
+     * @return A collection of the mzkit @``T:BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.PeakMs2`` clr object
+     *  which has the lib guid data assigned.
    */
    function set_conservedGuid(spectral: any, prefix?: string, env?: object): any;
 }

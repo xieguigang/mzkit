@@ -16,6 +16,16 @@ open a single cell data matrix reader
 .PP
 \fBenv\fB \fR\- -. 
 .PP
+.SH VALUE
+.PP
+A tuple list that contains the data elements:
+ 
+ 1. tolerance: the mass tolerance description for seperates the ion features
+ 2. featureSize: the number of the ion features in the raw data file
+ 3. ionSet: a numeric vector of the ion features m/z value.
+ 4. spots: the number of the spots that read from the rawdata matrix file
+ 5. reader: the rawdata @\fBT:BioNovoGene.Analytical.MassSpectrometry.SingleCells.MatrixReader\fR
+.PP
 .SH DETAILS
 .PP
 this function open a lazy reader of the matrix, for load all 

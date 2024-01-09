@@ -70,6 +70,13 @@ Namespace MetaLib.Models
 
     End Class
 
+    ''' <summary>
+    ''' the data model of the compound class information
+    ''' </summary>
+    ''' <remarks>
+    ''' this class information model is mainly address on the HMDB
+    ''' metabolite ontology class levels.
+    ''' </remarks>
     Public Class CompoundClass : Implements ICompoundClass
 
         Public Property kingdom As String Implements ICompoundClass.kingdom
@@ -108,6 +115,23 @@ Namespace MetaLib.Models
         ''' <returns></returns>
         <MessagePackMember(15)> Public Property pathways As String()
         <MessagePackMember(16)> Public Property samples As BiosampleSource()
+
+        Sub New()
+        End Sub
+
+        ''' <summary>
+        ''' creator a metabolite annotation data with compound class assigned
+        ''' </summary>
+        ''' <param name="class">the compound class data</param>
+        Sub New([class] As ICompoundClass)
+            If Not [class] Is Nothing Then
+                Me.kingdom = [class].kingdom
+                Me.super_class = [class].super_class
+                Me.[class] = [class].class
+                Me.sub_class = [class].sub_class
+                Me.molecular_framework = [class].molecular_framework
+            End If
+        End Sub
 
         Public Overrides Function ToString() As String
             Return name

@@ -5,6 +5,7 @@
 // ref=mzkit.Linears@mz_quantify, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 
 /**
+ * targeted linears
  * 
 */
 declare namespace Linears {

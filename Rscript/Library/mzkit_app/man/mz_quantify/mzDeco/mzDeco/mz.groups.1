@@ -5,6 +5,7 @@ mz.groups \- do \fBm/z\fR grouping under the given tolerance
 .SH SYNOPSIS
 \fImz.groups(\fBms1\fR as any, 
 \fBmzdiff\fR as any = "ppm:20", 
+\fBrtwin\fR as double = 0.05, 
 [\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
@@ -12,10 +13,15 @@ do \fBm/z\fR grouping under the given tolerance
 .PP
 .SH OPTIONS
 .PP
-\fBms1\fB \fR\- -. 
+\fBms1\fB \fR\- 
+ a LCMS mzpack rawdata object or a collection of the ms1 point data
+. 
 .PP
 .PP
-\fBmzdiff\fB \fR\- -. 
+\fBmzdiff\fB \fR\- the mass tolerance error for extract the XIC from the rawdata set. 
+.PP
+.PP
+\fBrtwin\fB \fR\- the rt tolerance window size for merge data points. 
 .PP
 .PP
 \fBenv\fB \fR\- -. 
@@ -23,6 +29,12 @@ do \fBm/z\fR grouping under the given tolerance
 .SH VALUE
 .PP
 create a list of XIC dataset for run downstream deconv operation
+.PP
+.SH DETAILS
+.PP
+the ion mz value is generated via the max intensity point in each ion 
+ feature group, and the xic data has already been re-order via the 
+ time asc.
 .PP
 .SH SEE ALSO
 mzDeco

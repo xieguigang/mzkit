@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MSP.MspData</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <table style="width: 100%;">
+            <tr>
+                <td>MspData {BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MSP}</td>
+                <td style="text-align: right;">.NET clr documentation</td>
+            </tr>
+        </table>
+
+        <h2>MspData</h2>
+
+        <h3>Description</h3>
+
+        <p>a spectrum file format data</p>
+
+<p>a collection of the spectrum peaks <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/ms2.html">ms2</a> data.</p>
+
+        <h3>Declare</h3>        
+
+        <pre>
+            <code id="clr_ts">
+# namespace BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MSP
+export class MspData {
+   # the metabolite name
+   Name: string;
+   Synonyms: string;
+   # <code>DB&#35;</code>
+   DB_id: string;
+   InChIKey: string;
+   MW: double;
+   Formula: string;
+   PrecursorMZ: string;
+   Precursor_type: string;
+   Spectrum_type: string;
+   Instrument_type: string;
+   Instrument: string;
+   Ion_mode: string;
+   Collision_energy: string;
+   RetentionTime: string;
+   # the spectrum data
+   Peaks: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/ms2.html">ms2[]</a>;
+   # 如果这个文件是来自于MoNA数据库的话, 则在这里是物质的注释信息
+   Comments: <a href="/vignettes/clr/System/Collections/Specialized/NameValueCollection.html">NameValueCollection</a>;
+}
+</code>
+        </pre>
+
+        <h3>.NET clr type reference tree</h3>
+
+        <ol>
+<li>use by <i>property</i> member <code>Peaks</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/ms2.html">ms2</a></li>
+<li>use by <i>property</i> member <code>Comments</code>: <a href="/vignettes/clr/System/Collections/Specialized/NameValueCollection.html">NameValueCollection</a></li>
+</ol>
+
+
+        <hr />
+        <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a
+                href="../{$package}.html">Index</a>]
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="https://mzkit.org/assets/js/R_syntax.js"></script>
+<script type="text/javascript" src="https://mzkit.org/assets/js/highlights.js"></script>
+<script type="text/javascript">r_highlights("clr_ts");</script>
+
+</html>

@@ -1,6 +1,6 @@
 # GCMS
 
-
+the targetted GCMS sim data quantification module
 
 + [as.quantify.ion](GCMS/as.quantify.ion.1) 
 + [SIMIonExtractor](GCMS/SIMIonExtractor.1) 

@@ -69,6 +69,12 @@ Namespace MetaLib.Models
     ''' <summary>
     ''' the very basic metabolite annotation data model
     ''' </summary>
+    ''' <remarks>
+    ''' this data model includes the metabolite annotation information, includes:
+    ''' 
+    ''' 1. basic metabolite information, example as formula, name, etc
+    ''' 2. database cross reference: <see cref="xref"/>
+    ''' </remarks>
     Public Class MetaInfo : Implements INamedValue
         Implements IEquatable(Of MetaInfo)
 
@@ -91,6 +97,30 @@ Namespace MetaLib.Models
         ''' </summary>
         ''' <returns></returns>
         <MessagePackMember(7)> Public Property xref As xref
+
+        Default Public ReadOnly Property GetXrefId(field As String) As String
+            Get
+                Dim arg As xref = xref
+
+                Select Case field.ToLower
+                    Case "biocyc", "metacyc" : Return arg.MetaCyc
+                    Case "cas" : Return arg.CAS.JoinBy("; ")
+                    Case "chebi" : Return arg.chebi
+                    Case "chembl" : Return arg.ChEMBL
+                    Case "drugbank" : Return arg.DrugBank
+                    Case "hmdb" : Return arg.HMDB
+                    Case "kegg" : Return arg.KEGG
+                    Case "knapsack" : Return arg.KNApSAcK
+                    Case "lipidmaps" : Return arg.lipidmaps
+                    Case "pubchem" : Return arg.pubchem
+                    Case "wikipedia" : Return arg.Wikipedia
+                    Case "metlin" : Return arg.metlin
+                    Case "mesh" : Return arg.MeSH
+                    Case Else
+                        Return arg.extras.TryGetValue(field).JoinBy("; ")
+                End Select
+            End Get
+        End Property
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String

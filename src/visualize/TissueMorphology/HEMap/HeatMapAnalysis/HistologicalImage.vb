@@ -139,6 +139,20 @@ Namespace HEMap
             End Using
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="block">the current block data</param>
+        ''' <param name="sx"></param>
+        ''' <param name="sy"></param>
+        ''' <param name="i">image physical x</param>
+        ''' <param name="j">image physical y</param>
+        ''' <param name="gridSize"></param>
+        ''' <param name="tolerance"></param>
+        ''' <param name="densityGrid"></param>
+        ''' <param name="colors"></param>
+        ''' <param name="colorData"></param>
+        ''' <returns></returns>
         <Extension>
         Private Function CellEvaluation(block As Color()(),
                                         ByRef sx As Integer,
@@ -172,6 +186,7 @@ Namespace HEMap
                 .ScaleY = sy
             }
 
+            ' evaluate the color channels
             If Not colors Is Nothing Then
                 For Each cl As String In colors
                     cell.layers(cl) = [Object].Eval(matrix, colorData(cl), gridSize, tolerance, densityGrid)
@@ -181,6 +196,24 @@ Namespace HEMap
             sy += 1
 
             Return cell
+        End Function
+
+        <Extension>
+        Public Iterator Function ScanColor(image As Image, targets As Color(), Optional tolerance As Double = 15) As IEnumerable(Of (target As Color, pos As Point))
+            Using bitmap As BitmapBuffer = BitmapBuffer.FromImage(image)
+                For i As Integer = 1 To bitmap.Width - 1
+                    For j As Integer = 1 To bitmap.Height - 1
+                        Dim pixel As Color = bitmap.GetPixel(i, j)
+                        Dim xy As New Point(i, j)
+
+                        For Each channel As Color In targets
+                            If channel.Equals(pixel, tolerance:=tolerance) Then
+                                Yield (channel, xy)
+                            End If
+                        Next
+                    Next
+                Next
+            End Using
         End Function
     End Module
 End Namespace

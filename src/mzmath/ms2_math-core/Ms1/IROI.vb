@@ -56,6 +56,8 @@
 Namespace Chromatogram
 
     ''' <summary>
+    ''' [rtmin, rtmax] a ROI region within a specific RT range
+    ''' 
     ''' 一个ROI区域就是色谱图上面的一个时间范围内的色谱峰数据
     ''' </summary>
     Public Interface IROI
@@ -71,5 +73,6 @@ Namespace Chromatogram
         ''' </summary>
         ''' <returns></returns>
         Property rtmax As Double
+
     End Interface
 End Namespace

@@ -168,9 +168,10 @@ Module metaDNAInfer
     ''' </summary>
     ''' <param name="file">csv table file or a directory with raw xml model data file in it.</param>
     ''' <param name="env"></param>
-    ''' <returns></returns>
+    ''' <returns>A collection of the reaction class table for provides 
+    ''' the data links between the compounds.</returns>
     <ExportAPI("reaction_class.table")>
-    <RApiReturn(GetType(ReactionClassTbl()))>
+    <RApiReturn(GetType(ReactionClassTbl))>
     Public Function readReactionClassTable(file As String, Optional env As Environment = Nothing) As Object
         If file.ExtensionSuffix("csv") Then
             Return file.LoadCsv(Of ReactionClassTbl).ToArray
@@ -198,6 +199,16 @@ Module metaDNAInfer
 
 #Region "metadna algorithm"
 
+    ''' <summary>
+    ''' Create an algorithm module for run metaDNA inferance
+    ''' </summary>
+    ''' <param name="ms1ppm">the mass tolerance error for matches the ms1 ion</param>
+    ''' <param name="mzwidth"></param>
+    ''' <param name="dotcutoff"></param>
+    ''' <param name="allowMs1"></param>
+    ''' <param name="maxIterations"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("metadna")>
     <RApiReturn(GetType(MetaDNAAlgorithm))>
     Public Function MetaDNAAlgorithm(Optional ms1ppm As Object = "ppm:20",
@@ -219,6 +230,13 @@ Module metaDNAInfer
         Return New MetaDNAAlgorithm(ms1Err, dotcutoff, mz2Err, allowMs1, maxIterations)
     End Function
 
+    ''' <summary>
+    ''' Configs the precursor adducts range for the metaDNA algorithm
+    ''' </summary>
+    ''' <param name="metadna"></param>
+    ''' <param name="precursorTypes"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("range")>
     <RApiReturn(GetType(MetaDNAAlgorithm))>
     Public Function SetSearchRange(metadna As Algorithm,
@@ -237,11 +255,11 @@ Module metaDNAInfer
     End Function
 
     ''' <summary>
-    ''' 
+    ''' Set kegg compound library
     ''' </summary>
     ''' <param name="metadna"></param>
     ''' <param name="kegg">
-    ''' a collection of the kegg compound data.
+    ''' should be a collection of the <see cref="KeggCompound"/> data.
     ''' </param>
     ''' <param name="env"></param>
     ''' <returns></returns>
@@ -261,11 +279,11 @@ Module metaDNAInfer
     End Function
 
     ''' <summary>
-    ''' 
+    ''' set the kegg reaction class data links for the compounds
     ''' </summary>
     ''' <param name="metadna"></param>
     ''' <param name="links">
-    ''' a collection of the reaction class data
+    ''' should be a collection of the <see cref="ReactionClass"/> data
     ''' </param>
     ''' <param name="env"></param>
     ''' <returns></returns>
@@ -285,7 +303,7 @@ Module metaDNAInfer
     End Function
 
     ''' <summary>
-    ''' 
+    ''' set ms2 spectrum data for run the annotation
     ''' </summary>
     ''' <param name="metadna"></param>
     ''' <param name="sample">
@@ -308,6 +326,14 @@ Module metaDNAInfer
         Return metadna.SetSamples(raw.populates(Of PeakMs2)(env))
     End Function
 
+    ''' <summary>
+    ''' apply of the metadna annotation workflow
+    ''' </summary>
+    ''' <param name="metaDNA"></param>
+    ''' <param name="sample"></param>
+    ''' <param name="seeds"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("DIA.infer")>
     <RApiReturn(GetType(CandidateInfer))>
     Public Function DIAInfer(metaDNA As Algorithm,
@@ -380,7 +406,8 @@ Module metaDNAInfer
     ''' <summary>
     ''' create seeds from mgf file data
     ''' </summary>
-    ''' <param name="seeds"></param>
+    ''' <param name="seeds">A set of the mzkit <see cref="PeakMs2"/> clr object that could 
+    ''' be used for the seeds for run the metadna annotation.</param>
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("as.seeds")>
@@ -405,8 +432,8 @@ Module metaDNAInfer
     ''' <summary>
     ''' get result alignments raw data for data plots.
     ''' </summary>
-    ''' <param name="DIAinfer"></param>
-    ''' <param name="table"></param>
+    ''' <param name="DIAinfer">the result candidates of clr data type in mzkit: <see cref="CandidateInfer"/></param>
+    ''' <param name="table">the <see cref="MetaDNAResult"/> data table</param>
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("result.alignment")>
@@ -431,6 +458,15 @@ Module metaDNAInfer
             .ExportInferRaw(rawFilter)
     End Function
 
+    ''' <summary>
+    ''' Extract the annotation result from metaDNA algorithm module as data table
+    ''' </summary>
+    ''' <param name="metaDNA"></param>
+    ''' <param name="result"></param>
+    ''' <param name="unique"></param>
+    ''' <param name="env"></param>
+    ''' <returns>A collection of the <see cref="MetaDNAResult"/> data objects that could be
+    ''' used for represented as the result table.</returns>
     <ExportAPI("as.table")>
     <RApiReturn(GetType(MetaDNAResult))>
     Public Function ResultTable(metaDNA As Algorithm,

@@ -66,12 +66,18 @@
 
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 
+''' <summary>
+''' 
+''' </summary>
 Public Interface IMs1 : Inherits IRetentionTime
 
     Property mz As Double
 
 End Interface
 
+''' <summary>
+''' A time point related data
+''' </summary>
 Public Interface IRetentionTime
 
     ''' <summary>
@@ -101,6 +107,10 @@ End Interface
 ''' </summary>
 Public Interface IMS1Annotation : Inherits IMs1Scan, INamedValue
 
+    ''' <summary>
+    ''' the ion annotated result
+    ''' </summary>
+    ''' <returns></returns>
     Property precursor_type As String
 
 End Interface

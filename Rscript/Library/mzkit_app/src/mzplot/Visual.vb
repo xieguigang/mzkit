@@ -58,6 +58,7 @@
 #End Region
 
 Imports System.Drawing
+Imports System.Drawing.Drawing2D
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII
@@ -73,11 +74,15 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Visualization
 Imports BioNovoGene.BioDeep.MassSpectrometry.MoleculeNetworking
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports Microsoft.VisualBasic.Data.ChartPlots
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -91,7 +96,7 @@ Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
-Imports Chromatogram = BioNovoGene.Analytical.MassSpectrometry.Assembly.DataReader.Chromatogram
+Imports Chromatogram = BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram.Chromatogram
 
 <Package("visual")>
 Module Visual
@@ -112,7 +117,53 @@ Module Visual
         Call Internal.generic.add("plot", GetType(AlignmentOutput), AddressOf plotAlignments)
         Call Internal.generic.add("plot", GetType(ScanMS1), AddressOf plotMS)
         Call Internal.generic.add("plot", GetType(ScanMS2), AddressOf plotMS)
+        Call Internal.generic.add("plot", GetType(RtShift()), AddressOf plotRtShifts)
     End Sub
+
+    Private Function plotRtShifts(rt_shifts As RtShift(), args As list, env As Environment) As Object
+        Dim samples = rt_shifts _
+            .GroupBy(Function(a) a.sample) _
+            .Select(Function(file) New NamedCollection(Of RtShift)(file.Key, file)) _
+            .ToArray
+        Dim rt_range As New DoubleRange(rt_shifts.Select(Function(a) a.refer_rt))
+        Dim res As Double = args.getValue({"res"}, env, [default]:=1000)
+        Dim dt As Double = (rt_range.Max - rt_range.Min) / res
+        Dim x_axis As Double() = seq(rt_range.Min, rt_range.Max, by:=dt).ToArray
+        Dim lines As New List(Of SerialData)
+        Dim size As String = InteropArgumentHelper.getSize(args.getByName("size"), env, "3800,3000")
+        Dim padding As String = InteropArgumentHelper.getPadding(args.getByName("padding"), "padding: 100px 200px 200px 200px;")
+        Dim colorSet = args.getValue({"colorSet", "colors"}, env, "paper")
+        Dim colors As Color() = Designer.GetColors(colorSet, n:=samples.Length + 1)
+        Dim fill_color As String = RColorPalette.getColor(args.getBySynonyms("fill", "grid.fill"), "lightgray")
+        Dim idx As i32 = 0
+
+        For Each sample As NamedCollection(Of RtShift) In samples
+            Dim points = sample _
+                .GroupBy(Function(a) a.refer_rt, offsets:=dt) _
+                .OrderBy(Function(a) Val(a.name)) _
+                .ToArray
+            Dim shift_points = points _
+                .Select(Function(dti)
+                            Return New PointData(Val(dti.name), Aggregate pt In dti Into Sum(pt.shift))
+                        End Function) _
+                .ToArray
+
+            lines.Add(New SerialData With {
+                .lineType = DashStyle.Solid,
+                .pointSize = 3,
+                .pts = shift_points,
+                .shape = LegendStyles.Square,
+                .title = sample.name,
+                .width = 2,
+                .color = colors(++idx)
+            })
+        Next
+
+        Return Scatter.Plot(lines, size:=size, padding:=padding, drawLine:=True, fill:=False,
+                            Xlabel:="retention time(s)", Ylabel:="RT shift(s)",
+                            XtickFormat:="F0", YtickFormat:="G4",
+                            gridFill:=fill_color)
+    End Function
 
     Private Function plotAlignments(aligns As AlignmentOutput, args As list, env As Environment) As Object
         Dim pairwise = aligns.GetAlignmentMirror
@@ -458,31 +509,8 @@ Module Visual
         End If
     End Function
 
-    ''' <summary>
-    ''' plot raw XIC matrix based on a given sequence of ms1 scans data
-    ''' </summary>
-    ''' <param name="ms1_scans">all ms1 scan point data for create XIC overlaps</param>
-    ''' <param name="mzwidth">mz tolerance for create XIC data</param>
-    ''' <param name="env"></param>
-    ''' <returns></returns>
-    <ExportAPI("raw_snapshot3D")>
-    Public Function Snapshot3D(<RRawVectorArgument>
-                               ms1_scans As Object,
-                               Optional mzwidth As Object = "da:0.3",
-                               Optional noise_cutoff As Double = 0.5,
-                               <RRawVectorArgument>
-                               Optional size As Object = "1600,1200",
-                               Optional env As Environment = Nothing) As Object
-
-        Dim points As pipeline = pipeline.TryCreatePipeline(Of ms1_scan)(ms1_scans, env)
-        Dim mzErr = Math.getTolerance(mzwidth, env)
-
-        If points.isError Then
-            Return points.getError
-        ElseIf mzErr Like GetType(Message) Then
-            Return mzErr.TryCast(Of Message)
-        End If
-
+    <Extension>
+    Private Function assembleOverlaps(points As pipeline, mzErr As [Variant](Of Tolerance, Message), noise_cutoff As Double, env As Environment) As ChromatogramOverlap
         Dim XIC As New ChromatogramOverlap
         Dim scan As ms1_scan()
         Dim chr As Chromatogram
@@ -515,14 +543,64 @@ Module Visual
             End If
         Next
 
+        Return XIC
+    End Function
+
+    ''' <summary>
+    ''' plot raw XIC matrix based on a given sequence of ms1 scans data
+    ''' </summary>
+    ''' <param name="ms1_scans">all ms1 scan point data for create XIC overlaps</param>
+    ''' <param name="mzwidth">mz tolerance for create XIC data</param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("raw_snapshot3D")>
+    Public Function Snapshot3D(<RRawVectorArgument>
+                               ms1_scans As Object,
+                               Optional mzwidth As Object = "da:0.3",
+                               Optional noise_cutoff As Double = 0.5,
+                               <RRawVectorArgument>
+                               Optional size As Object = "1920,1200",
+                               <RRawVectorArgument>
+                               Optional padding As Object = "padding:100px 300px 125px 150px;",
+                               Optional colors As Object = "paper",
+                               Optional show_legends As Boolean = True,
+                               Optional env As Environment = Nothing) As Object
+
+        Dim points As pipeline = pipeline.TryCreatePipeline(Of ms1_scan)(ms1_scans, env)
+        Dim mzErr As [Variant](Of Tolerance, Message) = Math.getTolerance(mzwidth, env)
+        Dim XIC As ChromatogramOverlap
+
+        If mzErr Like GetType(Message) Then
+            Return mzErr.TryCast(Of Message)
+        End If
+
+        If points.isError Then
+            If TypeOf ms1_scans Is list AndAlso DirectCast(ms1_scans, list).data _
+                .All(Function(xi) TypeOf xi Is MzGroup) Then
+
+                XIC = New ChromatogramOverlap
+
+                For Each group In DirectCast(ms1_scans, list).AsGeneric(Of MzGroup)(env)
+                    XIC(group.Key) = group.Value.CreateChromatogram
+                Next
+            ElseIf TypeOf ms1_scans Is ChromatogramOverlap Then
+                XIC = DirectCast(ms1_scans, ChromatogramOverlap)
+            Else
+                Return points.getError
+            End If
+        Else
+            XIC = points.assembleOverlaps(mzErr, noise_cutoff, env)
+        End If
+
         Dim args As New list With {
             .slots = New Dictionary(Of String, Object) From {
                 {"show.labels", False},
-                {"show.legends", False},
+                {"show.legends", show_legends},
                 {"parallel", True},
-                {"colors", "Spectral:c8"},
+                {"colors", colors},
                 {"opacity", 60},
-                {"size", size}
+                {"size", size},
+                {"padding", InteropArgumentHelper.getPadding(padding, "padding:100px 300px 125px 150px;")}
             }
         }
 
@@ -608,7 +686,7 @@ Module Visual
     ''' <summary>
     ''' visual of the UV spectrum
     ''' </summary>
-    ''' <param name="timeSignals"></param>
+    ''' <param name="timeSignals">should be a collection of the signal data: <see cref="GeneralSignal"/></param>
     ''' <param name="is_spectrum"></param>
     ''' <param name="size"></param>
     ''' <param name="padding"></param>

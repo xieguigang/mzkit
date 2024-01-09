@@ -70,43 +70,13 @@
 #End Region
 
 Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
-#If UNIX = 0 Then
-Imports Microsoft.VisualBasic.ApplicationServices
-#End If
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
 
 Namespace mzData.mzWebCache
-
-    ''' <summary>
-    ''' a unify reader interface for <see cref="BinaryStreamReader"/> read 
-    ''' data from file or read data from ``mzPack`` in-memory data object.
-    ''' </summary>
-    Public Interface IMzPackReader
-
-        ''' <summary>
-        ''' get all scan ms1 data its scan id collection
-        ''' </summary>
-        ''' <returns></returns>
-        ReadOnly Property EnumerateIndex As IEnumerable(Of String)
-        ''' <summary>
-        ''' the source file name of current raw data file
-        ''' </summary>
-        ''' <returns></returns>
-        ReadOnly Property source As String
-        ReadOnly Property rtmax As Double
-        Function ReadScan(scan_id As String, Optional skipProducts As Boolean = False) As ScanMS1
-        Function GetMetadata(id As String) As Dictionary(Of String, String)
-
-        Sub ReadChromatogramTick(scanId As String,
-                                 <Out> ByRef scan_time As Double,
-                                 <Out> ByRef BPC As Double,
-                                 <Out> ByRef TIC As Double)
-        Function hasMs2(Optional sampling As Integer = 64) As Boolean
-
-    End Interface
 
     ''' <summary>
     ''' the binary mzpack data reader
@@ -198,6 +168,8 @@ Namespace mzData.mzWebCache
         ''' <returns>
         ''' returns NULL if the meta data is not found
         ''' </returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetMetadata(index As String) As Dictionary(Of String, String) Implements IMzPackReader.GetMetadata
             Return metadata.TryGetValue(index)
         End Function
@@ -254,6 +226,13 @@ Namespace mzData.mzWebCache
             End Using
         End Sub
 
+        ''' <summary>
+        ''' read all ms2 scan products inside a given scan in ms1 level
+        ''' </summary>
+        ''' <param name="scanId">
+        ''' the scan id which could be unsed for point to the target ms1 scan data
+        ''' </param>
+        ''' <returns></returns>
         Public Function ReadScan2(scanId As String) As ScanMS2()
             Dim size As Integer = pointTo(scanId)
             Dim data As ScanMS2()
@@ -295,6 +274,11 @@ Namespace mzData.mzWebCache
             Return dataSize
         End Function
 
+        ''' <summary>
+        ''' chekc if there is any scan in ms2 level exists in current data file?
+        ''' </summary>
+        ''' <param name="sampling"></param>
+        ''' <returns></returns>
         Public Function hasMs2(Optional sampling As Integer = 64) As Boolean Implements IMzPackReader.hasMs2
             For Each scanId As String In EnumerateIndex.Take(sampling)
                 Call pointTo(scanId)
@@ -327,6 +311,12 @@ Namespace mzData.mzWebCache
             TIC = file.ReadDouble
         End Sub
 
+        Public Iterator Function LoadAllScans(Optional skipProducts As Boolean = False) As IEnumerable(Of ScanMS1)
+            For Each scan_id As String In EnumerateIndex
+                Yield ReadScan(scan_id, skipProducts)
+            Next
+        End Function
+
         Public Function ReadScan(scanId As String, Optional skipProducts As Boolean = False) As ScanMS1 Implements IMzPackReader.ReadScan
             Dim ms1 As New ScanMS1 With {.scan_id = scanId}
 
@@ -351,6 +341,10 @@ Namespace mzData.mzWebCache
             End If
 
             Return ms1
+        End Function
+
+        Public Overrides Function ToString() As String
+            Return $"{filepath} [{EnumerateIndex.Count} ms1_scans]"
         End Function
 
         Private Iterator Function populateMs2Products(nsize As Integer) As IEnumerable(Of ScanMS2)

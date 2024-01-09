@@ -77,8 +77,19 @@ Imports SingleCellMatrix = BioNovoGene.Analytical.MassSpectrometry.SingleCells.D
 
 ''' <summary>
 ''' Single cells metabolomics data processor
-''' </summary>
 ''' 
+''' Single-cell analysis is a technique that measures only the target cell itself and can 
+''' extract information that would be buried in bulk-cell analysis with high-resolution.
+''' </summary>
+''' <remarks>
+''' Single-cell metabolomics is a powerful tool that can reveal cellular heterogeneity and 
+''' can elucidate the mechanisms of biological phenomena in detail. It is a promising 
+''' approach in studying plants, especially when cellular heterogeneity has an impact on different 
+''' biological processes. In addition, metabolomics, which can be regarded as a detailed 
+''' phenotypic analysis, is expected to answer previously unrequited questions which will 
+''' lead to expansion of crop production, increased understanding of resistance to diseases,
+''' and in other applications as well.
+''' </remarks>
 <Package("SingleCells")>
 Module SingleCells
 
@@ -165,7 +176,14 @@ Module SingleCells
     ''' Cast the ion feature matrix as the GCModeller expression matrix object
     ''' </summary>
     ''' <param name="x"></param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' the gcmodeller expression matrix object, each <see cref="DataFrameRow"/> element inside the 
+    ''' generated matrix object is the expression vector of all metabolite ion features. which means
+    ''' the matrix format from this function outputs should be:
+    ''' 
+    ''' 1. cell labels, or spatial location in rows
+    ''' 2. and ion features in columns.
+    ''' </returns>
     <ExportAPI("as.expression")>
     <RApiReturn(GetType(HTSMatrix))>
     Public Function asHTSExpression(x As MzMatrix, Optional single_cell As Boolean = False) As Object
@@ -209,10 +227,11 @@ Module SingleCells
     ''' scale matrix for each spot/cell sample
     ''' </summary>
     ''' <param name="x"></param>
-    ''' <param name="scaler"></param>
+    ''' <param name="scaler">A R# <see cref="RFunction"/> for apply the scale transform.</param>
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("apply.scale")>
+    <RApiReturn(GetType(MzMatrix))>
     Public Function rowApplyScale(x As Object, scaler As RFunction, Optional env As Environment = Nothing) As Object
         Dim lambda As Func(Of Double(), [Variant](Of Message, Double())) =
             Function(xi)
@@ -283,6 +302,7 @@ Module SingleCells
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("cell_matrix")>
+    <RApiReturn(GetType(HTSMatrix))>
     Public Function cellMatrix(raw As mzPack,
                                Optional mzdiff As Double = 0.005,
                                Optional freq As Double = 0.001,
@@ -355,7 +375,15 @@ Module SingleCells
     ''' </summary>
     ''' <param name="file"></param>
     ''' <param name="env"></param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' A tuple list that contains the data elements:
+    ''' 
+    ''' 1. tolerance: the mass tolerance description for seperates the ion features
+    ''' 2. featureSize: the number of the ion features in the raw data file
+    ''' 3. ionSet: a numeric vector of the ion features m/z value.
+    ''' 4. spots: the number of the spots that read from the rawdata matrix file
+    ''' 5. reader: the rawdata <see cref="MatrixReader"/>
+    ''' </returns>
     ''' <remarks>
     ''' this function open a lazy reader of the matrix, for load all 
     ''' data into memory at once, use the ``read.mz_matrix`` 
@@ -430,9 +458,10 @@ Module SingleCells
     ''' <summary>
     ''' cast matrix object to the R liked dataframe object
     ''' </summary>
-    ''' <param name="x"></param>
+    ''' <param name="x">the matrix object that going to do the type casting</param>
     ''' <returns></returns>
     <ExportAPI("df.mz_matrix")>
+    <RApiReturn(GetType(SpatialMatrixReader))>
     Public Function dfMzMatrix(x As MzMatrix) As Object
         Return New SpatialMatrixReader(x)
     End Function

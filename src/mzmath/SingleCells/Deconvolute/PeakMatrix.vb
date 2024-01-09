@@ -56,6 +56,7 @@
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
+Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Math
@@ -63,18 +64,6 @@ Imports Microsoft.VisualBasic.Math
 Namespace Deconvolute
 
     Public Module PeakMatrix
-
-        <Extension>
-        Public Function CreateMzIndex(mzSet As Double(), Optional win_size As Double = 1) As BlockSearchFunction(Of (mz As Double, Integer))
-            Call VBDebugger.EchoLine($"tolerance window size: {win_size}")
-
-            Return New BlockSearchFunction(Of (mz As Double, Integer))(
-                data:=mzSet.Select(Function(mzi, i) (mzi, i)),
-                eval:=Function(i) i.mz,
-                tolerance:=win_size,
-                fuzzy:=True
-            )
-        End Function
 
         ''' <summary>
         ''' ms-imaging raw data matrix deconvolution
@@ -87,13 +76,15 @@ Namespace Deconvolute
                                      Optional mzdiff As Double = 0.001,
                                      Optional freq As Double = 0.01,
                                      Optional mzSet As Double() = Nothing,
-                                     Optional fastBin As Boolean = True) As MzMatrix
+                                     Optional fastBin As Boolean = True,
+                                     Optional verbose As Boolean = False) As MzMatrix
 
             If mzSet.IsNullOrEmpty Then
                 mzSet = GetMzIndex(
                     raw:=raw,
                     mzdiff:=mzdiff, freq:=freq,
-                    fast:=fastBin
+                    fast:=fastBin,
+                    verbose:=verbose
                 )
             End If
 
