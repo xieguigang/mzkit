@@ -373,6 +373,7 @@ Module Visual
         Dim labeIntensity As Double = args.getValue("label.intensity", env, 0.2)
         Dim size As String = InteropArgumentHelper.getSize(args!size, env, "1920,900")
         Dim alignment As Object = args.getByName("alignment")
+        Dim showAnnotation As Boolean = args.getValue("label.show", env, [default]:=True)
 
         If mirror OrElse Not alignment Is Nothing Then
             ' plot ms alignment mirror plot
@@ -397,7 +398,8 @@ Module Visual
                 images:=annotateImages,
                 labelIntensity:=labeIntensity,
                 size:=size,
-                title:=title Or ms.TryCast(Of LibraryMatrix).name.AsDefault
+                title:=title Or ms.TryCast(Of LibraryMatrix).name.AsDefault,
+                showAnnotationText:=showAnnotation
             )
         End If
     End Function

@@ -384,7 +384,8 @@ Public Class PeakAssign : Inherits Plot
                                              Optional labelIntensity As Double = 0.3,
                                              Optional images As Dictionary(Of String, Image) = Nothing,
                                              Optional xlabel$ = "M/z ratio",
-                                             Optional ylabel$ = "Relative Intensity (%)") As GraphicsData
+                                             Optional ylabel$ = "Relative Intensity (%)",
+                                             Optional showAnnotationText As Boolean = True) As GraphicsData
         Dim theme As New Theme With {
             .padding = padding,
             .background = bg,
@@ -401,7 +402,7 @@ Public Class PeakAssign : Inherits Plot
             title:=title Or matrix.name.AsDefault,
             matrix:=matrix.ms2,
             barHighlight:=barHighlight,
-            labelIntensity:=labelIntensity,
+            labelIntensity:=If(showAnnotationText, labelIntensity, Single.MaxValue),
             theme:=theme,
             images:=images
         ) With {
