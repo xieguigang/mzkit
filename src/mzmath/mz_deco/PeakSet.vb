@@ -10,6 +10,7 @@ Imports std = System.Math
 Public Class PeakSet
 
     Dim m_peaksdata As xcms2()
+    Dim m_peakindex As Dictionary(Of String, xcms2)
     Dim mz As BlockSearchFunction(Of (mz As Double, Integer))
     Dim rt As BlockSearchFunction(Of (mz As Double, Integer))
 
@@ -62,7 +63,19 @@ Public Class PeakSet
 
         Me.mz = mz.CreateMzIndex(win_size:=1.5)
         Me.rt = rt.CreateMzIndex(win_size:=60)
+        Me.m_peakindex = peaks.ToDictionary(Function(a) a.ID)
     End Sub
+
+    ''' <summary>
+    ''' try to get a peak by its unique reference id
+    ''' </summary>
+    ''' <param name="xcms_id"></param>
+    ''' <returns>null value will be returns if the given 
+    ''' <paramref name="xcms_id"/> is not existed inside
+    ''' index.</returns>
+    Public Function GetById(xcms_id As String) As xcms2
+        Return m_peakindex.TryGetValue(xcms_id)
+    End Function
 
     ''' <summary>
     ''' get XIC data
