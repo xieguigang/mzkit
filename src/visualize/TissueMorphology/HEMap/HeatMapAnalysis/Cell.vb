@@ -53,23 +53,39 @@
 
 #End Region
 
+Imports Microsoft.VisualBasic.Data.GraphTheory.GridGraph
+
 Namespace HEMap
 
-    Public Class Cell
+    ''' <summary>
+    ''' A cell block on the image
+    ''' </summary>
+    ''' <remarks>
+    ''' the channel layers data of the colors is consist with the <see cref="HEMap.[Object]"/> collection.
+    ''' </remarks>
+    Public Class Cell : Implements IPoint2D
+
+        ''' <summary>
+        ''' the physical image x
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property X As Integer
+        ''' <summary>
+        ''' the physical image y
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Y As Integer
 
         ''' <summary>
         ''' the location X of the grid
         ''' </summary>
         ''' <returns></returns>
-        Public Property X As Integer
-        ''' <summary>
+        Public Property ScaleX As Integer Implements IPoint2D.X
+        ''' <summary> 
         ''' the location Y of the grid
         ''' </summary>
         ''' <returns></returns>
-        Public Property Y As Integer
-
-        Public Property ScaleX As Integer
-        Public Property ScaleY As Integer
+        Public Property ScaleY As Integer Implements IPoint2D.Y
 
         ''' <summary>
         ''' average value of Red channel
@@ -90,15 +106,33 @@ Namespace HEMap
         ''' 
         ''' </summary>
         ''' <returns></returns>
-        Public Property Black As [Object]
+        Public Property black As [Object]
 
         Public Property layers As New Dictionary(Of String, [Object])
 
+        ''' <summary>
+        ''' does current cell block is in color black?
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property isBlack As Boolean
             Get
-                Return Black.Ratio > 0.975
+                Return black.Ratio > 0.975
             End Get
         End Property
+
+        Public Function GetChannelValue(layer As String, target As Layers) As Double
+            If Not layers.ContainsKey(layer) Then
+                Return 0.0
+            End If
+
+            Select Case target
+                Case HEMap.Layers.Density : Return layers(layer).Density
+                Case HEMap.Layers.Pixels : Return layers(layer).Pixels
+                Case HEMap.Layers.Ratio : Return layers(layer).Ratio
+            End Select
+
+            Throw New InvalidProgramException("this error will never happends!")
+        End Function
 
     End Class
 End Namespace

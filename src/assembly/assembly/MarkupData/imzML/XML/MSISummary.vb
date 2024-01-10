@@ -76,6 +76,10 @@ Namespace MarkupData.imzML
     ''' <summary>
     ''' total ions/base peak/average intensity
     ''' </summary>
+    ''' <remarks>
+    ''' spatial heatmap object consist with a collection of the <see cref="iPixelIntensity"/> 
+    ''' spot data in rows.
+    ''' </remarks>
     Public Class MSISummary
 
         ''' <summary>

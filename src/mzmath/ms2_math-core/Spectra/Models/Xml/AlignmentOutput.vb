@@ -58,7 +58,7 @@
 
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Linq
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Spectra.Xml
 
@@ -77,7 +77,7 @@ Namespace Spectra.Xml
                     Dim nq As Integer = alignments.Where(Function(x) x.query > 0).Count
                     Dim nr As Integer = alignments.Where(Function(x) x.ref > 0).Count
 
-                    Return jaccard * (stdNum.Min(nq, nr) / stdNum.Max(nq, nr))
+                    Return jaccard * (std.Min(nq, nr) / std.Max(nq, nr))
                 End If
             End Get
         End Property
@@ -88,7 +88,17 @@ Namespace Spectra.Xml
         ''' <returns></returns>
         Public ReadOnly Property cosine As Double
             Get
-                Return stdNum.Min(forward, reverse)
+                Return std.Min(forward, reverse)
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' get score mean result
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property mean As Double
+            Get
+                Return {forward, reverse, jaccard, entropy}.Average
             End Get
         End Property
 

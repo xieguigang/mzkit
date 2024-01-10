@@ -29,9 +29,9 @@
         <div style="width: 100%; padding-left: 3%; color: black;">
             <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>scan_tissue</strong>(<i>tissue</i>,
     <i>colors</i> = <span style='color: blue !important;'>NULL</span>,
-    <i>gridSize</i> = <span style='color: green;'>25</span>,
+    <i>grid.size</i> = <span style='color: green;'>25</span>,
     <i>tolerance</i> = <span style='color: green;'>15</span>,
-    <i>densityGrid</i> = <span style='color: green;'>5</span>);</code></pre>
+    <i>density.grid</i> = <span style='color: green;'>5</span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
@@ -39,23 +39,23 @@
         <table>
             
 <dt>tissue</dt>
-<dd><p><p>-</p></p></dd>
+<dd><p><p>the image of the HE-stain tissue image</p></p></dd>
 
 
 <dt>colors</dt>
-<dd><p><p>-</p></p></dd>
+<dd><p><p>target colors for run scaning</p></p></dd>
 
 
-<dt>gridSize</dt>
-<dd><p><p>-</p></p></dd>
+<dt>grid.size</dt>
+<dd><p><p>grid size for divid the image into blocks</p></p></dd>
 
 
 <dt>tolerance</dt>
-<dd><p><p>-</p></p></dd>
+<dd><p><p>the color tolerance value</p></p></dd>
 
 
-<dt>densityGrid</dt>
-<dd><p><p>-</p></p></dd>
+<dt>density.grid</dt>
+<dd><p><p>the grid size for evaluate the color density</p></p></dd>
 
         </table>
 
@@ -64,10 +64,13 @@
 
         
 
+        <h3 style="display: block">Authors</h3>
+
+        BioNovoGene
 
         <h3>Value</h3>
 
-        <p>the collection of the image blocks analysis result</p><h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/MsImaging/TissueMorphology/HEMap/Cell.html">Cell[]</a></li></ul>
+        <p>the collection of the image blocks analysis result</p><h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/MsImaging/TissueMorphology/HEMap/HEMapScan.html">HEMapScan</a></li></ul>
 
         <h3 style="display: none;">Examples</h3>
 

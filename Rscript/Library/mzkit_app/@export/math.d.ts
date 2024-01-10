@@ -37,11 +37,13 @@ declare namespace math {
      * + default value Is ``0.05``.
      * @param parallel 
      * + default value Is ``false``.
+     * @param aggregate_sum 
+     * + default value Is ``false``.
      * @param env 
      * + default value Is ``null``.
      * @return Peaks data in centroid mode or a new m/z vector in centroid.
    */
-   function centroid(ions: any, tolerance?: any, intoCutoff?: number, parallel?: boolean, env?: object): object|object|number;
+   function centroid(ions: any, tolerance?: any, intoCutoff?: number, parallel?: boolean, aggregate_sum?: boolean, env?: object): object|object|number;
    /**
     * Create a chromatogram data from a dataframe object
     * 
@@ -321,7 +323,8 @@ declare namespace math {
         * @param gt_score -
         * 
         * + default value Is ``0.6``.
-        * @param score_aggregate ``@``T:System.Func`3````
+        * @param score_aggregate A @``T:BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.ScoreAggregates`` method, should be a function in clr delegate 
+        *  liked: ``@``T:System.Func`3````.
         * 
         * + default value Is ``null``.
         * @param env 

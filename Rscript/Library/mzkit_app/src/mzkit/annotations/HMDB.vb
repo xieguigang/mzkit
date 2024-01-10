@@ -103,6 +103,7 @@ Imports SMRUCC.Rsharp.Runtime.Interop
 ''' On ~28,000 food components And food additives.
 ''' </summary>
 <Package("hmdb_kit")>
+<RTypeExport("hmdb_metabolite", GetType(HMDB.metabolite))>
 Module HMDBTools
 
     ''' <summary>

@@ -1,0 +1,33 @@
+.\" man page create by R# package system.
+.TH MSI 1 2000-Jan "raster" "raster"
+.SH NAME
+raster \- cast the ms-imaging layer data to raster object
+.SH SYNOPSIS
+\fIraster(\fBx\fR as any, 
+\fBlayer\fR as <integer> IntensitySummary = [Total], 
+[\fB<Environment>\fR]);\fR
+.SH DESCRIPTION
+.PP
+cast the ms-imaging layer data to raster object 
+ 
+ use this function for cast raster object, for do spatial heatmap rendering in another method.
+.PP
+.SH OPTIONS
+.PP
+\fBx\fB \fR\- -. 
+.PP
+.PP
+\fBlayer\fB \fR\- 
+ the layer type for create the raster object, this parameter only works 
+ for when the data type of **`x`** is @\fBT:BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML.MSISummary\fR.
+. 
+.PP
+.PP
+\fBenv\fB \fR\- -. 
+.PP
+.SH SEE ALSO
+MSI
+.SH FILES
+.PP
+mzkit.dll
+.PP

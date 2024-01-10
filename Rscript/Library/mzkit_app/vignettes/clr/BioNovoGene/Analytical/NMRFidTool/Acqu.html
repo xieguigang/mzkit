@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>BioNovoGene.Analytical.NMRFidTool.Acqu</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <table style="width: 100%;">
+            <tr>
+                <td>Acqu {BioNovoGene.Analytical.NMRFidTool}</td>
+                <td style="text-align: right;">.NET clr documentation</td>
+            </tr>
+        </table>
+
+        <h2>Acqu</h2>
+
+        <h3>Description</h3>
+
+        <p>Data structure for the acquisition parameters</p>
+
+<p>@author  Luis F. de Figueiredo</p>
+
+<p>User: ldpf<br />
+ Date: 14/01/2013<br />
+ Time: 14:01</p>
+
+        <h3>Declare</h3>        
+
+        <pre>
+            <code id="clr_ts">
+# namespace BioNovoGene.Analytical.NMRFidTool
+export class Acqu {
+   TransmiterFreq: double;
+   Decoupler1Freq: double;
+   Decoupler2Feq: double;
+   FreqOffset: double;
+   SpectralWidth: double;
+   AquiredPoints: integer;
+   DspDecimation: integer;
+   DspFirmware: integer;
+   DspGroupDelay: double;
+   ByteOrder: <a href="/vignettes/clr/Microsoft/VisualBasic/Data/IO/ByteOrder.html">ByteOrder</a>;
+   FilterType: integer;
+   NumberOfScans: integer;
+   PulseProgram: string;
+   ObservedNucleus: string;
+   InstrumentName: string;
+   Solvent: string;
+   Probehead: string;
+   Origin: string;
+   Owner: string;
+   FidType: <a href="/vignettes/clr/BioNovoGene/Analytical/NMRFidTool/FidData.html">FidData</a>;
+   SpectralFrequency: double;
+}
+</code>
+        </pre>
+
+        <h3>.NET clr type reference tree</h3>
+
+        <ol>
+<li>use by <i>property</i> member <code>ByteOrder</code>: <a href="/vignettes/clr/Microsoft/VisualBasic/Data/IO/ByteOrder.html">ByteOrder</a></li>
+<li>use by <i>property</i> member <code>FidType</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/NMRFidTool/FidData.html">FidData</a></li>
+</ol>
+
+
+        <hr />
+        <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a
+                href="../{$package}.html">Index</a>]
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
+<script type="text/javascript" src="../../_assets/highlights.js"></script>
+<script type="text/javascript">r_highlights("clr_ts");</script>
+
+</html>

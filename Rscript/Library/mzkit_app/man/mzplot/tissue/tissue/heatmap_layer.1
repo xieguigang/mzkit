@@ -1,11 +1,29 @@
 .\" man page create by R# package system.
 .TH TISSUE 1 2000-Jan "heatmap_layer" "heatmap_layer"
 .SH NAME
-heatmap_layer \- 
+heatmap_layer \- generates heatmap value
 .SH SYNOPSIS
-\fIheatmap_layer(\fBtissue\fR as <generic> Cell[], 
+\fIheatmap_layer(\fBtissue\fR as <generic> HEMapScan, 
 \fBheatmap\fR as <integer> Layers = [Density], 
 \fBtarget\fR as string = "black");\fR
+.SH DESCRIPTION
+.PP
+generates heatmap value
+ 
+ convert a specific @\fBT:BioNovoGene.Analytical.MassSpectrometry.MsImaging.TissueMorphology.HEMap.Layers\fR channel inside the tissue 
+ image scanning result as spatial heatmap matrix data.
+.PP
+.SH OPTIONS
+.PP
+\fBtissue\fB \fR\- -. 
+.PP
+.PP
+\fBheatmap\fB \fR\- the @\fBT:BioNovoGene.Analytical.MassSpectrometry.MsImaging.TissueMorphology.HEMap.Layers\fR channel scan for the target colors 
+ for heatmap rendering.. 
+.PP
+.PP
+\fBtarget\fB \fR\- the target color channel. 
+.PP
 .SH SEE ALSO
 tissue
 .SH FILES

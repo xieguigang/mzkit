@@ -353,6 +353,22 @@ declare namespace MSI {
      *  indicates the real pixel counts number if the count parameter is set to TRUE.
    */
    function pixels(file: any, count?: boolean, env?: object): object;
+   /**
+    * cast the ms-imaging layer data to raster object 
+    *  
+    *  use this function for cast raster object, for do spatial heatmap rendering in another method.
+    * 
+    * 
+     * @param x -
+     * @param layer the layer type for create the raster object, this parameter only works 
+     *  for when the data type of **`x`** is @``T:BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML.MSISummary``.
+     * 
+     * + default value Is ``null``.
+     * @param env -
+     * 
+     * + default value Is ``null``.
+   */
+   function raster(x: any, layer?: object, env?: object): object;
    module row {
       /**
        * each raw data file is a row scan data

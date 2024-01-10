@@ -10,11 +10,19 @@
 */
 declare namespace lipidomics {
    /**
+    * create the adduct ion data model
+    * 
+    * 
+     * @param env 
+     * + default value Is ``null``.
+   */
+   function adduct(adduct: any, env?: object): object;
+   /**
     * meansrue lipid ions
     * 
     * 
-     * @param lipidclass -
-     * @param adduct -
+     * @param lipidclass configs of the target lipid @``T:BioNovoGene.Analytical.MassSpectrometry.Lipidomics.LbmClass`` for run spectrum peaks generation
+     * @param adduct a precursor adducts data which could be generates via the ``adduct`` function.
      * @param minCarbonCount -
      * @param maxCarbonCount -
      * @param minDoubleBond -

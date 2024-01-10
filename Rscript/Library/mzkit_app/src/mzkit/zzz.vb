@@ -71,6 +71,7 @@ Public Class zzz
 
         Call MetaDbXref.Main()
         Call data.Main()
+        Call MSI.Main()
     End Sub
 
     Private Shared Function printMSScan(scan As MSScan) As String

@@ -32,10 +32,12 @@
 <li>the column in the HTS expression matrix object is the sample observation, <br />
 and this matrix object is a kind of matrix transpose result of the GCModeller <br />
 HTS expression matrix object.</li>
-<li>the molecule feature inside this matrix object, is a kind of numeric tag, could <br />
+<li><p>the molecule feature inside this matrix object, is a kind of numeric tag, could <br />
 be resolve the tag equalant with a given number tolerance, the molecule feature <br />
 inside the GCModeller HTS expression matrix is a character tag, just use the <br />
-string equals to resolve the equalant.</li>
+string equals to resolve the equalant. </p>
+
+<p>the <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/SingleCells/Deconvolute/MzMatrix.html">MzMatrix</a>.<a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/SingleCells/Deconvolute/PixelData.html">matrix</a> is consist with a collection of the <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/SingleCells/Deconvolute/PixelData.html">PixelData</a>.</p></li>
 </ol>
 
         <h3>Declare</h3>        
@@ -44,20 +46,27 @@ string equals to resolve the equalant.</li>
             <code id="clr_ts">
 # namespace BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
 export class MzMatrix {
+   # MS-imaging pixel data matrix or the 
+   #  cells data matrix in a single cells raw data
+   matrix: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/SingleCells/Deconvolute/PixelData.html">PixelData[]</a>;
    # m/z vector in numeric format of round to digit 4, this ion m/z 
    #  feature list is generated under the current mass 
    #  <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/SingleCells/Deconvolute/MzMatrix.html">MzMatrix</a>.<a href="#">tolerance</a>.
    mz: double;
    # the script string of the mz diff tolerance for <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/SingleCells/Deconvolute/MzMatrix.html">MzMatrix</a>.<a href="#">mz</a>
    tolerance: string;
-   # MS-imaging pixel data matrix or the 
-   #  cells data matrix in a single cells raw data
-   matrix: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/SingleCells/Deconvolute/PixelData.html">PixelData[]</a>;
    # get count of the ion feature size under current mass <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/SingleCells/Deconvolute/MzMatrix.html">MzMatrix</a>.<a href="#">tolerance</a>
    featureSize: integer;
 }
 </code>
         </pre>
+
+        <h3>.NET clr type reference tree</h3>
+
+        <ol>
+<li>use by <i>property</i> member <code>matrix</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/SingleCells/Deconvolute/PixelData.html">PixelData</a></li>
+</ol>
+
 
         <hr />
         <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a
