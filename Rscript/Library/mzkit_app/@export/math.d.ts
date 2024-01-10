@@ -323,7 +323,8 @@ declare namespace math {
         * @param gt_score -
         * 
         * + default value Is ``0.6``.
-        * @param score_aggregate ``@``T:System.Func`3````
+        * @param score_aggregate A @``T:BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.ScoreAggregates`` method, should be a function in clr delegate 
+        *  liked: ``@``T:System.Func`3````.
         * 
         * + default value Is ``null``.
         * @param env 
