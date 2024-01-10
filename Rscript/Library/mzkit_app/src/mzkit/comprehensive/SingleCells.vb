@@ -306,10 +306,13 @@ Module SingleCells
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("cell_matrix")>
-    <RApiReturn(GetType(HTSMatrix))>
+    <RApiReturn(GetType(HTSMatrix), GetType(MzMatrix))>
     Public Function cellMatrix(<RRawVectorArgument> raw As Object,
                                Optional mzdiff As Double = 0.005,
                                Optional freq As Double = 0.001,
+                               <RRawVectorArgument>
+                               Optional ions_mz As Object = Nothing,
+                               Optional mz_matrix As Boolean = False,
                                Optional env As Environment = Nothing) As Object
 
         Dim singleCells As New List(Of DataFrameRow)
@@ -353,6 +356,24 @@ Module SingleCells
                     .Trim
                 singleCells.Add(cell_scan)
             Next
+        ElseIf TypeOf raw Is dataframe Then
+            Dim ions As Double() = CLRVector.asNumeric(ions_mz)
+            Dim mat As New MzMatrix With {
+                .mz = ions,
+                .tolerance = mzdiff
+            }
+            Dim samples As New List(Of PixelData)
+
+            For Each sample In DirectCast(raw, dataframe).forEachRow
+                samples.Add(New PixelData With {
+                    .label = sample.name,
+                    .intensity = CLRVector.asNumeric(sample.value)
+                })
+            Next
+
+            mat.matrix = samples.ToArray
+
+            Return mat
         Else
             Return Message.InCompatibleType(GetType(mzPack), raw.GetType, env)
         End If

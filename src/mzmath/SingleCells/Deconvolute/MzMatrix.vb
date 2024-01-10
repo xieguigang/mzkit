@@ -81,6 +81,8 @@ Namespace Deconvolute
     '''    be resolve the tag equalant with a given number tolerance, the molecule feature 
     '''    inside the GCModeller HTS expression matrix is a character tag, just use the 
     '''    string equals to resolve the equalant. 
+    '''    
+    ''' the <see cref="matrix"/> is consist with a collection of the <see cref="PixelData"/>.
     ''' </remarks>
     Public Class MzMatrix
 
