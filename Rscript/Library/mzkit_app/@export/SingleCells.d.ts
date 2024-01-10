@@ -60,11 +60,15 @@ declare namespace SingleCells {
      * + default value Is ``0.005``.
      * @param freq 
      * + default value Is ``0.001``.
+     * @param ions_mz 
+     * + default value Is ``null``.
+     * @param mz_matrix 
+     * + default value Is ``false``.
      * @param env -
      * 
      * + default value Is ``null``.
    */
-   function cell_matrix(raw: any, mzdiff?: number, freq?: number, env?: object): object;
+   function cell_matrix(raw: any, mzdiff?: number, freq?: number, ions_mz?: any, mz_matrix?: boolean, env?: object): object|object;
    module df {
       /**
        * cast matrix object to the R liked dataframe object

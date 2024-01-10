@@ -65,6 +65,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Information
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Scripting
@@ -161,6 +162,10 @@ Namespace Spectra
         <DebuggerStepThrough>
         Sub New()
             Call MyBase.New({})
+        End Sub
+
+        Sub New(name As String, mz As Double(), into As IVector, Optional centroid As Boolean = True)
+            Call Me.New(name, mz, into.Data, centroid)
         End Sub
 
         Sub New(name As String, mz As Double(), into As Double(), Optional centroid As Boolean = True)

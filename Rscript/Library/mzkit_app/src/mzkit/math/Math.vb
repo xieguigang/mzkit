@@ -323,7 +323,8 @@ Module MzMath
     ''' <param name="equals_score"></param>
     ''' <param name="gt_score"></param>
     ''' <param name="score_aggregate">
-    ''' ``<see cref="Func(Of Double, Double, Double)"/>``
+    ''' A <see cref="ScoreAggregates"/> method, should be a function in clr delegate 
+    ''' liked: ``<see cref="Func(Of Double, Double, Double)"/>``.
     ''' </param>
     ''' <returns></returns>
     <ExportAPI("spectrum.compares")>
@@ -460,7 +461,7 @@ Module MzMath
     ''' <returns></returns>
     <ExportAPI("cosine")>
     <RApiReturn(GetType(AlignmentOutput))>
-    Public Function cosine(query As LibraryMatrix, ref As LibraryMatrix,
+    Public Function cosine(query As Object, ref As Object,
                            Optional tolerance As Object = "da:0.3",
                            Optional intocutoff As Double = 0.05,
                            Optional env As Environment = Nothing) As Object
@@ -469,8 +470,30 @@ Module MzMath
 
         If mzErr Like GetType(Message) Then
             Return mzErr.TryCast(Of Message)
+        End If
+
+        If TypeOf query Is LibraryMatrix AndAlso TypeOf ref Is LibraryMatrix Then
+            Return cosine(
+                query:=DirectCast(query, LibraryMatrix),
+                ref:=DirectCast(ref, LibraryMatrix),
+                mzErr:=mzErr.TryCast(Of Tolerance),
+                intocutoff:=New RelativeIntensityCutoff(intocutoff)
+            )
+        ElseIf TypeOf query Is MzMatrix AndAlso TypeOf ref Is LibraryMatrix Then
+            ' compares each spot with a reference spectrum
+            Dim m As MzMatrix = query
+            Dim refSpec As LibraryMatrix = ref
+            Dim cos As New list() With {.slots = New Dictionary(Of String, Object)}
+            Dim mzdiff As Tolerance = mzErr
+            Dim cutoff As New RelativeIntensityCutoff(intocutoff)
+
+            For Each q As LibraryMatrix In m.GetSpectrum
+                cos.add(q.name, cosine(q, New LibraryMatrix(refSpec), mzdiff, cutoff))
+            Next
+
+            Return cos
         Else
-            Return cosine(query, ref, mzErr.TryCast(Of Tolerance), New RelativeIntensityCutoff(intocutoff))
+            Return New NotImplementedException
         End If
     End Function
 

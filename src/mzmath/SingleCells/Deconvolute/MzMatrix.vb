@@ -57,10 +57,12 @@
 
 Imports System.IO
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text
 Imports HeatMapPixel = Microsoft.VisualBasic.Imaging.Pixel
 
@@ -205,6 +207,16 @@ Namespace Deconvolute
             Call text.Flush()
 
             Return True
+        End Function
+
+        ''' <summary>
+        ''' populate each spot/cell data as ms1 spectrum object
+        ''' </summary>
+        ''' <returns>a collection of the <see cref="LibraryMatrix"/> spectrum object.</returns>
+        Public Iterator Function GetSpectrum() As IEnumerable(Of LibraryMatrix)
+            For Each spot As PixelData In matrix.SafeQuery
+                Yield New LibraryMatrix(spot.label, mz, spot, centroid:=True)
+            Next
         End Function
     End Class
 End Namespace
