@@ -468,12 +468,12 @@ Module MzWeb
     ''' <summary>
     ''' open mzpack data from a raw data file in xml file format.
     ''' </summary>
-    ''' <param name="file"></param>
+    ''' <param name="file">the file path to the xml rawdata file</param>
     ''' <param name="prefer">
     ''' the prefer file format used when the given <paramref name="file"/> its extension
     ''' suffix name is ``XML``. value of this parameter could be imzml/mzml/mzxml
     ''' </param>
-    ''' <returns></returns>
+    ''' <returns>A mzkit mzpack rawdata object</returns>
     <ExportAPI("open_mzpack.xml")>
     Public Function openFromFile(file As String,
                                  Optional prefer As String = Nothing,
