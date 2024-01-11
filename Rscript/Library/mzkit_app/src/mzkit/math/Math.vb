@@ -323,7 +323,8 @@ Module MzMath
     ''' <param name="equals_score"></param>
     ''' <param name="gt_score"></param>
     ''' <param name="score_aggregate">
-    ''' ``<see cref="Func(Of Double, Double, Double)"/>``
+    ''' A <see cref="ScoreAggregates"/> method, should be a function in clr delegate 
+    ''' liked: ``<see cref="Func(Of Double, Double, Double)"/>``.
     ''' </param>
     ''' <returns></returns>
     <ExportAPI("spectrum.compares")>
@@ -460,7 +461,7 @@ Module MzMath
     ''' <returns></returns>
     <ExportAPI("cosine")>
     <RApiReturn(GetType(AlignmentOutput))>
-    Public Function cosine(query As LibraryMatrix, ref As LibraryMatrix,
+    Public Function cosine(query As Object, ref As Object,
                            Optional tolerance As Object = "da:0.3",
                            Optional intocutoff As Double = 0.05,
                            Optional env As Environment = Nothing) As Object
@@ -469,8 +470,30 @@ Module MzMath
 
         If mzErr Like GetType(Message) Then
             Return mzErr.TryCast(Of Message)
+        End If
+
+        If TypeOf query Is LibraryMatrix AndAlso TypeOf ref Is LibraryMatrix Then
+            Return cosine(
+                query:=DirectCast(query, LibraryMatrix),
+                ref:=DirectCast(ref, LibraryMatrix),
+                mzErr:=mzErr.TryCast(Of Tolerance),
+                intocutoff:=New RelativeIntensityCutoff(intocutoff)
+            )
+        ElseIf TypeOf query Is MzMatrix AndAlso TypeOf ref Is LibraryMatrix Then
+            ' compares each spot with a reference spectrum
+            Dim m As MzMatrix = query
+            Dim refSpec As LibraryMatrix = ref
+            Dim cos As New list() With {.slots = New Dictionary(Of String, Object)}
+            Dim mzdiff As Tolerance = mzErr
+            Dim cutoff As New RelativeIntensityCutoff(intocutoff)
+
+            For Each q As LibraryMatrix In m.GetSpectrum
+                cos.add(q.name, cosine(q, New LibraryMatrix(refSpec), mzdiff, cutoff))
+            Next
+
+            Return cos
         Else
-            Return cosine(query, ref, mzErr.TryCast(Of Tolerance), New RelativeIntensityCutoff(intocutoff))
+            Return New NotImplementedException
         End If
     End Function
 
@@ -665,6 +688,7 @@ Module MzMath
                              Optional tolerance As Object = "da:0.1",
                              Optional intoCutoff As Double = 0.05,
                              Optional parallel As Boolean = False,
+                             Optional aggregate_sum As Boolean = False,
                              Optional env As Environment = Nothing) As Object
 
         Dim inputType As Type = ions.GetType
@@ -736,7 +760,7 @@ Module MzMath
 
             Return ms2
         ElseIf inputType Is GetType(dataframe) Then
-            Return DirectCast(ions, dataframe).centroidDataframe(errors, threshold, env)
+            Return DirectCast(ions, dataframe).centroidDataframe(errors, threshold, aggregate_sum, env)
         ElseIf inputType Is GetType(ScanMS1) Then
             Dim scan1 As ScanMS1 = DirectCast(ions, ScanMS1)
             Dim msdata As ms2() = scan1 _
@@ -761,26 +785,19 @@ Module MzMath
     End Function
 
     <Extension>
-    Private Function centroidDataframe(data As dataframe,
+    Private Function centroidDataframe(msdata As dataframe,
                                        errors As Tolerance,
                                        threshold As LowAbundanceTrimming,
+                                       aggregate_sum As Boolean,
                                        env As Environment) As Object
 
-        Dim mz As Double(), into As Double()
+        Dim mz As Double() = CLRVector.asNumeric(msdata.getBySynonym("mz", "m/z", "MZ"))
+        Dim into As Double() = CLRVector.asNumeric(msdata.getBySynonym("into", "intensity"))
+        Dim annos As String() = CLRVector.asCharacter(msdata.getBySynonym("annotation", "text", "metadata", "info"))
 
-        If data.hasName("mz") Then
-            mz = CLRVector.asNumeric(data!mz)
-        ElseIf data.hasName("m/z") Then
-            mz = CLRVector.asNumeric(data("m/z"))
-        Else
+        If mz.IsNullOrEmpty Then
             Return Internal.debug.stop("mz column in dataframe should be 'mz' or 'm/z'!", env)
-        End If
-
-        If data.hasName("into") Then
-            into = CLRVector.asNumeric(data!into)
-        ElseIf data.hasName("intensity") Then
-            into = CLRVector.asNumeric(data!intensity)
-        Else
+        ElseIf into.IsNullOrEmpty Then
             Return Internal.debug.stop("intensity column in dataframe should be 'into' or 'intensity'!", env)
         End If
 
@@ -791,13 +808,14 @@ Module MzMath
                 .Select(Function(mzi, i)
                             Return New ms2 With {
                                 .mz = mzi,
-                                .intensity = into(i)
+                                .intensity = into(i),
+                                .Annotation = annos.ElementAtOrNull(i)
                             }
                         End Function) _
                 .ToArray
         }
 
-        Return ms2.CentroidMode(errors, threshold)
+        Return ms2.CentroidMode(errors, threshold, sum:=aggregate_sum)
     End Function
 
     ''' <summary>

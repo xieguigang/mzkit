@@ -53,17 +53,22 @@ declare namespace SingleCells {
     * export single cell expression matrix from the raw data scans
     * 
     * 
-     * @param raw -
+     * @param raw the raw data for make epxression matrix, could be a mzkit @``T:BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack`` object, 
+     *  or a tuple list of the msdata @``T:BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.LibraryMatrix``
      * @param mzdiff -
      * 
      * + default value Is ``0.005``.
      * @param freq 
      * + default value Is ``0.001``.
+     * @param ions_mz 
+     * + default value Is ``null``.
+     * @param mz_matrix 
+     * + default value Is ``false``.
      * @param env -
      * 
      * + default value Is ``null``.
    */
-   function cell_matrix(raw: object, mzdiff?: number, freq?: number, env?: object): object;
+   function cell_matrix(raw: any, mzdiff?: number, freq?: number, ions_mz?: any, mz_matrix?: boolean, env?: object): object|object;
    module df {
       /**
        * cast matrix object to the R liked dataframe object

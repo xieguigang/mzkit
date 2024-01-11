@@ -10,7 +10,7 @@
     <meta name="keywords" content="R#; tissue; mzplot" />
     <meta name="generator" content="https://github.com/rsharp-lang" />
     <meta name="theme-color" content="#333" />
-    <meta name="description" content="..." />
+    <meta name="description" content="tools for HE-stain image analysis Pathology is practiced by visu..." />
     <meta class="foundation-data-attribute-namespace" />
     <meta class="foundation-mq-xxlarge" />
     <meta class="foundation-mq-xlarge" />
@@ -63,19 +63,42 @@ table caption {font-size:14px;font-weight:bolder;}
     <p style="     font-size: 1.125em;     line-height: .8em;     margin-left: 0.5%;     background-color: #fbfbfb;     padding: 24px; ">
       <code>
         <span style="color: blue;">require</span>(<span style="color: black; font-weight: bold;">mzkit</span>);
-                               <br /><br /><span style="color: green;">{$desc_comments}</span><br /><span style="color: blue;">imports</span><span style="color: brown"> "tissue"</span><span style="color: blue;"> from</span><span style="color: brown"> "mzplot"</span>;
+                               <br /><br /><span style="color: green;">#' tools for HE-stain image analysis</span><br /><span style="color: blue;">imports</span><span style="color: brown"> "tissue"</span><span style="color: blue;"> from</span><span style="color: brown"> "mzplot"</span>;
                            </code>
     </p>
-    <p></p>
+    <p><p>tools for HE-stain image analysis</p>
+
+<p>Pathology is practiced by visual inspection of histochemically stained tissue slides. <br />
+ While the hematoxylin and eosin (H&amp;E) stain is most commonly used, special stains can<br />
+ provide additional contrast to different tissue components.</p>
+
+<p>Histological analysis of stained human tissue samples is the gold standard for evaluation <br />
+ of many diseases, as the fundamental basis of any pathologic evaluation is the examination<br />
+ of histologically stained tissue affixed on a glass slide using either a microscope or <br />
+ a digitized version of the histologic image following the image capture by a whole slide<br />
+ image (WSI) scanner. The histological staining step is a critical part of the pathology<br />
+ workflow and is required to provide contrast and color to tissue by facilitating a chromatic <br />
+ distinction among different tissue constituents. The most common stain (otherwise referred <br />
+ to as the routine stain) is the hematoxylin and eosin (H&amp;E), which is applied to nearly <br />
+ all clinical cases, covering ~80% of all the human tissue staining performed globally1. <br />
+ The H&amp;E stain is relatively easy to perform and is widely used across the industry. <br />
+ In addition to H&amp;E, there are a variety of other histological stains with different<br />
+ properties which are used by pathologists to better highlight different tissue <br />
+ constituents.</p></p>
     <blockquote>
       <p style="font-style: italic; font-size: 0.9em;">
                            
                            </p>
     </blockquote>
     <div id="main-wrapper">
-      <table class="table-three-line" style="display: none">
+      <table class="table-three-line" style="display: block">
         <caption>.NET clr type export</caption>
-        <tbody></tbody>
+        <tbody><tr>
+  <td id="he_map">
+    <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/MsImaging/TissueMorphology/HEMap/HEMapScan.html">he_map: HEMapScan</a>
+  </td>
+  <td><p>the scan result of the HE stain image</p></td>
+</tr></tbody>
       </table>
       <br />
       <br />
@@ -88,16 +111,25 @@ table caption {font-size:14px;font-weight:bolder;}
   <td><p>analysis the HE-stain image by blocks</p></td>
 </tr>
 <tr>
+  <td id="mark_nucleus">
+    <a href="./tissue/mark_nucleus.html">mark_nucleus</a>
+  </td>
+  <td><p>extract the possible nucleus pixel points from the image</p></td>
+</tr>
+<tr>
   <td id="heatmap_layer">
     <a href="./tissue/heatmap_layer.html">heatmap_layer</a>
   </td>
-  <td></td>
+  <td><p>generates heatmap value</p>
+
+<p>convert a specific @<code>T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.TissueMorphology.HEMap.Layers</code> channel inside the tissue <br />
+ image scanning result as spatial heatmap matrix data.</p></td>
 </tr>
 <tr>
   <td id="RSD">
     <a href="./tissue/RSD.html">RSD</a>
   </td>
-  <td></td>
+  <td><p>evaluate the spatial RSD of a specific channel</p></td>
 </tr></tbody>
       </table>
     </div>

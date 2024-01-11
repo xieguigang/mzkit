@@ -112,18 +112,35 @@ Imports SMRUCC.genomics.ComponentModel.DBLinkBuilder
 Namespace TMIC.HMDB
 
     ''' <summary>
-    ''' 主要是为了简化数据额存储
+    ''' A simple data model for the hmdb metabolite information 
+    ''' 
+    ''' the <see cref="synonyms"/> is just a simple string collection in the hmdb xml file.
     ''' </summary>
-    Public Class MetaReference : Implements INamedValue, IMolecule
+    ''' <remarks>
+    ''' 主要是为了简化数据额存储
+    ''' </remarks>
+    Public Class MetaReference : Implements INamedValue, IMolecule, IReadOnlyId
 
         ''' <summary>
-        ''' hmdb的主编号
+        ''' HMDB ID, hmdb的主编号
         ''' </summary>
         ''' <returns></returns>
-        Public Property accession As String Implements IKeyedEntity(Of String).Key, IMolecule.EntryId
+        Public Property accession As String Implements IKeyedEntity(Of String).Key, IMolecule.EntryId, IReadOnlyId.Identity
+        ''' <summary>
+        ''' Secondary Accession Numbers
+        ''' </summary>
+        ''' <returns></returns>
         Public Property secondary_accessions As secondary_accessions
+        ''' <summary>
+        ''' Common Name
+        ''' </summary>
+        ''' <returns></returns>
         Public Property name As String Implements IMolecule.Name
         Public Property description As String
+        ''' <summary>
+        ''' other synonym names from external database
+        ''' </summary>
+        ''' <returns></returns>
         Public Property synonyms As synonyms
         Public Property chemical_formula As String Implements IMolecule.Formula
 
@@ -200,8 +217,22 @@ Namespace TMIC.HMDB
     End Class
 
     ''' <summary>
-    ''' 当前这个对象类型的<see cref="INamedValue.Key"/>接口主键为<see cref="accession"/>属性
+    ''' the xml file data model of the hmdb metabolite, this object contains the full 
+    ''' record data of a hmdb metabolite.
+    ''' 
+    ''' the <see cref="ontology"/> data contains the category ontology information about this
+    ''' hmdb metabolite, example as:
+    ''' 
+    ''' 1. Physiological effect, example as Health effect
+    ''' 2. Disposition, example as the <see cref="biospecimen_locations"/>, <see cref="tissue_locations"/>, etc
+    ''' 3. Process, example as the biological process information
+    ''' 4. Role, the biological roles of current metabolite
+    ''' 
+    ''' 
     ''' </summary>
+    ''' <remarks>
+    ''' 当前这个对象类型的<see cref="INamedValue.Key"/>接口主键为<see cref="accession"/>属性
+    ''' </remarks>
     Public Class metabolite : Inherits MetaReference
 
         Public Property version As String
@@ -209,12 +240,20 @@ Namespace TMIC.HMDB
         Public Property update_date As String
 
         ''' <summary>
-        ''' 固态还是液态？
+        ''' solid/liquid, 固态还是液态？
         ''' </summary>
         ''' <returns></returns>
         Public Property state As String
 
+        ''' <summary>
+        ''' Physical Properties: Experimental Molecular Properties	
+        ''' </summary>
+        ''' <returns></returns>
         Public Property experimental_properties As Properties
+        ''' <summary>
+        ''' Physical Properties: Predicted Molecular Properties
+        ''' </summary>
+        ''' <returns></returns>
         Public Property predicted_properties As Properties
         Public Property diseases As disease()
 

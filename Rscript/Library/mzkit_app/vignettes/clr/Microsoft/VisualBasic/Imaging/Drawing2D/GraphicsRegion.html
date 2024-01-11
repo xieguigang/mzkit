@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Microsoft.VisualBasic.Imaging.Drawing2D.GraphicsRegion</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <table style="width: 100%;">
+            <tr>
+                <td>GraphicsRegion {Microsoft.VisualBasic.Imaging.Drawing2D}</td>
+                <td style="text-align: right;">.NET clr documentation</td>
+            </tr>
+        </table>
+
+        <h2>GraphicsRegion</h2>
+
+        <h3>Description</h3>
+
+        <p>绘图区域的参数</p>
+
+        <h3>Declare</h3>        
+
+        <pre>
+            <code id="clr_ts">
+# namespace Microsoft.VisualBasic.Imaging.Drawing2D
+export class GraphicsRegion extends <a href="/vignettes/clr/System/ValueType.html">ValueType</a> {
+   # 绘图区域的底部Y坐标值
+   Bottom: integer;
+   # Get the width of the entire canvas <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/Drawing2D/GraphicsRegion.html">GraphicsRegion</a>.<a href="/vignettes/clr/System/Drawing/Size.html">Size</a>
+   Width: integer;
+   # Get the height of the entire canvas <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/Drawing2D/GraphicsRegion.html">GraphicsRegion</a>.<a href="/vignettes/clr/System/Drawing/Size.html">Size</a>
+   Height: integer;
+   # 整张画布出去margin部分剩余的可供绘图的区域
+   PlotRegion: <a href="/vignettes/clr/System/Drawing/Rectangle.html">Rectangle</a>;
+   # 整张画布的大小区域
+   EntireArea: <a href="/vignettes/clr/System/Drawing/Rectangle.html">Rectangle</a>;
+   # <code>[left, right]</code> as <a href="/vignettes/clr/Microsoft/VisualBasic/ComponentModel/Ranges/Model/DoubleRange.html">DoubleRange</a>
+   XRange: string;
+   # <code>[top, bottom]</code> as <a href="/vignettes/clr/Microsoft/VisualBasic/ComponentModel/Ranges/Model/DoubleRange.html">DoubleRange</a>
+   YRange: string;
+}
+</code>
+        </pre>
+
+        <h3>.NET clr type reference tree</h3>
+
+        <ol>
+<li>this class extends from <a href="/vignettes/clr/System/ValueType.html">ValueType</a> class: <a href="/vignettes/clr/System/ValueType.html">ValueType</a></li>
+<li>use by <i>property</i> member <code>PlotRegion</code>: <a href="/vignettes/clr/System/Drawing/Rectangle.html">Rectangle</a></li>
+<li>use by <i>property</i> member <code>EntireArea</code>: <a href="/vignettes/clr/System/Drawing/Rectangle.html">Rectangle</a></li>
+</ol>
+
+
+        <hr />
+        <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a
+                href="../{$package}.html">Index</a>]
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
+<script type="text/javascript" src="../../_assets/highlights.js"></script>
+<script type="text/javascript">r_highlights("clr_ts");</script>
+
+</html>
