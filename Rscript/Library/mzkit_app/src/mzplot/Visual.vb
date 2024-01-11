@@ -58,6 +58,7 @@
 #End Region
 
 Imports System.Drawing
+Imports System.Drawing.Drawing2D
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII
@@ -73,11 +74,15 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Visualization
 Imports BioNovoGene.BioDeep.MassSpectrometry.MoleculeNetworking
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports Microsoft.VisualBasic.Data.ChartPlots
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -112,7 +117,53 @@ Module Visual
         Call Internal.generic.add("plot", GetType(AlignmentOutput), AddressOf plotAlignments)
         Call Internal.generic.add("plot", GetType(ScanMS1), AddressOf plotMS)
         Call Internal.generic.add("plot", GetType(ScanMS2), AddressOf plotMS)
+        Call Internal.generic.add("plot", GetType(RtShift()), AddressOf plotRtShifts)
     End Sub
+
+    Private Function plotRtShifts(rt_shifts As RtShift(), args As list, env As Environment) As Object
+        Dim samples = rt_shifts _
+            .GroupBy(Function(a) a.sample) _
+            .Select(Function(file) New NamedCollection(Of RtShift)(file.Key, file)) _
+            .ToArray
+        Dim rt_range As New DoubleRange(rt_shifts.Select(Function(a) a.refer_rt))
+        Dim res As Double = args.getValue({"res"}, env, [default]:=1000)
+        Dim dt As Double = (rt_range.Max - rt_range.Min) / res
+        Dim x_axis As Double() = seq(rt_range.Min, rt_range.Max, by:=dt).ToArray
+        Dim lines As New List(Of SerialData)
+        Dim size As String = InteropArgumentHelper.getSize(args.getByName("size"), env, "3800,3000")
+        Dim padding As String = InteropArgumentHelper.getPadding(args.getByName("padding"), "padding: 100px 200px 200px 200px;")
+        Dim colorSet = args.getValue({"colorSet", "colors"}, env, "paper")
+        Dim colors As Color() = Designer.GetColors(colorSet, n:=samples.Length + 1)
+        Dim fill_color As String = RColorPalette.getColor(args.getBySynonyms("fill", "grid.fill"), "lightgray")
+        Dim idx As i32 = 0
+
+        For Each sample As NamedCollection(Of RtShift) In samples
+            Dim points = sample _
+                .GroupBy(Function(a) a.refer_rt, offsets:=dt) _
+                .OrderBy(Function(a) Val(a.name)) _
+                .ToArray
+            Dim shift_points = points _
+                .Select(Function(dti)
+                            Return New PointData(Val(dti.name), Aggregate pt In dti Into Sum(pt.shift))
+                        End Function) _
+                .ToArray
+
+            lines.Add(New SerialData With {
+                .lineType = DashStyle.Solid,
+                .pointSize = 3,
+                .pts = shift_points,
+                .shape = LegendStyles.Square,
+                .title = sample.name,
+                .width = 2,
+                .color = colors(++idx)
+            })
+        Next
+
+        Return Scatter.Plot(lines, size:=size, padding:=padding, drawLine:=True, fill:=False,
+                            Xlabel:="retention time(s)", Ylabel:="RT shift(s)",
+                            XtickFormat:="F0", YtickFormat:="G4",
+                            gridFill:=fill_color)
+    End Function
 
     Private Function plotAlignments(aligns As AlignmentOutput, args As list, env As Environment) As Object
         Dim pairwise = aligns.GetAlignmentMirror
@@ -322,6 +373,7 @@ Module Visual
         Dim labeIntensity As Double = args.getValue("label.intensity", env, 0.2)
         Dim size As String = InteropArgumentHelper.getSize(args!size, env, "1920,900")
         Dim alignment As Object = args.getByName("alignment")
+        Dim showAnnotation As Boolean = args.getValue("annotation.show", env, [default]:=True)
 
         If mirror OrElse Not alignment Is Nothing Then
             ' plot ms alignment mirror plot
@@ -346,7 +398,8 @@ Module Visual
                 images:=annotateImages,
                 labelIntensity:=labeIntensity,
                 size:=size,
-                title:=title Or ms.TryCast(Of LibraryMatrix).name.AsDefault
+                title:=title Or ms.TryCast(Of LibraryMatrix).name.AsDefault,
+                showAnnotationText:=showAnnotation
             )
         End If
     End Function
@@ -522,6 +575,7 @@ Module Visual
         If mzErr Like GetType(Message) Then
             Return mzErr.TryCast(Of Message)
         End If
+
         If points.isError Then
             If TypeOf ms1_scans Is list AndAlso DirectCast(ms1_scans, list).data _
                 .All(Function(xi) TypeOf xi Is MzGroup) Then
@@ -531,6 +585,8 @@ Module Visual
                 For Each group In DirectCast(ms1_scans, list).AsGeneric(Of MzGroup)(env)
                     XIC(group.Key) = group.Value.CreateChromatogram
                 Next
+            ElseIf TypeOf ms1_scans Is ChromatogramOverlap Then
+                XIC = DirectCast(ms1_scans, ChromatogramOverlap)
             Else
                 Return points.getError
             End If
@@ -632,7 +688,7 @@ Module Visual
     ''' <summary>
     ''' visual of the UV spectrum
     ''' </summary>
-    ''' <param name="timeSignals"></param>
+    ''' <param name="timeSignals">should be a collection of the signal data: <see cref="GeneralSignal"/></param>
     ''' <param name="is_spectrum"></param>
     ''' <param name="size"></param>
     ''' <param name="padding"></param>

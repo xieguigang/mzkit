@@ -2,7 +2,15 @@
 
 Namespace NCBI.PubChem
 
+    ''' <summary>
+    ''' A publication record in pubmed database
+    ''' </summary>
     Public Class PubMed
+
+        ''' <summary>
+        ''' the article pubmed id
+        ''' </summary>
+        ''' <returns></returns>
         Public Property pmid As Long
         Public Property articlepubdate As Integer
         Public Property articletype As String

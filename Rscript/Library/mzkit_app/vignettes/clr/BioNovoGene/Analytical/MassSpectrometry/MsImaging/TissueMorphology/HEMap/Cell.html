@@ -5,7 +5,7 @@
     <title>BioNovoGene.Analytical.MassSpectrometry.MsImaging.TissueMorphology.HEMap.Cell</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-    <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
+    <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
 </head>
 
 <body>
@@ -22,7 +22,9 @@
 
         <h3>Description</h3>
 
-        
+        <p>A cell block on the image</p>
+
+<p>the channel layers data of the colors is consist with the <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/MsImaging/TissueMorphology/HEMap/Object.html">Object</a> collection.</p>
 
         <h3>Declare</h3>        
 
@@ -30,11 +32,13 @@
             <code id="clr_ts">
 # namespace BioNovoGene.Analytical.MassSpectrometry.MsImaging.TissueMorphology.HEMap
 export class Cell {
-   # the location X of the grid
+   # the physical image x
    X: integer;
-   # the location Y of the grid
+   # the physical image y
    Y: integer;
+   # the location X of the grid
    ScaleX: integer;
+   # the location Y of the grid
    ScaleY: integer;
    # average value of Red channel
    R: double;
@@ -42,12 +46,21 @@ export class Cell {
    G: double;
    # average value of Blue channel
    B: double;
-   Black: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/MsImaging/TissueMorphology/HEMap/Object.html">Object</a>;
+   black: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/MsImaging/TissueMorphology/HEMap/Object.html">Object</a>;
    layers: list;
+   # does current cell block is in color black?
    isBlack: boolean;
 }
 </code>
         </pre>
+
+        <h3>.NET clr type reference tree</h3>
+
+        <ol>
+<li>use by <i>property</i> member <code>black</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/MsImaging/TissueMorphology/HEMap/Object.html">Object</a></li>
+<li>use by <i>property</i> member <code>layers</code>: list</li>
+</ol>
+
 
         <hr />
         <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a
@@ -56,8 +69,8 @@ export class Cell {
     </div>
 </body>
 
-<script type="text/javascript" src="https://mzkit.org/assets/js/R_syntax.js"></script>
-<script type="text/javascript" src="https://mzkit.org/assets/js/highlights.js"></script>
+<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
+<script type="text/javascript" src="../../_assets/highlights.js"></script>
 <script type="text/javascript">r_highlights("clr_ts");</script>
 
 </html>

@@ -74,13 +74,26 @@ Imports SMRUCC.Rsharp.Runtime.Internal
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
+Imports vec = SMRUCC.Rsharp.Runtime.Internal.Object.vector
 
 ''' <summary>
 ''' Extract peak and signal data from rawdata
+''' 
+''' Data processing is the computational process of converting raw LC-MS 
+''' data to biological knowledge and involves multiple processes including 
+''' raw data deconvolution and the chemical identification of metabolites.
+''' 
+''' The process of data deconvolution, sometimes called peak picking, is 
+''' in itself a complex process caused by the complexity of the data and 
+''' variation introduced during the process of data acquisition related to 
+''' mass-to-charge ratio, retention time and chromatographic peak area.
 ''' </summary>
 <Package("mzDeco")>
 <RTypeExport("peak_feature", GetType(PeakFeature))>
 <RTypeExport("mz_group", GetType(MzGroup))>
+<RTypeExport("peak_set", GetType(PeakSet))>
+<RTypeExport("xcms2", GetType(xcms2))>
+<RTypeExport("rt_shift", GetType(RtShift))>
 Module mzDeco
 
     Sub Main()
@@ -89,11 +102,24 @@ Module mzDeco
 
         Call generic.add("readBin.mz_group", GetType(Stream), AddressOf readXIC)
         Call generic.add("readBin.peak_feature", GetType(Stream), AddressOf readSamples)
+        Call generic.add("readBin.peak_set", GetType(Stream), AddressOf readPeaktable)
 
         Call generic.add("writeBin", GetType(MzGroup), AddressOf writeXIC1)
         Call generic.add("writeBin", GetType(MzGroup()), AddressOf writeXIC)
         Call generic.add("writeBin", GetType(PeakFeature()), AddressOf writeSamples)
+        Call generic.add("writeBin", GetType(PeakSet), AddressOf writePeaktable)
     End Sub
+
+    Private Function writePeaktable(table As PeakSet, args As list, env As Environment) As Object
+        Dim con As Stream = args!con
+        Call SaveXcms.DumpSample(table, con)
+        Call con.Flush()
+        Return True
+    End Function
+
+    Private Function readPeaktable(file As Stream, args As list, env As Environment) As Object
+        Return SaveXcms.ReadSample(file)
+    End Function
 
     Private Function writeSamples(samples As PeakFeature(), args As list, env As Environment) As Object
         Dim con As Stream = args!con
@@ -174,6 +200,18 @@ Module mzDeco
         Return table
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="pool"></param>
+    ''' <param name="features_mz"></param>
+    ''' <param name="errors"></param>
+    ''' <param name="rtRange"></param>
+    ''' <param name="baseline"></param>
+    ''' <param name="joint"></param>
+    ''' <param name="dtw"></param>
+    ''' <param name="parallel"></param>
+    ''' <returns>a vector of <see cref="xcms2"/></returns>
     <Extension>
     Private Function xic_deco(pool As XICPool, features_mz As Double(),
                               errors As Tolerance,
@@ -181,7 +219,7 @@ Module mzDeco
                               baseline As Double,
                               joint As Boolean,
                               dtw As Boolean,
-                              parallel As Boolean) As xcms2()
+                              parallel As Boolean) As Object
 
         VectorTask.n_threads = App.CPUCoreNumbers
 
@@ -192,7 +230,7 @@ Module mzDeco
                 .extractAlignedPeaks(
                     rtRange:=rtRange,
                     baseline:=baseline,
-                    joint:=joint, xic_align:=True)
+                    joint:=joint, xic_align:=True, rt_shifts:=Nothing)
         Else
             Dim task As New xic_deco_task(pool, features_mz, errors, rtRange, baseline, joint, dtw)
 
@@ -202,8 +240,57 @@ Module mzDeco
                 Call task.Solve()
             End If
 
-            Return xcms2.MakeUniqueId(task.out).ToArray
+            Dim result = xcms2.MakeUniqueId(task.out).ToArray
+            Dim vec As New vec(result, RType.GetRSharpType(GetType(xcms2)))
+            Dim rt_diff As RtShift() = task.rt_shifts.ToArray
+
+            Call vec.setAttribute("rt.shift", rt_diff)
+
+            Return vec
         End If
+    End Function
+
+    ''' <summary>
+    ''' read the peaktable file that in xcms2 output format
+    ''' </summary>
+    ''' <param name="file"></param>
+    ''' <returns>A collection set of the <see cref="xcms2"/> peak features data object</returns>
+    <ExportAPI("read.xcms_peaks")>
+    <RApiReturn(GetType(PeakSet))>
+    Public Function readXcmsPeaks(file As String,
+                                  Optional tsv As Boolean = False,
+                                  Optional general_method As Boolean = False) As Object
+
+        If Not general_method Then
+            Return SaveXcms.ReadTextTable(file, tsv)
+        Else
+            Return New PeakSet With {
+                .peaks = file.LoadCsv(Of xcms2)().ToArray
+            }
+        End If
+    End Function
+
+    ''' <summary>
+    ''' make sample column projection
+    ''' </summary>
+    ''' <param name="peaktable">A xcms liked peaktable object, is a collection 
+    ''' of the <see cref="xcms2"/> peak feature data.</param>
+    ''' <param name="sampleNames">A character vector of the sample names for make 
+    ''' the peaktable projection.</param>
+    ''' <returns>A sub-table of the input original peaktable data</returns>
+    <ExportAPI("peak_subset")>
+    <RApiReturn(GetType(PeakSet))>
+    Public Function peakSubset(peaktable As PeakSet, sampleNames As String()) As Object
+        Return peaktable.Subset(sampleNames)
+    End Function
+
+    <ExportAPI("find_xcms_ionPeaks")>
+    <RApiReturn(GetType(xcms2))>
+    Public Function get_ionPeak(peaktable As PeakSet, mz As Double, rt As Double,
+                                Optional mzdiff As Double = 0.01,
+                                Optional rt_win As Double = 90) As Object
+
+        Return peaktable.FindIonSet(mz, rt, mzdiff, rt_win).ToArray
     End Function
 
     Private Class xic_deco_task : Inherits VectorTask
@@ -215,6 +302,7 @@ Module mzDeco
         Dim dtw As Boolean
 
         Public ReadOnly out As New List(Of xcms2)
+        Public ReadOnly rt_shifts As New List(Of RtShift)
 
         Public Sub New(pool As XICPool, features_mz As Double(),
                        errors As Tolerance,
@@ -237,8 +325,11 @@ Module mzDeco
         End Sub
 
         Protected Overrides Sub Solve(start As Integer, ends As Integer, cpu_id As Integer)
+            Dim rt_shifts As New List(Of RtShift)
+
             For i As Integer = start To ends
                 Dim samples_xic = pool(i).samples
+                Dim shifts As New List(Of RtShift)
 
                 If dtw Then
                     samples_xic = XICPool.DtwXIC(samples_xic).ToArray
@@ -248,12 +339,19 @@ Module mzDeco
                     .extractAlignedPeaks(
                         rtRange:=rtRange,
                         baseline:=baseline,
-                        joint:=joint, xic_align:=True)
+                        joint:=joint, xic_align:=True,
+                        rt_shifts:=shifts)
+
+                rt_shifts.AddRange(shifts)
 
                 SyncLock out
                     Call out.AddRange(result)
                 End SyncLock
             Next
+
+            SyncLock Me.rt_shifts
+                Me.rt_shifts.AddRange(rt_shifts)
+            End SyncLock
         End Sub
     End Class
 
@@ -270,7 +368,11 @@ Module mzDeco
     ''' </param>
     ''' <returns>a vector of the peak deconvolution data,
     ''' in format of xcms peak table liked or mzkit <see cref="PeakFeature"/>
-    ''' data object.</returns>
+    ''' data object.
+    ''' 
+    ''' the result data vector may contains the rt shift data result, where you can get this shift
+    ''' value via the ``rt.shift`` attribute name, rt shift data model is clr type: <see cref="RtShift"/>.
+    ''' </returns>
     ''' <example>
     ''' require(mzkit);
     ''' 
@@ -333,7 +435,7 @@ Module mzDeco
                 Return ls_xic.extractAlignedPeaks(
                     rtRange:=rtRange.TryCast(Of DoubleRange),
                     baseline:=baseline,
-                    joint:=joint, xic_align:=True)
+                    joint:=joint, xic_align:=True, rt_shifts:=Nothing)
             Else
                 GoTo extract_ms1
             End If
@@ -356,7 +458,12 @@ extract_ms1:
     End Function
 
     <Extension>
-    Private Function extractAlignedPeaks(dtw_aligned As NamedValue(Of MzGroup)(), rtRange As DoubleRange, baseline As Double, joint As Boolean, xic_align As Boolean) As xcms2()
+    Private Function extractAlignedPeaks(dtw_aligned As NamedValue(Of MzGroup)(), rtRange As DoubleRange,
+                                         baseline As Double,
+                                         joint As Boolean,
+                                         xic_align As Boolean,
+                                         ByRef rt_shifts As List(Of RtShift)) As xcms2()
+
         ' and then export the peaks and area data
         Dim peaksSet As NamedCollection(Of PeakFeature)() = dtw_aligned _
             .Select(Function(sample)
@@ -375,7 +482,7 @@ extract_ms1:
 
         If xic_align Then
             xcms = peaksSet _
-                .XicTable(rtwin:=rtRange.Max) _
+                .XicTable(rtwin:=rtRange.Max, rt_shifts:=rt_shifts) _
                 .ToArray
         Else
             xcms = peaksSet.XcmsTable.ToArray
@@ -599,9 +706,9 @@ extract_ms1:
     ''' 
     ''' this function is debug used only
     ''' </summary>
-    ''' <param name="pool"></param>
+    ''' <param name="pool">should be type of <see cref="XICPool"/> or peak collection <see cref="PeakSet"/> object.</param>
     ''' <param name="mz">the ion feature m/z value</param>
-    ''' <param name="dtw"></param>
+    ''' <param name="dtw">this parameter will not working when the data pool type is clr type <see cref="PeakSet"/></param>
     ''' <param name="mzdiff"></param>
     ''' <returns>
     ''' a tuple list object that contains the xic data across
@@ -628,27 +735,52 @@ extract_ms1:
     ''' ;
     ''' </example>
     <ExportAPI("pull_xic")>
-    Public Function pull_xic(pool As XICPool, mz As Double,
+    Public Function pull_xic(pool As Object, mz As Double,
                              Optional dtw As Boolean = True,
-                             Optional mzdiff As Double = 0.01) As Object
-        If dtw Then
-            Return New list With {
-                .slots = pool _
-                    .DtwXIC(mz, Tolerance.DeltaMass(mzdiff)) _
-                    .ToDictionary(Function(a) a.Name,
-                                  Function(a)
-                                      Return CObj(a.Value)
-                                  End Function)
-            }
-        Else
-            Return New list With {
-                .slots = pool _
-                    .GetXICMatrix(mz, Tolerance.DeltaMass(mzdiff)) _
-                    .ToDictionary(Function(a) a.Name,
-                                  Function(a)
-                                      Return CObj(a.Value)
-                                  End Function)
-            }
+                             Optional mzdiff As Double = 0.01,
+                             Optional strict As Boolean = False,
+                             Optional env As Environment = Nothing) As Object
+        If pool Is Nothing Then
+            Return Message.NullOrStrict(strict, NameOf(pool), env)
         End If
+
+        If TypeOf pool Is XICPool Then
+            If dtw Then
+                Return DirectCast(pool, XICPool).xic_dtw_list(mz, mzdiff)
+            Else
+                Return DirectCast(pool, XICPool).xic_matrix_list(mz, mzdiff)
+            End If
+        ElseIf TypeOf pool Is PeakSet Then
+            Return DirectCast(pool, PeakSet) _
+                .FilterMz(mz, mzdiff) _
+                .OrderBy(Function(i) i.rt) _
+                .ToArray
+        Else
+            Return Message.InCompatibleType(GetType(XICPool), pool.GetType, env)
+        End If
+    End Function
+
+    <Extension>
+    Private Function xic_dtw_list(pool As XICPool, mz As Double, mzdiff As Double) As list
+        Return New list With {
+            .slots = pool _
+                .DtwXIC(mz, Tolerance.DeltaMass(mzdiff)) _
+                .ToDictionary(Function(a) a.Name,
+                              Function(a)
+                                  Return CObj(a.Value)
+                              End Function)
+        }
+    End Function
+
+    <Extension>
+    Private Function xic_matrix_list(pool As XICPool, mz As Double, mzdiff As Double) As list
+        Return New list With {
+            .slots = pool _
+                .GetXICMatrix(mz, Tolerance.DeltaMass(mzdiff)) _
+                .ToDictionary(Function(a) a.Name,
+                                Function(a)
+                                    Return CObj(a.Value)
+                                End Function)
+        }
     End Function
 End Module

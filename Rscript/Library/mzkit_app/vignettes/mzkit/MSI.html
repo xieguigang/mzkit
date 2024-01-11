@@ -77,7 +77,26 @@ table caption {font-size:14px;font-weight:bolder;}
                            </p>
     </blockquote>
     <div id="main-wrapper">
+      <table class="table-three-line" style="display: block">
+        <caption>.NET clr type export</caption>
+        <tbody><tr>
+  <td id="msi_layer">
+    <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/MsImaging/SingleIonLayer.html">msi_layer: SingleIonLayer</a>
+  </td>
+  <td><p>a collection of the <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/MsImaging/PixelData.html">PixelData</a> spots, the spot pixel<br />
+ data was used to the spatial heatmap rendering.</p></td>
+</tr>
+<tr>
+  <td id="msi_summary">
+    <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/MarkupData/imzML/MSISummary.html">msi_summary: MSISummary</a>
+  </td>
+  <td><p>total ions/base peak/average intensity</p></td>
+</tr></tbody>
+      </table>
+      <br />
+      <br />
       <table class="table-three-line">
+        <caption>.NET clr function exports</caption>
         <tbody><tr>
   <td id="scale">
     <a href="./MSI/scale.html">scale</a>
@@ -115,6 +134,12 @@ table caption {font-size:14px;font-weight:bolder;}
   <td><p>get pixels size from the raw data file</p></td>
 </tr>
 <tr>
+  <td id="dimension_size">
+    <a href="./MSI/dimension_size.html">dimension_size</a>
+  </td>
+  <td><p>get or set the dimension size of the ms-imaging mzpack raw data object</p></td>
+</tr>
+<tr>
   <td id="open.imzML">
     <a href="./MSI/open.imzML.html">open.imzML</a>
   </td>
@@ -142,7 +167,7 @@ table caption {font-size:14px;font-weight:bolder;}
   <td id="correction">
     <a href="./MSI/correction.html">correction</a>
   </td>
-  <td><p>calculate the X scale</p></td>
+  <td><p>calculate the X axis scale</p></td>
 </tr>
 <tr>
   <td id="basePeakMz">
@@ -205,6 +230,12 @@ table caption {font-size:14px;font-weight:bolder;}
   <td><p>dumping raw data matrix as text table file.</p></td>
 </tr>
 <tr>
+  <td id="levels.convolution">
+    <a href="./MSI/levels.convolution.html">levels.convolution</a>
+  </td>
+  <td><p>sum pixels for create pixel spot convolution</p></td>
+</tr>
+<tr>
   <td id="spatial.convolution">
     <a href="./MSI/spatial.convolution.html">spatial.convolution</a>
   </td>
@@ -226,13 +257,27 @@ table caption {font-size:14px;font-weight:bolder;}
   <td id="sample_bootstraping">
     <a href="./MSI/sample_bootstraping.html">sample_bootstraping</a>
   </td>
-  <td></td>
+  <td><p>make expression bootstrapping of current ion layer</p></td>
 </tr>
 <tr>
   <td id="cast.spatial_layers">
     <a href="./MSI/cast.spatial_layers.html">cast.spatial_layers</a>
   </td>
   <td><p>cast the rawdata matrix as the ms-imaging ion layer</p></td>
+</tr>
+<tr>
+  <td id="z_assembler">
+    <a href="./MSI/z_assembler.html">z_assembler</a>
+  </td>
+  <td><p>Create mzpack object for ms-imaging in 3D</p></td>
+</tr>
+<tr>
+  <td id="raster">
+    <a href="./MSI/raster.html">raster</a>
+  </td>
+  <td><p>cast the ms-imaging layer data to raster object </p>
+
+<p>use this function for cast raster object, for do spatial heatmap rendering in another method.</p></td>
 </tr></tbody>
       </table>
     </div>

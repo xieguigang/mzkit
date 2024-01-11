@@ -37,11 +37,13 @@ declare namespace math {
      * + default value Is ``0.05``.
      * @param parallel 
      * + default value Is ``false``.
+     * @param aggregate_sum 
+     * + default value Is ``false``.
      * @param env 
      * + default value Is ``null``.
      * @return Peaks data in centroid mode or a new m/z vector in centroid.
    */
-   function centroid(ions: any, tolerance?: any, intoCutoff?: number, parallel?: boolean, env?: object): object|object|number;
+   function centroid(ions: any, tolerance?: any, intoCutoff?: number, parallel?: boolean, aggregate_sum?: boolean, env?: object): object|object|number;
    /**
     * Create a chromatogram data from a dataframe object
     * 
@@ -76,7 +78,7 @@ declare namespace math {
         * @param intocutoff default value Is ``0.05``.
         * @param env default value Is ``null``.
       */
-      function pairwise(query: any, ref: any, tolerance?: any, intocutoff?: number, env?: object): any;
+      function pairwise(query: any, ref: any, tolerance?: any, intocutoff?: number, env?: object): object;
    }
    /**
     * returns all precursor types for a given libtype
@@ -144,7 +146,7 @@ declare namespace math {
      * @param tolerance default value Is ``'da:0.3'``.
      * @param env default value Is ``null``.
    */
-   function jaccard(query: number, ref: number, tolerance?: any, env?: object): any;
+   function jaccard(query: number, ref: number, tolerance?: any, env?: object): number;
    /**
     * search spectrum via the jaccard index method
     * 
@@ -158,7 +160,7 @@ declare namespace math {
      * 
      * + default value Is ``null``.
    */
-   function jaccardSet(query: number, ref: number, tolerance?: any, env?: object): any;
+   function jaccardSet(query: number, ref: number, tolerance?: any, env?: object): object;
    /**
     * evaluate all m/z for all known precursor type.
     * 
@@ -247,7 +249,7 @@ declare namespace math {
      * 
      * + default value Is ``null``.
    */
-   function precursor_types(types: any, env?: object): any;
+   function precursor_types(types: any, env?: object): object;
    /**
     * Do resample of the chromatogram data
     * 
@@ -277,7 +279,7 @@ declare namespace math {
      * 
      * + default value Is ``null``.
    */
-   function sequenceOrder(scans: any, mzwidth?: any, rtwidth?: number, env?: object): any;
+   function sequenceOrder(scans: any, mzwidth?: any, rtwidth?: number, env?: object): object;
    /**
     * Search spectra with entropy similarity
     * 
@@ -306,7 +308,7 @@ declare namespace math {
      * 
      * + default value Is ``null``.
    */
-   function spectral_entropy(x: object, ref?: object, tolerance?: any, intocutoff?: number, env?: object): any;
+   function spectral_entropy(x: object, ref?: object, tolerance?: any, intocutoff?: number, env?: object): number;
    module spectrum {
       /**
        * create a delegate function pointer that apply for compares spectrums theirs similarity.
@@ -321,7 +323,8 @@ declare namespace math {
         * @param gt_score -
         * 
         * + default value Is ``0.6``.
-        * @param score_aggregate ``@``T:System.Func`3````
+        * @param score_aggregate A @``T:BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.ScoreAggregates`` method, should be a function in clr delegate 
+        *  liked: ``@``T:System.Func`3````.
         * 
         * + default value Is ``null``.
         * @param env 
@@ -363,8 +366,10 @@ declare namespace math {
      * + default value Is ``["ppm","da"]``.
      * @param env 
      * + default value Is ``null``.
+     * @return the value clr type of this function is determine based on 
+     *  the **`method`** parameter value.
    */
-   function tolerance(threshold: number, method?: any, env?: object): any;
+   function tolerance(threshold: number, method?: any, env?: object): object|object;
    /**
    */
    function toMS(isotope: object): object;

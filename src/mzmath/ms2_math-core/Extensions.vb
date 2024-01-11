@@ -75,6 +75,11 @@ Imports std = System.Math
         )
     End Function
 
+    <Extension>
+    Public Function CreateMzIndex(spectrum As IEnumerable(Of ms2), Optional win_size As Double = 1) As BlockSearchFunction(Of (mz As Double, Integer))
+        Return spectrum.Select(Function(mzi) mzi.mz).ToArray.CreateMzIndex(win_size)
+    End Function
+
     ''' <summary>
     ''' 将响应强度低于一定值的碎片进行删除
     ''' </summary>

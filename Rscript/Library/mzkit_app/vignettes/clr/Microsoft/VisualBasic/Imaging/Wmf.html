@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Microsoft.VisualBasic.Imaging.Wmf</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <table style="width: 100%;">
+            <tr>
+                <td>Wmf {Microsoft.VisualBasic.Imaging}</td>
+                <td style="text-align: right;">.NET clr documentation</td>
+            </tr>
+        </table>
+
+        <h2>Wmf</h2>
+
+        <h3>Description</h3>
+
+        <p>Windows Metafile (WMF) is an image file format originally designed for Microsoft Windows in the 1990s. <br />
+ Windows Metafiles are intended to be portable between applications and may contain both vector graphics <br />
+ and bitmap components. It acts in a similar manner to SVG files.</p>
+
+<p>Essentially, a WMF file stores a list of function calls that have to be issued to the Windows Graphics <br />
+ Device Interface (GDI) layer to display an image on screen. Since some GDI functions accept pointers <br />
+ to callback functions for error handling, a WMF file may erroneously include executable code.</p>
+
+<p>WMF Is a 16-bit format introduced in Windows 3.0. It Is the native vector format for Microsoft Office <br />
+ applications such as Word, PowerPoint, And Publisher. As of 2015 revision 12 of the Windows Metafile <br />
+ Format specification Is available for online reading Or download as PDF.</p>
+
+<p>The original 16 bit WMF file format was fully specified in volume 4 of the 1992 Windows 3.1 SDK documentation<br />
+ (at least if combined with the descriptions of the individual functions and structures in the other volumes), <br />
+ but that specification was vague about a few details. These manuals were published as printed books available <br />
+ in bookstores with no click through EULA or other unusual licensing restrictions (just a general warning that <br />
+ if purchased as part of a software bundle, the software would be subject to one).</p>
+
+<p>Over time the existence Of that historic specification was largely forgotten And some alternative implementations <br />
+ resorted To reverse engineering To figure out the file format from existing WMF files, which was difficult And <br />
+ Error prone. In September 2006, Microsoft again published the WMF file format specification In the context Of <br />
+ the Microsoft Open Specification Promise, promising To Not assert patent rights To file format implementors.</p>
+
+        <h3>Declare</h3>        
+
+        <pre>
+            <code id="clr_ts">
+# namespace Microsoft.VisualBasic.Imaging
+export class Wmf extends <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/GDICanvas.html">GDICanvas</a> {
+   # The file path of the target wmf image file.
+   wmfFile: string;
+   Size: <a href="/vignettes/clr/System/Drawing/Size.html">Size</a>;
+   Graphics: <a href="/vignettes/clr/System/Drawing/Graphics.html">Graphics</a>;
+   CompositingMode: <a href="/vignettes/clr/System/Drawing/Drawing2D/CompositingMode.html">CompositingMode</a>;
+   CompositingQuality: <a href="/vignettes/clr/System/Drawing/Drawing2D/CompositingQuality.html">CompositingQuality</a>;
+   Stroke: <a href="/vignettes/clr/System/Drawing/Pen.html">Pen</a>;
+   Font: <a href="/vignettes/clr/System/Drawing/Font.html">Font</a>;
+   DpiX: double;
+   DpiY: double;
+   InterpolationMode: <a href="/vignettes/clr/System/Drawing/Drawing2D/InterpolationMode.html">InterpolationMode</a>;
+   IsClipEmpty: boolean;
+   IsVisibleClipEmpty: boolean;
+   PageScale: double;
+   PageUnit: <a href="/vignettes/clr/System/Drawing/GraphicsUnit.html">GraphicsUnit</a>;
+   PixelOffsetMode: <a href="/vignettes/clr/System/Drawing/Drawing2D/PixelOffsetMode.html">PixelOffsetMode</a>;
+   RenderingOrigin: <a href="/vignettes/clr/System/Drawing/Point.html">Point</a>;
+   SmoothingMode: <a href="/vignettes/clr/System/Drawing/Drawing2D/SmoothingMode.html">SmoothingMode</a>;
+   TextContrast: integer;
+   TextRenderingHint: <a href="/vignettes/clr/System/Drawing/Text/TextRenderingHint.html">TextRenderingHint</a>;
+   Background: <a href="/vignettes/clr/System/Drawing/Color.html">Color</a>;
+   Dpi: double;
+}
+</code>
+        </pre>
+
+        <h3>.NET clr type reference tree</h3>
+
+        <ol>
+<li>this class extends from <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/GDICanvas.html">GDICanvas</a> class: <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/GDICanvas.html">GDICanvas</a></li>
+<li>use by <i>property</i> member <code>Size</code>: <a href="/vignettes/clr/System/Drawing/Size.html">Size</a></li>
+<li>use by <i>property</i> member <code>Graphics</code>: <a href="/vignettes/clr/System/Drawing/Graphics.html">Graphics</a></li>
+<li>use by <i>property</i> member <code>CompositingMode</code>: <a href="/vignettes/clr/System/Drawing/Drawing2D/CompositingMode.html">CompositingMode</a></li>
+<li>use by <i>property</i> member <code>CompositingQuality</code>: <a href="/vignettes/clr/System/Drawing/Drawing2D/CompositingQuality.html">CompositingQuality</a></li>
+<li>use by <i>property</i> member <code>Stroke</code>: <a href="/vignettes/clr/System/Drawing/Pen.html">Pen</a></li>
+<li>use by <i>property</i> member <code>Font</code>: <a href="/vignettes/clr/System/Drawing/Font.html">Font</a></li>
+<li>use by <i>property</i> member <code>InterpolationMode</code>: <a href="/vignettes/clr/System/Drawing/Drawing2D/InterpolationMode.html">InterpolationMode</a></li>
+<li>use by <i>property</i> member <code>PageUnit</code>: <a href="/vignettes/clr/System/Drawing/GraphicsUnit.html">GraphicsUnit</a></li>
+<li>use by <i>property</i> member <code>PixelOffsetMode</code>: <a href="/vignettes/clr/System/Drawing/Drawing2D/PixelOffsetMode.html">PixelOffsetMode</a></li>
+<li>use by <i>property</i> member <code>RenderingOrigin</code>: <a href="/vignettes/clr/System/Drawing/Point.html">Point</a></li>
+<li>use by <i>property</i> member <code>SmoothingMode</code>: <a href="/vignettes/clr/System/Drawing/Drawing2D/SmoothingMode.html">SmoothingMode</a></li>
+<li>use by <i>property</i> member <code>TextRenderingHint</code>: <a href="/vignettes/clr/System/Drawing/Text/TextRenderingHint.html">TextRenderingHint</a></li>
+<li>use by <i>property</i> member <code>Background</code>: <a href="/vignettes/clr/System/Drawing/Color.html">Color</a></li>
+</ol>
+
+
+        <hr />
+        <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a
+                href="../{$package}.html">Index</a>]
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
+<script type="text/javascript" src="../../_assets/highlights.js"></script>
+<script type="text/javascript">r_highlights("clr_ts");</script>
+
+</html>

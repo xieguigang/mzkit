@@ -72,5 +72,57 @@ Namespace MetaLib.Models
 
         Public MustOverride Function GetClass(id As String) As CompoundClass
 
+        ''' <summary>
+        ''' try to enumerate all the reference id inside current 
+        ''' class data index pool
+        ''' </summary>
+        ''' <returns>
+        ''' a collection of the metabolite reference id, which could be used 
+        ''' for get the compound class data via the <see cref="GetClass(String)"/> method.
+        ''' </returns>
+        Public MustOverride Function EnumerateId() As IEnumerable(Of String)
+
+        ''' <summary>
+        ''' populate the class structure data in string array:
+        ''' 
+        ''' 1. <see cref="ICompoundClass.kingdom"/>
+        ''' 2. <see cref="ICompoundClass.super_class"/>
+        ''' 3. <see cref="ICompoundClass.class"/>
+        ''' 4. <see cref="ICompoundClass.sub_class"/>
+        ''' 5. <see cref="ICompoundClass.molecular_framework"/>
+        ''' </summary>
+        ''' <param name="c"></param>
+        ''' <returns></returns>
+        Public Shared Iterator Function ToSet(c As ICompoundClass) As IEnumerable(Of String)
+            If Not c Is Nothing Then
+                Yield c.kingdom
+                Yield c.super_class
+                Yield c.class
+                Yield c.sub_class
+                Yield c.molecular_framework
+            End If
+        End Function
+
+        Public Shared Function GetLastNode(c As ICompoundClass) As String
+            If c Is Nothing Then
+                Return Nothing
+            End If
+
+            If Not c.molecular_framework.StringEmpty Then
+                Return c.molecular_framework
+            End If
+            If Not c.sub_class.StringEmpty Then
+                Return c.sub_class
+            End If
+            If Not c.class.StringEmpty Then
+                Return c.class
+            End If
+            If Not c.super_class.StringEmpty Then
+                Return c.super_class
+            End If
+
+            Return c.kingdom
+        End Function
+
     End Class
 End Namespace

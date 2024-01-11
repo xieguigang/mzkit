@@ -55,6 +55,7 @@
 #End Region
 
 Imports System.Drawing
+Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Data.GraphTheory
 Imports Microsoft.VisualBasic.Data.GraphTheory.GridGraph
 Imports Microsoft.VisualBasic.Imaging
@@ -66,12 +67,29 @@ Namespace HEMap
     ''' <summary>
     ''' layer object data
     ''' </summary>
+    ''' <remarks>
+    ''' a tuple data of pixels, density, ratio of the target channel in a 
+    ''' speicifc block data.
+    ''' </remarks>
     Public Class [Object]
 
-        Public Property Pixels As Integer
-        Public Property Density As Double
-        Public Property Ratio As Double
+        <XmlAttribute> Public Property Pixels As Integer
+        <XmlAttribute> Public Property Density As Double
+        <XmlAttribute> Public Property Ratio As Double
 
+        Public Overrides Function ToString() As String
+            Return $"pixels:{Pixels}; density:{Density}; ratio:{Ratio}"
+        End Function
+
+        ''' <summary>
+        ''' do target color matches and then evaluate the layer data
+        ''' </summary>
+        ''' <param name="rect"></param>
+        ''' <param name="target"></param>
+        ''' <param name="gridSize"></param>
+        ''' <param name="tolerance"></param>
+        ''' <param name="densityGrid"></param>
+        ''' <returns></returns>
         Public Shared Function Eval(rect As Grid(Of Color),
                                     target As Color,
                                     gridSize As Integer,

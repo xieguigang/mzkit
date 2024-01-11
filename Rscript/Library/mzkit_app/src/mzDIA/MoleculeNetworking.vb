@@ -111,10 +111,11 @@ Module MoleculeNetworking
     ''' <summary>
     ''' makes the spectrum data its unique id reference uniqued!
     ''' </summary>
-    ''' <param name="ions"></param>
+    ''' <param name="ions">A collection of the mzkit spectrum object</param>
     ''' <returns></returns>
     <ExportAPI("uniqueNames")>
-    Public Function unqiueNames(ions As PeakMs2()) As PeakMs2()
+    <RApiReturn(GetType(PeakMs2))>
+    Public Function unqiueNames(ions As PeakMs2()) As Object
         Dim id As String() = ions.SafeQuery.Select(Function(i) i.lib_guid).uniqueNames
 
         For i As Integer = 0 To id.Length - 1
@@ -163,6 +164,7 @@ Module MoleculeNetworking
     ''' <param name="equals"></param>
     ''' <returns></returns>
     <ExportAPI("tree")>
+    <RApiReturn(GetType(TreeCluster))>
     Public Function Tree(ions As PeakMs2(),
                          Optional mzdiff As Double = 0.3,
                          Optional intocutoff As Double = 0.05,
@@ -176,13 +178,23 @@ Module MoleculeNetworking
     ''' </summary>
     ''' <param name="clusters"></param>
     ''' <param name="rtwin"></param>
-    ''' <param name="wrap_peaks"></param>
+    ''' <param name="wrap_peaks">
+    ''' wraping the networking node data as the spectrum peak object?
+    ''' </param>
     ''' <param name="env"></param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' the value type of this function is affects by the <paramref name="wrap_peaks"/> parameter:
+    ''' 
+    ''' 1. for wrap_peaks is set to false by default, a vector of the raw <see cref="NetworkingNode"/> 
+    '''    which is extract from the cluster data will be returns
+    ''' 2. otherwise the spectrum peaks data will be returns if the parameter 
+    '''    value is set to value true.
+    ''' </returns>
     ''' <remarks>
     ''' This function works for the small molecular networking analysis
     ''' </remarks>
     <ExportAPI("splitClusterRT")>
+    <RApiReturn(GetType(PeakMs2), GetType(NetworkingNode))>
     Public Function splitClusterRT(<RRawVectorArgument>
                                    clusters As Object,
                                    Optional rtwin As Double = 30,

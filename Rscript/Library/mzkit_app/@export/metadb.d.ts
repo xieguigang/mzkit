@@ -7,6 +7,7 @@
 /**
  * Metabolite annotation database search engine
  * 
+ * > this library module mainly address of the ion m/z database search problem
 */
 declare namespace metadb {
    module annotationStream {
@@ -70,7 +71,7 @@ declare namespace metadb {
         * 
         * + default value Is ``null``.
       */
-      function metal_ion(formula: any, env?: object): any;
+      function metal_ion(formula: any, env?: object): boolean;
    }
    /**
      * @param env default value Is ``null``.
@@ -128,7 +129,7 @@ declare namespace metadb {
      * @param keepsRaw default value Is ``false``.
      * @param env default value Is ``null``.
    */
-   function parseLipidName(name: any, keepsRaw?: boolean, env?: object): any;
+   function parseLipidName(name: any, keepsRaw?: boolean, env?: object): object;
    /**
     * parse the precursor type calculator
     * 
@@ -184,11 +185,12 @@ declare namespace metadb {
    /**
     * verify that the given cas registry number is correct or not
     * 
+    * > based on the @``M:BioNovoGene.BioDeep.Chemoinformatics.CASNumber.Verify(System.String)`` clr function.
     * 
      * @param num -
      * @param env -
      * 
      * + default value Is ``null``.
    */
-   function verify_cas_number(num: any, env?: object): any;
+   function verify_cas_number(num: any, env?: object): boolean;
 }

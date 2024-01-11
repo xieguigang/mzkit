@@ -62,6 +62,15 @@ Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Statistics.Hypothesis.FishersExact
 
+''' <summary>
+''' a network module enrichment result
+''' </summary>
+''' <remarks>
+''' the <see cref="Fisher"/> data is the gsea enrichment result of 
+''' the vertex in current network module.
+''' 
+''' get a set of the metabolite annotation candidates from the <see cref="Hits"/> data.
+''' </remarks>
 Public Class ActivityEnrichment
 
     ''' <summary>

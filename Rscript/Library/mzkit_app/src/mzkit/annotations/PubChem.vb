@@ -88,6 +88,33 @@ Imports Rdataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
 ''' <summary>
 ''' toolkit for handling of the ncbi pubchem data
 ''' </summary>
+''' <remarks>
+''' PubChem is a database of chemical molecules and their activities against biological assays. 
+''' The system is maintained by the National Center for Biotechnology Information (NCBI), a 
+''' component of the National Library of Medicine, which is part of the United States National 
+''' Institutes of Health (NIH). PubChem can be accessed for free through a web user interface. 
+''' Millions of compound structures and descriptive datasets can be freely downloaded via FTP. 
+''' PubChem contains multiple substance descriptions and small molecules with fewer than 100 
+''' atoms and 1,000 bonds. More than 80 database vendors contribute to the growing PubChem 
+''' database.
+''' 
+''' ##### History
+''' PubChem was released In 2004 As a component Of the Molecular Libraries Program (MLP) Of the
+''' NIH. As Of November 2015, PubChem contains more than 150 million depositor-provided substance 
+''' descriptions, 60 million unique chemical structures, And 225 million biological activity test 
+''' results (from over 1 million assay experiments performed On more than 2 million small-molecules 
+''' covering almost 10,000 unique protein target sequences that correspond To more than 5,000 genes).
+''' It also contains RNA interference (RNAi) screening assays that target over 15,000 genes.
+''' 
+''' As of August 2018, PubChem contains 247.3 million substance descriptions, 96.5 million unique 
+''' chemical structures, contributed by 629 data sources from 40 countries. It also contains 237 
+''' million bioactivity test results from 1.25 million biological assays, covering >10,000 target 
+''' protein sequences.
+'''
+''' As of 2020, with data integration from over 100 New sources, PubChem contains more than 293 
+''' million depositor-provided substance descriptions, 111 million unique chemical structures,
+''' And 271 million bioactivity data points from 1.2 million biological assays experiments.
+''' </remarks>
 <Package("pubchem_kit")>
 <RTypeExport("pubmed", GetType(PubMed))>
 Module PubChemToolKit
@@ -135,12 +162,14 @@ Module PubChemToolKit
     ''' <summary>
     ''' Request the metabolite structure image via the pubchem image_fly api
     ''' </summary>
-    ''' <param name="cid"></param>
+    ''' <param name="cid">A character vector of the pubchem cid for get the molecular 
+    ''' structure data image.</param>
     ''' <param name="size"></param>
     ''' <param name="ignores_invalid_CID"></param>
     ''' <param name="env"></param>
     ''' <returns>A tuple list of the image data for the input pubchem metabolite cid query</returns>
     <ExportAPI("image_fly")>
+    <RApiReturn(GetType(Image))>
     Public Function ImageFlyGetImages(<RRawVectorArgument>
                                       cid As Object,
                                       <RRawVectorArgument>
@@ -222,7 +251,8 @@ Module PubChemToolKit
     ''' <param name="interval">
     ''' the time sleep interval in ms
     ''' </param>
-    ''' <returns></returns>
+    ''' <returns>A character vector of the pubchem cid that matches the given input ``name``.
+    ''' </returns>
     <ExportAPI("CID")>
     <RApiReturn(GetType(String))>
     Public Function CID(name As String,
@@ -272,8 +302,17 @@ Module PubChemToolKit
     ''' </summary>
     ''' <param name="cid"></param>
     ''' <param name="cache"></param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' A tuple list of the knowledge data that associated with the given pubchem metabolite:
+    ''' 
+    ''' 1. genes: the co-occurance genes with the compound 
+    ''' 2. disease: a list of the related disease with the compound
+    ''' 3. compounds: the co-occurance compound data
+    ''' 
+    ''' all of the slot data is a collection of the pubchem <see cref="MeshGraph"/> clr object
+    ''' </returns>
     <ExportAPI("query.knowlegde_graph")>
+    <RApiReturn("genes", "disease", "compounds")>
     Public Function QueryKnowledgeGraph(cid As String, Optional cache As String = "./graph_kb") As list
         Dim geneSet As MeshGraph() = WebGraph.Query(cid, PubChem.Graph.Types.ChemicalGeneSymbolNeighbor, cache)
         Dim diseaseSet = WebGraph.Query(cid, PubChem.Graph.Types.ChemicalDiseaseNeighbor, cache)
@@ -295,8 +334,9 @@ Module PubChemToolKit
     ''' <param name="cache">
     ''' A directory path that used for cache the pubchem data
     ''' </param>
-    ''' <returns></returns>
+    ''' <returns>A collection of the metabolite annotation data.</returns>
     <ExportAPI("query")>
+    <RApiReturn(GetType(MetaLib))>
     Public Function queryPubChem(<RRawVectorArgument>
                                  id As Object,
                                  Optional cache$ = "./",
@@ -338,8 +378,10 @@ Module PubChemToolKit
     ''' </param>
     ''' <param name="offline"></param>
     ''' <param name="env"></param>
-    ''' <returns></returns>
+    ''' <returns>A collection of the pubchem pug view object that contains the metabolite annotation information.</returns>
+    '''
     <ExportAPI("pugView")>
+    <RApiReturn(GetType(PugViewRecord))>
     Public Function pugView(<RRawVectorArgument> cid As Object,
                             Optional cacheFolder$ = "./pubchem_cache",
                             Optional offline As Boolean = False,
@@ -365,8 +407,11 @@ Module PubChemToolKit
     ''' <param name="dbfilter">
     ''' filter out the sid map data with a specific given db name
     ''' </param>
-    ''' <returns></returns>
+    ''' <returns>A collection of the map data that could be used for get the
+    ''' knowledge base id mapping from external database, and map between the 
+    ''' pubchem sid and cid.</returns>
     <ExportAPI("SID_map")>
+    <RApiReturn(GetType(SIDMap))>
     Public Function ReadSIDMap(sidMapText As String,
                                Optional skipNoCID As Boolean = True,
                                Optional dbfilter$ = Nothing) As SIDMap()
@@ -392,6 +437,7 @@ Module PubChemToolKit
     ''' </param>
     ''' <returns></returns>
     <ExportAPI("read.pugView")>
+    <RApiReturn(GetType(PugViewRecord))>
     Public Function readPugViewXml(file As String) As PugViewRecord
         If file.FileExists Then
             Return file.LoadXml(Of PugViewRecord)
@@ -400,7 +446,13 @@ Module PubChemToolKit
         End If
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="file"></param>
+    ''' <returns>A collection of the pubchem query summary download result file</returns>
     <ExportAPI("read.webquery")>
+    <RApiReturn(GetType(QueryXml))>
     Public Function readWebQuerySummary(file As String) As pipeline
         Return QueryXml.Load(file).DoCall(AddressOf pipeline.CreateFromPopulator)
     End Function
@@ -415,7 +467,14 @@ Module PubChemToolKit
         Return pugView.GetMetaInfo
     End Function
 
+    ''' <summary>
+    ''' Parse the mesh ontology tree
+    ''' </summary>
+    ''' <param name="file">A text file data that contains the mesh ontology tree data</param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("read.mesh_tree")>
+    <RApiReturn(GetType(Term))>
     Public Function ParseMeshTree(<RRawVectorArgument> file As Object, Optional env As Environment = Nothing) As Object
         Dim stream = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Read, env)
 
@@ -443,6 +502,11 @@ Module PubChemToolKit
         End If
     End Function
 
+    ''' <summary>
+    ''' gets the level1 term label of the mesh tree
+    ''' </summary>
+    ''' <param name="mesh"></param>
+    ''' <returns>A character vector of the ontology term label</returns>
     <ExportAPI("mesh_level1")>
     Public Function level1Terms(mesh As Tree(Of Term)) As String()
         Return mesh.Childs.Values.Select(Function(c) c.Data.ToString).ToArray

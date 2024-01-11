@@ -61,7 +61,7 @@ Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.SplashID
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Spectra
 
@@ -130,6 +130,10 @@ Namespace Spectra
             End Get
         End Property
 
+        ''' <summary>
+        ''' the number of the fragments in current spectrum peaks
+        ''' </summary>
+        ''' <returns></returns>
         <ScriptIgnore>
         Public ReadOnly Property fragments As Integer
             Get
@@ -168,7 +172,7 @@ Namespace Spectra
         End Function
 
         Public Overrides Function ToString() As String
-            Return $"M{stdNum.Round(mz)}T{stdNum.Round(rt)} intensity={Ms2Intensity.ToString("G3")} {file}#{scan}"
+            Return $"M{std.Round(mz)}T{std.Round(rt)} intensity={Ms2Intensity.ToString("G3")} {file}#{scan}"
         End Function
 
         ''' <summary>

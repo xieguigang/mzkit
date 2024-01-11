@@ -74,8 +74,36 @@ Imports SMRUCC.Rsharp.Runtime.Interop
 
 ''' <summary>
 ''' toolkit for handling of the hmdb database
+''' 
+''' The Human Metabolome Database (HMDB) is a comprehensive, high-quality, freely accessible, 
+''' online database of small molecule metabolites found in the human body. It bas been created 
+''' by the Human Metabolome Project funded by Genome Canada and is one of the first dedicated
+''' metabolomics databases. The HMDB facilitates human metabolomics research, including the 
+''' identification and characterization of human metabolites using NMR spectroscopy, GC-MS
+''' spectrometry and LC/MS spectrometry. To aid in this discovery process, the HMDB contains 
+''' three kinds of data: 1) chemical data, 2) clinical data, and 3) molecular biology/biochemistry 
+''' data. The chemical data includes 41,514 metabolite structures with detailed descriptions 
+''' along with nearly 10,000 NMR, GC-MS and LC/MS spectra.
+'''
+''' The clinical data includes information On >10,000 metabolite-biofluid concentrations And 
+''' metabolite concentration information On more than 600 different human diseases. The biochemical 
+''' data includes 5,688 protein (And DNA) sequences And more than 5,000 biochemical reactions that 
+''' are linked To these metabolite entries. Each metabolite entry In the HMDB contains more than 110 
+''' data fields With 2/3 Of the information being devoted To chemical/clinical data And the other 
+''' 1/3 devoted To enzymatic Or biochemical data. Many data fields are hyperlinked To other 
+''' databases (KEGG, MetaCyc, PubChem, Protein Data Bank, ChEBI, Swiss-Prot, And GenBank) And a 
+''' variety Of Structure And pathway viewing applets. The HMDB database supports extensive text, 
+''' sequence, spectral, chemical Structure And relational query searches. It has been widely used
+''' In metabolomics, clinical chemistry, biomarker discovery And general biochemistry education.
+'''
+''' Four additional databases, DrugBank, T3DB, SMPDB And FooDB are also part Of the HMDB suite Of 
+''' databases. DrugBank contains equivalent information On ~1,600 drug And drug metabolites, T3DB 
+''' contains information On 3,100 common toxins And environmental pollutants, SMPDB contains pathway 
+''' diagrams For 700 human metabolic And disease pathways, While FooDB contains equivalent information 
+''' On ~28,000 food components And food additives.
 ''' </summary>
 <Package("hmdb_kit")>
+<RTypeExport("hmdb_metabolite", GetType(HMDB.metabolite))>
 Module HMDBTools
 
     ''' <summary>
@@ -89,6 +117,7 @@ Module HMDBTools
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("read.hmdb_spectrals")>
+    <RApiReturn(GetType(PeakMs2), GetType(SpectraFile))>
     Public Function readHMDBSpectrals(repo As String,
                                       Optional hmdbRaw As Boolean = False,
                                       Optional lazy As Boolean = True,
@@ -207,6 +236,7 @@ Module HMDBTools
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <ExportAPI("read.hmdb")>
+    <RApiReturn(GetType(HMDB.metabolite))>
     Public Function readHMDB(xml As String) As pipeline
         Return TMIC.HMDB _
             .LoadXML(xml) _
@@ -216,7 +246,7 @@ Module HMDBTools
     ''' <summary>
     ''' save the hmdb database as a csv table file
     ''' </summary>
-    ''' <param name="hmdb"></param>
+    ''' <param name="hmdb">A collection of the HMDB <see cref="TMIC.HMDB.metabolite"/>.</param>
     ''' <param name="file">
     ''' this function will returns a huge metabolite table
     ''' if this parameter value default null
@@ -243,6 +273,13 @@ Module HMDBTools
         Return True
     End Function
 
+    ''' <summary>
+    ''' Extract the chemical taxonomy data
+    ''' </summary>
+    ''' <param name="metabolite">the HMDB metabolite data</param>
+    ''' <returns>
+    ''' A character vector that contains the <see cref="TMIC.HMDB.taxonomy"/> information from the <see cref="TMIC.HMDB.metabolite"/>
+    ''' </returns>
     <ExportAPI("chemical_taxonomy")>
     Public Function chemical_taxonomy(metabolite As TMIC.HMDB.metabolite) As String()
         If metabolite.taxonomy Is Nothing Then
@@ -267,6 +304,7 @@ Module HMDBTools
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("biospecimen_slicer")>
+    <RApiReturn(GetType(TMIC.HMDB.metabolite))>
     Public Function biospecimen_slicer(hmdb As pipeline, locations As BioSamples, Optional env As Environment = Nothing) As Object
         Dim locationIndex As Index(Of String) = locations.GetSampleLocations.Indexing
 

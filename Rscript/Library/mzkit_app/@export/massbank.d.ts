@@ -23,20 +23,20 @@ declare namespace massbank {
         * 
         * + default value Is ``null``.
       */
-      function lipidmaps(sdf: any, asList?: boolean, lazy?: boolean, env?: object): any;
+      function lipidmaps(sdf: any, asList?: boolean, lazy?: boolean, env?: object): object;
    }
    module chebi {
       module secondary2main {
          /**
          */
-         function mapping(repository: string): object;
+         function mapping(repository: string): string;
       }
    }
    /**
     * extract the chebi annotation data from the chebi ontology data
     * 
     * 
-     * @param chebi -
+     * @param chebi the chebi ontology data, in clr type: @``T:SMRUCC.genomics.foundation.OBO_Foundry.IO.Models.OBOFile``
    */
    function extract_chebi_compounds(chebi: object): object;
    module glycosyl {
@@ -55,7 +55,7 @@ declare namespace massbank {
          /**
            * @param env default value Is ``null``.
          */
-         function mapping(repository: any, env?: object): object;
+         function mapping(repository: any, env?: object): any;
       }
    }
    /**
@@ -67,18 +67,20 @@ declare namespace massbank {
      * 
      * + default value Is ``null``.
    */
-   function inchikey(inchi: any, env?: object): any;
+   function inchikey(inchi: any, env?: object): object;
    module lipid {
       /**
        * Create lipid class helper for annotation
        * 
        * 
         * @param lipidmaps -
+        * @param id 
+        * + default value Is ``null``.
         * @param env -
         * 
         * + default value Is ``null``.
       */
-      function class(lipidmaps: any, env?: object): object;
+      function class(lipidmaps: any, id?: any, env?: object): object|object;
       /**
       */
       function nameMaps(lipidmaps: object): object;
@@ -98,7 +100,17 @@ declare namespace massbank {
    function lipid_classprofiles(lipid_class: object): object;
    /**
    */
-   function lipid_profiles(categry: object, enrich: object): any;
+   function lipid_profiles(categry: object, enrich: object): object;
+   /**
+    * gets the metabolite id collection from lipidmaps database
+    * 
+    * 
+     * @param lipidmaps A lipidmaps database related dataset object
+     * @param env -
+     * 
+     * + default value Is ``null``.
+   */
+   function lipidmaps_id(lipidmaps: any, env?: object): any;
    /**
     * construct a new metabolite annotation information data
     * 
@@ -121,7 +133,7 @@ declare namespace massbank {
        * 
         * @param msp A metabolite data which is parse from the MONA msp dataset
       */
-      function msp_metadata(msp: object): any;
+      function msp_metadata(msp: object): object;
    }
    module parse {
       /**
@@ -132,7 +144,7 @@ declare namespace massbank {
      * @param max_len default value Is ``32``.
      * @param min_len default value Is ``5``.
    */
-   function rankingNames(x: any, max_len?: object, min_len?: object): any;
+   function rankingNames(x: any, max_len?: object, min_len?: object): object;
    module read {
       /**
        * read lipidmaps messagepack repository file
@@ -215,7 +227,7 @@ declare namespace massbank {
        * 
        * > save the lipidmaps data object into file in messagepack format
        * 
-        * @param lipidmaps -
+        * @param lipidmaps A collection of the lipidmaps metabolite @``T:BioNovoGene.BioDeep.Chemistry.LipidMaps.MetaData``
         * @param file -
         * @param env -
         * 

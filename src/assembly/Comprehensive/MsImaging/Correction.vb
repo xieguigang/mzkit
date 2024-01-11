@@ -57,6 +57,9 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 
 Namespace MsImaging
 
+    ''' <summary>
+    ''' An abstract data model for make scan x correction
+    ''' </summary>
     Public MustInherit Class Correction
 
         Public MustOverride Function GetPixelRowX(scanMs1 As ScanMS1) As Integer

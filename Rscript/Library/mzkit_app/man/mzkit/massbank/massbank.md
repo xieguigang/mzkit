@@ -11,6 +11,7 @@ Metabolite annotation database toolkit
 + [lipid_profiles](massbank/lipid_profiles.1) 
 + [lipid.names](massbank/lipid.names.1) Create lipid name helper for annotation
 + [lipid.class](massbank/lipid.class.1) Create lipid class helper for annotation
++ [lipidmaps_id](massbank/lipidmaps_id.1) gets the metabolite id collection from lipidmaps database
 + [as.lipidmaps](massbank/as.lipidmaps.1) populate lipidmaps meta data objects from the loaded sdf data stream
 + [lipid.nameMaps](massbank/lipid.nameMaps.1) 
 + [chebi.secondary2main.mapping](massbank/chebi.secondary2main.mapping.1) 

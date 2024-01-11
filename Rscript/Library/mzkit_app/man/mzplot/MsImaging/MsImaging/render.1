@@ -29,10 +29,11 @@ MS-imaging of the MSI summary data result.
 \fBintensity\fB \fR\- -. 
 .PP
 .PP
-\fBcolorSet\fB \fR\- @\fBT:Microsoft.VisualBasic.Imaging.Drawing2D.Colors.ScalerPalette\fR. 
+\fBcolorSet\fB \fR\- a enum flag value for rendering the spatial heatmap colors,
+ all flags see the clr enum: @\fBT:Microsoft.VisualBasic.Imaging.Drawing2D.Colors.ScalerPalette\fR. 
 .PP
 .PP
-\fBdefaultFill\fB \fR\- -. 
+\fBdefaultFill\fB \fR\- the color value for the spots which those intensity value is missing(ZERO or NaN). 
 .PP
 .PP
 \fBpixelSize\fB \fR\- -. 
@@ -49,6 +50,12 @@ MS-imaging of the MSI summary data result.
  do size overrides, default parameter value nothing means the
  size is evaluated based on the dimension **`dims`** 
  of the ms-imaging raw data and the **`pixelSize`**
+. 
+.PP
+.PP
+\fBdims\fB \fR\- 
+ the raw ms-imaging canvas dimension size, should be an integer vector that contains 
+ two elements inside: canvas width and canvas height value.
 . 
 .PP
 .PP

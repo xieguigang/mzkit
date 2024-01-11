@@ -112,6 +112,13 @@ Namespace TMIC.HMDB
     ''' <summary>
     ''' Metabolite compound chemical structure classification
     ''' </summary>
+    ''' <remarks>
+    ''' all these data contains in this model is the string array:
+    ''' 
+    ''' + <see cref="alternative_parents"/>
+    ''' + <see cref="substituents"/>
+    ''' + <see cref="external_descriptors"/>
+    ''' </remarks>
     Public Class taxonomy : Inherits CompoundClass
         Implements ICompoundClass
 
@@ -120,6 +127,11 @@ Namespace TMIC.HMDB
         Public Property alternative_parents As alternative_parents
         Public Property substituents As substituents
         Public Property external_descriptors As external_descriptors
+
+        Public Overrides Function ToString() As String
+            Return description
+        End Function
+
     End Class
 
     Public Structure external_descriptors
@@ -134,6 +146,9 @@ Namespace TMIC.HMDB
         <XmlElement> Public Property substituent As String()
     End Structure
 
+    ''' <summary>
+    ''' a collection of the <see cref="ontology_term"/>
+    ''' </summary>
     Public Class ontology
 
         <XmlElement>

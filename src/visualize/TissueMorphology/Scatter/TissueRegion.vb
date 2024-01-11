@@ -62,6 +62,17 @@ Imports Microsoft.VisualBasic.Imaging.Math2D
 ''' <summary>
 ''' a tissue polygon region object
 ''' </summary>
+''' <remarks>
+''' a tissue region polygon is consist with a collection of 
+''' the 2d geometry <see cref="Point"/> spots.
+''' 
+''' this tissue region object could be used for create the
+''' analysis sampleinfo object, where:
+''' 
+''' 1. label could be used as the sample group name
+''' 2. color is the clr <see cref="Color"/> data, could be used as the sample group color for chartting plot
+''' 3. the points consist the sample data for run the different expression analysis
+''' </remarks>
 Public Class TissueRegion
 
     ''' <summary>

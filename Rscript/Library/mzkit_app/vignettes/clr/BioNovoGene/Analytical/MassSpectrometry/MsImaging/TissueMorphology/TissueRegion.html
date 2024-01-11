@@ -5,7 +5,7 @@
     <title>BioNovoGene.Analytical.MassSpectrometry.MsImaging.TissueMorphology.TissueRegion</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-    <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
+    <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
 </head>
 
 <body>
@@ -22,7 +22,19 @@
 
         <h3>Description</h3>
 
-        a tissue polygon region object
+        <p>a tissue polygon region object</p>
+
+<p>a tissue region polygon is consist with a collection of <br />
+ the 2d geometry <a href="/vignettes/clr/System/Drawing/Point.html">Point</a> spots.</p>
+
+<p>this tissue region object could be used for create the<br />
+ analysis sampleinfo object, where:</p>
+
+<ol>
+<li>label could be used as the sample group name</li>
+<li>color is the clr <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/MsImaging/TissueMorphology/TissueRegion.html">TissueRegion</a>.<a href="/vignettes/clr/System/Drawing/Color.html">color</a> data, could be used as the sample group color for chartting plot</li>
+<li>the points consist the sample data for run the different expression analysis</li>
+</ol>
 
         <h3>Declare</h3>        
 
@@ -36,13 +48,21 @@ export class TissueRegion {
    # a collection of the pixels which is belongs to
    #  current Tissue Morphology region.
    points: <a href="/vignettes/clr/System/Drawing/Point.html">Point[]</a>;
-   # the sample tags of the @``P:BioNovoGene.Analytical.MassSpectrometry.MsImaging.TissueMorphology.TissueRegion.points``
+   # the sample tags of the <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/MsImaging/TissueMorphology/TissueRegion.html">TissueRegion</a>.<a href="/vignettes/clr/System/Drawing/Point.html">points</a>
    tags: string;
    # the pixel point count of the current region
    nsize: integer;
 }
 </code>
         </pre>
+
+        <h3>.NET clr type reference tree</h3>
+
+        <ol>
+<li>use by <i>property</i> member <code>color</code>: <a href="/vignettes/clr/System/Drawing/Color.html">Color</a></li>
+<li>use by <i>property</i> member <code>points</code>: <a href="/vignettes/clr/System/Drawing/Point.html">Point</a></li>
+</ol>
+
 
         <hr />
         <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a
@@ -51,8 +71,8 @@ export class TissueRegion {
     </div>
 </body>
 
-<script type="text/javascript" src="https://mzkit.org/assets/js/R_syntax.js"></script>
-<script type="text/javascript" src="https://mzkit.org/assets/js/highlights.js"></script>
+<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
+<script type="text/javascript" src="../../_assets/highlights.js"></script>
 <script type="text/javascript">r_highlights("clr_ts");</script>
 
 </html>

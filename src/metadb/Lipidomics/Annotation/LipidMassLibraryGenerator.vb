@@ -1196,6 +1196,11 @@ Public Class LipidIon
     Public Property mz As Double
     Public Property adduct As String
     Public Property total_formula As String
+
+    ''' <summary>
+    ''' the lipid class flag data
+    ''' </summary>
+    ''' <returns></returns>
     Public Property [class] As LbmClass
 
 End Class

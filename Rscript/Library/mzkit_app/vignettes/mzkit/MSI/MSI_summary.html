@@ -5,7 +5,7 @@
     <title>Fetch MSI summary data</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-    <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
+    <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
 </head>
 
 <body>
@@ -43,8 +43,8 @@
 
 
 <dt>as.vector</dt>
-<dd><p><p>returns the raw vector of @<code>T:BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML.iPixelIntensity</code> if set this<br />
- parameter value to value TRUE, or its wrapper object @<code>T:BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML.MSISummary</code> <br />
+<dd><p><p>returns the raw vector of <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/MarkupData/imzML/iPixelIntensity.html">iPixelIntensity</a> if set this<br />
+ parameter value to value TRUE, or its wrapper object <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/MarkupData/imzML/MSISummary.html">MSISummary</a> <br />
  if set this parameter value to FALSE by default.</p></p></dd>
 
 
@@ -60,6 +60,9 @@
 
         
 
+        <h3 style="display: block">Authors</h3>
+
+        BioNovoGene
 
         <h3>Value</h3>
 
@@ -69,7 +72,9 @@
 
         <pre><code id="example_r"> let rawdata = open.mzpack("/path/to/rawdata.mzPack");
  let spots = read.csv("/path/to/region.csv");
- let into = MSI_summary(rawdata, x = as.integer(spots$x), y = as.integer(spots$y), as.vector = TRUE);
+ let into = MSI_summary(rawdata, x = as.integer(spots$x), 
+       y = as.integer(spots$y), 
+       as.vector = TRUE);
  
  print(as.data.frame(into));
  print("view of the intensity vector:");
@@ -82,8 +87,8 @@
     </div>
 </body>
 
-<script type="text/javascript" src="https://mzkit.org/assets/js/R_syntax.js"></script>
-<script type="text/javascript" src="https://mzkit.org/assets/js/highlights.js"></script>
+<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
+<script type="text/javascript" src="../../_assets/highlights.js"></script>
 <script type="text/javascript">r_highlights("example_r");</script>
 
 </html>

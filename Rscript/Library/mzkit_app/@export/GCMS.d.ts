@@ -5,6 +5,7 @@
 // ref=mzkit.GCMSLinear@mz_quantify, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 
 /**
+ * the targetted GCMS sim data quantification module
  * 
 */
 declare namespace GCMS {

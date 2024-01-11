@@ -5,7 +5,7 @@
     <title>BioNovoGene.BioDeep.Chemistry.NCBI.PubChem.SIDMap</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-    <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
+    <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
 </head>
 
 <body>
@@ -22,12 +22,12 @@
 
         <h3>Description</h3>
 
-        This is a listing of all (live) SIDs with their source names and
- registry identifiers, and the standardized CID If present. It Is 
- a gzipped text file where Each line contains at least three
- columns: SID, tab, source name, tab, registry identifier; then
- a fourth column Of tab, CID If there Is a standardized CID For 
- the given SID.
+        <p>This is a listing of all (live) SIDs with their source names and<br />
+ registry identifiers, and the standardized CID If present. It Is <br />
+ a gzipped text file where Each line contains at least three<br />
+ columns: SID, tab, source name, tab, registry identifier; then<br />
+ a fourth column Of tab, CID If there Is a standardized CID For <br />
+ the given SID.</p>
 
         <h3>Declare</h3>        
 
@@ -36,12 +36,19 @@
 # namespace BioNovoGene.BioDeep.Chemistry.NCBI.PubChem
 export class SIDMap {
    SID: integer;
+   # the source database name, example as: KEGG, ChEBI, etc
    sourceName: string;
+   # the external database id, example as KEGG id, HMDB id or something.
    registryIdentifier: string;
    CID: integer;
 }
 </code>
         </pre>
+
+        <h3>.NET clr type reference tree</h3>
+
+        this clr type has no other .net clr type reference.
+
 
         <hr />
         <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a
@@ -50,8 +57,8 @@ export class SIDMap {
     </div>
 </body>
 
-<script type="text/javascript" src="https://mzkit.org/assets/js/R_syntax.js"></script>
-<script type="text/javascript" src="https://mzkit.org/assets/js/highlights.js"></script>
+<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
+<script type="text/javascript" src="../../_assets/highlights.js"></script>
 <script type="text/javascript">r_highlights("clr_ts");</script>
 
 </html>

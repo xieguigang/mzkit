@@ -22,14 +22,28 @@
 
         <h3>Description</h3>
 
-        #### Structure-data file
- 
- SDF or Structures Data File is a common file format developed by Molecular Design Limited 
- to handle a list of molecular structures with associated properties. 
- The file format has been published (Dalby et al., J. Chem. Inf. Comput. Sci. 1992, 32: 244-255).
- 
- + LMSD Structure-data file (http://www.lipidmaps.org/resources/downloads/index.html)
- + PubChem FTP SDF(ftp://ftp.ncbi.nlm.nih.gov/pubchem/Compound/CURRENT-Full/SDF)
+        <h4>Structure-data file</h4>
+
+<p>SDF or Structures Data File is a common file format developed by Molecular Design Limited <br />
+ to handle a list of molecular structures with associated properties. <br />
+ The file format has been published (Dalby et al., J. Chem. Inf. Comput. Sci. 1992, 32: 244-255).</p>
+
+<ul>
+<li>LMSD Structure-data file (<a href="http://www.lipidmaps.org/resources/downloads/index.html">http://www.lipidmaps.org/resources/downloads/index.html</a>)</li>
+<li>PubChem FTP SDF(<a href="ftp://ftp.ncbi.nlm.nih.gov/pubchem/Compound/CURRENT-Full/SDF">ftp://ftp.ncbi.nlm.nih.gov/pubchem/Compound/CURRENT-Full/SDF</a>)</li>
+</ul>
+
+<p><a href="https://cactus.nci.nih.gov/SDF_toolkit/">https://cactus.nci.nih.gov/SDF_toolkit/</a></p>
+
+<p>The SDF Toolkit in Perl 5</p>
+
+<p>Dalby A, Nourse JG, Hounshell WD, Gushurst Aki, Grier DL, Leland BA, Laufer J. <br />
+ Description of several chemical-structure file formats used by computer-programs developed at Molecular Design Limited. <br />
+ Journal of Chemical Information and Computer Sciences <br />
+ 32:(3) 244-255, May-Jun 1992.</p>
+
+<p><a href="http://www.nonlinear.com/progenesis/sdf-studio/v0.9/faq/sdf-file-format-guidance.aspx">http://www.nonlinear.com/progenesis/sdf-studio/v0.9/faq/sdf-file-format-guidance.aspx</a><br />
+ <a href="https://en.wikipedia.org/wiki/Chemical_table_file#SDF">https://en.wikipedia.org/wiki/Chemical_table_file#SDF</a></p>
 
         <h3>Declare</h3>        
 
@@ -43,7 +57,9 @@ export class SDF {
    Software: string;
    name: string;
    Comment: string;
+   # The molecular structure.
    Structure: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemoinformatics/SDF/Models/Structure.html">Structure</a>;
+   # the metadata that could be used as the annotation information of current molecule.
    MetaData: list;
 }
 </code>

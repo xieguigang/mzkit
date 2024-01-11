@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title><p>Create a dataset for evaluate ANOVA p-value</p></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <table style="width: 100%;">
+            <tr>
+                <td>ANOVAGroup {mzkit}</td>
+                <td style="text-align: right;">R Documentation</td>
+            </tr>
+        </table>
+
+        <h2><p>Create a dataset for evaluate ANOVA p-value</p></h2>
+
+        <h3>Description</h3>
+
+        
+
+        <h3>Usage</h3>
+
+        <div style="width: 100%; padding-left: 3%; color: black;">
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>ANOVAGroup</strong>(<i>data</i>, <i>sampleinfo</i>);</code></pre>
+        </div>
+
+        <h3>Arguments</h3>
+
+        <table>
+            
+<dt>data</dt>
+<dd><p><p>a data list object that should contains group sample raw data of the target metabolite ion. the list key name is the sample id and the list element data is the corresponding sample intensity data.</p></p></dd>
+
+
+<dt>sampleinfo</dt>
+<dd><p><p>a list data that should contains the data sample group tag information. the data structre of this list could be two fields are required at least: + group: the sample group name + id: a character vector that contains the sample id to get intensity vector data from the <code>data</code> parameter.</p></p></dd>
+
+        </table>
+
+
+        <h3 style="display: none;">Details</h3>
+
+        
+
+        <h3 style="display: block">Authors</h3>
+
+        xieguigang
+
+        <h3>Value</h3>
+
+        <p>a dataframe object that contains two fields: <code>intensity</code> and <code>region_group</code>, which could be used for do stat chartting plot liked bar/box/violin and also could be used for evaluated ANOVA F-test p-value result.</p>
+
+        <h3 style="display: none;">Examples</h3>
+
+        
+
+        <hr />
+        <div style="text-align: center;">[Package <em>mzkit</em> version 3.2.56.56444 <a
+                href="../mzkit.html">Index</a>]
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
+<script type="text/javascript" src="../../_assets/highlights.js"></script>
+<script type="text/javascript">r_highlights("example_r");</script>
+
+</html>

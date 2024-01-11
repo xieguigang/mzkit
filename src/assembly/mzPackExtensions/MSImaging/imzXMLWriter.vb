@@ -61,6 +61,11 @@ Imports Microsoft.VisualBasic.Imaging.Math2D
 
 Public Module imzXMLWriter
 
+    ''' <summary>
+    ''' just try to evaluate the dimension size from the current spot collection
+    ''' </summary>
+    ''' <param name="rawdata"></param>
+    ''' <returns></returns>
     <Extension>
     Private Function GetDimension(rawdata As mzPack) As Size
         Dim polygon As New Polygon2D(rawdata.MS.Select(Function(p) p.GetMSIPixel))
@@ -89,10 +94,15 @@ Public Module imzXMLWriter
     ''' <returns></returns>
     Public Function WriteXML(mzpack As mzPack, output As String,
                              Optional res As Double = 17,
-                             Optional ionMode As IonModes = IonModes.Positive) As Boolean
+                             Optional ionMode As IonModes = IonModes.Positive,
+                             Optional dims As Size? = Nothing) As Boolean
 
         Dim writer As imzML.mzPackWriter = imzML.mzPackWriter.OpenOutput(output)
         Dim dimsize As Size = mzpack.GetDimension
+
+        If dims IsNot Nothing AndAlso Not dims.Value.IsEmpty Then
+            dimsize = dims
+        End If
 
         ' config of the writer
         Call writer _

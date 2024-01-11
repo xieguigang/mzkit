@@ -56,6 +56,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Math
 
 Namespace Deconvolute
 
@@ -66,7 +67,7 @@ Namespace Deconvolute
     ''' the value of property <see cref="X"/> and <see cref="Y"/> is zero when the 
     ''' matrix data is a single cell data matrix
     ''' </remarks>
-    Public Class PixelData
+    Public Class PixelData : Implements IVector
 
         Public Property X As Integer
         Public Property Y As Integer
@@ -75,7 +76,7 @@ Namespace Deconvolute
         ''' </summary>
         ''' <returns></returns>
         Public Property label As String
-        Public Property intensity As Double()
+        Public Property intensity As Double() Implements IVector.Data
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String

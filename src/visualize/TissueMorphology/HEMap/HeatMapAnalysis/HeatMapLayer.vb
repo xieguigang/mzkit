@@ -130,6 +130,9 @@ Namespace HEMap
 
     End Module
 
+    ''' <summary>
+    ''' the layer data of <see cref="HEMap.Object"/>
+    ''' </summary>
     Public Enum Layers
         Pixels
         Density

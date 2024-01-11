@@ -57,6 +57,7 @@ Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Math
@@ -113,6 +114,22 @@ Namespace Deconvolute
             For Each scan As ScanMS1 In raw.MS
                 Dim cellId As String = scan.scan_id
                 Dim v As Double() = Math.DeconvoluteScan(scan.mz, scan.into, len, mzIndex)
+                Dim cell_scan As New T With {
+                    .Data = v,
+                    .Key = cellId
+                }
+
+                Yield cell_scan
+            Next
+        End Function
+
+        Public Iterator Function ExportScans(Of T As {New, INamedValue, IVector})(raw As IEnumerable(Of LibraryMatrix), mzSet As Double()) As IEnumerable(Of T)
+            Dim mzIndex = mzSet.CreateMzIndex
+            Dim len As Integer = mzSet.Length
+
+            For Each scan As LibraryMatrix In raw
+                Dim cellId As String = scan.name
+                Dim v As Double() = Math.DeconvoluteScan(scan.mz, scan.intensity, len, mzIndex)
                 Dim cell_scan As New T With {
                     .Data = v,
                     .Key = cellId

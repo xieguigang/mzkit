@@ -8,6 +8,7 @@ MS1 \- get the ms1 spectrum data in a specific pixel position
 \fBy\fR as integer, 
 \fBtolerance\fR as any = "da:0.1", 
 \fBthreshold\fR as double = 0.01, 
+\fBcomposed\fR as boolean = TRUE, 
 [\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
@@ -28,6 +29,13 @@ get the ms1 spectrum data in a specific pixel position
 .PP
 .PP
 \fBthreshold\fB \fR\- -. 
+.PP
+.PP
+\fBcomposed\fB \fR\- 
+ by default a union ion spectrum object will be generates based on the given spatial spots data,
+ for set this parameter value to false, then a tuple list object data that contains the ms1 
+ spectrum data for each spatial spots will be returns.
+. 
 .PP
 .PP
 \fBenv\fB \fR\- -. 

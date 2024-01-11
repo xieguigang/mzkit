@@ -98,6 +98,7 @@ Imports REnv = SMRUCC.Rsharp.Runtime.Internal.Invokes.base
 ''' Metabolite annotation database toolkit
 ''' </summary>
 <Package("massbank")>
+<RTypeExport("lipidmaps", GetType(LipidMaps.MetaData))>
 Module Massbank
 
     Sub New()
@@ -127,6 +128,7 @@ Module Massbank
     ''' <param name="msp">A metabolite data which is parse from the MONA msp dataset</param>
     ''' <returns></returns>
     <ExportAPI("mona.msp_metadata")>
+    <RApiReturn(GetType(BioNovoGene.BioDeep.Chemistry.MetaData))>
     Public Function monaMSP(msp As MspData) As Object
         Return msp.GetMetadata
     End Function
@@ -219,7 +221,7 @@ Module Massbank
     ''' <summary>
     ''' save lipidmaps data repository.
     ''' </summary>
-    ''' <param name="lipidmaps"></param>d
+    ''' <param name="lipidmaps">A collection of the lipidmaps metabolite <see cref="LipidMaps.MetaData"/></param>
     ''' <param name="file"></param>
     ''' <param name="env"></param>
     ''' <returns></returns>
@@ -287,6 +289,7 @@ Module Massbank
     End Function
 
     <ExportAPI("lipid_classprofiles")>
+    <RApiReturn(GetType(ClassProfiles))>
     Public Function castToClassProfiles(lipid_class As LipidMapsCategory) As ClassProfiles
         Return New ClassProfiles With {
             .Catalogs = lipid_class.Class
@@ -294,6 +297,7 @@ Module Massbank
     End Function
 
     <ExportAPI("lipid_profiles")>
+    <RApiReturn(GetType(CatalogProfiles))>
     Public Function lipidProfiles(categry As LipidMapsCategory, enrich As EnrichmentResult()) As Object
         Return categry.CreateEnrichmentProfiles(enrich)
     End Function
@@ -339,14 +343,61 @@ Module Massbank
     ''' let class = lipid.class(lipids);
     ''' </example>
     <ExportAPI("lipid.class")>
-    <RApiReturn(GetType(ClassReader))>
-    Public Function lipidClassReader(<RRawVectorArgument> lipidmaps As Object, Optional env As Environment = Nothing) As Object
-        Dim lipids As pipeline = pipeline.TryCreatePipeline(Of LipidMaps.MetaData)(lipidmaps, env)
+    <RApiReturn(GetType(LipidClassReader), GetType(CompoundClass))>
+    Public Function lipidClassReader(<RRawVectorArgument> lipidmaps As Object,
+                                     Optional id As Object = Nothing,
+                                     Optional env As Environment = Nothing) As Object
 
-        If lipids.isError Then
-            Return lipids.getError
+        If TypeOf lipidmaps Is LipidClassReader Then
+            Dim idset As String() = CLRVector.asCharacter(id)
+
+            ' get the lipidmaps class data via given id
+            If idset.IsNullOrEmpty Then
+                Return Nothing
+            ElseIf idset.Length = 1 Then
+                Return DirectCast(lipidmaps, LipidClassReader).GetClass(idset(0))
+            Else
+                Dim lipiddata As LipidClassReader = lipidmaps
+                Dim out As New list With {
+                    .slots = New Dictionary(Of String, Object)
+                }
+
+                For Each id_str As String In idset
+                    Call out.add(id_str, lipiddata.GetClass(id_str))
+                Next
+
+                Return out
+            End If
         Else
-            Return New LipidMaps.LipidClassReader(lipids.populates(Of LipidMaps.MetaData)(env))
+            ' build the lipidmaps class index object
+            Dim lipids As pipeline = pipeline.TryCreatePipeline(Of LipidMaps.MetaData)(lipidmaps, env)
+
+            If lipids.isError Then
+                Return lipids.getError
+            Else
+                Return New LipidMaps.LipidClassReader(lipids.populates(Of LipidMaps.MetaData)(env))
+            End If
+        End If
+    End Function
+
+    ''' <summary>
+    ''' gets the metabolite id collection from lipidmaps database
+    ''' </summary>
+    ''' <param name="lipidmaps">A lipidmaps database related dataset object</param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("lipidmaps_id")>
+    Public Function lipidmaps_id(lipidmaps As Object, Optional env As Environment = Nothing) As Object
+        If lipidmaps Is Nothing Then
+            Return Nothing
+        End If
+
+        If TypeOf lipidmaps Is LipidClassReader Then
+            Return DirectCast(lipidmaps, LipidClassReader) _
+                .EnumerateId _
+                .ToArray
+        Else
+            Return Message.InCompatibleType(GetType(LipidClassReader), lipidmaps.GetType, env)
         End If
     End Function
 
@@ -364,6 +415,7 @@ Module Massbank
     ''' let lipids = dataset |> as.lipidmaps();
     ''' </example>
     <ExportAPI("as.lipidmaps")>
+    <RApiReturn(GetType(LipidMaps.MetaData))>
     Public Function toLipidMaps(<RRawVectorArgument>
                                 sdf As Object,
                                 Optional asList As Boolean = False,
@@ -546,7 +598,8 @@ Module Massbank
     End Function
 
     <ExportAPI("chebi.secondary2main.mapping")>
-    Public Function chebiSecondary2Main(repository As String) As Dictionary(Of String, String())
+    <RApiReturn(GetType(String))>
+    Public Function chebiSecondary2Main(repository As String) As Object
         Return ChEBIRepo.ScanEntities(repository) _
             .GroupBy(Function(c) c.chebiId) _
             .Select(Function(c) c.First) _
@@ -559,10 +612,7 @@ Module Massbank
     End Function
 
     <ExportAPI("hmdb.secondary2main.mapping")>
-    Public Function hmdbSecondary2Main(<RRawVectorArgument>
-                                       repository As Object,
-                                       Optional env As Environment = Nothing) As Dictionary(Of String, String())
-
+    Public Function hmdbSecondary2Main(<RRawVectorArgument> repository As Object, Optional env As Environment = Nothing) As Object
         Dim metabolites As pipeline
 
         If TypeOf repository Is pipeline Then
@@ -676,9 +726,10 @@ Module Massbank
     ''' <summary>
     ''' extract the chebi annotation data from the chebi ontology data
     ''' </summary>
-    ''' <param name="chebi"></param>
+    ''' <param name="chebi">the chebi ontology data, in clr type: <see cref="OBOFile"/></param>
     ''' <returns></returns>
     <ExportAPI("extract_chebi_compounds")>
+    <RApiReturn(GetType(MetaInfo))>
     Public Function ExtractChebiCompounds(chebi As OBOFile) As MetaInfo()
         Return chebi _
             .DoCall(AddressOf ChEBIObo.ImportsMetabolites) _
@@ -686,6 +737,7 @@ Module Massbank
     End Function
 
     <ExportAPI("rankingNames")>
+    <RApiReturn("name", "synonym")>
     Public Function rankingNames(<RRawVectorArgument>
                                  x As Object,
                                  Optional max_len As Integer = 32,
@@ -767,6 +819,7 @@ Module Massbank
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("inchikey")>
+    <RApiReturn(GetType(InChIKey))>
     Public Function inchikey(<RRawVectorArgument> inchi As Object, Optional env As Environment = Nothing) As Object
         Return env.EvaluateFramework(Of String, InChIKey)(inchi, eval:=AddressOf IUPAC.MakeHashCode)
     End Function

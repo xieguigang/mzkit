@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative.PeakAreaMethods</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <table style="width: 100%;">
+            <tr>
+                <td>PeakAreaMethods {BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative}</td>
+                <td style="text-align: right;">.NET clr documentation</td>
+            </tr>
+        </table>
+
+        <h2>PeakAreaMethods</h2>
+
+        <h3>Description</h3>
+
+        <ul>
+<li>积分方法太敏感了，可能会对ROI以及峰型要求非常高
+
+<ul>
+<li>净峰法简单相加会比较鲁棒一些</li>
+</ul></li>
+</ul>
+
+        <h3>Declare</h3>        
+
+        <pre>
+            <code id="clr_ts">
+# namespace BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative
+export class PeakAreaMethods extends <a href="/vignettes/clr/System/Enum.html">Enum</a> {
+   # 使用简单的信号相加净峰法来计算峰面积
+   NetPeakSum: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/LinearQuantitative/PeakAreaMethods.html">PeakAreaMethods</a> = 0;
+
+   # 使用积分器来进行峰面积的计算
+   Integrator: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/LinearQuantitative/PeakAreaMethods.html">PeakAreaMethods</a> = 1;
+
+   # No peak finding, sum all chromatogram ticks signal intensity directly.
+   #  基线非常低（接近于零）的时候可以使用
+   SumAll: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/LinearQuantitative/PeakAreaMethods.html">PeakAreaMethods</a> = 2;
+
+   # 如果色谱柱的压力非常大，出峰非常的集中，可以直接使用最大的峰高度来近似为峰面积
+   MaxPeakHeight: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/LinearQuantitative/PeakAreaMethods.html">PeakAreaMethods</a> = 3;
+
+}
+</code>
+        </pre>
+
+        <h3>.NET clr type reference tree</h3>
+
+        <ol>
+<li>this class extends from <a href="/vignettes/clr/System/Enum.html">Enum</a> class: <a href="/vignettes/clr/System/Enum.html">Enum</a></li>
+<li>use by <i>field</i> member <code>NetPeakSum</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/LinearQuantitative/PeakAreaMethods.html">PeakAreaMethods</a></li>
+<li>use by <i>field</i> member <code>Integrator</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/LinearQuantitative/PeakAreaMethods.html">PeakAreaMethods</a></li>
+<li>use by <i>field</i> member <code>SumAll</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/LinearQuantitative/PeakAreaMethods.html">PeakAreaMethods</a></li>
+<li>use by <i>field</i> member <code>MaxPeakHeight</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/LinearQuantitative/PeakAreaMethods.html">PeakAreaMethods</a></li>
+</ol>
+
+
+        <hr />
+        <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a
+                href="../{$package}.html">Index</a>]
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
+<script type="text/javascript" src="../../_assets/highlights.js"></script>
+<script type="text/javascript">r_highlights("clr_ts");</script>
+
+</html>

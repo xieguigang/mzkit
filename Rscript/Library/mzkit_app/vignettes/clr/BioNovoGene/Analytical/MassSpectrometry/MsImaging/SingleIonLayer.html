@@ -5,7 +5,7 @@
     <title>BioNovoGene.Analytical.MassSpectrometry.MsImaging.SingleIonLayer</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-    <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
+    <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
 </head>
 
 <body>
@@ -22,7 +22,8 @@
 
         <h3>Description</h3>
 
-        
+        <p>a collection of the <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/MsImaging/PixelData.html">PixelData</a> spots, the spot pixel<br />
+ data was used to the spatial heatmap rendering.</p>
 
         <h3>Declare</h3>        
 
@@ -30,17 +31,36 @@
             <code id="clr_ts">
 # namespace BioNovoGene.Analytical.MassSpectrometry.MsImaging
 export class SingleIonLayer {
+   # the layer tag label, usually be a single ion m/z value.
    IonMz: string;
+   # the spatial spot data collection, that used for create spatial heatmap rendering.
    MSILayer: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/MsImaging/PixelData.html">PixelData[]</a>;
-   # the canvas size of the MSI plot output
+   # the canvas size of the MSI plot output, it indicates the max scan x and 
+   #  max scan y of the <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/MsImaging/SingleIonLayer.html">SingleIonLayer</a>.<a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/MsImaging/PixelData.html">MSILayer</a> heatmap.
    DimensionSize: <a href="/vignettes/clr/System/Drawing/Size.html">Size</a>;
+   # check is there some missing spot data inside the <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/MsImaging/SingleIonLayer.html">SingleIonLayer</a>.<a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/MsImaging/PixelData.html">MSILayer</a> by 
+   #  simply measuring the collection size.
    hasZeroPixels: boolean;
+   # get the max intensity value inside the <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/MsImaging/SingleIonLayer.html">SingleIonLayer</a>.<a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/MsImaging/PixelData.html">MSILayer</a>
    maxinto: double;
+   # check if the spot data has multiple sample label data tags
    hasMultipleSamples: boolean;
+   # get the sample tags of the spatial spots
    sampleTags: string;
+   # count the number of the pixel spots in current metabolite 
+   #  ion ms-imaging layer.
+   size: integer;
 }
 </code>
         </pre>
+
+        <h3>.NET clr type reference tree</h3>
+
+        <ol>
+<li>use by <i>property</i> member <code>MSILayer</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/MsImaging/PixelData.html">PixelData</a></li>
+<li>use by <i>property</i> member <code>DimensionSize</code>: <a href="/vignettes/clr/System/Drawing/Size.html">Size</a></li>
+</ol>
+
 
         <hr />
         <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a
@@ -49,8 +69,8 @@ export class SingleIonLayer {
     </div>
 </body>
 
-<script type="text/javascript" src="https://mzkit.org/assets/js/R_syntax.js"></script>
-<script type="text/javascript" src="https://mzkit.org/assets/js/highlights.js"></script>
+<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
+<script type="text/javascript" src="../../_assets/highlights.js"></script>
 <script type="text/javascript">r_highlights("clr_ts");</script>
 
 </html>

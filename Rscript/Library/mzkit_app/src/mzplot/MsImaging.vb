@@ -95,6 +95,7 @@ Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Invokes
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
+Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports PixelData = BioNovoGene.Analytical.MassSpectrometry.MsImaging.PixelData
 Imports Point2D = System.Drawing.Point
 
@@ -127,8 +128,9 @@ Module MsImaging
     ''' default is split layer into multiple sample source
     ''' </param>
     ''' <param name="env"></param>
-    ''' <returns></returns>
+    ''' <returns>A tuple list of the single ion ms-imaging layer objects</returns>
     <ExportAPI("split.layer")>
+    <RApiReturn(GetType(SingleIonLayer))>
     Public Function splitLayer(<RRawVectorArgument> x As Object,
                                <RListObjectArgument>
                                args As list,
@@ -208,17 +210,18 @@ Module MsImaging
     End Function
 
     ''' <summary>
-    ''' Contrast optimization of mass
-    ''' spectrometry imaging(MSI) data
-    ''' visualization by threshold intensity
-    ''' quantization (TrIQ)
+    ''' Contrast optimization of mass spectrometry imaging(MSI) data
+    ''' visualization by threshold intensity quantization (TrIQ)
     ''' </summary>
     ''' <param name="data">
     ''' A ms-imaging ion layer data or a numeric vector of the intensity data.
     ''' </param>
     ''' <param name="q">cutoff threshold of the intensity numeric vector</param>
     ''' <param name="env"></param>
-    ''' <returns></returns>
+    ''' <returns>A signal intensity value range [min, max]</returns>
+    ''' <remarks>
+    ''' this function works based on the <see cref="TrIQThreshold"/> clr module
+    ''' </remarks>
     <ExportAPI("TrIQ")>
     <RApiReturn(GetType(Double))>
     Public Function TrIQRange(<RRawVectorArgument>
@@ -255,7 +258,8 @@ Module MsImaging
     ''' <param name="min"></param>
     ''' <returns></returns>
     <ExportAPI("intensityLimits")>
-    Public Function LimitIntensityRange(data As SingleIonLayer, max As Double, Optional min As Double = 0) As SingleIonLayer
+    <RApiReturn(GetType(SingleIonLayer))>
+    Public Function LimitIntensityRange(data As SingleIonLayer, max As Double, Optional min As Double = 0) As Object
         data.MSILayer = data.MSILayer _
             .Select(Function(p)
                         If p.intensity > max Then
@@ -334,7 +338,7 @@ Module MsImaging
     ''' </summary>
     ''' <param name="file"></param>
     ''' <param name="env"></param>
-    ''' <returns></returns>
+    ''' <returns>A spatial ion xic reader object for MSI visual</returns>
     <ExportAPI("read.mzImage")>
     <RApiReturn(GetType(XICReader))>
     Public Function openIndexedCacheFile(<RRawVectorArgument> file As Object, Optional env As Environment = Nothing) As Object
@@ -350,9 +354,9 @@ Module MsImaging
     ''' <summary>
     ''' Extract a spectrum matrix object from MSI data by a given set of m/z values
     ''' </summary>
-    ''' <param name="viewer"></param>
-    ''' <param name="mz"></param>
-    ''' <param name="tolerance"></param>
+    ''' <param name="viewer">A ms-imaging <see cref="Drawer"/> canvas object, which contains the ms-imaging rawdata.</param>
+    ''' <param name="mz">A numeric vector that used as the ion m/z value for extract the imaging layer data from the drawer canvas.</param>
+    ''' <param name="tolerance">the mass tolerance error</param>
     ''' <param name="title"></param>
     ''' <param name="env"></param>
     ''' <returns>A spectrum matrix data of m/z value assocated with the intensity value</returns>
@@ -394,6 +398,11 @@ Module MsImaging
     ''' <param name="y"></param>
     ''' <param name="tolerance"></param>
     ''' <param name="threshold"></param>
+    ''' <param name="composed">
+    ''' by default a union ion spectrum object will be generates based on the given spatial spots data,
+    ''' for set this parameter value to false, then a tuple list object data that contains the ms1 
+    ''' spectrum data for each spatial spots will be returns.
+    ''' </param>
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("MS1")>
@@ -401,6 +410,7 @@ Module MsImaging
     Public Function GetMsMatrx(viewer As Drawer, x As Integer(), y As Integer(),
                                Optional tolerance As Object = "da:0.1",
                                Optional threshold As Double = 0.01,
+                               Optional composed As Boolean = True,
                                Optional env As Environment = Nothing) As Object
 
         Dim ms As New List(Of ms2)
@@ -412,17 +422,36 @@ Module MsImaging
             Return Internal.debug.stop("the vector size of x should be equals to vector y!", env)
         End If
 
-        For i As Integer = 0 To x.Length - 1
-            ms += viewer.ReadXY(x(i), y(i))
-        Next
+        If composed Then
+            For i As Integer = 0 To x.Length - 1
+                ms += viewer.ReadXY(x(i), y(i))
+            Next
 
-        Return New LibraryMatrix With {
-            .centroid = True,
-            .ms2 = ms.ToArray _
-                .Centroid(errors.TryCast(Of Tolerance), New RelativeIntensityCutoff(threshold)) _
-                .ToArray,
-            .name = "MS1"
-        }
+            Return New LibraryMatrix With {
+                .centroid = True,
+                .ms2 = ms.ToArray _
+                    .Centroid(errors.TryCast(Of Tolerance), New RelativeIntensityCutoff(threshold)) _
+                    .ToArray,
+                .name = "MS1"
+            }
+        Else
+            Dim tuples As New list With {.slots = New Dictionary(Of String, Object)}
+
+            For i As Integer = 0 To x.Length - 1
+                ms.Clear()
+                ms.AddRange(viewer.ReadXY(x(i), y(i)))
+
+                tuples.add($"{x(i)},{y(i)}", New LibraryMatrix With {
+                    .centroid = True,
+                    .ms2 = ms.ToArray _
+                        .Centroid(errors.TryCast(Of Tolerance), New RelativeIntensityCutoff(threshold)) _
+                        .ToArray,
+                    .name = $"[MS1] {x(i)},{y(i)}"
+                })
+            Next
+
+            Return tuples
+        End If
     End Function
 
     ''' <summary>
@@ -451,14 +480,16 @@ Module MsImaging
     End Function
 
     ''' <summary>
-    ''' get a pixel data
+    ''' get the spatial spot pixel data
     ''' </summary>
-    ''' <param name="data"></param>
-    ''' <param name="x"></param>
-    ''' <param name="y"></param>
-    ''' <returns></returns>
+    ''' <param name="data">the rawdata source for the ms-imaging.</param>
+    ''' <param name="x">an integer vector for x axis</param>
+    ''' <param name="y">an integer vector for y axis</param>
+    ''' <returns>
+    ''' A collection of the spatial spot data
+    ''' </returns>
     <ExportAPI("pixel")>
-    <RApiReturn(GetType(ibdPixel))>
+    <RApiReturn(GetType(ibdPixel), GetType(PixelScan), GetType(iPixelIntensity))>
     Public Function GetPixel(data As Object, x As Integer(), y As Integer(), Optional env As Environment = Nothing) As Object
         If x.Length = 1 AndAlso y.Length = 1 Then
             If TypeOf data Is XICReader Then
@@ -490,6 +521,10 @@ Module MsImaging
     ''' <summary>
     ''' load the raw pixels data from imzML file 
     ''' </summary>
+    ''' <param name="imzML">
+    ''' the ms-imaging rawdata source, could be a rawdata rendering wrapper <see cref="Drawer"/>,
+    ''' or a indexed <see cref="XICReader"/> for specific ions collection.
+    ''' </param>
     ''' <param name="mz">a collection of ion m/z value for rendering on one image</param>
     ''' <param name="tolerance">m/z tolerance error for get layer data</param>
     ''' <param name="skip_zero"></param>
@@ -528,12 +563,18 @@ Module MsImaging
     ''' <summary>
     ''' set cluster tags to the pixel tag property data
     ''' </summary>
-    ''' <param name="layer"></param>
-    ''' <param name="segments"></param>
+    ''' <param name="layer">A ms-imaging render layer object that contains a collection of the spatial spot data.</param>
+    ''' <param name="segments">A collection of the <see cref="TissueRegion"/> data, the tissue region label 
+    ''' string value will be assigned to the corresponding spatial spot its sample tag value.</param>
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("tag_layers")>
-    Public Function tagLayers(layer As SingleIonLayer, <RRawVectorArgument> segments As Object, Optional env As Environment = Nothing) As Object
+    <RApiReturn(GetType(SingleIonLayer))>
+    Public Function tagLayers(layer As SingleIonLayer,
+                              <RRawVectorArgument>
+                              segments As Object,
+                              Optional env As Environment = Nothing) As Object
+
         Dim pointCluster As pipeline = pipeline.TryCreatePipeline(Of TissueRegion)(segments, env)
 
         If pointCluster.isError Then
@@ -626,10 +667,10 @@ Module MsImaging
     ''' rendering ions MSI in (R,G,B) color channels
     ''' </summary>
     ''' <param name="viewer"></param>
-    ''' <param name="r"></param>
-    ''' <param name="g"></param>
-    ''' <param name="b"></param>
-    ''' <param name="tolerance"></param>
+    ''' <param name="r">the ion m/z value for the color red channel</param>
+    ''' <param name="g">the ion m/z value for the color green channel</param>
+    ''' <param name="b">the ion m/z value for the color blue channel</param>
+    ''' <param name="tolerance">the ion m/z mass tolerance error</param>
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("rgb")>
@@ -903,14 +944,32 @@ Module MsImaging
     ''' <summary>
     ''' get the default ms-imaging filter pipeline
     ''' </summary>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' A raster filter pipeline that consist with modules with orders:
+    ''' 
+    ''' 1. <see cref="DenoiseScaler"/>
+    ''' 2. <see cref="TrIQScaler"/>
+    ''' 3. <see cref="KNNScaler"/>
+    ''' 4. <see cref="SoftenScaler"/>
+    ''' </returns>
+    ''' <remarks>
+    ''' denoise_scale() &gt; TrIQ_scale(0.8) &gt; knn_scale() &gt; soften_scale()
+    ''' </remarks>
     <ExportAPI("defaultFilter")>
+    <RApiReturn(GetType(RasterPipeline))>
     Public Function defaultFilter() As RasterPipeline
         ' denoise_scale() > TrIQ_scale(0.8) > knn_scale() > soften_scale()
         Return New DenoiseScaler() _
             .Then(New TrIQScaler) _
             .Then(New KNNScaler) _
             .Then(New SoftenScaler)
+    End Function
+
+    <ExportAPI("parseFilters")>
+    Public Function parseFilters(<RRawVectorArgument> filters As Object) As RasterPipeline
+        Dim filters_str As String() = CLRVector.asCharacter(filters)
+        Dim raster As RasterPipeline = RasterPipeline.Parse(filters_str)
+        Return raster
     End Function
 
     ''' <summary>
@@ -921,8 +980,9 @@ Module MsImaging
     ''' 2. <see cref="SingleIonLayer"/>
     ''' </param>
     ''' <param name="intensity"></param>
-    ''' <param name="colorSet"><see cref="ScalerPalette"/></param>
-    ''' <param name="defaultFill"></param>
+    ''' <param name="colorSet">a enum flag value for rendering the spatial heatmap colors,
+    ''' all flags see the clr enum: <see cref="ScalerPalette"/></param>
+    ''' <param name="defaultFill">the color value for the spots which those intensity value is missing(ZERO or NaN)</param>
     ''' <param name="pixelSize"></param>
     ''' <param name="background">
     ''' all of the pixels in this index parameter data value will 
@@ -933,6 +993,10 @@ Module MsImaging
     ''' do size overrides, default parameter value nothing means the
     ''' size is evaluated based on the dimension <paramref name="dims"/> 
     ''' of the ms-imaging raw data and the <paramref name="pixelSize"/>
+    ''' </param>
+    ''' <param name="dims">
+    ''' the raw ms-imaging canvas dimension size, should be an integer vector that contains 
+    ''' two elements inside: canvas width and canvas height value.
     ''' </param>
     ''' <param name="env"></param>
     ''' <returns></returns>
@@ -1081,7 +1145,14 @@ Module MsImaging
     ''' </param>
     ''' <param name="densityCut"></param>
     ''' <param name="env"></param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' A dataframe object that contains data fields:
+    ''' 
+    ''' 1. mz: the ion mz vector
+    ''' 2. density: the average spatial density of current ion mz layer
+    ''' 3. layer: a mzkit clr <see cref="SingleIonLayer"/> object that could be used for ms-imaging visualization
+    ''' 
+    ''' </returns>
     <ExportAPI("MeasureMSIions")>
     <RApiReturn(GetType(Double), GetType(dataframe))>
     Public Function getMSIIons(raw As mzPack,

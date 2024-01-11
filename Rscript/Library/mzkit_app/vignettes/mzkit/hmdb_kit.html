@@ -10,7 +10,7 @@
     <meta name="keywords" content="R#; hmdb_kit; mzkit" />
     <meta name="generator" content="https://github.com/rsharp-lang" />
     <meta name="theme-color" content="#333" />
-    <meta name="description" content="toolkit for handling of the hmdb database..." />
+    <meta name="description" content="toolkit for handling of the hmdb database The Human Metabolome D..." />
     <meta class="foundation-data-attribute-namespace" />
     <meta class="foundation-mq-xxlarge" />
     <meta class="foundation-mq-xlarge" />
@@ -66,14 +66,64 @@ table caption {font-size:14px;font-weight:bolder;}
                                <br /><br /><span style="color: green;">#' toolkit for handling of the hmdb database</span><br /><span style="color: blue;">imports</span><span style="color: brown"> "hmdb_kit"</span><span style="color: blue;"> from</span><span style="color: brown"> "mzkit"</span>;
                            </code>
     </p>
-    <p><p>toolkit for handling of the hmdb database</p></p>
+    <p><p>toolkit for handling of the hmdb database</p>
+
+<p>The Human Metabolome Database (HMDB) is a comprehensive, high-quality, freely accessible, <br />
+ online database of small molecule metabolites found in the human body. It bas been created <br />
+ by the Human Metabolome Project funded by Genome Canada and is one of the first dedicated<br />
+ metabolomics databases. The HMDB facilitates human metabolomics research, including the <br />
+ identification and characterization of human metabolites using NMR spectroscopy, GC-MS<br />
+ spectrometry and LC/MS spectrometry. To aid in this discovery process, the HMDB contains <br />
+ three kinds of data: 1) chemical data, 2) clinical data, and 3) molecular biology/biochemistry <br />
+ data. The chemical data includes 41,514 metabolite structures with detailed descriptions <br />
+ along with nearly 10,000 NMR, GC-MS and LC/MS spectra.</p>
+
+<p>The clinical data includes information On >10,000 metabolite-biofluid concentrations And <br />
+ metabolite concentration information On more than 600 different human diseases. The biochemical <br />
+ data includes 5,688 protein (And DNA) sequences And more than 5,000 biochemical reactions that <br />
+ are linked To these metabolite entries. Each metabolite entry In the HMDB contains more than 110 <br />
+ data fields With 2/3 Of the information being devoted To chemical/clinical data And the other <br />
+ 1/3 devoted To enzymatic Or biochemical data. Many data fields are hyperlinked To other <br />
+ databases (KEGG, MetaCyc, PubChem, Protein Data Bank, ChEBI, Swiss-Prot, And GenBank) And a <br />
+ variety Of Structure And pathway viewing applets. The HMDB database supports extensive text, <br />
+ sequence, spectral, chemical Structure And relational query searches. It has been widely used<br />
+ In metabolomics, clinical chemistry, biomarker discovery And general biochemistry education.</p>
+
+<p>Four additional databases, DrugBank, T3DB, SMPDB And FooDB are also part Of the HMDB suite Of <br />
+ databases. DrugBank contains equivalent information On ~1,600 drug And drug metabolites, T3DB <br />
+ contains information On 3,100 common toxins And environmental pollutants, SMPDB contains pathway <br />
+ diagrams For 700 human metabolic And disease pathways, While FooDB contains equivalent information <br />
+ On ~28,000 food components And food additives.</p></p>
     <blockquote>
       <p style="font-style: italic; font-size: 0.9em;">
                            
                            </p>
     </blockquote>
     <div id="main-wrapper">
+      <table class="table-three-line" style="display: block">
+        <caption>.NET clr type export</caption>
+        <tbody><tr>
+  <td id="hmdb_metabolite">
+    <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/TMIC/HMDB/metabolite.html">hmdb_metabolite: metabolite</a>
+  </td>
+  <td><p>the xml file data model of the hmdb metabolite, this object contains the full <br />
+ record data of a hmdb metabolite.</p>
+
+<p>the <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/TMIC/HMDB/metabolite.html">metabolite</a>.<a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/TMIC/HMDB/ontology.html">ontology</a> data contains the category ontology information about this<br />
+ hmdb metabolite, example as:</p>
+
+<ol>
+<li>Physiological effect, example as Health effect</li>
+<li>Disposition, example as the <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/TMIC/HMDB/biospecimen_locations.html">biospecimen_locations</a>, <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/TMIC/HMDB/tissue_locations.html">tissue_locations</a>, etc</li>
+<li>Process, example as the biological process information</li>
+<li>Role, the biological roles of current metabolite</li>
+</ol></td>
+</tr></tbody>
+      </table>
+      <br />
+      <br />
       <table class="table-three-line">
+        <caption>.NET clr function exports</caption>
         <tbody><tr>
   <td id="read.hmdb_spectrals">
     <a href="./hmdb_kit/read.hmdb_spectrals.html">read.hmdb_spectrals</a>
@@ -102,7 +152,7 @@ table caption {font-size:14px;font-weight:bolder;}
   <td id="chemical_taxonomy">
     <a href="./hmdb_kit/chemical_taxonomy.html">chemical_taxonomy</a>
   </td>
-  <td></td>
+  <td><p>Extract the chemical taxonomy data</p></td>
 </tr>
 <tr>
   <td id="biospecimen_slicer">

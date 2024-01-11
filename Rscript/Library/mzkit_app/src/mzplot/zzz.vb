@@ -63,5 +63,6 @@ Public Class zzz
         Call Visual.Main()
         Call MSIColorSet.DoRegister()
         Call plotNMR.Main()
+        Call Tissue.Main()
     End Sub
 End Class

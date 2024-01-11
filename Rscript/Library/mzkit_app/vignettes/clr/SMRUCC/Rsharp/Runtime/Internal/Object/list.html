@@ -5,7 +5,7 @@
     <title>SMRUCC.Rsharp.Runtime.Internal.Object.list</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-    <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
+    <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
 </head>
 
 <body>
@@ -22,23 +22,32 @@
 
         <h3>Description</h3>
 
-        A tuple paired list object model
+        <p>A tuple paired list object model</p>
 
         <h3>Declare</h3>        
 
         <pre>
             <code id="clr_ts">
 # namespace SMRUCC.Rsharp.Runtime.Internal.Object
-export class list {
+export class list extends <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/RsharpDataObject.html">RsharpDataObject</a> {
    slots: list;
-   # gets the @``P:SMRUCC.Rsharp.Runtime.Internal.Object.list.slots`` collection size
+   # gets the list.<a href="#">slots</a> collection size
    length: integer;
-   # get all values collection from the ``slots`` symbol.
+   # get all values collection from the <code>slots</code> symbol.
    data: <a href="/vignettes/clr/System/Collections/Generic/IEnumerable`1.html">IEnumerable`1</a>;
    elementType: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Interop/RType.html">RType</a>;
 }
 </code>
         </pre>
+
+        <h3>.NET clr type reference tree</h3>
+
+        <ol>
+<li>this class extends from <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/RsharpDataObject.html">RsharpDataObject</a> class: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/RsharpDataObject.html">RsharpDataObject</a></li>
+<li>use by <i>property</i> member <code>data</code>: <a href="/vignettes/clr/System/Collections/Generic/IEnumerable`1.html">IEnumerable`1</a></li>
+<li>use by <i>property</i> member <code>elementType</code>: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Interop/RType.html">RType</a></li>
+</ol>
+
 
         <hr />
         <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a
@@ -47,8 +56,8 @@ export class list {
     </div>
 </body>
 
-<script type="text/javascript" src="https://mzkit.org/assets/js/R_syntax.js"></script>
-<script type="text/javascript" src="https://mzkit.org/assets/js/highlights.js"></script>
+<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
+<script type="text/javascript" src="../../_assets/highlights.js"></script>
 <script type="text/javascript">r_highlights("clr_ts");</script>
 
 </html>

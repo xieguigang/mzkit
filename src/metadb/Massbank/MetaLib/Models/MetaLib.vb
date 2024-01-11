@@ -70,6 +70,13 @@ Namespace MetaLib.Models
 
     End Class
 
+    ''' <summary>
+    ''' the data model of the compound class information
+    ''' </summary>
+    ''' <remarks>
+    ''' this class information model is mainly address on the HMDB
+    ''' metabolite ontology class levels.
+    ''' </remarks>
     Public Class CompoundClass : Implements ICompoundClass
 
         Public Property kingdom As String Implements ICompoundClass.kingdom

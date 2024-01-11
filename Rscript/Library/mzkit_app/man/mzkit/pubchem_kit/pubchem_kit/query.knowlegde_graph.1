@@ -16,6 +16,16 @@ Query the compound related biological context information from pubchem
 .PP
 \fBcache\fB \fR\- -. 
 .PP
+.SH VALUE
+.PP
+A tuple list of the knowledge data that associated with the given pubchem metabolite:
+ 
+ 1. genes: the co-occurance genes with the compound 
+ 2. disease: a list of the related disease with the compound
+ 3. compounds: the co-occurance compound data
+ 
+ all of the slot data is a collection of the pubchem @\fBT:BioNovoGene.BioDeep.Chemistry.NCBI.PubChem.Graph.MeshGraph\fR clr object
+.PP
 .SH SEE ALSO
 pubchem_kit
 .SH FILES

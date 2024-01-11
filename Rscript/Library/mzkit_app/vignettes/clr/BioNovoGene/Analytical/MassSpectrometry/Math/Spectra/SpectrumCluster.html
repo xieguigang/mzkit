@@ -5,7 +5,7 @@
     <title>BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.SpectrumCluster</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-    <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
+    <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
 </head>
 
 <body>
@@ -22,7 +22,7 @@
 
         <h3>Description</h3>
 
-        A collection of @``T:BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.PeakMs2`` spectrum data
+        <p>A collection of <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/PeakMs2.html">PeakMs2</a> spectrum data</p>
 
         <h3>Declare</h3>        
 
@@ -32,9 +32,9 @@
 export class SpectrumCluster {
    # 当前的这个质谱图聚类之中的代表性质谱图
    Representative: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/PeakMs2.html">PeakMs2</a>;
-   # 在这个属性之中也会通过包含有@``P:BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.SpectrumCluster.Representative``代表质谱图
+   # 在这个属性之中也会通过包含有<a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/SpectrumCluster.html">SpectrumCluster</a>.<a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/PeakMs2.html">Representative</a>代表质谱图
    cluster: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/PeakMs2.html">PeakMs2[]</a>;
-   # @``P:BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.SpectrumCluster.cluster`` members count
+   # <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/SpectrumCluster.html">SpectrumCluster</a>.<a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/PeakMs2.html">cluster</a> members count
    Length: integer;
    MID: string;
    RepresentativeFeature: string;
@@ -43,6 +43,14 @@ export class SpectrumCluster {
 </code>
         </pre>
 
+        <h3>.NET clr type reference tree</h3>
+
+        <ol>
+<li>use by <i>property</i> member <code>Representative</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/PeakMs2.html">PeakMs2</a></li>
+<li>use by <i>property</i> member <code>cluster</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/PeakMs2.html">PeakMs2</a></li>
+</ol>
+
+
         <hr />
         <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a
                 href="../{$package}.html">Index</a>]
@@ -50,8 +58,8 @@ export class SpectrumCluster {
     </div>
 </body>
 
-<script type="text/javascript" src="https://mzkit.org/assets/js/R_syntax.js"></script>
-<script type="text/javascript" src="https://mzkit.org/assets/js/highlights.js"></script>
+<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
+<script type="text/javascript" src="../../_assets/highlights.js"></script>
 <script type="text/javascript">r_highlights("clr_ts");</script>
 
 </html>

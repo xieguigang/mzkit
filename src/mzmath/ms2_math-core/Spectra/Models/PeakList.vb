@@ -67,6 +67,10 @@ Namespace Spectra
     ''' <summary>
     ''' Spectrum data in vector model
     ''' </summary>
+    ''' <remarks>
+    ''' if the <see cref="MRM"/> data is not empty, then it means current spectrum
+    ''' peaks data is the data for MRM targetted analysis
+    ''' </remarks>
     Public Class PeakList
 
         ''' <summary>
@@ -113,8 +117,17 @@ Namespace Spectra
         Sub New()
         End Sub
 
+        Public Iterator Function GetPeaks() As IEnumerable(Of ms2)
+            For i As Integer = 0 To mz.Length - 1
+                Yield New ms2(_mz(i), _into(i))
+            Next
+        End Function
+
     End Class
 
+    ''' <summary>
+    ''' the MRM ion pair data model
+    ''' </summary>
     Public Structure MRM
 
         Dim Q1 As Double

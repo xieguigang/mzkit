@@ -1,6 +1,7 @@
 # metadb
 
 Metabolite annotation database search engine
+> this library module mainly address of the ion m/z database search problem
 
 + [mass_search.index](metadb/mass_search.index.1) 
 + [queryByMass](metadb/queryByMass.1) 

@@ -18,6 +18,7 @@
       <PackageProjectUrl>https://mzkit.org</PackageProjectUrl>
       <RepositoryUrl>https://github.com/xieguigang/mzkit</RepositoryUrl>
       <RepositoryType>git</RepositoryType>
+      <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

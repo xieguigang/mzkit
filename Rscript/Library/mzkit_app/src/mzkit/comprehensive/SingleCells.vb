@@ -57,10 +57,13 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells
 Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.ComponentModel.Activations
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.genomics.Analysis.HTS.DataFrame
@@ -77,8 +80,19 @@ Imports SingleCellMatrix = BioNovoGene.Analytical.MassSpectrometry.SingleCells.D
 
 ''' <summary>
 ''' Single cells metabolomics data processor
-''' </summary>
 ''' 
+''' Single-cell analysis is a technique that measures only the target cell itself and can 
+''' extract information that would be buried in bulk-cell analysis with high-resolution.
+''' </summary>
+''' <remarks>
+''' Single-cell metabolomics is a powerful tool that can reveal cellular heterogeneity and 
+''' can elucidate the mechanisms of biological phenomena in detail. It is a promising 
+''' approach in studying plants, especially when cellular heterogeneity has an impact on different 
+''' biological processes. In addition, metabolomics, which can be regarded as a detailed 
+''' phenotypic analysis, is expected to answer previously unrequited questions which will 
+''' lead to expansion of crop production, increased understanding of resistance to diseases,
+''' and in other applications as well.
+''' </remarks>
 <Package("SingleCells")>
 Module SingleCells
 
@@ -165,7 +179,14 @@ Module SingleCells
     ''' Cast the ion feature matrix as the GCModeller expression matrix object
     ''' </summary>
     ''' <param name="x"></param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' the gcmodeller expression matrix object, each <see cref="DataFrameRow"/> element inside the 
+    ''' generated matrix object is the expression vector of all metabolite ion features. which means
+    ''' the matrix format from this function outputs should be:
+    ''' 
+    ''' 1. cell labels, or spatial location in rows
+    ''' 2. and ion features in columns.
+    ''' </returns>
     <ExportAPI("as.expression")>
     <RApiReturn(GetType(HTSMatrix))>
     Public Function asHTSExpression(x As MzMatrix, Optional single_cell As Boolean = False) As Object
@@ -209,10 +230,11 @@ Module SingleCells
     ''' scale matrix for each spot/cell sample
     ''' </summary>
     ''' <param name="x"></param>
-    ''' <param name="scaler"></param>
+    ''' <param name="scaler">A R# <see cref="RFunction"/> for apply the scale transform.</param>
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("apply.scale")>
+    <RApiReturn(GetType(MzMatrix))>
     Public Function rowApplyScale(x As Object, scaler As RFunction, Optional env As Environment = Nothing) As Object
         Dim lambda As Func(Of Double(), [Variant](Of Message, Double())) =
             Function(xi)
@@ -278,32 +300,90 @@ Module SingleCells
     ''' <summary>
     ''' export single cell expression matrix from the raw data scans
     ''' </summary>
-    ''' <param name="raw"></param>
+    ''' <param name="raw">the raw data for make epxression matrix, could be a mzkit <see cref="mzPack"/> object, 
+    ''' or a tuple list of the msdata <see cref="BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.LibraryMatrix"/></param>
     ''' <param name="mzdiff"></param>
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("cell_matrix")>
-    Public Function cellMatrix(raw As mzPack,
+    <RApiReturn(GetType(HTSMatrix), GetType(MzMatrix))>
+    Public Function cellMatrix(<RRawVectorArgument> raw As Object,
                                Optional mzdiff As Double = 0.005,
                                Optional freq As Double = 0.001,
+                               <RRawVectorArgument>
+                               Optional ions_mz As Object = Nothing,
+                               Optional mz_matrix As Boolean = False,
                                Optional env As Environment = Nothing) As Object
 
         Dim singleCells As New List(Of DataFrameRow)
-        Dim mzSet As Double() = SingleCellMath.GetMzIndex(raw:=raw, mzdiff:=mzdiff, freq:=freq)
+        Dim mzSet As Double()
+        Dim source As String
 
-        For Each cell_scan As DataFrameRow In SingleCellMatrix.ExportScans(Of DataFrameRow)(raw, mzSet)
-            cell_scan.geneID = cell_scan.geneID _
-                .Replace("[MS1]", "") _
-                .Trim
-            singleCells.Add(cell_scan)
-        Next
+        If raw Is Nothing Then
+            Return Nothing
+        End If
+
+        If TypeOf raw Is mzPack Then
+            Dim mzpack As mzPack = DirectCast(raw, mzPack)
+
+            source = mzpack.source
+            mzSet = SingleCellMath.GetMzIndex(
+                raw:=mzpack,
+                mzdiff:=mzdiff,
+                freq:=freq
+            )
+
+            For Each cell_scan As DataFrameRow In SingleCellMatrix.ExportScans(Of DataFrameRow)(mzpack, mzSet)
+                cell_scan.geneID = cell_scan.geneID _
+                    .Replace("[MS1]", "") _
+                    .Trim
+                singleCells.Add(cell_scan)
+            Next
+        ElseIf TypeOf raw Is list Then
+            Dim msdata As Dictionary(Of String, LibraryMatrix) = DirectCast(raw, list).AsGeneric(Of LibraryMatrix)(env)
+
+            source = "msdata"
+            mzSet = msdata.Values _
+                .IteratesALL _
+                .ToArray _
+                .Centroid(Tolerance.DeltaMass(mzdiff), New RelativeIntensityCutoff(0)) _
+                .Select(Function(mzi) mzi.mz) _
+                .ToArray
+
+            For Each cell_scan As DataFrameRow In SingleCellMatrix.ExportScans(Of DataFrameRow)(msdata.Values, mzSet)
+                cell_scan.geneID = cell_scan.geneID _
+                    .Replace("[MS1]", "") _
+                    .Trim
+                singleCells.Add(cell_scan)
+            Next
+        ElseIf TypeOf raw Is dataframe Then
+            Dim ions As Double() = CLRVector.asNumeric(ions_mz)
+            Dim mat As New MzMatrix With {
+                .mz = ions,
+                .tolerance = mzdiff
+            }
+            Dim samples As New List(Of PixelData)
+
+            For Each sample In DirectCast(raw, dataframe).forEachRow
+                samples.Add(New PixelData With {
+                    .label = sample.name,
+                    .intensity = CLRVector.asNumeric(sample.value)
+                })
+            Next
+
+            mat.matrix = samples.ToArray
+
+            Return mat
+        Else
+            Return Message.InCompatibleType(GetType(mzPack), raw.GetType, env)
+        End If
 
         Return New HTSMatrix With {
             .expression = singleCells.ToArray,
             .sampleID = mzSet _
                 .Select(Function(mzi) mzi.ToString("F4")) _
                 .ToArray,
-            .tag = raw.source
+            .tag = source
         }
     End Function
 
@@ -355,7 +435,15 @@ Module SingleCells
     ''' </summary>
     ''' <param name="file"></param>
     ''' <param name="env"></param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' A tuple list that contains the data elements:
+    ''' 
+    ''' 1. tolerance: the mass tolerance description for seperates the ion features
+    ''' 2. featureSize: the number of the ion features in the raw data file
+    ''' 3. ionSet: a numeric vector of the ion features m/z value.
+    ''' 4. spots: the number of the spots that read from the rawdata matrix file
+    ''' 5. reader: the rawdata <see cref="MatrixReader"/>
+    ''' </returns>
     ''' <remarks>
     ''' this function open a lazy reader of the matrix, for load all 
     ''' data into memory at once, use the ``read.mz_matrix`` 
@@ -430,9 +518,10 @@ Module SingleCells
     ''' <summary>
     ''' cast matrix object to the R liked dataframe object
     ''' </summary>
-    ''' <param name="x"></param>
+    ''' <param name="x">the matrix object that going to do the type casting</param>
     ''' <returns></returns>
     <ExportAPI("df.mz_matrix")>
+    <RApiReturn(GetType(SpatialMatrixReader))>
     Public Function dfMzMatrix(x As MzMatrix) As Object
         Return New SpatialMatrixReader(x)
     End Function

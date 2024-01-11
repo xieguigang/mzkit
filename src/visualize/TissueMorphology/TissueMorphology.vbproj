@@ -10,6 +10,7 @@
 	  <PackageLicenseFile>LICENSE</PackageLicenseFile>
 	  <Platforms>AnyCPU;x64</Platforms>
 	  <Configurations>Debug;Release;Rsharp_app_release;mzkit_win32</Configurations>
+	  <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0|AnyCPU'">

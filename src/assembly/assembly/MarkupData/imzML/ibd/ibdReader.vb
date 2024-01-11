@@ -67,6 +67,9 @@ Imports Microsoft.VisualBasic.Data.IO
 
 Namespace MarkupData.imzML
 
+    ''' <summary>
+    ''' the binary data reader of the mass spectrum data
+    ''' </summary>
     Public Class ibdReader : Implements IDisposable
 
         ReadOnly stream As BinaryDataReader
@@ -92,6 +95,10 @@ Namespace MarkupData.imzML
             End Get
         End Property
 
+        ''' <summary>
+        ''' the original source file name
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property fileName As String
             Get
                 If filepath.StringEmpty Then

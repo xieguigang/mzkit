@@ -75,12 +75,14 @@ Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.TissueMorphology
 Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells
 Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Data.GraphTheory.GridGraph
 Imports Microsoft.VisualBasic.Emit.Delegates
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.HeatMap
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.ComponentModel.Activations
@@ -92,11 +94,13 @@ Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports SMRUCC.Rsharp
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
+Imports SMRUCC.Rsharp.Runtime.Internal
 Imports SMRUCC.Rsharp.Runtime.Internal.Invokes
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Internal.Object.Converts
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
+Imports any = Microsoft.VisualBasic.Scripting
 Imports imzML = BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML.XML
 Imports rDataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
 Imports REnv = SMRUCC.Rsharp.Runtime
@@ -113,11 +117,40 @@ Imports vector = Microsoft.VisualBasic.Math.LinearAlgebra.Vector
 ''' metabolites, peptides or proteins by their molecular masses. 
 ''' </summary>
 <Package("MSI")>
+<RTypeExport("msi_layer", GetType(SingleIonLayer))>
+<RTypeExport("msi_summary", GetType(MSISummary))>
 Module MSI
 
-    Sub New()
+    Friend Sub Main()
         Call Internal.Object.Converts.makeDataframe.addHandler(GetType(IonStat()), AddressOf getStatTable)
+
+        Call generic.add("readBin.msi_layer", GetType(Stream), AddressOf readPeaklayer)
+        Call generic.add("readBin.msi_summary", GetType(Stream), AddressOf readSummarylayer)
+        Call generic.add("writeBin", GetType(MSISummary), AddressOf writeSummarylayer)
+        Call generic.add("writeBin", GetType(SingleIonLayer), AddressOf writePeaklayer)
     End Sub
+
+    Private Function writeSummarylayer(layer As MSISummary, args As list, env As Environment) As Object
+        Dim con As Stream = args!con
+        Call LayerFile.SaveMSISummary(layer, con)
+        Call con.Flush()
+        Return True
+    End Function
+
+    Private Function readSummarylayer(file As Stream, args As list, env As Environment) As Object
+        Return LayerFile.LoadSummaryLayer(file)
+    End Function
+
+    Private Function writePeaklayer(layer As SingleIonLayer, args As list, env As Environment) As Object
+        Dim con As Stream = args!con
+        Call LayerFile.SaveLayer(layer, con)
+        Call con.Flush()
+        Return True
+    End Function
+
+    Private Function readPeaklayer(file As Stream, args As list, env As Environment) As Object
+        Return LayerFile.ParseLayer(file)
+    End Function
 
     Private Function getStatTable(ions As IonStat(), args As list, env As Environment) As rDataframe
         Dim table As New rDataframe With {
@@ -153,6 +186,9 @@ Module MSI
     ''' <param name="factor">the size of this numeric vector should be equals to the 
     ''' ncol of the given dataframe input <paramref name="m"/>.
     ''' </param>
+    ''' <param name="bpc">
+    ''' scle by bpc or scale by tic?
+    ''' </param>
     ''' <param name="env"></param>
     ''' <returns>A new dataframe data after scaled</returns>
     ''' <example>
@@ -166,7 +202,11 @@ Module MSI
     ''' }
     ''' </example>
     <ExportAPI("scale")>
-    Public Function scale(m As rDataframe, <RRawVectorArgument> factor As Object, Optional env As Environment = Nothing) As Object
+    <RApiReturn(GetType(rDataframe))>
+    Public Function scale(m As rDataframe, <RRawVectorArgument> factor As Object,
+                          Optional bpc As Boolean = False,
+                          Optional env As Environment = Nothing) As Object
+
         Dim f As Double() = CLRVector.asNumeric(factor)
         Dim v As Double()
         Dim cols As String() = m.colnames
@@ -178,14 +218,29 @@ Module MSI
 
         m = New rDataframe(m)
 
-        For i As Integer = 0 To cols.Length - 1
-            name = cols(i)
-            ' scale current column field by a speicifc factor f(i)
-            v = CLRVector.asNumeric(m.columns(name))
-            v = SIMD.Divide.f64_op_divide_f64_scalar(v, v.Sum)
-            v = SIMD.Multiply.f64_scalar_op_multiply_f64(f(i), v)
-            m.columns(name) = ReLU.ReLU(v)
-        Next
+        If bpc Then
+            For i As Integer = 0 To cols.Length - 1
+                name = cols(i)
+                ' scale current column field by a speicifc factor f(i)
+                v = CLRVector.asNumeric(m.columns(name))
+                ' relative max norm
+                v = SIMD.Divide.f64_op_divide_f64_scalar(v, v.Max)
+                ' then scale to a max factor
+                v = SIMD.Multiply.f64_scalar_op_multiply_f64(f(i), v)
+                m.columns(name) = ReLU.ReLU(v)
+            Next
+        Else
+            For i As Integer = 0 To cols.Length - 1
+                name = cols(i)
+                ' scale current column field by a speicifc factor f(i)
+                v = CLRVector.asNumeric(m.columns(name))
+                ' total sum norm
+                v = SIMD.Divide.f64_op_divide_f64_scalar(v, v.Sum)
+                ' then scale to a total factor
+                v = SIMD.Multiply.f64_scalar_op_multiply_f64(f(i), v)
+                m.columns(name) = ReLU.ReLU(v)
+            Next
+        End If
 
         Return m
     End Function
@@ -516,6 +571,54 @@ Module MSI
     End Function
 
     ''' <summary>
+    ''' get or set the dimension size of the ms-imaging mzpack raw data object
+    ''' </summary>
+    ''' <param name="raw"></param>
+    ''' <param name="dims"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    ''' <example>
+    ''' # get dimension size value
+    ''' let size = dimension_size(mzpack_rawdata);
+    ''' str(size);
+    ''' 
+    ''' # set new dimension size to the ms-imaging mzpack object
+    ''' dimension_size(mzpack_rawdata) = [525, 600];
+    ''' 
+    ''' let new_size = dimension_size(mzpack_rawdata);
+    ''' str(new_size);
+    ''' </example>
+    <ExportAPI("dimension_size")>
+    Public Function dimension_size(raw As mzPack,
+                                   <RByRefValueAssign>
+                                   <RRawVectorArgument>
+                                   Optional dims As Object = Nothing,
+                                   Optional env As Environment = Nothing) As Object
+
+        If dims Is Nothing Then
+            ' just get dimension size
+            Return getmzPackMetadata(raw, env)
+        Else
+            Dim sizeVal As String = InteropArgumentHelper.getSize(dims, env, "0,0")
+
+            If sizeVal = "0,0" Then
+                Return Internal.debug.stop($"invalid dimension size value input: {any.ToString(dims)}", env)
+            End If
+
+            Dim dimsVal As Size = sizeVal.SizeParser
+
+            If raw.metadata Is Nothing Then
+                raw.metadata = New Dictionary(Of String, String)
+            End If
+
+            raw.metadata("width") = dimsVal.Width
+            raw.metadata("height") = dimsVal.Height
+
+            Return raw
+        End If
+    End Function
+
+    ''' <summary>
     ''' open the reader for the imzML ms-imaging file
     ''' </summary>
     ''' <param name="file">the file path to the specific imzML metadata file for load 
@@ -524,9 +627,9 @@ Module MSI
     ''' <returns>
     ''' this function returns a tuple list object that contains 2 slot elements inside:
     ''' 
-    ''' 1. scans: is the [x,y] spatial scans data
+    ''' 1. scans: is the [x,y] spatial scans data: <see cref="ScanData"/>.
     ''' 2. ibd: is the binary data reader wrapper object for the corresponding 
-    '''       ``ibd`` file of the given input imzML file.
+    '''       ``ibd`` file of the given input imzML file: <see cref="ibdReader"/>.
     ''' </returns>
     ''' <example>
     ''' # the msi_rawdata.ibd file should be in the same folder with the input imzml file.
@@ -567,23 +670,39 @@ Module MSI
     ''' <param name="ionMode">
     ''' the ion polarity mode value
     ''' </param>
+    ''' <param name="dims">
+    ''' an integer vector for set the size of the ms-imaging canvas dimension
+    ''' </param>
     ''' <returns></returns>
     ''' <example>
     ''' let msi_rawdata = open.mzpack(file = "/path/to/msi_rawdata.mzPack");
     ''' 
     ''' # convert the mzpack object into imzML format
     ''' msi_rawdata
-    ''' |> write.imzML(file = "/path/to/msi_rawdata.imzML");
+    ''' |> write.imzML(file = "/path/to/msi_rawdata.imzML", dims = [500, 450]);
     ''' </example>
     <ExportAPI("write.imzML")>
+    <RApiReturn(TypeCodes.boolean)>
     Public Function write_imzML(mzpack As mzPack, file As String,
                                 Optional res As Double = 17,
-                                Optional ionMode As IonModes = IonModes.Positive) As Object
+                                Optional ionMode As IonModes = IonModes.Positive,
+                                <RRawVectorArgument>
+                                Optional dims As Object = Nothing,
+                                Optional env As Environment = Nothing) As Object
+
+        Dim dimSize As String = InteropArgumentHelper.getSize(dims, env, "0,0")
+        Dim dimsVal As Size? = Nothing
+
+        If Not dimSize = "0,0" Then
+            dimsVal = dimSize.SizeParser
+        End If
 
         Return imzXMLWriter.WriteXML(
             mzpack, output:=file,
             res:=res,
-            ionMode:=ionMode)
+            ionMode:=ionMode,
+            dims:=dimsVal
+        )
     End Function
 
     ''' <summary>
@@ -602,6 +721,7 @@ Module MSI
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("row.scans")>
+    <RApiReturn(GetType(iPixelIntensity))>
     Public Function rowScans(raw As String(),
                              Optional y As Integer = 0,
                              Optional correction As Correction = Nothing,
@@ -690,7 +810,9 @@ Module MSI
     ''' <example>
     ''' let rawdata = open.mzpack("/path/to/rawdata.mzPack");
     ''' let spots = read.csv("/path/to/region.csv");
-    ''' let into = MSI_summary(rawdata, x = as.integer(spots$x), y = as.integer(spots$y), as.vector = TRUE);
+    ''' let into = MSI_summary(rawdata, x = as.integer(spots$x), 
+    '''       y = as.integer(spots$y), 
+    '''       as.vector = TRUE);
     ''' 
     ''' print(as.data.frame(into));
     ''' print("view of the intensity vector:");
@@ -746,14 +868,23 @@ Module MSI
     End Function
 
     ''' <summary>
-    ''' calculate the X scale
+    ''' calculate the X axis scale
     ''' </summary>
-    ''' <param name="totalTime"></param>
-    ''' <param name="pixels"></param>
-    ''' <param name="hasMs2"></param>
-    ''' <returns></returns>
+    ''' <param name="totalTime">the max rt of the y scan data</param>
+    ''' <param name="pixels">the average pixels of all your y scan data</param>
+    ''' <param name="hasMs2">does the ms-imaging raw data contains any ms scan data in ms2 level?</param>
+    ''' <returns>
+    ''' A x axis correction function wrapper, the clr object type of this 
+    ''' function return value is determined based on the flag parameter
+    ''' <paramref name="hasMs2"/>:
+    ''' 
+    ''' 1. for has ms2 data inside your ms-imaging rawdata, a <see cref="ScanMs2Correction"/> object should be used,
+    ''' 2. for has no ms2 data, a <see cref="ScanTimeCorrection"/> object is used 
+    '''    for run x axis correction based on the average rt diff.
+    ''' </returns>
     <ExportAPI("correction")>
-    Public Function Correction(totalTime As Double, pixels As Integer, Optional hasMs2 As Boolean = False) As Correction
+    <RApiReturn(GetType(Correction))>
+    Public Function Correction(totalTime As Double, pixels As Integer, Optional hasMs2 As Boolean = False) As Object
         If hasMs2 Then
             Return New ScanMs2Correction(totalTime, pixels)
         Else
@@ -1036,6 +1167,7 @@ Module MSI
     ''' <param name="env"></param>
     ''' <returns>returns the raw matrix data that contains the peak samples.</returns>
     <ExportAPI("peakSamples")>
+    <RApiReturn(GetType(DataSet))>
     Public Function peakSamples(raw As mzPack,
                                 Optional resolution As Integer = 100,
                                 Optional mzError As Object = "da:0.05",
@@ -1066,11 +1198,16 @@ Module MSI
     ''' <summary>
     ''' get number of ions in each pixel scans
     ''' </summary>
-    ''' <param name="raw"></param>
-    ''' <returns></returns>
+    ''' <param name="raw">
+    ''' should be a mzpack object that contains multiple spatial spot scans data.
+    ''' </param>
+    ''' <returns>an integer vector of the number of ions in each spatial spot scans</returns>
     <ExportAPI("pixelIons")>
-    Public Function PixelIons(raw As mzPack) As Integer()
-        Return raw.MS.Select(Function(scan) scan.size).ToArray
+    <RApiReturn(TypeCodes.integer)>
+    Public Function PixelIons(raw As mzPack) As Object
+        Return raw.MS _
+            .Select(Function(scan) scan.size) _
+            .ToArray
     End Function
 
     ''' <summary>
@@ -1157,6 +1294,45 @@ Module MSI
     ''' in format of spatial spot in columns and molecule feature in rows.
     ''' </param>
     ''' <returns></returns>
+    <ExportAPI("levels.convolution")>
+    Public Function level_convolution(mat As rDataframe, Optional clusters As Integer = 6, Optional win_size As Integer = 3) As rDataframe
+        Dim spatial_vector = mat.columns.AsParallel _
+            .Select(Function(a)
+                        Return (spot_id:=a.Key, vec:=CLRVector.asNumeric(a.Value))
+                    End Function) _
+            .OrderByDescending(Function(a) a.vec.Sum) _
+            .ToArray
+        Dim cluster_groups = spatial_vector.Split(spatial_vector.Length / clusters + 1)
+        Dim convolution As New rDataframe With {
+            .columns = New Dictionary(Of String, Array),
+            .rownames = mat.getRowNames
+        }
+
+        For Each cluster In cluster_groups
+            Dim slides = cluster.SlideWindows(winSize:=win_size).ToArray
+
+            For Each cov In slides
+                Dim v As Double() = cov.First.vec
+
+                For Each vi In cov.Skip(1)
+                    v = SIMD.Add.f64_op_add_f64(v, vi.vec)
+                Next
+
+                Call convolution.add(cov.First.spot_id, v)
+            Next
+        Next
+
+        Return convolution
+    End Function
+
+    ''' <summary>
+    ''' sum pixels for create pixel spot convolution
+    ''' </summary>
+    ''' <param name="mat">A matrix liked dataframe object that contains the 
+    ''' molecule expression data on each spatial spots, data object should 
+    ''' in format of spatial spot in columns and molecule feature in rows.
+    ''' </param>
+    ''' <returns></returns>
     <ExportAPI("spatial.convolution")>
     Public Function spatialConvolution(mat As rDataframe, Optional win_size As Integer = 2, Optional steps As Integer = 1) As rDataframe
         Dim spatial As Grid(Of SpotVector) = Grid(Of SpotVector).Create(SpotVector.LoadDataFrame(mat))
@@ -1207,6 +1383,7 @@ Module MSI
                                Optional dims As Object = Nothing,
                                Optional res As Double = 17,
                                Optional noise_cutoff As Double = 1,
+                               Optional source_tag As String = "pack_matrix",
                                Optional env As Environment = Nothing) As Object
         Dim scans As ScanMS1()
         Dim msi_dims As Size = InteropArgumentHelper.getSize(dims, env, "0,0").SizeParser
@@ -1243,8 +1420,10 @@ Module MSI
         End If
 
         Return New mzPack With {
-            .MS = scans.Where(Function(s) Not s Is Nothing).ToArray,
-            .source = NameOf(packMatrix),
+            .MS = scans _
+                .Where(Function(s) Not s Is Nothing) _
+                .ToArray,
+            .source = source_tag,
             .Application = FileApplicationClass.MSImaging,
             .metadata = If(metadata Is Nothing, Nothing, metadata.GetMetadata)
         }
@@ -1385,6 +1564,29 @@ Module MSI
         Return df
     End Function
 
+    ''' <summary>
+    ''' make expression bootstrapping of current ion layer
+    ''' </summary>
+    ''' <param name="layer">The target ion layer to run expression bootstraping</param>
+    ''' <param name="tissue">A collection of the <see cref="TissueRegion"/> object.</param>
+    ''' <param name="n">Get n sample points for each tissue region</param>
+    ''' <param name="coverage">The region area coverage for the bootstrapping.</param>
+    ''' <returns>
+    ''' A tuple list object that contains the expression data for each <see cref="TissueRegion"/>:
+    ''' 
+    ''' 1. the tuple key is the label of the tissue region data,
+    ''' 2. the tuple value is the numeric expression vector that sampling from 
+    '''    the corrisponding tissue region, the vector size is equals to the 
+    '''    parameter ``n``.
+    ''' </returns>
+    ''' <remarks>
+    ''' Bootstrapping is a statistical procedure that resamples a single dataset to create
+    ''' many simulated samples. This process allows you to calculate standard errors, 
+    ''' construct confidence intervals, and perform hypothesis testing for numerous types of
+    ''' sample statistics. Bootstrap methods are alternative approaches to traditional 
+    ''' hypothesis testing and are notable for being easier to understand and valid for more 
+    ''' conditions.
+    ''' </remarks>
     <ExportAPI("sample_bootstraping")>
     Public Function SampleBootstraping(layer As SingleIonLayer, tissue As TissueRegion(),
                                        Optional n As Integer = 32,
@@ -1397,12 +1599,13 @@ Module MSI
     ''' cast the rawdata matrix as the ms-imaging ion layer
     ''' </summary>
     ''' <param name="x">the matrix object</param>
-    ''' <param name="mzdiff"></param>
+    ''' <param name="mzdiff">the mass tolerance error in <see cref="DAmethod"/></param>
     ''' <param name="dims">
     ''' the dimension size of the ms-imaging spatial data
     ''' </param>
     ''' <returns></returns>
     <ExportAPI("cast.spatial_layers")>
+    <RApiReturn(GetType(SingleIonLayer))>
     Public Function castSpatialLayers(x As MzMatrix,
                                       Optional mzdiff As Double = 0.01,
                                       <RRawVectorArgument>
@@ -1421,7 +1624,56 @@ Module MSI
                 .ToArray
         End If
 
-        Return New MsImaging.MatrixReader(x).ForEachLayer(mz, dims:=size).ToArray
+        Return New MsImaging.MatrixReader(x) _
+            .ForEachLayer(mz, dims:=size) _
+            .ToArray
+    End Function
+
+    ''' <summary>
+    ''' Create mzpack object for ms-imaging in 3D
+    ''' </summary>
+    ''' <param name="x">the z axis value should be encoded in the <see cref="mzPack.source"/> tag</param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("z_assembler")>
+    Public Function z_assembler(<RRawVectorArgument> x As Object, file As Object, Optional env As Environment = Nothing) As Object
+        Dim pull As pipeline = pipeline.TryCreatePipeline(Of mzPack)(x, env)
+
+        If pull.isError Then
+            Return pull.getError
+        End If
+
+
+    End Function
+
+    ''' <summary>
+    ''' cast the ms-imaging layer data to raster object 
+    ''' 
+    ''' use this function for cast raster object, for do spatial heatmap rendering in another method.
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <param name="layer">
+    ''' the layer type for create the raster object, this parameter only works 
+    ''' for when the data type of <paramref name="x"/> is <see cref="MSISummary"/>.
+    ''' </param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("raster")>
+    <RApiReturn(GetType(RasterMatrix))>
+    Public Function asRaster(x As Object,
+                             Optional layer As IntensitySummary = IntensitySummary.Total,
+                             Optional env As Environment = Nothing) As Object
+        If x Is Nothing Then
+            Return x
+        End If
+
+        If TypeOf x Is SingleIonLayer Then
+            Return DirectCast(x, SingleIonLayer).AsRaster
+        ElseIf TypeOf x Is MSISummary Then
+            Return DirectCast(x, MSISummary).AsRaster(kind:=layer)
+        Else
+            Return Message.InCompatibleType(GetType(SingleIonLayer), x.GetType, env)
+        End If
     End Function
 End Module
 

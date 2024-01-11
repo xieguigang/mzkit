@@ -1,0 +1,36 @@
+.\" man page create by R# package system.
+.TH TISSUE 1 2000-Jan "mark_nucleus" "mark_nucleus"
+.SH NAME
+mark_nucleus \- extract the possible nucleus pixel points from the image
+.SH SYNOPSIS
+\fImark_nucleus(\fBtissue\fR as <generic> Image, 
+\fBnucleus\fR as any = ["#8230b8","#903ab5","#8826b1","#9026ae","#c23ec5"], 
+\fBtolerance\fR as double = 13, 
+[\fB<Environment>\fR]);\fR
+.SH DESCRIPTION
+.PP
+extract the possible nucleus pixel points from the image
+.PP
+.SH OPTIONS
+.PP
+\fBtissue\fB \fR\- the H&E stain image. 
+.PP
+.PP
+\fBnucleus\fB \fR\- the target color of the nucleus. 
+.PP
+.PP
+\fBenv\fB \fR\- -. 
+.PP
+.SH VALUE
+.PP
+a dataframe object that contains the nucleus pixel location 
+ result, this result dataframe object contains at least two data 
+ fields: \fBx\fR and \fBy\fR. such geometry pixel position could be used 
+ for the downstream data analysis pipeline.
+.PP
+.SH SEE ALSO
+tissue
+.SH FILES
+.PP
+mzplot.dll
+.PP

@@ -5,6 +5,8 @@ Imports std = System.Math
 Namespace Formula.MS
 
     ''' <summary>
+    ''' A <see cref="MzCalculator"/> liked precursor m/z evaluation model.
+    ''' 
     ''' This is the storage of adduct ion information.
     ''' </summary>
     Public Class AdductIon
@@ -64,6 +66,10 @@ Namespace Formula.MS
         Public Property IsRadical As Boolean
         Public Property IsIncluded As Boolean ' used for applications
 
+        ''' <summary>
+        ''' false value for ``[M]+`` or ``[M]-``.
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property HasAdduct As Boolean
             Get
                 Return Not String.IsNullOrEmpty(AdductIonName)
