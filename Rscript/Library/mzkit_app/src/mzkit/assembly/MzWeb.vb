@@ -477,13 +477,17 @@ Module MzWeb
     <ExportAPI("open_mzpack.xml")>
     Public Function openFromFile(file As String,
                                  Optional prefer As String = Nothing,
+                                 Optional da As Double = 0.001,
+                                 Optional noise_cutoff As Double = 0.0001,
                                  Optional env As Environment = Nothing) As mzPack
 
         If file.ExtensionSuffix("mzXML", "mzML", "imzML", "xml") Then
             Return Converter.LoadRawFileAuto(
                 xml:=file,
                 prefer:=prefer,
-                progress:=AddressOf VBDebugger.EchoLine
+                progress:=AddressOf VBDebugger.EchoLine,
+                tolerance:=$"da:{da}",
+                intocutoff:=noise_cutoff
             )
         ElseIf file.ExtensionSuffix("mgf", "msp") Then
             Return Converter.LoadAsciiFileAuto(file)
@@ -496,7 +500,7 @@ Module MzWeb
         ElseIf file.ExtensionSuffix("cdf") Then
             Using cdf As New netCDFReader(file)
                 If cdf.IsLecoGCMS Then
-                    Dim println As Action(Of String) = Sub(line) base.print(line,, env)
+                    Dim println As Action(Of String) = AddressOf VBDebugger.EchoLine
                     Dim sig As mzPack = GCMSConvertor.ConvertGCMS(cdf, println)
                     sig.source = file.FileName
                     Return sig
