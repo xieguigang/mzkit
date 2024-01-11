@@ -156,15 +156,20 @@ declare namespace mzweb {
        * open mzpack data from a raw data file in xml file format.
        * 
        * 
-        * @param file -
+        * @param file the file path to the xml rawdata file
         * @param prefer the prefer file format used when the given **`file`** its extension
         *  suffix name is ``XML``. value of this parameter could be imzml/mzml/mzxml
         * 
         * + default value Is ``null``.
+        * @param da 
+        * + default value Is ``0.001``.
+        * @param noise_cutoff 
+        * + default value Is ``0.0001``.
         * @param env 
         * + default value Is ``null``.
+        * @return A mzkit mzpack rawdata object
       */
-      function xml(file: string, prefer?: string, env?: object): object;
+      function xml(file: string, prefer?: string, da?: number, noise_cutoff?: number, env?: object): object;
    }
    /**
     * write binary format of mzweb stream data
