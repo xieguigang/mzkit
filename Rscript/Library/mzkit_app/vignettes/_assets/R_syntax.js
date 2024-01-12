@@ -22,14 +22,14 @@ var Token;
     Token.stacks = renderTextSet(["[", "]", "(", ")", "{", "}"]);
     Token.keywords = renderTextSet([
         "imports", "from", "require",
-        "if", "else", "for", "break", "while", "next",
+        "if", "else", "for", "break", "while",
         "in", "between",
         "function", "return",
-        "let", "const", "as",
+        "let", "const",
         "stop", "invisible",
         "export", "namespace", "class",
         "extends", "implements", // typescript keywords
-        "string", "double", "integer", "list", "boolean",
+        "string", "double", "integer", "list",
         "typeof"
     ]);
     var hex_colors = {
