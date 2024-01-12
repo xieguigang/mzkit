@@ -5,6 +5,8 @@ open_mzpack.xml \- open mzpack data from a raw data file in xml file format.
 .SH SYNOPSIS
 \fIopen_mzpack.xml(\fBfile\fR as string, 
 \fBprefer\fR as string = \fB<NULL>\fR, 
+\fBda\fR as double = 0.001, 
+\fBnoise_cutoff\fR as double = 0.0001, 
 [\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
@@ -12,13 +14,17 @@ open mzpack data from a raw data file in xml file format.
 .PP
 .SH OPTIONS
 .PP
-\fBfile\fB \fR\- -. 
+\fBfile\fB \fR\- the file path to the xml rawdata file. 
 .PP
 .PP
 \fBprefer\fB \fR\- 
  the prefer file format used when the given **`file`** its extension
  suffix name is \fBXML\fR. value of this parameter could be imzml/mzml/mzxml
 . 
+.PP
+.SH VALUE
+.PP
+A mzkit mzpack rawdata object
 .PP
 .SH SEE ALSO
 mzweb

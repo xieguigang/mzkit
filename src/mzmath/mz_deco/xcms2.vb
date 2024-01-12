@@ -61,6 +61,7 @@
 
 #End Region
 
+Imports System.ComponentModel
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
@@ -78,34 +79,38 @@ Public Class xcms2 : Inherits DynamicPropertyBase(Of Double)
     ''' the feature unique id
     ''' </summary>
     ''' <returns></returns>
+    <DisplayName("xcms id")>
+    <Category("MS1")>
     Public Property ID As String Implements INamedValue.Key
     ''' <summary>
     ''' the ion m/z
     ''' </summary>
     ''' <returns></returns>
-    Public Property mz As Double
+    <Category("MS1")> Public Property mz As Double
     ''' <summary>
     ''' the min of ion m/z value
     ''' </summary>
     ''' <returns></returns>
-    Public Property mzmin As Double
+    <Category("MS1")> Public Property mzmin As Double
     ''' <summary>
     ''' the max of the ion m/z value
     ''' </summary>
     ''' <returns></returns>
-    Public Property mzmax As Double
+    <Category("MS1")> Public Property mzmax As Double
     ''' <summary>
     ''' the rt value in max peak data point
     ''' </summary>
     ''' <returns></returns>
-    Public Property rt As Double
-    Public Property rtmin As Double
-    Public Property rtmax As Double
+    <Category("MS1")> Public Property rt As Double
+    <Category("MS1")> Public Property rtmin As Double
+    <Category("MS1")> Public Property rtmax As Double
 
     ''' <summary>
     ''' this feature has n sample data(value should be a positive number)
     ''' </summary>
     ''' <returns></returns>
+    ''' 
+    <Category("sample_data")>
     Public ReadOnly Property npeaks As Integer
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
@@ -113,6 +118,17 @@ Public Class xcms2 : Inherits DynamicPropertyBase(Of Double)
                 .Where(Function(s) s.Value > 0) _
                 .Count
         End Get
+    End Property
+
+    <Category("sample_data")>
+    <DisplayName("sample_data")>
+    Public Overrides Property Properties As Dictionary(Of String, Double)
+        Get
+            Return MyBase.Properties
+        End Get
+        Set(value As Dictionary(Of String, Double))
+            MyBase.Properties = value
+        End Set
     End Property
 
     'Public Shared Function Load(file As String) As xcms2()
