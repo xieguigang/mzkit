@@ -61,6 +61,10 @@ declare namespace spectrumTree {
    */
    function dotcutoff(search: object, cutoff: number): object;
    /**
+     * @param env default value Is ``null``.
+   */
+   function embedding(x: any, env?: object): any;
+   /**
     * Extract the test sample data for run evaluation of the annotation workflow
     * 
     * 
