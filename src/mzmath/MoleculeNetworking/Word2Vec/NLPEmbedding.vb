@@ -2,6 +2,12 @@
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.SplashID
 Imports Microsoft.VisualBasic.Data.NLP.Word2Vec
 
+''' <summary>
+''' Spec2Vec: Improved mass spectral similarity scoring through learning of structural relationships
+''' </summary>
+''' <remarks>
+''' https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1008724
+''' </remarks>
 Public Class NLPEmbedding
 
     ReadOnly wv As Word2Vec
