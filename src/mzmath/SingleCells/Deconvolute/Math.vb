@@ -54,16 +54,13 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
-Imports Microsoft.VisualBasic.ComponentModel.Algorithm
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Parallel
-Imports std = System.Math
 
 Namespace Deconvolute
 
@@ -219,7 +216,7 @@ Namespace Deconvolute
         End Function
 
         <Extension>
-        Public Function DeconvoluteMS(sp As LibraryMatrix, len As Integer, mzIndex As BlockSearchFunction(Of (mz As Double, Integer))) As Double()
+        Public Function DeconvoluteMS(sp As LibraryMatrix, len As Integer, mzIndex As MzPool) As Double()
             Return DeconvoluteScan(sp.Select(Function(a) a.mz).ToArray, sp.Select(Function(a) a.intensity).ToArray, len, mzIndex)
         End Function
 
@@ -236,28 +233,25 @@ Namespace Deconvolute
         Public Function DeconvoluteScan(mz As Double(),
                                         into As Double(),
                                         len As Integer,
-                                        mzIndex As BlockSearchFunction(Of (mz As Double, Integer))) As Double()
+                                        mzIndex As MzPool) As Double()
 
             Dim v As Double() = New Double(len - 1) {}
             Dim mzi As Double
-            Dim hit As (mz As Double, idx As Integer)
+            Dim hit As MzIndex
             Dim scan_size As Integer = mz.Length
 
             For i As Integer = 0 To scan_size - 1
                 mzi = mz(i)
-                hit = mzIndex _
-                    .Search((mzi, -1)) _
-                    .OrderBy(Function(a) std.Abs(a.mz - mzi)) _
-                    .FirstOrDefault
+                hit = mzIndex.SearchBest(mzi)
 
-                If hit.mz < 1 AndAlso hit.idx = 0 Then
+                If hit Is Nothing Then
                     ' 20221102
                     '
                     ' missing data
                     ' could be caused by the selective ion data export
                     ' just ignores of this problem
                 Else
-                    v(hit.idx) += into(i)
+                    v(hit.index) += into(i)
                 End If
             Next
 

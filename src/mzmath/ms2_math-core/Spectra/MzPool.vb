@@ -70,6 +70,14 @@ Namespace Spectra
             Next
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="mz"></param>
+        ''' <param name="mzdiff"></param>
+        ''' <returns>
+        ''' this function returns nothing if no hits could be found
+        ''' </returns>
         Public Function SearchBest(mz As Double, Optional mzdiff As Double? = Nothing) As MzIndex
             Dim query As MzIndex() = index.Search(New MzIndex(mz), tolerance:=mzdiff).ToArray
 
