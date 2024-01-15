@@ -1,4 +1,5 @@
 require(mzkit);
+require(JSON);
 
 imports "NLP" from "MLkit";
 imports "SingleCells" from "mzkit";
@@ -23,4 +24,12 @@ let matrix = spot_vector(tree);
 matrix 
 |> as.data.frame()
 |> write.csv(file = `${dirname(source)}/embedding.csv`)
+;
+
+tree 
+|> cell_clusters
+|> JSON::json_encode()
+|> writeLines(
+    con = `${dirname(source)}/clusters.json`
+)
 ;
