@@ -64,10 +64,10 @@ Imports std = System.Math
 <HideModuleName> Public Module Extensions
 
     <Extension>
-    Public Function CreateMzIndex(mzSet As Double(), Optional win_size As Double = 1) As BlockSearchFunction(Of (mz As Double, Integer))
+    Public Function CreateMzIndex(mzSet As Double(), Optional win_size As Double = 1) As BlockSearchFunction(Of MzIndex)
         Call VBDebugger.EchoLine($"tolerance window size: {win_size}")
 
-        Return New BlockSearchFunction(Of (mz As Double, Integer))(
+        Return New BlockSearchFunction(Of MzIndex)(
             data:=mzSet.Select(Function(mzi, i) (mzi, i)),
             eval:=Function(i) i.mz,
             tolerance:=win_size,
@@ -76,7 +76,7 @@ Imports std = System.Math
     End Function
 
     <Extension>
-    Public Function CreateMzIndex(spectrum As IEnumerable(Of ms2), Optional win_size As Double = 1) As BlockSearchFunction(Of (mz As Double, Integer))
+    Public Function CreateMzIndex(spectrum As IEnumerable(Of ms2), Optional win_size As Double = 1) As BlockSearchFunction(Of MzIndex)
         Return spectrum.Select(Function(mzi) mzi.mz).ToArray.CreateMzIndex(win_size)
     End Function
 

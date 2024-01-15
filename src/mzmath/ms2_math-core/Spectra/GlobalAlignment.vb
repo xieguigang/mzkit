@@ -65,7 +65,7 @@ Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Extensions
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Scripting
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Spectra
 
@@ -279,7 +279,7 @@ Namespace Spectra
                     .mz = mz,
                     .query = If(qmz Is Nothing, 0, qmz.intensity),
                     .ref = If(rmz Is Nothing, 0, rmz.intensity),
-                    .da = If(qmz Is Nothing OrElse rmz Is Nothing, Double.NaN, stdNum.Abs(qmz.mz - rmz.mz))
+                    .da = If(qmz Is Nothing OrElse rmz Is Nothing, Double.NaN, std.Abs(qmz.mz - rmz.mz))
                 }
             Next
         End Function

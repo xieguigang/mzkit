@@ -1,0 +1,62 @@
+﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Algorithm
+Imports Microsoft.VisualBasic.Linq
+
+Namespace Spectra
+
+    ''' <summary>
+    ''' represents the ion m/z as a index
+    ''' </summary>
+    Public Class MzIndex
+
+        Public Property mz As Double
+
+        ''' <summary>
+        ''' the index value
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property index As Integer
+
+        Sub New()
+        End Sub
+
+        Sub New(mz As Double, Optional index As Integer = 0)
+            Me.mz = mz
+            Me.index = index
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overrides Function ToString() As String
+            Return $"[{index}] {mz.ToString}"
+        End Function
+
+    End Class
+
+    Public Class MzPool
+
+        ReadOnly index As BlockSearchFunction(Of MzIndex)
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Sub New(mz As IEnumerable(Of Double), Optional win_size As Double = 1)
+            index = mz.ToArray.CreateMzIndex(win_size)
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Sub New(spec As IEnumerable(Of ms2), Optional win_size As Double = 1)
+            index = spec.CreateMzIndex(win_size)
+        End Sub
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="mz"></param>
+        ''' <param name="mzdiff"></param>
+        ''' <returns>this function returns empty collection if no hits was found.</returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function Search(mz As Double, Optional mzdiff As Double? = Nothing) As IEnumerable(Of MzIndex)
+            Return index.Search(New MzIndex(mz), tolerance:=mzdiff)
+        End Function
+
+    End Class
+End Namespace
