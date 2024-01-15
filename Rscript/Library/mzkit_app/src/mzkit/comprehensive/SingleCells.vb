@@ -529,8 +529,11 @@ Module SingleCells
     End Function
 
     <ExportAPI("cell_embedding")>
-    Public Function cell_embedding() As SpecEmbedding
-        Return New SpecEmbedding()
+    Public Function cell_embedding(ndims As Integer,
+                                   Optional method As TrainMethod = TrainMethod.Skip_Gram,
+                                   Optional freq As Integer = 3) As SpecEmbedding
+
+        Return New SpecEmbedding(ndims, method, freq)
     End Function
 
     <ExportAPI("embedding_sample")>
