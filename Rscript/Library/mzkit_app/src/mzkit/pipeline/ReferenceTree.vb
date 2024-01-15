@@ -623,6 +623,7 @@ Module ReferenceTreePkg
 
         If pullSpec.isError Then
             If TypeOf x Is mzPack Then
+                env.AddMessage("create the ion peak embedding for one mzpack sample data.", MSG_TYPES.WRN)
                 spec = DirectCast(x, mzPack).GetSpectrum(mslevel)
             Else
                 pullSpec = pipeline.TryCreatePipeline(Of mzPack)(x, env)
