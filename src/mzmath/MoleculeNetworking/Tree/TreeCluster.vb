@@ -10,4 +10,8 @@ Public Class TreeCluster
     Public Property tree As ClusterTree
     Public Property spectrum As PeakMs2()
 
+    Public Overrides Function ToString() As String
+        Return tree.ToString
+    End Function
+
 End Class

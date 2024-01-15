@@ -59,6 +59,9 @@ Imports Microsoft.VisualBasic.Data.GraphTheory
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.DataMining.BinaryTree
 
+''' <summary>
+''' create the network graph data from a given spectrum clustering tree
+''' </summary>
 Public Module GraphTree
 
     ''' <summary>
