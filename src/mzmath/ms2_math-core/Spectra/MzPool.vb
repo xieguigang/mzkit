@@ -26,6 +26,14 @@ Namespace Spectra
             Me.index = index
         End Sub
 
+        ''' <summary>
+        ''' get the fallback tuple data
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function Tuple() As (mz As Double, Integer)
+            Return (mz, index)
+        End Function
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
             Return $"[{index}] {mz.ToString}"
