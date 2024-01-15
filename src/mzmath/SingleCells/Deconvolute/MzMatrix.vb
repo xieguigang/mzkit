@@ -56,6 +56,7 @@
 #End Region
 
 Imports System.IO
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm
@@ -118,6 +119,16 @@ Namespace Deconvolute
                 Return mz.TryCount
             End Get
         End Property
+
+        ''' <summary>
+        ''' the matrix data type of current object, value of this property could be one of the flag value:
+        ''' 
+        ''' 1. <see cref="FileApplicationClass.MSImaging"/> 2d spatial data
+        ''' 2. <see cref="FileApplicationClass.MSImaging3D"/> 3d spatial data
+        ''' 3. <see cref="FileApplicationClass.SingleCellsMetabolomics"/> single cell matrix data
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property matrixType As FileApplicationClass
 
         ''' <summary>
         ''' Get ion layer data via a given mass value and mass error.

@@ -125,7 +125,7 @@ Module SingleCells
     ''' <summary>
     ''' cast the matrix object as the dataframe
     ''' </summary>
-    ''' <param name="x"></param>
+    ''' <param name="x">should be a rawdata object in general type: <see cref="MzMatrix"/>.</param>
     ''' <param name="args"></param>
     ''' <param name="env"></param>
     ''' <returns></returns>

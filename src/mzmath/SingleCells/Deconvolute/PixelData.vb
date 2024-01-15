@@ -71,6 +71,8 @@ Namespace Deconvolute
 
         Public Property X As Integer
         Public Property Y As Integer
+        Public Property Z As Integer
+
         ''' <summary>
         ''' scan id or the single cell label
         ''' </summary>
