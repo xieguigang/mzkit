@@ -1,6 +1,7 @@
 ﻿Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
 
 ''' <summary>
@@ -38,6 +39,12 @@ Public Class MatrixReader : Implements IDisposable
     ''' <returns></returns>
     Public ReadOnly Property spots As Integer
 
+    ''' <summary>
+    ''' <see cref="MzMatrix.matrixType"/>
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property matrixType As FileApplicationClass
+
     Dim disposedValue As Boolean
     Dim spot_index As Dictionary(Of Long, Dictionary(Of Long, Long))
     Dim label_index As Dictionary(Of String, Long())
@@ -58,6 +65,7 @@ Public Class MatrixReader : Implements IDisposable
 
         _tolerance = bin.ReadString
         _featureSize = bin.ReadInt32
+        _matrixType = CType(bin.ReadInt32, FileApplicationClass)
 
         Dim mz As Double() = New Double(featureSize - 1) {}
 

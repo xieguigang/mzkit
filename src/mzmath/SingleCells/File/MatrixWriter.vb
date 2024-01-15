@@ -8,20 +8,31 @@ Imports Microsoft.VisualBasic.Linq
 ''' </summary>
 Public Class MatrixWriter
 
+    ''' <summary>
+    ''' the rawdata matrix object to save to file
+    ''' </summary>
     ReadOnly m As MzMatrix
 
+    ''' <summary>
+    ''' the binary file magic header string
+    ''' </summary>
     Public Const magic As String = "single_cell"
 
     Sub New(m As MzMatrix)
         Me.m = m
     End Sub
 
+    ''' <summary>
+    ''' save the matrix to a file
+    ''' </summary>
+    ''' <param name="s">target file to save the matrix data</param>
     Public Sub Write(s As Stream)
         Dim bin As New BinaryWriter(s, encoding:=Encoding.ASCII)
 
         Call bin.Write(magic.Select(Function(c) CByte(Asc(c))).ToArray, Scan0, magic.Length)
         Call bin.Write(m.tolerance)
         Call bin.Write(m.featureSize)
+        Call bin.Write(m.matrixType)  ' int32
 
         For Each mzi As Double In m.mz.SafeQuery
             Call bin.Write(mzi)

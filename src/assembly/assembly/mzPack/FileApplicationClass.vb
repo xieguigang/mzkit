@@ -63,7 +63,7 @@ Namespace mzData.mzWebCache
     ''' <summary>
     ''' 当前的这个mzpack原始数据文件的应用程序类型
     ''' </summary>
-    Public Enum FileApplicationClass
+    Public Enum FileApplicationClass As Integer
 
         ''' <summary>
         ''' 普通LC-MS非靶向
