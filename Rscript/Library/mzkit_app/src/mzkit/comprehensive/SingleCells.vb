@@ -542,9 +542,12 @@ Module SingleCells
         End If
 
         If TypeOf sample Is mzPack Then
-            pull = DirectCast(sample, mzPack).MS _
+            Dim mzpack As mzPack = sample
+            Dim source As String = mzpack.source
+
+            pull = mzpack.MS _
                 .Select(Function(s)
-                            Return New PeakMs2(s.scan_id, s.GetMs)
+                            Return New PeakMs2(source & " - " & s.scan_id, s.GetMs)
                         End Function) _
                 .ToArray
         ElseIf TypeOf sample Is MzMatrix Then
