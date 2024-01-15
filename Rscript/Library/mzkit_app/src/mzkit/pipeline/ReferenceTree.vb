@@ -63,6 +63,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree
 Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.PackLib
 Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.Query
 Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.Tree
+Imports BioNovoGene.BioDeep.MassSpectrometry.MoleculeNetworking
 Imports BioNovoGene.BioDeep.MSEngine
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
 Imports Microsoft.VisualBasic.CommandLine.Reflection
@@ -615,29 +616,36 @@ Module ReferenceTreePkg
                               Optional mslevel As Integer = 2,
                               Optional env As Environment = Nothing) As Object
 
-        Dim spec As ISpectrum() = Nothing
-        Dim pullSpec As pipeline = pipeline.TryCreatePipeline(Of ISpectrum)(x, env)
+        Dim spec As PeakMs2() = Nothing
+        Dim pullSpec As pipeline = pipeline.TryCreatePipeline(Of PeakMs2)(x, env)
 
         If pullSpec.isError Then
             If TypeOf x Is mzPack Then
                 Dim pool As mzPack = x
 
                 If mslevel = 2 Then
-                    spec = pool.GetMs2Peaks _
-                        .Select(Function(s) DirectCast(s, ISpectrum)) _
-                        .ToArray
+                    spec = pool.GetMs2Peaks.ToArray
                 Else
                     spec = pool.MS _
-                        .Select(Function(m1) DirectCast(New LibraryMatrix(m1.GetMs), ISpectrum)) _
+                        .Select(Function(m1) New PeakMs2(m1.scan_id, m1.GetMs)) _
                         .ToArray
                 End If
+            Else
+                pullSpec = pipeline.TryCreatePipeline(Of mzPack)(x, env)
+
+                If pullSpec.isError Then
+                    Return pullSpec.getError
+                End If
+
+
             End If
         Else
             spec = pullSpec _
-                .populates(Of ISpectrum)(env) _
+                .populates(Of PeakMs2)(env) _
                 .ToArray
         End If
 
+        Dim ions As New IonEmbedding()
 
     End Function
 End Module
