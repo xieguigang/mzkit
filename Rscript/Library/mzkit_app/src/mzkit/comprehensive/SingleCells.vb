@@ -546,6 +546,8 @@ Module SingleCells
         Else
             Return Message.InCompatibleType(GetType(MzMatrix), sample.GetType, env)
         End If
+
+        Return pool
     End Function
 
     <ExportAPI("spot_vector")>
