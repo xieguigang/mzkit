@@ -48,17 +48,18 @@ Public Class MatrixWriter
         Call bin.Write(0&)
         Call bin.Write(0&)
 
-        Dim spot_index As New List(Of (Integer, Integer, Long))
+        Dim spot_index As New List(Of (Integer, Integer, Integer, Long))
         Dim label_index As New List(Of (String, Long))
 
         For Each spot As PixelData In m.matrix.SafeQuery
             Dim label As String = If(spot.label, "")
 
-            Call spot_index.Add((spot.X, spot.Y, s.Position))
+            Call spot_index.Add((spot.X, spot.Y, spot.Z, s.Position))
             Call label_index.Add((label, s.Position))
 
             Call bin.Write(spot.X)
             Call bin.Write(spot.Y)
+            Call bin.Write(spot.Z)
             Call bin.Write(label)
 
             ' intensity vector size equals to the mz features
@@ -67,16 +68,17 @@ Public Class MatrixWriter
             Next
         Next
 
-        ' write spot index
+        ' write spatial spot index
         Dim offset1 As Long = s.Position
 
         For Each index In spot_index
             Call bin.Write(index.Item1)
             Call bin.Write(index.Item2)
             Call bin.Write(index.Item3)
+            Call bin.Write(index.Item4)
         Next
 
-        ' write label index
+        ' write singlecell label index
         Dim offset2 As Long = s.Position
 
         For Each index In label_index

@@ -80,7 +80,7 @@ Public Class MatrixReader : Implements IDisposable
         Dim offset2 As Long = bin.ReadInt64
         Dim offset_spots As Long = bin.BaseStream.Position
 
-        Dim spot_index As New List(Of (Integer, Integer, Long))
+        Dim spot_index As New List(Of (Integer, Integer, Integer, Long))
         Dim label_index As New List(Of (String, Long))
 
         Call bin.BaseStream.Seek(offset1, SeekOrigin.Begin)
@@ -88,9 +88,10 @@ Public Class MatrixReader : Implements IDisposable
         For i As Integer = 0 To _spots - 1
             Dim x As Integer = bin.ReadInt32
             Dim y As Integer = bin.ReadInt32
+            Dim z As Integer = bin.ReadInt32
             Dim p As Long = bin.ReadInt64
 
-            Call spot_index.Add((x, y, p))
+            Call spot_index.Add((x, y, z, p))
         Next
 
         Call bin.BaseStream.Seek(offset2, SeekOrigin.Begin)
@@ -119,9 +120,16 @@ Public Class MatrixReader : Implements IDisposable
         Return offset_spots
     End Function
 
-    Public Function GetSpot(x As Integer, y As Integer) As PixelData
+    ''' <summary>
+    ''' get a 2d spatial spot data
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <param name="y"></param>
+    ''' <returns></returns>
+    Public Function GetSpot(x As Integer, y As Integer, Optional z As Integer = 0) As PixelData
         Dim xl As Long = CLng(x)
         Dim yl As Long = CLng(y)
+        Dim zl As Long = CLng(z)
 
         If Not spot_index.ContainsKey(xl) Then
             Return Nothing
@@ -135,6 +143,15 @@ Public Class MatrixReader : Implements IDisposable
             Call bin.BaseStream.Seek(index(yl), SeekOrigin.Begin)
             Return LoadCurrentSpot()
         End If
+    End Function
+
+    Public Function GetSpot(cell_id As String) As PixelData
+        If Not label_index.ContainsKey(cell_id) Then
+            Return Nothing
+        End If
+
+        Call bin.BaseStream.Seek(label_index(cell_id)(0), SeekOrigin.Begin)
+        Return LoadCurrentSpot()
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -153,6 +170,7 @@ Public Class MatrixReader : Implements IDisposable
     Private Function LoadCurrentSpot() As PixelData
         Dim x As Integer = bin.ReadInt32
         Dim y As Integer = bin.ReadInt32
+        Dim z As Integer = bin.ReadInt32
         Dim label As String = bin.ReadString
         Dim into As Double() = New Double(featureSize - 1) {}
 
@@ -164,12 +182,13 @@ Public Class MatrixReader : Implements IDisposable
             .X = x,
             .Y = y,
             .label = label,
-            .intensity = into
+            .intensity = into,
+            .Z = z
         }
     End Function
 
     ''' <summary>
-    ''' load all matrix into memory
+    ''' load all matrix into memory at once
     ''' </summary>
     ''' <returns></returns>
     ''' 
@@ -178,7 +197,8 @@ Public Class MatrixReader : Implements IDisposable
         Return New MzMatrix With {
             .mz = ionSet,
             .tolerance = tolerance,
-            .matrix = LoadSpots.ToArray
+            .matrix = LoadSpots.ToArray,
+            .matrixType = matrixType
         }
     End Function
 
