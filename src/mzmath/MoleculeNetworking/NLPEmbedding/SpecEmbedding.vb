@@ -1,5 +1,4 @@
 ﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
-Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.SplashID
 Imports Microsoft.VisualBasic.Data.NLP.Word2Vec
 Imports Microsoft.VisualBasic.Linq
 
@@ -25,16 +24,20 @@ Public Class SpecEmbedding
     ''' <param name="sample">should be re-order by rt asc or something else?</param>
     Public Sub AddSample(sample As IEnumerable(Of PeakMs2))
         Dim pull As PeakMs2() = sample.SafeQuery.ToArray
+        Dim clusters As String() = Nothing
 
         If index Is Nothing Then
             index = pool.Tree(pull)
+            clusters = index.clusters
         Else
-            index = pool.Tree(index, pull)
+            index = pool.Tree(index, pull, clusters)
         End If
 
-        For Each spec As PeakMs2 In pull
-
-        Next
+        Call wv.readTokens(clusters)
     End Sub
 
+    Public Function CreateEmbedding() As VectorModel
+        Call wv.training()
+        Return wv.outputVector
+    End Function
 End Class
