@@ -61,7 +61,9 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells
 Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
+Imports BioNovoGene.BioDeep.MassSpectrometry.MoleculeNetworking
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Data.NLP.Word2Vec
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.ComponentModel.Activations
@@ -524,5 +526,30 @@ Module SingleCells
     <RApiReturn(GetType(SpatialMatrixReader))>
     Public Function dfMzMatrix(x As MzMatrix) As Object
         Return New SpatialMatrixReader(x)
+    End Function
+
+    <ExportAPI("cell_embedding")>
+    Public Function cell_embedding() As SpecEmbedding
+        Return New SpecEmbedding()
+    End Function
+
+    <ExportAPI("embedding_sample")>
+    Public Function embedding_sample(pool As SpecEmbedding, sample As Object, Optional env As Environment = Nothing) As Object
+        If sample Is Nothing Then
+            Return pool
+        End If
+
+        If TypeOf sample Is mzPack Then
+            Call pool.AddSample(DirectCast(sample, mzPack).MS.Select(Function(s) New PeakMs2(s.scan_id, s.GetMs)))
+        ElseIf TypeOf sample Is MzMatrix Then
+            Call pool.AddSample(DirectCast(sample, MzMatrix).GetPeaks)
+        Else
+            Return Message.InCompatibleType(GetType(MzMatrix), sample.GetType, env)
+        End If
+    End Function
+
+    <ExportAPI("spot_vector")>
+    Public Function spot_vector(pool As SpecEmbedding) As VectorModel
+        Return pool.CreateEmbedding
     End Function
 End Module

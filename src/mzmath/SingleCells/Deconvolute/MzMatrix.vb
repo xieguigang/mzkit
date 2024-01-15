@@ -217,5 +217,11 @@ Namespace Deconvolute
                 Yield New LibraryMatrix(spot.label, mz, spot, centroid:=True)
             Next
         End Function
+
+        Public Iterator Function GetPeaks() As IEnumerable(Of PeakMs2)
+            For Each spot As PixelData In matrix.SafeQuery
+                Yield New PeakMs2(spot.label, mz, spot)
+            Next
+        End Function
     End Class
 End Namespace
