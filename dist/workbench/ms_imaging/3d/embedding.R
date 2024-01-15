@@ -10,7 +10,7 @@ let tree = SingleCells::cell_embedding(ndims = 20);
 
 for(file in rawfiles) {
     let rawdata = file 
-    |> open.mzpack()
+    |> open.mzpack(verbose = FALSE)
     ;
     tree |> embedding_sample(rawdata, tag = basename(file))
     ;

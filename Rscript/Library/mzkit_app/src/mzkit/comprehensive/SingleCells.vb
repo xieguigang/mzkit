@@ -536,6 +536,20 @@ Module SingleCells
         Return New SpecEmbedding(ndims, method, freq)
     End Function
 
+    <ExportAPI("cell_clusters")>
+    Public Function cell_clusters(pool As SpecEmbedding) As list
+        Dim tree = pool.GetClusters
+        Dim clusters As New list With {
+            .slots = tree _
+                .ToDictionary(Function(t) t.Key,
+                              Function(t)
+                                  Return CObj(t.Value)
+                              End Function)
+        }
+
+        Return clusters
+    End Function
+
     <ExportAPI("embedding_sample")>
     Public Function embedding_sample(pool As SpecEmbedding, sample As Object,
                                      Optional tag As String = Nothing,

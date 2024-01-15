@@ -10,6 +10,12 @@ Public Class SpecEmbedding
     Dim pool As NetworkingTree
     Dim index As TreeCluster
 
+    Public ReadOnly Property GetClusters As Dictionary(Of String, String())
+        Get
+            Return index.GetTree
+        End Get
+    End Property
+
     Sub New(Optional ndims As Integer = 30, Optional method As TrainMethod = TrainMethod.Skip_Gram, Optional freq As Integer = 1)
         wv = New Word2VecFactory() _
             .setMethod(method) _
