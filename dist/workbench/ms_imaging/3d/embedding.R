@@ -13,6 +13,8 @@ for(file in rawfiles) {
     ;
     tree |> embedding_sample(rawdata, tag = basename(file))
     ;
+
+    print(basename(file));
 }
 
 let matrix = spot_vector(tree);
