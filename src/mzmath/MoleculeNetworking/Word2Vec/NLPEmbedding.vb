@@ -20,9 +20,13 @@ Public Class NLPEmbedding
     End Sub
 
     Public Sub Add(spec As ISpectrum)
-        For Each mz As ms2 In spec.GetIons
+        Dim words As New List(Of String)
+
+        For Each mz As ms2 In spec.GetIons.OrderByDescending(Function(i) i.intensity)
             Dim check = index.
         Next
+
+        Call wv.readTokens(words)
     End Sub
 
 End Class
