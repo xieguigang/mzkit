@@ -87,6 +87,11 @@ Public Module SaveXcms
         Loop
     End Function
 
+    ''' <summary>
+    ''' save as binary file
+    ''' </summary>
+    ''' <param name="sample"></param>
+    ''' <param name="file"></param>
     <Extension>
     Public Sub DumpSample(sample As PeakSet, file As Stream)
         Dim bin As New BinaryWriter(file)
@@ -116,6 +121,11 @@ Public Module SaveXcms
         Call bin.Flush()
     End Sub
 
+    ''' <summary>
+    ''' load binary file
+    ''' </summary>
+    ''' <param name="file"></param>
+    ''' <returns></returns>
     Public Function ReadSample(file As Stream) As PeakSet
         Dim rd As New BinaryReader(file)
         Dim ROIs As Integer = rd.ReadInt32
