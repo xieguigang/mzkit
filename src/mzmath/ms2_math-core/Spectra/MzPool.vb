@@ -1,6 +1,7 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm
 Imports Microsoft.VisualBasic.Linq
+Imports std = System.Math
 
 Namespace Spectra
 
@@ -56,6 +57,20 @@ Namespace Spectra
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Search(mz As Double, Optional mzdiff As Double? = Nothing) As IEnumerable(Of MzIndex)
             Return index.Search(New MzIndex(mz), tolerance:=mzdiff)
+        End Function
+
+        Public Function SearchBest(mz As Double, Optional mzdiff As Double? = Nothing) As MzIndex
+            Dim query As MzIndex() = index.Search(New MzIndex(mz), tolerance:=mzdiff).ToArray
+
+            If query.IsNullOrEmpty Then
+                Return Nothing
+            ElseIf query.Length = 1 Then
+                Return query(0)
+            Else
+                Return query _
+                    .OrderBy(Function(mzi) std.Abs(mzi.mz - mz)) _
+                    .First
+            End If
         End Function
 
     End Class
