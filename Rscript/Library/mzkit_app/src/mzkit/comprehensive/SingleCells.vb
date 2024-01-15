@@ -534,7 +534,9 @@ Module SingleCells
     End Function
 
     <ExportAPI("embedding_sample")>
-    Public Function embedding_sample(pool As SpecEmbedding, sample As Object, Optional env As Environment = Nothing) As Object
+    Public Function embedding_sample(pool As SpecEmbedding, sample As Object,
+                                     Optional tag As String = Nothing,
+                                     Optional env As Environment = Nothing) As Object
         Dim pull As PeakMs2()
 
         If sample Is Nothing Then
@@ -543,16 +545,16 @@ Module SingleCells
 
         If TypeOf sample Is mzPack Then
             Dim mzpack As mzPack = sample
-            Dim source As String = mzpack.source
 
+            tag = If(tag, mzpack.source)
             pull = mzpack.MS _
                 .Select(Function(s)
-                            Return New PeakMs2(source & " - " & s.scan_id, s.GetMs)
+                            Return New PeakMs2(tag & " - " & s.scan_id, s.GetMs)
                         End Function) _
                 .ToArray
         ElseIf TypeOf sample Is MzMatrix Then
             pull = DirectCast(sample, MzMatrix) _
-                .GetPeaks _
+                .GetPeaks(tag) _
                 .ToArray
         Else
             Return Message.InCompatibleType(GetType(MzMatrix), sample.GetType, env)

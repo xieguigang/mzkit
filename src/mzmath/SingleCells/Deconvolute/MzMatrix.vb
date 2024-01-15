@@ -218,9 +218,11 @@ Namespace Deconvolute
             Next
         End Function
 
-        Public Iterator Function GetPeaks() As IEnumerable(Of PeakMs2)
+        Public Iterator Function GetPeaks(Optional tag As String = Nothing) As IEnumerable(Of PeakMs2)
+            Dim prefix_tag As Boolean = Not tag.StringEmpty
+
             For Each spot As PixelData In matrix.SafeQuery
-                Yield New PeakMs2(spot.label, mz, spot)
+                Yield New PeakMs2(If(prefix_tag, tag & " - " & spot.label, spot.label), mz, spot)
             Next
         End Function
     End Class
