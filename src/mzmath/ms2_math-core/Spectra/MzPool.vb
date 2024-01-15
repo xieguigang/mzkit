@@ -46,8 +46,18 @@ Namespace Spectra
 
     End Class
 
+    ''' <summary>
+    ''' a wrapper of the binary search function for do mz search 
+    ''' with given tolerance error in fast speed.
+    ''' </summary>
+    ''' <remarks>
+    ''' this class module is works based on the binary search helper <see cref="BlockSearchFunction"/>
+    ''' </remarks>
     Public Class MzPool
 
+        ''' <summary>
+        ''' a wrapper of the binary search function
+        ''' </summary>
         ReadOnly index As BlockSearchFunction(Of MzIndex)
 
         ''' <summary>
@@ -60,6 +70,12 @@ Namespace Spectra
             End Get
         End Property
 
+        ''' <summary>
+        ''' get a set of the raw input ion mz element values,
+        ''' this length of this vector is equals to the <see cref="size"/>
+        ''' property value.
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property raw As MzIndex()
             Get
                 Return index.raw
@@ -77,9 +93,9 @@ Namespace Spectra
         End Sub
 
         ''' <summary>
-        ''' 
+        ''' get a set of the index hits that matches the given absolute error.
         ''' </summary>
-        ''' <param name="mz"></param>
+        ''' <param name="mz">target mz value to do search</param>
         ''' <param name="mzdiff"></param>
         ''' <returns>this function returns empty collection if no hits was found.</returns>
         ''' 
@@ -95,9 +111,9 @@ Namespace Spectra
         End Function
 
         ''' <summary>
-        ''' 
+        ''' get the index hit with smallest absolute error
         ''' </summary>
-        ''' <param name="mz"></param>
+        ''' <param name="mz">the target mz numeric value to do search</param>
         ''' <param name="mzdiff"></param>
         ''' <returns>
         ''' this function returns nothing if no hits could be found
