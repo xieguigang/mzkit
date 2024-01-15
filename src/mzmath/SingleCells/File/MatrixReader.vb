@@ -3,6 +3,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
+Imports Microsoft.VisualBasic.Data.GraphTheory.GridGraph
 
 ''' <summary>
 ''' A lazy binary data matrix reader for the singlecells/spatial data
@@ -46,7 +47,7 @@ Public Class MatrixReader : Implements IDisposable
     Public ReadOnly Property matrixType As FileApplicationClass
 
     Dim disposedValue As Boolean
-    Dim spot_index As Dictionary(Of Long, Dictionary(Of Long, Long))
+    Dim spot_index As Spatial3D(Of SpatialIndex)
     Dim label_index As Dictionary(Of String, Long())
 
     Sub New(s As Stream)
@@ -80,7 +81,7 @@ Public Class MatrixReader : Implements IDisposable
         Dim offset2 As Long = bin.ReadInt64
         Dim offset_spots As Long = bin.BaseStream.Position
 
-        Dim spot_index As New List(Of (Integer, Integer, Integer, Long))
+        Dim spot_index As New List(Of SpatialIndex)
         Dim label_index As New List(Of (String, Long))
 
         Call bin.BaseStream.Seek(offset1, SeekOrigin.Begin)
@@ -91,7 +92,7 @@ Public Class MatrixReader : Implements IDisposable
             Dim z As Integer = bin.ReadInt32
             Dim p As Long = bin.ReadInt64
 
-            Call spot_index.Add((x, y, z, p))
+            Call spot_index.Add(New SpatialIndex(x, y, z, p))
         Next
 
         Call bin.BaseStream.Seek(offset2, SeekOrigin.Begin)
@@ -103,6 +104,7 @@ Public Class MatrixReader : Implements IDisposable
             Call label_index.Add((label, p))
         Next
 
+        Me.spot_index = Spatial3D(Of SpatialIndex).CreateSpatial3D(Of SpatialIndex)(spot_index)
         Me.label_index = label_index _
             .GroupBy(Function(d) d.Item1) _
             .ToDictionary(Function(d) d.Key,
@@ -111,11 +113,6 @@ Public Class MatrixReader : Implements IDisposable
                                   .Select(Function(o) o.Item2) _
                                   .ToArray
                           End Function)
-        Me.spot_index = spot_index _
-            .GroupBy(Function(a) CLng(a.Item1)) _
-            .ToDictionary(Function(a)
-                              Return a.Key
-                          End Function, AddressOf offsetIndex)
 
         Return offset_spots
     End Function
@@ -127,20 +124,13 @@ Public Class MatrixReader : Implements IDisposable
     ''' <param name="y"></param>
     ''' <returns></returns>
     Public Function GetSpot(x As Integer, y As Integer, Optional z As Integer = 0) As PixelData
-        Dim xl As Long = CLng(x)
-        Dim yl As Long = CLng(y)
-        Dim zl As Long = CLng(z)
+        Dim hit As Boolean = False
+        Dim index As SpatialIndex = Me.spot_index.GetData(x, y, z, hit)
 
-        If Not spot_index.ContainsKey(xl) Then
-            Return Nothing
-        End If
-
-        Dim index = spot_index(xl)
-
-        If Not index.ContainsKey(yl) Then
+        If Not hit Then
             Return Nothing
         Else
-            Call bin.BaseStream.Seek(index(yl), SeekOrigin.Begin)
+            Call bin.BaseStream.Seek(index.offset, SeekOrigin.Begin)
             Return LoadCurrentSpot()
         End If
     End Function
@@ -152,11 +142,6 @@ Public Class MatrixReader : Implements IDisposable
 
         Call bin.BaseStream.Seek(label_index(cell_id)(0), SeekOrigin.Begin)
         Return LoadCurrentSpot()
-    End Function
-
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Private Shared Function offsetIndex(a As IGrouping(Of Long, (Integer, Integer, Long))) As Dictionary(Of Long, Long)
-        Return a.ToDictionary(Function(ai) CLng(ai.Item2), Function(ai) ai.Item3)
     End Function
 
     Public Iterator Function LoadSpots() As IEnumerable(Of PixelData)
