@@ -11,7 +11,7 @@ for(file in rawfiles) {
     let rawdata = file 
     |> open.mzpack()
     ;
-    tree |> embedding_sample(rawdata)
+    tree |> embedding_sample(rawdata, tag = basename(file))
     ;
 }
 
