@@ -1,4 +1,5 @@
-﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.Data.NLP.Word2Vec
 Imports Microsoft.VisualBasic.Linq
 
@@ -22,9 +23,21 @@ Public Class SpecEmbedding
     ''' 
     ''' </summary>
     ''' <param name="sample">should be re-order by rt asc or something else?</param>
-    Public Sub AddSample(sample As IEnumerable(Of PeakMs2))
+    Public Sub AddSample(sample As IEnumerable(Of PeakMs2), Optional centroid As Boolean = False)
         Dim pull As PeakMs2() = sample.SafeQuery.ToArray
         Dim clusters As String() = Nothing
+
+        If centroid Then
+            pull = pull.AsParallel _
+                .Select(Function(s)
+                            Dim ms As ms2() = s.mzInto _
+                                .Centroid(Tolerance.DeltaMass(0.3), New RelativeIntensityCutoff(0.01)) _
+                                .ToArray
+
+                            Return New PeakMs2(s.lib_guid, ms)
+                        End Function) _
+                .ToArray
+        End If
 
         If index Is Nothing Then
             index = pool.Tree(pull)

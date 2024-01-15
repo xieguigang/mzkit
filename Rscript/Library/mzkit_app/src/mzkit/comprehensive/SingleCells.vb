@@ -540,9 +540,9 @@ Module SingleCells
         End If
 
         If TypeOf sample Is mzPack Then
-            Call pool.AddSample(DirectCast(sample, mzPack).MS.Select(Function(s) New PeakMs2(s.scan_id, s.GetMs)))
+            Call pool.AddSample(DirectCast(sample, mzPack).MS.Select(Function(s) New PeakMs2(s.scan_id, s.GetMs)), centroid:=True)
         ElseIf TypeOf sample Is MzMatrix Then
-            Call pool.AddSample(DirectCast(sample, MzMatrix).GetPeaks)
+            Call pool.AddSample(DirectCast(sample, MzMatrix).GetPeaks, centroid:=True)
         Else
             Return Message.InCompatibleType(GetType(MzMatrix), sample.GetType, env)
         End If
