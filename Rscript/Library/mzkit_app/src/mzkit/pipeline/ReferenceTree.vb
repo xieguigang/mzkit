@@ -58,6 +58,7 @@ Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.SplashID
 Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree
 Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.PackLib
 Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.Query
@@ -599,8 +600,44 @@ Module ReferenceTreePkg
         Return True
     End Function
 
+    ''' <summary>
+    ''' do embedding of the spectrum data
+    ''' </summary>
+    ''' <param name="x">a set of the spectrum data, usually be a mzpack object</param>
+    ''' <param name="mslevel">
+    ''' only works when the input dataset is <see cref="mzPack"/>
+    ''' </param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("embedding")>
-    Public Function embedding(<RRawVectorArgument> x As Object, Optional env As Environment = Nothing) As Object
+    Public Function embedding(<RRawVectorArgument>
+                              x As Object,
+                              Optional mslevel As Integer = 2,
+                              Optional env As Environment = Nothing) As Object
+
+        Dim spec As ISpectrum() = Nothing
+        Dim pullSpec As pipeline = pipeline.TryCreatePipeline(Of ISpectrum)(x, env)
+
+        If pullSpec.isError Then
+            If TypeOf x Is mzPack Then
+                Dim pool As mzPack = x
+
+                If mslevel = 2 Then
+                    spec = pool.GetMs2Peaks _
+                        .Select(Function(s) DirectCast(s, ISpectrum)) _
+                        .ToArray
+                Else
+                    spec = pool.MS _
+                        .Select(Function(m1) DirectCast(New LibraryMatrix(m1.GetMs), ISpectrum)) _
+                        .ToArray
+                End If
+            End If
+        Else
+            spec = pullSpec _
+                .populates(Of ISpectrum)(env) _
+                .ToArray
+        End If
+
 
     End Function
 End Module
