@@ -8,7 +8,7 @@ Imports Microsoft.VisualBasic.Data.NLP.Word2Vec
 ''' <remarks>
 ''' https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1008724
 ''' </remarks>
-Public Class NLPEmbedding
+Public Class IonEmbedding
 
     ReadOnly wv As Word2Vec
 
