@@ -42,6 +42,22 @@ Namespace Spectra
 
         ReadOnly index As BlockSearchFunction(Of MzIndex)
 
+        ''' <summary>
+        ''' the number of the mz peaks input
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property size As Integer
+            Get
+                Return index.size
+            End Get
+        End Property
+
+        Public ReadOnly Property raw As MzIndex()
+            Get
+                Return index.raw
+            End Get
+        End Property
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(mz As IEnumerable(Of Double), Optional win_size As Double = 1)
             index = mz.ToArray.CreateMzIndex(win_size)
