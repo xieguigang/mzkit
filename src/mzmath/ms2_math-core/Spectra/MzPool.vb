@@ -31,6 +31,11 @@ Namespace Spectra
             Return $"[{index}] {mz.ToString}"
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Widening Operator CType(mzVal As (mz As Double, index As Integer)) As MzIndex
+            Return New MzIndex(mzVal.mz, mzVal.index)
+        End Operator
+
     End Class
 
     Public Class MzPool
@@ -57,6 +62,12 @@ Namespace Spectra
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Search(mz As Double, Optional mzdiff As Double? = Nothing) As IEnumerable(Of MzIndex)
             Return index.Search(New MzIndex(mz), tolerance:=mzdiff)
+        End Function
+
+        Public Iterator Function Query(mz As Double, Optional mzdiff As Double? = Nothing) As IEnumerable(Of (Double, Integer))
+            For Each hit In index.Search(New MzIndex(mz), tolerance:=mzdiff)
+                Yield (hit.mz, hit.index)
+            Next
         End Function
 
         Public Function SearchBest(mz As Double, Optional mzdiff As Double? = Nothing) As MzIndex

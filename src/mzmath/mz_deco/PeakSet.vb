@@ -1,5 +1,5 @@
 ﻿Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.ComponentModel.Algorithm
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports std = System.Math
@@ -11,8 +11,8 @@ Public Class PeakSet
 
     Dim m_peaksdata As xcms2()
     Dim m_peakindex As Dictionary(Of String, xcms2)
-    Dim mz As BlockSearchFunction(Of (mz As Double, Integer))
-    Dim rt As BlockSearchFunction(Of (mz As Double, Integer))
+    Dim mz As MzPool
+    Dim rt As MzPool
 
     ''' <summary>
     ''' the ROI peaks data
@@ -61,8 +61,8 @@ Public Class PeakSet
             rt(i) = m_peaksdata(i).rt
         Next
 
-        Me.mz = mz.CreateMzIndex(win_size:=1.5)
-        Me.rt = rt.CreateMzIndex(win_size:=60)
+        Me.mz = New MzPool(mz, win_size:=1.5)
+        Me.rt = New MzPool(rt, win_size:=60)
         Me.m_peakindex = peaks.ToDictionary(Function(a) a.ID)
     End Sub
 
@@ -84,29 +84,29 @@ Public Class PeakSet
     ''' <param name="mzdiff"></param>
     ''' <returns></returns>
     Public Iterator Function FilterMz(mz As Double, mzdiff As Double) As IEnumerable(Of xcms2)
-        For Each hit As (mz As Double, Integer) In Me.mz.Search((mz, -1))
-            If hit.Item2 > -1 AndAlso std.Abs(hit.mz - mz) <= mzdiff Then
-                Yield m_peaksdata(hit.Item2)
+        For Each hit As MzIndex In Me.mz.Search(mz)
+            If hit.index > -1 AndAlso std.Abs(hit.mz - mz) <= mzdiff Then
+                Yield m_peaksdata(hit.index)
             End If
         Next
     End Function
 
     Public Iterator Function FilterRt(rt As Double, rt_win As Double) As IEnumerable(Of xcms2)
-        For Each hit As (rt As Double, Integer) In Me.rt.Search((rt, -1))
-            If hit.Item2 > -1 AndAlso std.Abs(hit.rt - rt) <= rt_win Then
-                Yield m_peaksdata(hit.Item2)
+        For Each hit As (rt As Double, index As Integer) In Me.rt.Query(rt)
+            If hit.index > -1 AndAlso std.Abs(hit.rt - rt) <= rt_win Then
+                Yield m_peaksdata(hit.index)
             End If
         Next
     End Function
 
     Public Iterator Function FindIonSet(mz As Double, rt As Double, mzdiff As Double, rt_win As Double) As IEnumerable(Of xcms2)
-        Dim mzset = Me.mz.Search((mz, -1)).AsParallel _
-            .Where(Function(i) i.Item2 > -1 AndAlso std.Abs(i.mz - mz) <= mzdiff) _
+        Dim mzset = Me.mz.Search(mz).AsParallel _
+            .Where(Function(i) i.index > -1 AndAlso std.Abs(i.mz - mz) <= mzdiff) _
             .ToArray
-        Dim rtset = Me.rt.Search((rt, -1)).AsParallel _
+        Dim rtset = Me.rt.Query(rt).AsParallel _
             .Where(Function(i) i.Item2 > -1 AndAlso std.Abs(i.Item1 - rt) <= rt_win) _
             .ToArray
-        Dim intersect_offsets = mzset.Select(Function(a) a.Item2) _
+        Dim intersect_offsets = mzset.Select(Function(a) a.index) _
             .Intersect(rtset.Select(Function(b) b.Item2)) _
             .ToArray
 
