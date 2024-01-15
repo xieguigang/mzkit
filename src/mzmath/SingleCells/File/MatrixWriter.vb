@@ -3,6 +3,9 @@ Imports System.Text
 Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
 Imports Microsoft.VisualBasic.Linq
 
+''' <summary>
+''' helper module for write the matrix as binary data
+''' </summary>
 Public Class MatrixWriter
 
     ReadOnly m As MzMatrix
