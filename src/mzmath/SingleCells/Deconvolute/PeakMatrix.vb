@@ -64,6 +64,9 @@ Imports Microsoft.VisualBasic.Math
 
 Namespace Deconvolute
 
+    ''' <summary>
+    ''' helper function for create matrix from a ms rawdata object
+    ''' </summary>
     Public Module PeakMatrix
 
         ''' <summary>
