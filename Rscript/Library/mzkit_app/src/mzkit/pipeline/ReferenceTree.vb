@@ -584,8 +584,16 @@ Module ReferenceTreePkg
         End If
 
         Dim newPool As New SpectrumPack(buf.TryCast(Of Stream))
+        Dim annoData As Func(Of String, (name As String, formula As String)) = AddressOf metadb.GetAnnotation
+        Dim xrefData As Func(Of String, Dictionary(Of String, String)) = AddressOf metadb.GetDbXref
 
-
+        Call New Compression(annoData, xrefData, println:=Sub(s) base.print(s,, env)) _
+            .SpectrumCompression(
+                spectrumLib, newPool,
+                nspec:=nspec,
+                test:=test,
+                xrefDb:=xrefDb
+            )
         Call newPool.Dispose()
 
         Return True
