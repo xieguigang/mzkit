@@ -72,10 +72,31 @@ Imports Microsoft.VisualBasic.DataMining.BinaryTree
 Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Distributions
-Imports Microsoft.VisualBasic.Math.LinearAlgebra.Prcomp
 Imports Microsoft.VisualBasic.Math.Statistics.Linq
 
 Public Module GridScanner
+
+    <Extension>
+    Private Iterator Function PCAProject(matrix As EntityClusterModel()) As IEnumerable(Of EntityClusterModel)
+        Dim block_tags As String() = matrix(Scan0).Properties.Keys.ToArray
+        Dim matrix2 = matrix.Z.Select(Function(r) r(block_tags)).ToArray
+        'Dim PCA As New PCA(matrix2, center:=False)
+        'Dim pc3 = PCA _
+        '    .Project(nPC:=3) _
+        '    .Select(Function(r, i)
+        '                Return New EntityClusterModel With {
+        '                    .ID = matrix(i).ID,
+        '                    .Properties = New Dictionary(Of String, Double) From {
+        '                        {"PC1", r(0)},
+        '                        {"PC2", r(1)},
+        '                        {"PC3", r(2)}
+        '                    }
+        '                }
+        '            End Function) _
+        '    .ToArray
+
+        Throw New NotImplementedException
+    End Function
 
     <Extension>
     Public Iterator Function PCAGroups(raw As IEnumerable(Of PixelScan),
@@ -97,27 +118,11 @@ Public Module GridScanner
 
         Dim region As New Size(grid_width / 2, grid_height / 2)
         Dim matrix As EntityClusterModel() = grid2.PopulateIonMatrix(region, repeats, bag_size, mzdiff).ToArray
-        Dim block_tags = matrix(Scan0).Properties.Keys
-        Dim PCA As New PCA(matrix.Z.Select(Function(r) r(block_tags)), center:=False)
-        Dim pc3 = PCA _
-            .Project(nPC:=3) _
-            .Select(Function(r, i)
-                        Return New EntityClusterModel With {
-                            .ID = matrix(i).ID,
-                            .Properties = New Dictionary(Of String, Double) From {
-                                {"PC1", r(0)},
-                                {"PC2", r(1)},
-                                {"PC3", r(2)}
-                            }
-                        }
-                    End Function) _
-            .ToArray
-        Dim metric As New Metric(block_tags)
         ' run dbscan cluster?
         'Dim pc3_groups = New DbscanAlgorithm(Of EntityClusterModel)(AddressOf metric.DistanceTo) _
         '    .ComputeClusterDBSCAN(pc3, eps, 3) _
         '    .ToArray
-        Dim pc3_groups = pc3.Kmeans(expected:=k).ToArray
+        Dim pc3_groups = matrix.PCAProject.Kmeans(expected:=k).ToArray
 
         'For Each group In pc3_groups
         '    For Each x As EntityClusterModel In group
