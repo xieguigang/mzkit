@@ -68,6 +68,7 @@ Imports BioNovoGene.BioDeep.MSEngine
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.Data.NLP.Word2Vec
 Imports Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.MetaData
@@ -611,6 +612,7 @@ Module ReferenceTreePkg
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("embedding")>
+    <RApiReturn(GetType(VectorModel))>
     Public Function embedding(<RRawVectorArgument>
                               x As Object,
                               Optional mslevel As Integer = 2,
@@ -621,15 +623,7 @@ Module ReferenceTreePkg
 
         If pullSpec.isError Then
             If TypeOf x Is mzPack Then
-                Dim pool As mzPack = x
-
-                If mslevel = 2 Then
-                    spec = pool.GetMs2Peaks.ToArray
-                Else
-                    spec = pool.MS _
-                        .Select(Function(m1) New PeakMs2(m1.scan_id, m1.GetMs)) _
-                        .ToArray
-                End If
+                spec = DirectCast(x, mzPack).GetSpectrum(mslevel)
             Else
                 pullSpec = pipeline.TryCreatePipeline(Of mzPack)(x, env)
 
@@ -637,7 +631,14 @@ Module ReferenceTreePkg
                     Return pullSpec.getError
                 End If
 
+                Dim spectrums As New SpecEmbedding
 
+                For Each sample As mzPack In pullSpec.populates(Of mzPack)(env)
+                    spec = sample.GetSpectrum(mslevel)
+                    spectrums.AddSample(spec)
+                Next
+
+                Return spectrums.CreateEmbedding
             End If
         Else
             spec = pullSpec _
@@ -647,5 +648,21 @@ Module ReferenceTreePkg
 
         Dim ions As New IonEmbedding()
 
+        For Each ms As PeakMs2 In spec
+            Call ions.Add(ms)
+        Next
+
+        Return ions.CreateEmbedding
+    End Function
+
+    <Extension>
+    Private Function GetSpectrum(pool As mzPack, msLevel As Integer) As PeakMs2()
+        If msLevel = 2 Then
+            Return pool.GetMs2Peaks.ToArray
+        Else
+            Return pool.MS _
+                .Select(Function(m1) New PeakMs2(m1.scan_id, m1.GetMs)) _
+                .ToArray
+        End If
     End Function
 End Module
