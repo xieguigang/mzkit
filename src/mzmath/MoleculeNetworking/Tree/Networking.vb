@@ -91,23 +91,7 @@ Public Module Networking
                          Optional intocutoff As Double = 0.05,
                          Optional equals As Double = 0.85) As TreeCluster
 
-        Dim cosine As New CosAlignment(
-            mzwidth:=Tolerance.DeltaMass(mzdiff),
-            intocutoff:=New RelativeIntensityCutoff(intocutoff)
-        )
-        Dim align As New MSScore(cosine, ions.ToArray, equals, equals)
-        Dim clustering As New ClusterTree
-        Dim ionsList As New List(Of PeakMs2)
-
-        For Each ion As PeakMs2 In align.Ions
-            Call ionsList.Add(ion)
-            Call ClusterTree.Add(clustering, ion.lib_guid, align, threshold:=equals)
-        Next
-
-        Return New TreeCluster With {
-            .tree = clustering,
-            .spectrum = ionsList.ToArray
-        }
+        Return New NetworkingTree(mzdiff, intocutoff, equals).Tree(ions)
     End Function
 
     Private Iterator Function normPeaki(i As PeakMs2) As IEnumerable(Of ms2)

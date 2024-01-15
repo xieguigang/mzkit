@@ -39,6 +39,13 @@ Public Class MSScoreGenerator : Inherits ComparisonProvider
         Me.getSpectrum = getSpectrum
     End Sub
 
+    Sub New(align As AlignmentProvider, Optional equals As Double = 1, Optional gt As Double = 0)
+        Call MyBase.New(equals, gt)
+
+        Me.align = align
+        Me.getSpectrum = Function(guid) Nothing
+    End Sub
+
     ''' <summary>
     ''' 
     ''' </summary>
@@ -56,6 +63,13 @@ Public Class MSScoreGenerator : Inherits ComparisonProvider
         For Each spec As PeakMs2 In ions
             Call Add(spec)
         Next
+    End Sub
+
+    ''' <summary>
+    ''' clear the cache of the spectrum data pool
+    ''' </summary>
+    Public Sub Clear()
+        Call cache.Clear()
     End Sub
 
     Public Sub Add(spectral As PeakMs2)
