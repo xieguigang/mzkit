@@ -1703,7 +1703,10 @@ Module MSI
         Dim z As Integer
 
         For Each layer As mzPack In pool
+            Call VBDebugger.Echo($"   * process {layer.source} ... ")
+
             If layer Is Nothing OrElse layer.MS.TryCount = 0 Then
+                Call VBDebugger.EchoLine("skiped.")
                 Continue For
             End If
 
@@ -1726,6 +1729,8 @@ Module MSI
 
                 Call writeSpots.AddSpot(spot)
             Next
+
+            Call VBDebugger.EchoLine("ok!")
         Next
 
         Call MatrixWriter.WriteIndex(bin, writeSpots, offset1, offset2)
