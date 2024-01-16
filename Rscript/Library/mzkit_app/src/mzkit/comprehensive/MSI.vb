@@ -60,6 +60,7 @@
 Imports System.Drawing
 Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports System.Text
 Imports BioNovoGene.Analytical.MassSpectrometry
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.Comprehensive.MsImaging
@@ -1673,9 +1674,52 @@ Module MSI
                         End Function)
         End If
 
-        For Each layer As mzPack In pool
+        Dim header As New MatrixHeader With {
+            .matrixType = FileApplicationClass.MSImaging3D,
+            .tolerance = mzdiff.ToString,
+            .mz = mzSet,
+            .numSpots = Aggregate layer As mzPack
+                        In pool
+                        Into Sum(layer.MS.TryCount)
+        }
+        Dim bin As New BinaryWriter(buf.TryCast(Of Stream), encoding:=Encoding.ASCII)
+        Dim offset As Long = MatrixWriter.WriteHeader(bin, header)
 
+        ' write index placeholder
+        Call bin.Write(0&)
+        Call bin.Write(0&)
+
+        Dim writeSpots As New SpotWriter(bin)
+        Dim offset1, offset2 As Long
+
+        For Each layer As mzPack In pool
+            If layer Is Nothing OrElse layer.MS.TryCount = 0 Then
+                Continue For
+            End If
+
+            Dim z As Integer = Val(layer.source)
+
+            For Each cell As ScanMS1 In layer.MS
+                Dim xy As Point = cell.GetMSIPixel
+                Dim v As Double()
+                Dim spot As New Deconvolute.PixelData With {
+                    .X = xy.X,
+                    .Y = xy.Y,
+                    .Z = z,
+                    .label = $"{z} - {cell.scan_id}",
+                    .intensity = v
+                }
+
+                Call writeSpots.AddSpot(spot)
+            Next
         Next
+
+        Call MatrixWriter.WriteIndex(bin, writeSpots, offset1, offset2)
+
+        Call buf.TryCast(Of Stream).Seek(offset, SeekOrigin.Begin)
+        Call bin.Write(offset1)
+        Call bin.Write(offset2)
+        Call bin.Flush()
 
         Return True
     End Function
