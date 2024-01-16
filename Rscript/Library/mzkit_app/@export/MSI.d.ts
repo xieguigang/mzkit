@@ -513,7 +513,11 @@ declare namespace MSI {
    }
    /**
     * Create mzpack object for ms-imaging in 3D
+    *  
+    *  this function assembling a collection of the 2D layer in z-axis
+    *  order for construct a new 3D volume data.
     * 
+    * > a @``T:BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute.MzMatrix`` object will be packed as the 3D volumn result.
     * 
      * @param env -
      * 

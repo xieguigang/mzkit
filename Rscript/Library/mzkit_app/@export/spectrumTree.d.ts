@@ -61,9 +61,18 @@ declare namespace spectrumTree {
    */
    function dotcutoff(search: object, cutoff: number): object;
    /**
-     * @param env default value Is ``null``.
+    * do embedding of the spectrum data
+    * 
+    * 
+     * @param x a set of the spectrum data, usually be a mzpack object
+     * @param mslevel only works when the input dataset is @``T:BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack``
+     * 
+     * + default value Is ``2``.
+     * @param env -
+     * 
+     * + default value Is ``null``.
    */
-   function embedding(x: any, env?: object): any;
+   function embedding(x: any, mslevel?: object, env?: object): object;
    /**
     * Extract the test sample data for run evaluation of the annotation workflow
     * 

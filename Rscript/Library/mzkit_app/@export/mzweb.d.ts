@@ -146,10 +146,12 @@ declare namespace mzweb {
        * 
        * 
         * @param file the ``*.mzXML``/``*.mzML``/``*.mzPack``/``*.raw`` raw data file
+        * @param verbose 
+        * + default value Is ``true``.
         * @param env 
         * + default value Is ``null``.
       */
-      function mzpack(file: any, env?: object): object;
+      function mzpack(file: any, verbose?: boolean, env?: object): object;
    }
    module open_mzpack {
       /**
@@ -165,11 +167,13 @@ declare namespace mzweb {
         * + default value Is ``0.001``.
         * @param noise_cutoff 
         * + default value Is ``0.0001``.
+        * @param verbose 
+        * + default value Is ``true``.
         * @param env 
         * + default value Is ``null``.
         * @return A mzkit mzpack rawdata object
       */
-      function xml(file: string, prefer?: string, da?: number, noise_cutoff?: number, env?: object): object;
+      function xml(file: string, prefer?: string, da?: number, noise_cutoff?: number, verbose?: boolean, env?: object): object;
    }
    /**
     * write binary format of mzweb stream data

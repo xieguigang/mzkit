@@ -21,3 +21,7 @@ Single cells metabolomics data processor
 + [open.matrix](SingleCells/open.matrix.1) open a single cell data matrix reader
 + [read.mz_matrix](SingleCells/read.mz_matrix.1) load the data matrix into memory at once
 + [df.mz_matrix](SingleCells/df.mz_matrix.1) cast matrix object to the R liked dataframe object
++ [cell_embedding](SingleCells/cell_embedding.1) 
++ [cell_clusters](SingleCells/cell_clusters.1) 
++ [embedding_sample](SingleCells/embedding_sample.1) 
++ [spot_vector](SingleCells/spot_vector.1) 
