@@ -49,6 +49,15 @@ Public Class MatrixWriter
         Call bin.Flush()
     End Sub
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="bin"></param>
+    ''' <param name="header"></param>
+    ''' <returns>
+    ''' the start position of the cell spot data block, this position minus 4 for 
+    ''' get/set the position of the data <see cref="MatrixHeader.numSpots"/>.
+    ''' </returns>
     Public Shared Function WriteHeader(bin As BinaryWriter, header As MatrixHeader) As Long
         Dim s As Stream = bin.BaseStream
 
@@ -62,6 +71,7 @@ Public Class MatrixWriter
         Next
 
         ' save count of the spots
+        ' int32
         Call bin.Write(header.numSpots)
         Call bin.Flush()
 

@@ -22,6 +22,7 @@ Public Class ZAssembler : Implements IDisposable
     Dim mzIndex As BlockSearchFunction(Of (mz As Double, Integer))
     Dim len As Integer
     Dim numSpots As Integer = 0
+    Dim writeSpotCount As Boolean = False
 
     Private disposedValue As Boolean
 
@@ -32,6 +33,14 @@ Public Class ZAssembler : Implements IDisposable
     End Sub
 
     ''' <summary>
+    ''' see dev notes: <see cref="MatrixWriter.WriteHeader"/>
+    ''' </summary>
+    ''' <returns></returns>
+    Private Function calcSpotNumberOffset() As Long
+        Return offset - 4
+    End Function
+
+    ''' <summary>
     ''' 
     ''' </summary>
     ''' <param name="header">the <see cref="MatrixHeader.numSpots"/> may be zero in lazy mode!</param>
@@ -39,6 +48,7 @@ Public Class ZAssembler : Implements IDisposable
         offset = MatrixWriter.WriteHeader(bin, header)
         len = header.mz.Length
         mzIndex = header.mz.CreateMzIndex(win_size:=1.25)
+        writeSpotCount = header.numSpots <= 0
 
         ' write index placeholder
         Call bin.Write(0&)
@@ -81,6 +91,13 @@ Public Class ZAssembler : Implements IDisposable
         Call bin.Write(offset1)
         Call bin.Write(offset2)
         Call bin.Flush()
+
+        If writeSpotCount Then
+            Call s.Seek(calcSpotNumberOffset(), SeekOrigin.Begin)
+            ' int32
+            Call bin.Write(numSpots)
+            Call bin.Flush()
+        End If
     End Sub
 
     Protected Overridable Sub Dispose(disposing As Boolean)
