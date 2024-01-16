@@ -106,8 +106,8 @@ Imports rDataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
 Imports REnv = SMRUCC.Rsharp.Runtime
 Imports SingleCellMath = BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute.Math
 Imports SingleCellMatrix = BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute.PeakMatrix
+Imports SpotVector = BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute.PixelData
 Imports std = System.Math
-Imports vector = Microsoft.VisualBasic.Math.LinearAlgebra.Vector
 
 ''' <summary>
 ''' MS-Imaging data handler
@@ -1335,7 +1335,7 @@ Module MSI
     ''' <returns></returns>
     <ExportAPI("spatial.convolution")>
     Public Function spatialConvolution(mat As rDataframe, Optional win_size As Integer = 2, Optional steps As Integer = 1) As rDataframe
-        Dim spatial As Grid(Of SpotVector) = Grid(Of SpotVector).Create(SpotVector.LoadDataFrame(mat))
+        Dim spatial As Grid(Of SpotVector) = Grid(Of SpotVector).Create(mat.LoadSpotVectorDataFrame())
         Dim convolution As New rDataframe With {
             .columns = New Dictionary(Of String, Array),
             .rownames = mat.getRowNames
@@ -1344,7 +1344,7 @@ Module MSI
         For Each spot As SpotVector In spatial.EnumerateData
             If spot.X Mod steps = 0 AndAlso spot.Y Mod steps = 0 Then
                 Dim x = spot.X, y = spot.Y
-                Dim vec = spot.expression
+                Dim vec = spot.intensity.AsVector
                 Dim v As Integer = 1
 
                 For xi = x - win_size To x + win_size
@@ -1353,7 +1353,7 @@ Module MSI
                             Dim vi = spatial.GetData(xi, yi)
 
                             If Not vi Is Nothing Then
-                                vec += vi.expression
+                                vec += vi.intensity
                                 v += 1
                             End If
                         End If
@@ -1675,28 +1675,18 @@ Module MSI
             Return Message.InCompatibleType(GetType(SingleIonLayer), x.GetType, env)
         End If
     End Function
-End Module
 
-Public Class SpotVector : Implements IPoint2D
-
-    Public Property X As Integer Implements IPoint2D.X
-    Public Property Y As Integer Implements IPoint2D.Y
-    Public Property expression As vector
-
-    Public Overrides Function ToString() As String
-        Return $"[{X},{Y}]"
-    End Function
-
-    Public Shared Iterator Function LoadDataFrame(mat As rDataframe) As IEnumerable(Of SpotVector)
+    <Extension>
+    Public Iterator Function LoadSpotVectorDataFrame(mat As rDataframe) As IEnumerable(Of SpotVector)
         For Each col As KeyValuePair(Of String, Array) In mat.columns
             Dim t As String() = col.Key.Split(","c)
             Dim xy As Integer() = t.Select(AddressOf Integer.Parse).ToArray
 
             Yield New SpotVector With {
-                .expression = CLRVector.asNumeric(col.Value).AsVector,
+                .intensity = CLRVector.asNumeric(col.Value),
                 .X = xy(0),
                 .Y = xy(1)
             }
         Next
     End Function
-End Class
+End Module
