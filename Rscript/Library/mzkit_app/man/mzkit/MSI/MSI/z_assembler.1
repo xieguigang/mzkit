@@ -3,28 +3,14 @@
 .SH NAME
 z_assembler \- Create mzpack object for ms-imaging in 3D
 .SH SYNOPSIS
-\fIz_assembler(\fBx\fR as any, 
+\fIz_assembler(\fBheader\fR as <generic> MatrixHeader, 
 \fBfile\fR as any, 
-\fBion_features\fR as any = \fB<NULL>\fR, 
-\fBmzdiff\fR as double = 0.001, 
-\fBfreq\fR as double = 0.001, 
-\fBverbose\fR as boolean = FALSE, 
-\fBz_pattern\fR as <generic> Regex = \fB<NULL>\fR, 
 [\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
 Create mzpack object for ms-imaging in 3D
 .PP
 .SH OPTIONS
-.PP
-\fBx\fB \fR\- the z axis value should be encoded in the @\fBP:BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack.source\fR tag. 
-.PP
-.PP
-\fBz_pattern\fB \fR\- 
- a @\fBT:System.Text.RegularExpressions.Regex\fR pattern expression for parse the z-axis information from the source tag of 
- the 2D layer mzpack object, default nothing means the source tag string is an integer pattern.
-. 
-.PP
 .PP
 \fBenv\fB \fR\- -. 
 .PP

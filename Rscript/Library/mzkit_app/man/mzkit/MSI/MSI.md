@@ -34,5 +34,6 @@ MS-Imaging data handler
 + [moran_I](MSI/moran_I.1) evaluate the moran index for each ion layer
 + [sample_bootstraping](MSI/sample_bootstraping.1) make expression bootstrapping of current ion layer
 + [cast.spatial_layers](MSI/cast.spatial_layers.1) cast the rawdata matrix as the ms-imaging ion layer
++ [z_header](MSI/z_header.1) 
 + [z_assembler](MSI/z_assembler.1) Create mzpack object for ms-imaging in 3D
 + [raster](MSI/raster.1) cast the ms-imaging layer data to raster object 

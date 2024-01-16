@@ -112,8 +112,12 @@ declare namespace MSI {
      * @param fast_bins -
      * 
      * + default value Is ``true``.
+     * @param verbose 
+     * + default value Is ``false``.
+     * @param env 
+     * + default value Is ``null``.
    */
-   function getMatrixIons(raw: object, mzdiff?: number, q?: number, fast_bins?: boolean): number;
+   function getMatrixIons(raw: any, mzdiff?: number, q?: number, fast_bins?: boolean, verbose?: boolean, env?: object): number;
    /**
      * @param env default value Is ``null``.
    */
@@ -511,22 +515,18 @@ declare namespace MSI {
     * Create mzpack object for ms-imaging in 3D
     * 
     * 
-     * @param x the z axis value should be encoded in the @``P:BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack.source`` tag
-     * @param ion_features 
-     * + default value Is ``null``.
-     * @param mzdiff 
-     * + default value Is ``0.001``.
-     * @param freq 
-     * + default value Is ``0.001``.
-     * @param verbose 
-     * + default value Is ``false``.
-     * @param z_pattern a @``T:System.Text.RegularExpressions.Regex`` pattern expression for parse the z-axis information from the source tag of 
-     *  the 2D layer mzpack object, default nothing means the source tag string is an integer pattern.
-     * 
-     * + default value Is ``null``.
      * @param env -
      * 
      * + default value Is ``null``.
    */
-   function z_assembler(x: any, file: any, ion_features?: any, mzdiff?: number, freq?: number, verbose?: boolean, z_pattern?: object, env?: object): any;
+   function z_assembler(header: object, file: any, env?: object): object;
+   /**
+    * 
+    * 
+     * @param features the ion features m/z vector
+     * @param mzdiff -
+     * 
+     * + default value Is ``0.001``.
+   */
+   function z_header(features: any, mzdiff?: number): object;
 }
