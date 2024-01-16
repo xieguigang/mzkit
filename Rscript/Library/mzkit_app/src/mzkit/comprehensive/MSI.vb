@@ -1631,19 +1631,45 @@ Module MSI
 
     ''' <summary>
     ''' Create mzpack object for ms-imaging in 3D
+    ''' 
+    ''' this function assembling a collection of the 2D layer in z-axis
+    ''' order for construct a new 3D volume data.
     ''' </summary>
-    ''' <param name="x">the z axis value should be encoded in the <see cref="mzPack.source"/> tag</param>
+    ''' <param name="x">should be a collection of the mzkit mzpack rawdata object. 
+    ''' the z axis value should be encoded in the <see cref="mzPack.source"/> tag.</param>
+    ''' <param name="file">
+    ''' the file resource link for save the matrix data.
+    ''' </param>
+    ''' <param name="ion_features">
+    ''' a set of the ion features its m/z value for make the data subset.
+    ''' leaves this parameter blank by default means create volume data for
+    ''' all ion features.
+    ''' </param>
     ''' <param name="env"></param>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' a <see cref="MzMatrix"/> object will be packed as the 3D volumn result.
+    ''' </remarks>
     <ExportAPI("z_assembler")>
-    Public Function z_assembler(<RRawVectorArgument> x As Object, file As Object, Optional env As Environment = Nothing) As Object
+    Public Function z_assembler(<RRawVectorArgument> x As Object, file As Object,
+                                <RRawVectorArgument>
+                                Optional ion_features As Object = Nothing,
+                                Optional env As Environment = Nothing) As Object
         Dim pull As pipeline = pipeline.TryCreatePipeline(Of mzPack)(x, env)
+        Dim buf = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Write, env)
 
         If pull.isError Then
             Return pull.getError
+        ElseIf buf Like GetType(Message) Then
+            Return buf.TryCast(Of Message)
         End If
 
+        Dim mzSet As Double() = CLRVector.asNumeric(ion_features)
 
+        If mzSet.IsNullOrEmpty Then
+            ' get all mz ions from the rawdata
+
+        End If
     End Function
 
     ''' <summary>
