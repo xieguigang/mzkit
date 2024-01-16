@@ -13,6 +13,7 @@ Public Class SpotWriter
     ''' </summary>
     ''' <returns></returns>
     Private ReadOnly Property sPos As Long
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
             Return bin.BaseStream.Position
         End Get

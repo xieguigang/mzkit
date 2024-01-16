@@ -1644,8 +1644,7 @@ Module MSI
     ''' <returns></returns>
     <ExportAPI("z_assembler")>
     Public Function z_assembler(<RRawVectorArgument> x As Object, file As Object,
-                                <RRawVectorArgument>
-                                Optional ion_features As Object = Nothing,
+                                <RRawVectorArgument> ion_features As Object,
                                 Optional mzdiff As Double = 0.001,
                                 Optional freq As Double = 0.001,
                                 Optional verbose As Boolean = False,
@@ -1703,42 +1702,10 @@ Module MSI
         Dim z As Integer
 
         For Each layer As mzPack In pool
-            Call VBDebugger.cat({$"   * process {layer.source} ... "})
 
-            If layer Is Nothing OrElse layer.MS.TryCount = 0 Then
-                Call VBDebugger.EchoLine("skiped.")
-                Continue For
-            End If
-
-            If z_pattern IsNot Nothing Then
-                z = Val(z_pattern.Match(layer.source).Value)
-            Else
-                z = Val(layer.source)
-            End If
-
-            For Each cell As ScanMS1 In layer.MS
-                Dim xy As Point = cell.GetMSIPixel
-                Dim v As Double() = Deconvolute.DeconvoluteScan(cell.mz, cell.into, len, mzIndex)
-                Dim spot As New Deconvolute.PixelData With {
-                    .X = xy.X,
-                    .Y = xy.Y,
-                    .Z = z,
-                    .label = $"{z} - {cell.scan_id}",
-                    .intensity = v
-                }
-
-                Call writeSpots.AddSpot(spot)
-            Next
-
-            Call VBDebugger.EchoLine("ok!")
         Next
 
-        Call MatrixWriter.WriteIndex(bin, writeSpots, offset1, offset2)
 
-        Call buf.TryCast(Of Stream).Seek(offset, SeekOrigin.Begin)
-        Call bin.Write(offset1)
-        Call bin.Write(offset2)
-        Call bin.Flush()
 
         Return True
     End Function
