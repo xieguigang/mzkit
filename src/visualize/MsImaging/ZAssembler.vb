@@ -1,5 +1,6 @@
 ﻿Imports System.Drawing
 Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
@@ -35,6 +36,8 @@ Public Class ZAssembler : Implements IDisposable
     ''' see dev notes: <see cref="MatrixWriter.WriteHeader"/>
     ''' </summary>
     ''' <returns></returns>
+    '''
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Private Function calcSpotNumberOffset() As Long
         Return offset - 4
     End Function
