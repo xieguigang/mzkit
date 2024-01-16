@@ -61,6 +61,7 @@ Imports System.Drawing
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports System.Text.RegularExpressions
 Imports BioNovoGene.Analytical.MassSpectrometry
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.Comprehensive.MsImaging
@@ -1635,6 +1636,10 @@ Module MSI
     ''' Create mzpack object for ms-imaging in 3D
     ''' </summary>
     ''' <param name="x">the z axis value should be encoded in the <see cref="mzPack.source"/> tag</param>
+    ''' <param name="z_pattern">
+    ''' a <see cref="Regex"/> pattern expression for parse the z-axis information from the source tag of 
+    ''' the 2D layer mzpack object, default nothing means the source tag string is an integer pattern.
+    ''' </param>
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("z_assembler")>
@@ -1644,6 +1649,7 @@ Module MSI
                                 Optional mzdiff As Double = 0.001,
                                 Optional freq As Double = 0.001,
                                 Optional verbose As Boolean = False,
+                                Optional z_pattern As Regex = Nothing,
                                 Optional env As Environment = Nothing) As Object
 
         Dim pull As pipeline = pipeline.TryCreatePipeline(Of mzPack)(x, env)
@@ -1694,13 +1700,18 @@ Module MSI
         Dim offset1, offset2 As Long
         Dim mzIndex = mzSet.CreateMzIndex(win_size:=1.25)
         Dim len As Integer = mzSet.Length
+        Dim z As Integer
 
         For Each layer As mzPack In pool
             If layer Is Nothing OrElse layer.MS.TryCount = 0 Then
                 Continue For
             End If
 
-            Dim z As Integer = Val(layer.source)
+            If z_pattern IsNot Nothing Then
+                z = Val(z_pattern.Match(layer.source).Value)
+            Else
+                z = Val(layer.source)
+            End If
 
             For Each cell As ScanMS1 In layer.MS
                 Dim xy As Point = cell.GetMSIPixel
