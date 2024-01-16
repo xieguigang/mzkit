@@ -529,9 +529,10 @@ Module SingleCells
     End Function
 
     <ExportAPI("cell_embedding")>
+    <RApiReturn(GetType(SpecEmbedding))>
     Public Function cell_embedding(ndims As Integer,
                                    Optional method As TrainMethod = TrainMethod.Skip_Gram,
-                                   Optional freq As Integer = 3) As SpecEmbedding
+                                   Optional freq As Integer = 3) As Object
 
         Return New SpecEmbedding(ndims, method, freq)
     End Function
@@ -551,6 +552,7 @@ Module SingleCells
     End Function
 
     <ExportAPI("embedding_sample")>
+    <RApiReturn(GetType(SpecEmbedding))>
     Public Function embedding_sample(pool As SpecEmbedding, sample As Object,
                                      Optional tag As String = Nothing,
                                      Optional env As Environment = Nothing) As Object
@@ -577,7 +579,12 @@ Module SingleCells
             Return Message.InCompatibleType(GetType(MzMatrix), sample.GetType, env)
         End If
 
-        Call pool.AddSample(pull, centroid:=True)
+        pull = pull _
+            .OrderByDescending(Function(s)
+                                   Return s.mzInto.Sum(Function(i) i.intensity)
+                               End Function) _
+            .ToArray
+        pool.AddSample(pull, centroid:=True)
 
         Return pool
     End Function
