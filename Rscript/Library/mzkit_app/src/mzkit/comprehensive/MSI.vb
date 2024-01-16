@@ -1672,64 +1672,34 @@ Module MSI
     End Function
 
     ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="features">the ion features m/z vector</param>
+    ''' <param name="mzdiff"></param>
+    ''' <returns></returns>
+    <ExportAPI("z_header")>
+    Public Function z_header(<RRawVectorArgument> features As Object, Optional mzdiff As Double = 0.001) As MatrixHeader
+        Return New MatrixHeader With {
+            .matrixType = FileApplicationClass.MSImaging3D,
+            .tolerance = mzdiff.ToString,
+            .mz = CLRVector.asNumeric(features),
+            .numSpots = 0
+        }
+    End Function
+
+    ''' <summary>
     ''' Create mzpack object for ms-imaging in 3D
     ''' </summary>
-    ''' <param name="x">the z axis value should be encoded in the <see cref="mzPack.source"/> tag</param>
-    ''' <param name="z_pattern">
-    ''' a <see cref="Regex"/> pattern expression for parse the z-axis information from the source tag of 
-    ''' the 2D layer mzpack object, default nothing means the source tag string is an integer pattern.
-    ''' </param>
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("z_assembler")>
-    Public Function z_assembler(<RRawVectorArgument> x As Object, file As Object,
-                                <RRawVectorArgument> ion_features As Object,
-                                Optional mzdiff As Double = 0.001,
-                                Optional freq As Double = 0.001,
-                                Optional verbose As Boolean = False,
-                                Optional z_pattern As Regex = Nothing,
-                                Optional env As Environment = Nothing) As Object
-
-        Dim pull As pipeline = pipeline.TryCreatePipeline(Of mzPack)(x, env)
+    Public Function z_assembler(header As MatrixHeader, file As Object, Optional env As Environment = Nothing) As Object
         Dim buf = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Write, env)
 
-        If pull.isError Then
-            Return pull.getError
-        ElseIf buf Like GetType(Message) Then
+        If buf Like GetType(Message) Then
             Return buf.TryCast(Of Message)
         End If
 
-        Dim mzSet As Double() = CLRVector.asNumeric(ion_features)
-        Dim pool As mzPack() = pull.populates(Of mzPack)(env).ToArray
-
-        If mzSet.IsNullOrEmpty Then
-
-        End If
-
-        Dim header As New MatrixHeader With {
-            .matrixType = FileApplicationClass.MSImaging3D,
-            .tolerance = mzdiff.ToString,
-            .mz = mzSet,
-            .numSpots = Aggregate layer As mzPack
-                        In pool
-                        Into Sum(layer.MS.TryCount)
-        }
-        Dim bin As New BinaryWriter(buf.TryCast(Of Stream), encoding:=Encoding.ASCII)
-        Dim offset As Long = MatrixWriter.WriteHeader(bin, header)
-
-        ' write index placeholder
-        Call bin.Write(0&)
-        Call bin.Write(0&)
-
-        Dim writeSpots As New SpotWriter(bin)
-        Dim offset1, offset2 As Long
-        Dim mzIndex = mzSet.CreateMzIndex(win_size:=1.25)
-        Dim len As Integer = mzSet.Length
-        Dim z As Integer
-
-        For Each layer As mzPack In pool
-
-        Next
 
 
 

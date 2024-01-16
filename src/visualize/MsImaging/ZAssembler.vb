@@ -21,6 +21,7 @@ Public Class ZAssembler : Implements IDisposable
     Dim offset As Long
     Dim mzIndex As BlockSearchFunction(Of (mz As Double, Integer))
     Dim len As Integer
+    Dim numSpots As Integer = 0
 
     Private disposedValue As Boolean
 
@@ -45,11 +46,13 @@ Public Class ZAssembler : Implements IDisposable
     End Sub
 
     Public Sub Write2DLayer(layer As IMZPack, z As Integer)
-        Call VBDebugger.cat({$"   * process {layer.source} ... "})
+        Call VBDebugger.cat({$"   * process {layer.source} {layer.MS.TryCount}spots ... "})
 
         If layer Is Nothing OrElse layer.MS.TryCount = 0 Then
             Call VBDebugger.EchoLine("skiped.")
             Return
+        Else
+            numSpots += layer.MS.TryCount
         End If
 
         For Each cell As ScanMS1 In layer.MS
