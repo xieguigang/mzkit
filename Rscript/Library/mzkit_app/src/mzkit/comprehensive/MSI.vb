@@ -1703,7 +1703,7 @@ Module MSI
         Dim z As Integer
 
         For Each layer As mzPack In pool
-            Call VBDebugger.Echo({$"   * process {layer.source} ... "})
+            Call VBDebugger.cat({$"   * process {layer.source} ... "})
 
             If layer Is Nothing OrElse layer.MS.TryCount = 0 Then
                 Call VBDebugger.EchoLine("skiped.")
