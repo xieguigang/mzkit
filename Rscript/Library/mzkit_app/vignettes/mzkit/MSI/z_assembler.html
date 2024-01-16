@@ -31,7 +31,8 @@
     <i>ion.features</i> = <span style='color: blue !important;'>NULL</span>,
     <i>mzdiff</i> = <span style='color: green;'>0.001</span>,
     <i>freq</i> = <span style='color: green;'>0.001</span>,
-    <i>verbose</i> = <span style='color: blue !important;'>FALSE</span>);</code></pre>
+    <i>verbose</i> = <span style='color: blue !important;'>FALSE</span>,
+    <i>z.pattern</i> = <span style='color: blue !important;'>NULL</span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
@@ -40,6 +41,11 @@
             
 <dt>x</dt>
 <dd><p><p>the z axis value should be encoded in the <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzPack.html">mzPack</a>.<a href="#">source</a> tag</p></p></dd>
+
+
+<dt>z.pattern</dt>
+<dd><p><p>a <a href="/vignettes/clr/System/Text/RegularExpressions/Regex.html">Regex</a> pattern expression for parse the z-axis information from the source tag of <br />
+ the 2D layer mzpack object, default nothing means the source tag string is an integer pattern.</p></p></dd>
 
 
 <dt>env</dt>

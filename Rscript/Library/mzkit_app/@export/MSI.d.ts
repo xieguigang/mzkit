@@ -520,9 +520,13 @@ declare namespace MSI {
      * + default value Is ``0.001``.
      * @param verbose 
      * + default value Is ``false``.
+     * @param z_pattern a @``T:System.Text.RegularExpressions.Regex`` pattern expression for parse the z-axis information from the source tag of 
+     *  the 2D layer mzpack object, default nothing means the source tag string is an integer pattern.
+     * 
+     * + default value Is ``null``.
      * @param env -
      * 
      * + default value Is ``null``.
    */
-   function z_assembler(x: any, file: any, ion_features?: any, mzdiff?: number, freq?: number, verbose?: boolean, env?: object): any;
+   function z_assembler(x: any, file: any, ion_features?: any, mzdiff?: number, freq?: number, verbose?: boolean, z_pattern?: object, env?: object): any;
 }

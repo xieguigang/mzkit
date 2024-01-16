@@ -9,6 +9,7 @@ z_assembler \- Create mzpack object for ms-imaging in 3D
 \fBmzdiff\fR as double = 0.001, 
 \fBfreq\fR as double = 0.001, 
 \fBverbose\fR as boolean = FALSE, 
+\fBz_pattern\fR as <generic> Regex = \fB<NULL>\fR, 
 [\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
@@ -17,6 +18,12 @@ Create mzpack object for ms-imaging in 3D
 .SH OPTIONS
 .PP
 \fBx\fB \fR\- the z axis value should be encoded in the @\fBP:BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack.source\fR tag. 
+.PP
+.PP
+\fBz_pattern\fB \fR\- 
+ a @\fBT:System.Text.RegularExpressions.Regex\fR pattern expression for parse the z-axis information from the source tag of 
+ the 2D layer mzpack object, default nothing means the source tag string is an integer pattern.
+. 
 .PP
 .PP
 \fBenv\fB \fR\- -. 
