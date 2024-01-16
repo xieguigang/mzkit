@@ -59,7 +59,6 @@ Imports System.IO
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
-Imports Microsoft.VisualBasic.ComponentModel.Algorithm
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
@@ -154,9 +153,9 @@ Namespace Deconvolute
                                                     m As MzMatrix,
                                                     mz As Double,
                                                     mzdiff As Tolerance,
-                                                    mzindex As BlockSearchFunction(Of (mz As Double, Integer))) As IEnumerable(Of Pixel)
+                                                    mzindex As MzPool) As IEnumerable(Of Pixel)
 
-            Dim hits = mzindex.Search((mz, 0)).Where(Function(mzi) mzdiff(mzi.mz, mz)).ToArray
+            Dim hits = mzindex.Search(mz).Where(Function(mzi) mzdiff(mzi.mz, mz)).ToArray
             Dim conv As Double
             Dim p As Pixel
 
@@ -165,7 +164,7 @@ Namespace Deconvolute
             End If
 
             For Each spot As PixelData In m.matrix
-                conv = Aggregate a In hits Into Sum(spot.intensity(a.Item2))
+                conv = Aggregate a In hits Into Sum(spot.intensity(a.index))
                 p = New Pixel With {
                     .X = spot.X,
                     .Y = spot.Y,
@@ -236,6 +235,14 @@ Namespace Deconvolute
         Public Iterator Function GetSpectrum() As IEnumerable(Of LibraryMatrix)
             For Each spot As PixelData In matrix.SafeQuery
                 Yield New LibraryMatrix(spot.label, mz, spot, centroid:=True)
+            Next
+        End Function
+
+        Public Iterator Function GetPeaks(Optional tag As String = Nothing) As IEnumerable(Of PeakMs2)
+            Dim prefix_tag As Boolean = Not tag.StringEmpty
+
+            For Each spot As PixelData In matrix.SafeQuery
+                Yield New PeakMs2(If(prefix_tag, tag & " - " & spot.label, spot.label), mz, spot)
             Next
         End Function
     End Class

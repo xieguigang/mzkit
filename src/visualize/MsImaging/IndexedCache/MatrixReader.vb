@@ -1,9 +1,8 @@
 ﻿Imports System.Drawing
 Imports System.Runtime.CompilerServices
-Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
-Imports Microsoft.VisualBasic.ComponentModel.Algorithm
 
 ''' <summary>
 ''' A spatial matrix reader
@@ -11,14 +10,14 @@ Imports Microsoft.VisualBasic.ComponentModel.Algorithm
 Public Class MatrixReader
 
     ReadOnly m As MzMatrix
-    ReadOnly index As BlockSearchFunction(Of (mz As Double, Integer))
+    ReadOnly index As MzPool
     ReadOnly mzdiff As Tolerance
     ReadOnly dims As Size
 
     Sub New(m As MzMatrix)
         Me.m = m
         Me.mzdiff = Tolerance.ParseScript(m.tolerance)
-        Me.index = m.mz.CreateMzIndex
+        Me.index = New MzPool(m.mz)
         Me.dims = MeasureDimension()
     End Sub
 

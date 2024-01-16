@@ -56,9 +56,7 @@
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
-Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
-Imports Microsoft.VisualBasic.ComponentModel.Algorithm
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Math
 
@@ -92,7 +90,7 @@ Namespace Deconvolute
                 )
             End If
 
-            Dim mzIndex = mzSet.CreateMzIndex
+            Dim mzIndex As New MzPool(mzSet)
             Dim matrix As PixelData() = raw _
                 .deconvoluteMatrix(mzSet.Length, mzIndex) _
                 .ToArray
@@ -111,7 +109,7 @@ Namespace Deconvolute
         ''' <param name="raw"></param>
         ''' <returns></returns>
         Public Iterator Function ExportScans(Of T As {New, INamedValue, IVector})(raw As IMZPack, mzSet As Double()) As IEnumerable(Of T)
-            Dim mzIndex = mzSet.CreateMzIndex
+            Dim mzIndex As New MzPool(mzSet)
             Dim len As Integer = mzSet.Length
 
             For Each scan As ScanMS1 In raw.MS
@@ -127,7 +125,7 @@ Namespace Deconvolute
         End Function
 
         Public Iterator Function ExportScans(Of T As {New, INamedValue, IVector})(raw As IEnumerable(Of LibraryMatrix), mzSet As Double()) As IEnumerable(Of T)
-            Dim mzIndex = mzSet.CreateMzIndex
+            Dim mzIndex As New MzPool(mzSet)
             Dim len As Integer = mzSet.Length
 
             For Each scan As LibraryMatrix In raw
@@ -143,9 +141,7 @@ Namespace Deconvolute
         End Function
 
         <Extension>
-        Private Iterator Function deconvoluteMatrix(raw As IMZPack,
-                                                    len As Integer,
-                                                    mzIndex As BlockSearchFunction(Of (mz As Double, Integer))) As IEnumerable(Of PixelData)
+        Private Iterator Function deconvoluteMatrix(raw As IMZPack, len As Integer, mzIndex As MzPool) As IEnumerable(Of PixelData)
             For Each scan As ScanMS1 In raw.MS
                 Dim xy As Point = scan.GetMSIPixel
                 Dim v As Double() = Math.DeconvoluteScan(scan.mz, scan.into, len, mzIndex)

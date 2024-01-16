@@ -61,6 +61,8 @@ Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.SplashID
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math
 Imports std = System.Math
 
 Namespace Spectra
@@ -144,6 +146,18 @@ Namespace Spectra
                 End If
             End Get
         End Property
+
+        Sub New()
+        End Sub
+
+        Sub New(guid As String, spec As IEnumerable(Of ms2))
+            lib_guid = guid
+            mzInto = spec.SafeQuery.ToArray
+        End Sub
+
+        Sub New(guid As String, mz As Double(), into As IVector)
+            Call Me.New(guid, into.Data.Select(Function(intensity, i) New ms2(mz(i), intensity)))
+        End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Sub SetIons(ions As IEnumerable(Of ms2)) Implements ISpectrum.SetIons

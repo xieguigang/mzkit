@@ -1,8 +1,7 @@
 ﻿Imports System.Runtime.CompilerServices
-Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
-Imports Microsoft.VisualBasic.ComponentModel.Algorithm
 Imports Microsoft.VisualBasic.Linq
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components.Interface
@@ -15,14 +14,14 @@ Imports SMRUCC.Rsharp.Runtime.Vectorization
 Public Class SpatialMatrixReader : Implements IdataframeReader, IReflector
 
     ReadOnly m As MzMatrix
-    ReadOnly index As BlockSearchFunction(Of (mz As Double, Integer))
+    ReadOnly index As MzPool
     ReadOnly mzdiff As Tolerance
     ReadOnly spatialIndex As Dictionary(Of String, Integer)
 
     Sub New(m As MzMatrix)
         Me.m = m
         Me.mzdiff = Tolerance.ParseScript(m.tolerance)
-        Me.index = m.mz.CreateMzIndex
+        Me.index = New MzPool(m.mz)
 
         Call CreateIndex(m, spatialIndex)
     End Sub
@@ -59,11 +58,11 @@ Public Class SpatialMatrixReader : Implements IdataframeReader, IReflector
 
     Private Function loadLayer(mzi As Double) As dataframe
         Dim offsets As Integer() = Me.index _
-            .Search((mzi, -1)) _
+            .Search(mzi) _
             .Where(Function(mzhit)
                        Return mzdiff(mzi, mzhit.mz)
                    End Function) _
-            .Select(Function(h) h.Item2) _
+            .Select(Function(h) h.index) _
             .ToArray
 
         If offsets.Length = 0 Then

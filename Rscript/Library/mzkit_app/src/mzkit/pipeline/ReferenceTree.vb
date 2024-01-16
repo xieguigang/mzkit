@@ -58,14 +58,17 @@ Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.SplashID
 Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree
 Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.PackLib
 Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.Query
 Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.Tree
+Imports BioNovoGene.BioDeep.MassSpectrometry.MoleculeNetworking
 Imports BioNovoGene.BioDeep.MSEngine
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.Data.NLP.Word2Vec
 Imports Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.MetaData
@@ -583,66 +586,84 @@ Module ReferenceTreePkg
             Return buf.TryCast(Of Message)
         End If
 
-        Dim pullAll = spectrumLib.LoadMass.ToArray
         Dim newPool As New SpectrumPack(buf.TryCast(Of Stream))
-        Dim nsize As Integer = 0
+        Dim annoData As Func(Of String, (name As String, formula As String)) = AddressOf metadb.GetAnnotation
+        Dim xrefData As Func(Of String, Dictionary(Of String, String)) = AddressOf metadb.GetDbXref
 
-        For Each metabo As MassIndex In pullAll
-            Try
-                Dim allspec = spectrumLib.GetSpectrum(metabo).ToArray
-                Dim i As i32 = 1
-
-                If allspec.Length > nspec Then
-                    allspec = Cleanup.Compress(allspec, n:=nspec).ToArray
-                End If
-
-                Dim annoData = metadb.GetAnnotation(uniqueId:=metabo.name)
-                Dim xrefs = metadb.GetDbXref(metabo.name)
-                Dim uuid As String
-                Dim xref_id As String
-
-                If annoData.name.StringEmpty AndAlso annoData.formula.StringEmpty Then
-                    uuid = metabo.name
-                    xref_id = uuid
-                Else
-                    If Not xrefDb.StringEmpty Then
-                        uuid = xrefs.TryGetValue(xrefDb)
-                    Else
-                        uuid = metabo.name.Split.First
-                    End If
-
-                    If Not uuid.StringEmpty Then
-                        xref_id = uuid
-                    Else
-                        xref_id = metabo.name.Split.First
-                    End If
-
-                    uuid = $"{uuid}|{SpectrumPack.PathName(annoData.name)}|{SpectrumPack.PathName(annoData.formula)}"
-                End If
-
-                Call base.print(uuid,, env)
-
-                For Each spectrum As PeakMs2 In allspec
-                    spectrum.lib_guid = $"{uuid}#{++i}"
-                    spectrum.scan = xref_id
-                    spectrum.file = uuid
-                    newPool.Push(uuid, If(annoData.formula, metabo.formula), spectrum)
-                Next
-
-                nsize += 1
-
-                If test > 0 Then
-                    If nsize >= test Then
-                        Exit For
-                    End If
-                End If
-            Catch ex As Exception
-
-            End Try
-        Next
-
+        Call New Compression(annoData, xrefData, println:=Sub(s) base.print(s,, env)) _
+            .SpectrumCompression(
+                spectrumLib, newPool,
+                nspec:=nspec,
+                test:=test,
+                xrefDb:=xrefDb
+            )
         Call newPool.Dispose()
 
         Return True
+    End Function
+
+    ''' <summary>
+    ''' do embedding of the spectrum data
+    ''' </summary>
+    ''' <param name="x">a set of the spectrum data, usually be a mzpack object</param>
+    ''' <param name="mslevel">
+    ''' only works when the input dataset is <see cref="mzPack"/>
+    ''' </param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("embedding")>
+    <RApiReturn(GetType(VectorModel))>
+    Public Function embedding(<RRawVectorArgument>
+                              x As Object,
+                              Optional mslevel As Integer = 2,
+                              Optional env As Environment = Nothing) As Object
+
+        Dim spec As PeakMs2() = Nothing
+        Dim pullSpec As pipeline = pipeline.TryCreatePipeline(Of PeakMs2)(x, env)
+
+        If pullSpec.isError Then
+            If TypeOf x Is mzPack Then
+                env.AddMessage("create the ion peak embedding for one mzpack sample data.", MSG_TYPES.WRN)
+                spec = DirectCast(x, mzPack).GetSpectrum(mslevel)
+            Else
+                pullSpec = pipeline.TryCreatePipeline(Of mzPack)(x, env)
+
+                If pullSpec.isError Then
+                    Return pullSpec.getError
+                End If
+
+                Dim spectrums As New SpecEmbedding
+
+                For Each sample As mzPack In pullSpec.populates(Of mzPack)(env)
+                    spec = sample.GetSpectrum(mslevel)
+                    spectrums.AddSample(spec)
+                Next
+
+                Return spectrums.CreateEmbedding
+            End If
+        Else
+            spec = pullSpec _
+                .populates(Of PeakMs2)(env) _
+                .ToArray
+        End If
+
+        Dim ions As New IonEmbedding()
+
+        For Each ms As PeakMs2 In spec
+            Call ions.Add(ms)
+        Next
+
+        Return ions.CreateEmbedding
+    End Function
+
+    <Extension>
+    Private Function GetSpectrum(pool As mzPack, msLevel As Integer) As PeakMs2()
+        If msLevel = 2 Then
+            Return pool.GetMs2Peaks.ToArray
+        Else
+            Return pool.MS _
+                .Select(Function(m1) New PeakMs2(m1.scan_id, m1.GetMs)) _
+                .ToArray
+        End If
     End Function
 End Module

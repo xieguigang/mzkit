@@ -13,3 +13,4 @@ the spectrum tree reference library tools
 + [query](spectrumTree/query.1) do spectrum family alignment via cos similarity
 + [addBucket](spectrumTree/addBucket.1) push the reference spectrum data into the spectrum reference tree library
 + [compress](spectrumTree/compress.1) Compress and make cleanup of the spectrum library
++ [embedding](spectrumTree/embedding.1) 

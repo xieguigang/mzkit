@@ -61,7 +61,9 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells
 Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
+Imports BioNovoGene.BioDeep.MassSpectrometry.MoleculeNetworking
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Data.NLP.Word2Vec
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.ComponentModel.Activations
@@ -524,5 +526,71 @@ Module SingleCells
     <RApiReturn(GetType(SpatialMatrixReader))>
     Public Function dfMzMatrix(x As MzMatrix) As Object
         Return New SpatialMatrixReader(x)
+    End Function
+
+    <ExportAPI("cell_embedding")>
+    <RApiReturn(GetType(SpecEmbedding))>
+    Public Function cell_embedding(ndims As Integer,
+                                   Optional method As TrainMethod = TrainMethod.Skip_Gram,
+                                   Optional freq As Integer = 3) As Object
+
+        Return New SpecEmbedding(ndims, method, freq)
+    End Function
+
+    <ExportAPI("cell_clusters")>
+    Public Function cell_clusters(pool As SpecEmbedding) As list
+        Dim tree = pool.GetClusters
+        Dim clusters As New list With {
+            .slots = tree _
+                .ToDictionary(Function(t) t.Key,
+                              Function(t)
+                                  Return CObj(t.Value)
+                              End Function)
+        }
+
+        Return clusters
+    End Function
+
+    <ExportAPI("embedding_sample")>
+    <RApiReturn(GetType(SpecEmbedding))>
+    Public Function embedding_sample(pool As SpecEmbedding, sample As Object,
+                                     Optional tag As String = Nothing,
+                                     Optional env As Environment = Nothing) As Object
+        Dim pull As PeakMs2()
+
+        If sample Is Nothing Then
+            Return pool
+        End If
+
+        If TypeOf sample Is mzPack Then
+            Dim mzpack As mzPack = sample
+
+            tag = If(tag, mzpack.source)
+            pull = mzpack.MS _
+                .Select(Function(s)
+                            Return New PeakMs2(tag & " - " & s.scan_id, s.GetMs)
+                        End Function) _
+                .ToArray
+        ElseIf TypeOf sample Is MzMatrix Then
+            pull = DirectCast(sample, MzMatrix) _
+                .GetPeaks(tag) _
+                .ToArray
+        Else
+            Return Message.InCompatibleType(GetType(MzMatrix), sample.GetType, env)
+        End If
+
+        pull = pull _
+            .OrderByDescending(Function(s)
+                                   Return s.mzInto.Sum(Function(i) i.intensity)
+                               End Function) _
+            .ToArray
+        pool.AddSample(pull, centroid:=True)
+
+        Return pool
+    End Function
+
+    <ExportAPI("spot_vector")>
+    Public Function spot_vector(pool As SpecEmbedding) As VectorModel
+        Return pool.CreateEmbedding
     End Function
 End Module
