@@ -1693,17 +1693,19 @@ Module MSI
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("z_assembler")>
+    <RApiReturn(GetType(ZAssembler))>
     Public Function z_assembler(header As MatrixHeader, file As Object, Optional env As Environment = Nothing) As Object
         Dim buf = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Write, env)
 
         If buf Like GetType(Message) Then
             Return buf.TryCast(Of Message)
+        Else
+            Dim z As New ZAssembler(buf.TryCast(Of Stream))
+            Call z.WriteHeader(header)
+            Return New z_assembler_func With {
+                .assembler = z
+            }
         End If
-
-
-
-
-        Return True
     End Function
 
     ''' <summary>
