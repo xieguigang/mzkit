@@ -1636,14 +1636,39 @@ Module MSI
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("z_assembler")>
-    Public Function z_assembler(<RRawVectorArgument> x As Object, file As Object, Optional env As Environment = Nothing) As Object
+    Public Function z_assembler(<RRawVectorArgument> x As Object, file As Object,
+                                <RRawVectorArgument>
+                                Optional ion_features As Object = Nothing,
+                                Optional mzdiff As Double = 0.001,
+                                Optional freq As Double = 0.001,
+                                Optional verbose As Boolean = False,
+                                Optional env As Environment = Nothing) As Object
+
         Dim pull As pipeline = pipeline.TryCreatePipeline(Of mzPack)(x, env)
+        Dim buf = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Write, env)
 
         If pull.isError Then
             Return pull.getError
+        ElseIf buf Like GetType(Message) Then
+            Return buf.TryCast(Of Message)
         End If
 
+        Dim mzSet As Double() = CLRVector.asNumeric(ion_features)
+        Dim pool As mzPack() = pull.populates(Of mzPack)(env).ToArray
 
+        If mzSet.IsNullOrEmpty Then
+            ' get all mz ions from the rawdata
+            mzSet = pool.AsParallel _
+                .Select(Function(rawdata)
+                            Return GetMzIndex(
+                                raw:=rawdata,
+                                mzdiff:=mzdiff, freq:=freq,
+                                fast:=True,
+                                verbose:=verbose
+                            )
+                        End Function) _
+                .IteratesALL
+        End If
     End Function
 
     ''' <summary>

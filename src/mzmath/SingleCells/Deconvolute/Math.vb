@@ -112,32 +112,13 @@ Namespace Deconvolute
                     Call scanMz.Add(x)
                 Next
 
-                scanMz.Shuffle
-                ' VectorTask.n_threads = App.CPUCoreNumbers
+                Call scanMz.Shuffle
 
                 If verbose Then
                     Call VBDebugger.EchoLine($"processing {scanMz.Count} ion feature blocks...")
                 End If
 
-                Dim par As New IndexTask(scanMz, mzdiff, verbose)
-                Dim subgroups = DirectCast(par.Run(), IndexTask).groups
-                Dim merge = subgroups.IteratesALL _
-                    .Where(Function(n) n.Length > 0) _
-                    .GroupBy(Function(a) a.Average, offsets:=mzdiff) _
-                    .ToArray
-                Dim bins = merge _
-                    .Select(Function(g)
-                                Dim bin As Double() = g _
-                                    .Select(Function(i) i.value) _
-                                    .IteratesALL _
-                                    .ToArray
-
-                                Return New NamedCollection(Of Double)(bin.Average.ToString, bin)
-                            End Function) _
-                    .OrderByDescending(Function(g) g.Length) _
-                    .ToArray
-
-                Return GetMzIndex(bins, freq)
+                Return GetMzIndexFastBin(scanMz, mzdiff, freq, verbose:=verbose)
             Else
                 Dim scanMz As New List(Of Double)
 
@@ -147,6 +128,28 @@ Namespace Deconvolute
 
                 Return GetMzIndex(scanMz, mzdiff, freq)
             End If
+        End Function
+
+        Public Function GetMzIndexFastBin(scanMz As List(Of Double()), mzdiff As Double, freq As Double, Optional verbose As Boolean = False) As Double()
+            Dim par As New IndexTask(scanMz, mzdiff, verbose)
+            Dim subgroups = DirectCast(par.Run(), IndexTask).groups
+            Dim merge = subgroups.IteratesALL _
+                .Where(Function(n) n.Length > 0) _
+                .GroupBy(Function(a) a.Average, offsets:=mzdiff) _
+                .ToArray
+            Dim bins = merge _
+                .Select(Function(g)
+                            Dim bin As Double() = g _
+                                .Select(Function(i) i.value) _
+                                .IteratesALL _
+                                .ToArray
+
+                            Return New NamedCollection(Of Double)(bin.Average.ToString, bin)
+                        End Function) _
+                .OrderByDescending(Function(g) g.Length) _
+                .ToArray
+
+            Return GetMzIndex(bins, freq)
         End Function
 
         Private Class IndexTask : Inherits VectorTask
