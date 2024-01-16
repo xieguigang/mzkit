@@ -130,6 +130,15 @@ Namespace Deconvolute
         ''' <returns></returns>
         Public Property matrixType As FileApplicationClass
 
+        Public Function GetHeader() As MatrixHeader
+            Return New MatrixHeader With {
+                .matrixType = matrixType,
+                .mz = mz.ToArray,
+                .numSpots = matrix.TryCount,
+                .tolerance = tolerance
+            }
+        End Function
+
         ''' <summary>
         ''' Get ion layer data via a given mass value and mass error.
         ''' </summary>

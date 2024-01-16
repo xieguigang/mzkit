@@ -1667,8 +1667,17 @@ Module MSI
                                 verbose:=verbose
                             )
                         End Function) _
-                .IteratesALL
+                .AsList() _
+                .DoCall(Function(mzBins)
+                            Return GetMzIndexFastBin(mzBins, mzdiff, freq, verbose:=verbose)
+                        End Function)
         End If
+
+        For Each layer As mzPack In pool
+
+        Next
+
+        Return True
     End Function
 
     ''' <summary>
