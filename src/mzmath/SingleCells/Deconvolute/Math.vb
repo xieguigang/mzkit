@@ -231,7 +231,9 @@ Namespace Deconvolute
         ''' </summary>
         ''' <param name="mz"></param>
         ''' <param name="into"></param>
-        ''' <param name="len"></param>
+        ''' <param name="len">
+        ''' should be the length of the <paramref name="mzIndex"/>
+        ''' </param>
         ''' <param name="mzIndex"></param>
         ''' <returns>
         ''' a vector of the intensity data which is aligned with the mz vector

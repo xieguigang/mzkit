@@ -66,6 +66,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.Comprehensive.MsImaging
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
+Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
@@ -1691,6 +1692,8 @@ Module MSI
 
         Dim writeSpots As New SpotWriter(bin)
         Dim offset1, offset2 As Long
+        Dim mzIndex = mzSet.CreateMzIndex(win_size:=1.25)
+        Dim len As Integer = mzSet.Length
 
         For Each layer As mzPack In pool
             If layer Is Nothing OrElse layer.MS.TryCount = 0 Then
@@ -1701,7 +1704,7 @@ Module MSI
 
             For Each cell As ScanMS1 In layer.MS
                 Dim xy As Point = cell.GetMSIPixel
-                Dim v As Double()
+                Dim v As Double() = Deconvolute.DeconvoluteScan(cell.mz, cell.into, len, mzIndex)
                 Dim spot As New Deconvolute.PixelData With {
                     .X = xy.X,
                     .Y = xy.Y,
