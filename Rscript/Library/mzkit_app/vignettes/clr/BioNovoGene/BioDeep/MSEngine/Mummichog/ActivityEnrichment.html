@@ -35,6 +35,10 @@
             <code id="clr_ts">
 # namespace BioNovoGene.BioDeep.MSEngine.Mummichog
 export class ActivityEnrichment {
+   # the fisher test p-value
+   Fisher: <a href="/vignettes/clr/Microsoft/VisualBasic/Math/Statistics/Hypothesis/FishersExact/FishersExactPvalues.html">FishersExactPvalues</a>;
+   # the ms1 peak list annotation result
+   Hits: <a href="/vignettes/clr/BioNovoGene/BioDeep/MSEngine/MzQuery.html">MzQuery[]</a>;
    # the network modularity
    Q: double;
    # the metabolite hits input size
@@ -43,10 +47,6 @@ export class ActivityEnrichment {
    Background: integer;
    # Q * Input / Background
    Activity: double;
-   # the fisher test p-value
-   Fisher: <a href="/vignettes/clr/Microsoft/VisualBasic/Math/Statistics/Hypothesis/FishersExact/FishersExactPvalues.html">FishersExactPvalues</a>;
-   # the ms1 peak list annotation result
-   Hits: <a href="/vignettes/clr/BioNovoGene/BioDeep/MSEngine/MzQuery.html">MzQuery[]</a>;
    # usually the pathway name
    Name: string;
    # the pathway description details
