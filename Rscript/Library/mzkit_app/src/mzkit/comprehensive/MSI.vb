@@ -86,6 +86,7 @@ Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Data.GraphTheory.GridGraph
 Imports Microsoft.VisualBasic.Emit.Delegates
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.HeatMap
+Imports Microsoft.VisualBasic.Imaging.Landscape.Vendor_3mf.XML
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.ComponentModel.Activations
@@ -1222,12 +1223,43 @@ Module MSI
     ''' <param name="fast_bins"></param>
     ''' <returns></returns>
     <ExportAPI("getMatrixIons")>
-    Public Function GetMatrixIons(raw As mzPack,
+    <RApiReturn(TypeCodes.double)>
+    Public Function GetMatrixIons(<RRawVectorArgument> raw As Object,
                                   Optional mzdiff As Double = 0.001,
                                   Optional q As Double = 0.001,
-                                  Optional fast_bins As Boolean = True) As Double()
+                                  Optional fast_bins As Boolean = True,
+                                  Optional verbose As Boolean = False,
+                                  Optional env As Environment = Nothing) As Object
 
-        Return SingleCellMath.GetMzIndex(raw, mzdiff, q, fast:=fast_bins)
+        Dim pull As pipeline = pipeline.TryCreatePipeline(Of mzPack)(raw, env)
+        Dim pool As mzPack()
+
+        If pull.isError Then
+            Return pull.getError
+        Else
+            pool = pull _
+                .populates(Of mzPack)(env) _
+                .ToArray
+        End If
+
+        If pool.Length = 1 Then
+            Return SingleCellMath.GetMzIndex(pool(0), mzdiff, q, fast:=fast_bins)
+        End If
+
+        ' get all mz ions from the rawdata
+        Return pool.AsParallel _
+            .Select(Function(rawdata)
+                        Return GetMzIndex(
+                            raw:=rawdata,
+                            mzdiff:=mzdiff, freq:=q,
+                            fast:=True,
+                            verbose:=verbose
+                        )
+                    End Function) _
+            .AsList() _
+            .DoCall(Function(mzBins)
+                        Return GetMzIndexFastBin(mzBins, mzdiff, q, verbose:=verbose)
+                    End Function)
     End Function
 
     ''' <summary>
@@ -1664,20 +1696,7 @@ Module MSI
         Dim pool As mzPack() = pull.populates(Of mzPack)(env).ToArray
 
         If mzSet.IsNullOrEmpty Then
-            ' get all mz ions from the rawdata
-            mzSet = pool.AsParallel _
-                .Select(Function(rawdata)
-                            Return GetMzIndex(
-                                raw:=rawdata,
-                                mzdiff:=mzdiff, freq:=freq,
-                                fast:=True,
-                                verbose:=verbose
-                            )
-                        End Function) _
-                .AsList() _
-                .DoCall(Function(mzBins)
-                            Return GetMzIndexFastBin(mzBins, mzdiff, freq, verbose:=verbose)
-                        End Function)
+
         End If
 
         Dim header As New MatrixHeader With {

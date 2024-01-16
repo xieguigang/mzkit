@@ -21,6 +21,7 @@ Public Class ZAssembler : Implements IDisposable
     Dim offset As Long
     Dim mzIndex As BlockSearchFunction(Of (mz As Double, Integer))
     Dim len As Integer
+
     Private disposedValue As Boolean
 
     Sub New(buf As Stream)
