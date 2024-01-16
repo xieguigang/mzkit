@@ -83,7 +83,7 @@ declare namespace SingleCells {
     * 
     * > implements the ``as.data.frame`` function
     * 
-     * @param x -
+     * @param x should be a rawdata object in general type: @``T:BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute.MzMatrix``.
      * @param args -
      * @param env -
      * 

@@ -512,9 +512,17 @@ declare namespace MSI {
     * 
     * 
      * @param x the z axis value should be encoded in the @``P:BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack.source`` tag
+     * @param ion_features 
+     * + default value Is ``null``.
+     * @param mzdiff 
+     * + default value Is ``0.001``.
+     * @param freq 
+     * + default value Is ``0.001``.
+     * @param verbose 
+     * + default value Is ``false``.
      * @param env -
      * 
      * + default value Is ``null``.
    */
-   function z_assembler(x: any, file: any, env?: object): any;
+   function z_assembler(x: any, file: any, ion_features?: any, mzdiff?: number, freq?: number, verbose?: boolean, env?: object): any;
 }
