@@ -2,9 +2,8 @@
 Imports System.IO
 Imports System.Text
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
-Imports BioNovoGene.Analytical.MassSpectrometry.Math
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells
-Imports Microsoft.VisualBasic.ComponentModel.Algorithm
 
 ''' <summary>
 ''' assemble the 2D layers as 3D volume data
@@ -19,7 +18,7 @@ Public Class ZAssembler : Implements IDisposable
     ''' offset position of the spot data blocks start location
     ''' </summary>
     Dim offset As Long
-    Dim mzIndex As BlockSearchFunction(Of (mz As Double, Integer))
+    Dim mzIndex As MzPool
     Dim len As Integer
     Dim numSpots As Integer = 0
     Dim writeSpotCount As Boolean = False
@@ -47,7 +46,7 @@ Public Class ZAssembler : Implements IDisposable
     Public Sub WriteHeader(header As MatrixHeader)
         offset = MatrixWriter.WriteHeader(bin, header)
         len = header.mz.Length
-        mzIndex = header.mz.CreateMzIndex(win_size:=1.25)
+        mzIndex = New MzPool(header.mz, win_size:=1.25)
         writeSpotCount = header.numSpots <= 0
 
         ' write index placeholder
