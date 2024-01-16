@@ -1104,22 +1104,29 @@ Module MSI
                                Optional env As Environment = Nothing) As Object
 
         Dim err = Math.getTolerance(mzError, env)
+        Dim println = env.WriteLineHandler
 
         If err Like GetType(Message) Then
             Return err.TryCast(Of Message)
         End If
 
-        Call base.print($"extract ion feature data with mass tolerance: {err.TryCast(Of Tolerance).ToString}",, env)
+        Call println($"extract ion feature data with mass tolerance: {err.TryCast(Of Tolerance).ToString}")
 
         If raw_matrix Then
-            Call base.print("the raw ions feature matrix object will be returned!",, env)
+            Call println("the raw ions feature matrix object will be returned!")
         End If
 
         If Not ionSet Is Nothing Then
             Return raw.GetPeakMatrix(ionSet, err.TryCast(Of Tolerance), raw_matrix, env)
         ElseIf raw_matrix Then
             Dim topIons As Double() = raw.GetMzIndex(mzdiff:=err.TryCast(Of Tolerance).GetErrorDalton, topN:=topN)
-            Dim m = Deconvolute.PeakMatrix.CreateMatrix(raw, err.TryCast(Of Tolerance).GetErrorDalton, 0, mzSet:=topIons)
+            Dim m = Deconvolute.PeakMatrix.CreateMatrix(
+                raw:=raw,
+                mzdiff:=err.TryCast(Of Tolerance).GetErrorDalton,
+                freq:=0,
+                mzSet:=topIons
+            )
+
             Return m
         Else
             Return raw _
