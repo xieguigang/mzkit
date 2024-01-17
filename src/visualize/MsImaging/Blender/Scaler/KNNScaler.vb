@@ -59,6 +59,9 @@ Imports System.Xml.Serialization
 
 Namespace Blender.Scaler
 
+    ''' <summary>
+    ''' fill the missing data with knn search method
+    ''' </summary>
     Public Class KNNScaler : Inherits Scaler
 
         <XmlAttribute> Public Property k As Integer

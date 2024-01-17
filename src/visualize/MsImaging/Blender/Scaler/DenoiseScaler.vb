@@ -59,6 +59,9 @@ Imports System.Xml.Serialization
 
 Namespace Blender.Scaler
 
+    ''' <summary>
+    ''' removes the pixel points by the average density cutoff
+    ''' </summary>
     Public Class DenoiseScaler : Inherits Scaler
 
         ''' <summary>

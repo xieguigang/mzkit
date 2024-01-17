@@ -1,60 +1,60 @@
 ﻿#Region "Microsoft.VisualBasic::19f36fd9813f6c3bf75e301d88858ae4, mzkit\src\visualize\MsImaging\Blender\Scaler\Scaler.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 46
-    '    Code Lines: 37
-    ' Comment Lines: 0
-    '   Blank Lines: 9
-    '     File Size: 1.73 KB
+' Summaries:
 
 
-    '     Class Scaler
-    ' 
-    '         Function: [Then], (+2 Overloads) DoIntensityScale
-    '         Interface LayerScaler
-    ' 
-    '             Function: DoIntensityScale
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 46
+'    Code Lines: 37
+' Comment Lines: 0
+'   Blank Lines: 9
+'     File Size: 1.73 KB
+
+
+'     Class Scaler
+' 
+'         Function: [Then], (+2 Overloads) DoIntensityScale
+'         Interface LayerScaler
+' 
+'             Function: DoIntensityScale
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -125,6 +125,7 @@ Namespace Blender.Scaler
                 Case "knn_fill" : Return New KNNScaler(pars.ElementAtOrDefault(0, 3), pars.ElementAtOrDefault(1, 0.65))
                 Case "log" : Return New LogScaler(pars.ElementAtOrDefault(0, System.Math.E))
                 Case "power" : Return New PowerScaler(pars.ElementAtOrDefault(0, 2))
+                Case "triq_clip" : Return New TrIQClip(pars.ElementAtOrDefault(0, 0.8), pars.ElementAtOrDefault(1, 100))
                 Case Else
                     Throw New NotImplementedException(config.Name)
             End Select
