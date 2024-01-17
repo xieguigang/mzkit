@@ -1791,12 +1791,14 @@ Module MSI
                     v = 255
                 End If
 
-                buf(spot.x)(spot.y) = CByte(v)
+                buf(spot.y - 1)(spot.x - 1) = CByte(v)
             Next
 
             For Each line As Byte() In buf
                 Call bin.Write(line)
             Next
+
+            Call Console.Write(".")
         Next
 
         Call bin.Flush()
