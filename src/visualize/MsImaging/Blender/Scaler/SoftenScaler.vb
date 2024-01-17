@@ -134,7 +134,7 @@ Namespace Blender.Scaler
         End Function
 
         Public Overrides Function ToScript() As String
-            Return "soften()"
+            Return $"soften()"
         End Function
     End Class
 End Namespace

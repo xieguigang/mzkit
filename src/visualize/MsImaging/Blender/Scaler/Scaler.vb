@@ -58,6 +58,9 @@
 
 #End Region
 
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Serialization.JSON
+
 Namespace Blender.Scaler
 
     Public MustInherit Class Scaler : Implements LayerScaler
@@ -108,27 +111,65 @@ Namespace Blender.Scaler
             Return New RasterPipeline From {Me, [next]}
         End Function
 
+        Public Shared Iterator Function GetFilters() As IEnumerable(Of Type)
+            Yield GetType(DenoiseScaler)      ' $"denoise({q})"
+            Yield GetType(IntensityCutScaler) ' $"cut({cutoff}, {percentage})"
+            Yield GetType(KNNScaler)          ' $"knn_fill({k},{q})"
+            Yield GetType(LogScaler)          ' $"log({base.ToString("F4")})"
+            Yield GetType(PowerScaler)        ' $"power({pow})"
+            Yield GetType(QuantileScaler)     ' $"Q({q.ToString("F4")},percentail:={percentail.ToString.ToLower})"
+            Yield GetType(SoftenScaler)       ' $"soften()"
+            Yield GetType(TrIQClip)           ' $"TrIQ_clip({threshold},{N})"
+            Yield GetType(TrIQScaler)         ' $"TrIQ({threshold.ToString("F4")})"
+        End Function
+
         Public Shared Function Parse(line As String) As Scaler
             line = Strings.Trim(line).ToLower
 
             Dim config = line.GetTagValue("(", trim:=True)
-            Dim pars = config.Value _
-                .Trim(")"c) _
-                .Split(","c) _
-                .Select(AddressOf Val) _
-                .ToArray
+            Dim par_str As String = config.Value.Trim(")"c)
+            Dim pars As New ParameterSet(par_str.Split(","c))
 
             Select Case config.Name
                 Case "soften" : Return New SoftenScaler
-                Case "denoise" : Return New DenoiseScaler(pars.ElementAtOrDefault(0, 0.01))
-                Case "triq" : Return New TrIQScaler(pars.ElementAtOrDefault(0, 0.65))
-                Case "knn_fill" : Return New KNNScaler(pars.ElementAtOrDefault(0, 3), pars.ElementAtOrDefault(1, 0.65))
-                Case "log" : Return New LogScaler(pars.ElementAtOrDefault(0, System.Math.E))
-                Case "power" : Return New PowerScaler(pars.ElementAtOrDefault(0, 2))
-                Case "triq_clip" : Return New TrIQClip(pars.ElementAtOrDefault(0, 0.8), pars.ElementAtOrDefault(1, 100))
+                Case "denoise" : Return New DenoiseScaler(pars.next(0.01))
+                Case "triq" : Return New TrIQScaler(pars.next(0.65))
+                Case "q" : Return New QuantileScaler(pars.next(0.5), pars.next(False))
+                Case "knn_fill" : Return New KNNScaler(pars.next(3), pars.next(0.65))
+                Case "log" : Return New LogScaler(pars.next(System.Math.E))
+                Case "power" : Return New PowerScaler(pars.next(2.0))
+                Case "triq_clip" : Return New TrIQClip(pars.next(0.8), pars.next(100))
+                Case "cut" : Return New IntensityCutScaler(pars.next(0.05), pars.next(False))
                 Case Else
-                    Throw New NotImplementedException(config.Name)
+                    Throw New NotImplementedException(line & ": " & config.Name)
             End Select
+        End Function
+
+    End Class
+
+    Friend Class ParameterSet
+
+        Dim pars As String()
+        Dim offset As i32 = 0
+
+        Sub New(pars As String())
+            Me.pars = pars
+        End Sub
+
+        Public Function [next](default#) As Double
+            Return Val(pars.ElementAtOrDefault(++offset, [default].ToString))
+        End Function
+
+        Public Function [next]([default] As Boolean) As Boolean
+            Return pars.ElementAtOrDefault(++offset, [default].ToString).ParseBoolean
+        End Function
+
+        Public Function [next](default%) As Integer
+            Return pars.ElementAtOrDefault(++offset, [default].ToString).ParseInteger
+        End Function
+
+        Public Overrides Function ToString() As String
+            Return pars.GetJson
         End Function
 
     End Class
