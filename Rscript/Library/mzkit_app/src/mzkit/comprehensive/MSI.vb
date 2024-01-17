@@ -1777,8 +1777,8 @@ Module MSI
 
         For Each layer As SingleIonLayer In layers_2d
             Dim buf As Byte()() = RectangularArray.Matrix(Of Byte)(
-                assert_dims.Width,
-                assert_dims.Height
+                assert_dims.Height,
+                assert_dims.Width
             )
             Dim v As Double
 
