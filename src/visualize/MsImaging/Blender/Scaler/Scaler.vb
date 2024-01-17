@@ -124,6 +124,7 @@ Namespace Blender.Scaler
                 Case "triq" : Return New TrIQScaler(pars.ElementAtOrDefault(0, 0.65))
                 Case "knn_fill" : Return New KNNScaler(pars.ElementAtOrDefault(0, 3), pars.ElementAtOrDefault(1, 0.65))
                 Case "log" : Return New LogScaler(pars.ElementAtOrDefault(0, System.Math.E))
+                Case "power" : Return New PowerScaler(pars.ElementAtOrDefault(0, 2))
                 Case Else
                     Throw New NotImplementedException(config.Name)
             End Select
