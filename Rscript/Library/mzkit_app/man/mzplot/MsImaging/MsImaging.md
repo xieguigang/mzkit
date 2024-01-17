@@ -32,6 +32,7 @@
 + [MSI_summary.scaleMax](MsImaging/MSI_summary.scaleMax.1) 
 + [defaultFilter](MsImaging/defaultFilter.1) get the default ms-imaging filter pipeline
 + [parseFilters](MsImaging/parseFilters.1) 
++ [intensityFilter](MsImaging/intensityFilter.1) 
 + [render](MsImaging/render.1) MS-imaging of the MSI summary data result.
 + [as.pixels](MsImaging/as.pixels.1) extract the pixel [x,y] information for all of
 + [MeasureMSIions](MsImaging/MeasureMSIions.1) 
