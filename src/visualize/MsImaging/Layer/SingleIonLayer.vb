@@ -254,6 +254,10 @@ Public Class SingleIonLayer
         }
     End Function
 
+    ''' <summary>
+    ''' get intensity value from all spot data inside current layer object
+    ''' </summary>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function GetIntensity() As Double()
         Return MSILayer.Select(Function(p) p.intensity).ToArray
