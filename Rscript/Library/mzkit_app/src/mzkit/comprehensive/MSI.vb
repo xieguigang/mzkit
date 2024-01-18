@@ -1236,6 +1236,9 @@ Module MSI
     ''' <param name="q"></param>
     ''' <param name="fast_bins"></param>
     ''' <returns></returns>
+    ''' <example>
+    ''' getMatrixIons(mzpack, mzdiff = 0.001, fast.bins = TRUE);
+    ''' </example>
     <ExportAPI("getMatrixIons")>
     <RApiReturn(TypeCodes.double)>
     Public Function GetMatrixIons(<RRawVectorArgument> raw As Object,
