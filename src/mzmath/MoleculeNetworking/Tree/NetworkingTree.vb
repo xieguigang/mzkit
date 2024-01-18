@@ -12,10 +12,12 @@ Public Class NetworkingTree
     ReadOnly cosine As CosAlignment
     ReadOnly align As MSScoreGenerator
     ReadOnly equals_cutoff As Double = 0.85
+    ReadOnly diff As Double = 0.1
 
     Sub New(Optional mzdiff As Double = 0.3,
             Optional intocutoff As Double = 0.05,
-            Optional equals As Double = 0.85)
+            Optional equals As Double = 0.85,
+            Optional interval As Double = 0.1)
 
         cosine = New CosAlignment(
             mzwidth:=Tolerance.DeltaMass(mzdiff),
@@ -25,6 +27,7 @@ Public Class NetworkingTree
         ' any spectrum inside
         align = New MSScoreGenerator(cosine, equals, equals)
         equals_cutoff = equals
+        diff = interval
     End Sub
 
     ''' <summary>
@@ -55,8 +58,10 @@ Public Class NetworkingTree
             Call ionsList.Add(ion)
             Call align.Add(ion)
 
-            class_id = ClusterTree.Add(clustering, ion.lib_guid, align, threshold:=equals_cutoff)
-            clusters.Add(class_id)
+            class_id = ClusterTree.Add(clustering, ion.lib_guid, align,
+                                       threshold:=equals_cutoff,
+                                       ds:=diff)
+            Call clusters.Add(class_id)
         Next
 
         Return New TreeCluster With {
@@ -80,8 +85,10 @@ Public Class NetworkingTree
             Call ionsList.Add(ion)
             Call align.Add(ion)
 
-            class_id = ClusterTree.Add(clustering, ion.lib_guid, align, threshold:=equals_cutoff)
-            classes.Add(class_id)
+            class_id = ClusterTree.Add(clustering, ion.lib_guid, align,
+                                       threshold:=equals_cutoff,
+                                       ds:=diff)
+            Call classes.Add(class_id)
         Next
 
         clusters = classes.ToArray

@@ -534,14 +534,18 @@ Module SingleCells
     ''' <param name="ndims">the embedding vector size, greater than 30 and less than 100 dimension is recommended.</param>
     ''' <param name="method"></param>
     ''' <param name="freq"></param>
+    ''' <param name="diff">
+    ''' the score diff for build the tree branch
+    ''' </param>
     ''' <returns></returns>
     <ExportAPI("cell_embedding")>
     <RApiReturn(GetType(SpecEmbedding))>
     Public Function cell_embedding(Optional ndims As Integer = 30,
                                    Optional method As TrainMethod = TrainMethod.Skip_Gram,
-                                   Optional freq As Integer = 3) As Object
+                                   Optional freq As Integer = 3,
+                                   Optional diff As Double = 0.1) As Object
 
-        Return New SpecEmbedding(ndims, method, freq)
+        Return New SpecEmbedding(ndims, method, freq, diff:=diff)
     End Function
 
     ''' <summary>

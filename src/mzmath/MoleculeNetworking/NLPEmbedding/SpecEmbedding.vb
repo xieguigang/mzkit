@@ -20,14 +20,18 @@ Public Class SpecEmbedding
         End Get
     End Property
 
-    Sub New(Optional ndims As Integer = 30, Optional method As TrainMethod = TrainMethod.Skip_Gram, Optional freq As Integer = 1)
+    Sub New(Optional ndims As Integer = 30,
+            Optional method As TrainMethod = TrainMethod.Skip_Gram,
+            Optional freq As Integer = 1,
+            Optional diff As Double = 0.1)
+
         wv = New Word2VecFactory() _
             .setMethod(method) _
             .setNumOfThread(1) _
             .setFreqThresold(freq) _
             .setVectorSize(size:=ndims) _
             .build()
-        pool = New NetworkingTree()
+        pool = New NetworkingTree(interval:=diff)
     End Sub
 
     ''' <summary>
