@@ -14,8 +14,10 @@ declare namespace taxonomy {
     * 
     * 
      * @param tree -
+     * @param env 
+     * + default value Is ``null``.
    */
-   function clusters(tree: object): any;
+   function clusters(tree: any, env?: object): any;
    /**
     * create taxonomy tree for multiple sample data in parallel
     * 
