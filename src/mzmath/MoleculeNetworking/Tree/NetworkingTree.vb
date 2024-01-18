@@ -9,10 +9,10 @@ Imports Microsoft.VisualBasic.Linq
 ''' </summary>
 Public Class NetworkingTree
 
-    ReadOnly cosine As CosAlignment
-    ReadOnly align As MSScoreGenerator
-    ReadOnly equals_cutoff As Double = 0.85
-    ReadOnly diff As Double = 0.1
+    Friend ReadOnly cosine As CosAlignment
+    Friend ReadOnly align As MSScoreGenerator
+    Friend ReadOnly equals_cutoff As Double = 0.85
+    Friend ReadOnly diff As Double = 0.1
 
     Sub New(Optional mzdiff As Double = 0.3,
             Optional intocutoff As Double = 0.05,

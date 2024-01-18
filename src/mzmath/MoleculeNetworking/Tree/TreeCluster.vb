@@ -34,4 +34,18 @@ Public Class TreeCluster
         End If
     End Sub
 
+    Public Shared Function Union(trees As IEnumerable(Of TreeCluster), Optional args As NetworkingTree = Nothing) As TreeCluster
+        Dim unionTree As ClusterTree
+
+        If args Is Nothing Then
+            args = New NetworkingTree
+        End If
+
+        For Each part As TreeCluster In trees
+            If unionTree Is Nothing Then
+
+            End If
+        Next
+    End Function
+
 End Class

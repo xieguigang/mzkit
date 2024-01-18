@@ -88,9 +88,10 @@ Public Module Networking
     Public Function Tree(ions As IEnumerable(Of PeakMs2),
                          Optional mzdiff As Double = 0.3,
                          Optional intocutoff As Double = 0.05,
-                         Optional equals As Double = 0.85) As TreeCluster
+                         Optional equals As Double = 0.85,
+                         Optional diff As Double = 0.1) As TreeCluster
 
-        Return New NetworkingTree(mzdiff, intocutoff, equals).Tree(ions)
+        Return New NetworkingTree(mzdiff, intocutoff, equals, interval:=diff).Tree(ions)
     End Function
 
     Private Iterator Function normPeaki(i As PeakMs2) As IEnumerable(Of ms2)
