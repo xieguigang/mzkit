@@ -1,5 +1,6 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
 Imports Microsoft.VisualBasic.Data.GraphTheory
 Imports Microsoft.VisualBasic.DataMining.BinaryTree
 
@@ -51,7 +52,7 @@ Public Class TreeCluster
 
             Dim clusters As Dictionary(Of String, String()) = part.GetTree
 
-            For Each cluster_id As String In clusters.Keys
+            For Each cluster_id As String In Tqdm.Wrap(clusters.Keys)
                 Call ClusterTree.Add(unionTree, args.SetTargetKey(cluster_id), find:=c)
                 Call c.Members.AddRange(clusters(cluster_id))
             Next

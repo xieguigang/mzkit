@@ -68,4 +68,23 @@ Module Taxonomy
         Return union
     End Function
 
+    ''' <summary>
+    ''' get spectrum clusters
+    ''' </summary>
+    ''' <param name="tree"></param>
+    ''' <returns></returns>
+    <ExportAPI("clusters")>
+    Public Function clusters(tree As ClusterTree) As Object
+        Dim pull As New Dictionary(Of String, String())
+        Call TreeCluster.GetTree(tree, pull)
+
+        Return New list With {
+            .slots = pull _
+                .ToDictionary(Function(t) t.Key,
+                              Function(t)
+                                  Return CObj(t.Value)
+                              End Function)
+        }
+    End Function
+
 End Module
