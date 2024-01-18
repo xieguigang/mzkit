@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>cell_embedding</title>
+    <title>create a session for create spot cell embedding</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
@@ -18,24 +18,41 @@
             </tr>
         </table>
 
-        <h2>cell_embedding</h2>
+        <h2>create a session for create spot cell embedding</h2>
 
         <h3>Description</h3>
 
-        cell_embedding
+        
 
         <h3>Usage</h3>
 
         <div style="width: 100%; padding-left: 3%; color: black;">
-            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>cell_embedding</strong>(<i>ndims</i>,
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>cell_embedding</strong>(
+    <i>ndims</i> = <span style='color: green;'>30</span>,
     <i>method</i> = Skip_Gram,
-    <i>freq</i> = <span style='color: green;'>3</span>);</code></pre>
+    <i>freq</i> = <span style='color: green;'>3</span>,
+    <i>diff</i> = <span style='color: green;'>0.1</span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
 
         <table>
             
+<dt>ndims</dt>
+<dd><p><p>the embedding vector size, greater than 30 and less than 100 dimension is recommended.</p></p></dd>
+
+
+<dt>method</dt>
+<dd><p><p>-</p></p></dd>
+
+
+<dt>freq</dt>
+<dd><p><p>-</p></p></dd>
+
+
+<dt>diff</dt>
+<dd><p><p>the score diff for build the tree branch</p></p></dd>
+
         </table>
 
 
