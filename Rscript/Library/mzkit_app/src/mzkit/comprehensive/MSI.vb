@@ -1142,6 +1142,18 @@ Module MSI
         End If
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="raw"></param>
+    ''' <param name="ionSet"></param>
+    ''' <param name="err"></param>
+    ''' <param name="rawMatrix">
+    ''' true for returns the raw <see cref="MzMatrix"/> object, and
+    ''' false for returns a collection of the <see cref="DataSet"/> rows.
+    ''' </param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <Extension>
     Private Function GetPeakMatrix(raw As mzPack, ionSet As Object, err As Tolerance,
                                    rawMatrix As Boolean,
