@@ -6,6 +6,7 @@ Imports Microsoft.VisualBasic.DataMining.BinaryTree
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
+Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 
@@ -74,9 +75,20 @@ Module Taxonomy
     ''' <param name="tree"></param>
     ''' <returns></returns>
     <ExportAPI("clusters")>
-    Public Function clusters(tree As ClusterTree) As Object
+    Public Function clusters(tree As Object, Optional env As Environment = Nothing) As Object
         Dim pull As New Dictionary(Of String, String())
-        Call TreeCluster.GetTree(tree, pull)
+
+        If tree Is Nothing Then
+            Return Nothing
+        End If
+
+        If TypeOf tree Is ClusterTree Then
+            Call TreeCluster.GetTree(tree, pull)
+        ElseIf TypeOf tree Is SpectrumVocabulary Then
+            pull = DirectCast(tree, SpectrumVocabulary).GetClusters
+        Else
+            Return Message.InCompatibleType(GetType(ClusterTree), tree.GetType, env)
+        End If
 
         Return New list With {
             .slots = pull _

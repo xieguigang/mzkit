@@ -18,6 +18,10 @@ Public Class SpectrumVocabulary
         Next
     End Sub
 
+    Public Function GetClusters() As Dictionary(Of String, String())
+        Return New Dictionary(Of String, String())(clusters)
+    End Function
+
     Public Function ToTerm(id As String) As String
         If mapping.ContainsKey(id) Then
             Return mapping(id)
