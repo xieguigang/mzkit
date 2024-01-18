@@ -8,6 +8,9 @@ Public Class SpecEmbedding
     ReadOnly wv As Word2Vec
 
     Dim pool As NetworkingTree
+    ''' <summary>
+    ''' the spectrum vocabulary builder
+    ''' </summary>
     Dim index As TreeCluster
 
     ''' <summary>
@@ -54,6 +57,7 @@ Public Class SpecEmbedding
                 .ToArray
         End If
 
+        ' create vocabulary
         If index Is Nothing Then
             index = pool.Tree(pull)
             clusters = index.clusters
@@ -62,6 +66,10 @@ Public Class SpecEmbedding
         End If
 
         Call wv.readTokens(clusters)
+    End Sub
+
+    Public Sub AddSample(terms As IEnumerable(Of String))
+        Call wv.readTokens(terms.ToArray)
     End Sub
 
     Public Function CreateEmbedding() As VectorModel

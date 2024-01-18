@@ -64,6 +64,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
 Imports BioNovoGene.BioDeep.MassSpectrometry.MoleculeNetworking
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Data.NLP.Word2Vec
+Imports Microsoft.VisualBasic.DataMining.BinaryTree
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.ComponentModel.Activations
@@ -583,6 +584,7 @@ Module SingleCells
     <RApiReturn(GetType(SpecEmbedding))>
     Public Function embedding_sample(pool As SpecEmbedding, sample As Object,
                                      Optional tag As String = Nothing,
+                                     Optional vocabulary As SpectrumVocabulary = Nothing,
                                      Optional env As Environment = Nothing) As Object
         Dim pull As PeakMs2()
 
@@ -615,11 +617,31 @@ Module SingleCells
                                           Into Sum(mzi.intensity)
                                End Function) _
             .ToArray
-        pool.AddSample(pull, centroid:=True)
+
+        If vocabulary Is Nothing Then
+            Call pool.AddSample(pull, centroid:=True)
+        Else
+            Dim terms As String() = pull _
+                .Select(Function(spec)
+                            Return vocabulary.ToTerm(spec.lib_guid)
+                        End Function) _
+                .ToArray
+
+            Call pool.AddSample(terms)
+        End If
 
         Return pool
     End Function
 
+    ''' <summary>
+    ''' get the cell spot embedding result
+    ''' </summary>
+    ''' <param name="pool"></param>
+    ''' <returns>vector data could be converts the dataframe object via ``as.data.frame``
+    ''' </returns>
+    ''' <example>
+    ''' as.data.frame(spot_vector(x));
+    ''' </example>
     <ExportAPI("spot_vector")>
     Public Function spot_vector(pool As SpecEmbedding) As VectorModel
         Return pool.CreateEmbedding

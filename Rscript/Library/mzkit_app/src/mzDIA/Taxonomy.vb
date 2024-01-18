@@ -87,4 +87,9 @@ Module Taxonomy
         }
     End Function
 
+    <ExportAPI("vocabulary")>
+    Public Function vocabulary(tree As ClusterTree) As SpectrumVocabulary
+        Return New SpectrumVocabulary(tree)
+    End Function
+
 End Module
