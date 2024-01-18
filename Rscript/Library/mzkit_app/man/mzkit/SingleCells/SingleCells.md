@@ -24,4 +24,4 @@ Single cells metabolomics data processor
 + [cell_embedding](SingleCells/cell_embedding.1) create a session for create spot cell embedding
 + [cell_clusters](SingleCells/cell_clusters.1) export the cell clustering result
 + [embedding_sample](SingleCells/embedding_sample.1) push a sample data into the embedding session
-+ [spot_vector](SingleCells/spot_vector.1) 
++ [spot_vector](SingleCells/spot_vector.1) get the cell spot embedding result

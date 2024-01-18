@@ -1,0 +1,46 @@
+.\" man page create by R# package system.
+.TH TAXONOMY 1 2000-Jan "parallel_tree" "parallel_tree"
+.SH NAME
+parallel_tree \- create taxonomy tree for multiple sample data in parallel
+.SH SYNOPSIS
+\fIparallel_tree(\fBx\fR as list, 
+\fBmzdiff\fR as double = 0.3, 
+\fBintocutoff\fR as double = 0.05, 
+\fBequals\fR as double = 0.85, 
+\fBinterval\fR as double = 0.1, 
+[\fB<Environment>\fR]);\fR
+.SH DESCRIPTION
+.PP
+create taxonomy tree for multiple sample data in parallel
+.PP
+.SH OPTIONS
+.PP
+\fBx\fB \fR\- a collection of the spectrum sample data, should be a tuple list 
+ object that contains multiple sample data to build tree. each slot value in this 
+ tuple list should be a vector of the @\fBT:BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.PeakMs2\fR spectrum data.. 
+.PP
+.PP
+\fBmzdiff\fB \fR\- -. 
+.PP
+.PP
+\fBintocutoff\fB \fR\- -. 
+.PP
+.PP
+\fBequals\fB \fR\- -. 
+.PP
+.PP
+\fBinterval\fB \fR\- -. 
+.PP
+.PP
+\fBenv\fB \fR\- -. 
+.PP
+.SH VALUE
+.PP
+a union spectrum taxonomy tree object
+.PP
+.SH SEE ALSO
+taxonomy
+.SH FILES
+.PP
+mzDIA.dll
+.PP

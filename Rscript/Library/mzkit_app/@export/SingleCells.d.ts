@@ -115,11 +115,13 @@ declare namespace SingleCells {
      * @param tag -
      * 
      * + default value Is ``null``.
+     * @param vocabulary 
+     * + default value Is ``null``.
      * @param env -
      * 
      * + default value Is ``null``.
    */
-   function embedding_sample(pool: object, sample: any, tag?: string, env?: object): object;
+   function embedding_sample(pool: object, sample: any, tag?: string, vocabulary?: object, env?: object): object;
    /**
     * cast the matrix object as the dataframe
     * 
@@ -183,6 +185,11 @@ declare namespace SingleCells {
    */
    function SCM_ionStat(raw: object, da?: number, parallel?: boolean): object;
    /**
+    * get the cell spot embedding result
+    * 
+    * 
+     * @param pool -
+     * @return vector data could be converts the dataframe object via ``as.data.frame``
    */
    function spot_vector(pool: object): object;
    module write {
