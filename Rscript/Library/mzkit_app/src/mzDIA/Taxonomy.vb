@@ -2,6 +2,7 @@
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.BioDeep.MassSpectrometry.MoleculeNetworking
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.DataMining.BinaryTree
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
@@ -41,7 +42,7 @@ Module Taxonomy
     ''' <param name="env"></param>
     ''' <returns>a union spectrum taxonomy tree object</returns>
     <ExportAPI("parallel_tree")>
-    <RApiReturn(GetType(TreeCluster))>
+    <RApiReturn(GetType(ClusterTree))>
     Public Function parallelTree(<RRawVectorArgument> x As list,
                                  Optional mzdiff As Double = 0.3,
                                  Optional intocutoff As Double = 0.05,
@@ -57,7 +58,12 @@ Module Taxonomy
                     End Function) _
             .ToArray
         ' make union
-        Dim union As TreeCluster = TreeCluster.Union(trees)
+        Dim args As New ClusterTree.Argument With {
+            .diff = interval,
+            .threshold = 0.95,
+            .alignment = NetworkingTree.CreateAlignment(mzdiff, intocutoff, equals)
+        }
+        Dim union As ClusterTree = TreeCluster.Union(trees, args)
 
         Return union
     End Function

@@ -9,7 +9,6 @@ Imports Microsoft.VisualBasic.Linq
 ''' </summary>
 Public Class NetworkingTree
 
-    Friend ReadOnly cosine As CosAlignment
     Friend ReadOnly align As MSScoreGenerator
     Friend ReadOnly equals_cutoff As Double = 0.85
     Friend ReadOnly diff As Double = 0.1
@@ -19,16 +18,22 @@ Public Class NetworkingTree
             Optional equals As Double = 0.85,
             Optional interval As Double = 0.1)
 
-        cosine = New CosAlignment(
+        align = CreateAlignment(mzdiff, intocutoff, equals)
+        equals_cutoff = equals
+        diff = interval
+    End Sub
+
+    Public Shared Function CreateAlignment(Optional mzdiff As Double = 0.3,
+                                           Optional intocutoff As Double = 0.05,
+                                           Optional equals As Double = 0.85) As MSScoreGenerator
+        Dim cosine As New CosAlignment(
             mzwidth:=Tolerance.DeltaMass(mzdiff),
             intocutoff:=New RelativeIntensityCutoff(intocutoff)
         )
         ' the align score generator didn't has
         ' any spectrum inside
-        align = New MSScoreGenerator(cosine, equals, equals)
-        equals_cutoff = equals
-        diff = interval
-    End Sub
+        Return New MSScoreGenerator(cosine, equals, equals)
+    End Function
 
     ''' <summary>
     ''' clear the spectrum cache
