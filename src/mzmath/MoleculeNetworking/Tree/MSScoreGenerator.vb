@@ -32,7 +32,9 @@ Public Class MSScoreGenerator : Inherits ComparisonProvider
     ''' </param>
     ''' <param name="equals"></param>
     ''' <param name="gt"></param>
-    Sub New(align As AlignmentProvider, getSpectrum As Func(Of String, PeakMs2), Optional equals As Double = 1, Optional gt As Double = 0)
+    Sub New(align As AlignmentProvider, getSpectrum As Func(Of String, PeakMs2),
+            Optional equals As Double = 1,
+            Optional gt As Double = 0)
         Call MyBase.New(equals, gt)
 
         Me.align = align
@@ -78,7 +80,12 @@ Public Class MSScoreGenerator : Inherits ComparisonProvider
         End If
     End Sub
 
-    Private Function GetSpectral(guid As String) As PeakMs2
+    ''' <summary>
+    ''' get spectrum from dictionary via a key
+    ''' </summary>
+    ''' <param name="guid"></param>
+    ''' <returns></returns>
+    Public Function GetSpectral(guid As String) As PeakMs2
         If Not cache.ContainsKey(guid) Then
             cache.Add(guid, getSpectrum(guid))
         End If

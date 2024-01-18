@@ -34,18 +34,30 @@ Public Class TreeCluster
         End If
     End Sub
 
-    Public Shared Function Union(trees As IEnumerable(Of TreeCluster), Optional args As NetworkingTree = Nothing) As TreeCluster
-        Dim unionTree As ClusterTree
-
-        If args Is Nothing Then
-            args = New NetworkingTree
-        End If
+    Public Shared Function Union(trees As IEnumerable(Of TreeCluster), args As ClusterTree.Argument) As ClusterTree
+        Dim unionTree As ClusterTree = Nothing
+        Dim align As MSScoreGenerator = args.alignment
+        Dim c As ClusterTree = Nothing
 
         For Each part As TreeCluster In trees
-            If unionTree Is Nothing Then
+            For Each spec As PeakMs2 In part.spectrum
+                Call align.Add(spec)
+            Next
 
+            If unionTree Is Nothing Then
+                unionTree = part.tree
+                Continue For
             End If
+
+            Dim clusters As Dictionary(Of String, String()) = part.GetTree
+
+            For Each cluster_id As String In clusters.Keys
+                Call ClusterTree.Add(unionTree, args.SetTargetKey(cluster_id), find:=c)
+                Call c.Members.AddRange(clusters(cluster_id))
+            Next
         Next
+
+        Return unionTree
     End Function
 
 End Class
