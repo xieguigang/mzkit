@@ -1237,6 +1237,10 @@ Module MSI
     ''' <param name="fast_bins"></param>
     ''' <returns></returns>
     ''' <example>
+    ''' # thread number for fast bins could be set via the 
+    ''' # n_thread options, example as:
+    ''' options(n_thread = 8);
+    ''' 
     ''' getMatrixIons(mzpack, mzdiff = 0.001, fast.bins = TRUE);
     ''' </example>
     <ExportAPI("getMatrixIons")>
