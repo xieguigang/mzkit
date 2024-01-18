@@ -53,15 +53,18 @@ Public Class NetworkingTree
         Dim clustering As New ClusterTree
         Dim clusters As New List(Of String)
         Dim class_id As String
+        Dim args As New ClusterTree.Argument With {
+            .alignment = align,
+            .threshold = equals_cutoff,
+            .diff = diff
+        }
 
         For Each ion As PeakMs2 In ions.SafeQuery
             Call ionsList.Add(ion)
             Call align.Add(ion)
 
-            class_id = ClusterTree.Add(clustering, ion.lib_guid, align,
-                                       threshold:=equals_cutoff,
-                                       ds:=diff)
-            Call clusters.Add(class_id)
+            class_id = ClusterTree.Add(clustering, args.SetTargetKey(ion.lib_guid))
+            clusters.Add(class_id)
         Next
 
         Return New TreeCluster With {
@@ -80,15 +83,18 @@ Public Class NetworkingTree
         Dim clustering As ClusterTree = [continue].tree
         Dim classes As New List(Of String)
         Dim class_id As String
+        Dim args As New ClusterTree.Argument With {
+            .alignment = align,
+            .threshold = equals_cutoff,
+            .diff = diff
+        }
 
         For Each ion As PeakMs2 In ions.SafeQuery
             Call ionsList.Add(ion)
             Call align.Add(ion)
 
-            class_id = ClusterTree.Add(clustering, ion.lib_guid, align,
-                                       threshold:=equals_cutoff,
-                                       ds:=diff)
-            Call classes.Add(class_id)
+            class_id = ClusterTree.Add(clustering, args.SetTargetKey(ion.lib_guid))
+            classes.Add(class_id)
         Next
 
         clusters = classes.ToArray
