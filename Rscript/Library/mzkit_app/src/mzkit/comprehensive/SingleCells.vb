@@ -528,15 +528,28 @@ Module SingleCells
         Return New SpatialMatrixReader(x)
     End Function
 
+    ''' <summary>
+    ''' create a session for create spot cell embedding
+    ''' </summary>
+    ''' <param name="ndims">the embedding vector size, greater than 30 and less than 100 dimension is recommended.</param>
+    ''' <param name="method"></param>
+    ''' <param name="freq"></param>
+    ''' <returns></returns>
     <ExportAPI("cell_embedding")>
     <RApiReturn(GetType(SpecEmbedding))>
-    Public Function cell_embedding(ndims As Integer,
+    Public Function cell_embedding(Optional ndims As Integer = 30,
                                    Optional method As TrainMethod = TrainMethod.Skip_Gram,
                                    Optional freq As Integer = 3) As Object
 
         Return New SpecEmbedding(ndims, method, freq)
     End Function
 
+    ''' <summary>
+    ''' export the cell clustering result
+    ''' </summary>
+    ''' <param name="pool"></param>
+    ''' <returns>a tuple list of the cell clustering result,
+    ''' each tuple is a cluster result.</returns>
     <ExportAPI("cell_clusters")>
     Public Function cell_clusters(pool As SpecEmbedding) As list
         Dim tree = pool.GetClusters
@@ -551,6 +564,17 @@ Module SingleCells
         Return clusters
     End Function
 
+    ''' <summary>
+    ''' push a sample data into the embedding session
+    ''' </summary>
+    ''' <param name="pool"></param>
+    ''' <param name="sample"></param>
+    ''' <param name="tag"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' the spectrum data will be re-order via the spectrum total ions desc
+    ''' </remarks>
     <ExportAPI("embedding_sample")>
     <RApiReturn(GetType(SpecEmbedding))>
     Public Function embedding_sample(pool As SpecEmbedding, sample As Object,
@@ -579,9 +603,12 @@ Module SingleCells
             Return Message.InCompatibleType(GetType(MzMatrix), sample.GetType, env)
         End If
 
+        ' re-order the spectrum data via total sum data
         pull = pull _
             .OrderByDescending(Function(s)
-                                   Return s.mzInto.Sum(Function(i) i.intensity)
+                                   Return Aggregate mzi As ms2
+                                          In s.mzInto
+                                          Into Sum(mzi.intensity)
                                End Function) _
             .ToArray
         pool.AddSample(pull, centroid:=True)

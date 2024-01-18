@@ -10,6 +10,10 @@ Public Class SpecEmbedding
     Dim pool As NetworkingTree
     Dim index As TreeCluster
 
+    ''' <summary>
+    ''' get the tree clustering result
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property GetClusters As Dictionary(Of String, String())
         Get
             Return index.GetTree
