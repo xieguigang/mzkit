@@ -83,7 +83,7 @@ Module Taxonomy
                        equals As Double,
                        interval As Double)
 
-            Call MyBase.New(pool.Count)
+            Call MyBase.New(pool.Count, verbose:=True)
 
             Me.pool = pool.ToArray
             Me.mzdiff = mzdiff

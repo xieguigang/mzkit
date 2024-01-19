@@ -40,7 +40,7 @@ Public Class TreeCluster
         Dim align As MSScoreGenerator = args.alignment
         Dim c As ClusterTree = Nothing
 
-        For Each part As TreeCluster In trees
+        For Each part As TreeCluster In Tqdm.Wrap(trees.ToArray, useColor:=True)
             For Each spec As PeakMs2 In part.spectrum
                 Call align.Add(spec)
             Next
@@ -52,7 +52,7 @@ Public Class TreeCluster
 
             Dim clusters As Dictionary(Of String, String()) = part.GetTree
 
-            For Each cluster_id As String In Tqdm.Wrap(clusters.Keys)
+            For Each cluster_id As String In clusters.Keys
                 Call ClusterTree.Add(unionTree, args.SetTargetKey(cluster_id), find:=c)
                 Call c.Members.AddRange(clusters(cluster_id))
             Next
