@@ -582,7 +582,7 @@ Module SingleCells
     ''' </remarks>
     <ExportAPI("embedding_sample")>
     <RApiReturn(GetType(SpecEmbedding))>
-    Public Function embedding_sample(pool As SpecEmbedding, sample As Object,
+    Public Function embedding_sample(pool As SpecEmbedding, <RRawVectorArgument> sample As Object,
                                      Optional tag As String = Nothing,
                                      Optional vocabulary As SpectrumVocabulary = Nothing,
                                      Optional env As Environment = Nothing) As Object
@@ -606,7 +606,13 @@ Module SingleCells
                 .GetPeaks(tag) _
                 .ToArray
         Else
-            Return Message.InCompatibleType(GetType(MzMatrix), sample.GetType, env)
+            Dim pip As pipeline = pipeline.TryCreatePipeline(Of PeakMs2)(sample, env)
+
+            If pip.isError Then
+                Return pip.getError
+            Else
+                pull = pip.populates(Of PeakMs2)(env).ToArray
+            End If
         End If
 
         ' re-order the spectrum data via total sum data
