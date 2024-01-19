@@ -1,4 +1,5 @@
 ﻿Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
 Imports Microsoft.VisualBasic.Linq
@@ -18,6 +19,8 @@ Public Class MatrixWriter
     ''' </summary>
     Public Const magic As String = "single_cell"
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <DebuggerStepThrough>
     Sub New(m As MzMatrix)
         Me.m = m
     End Sub
@@ -78,6 +81,13 @@ Public Class MatrixWriter
         Return s.Position
     End Function
 
+    ''' <summary>
+    ''' write the spot offset index: x,y,z coordinate offset andalso the cell label offset
+    ''' </summary>
+    ''' <param name="bin"></param>
+    ''' <param name="tmp"></param>
+    ''' <param name="offset1"></param>
+    ''' <param name="offset2"></param>
     Public Shared Sub WriteIndex(bin As BinaryWriter, tmp As SpotWriter, ByRef offset1 As Long, ByRef offset2 As Long)
         Dim s As Stream = bin.BaseStream
 
