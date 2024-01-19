@@ -152,11 +152,22 @@ Public Class MatrixReader : Implements IDisposable
         Next
     End Function
 
-    Private Function LoadCurrentSpot() As PixelData
+    ''' <summary>
+    ''' for a better perfermance of binary data file seek operation
+    ''' the scan data is in structrue of:
+    ''' 
+    ''' ```
+    '''   x,  y,  z,intensity,label_string
+    ''' i32,i32,i32,  f64 * n,string
+    ''' ```
+    ''' 
+    ''' so, for seek a ion intensity value will be in fast speed
+    ''' </summary>
+    ''' <returns></returns>
+    Friend Function LoadCurrentSpot() As PixelData
         Dim x As Integer = bin.ReadInt32
         Dim y As Integer = bin.ReadInt32
         Dim z As Integer = bin.ReadInt32
-        Dim label As String = bin.ReadString
         Dim into As Double() = New Double(featureSize - 1) {}
 
         For offset As Integer = 0 To into.Length - 1
@@ -166,7 +177,7 @@ Public Class MatrixReader : Implements IDisposable
         Return New PixelData With {
             .X = x,
             .Y = y,
-            .label = label,
+            .label = bin.ReadString,
             .intensity = into,
             .Z = z
         }

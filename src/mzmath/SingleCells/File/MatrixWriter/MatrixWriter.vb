@@ -84,11 +84,11 @@ Public Class MatrixWriter
         ' write spatial spot index
         offset1 = s.Position
 
-        For Each index In tmp.GetSpotOffSets
-            Call bin.Write(index.Item1)
-            Call bin.Write(index.Item2)
-            Call bin.Write(index.Item3)
-            Call bin.Write(index.Item4)
+        For Each index As SpatialIndex In tmp.GetSpotOffSets
+            Call bin.Write(index.X)
+            Call bin.Write(index.Y)
+            Call bin.Write(index.Z)
+            Call bin.Write(index.offset)
         Next
 
         ' write singlecell label index
