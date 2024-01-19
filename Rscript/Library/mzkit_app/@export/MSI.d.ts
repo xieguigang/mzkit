@@ -112,8 +112,12 @@ declare namespace MSI {
      * @param fast_bins -
      * 
      * + default value Is ``true``.
+     * @param verbose 
+     * + default value Is ``false``.
+     * @param env 
+     * + default value Is ``null``.
    */
-   function getMatrixIons(raw: object, mzdiff?: number, q?: number, fast_bins?: boolean): number;
+   function getMatrixIons(raw: any, mzdiff?: number, q?: number, fast_bins?: boolean, verbose?: boolean, env?: object): number;
    /**
      * @param env default value Is ``null``.
    */
@@ -509,12 +513,37 @@ declare namespace MSI {
    }
    /**
     * Create mzpack object for ms-imaging in 3D
+    *  
+    *  this function assembling a collection of the 2D layer in z-axis
+    *  order for construct a new 3D volume data.
     * 
+    * > a @``T:BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute.MzMatrix`` object will be packed as the 3D volumn result.
     * 
-     * @param x the z axis value should be encoded in the @``P:BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack.source`` tag
      * @param env -
      * 
      * + default value Is ``null``.
    */
-   function z_assembler(x: any, file: any, env?: object): any;
+   function z_assembler(header: object, file: any, env?: object): object;
+   /**
+    * 
+    * 
+     * @param features the ion features m/z vector
+     * @param mzdiff -
+     * 
+     * + default value Is ``0.001``.
+   */
+   function z_header(features: any, mzdiff?: number): object;
+   /**
+    * create a simple 3d volume model for mzkit workbench
+    * 
+    * 
+     * @param layers should be a collection of the @``T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.SingleIonLayer``. 
+     *  the layer elements in this collection should be already been re-ordered by 
+     *  the z-axis!
+     * @param dump -
+     * @param env -
+     * 
+     * + default value Is ``null``.
+   */
+   function z_volume(layers: any, dump: string, env?: object): any;
 }

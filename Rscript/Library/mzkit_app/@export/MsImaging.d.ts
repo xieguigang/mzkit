@@ -90,6 +90,10 @@ declare namespace MsImaging {
    */
    function intensity(layer: any, summary?: object, env?: object): number;
    /**
+     * @param env default value Is ``null``.
+   */
+   function intensityFilter(x: any, filter: object, env?: object): any;
+   /**
     * trim the intensity data value in a pixels of a ion MS-Imaging layer
     * 
     * 

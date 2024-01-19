@@ -50,6 +50,33 @@ declare namespace SingleCells {
       function expression(x: object, single_cell?: boolean): object;
    }
    /**
+    * export the cell clustering result
+    * 
+    * 
+     * @param pool -
+     * @return a tuple list of the cell clustering result,
+     *  each tuple is a cluster result.
+   */
+   function cell_clusters(pool: object): object;
+   /**
+    * create a session for create spot cell embedding
+    * 
+    * 
+     * @param ndims the embedding vector size, greater than 30 and less than 100 dimension is recommended.
+     * 
+     * + default value Is ``30``.
+     * @param method -
+     * 
+     * + default value Is ``null``.
+     * @param freq -
+     * 
+     * + default value Is ``3``.
+     * @param diff the score diff for build the tree branch
+     * 
+     * + default value Is ``0.1``.
+   */
+   function cell_embedding(ndims?: object, method?: object, freq?: object, diff?: number): object;
+   /**
     * export single cell expression matrix from the raw data scans
     * 
     * 
@@ -79,11 +106,28 @@ declare namespace SingleCells {
       function mz_matrix(x: object): object;
    }
    /**
+    * push a sample data into the embedding session
+    * 
+    * > the spectrum data will be re-order via the spectrum total ions desc
+    * 
+     * @param pool -
+     * @param sample -
+     * @param tag -
+     * 
+     * + default value Is ``null``.
+     * @param vocabulary 
+     * + default value Is ``null``.
+     * @param env -
+     * 
+     * + default value Is ``null``.
+   */
+   function embedding_sample(pool: object, sample: any, tag?: string, vocabulary?: object, env?: object): object;
+   /**
     * cast the matrix object as the dataframe
     * 
     * > implements the ``as.data.frame`` function
     * 
-     * @param x -
+     * @param x should be a rawdata object in general type: @``T:BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute.MzMatrix``.
      * @param args -
      * @param env -
      * 
@@ -140,6 +184,14 @@ declare namespace SingleCells {
      * + default value Is ``true``.
    */
    function SCM_ionStat(raw: object, da?: number, parallel?: boolean): object;
+   /**
+    * get the cell spot embedding result
+    * 
+    * 
+     * @param pool -
+     * @return vector data could be converts the dataframe object via ``as.data.frame``
+   */
+   function spot_vector(pool: object): object;
    module write {
       /**
        * write the single cell ion feature data matrix

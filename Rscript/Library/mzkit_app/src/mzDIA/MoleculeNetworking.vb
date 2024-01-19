@@ -72,7 +72,7 @@ Imports SMRUCC.Rsharp.Runtime.Internal.[Object].Converts
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports rDataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
 Imports REnv = SMRUCC.Rsharp.Runtime
-Imports stdNum = System.Math
+Imports std = System.Math
 
 ''' <summary>
 ''' Molecular Networking (MN) is a computational strategy that may help visualization and interpretation of the complex data arising from MS analysis. 
@@ -290,7 +290,7 @@ Module MoleculeNetworking
             .ProduceNodes _
             .Networking
         Dim matrix As rDataframe = ProtocolPipeline _
-            .Networking(Of IO.DataSet)(graph, Function(a, b) stdNum.Min(a, b)) _
+            .Networking(Of IO.DataSet)(graph, Function(a, b) std.Min(a, b)) _
             .RMatrix
         Dim clusters As NetworkingNode() = graph _
             .Select(Function(u) workflow.Cluster(u.reference)) _

@@ -4,6 +4,9 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Namespace Blender.Scaler
 
+    ''' <summary>
+    ''' power for increase the data difference
+    ''' </summary>
     Public Class PowerScaler : Inherits Scaler
 
         <XmlAttribute> Public Property pow As Double = 2

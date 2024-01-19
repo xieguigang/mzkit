@@ -445,12 +445,12 @@ Module MzWeb
     ''' <returns></returns>
     <ExportAPI("open.mzpack")>
     <RApiReturn(GetType(mzPack))>
-    Public Function Open(file As Object, Optional env As Environment = Nothing) As Object
+    Public Function Open(file As Object, Optional verbose As Boolean = True, Optional env As Environment = Nothing) As Object
         If file Is Nothing Then
             Return Internal.debug.stop("the required file object can not be nothing!", env)
         End If
         If TypeOf file Is String Then
-            Dim mzpack As mzPack = openFromFile(file, env:=env)
+            Dim mzpack As mzPack = openFromFile(file, verbose:=verbose, env:=env)
 
             If mzpack.source.StringEmpty Then
                 mzpack.source = DirectCast(file, String).FileName
@@ -459,7 +459,7 @@ Module MzWeb
             Return mzpack
         ElseIf TypeOf file Is Stream Then
             Dim stream As Stream = file
-            Return mzPack.ReadAll(file:=stream)
+            Return mzPack.ReadAll(file:=stream, verbose:=verbose)
         Else
             Return Internal.debug.stop(New NotImplementedException($"unsure for how to handling '{file.GetType.FullName}' as a file stream for read mzpack data!"), env)
         End If
@@ -479,13 +479,22 @@ Module MzWeb
                                  Optional prefer As String = Nothing,
                                  Optional da As Double = 0.001,
                                  Optional noise_cutoff As Double = 0.0001,
+                                 Optional verbose As Boolean = True,
                                  Optional env As Environment = Nothing) As mzPack
+
+        Dim println As Action(Of String) = AddressOf VBDebugger.EchoLine
+
+        If Not verbose Then
+            println = Sub()
+                          ' do nothing
+                      End Sub
+        End If
 
         If file.ExtensionSuffix("mzXML", "mzML", "imzML", "xml") Then
             Return Converter.LoadRawFileAuto(
                 xml:=file,
                 prefer:=prefer,
-                progress:=AddressOf VBDebugger.EchoLine,
+                progress:=println,
                 tolerance:=$"da:{da}",
                 intocutoff:=noise_cutoff
             )
@@ -500,7 +509,6 @@ Module MzWeb
         ElseIf file.ExtensionSuffix("cdf") Then
             Using cdf As New netCDFReader(file)
                 If cdf.IsLecoGCMS Then
-                    Dim println As Action(Of String) = AddressOf VBDebugger.EchoLine
                     Dim sig As mzPack = GCMSConvertor.ConvertGCMS(cdf, println)
                     sig.source = file.FileName
                     Return sig
@@ -519,7 +527,7 @@ Module MzWeb
             End Using
         Else
             Using stream As Stream = file.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
-                Return mzPack.ReadAll(file:=stream)
+                Return mzPack.ReadAll(file:=stream, verbose:=verbose)
             End Using
         End If
     End Function

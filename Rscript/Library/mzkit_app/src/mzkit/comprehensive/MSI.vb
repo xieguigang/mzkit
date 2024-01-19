@@ -60,6 +60,7 @@
 Imports System.Drawing
 Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports System.Text
 Imports BioNovoGene.Analytical.MassSpectrometry
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.Comprehensive.MsImaging
@@ -79,8 +80,10 @@ Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Data.GraphTheory.GridGraph
+Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Emit.Delegates
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.HeatMap
 Imports Microsoft.VisualBasic.Language
@@ -91,6 +94,7 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Statistics.Hypothesis
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Scripting.Runtime
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports SMRUCC.Rsharp
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
@@ -106,8 +110,8 @@ Imports rDataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
 Imports REnv = SMRUCC.Rsharp.Runtime
 Imports SingleCellMath = BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute.Math
 Imports SingleCellMatrix = BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute.PeakMatrix
+Imports SpotVector = BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute.PixelData
 Imports std = System.Math
-Imports vector = Microsoft.VisualBasic.Math.LinearAlgebra.Vector
 
 ''' <summary>
 ''' MS-Imaging data handler
@@ -148,6 +152,13 @@ Module MSI
         Return True
     End Function
 
+    ''' <summary>
+    ''' read <see cref="SingleIonLayer"/>
+    ''' </summary>
+    ''' <param name="file"></param>
+    ''' <param name="args"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     Private Function readPeaklayer(file As Stream, args As list, env As Environment) As Object
         Return LayerFile.ParseLayer(file)
     End Function
@@ -1100,22 +1111,29 @@ Module MSI
                                Optional env As Environment = Nothing) As Object
 
         Dim err = Math.getTolerance(mzError, env)
+        Dim println = env.WriteLineHandler
 
         If err Like GetType(Message) Then
             Return err.TryCast(Of Message)
         End If
 
-        Call base.print($"extract ion feature data with mass tolerance: {err.TryCast(Of Tolerance).ToString}",, env)
+        Call println($"extract ion feature data with mass tolerance: {err.TryCast(Of Tolerance).ToString}")
 
         If raw_matrix Then
-            Call base.print("the raw ions feature matrix object will be returned!",, env)
+            Call println("the raw ions feature matrix object will be returned!")
         End If
 
         If Not ionSet Is Nothing Then
             Return raw.GetPeakMatrix(ionSet, err.TryCast(Of Tolerance), raw_matrix, env)
         ElseIf raw_matrix Then
             Dim topIons As Double() = raw.GetMzIndex(mzdiff:=err.TryCast(Of Tolerance).GetErrorDalton, topN:=topN)
-            Dim m = Deconvolute.PeakMatrix.CreateMatrix(raw, err.TryCast(Of Tolerance).GetErrorDalton, 0, mzSet:=topIons)
+            Dim m = Deconvolute.PeakMatrix.CreateMatrix(
+                raw:=raw,
+                mzdiff:=err.TryCast(Of Tolerance).GetErrorDalton,
+                freq:=0,
+                mzSet:=topIons
+            )
+
             Return m
         Else
             Return raw _
@@ -1124,6 +1142,18 @@ Module MSI
         End If
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="raw"></param>
+    ''' <param name="ionSet"></param>
+    ''' <param name="err"></param>
+    ''' <param name="rawMatrix">
+    ''' true for returns the raw <see cref="MzMatrix"/> object, and
+    ''' false for returns a collection of the <see cref="DataSet"/> rows.
+    ''' </param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <Extension>
     Private Function GetPeakMatrix(raw As mzPack, ionSet As Object, err As Tolerance,
                                    rawMatrix As Boolean,
@@ -1218,13 +1248,51 @@ Module MSI
     ''' <param name="q"></param>
     ''' <param name="fast_bins"></param>
     ''' <returns></returns>
+    ''' <example>
+    ''' # thread number for fast bins could be set via the 
+    ''' # n_thread options, example as:
+    ''' options(n_thread = 8);
+    ''' 
+    ''' getMatrixIons(mzpack, mzdiff = 0.001, fast.bins = TRUE);
+    ''' </example>
     <ExportAPI("getMatrixIons")>
-    Public Function GetMatrixIons(raw As mzPack,
+    <RApiReturn(TypeCodes.double)>
+    Public Function GetMatrixIons(<RRawVectorArgument> raw As Object,
                                   Optional mzdiff As Double = 0.001,
                                   Optional q As Double = 0.001,
-                                  Optional fast_bins As Boolean = True) As Double()
+                                  Optional fast_bins As Boolean = True,
+                                  Optional verbose As Boolean = False,
+                                  Optional env As Environment = Nothing) As Object
 
-        Return SingleCellMath.GetMzIndex(raw, mzdiff, q, fast:=fast_bins)
+        Dim pull As pipeline = pipeline.TryCreatePipeline(Of mzPack)(raw, env)
+        Dim pool As mzPack()
+
+        If pull.isError Then
+            Return pull.getError
+        Else
+            pool = pull _
+                .populates(Of mzPack)(env) _
+                .ToArray
+        End If
+
+        If pool.Length = 1 Then
+            Return SingleCellMath.GetMzIndex(pool(0), mzdiff, q, fast:=fast_bins)
+        End If
+
+        ' get all mz ions from the rawdata
+        Return pool.AsParallel _
+            .Select(Function(rawdata)
+                        Return GetMzIndex(
+                            raw:=rawdata,
+                            mzdiff:=mzdiff, freq:=q,
+                            fast:=True,
+                            verbose:=verbose
+                        )
+                    End Function) _
+            .AsList() _
+            .DoCall(Function(mzBins)
+                        Return GetMzIndexFastBin(mzBins, mzdiff, q, verbose:=verbose)
+                    End Function)
     End Function
 
     ''' <summary>
@@ -1335,7 +1403,7 @@ Module MSI
     ''' <returns></returns>
     <ExportAPI("spatial.convolution")>
     Public Function spatialConvolution(mat As rDataframe, Optional win_size As Integer = 2, Optional steps As Integer = 1) As rDataframe
-        Dim spatial As Grid(Of SpotVector) = Grid(Of SpotVector).Create(SpotVector.LoadDataFrame(mat))
+        Dim spatial As Grid(Of SpotVector) = Grid(Of SpotVector).Create(mat.LoadSpotVectorDataFrame())
         Dim convolution As New rDataframe With {
             .columns = New Dictionary(Of String, Array),
             .rownames = mat.getRowNames
@@ -1344,7 +1412,7 @@ Module MSI
         For Each spot As SpotVector In spatial.EnumerateData
             If spot.X Mod steps = 0 AndAlso spot.Y Mod steps = 0 Then
                 Dim x = spot.X, y = spot.Y
-                Dim vec = spot.expression
+                Dim vec = spot.intensity.AsVector
                 Dim v As Integer = 1
 
                 For xi = x - win_size To x + win_size
@@ -1353,7 +1421,7 @@ Module MSI
                             Dim vi = spatial.GetData(xi, yi)
 
                             If Not vi Is Nothing Then
-                                vec += vi.expression
+                                vec += vi.intensity
                                 v += 1
                             End If
                         End If
@@ -1630,20 +1698,133 @@ Module MSI
     End Function
 
     ''' <summary>
-    ''' Create mzpack object for ms-imaging in 3D
+    ''' 
     ''' </summary>
-    ''' <param name="x">the z axis value should be encoded in the <see cref="mzPack.source"/> tag</param>
+    ''' <param name="features">the ion features m/z vector</param>
+    ''' <param name="mzdiff"></param>
+    ''' <returns></returns>
+    <ExportAPI("z_header")>
+    Public Function z_header(<RRawVectorArgument> features As Object, Optional mzdiff As Double = 0.001) As MatrixHeader
+        Return New MatrixHeader With {
+            .matrixType = FileApplicationClass.MSImaging3D,
+            .tolerance = mzdiff.ToString,
+            .mz = CLRVector.asNumeric(features),
+            .numSpots = 0
+        }
+    End Function
+
+    ''' <summary>
+    ''' Create mzpack object for ms-imaging in 3D
+    ''' 
+    ''' this function assembling a collection of the 2D layer in z-axis
+    ''' order for construct a new 3D volume data.
+    ''' </summary>
     ''' <param name="env"></param>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' a <see cref="MzMatrix"/> object will be packed as the 3D volumn result.
+    ''' </remarks>
     <ExportAPI("z_assembler")>
-    Public Function z_assembler(<RRawVectorArgument> x As Object, file As Object, Optional env As Environment = Nothing) As Object
-        Dim pull As pipeline = pipeline.TryCreatePipeline(Of mzPack)(x, env)
+    <RApiReturn(GetType(ZAssembler))>
+    Public Function z_assembler(header As MatrixHeader, file As Object, Optional env As Environment = Nothing) As Object
+        Dim buf = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Write, env)
+
+        If buf Like GetType(Message) Then
+            Return buf.TryCast(Of Message)
+        Else
+            Dim z As New ZAssembler(buf.TryCast(Of Stream))
+            Call z.WriteHeader(header)
+            Return New z_assembler_func With {
+                .assembler = z
+            }
+        End If
+    End Function
+
+    ''' <summary>
+    ''' create a simple 3d volume model for mzkit workbench
+    ''' </summary>
+    ''' <param name="layers">should be a collection of the <see cref="SingleIonLayer"/>. 
+    ''' the layer elements in this collection should be already been re-ordered by 
+    ''' the z-axis!</param>
+    ''' <param name="dump"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("z_volume")>
+    Public Function z_volume(<RRawVectorArgument> layers As Object, dump As String, Optional env As Environment = Nothing) As Object
+        Dim pull As pipeline = pipeline.TryCreatePipeline(Of SingleIonLayer)(layers, env)
 
         If pull.isError Then
             Return pull.getError
         End If
 
+        Dim layers_2d As SingleIonLayer() = pull _
+            .populates(Of SingleIonLayer)(env) _
+            .ToArray
+        ' check dimension size for all layers
+        Dim assert_dims As Size = layers_2d(0).DimensionSize
+        Dim check_mismatched = layers_2d _
+            .Where(Function(l) l.DimensionSize.Width <> assert_dims.Width OrElse l.DimensionSize.Height <> assert_dims.Height) _
+            .Select(Function(a) a.IonMz) _
+            .ToArray
 
+        If check_mismatched.Any Then
+            Call env.AddMessage({
+                $"there are {check_mismatched.Length} 2d layer dimension value is mis-matched!",
+                $"layers: {check_mismatched.GetJson}"
+            })
+        End If
+
+        Dim dimx As Integer = assert_dims.Width
+        Dim dimy As Integer = assert_dims.Height
+        Dim dimz As Integer = layers_2d.Length
+
+        Call {dimx, dimy, dimz}.GetJson.SaveTo($"{dump}/dims.json")
+
+        Dim s As Stream = $"{dump}/data.dat".Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False)
+        Dim bin As New BinaryDataWriter(s, Encoding.ASCII)
+        Dim byter As New DoubleRange(0, 255)
+        ' global intensity range
+        Dim intensityr As DoubleRange = layers_2d _
+            .AsParallel _
+            .Select(Function(l) l.GetIntensity.Range) _
+            .Select(Iterator Function(r) As IEnumerable(Of Double)
+                        Yield r.min
+                        Yield r.max
+                    End Function) _
+            .IteratesALL _
+            .ToArray
+
+        For Each layer As SingleIonLayer In layers_2d
+            Dim buf As Byte()() = RectangularArray.Matrix(Of Byte)(
+                assert_dims.Height,
+                assert_dims.Width
+            )
+            Dim v As Double
+
+            For Each spot As MsImaging.PixelData In layer.MSILayer
+                v = intensityr.ScaleMapping(spot.intensity, byter)
+
+                If v < 0 Then
+                    v = 0
+                ElseIf v > 255 Then
+                    v = 255
+                End If
+
+                buf(spot.y - 1)(spot.x - 1) = CByte(v)
+            Next
+
+            For Each line As Byte() In buf
+                Call bin.Write(line)
+            Next
+
+            Call Console.Write(".")
+        Next
+
+        Call bin.Flush()
+        Call s.Flush()
+        Call s.Dispose()
+
+        Return True
     End Function
 
     ''' <summary>
@@ -1675,28 +1856,18 @@ Module MSI
             Return Message.InCompatibleType(GetType(SingleIonLayer), x.GetType, env)
         End If
     End Function
-End Module
 
-Public Class SpotVector : Implements IPoint2D
-
-    Public Property X As Integer Implements IPoint2D.X
-    Public Property Y As Integer Implements IPoint2D.Y
-    Public Property expression As vector
-
-    Public Overrides Function ToString() As String
-        Return $"[{X},{Y}]"
-    End Function
-
-    Public Shared Iterator Function LoadDataFrame(mat As rDataframe) As IEnumerable(Of SpotVector)
+    <Extension>
+    Public Iterator Function LoadSpotVectorDataFrame(mat As rDataframe) As IEnumerable(Of SpotVector)
         For Each col As KeyValuePair(Of String, Array) In mat.columns
             Dim t As String() = col.Key.Split(","c)
             Dim xy As Integer() = t.Select(AddressOf Integer.Parse).ToArray
 
             Yield New SpotVector With {
-                .expression = CLRVector.asNumeric(col.Value).AsVector,
+                .intensity = CLRVector.asNumeric(col.Value),
                 .X = xy(0),
                 .Y = xy(1)
             }
         Next
     End Function
-End Class
+End Module

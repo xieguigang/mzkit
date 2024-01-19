@@ -1,7 +1,16 @@
 ﻿Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
+Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
+Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.Data.GraphTheory.GridGraph
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Serialization
 
 ''' <summary>
 ''' A lazy binary data matrix reader for the singlecells/spatial data
@@ -38,14 +47,24 @@ Public Class MatrixReader : Implements IDisposable
     ''' <returns></returns>
     Public ReadOnly Property spots As Integer
 
+    ''' <summary>
+    ''' <see cref="MzMatrix.matrixType"/>
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property matrixType As FileApplicationClass
+
     Dim disposedValue As Boolean
-    Dim spot_index As Dictionary(Of Long, Dictionary(Of Long, Long))
+    Dim spot_index As Spatial3D(Of SpatialIndex)
     Dim label_index As Dictionary(Of String, Long())
+    Dim mzIndex As MzPool
+    Dim mzdiff As Double
 
     Sub New(s As Stream)
         Me.bin = New BinaryReader(s, Encoding.ASCII)
         Me.bin.BaseStream.Seek(0, SeekOrigin.Begin)
         Me.scan0 = loadHeaders()
+        Me.mzIndex = New MzPool(ionSet)
+        Me.mzdiff = Val(tolerance)
     End Sub
 
     Private Function loadHeaders() As Long
@@ -58,6 +77,7 @@ Public Class MatrixReader : Implements IDisposable
 
         _tolerance = bin.ReadString
         _featureSize = bin.ReadInt32
+        _matrixType = CType(bin.ReadInt32, FileApplicationClass)
 
         Dim mz As Double() = New Double(featureSize - 1) {}
 
@@ -72,7 +92,7 @@ Public Class MatrixReader : Implements IDisposable
         Dim offset2 As Long = bin.ReadInt64
         Dim offset_spots As Long = bin.BaseStream.Position
 
-        Dim spot_index As New List(Of (Integer, Integer, Long))
+        Dim spot_index As New List(Of SpatialIndex)
         Dim label_index As New List(Of (String, Long))
 
         Call bin.BaseStream.Seek(offset1, SeekOrigin.Begin)
@@ -80,9 +100,10 @@ Public Class MatrixReader : Implements IDisposable
         For i As Integer = 0 To _spots - 1
             Dim x As Integer = bin.ReadInt32
             Dim y As Integer = bin.ReadInt32
+            Dim z As Integer = bin.ReadInt32
             Dim p As Long = bin.ReadInt64
 
-            Call spot_index.Add((x, y, p))
+            Call spot_index.Add(New SpatialIndex(x, y, z, p))
         Next
 
         Call bin.BaseStream.Seek(offset2, SeekOrigin.Begin)
@@ -94,6 +115,7 @@ Public Class MatrixReader : Implements IDisposable
             Call label_index.Add((label, p))
         Next
 
+        Me.spot_index = Spatial3D(Of SpatialIndex).CreateSpatial3D(Of SpatialIndex)(spot_index)
         Me.label_index = label_index _
             .GroupBy(Function(d) d.Item1) _
             .ToDictionary(Function(d) d.Key,
@@ -102,36 +124,81 @@ Public Class MatrixReader : Implements IDisposable
                                   .Select(Function(o) o.Item2) _
                                   .ToArray
                           End Function)
-        Me.spot_index = spot_index _
-            .GroupBy(Function(a) CLng(a.Item1)) _
-            .ToDictionary(Function(a)
-                              Return a.Key
-                          End Function, AddressOf offsetIndex)
 
         Return offset_spots
     End Function
 
-    Public Function GetSpot(x As Integer, y As Integer) As PixelData
-        Dim xl As Long = CLng(x)
-        Dim yl As Long = CLng(y)
+    ''' <summary>
+    ''' get a 2d spatial spot data
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <param name="y"></param>
+    ''' <returns></returns>
+    Public Function GetSpot(x As Integer, y As Integer, Optional z As Integer = 0) As PixelData
+        Dim hit As Boolean = False
+        Dim index As SpatialIndex = Me.spot_index.GetData(x, y, z, hit)
 
-        If Not spot_index.ContainsKey(xl) Then
-            Return Nothing
-        End If
-
-        Dim index = spot_index(xl)
-
-        If Not index.ContainsKey(yl) Then
+        If Not hit Then
             Return Nothing
         Else
-            Call bin.BaseStream.Seek(index(yl), SeekOrigin.Begin)
+            Call bin.BaseStream.Seek(index.offset, SeekOrigin.Begin)
             Return LoadCurrentSpot()
         End If
     End Function
 
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Private Shared Function offsetIndex(a As IGrouping(Of Long, (Integer, Integer, Long))) As Dictionary(Of Long, Long)
-        Return a.ToDictionary(Function(ai) CLng(ai.Item2), Function(ai) ai.Item3)
+    Public Function GetSpot(cell_id As String) As PixelData
+        If Not label_index.ContainsKey(cell_id) Then
+            Return Nothing
+        End If
+
+        Call bin.BaseStream.Seek(label_index(cell_id)(0), SeekOrigin.Begin)
+        Return LoadCurrentSpot()
+    End Function
+
+    Public Function GetIntensity(cell_id As String, mz As Double) As Double
+        Dim offset As MzIndex = mzIndex.SearchBest(mz, mzdiff)
+
+        If Not label_index.ContainsKey(cell_id) Then
+            Return 0
+        End If
+        If offset Is Nothing Then
+            Return 0
+        End If
+
+        Call bin.BaseStream.Seek(label_index(cell_id)(0), SeekOrigin.Begin)
+        Call bin.BaseStream.Seek(RawStream.INT32 * 3 + RawStream.DblFloat * offset, SeekOrigin.Current)
+
+        Return bin.ReadDouble
+    End Function
+
+    Public Iterator Function GetRaster(mz As Double, Optional dims As (x As Integer, y As Integer, z As Integer) = Nothing) As IEnumerable(Of Double()())
+        Dim s As Stream = bin.BaseStream
+        Dim offset As Long
+        Dim i As MzIndex = mzIndex.SearchBest(mz, mzdiff)
+
+        If i Is Nothing Then
+            ' current data contains no such ion m/z value
+            Return
+        End If
+
+        If dims.x = 0 OrElse dims.y = 0 Then
+            dims = spot_index.GetDimensions
+        End If
+
+        For Each layer As Grid(Of SpatialIndex) In spot_index.ZLayers
+            Dim buf As Double()() = RectangularArray.Matrix(Of Double)(dims.y, dims.x)
+            Dim v As Double
+
+            For Each spot As SpatialIndex In layer.EnumerateData
+                offset = spot + RawStream.INT32 * 3 + RawStream.DblFloat * i
+                s.Seek(offset, SeekOrigin.Begin)
+                v = bin.ReadDouble
+
+                buf(spot.Y - 1)(spot.X - 1) = v
+            Next
+
+            Yield buf
+        Next
     End Function
 
     Public Iterator Function LoadSpots() As IEnumerable(Of PixelData)
@@ -142,10 +209,22 @@ Public Class MatrixReader : Implements IDisposable
         Next
     End Function
 
-    Private Function LoadCurrentSpot() As PixelData
+    ''' <summary>
+    ''' for a better perfermance of binary data file seek operation
+    ''' the scan data is in structrue of:
+    ''' 
+    ''' ```
+    '''   x,  y,  z,intensity,label_string
+    ''' i32,i32,i32,  f64 * n,string
+    ''' ```
+    ''' 
+    ''' so, for seek a ion intensity value will be in fast speed
+    ''' </summary>
+    ''' <returns></returns>
+    Friend Function LoadCurrentSpot() As PixelData
         Dim x As Integer = bin.ReadInt32
         Dim y As Integer = bin.ReadInt32
-        Dim label As String = bin.ReadString
+        Dim z As Integer = bin.ReadInt32
         Dim into As Double() = New Double(featureSize - 1) {}
 
         For offset As Integer = 0 To into.Length - 1
@@ -155,13 +234,14 @@ Public Class MatrixReader : Implements IDisposable
         Return New PixelData With {
             .X = x,
             .Y = y,
-            .label = label,
-            .intensity = into
+            .label = bin.ReadString,
+            .intensity = into,
+            .Z = z
         }
     End Function
 
     ''' <summary>
-    ''' load all matrix into memory
+    ''' load all matrix into memory at once
     ''' </summary>
     ''' <returns></returns>
     ''' 
@@ -170,7 +250,8 @@ Public Class MatrixReader : Implements IDisposable
         Return New MzMatrix With {
             .mz = ionSet,
             .tolerance = tolerance,
-            .matrix = LoadSpots.ToArray
+            .matrix = LoadSpots.ToArray,
+            .matrixType = matrixType
         }
     End Function
 

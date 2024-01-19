@@ -946,8 +946,8 @@ Module MzMath
     ''' <param name="mz">A numeric vector of the peak m/z vector</param>
     ''' <returns></returns>
     <ExportAPI("mz_index")>
-    Public Function CreateMzIndex(mz As Double()) As BlockSearchFunction(Of (mz As Double, Integer))
-        Return mz.CreateMzIndex
+    Public Function CreateMzIndex(<RRawVectorArgument> mz As Object, Optional win_size As Double = 1) As MzPool
+        Return New MzPool(CLRVector.asNumeric(mz), win_size)
     End Function
 
     ''' <summary>
@@ -972,7 +972,7 @@ Module MzMath
     <ExportAPI("intensity_vec")>
     Public Function alignIntensity(<RRawVectorArgument>
                                    ms As Object,
-                                   mzSet As BlockSearchFunction(Of (mz As Double, Integer)),
+                                   mzSet As MzPool,
                                    Optional env As Environment = Nothing) As Object
 
         If TypeOf ms Is LibraryMatrix Then
@@ -997,9 +997,9 @@ Module MzMath
             Dim size As Integer = matrix.First.Value.Length
             Dim names = matrix.Keys.ToArray
             Dim cols As String() = mzSet.raw _
-                    .OrderBy(Function(m) m.Item2) _
-                    .Select(Function(m) m.mz.ToString) _
-                    .ToArray
+                .OrderBy(Function(m) m.index) _
+                .Select(Function(m) m.mz.ToString) _
+                .ToArray
             Dim df As New dataframe With {
                 .columns = New Dictionary(Of String, Array),
                 .rownames = names

@@ -54,16 +54,13 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
-Imports Microsoft.VisualBasic.ComponentModel.Algorithm
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Parallel
-Imports std = System.Math
 
 Namespace Deconvolute
 
@@ -112,32 +109,13 @@ Namespace Deconvolute
                     Call scanMz.Add(x)
                 Next
 
-                scanMz.Shuffle
-                ' VectorTask.n_threads = App.CPUCoreNumbers
+                Call scanMz.Shuffle
 
                 If verbose Then
                     Call VBDebugger.EchoLine($"processing {scanMz.Count} ion feature blocks...")
                 End If
 
-                Dim par As New IndexTask(scanMz, mzdiff, verbose)
-                Dim subgroups = DirectCast(par.Run(), IndexTask).groups
-                Dim merge = subgroups.IteratesALL _
-                    .Where(Function(n) n.Length > 0) _
-                    .GroupBy(Function(a) a.Average, offsets:=mzdiff) _
-                    .ToArray
-                Dim bins = merge _
-                    .Select(Function(g)
-                                Dim bin As Double() = g _
-                                    .Select(Function(i) i.value) _
-                                    .IteratesALL _
-                                    .ToArray
-
-                                Return New NamedCollection(Of Double)(bin.Average.ToString, bin)
-                            End Function) _
-                    .OrderByDescending(Function(g) g.Length) _
-                    .ToArray
-
-                Return GetMzIndex(bins, freq)
+                Return GetMzIndexFastBin(scanMz, mzdiff, freq, verbose:=verbose)
             Else
                 Dim scanMz As New List(Of Double)
 
@@ -147,6 +125,28 @@ Namespace Deconvolute
 
                 Return GetMzIndex(scanMz, mzdiff, freq)
             End If
+        End Function
+
+        Public Function GetMzIndexFastBin(scanMz As List(Of Double()), mzdiff As Double, freq As Double, Optional verbose As Boolean = False) As Double()
+            Dim par As New IndexTask(scanMz, mzdiff, verbose)
+            Dim subgroups = DirectCast(par.Run(), IndexTask).groups
+            Dim merge = subgroups.IteratesALL _
+                .Where(Function(n) n.Length > 0) _
+                .GroupBy(Function(a) a.Average, offsets:=mzdiff) _
+                .ToArray
+            Dim bins = merge _
+                .Select(Function(g)
+                            Dim bin As Double() = g _
+                                .Select(Function(i) i.value) _
+                                .IteratesALL _
+                                .ToArray
+
+                            Return New NamedCollection(Of Double)(bin.Average.ToString, bin)
+                        End Function) _
+                .OrderByDescending(Function(g) g.Length) _
+                .ToArray
+
+            Return GetMzIndex(bins, freq)
         End Function
 
         Private Class IndexTask : Inherits VectorTask
@@ -160,7 +160,7 @@ Namespace Deconvolute
 
                 Me.blocks = blocks
                 Me.mzdiff = mzdiff
-                Me.groups = Me.Allocate(Of NamedCollection(Of Double)())()
+                Me.groups = Me.Allocate(Of NamedCollection(Of Double)())(all:=False)
             End Sub
 
             Protected Overrides Sub Solve(start As Integer, ends As Integer, thread_id As Integer)
@@ -219,7 +219,7 @@ Namespace Deconvolute
         End Function
 
         <Extension>
-        Public Function DeconvoluteMS(sp As LibraryMatrix, len As Integer, mzIndex As BlockSearchFunction(Of (mz As Double, Integer))) As Double()
+        Public Function DeconvoluteMS(sp As LibraryMatrix, len As Integer, mzIndex As MzPool) As Double()
             Return DeconvoluteScan(sp.Select(Function(a) a.mz).ToArray, sp.Select(Function(a) a.intensity).ToArray, len, mzIndex)
         End Function
 
@@ -228,7 +228,9 @@ Namespace Deconvolute
         ''' </summary>
         ''' <param name="mz"></param>
         ''' <param name="into"></param>
-        ''' <param name="len"></param>
+        ''' <param name="len">
+        ''' should be the length of the <paramref name="mzIndex"/>
+        ''' </param>
         ''' <param name="mzIndex"></param>
         ''' <returns>
         ''' a vector of the intensity data which is aligned with the mz vector
@@ -236,28 +238,25 @@ Namespace Deconvolute
         Public Function DeconvoluteScan(mz As Double(),
                                         into As Double(),
                                         len As Integer,
-                                        mzIndex As BlockSearchFunction(Of (mz As Double, Integer))) As Double()
+                                        mzIndex As MzPool) As Double()
 
             Dim v As Double() = New Double(len - 1) {}
             Dim mzi As Double
-            Dim hit As (mz As Double, idx As Integer)
+            Dim hit As MzIndex
             Dim scan_size As Integer = mz.Length
 
             For i As Integer = 0 To scan_size - 1
                 mzi = mz(i)
-                hit = mzIndex _
-                    .Search((mzi, -1)) _
-                    .OrderBy(Function(a) std.Abs(a.mz - mzi)) _
-                    .FirstOrDefault
+                hit = mzIndex.SearchBest(mzi)
 
-                If hit.mz < 1 AndAlso hit.idx = 0 Then
+                If hit Is Nothing Then
                     ' 20221102
                     '
                     ' missing data
                     ' could be caused by the selective ion data export
                     ' just ignores of this problem
                 Else
-                    v(hit.idx) += into(i)
+                    v(hit.index) += into(i)
                 End If
             Next
 

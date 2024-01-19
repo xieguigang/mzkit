@@ -1,0 +1,34 @@
+.\" man page create by R# package system.
+.TH SINGLECELLS 1 2000-Jan "cell_embedding" "cell_embedding"
+.SH NAME
+cell_embedding \- create a session for create spot cell embedding
+.SH SYNOPSIS
+\fIcell_embedding(\fBndims\fR as integer = 30, 
+\fBmethod\fR as <integer> TrainMethod = [Skip_Gram], 
+\fBfreq\fR as integer = 3, 
+\fBdiff\fR as double = 0.1);\fR
+.SH DESCRIPTION
+.PP
+create a session for create spot cell embedding
+.PP
+.SH OPTIONS
+.PP
+\fBndims\fB \fR\- the embedding vector size, greater than 30 and less than 100 dimension is recommended.. 
+.PP
+.PP
+\fBmethod\fB \fR\- -. 
+.PP
+.PP
+\fBfreq\fB \fR\- -. 
+.PP
+.PP
+\fBdiff\fB \fR\- 
+ the score diff for build the tree branch
+. 
+.PP
+.SH SEE ALSO
+SingleCells
+.SH FILES
+.PP
+mzkit.dll
+.PP

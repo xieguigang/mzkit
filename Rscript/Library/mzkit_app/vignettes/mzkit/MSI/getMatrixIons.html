@@ -30,7 +30,8 @@
             <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>getMatrixIons</strong>(<i>raw</i>,
     <i>mzdiff</i> = <span style='color: green;'>0.001</span>,
     <i>q</i> = <span style='color: green;'>0.001</span>,
-    <i>fast.bins</i> = <span style='color: blue !important;'>TRUE</span>);</code></pre>
+    <i>fast.bins</i> = <span style='color: blue !important;'>TRUE</span>,
+    <i>verbose</i> = <span style='color: blue !important;'>FALSE</span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
@@ -67,9 +68,13 @@
 
         this function returns data object of type double.<h4>clr value class</h4><ul><li>double</li></ul>
 
-        <h3 style="display: none;">Examples</h3>
+        <h3 style="display: block;">Examples</h3>
 
-        
+        <pre><code id="example_r"> # thread number for fast bins could be set via the 
+ # n_thread options, example as:
+ options(n_thread = 8);
+ 
+ getMatrixIons(mzpack, mzdiff = 0.001, fast.bins = TRUE);</code></pre>
 
         <hr />
         <div style="text-align: center;">[Package <em>MSI</em> version 1.0.0.0 <a

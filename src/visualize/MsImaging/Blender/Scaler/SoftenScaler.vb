@@ -58,6 +58,9 @@ Imports Microsoft.VisualBasic.Data.GraphTheory.GridGraph
 
 Namespace Blender.Scaler
 
+    ''' <summary>
+    ''' make spatial convolution for make the signal smooth
+    ''' </summary>
     Public Class SoftenScaler : Inherits Scaler
 
         Sub New()
@@ -131,7 +134,7 @@ Namespace Blender.Scaler
         End Function
 
         Public Overrides Function ToScript() As String
-            Return "soften()"
+            Return $"soften()"
         End Function
     End Class
 End Namespace

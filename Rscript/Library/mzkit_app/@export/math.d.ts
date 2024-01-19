@@ -183,8 +183,10 @@ declare namespace math {
     * 
     * 
      * @param mz A numeric vector of the peak m/z vector
+     * @param win_size 
+     * + default value Is ``1``.
    */
-   function mz_index(mz: number): object;
+   function mz_index(mz: any, win_size?: number): object;
    /**
     * normalized the peak intensity data, do [0,1] scaled.
     * 

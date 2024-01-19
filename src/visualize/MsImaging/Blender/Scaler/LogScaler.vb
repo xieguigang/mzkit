@@ -61,6 +61,9 @@ Imports std = System.Math
 
 Namespace Blender.Scaler
 
+    ''' <summary>
+    ''' log for reduce the data difference
+    ''' </summary>
     Public Class LogScaler : Inherits Scaler
 
         <XmlAttribute> Public Property base As Double = std.E

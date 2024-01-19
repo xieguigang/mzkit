@@ -63,7 +63,7 @@ Imports Microsoft.VisualBasic.Scripting.Runtime
 Namespace mzData.mzWebCache
 
     ''' <summary>
-    ''' MS scan
+    ''' MS scan of mslevel 1
     ''' </summary>
     Public Class ScanMS1 : Inherits MSScan
         Implements ITimeSignal

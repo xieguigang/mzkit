@@ -3,19 +3,23 @@
 .SH NAME
 z_assembler \- Create mzpack object for ms-imaging in 3D
 .SH SYNOPSIS
-\fIz_assembler(\fBx\fR as any, 
+\fIz_assembler(\fBheader\fR as <generic> MatrixHeader, 
 \fBfile\fR as any, 
 [\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
 Create mzpack object for ms-imaging in 3D
+ 
+ this function assembling a collection of the 2D layer in z-axis
+ order for construct a new 3D volume data.
 .PP
 .SH OPTIONS
 .PP
-\fBx\fB \fR\- the z axis value should be encoded in the @\fBP:BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack.source\fR tag. 
-.PP
-.PP
 \fBenv\fB \fR\- -. 
+.PP
+.SH DETAILS
+.PP
+a @\fBT:BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute.MzMatrix\fR object will be packed as the 3D volumn result.
 .PP
 .SH SEE ALSO
 MSI
