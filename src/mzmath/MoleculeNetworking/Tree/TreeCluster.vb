@@ -51,7 +51,10 @@ Public Class TreeCluster
         Dim c As ClusterTree = Nothing
 
         For Each part As TreeCluster In Tqdm.Wrap(trees.ToArray, useColor:=True)
-            For Each spec As PeakMs2 In part.spectrum
+            If part Is Nothing Then
+                Continue For
+            End If
+            For Each spec As PeakMs2 In part.spectrum.SafeQuery
                 Call align.Add(spec)
             Next
 
@@ -61,11 +64,25 @@ Public Class TreeCluster
             End If
 
             Dim clusters As Dictionary(Of String, String()) = part.GetTree
+            Dim subs As String()
 
-            For Each cluster_id As String In clusters.Keys
-                Call ClusterTree.Add(unionTree, args.SetTargetKey(cluster_id), find:=c)
-                Call c.Members.AddRange(clusters(cluster_id))
-            Next
+            If Not clusters.IsNullOrEmpty Then
+                For Each cluster_id As String In clusters.Keys
+                    Call ClusterTree.Add(unionTree, args.SetTargetKey(cluster_id), find:=c)
+
+                    subs = clusters(cluster_id)
+
+                    If subs Is Nothing Then
+                        subs = {}
+                    End If
+
+                    If c.Members.IsNullOrEmpty Then
+                        c.Members = New List(Of String)(subs)
+                    Else
+                        c.Members.AddRange(subs)
+                    End If
+                Next
+            End If
         Next
 
         Return unionTree
