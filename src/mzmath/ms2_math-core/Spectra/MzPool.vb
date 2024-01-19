@@ -44,6 +44,16 @@ Namespace Spectra
             Return New MzIndex(mzVal.mz, mzVal.index)
         End Operator
 
+        ''' <summary>
+        ''' calculate the binary data file offset
+        ''' </summary>
+        ''' <param name="sizeof"></param>
+        ''' <param name="index"></param>
+        ''' <returns></returns>
+        Public Shared Operator *(sizeof As Integer, index As MzIndex) As Integer
+            Return sizeof * index.index
+        End Operator
+
     End Class
 
     ''' <summary>

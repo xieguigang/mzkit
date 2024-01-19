@@ -2,8 +2,15 @@
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
+Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.GraphTheory.GridGraph
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Serialization
 
 ''' <summary>
 ''' A lazy binary data matrix reader for the singlecells/spatial data
@@ -49,11 +56,15 @@ Public Class MatrixReader : Implements IDisposable
     Dim disposedValue As Boolean
     Dim spot_index As Spatial3D(Of SpatialIndex)
     Dim label_index As Dictionary(Of String, Long())
+    Dim mzIndex As MzPool
+    Dim mzdiff As Double
 
     Sub New(s As Stream)
         Me.bin = New BinaryReader(s, Encoding.ASCII)
         Me.bin.BaseStream.Seek(0, SeekOrigin.Begin)
         Me.scan0 = loadHeaders()
+        Me.mzIndex = New MzPool(ionSet)
+        Me.mzdiff = Val(tolerance)
     End Sub
 
     Private Function loadHeaders() As Long
@@ -142,6 +153,52 @@ Public Class MatrixReader : Implements IDisposable
 
         Call bin.BaseStream.Seek(label_index(cell_id)(0), SeekOrigin.Begin)
         Return LoadCurrentSpot()
+    End Function
+
+    Public Function GetIntensity(cell_id As String, mz As Double) As Double
+        Dim offset As MzIndex = mzIndex.SearchBest(mz, mzdiff)
+
+        If Not label_index.ContainsKey(cell_id) Then
+            Return 0
+        End If
+        If offset Is Nothing Then
+            Return 0
+        End If
+
+        Call bin.BaseStream.Seek(label_index(cell_id)(0), SeekOrigin.Begin)
+        Call bin.BaseStream.Seek(RawStream.INT32 * 3 + RawStream.DblFloat * offset, SeekOrigin.Current)
+
+        Return bin.ReadDouble
+    End Function
+
+    Public Iterator Function GetRaster(mz As Double, Optional dims As (x As Integer, y As Integer, z As Integer) = Nothing) As IEnumerable(Of Double()())
+        Dim s As Stream = bin.BaseStream
+        Dim offset As Long
+        Dim i As MzIndex = mzIndex.SearchBest(mz, mzdiff)
+
+        If i Is Nothing Then
+            ' current data contains no such ion m/z value
+            Return
+        End If
+
+        If dims.x = 0 OrElse dims.y = 0 Then
+            dims = spot_index.GetDimensions
+        End If
+
+        For Each layer As Grid(Of SpatialIndex) In spot_index.ZLayers
+            Dim buf As Double()() = RectangularArray.Matrix(Of Double)(dims.y, dims.x)
+            Dim v As Double
+
+            For Each spot As SpatialIndex In layer.EnumerateData
+                offset = spot + RawStream.INT32 * 3 + RawStream.DblFloat * i
+                s.Seek(offset, SeekOrigin.Begin)
+                v = bin.ReadDouble
+
+                buf(spot.Y - 1)(spot.X - 1) = v
+            Next
+
+            Yield buf
+        Next
     End Function
 
     Public Iterator Function LoadSpots() As IEnumerable(Of PixelData)
