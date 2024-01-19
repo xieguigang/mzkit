@@ -3,6 +3,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
 Imports Microsoft.VisualBasic.Data.GraphTheory
 Imports Microsoft.VisualBasic.DataMining.BinaryTree
+Imports Microsoft.VisualBasic.Linq
 
 ''' <summary>
 ''' A tuple object that wrap the <see cref="ClusterTree"/> and
@@ -26,7 +27,16 @@ Public Class TreeCluster
     End Function
 
     Public Shared Sub GetTree(tree As ClusterTree, ByRef pull As Dictionary(Of String, String()))
-        Call pull.Add(tree.Data, tree.Members.ToArray)
+        If pull.ContainsKey(tree.Data) Then
+            ' duplicated key may be found in spectrum
+            ' taxonomy tree union operation
+            pull(tree.Data) = tree.Members _
+                .JoinIterates(pull.TryGetValue(tree.Data)) _
+                .Distinct _
+                .ToArray
+        Else
+            Call pull.Add(tree.Data, tree.Members.ToArray)
+        End If
 
         If tree.Childs.Any Then
             For Each subTree As Tree(Of String) In tree.Childs.Values

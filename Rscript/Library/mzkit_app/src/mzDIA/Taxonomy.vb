@@ -90,13 +90,14 @@ Module Taxonomy
             Me.intocutoff = intocutoff
             Me.equals_score = equals
             Me.interval = interval
-            Me.out = Allocate(Of TreeCluster)(all:=True)
+            Me.out = Allocate(Of TreeCluster)(all:=False)
         End Sub
 
         Protected Overrides Sub Solve(start As Integer, ends As Integer, cpu_id As Integer)
             Dim da As Tolerance = Tolerance.DeltaMass(mzdiff)
             Dim cutoff As New RelativeIntensityCutoff(intocutoff)
             Dim tree As TreeCluster
+            Dim poolData As New List(Of PeakMs2)
 
             For i As Integer = start To ends
                 Dim data As PeakMs2() = pool(i).Value
@@ -108,12 +109,14 @@ Module Taxonomy
                                 Return spec
                             End Function) _
                     .ToArray
-                tree = New NetworkingTree(mzdiff, intocutoff, equals_score, interval).Tree(data)
-
-                SyncLock out
-                    out(i) = tree
-                End SyncLock
+                poolData.AddRange(data)
             Next
+
+            tree = New NetworkingTree(mzdiff, intocutoff, equals_score, interval).Tree(poolData)
+
+            SyncLock out
+                out(cpu_id) = tree
+            End SyncLock
         End Sub
     End Class
 
