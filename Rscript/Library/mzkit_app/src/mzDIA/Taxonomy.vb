@@ -1,9 +1,11 @@
 ﻿
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.BioDeep.MassSpectrometry.MoleculeNetworking
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.DataMining.BinaryTree
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
@@ -52,12 +54,8 @@ Module Taxonomy
                                  Optional env As Environment = Nothing) As Object
 
         Dim pool As Dictionary(Of String, PeakMs2()) = x.AsGeneric(Of PeakMs2())(env)
-        Dim trees As TreeCluster() = pool _
-            .AsParallel _
-            .Select(Function(par)
-                        Return New NetworkingTree(mzdiff, intocutoff, equals, interval).Tree(par.Value.SafeQuery)
-                    End Function) _
-            .ToArray
+        Dim task As New ParallelTreeTask(pool, mzdiff, intocutoff, equals, interval)
+        Dim trees As TreeCluster() = DirectCast(task.Run, ParallelTreeTask).out
         ' make union
         Dim args As New ClusterTree.Argument With {
             .diff = interval,
@@ -68,6 +66,56 @@ Module Taxonomy
 
         Return union
     End Function
+
+    Private Class ParallelTreeTask : Inherits VectorTask
+
+        ReadOnly pool As KeyValuePair(Of String, PeakMs2())(),
+            mzdiff As Double,
+            intocutoff As Double,
+            equals_score As Double,
+            interval As Double
+
+        Public out As TreeCluster()
+
+        Public Sub New(pool As Dictionary(Of String, PeakMs2()),
+                       mzdiff As Double,
+                       intocutoff As Double,
+                       equals As Double,
+                       interval As Double)
+
+            Call MyBase.New(pool.Count)
+
+            Me.pool = pool.ToArray
+            Me.mzdiff = mzdiff
+            Me.intocutoff = intocutoff
+            Me.equals_score = equals
+            Me.interval = interval
+            Me.out = Allocate(Of TreeCluster)(all:=True)
+        End Sub
+
+        Protected Overrides Sub Solve(start As Integer, ends As Integer, cpu_id As Integer)
+            Dim da As Tolerance = Tolerance.DeltaMass(mzdiff)
+            Dim cutoff As New RelativeIntensityCutoff(intocutoff)
+            Dim tree As TreeCluster
+
+            For i As Integer = start To ends
+                Dim data As PeakMs2() = pool(i).Value
+
+                data = data _
+                    .SafeQuery _
+                    .Select(Function(spec)
+                                spec.mzInto = spec.mzInto.Centroid(da, cutoff).ToArray
+                                Return spec
+                            End Function) _
+                    .ToArray
+                tree = New NetworkingTree(mzdiff, intocutoff, equals_score, interval).Tree(data)
+
+                SyncLock out
+                    out(i) = tree
+                End SyncLock
+            Next
+        End Sub
+    End Class
 
     ''' <summary>
     ''' get spectrum clusters

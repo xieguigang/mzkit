@@ -160,7 +160,7 @@ Namespace Deconvolute
 
                 Me.blocks = blocks
                 Me.mzdiff = mzdiff
-                Me.groups = Me.Allocate(Of NamedCollection(Of Double)())()
+                Me.groups = Me.Allocate(Of NamedCollection(Of Double)())(all:=False)
             End Sub
 
             Protected Overrides Sub Solve(start As Integer, ends As Integer, thread_id As Integer)
