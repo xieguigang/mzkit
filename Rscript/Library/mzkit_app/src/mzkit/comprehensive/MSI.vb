@@ -61,13 +61,11 @@ Imports System.Drawing
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
-Imports System.Text.RegularExpressions
 Imports BioNovoGene.Analytical.MassSpectrometry
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.Comprehensive.MsImaging
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
-Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
@@ -82,11 +80,12 @@ Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Data.GraphTheory.GridGraph
+Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Emit.Delegates
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.HeatMap
-Imports Microsoft.VisualBasic.Imaging.Landscape.Vendor_3mf.XML
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.ComponentModel.Activations
@@ -95,6 +94,7 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Statistics.Hypothesis
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Scripting.Runtime
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports SMRUCC.Rsharp
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
@@ -152,6 +152,13 @@ Module MSI
         Return True
     End Function
 
+    ''' <summary>
+    ''' read <see cref="SingleIonLayer"/>
+    ''' </summary>
+    ''' <param name="file"></param>
+    ''' <param name="args"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     Private Function readPeaklayer(file As Stream, args As list, env As Environment) As Object
         Return LayerFile.ParseLayer(file)
     End Function
@@ -1135,6 +1142,18 @@ Module MSI
         End If
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="raw"></param>
+    ''' <param name="ionSet"></param>
+    ''' <param name="err"></param>
+    ''' <param name="rawMatrix">
+    ''' true for returns the raw <see cref="MzMatrix"/> object, and
+    ''' false for returns a collection of the <see cref="DataSet"/> rows.
+    ''' </param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <Extension>
     Private Function GetPeakMatrix(raw As mzPack, ionSet As Object, err As Tolerance,
                                    rawMatrix As Boolean,
@@ -1229,6 +1248,13 @@ Module MSI
     ''' <param name="q"></param>
     ''' <param name="fast_bins"></param>
     ''' <returns></returns>
+    ''' <example>
+    ''' # thread number for fast bins could be set via the 
+    ''' # n_thread options, example as:
+    ''' options(n_thread = 8);
+    ''' 
+    ''' getMatrixIons(mzpack, mzdiff = 0.001, fast.bins = TRUE);
+    ''' </example>
     <ExportAPI("getMatrixIons")>
     <RApiReturn(TypeCodes.double)>
     Public Function GetMatrixIons(<RRawVectorArgument> raw As Object,
@@ -1712,6 +1738,93 @@ Module MSI
                 .assembler = z
             }
         End If
+    End Function
+
+    ''' <summary>
+    ''' create a simple 3d volume model for mzkit workbench
+    ''' </summary>
+    ''' <param name="layers">should be a collection of the <see cref="SingleIonLayer"/>. 
+    ''' the layer elements in this collection should be already been re-ordered by 
+    ''' the z-axis!</param>
+    ''' <param name="dump"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("z_volume")>
+    Public Function z_volume(<RRawVectorArgument> layers As Object, dump As String, Optional env As Environment = Nothing) As Object
+        Dim pull As pipeline = pipeline.TryCreatePipeline(Of SingleIonLayer)(layers, env)
+
+        If pull.isError Then
+            Return pull.getError
+        End If
+
+        Dim layers_2d As SingleIonLayer() = pull _
+            .populates(Of SingleIonLayer)(env) _
+            .ToArray
+        ' check dimension size for all layers
+        Dim assert_dims As Size = layers_2d(0).DimensionSize
+        Dim check_mismatched = layers_2d _
+            .Where(Function(l) l.DimensionSize.Width <> assert_dims.Width OrElse l.DimensionSize.Height <> assert_dims.Height) _
+            .Select(Function(a) a.IonMz) _
+            .ToArray
+
+        If check_mismatched.Any Then
+            Call env.AddMessage({
+                $"there are {check_mismatched.Length} 2d layer dimension value is mis-matched!",
+                $"layers: {check_mismatched.GetJson}"
+            })
+        End If
+
+        Dim dimx As Integer = assert_dims.Width
+        Dim dimy As Integer = assert_dims.Height
+        Dim dimz As Integer = layers_2d.Length
+
+        Call {dimx, dimy, dimz}.GetJson.SaveTo($"{dump}/dims.json")
+
+        Dim s As Stream = $"{dump}/data.dat".Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False)
+        Dim bin As New BinaryDataWriter(s, Encoding.ASCII)
+        Dim byter As New DoubleRange(0, 255)
+        ' global intensity range
+        Dim intensityr As DoubleRange = layers_2d _
+            .AsParallel _
+            .Select(Function(l) l.GetIntensity.Range) _
+            .Select(Iterator Function(r) As IEnumerable(Of Double)
+                        Yield r.min
+                        Yield r.max
+                    End Function) _
+            .IteratesALL _
+            .ToArray
+
+        For Each layer As SingleIonLayer In layers_2d
+            Dim buf As Byte()() = RectangularArray.Matrix(Of Byte)(
+                assert_dims.Height,
+                assert_dims.Width
+            )
+            Dim v As Double
+
+            For Each spot As MsImaging.PixelData In layer.MSILayer
+                v = intensityr.ScaleMapping(spot.intensity, byter)
+
+                If v < 0 Then
+                    v = 0
+                ElseIf v > 255 Then
+                    v = 255
+                End If
+
+                buf(spot.y - 1)(spot.x - 1) = CByte(v)
+            Next
+
+            For Each line As Byte() In buf
+                Call bin.Write(line)
+            Next
+
+            Call Console.Write(".")
+        Next
+
+        Call bin.Flush()
+        Call s.Flush()
+        Call s.Dispose()
+
+        Return True
     End Function
 
     ''' <summary>

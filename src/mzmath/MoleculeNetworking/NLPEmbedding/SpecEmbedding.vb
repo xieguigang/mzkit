@@ -8,22 +8,33 @@ Public Class SpecEmbedding
     ReadOnly wv As Word2Vec
 
     Dim pool As NetworkingTree
+    ''' <summary>
+    ''' the spectrum vocabulary builder
+    ''' </summary>
     Dim index As TreeCluster
 
+    ''' <summary>
+    ''' get the tree clustering result
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property GetClusters As Dictionary(Of String, String())
         Get
             Return index.GetTree
         End Get
     End Property
 
-    Sub New(Optional ndims As Integer = 30, Optional method As TrainMethod = TrainMethod.Skip_Gram, Optional freq As Integer = 1)
+    Sub New(Optional ndims As Integer = 30,
+            Optional method As TrainMethod = TrainMethod.Skip_Gram,
+            Optional freq As Integer = 1,
+            Optional diff As Double = 0.1)
+
         wv = New Word2VecFactory() _
             .setMethod(method) _
             .setNumOfThread(1) _
             .setFreqThresold(freq) _
             .setVectorSize(size:=ndims) _
             .build()
-        pool = New NetworkingTree()
+        pool = New NetworkingTree(interval:=diff)
     End Sub
 
     ''' <summary>
@@ -46,6 +57,7 @@ Public Class SpecEmbedding
                 .ToArray
         End If
 
+        ' create vocabulary
         If index Is Nothing Then
             index = pool.Tree(pull)
             clusters = index.clusters
@@ -54,6 +66,10 @@ Public Class SpecEmbedding
         End If
 
         Call wv.readTokens(clusters)
+    End Sub
+
+    Public Sub AddSample(terms As IEnumerable(Of String))
+        Call wv.readTokens(terms.ToArray)
     End Sub
 
     Public Function CreateEmbedding() As VectorModel

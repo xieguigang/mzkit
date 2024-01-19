@@ -972,6 +972,14 @@ Module MsImaging
         Return raster
     End Function
 
+    <ExportAPI("intensityFilter")>
+    Public Function intensityFilter(<RRawVectorArgument> x As Object, filter As RasterPipeline, Optional env As Environment = Nothing) As Object
+        Return env.EvaluateFramework(Of SingleIonLayer, SingleIonLayer)(x,
+            eval:=Function(layer)
+                      Return filter(layer)
+                  End Function)
+    End Function
+
     ''' <summary>
     ''' MS-imaging of the MSI summary data result.
     ''' </summary>

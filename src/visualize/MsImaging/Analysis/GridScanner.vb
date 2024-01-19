@@ -225,9 +225,10 @@ Public Module GridScanner
         Dim align As New CorrelationAligner(matrix)
         Dim root As New ClusterTree
         Dim i As Integer = 1
+        Dim args As New ClusterTree.Argument With {.alignment = align, .threshold = equals}
 
         For Each key As String In matrix.Keys
-            Call ClusterTree.Add(root, key, align, equals)
+            Call ClusterTree.Add(root, args.SetTargetKey(key))
         Next
 
         For Each cluster As ClusterTree In ClusterTree.GetClusters(root)

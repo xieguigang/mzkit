@@ -533,4 +533,17 @@ declare namespace MSI {
      * + default value Is ``0.001``.
    */
    function z_header(features: any, mzdiff?: number): object;
+   /**
+    * create a simple 3d volume model for mzkit workbench
+    * 
+    * 
+     * @param layers should be a collection of the @``T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.SingleIonLayer``. 
+     *  the layer elements in this collection should be already been re-ordered by 
+     *  the z-axis!
+     * @param dump -
+     * @param env -
+     * 
+     * + default value Is ``null``.
+   */
+   function z_volume(layers: any, dump: string, env?: object): any;
 }

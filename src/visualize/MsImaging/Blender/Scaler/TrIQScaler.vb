@@ -61,6 +61,9 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Namespace Blender.Scaler
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
     Public Class TrIQScaler : Inherits Scaler
 
         ''' <summary>
