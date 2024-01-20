@@ -63,6 +63,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
 Imports Microsoft.VisualBasic.Text
 Imports HeatMapPixel = Microsoft.VisualBasic.Imaging.Pixel
 
@@ -86,7 +87,7 @@ Namespace Deconvolute
     '''    
     ''' the <see cref="matrix"/> is consist with a collection of the <see cref="PixelData"/>.
     ''' </remarks>
-    Public Class MzMatrix
+    Public Class MzMatrix : Implements INumericMatrix
 
         ''' <summary>
         ''' m/z vector in numeric format of round to digit 4, this ion m/z 
@@ -244,6 +245,16 @@ Namespace Deconvolute
             For Each spot As PixelData In matrix.SafeQuery
                 Yield New PeakMs2(If(prefix_tag, tag & " - " & spot.label, spot.label), mz, spot)
             Next
+        End Function
+
+        Public Function ArrayPack(Optional deepcopy As Boolean = False) As Double()() Implements INumericMatrix.ArrayPack
+            Dim m As Double()() = New Double(matrix.Length - 1)() {}
+
+            For i As Integer = 0 To matrix.Length - 1
+                m(i) = _matrix(i).intensity
+            Next
+
+            Return m
         End Function
     End Class
 End Namespace
