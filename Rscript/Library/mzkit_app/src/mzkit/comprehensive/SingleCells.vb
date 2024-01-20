@@ -646,4 +646,9 @@ Module SingleCells
     Public Function spot_vector(pool As SpecEmbedding) As VectorModel
         Return pool.CreateEmbedding
     End Function
+
+    <ExportAPI("spatial_labels")>
+    Public Function spatialLabels(x As MzMatrix) As String()
+        Return x.matrix.Select(Function(s) $"{s.X},{s.Y},{s.Z}").ToArray
+    End Function
 End Module
