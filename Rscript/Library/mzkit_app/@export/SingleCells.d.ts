@@ -185,6 +185,9 @@ declare namespace SingleCells {
    */
    function SCM_ionStat(raw: object, da?: number, parallel?: boolean): object;
    /**
+   */
+   function spatial_labels(x: object): string;
+   /**
     * get the cell spot embedding result
     * 
     * 
