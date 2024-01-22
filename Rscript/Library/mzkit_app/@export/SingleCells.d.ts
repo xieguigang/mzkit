@@ -30,7 +30,7 @@ declare namespace SingleCells {
         * 
         * + default value Is ``null``.
       */
-      function scale(x: any, scaler: object, env?: object): object;
+      function scale(x: any, scaler: any, env?: object): object;
    }
    module as {
       /**
