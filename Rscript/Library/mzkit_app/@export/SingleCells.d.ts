@@ -30,7 +30,7 @@ declare namespace SingleCells {
         * 
         * + default value Is ``null``.
       */
-      function scale(x: any, scaler: object, env?: object): object;
+      function scale(x: any, scaler: any, env?: object): object;
    }
    module as {
       /**
@@ -184,6 +184,9 @@ declare namespace SingleCells {
      * + default value Is ``true``.
    */
    function SCM_ionStat(raw: object, da?: number, parallel?: boolean): object;
+   /**
+   */
+   function spatial_labels(x: object): string;
    /**
     * get the cell spot embedding result
     * 
