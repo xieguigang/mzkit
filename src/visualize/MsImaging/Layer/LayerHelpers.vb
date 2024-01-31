@@ -85,12 +85,13 @@ Public Module LayerHelpers
                                         Optional mzdiff As Tolerance = Nothing,
                                         Optional gridSize As Integer = 5,
                                         Optional qcut As Double = 0.05,
-                                        Optional intoCut As Double = 0) As IEnumerable(Of DoubleTagged(Of SingleIonLayer))
+                                        Optional intoCut As Double = 0,
+                                        Optional verbose As Boolean = True) As IEnumerable(Of DoubleTagged(Of SingleIonLayer))
 
         Dim cellSize As New Size(gridSize, gridSize)
         Dim graph As Grid(Of ScanMS1) = Grid(Of ScanMS1).Create(raw.MS, Function(scan) scan.GetMSIPixel)
         Dim mzErr As Tolerance = mzdiff Or Tolerance.DefaultTolerance
-        Dim reader As PixelReader = New ReadRawPack(raw)
+        Dim reader As PixelReader = New ReadRawPack(raw, verbose:=verbose)
         Dim ncut As Integer = graph.size * qcut
         Dim allMz As NamedCollection(Of (mzi As ms2, pt As Point))() = graph _
             .EnumerateData _
