@@ -247,7 +247,8 @@ Public Module PixelsCDF
                                       Optional offsetX As Integer = 0,
                                       Optional offsetY As Integer = 0,
                                       Optional excludesMz As Double() = Nothing,
-                                      Optional mzdiff As Double = 0.05) As ReadRawPack
+                                      Optional mzdiff As Double = 0.05,
+                                      Optional verbose As Boolean = True) As ReadRawPack
 
         Dim w = Aggregate i In allPixels Into Max(i.X)
         Dim h = Aggregate i In allPixels Into Max(i.Y)
@@ -270,6 +271,6 @@ Public Module PixelsCDF
             End If
         Next
 
-        Return New ReadRawPack(pixels, size, resolution:=17)
+        Return New ReadRawPack(pixels, size, resolution:=17, verbose:=verbose)
     End Function
 End Module

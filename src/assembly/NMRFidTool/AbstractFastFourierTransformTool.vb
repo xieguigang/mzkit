@@ -115,7 +115,7 @@ Public MustInherit Class AbstractFastFourierTransformTool
         tdRelatedNonUnderstoodRearrangementForSequential()
         Dim signals As Integer
         fidField.Proc.LineBroadening = 0.3
-        ''' applyWindowFunctions //window function need to be applied before FT
+        ' applyWindowFunctions //window function need to be applied before FT
         'TODO adapt the FFT to the new object Spectrum
         '        Apodizator apodization = new ExponentialApodizator(data, acquisition.getAcquisitionMode(), processing);
         Dim apodizedData As Double() = Nothing
@@ -204,7 +204,7 @@ Public MustInherit Class AbstractFastFourierTransformTool
     End Sub
 
     Friend Overridable Sub tdRelatedNonUnderstoodRearrangementForSequential()
-        ''' try to understand this bit of code!!!!
+        ' try to understand this bit of code!!!!
         'nonsense case if SI is set to be less than TD/2
         Dim td = If(fidField.Proc.TdEffective > 2 * fidField.Proc.TransformSize, 2 * fidField.Proc.TransformSize, fidField.Proc.TdEffective)
         ' move the data from position i to position 2*i, why?

@@ -351,7 +351,7 @@ Public Class TICplot : Inherits Plot
                 Call g.DrawLine(labelConnector, i.value.GetTextAnchor(anchors(i)), anchors(i))
             End If
 
-            Call g.DrawString(i.value.text, labelFont, labelBrush, i.value)
+            Call g.DrawString(i.value.text, labelFont, labelBrush, i.value.location)
         Next
     End Sub
 

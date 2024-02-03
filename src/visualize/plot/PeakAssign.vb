@@ -364,7 +364,7 @@ Public Class PeakAssign : Inherits Plot
                 If images.ContainsKey(i.value.text) Then
                     Call g.DrawImage(images(i.value.text).img, i.value.rectangle)
                 Else
-                    Call g.DrawString(i.value.text, labelFont, labelBrush, i.value)
+                    Call g.DrawString(i.value.text, labelFont, labelBrush, i.value.location)
                 End If
             Next
         End If

@@ -97,22 +97,22 @@ Public Class Drawer : Implements IDisposable
         End Get
     End Property
 
-    Sub New(file As String, Optional memoryCache As Boolean = False)
+    Sub New(file As String, Optional memoryCache As Boolean = False, Optional verbose As Boolean = True)
         If file.ExtensionSuffix("imzML") Then
             pixelReader = New ReadIbd(imzML:=file, memoryCache:=memoryCache)
         ElseIf file.ExtensionSuffix("mzpack") Then
-            pixelReader = New ReadRawPack(mzpack:=file)
+            pixelReader = New ReadRawPack(mzpack:=file, verbose:=verbose)
         Else
             Throw New InvalidProgramException($"unsupported file type: {file.FileName}")
         End If
     End Sub
 
-    Sub New(mzpack As mzPack)
-        pixelReader = New ReadRawPack(mzpack)
+    Sub New(mzpack As mzPack, Optional verbose As Boolean = True)
+        pixelReader = New ReadRawPack(mzpack, verbose)
     End Sub
 
-    Sub New(matrix As mzPackPixel())
-        pixelReader = New ReadRawPack(matrix)
+    Sub New(matrix As mzPackPixel(), Optional verbose As Boolean = True)
+        pixelReader = New ReadRawPack(matrix, verbose)
     End Sub
 
     Sub New(reader As PixelReader)
