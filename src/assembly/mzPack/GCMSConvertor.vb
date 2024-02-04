@@ -155,7 +155,7 @@ Public Module GCMSConvertor
         Call println("read intensity matrix, may takes a long time to run...")
         Call agilentGC.getDataVariable("intensity_values", into)
 
-        If type = CDFDataTypes.INT Then
+        If type = CDFDataTypes.NC_INT Then
             Dim ints As integers = DirectCast(into, integers)
 
             For Each width As Integer In point_count
@@ -166,7 +166,7 @@ Public Module GCMSConvertor
 
                 offset += width
             Next
-        ElseIf type = CDFDataTypes.FLOAT Then
+        ElseIf type = CDFDataTypes.NC_FLOAT Then
             Dim singles As floats = DirectCast(into, floats)
 
             For Each width As Integer In point_count
