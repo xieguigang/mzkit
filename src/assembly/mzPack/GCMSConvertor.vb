@@ -86,6 +86,7 @@ Public Class GCMSnetCDF
     Public Property flag_count As Integer()
     Public Property mass_values As Short()
     Public Property intensity_values As Single()
+    Public Property metadata As New Dictionary(Of String, String)
 
 End Class
 
