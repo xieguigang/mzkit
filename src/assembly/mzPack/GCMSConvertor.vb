@@ -63,6 +63,13 @@ Imports Microsoft.VisualBasic.DataStorage.netCDF.DataVector
 Imports Microsoft.VisualBasic.Linq
 Imports std = System.Math
 
+''' <summary>
+''' the netCDF in-memory data model of GCMS data 
+''' </summary>
+Public Class GCMSnetCDF
+
+End Class
+
 Public Module GCMSConvertor
 
     Public Function ConvertGCMS(agilentGC As netCDFReader, Optional println As Action(Of String) = Nothing) As mzPack
