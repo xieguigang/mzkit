@@ -56,6 +56,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Data.GraphTheory.GridGraph
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Math
@@ -82,9 +83,22 @@ Namespace Deconvolute
         Public Property label As String
         Public Property intensity As Double() Implements IVector.Data
 
+        Sub New()
+        End Sub
+
+        Sub New(label As String, expression As Double())
+            Me.label = label
+            Me.intensity = expression
+        End Sub
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
             Return $"[{X},{Y}] {label} total_ions:{intensity.Sum}"
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function FromSingleCellExpression(Of T As {INamedValue, IVector})(v As T) As PixelData
+            Return New PixelData(v.Key, v.Data)
         End Function
 
     End Class
