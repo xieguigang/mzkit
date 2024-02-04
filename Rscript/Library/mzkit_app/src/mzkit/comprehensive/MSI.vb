@@ -134,6 +134,7 @@ Module MSI
         Call generic.add("writeBin", GetType(SingleIonLayer), AddressOf writePeaklayer)
     End Sub
 
+    <RGenericOverloads("writeBin")>
     Private Function writeSummarylayer(layer As MSISummary, args As list, env As Environment) As Object
         Dim con As Stream = args!con
         Call LayerFile.SaveMSISummary(layer, con)
@@ -145,6 +146,7 @@ Module MSI
         Return LayerFile.LoadSummaryLayer(file)
     End Function
 
+    <RGenericOverloads("writeBin")>
     Private Function writePeaklayer(layer As SingleIonLayer, args As list, env As Environment) As Object
         Dim con As Stream = args!con
         Call LayerFile.SaveLayer(layer, con)
@@ -163,6 +165,7 @@ Module MSI
         Return LayerFile.ParseLayer(file)
     End Function
 
+    <RGenericOverloads("as.data.frame")>
     Private Function getStatTable(ions As IonStat(), args As list, env As Environment) As rDataframe
         Dim table As New rDataframe With {
             .columns = New Dictionary(Of String, Array),
@@ -730,7 +733,8 @@ Module MSI
     ''' a file list of mzpack data files
     ''' </param>
     ''' <param name="env"></param>
-    ''' <returns></returns>
+    ''' <returns>the function return value should be a collection of the spot data if the y
+    ''' scan line has been specific, or a collection of the mzpack object.</returns>
     <ExportAPI("row.scans")>
     <RApiReturn(GetType(iPixelIntensity))>
     Public Function rowScans(raw As String(),
@@ -893,6 +897,11 @@ Module MSI
     ''' 2. for has no ms2 data, a <see cref="ScanTimeCorrection"/> object is used 
     '''    for run x axis correction based on the average rt diff.
     ''' </returns>
+    ''' <example>
+    ''' # create x-axis correction object based on the row scans data
+    ''' let cor = MSI::correction(totalTime = 120, pixels = 300, 
+    '''      hasMs2 = FALSE);
+    ''' </example>
     <ExportAPI("correction")>
     <RApiReturn(GetType(Correction))>
     Public Function Correction(totalTime As Double, pixels As Integer, Optional hasMs2 As Boolean = False) As Object
@@ -930,6 +939,12 @@ Module MSI
     ''' <remarks>
     ''' count pixels/density/etc for each ions m/z data
     ''' </remarks>
+    ''' <example>
+    ''' let rawdata = open.mzpack("/file.mzpack");
+    ''' let ion_features = MSI::ionStat(rawdata);
+    ''' 
+    ''' print(as.data.frame(ion_features));
+    ''' </example>
     <ExportAPI("ionStat")>
     <RApiReturn(GetType(IonStat))>
     Public Function IonStats(<RRawVectorArgument>
@@ -1018,6 +1033,9 @@ Module MSI
     ''' </param>
     ''' <param name="yscale">
     ''' apply for mapping smooth MS1 to ms2 scans
+    ''' </param>
+    ''' <param name="correction">
+    ''' the x-axis encoder, use the ``correction`` function for construct this object.
     ''' </param>
     ''' <returns></returns>
     <ExportAPI("scans2D")>
@@ -1698,7 +1716,7 @@ Module MSI
     End Function
 
     ''' <summary>
-    ''' 
+    ''' create the volume file header data
     ''' </summary>
     ''' <param name="features">the ion features m/z vector</param>
     ''' <param name="mzdiff"></param>
@@ -1749,6 +1767,9 @@ Module MSI
     ''' <param name="dump"></param>
     ''' <param name="env"></param>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' this function works for combine a collection of the 2D layer as the 3d volume <see cref="MzMatrix"/> data
+    ''' </remarks>
     <ExportAPI("z_volume")>
     Public Function z_volume(<RRawVectorArgument> layers As Object, dump As String, Optional env As Environment = Nothing) As Object
         Dim pull As pipeline = pipeline.TryCreatePipeline(Of SingleIonLayer)(layers, env)
