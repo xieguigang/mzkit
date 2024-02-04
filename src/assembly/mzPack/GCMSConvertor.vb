@@ -68,6 +68,25 @@ Imports std = System.Math
 ''' </summary>
 Public Class GCMSnetCDF
 
+    Public Property error_log As String
+    Public Property a_d_sampling_rate As Double()
+    Public Property a_d_coaddition_factor As Short()
+    Public Property scan_acquisition_time As Double()
+    Public Property scan_duration As Double()
+    Public Property inter_scan_time As Double()
+    Public Property resolution As Double()
+    Public Property actual_scan_number As Integer()
+    Public Property total_intensity As Double()
+    Public Property mass_range_min As Double()
+    Public Property mass_range_max As Double()
+    Public Property time_range_min As Double()
+    Public Property time_range_max As Double()
+    Public Property scan_index As Integer()
+    Public Property point_count As Integer()
+    Public Property flag_count As Integer()
+    Public Property mass_values As Short()
+    Public Property intensity_values As Single()
+
 End Class
 
 Public Module GCMSConvertor
