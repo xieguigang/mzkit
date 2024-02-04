@@ -88,6 +88,30 @@ Public Class GCMSnetCDF
     Public Property intensity_values As Single()
     Public Property metadata As New Dictionary(Of String, String)
 
+    Public Iterator Function readMzmatrix() As IEnumerable(Of Double())
+        Dim offset As Integer = 0
+        Dim v As Short()
+
+        For Each width As Integer In point_count
+            v = New Short(width - 1) {}
+            Array.ConstrainedCopy(mass_values, offset, v, Scan0, width)
+            Yield v.Select(Function(si) CDbl(si)).ToArray
+            offset += width
+        Next
+    End Function
+
+    Public Iterator Function readIntoMatrix() As IEnumerable(Of Double())
+        Dim offset As Integer = 0
+        Dim v As Single()
+
+        For Each width As Integer In point_count
+            v = New Single(width - 1) {}
+            Array.ConstrainedCopy(intensity_values, offset, v, Scan0, width)
+            Yield v.Select(Function(fi) CDbl(fi)).ToArray
+            offset += width
+        Next
+    End Function
+
 End Class
 
 Public Module GCMSConvertor
@@ -123,6 +147,52 @@ Public Module GCMSConvertor
             },
             .metadata = metadata
         }
+    End Function
+
+    Public Function ConvertGCMS(agilentGC As GCMSnetCDF, Optional println As Action(Of String) = Nothing) As mzPack
+        Dim metadata As Dictionary(Of String, String) = agilentGC.metadata
+
+        If println Is Nothing Then
+            println = AddressOf VBDebugger.EchoLine
+        End If
+
+        Call println("load metadata attributes of current GC-MS file:")
+        Call println("")
+
+        For Each attr In metadata
+            println(attr.ToString)
+        Next
+
+        Call println("")
+        Call println("get TIC data...")
+
+        Dim scan_time As Double() = agilentGC.scan_acquisition_time
+        Dim totalIons As Double() = agilentGC.total_intensity
+
+        Return New mzPack With {
+            .Application = FileApplicationClass.GCMS,
+            .MS = LoadMs1Scans(agilentGC, println).ToArray,
+            .Chromatogram = New Chromatogram With {
+                .scan_time = scan_time,
+                .BPC = totalIons,
+                .TIC = totalIons
+            },
+            .metadata = metadata
+        }
+    End Function
+
+    Public Function LoadMs1Scans(agilentGC As GCMSnetCDF, println As Action(Of String)) As IEnumerable(Of ScanMS1)
+        Dim scan_time As Double() = agilentGC.scan_acquisition_time
+        Dim totalIons As Double() = agilentGC.total_intensity
+        Dim point_count As Integer() = agilentGC.point_count
+        Dim mz As Double()() = agilentGC.readMzmatrix().ToArray
+        Dim into As Double()() = agilentGC.readIntoMatrix().ToArray
+
+        Call println("read scan matrix!")
+
+        Return scan_time _
+            .CreateMSScans(totalIons, mz, into) _
+            .OrderBy(Function(t) t.rt)
     End Function
 
     Public Function LoadMs1Scans(agilentGC As netCDFReader, println As Action(Of String)) As IEnumerable(Of ScanMS1)
