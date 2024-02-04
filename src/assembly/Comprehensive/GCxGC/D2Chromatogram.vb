@@ -127,15 +127,15 @@ Public Class D2Chromatogram
                     .ToArray
                 dims = size.ComputeIfAbsent(vector.Length.ToString, Function() New Dimension With {.name = $"sizeof_{vector.Length}", .size = vector.Length})
                 attrs = {
-                    New attribute With {.name = "scan_time", .type = CDFDataTypes.DOUBLE, .value = scan.scan_time},
-                    New attribute With {.name = "intensity", .type = CDFDataTypes.DOUBLE, .value = scan.intensity}
+                    New attribute With {.name = "scan_time", .type = CDFDataTypes.NC_DOUBLE, .value = scan.scan_time},
+                    New attribute With {.name = "intensity", .type = CDFDataTypes.NC_DOUBLE, .value = scan.intensity}
                 }
                 writer.AddVector($"[{++i}]{scan}", vector, dims, attrs)
             Next
 
             attrs = {
-                New attribute With {.name = "nscans", .value = i - 1, .type = CDFDataTypes.INT},
-                New attribute With {.name = "classid", .value = FileApplicationClass.GCxGC.Description, .type = CDFDataTypes.CHAR}
+                New attribute With {.name = "nscans", .value = i - 1, .type = CDFDataTypes.NC_INT},
+                New attribute With {.name = "classid", .value = FileApplicationClass.GCxGC.Description, .type = CDFDataTypes.NC_CHAR}
             }
             writer.GlobalAttributes(attrs)
         End Using
