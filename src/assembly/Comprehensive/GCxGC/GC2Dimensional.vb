@@ -124,6 +124,11 @@ Public Module GC2Dimensional
         Dim println As Action(Of String) = AddressOf Console.WriteLine
         Dim raw1D As mzPack = GCMSConvertor.ConvertGCMS(agilentGC, println)
 
+        Return raw1D.Demodulate2D(modtime, sam_rate)
+    End Function
+
+    <Extension>
+    Public Function Demodulate2D(raw1D As mzPack, modtime As Double, Optional sam_rate As Double = Double.NaN) As mzPack
         ' agilentGC.ToString
         '
         ' 2022-01-12
@@ -141,20 +146,6 @@ Public Module GC2Dimensional
         }
 
         Return gc2D
-    End Function
-
-    <Extension>
-    Public Function Demodulate2D(rawdata As mzPack, modtime As Double) As mzPack
-        Return New mzPack With {
-            .MS = rawdata.MS.Demodulate2D(modtime),
-            .Application = FileApplicationClass.GCxGC,
-            .source = "LECO GCxGC CDF",
-            .metadata = rawdata.metadata,
-            .Chromatogram = rawdata.Chromatogram,
-            .Annotations = rawdata.Annotations,
-            .Scanners = rawdata.Scanners,
-            .Thumbnail = rawdata.Thumbnail
-        }
     End Function
 
     ''' <summary>
