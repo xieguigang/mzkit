@@ -63,13 +63,11 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
-Imports Microsoft.VisualBasic.Data.csv.DATA
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors.Scaler
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.HeatMap
-Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.MIME.Html.CSS
@@ -160,7 +158,7 @@ Public Class GCxGCTIC2DPlot : Inherits Plot
         )
 
         If intensityRange.Length > 0.0 Then
-            Call g.DrawImage(FillHeatMap(TIC2D, rect.Size, scale, theme.colorSet, mapLevels, dw, dh, colors.First), rect.Location)
+            Call g.DrawImage(FillHeatMap(TIC2D, rect.Size, scale, theme.colorSet, mapLevels, dw, dh, colors.First), rect)
         End If
 
         Dim width = canvas.Width * 0.1
