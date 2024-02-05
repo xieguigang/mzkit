@@ -134,17 +134,17 @@ Public Module CDF
                 dimension = tissueMorphology.GetDimension
             End If
 
-            attrs.Add(New attribute With {.name = "scan_x", .type = CDFDataTypes.INT, .value = dimension.Width})
-            attrs.Add(New attribute With {.name = "scan_y", .type = CDFDataTypes.INT, .value = dimension.Height})
-            attrs.Add(New attribute With {.name = "regions", .type = CDFDataTypes.INT, .value = tissueMorphology.Length})
-            attrs.Add(New attribute With {.name = "umap_sample", .type = CDFDataTypes.INT, .value = umap.Length})
+            attrs.Add(New attribute With {.name = "scan_x", .type = CDFDataTypes.NC_INT, .value = dimension.Width})
+            attrs.Add(New attribute With {.name = "scan_y", .type = CDFDataTypes.NC_INT, .value = dimension.Height})
+            attrs.Add(New attribute With {.name = "regions", .type = CDFDataTypes.NC_INT, .value = tissueMorphology.Length})
+            attrs.Add(New attribute With {.name = "umap_sample", .type = CDFDataTypes.NC_INT, .value = umap.Length})
             cdf.GlobalAttributes(attrs.PopAll)
 
             ' write region data
             For Each region As TissueRegion In tissueMorphology
-                attrs.Add(New attribute With {.name = "label", .type = CDFDataTypes.CHAR, .value = region.label})
-                attrs.Add(New attribute With {.name = "color", .type = CDFDataTypes.CHAR, .value = region.color.ToHtmlColor})
-                attrs.Add(New attribute With {.name = "size", .type = CDFDataTypes.INT, .value = region.nsize})
+                attrs.Add(New attribute With {.name = "label", .type = CDFDataTypes.NC_CHAR, .value = region.label})
+                attrs.Add(New attribute With {.name = "color", .type = CDFDataTypes.NC_CHAR, .value = region.color.ToHtmlColor})
+                attrs.Add(New attribute With {.name = "size", .type = CDFDataTypes.NC_INT, .value = region.nsize})
 
                 For Each p As Point In region.points
                     Call pixels.Add(p.X)
@@ -272,7 +272,7 @@ Public Module CDF
         Dim clusters As String()
         Dim labels As String() = {}
 
-        If clusterVar.type = CDFDataTypes.INT Then
+        If clusterVar.type = CDFDataTypes.NC_INT Then
             ' version 1 and v2 format
             clusters = cdf.ReadClusterLabelv2
         Else

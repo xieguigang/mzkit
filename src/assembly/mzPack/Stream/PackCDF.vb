@@ -122,7 +122,7 @@ Public Module PackCDF
             }
             Dim formatAttr As New attribute With {
                 .name = "format",
-                .type = CDFDataTypes.CHAR,
+                .type = CDFDataTypes.NC_CHAR,
                 .value = "JSON"
             }
 

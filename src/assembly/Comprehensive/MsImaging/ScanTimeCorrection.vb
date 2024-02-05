@@ -64,7 +64,7 @@ Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Namespace MsImaging
 
     ''' <summary>
-    ''' 在这里必须要假设每一个像素点的扫描时间是等长的
+    ''' implements the x-axis encoder based on the scan time offsets
     ''' </summary>
     Public Class ScanTimeCorrection : Inherits Correction
 

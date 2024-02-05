@@ -66,9 +66,10 @@
 <li>reader: the rawdata <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/SingleCells/MatrixReader.html">MatrixReader</a></li>
 </ol> the list data also has some specificied data fields: <code>list(tolerance, featureSize, ionSet, spots, reader)</code>.<h4>clr value class</h4><ul><li>list</li></ul>
 
-        <h3 style="display: none;">Examples</h3>
+        <h3 style="display: block;">Examples</h3>
 
-        
+        <pre><code id="example_r"> let reader = open.matrix("/file.dat");
+ let matrix = read.mz_matrix(reader$reader);</code></pre>
 
         <hr />
         <div style="text-align: center;">[Package <em>SingleCells</em> version 1.0.0.0 <a

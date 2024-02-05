@@ -52,9 +52,22 @@
 
         this function returns data object of type <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/SpatialMatrixReader.html">SpatialMatrixReader</a>.<h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/SpatialMatrixReader.html">SpatialMatrixReader</a></li></ul>
 
-        <h3 style="display: none;">Examples</h3>
+        <h3 style="display: block;">Examples</h3>
 
-        
+        <pre><code id="example_r"> let matrix = read.mz_matrix("/file.dat");
+ # cast object to dataframe liked object
+ let df = df.mz_matrix(matrix);
+ 
+ # get m/z features inside this expression matrix
+ print(colnames(df));
+ # get single cell labels inside this expression matrix
+ print(colnames(df));
+ 
+ # get expression of specific ion by m/z value
+ print(df[, 336.8995]);
+ 
+ # get expression of a specific singlecell by its label
+ print(df["cell_label1", ]);</code></pre>
 
         <hr />
         <div style="text-align: center;">[Package <em>SingleCells</em> version 1.0.0.0 <a

@@ -111,9 +111,9 @@ Namespace HEMap
             Dim spot_color As New attribute("spot_color", spotColor)
             Dim label As New attribute("label", _label)
             Dim mirror As New attribute("mirror", _mirror.ToString.ToLower)
-            Dim rotation As New attribute("rotation", _rotation.ToString, CDFDataTypes.FLOAT)
+            Dim rotation As New attribute("rotation", _rotation.ToString, CDFDataTypes.NC_FLOAT)
             Dim offset As New attribute("offset", $"{_offset.X},{_offset.Y}")
-            Dim spot_number As New attribute("spot_number", mappings.Length.ToString, CDFDataTypes.INT)
+            Dim spot_number As New attribute("spot_number", mappings.Length.ToString, CDFDataTypes.NC_INT)
             Dim img_size As New attribute("img_size", $"{HEstain.Width},{HEstain.Height}")
             Dim msi_dims As New attribute("msi_dims", $"{MSIdims.Width},{MSIdims.Height}")
 

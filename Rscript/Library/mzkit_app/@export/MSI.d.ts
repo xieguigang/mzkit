@@ -389,6 +389,8 @@ declare namespace MSI {
         * @param env -
         * 
         * + default value Is ``null``.
+        * @return the function return value should be a collection of the spot data if the y
+        *  scan line has been specific, or a collection of the mzpack object.
       */
       function scans(raw: string, y?: object, correction?: object, env?: object): object;
    }
@@ -450,7 +452,8 @@ declare namespace MSI {
     * 
     * 
      * @param rowScans data result comes from the function ``row.scans``.
-     * @param correction 
+     * @param correction the x-axis encoder, use the ``correction`` function for construct this object.
+     * 
      * + default value Is ``null``.
      * @param intocutoff 
      * + default value Is ``0.05``.
@@ -525,6 +528,7 @@ declare namespace MSI {
    */
    function z_assembler(header: object, file: any, env?: object): object;
    /**
+    * create the volume file header data
     * 
     * 
      * @param features the ion features m/z vector
@@ -536,6 +540,7 @@ declare namespace MSI {
    /**
     * create a simple 3d volume model for mzkit workbench
     * 
+    * > this function works for combine a collection of the 2D layer as the 3d volume @``T:BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute.MzMatrix`` data
     * 
      * @param layers should be a collection of the @``T:BioNovoGene.Analytical.MassSpectrometry.MsImaging.SingleIonLayer``. 
      *  the layer elements in this collection should be already been re-ordered by 

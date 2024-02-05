@@ -57,6 +57,7 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells
@@ -105,6 +106,7 @@ Module SingleCells
         Call Internal.Object.Converts.makeDataframe.addHandler(GetType(SpatialMatrixReader), AddressOf mzMatrixDf)
     End Sub
 
+    <RGenericOverloads("as.data.frame")>
     Private Function cellStatsTable(ions As SingleCellIonStat(), args As list, env As Environment) As Rdataframe
         Dim table As New Rdataframe With {
            .columns = New Dictionary(Of String, Array),
@@ -135,6 +137,9 @@ Module SingleCells
     ''' <remarks>
     ''' implements the ``as.data.frame`` function
     ''' </remarks>
+    ''' <example>
+    ''' as.data.frame(x);
+    ''' </example>
     <ExportAPI("mz_matrix")>
     <RApiReturn(GetType(Rdataframe))>
     Public Function mzMatrixDf(x As Object,
@@ -190,6 +195,9 @@ Module SingleCells
     ''' 1. cell labels, or spatial location in rows
     ''' 2. and ion features in columns.
     ''' </returns>
+    ''' <example>
+    ''' as.expression(x);
+    ''' </example>
     <ExportAPI("as.expression")>
     <RApiReturn(GetType(HTSMatrix))>
     Public Function asHTSExpression(x As MzMatrix, Optional single_cell As Boolean = False) As Object
@@ -236,6 +244,15 @@ Module SingleCells
     ''' <param name="scaler">A R# <see cref="RFunction"/> for apply the scale transform.</param>
     ''' <param name="env"></param>
     ''' <returns></returns>
+    ''' <example>
+    ''' # use the internal function
+    ''' x &lt;- apply.scale(x, scaler = max);
+    ''' # use the lambda function
+    ''' # the symbol x of the parameter in f function is a different thing 
+    ''' # with the variable x
+    ''' let f(x) = x ^ 2;
+    ''' x &lt;- apply.scale(x, scaler = f);
+    ''' </example>
     <ExportAPI("apply.scale")>
     <RApiReturn(GetType(MzMatrix))>
     Public Function rowApplyScale(x As Object, scaler As RFunction, Optional env As Environment = Nothing) As Object
@@ -308,6 +325,11 @@ Module SingleCells
     ''' <param name="mzdiff"></param>
     ''' <param name="env"></param>
     ''' <returns></returns>
+    ''' <example>
+    ''' let rawdata = open.mzpack("/file.mzpack");
+    ''' let matrix = cell_matrix(rawdata, mz_matrix = TRUE);
+    ''' 
+    ''' </example>
     <ExportAPI("cell_matrix")>
     <RApiReturn(GetType(HTSMatrix), GetType(MzMatrix))>
     Public Function cellMatrix(<RRawVectorArgument> raw As Object,
@@ -381,19 +403,30 @@ Module SingleCells
             Return Message.InCompatibleType(GetType(mzPack), raw.GetType, env)
         End If
 
-        Return New HTSMatrix With {
-            .expression = singleCells.ToArray,
-            .sampleID = mzSet _
-                .Select(Function(mzi) mzi.ToString("F4")) _
-                .ToArray,
-            .tag = source
-        }
+        If mz_matrix Then
+            Return New MzMatrix With {
+                .tolerance = $"da:{mzdiff}",
+                .matrixType = FileApplicationClass.SingleCellsMetabolomics,
+                .mz = mzSet,
+                .matrix = singleCells _
+                    .Select(Function(v) PixelData.FromSingleCellExpression(v)) _
+                    .ToArray
+            }
+        Else
+            Return New HTSMatrix With {
+                .expression = singleCells.ToArray,
+                .sampleID = mzSet _
+                    .Select(Function(mzi) mzi.ToString("F4")) _
+                    .ToArray,
+                .tag = source
+            }
+        End If
     End Function
 
     ''' <summary>
     ''' do stats of the single cell metabolomics ions
     ''' </summary>
-    ''' <param name="raw"></param>
+    ''' <param name="raw">the <see cref="mzPack"/> rawdata object</param>
     ''' <param name="da"></param>
     ''' <param name="parallel"></param>
     ''' <returns></returns>
@@ -409,10 +442,16 @@ Module SingleCells
     ''' <summary>
     ''' write the single cell ion feature data matrix
     ''' </summary>
-    ''' <param name="x"></param>
+    ''' <param name="x">the expression <see cref="MzMatrix"/> object.</param>
     ''' <param name="file"></param>
     ''' <param name="env"></param>
     ''' <returns></returns>
+    ''' <example>
+    ''' let rawdata = open.mzpack("/file.mzpack");
+    ''' let matrix = cell_matrix(rawdata, mz_matrix = TRUE);
+    ''' 
+    ''' write.matrix(matrix, file = "/save.dat");
+    ''' </example>
     <ExportAPI("write.matrix")>
     <RApiReturn(TypeCodes.boolean)>
     Public Function writeMatrix(x As MzMatrix, file As Object, Optional env As Environment = Nothing) As Object
@@ -452,6 +491,10 @@ Module SingleCells
     ''' data into memory at once, use the ``read.mz_matrix`` 
     ''' function.
     ''' </remarks>
+    ''' <example>
+    ''' let reader = open.matrix("/file.dat");
+    ''' let matrix = read.mz_matrix(reader$reader);
+    ''' </example>
     <ExportAPI("open.matrix")>
     <RApiReturn(
         NameOf(MatrixReader.tolerance),
@@ -494,6 +537,9 @@ Module SingleCells
     ''' <remarks>
     ''' for create a lazy data reader of the matrix, use the ``open.matrix`` function.
     ''' </remarks>
+    ''' <example>
+    ''' read.mz_matrix("/file.dat");
+    ''' </example>
     <ExportAPI("read.mz_matrix")>
     <RApiReturn(GetType(MzMatrix))>
     Public Function readMzmatrix(<RRawVectorArgument>
@@ -523,6 +569,22 @@ Module SingleCells
     ''' </summary>
     ''' <param name="x">the matrix object that going to do the type casting</param>
     ''' <returns></returns>
+    ''' <example>
+    ''' let matrix = read.mz_matrix("/file.dat");
+    ''' # cast object to dataframe liked object
+    ''' let df = df.mz_matrix(matrix);
+    ''' 
+    ''' # get m/z features inside this expression matrix
+    ''' print(colnames(df));
+    ''' # get single cell labels inside this expression matrix
+    ''' print(colnames(df));
+    ''' 
+    ''' # get expression of specific ion by m/z value
+    ''' print(df[, 336.8995]);
+    ''' 
+    ''' # get expression of a specific singlecell by its label
+    ''' print(df["cell_label1", ]);
+    ''' </example>
     <ExportAPI("df.mz_matrix")>
     <RApiReturn(GetType(SpatialMatrixReader))>
     Public Function dfMzMatrix(x As MzMatrix) As Object
@@ -653,6 +715,23 @@ Module SingleCells
         Return pool.CreateEmbedding
     End Function
 
+    ''' <summary>
+    ''' get the labels based on the spatial information of each spot
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <returns></returns>
+    ''' <example>
+    ''' let matrix = read.mz_matrix("/file.dat");
+    ''' let xyz = spatial_labels(matrix);
+    ''' let spatial = strsplit(xyz, ",");
+    ''' 
+    ''' # x
+    ''' print(spatial@{1});
+    ''' # y
+    ''' print(spatial@{2});
+    ''' # z
+    ''' print(spatial@{3});
+    ''' </example>
     <ExportAPI("spatial_labels")>
     Public Function spatialLabels(x As MzMatrix) As String()
         Return x.matrix.Select(Function(s) $"{s.X},{s.Y},{s.Z}").ToArray

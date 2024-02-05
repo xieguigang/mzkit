@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>spatial_labels</title>
+    <title>get the labels based on the spatial information of each spot</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
@@ -18,11 +18,11 @@
             </tr>
         </table>
 
-        <h2>spatial_labels</h2>
+        <h2>get the labels based on the spatial information of each spot</h2>
 
         <h3>Description</h3>
 
-        spatial_labels
+        
 
         <h3>Usage</h3>
 
@@ -34,6 +34,9 @@
 
         <table>
             
+<dt>x</dt>
+<dd><p><p>-</p></p></dd>
+
         </table>
 
 
@@ -49,9 +52,18 @@
 
         this function returns data object of type string.<h4>clr value class</h4><ul><li>string</li></ul>
 
-        <h3 style="display: none;">Examples</h3>
+        <h3 style="display: block;">Examples</h3>
 
-        
+        <pre><code id="example_r"> let matrix = read.mz_matrix("/file.dat");
+ let xyz = spatial_labels(matrix);
+ let spatial = strsplit(xyz, ",");
+ 
+ # x
+ print(spatial@{1});
+ # y
+ print(spatial@{2});
+ # z
+ print(spatial@{3});</code></pre>
 
         <hr />
         <div style="text-align: center;">[Package <em>SingleCells</em> version 1.0.0.0 <a

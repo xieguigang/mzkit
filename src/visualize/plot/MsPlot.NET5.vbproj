@@ -109,6 +109,7 @@
     <ProjectReference Include="..\..\mzmath\ms2_math-core\mzmath-netcore5.vbproj" />
     <ProjectReference Include="..\..\mzmath\mz_deco\deconv.NET5.vbproj" />
     <ProjectReference Include="..\..\mzmath\TargetedMetabolomics\Targetted.NET5.vbproj" />
+    <ProjectReference Include="..\MsImaging\MsImaging.NET5.vbproj" />
   </ItemGroup>
 
   <ItemGroup>
