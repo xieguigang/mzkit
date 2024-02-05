@@ -44,20 +44,35 @@ Public Class XcmsRData
         Dim matrix As New List(Of ms2())
         Dim raw As list = ConvertToR.ToRObject(root.LinkVisitor("ms2"))
         Dim names As New List(Of String)
+        Dim msms As ms2()
 
         raw = raw!ms2
 
         For Each name As String In raw.getNames
-            Dim vec As Double() = CLRVector.asNumeric(raw(name))
-            Dim msms As ms2() = New ms2(CInt(vec.Length / 2) - 1) {}
-            Dim tuple = vec.Split(msms.Length)
+            Dim rawObject As Object = raw(name)
 
-            For i As Integer = 0 To msms.Length - 1
-                msms(i) = New ms2 With {
-                    .mz = tuple(0)(i),
-                    .intensity = tuple(1)(i)
-                }
-            Next
+            If TypeOf rawObject Is dataframe Then
+                Dim df As dataframe = rawObject
+                Dim mz2 As Double() = CLRVector.asNumeric(df!mz)
+                Dim into2 As Double() = CLRVector.asNumeric(df!intensity)
+
+                msms = New ms2(mz2.Length - 1) {}
+
+                For i As Integer = 0 To mz2.Length - 1
+                    msms(i) = New ms2(mz2(i), into2(i))
+                Next
+            Else
+                Dim vec As Double() = CLRVector.asNumeric(raw(name))
+                msms = New ms2(CInt(vec.Length / 2) - 1) {}
+                Dim tuple = vec.Split(msms.Length)
+
+                For i As Integer = 0 To msms.Length - 1
+                    msms(i) = New ms2 With {
+                        .mz = tuple(0)(i),
+                        .intensity = tuple(1)(i)
+                    }
+                Next
+            End If
 
             Call names.Add(name)
             Call matrix.Add(msms)
