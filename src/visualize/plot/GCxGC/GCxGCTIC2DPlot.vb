@@ -63,6 +63,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
+Imports Microsoft.VisualBasic.Data.csv.DATA
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
@@ -159,7 +160,7 @@ Public Class GCxGCTIC2DPlot : Inherits Plot
         )
 
         If intensityRange.Length > 0.0 Then
-            Call g.DrawImage(FillHeatMap(TIC2D, rect.Size, scale, theme.colorSet, mapLevels, theme.background), rect.Location)
+            Call g.DrawImage(FillHeatMap(TIC2D, rect.Size, scale, theme.colorSet, mapLevels, dw, dh, colors.First), rect.Location)
         End If
 
         Dim width = canvas.Width * 0.1
@@ -190,9 +191,10 @@ Public Class GCxGCTIC2DPlot : Inherits Plot
                                        scale As DataScaler,
                                        Colors As String,
                                        mapLevels As Integer,
-                                       background As String) As Image
+                                       dw As Double, dh As Double,
+                                       background As Color) As Image
 
-        Dim render As New PixelRender(Colors, mapLevels, defaultColor:=background.TranslateColor)
+        Dim render As New PixelRender(Colors, mapLevels, defaultColor:=background)
         Dim pixels As MsImaging.PixelData() = TIC2D _
             .Select(Iterator Function(line) As IEnumerable(Of MsImaging.PixelData)
                         Dim xi As Integer = scale.TranslateX(line.scan_time)
@@ -204,7 +206,7 @@ Public Class GCxGCTIC2DPlot : Inherits Plot
             .IteratesALL _
             .ToArray
 
-        Return render.RenderRasterImage(pixels, size, fillRect:=True)
+        Return render.RenderRasterImage(pixels, size, fillRect:=True, cw:=dw, ch:=dh)
     End Function
 
     Public Shared Sub FillHeatMap(g As IGraphics,
