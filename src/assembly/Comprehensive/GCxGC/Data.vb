@@ -40,7 +40,8 @@ Public Module Data
                                 .Time = t.rt
                             }
                         End Function) _
-                .ToArray
+                .ToArray,
+            .scan_id = d.scan_id
         }
     End Function
 End Module

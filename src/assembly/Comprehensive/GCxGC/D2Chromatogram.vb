@@ -59,6 +59,7 @@ Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.DataStorage.netCDF
 Imports Microsoft.VisualBasic.DataStorage.netCDF.Components
@@ -73,10 +74,11 @@ Imports Microsoft.VisualBasic.Linq
 ''' <remarks>
 ''' is a collection of the <see cref="ChromatogramTick"/> data.
 ''' </remarks>
-Public Class D2Chromatogram
+Public Class D2Chromatogram : Implements IReadOnlyId, INamedValue
 
     Public Property scan_time As Double
     Public Property intensity As Double
+    Public Property scan_id As String Implements INamedValue.Key, IReadOnlyId.Identity
 
     ''' <summary>
     ''' chromatogram data 2d
@@ -103,6 +105,18 @@ Public Class D2Chromatogram
             Return chromatogram.Length
         End Get
     End Property
+
+    Sub New()
+    End Sub
+
+    Sub New(t1 As Double)
+        scan_time = t1
+    End Sub
+
+    Sub New(t1 As Double, id As String)
+        scan_id = id
+        scan_time = t1
+    End Sub
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overrides Function ToString() As String
