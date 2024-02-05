@@ -204,7 +204,7 @@ Public Class GCxGCTIC2DPlot : Inherits Plot
             .IteratesALL _
             .ToArray
 
-        Return render.RenderRasterImage(pixels, size, fillRect:=True, cw:=dw, ch:=dh)
+        Return render.RenderRasterImage(pixels, size, fillRect:=True, cw:=dw, ch:=dh, gauss:=False)
     End Function
 
     Public Shared Sub FillHeatMap(g As IGraphics,
