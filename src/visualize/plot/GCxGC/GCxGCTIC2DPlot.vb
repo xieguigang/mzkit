@@ -1,58 +1,58 @@
 ﻿#Region "Microsoft.VisualBasic::9a73fc179e98243c119643fde4fe96f1, mzkit\src\visualize\plot\GCxGC\GCxGCTIC2DPlot.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 164
-    '    Code Lines: 142
-    ' Comment Lines: 5
-    '   Blank Lines: 17
-    '     File Size: 7.12 KB
+' Summaries:
 
 
-    ' Class GCxGCTIC2DPlot
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: cutSignal
-    ' 
-    '     Sub: FillHeatMap, PlotInternal
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 164
+'    Code Lines: 142
+' Comment Lines: 5
+'   Blank Lines: 17
+'     File Size: 7.12 KB
+
+
+' Class GCxGCTIC2DPlot
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: cutSignal
+' 
+'     Sub: FillHeatMap, PlotInternal
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -83,11 +83,25 @@ Public Class GCxGCTIC2DPlot : Inherits Plot
     Public Sub New(TIC2D As D2Chromatogram(), ql As Double, qh As Double, mapLevels As Integer, theme As Theme)
         Call MyBase.New(theme)
 
-        Me.TIC2D = cutSignal(TIC2D, ql, qh, mapLevels).ToArray
+        Me.TIC2D = CutSignal(TIC2D, ql, qh, mapLevels).ToArray
         Me.mapLevels = mapLevels
     End Sub
 
-    Private Shared Iterator Function cutSignal(gcxgc As D2Chromatogram(), ql As Double, qh As Double, levels As Integer) As IEnumerable(Of D2Chromatogram)
+    Public Shared Iterator Function CutSignal(gcxgc As D2Chromatogram(),
+                                              Optional ql As Double = -1,
+                                              Optional qh As Double = 1,
+                                              Optional levels As Integer = 100) As IEnumerable(Of D2Chromatogram)
+
+        If ql <= 0 AndAlso qh >= 1 Then
+            Call "no intensity scale range was changed!".Warning
+
+            For Each item As D2Chromatogram In gcxgc
+                Yield item
+            Next
+
+            Return
+        End If
+
         Dim rawData As IEnumerable(Of Double) = gcxgc _
             .Select(Function(t) t.chromatogram) _
             .IteratesALL _
