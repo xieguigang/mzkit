@@ -190,7 +190,7 @@ Public Class GCxGCTIC2DPlot : Inherits Plot
                                        Colors As String,
                                        mapLevels As Integer,
                                        dw As Double, dh As Double,
-                                       background As Color) As Image
+                                       Optional background As Color? = Nothing) As Image
 
         Dim render As New PixelRender(Colors, mapLevels, defaultColor:=background)
         Dim pixels As MsImaging.PixelData() = TIC2D _
