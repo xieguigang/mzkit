@@ -206,4 +206,39 @@ Public Class GCxGCTIC2DPlot : Inherits Plot
 
         Return render.RenderRasterImage(pixels, size, fillRect:=True)
     End Function
+
+    Public Shared Sub FillHeatMap(g As IGraphics,
+                                  TIC2D As IEnumerable(Of D2Chromatogram),
+                                  dw As Double,
+                                  dh As Double,
+                                  scale As DataScaler,
+                                  intensityRange As DoubleRange,
+                                  index As DoubleRange,
+                                  colors As SolidBrush())
+
+        For Each col As D2Chromatogram In TIC2D
+            Dim x As Double = scale.TranslateX(col.scan_time)
+            Dim i As Integer
+            Dim rect As RectangleF
+
+            For Each cell As ChromatogramTick In col.chromatogram
+                rect = New RectangleF() With {
+                    .X = x,
+                    .Y = scale.TranslateY(cell.Time),
+                    .Width = dw,
+                    .Height = dh
+                }
+                i = intensityRange.ScaleMapping(If(cell.Intensity > intensityRange.Max, intensityRange.Max, cell.Intensity), index)
+                ' i = index.Max - i
+
+                If i >= colors.Length Then
+                    Call g.FillRectangle(colors.Last, rect)
+                ElseIf i <= 0 Then
+                    Call g.FillRectangle(colors(Scan0), rect)
+                Else
+                    Call g.FillRectangle(colors(i), rect)
+                End If
+            Next
+        Next
+    End Sub
 End Class
