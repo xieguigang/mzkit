@@ -24,6 +24,11 @@ Public Module Data
     End Function
 
     <Extension>
+    Public Function ExtractTIC(rawdata As mzPack) As IEnumerable(Of D2Chromatogram)
+        Return rawdata.MS.Select(Function(d1) d1.ExtractTIC)
+    End Function
+
+    <Extension>
     Public Function ExtractTIC(d As ScanMS1) As D2Chromatogram
         Return New D2Chromatogram With {
             .intensity = d.TIC,
