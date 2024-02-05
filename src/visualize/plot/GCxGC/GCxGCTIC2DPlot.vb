@@ -67,6 +67,8 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors.Scaler
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.HeatMap
+Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.MIME.Html.CSS
@@ -130,13 +132,9 @@ Public Class GCxGCTIC2DPlot : Inherits Plot
             .X = scaleX,
             .Y = scaleY
         }
-        Dim colors As SolidBrush() = Designer _
-            .GetColors(theme.colorSet, mapLevels) _
-            .Select(Function(c) New SolidBrush(c)) _
-            .ToArray
+        Dim colors As Color() = Designer.GetColors(theme.colorSet, mapLevels)
         Dim dw As Double = rect.Width / TIC2D.Length
         Dim dh As Double = rect.Height / TIC2D(Scan0).chromatogram.Length
-        Dim index As New DoubleRange(0, colors.Length - 1)
         Dim allIntensity As Vector = TIC2D _
             .Select(Function(t) t.chromatogram) _
             .IteratesALL _
@@ -161,7 +159,7 @@ Public Class GCxGCTIC2DPlot : Inherits Plot
         )
 
         If intensityRange.Length > 0.0 Then
-            Call FillHeatMap(g, TIC2D, dw, dh, scale, intensityRange, index, colors)
+            Call g.DrawImage(FillHeatMap(TIC2D, rect.Size, scale, theme.colorSet, mapLevels, theme.background), rect.Location)
         End If
 
         Dim width = canvas.Width * 0.1
@@ -175,7 +173,9 @@ Public Class GCxGCTIC2DPlot : Inherits Plot
         Call DrawMainTitle(g, canvas.PlotRegion)
         Call g.ColorMapLegend(
             layout:=legendLayout,
-            designer:=colors,
+            designer:=colors _
+                .Select(Function(c) New SolidBrush(c)) _
+                .ToArray,
             ticks:=allIntensity,
             titleFont:=CSSFont.TryParse(theme.legendTitleCSS).GDIObject(g.Dpi),
             title:="Intensity Scale",
@@ -185,38 +185,25 @@ Public Class GCxGCTIC2DPlot : Inherits Plot
         )
     End Sub
 
-    Public Shared Sub FillHeatMap(g As IGraphics,
-                                  TIC2D As IEnumerable(Of D2Chromatogram),
-                                  dw As Double,
-                                  dh As Double,
-                                  scale As DataScaler,
-                                  intensityRange As DoubleRange,
-                                  index As DoubleRange,
-                                  colors As SolidBrush())
+    Public Shared Function FillHeatMap(TIC2D As IEnumerable(Of D2Chromatogram),
+                                       size As Size,
+                                       scale As DataScaler,
+                                       Colors As String,
+                                       mapLevels As Integer,
+                                       background As String) As Image
 
-        For Each col As D2Chromatogram In TIC2D
-            Dim x As Double = scale.TranslateX(col.scan_time)
-            Dim i As Integer
-            Dim rect As RectangleF
+        Dim render As New PixelRender(Colors, mapLevels, defaultColor:=background.TranslateColor)
+        Dim pixels As MsImaging.PixelData() = TIC2D _
+            .Select(Iterator Function(line) As IEnumerable(Of MsImaging.PixelData)
+                        Dim xi As Integer = scale.TranslateX(line.scan_time)
 
-            For Each cell As ChromatogramTick In col.chromatogram
-                rect = New RectangleF() With {
-                    .X = x,
-                    .Y = scale.TranslateY(cell.Time),
-                    .Width = dw,
-                    .Height = dh
-                }
-                i = intensityRange.ScaleMapping(If(cell.Intensity > intensityRange.Max, intensityRange.Max, cell.Intensity), index)
-                ' i = index.Max - i
+                        For Each cel As ChromatogramTick In line.chromatogram
+                            Yield New MsImaging.PixelData(xi, scale.TranslateY(cel.Time), cel.Intensity)
+                        Next
+                    End Function) _
+            .IteratesALL _
+            .ToArray
 
-                If i >= colors.Length Then
-                    Call g.FillRectangle(colors.Last, rect)
-                ElseIf i <= 0 Then
-                    Call g.FillRectangle(colors(Scan0), rect)
-                Else
-                    Call g.FillRectangle(colors(i), rect)
-                End If
-            Next
-        Next
-    End Sub
+        Return render.RenderRasterImage(pixels, size, fillRect:=True)
+    End Function
 End Class

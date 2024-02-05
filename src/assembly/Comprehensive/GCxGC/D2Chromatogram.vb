@@ -70,6 +70,9 @@ Imports Microsoft.VisualBasic.Linq
 ''' <summary>
 ''' A data model for GCxGC 2d chromatogram
 ''' </summary>
+''' <remarks>
+''' is a collection of the <see cref="ChromatogramTick"/> data.
+''' </remarks>
 Public Class D2Chromatogram
 
     Public Property scan_time As Double
@@ -170,6 +173,7 @@ Public Class D2Chromatogram
         End Using
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function times() As Double()
         Return chromatogram.Select(Function(t) t.Time).ToArray
     End Function
