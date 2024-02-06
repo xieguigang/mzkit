@@ -131,6 +131,18 @@ Public Class xcms2 : Inherits DynamicPropertyBase(Of Double)
         End Set
     End Property
 
+    Sub New()
+    End Sub
+
+    Sub New(mz As Double, rt As Double)
+        Me.mz = mz
+        Me.mzmin = mz
+        Me.mzmax = mz
+        Me.rt = rt
+        Me.rtmin = rt
+        Me.rtmax = rt
+    End Sub
+
     'Public Shared Function Load(file As String) As xcms2()
     '    Return DataSet _
     '        .LoadDataSet(Of xcms2)(file, uidMap:=NameOf(ID)) _
