@@ -30,26 +30,26 @@
             <code id="clr_ts">
 # namespace BioNovoGene.Analytical.MassSpectrometry.Math
 export class PeakFeature {
-   xcms_id: string;
-   mz: double;
-   # 出峰达到峰高最大值<a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/PeakFeature.html">PeakFeature</a>.<a href="#">maxInto</a>的时间点
-   rt: double;
-   rtmin: double;
-   rtmax: double;
-   # 这个区域的最大峰高度
-   maxInto: double;
+   # 计算得到的峰面积
+   area: double;
    # 所计算出来的基线的响应强度
    baseline: double;
    # 当前的这个ROI的峰面积积分值
    integration: double;
-   # 计算得到的峰面积
-   area: double;
+   # 这个区域的最大峰高度
+   maxInto: double;
+   mz: double;
    # 噪声的面积积分百分比
    noise: double;
    nticks: integer;
    rawfile: string;
+   # 出峰达到峰高最大值<a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/PeakFeature.html">PeakFeature</a>.<a href="#">maxInto</a>的时间点
+   rt: double;
+   rtmax: double;
+   rtmin: double;
    # 信噪比
    snRatio: double;
+   xcms_id: string;
 }
 </code>
         </pre>

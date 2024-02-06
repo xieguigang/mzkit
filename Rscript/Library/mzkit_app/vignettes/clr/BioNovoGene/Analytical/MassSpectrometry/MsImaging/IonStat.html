@@ -30,26 +30,13 @@
             <code id="clr_ts">
 # namespace BioNovoGene.Analytical.MassSpectrometry.MsImaging
 export class IonStat {
-   # the ion m/z value of current ms-imaging layer feature
-   mz: double;
-   # the min range value of current ion m/z
-   mzmin: double;
-   # the max range value of current ion m/z
-   mzmax: double;
-   # the description text of the mz range: mzmax - mzmin
-   mzwidth: string;
-   # the average spatial density
-   pixels: integer;
-   density: double;
-   maxIntensity: double;
    averageIntensity: double;
    # the x axis position of the pixel which has the max intensity value of current ion layer
    basePixelX: integer;
    # the y axis position of the pixel which has the max intensity value of current ion layer
    basePixelY: integer;
-   Q1Intensity: double;
-   Q2Intensity: double;
-   Q3Intensity: double;
+   density: double;
+   maxIntensity: double;
    # Moran-I index value of current ion layer geometry data
    # 
    # In statistics, Moran's I is a measure of spatial autocorrelation developed by Patrick Alfred Pierce Moran.
@@ -57,8 +44,21 @@ export class IonStat {
    #  Spatial autocorrelation is more complex than one-dimensional autocorrelation because spatial correlation 
    #  is multi-dimensional (i.e. 2 or 3 dimensions of space) and multi-directional.
    moran: double;
+   # the ion m/z value of current ms-imaging layer feature
+   mz: double;
+   # the max range value of current ion m/z
+   mzmax: double;
+   # the min range value of current ion m/z
+   mzmin: double;
+   # the description text of the mz range: mzmax - mzmin
+   mzwidth: string;
+   # the average spatial density
+   pixels: integer;
    # the Moran-I test p-value
    pvalue: double;
+   Q1Intensity: double;
+   Q2Intensity: double;
+   Q3Intensity: double;
 }
 </code>
         </pre>

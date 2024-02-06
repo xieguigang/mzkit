@@ -30,12 +30,12 @@
             <code id="clr_ts">
 # namespace BioNovoGene.BioDeep.Chemistry.Model
 export class Atom extends <a href="/vignettes/clr/System/ValueType.html">ValueType</a> {
-   Index: integer;
-   KEGGAtom: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/Model/KegAtomType.html">KegAtomType</a>;
    Atom: string;
    # 由于这个坐标对象只能存储integer类型，
    #  所以KCF之中的坐标值需要乘以100000之后再保存在这个属性值中
    Atom2D_coordinates: <a href="/vignettes/clr/Microsoft/VisualBasic/Text/Xml/Models/Coordinate.html">Coordinate</a>;
+   Index: integer;
+   KEGGAtom: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/Model/KegAtomType.html">KegAtomType</a>;
 }
 </code>
         </pre>
@@ -44,8 +44,8 @@ export class Atom extends <a href="/vignettes/clr/System/ValueType.html">ValueTy
 
         <ol>
 <li>this class extends from <a href="/vignettes/clr/System/ValueType.html">ValueType</a> class: <a href="/vignettes/clr/System/ValueType.html">ValueType</a></li>
-<li>use by <i>property</i> member <code>KEGGAtom</code>: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/Model/KegAtomType.html">KegAtomType</a></li>
 <li>use by <i>property</i> member <code>Atom2D_coordinates</code>: <a href="/vignettes/clr/Microsoft/VisualBasic/Text/Xml/Models/Coordinate.html">Coordinate</a></li>
+<li>use by <i>property</i> member <code>KEGGAtom</code>: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/Model/KegAtomType.html">KegAtomType</a></li>
 </ol>
 
 

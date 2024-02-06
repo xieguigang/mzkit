@@ -32,20 +32,18 @@
             <code id="clr_ts">
 # namespace Microsoft.VisualBasic.Imaging
 export class IGraphics {
-   # the current canvas size in pixels: [width, height]
-   Size: <a href="/vignettes/clr/System/Drawing/Size.html">Size</a>;
    # set background via @<code>M:Microsoft.VisualBasic.Imaging.IGraphics.Clear(System.Drawing.Color)</code> method.
    Background: <a href="/vignettes/clr/System/Drawing/Color.html">Color</a>;
    # Gets a value that specifies how composited images are drawn to this System.Drawing.Graphics.
    CompositingMode: <a href="/vignettes/clr/System/Drawing/Drawing2D/CompositingMode.html">CompositingMode</a>;
    # Gets or sets the rendering quality of composited images drawn to this System.Drawing.Graphics.
    CompositingQuality: <a href="/vignettes/clr/System/Drawing/Drawing2D/CompositingQuality.html">CompositingQuality</a>;
+   # max value of the [DpiX, DpiY]
+   Dpi: double;
    # Gets the horizontal resolution of this System.Drawing.Graphics.
    DpiX: double;
    # Gets the vertical resolution of this System.Drawing.Graphics.
    DpiY: double;
-   # max value of the [DpiX, DpiY]
-   Dpi: double;
    InterpolationMode: <a href="/vignettes/clr/System/Drawing/Drawing2D/InterpolationMode.html">InterpolationMode</a>;
    IsClipEmpty: boolean;
    IsVisibleClipEmpty: boolean;
@@ -53,6 +51,8 @@ export class IGraphics {
    PageUnit: <a href="/vignettes/clr/System/Drawing/GraphicsUnit.html">GraphicsUnit</a>;
    PixelOffsetMode: <a href="/vignettes/clr/System/Drawing/Drawing2D/PixelOffsetMode.html">PixelOffsetMode</a>;
    RenderingOrigin: <a href="/vignettes/clr/System/Drawing/Point.html">Point</a>;
+   # the current canvas size in pixels: [width, height]
+   Size: <a href="/vignettes/clr/System/Drawing/Size.html">Size</a>;
    SmoothingMode: <a href="/vignettes/clr/System/Drawing/Drawing2D/SmoothingMode.html">SmoothingMode</a>;
    TextContrast: integer;
    TextRenderingHint: <a href="/vignettes/clr/System/Drawing/Text/TextRenderingHint.html">TextRenderingHint</a>;
@@ -63,7 +63,6 @@ export class IGraphics {
         <h3>.NET clr type reference tree</h3>
 
         <ol>
-<li>use by <i>property</i> member <code>Size</code>: <a href="/vignettes/clr/System/Drawing/Size.html">Size</a></li>
 <li>use by <i>property</i> member <code>Background</code>: <a href="/vignettes/clr/System/Drawing/Color.html">Color</a></li>
 <li>use by <i>property</i> member <code>CompositingMode</code>: <a href="/vignettes/clr/System/Drawing/Drawing2D/CompositingMode.html">CompositingMode</a></li>
 <li>use by <i>property</i> member <code>CompositingQuality</code>: <a href="/vignettes/clr/System/Drawing/Drawing2D/CompositingQuality.html">CompositingQuality</a></li>
@@ -71,6 +70,7 @@ export class IGraphics {
 <li>use by <i>property</i> member <code>PageUnit</code>: <a href="/vignettes/clr/System/Drawing/GraphicsUnit.html">GraphicsUnit</a></li>
 <li>use by <i>property</i> member <code>PixelOffsetMode</code>: <a href="/vignettes/clr/System/Drawing/Drawing2D/PixelOffsetMode.html">PixelOffsetMode</a></li>
 <li>use by <i>property</i> member <code>RenderingOrigin</code>: <a href="/vignettes/clr/System/Drawing/Point.html">Point</a></li>
+<li>use by <i>property</i> member <code>Size</code>: <a href="/vignettes/clr/System/Drawing/Size.html">Size</a></li>
 <li>use by <i>property</i> member <code>SmoothingMode</code>: <a href="/vignettes/clr/System/Drawing/Drawing2D/SmoothingMode.html">SmoothingMode</a></li>
 <li>use by <i>property</i> member <code>TextRenderingHint</code>: <a href="/vignettes/clr/System/Drawing/Text/TextRenderingHint.html">TextRenderingHint</a></li>
 </ol>

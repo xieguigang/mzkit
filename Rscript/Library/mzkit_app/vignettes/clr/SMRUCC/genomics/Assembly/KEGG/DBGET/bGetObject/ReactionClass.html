@@ -30,15 +30,15 @@
             <code id="clr_ts">
 # namespace SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
 export class ReactionClass extends <a href="/vignettes/clr/Microsoft/VisualBasic/ComponentModel/XmlDataModel.html">XmlDataModel</a> {
-   entryId: string;
+   category: string;
    definition: string;
+   entryId: string;
+   enzymes: <a href="/vignettes/clr/Microsoft/VisualBasic/Text/Xml/Models/NamedValue.html">NamedValue[]</a>;
+   orthology: <a href="/vignettes/clr/Microsoft/VisualBasic/Text/Xml/Models/NamedValue.html">NamedValue[]</a>;
+   pathways: <a href="/vignettes/clr/Microsoft/VisualBasic/Text/Xml/Models/NamedValue.html">NamedValue[]</a>;
    # <code>CXXXXX -&gt; CYYYYY</code>
    reactantPairs: <a href="/vignettes/clr/SMRUCC/genomics/Assembly/KEGG/DBGET/bGetObject/ReactionCompoundTransform.html">ReactionCompoundTransform[]</a>;
    reactions: <a href="/vignettes/clr/Microsoft/VisualBasic/Text/Xml/Models/NamedValue.html">NamedValue[]</a>;
-   enzymes: <a href="/vignettes/clr/Microsoft/VisualBasic/Text/Xml/Models/NamedValue.html">NamedValue[]</a>;
-   pathways: <a href="/vignettes/clr/Microsoft/VisualBasic/Text/Xml/Models/NamedValue.html">NamedValue[]</a>;
-   orthology: <a href="/vignettes/clr/Microsoft/VisualBasic/Text/Xml/Models/NamedValue.html">NamedValue[]</a>;
-   category: string;
    rModules: <a href="/vignettes/clr/Microsoft/VisualBasic/Text/Xml/Models/NamedValue.html">NamedValue[]</a>;
    Stylesheet: <a href="/vignettes/clr/Microsoft/VisualBasic/ComponentModel/XmlStyleProcessor.html">XmlStyleProcessor</a>;
    TypeComment: <a href="/vignettes/clr/System/Xml/XmlComment.html">XmlComment</a>;
@@ -50,11 +50,11 @@ export class ReactionClass extends <a href="/vignettes/clr/Microsoft/VisualBasic
 
         <ol>
 <li>this class extends from <a href="/vignettes/clr/Microsoft/VisualBasic/ComponentModel/XmlDataModel.html">XmlDataModel</a> class: <a href="/vignettes/clr/Microsoft/VisualBasic/ComponentModel/XmlDataModel.html">XmlDataModel</a></li>
+<li>use by <i>property</i> member <code>enzymes</code>: <a href="/vignettes/clr/Microsoft/VisualBasic/Text/Xml/Models/NamedValue.html">NamedValue</a></li>
+<li>use by <i>property</i> member <code>orthology</code>: <a href="/vignettes/clr/Microsoft/VisualBasic/Text/Xml/Models/NamedValue.html">NamedValue</a></li>
+<li>use by <i>property</i> member <code>pathways</code>: <a href="/vignettes/clr/Microsoft/VisualBasic/Text/Xml/Models/NamedValue.html">NamedValue</a></li>
 <li>use by <i>property</i> member <code>reactantPairs</code>: <a href="/vignettes/clr/SMRUCC/genomics/Assembly/KEGG/DBGET/bGetObject/ReactionCompoundTransform.html">ReactionCompoundTransform</a></li>
 <li>use by <i>property</i> member <code>reactions</code>: <a href="/vignettes/clr/Microsoft/VisualBasic/Text/Xml/Models/NamedValue.html">NamedValue</a></li>
-<li>use by <i>property</i> member <code>enzymes</code>: <a href="/vignettes/clr/Microsoft/VisualBasic/Text/Xml/Models/NamedValue.html">NamedValue</a></li>
-<li>use by <i>property</i> member <code>pathways</code>: <a href="/vignettes/clr/Microsoft/VisualBasic/Text/Xml/Models/NamedValue.html">NamedValue</a></li>
-<li>use by <i>property</i> member <code>orthology</code>: <a href="/vignettes/clr/Microsoft/VisualBasic/Text/Xml/Models/NamedValue.html">NamedValue</a></li>
 <li>use by <i>property</i> member <code>rModules</code>: <a href="/vignettes/clr/Microsoft/VisualBasic/Text/Xml/Models/NamedValue.html">NamedValue</a></li>
 <li>use by <i>property</i> member <code>Stylesheet</code>: <a href="/vignettes/clr/Microsoft/VisualBasic/ComponentModel/XmlStyleProcessor.html">XmlStyleProcessor</a></li>
 <li>use by <i>property</i> member <code>TypeComment</code>: <a href="/vignettes/clr/System/Xml/XmlComment.html">XmlComment</a></li>

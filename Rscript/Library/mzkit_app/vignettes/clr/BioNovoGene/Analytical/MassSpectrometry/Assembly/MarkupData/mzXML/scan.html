@@ -30,9 +30,8 @@
             <code id="clr_ts">
 # namespace BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
 export class scan {
-   # The scan number
-   num: integer;
-   scanType: string;
+   basePeakIntensity: double;
+   basePeakMz: double;
    # <code>profile</code> and <code>centroid</code> in Mass Spectrometry?
    # 
    # <ol>
@@ -49,22 +48,23 @@ export class scan {
    # </ul></li>
    # </ol>
    centroided: string;
+   collisionEnergy: string;
+   highMz: double;
+   lowMz: double;
+   msInstrumentID: string;
    # 当前的质谱碎片的等级,一级质谱,二级质谱或者msn等级的质谱
    msLevel: integer;
+   # The scan number
+   num: integer;
+   peaks: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/MarkupData/mzXML/peaks.html">peaks</a>;
    peaksCount: integer;
    polarity: string;
-   retentionTime: string;
-   basePeakMz: double;
-   basePeakIntensity: double;
-   totIonCurrent: double;
-   collisionEnergy: string;
-   lowMz: double;
-   highMz: double;
-   msInstrumentID: string;
    precursorMz: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/MarkupData/mzXML/precursorMz.html">precursorMz</a>;
-   peaks: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/MarkupData/mzXML/peaks.html">peaks</a>;
+   retentionTime: string;
    # parse of the data field: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/MarkupData/mzXML/scan.html">scan</a>.<a href="#">retentionTime</a>
    ScanTime: double;
+   scanType: string;
+   totIonCurrent: double;
 }
 </code>
         </pre>
@@ -72,8 +72,8 @@ export class scan {
         <h3>.NET clr type reference tree</h3>
 
         <ol>
-<li>use by <i>property</i> member <code>precursorMz</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/MarkupData/mzXML/precursorMz.html">precursorMz</a></li>
 <li>use by <i>property</i> member <code>peaks</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/MarkupData/mzXML/peaks.html">peaks</a></li>
+<li>use by <i>property</i> member <code>precursorMz</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/MarkupData/mzXML/precursorMz.html">precursorMz</a></li>
 </ol>
 
 

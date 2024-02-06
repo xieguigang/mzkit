@@ -32,9 +32,7 @@
             <code id="clr_ts">
 # namespace SMRUCC.Rsharp.Runtime.Internal.Object
 export class pipeline extends <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/RsharpDataObject.html">RsharpDataObject</a> {
-   # The action will be called after finish loop on the sequence. 
-   #  Null value of this property will be ignored
-   pipeFinalize: <a href="/vignettes/clr/System/Action.html">Action</a>;
+   elementType: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Interop/RType.html">RType</a>;
    # contains an error message in the pipeline populator or 
    #  the pipeline data is an error message. You can get the
    #  error message via function <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Internal/Object/pipeline.html">pipeline</a>.<a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/Message.html">getError</a> when
@@ -42,7 +40,9 @@ export class pipeline extends <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Comp
    isError: boolean;
    # current data pipeline is a data message?
    isMessage: boolean;
-   elementType: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Interop/RType.html">RType</a>;
+   # The action will be called after finish loop on the sequence. 
+   #  Null value of this property will be ignored
+   pipeFinalize: <a href="/vignettes/clr/System/Action.html">Action</a>;
 }
 </code>
         </pre>
@@ -51,8 +51,8 @@ export class pipeline extends <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Comp
 
         <ol>
 <li>this class extends from <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/RsharpDataObject.html">RsharpDataObject</a> class: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/RsharpDataObject.html">RsharpDataObject</a></li>
-<li>use by <i>property</i> member <code>pipeFinalize</code>: <a href="/vignettes/clr/System/Action.html">Action</a></li>
 <li>use by <i>property</i> member <code>elementType</code>: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Interop/RType.html">RType</a></li>
+<li>use by <i>property</i> member <code>pipeFinalize</code>: <a href="/vignettes/clr/System/Action.html">Action</a></li>
 </ol>
 
 

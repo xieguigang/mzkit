@@ -32,14 +32,14 @@
 export class GraphicsRegion extends <a href="/vignettes/clr/System/ValueType.html">ValueType</a> {
    # 绘图区域的底部Y坐标值
    Bottom: integer;
-   # Get the width of the entire canvas <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/Drawing2D/GraphicsRegion.html">GraphicsRegion</a>.<a href="/vignettes/clr/System/Drawing/Size.html">Size</a>
-   Width: integer;
+   # 整张画布的大小区域
+   EntireArea: <a href="/vignettes/clr/System/Drawing/Rectangle.html">Rectangle</a>;
    # Get the height of the entire canvas <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/Drawing2D/GraphicsRegion.html">GraphicsRegion</a>.<a href="/vignettes/clr/System/Drawing/Size.html">Size</a>
    Height: integer;
    # 整张画布出去margin部分剩余的可供绘图的区域
    PlotRegion: <a href="/vignettes/clr/System/Drawing/Rectangle.html">Rectangle</a>;
-   # 整张画布的大小区域
-   EntireArea: <a href="/vignettes/clr/System/Drawing/Rectangle.html">Rectangle</a>;
+   # Get the width of the entire canvas <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/Drawing2D/GraphicsRegion.html">GraphicsRegion</a>.<a href="/vignettes/clr/System/Drawing/Size.html">Size</a>
+   Width: integer;
    # <code>[left, right]</code> as <a href="/vignettes/clr/Microsoft/VisualBasic/ComponentModel/Ranges/Model/DoubleRange.html">DoubleRange</a>
    XRange: string;
    # <code>[top, bottom]</code> as <a href="/vignettes/clr/Microsoft/VisualBasic/ComponentModel/Ranges/Model/DoubleRange.html">DoubleRange</a>
@@ -52,8 +52,8 @@ export class GraphicsRegion extends <a href="/vignettes/clr/System/ValueType.htm
 
         <ol>
 <li>this class extends from <a href="/vignettes/clr/System/ValueType.html">ValueType</a> class: <a href="/vignettes/clr/System/ValueType.html">ValueType</a></li>
-<li>use by <i>property</i> member <code>PlotRegion</code>: <a href="/vignettes/clr/System/Drawing/Rectangle.html">Rectangle</a></li>
 <li>use by <i>property</i> member <code>EntireArea</code>: <a href="/vignettes/clr/System/Drawing/Rectangle.html">Rectangle</a></li>
+<li>use by <i>property</i> member <code>PlotRegion</code>: <a href="/vignettes/clr/System/Drawing/Rectangle.html">Rectangle</a></li>
 </ol>
 
 

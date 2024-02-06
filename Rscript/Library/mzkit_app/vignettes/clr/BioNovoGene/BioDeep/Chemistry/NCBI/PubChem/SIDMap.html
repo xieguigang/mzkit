@@ -35,12 +35,12 @@
             <code id="clr_ts">
 # namespace BioNovoGene.BioDeep.Chemistry.NCBI.PubChem
 export class SIDMap {
+   CID: integer;
+   # the external database id, example as KEGG id, HMDB id or something.
+   registryIdentifier: string;
    SID: integer;
    # the source database name, example as: KEGG, ChEBI, etc
    sourceName: string;
-   # the external database id, example as KEGG id, HMDB id or something.
-   registryIdentifier: string;
-   CID: integer;
 }
 </code>
         </pre>

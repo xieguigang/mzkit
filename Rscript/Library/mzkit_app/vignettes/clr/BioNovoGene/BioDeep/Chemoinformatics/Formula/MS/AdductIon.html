@@ -33,20 +33,20 @@
 # namespace BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
 export class AdductIon {
    AdductIonAccurateMass: double;
-   AdductIonXmer: integer;
    # the precursor adduct name, example as <code>[M+H]+</code>
    AdductIonName: string;
+   AdductIonXmer: integer;
    ChargeNumber: integer;
-   IonMode: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Ms1/PrecursorType/IonModes.html">IonModes</a>;
    FormatCheck: boolean;
-   M1Intensity: double;
-   M2Intensity: double;
-   IsRadical: boolean;
-   IsIncluded: boolean;
    # false value for <code>[M]+</code> or <code>[M]-</code>.
    HasAdduct: boolean;
+   IonMode: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Ms1/PrecursorType/IonModes.html">IonModes</a>;
    IsFA: boolean;
    IsHac: boolean;
+   IsIncluded: boolean;
+   IsRadical: boolean;
+   M1Intensity: double;
+   M2Intensity: double;
 }
 </code>
         </pre>
