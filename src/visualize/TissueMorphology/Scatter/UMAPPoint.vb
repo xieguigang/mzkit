@@ -89,6 +89,16 @@ Public Class UMAPPoint
     ''' <returns></returns>
     Public Property [class] As String
 
+    Sub New()
+    End Sub
+
+    Sub New(label As String, x As Double, y As Double, z As Double)
+        Me.label = label
+        Me.x = x
+        Me.y = y
+        Me.z = z
+    End Sub
+
     Private Shared Function GetClusterLabels(df As DataFrame) As String()
         Dim [class] As String()
 
