@@ -30,23 +30,23 @@
             <code id="clr_ts">
 # namespace BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 export class ROI {
-   # 这个区域的起始和结束的时间点
-   time: <a href="/vignettes/clr/Microsoft/VisualBasic/ComponentModel/Ranges/Model/DoubleRange.html">DoubleRange</a>;
-   # 出峰达到峰高最大值<a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Chromatogram/ROI.html">ROI</a>.<a href="#">maxInto</a>的时间点
-   rt: double;
-   # 这个区域的最大峰高度
-   maxInto: double;
-   # 在这个ROI时间窗区域内的色谱图数据
-   ticks: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Chromatogram/ChromatogramTick.html">ChromatogramTick[]</a>;
    # 所计算出来的基线的响应强度
    baseline: double;
    # 当前的这个ROI的峰面积积分值
    integration: double;
+   # 这个区域的最大峰高度
+   maxInto: double;
    # 噪声的面积积分百分比
    noise: double;
+   peakWidth: double;
+   # 出峰达到峰高最大值<a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Chromatogram/ROI.html">ROI</a>.<a href="#">maxInto</a>的时间点
+   rt: double;
    # 信噪比
    snRatio: double;
-   peakWidth: double;
+   # 在这个ROI时间窗区域内的色谱图数据
+   ticks: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Chromatogram/ChromatogramTick.html">ChromatogramTick[]</a>;
+   # 这个区域的起始和结束的时间点
+   time: <a href="/vignettes/clr/Microsoft/VisualBasic/ComponentModel/Ranges/Model/DoubleRange.html">DoubleRange</a>;
 }
 </code>
         </pre>
@@ -54,8 +54,8 @@ export class ROI {
         <h3>.NET clr type reference tree</h3>
 
         <ol>
-<li>use by <i>property</i> member <code>time</code>: <a href="/vignettes/clr/Microsoft/VisualBasic/ComponentModel/Ranges/Model/DoubleRange.html">DoubleRange</a></li>
 <li>use by <i>property</i> member <code>ticks</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Chromatogram/ChromatogramTick.html">ChromatogramTick</a></li>
+<li>use by <i>property</i> member <code>time</code>: <a href="/vignettes/clr/Microsoft/VisualBasic/ComponentModel/Ranges/Model/DoubleRange.html">DoubleRange</a></li>
 </ol>
 
 

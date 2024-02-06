@@ -30,30 +30,30 @@
             <code id="clr_ts">
 # namespace BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative
 export class IonPeakTableRow {
-   # 标志物物质编号
-   ID: string;
-   # 通用名称
-   Name: string;
-   # 保留时间的下限
-   rtmin: double;
-   # 保留时间的上限
-   rtmax: double;
+   # 信号基线水平
+   base: double;
    # 浓度
    content: double;
+   # 标志物物质编号
+   ID: string;
+   # 内标编号
+   IS: string;
    # 最大的信号响应值
    maxinto: double;
    # 内标的最大信号响应值
    maxinto_IS: double;
+   # 通用名称
+   Name: string;
+   # 实验数据的原始文件名
+   raw: string;
+   # 保留时间的上限
+   rtmax: double;
+   # 保留时间的下限
+   rtmin: double;
    # 峰面积
    TPA: double;
    # 内标的峰面积
    TPA_IS: double;
-   # 内标编号
-   IS: string;
-   # 信号基线水平
-   base: double;
-   # 实验数据的原始文件名
-   raw: string;
 }
 </code>
         </pre>

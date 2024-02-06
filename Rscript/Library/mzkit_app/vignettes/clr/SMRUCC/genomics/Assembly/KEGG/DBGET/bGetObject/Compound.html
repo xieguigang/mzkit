@@ -30,25 +30,25 @@
             <code id="clr_ts">
 # namespace SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
 export class Compound extends <a href="/vignettes/clr/Microsoft/VisualBasic/ComponentModel/XmlDataModel.html">XmlDataModel</a> {
-   # KEGG compound ID: <code>cpd:C\d+</code>
-   entry: string;
+   category: <a href="/vignettes/clr/SMRUCC/genomics/Assembly/KEGG/DBGET/BriteHEntry/BriteTerm.html">BriteTerm[]</a>;
    # the metabolite common names
    commonNames: string;
-   formula: string;
-   molWeight: double;
-   exactMass: double;
-   # The <a href="/vignettes/clr/SMRUCC/genomics/Assembly/KEGG/DBGET/bGetObject/Compound.html">Compound</a>.<a href="#">entry</a>[compound] was involved in these reactions. (<a href="http://www.kegg.jp/dbget-bin/www_bget?rn:[KEGG_Reaction_ID]">http://www.kegg.jp/dbget-bin/www_bget?rn:[KEGG_Reaction_ID]</a>)
-   reactionId: string;
-   pathway: <a href="/vignettes/clr/Microsoft/VisualBasic/Text/Xml/Models/NamedValue.html">NamedValue[]</a>;
-   Module: <a href="/vignettes/clr/Microsoft/VisualBasic/Text/Xml/Models/NamedValue.html">NamedValue[]</a>;
-   remarks: string;
-   enzyme: string;
-   category: <a href="/vignettes/clr/SMRUCC/genomics/Assembly/KEGG/DBGET/BriteHEntry/BriteTerm.html">BriteTerm[]</a>;
    DbLinks: <a href="/vignettes/clr/SMRUCC/genomics/ComponentModel/DBLinkBuilder/DBLink.html">DBLink[]</a>;
-   # 2D分子结构数据
-   KCF: string;
+   # KEGG compound ID: <code>cpd:C\d+</code>
+   entry: string;
+   enzyme: string;
+   exactMass: double;
+   formula: string;
    # A png image that encoded in base64 string format
    Image: string;
+   # 2D分子结构数据
+   KCF: string;
+   Module: <a href="/vignettes/clr/Microsoft/VisualBasic/Text/Xml/Models/NamedValue.html">NamedValue[]</a>;
+   molWeight: double;
+   pathway: <a href="/vignettes/clr/Microsoft/VisualBasic/Text/Xml/Models/NamedValue.html">NamedValue[]</a>;
+   # The <a href="/vignettes/clr/SMRUCC/genomics/Assembly/KEGG/DBGET/bGetObject/Compound.html">Compound</a>.<a href="#">entry</a>[compound] was involved in these reactions. (<a href="http://www.kegg.jp/dbget-bin/www_bget?rn:[KEGG_Reaction_ID]">http://www.kegg.jp/dbget-bin/www_bget?rn:[KEGG_Reaction_ID]</a>)
+   reactionId: string;
+   remarks: string;
    Stylesheet: <a href="/vignettes/clr/Microsoft/VisualBasic/ComponentModel/XmlStyleProcessor.html">XmlStyleProcessor</a>;
    TypeComment: <a href="/vignettes/clr/System/Xml/XmlComment.html">XmlComment</a>;
 }
@@ -59,10 +59,10 @@ export class Compound extends <a href="/vignettes/clr/Microsoft/VisualBasic/Comp
 
         <ol>
 <li>this class extends from <a href="/vignettes/clr/Microsoft/VisualBasic/ComponentModel/XmlDataModel.html">XmlDataModel</a> class: <a href="/vignettes/clr/Microsoft/VisualBasic/ComponentModel/XmlDataModel.html">XmlDataModel</a></li>
-<li>use by <i>property</i> member <code>pathway</code>: <a href="/vignettes/clr/Microsoft/VisualBasic/Text/Xml/Models/NamedValue.html">NamedValue</a></li>
-<li>use by <i>property</i> member <code>Module</code>: <a href="/vignettes/clr/Microsoft/VisualBasic/Text/Xml/Models/NamedValue.html">NamedValue</a></li>
 <li>use by <i>property</i> member <code>category</code>: <a href="/vignettes/clr/SMRUCC/genomics/Assembly/KEGG/DBGET/BriteHEntry/BriteTerm.html">BriteTerm</a></li>
 <li>use by <i>property</i> member <code>DbLinks</code>: <a href="/vignettes/clr/SMRUCC/genomics/ComponentModel/DBLinkBuilder/DBLink.html">DBLink</a></li>
+<li>use by <i>property</i> member <code>Module</code>: <a href="/vignettes/clr/Microsoft/VisualBasic/Text/Xml/Models/NamedValue.html">NamedValue</a></li>
+<li>use by <i>property</i> member <code>pathway</code>: <a href="/vignettes/clr/Microsoft/VisualBasic/Text/Xml/Models/NamedValue.html">NamedValue</a></li>
 <li>use by <i>property</i> member <code>Stylesheet</code>: <a href="/vignettes/clr/Microsoft/VisualBasic/ComponentModel/XmlStyleProcessor.html">XmlStyleProcessor</a></li>
 <li>use by <i>property</i> member <code>TypeComment</code>: <a href="/vignettes/clr/System/Xml/XmlComment.html">XmlComment</a></li>
 </ol>

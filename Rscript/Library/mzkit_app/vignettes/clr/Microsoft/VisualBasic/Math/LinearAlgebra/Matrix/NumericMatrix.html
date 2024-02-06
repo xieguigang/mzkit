@@ -72,22 +72,22 @@ double rnorm = r.NormInf();
             <code id="clr_ts">
 # namespace Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
 export class NumericMatrix extends <a href="/vignettes/clr/Microsoft/VisualBasic/Language/Vectorization/Vector`1.html">Vector`1</a> {
-   # Make a one-dimensional column packed copy of the internal array.
-   ColumnPackedCopy: double;
-   # Make a one-dimensional row packed copy of the internal array.
-   RowPackedCopy: double;
-   # Get row dimension.
-   RowDimension: integer;
+   Array: <a href="/vignettes/clr/System/Double[].html">Double[][]</a>;
    # Get column dimension.
    ColumnDimension: integer;
+   # Make a one-dimensional column packed copy of the internal array.
+   ColumnPackedCopy: double;
+   DiagonalVector: <a href="/vignettes/clr/Microsoft/VisualBasic/Math/LinearAlgebra/Vector.html">Vector</a>;
    # get [n,m] shape data
    Dimension: <a href="/vignettes/clr/System/Drawing/Size.html">Size</a>;
-   DiagonalVector: <a href="/vignettes/clr/Microsoft/VisualBasic/Math/LinearAlgebra/Vector.html">Vector</a>;
-   Length: integer;
-   IsScalar: boolean;
-   Array: <a href="/vignettes/clr/System/Double[].html">Double[][]</a>;
-   Last: double;
    First: double;
+   IsScalar: boolean;
+   Last: double;
+   Length: integer;
+   # Get row dimension.
+   RowDimension: integer;
+   # Make a one-dimensional row packed copy of the internal array.
+   RowPackedCopy: double;
 }
 </code>
         </pre>
@@ -96,9 +96,9 @@ export class NumericMatrix extends <a href="/vignettes/clr/Microsoft/VisualBasic
 
         <ol>
 <li>this class extends from <a href="/vignettes/clr/Microsoft/VisualBasic/Language/Vectorization/Vector`1.html">Vector`1</a> class: <a href="/vignettes/clr/Microsoft/VisualBasic/Language/Vectorization/Vector`1.html">Vector`1</a></li>
-<li>use by <i>property</i> member <code>Dimension</code>: <a href="/vignettes/clr/System/Drawing/Size.html">Size</a></li>
-<li>use by <i>property</i> member <code>DiagonalVector</code>: <a href="/vignettes/clr/Microsoft/VisualBasic/Math/LinearAlgebra/Vector.html">Vector</a></li>
 <li>use by <i>property</i> member <code>Array</code>: <a href="/vignettes/clr/System/Double[].html">Double[]</a></li>
+<li>use by <i>property</i> member <code>DiagonalVector</code>: <a href="/vignettes/clr/Microsoft/VisualBasic/Math/LinearAlgebra/Vector.html">Vector</a></li>
+<li>use by <i>property</i> member <code>Dimension</code>: <a href="/vignettes/clr/System/Drawing/Size.html">Size</a></li>
 </ol>
 
 

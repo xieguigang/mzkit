@@ -31,20 +31,20 @@
             <code id="clr_ts">
 # namespace BioNovoGene.Analytical.MassSpectrometry.MsImaging
 export class SingleIonLayer {
-   # the layer tag label, usually be a single ion m/z value.
-   IonMz: string;
-   # the spatial spot data collection, that used for create spatial heatmap rendering.
-   MSILayer: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/MsImaging/PixelData.html">PixelData[]</a>;
    # the canvas size of the MSI plot output, it indicates the max scan x and 
    #  max scan y of the <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/MsImaging/SingleIonLayer.html">SingleIonLayer</a>.<a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/MsImaging/PixelData.html">MSILayer</a> heatmap.
    DimensionSize: <a href="/vignettes/clr/System/Drawing/Size.html">Size</a>;
+   # check if the spot data has multiple sample label data tags
+   hasMultipleSamples: boolean;
    # check is there some missing spot data inside the <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/MsImaging/SingleIonLayer.html">SingleIonLayer</a>.<a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/MsImaging/PixelData.html">MSILayer</a> by 
    #  simply measuring the collection size.
    hasZeroPixels: boolean;
+   # the layer tag label, usually be a single ion m/z value.
+   IonMz: string;
    # get the max intensity value inside the <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/MsImaging/SingleIonLayer.html">SingleIonLayer</a>.<a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/MsImaging/PixelData.html">MSILayer</a>
    maxinto: double;
-   # check if the spot data has multiple sample label data tags
-   hasMultipleSamples: boolean;
+   # the spatial spot data collection, that used for create spatial heatmap rendering.
+   MSILayer: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/MsImaging/PixelData.html">PixelData[]</a>;
    # get the sample tags of the spatial spots
    sampleTags: string;
    # count the number of the pixel spots in current metabolite 
@@ -57,8 +57,8 @@ export class SingleIonLayer {
         <h3>.NET clr type reference tree</h3>
 
         <ol>
-<li>use by <i>property</i> member <code>MSILayer</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/MsImaging/PixelData.html">PixelData</a></li>
 <li>use by <i>property</i> member <code>DimensionSize</code>: <a href="/vignettes/clr/System/Drawing/Size.html">Size</a></li>
+<li>use by <i>property</i> member <code>MSILayer</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/MsImaging/PixelData.html">PixelData</a></li>
 </ol>
 
 

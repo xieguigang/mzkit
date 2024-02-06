@@ -36,27 +36,27 @@
             <code id="clr_ts">
 # namespace BioNovoGene.Analytical.NMRFidTool
 export class Acqu {
-   TransmiterFreq: double;
+   AquiredPoints: integer;
+   ByteOrder: <a href="/vignettes/clr/Microsoft/VisualBasic/Data/IO/ByteOrder.html">ByteOrder</a>;
    Decoupler1Freq: double;
    Decoupler2Feq: double;
-   FreqOffset: double;
-   SpectralWidth: double;
-   AquiredPoints: integer;
    DspDecimation: integer;
    DspFirmware: integer;
    DspGroupDelay: double;
-   ByteOrder: <a href="/vignettes/clr/Microsoft/VisualBasic/Data/IO/ByteOrder.html">ByteOrder</a>;
+   FidType: <a href="/vignettes/clr/BioNovoGene/Analytical/NMRFidTool/FidData.html">FidData</a>;
    FilterType: integer;
-   NumberOfScans: integer;
-   PulseProgram: string;
-   ObservedNucleus: string;
+   FreqOffset: double;
    InstrumentName: string;
-   Solvent: string;
-   Probehead: string;
+   NumberOfScans: integer;
+   ObservedNucleus: string;
    Origin: string;
    Owner: string;
-   FidType: <a href="/vignettes/clr/BioNovoGene/Analytical/NMRFidTool/FidData.html">FidData</a>;
+   Probehead: string;
+   PulseProgram: string;
+   Solvent: string;
    SpectralFrequency: double;
+   SpectralWidth: double;
+   TransmiterFreq: double;
 }
 </code>
         </pre>

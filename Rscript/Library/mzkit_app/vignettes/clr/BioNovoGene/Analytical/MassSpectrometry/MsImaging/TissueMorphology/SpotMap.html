@@ -35,8 +35,12 @@ export class SpotMap {
    barcode: string;
    # tissue flag
    flag: integer;
+   # The optional heatmap scale data
+   heatmap: double;
    # the physical xy
    physicalXY: integer;
+   SMX: integer;
+   SMY: integer;
    # the original raw spot xy
    spotXY: integer;
    # pixel x of the spatial transcriptomics spot.
@@ -45,12 +49,8 @@ export class SpotMap {
    # pixel y of the spatial transcriptomics spot.
    #  (after spatial transform)
    STY: double;
-   SMX: integer;
-   SMY: integer;
    # tissue tag data of the SMdata
    TissueMorphology: string;
-   # The optional heatmap scale data
-   heatmap: double;
 }
 </code>
         </pre>

@@ -100,17 +100,17 @@
             <code id="clr_ts">
 # namespace SMRUCC.Rsharp.Runtime.Internal.Object
 export class dataframe extends <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/RsharpDataObject.html">RsharpDataObject</a> {
-   # 长度为1或者长度为n
-   columns: list;
-   rownames: string;
    # get all keys names of <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Internal/Object/dataframe.html">dataframe</a>.<a href="#">columns</a> data
    colnames: string;
-   # column <a href="/vignettes/clr/System/Array.html">Array</a>.<a href="#">Length</a>
-   nrows: integer;
-   ncols: integer;
+   # 长度为1或者长度为n
+   columns: list;
+   elementType: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Interop/RType.html">RType</a>;
    # current dataframe object contains any data or not?
    empty: boolean;
-   elementType: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Interop/RType.html">RType</a>;
+   ncols: integer;
+   # column <a href="/vignettes/clr/System/Array.html">Array</a>.<a href="#">Length</a>
+   nrows: integer;
+   rownames: string;
 }
 </code>
         </pre>

@@ -30,17 +30,17 @@
             <code id="clr_ts">
 # namespace BioNovoGene.Analytical.MassSpectrometry.Math.GCMS
 export class Raw {
-   title: string;
    # the global attribute in netcdf file
    attributes: list;
-   # [气相色谱数据] 按照从开始到结束升序排序过了的
-   times: double;
-   # [气相色谱数据] 相应强度是和<a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/GCMS/Raw.html">Raw</a>.<a href="#">times</a>一一对应的
-   tic: double;
+   fileName: string;
    # 质谱扫描的结果数据
    ms: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/ms1_scan[].html">ms1_scan[][]</a>;
    mz: double;
-   fileName: string;
+   # [气相色谱数据] 相应强度是和<a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/GCMS/Raw.html">Raw</a>.<a href="#">times</a>一一对应的
+   tic: double;
+   # [气相色谱数据] 按照从开始到结束升序排序过了的
+   times: double;
+   title: string;
 }
 </code>
         </pre>

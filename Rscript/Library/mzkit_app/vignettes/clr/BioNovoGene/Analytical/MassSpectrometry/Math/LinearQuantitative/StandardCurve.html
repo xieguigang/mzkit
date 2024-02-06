@@ -30,20 +30,20 @@
             <code id="clr_ts">
 # namespace BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative
 export class StandardCurve {
-   # The metabolite name or database id
-   name: string;
-   # 该代谢物的线性回归模型
-   linear: <a href="/vignettes/clr/Microsoft/VisualBasic/Data/Bootstrapping/IFitted.html">IFitted</a>;
-   points: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/LinearQuantitative/Linear/ReferencePoint.html">ReferencePoint[]</a>;
+   arguments: <i>any</i> kind;
    blankControls: double;
    # The internal standards
    IS: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/LinearQuantitative/IS.html">IS</a>;
-   arguments: <i>any</i> kind;
+   isValid: boolean;
+   isWeighted: boolean;
+   # 该代谢物的线性回归模型
+   linear: <a href="/vignettes/clr/Microsoft/VisualBasic/Data/Bootstrapping/IFitted.html">IFitted</a>;
+   # The metabolite name or database id
+   name: string;
+   points: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/LinearQuantitative/Linear/ReferencePoint.html">ReferencePoint[]</a>;
    # This linear model is required calibration by internal standards or not?
    #  (在进行线性回归计算的时候是否需要内标校正？)
    requireISCalibration: boolean;
-   isWeighted: boolean;
-   isValid: boolean;
 }
 </code>
         </pre>
@@ -51,10 +51,10 @@ export class StandardCurve {
         <h3>.NET clr type reference tree</h3>
 
         <ol>
+<li>use by <i>property</i> member <code>arguments</code>: <i>any</i> kind</li>
+<li>use by <i>property</i> member <code>IS</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/LinearQuantitative/IS.html">IS</a></li>
 <li>use by <i>property</i> member <code>linear</code>: <a href="/vignettes/clr/Microsoft/VisualBasic/Data/Bootstrapping/IFitted.html">IFitted</a></li>
 <li>use by <i>property</i> member <code>points</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/LinearQuantitative/Linear/ReferencePoint.html">ReferencePoint</a></li>
-<li>use by <i>property</i> member <code>IS</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/LinearQuantitative/IS.html">IS</a></li>
-<li>use by <i>property</i> member <code>arguments</code>: <i>any</i> kind</li>
 </ol>
 
 

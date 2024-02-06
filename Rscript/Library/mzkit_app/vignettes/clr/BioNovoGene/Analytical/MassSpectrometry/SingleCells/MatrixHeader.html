@@ -30,16 +30,8 @@
             <code id="clr_ts">
 # namespace BioNovoGene.Analytical.MassSpectrometry.SingleCells
 export class MatrixHeader {
-   # m/z vector in numeric format of round to digit 4, this ion m/z 
-   #  feature list is generated under the current mass 
-   #  <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/SingleCells/MatrixHeader.html">MatrixHeader</a>.<a href="#">tolerance</a>.
-   mz: double;
-   # the script string of the mz diff tolerance for <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/SingleCells/MatrixHeader.html">MatrixHeader</a>.<a href="#">mz</a>
-   tolerance: string;
    # get count of the ion feature size under current mass <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/SingleCells/MatrixHeader.html">MatrixHeader</a>.<a href="#">tolerance</a>
    featureSize: integer;
-   # number of the spots
-   numSpots: integer;
    # the matrix data type of current object, value of this property could be one of the flag value:
    # 
    # <ol>
@@ -48,6 +40,14 @@ export class MatrixHeader {
    # <li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/mzWebCache/FileApplicationClass.html">FileApplicationClass</a>.<a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/mzWebCache/FileApplicationClass.html">SingleCellsMetabolomics</a> single cell matrix data</li>
    # </ol>
    matrixType: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/mzWebCache/FileApplicationClass.html">FileApplicationClass</a>;
+   # m/z vector in numeric format of round to digit 4, this ion m/z 
+   #  feature list is generated under the current mass 
+   #  <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/SingleCells/MatrixHeader.html">MatrixHeader</a>.<a href="#">tolerance</a>.
+   mz: double;
+   # number of the spots
+   numSpots: integer;
+   # the script string of the mz diff tolerance for <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/SingleCells/MatrixHeader.html">MatrixHeader</a>.<a href="#">mz</a>
+   tolerance: string;
 }
 </code>
         </pre>

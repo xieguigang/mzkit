@@ -33,15 +33,15 @@
             <code id="clr_ts">
 # namespace BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 export class MzCalculator {
-   name: string;
-   # 电荷量的符号无所谓,计算出来的m/z结果值总是正数
-   charge: integer;
-   M: integer;
    # 是可能会出现负数的加和结果，例如[M-H2O]的adducts为-18
    adducts: double;
+   # 电荷量的符号无所谓,计算出来的m/z结果值总是正数
+   charge: integer;
+   IsEmpty: boolean;
+   M: integer;
    # only one of the char +/-
    mode: string;
-   IsEmpty: boolean;
+   name: string;
 }
 </code>
         </pre>
