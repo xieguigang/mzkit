@@ -75,6 +75,7 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Data.IO.MessagePack
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Serialization.JSON
@@ -105,6 +106,11 @@ Module Massbank
         Call Internal.Object.Converts.makeDataframe.addHandler(GetType(LipidMaps.MetaData()), AddressOf createLipidMapTable)
     End Sub
 
+    Private Function readMetalibMsgPack() As Object
+
+    End Function
+
+    <RGenericOverloads("as.data.frame")>
     Public Function createLipidMapTable(lipidmap As LipidMaps.MetaData(), args As list, env As Environment) As Rdataframe
         Dim table As New Rdataframe With {
             .columns = New Dictionary(Of String, Array),
@@ -120,6 +126,36 @@ Module Massbank
         Next
 
         Return table
+    End Function
+
+    ''' <summary>
+    ''' write the metabolite annotation data collection as messagepack
+    ''' </summary>
+    ''' <param name="metadb">should be a collection of the mzkit metabolite annotation model <see cref="MetaLib"/>.</param>
+    ''' <param name="file">the file to the target messagepack file</param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("write.metalib")>
+    Public Function writeMetalib(<RRawVectorArgument> metadb As Object, file As Object, Optional env As Environment = Nothing) As Object
+        Dim pull = pipeline.TryCreatePipeline(Of MetaLib)(metadb, env)
+        Dim f = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Write, env)
+
+        If pull.isError Then
+            Return pull.getError
+        ElseIf f Like GetType(Message) Then
+            Return f.TryCast(Of Message)
+        End If
+
+        Dim s As Stream = f.TryCast(Of Stream)
+
+        Call MsgPackSerializer.SerializeObject(pull.populates(Of MetaLib)(env).ToArray, s)
+        Call s.Flush()
+
+        If TypeOf file Is String Then
+            Call s.Dispose()
+        End If
+
+        Return True
     End Function
 
     ''' <summary>
