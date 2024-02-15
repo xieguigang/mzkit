@@ -36,6 +36,7 @@ Namespace NCBI.PubChem.Web
                 .InChI = q.inchi,
                 .InChIkey = q.inchikey
             }
+            Dim name As String = NameRanking.Ranking(stringArray(q.cmpdname)).FirstOrDefault
 
             Return New Metadata2 With {
                 .chemical = descriptor,
@@ -44,7 +45,7 @@ Namespace NCBI.PubChem.Web
                 .formula = q.mf,
                 .ID = q.cid,
                 .IUPACName = q.iupacname,
-                .name = NameRanking.Ranking(stringArray(q.cmpdname)).First,
+                .name = If(name, q.iupacname),
                 .synonym = stringArray(q.cmpdsynonym).ToArray,
                 .xref = xrefs
             }

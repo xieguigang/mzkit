@@ -70,7 +70,10 @@ Namespace MetaLib
         ''' <param name="maxLen"></param>
         ''' <param name="minLen"></param>
         ''' <returns></returns>
-        Public Function Ranking(names As IEnumerable(Of String), Optional maxLen As Integer = 32, Optional minLen As Integer = 5) As IEnumerable(Of NumericTagged(Of String))
+        Public Function Ranking(names As IEnumerable(Of String),
+                                Optional maxLen As Integer = 32,
+                                Optional minLen As Integer = 5) As IEnumerable(Of NumericTagged(Of String))
+
             Return From name As String
                    In names
                    Let score As Double = NameRanking.Score(name, maxLen, minLen)
