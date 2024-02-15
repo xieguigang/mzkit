@@ -46,17 +46,11 @@ string equals to resolve the equalant. </p>
             <code id="clr_ts">
 # namespace BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
 export class MzMatrix {
+   # get count of the ion feature size under current mass <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/SingleCells/Deconvolute/MzMatrix.html">MzMatrix</a>.<a href="#">tolerance</a>
+   featureSize: integer;
    # MS-imaging pixel data matrix or the 
    #  cells data matrix in a single cells raw data
    matrix: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/SingleCells/Deconvolute/PixelData.html">PixelData[]</a>;
-   # m/z vector in numeric format of round to digit 4, this ion m/z 
-   #  feature list is generated under the current mass 
-   #  <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/SingleCells/Deconvolute/MzMatrix.html">MzMatrix</a>.<a href="#">tolerance</a>.
-   mz: double;
-   # the script string of the mz diff tolerance for <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/SingleCells/Deconvolute/MzMatrix.html">MzMatrix</a>.<a href="#">mz</a>
-   tolerance: string;
-   # get count of the ion feature size under current mass <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/SingleCells/Deconvolute/MzMatrix.html">MzMatrix</a>.<a href="#">tolerance</a>
-   featureSize: integer;
    # the matrix data type of current object, value of this property could be one of the flag value:
    # 
    # <ol>
@@ -65,6 +59,12 @@ export class MzMatrix {
    # <li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/mzWebCache/FileApplicationClass.html">FileApplicationClass</a>.<a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/mzWebCache/FileApplicationClass.html">SingleCellsMetabolomics</a> single cell matrix data</li>
    # </ol>
    matrixType: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/mzWebCache/FileApplicationClass.html">FileApplicationClass</a>;
+   # m/z vector in numeric format of round to digit 4, this ion m/z 
+   #  feature list is generated under the current mass 
+   #  <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/SingleCells/Deconvolute/MzMatrix.html">MzMatrix</a>.<a href="#">tolerance</a>.
+   mz: double;
+   # the script string of the mz diff tolerance for <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/SingleCells/Deconvolute/MzMatrix.html">MzMatrix</a>.<a href="#">mz</a>
+   tolerance: string;
 }
 </code>
         </pre>

@@ -30,20 +30,20 @@
             <code id="clr_ts">
 # namespace System.Drawing
 export class Bitmap extends <a href="/vignettes/clr/System/Drawing/Image.html">Image</a> {
-   Tag: <i>any</i> kind;
-   PhysicalDimension: <a href="/vignettes/clr/System/Drawing/SizeF.html">SizeF</a>;
-   Size: <a href="/vignettes/clr/System/Drawing/Size.html">Size</a>;
-   Width: integer;
+   Flags: integer;
+   FrameDimensionsList: <a href="/vignettes/clr/System/Guid.html">Guid[]</a>;
    Height: integer;
    HorizontalResolution: double;
-   VerticalResolution: double;
-   Flags: integer;
-   RawFormat: <a href="/vignettes/clr/System/Drawing/Imaging/ImageFormat.html">ImageFormat</a>;
+   Palette: <a href="/vignettes/clr/System/Drawing/Imaging/ColorPalette.html">ColorPalette</a>;
+   PhysicalDimension: <a href="/vignettes/clr/System/Drawing/SizeF.html">SizeF</a>;
    PixelFormat: <a href="/vignettes/clr/System/Drawing/Imaging/PixelFormat.html">PixelFormat</a>;
    PropertyIdList: integer;
    PropertyItems: <a href="/vignettes/clr/System/Drawing/Imaging/PropertyItem.html">PropertyItem[]</a>;
-   FrameDimensionsList: <a href="/vignettes/clr/System/Guid.html">Guid[]</a>;
-   Palette: <a href="/vignettes/clr/System/Drawing/Imaging/ColorPalette.html">ColorPalette</a>;
+   RawFormat: <a href="/vignettes/clr/System/Drawing/Imaging/ImageFormat.html">ImageFormat</a>;
+   Size: <a href="/vignettes/clr/System/Drawing/Size.html">Size</a>;
+   Tag: <i>any</i> kind;
+   VerticalResolution: double;
+   Width: integer;
 }
 </code>
         </pre>
@@ -52,14 +52,14 @@ export class Bitmap extends <a href="/vignettes/clr/System/Drawing/Image.html">I
 
         <ol>
 <li>this class extends from <a href="/vignettes/clr/System/Drawing/Image.html">Image</a> class: <a href="/vignettes/clr/System/Drawing/Image.html">Image</a></li>
-<li>use by <i>property</i> member <code>Tag</code>: <i>any</i> kind</li>
-<li>use by <i>property</i> member <code>PhysicalDimension</code>: <a href="/vignettes/clr/System/Drawing/SizeF.html">SizeF</a></li>
-<li>use by <i>property</i> member <code>Size</code>: <a href="/vignettes/clr/System/Drawing/Size.html">Size</a></li>
-<li>use by <i>property</i> member <code>RawFormat</code>: <a href="/vignettes/clr/System/Drawing/Imaging/ImageFormat.html">ImageFormat</a></li>
-<li>use by <i>property</i> member <code>PixelFormat</code>: <a href="/vignettes/clr/System/Drawing/Imaging/PixelFormat.html">PixelFormat</a></li>
-<li>use by <i>property</i> member <code>PropertyItems</code>: <a href="/vignettes/clr/System/Drawing/Imaging/PropertyItem.html">PropertyItem</a></li>
 <li>use by <i>property</i> member <code>FrameDimensionsList</code>: <a href="/vignettes/clr/System/Guid.html">Guid</a></li>
 <li>use by <i>property</i> member <code>Palette</code>: <a href="/vignettes/clr/System/Drawing/Imaging/ColorPalette.html">ColorPalette</a></li>
+<li>use by <i>property</i> member <code>PhysicalDimension</code>: <a href="/vignettes/clr/System/Drawing/SizeF.html">SizeF</a></li>
+<li>use by <i>property</i> member <code>PixelFormat</code>: <a href="/vignettes/clr/System/Drawing/Imaging/PixelFormat.html">PixelFormat</a></li>
+<li>use by <i>property</i> member <code>PropertyItems</code>: <a href="/vignettes/clr/System/Drawing/Imaging/PropertyItem.html">PropertyItem</a></li>
+<li>use by <i>property</i> member <code>RawFormat</code>: <a href="/vignettes/clr/System/Drawing/Imaging/ImageFormat.html">ImageFormat</a></li>
+<li>use by <i>property</i> member <code>Size</code>: <a href="/vignettes/clr/System/Drawing/Size.html">Size</a></li>
+<li>use by <i>property</i> member <code>Tag</code>: <i>any</i> kind</li>
 </ol>
 
 

@@ -30,15 +30,15 @@
             <code id="clr_ts">
 # namespace BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 export class BinaryStreamReader {
-   rtmin: double;
-   rtmax: double;
-   mzmin: double;
-   mzmax: double;
-   # "BioNovoGene/mzWebStream"
-   magic: string;
    # get index key of all ms1 scan
    EnumerateIndex: <a href="/vignettes/clr/System/Collections/Generic/IEnumerable`1.html">IEnumerable`1</a>;
    filepath: string;
+   # "BioNovoGene/mzWebStream"
+   magic: string;
+   mzmax: double;
+   mzmin: double;
+   rtmax: double;
+   rtmin: double;
    source: string;
 }
 </code>

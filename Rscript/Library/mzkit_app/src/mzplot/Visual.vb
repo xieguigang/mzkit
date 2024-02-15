@@ -200,6 +200,7 @@ Module Visual
         Dim mapLevels As Integer = args.getValue("map.levels", env, 64)
         Dim mesh3D As Boolean = args.getValue("peaks3D", env, False)
         Dim app As Plot
+        Dim driver As Drivers = env.getDriver
 
         If mesh3D Then
             app = New GCxGCTIC3DPeaks(x, 5, mapLevels, theme) With {
@@ -218,7 +219,7 @@ Module Visual
             }
         End If
 
-        Return app.Plot(size)
+        Return app.Plot(size, driver:=driver)
     End Function
 
     ''' <summary>

@@ -32,24 +32,24 @@
 export class RType {
    # the raw CLR <a href="/vignettes/clr/System/Type.html">Type</a>.<a href="#">FullName</a>
    fullName: string;
-   # the raw CLR type name
-   name: string;
-   # The mapped R# data type
-   mode: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/TypeCodes.html">TypeCodes</a>;
-   isArray: boolean;
-   isCollection: boolean;
-   # is R# runtime type?
-   isPrimitive: boolean;
-   # Is dictionary of string and value types?
-   isGenericListObject: boolean;
-   # based .NET CLR type
-   raw: <a href="/vignettes/clr/System/Type.html">Type</a>;
-   # implements interface of <a href="/vignettes/clr/Microsoft/VisualBasic/ComponentModel/DataSourceModel/IDynamicsObject.html">IDynamicsObject</a>?
-   haveDynamicsProperty: boolean;
-   # is an <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Environment.html">Environment</a> object?
-   isEnvironment: boolean;
    getCount: <a href="/vignettes/clr/System/Reflection/PropertyInfo.html">PropertyInfo</a>;
    getItem: <a href="/vignettes/clr/System/Reflection/PropertyInfo.html">PropertyInfo</a>;
+   # implements interface of <a href="/vignettes/clr/Microsoft/VisualBasic/ComponentModel/DataSourceModel/IDynamicsObject.html">IDynamicsObject</a>?
+   haveDynamicsProperty: boolean;
+   isArray: boolean;
+   isCollection: boolean;
+   # is an <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Environment.html">Environment</a> object?
+   isEnvironment: boolean;
+   # Is dictionary of string and value types?
+   isGenericListObject: boolean;
+   # is R# runtime type?
+   isPrimitive: boolean;
+   # The mapped R# data type
+   mode: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/TypeCodes.html">TypeCodes</a>;
+   # the raw CLR type name
+   name: string;
+   # based .NET CLR type
+   raw: <a href="/vignettes/clr/System/Type.html">Type</a>;
 }
 </code>
         </pre>
@@ -57,10 +57,10 @@ export class RType {
         <h3>.NET clr type reference tree</h3>
 
         <ol>
-<li>use by <i>property</i> member <code>mode</code>: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/TypeCodes.html">TypeCodes</a></li>
-<li>use by <i>property</i> member <code>raw</code>: <a href="/vignettes/clr/System/Type.html">Type</a></li>
 <li>use by <i>property</i> member <code>getCount</code>: <a href="/vignettes/clr/System/Reflection/PropertyInfo.html">PropertyInfo</a></li>
 <li>use by <i>property</i> member <code>getItem</code>: <a href="/vignettes/clr/System/Reflection/PropertyInfo.html">PropertyInfo</a></li>
+<li>use by <i>property</i> member <code>mode</code>: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/TypeCodes.html">TypeCodes</a></li>
+<li>use by <i>property</i> member <code>raw</code>: <a href="/vignettes/clr/System/Type.html">Type</a></li>
 </ol>
 
 

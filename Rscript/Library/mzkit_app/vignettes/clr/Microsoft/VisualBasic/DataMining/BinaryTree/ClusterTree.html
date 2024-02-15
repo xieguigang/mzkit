@@ -39,18 +39,18 @@
             <code id="clr_ts">
 # namespace Microsoft.VisualBasic.DataMining.BinaryTree
 export class ClusterTree extends <a href="/vignettes/clr/Microsoft/VisualBasic/Data/GraphTheory/Tree`1.html">Tree`1</a> {
+   Childs: list;
+   Count: integer;
+   Data: string;
+   ID: integer;
+   IsLeaf: boolean;
+   IsRoot: boolean;
+   label: string;
    # This property includes all data in current cluster tree node, 
    #  also includes the <a href="/vignettes/clr/Microsoft/VisualBasic/Data/GraphTheory/Tree`1.html">Tree`1</a>.<a href="/vignettes/clr/Microsoft/VisualBasic/Data/GraphTheory/T.html">Data</a> member.
    Members: <a href="/vignettes/clr/System/Collections/Generic/List`1.html">List`1</a>;
-   Data: string;
-   Childs: list;
    Parent: <a href="/vignettes/clr/Microsoft/VisualBasic/Data/GraphTheory/Tree`1.html">Tree`1</a>;
-   Count: integer;
    QualifyName: string;
-   IsRoot: boolean;
-   IsLeaf: boolean;
-   label: string;
-   ID: integer;
 }
 </code>
         </pre>
@@ -59,8 +59,8 @@ export class ClusterTree extends <a href="/vignettes/clr/Microsoft/VisualBasic/D
 
         <ol>
 <li>this class extends from <a href="/vignettes/clr/Microsoft/VisualBasic/Data/GraphTheory/Tree`1.html">Tree`1</a> class: <a href="/vignettes/clr/Microsoft/VisualBasic/Data/GraphTheory/Tree`1.html">Tree`1</a></li>
-<li>use by <i>property</i> member <code>Members</code>: <a href="/vignettes/clr/System/Collections/Generic/List`1.html">List`1</a></li>
 <li>use by <i>property</i> member <code>Childs</code>: list</li>
+<li>use by <i>property</i> member <code>Members</code>: <a href="/vignettes/clr/System/Collections/Generic/List`1.html">List`1</a></li>
 <li>use by <i>property</i> member <code>Parent</code>: <a href="/vignettes/clr/Microsoft/VisualBasic/Data/GraphTheory/Tree`1.html">Tree`1</a></li>
 </ol>
 

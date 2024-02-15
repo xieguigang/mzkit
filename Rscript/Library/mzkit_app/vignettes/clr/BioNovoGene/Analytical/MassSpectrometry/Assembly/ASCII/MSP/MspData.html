@@ -32,26 +32,26 @@
             <code id="clr_ts">
 # namespace BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MSP
 export class MspData {
-   # the metabolite name
-   Name: string;
-   Synonyms: string;
-   # <code>DB&#35;</code>
-   DB_id: string;
-   InChIKey: string;
-   MW: double;
-   Formula: string;
-   PrecursorMZ: string;
-   Precursor_type: string;
-   Spectrum_type: string;
-   Instrument_type: string;
-   Instrument: string;
-   Ion_mode: string;
    Collision_energy: string;
-   RetentionTime: string;
-   # the spectrum data
-   Peaks: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/ms2.html">ms2[]</a>;
    # 如果这个文件是来自于MoNA数据库的话, 则在这里是物质的注释信息
    Comments: <a href="/vignettes/clr/System/Collections/Specialized/NameValueCollection.html">NameValueCollection</a>;
+   # <code>DB&#35;</code>
+   DB_id: string;
+   Formula: string;
+   InChIKey: string;
+   Instrument: string;
+   Instrument_type: string;
+   Ion_mode: string;
+   MW: double;
+   # the metabolite name
+   Name: string;
+   # the spectrum data
+   Peaks: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/ms2.html">ms2[]</a>;
+   Precursor_type: string;
+   PrecursorMZ: string;
+   RetentionTime: string;
+   Spectrum_type: string;
+   Synonyms: string;
 }
 </code>
         </pre>
@@ -59,8 +59,8 @@ export class MspData {
         <h3>.NET clr type reference tree</h3>
 
         <ol>
-<li>use by <i>property</i> member <code>Peaks</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/ms2.html">ms2</a></li>
 <li>use by <i>property</i> member <code>Comments</code>: <a href="/vignettes/clr/System/Collections/Specialized/NameValueCollection.html">NameValueCollection</a></li>
+<li>use by <i>property</i> member <code>Peaks</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/ms2.html">ms2</a></li>
 </ol>
 
 

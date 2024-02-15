@@ -31,27 +31,27 @@
             <code id="clr_ts">
 # namespace BioNovoGene.Analytical.MassSpectrometry.Assembly
 export class mzPack {
-   # 一般为二维散点图
-   Thumbnail: <a href="/vignettes/clr/System/Drawing/Image.html">Image</a>;
-   MS: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/mzWebCache/ScanMS1.html">ScanMS1[]</a>;
+   # m/z annotation
+   Annotations: list;
    Application: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/mzWebCache/FileApplicationClass.html">FileApplicationClass</a>;
    # TIC/BPC
    Chromatogram: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Chromatogram/Chromatogram.html">Chromatogram</a>;
-   # the file name of the raw data source file
-   source: string;
-   metadata: list;
-   # 其他的扫描器数据，例如紫外扫描
-   Scanners: list;
-   # m/z annotation
-   Annotations: list;
-   rtmin: double;
-   rtmax: double;
-   totalIons: double;
-   maxIntensity: double;
-   # get size of the ms1 scan data
-   size: integer;
    # get number of total ms2 scan data
    CountMs2: integer;
+   maxIntensity: double;
+   metadata: list;
+   MS: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/mzWebCache/ScanMS1.html">ScanMS1[]</a>;
+   rtmax: double;
+   rtmin: double;
+   # 其他的扫描器数据，例如紫外扫描
+   Scanners: list;
+   # get size of the ms1 scan data
+   size: integer;
+   # the file name of the raw data source file
+   source: string;
+   # 一般为二维散点图
+   Thumbnail: <a href="/vignettes/clr/System/Drawing/Image.html">Image</a>;
+   totalIons: double;
 }
 </code>
         </pre>
@@ -59,13 +59,13 @@ export class mzPack {
         <h3>.NET clr type reference tree</h3>
 
         <ol>
-<li>use by <i>property</i> member <code>Thumbnail</code>: <a href="/vignettes/clr/System/Drawing/Image.html">Image</a></li>
-<li>use by <i>property</i> member <code>MS</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/mzWebCache/ScanMS1.html">ScanMS1</a></li>
+<li>use by <i>property</i> member <code>Annotations</code>: list</li>
 <li>use by <i>property</i> member <code>Application</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/mzWebCache/FileApplicationClass.html">FileApplicationClass</a></li>
 <li>use by <i>property</i> member <code>Chromatogram</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Chromatogram/Chromatogram.html">Chromatogram</a></li>
 <li>use by <i>property</i> member <code>metadata</code>: list</li>
+<li>use by <i>property</i> member <code>MS</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/mzWebCache/ScanMS1.html">ScanMS1</a></li>
 <li>use by <i>property</i> member <code>Scanners</code>: list</li>
-<li>use by <i>property</i> member <code>Annotations</code>: list</li>
+<li>use by <i>property</i> member <code>Thumbnail</code>: <a href="/vignettes/clr/System/Drawing/Image.html">Image</a></li>
 </ol>
 
 

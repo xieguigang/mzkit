@@ -59,6 +59,7 @@ Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.DataStorage.netCDF
 Imports Microsoft.VisualBasic.DataStorage.netCDF.Components
@@ -70,10 +71,14 @@ Imports Microsoft.VisualBasic.Linq
 ''' <summary>
 ''' A data model for GCxGC 2d chromatogram
 ''' </summary>
-Public Class D2Chromatogram
+''' <remarks>
+''' is a collection of the <see cref="ChromatogramTick"/> data.
+''' </remarks>
+Public Class D2Chromatogram : Implements IReadOnlyId, INamedValue
 
     Public Property scan_time As Double
     Public Property intensity As Double
+    Public Property scan_id As String Implements INamedValue.Key, IReadOnlyId.Identity
 
     ''' <summary>
     ''' chromatogram data 2d
@@ -101,6 +106,18 @@ Public Class D2Chromatogram
         End Get
     End Property
 
+    Sub New()
+    End Sub
+
+    Sub New(t1 As Double)
+        scan_time = t1
+    End Sub
+
+    Sub New(t1 As Double, id As String)
+        scan_id = id
+        scan_time = t1
+    End Sub
+
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overrides Function ToString() As String
         Return $"{intensity.ToString("G3")}@{scan_time.ToString("F2")}"
@@ -127,15 +144,15 @@ Public Class D2Chromatogram
                     .ToArray
                 dims = size.ComputeIfAbsent(vector.Length.ToString, Function() New Dimension With {.name = $"sizeof_{vector.Length}", .size = vector.Length})
                 attrs = {
-                    New attribute With {.name = "scan_time", .type = CDFDataTypes.DOUBLE, .value = scan.scan_time},
-                    New attribute With {.name = "intensity", .type = CDFDataTypes.DOUBLE, .value = scan.intensity}
+                    New attribute With {.name = "scan_time", .type = CDFDataTypes.NC_DOUBLE, .value = scan.scan_time},
+                    New attribute With {.name = "intensity", .type = CDFDataTypes.NC_DOUBLE, .value = scan.intensity}
                 }
                 writer.AddVector($"[{++i}]{scan}", vector, dims, attrs)
             Next
 
             attrs = {
-                New attribute With {.name = "nscans", .value = i - 1, .type = CDFDataTypes.INT},
-                New attribute With {.name = "classid", .value = FileApplicationClass.GCxGC.Description, .type = CDFDataTypes.CHAR}
+                New attribute With {.name = "nscans", .value = i - 1, .type = CDFDataTypes.NC_INT},
+                New attribute With {.name = "classid", .value = FileApplicationClass.GCxGC.Description, .type = CDFDataTypes.NC_CHAR}
             }
             writer.GlobalAttributes(attrs)
         End Using
@@ -170,6 +187,7 @@ Public Class D2Chromatogram
         End Using
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function times() As Double()
         Return chromatogram.Select(Function(t) t.Time).ToArray
     End Function

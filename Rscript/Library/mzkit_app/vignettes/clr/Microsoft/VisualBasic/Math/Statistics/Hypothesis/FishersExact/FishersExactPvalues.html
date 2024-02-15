@@ -30,19 +30,19 @@
             <code id="clr_ts">
 # namespace Microsoft.VisualBasic.Math.Statistics.Hypothesis.FishersExact
 export class FishersExactPvalues {
-   # pvalue for the two-tailed test. Use this when there Is no prior alternative.
-   two_tail_pvalue: double;
-   # pvalue for the "left" Or "lesser" tail. Use this when the alternative to
-   #  independence Is that there Is negative association between the variables.
-   #  That Is, the observations tend to lie in lower left And upper right.
-   less_pvalue: double;
    # Use this when the alternative to independence Is that there Is positive
    #  association between the variables. That Is, the observations tend to lie
    #  in upper left And lower right.
    greater_pvalue: double;
+   hyper_state: <a href="/vignettes/clr/Microsoft/VisualBasic/Math/Statistics/Hypothesis/FishersExact/HyperState.html">HyperState</a>;
+   # pvalue for the "left" Or "lesser" tail. Use this when the alternative to
+   #  independence Is that there Is negative association between the variables.
+   #  That Is, the observations tend to lie in lower left And upper right.
+   less_pvalue: double;
    # [a,b,c,d]
    matrix: integer;
-   hyper_state: <a href="/vignettes/clr/Microsoft/VisualBasic/Math/Statistics/Hypothesis/FishersExact/HyperState.html">HyperState</a>;
+   # pvalue for the two-tailed test. Use this when there Is no prior alternative.
+   two_tail_pvalue: double;
 }
 </code>
         </pre>

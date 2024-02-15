@@ -30,38 +30,38 @@
             <code id="clr_ts">
 # namespace BioNovoGene.BioDeep.MetaDNA
 export class MetaDNAResult {
-   # the unique id of ms1 parent ion
-   ROI_id: string;
-   # the unique id of ms2 spectrum peaks
-   query_id: string;
-   mz: double;
-   rt: double;
-   intensity: double;
-   KEGGId: string;
    exactMass: double;
+   fileName: string;
    formula: string;
-   name: string;
-   precursorType: string;
+   forward: double;
+   inferLevel: string;
+   inferSize: integer;
+   intensity: double;
+   jaccard: double;
+   KEGG_reaction: string;
+   KEGGId: string;
+   mirror: double;
+   mz: double;
    # calculated m/z value based on <a href="/vignettes/clr/BioNovoGene/BioDeep/MetaDNA/MetaDNAResult.html">MetaDNAResult</a>.<a href="#">mz</a> and <a href="/vignettes/clr/BioNovoGene/BioDeep/MetaDNA/MetaDNAResult.html">MetaDNAResult</a>.<a href="#">precursorType</a>
    mzCalc: double;
+   name: string;
+   parentTrace: double;
+   partnerKEGGId: string;
    ppm: double;
+   precursorType: string;
+   pvalue: double;
+   # the unique id of ms2 spectrum peaks
+   query_id: string;
+   reaction: string;
+   reverse: double;
+   # the unique id of ms1 parent ion
+   ROI_id: string;
+   rt: double;
    # the score match of ms1 <a href="/vignettes/clr/BioNovoGene/BioDeep/MetaDNA/MetaDNAResult.html">MetaDNAResult</a>.<a href="#">rt</a> and rt value of the KEGG compound reference
    rt_adjust: double;
-   inferLevel: string;
-   forward: double;
-   reverse: double;
-   jaccard: double;
-   mirror: double;
-   parentTrace: double;
-   inferSize: integer;
    score1: double;
    score2: double;
-   pvalue: double;
    seed: string;
-   partnerKEGGId: string;
-   KEGG_reaction: string;
-   reaction: string;
-   fileName: string;
 }
 </code>
         </pre>

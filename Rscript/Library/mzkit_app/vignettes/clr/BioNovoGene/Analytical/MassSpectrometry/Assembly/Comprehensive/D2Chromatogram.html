@@ -24,16 +24,19 @@
 
         <p>A data model for GCxGC 2d chromatogram</p>
 
+<p>is a collection of the <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Chromatogram/ChromatogramTick.html">ChromatogramTick</a> data.</p>
+
         <h3>Declare</h3>        
 
         <pre>
             <code id="clr_ts">
 # namespace BioNovoGene.Analytical.MassSpectrometry.Assembly.Comprehensive
 export class D2Chromatogram {
-   scan_time: double;
-   intensity: double;
    # chromatogram data 2d
    chromatogram: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Chromatogram/ChromatogramTick.html">ChromatogramTick[]</a>;
+   intensity: double;
+   scan_id: string;
+   scan_time: double;
    size: integer;
 }
 </code>

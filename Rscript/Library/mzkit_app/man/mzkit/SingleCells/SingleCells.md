@@ -25,4 +25,4 @@ Single cells metabolomics data processor
 + [cell_clusters](SingleCells/cell_clusters.1) export the cell clustering result
 + [embedding_sample](SingleCells/embedding_sample.1) push a sample data into the embedding session
 + [spot_vector](SingleCells/spot_vector.1) get the cell spot embedding result
-+ [spatial_labels](SingleCells/spatial_labels.1) 
++ [spatial_labels](SingleCells/spatial_labels.1) get the labels based on the spatial information of each spot

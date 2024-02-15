@@ -30,23 +30,23 @@
             <code id="clr_ts">
 # namespace BioNovoGene.Analytical.MassSpectrometry.Assembly.Comprehensive.MsImaging
 export class Metadata {
+   # the string name of <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/mzWebCache/FileApplicationClass.html">FileApplicationClass</a>, 
+   #  not the description id value
+   class: string;
+   # the ion m/z value range of the scan result.
+   mass_range: <a href="/vignettes/clr/Microsoft/VisualBasic/ComponentModel/Ranges/Model/DoubleRange.html">DoubleRange</a>;
+   # the calculated physical height of the sample slider data
+   physical_height: double;
+   # the calculated physical width of the sample slider data
+   physical_width: double;
+   # the spatial resolution, usually be the average resolution on x and y axis
+   resolution: double;
    # the max scan number in x axis
    scan_x: integer;
    # the max rows in y axis
    scan_y: integer;
    # only works for mzkit application <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/mzWebCache/FileApplicationClass.html">FileApplicationClass</a>.<a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/mzWebCache/FileApplicationClass.html">MSImaging3D</a>
    scan_z: integer;
-   # the spatial resolution, usually be the average resolution on x and y axis
-   resolution: double;
-   # the ion m/z value range of the scan result.
-   mass_range: <a href="/vignettes/clr/Microsoft/VisualBasic/ComponentModel/Ranges/Model/DoubleRange.html">DoubleRange</a>;
-   # the string name of <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/mzWebCache/FileApplicationClass.html">FileApplicationClass</a>, 
-   #  not the description id value
-   class: string;
-   # the calculated physical width of the sample slider data
-   physical_width: double;
-   # the calculated physical height of the sample slider data
-   physical_height: double;
 }
 </code>
         </pre>

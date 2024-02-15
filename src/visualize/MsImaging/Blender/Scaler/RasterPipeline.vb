@@ -61,6 +61,9 @@ Imports System.Runtime.CompilerServices
 
 Namespace Blender.Scaler
 
+    ''' <summary>
+    ''' a collection of the raster data filter: <see cref="Scaler"/>
+    ''' </summary>
     Public Class RasterPipeline : Implements Scaler.LayerScaler, IEnumerable(Of Scaler)
 
         ReadOnly pipeline As New List(Of Scaler)

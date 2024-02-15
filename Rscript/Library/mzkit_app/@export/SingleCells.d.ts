@@ -175,7 +175,7 @@ declare namespace SingleCells {
     * do stats of the single cell metabolomics ions
     * 
     * 
-     * @param raw -
+     * @param raw the @``T:BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack`` rawdata object
      * @param da -
      * 
      * + default value Is ``0.01``.
@@ -185,6 +185,10 @@ declare namespace SingleCells {
    */
    function SCM_ionStat(raw: object, da?: number, parallel?: boolean): object;
    /**
+    * get the labels based on the spatial information of each spot
+    * 
+    * 
+     * @param x -
    */
    function spatial_labels(x: object): string;
    /**
@@ -200,7 +204,7 @@ declare namespace SingleCells {
        * write the single cell ion feature data matrix
        * 
        * 
-        * @param x -
+        * @param x the expression @``T:BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute.MzMatrix`` object.
         * @param file -
         * @param env -
         * 

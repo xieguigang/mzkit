@@ -30,6 +30,8 @@
             <code id="clr_ts">
 # namespace BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
 export class peaks {
+   byteOrder: string;
+   compressedLen: integer;
    # <ol>
    # <li>zlib
    # 
@@ -39,10 +41,8 @@ export class peaks {
    # </ol></li>
    # </ol>
    compressionType: string;
-   compressedLen: integer;
-   precision: double;
-   byteOrder: string;
    contentType: string;
+   precision: double;
    value: string;
 }
 </code>

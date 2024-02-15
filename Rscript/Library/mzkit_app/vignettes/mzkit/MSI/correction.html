@@ -69,9 +69,11 @@
 for run x axis correction based on the average rt diff.</li>
 </ol><h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/Comprehensive/MsImaging/Correction.html">Correction</a></li></ul>
 
-        <h3 style="display: none;">Examples</h3>
+        <h3 style="display: block;">Examples</h3>
 
-        
+        <pre><code id="example_r"> # create x-axis correction object based on the row scans data
+ let cor = MSI::correction(totalTime = 120, pixels = 300, 
+      hasMs2 = FALSE);</code></pre>
 
         <hr />
         <div style="text-align: center;">[Package <em>MSI</em> version 1.0.0.0 <a
