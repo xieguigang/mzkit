@@ -293,8 +293,9 @@ Module PubChemToolKit
     ''' <param name="cid">The pubchem compound cid, should be an integer value</param>
     ''' <returns>A url for get the pubchem data in pugview format</returns>
     <ExportAPI("pubchem_url")>
-    Public Function pubchemUrl(cid As String) As String
-        Return WebQuery.pugViewApi(cid)
+    <RApiReturn(GetType(String))>
+    Public Function pubchemUrl(<RRawVectorArgument> cid As Object, Optional env As Environment = Nothing) As Object
+        Return env.EvaluateFramework(Of String, String)(cid, AddressOf WebQuery.pugViewApi)
     End Function
 
     ''' <summary>
@@ -309,7 +310,8 @@ Module PubChemToolKit
     ''' 2. disease: a list of the related disease with the compound
     ''' 3. compounds: the co-occurance compound data
     ''' 
-    ''' all of the slot data is a collection of the pubchem <see cref="MeshGraph"/> clr object
+    ''' all of the slot data is a collection of the mzkit pubchem <see cref="MeshGraph"/> 
+    ''' clr object.
     ''' </returns>
     <ExportAPI("query.knowlegde_graph")>
     <RApiReturn("genes", "disease", "compounds")>
@@ -447,9 +449,14 @@ Module PubChemToolKit
     End Function
 
     ''' <summary>
-    ''' 
+    ''' read the pubchem webquery summary xml file
     ''' </summary>
-    ''' <param name="file"></param>
+    ''' <param name="file">
+    ''' the file path to the pubchem query search result file, the data file which
+    ''' could be downloaded from the query result url example like: 
+    ''' 
+    ''' https://pubchem.ncbi.nlm.nih.gov/sdq/sdqagent.cgi?infmt=json&outfmt=xml&query={%22download%22:%22*%22,%22collection%22:%22compound%22,%22order%22:[%22relevancescore,desc%22],%22start%22:1,%22limit%22:10000000,%22downloadfilename%22:%22PubChem_compound_text_kegg%22,%22where%22:{%22ands%22:[{%22*%22:%22kegg%22}]}}
+    ''' </param>
     ''' <returns>A collection of the pubchem query summary download result file</returns>
     <ExportAPI("read.webquery")>
     <RApiReturn(GetType(QueryXml))>

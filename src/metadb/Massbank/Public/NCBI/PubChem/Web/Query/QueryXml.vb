@@ -2,9 +2,15 @@
 Imports System.Runtime.CompilerServices
 Imports System.Xml
 Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.Text.Xml
 Imports Microsoft.VisualBasic.Text.Xml.Linq
 
 Namespace NCBI.PubChem.Web
+
+    ' https://pubchem.ncbi.nlm.nih.gov/sdq/sdqagent.cgi?infmt=json&outfmt=xml&query={%22download%22:%22*%22,%22collection%22:%22compound%22,%22order%22:[%22relevancescore,desc%22],%22start%22:1,%22limit%22:10000000,%22downloadfilename%22:%22PubChem_compound_text_kegg%22,%22where%22:{%22ands%22:[{%22*%22:%22kegg%22}]}}
+
+    ' {%22download%22:%22*%22,%22collection%22:%22compound%22,%22order%22:[%22relevancescore,desc%22],%22start%22:1,%22limit%22:10000000,%22downloadfilename%22:%22PubChem_compound_text_kegg%22,%22where%22:{%22ands%22:[{%22*%22:%22kegg%22}]}}
+    ' {"download":"*","collection":"compound","order":["relevancescore,desc"],"start":1,"limit":10000000,"downloadfilename":"PubChem_compound_text_kegg","where":{"ands":[{"*":"kegg"}]}}
 
     ''' <summary>
     ''' result data set for pubchem query summary
@@ -122,6 +128,16 @@ Namespace NCBI.PubChem.Web
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
             Return Me.GetXml
+        End Function
+
+        Public Shared Function DownloadURL(q As String, Optional limit As Integer = 10000000) As String
+            ' {"download":"*","collection":"compound","order":["relevancescore,desc"],"start":1,"limit":10000000,"downloadfilename":"PubChem_compound_text_kegg","where":{"ands":[{"*":"kegg"}]}}
+            Dim json As String = sprintf(<JSON>{"download":"*","collection":"compound","order":["relevancescore,desc"],"start":1,"limit":%s,"downloadfilename":"PubChem_compound_text_kegg","where":{"ands":[{"*":"%s"}]}}</JSON>,
+                                         limit,
+                                         q.Replace(""""c, "'")).UrlEncode
+            Dim url As String = $"https://pubchem.ncbi.nlm.nih.gov/sdq/sdqagent.cgi?infmt=json&outfmt=xml&query={json}"
+
+            Return url
         End Function
 
     End Class
