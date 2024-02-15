@@ -90,9 +90,11 @@ declare namespace hmdb_kit {
        * 
        * 
         * @param xml the file path of the hmdb metabolite database xml file
+        * @param convert_std 
+        * + default value Is ``false``.
         * @return this function populate a collection of the hmdb metabolites data
       */
-      function hmdb(xml: string): object;
+      function hmdb(xml: string, convert_std?: boolean): object;
       /**
        * read hmdb spectral data collection
        * 
