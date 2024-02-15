@@ -84,11 +84,11 @@ Namespace MetaLib.Models
     ''' </remarks>
     Public Class CompoundClass : Implements ICompoundClass
 
-        Public Property kingdom As String Implements ICompoundClass.kingdom
-        Public Property super_class As String Implements ICompoundClass.super_class
-        Public Property [class] As String Implements ICompoundClass.class
-        Public Property sub_class As String Implements ICompoundClass.sub_class
-        Public Property molecular_framework As String Implements ICompoundClass.molecular_framework
+        <MessagePackMember(0)> Public Property kingdom As String Implements ICompoundClass.kingdom
+        <MessagePackMember(1)> Public Property super_class As String Implements ICompoundClass.super_class
+        <MessagePackMember(2)> Public Property [class] As String Implements ICompoundClass.class
+        <MessagePackMember(3)> Public Property sub_class As String Implements ICompoundClass.sub_class
+        <MessagePackMember(4)> Public Property molecular_framework As String Implements ICompoundClass.molecular_framework
 
     End Class
 

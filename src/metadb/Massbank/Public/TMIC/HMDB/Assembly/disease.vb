@@ -70,14 +70,14 @@ Namespace TMIC.HMDB
     Public Class disease
 
         <MessagePackMember(0)> Public Property name As String
-        <MessagePackMember(0)> Public Property omim_id As String
-        <MessagePackMember(0)> Public Property references As reference()
+        <MessagePackMember(1)> Public Property omim_id As String
+        <MessagePackMember(2)> Public Property references As reference()
 
     End Class
 
     Public Structure reference
         <MessagePackMember(0)> Public Property reference_text As String
-        <MessagePackMember(0)> Public Property pubmed_id As String
+        <MessagePackMember(1)> Public Property pubmed_id As String
 
         Public Overrides Function ToString() As String
             Return reference_text
@@ -87,10 +87,10 @@ Namespace TMIC.HMDB
     Public Class protein
 
         <MessagePackMember(0)> Public Property protein_accession As String
-        <MessagePackMember(0)> Public Property name As String
-        <MessagePackMember(0)> Public Property uniprot_id As String
-        <MessagePackMember(0)> Public Property gene_name As String
-        <MessagePackMember(0)> Public Property protein_type As String
+        <MessagePackMember(1)> Public Property name As String
+        <MessagePackMember(2)> Public Property uniprot_id As String
+        <MessagePackMember(3)> Public Property gene_name As String
+        <MessagePackMember(4)> Public Property protein_type As String
 
     End Class
 End Namespace
