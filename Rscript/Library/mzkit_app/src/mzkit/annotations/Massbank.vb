@@ -138,7 +138,8 @@ Module Massbank
     <ExportAPI("write.metalib")>
     Public Function writeMetalib(<RRawVectorArgument> metadb As Object, file As Object, Optional env As Environment = Nothing) As Object
         Dim pull = pipeline.TryCreatePipeline(Of MetaLib)(metadb, env)
-        Dim f = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Write, env)
+        Dim is_path As Boolean = False
+        Dim f = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Write, env, is_filepath:=is_path)
 
         If pull.isError Then
             Return pull.getError
@@ -151,7 +152,7 @@ Module Massbank
         Call MsgPackSerializer.SerializeObject(pull.populates(Of MetaLib)(env).ToArray, s)
         Call s.Flush()
 
-        If TypeOf file Is String Then
+        If is_path Then
             Call s.Dispose()
         End If
 
