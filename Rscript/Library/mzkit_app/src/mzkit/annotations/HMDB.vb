@@ -59,6 +59,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.BioDeep.Chemistry
 Imports BioNovoGene.BioDeep.Chemistry.TMIC
+Imports BioNovoGene.BioDeep.Chemistry.TMIC.HMDB
 Imports BioNovoGene.BioDeep.Chemistry.TMIC.HMDB.Repository
 Imports BioNovoGene.BioDeep.Chemistry.TMIC.HMDB.Spectra
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
@@ -168,7 +169,7 @@ Module HMDBTools
         Dim hmdbId As String = file.database_id.value
 
         If Not file.references.IsNullOrEmpty Then
-            Dim ref0 As reference = file.references(Scan0)
+            Dim ref0 As Spectra.reference = file.references(Scan0)
             Dim xref_id As String = ref0.database_id
 
             ' biodeepMSMS package use the delimiter | symbol
@@ -237,10 +238,16 @@ Module HMDBTools
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <ExportAPI("read.hmdb")>
     <RApiReturn(GetType(HMDB.metabolite))>
-    Public Function readHMDB(xml As String) As pipeline
-        Return TMIC.HMDB _
-            .LoadXML(xml) _
-            .DoCall(AddressOf pipeline.CreateFromPopulator)
+    Public Function readHMDB(xml As String, Optional convert_std As Boolean = False) As pipeline
+        Dim pull As IEnumerable(Of metabolite) = TMIC.HMDB.LoadXML(xml)
+
+        If convert_std Then
+            Return pull _
+                .ConvertInternal _
+                .DoCall(AddressOf pipeline.CreateFromPopulator)
+        Else
+            Return pipeline.CreateFromPopulator(pull)
+        End If
     End Function
 
     ''' <summary>

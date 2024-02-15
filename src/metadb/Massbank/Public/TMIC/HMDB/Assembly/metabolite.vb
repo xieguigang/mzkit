@@ -331,5 +331,10 @@ Namespace TMIC.HMDB
         Public Overrides Function ToString() As String
             Return Me.synonym.GetJson
         End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Narrowing Operator CType(snames As synonyms) As String()
+            Return snames.synonym
+        End Operator
     End Structure
 End Namespace
