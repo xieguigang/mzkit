@@ -104,6 +104,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
+Imports Microsoft.VisualBasic.Data.IO.MessagePack.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text.Xml.Linq
 Imports SMRUCC.genomics.ComponentModel
@@ -125,28 +126,28 @@ Namespace TMIC.HMDB
         ''' HMDB ID, hmdb的主编号
         ''' </summary>
         ''' <returns></returns>
-        Public Property accession As String Implements IKeyedEntity(Of String).Key, IMolecule.EntryId, IReadOnlyId.Identity
+        <MessagePackMember(0)> Public Property accession As String Implements IKeyedEntity(Of String).Key, IMolecule.EntryId, IReadOnlyId.Identity
         ''' <summary>
         ''' Secondary Accession Numbers
         ''' </summary>
         ''' <returns></returns>
-        Public Property secondary_accessions As secondary_accessions
+        <MessagePackMember(0)> Public Property secondary_accessions As secondary_accessions
         ''' <summary>
         ''' Common Name
         ''' </summary>
         ''' <returns></returns>
-        Public Property name As String Implements IMolecule.Name
-        Public Property description As String
+        <MessagePackMember(0)> Public Property name As String Implements IMolecule.Name
+        <MessagePackMember(0)> Public Property description As String
         ''' <summary>
         ''' other synonym names from external database
         ''' </summary>
         ''' <returns></returns>
-        Public Property synonyms As synonyms
-        Public Property chemical_formula As String Implements IMolecule.Formula
+        <MessagePackMember(0)> Public Property synonyms As synonyms
+        <MessagePackMember(0)> Public Property chemical_formula As String Implements IMolecule.Formula
 
 #Region "有些代谢物的分子质量的值空字符串，在进行XML反序列化的时候会出错，所以在这里改成字符串来避免出错"
-        Public Property average_molecular_weight As String
-        Public Property monisotopic_molecular_weight As String
+        <MessagePackMember(0)> Public Property average_molecular_weight As String
+        <MessagePackMember(0)> Public Property monisotopic_molecular_weight As String
 
         ''' <summary>
         ''' 因为XML反序列化的时候，有些分子可能会还不存在<see cref="average_molecular_weight"/>实验数据，
@@ -164,56 +165,56 @@ Namespace TMIC.HMDB
         End Property
 #End Region
 
-        Public Property iupac_name As String
-        Public Property traditional_iupac As String
+        <MessagePackMember(0)> Public Property iupac_name As String
+        <MessagePackMember(0)> Public Property traditional_iupac As String
         <XmlElement>
-        Public Property cas_registry_number As String
-        Public Property smiles As String
-        Public Property inchi As String
-        Public Property inchikey As String
-        Public Property taxonomy As taxonomy
+        <MessagePackMember(0)> Public Property cas_registry_number As String
+        <MessagePackMember(0)> Public Property smiles As String
+        <MessagePackMember(0)> Public Property inchi As String
+        <MessagePackMember(0)> Public Property inchikey As String
+        <MessagePackMember(0)> Public Property taxonomy As taxonomy
 
 #Region "和其他的外部数据库的编号映射关系: xref"
-        <Xref> Public Property drugbank_id As String
-        <Xref> Public Property drugbank_metabolite_id As String
-        <Xref> Public Property phenol_explorer_compound_id As String
-        <Xref> Public Property phenol_explorer_metabolite_id As String
-        <Xref> Public Property foodb_id As String
-        <Xref> Public Property knapsack_id As String
-        <Xref> Public Property chemspider_id As String
-        <Xref> Public Property kegg_id As String
-        <Xref> Public Property biocyc_id As String
-        <Xref> Public Property bigg_id As String
-        <Xref> Public Property wikipidia As String
-        <Xref> Public Property nugowiki As String
-        <Xref> Public Property metagene As String
-        <Xref> Public Property metlin_id As String
-        <Xref> Public Property pubchem_compound_id As String
-        <Xref> Public Property het_id As String
-        <Xref> Public Property chebi_id As String
-        <Xref> Public Property wikipedia_id As String
-        <Xref> Public Property meta_cyc_id As String
-        <Xref> Public Property pdb_id As String
-        <Xref> Public Property vmh_id As String
-        <Xref> Public Property fbonto_id As String
+        <MessagePackMember(0)> <Xref> Public Property drugbank_id As String
+        <MessagePackMember(0)> <Xref> Public Property drugbank_metabolite_id As String
+        <MessagePackMember(0)> <Xref> Public Property phenol_explorer_compound_id As String
+        <MessagePackMember(0)> <Xref> Public Property phenol_explorer_metabolite_id As String
+        <MessagePackMember(0)> <Xref> Public Property foodb_id As String
+        <MessagePackMember(0)> <Xref> Public Property knapsack_id As String
+        <MessagePackMember(0)> <Xref> Public Property chemspider_id As String
+        <MessagePackMember(0)> <Xref> Public Property kegg_id As String
+        <MessagePackMember(0)> <Xref> Public Property biocyc_id As String
+        <MessagePackMember(0)> <Xref> Public Property bigg_id As String
+        <MessagePackMember(0)> <Xref> Public Property wikipidia As String
+        <MessagePackMember(0)> <Xref> Public Property nugowiki As String
+        <MessagePackMember(0)> <Xref> Public Property metagene As String
+        <MessagePackMember(0)> <Xref> Public Property metlin_id As String
+        <MessagePackMember(0)> <Xref> Public Property pubchem_compound_id As String
+        <MessagePackMember(0)> <Xref> Public Property het_id As String
+        <MessagePackMember(0)> <Xref> Public Property chebi_id As String
+        <MessagePackMember(0)> <Xref> Public Property wikipedia_id As String
+        <MessagePackMember(0)> <Xref> Public Property meta_cyc_id As String
+        <MessagePackMember(0)> <Xref> Public Property pdb_id As String
+        <MessagePackMember(0)> <Xref> Public Property vmh_id As String
+        <MessagePackMember(0)> <Xref> Public Property fbonto_id As String
 #End Region
 
-        Public Property synthesis_reference As String
-        Public Property biological_properties As biological_properties
+        <MessagePackMember(0)> Public Property synthesis_reference As String
+        <MessagePackMember(0)> Public Property biological_properties As biological_properties
 
     End Class
 
     Public Class biological_properties
-        Public Property biospecimen_locations As biospecimen_locations
-        Public Property tissue_locations As tissue_locations
-        Public Property cellular_locations As cellular_locations
-        Public Property pathways As pathway()
+        <MessagePackMember(0)> Public Property biospecimen_locations As biospecimen_locations
+        <MessagePackMember(0)> Public Property tissue_locations As tissue_locations
+        <MessagePackMember(0)> Public Property cellular_locations As cellular_locations
+        <MessagePackMember(0)> Public Property pathways As pathway()
     End Class
 
     Public Class pathway
-        Public Property name As String
-        Public Property smpdb_id As String
-        Public Property kegg_map_id As String
+        <MessagePackMember(0)> Public Property name As String
+        <MessagePackMember(0)> Public Property smpdb_id As String
+        <MessagePackMember(0)> Public Property kegg_map_id As String
     End Class
 
     ''' <summary>
@@ -235,34 +236,34 @@ Namespace TMIC.HMDB
     ''' </remarks>
     Public Class metabolite : Inherits MetaReference
 
-        Public Property version As String
-        Public Property creation_date As String
-        Public Property update_date As String
+        <MessagePackMember(0)> Public Property version As String
+        <MessagePackMember(0)> Public Property creation_date As String
+        <MessagePackMember(0)> Public Property update_date As String
 
         ''' <summary>
         ''' solid/liquid, 固态还是液态？
         ''' </summary>
         ''' <returns></returns>
-        Public Property state As String
+        <MessagePackMember(0)> Public Property state As String
 
         ''' <summary>
         ''' Physical Properties: Experimental Molecular Properties	
         ''' </summary>
         ''' <returns></returns>
-        Public Property experimental_properties As Properties
+        <MessagePackMember(0)> Public Property experimental_properties As Properties
         ''' <summary>
         ''' Physical Properties: Predicted Molecular Properties
         ''' </summary>
         ''' <returns></returns>
-        Public Property predicted_properties As Properties
-        Public Property diseases As disease()
+        <MessagePackMember(0)> Public Property predicted_properties As Properties
+        <MessagePackMember(0)> Public Property diseases As disease()
 
-        Public Property normal_concentrations As concentration()
-        Public Property abnormal_concentrations As concentration()
-        Public Property ontology As ontology
+        <MessagePackMember(0)> Public Property normal_concentrations As concentration()
+        <MessagePackMember(0)> Public Property abnormal_concentrations As concentration()
+        <MessagePackMember(0)> Public Property ontology As ontology
 
-        Public Property general_references As reference()
-        Public Property protein_associations As protein()
+        <MessagePackMember(0)> Public Property general_references As reference()
+        <MessagePackMember(0)> Public Property protein_associations As protein()
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
@@ -284,6 +285,7 @@ Namespace TMIC.HMDB
     Public Structure biospecimen_locations
 
         <XmlElement>
+        <MessagePackMember(0)>
         Public Property biospecimen As String()
 
         Public Overrides Function ToString() As String
@@ -294,6 +296,7 @@ Namespace TMIC.HMDB
     Public Structure tissue_locations
 
         <XmlElement>
+        <MessagePackMember(0)>
         Public Property tissue As String()
 
         Public Overrides Function ToString() As String
@@ -307,6 +310,7 @@ Namespace TMIC.HMDB
     Public Structure secondary_accessions
 
         <XmlElement>
+        <MessagePackMember(0)>
         Public Property accession As String()
 
         Public Overrides Function ToString() As String
@@ -321,6 +325,7 @@ Namespace TMIC.HMDB
     Public Structure synonyms
 
         <XmlElement>
+        <MessagePackMember(0)>
         Public Property synonym As String()
 
         Public Overrides Function ToString() As String
