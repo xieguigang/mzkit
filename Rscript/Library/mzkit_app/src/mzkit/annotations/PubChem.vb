@@ -119,7 +119,7 @@ Imports Rdataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
 <RTypeExport("pubmed", GetType(PubMed))>
 Module PubChemToolKit
 
-    Sub New()
+    Sub Main()
         Call Internal.Object.Converts.makeDataframe.addHandler(GetType(SIDMap()), AddressOf SIDMapTable)
     End Sub
 

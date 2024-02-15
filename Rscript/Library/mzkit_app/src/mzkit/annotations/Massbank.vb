@@ -104,7 +104,7 @@ Imports REnv = SMRUCC.Rsharp.Runtime.Internal.Invokes.base
 <RTypeExport("metalib", GetType(MetaLib))>
 Module Massbank
 
-    Sub New()
+    Sub Main()
         Call Internal.Object.Converts.makeDataframe.addHandler(GetType(LipidMaps.MetaData()), AddressOf createLipidMapTable)
 
         Call generic.add("readBin.metalib", GetType(Stream), AddressOf readMetalibMsgPack)

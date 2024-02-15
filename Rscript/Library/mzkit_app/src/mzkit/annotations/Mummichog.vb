@@ -87,7 +87,7 @@ Imports std = System.Math
 <Package("Mummichog")>
 Module Mummichog
 
-    Sub New()
+    Sub Main()
         Call Internal.Object.Converts.makeDataframe.addHandler(GetType(ActivityEnrichment()), AddressOf getResultTable)
     End Sub
 
