@@ -59,6 +59,7 @@
 Imports BioNovoGene.BioDeep.Chemistry.MetaLib.CrossReference
 Imports BioNovoGene.BioDeep.Chemoinformatics
 Imports Microsoft.VisualBasic.Data.IO.MessagePack.Serialization
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace MetaLib.Models
 
@@ -67,6 +68,10 @@ Namespace MetaLib.Models
         <MessagePackMember(0)> Public Property biosample As String
         <MessagePackMember(1)> Public Property source As String
         <MessagePackMember(2)> Public Property reference As String
+
+        Public Overrides Function ToString() As String
+            Return Me.GetJson
+        End Function
 
     End Class
 
