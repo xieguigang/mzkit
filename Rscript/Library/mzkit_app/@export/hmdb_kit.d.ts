@@ -31,8 +31,8 @@
  *  Four additional databases, DrugBank, T3DB, SMPDB And FooDB are also part Of the HMDB suite Of 
  *  databases. DrugBank contains equivalent information On ~1,600 drug And drug metabolites, T3DB 
  *  contains information On 3,100 common toxins And environmental pollutants, SMPDB contains pathway 
- *  diagrams For 700 human metabolic And disease pathways, While FooDB contains equivalent information 
- *  On ~28,000 food components And food additives.
+ *  diagrams For 700 human metabolic And disease pathways, While FooDB contains equivalent 
+ *  information On ~28,000 food components And food additives.
  * 
 */
 declare namespace hmdb_kit {
