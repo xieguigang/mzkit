@@ -470,7 +470,8 @@ Module PubChemToolKit
         Dim pull As IEnumerable(Of QueryXml) = QueryXml.Load(file)
 
         If convert_std Then
-            Return pull _
+            Return pull.ToArray _
+                .AsParallel _
                 .Select(Function(m) m.CreateMetadata) _
                 .DoCall(AddressOf pipeline.CreateFromPopulator)
         Else
