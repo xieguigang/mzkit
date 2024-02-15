@@ -1,14 +1,8 @@
 ﻿Imports System.Runtime.CompilerServices
-Imports BiodeepDB.IntegrativeRepository
-Imports BiodeepDB.IntegrativeRepository.Components
-Imports BioNovoGene.BioDeep.Chemistry.MetaLib.Models
-Imports BioNovoGene.BioDeep.Chemistry.NCBI.PubChem
 Imports BioNovoGene.BioDeep.Chemistry.MetaLib.CrossReference
-Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Linq
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports Microsoft.VisualBasic.Text
 Imports Metadata2 = BioNovoGene.BioDeep.Chemistry.MetaLib.Models.MetaLib
-Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 
 Namespace TMIC.HMDB
 
