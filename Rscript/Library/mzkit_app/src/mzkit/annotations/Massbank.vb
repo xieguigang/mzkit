@@ -152,8 +152,9 @@ Module Massbank
         End If
 
         Dim s As Stream = f.TryCast(Of Stream)
+        Dim pool = pull.populates(Of MetaLib)(env).ToArray
 
-        Call MsgPackSerializer.SerializeObject(pull.populates(Of MetaLib)(env).ToArray, s)
+        Call MsgPackSerializer.SerializeObject(pool, s)
         Call s.Flush()
 
         If is_path Then

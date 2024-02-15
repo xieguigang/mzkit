@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "mzkit": {
+      "commandName": "Project"
+    },
+    "run_dll": {
+      "commandName": "Executable",
+      "executablePath": "E:\\GCModeller\\src\\R-sharp\\App\\net6.0\\R#.exe",
+      "commandLineArgs": "E:\\mzkit\\Rscript\\Library\\mzkit_app\\test\\pubchem\\data_reader.test.R --attach E:\\mzkit\\Rscript\\Library\\mzkit_app"
+    }
+  }
+}
