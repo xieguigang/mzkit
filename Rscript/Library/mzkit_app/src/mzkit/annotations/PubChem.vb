@@ -457,11 +457,25 @@ Module PubChemToolKit
     ''' 
     ''' > https://pubchem.ncbi.nlm.nih.gov/sdq/sdqagent.cgi?infmt=json&amp;outfmt=xml&amp;query={%22download%22:%22*%22,%22collection%22:%22compound%22,%22order%22:[%22relevancescore,desc%22],%22start%22:1,%22limit%22:10000000,%22downloadfilename%22:%22PubChem_compound_text_kegg%22,%22where%22:{%22ands%22:[{%22*%22:%22kegg%22}]}}
     ''' </param>
-    ''' <returns>A collection of the pubchem query summary download <see cref="QueryXml"/> result file</returns>
+    ''' <param name="convert_std">
+    ''' convert to a unify metabolite data model inside mzkit?
+    ''' </param>
+    ''' <returns>A collection of the pubchem query summary <see cref="QueryXml"/> object
+    ''' (or <see cref="MetaLib"/> data model if the parameter <paramref name="convert_std"/> 
+    ''' has been set to ``true``) that parsed from download result file.
+    ''' </returns>
     <ExportAPI("read.webquery")>
-    <RApiReturn(GetType(QueryXml))>
-    Public Function readWebQuerySummary(file As String) As pipeline
-        Return QueryXml.Load(file).DoCall(AddressOf pipeline.CreateFromPopulator)
+    <RApiReturn(GetType(QueryXml), GetType(MetaLib))>
+    Public Function readWebQuerySummary(file As String, Optional convert_std As Boolean = False) As pipeline
+        Dim pull As IEnumerable(Of QueryXml) = QueryXml.Load(file)
+
+        If convert_std Then
+            Return pull _
+                .Select(Function(m) m.CreateMetadata) _
+                .DoCall(AddressOf pipeline.CreateFromPopulator)
+        Else
+            Return pipeline.CreateFromPopulator(pull)
+        End If
     End Function
 
     ''' <summary>
