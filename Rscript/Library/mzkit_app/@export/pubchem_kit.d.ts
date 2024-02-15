@@ -103,9 +103,11 @@ declare namespace pubchem_kit {
     * 
     * 
      * @param cid The pubchem compound cid, should be an integer value
+     * @param env 
+     * + default value Is ``null``.
      * @return A url for get the pubchem data in pugview format
    */
-   function pubchem_url(cid: string): string;
+   function pubchem_url(cid: any, env?: object): string;
    /**
     * query pubchem data via a given cid value
     * 
@@ -154,7 +156,8 @@ declare namespace pubchem_kit {
         *  2. disease: a list of the related disease with the compound
         *  3. compounds: the co-occurance compound data
         *  
-        *  all of the slot data is a collection of the pubchem @``T:BioNovoGene.BioDeep.Chemistry.NCBI.PubChem.Graph.MeshGraph`` clr object
+        *  all of the slot data is a collection of the mzkit pubchem @``T:BioNovoGene.BioDeep.Chemistry.NCBI.PubChem.Graph.MeshGraph`` 
+        *  clr object.
       */
       function knowlegde_graph(cid: string, cache?: string): object;
    }
@@ -191,10 +194,14 @@ declare namespace pubchem_kit {
       */
       function pugView(file: string): object;
       /**
+       * read the pubchem webquery summary xml file
        * 
        * 
-        * @param file -
-        * @return A collection of the pubchem query summary download result file
+        * @param file the file path to the pubchem query search result file, the data file which
+        *  could be downloaded from the query result url example like: 
+        *  
+        *  > https://pubchem.ncbi.nlm.nih.gov/sdq/sdqagent.cgi?infmt=json&outfmt=xml&query={%22download%22:%22*%22,%22collection%22:%22compound%22,%22order%22:[%22relevancescore,desc%22],%22start%22:1,%22limit%22:10000000,%22downloadfilename%22:%22PubChem_compound_text_kegg%22,%22where%22:{%22ands%22:[{%22*%22:%22kegg%22}]}}
+        * @return A collection of the pubchem query summary download @``T:BioNovoGene.BioDeep.Chemistry.NCBI.PubChem.Web.QueryXml`` result file
       */
       function webquery(file: string): object;
    }

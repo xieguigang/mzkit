@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>BioNovoGene.BioDeep.Chemistry.NCBI.PubChem.Web.QueryXml</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <table style="width: 100%;">
+            <tr>
+                <td>QueryXml {BioNovoGene.BioDeep.Chemistry.NCBI.PubChem.Web}</td>
+                <td style="text-align: right;">.NET clr documentation</td>
+            </tr>
+        </table>
+
+        <h2>QueryXml</h2>
+
+        <h3>Description</h3>
+
+        <p>result data set for pubchem query summary</p>
+
+<p>[Download]<br />
+ Summary (Search Results)<br />
+ XML format</p>
+
+<p>this xml data model is a kind of summary of the pubchem <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/NCBI/PubChem/PugViewRecord.html">PugViewRecord</a> xml data.</p>
+
+        <h3>Declare</h3>        
+
+        <pre>
+            <code id="clr_ts">
+# namespace BioNovoGene.BioDeep.Chemistry.NCBI.PubChem.Web
+export class QueryXml {
+   # a string array
+   annotation: <i>any</i> kind;
+   canonicalsmiles: string;
+   charge: double;
+   cid: integer;
+   # a string array
+   cmpdname: <i>any</i> kind;
+   # a string array
+   cmpdsynonym: <i>any</i> kind;
+   complexity: double;
+   covalentunitcnt: double;
+   definedatomstereocnt: double;
+   definedbondstereocnt: double;
+   exactmass: double;
+   gpfamilycnt: double;
+   gpidcnt: double;
+   hbondacc: double;
+   hbonddonor: double;
+   heavycnt: double;
+   inchi: string;
+   inchikey: string;
+   isosmiles: string;
+   isotopeatomcnt: double;
+   iupacname: string;
+   # a string array
+   meshheadings: <i>any</i> kind;
+   mf: string;
+   monoisotopicmass: double;
+   mw: double;
+   neighbortype: string;
+   pclidcnt: double;
+   polararea: double;
+   rotbonds: double;
+   # a string array
+   sidsrcname: <i>any</i> kind;
+   totalatomstereocnt: double;
+   totalbondstereocnt: double;
+   undefinedatomstereocnt: double;
+   undefinedbondstereocnt: double;
+   xlogp: double;
+}
+</code>
+        </pre>
+
+        <h3>.NET clr type reference tree</h3>
+
+        <ol>
+<li>use by <i>property</i> member <code>annotation</code>: <i>any</i> kind</li>
+<li>use by <i>property</i> member <code>cmpdname</code>: <i>any</i> kind</li>
+<li>use by <i>property</i> member <code>cmpdsynonym</code>: <i>any</i> kind</li>
+<li>use by <i>property</i> member <code>meshheadings</code>: <i>any</i> kind</li>
+<li>use by <i>property</i> member <code>sidsrcname</code>: <i>any</i> kind</li>
+</ol>
+
+
+        <hr />
+        <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a
+                href="../{$package}.html">Index</a>]
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
+<script type="text/javascript" src="../../_assets/highlights.js"></script>
+<script type="text/javascript">r_highlights("clr_ts");</script>
+
+</html>
