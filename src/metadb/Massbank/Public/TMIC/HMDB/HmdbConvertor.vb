@@ -10,10 +10,10 @@ Imports Microsoft.VisualBasic.Text
 
 Namespace TMIC.HMDB
 
-    Module hmdbProcessor
+    Module HmdbConvertor
 
         <Extension>
-        Public Sub FillHMDBInformation(metabolites As IEnumerable(Of HMDB.MetaDb),
+        Public Sub FillHMDBInformation(metabolites As IEnumerable(Of metabolite),
                                    metadb As MetaIndex,
                                    ByRef missingKEGGId As List(Of String),
                                    sidMap As Dictionary(Of String, SIDMap))
@@ -66,7 +66,7 @@ Namespace TMIC.HMDB
             .HMDB = metabolite.accession,
             .InChI = metabolite.inchi,
             .InChIkey = metabolite.inchikey,
-            .KEGG = Strings.Trim(metabolite.kegg_id).Trim(ASCII.TAB),
+            .kegg = Strings.Trim(metabolite.kegg_id).Trim(ASCII.TAB),
             .SMILES = metabolite.smiles,
             .Wikipedia = metabolite.wikipedia_id,
             .pubchem = metabolite.GetCID(sidMap)
@@ -84,15 +84,15 @@ Namespace TMIC.HMDB
             .formula = metabolite.chemical_formula,
             .kingdom = metabolite.kingdom,
             .molecular_framework = metabolite.molecular_framework,
-            .source = XrefDbs.HMDB,
+            .Source = XrefDbs.HMDB,
             .sub_class = metabolite.sub_class,
             .super_class = metabolite.super_class,
             .note = metabolite.description,
             .mass = metabolite.exact_mass,
             .xref = xref,
-            .name = names,
-            .origins = {New Origins With {.id = "NCBI:9606", .speciesName = "Homo sapiens"}},
-            .logs = {New TraceAction With {.action = "create_by", .db = XrefDbs.HMDB, .recordId = metabolite.accession}}
+            .Name = names,
+            .origins = {New origins With {.id = "NCBI:9606", .speciesName = "Homo sapiens"}},
+            .logs = {New TraceAction With {.Action = "create_by", .db = XrefDbs.HMDB, .recordId = metabolite.accession}}
         }
         End Function
 
@@ -152,8 +152,8 @@ Namespace TMIC.HMDB
                 anno.note = metabolite.description
             End If
 
-            anno.origins = anno.origins.JoinIterates(New Origins With {.id = "NCBI:9606", .speciesName = "Homo sapiens"}).ToArray
-            anno.logs.Add(New TraceAction With {.action = "modify_by", .recordId = metabolite.accession, .db = XrefDbs.HMDB})
+            anno.origins = anno.origins.JoinIterates(New origins With {.id = "NCBI:9606", .speciesName = "Homo sapiens"}).ToArray
+            anno.logs.Add(New TraceAction With {.Action = "modify_by", .recordId = metabolite.accession, .db = XrefDbs.HMDB})
 
             Dim xref As xref = anno.xref
 
