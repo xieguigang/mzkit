@@ -4,6 +4,7 @@ Imports System.Xml
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Text.Xml
 Imports Microsoft.VisualBasic.Text.Xml.Linq
+Imports Metadata2 = BioNovoGene.BioDeep.Chemistry.MetaLib.Models.MetaLib
 
 Namespace NCBI.PubChem.Web
 
@@ -84,6 +85,11 @@ Namespace NCBI.PubChem.Web
         Public Property cmpdsynonym As Object
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function CreateMetadata() As Metadata2
+            Return MetadataConvertor.CreateMetadata(Me)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Iterator Function Load(filepath As String) As IEnumerable(Of QueryXml)
             For Each metabo As QueryXml In filepath.LoadUltraLargeXMLDataSet(Of QueryXml)(
                 typeName:="row",
@@ -139,6 +145,5 @@ Namespace NCBI.PubChem.Web
 
             Return url
         End Function
-
     End Class
 End Namespace
