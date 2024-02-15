@@ -88,6 +88,7 @@ Imports SMRUCC.genomics.foundation.OBO_Foundry.IO.Models
 Imports SMRUCC.Rsharp
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
+Imports SMRUCC.Rsharp.Runtime.Internal
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
@@ -100,14 +101,17 @@ Imports REnv = SMRUCC.Rsharp.Runtime.Internal.Invokes.base
 ''' </summary>
 <Package("massbank")>
 <RTypeExport("lipidmaps", GetType(LipidMaps.MetaData))>
+<RTypeExport("metalib", GetType(MetaLib))>
 Module Massbank
 
     Sub New()
         Call Internal.Object.Converts.makeDataframe.addHandler(GetType(LipidMaps.MetaData()), AddressOf createLipidMapTable)
+
+        Call generic.add("readBin.metalib", GetType(Stream), AddressOf readMetalibMsgPack)
     End Sub
 
-    Private Function readMetalibMsgPack() As Object
-
+    Private Function readMetalibMsgPack(file As Stream, args As list, env As Environment) As Object
+        Return MsgPackSerializer.Deserialize(Of MetaLib())(file)
     End Function
 
     <RGenericOverloads("as.data.frame")>
