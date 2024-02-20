@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>SMRUCC.genomics.Assembly.KEGG.WebServices.XML.Area</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <table style="width: 100%;">
+            <tr>
+                <td>Area {SMRUCC.genomics.Assembly.KEGG.WebServices.XML}</td>
+                <td style="text-align: right;">.NET clr documentation</td>
+            </tr>
+        </table>
+
+        <h2>Area</h2>
+
+        <h3>Description</h3>
+
+        
+
+        <h3>Declare</h3>        
+
+        <pre>
+            <code id="clr_ts">
+# namespace SMRUCC.genomics.Assembly.KEGG.WebServices.XML
+export class Area {
+   class: string;
+   # 位置坐标信息
+   coords: string;
+   data_id: string;
+   entry: string;
+   href: string;
+   IDVector: string;
+   moduleId: string;
+   Names: <a href="/vignettes/clr/Microsoft/VisualBasic/ComponentModel/DataSourceModel/NamedValue`1.html">NamedValue`1[]</a>;
+   # 如果是方块的话，则这个属性代表图上面的方块的参数，包括位置和大小
+   #  如果是圆的话，则这个属性的中心点为圆心，宽度的一半为半径
+   Rectangle: <a href="/vignettes/clr/System/Drawing/RectangleF.html">RectangleF</a>;
+   refid: string;
+   # <ul>
+   # <li>rect
+   # 
+   # <ul>
+   # <li>poly</li>
+   # <li>circle</li>
+   # </ul></li>
+   # </ul>
+   shape: string;
+   title: string;
+   # Compound, Gene, Pathway, Reaction
+   Type: string;
+}
+</code>
+        </pre>
+
+        <h3>.NET clr type reference tree</h3>
+
+        <ol>
+<li>use by <i>property</i> member <code>Names</code>: <a href="/vignettes/clr/Microsoft/VisualBasic/ComponentModel/DataSourceModel/NamedValue`1.html">NamedValue`1</a></li>
+<li>use by <i>property</i> member <code>Rectangle</code>: <a href="/vignettes/clr/System/Drawing/RectangleF.html">RectangleF</a></li>
+</ol>
+
+
+        <hr />
+        <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a
+                href="../{$package}.html">Index</a>]
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
+<script type="text/javascript" src="../../_assets/highlights.js"></script>
+<script type="text/javascript">r_highlights("clr_ts");</script>
+
+</html>
