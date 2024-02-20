@@ -112,29 +112,10 @@ Namespace Massbank
             pk.SPLASH = node.TryGetValue(NameOf(pk.SPLASH)).DefaultFirst
 
             Try
-                pk.ANNOTATION = node.TryGetValue(NameOf(pk.ANNOTATION)) _
-                .SafeQuery _
-                .SeqIterator _
-                .Select(Function(s)
-                            Dim t$() = (+s).Split
-                            Dim table As PropertyValue() =
-                                t.Where(Function(ss) Not ss.StringEmpty) _
-                                 .SeqIterator _
-                                 .Select(Function(k)
-                                             Return New PropertyValue With {
-                                                .Key = k.i,
-                                                .Property = annotationHeaders(k),
-                                                .Value = +k
-                                             }
-                                         End Function) _
-                                 .ToArray
-
-                            Return New Entity With {
-                                .ID = s.i,
-                                .Properties = table
-                            }
-                        End Function) _
-                .ToArray
+                pk.ANNOTATION = node _
+                    .TryGetValue(NameOf(pk.ANNOTATION)) _
+                    .ParseAnnotations(annotationHeaders) _
+                    .ToArray
             Catch ex As Exception
 
             End Try
@@ -156,6 +137,33 @@ Namespace Massbank
         End Function
 
         <Extension>
+        Private Iterator Function ParseAnnotations(lines As IEnumerable(Of String), annotationHeaders$()) As IEnumerable(Of Entity)
+            Dim i As Integer = -1
+
+            For Each s As String In lines.SafeQuery
+                Dim t$() = Strings.Trim(s).Split
+                Dim table As PropertyValue() =
+                    t.Where(Function(ss) Not ss.StringEmpty) _
+                     .SeqIterator _
+                     .Select(Function(k)
+                                 Return New PropertyValue With {
+                                    .Key = k.i,
+                                    .Property = annotationHeaders(k),
+                                    .Value = +k
+                                 }
+                             End Function) _
+                     .ToArray
+
+                i += 1
+
+                Yield New Entity With {
+                    .ID = i,
+                    .Properties = table
+                }
+            Next
+        End Function
+
+        <Extension>
         Private Function __createObject(type As Type, node As Node) As Object
             Dim o As Object = Activator.CreateInstance(type)
             Dim schema = type.Schema(PropertyAccess.Writeable,, True)
@@ -174,6 +182,8 @@ Namespace Massbank
 
             Return o
         End Function
+
+        Const pk_annotation = "PK$ANNOTATION"
 
         <Extension>
         Private Function __loadSection(data$(), ByRef annotationHeaders$()) As Dictionary(Of String, Node)
@@ -211,11 +221,11 @@ Namespace Massbank
                     End If
                 End If
 
-                If value.Name = "PK$ANNOTATION" OrElse value.Name = "PK$PEAK" Then
+                If value.Name = pk_annotation OrElse value.Name = "PK$PEAK" Then
                     table = value.Name
                     readTable = True
 
-                    If value.Name = "PK$ANNOTATION" Then
+                    If value.Name = pk_annotation Then
                         annotationHeaders = value.Value.Split
                     End If
 

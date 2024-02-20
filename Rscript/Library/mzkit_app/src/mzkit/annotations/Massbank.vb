@@ -75,6 +75,7 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Data.IO.MessagePack
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Serialization.JSON
@@ -87,6 +88,7 @@ Imports SMRUCC.genomics.foundation.OBO_Foundry.IO.Models
 Imports SMRUCC.Rsharp
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
+Imports SMRUCC.Rsharp.Runtime.Internal
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
@@ -99,12 +101,20 @@ Imports REnv = SMRUCC.Rsharp.Runtime.Internal.Invokes.base
 ''' </summary>
 <Package("massbank")>
 <RTypeExport("lipidmaps", GetType(LipidMaps.MetaData))>
+<RTypeExport("metalib", GetType(MetaLib))>
 Module Massbank
 
-    Sub New()
+    Sub Main()
         Call Internal.Object.Converts.makeDataframe.addHandler(GetType(LipidMaps.MetaData()), AddressOf createLipidMapTable)
+
+        Call generic.add("readBin.metalib", GetType(Stream), AddressOf readMetalibMsgPack)
     End Sub
 
+    Private Function readMetalibMsgPack(file As Stream, args As list, env As Environment) As Object
+        Return MsgPackSerializer.Deserialize(Of MetaLib())(file)
+    End Function
+
+    <RGenericOverloads("as.data.frame")>
     Public Function createLipidMapTable(lipidmap As LipidMaps.MetaData(), args As list, env As Environment) As Rdataframe
         Dim table As New Rdataframe With {
             .columns = New Dictionary(Of String, Array),
@@ -120,6 +130,38 @@ Module Massbank
         Next
 
         Return table
+    End Function
+
+    ''' <summary>
+    ''' write the metabolite annotation data collection as messagepack
+    ''' </summary>
+    ''' <param name="metadb">should be a collection of the mzkit metabolite annotation model <see cref="MetaLib"/>.</param>
+    ''' <param name="file">the file to the target messagepack file</param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("write.metalib")>
+    Public Function writeMetalib(<RRawVectorArgument> metadb As Object, file As Object, Optional env As Environment = Nothing) As Object
+        Dim pull = pipeline.TryCreatePipeline(Of MetaLib)(metadb, env)
+        Dim is_path As Boolean = False
+        Dim f = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Write, env, is_filepath:=is_path)
+
+        If pull.isError Then
+            Return pull.getError
+        ElseIf f Like GetType(Message) Then
+            Return f.TryCast(Of Message)
+        End If
+
+        Dim s As Stream = f.TryCast(Of Stream)
+        Dim pool = pull.populates(Of MetaLib)(env).ToArray
+
+        Call MsgPackSerializer.SerializeObject(pool, s)
+        Call s.Flush()
+
+        If is_path Then
+            Call s.Dispose()
+        End If
+
+        Return True
     End Function
 
     ''' <summary>
