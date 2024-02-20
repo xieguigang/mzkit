@@ -165,6 +165,13 @@ Module MSI
         Return LayerFile.ParseLayer(file)
     End Function
 
+    ''' <summary>
+    ''' cast the ion set of ms-imaging rawdata as table 
+    ''' </summary>
+    ''' <param name="ions"></param>
+    ''' <param name="args"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <RGenericOverloads("as.data.frame")>
     Private Function getStatTable(ions As IonStat(), args As list, env As Environment) As rDataframe
         Dim table As New rDataframe With {
