@@ -1,4 +1,4 @@
-# pubchem_kit
+﻿# pubchem_kit
 
 toolkit for handling of the ncbi pubchem data
 > PubChem is a database of chemical molecules and their activities against biological assays. 

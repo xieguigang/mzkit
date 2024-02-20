@@ -181,7 +181,6 @@ Public Class PeakAssign : Inherits Plot
             .Y = yscale
         }
         Dim bottomY As Double = rect.Bottom
-        Dim text As New GraphicsText(DirectCast(g, Graphics2D).Graphics)
         Dim labelFont As Font = CSSFont.TryParse(theme.tagCSS).GDIObject(g.Dpi)
         Dim titleFont As Font = CSSFont.TryParse(theme.mainCSS).GDIObject(g.Dpi)
 
@@ -388,7 +387,9 @@ Public Class PeakAssign : Inherits Plot
                                              Optional images As Dictionary(Of String, Image) = Nothing,
                                              Optional xlabel$ = "M/z ratio",
                                              Optional ylabel$ = "Relative Intensity (%)",
-                                             Optional showAnnotationText As Boolean = True) As GraphicsData
+                                             Optional showAnnotationText As Boolean = True,
+                                             Optional driver As Drivers = Drivers.Default,
+                                             Optional dpi As Integer = 300) As GraphicsData
         Dim theme As New Theme With {
             .padding = padding,
             .background = bg,
@@ -414,6 +415,6 @@ Public Class PeakAssign : Inherits Plot
             .ylabel = ylabel
         }
 
-        Return app.Plot(size, ppi:=200)
+        Return app.Plot(size, ppi:=dpi, driver:=driver)
     End Function
 End Class

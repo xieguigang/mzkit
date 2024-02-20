@@ -400,7 +400,9 @@ Module Visual
                 labelIntensity:=labeIntensity,
                 size:=size,
                 title:=title Or ms.TryCast(Of LibraryMatrix).name.AsDefault,
-                showAnnotationText:=showAnnotation
+                showAnnotationText:=showAnnotation,
+                driver:=env.getDriver,
+                dpi:=300
             )
         End If
     End Function

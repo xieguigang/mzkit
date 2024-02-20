@@ -1,4 +1,4 @@
-# NMR
+﻿# NMR
 
 plot NMR spectrum data
 
