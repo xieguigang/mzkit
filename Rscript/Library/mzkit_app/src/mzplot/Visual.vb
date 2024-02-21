@@ -60,6 +60,7 @@
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.Comprehensive
@@ -120,6 +121,7 @@ Module Visual
         Call Internal.generic.add("plot", GetType(RtShift()), AddressOf plotRtShifts)
     End Sub
 
+    <RGenericOverloads("plot")>
     Private Function plotRtShifts(rt_shifts As RtShift(), args As list, env As Environment) As Object
         Dim samples = rt_shifts _
             .GroupBy(Function(a) a.sample) _
@@ -165,6 +167,7 @@ Module Visual
                             gridFill:=fill_color)
     End Function
 
+    <RGenericOverloads("plot")>
     Private Function plotAlignments(aligns As AlignmentOutput, args As list, env As Environment) As Object
         Dim pairwise = aligns.GetAlignmentMirror
         Dim title As String = args.getValue("title", env, [default]:=$"{aligns.query.id} vs {aligns.reference.id}")
@@ -180,6 +183,7 @@ Module Visual
         )
     End Function
 
+    <RGenericOverloads("plot")>
     Private Function plotPeaktable(peakSet As PeakSet, args As list, env As Environment) As Object
         Dim theme As New Theme With {
             .axisLabelCSS = "font-style: normal; font-size: 12; font-family: " & FontFace.CambriaMath & ";",
@@ -189,6 +193,7 @@ Module Visual
         Return app.Plot()
     End Function
 
+    <RGenericOverloads("plot")>
     Private Function plotGCxGCTic2D(x As D2Chromatogram(), args As list, env As Environment) As Object
         Dim theme As New Theme With {
             .padding = args.getValue("padding", env, "padding: 250px 500px 200px 200px;"),
@@ -230,6 +235,7 @@ Module Visual
     ''' <param name="env"></param>
     ''' <returns></returns>
     ''' 
+    <RGenericOverloads("plot")>
     <Extension>
     Private Function plotOverlaps(x As ChromatogramOverlap, args As list, env As Environment) As Object
         Dim isBPC As Boolean = args.getValue("bpc", env, [default]:=False)
@@ -303,6 +309,8 @@ Module Visual
     ''' <param name="args"></param>
     ''' <param name="env"></param>
     ''' <returns></returns>
+    ''' 
+    <RGenericOverloads("plot")>
     Private Function plotRawChromatogram(x As mzPack, args As list, env As Environment) As Object
         Dim chr As Chromatogram = x.Chromatogram
 
@@ -317,11 +325,13 @@ Module Visual
         Return plotChromatogram(chr, args, env)
     End Function
 
+    <RGenericOverloads("plot")>
     <Extension>
     Private Function plotTIC2(x As D2Chromatogram, args As list, env As Environment) As Object
         Return x.chromatogram.plotTIC(args, env)
     End Function
 
+    <RGenericOverloads("plot")>
     <Extension>
     Private Function plotTIC(x As ChromatogramTick(), args As list, env As Environment) As Object
         Dim name As String = args.getValue("name", env, [default]:="unknown")
@@ -352,6 +362,8 @@ Module Visual
     ''' <param name="args"></param>
     ''' <param name="env"></param>
     ''' <returns></returns>
+    ''' 
+    <RGenericOverloads("plot")>
     Private Function plotChromatogram(x As Chromatogram, args As list, env As Environment) As Object
         Dim isBPC As Boolean = args.getValue("bpc", env, [default]:=False)
         Dim data As ChromatogramTick() = x.GetTicks(isBPC).ToArray
@@ -359,14 +371,17 @@ Module Visual
         Return data.plotTIC(args, env)
     End Function
 
+    <RGenericOverloads("plot")>
     Private Function plotSignal(x As GeneralSignal, args As list, env As Environment) As Object
         Return plotSignal2({x}, args, env)
     End Function
 
+    <RGenericOverloads("plot")>
     Private Function plotSignal2(x As GeneralSignal(), args As list, env As Environment) As Object
         Return PlotUVSignals(x, env:=env)
     End Function
 
+    <RGenericOverloads("plot")>
     Private Function plotMS(spectrum As Object, args As list, env As Environment) As Object
         Dim title As String = args.getValue(Of String)("title", env, Nothing)
         Dim mirror As Boolean = args.getValue("mirror", env, False)

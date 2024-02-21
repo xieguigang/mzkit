@@ -60,6 +60,7 @@
 
 Imports System.IO
 Imports System.Text
+Imports BioNovoGene.Analytical.MassSpectrometry
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram

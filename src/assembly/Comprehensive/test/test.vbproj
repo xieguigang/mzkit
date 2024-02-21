@@ -128,53 +128,92 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\GCModeller\src\R-sharp\R#\R.vbproj">
-      <Project>{0c2eb77c-39f2-460d-a3f8-ce905f867637}</Project>
-      <Name>R</Name>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\BinaryData\binarydata-netcore5.vbproj">
+      <Project>{049b2e61-ce52-4782-9517-5d17a92e82dc}</Project>
+      <Name>binarydata-netcore5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\BinaryData\BinaryData.vbproj">
-      <Project>{487d7c92-d05a-4908-bf81-e6baba0bf592}</Project>
-      <Name>BinaryData</Name>
+    <ProjectReference Include="..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\HDSPack\HDSPack.vbproj">
+      <Project>{fc9d8d37-61bb-4786-865d-536d053851cc}</Project>
+      <Name>HDSPack</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\DataStorage\DataStorage.vbproj">
-      <Project>{3c79ae03-a766-4b61-bdc4-824d78481b53}</Project>
-      <Name>DataStorage</Name>
+    <ProjectReference Include="..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\msgpack\msgpack-netcore5.vbproj">
+      <Project>{a65e88d5-17c1-493f-9e02-b6f8fdf82401}</Project>
+      <Name>msgpack-netcore5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\DataFrame\47_dotnet_ms-vb_data.framework.vbproj">
-      <Project>{7283c179-f852-4ead-8d8f-b82ef2cbd7db}</Project>
-      <Name>47_dotnet_ms-vb_data.framework</Name>
+    <ProjectReference Include="..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\netCDF\netCDF.vbproj">
+      <Project>{d313df8b-d336-4e40-975c-5b7cba673c89}</Project>
+      <Name>netCDF</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\Math\math-core.vbproj">
-      <Project>{e3367b88-5d0c-495a-8273-331656d4b5aa}</Project>
-      <Name>math-core</Name>
+    <ProjectReference Include="..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\DataFrame\dataframework-netcore5.vbproj">
+      <Project>{89b72ec0-756f-43dd-ba4c-421c54fd2e75}</Project>
+      <Name>dataframework-netcore5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\SignalProcessing\SignalProcessing\SignalProcessing.vbproj">
-      <Project>{83975074-cbe1-4abc-ba91-91d63da156c8}</Project>
-      <Name>SignalProcessing</Name>
+    <ProjectReference Include="..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Graph\graph-netcore5.vbproj">
+      <Project>{be08d620-498f-4247-a577-11b55c08d1df}</Project>
+      <Name>graph-netcore5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\47-dotnet_Microsoft.VisualBasic.vbproj">
-      <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
-      <Name>47-dotnet_Microsoft.VisualBasic</Name>
+    <ProjectReference Include="..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\DataFittings\linear-netcore5.vbproj">
+      <Project>{8cf0aeb7-3650-4ac6-a895-0a3b7d0b0564}</Project>
+      <Name>linear-netcore5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\mzmath\ms2_math-core\MassSpectrum.math-core.vbproj">
-      <Project>{a2130297-2b4a-4b02-80b2-5cfa860f6dae}</Project>
-      <Name>MassSpectrum.math-core</Name>
+    <ProjectReference Include="..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\Math\Math.NET5.vbproj">
+      <Project>{d5212c70-3bdf-4f63-a5ce-b1a874498383}</Project>
+      <Name>Math.NET5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\assembly\assembly.vbproj">
-      <Project>{95f7d65e-9db1-4605-9fd3-25433277af88}</Project>
-      <Name>assembly</Name>
+    <ProjectReference Include="..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\SignalProcessing\SignalProcessing\signalprocessing-netcore5.vbproj">
+      <Project>{16adb84b-e267-4170-9c55-3fbeb00f37fb}</Project>
+      <Name>signalprocessing-netcore5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\mzPack\mzPack.vbproj">
-      <Project>{a1cb72f1-e918-4146-82a4-f409f31700b6}</Project>
-      <Name>mzPack</Name>
+    <ProjectReference Include="..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\gr\Landscape\Landscape.vbproj">
+      <Project>{ecb716ef-4dce-43f4-b9d1-dc8121b4e9a0}</Project>
+      <Name>Landscape</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\ThermoRawFileReader\ThermoRawFileReader.vbproj">
-      <Project>{b2a12d83-0b7b-45e5-8eee-7fe0f2d6a979}</Project>
-      <Name>ThermoRawFileReader</Name>
+    <ProjectReference Include="..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\imaging.NET5.vbproj">
+      <Project>{1e7e68a1-f8c7-4098-86c1-41b27f18ff69}</Project>
+      <Name>imaging.NET5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Comprehensive.vbproj">
-      <Project>{6f5f8407-deb8-4b75-bf41-5284772d37dd}</Project>
-      <Name>Comprehensive</Name>
+    <ProjectReference Include="..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj">
+      <Project>{3890cef5-800d-45ea-97d8-88491f01e001}</Project>
+      <Name>Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\mime\text%25html\html_netcore5.vbproj">
+      <Project>{45bb5aac-d7e3-499d-8c53-491d06c41cd3}</Project>
+      <Name>html_netcore5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\mzmath\ms2_math-core\mzmath-netcore5.vbproj">
+      <Project>{dc4ea5b8-10f5-41e0-8576-1ab1671804b0}</Project>
+      <Name>mzmath-netcore5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\mzmath\mz_deco\deconv.NET5.vbproj">
+      <Project>{73a65e83-4f50-480e-9b07-19e5df42d7b4}</Project>
+      <Name>deconv.NET5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\mzmath\SingleCells\SingleCells.vbproj">
+      <Project>{64fc46bd-6f4e-4c28-ba0e-db4d44a34db9}</Project>
+      <Name>SingleCells</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\assembly\assembly-netcore5.vbproj">
+      <Project>{f9545760-8b08-455d-ae1f-5da12b3f3367}</Project>
+      <Name>assembly-netcore5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\mzPack\mzpack.NET5.vbproj">
+      <Project>{e792c70f-d19a-469c-8d01-74f906aa21f8}</Project>
+      <Name>mzpack.NET5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\SignalReader\SignalReader.vbproj">
+      <Project>{e60ee2da-ef6f-41c1-a5bd-83de0be773e0}</Project>
+      <Name>SignalReader</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\ThermoRawFileReader\MSFileReader.NET5.vbproj">
+      <Project>{5c734510-f610-4487-a607-9a0f075be487}</Project>
+      <Name>MSFileReader.NET5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Comprehensive.NET5.vbproj">
+      <Project>{2737fcc0-6d58-4022-a24b-c41811b66c1f}</Project>
+      <Name>Comprehensive.NET5</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />

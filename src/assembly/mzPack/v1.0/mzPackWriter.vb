@@ -95,7 +95,7 @@ Public Class mzPackWriter : Inherits BinaryStreamWriter
         End If
     End Sub
 
-    Public Sub AddOtherScanner(key As String, data As ChromatogramOverlap)
+    Public Sub AddOtherScanner(key As String, data As ChromatogramOverlapList)
         Dim file As String = $"{worktemp}/{key.NormalizePathString}.cdf"
 
         Using buffer As Stream = file.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False)

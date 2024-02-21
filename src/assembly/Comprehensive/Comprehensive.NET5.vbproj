@@ -142,7 +142,6 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\BinaryData\binarydata-netcore5.vbproj" />
-		<ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\DataStorage\datastorage-netcore5.vbproj" />
 		<ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\DataFrame\dataframework-netcore5.vbproj" />
 		<ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\Math\Math.NET5.vbproj" />
 		<ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\SignalProcessing\SignalProcessing\signalprocessing-netcore5.vbproj" />
@@ -153,6 +152,7 @@
 		<ProjectReference Include="..\..\mzmath\SingleCells\SingleCells.vbproj" />
 		<ProjectReference Include="..\assembly\assembly-netcore5.vbproj" />
 		<ProjectReference Include="..\mzPack\mzpack.NET5.vbproj" />
+		<ProjectReference Include="..\ThermoRawFileReader\MSFileReader.NET5.vbproj" />
 		
 
 	</ItemGroup>

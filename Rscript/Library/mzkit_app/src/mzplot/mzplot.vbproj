@@ -153,6 +153,7 @@
     <ProjectReference Include="../../..\..\..\src\visualize\plot\MsPlot.NET5.vbproj" />
     <ProjectReference Include="../../..\..\..\src\visualize\SDF.Extensions\SDF.Extensions.NET5.vbproj" />
     <ProjectReference Include="../../..\..\..\src\visualize\TissueMorphology\TissueMorphology.vbproj" />
+    <ProjectReference Include="..\..\..\..\..\src\assembly\LoadR.NET5\LoadR.NET5.vbproj" />
   </ItemGroup>
 
   <ItemGroup>

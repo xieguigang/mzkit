@@ -74,7 +74,7 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Public Module PackCDF
 
     <Extension>
-    Public Function UnionTimeSeq(overlaps As ChromatogramOverlap, Optional dt As Double = -1) As Double()
+    Public Function UnionTimeSeq(overlaps As ChromatogramOverlapList, Optional dt As Double = -1) As Double()
         Dim union As Double() = overlaps.overlaps _
             .Values _
             .Select(Function(sig) sig.scan_time) _
@@ -105,7 +105,7 @@ Public Module PackCDF
     ''' |TIC|BPC|
     ''' </remarks>
     <Extension>
-    Public Sub SavePackData(overlaps As ChromatogramOverlap, file As Stream)
+    Public Sub SavePackData(overlaps As ChromatogramOverlapList, file As Stream)
         Dim scan_time As Double() = overlaps.UnionTimeSeq
         Dim line As doubles = scan_time
         Dim length As New Dimension With {.name = "scan_length", .size = scan_time.Length}
@@ -152,12 +152,12 @@ Public Module PackCDF
     ''' <param name="file"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function ReadPackData(file As Stream) As ChromatogramOverlap
+    Public Function ReadPackData(file As Stream) As ChromatogramOverlapList
         Using cdf As New netCDFReader(file)
             Dim nameStr As String = DirectCast(cdf.getDataVariable("signalNames"), chars)
             Dim names As String() = nameStr.LoadJSON(Of String())
             Dim scan_time As Double() = CType(cdf.getDataVariable("scan_time"), doubles)
-            Dim overlaps As New ChromatogramOverlap With {
+            Dim overlaps As New ChromatogramOverlapList With {
                 .overlaps = New Dictionary(Of String, Chromatogram)
             }
             Dim joinData As Double()()

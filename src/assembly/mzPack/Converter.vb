@@ -273,7 +273,7 @@ imzML:      Return LoadimzML(xml, intocutoff, Sub(p, msg) progress($"{msg}...{p}
         Dim UVdetecor As String = ExtractUVData.GetPhotodiodeArrayDetectorInstrumentConfigurationId(xml)
         Dim scanLoader As New mzMLScans(mzErr:=tolerance, intocutoff:=intocutoff)
         Dim MS As ScanMS1() = scanLoader.Load(xml, progress).ToArray
-        Dim UV As New ChromatogramOverlap
+        Dim UV As New ChromatogramOverlapList
         Dim PDA As New List(Of ChromatogramTick)
 
         For Each time_scan As GeneralSignal In scanLoader.GetUVScans(UVdetecor)
@@ -296,7 +296,7 @@ imzML:      Return LoadimzML(xml, intocutoff, Sub(p, msg) progress($"{msg}...{p}
             End If
         Next
 
-        Dim PDAPlot As New ChromatogramOverlap
+        Dim PDAPlot As New ChromatogramOverlapList
 
         PDAPlot("PDA") = New chromatogramObj With {
             .scan_time = PDA.Select(Function(t) t.Time).ToArray,
@@ -304,7 +304,7 @@ imzML:      Return LoadimzML(xml, intocutoff, Sub(p, msg) progress($"{msg}...{p}
             .BPC = .TIC
         }
 
-        Dim otherScanner As New Dictionary(Of String, ChromatogramOverlap)
+        Dim otherScanner As New Dictionary(Of String, ChromatogramOverlapList)
 
         If UV.length > 0 Then
             otherScanner(ExtractUVData.UVScanType) = UV
@@ -326,7 +326,7 @@ imzML:      Return LoadimzML(xml, intocutoff, Sub(p, msg) progress($"{msg}...{p}
             Return
         End If
 
-        Dim time_scans As ChromatogramOverlap = mzpack.Scanners(ExtractUVData.UVScanType)
+        Dim time_scans As ChromatogramOverlapList = mzpack.Scanners(ExtractUVData.UVScanType)
         Dim PDA As chromatogramObj = mzpack.Scanners!PDA!PDA
         Dim scan As chromatogramObj
         Dim UV As UVScan
