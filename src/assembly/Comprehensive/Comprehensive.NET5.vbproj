@@ -152,6 +152,7 @@
 		<ProjectReference Include="..\..\mzmath\SingleCells\SingleCells.vbproj" />
 		<ProjectReference Include="..\assembly\assembly-netcore5.vbproj" />
 		<ProjectReference Include="..\mzPack\mzpack.NET5.vbproj" />
+		<ProjectReference Include="..\ThermoRawFileReader\MSFileReader.NET5.vbproj" />
 		
 
 	</ItemGroup>
