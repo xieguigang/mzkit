@@ -84,7 +84,7 @@ Public Class GCMSnetCDF
     Public Property scan_index As Integer()
     Public Property point_count As Integer()
     Public Property flag_count As Integer()
-    Public Property mass_values As Short()
+    Public Property mass_values As Single()
     Public Property intensity_values As Single()
     Public Property metadata As New Dictionary(Of String, String)
 
