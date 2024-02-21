@@ -132,7 +132,6 @@
 		<ProjectReference Include="..\BrukerDataReader\BrukerDataReader.NET5.vbproj" />
 		<ProjectReference Include="..\Comprehensive\Comprehensive.NET5.vbproj" />
 		<ProjectReference Include="..\mzPack\mzpack.NET5.vbproj" />
-		<ProjectReference Include="..\sciexWiffReader\sciexWiffReader.NET5.vbproj" />
 		<ProjectReference Include="..\SignalReader\SignalReader.vbproj" />
 
 
