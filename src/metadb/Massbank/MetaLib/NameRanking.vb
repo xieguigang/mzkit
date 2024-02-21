@@ -63,7 +63,17 @@ Namespace MetaLib
             Return eval
         End Function
 
-        Public Function Ranking(names As IEnumerable(Of String), Optional maxLen As Integer = 32, Optional minLen As Integer = 5) As IEnumerable(Of NumericTagged(Of String))
+        ''' <summary>
+        ''' ranking the input names with score order in desc
+        ''' </summary>
+        ''' <param name="names"></param>
+        ''' <param name="maxLen"></param>
+        ''' <param name="minLen"></param>
+        ''' <returns></returns>
+        Public Function Ranking(names As IEnumerable(Of String),
+                                Optional maxLen As Integer = 32,
+                                Optional minLen As Integer = 5) As IEnumerable(Of NumericTagged(Of String))
+
             Return From name As String
                    In names
                    Let score As Double = NameRanking.Score(name, maxLen, minLen)

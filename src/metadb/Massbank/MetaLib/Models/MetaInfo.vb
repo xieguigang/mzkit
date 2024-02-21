@@ -58,6 +58,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.Annotations
 Imports BioNovoGene.BioDeep.Chemistry.MetaLib.CrossReference
 Imports BioNovoGene.BioDeep.Chemoinformatics
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
@@ -77,16 +78,18 @@ Namespace MetaLib.Models
     ''' </remarks>
     Public Class MetaInfo : Implements INamedValue
         Implements IEquatable(Of MetaInfo)
+        ' the abstract metabolite annotation data model
+        Implements IReadOnlyId, IExactMassProvider, ICompoundNameProvider, IFormulaProvider
 
         ''' <summary>
         ''' 该物质在整合库之中的唯一标识符
         ''' </summary>
         ''' <returns></returns>
-        <MessagePackMember(0)> <XmlAttribute> Public Property ID As String Implements IKeyedEntity(Of String).Key
-        <MessagePackMember(1)> <XmlAttribute> Public Property formula As String
-        <MessagePackMember(2)> <XmlAttribute> Public Property exact_mass As Double
+        <MessagePackMember(0)> <XmlAttribute> Public Property ID As String Implements IKeyedEntity(Of String).Key, IReadOnlyId.Identity
+        <MessagePackMember(1)> <XmlAttribute> Public Property formula As String Implements IFormulaProvider.Formula
+        <MessagePackMember(2)> <XmlAttribute> Public Property exact_mass As Double Implements IExactMassProvider.ExactMass
 
-        <MessagePackMember(3)> Public Property name As String
+        <MessagePackMember(3)> Public Property name As String Implements ICompoundNameProvider.CommonName
         <MessagePackMember(4)> Public Property IUPACName As String
         <MessagePackMember(5)> Public Property description As String
         <XmlElement>

@@ -234,5 +234,16 @@ declare namespace massbank {
         * + default value Is ``null``.
       */
       function lipidmaps(lipidmaps: any, file: any, env?: object): any;
+      /**
+       * write the metabolite annotation data collection as messagepack
+       * 
+       * 
+        * @param metadb should be a collection of the mzkit metabolite annotation model @``T:BioNovoGene.BioDeep.Chemistry.MetaLib.Models.MetaLib``.
+        * @param file the file to the target messagepack file
+        * @param env -
+        * 
+        * + default value Is ``null``.
+      */
+      function metalib(metadb: any, file: any, env?: object): any;
    }
 }

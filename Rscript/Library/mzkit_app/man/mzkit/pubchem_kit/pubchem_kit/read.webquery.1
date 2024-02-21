@@ -1,16 +1,33 @@
 .\" man page create by R# package system.
 .TH PUBCHEM_KIT 1 2000-Jan "read.webquery" "read.webquery"
 .SH NAME
-read.webquery \- 
+read.webquery \- read the pubchem webquery summary xml file
 .SH SYNOPSIS
-\fIread.webquery(\fBfile\fR as string);\fR
+\fIread.webquery(\fBfile\fR as string, 
+\fBconvert_std\fR as boolean = FALSE);\fR
+.SH DESCRIPTION
+.PP
+read the pubchem webquery summary xml file
+.PP
 .SH OPTIONS
 .PP
-\fBfile\fB \fR\- -. 
+\fBfile\fB \fR\- 
+ the file path to the pubchem query search result file, the data file which
+ could be downloaded from the query result url example like: 
+ 
+ > https://pubchem.ncbi.nlm.nih.gov/sdq/sdqagent.cgi?infmt=json&outfmt=xml&query={%22download%22:%22*%22,%22collection%22:%22compound%22,%22order%22:[%22relevancescore,desc%22],%22start%22:1,%22limit%22:10000000,%22downloadfilename%22:%22PubChem_compound_text_kegg%22,%22where%22:{%22ands%22:[{%22*%22:%22kegg%22}]}}
+. 
+.PP
+.PP
+\fBconvert_std\fB \fR\- 
+ convert to a unify metabolite data model inside mzkit?
+. 
 .PP
 .SH VALUE
 .PP
-A collection of the pubchem query summary download result file
+A collection of the pubchem query summary @\fBT:BioNovoGene.BioDeep.Chemistry.NCBI.PubChem.Web.QueryXml\fR object
+ (or @\fBT:BioNovoGene.BioDeep.Chemistry.MetaLib.Models.MetaLib\fR data model if the parameter **`convert_std`** 
+ has been set to \fBtrue\fR) that parsed from download result file.
 .PP
 .SH SEE ALSO
 pubchem_kit

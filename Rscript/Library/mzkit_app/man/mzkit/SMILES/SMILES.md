@@ -1,4 +1,4 @@
-# SMILES
+﻿# SMILES
 
 ### Simplified molecular-input line-entry system
  

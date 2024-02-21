@@ -1,4 +1,4 @@
-# pubchem_kit
+﻿# pubchem_kit
 
 toolkit for handling of the ncbi pubchem data
 > PubChem is a database of chemical molecules and their activities against biological assays. 
@@ -37,7 +37,7 @@ toolkit for handling of the ncbi pubchem data
 + [pugView](pubchem_kit/pugView.1) query pubchem data via a given cid value
 + [SID_map](pubchem_kit/SID_map.1) parse the pubchem sid map data file
 + [read.pugView](pubchem_kit/read.pugView.1) read xml text and then parse as pugview record data object
-+ [read.webquery](pubchem_kit/read.webquery.1) 
++ [read.webquery](pubchem_kit/read.webquery.1) read the pubchem webquery summary xml file
 + [metadata.pugView](pubchem_kit/metadata.pugView.1) extract the compound annotation data
 + [read.mesh_tree](pubchem_kit/read.mesh_tree.1) Parse the mesh ontology tree
 + [mesh_background](pubchem_kit/mesh_background.1) create MeSH ontology gsea background based on the mesh tree

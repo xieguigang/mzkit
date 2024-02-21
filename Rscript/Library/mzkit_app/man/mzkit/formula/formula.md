@@ -1,4 +1,4 @@
-# formula
+﻿# formula
 
 The chemical formulae toolkit
  

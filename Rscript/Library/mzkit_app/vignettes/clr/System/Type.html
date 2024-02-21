@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>System.Type</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <table style="width: 100%;">
+            <tr>
+                <td>Type {System}</td>
+                <td style="text-align: right;">.NET clr documentation</td>
+            </tr>
+        </table>
+
+        <h2>Type</h2>
+
+        <h3>Description</h3>
+
+        
+
+        <h3>Declare</h3>        
+
+        <pre>
+            <code id="clr_ts">
+# namespace System
+export class Type extends <a href="/vignettes/clr/System/Reflection/MemberInfo.html">MemberInfo</a> {
+   Assembly: <a href="/vignettes/clr/System/Reflection/Assembly.html">Assembly</a>;
+   AssemblyQualifiedName: string;
+   Attributes: <a href="/vignettes/clr/System/Reflection/TypeAttributes.html">TypeAttributes</a>;
+   BaseType: <a href="/vignettes/clr/System/Type.html">Type</a>;
+   ContainsGenericParameters: boolean;
+   CustomAttributes: <a href="/vignettes/clr/System/Collections/Generic/IEnumerable`1.html">IEnumerable`1</a>;
+   DeclaringMethod: <a href="/vignettes/clr/System/Reflection/MethodBase.html">MethodBase</a>;
+   DeclaringType: <a href="/vignettes/clr/System/Type.html">Type</a>;
+   FullName: string;
+   GenericParameterAttributes: <a href="/vignettes/clr/System/Reflection/GenericParameterAttributes.html">GenericParameterAttributes</a>;
+   GenericParameterPosition: integer;
+   GenericTypeArguments: <a href="/vignettes/clr/System/Type.html">Type[]</a>;
+   GUID: <a href="/vignettes/clr/System/Guid.html">Guid</a>;
+   HasElementType: boolean;
+   IsAbstract: boolean;
+   IsAnsiClass: boolean;
+   IsArray: boolean;
+   IsAutoClass: boolean;
+   IsAutoLayout: boolean;
+   IsByRef: boolean;
+   IsByRefLike: boolean;
+   IsClass: boolean;
+   IsCollectible: boolean;
+   IsCOMObject: boolean;
+   IsConstructedGenericType: boolean;
+   IsContextful: boolean;
+   IsEnum: boolean;
+   IsExplicitLayout: boolean;
+   IsGenericMethodParameter: boolean;
+   IsGenericParameter: boolean;
+   IsGenericType: boolean;
+   IsGenericTypeDefinition: boolean;
+   IsGenericTypeParameter: boolean;
+   IsImport: boolean;
+   IsInterface: boolean;
+   IsLayoutSequential: boolean;
+   IsMarshalByRef: boolean;
+   IsNested: boolean;
+   IsNestedAssembly: boolean;
+   IsNestedFamANDAssem: boolean;
+   IsNestedFamily: boolean;
+   IsNestedFamORAssem: boolean;
+   IsNestedPrivate: boolean;
+   IsNestedPublic: boolean;
+   IsNotPublic: boolean;
+   IsPointer: boolean;
+   IsPrimitive: boolean;
+   IsPublic: boolean;
+   IsSealed: boolean;
+   IsSecurityCritical: boolean;
+   IsSecuritySafeCritical: boolean;
+   IsSecurityTransparent: boolean;
+   IsSerializable: boolean;
+   IsSignatureType: boolean;
+   IsSpecialName: boolean;
+   IsSZArray: boolean;
+   IsTypeDefinition: boolean;
+   IsUnicodeClass: boolean;
+   IsValueType: boolean;
+   IsVariableBoundArray: boolean;
+   IsVisible: boolean;
+   MemberType: <a href="/vignettes/clr/System/Reflection/MemberTypes.html">MemberTypes</a>;
+   MetadataToken: integer;
+   Module: <a href="/vignettes/clr/System/Reflection/Module.html">Module</a>;
+   Name: string;
+   Namespace: string;
+   ReflectedType: <a href="/vignettes/clr/System/Type.html">Type</a>;
+   StructLayoutAttribute: <a href="/vignettes/clr/System/Runtime/InteropServices/StructLayoutAttribute.html">StructLayoutAttribute</a>;
+   TypeHandle: <a href="/vignettes/clr/System/RuntimeTypeHandle.html">RuntimeTypeHandle</a>;
+   TypeInitializer: <a href="/vignettes/clr/System/Reflection/ConstructorInfo.html">ConstructorInfo</a>;
+   UnderlyingSystemType: <a href="/vignettes/clr/System/Type.html">Type</a>;
+}
+</code>
+        </pre>
+
+        <h3>.NET clr type reference tree</h3>
+
+        <ol>
+<li>this class extends from <a href="/vignettes/clr/System/Reflection/MemberInfo.html">MemberInfo</a> class: <a href="/vignettes/clr/System/Reflection/MemberInfo.html">MemberInfo</a></li>
+<li>use by <i>property</i> member <code>Assembly</code>: <a href="/vignettes/clr/System/Reflection/Assembly.html">Assembly</a></li>
+<li>use by <i>property</i> member <code>Attributes</code>: <a href="/vignettes/clr/System/Reflection/TypeAttributes.html">TypeAttributes</a></li>
+<li>use by <i>property</i> member <code>BaseType</code>: <a href="/vignettes/clr/System/Type.html">Type</a></li>
+<li>use by <i>property</i> member <code>CustomAttributes</code>: <a href="/vignettes/clr/System/Collections/Generic/IEnumerable`1.html">IEnumerable`1</a></li>
+<li>use by <i>property</i> member <code>DeclaringMethod</code>: <a href="/vignettes/clr/System/Reflection/MethodBase.html">MethodBase</a></li>
+<li>use by <i>property</i> member <code>DeclaringType</code>: <a href="/vignettes/clr/System/Type.html">Type</a></li>
+<li>use by <i>property</i> member <code>GenericParameterAttributes</code>: <a href="/vignettes/clr/System/Reflection/GenericParameterAttributes.html">GenericParameterAttributes</a></li>
+<li>use by <i>property</i> member <code>GenericTypeArguments</code>: <a href="/vignettes/clr/System/Type.html">Type</a></li>
+<li>use by <i>property</i> member <code>GUID</code>: <a href="/vignettes/clr/System/Guid.html">Guid</a></li>
+<li>use by <i>property</i> member <code>MemberType</code>: <a href="/vignettes/clr/System/Reflection/MemberTypes.html">MemberTypes</a></li>
+<li>use by <i>property</i> member <code>Module</code>: <a href="/vignettes/clr/System/Reflection/Module.html">Module</a></li>
+<li>use by <i>property</i> member <code>ReflectedType</code>: <a href="/vignettes/clr/System/Type.html">Type</a></li>
+<li>use by <i>property</i> member <code>StructLayoutAttribute</code>: <a href="/vignettes/clr/System/Runtime/InteropServices/StructLayoutAttribute.html">StructLayoutAttribute</a></li>
+<li>use by <i>property</i> member <code>TypeHandle</code>: <a href="/vignettes/clr/System/RuntimeTypeHandle.html">RuntimeTypeHandle</a></li>
+<li>use by <i>property</i> member <code>TypeInitializer</code>: <a href="/vignettes/clr/System/Reflection/ConstructorInfo.html">ConstructorInfo</a></li>
+<li>use by <i>property</i> member <code>UnderlyingSystemType</code>: <a href="/vignettes/clr/System/Type.html">Type</a></li>
+</ol>
+
+
+        <hr />
+        <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a
+                href="../{$package}.html">Index</a>]
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
+<script type="text/javascript" src="../../_assets/highlights.js"></script>
+<script type="text/javascript">r_highlights("clr_ts");</script>
+
+</html>

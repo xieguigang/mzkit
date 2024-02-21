@@ -59,6 +59,7 @@
 Imports BioNovoGene.BioDeep.Chemistry.MetaLib.CrossReference
 Imports BioNovoGene.BioDeep.Chemoinformatics
 Imports Microsoft.VisualBasic.Data.IO.MessagePack.Serialization
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace MetaLib.Models
 
@@ -67,6 +68,10 @@ Namespace MetaLib.Models
         <MessagePackMember(0)> Public Property biosample As String
         <MessagePackMember(1)> Public Property source As String
         <MessagePackMember(2)> Public Property reference As String
+
+        Public Overrides Function ToString() As String
+            Return Me.GetJson
+        End Function
 
     End Class
 
@@ -79,11 +84,11 @@ Namespace MetaLib.Models
     ''' </remarks>
     Public Class CompoundClass : Implements ICompoundClass
 
-        Public Property kingdom As String Implements ICompoundClass.kingdom
-        Public Property super_class As String Implements ICompoundClass.super_class
-        Public Property [class] As String Implements ICompoundClass.class
-        Public Property sub_class As String Implements ICompoundClass.sub_class
-        Public Property molecular_framework As String Implements ICompoundClass.molecular_framework
+        <MessagePackMember(0)> Public Property kingdom As String Implements ICompoundClass.kingdom
+        <MessagePackMember(1)> Public Property super_class As String Implements ICompoundClass.super_class
+        <MessagePackMember(2)> Public Property [class] As String Implements ICompoundClass.class
+        <MessagePackMember(3)> Public Property sub_class As String Implements ICompoundClass.sub_class
+        <MessagePackMember(4)> Public Property molecular_framework As String Implements ICompoundClass.molecular_framework
 
     End Class
 
