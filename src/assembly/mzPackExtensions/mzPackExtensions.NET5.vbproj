@@ -120,7 +120,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\..\..\GCModeller\src\R-sharp\R#\Rsharp-netcore5.vbproj" />
 		<ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\BinaryData\binarydata-netcore5.vbproj" />
 		<ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\DataStorage\datastorage-netcore5.vbproj" />
 		<ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\msgpack\msgpack-netcore5.vbproj" />
@@ -133,6 +132,7 @@
 		<ProjectReference Include="..\BrukerDataReader\BrukerDataReader.NET5.vbproj" />
 		<ProjectReference Include="..\Comprehensive\Comprehensive.NET5.vbproj" />
 		<ProjectReference Include="..\mzPack\mzpack.NET5.vbproj" />
+		<ProjectReference Include="..\sciexWiffReader\sciexWiffReader.NET5.vbproj" />
 		<ProjectReference Include="..\SignalReader\SignalReader.vbproj" />
 
 
