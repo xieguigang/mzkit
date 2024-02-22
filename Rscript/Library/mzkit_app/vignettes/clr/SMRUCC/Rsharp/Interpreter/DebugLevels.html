@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>SMRUCC.Rsharp.Interpreter.DebugLevels</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <table style="width: 100%;">
+            <tr>
+                <td>DebugLevels {SMRUCC.Rsharp.Interpreter}</td>
+                <td style="text-align: right;">.NET clr documentation</td>
+            </tr>
+        </table>
+
+        <h2>DebugLevels</h2>
+
+        <h3>Description</h3>
+
+        <p>debug echo verbose level for the R# interpreter engine</p>
+
+        <h3>Declare</h3>        
+
+        <pre>
+            <code id="clr_ts">
+# namespace SMRUCC.Rsharp.Interpreter
+export class DebugLevels extends <a href="/vignettes/clr/System/Enum.html">Enum</a> {
+   # print all data on the console
+   All: <a href="/vignettes/clr/SMRUCC/Rsharp/Interpreter/DebugLevels.html">DebugLevels</a> = 3;
+
+   # debug echo of the memory delta change after execute each expression
+   Memory: <a href="/vignettes/clr/SMRUCC/Rsharp/Interpreter/DebugLevels.html">DebugLevels</a> = 1;
+
+   # no debug echo, normal mode(or production mode)
+   None: <a href="/vignettes/clr/SMRUCC/Rsharp/Interpreter/DebugLevels.html">DebugLevels</a> = 0;
+
+   # print the expression executation stack data
+   Stack: <a href="/vignettes/clr/SMRUCC/Rsharp/Interpreter/DebugLevels.html">DebugLevels</a> = 2;
+
+}
+</code>
+        </pre>
+
+        <h3>.NET clr type reference tree</h3>
+
+        <ol>
+<li>this class extends from <a href="/vignettes/clr/System/Enum.html">Enum</a> class: <a href="/vignettes/clr/System/Enum.html">Enum</a></li>
+<li>use by <i>field</i> member <code>All</code>: <a href="/vignettes/clr/SMRUCC/Rsharp/Interpreter/DebugLevels.html">DebugLevels</a></li>
+<li>use by <i>field</i> member <code>Memory</code>: <a href="/vignettes/clr/SMRUCC/Rsharp/Interpreter/DebugLevels.html">DebugLevels</a></li>
+<li>use by <i>field</i> member <code>None</code>: <a href="/vignettes/clr/SMRUCC/Rsharp/Interpreter/DebugLevels.html">DebugLevels</a></li>
+<li>use by <i>field</i> member <code>Stack</code>: <a href="/vignettes/clr/SMRUCC/Rsharp/Interpreter/DebugLevels.html">DebugLevels</a></li>
+</ol>
+
+
+        <hr />
+        <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a
+                href="../{$package}.html">Index</a>]
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
+<script type="text/javascript" src="../../_assets/highlights.js"></script>
+<script type="text/javascript">r_highlights("clr_ts");</script>
+
+</html>

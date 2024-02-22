@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>SMRUCC.Rsharp.Development.Configuration.Options</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <table style="width: 100%;">
+            <tr>
+                <td>Options {SMRUCC.Rsharp.Development.Configuration}</td>
+                <td style="text-align: right;">.NET clr documentation</td>
+            </tr>
+        </table>
+
+        <h2>Options</h2>
+
+        <h3>Description</h3>
+
+        <p>Data reader of <a href="/vignettes/clr/SMRUCC/Rsharp/Development/Configuration/ConfigFile.html">ConfigFile</a>. The operations in this module will modify <br />
+ the environment configuration of the R# scripting engine and it also controls <br />
+ some of the behaviour of the sciBASIC.NET framework.</p>
+
+        <h3>Declare</h3>        
+
+        <pre>
+            <code id="clr_ts">
+# namespace SMRUCC.Rsharp.Development.Configuration
+export class Options {
+   # [digits]:
+   # 
+   # controls the number of significant (see signif) digits to print when printing 
+   #  numeric values. It is a suggestion only. Valid values are 1...22 with default 
+   #  7. See the note in print.default about values greater than 15.
+   digits: integer;
+   # get default script environments
+   environments: string;
+   # [f64.format]: <code>F</code> or <code>G</code>
+   f64Format: string;
+   HTTPUserAgent: string;
+   julia: string;
+   # Package library repository file path.
+   lib: string;
+   # the folder path for save the installed R# zip packages
+   lib_loc: string;
+   # file path for save the config file
+   localConfig: string;
+   log4vb_redirect: boolean;
+   # Max count number for print vector. integer, defaulting to 999. 
+   #  print or show methods can make use of this option, to limit the 
+   #  amount of information that is printed, to something in the 
+   #  order of (and typically slightly less than) max.print entries.
+   maxPrint: integer;
+   memoryLoad: string;
+   MimeType: <a href="/vignettes/clr/Microsoft/VisualBasic/Net/Protocols/ContentTypes/ContentType.html">ContentType[]</a>;
+   nwarnings: integer;
+   python: string;
+   # 在R#环境之中调用命令行，输出的stdout字符串是使用多行数据返回还是整个文本返回
+   stdout_multipline: boolean;
+   # turn strict mode on?
+   strict: boolean;
+   typescript: string;
+   # logical. Should R report extra information on progress? Set to TRUE by the command-line option <code>--verbose</code>
+   verbose: boolean;
+}
+</code>
+        </pre>
+
+        <h3>.NET clr type reference tree</h3>
+
+        <ol>
+<li>use by <i>property</i> member <code>MimeType</code>: <a href="/vignettes/clr/Microsoft/VisualBasic/Net/Protocols/ContentTypes/ContentType.html">ContentType</a></li>
+</ol>
+
+
+        <hr />
+        <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a
+                href="../{$package}.html">Index</a>]
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
+<script type="text/javascript" src="../../_assets/highlights.js"></script>
+<script type="text/javascript">r_highlights("clr_ts");</script>
+
+</html>

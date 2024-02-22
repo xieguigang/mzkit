@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>SMRUCC.Rsharp.Runtime.Components.Symbol</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <table style="width: 100%;">
+            <tr>
+                <td>Symbol {SMRUCC.Rsharp.Runtime.Components}</td>
+                <td style="text-align: right;">.NET clr documentation</td>
+            </tr>
+        </table>
+
+        <h2>Symbol</h2>
+
+        <h3>Description</h3>
+
+        <p>The variable model in R# language</p>
+
+        <h3>Declare</h3>        
+
+        <pre>
+            <code id="clr_ts">
+# namespace SMRUCC.Rsharp.Runtime.Components
+export class Symbol {
+   # 当前的这个变量被约束的类型
+   constraint: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/TypeCodes.html">TypeCodes</a>;
+   # 当前的变量值的类型代码是否满足类型约束条件
+   constraintValid: boolean;
+   # 当前的这个符号值是否是一个可以被调用的函数对象？
+   isCallable: boolean;
+   # The vector length
+   length: integer;
+   name: string;
+   readonly: boolean;
+   # which runtime stack that this variable symbol is created?
+   stacktrace: <a href="/vignettes/clr/Microsoft/VisualBasic/ApplicationServices/Debugging/Diagnostics/StackFrame.html">StackFrame[]</a>;
+   # 当前的这个变量的值所具有的类型代码
+   typeCode: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/TypeCodes.html">TypeCodes</a>;
+   # <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Interop/RType.html">RType</a>.<a href="#">fullName</a>, key for <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/GlobalEnvironment.html">GlobalEnvironment</a>.<a href="#">types</a>
+   typeId: string;
+   # Get the .net clr type of the current object <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/Symbol.html">Symbol</a>.<a href="#">value</a>.
+   typeof: <a href="/vignettes/clr/System/Type.html">Type</a>;
+   # 变量值对于基础类型而言，都是以数组的形式存储的
+   #  非基础类型则为其值本身
+   value: <i>any</i> kind;
+}
+</code>
+        </pre>
+
+        <h3>.NET clr type reference tree</h3>
+
+        <ol>
+<li>use by <i>property</i> member <code>constraint</code>: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/TypeCodes.html">TypeCodes</a></li>
+<li>use by <i>property</i> member <code>stacktrace</code>: <a href="/vignettes/clr/Microsoft/VisualBasic/ApplicationServices/Debugging/Diagnostics/StackFrame.html">StackFrame</a></li>
+<li>use by <i>property</i> member <code>typeCode</code>: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/TypeCodes.html">TypeCodes</a></li>
+<li>use by <i>property</i> member <code>typeof</code>: <a href="/vignettes/clr/System/Type.html">Type</a></li>
+<li>use by <i>property</i> member <code>value</code>: <i>any</i> kind</li>
+</ol>
+
+
+        <hr />
+        <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a
+                href="../{$package}.html">Index</a>]
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
+<script type="text/javascript" src="../../_assets/highlights.js"></script>
+<script type="text/javascript">r_highlights("clr_ts");</script>
+
+</html>

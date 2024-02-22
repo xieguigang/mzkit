@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>SMRUCC.Rsharp.Runtime.GlobalEnvironment</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <table style="width: 100%;">
+            <tr>
+                <td>GlobalEnvironment {SMRUCC.Rsharp.Runtime}</td>
+                <td style="text-align: right;">.NET clr documentation</td>
+            </tr>
+        </table>
+
+        <h2>GlobalEnvironment</h2>
+
+        <h3>Description</h3>
+
+        <p>the global environment of the R# interpreter runtime.</p>
+
+<p>R#之中的全局环境对象</p>
+
+        <h3>Declare</h3>        
+
+        <pre>
+            <code id="clr_ts">
+# namespace SMRUCC.Rsharp.Runtime
+export class GlobalEnvironment extends <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Environment.html">Environment</a> {
+   attachedNamespace: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/SymbolNamespaceSolver.html">SymbolNamespaceSolver</a>;
+   debugLevel: <a href="/vignettes/clr/SMRUCC/Rsharp/Interpreter/DebugLevels.html">DebugLevels</a>;
+   # <a href="/vignettes/clr/SMRUCC/Rsharp/Interpreter/RInterpreter.html">RInterpreter</a>.<a href="#">debug</a>
+   debugMode: boolean;
+   factors: list;
+   funcSymbols: list;
+   globalEnvironment: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/GlobalEnvironment.html">GlobalEnvironment</a>;
+   isGlobal: boolean;
+   isLINQContext: boolean;
+   last: <i>any</i> kind;
+   # 用于traceback进行脚本函数调试使用
+   lastException: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/Message.html">Message</a>;
+   log4vb_redirect: boolean;
+   messages: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/Message.html">iterates(Message)</a>;
+   options: <a href="/vignettes/clr/SMRUCC/Rsharp/Development/Configuration/Options.html">Options</a>;
+   packages: <a href="/vignettes/clr/SMRUCC/Rsharp/Development/Package/PackageManager.html">PackageManager</a>;
+   parent: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Environment.html">Environment</a>;
+   # Enable programming in multiple kind of programming language
+   polyglot: <a href="/vignettes/clr/SMRUCC/Rsharp/Development/Polyglot/Platform.html">Platform</a>;
+   profiler2: <a href="/vignettes/clr/System/Collections/Generic/Stack`1.html">Stack`1</a>;
+   # the R# script host object
+   Rscript: <a href="/vignettes/clr/SMRUCC/Rsharp/Interpreter/RInterpreter.html">RInterpreter</a>;
+   # if current executation is comes from the R script executation
+   #  then this property will returns the directory path in the <code>!script</code>
+   #  magic symbol object, otherwise will returns nothing
+   scriptDir: string;
+   stackFrame: <a href="/vignettes/clr/Microsoft/VisualBasic/ApplicationServices/Debugging/Diagnostics/StackFrame.html">StackFrame</a>;
+   stackTrace: <a href="/vignettes/clr/Microsoft/VisualBasic/ApplicationServices/Debugging/Diagnostics/StackFrame.html">StackFrame[]</a>;
+   # a <a href="/vignettes/clr/System/IO/TextWriter.html">TextWriter</a> wrapper object
+   stdout: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/RContentOutput.html">RContentOutput</a>;
+   symbolLanguages: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/SymbolLanguageProcessor.html">SymbolLanguageProcessor</a>;
+   types: list;
+}
+</code>
+        </pre>
+
+        <h3>.NET clr type reference tree</h3>
+
+        <ol>
+<li>this class extends from <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Environment.html">Environment</a> class: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Environment.html">Environment</a></li>
+<li>use by <i>property</i> member <code>attachedNamespace</code>: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/SymbolNamespaceSolver.html">SymbolNamespaceSolver</a></li>
+<li>use by <i>property</i> member <code>debugLevel</code>: <a href="/vignettes/clr/SMRUCC/Rsharp/Interpreter/DebugLevels.html">DebugLevels</a></li>
+<li>use by <i>property</i> member <code>factors</code>: list</li>
+<li>use by <i>property</i> member <code>funcSymbols</code>: list</li>
+<li>use by <i>property</i> member <code>last</code>: <i>any</i> kind</li>
+<li>use by <i>property</i> member <code>lastException</code>: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/Message.html">Message</a></li>
+<li>use by <i>property</i> member <code>messages</code>: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/Message.html">iterates(Message)</a></li>
+<li>use by <i>property</i> member <code>options</code>: <a href="/vignettes/clr/SMRUCC/Rsharp/Development/Configuration/Options.html">Options</a></li>
+<li>use by <i>property</i> member <code>packages</code>: <a href="/vignettes/clr/SMRUCC/Rsharp/Development/Package/PackageManager.html">PackageManager</a></li>
+<li>use by <i>property</i> member <code>polyglot</code>: <a href="/vignettes/clr/SMRUCC/Rsharp/Development/Polyglot/Platform.html">Platform</a></li>
+<li>use by <i>property</i> member <code>profiler2</code>: <a href="/vignettes/clr/System/Collections/Generic/Stack`1.html">Stack`1</a></li>
+<li>use by <i>property</i> member <code>Rscript</code>: <a href="/vignettes/clr/SMRUCC/Rsharp/Interpreter/RInterpreter.html">RInterpreter</a></li>
+<li>use by <i>property</i> member <code>stackFrame</code>: <a href="/vignettes/clr/Microsoft/VisualBasic/ApplicationServices/Debugging/Diagnostics/StackFrame.html">StackFrame</a></li>
+<li>use by <i>property</i> member <code>stackTrace</code>: <a href="/vignettes/clr/Microsoft/VisualBasic/ApplicationServices/Debugging/Diagnostics/StackFrame.html">StackFrame</a></li>
+<li>use by <i>property</i> member <code>stdout</code>: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/RContentOutput.html">RContentOutput</a></li>
+<li>use by <i>property</i> member <code>symbolLanguages</code>: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/SymbolLanguageProcessor.html">SymbolLanguageProcessor</a></li>
+<li>use by <i>property</i> member <code>types</code>: list</li>
+</ol>
+
+
+        <hr />
+        <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a
+                href="../{$package}.html">Index</a>]
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
+<script type="text/javascript" src="../../_assets/highlights.js"></script>
+<script type="text/javascript">r_highlights("clr_ts");</script>
+
+</html>

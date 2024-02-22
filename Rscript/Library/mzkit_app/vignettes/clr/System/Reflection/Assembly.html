@@ -31,11 +31,11 @@
 # namespace System.Reflection
 export class Assembly {
    CodeBase: string;
-   CustomAttributes: <a href="/vignettes/clr/System/Collections/Generic/IEnumerable`1.html">IEnumerable`1</a>;
-   DefinedTypes: <a href="/vignettes/clr/System/Collections/Generic/IEnumerable`1.html">IEnumerable`1</a>;
+   CustomAttributes: <a href="/vignettes/clr/System/Reflection/CustomAttributeData.html">iterates(CustomAttributeData)</a>;
+   DefinedTypes: <a href="/vignettes/clr/System/Reflection/TypeInfo.html">iterates(TypeInfo)</a>;
    EntryPoint: <a href="/vignettes/clr/System/Reflection/MethodInfo.html">MethodInfo</a>;
    EscapedCodeBase: string;
-   ExportedTypes: <a href="/vignettes/clr/System/Collections/Generic/IEnumerable`1.html">IEnumerable`1</a>;
+   ExportedTypes: <a href="/vignettes/clr/System/Type.html">iterates(Type)</a>;
    FullName: string;
    GlobalAssemblyCache: boolean;
    HostContext: integer;
@@ -45,7 +45,7 @@ export class Assembly {
    IsFullyTrusted: boolean;
    Location: string;
    ManifestModule: <a href="/vignettes/clr/System/Reflection/Module.html">Module</a>;
-   Modules: <a href="/vignettes/clr/System/Collections/Generic/IEnumerable`1.html">IEnumerable`1</a>;
+   Modules: <a href="/vignettes/clr/System/Reflection/Module.html">iterates(Module)</a>;
    ReflectionOnly: boolean;
    SecurityRuleSet: <a href="/vignettes/clr/System/Security/SecurityRuleSet.html">SecurityRuleSet</a>;
 }
@@ -55,12 +55,12 @@ export class Assembly {
         <h3>.NET clr type reference tree</h3>
 
         <ol>
-<li>use by <i>property</i> member <code>CustomAttributes</code>: <a href="/vignettes/clr/System/Collections/Generic/IEnumerable`1.html">IEnumerable`1</a></li>
-<li>use by <i>property</i> member <code>DefinedTypes</code>: <a href="/vignettes/clr/System/Collections/Generic/IEnumerable`1.html">IEnumerable`1</a></li>
+<li>use by <i>property</i> member <code>CustomAttributes</code>: <a href="/vignettes/clr/System/Reflection/CustomAttributeData.html">iterates(CustomAttributeData)</a></li>
+<li>use by <i>property</i> member <code>DefinedTypes</code>: <a href="/vignettes/clr/System/Reflection/TypeInfo.html">iterates(TypeInfo)</a></li>
 <li>use by <i>property</i> member <code>EntryPoint</code>: <a href="/vignettes/clr/System/Reflection/MethodInfo.html">MethodInfo</a></li>
-<li>use by <i>property</i> member <code>ExportedTypes</code>: <a href="/vignettes/clr/System/Collections/Generic/IEnumerable`1.html">IEnumerable`1</a></li>
+<li>use by <i>property</i> member <code>ExportedTypes</code>: <a href="/vignettes/clr/System/Type.html">iterates(Type)</a></li>
 <li>use by <i>property</i> member <code>ManifestModule</code>: <a href="/vignettes/clr/System/Reflection/Module.html">Module</a></li>
-<li>use by <i>property</i> member <code>Modules</code>: <a href="/vignettes/clr/System/Collections/Generic/IEnumerable`1.html">IEnumerable`1</a></li>
+<li>use by <i>property</i> member <code>Modules</code>: <a href="/vignettes/clr/System/Reflection/Module.html">iterates(Module)</a></li>
 <li>use by <i>property</i> member <code>SecurityRuleSet</code>: <a href="/vignettes/clr/System/Security/SecurityRuleSet.html">SecurityRuleSet</a></li>
 </ol>
 
