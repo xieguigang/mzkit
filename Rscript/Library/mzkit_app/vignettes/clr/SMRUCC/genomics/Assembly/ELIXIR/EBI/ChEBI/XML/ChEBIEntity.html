@@ -35,32 +35,48 @@
             <code id="clr_ts">
 # namespace SMRUCC.genomics.Assembly.ELIXIR.EBI.ChEBI.XML
 export class ChEBIEntity {
+   charge: integer;
+   chebiAsciiName: string;
    # Chebi的主ID
    chebiId: string;
-   chebiAsciiName: string;
+   ChemicalStructures: <a href="/vignettes/clr/SMRUCC/genomics/Assembly/ELIXIR/EBI/ChEBI/XML/ChemicalStructures.html">ChemicalStructures[]</a>;
+   Citations: <a href="/vignettes/clr/SMRUCC/genomics/Assembly/ELIXIR/EBI/ChEBI/XML/Synonyms.html">Synonyms[]</a>;
+   CompoundOrigins: <a href="/vignettes/clr/SMRUCC/genomics/Assembly/ELIXIR/EBI/ChEBI/XML/CompoundOrigin.html">CompoundOrigin[]</a>;
+   DatabaseLinks: <a href="/vignettes/clr/SMRUCC/genomics/Assembly/ELIXIR/EBI/ChEBI/XML/DatabaseLinks.html">DatabaseLinks[]</a>;
    definition: string;
-   status: string;
-   smiles: string;
+   entityStar: integer;
+   Formulae: <a href="/vignettes/clr/SMRUCC/genomics/Assembly/ELIXIR/EBI/ChEBI/XML/Formulae.html">Formulae</a>;
    inchi: string;
    inchiKey: string;
-   charge: integer;
-   mass: double;
-   entityStar: integer;
-   Synonyms: <a href="/vignettes/clr/SMRUCC/genomics/Assembly/ELIXIR/EBI/ChEBI/XML/Synonyms.html">Synonyms[]</a>;
    IupacNames: <a href="/vignettes/clr/SMRUCC/genomics/Assembly/ELIXIR/EBI/ChEBI/XML/Synonyms.html">Synonyms[]</a>;
-   Citations: <a href="/vignettes/clr/SMRUCC/genomics/Assembly/ELIXIR/EBI/ChEBI/XML/Synonyms.html">Synonyms[]</a>;
-   Formulae: <a href="/vignettes/clr/SMRUCC/genomics/Assembly/ELIXIR/EBI/ChEBI/XML/Formulae.html">Formulae</a>;
+   mass: double;
+   OntologyChildren: <a href="/vignettes/clr/SMRUCC/genomics/Assembly/ELIXIR/EBI/ChEBI/XML/OntologyParents.html">OntologyParents[]</a>;
+   OntologyParents: <a href="/vignettes/clr/SMRUCC/genomics/Assembly/ELIXIR/EBI/ChEBI/XML/OntologyParents.html">OntologyParents[]</a>;
+   RegistryNumbers: <a href="/vignettes/clr/SMRUCC/genomics/Assembly/ELIXIR/EBI/ChEBI/XML/RegistryNumbers.html">RegistryNumbers[]</a>;
    # 次级编号，和主编号都代表同一样物质
    SecondaryChEBIIds: string;
-   RegistryNumbers: <a href="/vignettes/clr/SMRUCC/genomics/Assembly/ELIXIR/EBI/ChEBI/XML/RegistryNumbers.html">RegistryNumbers[]</a>;
-   ChemicalStructures: <a href="/vignettes/clr/SMRUCC/genomics/Assembly/ELIXIR/EBI/ChEBI/XML/ChemicalStructures.html">ChemicalStructures[]</a>;
-   DatabaseLinks: <a href="/vignettes/clr/SMRUCC/genomics/Assembly/ELIXIR/EBI/ChEBI/XML/DatabaseLinks.html">DatabaseLinks[]</a>;
-   OntologyParents: <a href="/vignettes/clr/SMRUCC/genomics/Assembly/ELIXIR/EBI/ChEBI/XML/OntologyParents.html">OntologyParents[]</a>;
-   OntologyChildren: <a href="/vignettes/clr/SMRUCC/genomics/Assembly/ELIXIR/EBI/ChEBI/XML/OntologyParents.html">OntologyParents[]</a>;
-   CompoundOrigins: <a href="/vignettes/clr/SMRUCC/genomics/Assembly/ELIXIR/EBI/ChEBI/XML/CompoundOrigin.html">CompoundOrigin[]</a>;
+   smiles: string;
+   status: string;
+   Synonyms: <a href="/vignettes/clr/SMRUCC/genomics/Assembly/ELIXIR/EBI/ChEBI/XML/Synonyms.html">Synonyms[]</a>;
 }
 </code>
         </pre>
+
+        <h3>.NET clr type reference tree</h3>
+
+        <ol>
+<li>use by <i>property</i> member <code>ChemicalStructures</code>: <a href="/vignettes/clr/SMRUCC/genomics/Assembly/ELIXIR/EBI/ChEBI/XML/ChemicalStructures.html">ChemicalStructures</a></li>
+<li>use by <i>property</i> member <code>Citations</code>: <a href="/vignettes/clr/SMRUCC/genomics/Assembly/ELIXIR/EBI/ChEBI/XML/Synonyms.html">Synonyms</a></li>
+<li>use by <i>property</i> member <code>CompoundOrigins</code>: <a href="/vignettes/clr/SMRUCC/genomics/Assembly/ELIXIR/EBI/ChEBI/XML/CompoundOrigin.html">CompoundOrigin</a></li>
+<li>use by <i>property</i> member <code>DatabaseLinks</code>: <a href="/vignettes/clr/SMRUCC/genomics/Assembly/ELIXIR/EBI/ChEBI/XML/DatabaseLinks.html">DatabaseLinks</a></li>
+<li>use by <i>property</i> member <code>Formulae</code>: <a href="/vignettes/clr/SMRUCC/genomics/Assembly/ELIXIR/EBI/ChEBI/XML/Formulae.html">Formulae</a></li>
+<li>use by <i>property</i> member <code>IupacNames</code>: <a href="/vignettes/clr/SMRUCC/genomics/Assembly/ELIXIR/EBI/ChEBI/XML/Synonyms.html">Synonyms</a></li>
+<li>use by <i>property</i> member <code>OntologyChildren</code>: <a href="/vignettes/clr/SMRUCC/genomics/Assembly/ELIXIR/EBI/ChEBI/XML/OntologyParents.html">OntologyParents</a></li>
+<li>use by <i>property</i> member <code>OntologyParents</code>: <a href="/vignettes/clr/SMRUCC/genomics/Assembly/ELIXIR/EBI/ChEBI/XML/OntologyParents.html">OntologyParents</a></li>
+<li>use by <i>property</i> member <code>RegistryNumbers</code>: <a href="/vignettes/clr/SMRUCC/genomics/Assembly/ELIXIR/EBI/ChEBI/XML/RegistryNumbers.html">RegistryNumbers</a></li>
+<li>use by <i>property</i> member <code>Synonyms</code>: <a href="/vignettes/clr/SMRUCC/genomics/Assembly/ELIXIR/EBI/ChEBI/XML/Synonyms.html">Synonyms</a></li>
+</ol>
+
 
         <hr />
         <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a

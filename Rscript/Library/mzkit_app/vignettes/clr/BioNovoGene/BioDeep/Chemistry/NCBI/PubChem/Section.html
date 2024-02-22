@@ -24,7 +24,7 @@
 
         <p>A general data model for show the annotation information</p>
 
-<p>A category data</p><br /><p>this class extends from <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/NCBI/PubChem/InformationSection.html">InformationSection</a> class.</p>
+<p>A category data</p>
 
         <h3>Declare</h3>        
 
@@ -32,19 +32,29 @@
             <code id="clr_ts">
 # namespace BioNovoGene.BioDeep.Chemistry.NCBI.PubChem
 export class Section extends <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/NCBI/PubChem/InformationSection.html">InformationSection</a> {
-   # the category title
-   TOCHeading: string;
    Description: string;
-   HintGroupSubsectionsByReference: boolean;
+   DisplayControls: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/NCBI/PubChem/DisplayControls.html">DisplayControls</a>;
    HintEmbeddedHTML: boolean;
+   HintGroupSubsectionsByReference: boolean;
    HintShowAtMost: string;
    HintSortByLength: boolean;
-   DisplayControls: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/NCBI/PubChem/DisplayControls.html">DisplayControls</a>;
    Information: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/NCBI/PubChem/Information.html">Information[]</a>;
    Sections: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/NCBI/PubChem/Section.html">Section[]</a>;
+   # the category title
+   TOCHeading: string;
 }
 </code>
         </pre>
+
+        <h3>.NET clr type reference tree</h3>
+
+        <ol>
+<li>this class extends from <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/NCBI/PubChem/InformationSection.html">InformationSection</a> class: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/NCBI/PubChem/InformationSection.html">InformationSection</a></li>
+<li>use by <i>property</i> member <code>DisplayControls</code>: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/NCBI/PubChem/DisplayControls.html">DisplayControls</a></li>
+<li>use by <i>property</i> member <code>Information</code>: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/NCBI/PubChem/Information.html">Information</a></li>
+<li>use by <i>property</i> member <code>Sections</code>: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/NCBI/PubChem/Section.html">Section</a></li>
+</ol>
+
 
         <hr />
         <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a

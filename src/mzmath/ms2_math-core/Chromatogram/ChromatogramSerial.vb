@@ -1,4 +1,5 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 
@@ -7,13 +8,13 @@ Namespace Chromatogram
     ''' <summary>
     ''' A label tagged chromatogram data
     ''' </summary>
-    Public Class ChromatogramSerial
+    Public Class ChromatogramSerial : Implements IEnumerable(Of ChromatogramTick), INamedValue
 
         ''' <summary>
         ''' the data label
         ''' </summary>
         ''' <returns></returns>
-        Public Property Name As String
+        Public Property Name As String Implements INamedValue.Key
         Public Property Chromatogram As ChromatogramTick()
 
         ''' <summary>
@@ -88,5 +89,14 @@ Namespace Chromatogram
             Return Name & $" [{rtmin.ToString("F4")} ~ {rtmax.ToString("F4")} sec]"
         End Function
 
+        Public Iterator Function GetEnumerator() As IEnumerator(Of ChromatogramTick) Implements IEnumerable(Of ChromatogramTick).GetEnumerator
+            For Each tick As ChromatogramTick In Chromatogram
+                Yield tick
+            Next
+        End Function
+
+        Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
+            Yield GetEnumerator()
+        End Function
     End Class
 End Namespace

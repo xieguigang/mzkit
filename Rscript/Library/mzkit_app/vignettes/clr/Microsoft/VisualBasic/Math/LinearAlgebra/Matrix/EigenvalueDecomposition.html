@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Microsoft.VisualBasic.Math.LinearAlgebra.Matrix.EigenvalueDecomposition</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <table style="width: 100%;">
+            <tr>
+                <td>EigenvalueDecomposition {Microsoft.VisualBasic.Math.LinearAlgebra.Matrix}</td>
+                <td style="text-align: right;">.NET clr documentation</td>
+            </tr>
+        </table>
+
+        <h2>EigenvalueDecomposition</h2>
+
+        <h3>Description</h3>
+
+        <p>Eigenvalues and eigenvectors of a real matrix. <br />
+ If A is symmetric, then A = V*D*V' where the eigenvalue matrix D is<br />
+ diagonal and the eigenvector matrix V is orthogonal.<br />
+ I.e. A = V.Multiply(D.Multiply(V.Transpose())) and <br />
+ V.Multiply(V.Transpose()) equals the identity matrix.<br />
+ If A is not symmetric, then the eigenvalue matrix D is block diagonal<br />
+ with the real eigenvalues in 1-by-1 blocks and any complex eigenvalues,<br />
+ lambda + i*mu, in 2-by-2 blocks, [lambda, mu; -mu, lambda].  The<br />
+ columns of V represent the eigenvectors in the sense that A*V = V*D,<br />
+ i.e. A.Multiply(V) equals V.Multiply(D).  The matrix V may be badly<br />
+ conditioned, or even singular, so the validity of the equation<br />
+ A = V*D*Inverse(V) depends upon V.cond().</p>
+
+        <h3>Declare</h3>        
+
+        <pre>
+            <code id="clr_ts">
+# namespace Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
+export class EigenvalueDecomposition {
+   # Return the block diagonal eigenvalue matrix
+   D: <a href="/vignettes/clr/Microsoft/VisualBasic/Math/LinearAlgebra/Matrix/GeneralMatrix.html">GeneralMatrix</a>;
+   # Return the imaginary parts of the eigenvalues
+   ImagEigenvalues: double;
+   # Return the real parts of the eigenvalues
+   RealEigenvalues: double;
+   # Return the eigenvector matrix
+   V: <a href="/vignettes/clr/Microsoft/VisualBasic/Math/LinearAlgebra/Matrix/GeneralMatrix.html">GeneralMatrix</a>;
+}
+</code>
+        </pre>
+
+        <h3>.NET clr type reference tree</h3>
+
+        <ol>
+<li>use by <i>property</i> member <code>D</code>: <a href="/vignettes/clr/Microsoft/VisualBasic/Math/LinearAlgebra/Matrix/GeneralMatrix.html">GeneralMatrix</a></li>
+<li>use by <i>property</i> member <code>V</code>: <a href="/vignettes/clr/Microsoft/VisualBasic/Math/LinearAlgebra/Matrix/GeneralMatrix.html">GeneralMatrix</a></li>
+</ol>
+
+
+        <hr />
+        <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a
+                href="../{$package}.html">Index</a>]
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="https://mzkit.org/assets/js/R_syntax.js"></script>
+<script type="text/javascript" src="https://mzkit.org/assets/js/highlights.js"></script>
+<script type="text/javascript">r_highlights("clr_ts");</script>
+
+</html>

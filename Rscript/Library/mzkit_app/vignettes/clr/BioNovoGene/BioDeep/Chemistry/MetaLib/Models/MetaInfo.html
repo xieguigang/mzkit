@@ -37,19 +37,26 @@
             <code id="clr_ts">
 # namespace BioNovoGene.BioDeep.Chemistry.MetaLib.Models
 export class MetaInfo {
-   # The database cross reference of current metabolite and the molecule structure data.
-   xref: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/MetaLib/CrossReference/xref.html">xref</a>;
+   description: string;
+   exact_mass: double;
+   formula: string;
    # 该物质在整合库之中的唯一标识符
    ID: string;
-   formula: string;
-   exact_mass: double;
-   name: string;
    IUPACName: string;
-   description: string;
+   name: string;
    synonym: string;
+   # The database cross reference of current metabolite and the molecule structure data.
+   xref: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/MetaLib/CrossReference/xref.html">xref</a>;
 }
 </code>
         </pre>
+
+        <h3>.NET clr type reference tree</h3>
+
+        <ol>
+<li>use by <i>property</i> member <code>xref</code>: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/MetaLib/CrossReference/xref.html">xref</a></li>
+</ol>
+
 
         <hr />
         <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a

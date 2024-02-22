@@ -5,7 +5,7 @@
     <title>System.Reflection.Assembly</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-    <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
+    <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
 </head>
 
 <body>
@@ -31,11 +31,11 @@
 # namespace System.Reflection
 export class Assembly {
    CodeBase: string;
-   CustomAttributes: <a href="/vignettes/clr/System/Collections/Generic/IEnumerable`1.html">IEnumerable`1</a>;
-   DefinedTypes: <a href="/vignettes/clr/System/Collections/Generic/IEnumerable`1.html">IEnumerable`1</a>;
+   CustomAttributes: <a href="/vignettes/clr/System/Reflection/CustomAttributeData.html">iterates(CustomAttributeData)</a>;
+   DefinedTypes: <a href="/vignettes/clr/System/Reflection/TypeInfo.html">iterates(TypeInfo)</a>;
    EntryPoint: <a href="/vignettes/clr/System/Reflection/MethodInfo.html">MethodInfo</a>;
    EscapedCodeBase: string;
-   ExportedTypes: <a href="/vignettes/clr/System/Collections/Generic/IEnumerable`1.html">IEnumerable`1</a>;
+   ExportedTypes: <a href="/vignettes/clr/System/Type.html">iterates(Type)</a>;
    FullName: string;
    GlobalAssemblyCache: boolean;
    HostContext: integer;
@@ -45,7 +45,7 @@ export class Assembly {
    IsFullyTrusted: boolean;
    Location: string;
    ManifestModule: <a href="/vignettes/clr/System/Reflection/Module.html">Module</a>;
-   Modules: <a href="/vignettes/clr/System/Collections/Generic/IEnumerable`1.html">IEnumerable`1</a>;
+   Modules: <a href="/vignettes/clr/System/Reflection/Module.html">iterates(Module)</a>;
    ReflectionOnly: boolean;
    SecurityRuleSet: <a href="/vignettes/clr/System/Security/SecurityRuleSet.html">SecurityRuleSet</a>;
 }
@@ -55,12 +55,12 @@ export class Assembly {
         <h3>.NET clr type reference tree</h3>
 
         <ol>
-<li>use by <i>property</i> member <code>CustomAttributes</code>: <a href="/vignettes/clr/System/Collections/Generic/IEnumerable`1.html">IEnumerable`1</a></li>
-<li>use by <i>property</i> member <code>DefinedTypes</code>: <a href="/vignettes/clr/System/Collections/Generic/IEnumerable`1.html">IEnumerable`1</a></li>
+<li>use by <i>property</i> member <code>CustomAttributes</code>: <a href="/vignettes/clr/System/Reflection/CustomAttributeData.html">iterates(CustomAttributeData)</a></li>
+<li>use by <i>property</i> member <code>DefinedTypes</code>: <a href="/vignettes/clr/System/Reflection/TypeInfo.html">iterates(TypeInfo)</a></li>
 <li>use by <i>property</i> member <code>EntryPoint</code>: <a href="/vignettes/clr/System/Reflection/MethodInfo.html">MethodInfo</a></li>
-<li>use by <i>property</i> member <code>ExportedTypes</code>: <a href="/vignettes/clr/System/Collections/Generic/IEnumerable`1.html">IEnumerable`1</a></li>
+<li>use by <i>property</i> member <code>ExportedTypes</code>: <a href="/vignettes/clr/System/Type.html">iterates(Type)</a></li>
 <li>use by <i>property</i> member <code>ManifestModule</code>: <a href="/vignettes/clr/System/Reflection/Module.html">Module</a></li>
-<li>use by <i>property</i> member <code>Modules</code>: <a href="/vignettes/clr/System/Collections/Generic/IEnumerable`1.html">IEnumerable`1</a></li>
+<li>use by <i>property</i> member <code>Modules</code>: <a href="/vignettes/clr/System/Reflection/Module.html">iterates(Module)</a></li>
 <li>use by <i>property</i> member <code>SecurityRuleSet</code>: <a href="/vignettes/clr/System/Security/SecurityRuleSet.html">SecurityRuleSet</a></li>
 </ol>
 
@@ -72,8 +72,8 @@ export class Assembly {
     </div>
 </body>
 
-<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
-<script type="text/javascript" src="../../_assets/highlights.js"></script>
+<script type="text/javascript" src="https://mzkit.org/assets/js/R_syntax.js"></script>
+<script type="text/javascript" src="https://mzkit.org/assets/js/highlights.js"></script>
 <script type="text/javascript">r_highlights("clr_ts");</script>
 
 </html>

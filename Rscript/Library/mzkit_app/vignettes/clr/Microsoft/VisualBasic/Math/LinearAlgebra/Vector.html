@@ -24,7 +24,7 @@
 
         <p>A numeric vector</p>
 
-<p>this numeric vector is based on the <a href="/vignettes/clr/Microsoft/VisualBasic/Language/Vectorization/Vector`1.html">Vector`1</a></p><br /><p>this class extends from <a href="/vignettes/clr/Microsoft/VisualBasic/Math/Scripting/Rscript/GenericVector`1.html">GenericVector`1</a> class.</p>
+<p>this numeric vector is based on the <a href="/vignettes/clr/Microsoft/VisualBasic/Language/Vectorization/Vector`1.html">Vector`1</a></p>
 
         <h3>Declare</h3>        
 
@@ -32,30 +32,40 @@
             <code id="clr_ts">
 # namespace Microsoft.VisualBasic.Math.LinearAlgebra
 export class Vector extends <a href="/vignettes/clr/Microsoft/VisualBasic/Math/Scripting/Rscript/GenericVector`1.html">GenericVector`1</a> {
+   Array: double;
+   Dim: integer;
+   First: double;
+   IsNaN: <a href="/vignettes/clr/Microsoft/VisualBasic/Language/Vectorization/BooleanVector.html">BooleanVector</a>;
    # <a href="/vignettes/clr/Microsoft/VisualBasic/Math/Scripting/Rscript/GenericVector`1.html">GenericVector`1</a>.<a href="#">Dim</a>为1?即当前的向量对象是否是只包含有一个数字？
    IsNumeric: boolean;
-   IsNaN: <a href="/vignettes/clr/Microsoft/VisualBasic/Language/Vectorization/BooleanVector.html">BooleanVector</a>;
+   IsScalar: boolean;
+   Last: double;
+   Length: integer;
    # <code>norm2()</code>
    # 
    # 向量模的平方，<code>||x||</code>是向量<code>x=(x1，x2，…，xp)</code>的欧几里得范数
    Mod: double;
+   # <code>[min, max]</code>
+   Range: <a href="/vignettes/clr/Microsoft/VisualBasic/ComponentModel/Ranges/Model/DoubleRange.html">DoubleRange</a>;
    # <code>norm()</code>
    # 
    # <a href="http://math.stackexchange.com/questions/440320/what-is-magnitude-of-sum-of-two-vector">http://math.stackexchange.com/questions/440320/what-is-magnitude-of-sum-of-two-vector</a>
    SumMagnitude: double;
    # normalize
    Unit: <a href="/vignettes/clr/Microsoft/VisualBasic/Math/LinearAlgebra/Vector.html">Vector</a>;
-   # <code>[min, max]</code>
-   Range: <a href="/vignettes/clr/Microsoft/VisualBasic/ComponentModel/Ranges/Model/DoubleRange.html">DoubleRange</a>;
-   Dim: integer;
-   Length: integer;
-   IsScalar: boolean;
-   Array: double;
-   Last: double;
-   First: double;
 }
 </code>
         </pre>
+
+        <h3>.NET clr type reference tree</h3>
+
+        <ol>
+<li>this class extends from <a href="/vignettes/clr/Microsoft/VisualBasic/Math/Scripting/Rscript/GenericVector`1.html">GenericVector`1</a> class: <a href="/vignettes/clr/Microsoft/VisualBasic/Math/Scripting/Rscript/GenericVector`1.html">GenericVector`1</a></li>
+<li>use by <i>property</i> member <code>IsNaN</code>: <a href="/vignettes/clr/Microsoft/VisualBasic/Language/Vectorization/BooleanVector.html">BooleanVector</a></li>
+<li>use by <i>property</i> member <code>Range</code>: <a href="/vignettes/clr/Microsoft/VisualBasic/ComponentModel/Ranges/Model/DoubleRange.html">DoubleRange</a></li>
+<li>use by <i>property</i> member <code>Unit</code>: <a href="/vignettes/clr/Microsoft/VisualBasic/Math/LinearAlgebra/Vector.html">Vector</a></li>
+</ol>
+
 
         <hr />
         <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a

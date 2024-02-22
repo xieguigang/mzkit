@@ -23,7 +23,7 @@
         <h3>Description</h3>
 
         <p>A collection of the functional related <a href="/vignettes/clr/SMRUCC/genomics/Analysis/HTS/GSEA/BackgroundGene.html">BackgroundGene</a>.<br />
- (主要是KEGG代谢途径，也可以是其他的具有生物学意义的聚类结果)</p><br /><p>this class extends from <a href="/vignettes/clr/Microsoft/VisualBasic/Text/Xml/Models/ListOf`1.html">ListOf`1</a> class.</p>
+ (主要是KEGG代谢途径，也可以是其他的具有生物学意义的聚类结果)</p>
 
         <h3>Declare</h3>        
 
@@ -31,20 +31,28 @@
             <code id="clr_ts">
 # namespace SMRUCC.genomics.Analysis.HTS.GSEA
 export class Cluster extends <a href="/vignettes/clr/Microsoft/VisualBasic/Text/Xml/Models/ListOf`1.html">ListOf`1</a> {
-   # The cluster id.(代谢途径的编号或者其他的标识符)
-   ID: string;
-   # The common name of current term <a href="/vignettes/clr/SMRUCC/genomics/Analysis/HTS/GSEA/Cluster.html">Cluster</a>.<a href="#">ID</a>
-   names: string;
    # A brief description on term function.
    description: string;
-   # 当前的这个聚类之中的基因列表
-   members: <a href="/vignettes/clr/SMRUCC/genomics/Analysis/HTS/GSEA/BackgroundGene.html">BackgroundGene[]</a>;
+   # The cluster id.(代谢途径的编号或者其他的标识符)
+   ID: string;
    # get the collection of all member theirs <a href="/vignettes/clr/SMRUCC/genomics/ComponentModel/DBLinkBuilder/Synonym.html">Synonym</a>.<a href="#">accessionID</a>
    memberIds: string;
+   # 当前的这个聚类之中的基因列表
+   members: <a href="/vignettes/clr/SMRUCC/genomics/Analysis/HTS/GSEA/BackgroundGene.html">BackgroundGene[]</a>;
+   # The common name of current term <a href="/vignettes/clr/SMRUCC/genomics/Analysis/HTS/GSEA/Cluster.html">Cluster</a>.<a href="#">ID</a>
+   names: string;
    size: integer;
 }
 </code>
         </pre>
+
+        <h3>.NET clr type reference tree</h3>
+
+        <ol>
+<li>this class extends from <a href="/vignettes/clr/Microsoft/VisualBasic/Text/Xml/Models/ListOf`1.html">ListOf`1</a> class: <a href="/vignettes/clr/Microsoft/VisualBasic/Text/Xml/Models/ListOf`1.html">ListOf`1</a></li>
+<li>use by <i>property</i> member <code>members</code>: <a href="/vignettes/clr/SMRUCC/genomics/Analysis/HTS/GSEA/BackgroundGene.html">BackgroundGene</a></li>
+</ol>
+
 
         <hr />
         <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a

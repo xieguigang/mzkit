@@ -30,8 +30,6 @@
             <code id="clr_ts">
 # namespace BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative.Linear
 export class ReferencePoint {
-   ID: string;
-   Name: string;
    # 内标峰面积
    AIS: double;
    # 当前试验点的标准品峰面积
@@ -40,18 +38,25 @@ export class ReferencePoint {
    cIS: double;
    # 当前试验点的标准品浓度(Py)
    Cti: double;
-   Px: double;
-   yfit: double;
    error: double;
-   variant: double;
+   ID: string;
+   # 浓度梯度水平的名称，例如：<code>L1, L2, L3, ...</code>
+   level: string;
+   Name: string;
+   Px: double;
    # If the value of this property is false, then it means 
    #  current reference point is removed from linear modelling.
    valid: boolean;
-   # 浓度梯度水平的名称，例如：<code>L1, L2, L3, ...</code>
-   level: string;
+   variant: double;
+   yfit: double;
 }
 </code>
         </pre>
+
+        <h3>.NET clr type reference tree</h3>
+
+        this clr type has no other .net clr type reference.
+
 
         <hr />
         <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a

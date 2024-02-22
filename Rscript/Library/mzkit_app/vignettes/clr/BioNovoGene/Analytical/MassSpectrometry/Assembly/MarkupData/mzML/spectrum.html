@@ -5,7 +5,7 @@
     <title>BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML.spectrum</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-    <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
+    <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
 </head>
 
 <body>
@@ -48,7 +48,7 @@ export class spectrum extends <a href="/vignettes/clr/BioNovoGene/Analytical/Mas
    scan_time: double;
    scanList: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/MarkupData/mzML/scanList.html">scanList</a>;
    # selected ion m/z
-   selectedIon: <a href="/vignettes/clr/System/ValueTuple`2.html">ValueTuple`2</a>;
+   selectedIon: tuple[double, double];
    sourceFileRef: string;
    userParams: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/MarkupData/mzML/ControlVocabulary/userParam.html">userParam[]</a>;
 }
@@ -65,7 +65,7 @@ export class spectrum extends <a href="/vignettes/clr/BioNovoGene/Analytical/Mas
 <li>use by <i>property</i> member <code>polarity</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Ms1/PrecursorType/IonModes.html">IonModes</a></li>
 <li>use by <i>property</i> member <code>precursorList</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/MarkupData/mzML/precursorList.html">precursorList</a></li>
 <li>use by <i>property</i> member <code>scanList</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/MarkupData/mzML/scanList.html">scanList</a></li>
-<li>use by <i>property</i> member <code>selectedIon</code>: <a href="/vignettes/clr/System/ValueTuple`2.html">ValueTuple`2</a></li>
+<li>use by <i>property</i> member <code>selectedIon</code>: tuple[double, double]</li>
 <li>use by <i>property</i> member <code>userParams</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/MarkupData/mzML/ControlVocabulary/userParam.html">userParam</a></li>
 </ol>
 
@@ -77,8 +77,8 @@ export class spectrum extends <a href="/vignettes/clr/BioNovoGene/Analytical/Mas
     </div>
 </body>
 
-<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
-<script type="text/javascript" src="../../_assets/highlights.js"></script>
+<script type="text/javascript" src="https://mzkit.org/assets/js/R_syntax.js"></script>
+<script type="text/javascript" src="https://mzkit.org/assets/js/highlights.js"></script>
 <script type="text/javascript">r_highlights("clr_ts");</script>
 
 </html>
