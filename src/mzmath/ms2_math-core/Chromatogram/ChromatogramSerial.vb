@@ -90,13 +90,13 @@ Namespace Chromatogram
         End Function
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of ChromatogramTick) Implements IEnumerable(Of ChromatogramTick).GetEnumerator
-            Yield IEnumerable_GetEnumerator()
-        End Function
-
-        Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
             For Each tick As ChromatogramTick In Chromatogram
                 Yield tick
             Next
+        End Function
+
+        Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
+            Yield GetEnumerator()
         End Function
     End Class
 End Namespace
