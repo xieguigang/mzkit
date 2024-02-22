@@ -7,7 +7,7 @@ Namespace Chromatogram
     ''' <summary>
     ''' A label tagged chromatogram data
     ''' </summary>
-    Public Class ChromatogramSerial
+    Public Class ChromatogramSerial : Implements IEnumerable(Of ChromatogramTick)
 
         ''' <summary>
         ''' the data label
@@ -88,5 +88,14 @@ Namespace Chromatogram
             Return Name & $" [{rtmin.ToString("F4")} ~ {rtmax.ToString("F4")} sec]"
         End Function
 
+        Public Iterator Function GetEnumerator() As IEnumerator(Of ChromatogramTick) Implements IEnumerable(Of ChromatogramTick).GetEnumerator
+            Yield IEnumerable_GetEnumerator()
+        End Function
+
+        Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
+            For Each tick As ChromatogramTick In Chromatogram
+                Yield tick
+            Next
+        End Function
     End Class
 End Namespace
