@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.SpectrumTreeCluster</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <table style="width: 100%;">
+            <tr>
+                <td>SpectrumTreeCluster {BioNovoGene.Analytical.MassSpectrometry.Math.Spectra}</td>
+                <td style="text-align: right;">.NET clr documentation</td>
+            </tr>
+        </table>
+
+        <h2>SpectrumTreeCluster</h2>
+
+        <h3>Description</h3>
+
+        <p>The spectral network (molecular network, MN) concept is<br />
+ based on the organization And visualization of tandem MS<br />
+ information via spectral similarity (homologous MS2 fragmentations).</p>
+
+<p>Structurally related compounds usually share<br />
+ similar MS/MS spectra, And GNPS groups the similar spectra<br />
+ in a network-based format, allowing the visual exploration of<br />
+ identical And analogous molecules.</p>
+
+<p>因为在标准品实验之中仅包含有标准品以及流动相物质<br />
+ 标准品的质谱碎片理论上应该是数量最多的,所以在这里<br />
+ 通过二叉树对所有的质谱图进行聚类,取出成员最多的簇<br />
+ 作为候选的标准品质谱图</p>
+
+        <h3>Declare</h3>        
+
+        <pre>
+            <code id="clr_ts">
+# namespace BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+export class SpectrumTreeCluster {
+   allMs2Scans: <a href="/vignettes/clr/System/Collections/Generic/List`1.html">List`1</a>;
+}
+</code>
+        </pre>
+
+        <h3>.NET clr type reference tree</h3>
+
+        <ol>
+<li>use by <i>property</i> member <code>allMs2Scans</code>: <a href="/vignettes/clr/System/Collections/Generic/List`1.html">List`1</a></li>
+</ol>
+
+
+        <hr />
+        <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a
+                href="../{$package}.html">Index</a>]
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
+<script type="text/javascript" src="../../_assets/highlights.js"></script>
+<script type="text/javascript">r_highlights("clr_ts");</script>
+
+</html>

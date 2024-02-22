@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Microsoft.VisualBasic.Data.Bootstrapping.IFitted</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <table style="width: 100%;">
+            <tr>
+                <td>IFitted {Microsoft.VisualBasic.Data.Bootstrapping}</td>
+                <td style="text-align: right;">.NET clr documentation</td>
+            </tr>
+        </table>
+
+        <h2>IFitted</h2>
+
+        <h3>Description</h3>
+
+        <p>a unify interface model of linear fitting result</p>
+
+        <h3>Declare</h3>        
+
+        <pre>
+            <code id="clr_ts">
+# namespace Microsoft.VisualBasic.Data.Bootstrapping
+export class IFitted {
+   # 保存拟合后的y值，在拟合时可设置为不保存节省内存
+   ErrorTest: <a href="/vignettes/clr/Microsoft/VisualBasic/Data/Bootstrapping/IFitError.html">IFitError[]</a>;
+   # 线性模型的多项式
+   Polynomial: <a href="/vignettes/clr/Microsoft/VisualBasic/Math/LinearAlgebra/Formula.html">Formula</a>;
+   # 相关系数 R2
+   R2: double;
+}
+</code>
+        </pre>
+
+        <h3>.NET clr type reference tree</h3>
+
+        <ol>
+<li>use by <i>property</i> member <code>ErrorTest</code>: <a href="/vignettes/clr/Microsoft/VisualBasic/Data/Bootstrapping/IFitError.html">IFitError</a></li>
+<li>use by <i>property</i> member <code>Polynomial</code>: <a href="/vignettes/clr/Microsoft/VisualBasic/Math/LinearAlgebra/Formula.html">Formula</a></li>
+</ol>
+
+
+        <hr />
+        <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a
+                href="../{$package}.html">Index</a>]
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
+<script type="text/javascript" src="../../_assets/highlights.js"></script>
+<script type="text/javascript">r_highlights("clr_ts");</script>
+
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>SMRUCC.Rsharp.Runtime.Interop.RMethodInfo</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <table style="width: 100%;">
+            <tr>
+                <td>RMethodInfo {SMRUCC.Rsharp.Runtime.Interop}</td>
+                <td style="text-align: right;">.NET clr documentation</td>
+            </tr>
+        </table>
+
+        <h2>RMethodInfo</h2>
+
+        <h3>Description</h3>
+
+        <p>Use for R# package method, a wrapper for the .NET clr function <a href="/vignettes/clr/System/Reflection/MethodInfo.html">MethodInfo</a>.</p>
+
+        <h3>Declare</h3>        
+
+        <pre>
+            <code id="clr_ts">
+# namespace SMRUCC.Rsharp.Runtime.Interop
+export class RMethodInfo extends <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/RsharpDataObject.html">RsharpDataObject</a> {
+   elementType: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Interop/RType.html">RType</a>;
+   # Do not print the value of this function on console
+   invisible: boolean;
+   # The function name
+   name: string;
+   # module namespace string that parsed from <a href="/vignettes/clr/Microsoft/VisualBasic/Scripting/MetaData/PackageAttribute.html">PackageAttribute</a>
+   namespace: string;
+   # A list of parameters of current .NET api that imported
+   #  from the external dll assembly file.
+   parameters: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Interop/RMethodArgument.html">RMethodArgument[]</a>;
+   # the return type of current api method
+   returns: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Interop/IRType.html">IRType</a>;
+   stackFrame: <a href="/vignettes/clr/Microsoft/VisualBasic/ApplicationServices/Debugging/Diagnostics/StackFrame.html">StackFrame</a>;
+}
+</code>
+        </pre>
+
+        <h3>.NET clr type reference tree</h3>
+
+        <ol>
+<li>this class extends from <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/RsharpDataObject.html">RsharpDataObject</a> class: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/RsharpDataObject.html">RsharpDataObject</a></li>
+<li>use by <i>property</i> member <code>elementType</code>: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Interop/RType.html">RType</a></li>
+<li>use by <i>property</i> member <code>parameters</code>: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Interop/RMethodArgument.html">RMethodArgument</a></li>
+<li>use by <i>property</i> member <code>returns</code>: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Interop/IRType.html">IRType</a></li>
+<li>use by <i>property</i> member <code>stackFrame</code>: <a href="/vignettes/clr/Microsoft/VisualBasic/ApplicationServices/Debugging/Diagnostics/StackFrame.html">StackFrame</a></li>
+</ol>
+
+
+        <hr />
+        <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a
+                href="../{$package}.html">Index</a>]
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
+<script type="text/javascript" src="../../_assets/highlights.js"></script>
+<script type="text/javascript">r_highlights("clr_ts");</script>
+
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>SMRUCC.Rsharp.Interpreter.ExecuteEngine.ExpressionSymbols.Closure.DeclareNewFunction</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <table style="width: 100%;">
+            <tr>
+                <td>DeclareNewFunction {SMRUCC.Rsharp.Interpreter.ExecuteEngine.ExpressionSymbols.Closure}</td>
+                <td style="text-align: right;">.NET clr documentation</td>
+            </tr>
+        </table>
+
+        <h2>DeclareNewFunction</h2>
+
+        <h3>Description</h3>
+
+        <h2>Function Definition</h2>
+
+<p>An R function object. These functions provide the base mechanisms <br />
+ for defining new functions in the R language.</p>
+
+<p>The names in an argument list can be back-quoted non-standard names <br />
+ (see ‘backquote’).<br />
+ If value is missing, NULL is returned. If it is a single expression,<br />
+ the value of the evaluated expression is returned. (The expression <br />
+ is evaluated as soon as return is called, in the evaluation frame <br />
+ of the function and before any on.exit expression is evaluated.)<br />
+ If the end of a function is reached without calling return, the value<br />
+ of the last evaluated expression is returned.</p>
+
+<p>(普通的函数定义模型: </p>
+
+<p>普通的函数与lambda函数<a href="/vignettes/clr/SMRUCC/Rsharp/Interpreter/ExecuteEngine/ExpressionSymbols/Closure/DeclareLambdaFunction.html">DeclareLambdaFunction</a>在结构上是一致的，<br />
+ 但是有一个区别就是lambda函数<a href="/vignettes/clr/SMRUCC/Rsharp/Interpreter/ExecuteEngine/ExpressionSymbols/Closure/DeclareLambdaFunction.html">DeclareLambdaFunction</a>是没有<a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Environment.html">Environment</a>的，<br />
+ 所以lambda函数会更加的轻量化，不容易产生内存溢出的问题)</p>
+
+<p>This type of function is not the only type in R: they are called <br />
+ closures (a name with origins in LISP) to distinguish them from <br />
+ primitive functions.<br />
+ A closure has three components, its formals (its argument list), <br />
+ its body (expr in the ‘Usage’ section) and its environment which <br />
+ provides the enclosure of the evaluation frame when the closure is <br />
+ used.<br />
+ There is an optional further component if the closure has been <br />
+ byte-compiled. This is not normally user-visible, but it indicated <br />
+ when functions are printed.</p>
+
+<blockquote>
+  <p>Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988) The New S Language.<br />
+   Wadsworth &amp; Brooks/Cole.</p>
+</blockquote>
+
+<p>A subclass of <a href="/vignettes/clr/SMRUCC/Rsharp/Interpreter/ExecuteEngine/SymbolExpression.html">SymbolExpression</a></p>
+
+        <h3>Declare</h3>        
+
+        <pre>
+            <code id="clr_ts">
+# namespace SMRUCC.Rsharp.Interpreter.ExecuteEngine.ExpressionSymbols.Closure
+export class DeclareNewFunction extends <a href="/vignettes/clr/SMRUCC/Rsharp/Interpreter/ExecuteEngine/SymbolExpression.html">SymbolExpression</a> {
+   body: <a href="/vignettes/clr/SMRUCC/Rsharp/Interpreter/ExecuteEngine/ExpressionSymbols/Closure/ClosureExpression.html">ClosureExpression</a>;
+   expressionName: <a href="/vignettes/clr/SMRUCC/Rsharp/Development/Package/File/ExpressionTypes.html">ExpressionTypes</a>;
+   funcName: string;
+   isCallable: boolean;
+   # 这个是当前的这个函数的程序包来源名称，在运行时创建的函数的命令空间为<code>SMRUCC/R&#35;_runtime</code>
+   Namespace: string;
+   parameters: <a href="/vignettes/clr/SMRUCC/Rsharp/Interpreter/ExecuteEngine/ExpressionSymbols/Closure/DeclareNewSymbol.html">DeclareNewSymbol[]</a>;
+   stackFrame: <a href="/vignettes/clr/Microsoft/VisualBasic/ApplicationServices/Debugging/Diagnostics/StackFrame.html">StackFrame</a>;
+   type: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/TypeCodes.html">TypeCodes</a>;
+}
+</code>
+        </pre>
+
+        <h3>.NET clr type reference tree</h3>
+
+        <ol>
+<li>this class extends from <a href="/vignettes/clr/SMRUCC/Rsharp/Interpreter/ExecuteEngine/SymbolExpression.html">SymbolExpression</a> class: <a href="/vignettes/clr/SMRUCC/Rsharp/Interpreter/ExecuteEngine/SymbolExpression.html">SymbolExpression</a></li>
+<li>use by <i>property</i> member <code>body</code>: <a href="/vignettes/clr/SMRUCC/Rsharp/Interpreter/ExecuteEngine/ExpressionSymbols/Closure/ClosureExpression.html">ClosureExpression</a></li>
+<li>use by <i>property</i> member <code>expressionName</code>: <a href="/vignettes/clr/SMRUCC/Rsharp/Development/Package/File/ExpressionTypes.html">ExpressionTypes</a></li>
+<li>use by <i>property</i> member <code>parameters</code>: <a href="/vignettes/clr/SMRUCC/Rsharp/Interpreter/ExecuteEngine/ExpressionSymbols/Closure/DeclareNewSymbol.html">DeclareNewSymbol</a></li>
+<li>use by <i>property</i> member <code>stackFrame</code>: <a href="/vignettes/clr/Microsoft/VisualBasic/ApplicationServices/Debugging/Diagnostics/StackFrame.html">StackFrame</a></li>
+<li>use by <i>property</i> member <code>type</code>: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/TypeCodes.html">TypeCodes</a></li>
+</ol>
+
+
+        <hr />
+        <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a
+                href="../{$package}.html">Index</a>]
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
+<script type="text/javascript" src="../../_assets/highlights.js"></script>
+<script type="text/javascript">r_highlights("clr_ts");</script>
+
+</html>

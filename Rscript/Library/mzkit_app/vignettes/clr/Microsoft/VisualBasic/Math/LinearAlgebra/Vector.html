@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Microsoft.VisualBasic.Math.LinearAlgebra.Vector</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <table style="width: 100%;">
+            <tr>
+                <td>Vector {Microsoft.VisualBasic.Math.LinearAlgebra}</td>
+                <td style="text-align: right;">.NET clr documentation</td>
+            </tr>
+        </table>
+
+        <h2>Vector</h2>
+
+        <h3>Description</h3>
+
+        <p>A numeric vector</p>
+
+<p>this numeric vector is based on the <a href="/vignettes/clr/Microsoft/VisualBasic/Language/Vectorization/Vector`1.html">Vector`1</a></p>
+
+        <h3>Declare</h3>        
+
+        <pre>
+            <code id="clr_ts">
+# namespace Microsoft.VisualBasic.Math.LinearAlgebra
+export class Vector extends <a href="/vignettes/clr/Microsoft/VisualBasic/Math/Scripting/Rscript/GenericVector`1.html">GenericVector`1</a> {
+   Array: double;
+   Dim: integer;
+   First: double;
+   IsNaN: <a href="/vignettes/clr/Microsoft/VisualBasic/Language/Vectorization/BooleanVector.html">BooleanVector</a>;
+   # <a href="/vignettes/clr/Microsoft/VisualBasic/Math/Scripting/Rscript/GenericVector`1.html">GenericVector`1</a>.<a href="#">Dim</a>为1?即当前的向量对象是否是只包含有一个数字？
+   IsNumeric: boolean;
+   IsScalar: boolean;
+   Last: double;
+   Length: integer;
+   # <code>norm2()</code>
+   # 
+   # 向量模的平方，<code>||x||</code>是向量<code>x=(x1，x2，…，xp)</code>的欧几里得范数
+   Mod: double;
+   # <code>[min, max]</code>
+   Range: <a href="/vignettes/clr/Microsoft/VisualBasic/ComponentModel/Ranges/Model/DoubleRange.html">DoubleRange</a>;
+   # <code>norm()</code>
+   # 
+   # <a href="http://math.stackexchange.com/questions/440320/what-is-magnitude-of-sum-of-two-vector">http://math.stackexchange.com/questions/440320/what-is-magnitude-of-sum-of-two-vector</a>
+   SumMagnitude: double;
+   # normalize
+   Unit: <a href="/vignettes/clr/Microsoft/VisualBasic/Math/LinearAlgebra/Vector.html">Vector</a>;
+}
+</code>
+        </pre>
+
+        <h3>.NET clr type reference tree</h3>
+
+        <ol>
+<li>this class extends from <a href="/vignettes/clr/Microsoft/VisualBasic/Math/Scripting/Rscript/GenericVector`1.html">GenericVector`1</a> class: <a href="/vignettes/clr/Microsoft/VisualBasic/Math/Scripting/Rscript/GenericVector`1.html">GenericVector`1</a></li>
+<li>use by <i>property</i> member <code>IsNaN</code>: <a href="/vignettes/clr/Microsoft/VisualBasic/Language/Vectorization/BooleanVector.html">BooleanVector</a></li>
+<li>use by <i>property</i> member <code>Range</code>: <a href="/vignettes/clr/Microsoft/VisualBasic/ComponentModel/Ranges/Model/DoubleRange.html">DoubleRange</a></li>
+<li>use by <i>property</i> member <code>Unit</code>: <a href="/vignettes/clr/Microsoft/VisualBasic/Math/LinearAlgebra/Vector.html">Vector</a></li>
+</ol>
+
+
+        <hr />
+        <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a
+                href="../{$package}.html">Index</a>]
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
+<script type="text/javascript" src="../../_assets/highlights.js"></script>
+<script type="text/javascript">r_highlights("clr_ts");</script>
+
+</html>

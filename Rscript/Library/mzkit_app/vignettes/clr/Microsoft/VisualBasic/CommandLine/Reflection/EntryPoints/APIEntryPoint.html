@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Microsoft.VisualBasic.CommandLine.Reflection.EntryPoints.APIEntryPoint</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <table style="width: 100%;">
+            <tr>
+                <td>APIEntryPoint {Microsoft.VisualBasic.CommandLine.Reflection.EntryPoints}</td>
+                <td style="text-align: right;">.NET clr documentation</td>
+            </tr>
+        </table>
+
+        <h2>APIEntryPoint</h2>
+
+        <h3>Description</h3>
+
+        <p>The entry point data of the commands in the command line which was original loaded <br />
+ from the source meta data in the compiled target.<br />
+ (命令行命令的执行入口点)</p>
+
+        <h3>Declare</h3>        
+
+        <pre>
+            <code id="clr_ts">
+# namespace Microsoft.VisualBasic.CommandLine.Reflection.EntryPoints
+export class APIEntryPoint extends <a href="/vignettes/clr/Microsoft/VisualBasic/CommandLine/Reflection/EntryPoints/APIDelegate.html">APIDelegate</a> {
+   # 当前的这个命令对象的参数帮助信息列表
+   Arguments: <a href="/vignettes/clr/Microsoft/VisualBasic/CommandLine/Reflection/ArgumentCollection.html">ArgumentCollection</a>;
+   # The reflection entry point in the assembly for the target method object.
+   EntryPoint: <a href="/vignettes/clr/System/Reflection/MethodInfo.html">MethodInfo</a>;
+   Example: string;
+   Info: string;
+   # The shared method did not requires of the object instance.(这个方法是否为实例方法)
+   IsInstanceMethod: boolean;
+   Name: string;
+   # If the target invoked <a href="/vignettes/clr/Microsoft/VisualBasic/CommandLine/Reflection/EntryPoints/APIEntryPoint.html">APIEntryPoint</a>.<a href="/vignettes/clr/System/Reflection/MethodInfo.html">EntryPoint</a>[method delegate] is a instance method, 
+   #  then this property value should be the target object instance which has the method delegate.
+   #  (假若目标方法不是共享的方法，则必须要使用本对象来进行Invoke的调用)
+   target: <i>any</i> kind;
+   Usage: string;
+}
+</code>
+        </pre>
+
+        <h3>.NET clr type reference tree</h3>
+
+        <ol>
+<li>this class extends from <a href="/vignettes/clr/Microsoft/VisualBasic/CommandLine/Reflection/EntryPoints/APIDelegate.html">APIDelegate</a> class: <a href="/vignettes/clr/Microsoft/VisualBasic/CommandLine/Reflection/EntryPoints/APIDelegate.html">APIDelegate</a></li>
+<li>use by <i>property</i> member <code>Arguments</code>: <a href="/vignettes/clr/Microsoft/VisualBasic/CommandLine/Reflection/ArgumentCollection.html">ArgumentCollection</a></li>
+<li>use by <i>property</i> member <code>EntryPoint</code>: <a href="/vignettes/clr/System/Reflection/MethodInfo.html">MethodInfo</a></li>
+<li>use by <i>property</i> member <code>target</code>: <i>any</i> kind</li>
+</ol>
+
+
+        <hr />
+        <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a
+                href="../{$package}.html">Index</a>]
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
+<script type="text/javascript" src="../../_assets/highlights.js"></script>
+<script type="text/javascript">r_highlights("clr_ts");</script>
+
+</html>

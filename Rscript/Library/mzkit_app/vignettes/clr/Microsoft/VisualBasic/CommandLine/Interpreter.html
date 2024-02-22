@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Microsoft.VisualBasic.CommandLine.Interpreter</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <table style="width: 100%;">
+            <tr>
+                <td>Interpreter {Microsoft.VisualBasic.CommandLine}</td>
+                <td style="text-align: right;">.NET clr documentation</td>
+            </tr>
+        </table>
+
+        <h2>Interpreter</h2>
+
+        <h3>Description</h3>
+
+        <p>Command line interpreter for your <strong>CLI</strong> program.<br />
+ (命令行解释器，请注意，在调试模式之下，命令行解释器会在运行完命令之后暂停，而Release模式之下则不会。<br />
+ 假若在调试模式之下发现程序有很长一段时间处于cpu占用为零的静止状态，则很有可能已经运行完命令并且等待<br />
+ 回车退出)</p>
+
+        <h3>Declare</h3>        
+
+        <pre>
+            <code id="clr_ts">
+# namespace Microsoft.VisualBasic.CommandLine
+export class Interpreter {
+   # 当前的解释器内所容纳的所有的CLI API列表
+   APIList: <a href="/vignettes/clr/System/Collections/Generic/ICollection`1.html">ICollection`1</a>;
+   # List all of the command line entry point name which were contains in this cli interpreter.
+   #  (列举出本CLI命令行解释器之中的所有的命令行执行入口点的名称)
+   APINameList: <a href="/vignettes/clr/System/Collections/Generic/ICollection`1.html">ICollection`1</a>;
+   # Gets the command counts in current cli interpreter.(返回本CLI命令行解释器之中所包含有的命令的数目)
+   Count: integer;
+   # Public Delegate Function __ExecuteEmptyCli() As Integer,
+   #  (<a href="/vignettes/clr/Microsoft/VisualBasic/CommandLine/ExecuteEmptyCLI.html">ExecuteEmptyCLI</a>: 假若所传入的命令行是空的，就会执行这个函数指针)
+   ExecuteEmptyCli: <a href="/vignettes/clr/Microsoft/VisualBasic/CommandLine/ExecuteEmptyCLI.html">ExecuteEmptyCLI</a>;
+   # Public Delegate Function __ExecuteFile(path As String, args As String()) As Integer,
+   #  (<a href="/vignettes/clr/Microsoft/VisualBasic/CommandLine/ExecuteFile.html">ExecuteFile</a>: 假若所传入的命令行的name是文件路径，解释器就会执行这个函数指针)
+   #  这个函数指针一般是用作于执行脚本程序的
+   ExecuteFile: <a href="/vignettes/clr/Microsoft/VisualBasic/CommandLine/ExecuteFile.html">ExecuteFile</a>;
+   ExecuteNotFound: <a href="/vignettes/clr/Microsoft/VisualBasic/CommandLine/ExecuteNotFound.html">ExecuteNotFound</a>;
+   ExecuteQuery: <a href="/vignettes/clr/Microsoft/VisualBasic/CommandLine/ExecuteQuery.html">ExecuteQuery</a>;
+   Info: <a href="/vignettes/clr/Microsoft/VisualBasic/CommandLine/Reflection/Namespace.html">Namespace</a>;
+   IsReadOnly: boolean;
+   # Returns the command entry info list array.
+   ListCommandInfo: <a href="/vignettes/clr/Microsoft/VisualBasic/CommandLine/Reflection/EntryPoints/APIEntryPoint.html">APIEntryPoint[]</a>;
+   Stack: string;
+   # The CLI API container Module/Class type information.(申明这个解释器的命令行API容器类型)
+   Type: <a href="/vignettes/clr/System/Type.html">Type</a>;
+}
+</code>
+        </pre>
+
+        <h3>.NET clr type reference tree</h3>
+
+        <ol>
+<li>use by <i>property</i> member <code>APIList</code>: <a href="/vignettes/clr/System/Collections/Generic/ICollection`1.html">ICollection`1</a></li>
+<li>use by <i>property</i> member <code>APINameList</code>: <a href="/vignettes/clr/System/Collections/Generic/ICollection`1.html">ICollection`1</a></li>
+<li>use by <i>property</i> member <code>ExecuteEmptyCli</code>: <a href="/vignettes/clr/Microsoft/VisualBasic/CommandLine/ExecuteEmptyCLI.html">ExecuteEmptyCLI</a></li>
+<li>use by <i>property</i> member <code>ExecuteFile</code>: <a href="/vignettes/clr/Microsoft/VisualBasic/CommandLine/ExecuteFile.html">ExecuteFile</a></li>
+<li>use by <i>property</i> member <code>ExecuteNotFound</code>: <a href="/vignettes/clr/Microsoft/VisualBasic/CommandLine/ExecuteNotFound.html">ExecuteNotFound</a></li>
+<li>use by <i>property</i> member <code>ExecuteQuery</code>: <a href="/vignettes/clr/Microsoft/VisualBasic/CommandLine/ExecuteQuery.html">ExecuteQuery</a></li>
+<li>use by <i>property</i> member <code>Info</code>: <a href="/vignettes/clr/Microsoft/VisualBasic/CommandLine/Reflection/Namespace.html">Namespace</a></li>
+<li>use by <i>property</i> member <code>ListCommandInfo</code>: <a href="/vignettes/clr/Microsoft/VisualBasic/CommandLine/Reflection/EntryPoints/APIEntryPoint.html">APIEntryPoint</a></li>
+<li>use by <i>property</i> member <code>Type</code>: <a href="/vignettes/clr/System/Type.html">Type</a></li>
+</ol>
+
+
+        <hr />
+        <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a
+                href="../{$package}.html">Index</a>]
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
+<script type="text/javascript" src="../../_assets/highlights.js"></script>
+<script type="text/javascript">r_highlights("clr_ts");</script>
+
+</html>

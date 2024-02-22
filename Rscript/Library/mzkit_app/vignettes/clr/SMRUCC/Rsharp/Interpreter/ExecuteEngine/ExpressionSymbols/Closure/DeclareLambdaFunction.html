@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>SMRUCC.Rsharp.Interpreter.ExecuteEngine.ExpressionSymbols.Closure.DeclareLambdaFunction</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <table style="width: 100%;">
+            <tr>
+                <td>DeclareLambdaFunction {SMRUCC.Rsharp.Interpreter.ExecuteEngine.ExpressionSymbols.Closure}</td>
+                <td style="text-align: right;">.NET clr documentation</td>
+            </tr>
+        </table>
+
+        <h2>DeclareLambdaFunction</h2>
+
+        <h3>Description</h3>
+
+        <p>只允许简单的表达式出现在这里<br />
+ 并且参数也只允许出现一个</p>
+
+<p>a subclass of <a href="/vignettes/clr/SMRUCC/Rsharp/Interpreter/ExecuteEngine/SymbolExpression.html">SymbolExpression</a></p>
+
+<p>(lambda函数与普通函数相比，lambda函数是没有environment的<br />
+ 所以lambda函数会更加的轻量化)</p>
+
+        <h3>Declare</h3>        
+
+        <pre>
+            <code id="clr_ts">
+# namespace SMRUCC.Rsharp.Interpreter.ExecuteEngine.ExpressionSymbols.Closure
+export class DeclareLambdaFunction extends <a href="/vignettes/clr/SMRUCC/Rsharp/Interpreter/ExecuteEngine/SymbolExpression.html">SymbolExpression</a> {
+   closure: <a href="/vignettes/clr/SMRUCC/Rsharp/Interpreter/ExecuteEngine/Expression.html">Expression</a>;
+   expressionName: <a href="/vignettes/clr/SMRUCC/Rsharp/Development/Package/File/ExpressionTypes.html">ExpressionTypes</a>;
+   isCallable: boolean;
+   name: string;
+   parameterNames: string;
+   stackFrame: <a href="/vignettes/clr/Microsoft/VisualBasic/ApplicationServices/Debugging/Diagnostics/StackFrame.html">StackFrame</a>;
+   type: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/TypeCodes.html">TypeCodes</a>;
+}
+</code>
+        </pre>
+
+        <h3>.NET clr type reference tree</h3>
+
+        <ol>
+<li>this class extends from <a href="/vignettes/clr/SMRUCC/Rsharp/Interpreter/ExecuteEngine/SymbolExpression.html">SymbolExpression</a> class: <a href="/vignettes/clr/SMRUCC/Rsharp/Interpreter/ExecuteEngine/SymbolExpression.html">SymbolExpression</a></li>
+<li>use by <i>property</i> member <code>closure</code>: <a href="/vignettes/clr/SMRUCC/Rsharp/Interpreter/ExecuteEngine/Expression.html">Expression</a></li>
+<li>use by <i>property</i> member <code>expressionName</code>: <a href="/vignettes/clr/SMRUCC/Rsharp/Development/Package/File/ExpressionTypes.html">ExpressionTypes</a></li>
+<li>use by <i>property</i> member <code>stackFrame</code>: <a href="/vignettes/clr/Microsoft/VisualBasic/ApplicationServices/Debugging/Diagnostics/StackFrame.html">StackFrame</a></li>
+<li>use by <i>property</i> member <code>type</code>: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/TypeCodes.html">TypeCodes</a></li>
+</ol>
+
+
+        <hr />
+        <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a
+                href="../{$package}.html">Index</a>]
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
+<script type="text/javascript" src="../../_assets/highlights.js"></script>
+<script type="text/javascript">r_highlights("clr_ts");</script>
+
+</html>

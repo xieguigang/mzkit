@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>SMRUCC.Rsharp.Runtime.Interop.RType</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <table style="width: 100%;">
+            <tr>
+                <td>RType {SMRUCC.Rsharp.Runtime.Interop}</td>
+                <td style="text-align: right;">.NET clr documentation</td>
+            </tr>
+        </table>
+
+        <h2>RType</h2>
+
+        <h3>Description</h3>
+
+        <p>The type wrapper for .NET type to R# language runtime</p>
+
+        <h3>Declare</h3>        
+
+        <pre>
+            <code id="clr_ts">
+# namespace SMRUCC.Rsharp.Runtime.Interop
+export class RType {
+   # the raw CLR <a href="/vignettes/clr/System/Type.html">Type</a>.<a href="#">FullName</a>
+   fullName: string;
+   getCount: <a href="/vignettes/clr/System/Reflection/PropertyInfo.html">PropertyInfo</a>;
+   getItem: <a href="/vignettes/clr/System/Reflection/PropertyInfo.html">PropertyInfo</a>;
+   # implements interface of <a href="/vignettes/clr/Microsoft/VisualBasic/ComponentModel/DataSourceModel/IDynamicsObject.html">IDynamicsObject</a>?
+   haveDynamicsProperty: boolean;
+   isArray: boolean;
+   isCollection: boolean;
+   # is an <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Environment.html">Environment</a> object?
+   isEnvironment: boolean;
+   # Is dictionary of string and value types?
+   isGenericListObject: boolean;
+   # is R# runtime type?
+   isPrimitive: boolean;
+   # The mapped R# data type
+   mode: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/TypeCodes.html">TypeCodes</a>;
+   # the raw CLR type name
+   name: string;
+   # based .NET CLR type
+   raw: <a href="/vignettes/clr/System/Type.html">Type</a>;
+}
+</code>
+        </pre>
+
+        <h3>.NET clr type reference tree</h3>
+
+        <ol>
+<li>use by <i>property</i> member <code>getCount</code>: <a href="/vignettes/clr/System/Reflection/PropertyInfo.html">PropertyInfo</a></li>
+<li>use by <i>property</i> member <code>getItem</code>: <a href="/vignettes/clr/System/Reflection/PropertyInfo.html">PropertyInfo</a></li>
+<li>use by <i>property</i> member <code>mode</code>: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/TypeCodes.html">TypeCodes</a></li>
+<li>use by <i>property</i> member <code>raw</code>: <a href="/vignettes/clr/System/Type.html">Type</a></li>
+</ol>
+
+
+        <hr />
+        <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a
+                href="../{$package}.html">Index</a>]
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
+<script type="text/javascript" src="../../_assets/highlights.js"></script>
+<script type="text/javascript">r_highlights("clr_ts");</script>
+
+</html>

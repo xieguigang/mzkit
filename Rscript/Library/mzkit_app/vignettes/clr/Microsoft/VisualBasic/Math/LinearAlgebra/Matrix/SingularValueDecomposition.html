@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Microsoft.VisualBasic.Math.LinearAlgebra.Matrix.SingularValueDecomposition</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <table style="width: 100%;">
+            <tr>
+                <td>SingularValueDecomposition {Microsoft.VisualBasic.Math.LinearAlgebra.Matrix}</td>
+                <td style="text-align: right;">.NET clr documentation</td>
+            </tr>
+        </table>
+
+        <h2>SingularValueDecomposition</h2>
+
+        <h3>Description</h3>
+
+        <p>Singular Value Decomposition.</p>
+
+<p>For an m-by-n matrix A with m >= n, the singular value decomposition is<br />
+ an m-by-n orthogonal matrix U, an n-by-n diagonal matrix S, and<br />
+ an n-by-n orthogonal matrix V so that A = U*S*V'.<br />
+ The singular values, sigma[k] = S[k][k], are ordered so that<br />
+ sigma[0] >= sigma[1] >= ... >= sigma[n-1].<br />
+ The singular value decompostion always exists, so the constructor will<br />
+ never fail.  The matrix condition number and the effective numerical<br />
+ rank can be computed from this decomposition.</p>
+
+        <h3>Declare</h3>        
+
+        <pre>
+            <code id="clr_ts">
+# namespace Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
+export class SingularValueDecomposition {
+   # Two norm condition number
+   Condition: double;
+   # Two norm
+   Norm2: double;
+   # Effective numerical matrix rank
+   Rank: integer;
+   # Return the diagonal matrix of singular values
+   S: <a href="/vignettes/clr/Microsoft/VisualBasic/Math/LinearAlgebra/Matrix/GeneralMatrix.html">GeneralMatrix</a>;
+   # Return the one-dimensional array of singular values
+   SingularValues: <a href="/vignettes/clr/Microsoft/VisualBasic/Math/LinearAlgebra/Vector.html">Vector</a>;
+   # Return the left singular vectors
+   U: <a href="/vignettes/clr/Microsoft/VisualBasic/Math/LinearAlgebra/Matrix/GeneralMatrix.html">GeneralMatrix</a>;
+   # Return the right singular vectors
+   V: <a href="/vignettes/clr/Microsoft/VisualBasic/Math/LinearAlgebra/Matrix/GeneralMatrix.html">GeneralMatrix</a>;
+}
+</code>
+        </pre>
+
+        <h3>.NET clr type reference tree</h3>
+
+        <ol>
+<li>use by <i>property</i> member <code>S</code>: <a href="/vignettes/clr/Microsoft/VisualBasic/Math/LinearAlgebra/Matrix/GeneralMatrix.html">GeneralMatrix</a></li>
+<li>use by <i>property</i> member <code>SingularValues</code>: <a href="/vignettes/clr/Microsoft/VisualBasic/Math/LinearAlgebra/Vector.html">Vector</a></li>
+<li>use by <i>property</i> member <code>U</code>: <a href="/vignettes/clr/Microsoft/VisualBasic/Math/LinearAlgebra/Matrix/GeneralMatrix.html">GeneralMatrix</a></li>
+<li>use by <i>property</i> member <code>V</code>: <a href="/vignettes/clr/Microsoft/VisualBasic/Math/LinearAlgebra/Matrix/GeneralMatrix.html">GeneralMatrix</a></li>
+</ol>
+
+
+        <hr />
+        <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a
+                href="../{$package}.html">Index</a>]
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
+<script type="text/javascript" src="../../_assets/highlights.js"></script>
+<script type="text/javascript">r_highlights("clr_ts");</script>
+
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>SMRUCC.Rsharp.Runtime.Components.Message</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <table style="width: 100%;">
+            <tr>
+                <td>Message {SMRUCC.Rsharp.Runtime.Components}</td>
+                <td style="text-align: right;">.NET clr documentation</td>
+            </tr>
+        </table>
+
+        <h2>Message</h2>
+
+        <h3>Description</h3>
+
+        <p>The warning message and exception message</p>
+
+        <h3>Declare</h3>        
+
+        <pre>
+            <code id="clr_ts">
+# namespace SMRUCC.Rsharp.Runtime.Components
+export class Message {
+   # [R# runtime] the R# scripting environment runtime stack trace
+   environmentStack: <a href="/vignettes/clr/Microsoft/VisualBasic/ApplicationServices/Debugging/Diagnostics/StackFrame.html">StackFrame[]</a>;
+   # the .NET log levels of current message object, value could be warning and error
+   level: <a href="/vignettes/clr/Microsoft/VisualBasic/ApplicationServices/Debugging/Logging/MSG_TYPES.html">MSG_TYPES</a>;
+   # the message content about this error or warning
+   message: string;
+   # the source R# expression that cause this error or warning message
+   source: <a href="/vignettes/clr/SMRUCC/Rsharp/Interpreter/ExecuteEngine/Expression.html">Expression</a>;
+   # [VB.NET runtime] the R# engine stack trace
+   trace: <a href="/vignettes/clr/Microsoft/VisualBasic/ApplicationServices/Debugging/Diagnostics/StackFrame.html">StackFrame[]</a>;
+}
+</code>
+        </pre>
+
+        <h3>.NET clr type reference tree</h3>
+
+        <ol>
+<li>use by <i>property</i> member <code>environmentStack</code>: <a href="/vignettes/clr/Microsoft/VisualBasic/ApplicationServices/Debugging/Diagnostics/StackFrame.html">StackFrame</a></li>
+<li>use by <i>property</i> member <code>level</code>: <a href="/vignettes/clr/Microsoft/VisualBasic/ApplicationServices/Debugging/Logging/MSG_TYPES.html">MSG_TYPES</a></li>
+<li>use by <i>property</i> member <code>source</code>: <a href="/vignettes/clr/SMRUCC/Rsharp/Interpreter/ExecuteEngine/Expression.html">Expression</a></li>
+<li>use by <i>property</i> member <code>trace</code>: <a href="/vignettes/clr/Microsoft/VisualBasic/ApplicationServices/Debugging/Diagnostics/StackFrame.html">StackFrame</a></li>
+</ol>
+
+
+        <hr />
+        <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a
+                href="../{$package}.html">Index</a>]
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
+<script type="text/javascript" src="../../_assets/highlights.js"></script>
+<script type="text/javascript">r_highlights("clr_ts");</script>
+
+</html>

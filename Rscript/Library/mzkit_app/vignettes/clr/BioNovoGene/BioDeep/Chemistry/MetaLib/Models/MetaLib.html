@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>BioNovoGene.BioDeep.Chemistry.MetaLib.Models.MetaLib</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <table style="width: 100%;">
+            <tr>
+                <td>MetaLib {BioNovoGene.BioDeep.Chemistry.MetaLib.Models}</td>
+                <td style="text-align: right;">.NET clr documentation</td>
+            </tr>
+        </table>
+
+        <h2>MetaLib</h2>
+
+        <h3>Description</h3>
+
+        <p>对<code>chebi/kegg/pubchem/HMDB/metlin</code>的物质注释信息整合库，这个数据库只要为了生成编号，名称之类的注释信息而构建的</p>
+
+        <h3>Declare</h3>        
+
+        <pre>
+            <code id="clr_ts">
+# namespace BioNovoGene.BioDeep.Chemistry.MetaLib.Models
+export class MetaLib extends <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/MetaLib/Models/MetaInfo.html">MetaInfo</a> {
+   chemical: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemoinformatics/ChemicalDescriptor.html">ChemicalDescriptor</a>;
+   class: string;
+   description: string;
+   exact_mass: double;
+   formula: string;
+   ID: string;
+   IUPACName: string;
+   kingdom: string;
+   molecular_framework: string;
+   name: string;
+   organism: string;
+   # 包含有这个物质的KEGG pathway的编号的集合，只有当<a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/MetaLib/CrossReference/xref.html">xref</a>.<a href="#">KEGG</a>
+   #  存在值的时候才会存在这个属性
+   pathways: string;
+   samples: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/MetaLib/Models/BiosampleSource.html">BiosampleSource[]</a>;
+   sub_class: string;
+   super_class: string;
+   synonym: string;
+   xref: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/MetaLib/CrossReference/xref.html">xref</a>;
+}
+</code>
+        </pre>
+
+        <h3>.NET clr type reference tree</h3>
+
+        <ol>
+<li>this class extends from <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/MetaLib/Models/MetaInfo.html">MetaInfo</a> class: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/MetaLib/Models/MetaInfo.html">MetaInfo</a></li>
+<li>use by <i>property</i> member <code>chemical</code>: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemoinformatics/ChemicalDescriptor.html">ChemicalDescriptor</a></li>
+<li>use by <i>property</i> member <code>samples</code>: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/MetaLib/Models/BiosampleSource.html">BiosampleSource</a></li>
+<li>use by <i>property</i> member <code>xref</code>: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/MetaLib/CrossReference/xref.html">xref</a></li>
+</ol>
+
+
+        <hr />
+        <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a
+                href="../{$package}.html">Index</a>]
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
+<script type="text/javascript" src="../../_assets/highlights.js"></script>
+<script type="text/javascript">r_highlights("clr_ts");</script>
+
+</html>
