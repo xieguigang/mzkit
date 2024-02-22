@@ -30,8 +30,15 @@
             <code id="clr_ts">
 # namespace Microsoft.VisualBasic.ApplicationServices.Development.XmlDoc.Assembly
 export class XmlDocs {
+   # the member name
    Name: string;
+   # Use the <remarks> tag to add information about a type, supplementing the information specified with <summary>.
    Remarks: string;
+   # Specifies the summary of the member. Use the <summary> tag to describe a type or 
+   #  a type member. Use <remarks> to add supplemental information to a type description.
+   # 
+   # The text For the <summary> tag Is the only source Of information about the type 
+   #  In IntelliSense, And Is also displayed In the Object Browser.
    Summary: string;
 }
 </code>
