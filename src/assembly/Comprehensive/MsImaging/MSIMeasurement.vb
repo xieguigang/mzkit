@@ -56,10 +56,10 @@
 
 #If NET48 Then
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader
+Imports std = System.Math
 #End If
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
-Imports stdNum = System.Math
 
 Namespace MsImaging
 
@@ -137,7 +137,7 @@ Namespace MsImaging
                 maxrt.Add(file.ScanTimeMax * 60)
 
                 If Not scanMs2 Then
-                    For i As Integer = 0 To stdNum.Min(64, maxScan)
+                    For i As Integer = 0 To std.Min(64, maxScan)
                         If file.ThermoReader.GetMSLevel(scan:=i) > 1 Then
                             scanMs2 = True
                             Exit For

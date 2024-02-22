@@ -100,7 +100,7 @@ Public Class mzPack : Implements IMZPack
     ''' 其他的扫描器数据，例如紫外扫描
     ''' </summary>
     ''' <returns></returns>
-    Public Property Scanners As Dictionary(Of String, ChromatogramOverlap)
+    Public Property Scanners As Dictionary(Of String, ChromatogramOverlapList)
     ''' <summary>
     ''' m/z annotation
     ''' </summary>

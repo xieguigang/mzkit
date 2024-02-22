@@ -519,7 +519,7 @@ Module MzWeb
                         .MS = cdf.CreateMs1.ToArray,
                         .Application = FileApplicationClass.MSImaging,
                         .source = file.FileName,
-                        .Scanners = New Dictionary(Of String, ChromatogramOverlap),
+                        .Scanners = New Dictionary(Of String, ChromatogramOverlapList),
                         .Chromatogram = Nothing,
                         .Thumbnail = Nothing
                     }

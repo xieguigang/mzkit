@@ -84,16 +84,16 @@ Public Class GCMSnetCDF
     Public Property scan_index As Integer()
     Public Property point_count As Integer()
     Public Property flag_count As Integer()
-    Public Property mass_values As Short()
+    Public Property mass_values As Single()
     Public Property intensity_values As Single()
     Public Property metadata As New Dictionary(Of String, String)
 
     Public Iterator Function readMzmatrix() As IEnumerable(Of Double())
         Dim offset As Integer = 0
-        Dim v As Short()
+        Dim v As Single()
 
         For Each width As Integer In point_count
-            v = New Short(width - 1) {}
+            v = New Single(width - 1) {}
             Array.ConstrainedCopy(mass_values, offset, v, Scan0, width)
             Yield v.Select(Function(si) CDbl(si)).ToArray
             offset += width

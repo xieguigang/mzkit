@@ -190,10 +190,6 @@
       <Project>{e4e859d3-f581-401d-bb6d-37aff663b88d}</Project>
       <Name>Math.NET5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\SignalProcessing\SignalProcessing\signalprocessing-netcore5.vbproj">
-      <Project>{ab027275-6748-46bf-8217-20c1858a768d}</Project>
-      <Name>signalprocessing-netcore5</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj">
       <Project>{5e161d08-84ec-4d88-a5ca-cea92d8999b0}</Project>
       <Name>Core</Name>
