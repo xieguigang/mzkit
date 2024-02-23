@@ -30,43 +30,43 @@
             <code id="clr_ts">
 # namespace SMRUCC.Rsharp.Runtime.Components
 export class TypeCodes extends <a href="/vignettes/clr/System/Enum.html">Enum</a> {
-   # boolean vector
-   boolean: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/TypeCodes.html">TypeCodes</a> = 104;
-
-   # 函数类型
-   closure: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/TypeCodes.html">TypeCodes</a> = 2;
-
-   # type code for <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Interop/RMethodInfo.html">RMethodInfo</a> and .NET clr <a href="/vignettes/clr/System/Reflection/MethodInfo.html">MethodInfo</a>
-   clr_delegate: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/TypeCodes.html">TypeCodes</a> = 6;
-
-   # A data table liked compound type
-   dataframe: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/TypeCodes.html">TypeCodes</a> = 105;
-
-   # double numeric vector
-   double: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/TypeCodes.html">TypeCodes</a> = 102;
-
-   # the runtime environment
-   environment: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/TypeCodes.html">TypeCodes</a> = 5;
-
-   formula: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/TypeCodes.html">TypeCodes</a> = 4;
+   # Unknown or invalid
+   NA: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/TypeCodes.html">TypeCodes</a> = 0;
 
    # Object type in R#, any other CLR type.(使用这个类型来表示没有类型约束)
    generic: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/TypeCodes.html">TypeCodes</a> = 1;
 
-   # integer vector
-   integer: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/TypeCodes.html">TypeCodes</a> = 101;
+   # 函数类型
+   closure: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/TypeCodes.html">TypeCodes</a> = 2;
+
+   formula: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/TypeCodes.html">TypeCodes</a> = 4;
+
+   # the runtime environment
+   environment: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/TypeCodes.html">TypeCodes</a> = 5;
+
+   # type code for <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Interop/RMethodInfo.html">RMethodInfo</a> and .NET clr <a href="/vignettes/clr/System/Reflection/MethodInfo.html">MethodInfo</a>
+   clr_delegate: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/TypeCodes.html">TypeCodes</a> = 6;
 
    # Class type in R#
    list: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/TypeCodes.html">TypeCodes</a> = 100;
 
-   # Unknown or invalid
-   NA: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/TypeCodes.html">TypeCodes</a> = 0;
+   # integer vector
+   integer: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/TypeCodes.html">TypeCodes</a> = 101;
 
-   # <a href="/vignettes/clr/System/Byte.html">Byte</a>
-   raw: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/TypeCodes.html">TypeCodes</a> = 106;
+   # double numeric vector
+   double: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/TypeCodes.html">TypeCodes</a> = 102;
 
    # string vector
    string: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/TypeCodes.html">TypeCodes</a> = 103;
+
+   # boolean vector
+   boolean: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/TypeCodes.html">TypeCodes</a> = 104;
+
+   # A data table liked compound type
+   dataframe: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/TypeCodes.html">TypeCodes</a> = 105;
+
+   # <a href="/vignettes/clr/System/Byte.html">Byte</a>
+   raw: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/TypeCodes.html">TypeCodes</a> = 106;
 
 }
 </code>
@@ -76,19 +76,19 @@ export class TypeCodes extends <a href="/vignettes/clr/System/Enum.html">Enum</a
 
         <ol>
 <li>this class extends from <a href="/vignettes/clr/System/Enum.html">Enum</a> class: <a href="/vignettes/clr/System/Enum.html">Enum</a></li>
-<li>use by <i>field</i> member <code>boolean</code>: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/TypeCodes.html">TypeCodes</a></li>
-<li>use by <i>field</i> member <code>closure</code>: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/TypeCodes.html">TypeCodes</a></li>
-<li>use by <i>field</i> member <code>clr_delegate</code>: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/TypeCodes.html">TypeCodes</a></li>
-<li>use by <i>field</i> member <code>dataframe</code>: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/TypeCodes.html">TypeCodes</a></li>
-<li>use by <i>field</i> member <code>double</code>: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/TypeCodes.html">TypeCodes</a></li>
-<li>use by <i>field</i> member <code>environment</code>: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/TypeCodes.html">TypeCodes</a></li>
-<li>use by <i>field</i> member <code>formula</code>: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/TypeCodes.html">TypeCodes</a></li>
-<li>use by <i>field</i> member <code>generic</code>: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/TypeCodes.html">TypeCodes</a></li>
-<li>use by <i>field</i> member <code>integer</code>: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/TypeCodes.html">TypeCodes</a></li>
-<li>use by <i>field</i> member <code>list</code>: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/TypeCodes.html">TypeCodes</a></li>
 <li>use by <i>field</i> member <code>NA</code>: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/TypeCodes.html">TypeCodes</a></li>
-<li>use by <i>field</i> member <code>raw</code>: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/TypeCodes.html">TypeCodes</a></li>
+<li>use by <i>field</i> member <code>generic</code>: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/TypeCodes.html">TypeCodes</a></li>
+<li>use by <i>field</i> member <code>closure</code>: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/TypeCodes.html">TypeCodes</a></li>
+<li>use by <i>field</i> member <code>formula</code>: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/TypeCodes.html">TypeCodes</a></li>
+<li>use by <i>field</i> member <code>environment</code>: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/TypeCodes.html">TypeCodes</a></li>
+<li>use by <i>field</i> member <code>clr_delegate</code>: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/TypeCodes.html">TypeCodes</a></li>
+<li>use by <i>field</i> member <code>list</code>: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/TypeCodes.html">TypeCodes</a></li>
+<li>use by <i>field</i> member <code>integer</code>: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/TypeCodes.html">TypeCodes</a></li>
+<li>use by <i>field</i> member <code>double</code>: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/TypeCodes.html">TypeCodes</a></li>
 <li>use by <i>field</i> member <code>string</code>: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/TypeCodes.html">TypeCodes</a></li>
+<li>use by <i>field</i> member <code>boolean</code>: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/TypeCodes.html">TypeCodes</a></li>
+<li>use by <i>field</i> member <code>dataframe</code>: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/TypeCodes.html">TypeCodes</a></li>
+<li>use by <i>field</i> member <code>raw</code>: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/TypeCodes.html">TypeCodes</a></li>
 </ol>
 
 

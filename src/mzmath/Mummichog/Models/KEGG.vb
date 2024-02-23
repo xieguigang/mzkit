@@ -87,10 +87,10 @@ Public Module KEGG
 
     <Extension>
     Public Iterator Function CreateBackground(pathways As IEnumerable(Of Map), populator As MapGraphPopulator) As IEnumerable(Of NamedValue(Of NetworkGraph))
-        For Each map As Map In pathways
+        For Each map As Map In From pwy In pathways Where Not pwy Is Nothing
             Dim model As NetworkGraph = populator.CreateGraphModel(map)
             Dim referId As String = If(map.EntryId.IsPattern("\d+"), $"map{map.EntryId}", map.EntryId)
-            Dim name As String = map.Name _
+            Dim name As String = map.name _
                 .Replace("Reference pathway", "") _
                 .Trim(" "c, "-"c)
 

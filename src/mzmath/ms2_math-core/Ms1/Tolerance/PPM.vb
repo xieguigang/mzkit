@@ -56,11 +56,13 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Ms1
 
     ''' <summary>
+    ''' part per million ``1/10^6``.
+    ''' 
     ''' PPM tolerance calculator
     ''' </summary>
     Public Class PPMmethod : Inherits Tolerance
@@ -92,7 +94,7 @@ Namespace Ms1
         Public Overloads Shared Function PPM(measured#, actualValue#) As Double
             ' （测量值-实际分子量）/ 实际分子量
             ' |(实验数据 - 数据库结果)| / 实验数据 * 1000000
-            Dim ppmd# = (stdNum.Abs(measured - actualValue) / actualValue) * 1000000
+            Dim ppmd# = (std.Abs(measured - actualValue) / actualValue) * 1000000
 
             If ppmd < 0 Then
                 ' 计算溢出了

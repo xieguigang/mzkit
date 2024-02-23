@@ -259,7 +259,7 @@ Public Class MSJointConnection : Implements IMzQuery
     End Function
 
     Private Shared Iterator Function toClusters(maps As IEnumerable(Of Map)) As IEnumerable(Of Cluster)
-        For Each map As Map In maps
+        For Each map As Map In From pwy In maps.SafeQuery Where Not pwy Is Nothing
             Yield New Cluster With {
                 .description = map.description,
                 .ID = map.EntryId,

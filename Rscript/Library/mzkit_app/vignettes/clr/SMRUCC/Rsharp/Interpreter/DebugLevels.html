@@ -30,17 +30,17 @@
             <code id="clr_ts">
 # namespace SMRUCC.Rsharp.Interpreter
 export class DebugLevels extends <a href="/vignettes/clr/System/Enum.html">Enum</a> {
-   # print all data on the console
-   All: <a href="/vignettes/clr/SMRUCC/Rsharp/Interpreter/DebugLevels.html">DebugLevels</a> = 3;
+   # no debug echo, normal mode(or production mode)
+   None: <a href="/vignettes/clr/SMRUCC/Rsharp/Interpreter/DebugLevels.html">DebugLevels</a> = 0;
 
    # debug echo of the memory delta change after execute each expression
    Memory: <a href="/vignettes/clr/SMRUCC/Rsharp/Interpreter/DebugLevels.html">DebugLevels</a> = 1;
 
-   # no debug echo, normal mode(or production mode)
-   None: <a href="/vignettes/clr/SMRUCC/Rsharp/Interpreter/DebugLevels.html">DebugLevels</a> = 0;
-
    # print the expression executation stack data
    Stack: <a href="/vignettes/clr/SMRUCC/Rsharp/Interpreter/DebugLevels.html">DebugLevels</a> = 2;
+
+   # print all data on the console
+   All: <a href="/vignettes/clr/SMRUCC/Rsharp/Interpreter/DebugLevels.html">DebugLevels</a> = 3;
 
 }
 </code>
@@ -50,10 +50,10 @@ export class DebugLevels extends <a href="/vignettes/clr/System/Enum.html">Enum<
 
         <ol>
 <li>this class extends from <a href="/vignettes/clr/System/Enum.html">Enum</a> class: <a href="/vignettes/clr/System/Enum.html">Enum</a></li>
-<li>use by <i>field</i> member <code>All</code>: <a href="/vignettes/clr/SMRUCC/Rsharp/Interpreter/DebugLevels.html">DebugLevels</a></li>
-<li>use by <i>field</i> member <code>Memory</code>: <a href="/vignettes/clr/SMRUCC/Rsharp/Interpreter/DebugLevels.html">DebugLevels</a></li>
 <li>use by <i>field</i> member <code>None</code>: <a href="/vignettes/clr/SMRUCC/Rsharp/Interpreter/DebugLevels.html">DebugLevels</a></li>
+<li>use by <i>field</i> member <code>Memory</code>: <a href="/vignettes/clr/SMRUCC/Rsharp/Interpreter/DebugLevels.html">DebugLevels</a></li>
 <li>use by <i>field</i> member <code>Stack</code>: <a href="/vignettes/clr/SMRUCC/Rsharp/Interpreter/DebugLevels.html">DebugLevels</a></li>
+<li>use by <i>field</i> member <code>All</code>: <a href="/vignettes/clr/SMRUCC/Rsharp/Interpreter/DebugLevels.html">DebugLevels</a></li>
 </ol>
 
 

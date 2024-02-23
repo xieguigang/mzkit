@@ -34,9 +34,6 @@
             <code id="clr_ts">
 # namespace BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData
 export class ActivationMethods extends <a href="/vignettes/clr/System/Enum.html">Enum</a> {
-   # Any activation type
-   AnyType: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/ActivationMethods.html">ActivationMethods</a> = 6;
-
    # Collision-Induced Dissociation
    # 
    # In collision-induced dissociation (CID), activation of the selected ions 
@@ -46,6 +43,9 @@ export class ActivationMethods extends <a href="/vignettes/clr/System/Enum.html"
    #  tandem quadrupole and ion trapping instruments.
    CID: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/ActivationMethods.html">ActivationMethods</a> = 0;
 
+   # Multi Photon Dissociation
+   MPD: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/ActivationMethods.html">ActivationMethods</a> = 1;
+
    # Electron Capture Dissociation
    # 
    # unique fragmentation mechanisms of multiply-charged species can be studied 
@@ -53,6 +53,9 @@ export class ActivationMethods extends <a href="/vignettes/clr/System/Enum.html"
    #  as an efficient means to study non-covalent interactions and to gain 
    #  sequence information in proteomics applications.
    ECD: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/ActivationMethods.html">ActivationMethods</a> = 2;
+
+   # Pulsed Q Dissociation
+   PQD: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/ActivationMethods.html">ActivationMethods</a> = 3;
 
    # Electron Transfer Dissociation
    # 
@@ -65,15 +68,23 @@ export class ActivationMethods extends <a href="/vignettes/clr/System/Enum.html"
    # High-energy Collision-induce Dissociation (psi-ms: beam-type collision-induced dissociation)
    HCD: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/ActivationMethods.html">ActivationMethods</a> = 5;
 
-   # Trapping instruments, such as quadrupole ion traps and Fourier transform ion 
-   #  cyclotron resonance instruments, are particularly useful for the photoactivation 
-   #  of ions, specifically for fragmentation of precursor ions by infrared 
-   #  multiphoton dissociation (IRMPD). IRMPD is a non-selective activation method 
-   #  and usually yields rich fragmentation spectra.
-   IRMPD: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/ActivationMethods.html">ActivationMethods</a> = 40;
+   # Any activation type
+   AnyType: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/ActivationMethods.html">ActivationMethods</a> = 6;
 
-   # Last Activation
-   LastActivation: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/ActivationMethods.html">ActivationMethods</a> = 38;
+   # Supplemental Activation
+   SA: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/ActivationMethods.html">ActivationMethods</a> = 7;
+
+   # Proton Transfer Reaction
+   PTR: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/ActivationMethods.html">ActivationMethods</a> = 8;
+
+   # Negative Electron Transfer Dissociation
+   NETD: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/ActivationMethods.html">ActivationMethods</a> = 9;
+
+   # Negative Proton Transfer Reaction
+   NPTR: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/ActivationMethods.html">ActivationMethods</a> = 10;
+
+   # Ultraviolet Photo Dissociation
+   UVPD: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/ActivationMethods.html">ActivationMethods</a> = 11;
 
    # Mode A
    ModeA: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/ActivationMethods.html">ActivationMethods</a> = 12;
@@ -153,23 +164,8 @@ export class ActivationMethods extends <a href="/vignettes/clr/System/Enum.html"
    # Mode Z
    ModeZ: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/ActivationMethods.html">ActivationMethods</a> = 37;
 
-   # Multi Photon Dissociation
-   MPD: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/ActivationMethods.html">ActivationMethods</a> = 1;
-
-   # Negative Electron Transfer Dissociation
-   NETD: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/ActivationMethods.html">ActivationMethods</a> = 9;
-
-   # Negative Proton Transfer Reaction
-   NPTR: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/ActivationMethods.html">ActivationMethods</a> = 10;
-
-   # Pulsed Q Dissociation
-   PQD: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/ActivationMethods.html">ActivationMethods</a> = 3;
-
-   # Proton Transfer Reaction
-   PTR: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/ActivationMethods.html">ActivationMethods</a> = 8;
-
-   # Supplemental Activation
-   SA: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/ActivationMethods.html">ActivationMethods</a> = 7;
+   # Last Activation
+   LastActivation: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/ActivationMethods.html">ActivationMethods</a> = 38;
 
    # Collisional activation upon impact of precursor ions on solid surfaces, 
    #  surface-induced dissociation (SID), is gaining importance as an alternative 
@@ -177,11 +173,15 @@ export class ActivationMethods extends <a href="/vignettes/clr/System/Enum.html"
    #  spectrometers.
    SID: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/ActivationMethods.html">ActivationMethods</a> = 39;
 
+   # Trapping instruments, such as quadrupole ion traps and Fourier transform ion 
+   #  cyclotron resonance instruments, are particularly useful for the photoactivation 
+   #  of ions, specifically for fragmentation of precursor ions by infrared 
+   #  multiphoton dissociation (IRMPD). IRMPD is a non-selective activation method 
+   #  and usually yields rich fragmentation spectra.
+   IRMPD: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/ActivationMethods.html">ActivationMethods</a> = 40;
+
    # Unknown activation type
    Unknown: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/ActivationMethods.html">ActivationMethods</a> = 255;
-
-   # Ultraviolet Photo Dissociation
-   UVPD: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/ActivationMethods.html">ActivationMethods</a> = 11;
 
 }
 </code>
@@ -191,13 +191,18 @@ export class ActivationMethods extends <a href="/vignettes/clr/System/Enum.html"
 
         <ol>
 <li>this class extends from <a href="/vignettes/clr/System/Enum.html">Enum</a> class: <a href="/vignettes/clr/System/Enum.html">Enum</a></li>
-<li>use by <i>field</i> member <code>AnyType</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/ActivationMethods.html">ActivationMethods</a></li>
 <li>use by <i>field</i> member <code>CID</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/ActivationMethods.html">ActivationMethods</a></li>
+<li>use by <i>field</i> member <code>MPD</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/ActivationMethods.html">ActivationMethods</a></li>
 <li>use by <i>field</i> member <code>ECD</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/ActivationMethods.html">ActivationMethods</a></li>
+<li>use by <i>field</i> member <code>PQD</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/ActivationMethods.html">ActivationMethods</a></li>
 <li>use by <i>field</i> member <code>ETD</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/ActivationMethods.html">ActivationMethods</a></li>
 <li>use by <i>field</i> member <code>HCD</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/ActivationMethods.html">ActivationMethods</a></li>
-<li>use by <i>field</i> member <code>IRMPD</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/ActivationMethods.html">ActivationMethods</a></li>
-<li>use by <i>field</i> member <code>LastActivation</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/ActivationMethods.html">ActivationMethods</a></li>
+<li>use by <i>field</i> member <code>AnyType</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/ActivationMethods.html">ActivationMethods</a></li>
+<li>use by <i>field</i> member <code>SA</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/ActivationMethods.html">ActivationMethods</a></li>
+<li>use by <i>field</i> member <code>PTR</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/ActivationMethods.html">ActivationMethods</a></li>
+<li>use by <i>field</i> member <code>NETD</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/ActivationMethods.html">ActivationMethods</a></li>
+<li>use by <i>field</i> member <code>NPTR</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/ActivationMethods.html">ActivationMethods</a></li>
+<li>use by <i>field</i> member <code>UVPD</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/ActivationMethods.html">ActivationMethods</a></li>
 <li>use by <i>field</i> member <code>ModeA</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/ActivationMethods.html">ActivationMethods</a></li>
 <li>use by <i>field</i> member <code>ModeB</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/ActivationMethods.html">ActivationMethods</a></li>
 <li>use by <i>field</i> member <code>ModeC</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/ActivationMethods.html">ActivationMethods</a></li>
@@ -224,15 +229,10 @@ export class ActivationMethods extends <a href="/vignettes/clr/System/Enum.html"
 <li>use by <i>field</i> member <code>ModeX</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/ActivationMethods.html">ActivationMethods</a></li>
 <li>use by <i>field</i> member <code>ModeY</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/ActivationMethods.html">ActivationMethods</a></li>
 <li>use by <i>field</i> member <code>ModeZ</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/ActivationMethods.html">ActivationMethods</a></li>
-<li>use by <i>field</i> member <code>MPD</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/ActivationMethods.html">ActivationMethods</a></li>
-<li>use by <i>field</i> member <code>NETD</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/ActivationMethods.html">ActivationMethods</a></li>
-<li>use by <i>field</i> member <code>NPTR</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/ActivationMethods.html">ActivationMethods</a></li>
-<li>use by <i>field</i> member <code>PQD</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/ActivationMethods.html">ActivationMethods</a></li>
-<li>use by <i>field</i> member <code>PTR</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/ActivationMethods.html">ActivationMethods</a></li>
-<li>use by <i>field</i> member <code>SA</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/ActivationMethods.html">ActivationMethods</a></li>
+<li>use by <i>field</i> member <code>LastActivation</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/ActivationMethods.html">ActivationMethods</a></li>
 <li>use by <i>field</i> member <code>SID</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/ActivationMethods.html">ActivationMethods</a></li>
+<li>use by <i>field</i> member <code>IRMPD</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/ActivationMethods.html">ActivationMethods</a></li>
 <li>use by <i>field</i> member <code>Unknown</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/ActivationMethods.html">ActivationMethods</a></li>
-<li>use by <i>field</i> member <code>UVPD</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/ActivationMethods.html">ActivationMethods</a></li>
 </ol>
 
 
