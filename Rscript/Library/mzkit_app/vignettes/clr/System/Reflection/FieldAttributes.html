@@ -30,21 +30,23 @@
             <code id="clr_ts">
 # namespace System.Reflection
 export class FieldAttributes extends <a href="/vignettes/clr/System/Enum.html">Enum</a> {
-   Assembly: <a href="/vignettes/clr/System/Reflection/FieldAttributes.html">FieldAttributes</a> = 3;
+   PrivateScope: <a href="/vignettes/clr/System/Reflection/FieldAttributes.html">FieldAttributes</a> = 0;
+
+   Private: <a href="/vignettes/clr/System/Reflection/FieldAttributes.html">FieldAttributes</a> = 1;
 
    FamANDAssem: <a href="/vignettes/clr/System/Reflection/FieldAttributes.html">FieldAttributes</a> = 2;
+
+   Assembly: <a href="/vignettes/clr/System/Reflection/FieldAttributes.html">FieldAttributes</a> = 3;
 
    Family: <a href="/vignettes/clr/System/Reflection/FieldAttributes.html">FieldAttributes</a> = 4;
 
    FamORAssem: <a href="/vignettes/clr/System/Reflection/FieldAttributes.html">FieldAttributes</a> = 5;
 
+   Public: <a href="/vignettes/clr/System/Reflection/FieldAttributes.html">FieldAttributes</a> = 6;
+
    FieldAccessMask: <a href="/vignettes/clr/System/Reflection/FieldAttributes.html">FieldAttributes</a> = 7;
 
-   HasDefault: <a href="/vignettes/clr/System/Reflection/FieldAttributes.html">FieldAttributes</a> = 32768;
-
-   HasFieldMarshal: <a href="/vignettes/clr/System/Reflection/FieldAttributes.html">FieldAttributes</a> = 4096;
-
-   HasFieldRVA: <a href="/vignettes/clr/System/Reflection/FieldAttributes.html">FieldAttributes</a> = 256;
+   Static: <a href="/vignettes/clr/System/Reflection/FieldAttributes.html">FieldAttributes</a> = 16;
 
    InitOnly: <a href="/vignettes/clr/System/Reflection/FieldAttributes.html">FieldAttributes</a> = 32;
 
@@ -52,21 +54,19 @@ export class FieldAttributes extends <a href="/vignettes/clr/System/Enum.html">E
 
    NotSerialized: <a href="/vignettes/clr/System/Reflection/FieldAttributes.html">FieldAttributes</a> = 128;
 
-   PinvokeImpl: <a href="/vignettes/clr/System/Reflection/FieldAttributes.html">FieldAttributes</a> = 8192;
-
-   Private: <a href="/vignettes/clr/System/Reflection/FieldAttributes.html">FieldAttributes</a> = 1;
-
-   PrivateScope: <a href="/vignettes/clr/System/Reflection/FieldAttributes.html">FieldAttributes</a> = 0;
-
-   Public: <a href="/vignettes/clr/System/Reflection/FieldAttributes.html">FieldAttributes</a> = 6;
-
-   ReservedMask: <a href="/vignettes/clr/System/Reflection/FieldAttributes.html">FieldAttributes</a> = 38144;
-
-   RTSpecialName: <a href="/vignettes/clr/System/Reflection/FieldAttributes.html">FieldAttributes</a> = 1024;
+   HasFieldRVA: <a href="/vignettes/clr/System/Reflection/FieldAttributes.html">FieldAttributes</a> = 256;
 
    SpecialName: <a href="/vignettes/clr/System/Reflection/FieldAttributes.html">FieldAttributes</a> = 512;
 
-   Static: <a href="/vignettes/clr/System/Reflection/FieldAttributes.html">FieldAttributes</a> = 16;
+   RTSpecialName: <a href="/vignettes/clr/System/Reflection/FieldAttributes.html">FieldAttributes</a> = 1024;
+
+   HasFieldMarshal: <a href="/vignettes/clr/System/Reflection/FieldAttributes.html">FieldAttributes</a> = 4096;
+
+   PinvokeImpl: <a href="/vignettes/clr/System/Reflection/FieldAttributes.html">FieldAttributes</a> = 8192;
+
+   HasDefault: <a href="/vignettes/clr/System/Reflection/FieldAttributes.html">FieldAttributes</a> = 32768;
+
+   ReservedMask: <a href="/vignettes/clr/System/Reflection/FieldAttributes.html">FieldAttributes</a> = 38144;
 
 }
 </code>
@@ -76,25 +76,25 @@ export class FieldAttributes extends <a href="/vignettes/clr/System/Enum.html">E
 
         <ol>
 <li>this class extends from <a href="/vignettes/clr/System/Enum.html">Enum</a> class: <a href="/vignettes/clr/System/Enum.html">Enum</a></li>
-<li>use by <i>field</i> member <code>Assembly</code>: <a href="/vignettes/clr/System/Reflection/FieldAttributes.html">FieldAttributes</a></li>
+<li>use by <i>field</i> member <code>PrivateScope</code>: <a href="/vignettes/clr/System/Reflection/FieldAttributes.html">FieldAttributes</a></li>
+<li>use by <i>field</i> member <code>Private</code>: <a href="/vignettes/clr/System/Reflection/FieldAttributes.html">FieldAttributes</a></li>
 <li>use by <i>field</i> member <code>FamANDAssem</code>: <a href="/vignettes/clr/System/Reflection/FieldAttributes.html">FieldAttributes</a></li>
+<li>use by <i>field</i> member <code>Assembly</code>: <a href="/vignettes/clr/System/Reflection/FieldAttributes.html">FieldAttributes</a></li>
 <li>use by <i>field</i> member <code>Family</code>: <a href="/vignettes/clr/System/Reflection/FieldAttributes.html">FieldAttributes</a></li>
 <li>use by <i>field</i> member <code>FamORAssem</code>: <a href="/vignettes/clr/System/Reflection/FieldAttributes.html">FieldAttributes</a></li>
+<li>use by <i>field</i> member <code>Public</code>: <a href="/vignettes/clr/System/Reflection/FieldAttributes.html">FieldAttributes</a></li>
 <li>use by <i>field</i> member <code>FieldAccessMask</code>: <a href="/vignettes/clr/System/Reflection/FieldAttributes.html">FieldAttributes</a></li>
-<li>use by <i>field</i> member <code>HasDefault</code>: <a href="/vignettes/clr/System/Reflection/FieldAttributes.html">FieldAttributes</a></li>
-<li>use by <i>field</i> member <code>HasFieldMarshal</code>: <a href="/vignettes/clr/System/Reflection/FieldAttributes.html">FieldAttributes</a></li>
-<li>use by <i>field</i> member <code>HasFieldRVA</code>: <a href="/vignettes/clr/System/Reflection/FieldAttributes.html">FieldAttributes</a></li>
+<li>use by <i>field</i> member <code>Static</code>: <a href="/vignettes/clr/System/Reflection/FieldAttributes.html">FieldAttributes</a></li>
 <li>use by <i>field</i> member <code>InitOnly</code>: <a href="/vignettes/clr/System/Reflection/FieldAttributes.html">FieldAttributes</a></li>
 <li>use by <i>field</i> member <code>Literal</code>: <a href="/vignettes/clr/System/Reflection/FieldAttributes.html">FieldAttributes</a></li>
 <li>use by <i>field</i> member <code>NotSerialized</code>: <a href="/vignettes/clr/System/Reflection/FieldAttributes.html">FieldAttributes</a></li>
-<li>use by <i>field</i> member <code>PinvokeImpl</code>: <a href="/vignettes/clr/System/Reflection/FieldAttributes.html">FieldAttributes</a></li>
-<li>use by <i>field</i> member <code>Private</code>: <a href="/vignettes/clr/System/Reflection/FieldAttributes.html">FieldAttributes</a></li>
-<li>use by <i>field</i> member <code>PrivateScope</code>: <a href="/vignettes/clr/System/Reflection/FieldAttributes.html">FieldAttributes</a></li>
-<li>use by <i>field</i> member <code>Public</code>: <a href="/vignettes/clr/System/Reflection/FieldAttributes.html">FieldAttributes</a></li>
-<li>use by <i>field</i> member <code>ReservedMask</code>: <a href="/vignettes/clr/System/Reflection/FieldAttributes.html">FieldAttributes</a></li>
-<li>use by <i>field</i> member <code>RTSpecialName</code>: <a href="/vignettes/clr/System/Reflection/FieldAttributes.html">FieldAttributes</a></li>
+<li>use by <i>field</i> member <code>HasFieldRVA</code>: <a href="/vignettes/clr/System/Reflection/FieldAttributes.html">FieldAttributes</a></li>
 <li>use by <i>field</i> member <code>SpecialName</code>: <a href="/vignettes/clr/System/Reflection/FieldAttributes.html">FieldAttributes</a></li>
-<li>use by <i>field</i> member <code>Static</code>: <a href="/vignettes/clr/System/Reflection/FieldAttributes.html">FieldAttributes</a></li>
+<li>use by <i>field</i> member <code>RTSpecialName</code>: <a href="/vignettes/clr/System/Reflection/FieldAttributes.html">FieldAttributes</a></li>
+<li>use by <i>field</i> member <code>HasFieldMarshal</code>: <a href="/vignettes/clr/System/Reflection/FieldAttributes.html">FieldAttributes</a></li>
+<li>use by <i>field</i> member <code>PinvokeImpl</code>: <a href="/vignettes/clr/System/Reflection/FieldAttributes.html">FieldAttributes</a></li>
+<li>use by <i>field</i> member <code>HasDefault</code>: <a href="/vignettes/clr/System/Reflection/FieldAttributes.html">FieldAttributes</a></li>
+<li>use by <i>field</i> member <code>ReservedMask</code>: <a href="/vignettes/clr/System/Reflection/FieldAttributes.html">FieldAttributes</a></li>
 </ol>
 
 
