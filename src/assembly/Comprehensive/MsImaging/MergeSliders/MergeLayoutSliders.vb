@@ -104,8 +104,8 @@ Public Module MergeLayoutSliders
             .[class] = FileApplicationClass.MSImaging.ToString,
             .mass_range = New DoubleRange(mzmin.Min, mzmax.Max),
             .resolution = res.Average,
-            .scan_x = poly.width + padding.Width,
-            .scan_y = poly.height + padding.Height
+            .scan_x = poly.width + padding.Width * 2,
+            .scan_y = poly.height + padding.Height * 2
         }
 
         Return New mzPack With {
