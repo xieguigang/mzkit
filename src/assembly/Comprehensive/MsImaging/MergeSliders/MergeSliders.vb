@@ -60,7 +60,6 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Public Module MergeSliders
 
@@ -199,8 +198,10 @@ Public Module MergeSliders
         meta.Remove("X")
         meta.Remove("Y")
 
-        If Not meta.ContainsKey("sample") Then
-            meta.Add("sample", sampleid)
+        If Not meta.ContainsKey(mzStreamWriter.SampleMetaName) Then
+            Call meta.Add(mzStreamWriter.SampleMetaName, sampleid)
+        ElseIf meta(mzStreamWriter.SampleMetaName).StringEmpty Then
+            meta(mzStreamWriter.SampleMetaName) = sampleid
         End If
 
         ' the location of current pixel must be
