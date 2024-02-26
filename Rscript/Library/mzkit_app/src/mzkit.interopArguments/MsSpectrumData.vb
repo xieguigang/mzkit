@@ -4,11 +4,11 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Math
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Vectorization
+Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
 
 Module MsSpectrumData
 
@@ -69,7 +69,7 @@ Module MsSpectrumData
                     .name = name
                 }
             Case Else
-                Return Internal.debug.stop(New NotImplementedException(type.FullName), env)
+                Return RInternal.debug.stop(New NotImplementedException(type.FullName), env)
         End Select
     End Function
 
