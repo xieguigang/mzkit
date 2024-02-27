@@ -76,6 +76,9 @@ Namespace Formula
             Me.chargeRange = New IntRange(minCharge, maxCharge)
         End Sub
 
+        Sub New()
+        End Sub
+
         Public Function AddElement(element As String, min As Integer, max As Integer) As SearchOption
             Call New ElementSearchCandiate With {
                 .Element = element,
