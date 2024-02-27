@@ -66,12 +66,20 @@ Namespace Formula
 
     Public Class SearchOption
 
-        Public ReadOnly Property candidateElements As List(Of ElementSearchCandiate)
+        Public ReadOnly Property candidateElements As ElementSearchCandiate()
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return _candidateElements.SafeQuery.ToArray
+            End Get
+        End Property
+
         Public ReadOnly Property ppm As Double
         Public ReadOnly Property chargeRange As IntRange
 
+        ReadOnly _candidateElements As List(Of ElementSearchCandiate)
+
         Sub New(minCharge As Integer, maxCharge As Integer, Optional ppm As Double = 30)
-            Me.candidateElements = New List(Of ElementSearchCandiate)
+            Me._candidateElements = New List(Of ElementSearchCandiate)
             Me.ppm = ppm
             Me.chargeRange = New IntRange(minCharge, maxCharge)
         End Sub
@@ -84,7 +92,7 @@ Namespace Formula
                 .Element = element,
                 .MaxCount = max,
                 .MinCount = min
-            }.DoCall(AddressOf candidateElements.Add)
+            }.DoCall(AddressOf _candidateElements.Add)
 
             Return Me
         End Function
