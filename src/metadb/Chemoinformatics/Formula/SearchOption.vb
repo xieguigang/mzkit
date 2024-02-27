@@ -64,6 +64,9 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Formula
 
+    ''' <summary>
+    ''' options for evaluate a formula for matches a given experiment mass
+    ''' </summary>
     Public Class SearchOption
 
         Public ReadOnly Property candidateElements As ElementSearchCandiate()
@@ -73,9 +76,26 @@ Namespace Formula
             End Get
         End Property
 
+        ''' <summary>
+        ''' the mass tolerance between the formula evaluated mass and the experiment mass
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property ppm As Double
         Public ReadOnly Property chargeRange As IntRange
 
+        ''' <summary>
+        ''' number of the element types in current search option
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property candidateSize As Integer
+            Get
+                Return _candidateElements.TryCount
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' a collection of the candidate elements
+        ''' </summary>
         ReadOnly _candidateElements As List(Of ElementSearchCandiate)
 
         Sub New(minCharge As Integer, maxCharge As Integer, Optional ppm As Double = 30)
