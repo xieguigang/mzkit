@@ -91,9 +91,9 @@ Namespace Spectra.SplashID
 
         Public Shared ReadOnly MSSplash As New Splash(SpectrumType.MS)
 
-        Dim spectrumType As SpectrumType
+        ReadOnly spectrumType As SpectrumType
 
-        Sub New(type As SpectrumType)
+        Sub New(Optional type As SpectrumType = SpectrumType.MS)
             Me.spectrumType = type
         End Sub
 
