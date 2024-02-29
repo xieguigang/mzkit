@@ -270,6 +270,7 @@ Namespace PackLib
         Private Function GetMassFiles() As IEnumerable(Of StreamBlock)
             Return DirectCast(file.GetObject("/massSet/"), StreamGroup) _
                 .ListFiles(safe:=True) _
+                .Where(Function(f) TypeOf f Is StreamBlock) _
                 .Select(Function(f) DirectCast(f, StreamBlock))
         End Function
 

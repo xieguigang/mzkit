@@ -153,6 +153,10 @@ Namespace Ms1.PrecursorType
             Return AdductMZ(mass, adducts, charge, IonMode:=If(mode = "+"c, IonModes.Positive, IonModes.Negative), M:=M)
         End Function
 
+        Public Function GetIonMode() As IonModes
+            Return Provider.ParseIonMode(mode)
+        End Function
+
         <DebuggerStepThrough>
         Public Overrides Function ToString() As String
             If InStr(name, "[") < InStr(name, "]") AndAlso InStr(name, "[") > 0 Then
