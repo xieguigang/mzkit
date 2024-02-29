@@ -222,6 +222,9 @@ Module ReferenceTreePkg
             Dim precursor_types = Math.GetPrecursorTypes(adducts, env)
             Dim referenceSpectrum = New SpectrumReader(buf, targets).BuildSearchIndex(precursor_types)
 
+            Call println("precursor adducts for filtering targets:")
+            Call println(adducts)
+
             Return New PackAlignment(referenceSpectrum, dotcutoff)
         Else
             Return New TreeSearch(buffer.TryCast(Of Stream)).SetCutoff(dotcutoff)
