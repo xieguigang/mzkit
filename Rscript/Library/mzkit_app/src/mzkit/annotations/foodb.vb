@@ -3,8 +3,14 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
+Imports SMRUCC.Rsharp.Runtime.Interop
 
 <Package("foodb")>
+<RTypeExport("foodb_compound", GetType(Compound))>
+<RTypeExport("foodb_content", GetType(Content))>
+<RTypeExport("foodb_flavor", GetType(Flavor))>
+<RTypeExport("foodb_compoundFlavor", GetType(CompoundFlavor))>
+<RTypeExport("foodb_food", GetType(Food))>
 Module foodbTools
 
     <ExportAPI("loadFoods")>
