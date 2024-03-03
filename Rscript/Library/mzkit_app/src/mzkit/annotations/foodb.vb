@@ -9,13 +9,13 @@ Module foodbTools
 
     <ExportAPI("loadFoods")>
     Public Function loadFoods(dir As String, Optional env As Environment = Nothing) As Object
-        Dim foods = $"{dir}\Food.csv".LoadCsv(Of Food)
-        Dim flavor = "D:\biodeep\flavor\foodb\table\Flavor.csv".LoadCsv(Of Flavor).GroupBy(Function(d) d.id).ToDictionary(Function(d) d.Key, Function(d) d.First.name)
-        Dim compounds = "D:\biodeep\flavor\foodb\table\Compound.csv".LoadCsv(Of Compound).GroupBy(Function(d) d.id).ToDictionary(Function(d) d.Key, Function(d) d.First)
-        Dim compoundFlavor = "D:\biodeep\flavor\foodb\table\CompoundsFlavor.csv".LoadCsv(Of CompoundFlavor) _
+        Dim foods = $"{dir}/Food.csv".LoadCsv(Of Food)
+        Dim flavor = $"{dir}/Flavor.csv".LoadCsv(Of Flavor).GroupBy(Function(d) d.id).ToDictionary(Function(d) d.Key, Function(d) d.First.name)
+        Dim compounds = $"{dir}/Compound.csv".LoadCsv(Of Compound).GroupBy(Function(d) d.id).ToDictionary(Function(d) d.Key, Function(d) d.First)
+        Dim compoundFlavor = $"{dir}/CompoundsFlavor.csv".LoadCsv(Of CompoundFlavor) _
             .Where(Function(d) d.source_type = "Compound").GroupBy(Function(d) d.compound_id).ToDictionary(Function(d) d.Key, Function(d) d.Where(Function(a) flavor.ContainsKey(a.flavor_id)).Select(Function(a) flavor(a.flavor_id)).ToArray)
         ' food -> compounds
-        Dim contents = "D:\biodeep\flavor\foodb\table\Content.csv".LoadCsv(Of Content).Where(Function(d) d.source_type <> "Nutrient") _
+        Dim contents = $"{dir}/Content.csv".LoadCsv(Of Content).Where(Function(d) d.source_type <> "Nutrient") _
             .Where(Function(d) compoundFlavor.ContainsKey(d.source_id)) _
             .GroupBy(Function(d) d.food_id) _
             .ToDictionary(Function(d) d.Key,
@@ -35,7 +35,6 @@ Module foodbTools
                               }
                           End Function)
 
-
-        Call foodsData.GetJson.SaveTo(foodDataJson)
+        Return foodsData
     End Function
 End Module
