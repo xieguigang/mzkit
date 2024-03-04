@@ -619,12 +619,11 @@ Module metaDNAInfer
         End If
 
         If Not keggSet.isError Then
+            Dim pull = keggSet.populates(Of metadata)(env).ToArray
+            Dim filter = pull.Where(Function(c) Not c.ID Like excludesEntry).ToArray
+
             Return CompoundSolver.CreateIndex(
-                compounds:=keggSet _
-                    .populates(Of metadata)(env) _
-                    .Where(Function(c)
-                               Return Not c.ID Like excludesEntry
-                           End Function),
+                compounds:=filter,
                 types:=calculators,
                 tolerance:=mzErr.TryCast(Of Tolerance),
                 mass_range:=If(mz_range.IsNullOrEmpty, Nothing, New DoubleRange(mz_range))
