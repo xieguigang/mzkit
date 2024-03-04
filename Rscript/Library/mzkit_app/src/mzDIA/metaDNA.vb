@@ -571,7 +571,7 @@ Module metaDNAInfer
                                      Optional excludes As Object = Nothing,
                                      Optional env As Environment = Nothing) As Object
 
-        Dim keggSet = pipeline.TryCreatePipeline(Of KeggCompound)(kegg, env)
+        Dim keggSet = pipeline.TryCreatePipeline(Of KeggCompound)(kegg, env, suppress:=True)
         Dim mzErr = Math.getTolerance(mzdiff, env)
         Dim calculators As MzCalculator() = Math.GetPrecursorTypes(precursors, env)
         Dim excludesEntry As Index(Of String) = CLRVector.asCharacter(excludes).Indexing
