@@ -94,7 +94,7 @@ Public Class MSJointConnection : Implements IMzQuery
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function GetCompound(kegg_id As String) As Compound
-        Return kegg.GetCompound(kegg_id).KEGG
+        Return DirectCast(kegg.GetCompound(kegg_id), KEGGCompound).KEGG
     End Function
 
     Public Function GetEnrichment(id As IEnumerable(Of String)) As EnrichmentResult()
@@ -300,7 +300,7 @@ Public Class MSJointConnection : Implements IMzQuery
     ''' <see cref="Compound"/>
     ''' </returns>
     Public Function GetMetadata(uniqueId As String) As Object Implements IMzQuery.GetMetadata
-        Return kegg.GetCompound(uniqueId).KEGG
+        Return DirectCast(kegg.GetCompound(uniqueId), KEGGCompound).KEGG
     End Function
 
     Public Function GetDbXref(uniqueId As String) As Dictionary(Of String, String) Implements IMzQuery.GetDbXref

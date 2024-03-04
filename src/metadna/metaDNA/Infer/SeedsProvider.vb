@@ -107,7 +107,7 @@ Namespace Infer
                                   Return c.ToArray
                               End Function)
             Dim kegg_id As String = all.Values.First()(Scan0).kegg.unique_id
-            Dim kegg As Compound = Me.kegg.GetCompound(kegg_id).KEGG
+            Dim kegg As GenericCompound = Me.kegg.GetCompound(kegg_id)
             Dim tree As New SpectrumTreeCluster(showReport:=False)
 
             Call all _
