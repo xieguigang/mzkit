@@ -227,9 +227,9 @@ Public Class Algorithm
 
     Private Iterator Function RunInfer(seed As AnnotatedSeed) As IEnumerable(Of InferLink)
         For Each kegg_id As String In network.FindPartners(seed.kegg_id)
-            Dim compound As Compound = kegg.GetCompound(kegg_id)
+            Dim compound As GenericCompound = kegg.GetCompound(kegg_id)
 
-            If compound Is Nothing OrElse compound.exactMass <= 0 Then
+            If compound Is Nothing OrElse compound.ExactMass <= 0 Then
                 Continue For
             End If
 
@@ -240,7 +240,7 @@ Public Class Algorithm
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Private Function alignKeggCompound(seed As AnnotatedSeed, compound As Compound) As IEnumerable(Of InferLink)
+    Private Function alignKeggCompound(seed As AnnotatedSeed, compound As GenericCompound) As IEnumerable(Of InferLink)
         Return precursorTypes _
             .Select(Function(type)
                         Return alignKeggCompound(type, seed, compound)
@@ -248,8 +248,8 @@ Public Class Algorithm
             .IteratesALL
     End Function
 
-    Private Iterator Function alignKeggCompound(type As MzCalculator, seed As AnnotatedSeed, compound As Compound) As IEnumerable(Of InferLink)
-        Dim mz As Double = type.CalcMZ(compound.exactMass)
+    Private Iterator Function alignKeggCompound(type As MzCalculator, seed As AnnotatedSeed, compound As GenericCompound) As IEnumerable(Of InferLink)
+        Dim mz As Double = type.CalcMZ(compound.ExactMass)
         Dim candidates As PeakMs2() = unknowns.QueryByParentMz(mz).ToArray
 
         If candidates.IsNullOrEmpty Then
@@ -260,7 +260,7 @@ Public Class Algorithm
             Dim alignment As InferLink = GetBestQuery(hit, seed)
             Dim kegg As New MzQuery With {
                 .mz = mz,
-                .unique_id = compound.entry,
+                .unique_id = compound.Identity,
                 .precursorType = type.ToString,
                 .ppm = PPMmethod.PPM(mz, hit.mz)
             }
