@@ -274,7 +274,7 @@ Module metaDNAInfer
                                    kegg As Object,
                                    Optional env As Environment = Nothing) As Object
 
-        Dim library As pipeline = pipeline.TryCreatePipeline(Of KeggCompound)(kegg, env)
+        Dim library As pipeline = pipeline.TryCreatePipeline(Of KeggCompound)(kegg, env, suppress:=True)
 
         If Not library.isError Then
             Return metadna.SetKeggLibrary(library.populates(Of KeggCompound)(env))
