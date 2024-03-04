@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Microsoft.VisualBasic.Imaging.GDICanvas</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <table style="width: 100%;">
+            <tr>
+                <td>GDICanvas {Microsoft.VisualBasic.Imaging}</td>
+                <td style="text-align: right;">.NET clr documentation</td>
+            </tr>
+        </table>
+
+        <h2>GDICanvas</h2>
+
+        <h3>Description</h3>
+
+        <p>这个对象是<a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/Graphics2D.html">Graphics2D</a>以及<a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/Wmf.html">Wmf</a>公用的基础类型</p>
+
+        <h3>Declare</h3>        
+
+        <pre>
+            <code id="clr_ts">
+# namespace Microsoft.VisualBasic.Imaging
+export class GDICanvas extends <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/IGraphics.html">IGraphics</a> {
+   Background: <a href="/vignettes/clr/System/Drawing/Color.html">Color</a>;
+   CompositingMode: <a href="/vignettes/clr/System/Drawing/Drawing2D/CompositingMode.html">CompositingMode</a>;
+   CompositingQuality: <a href="/vignettes/clr/System/Drawing/Drawing2D/CompositingQuality.html">CompositingQuality</a>;
+   Dpi: double;
+   # Gets the horizontal resolution of this System.Drawing.Graphics.
+   DpiX: double;
+   # Gets the vertical resolution of this System.Drawing.Graphics.
+   DpiY: double;
+   # Default font value for text drawing
+   Font: <a href="/vignettes/clr/System/Drawing/Font.html">Font</a>;
+   # GDI+ device handle.(GDI+绘图设备句柄)
+   Graphics: <a href="/vignettes/clr/System/Drawing/Graphics.html">Graphics</a>;
+   # Gets or sets the interpolation mode associated with this System.Drawing.Graphics.
+   InterpolationMode: <a href="/vignettes/clr/System/Drawing/Drawing2D/InterpolationMode.html">InterpolationMode</a>;
+   IsClipEmpty: boolean;
+   IsVisibleClipEmpty: boolean;
+   # Gets or sets the scaling between world units and page units for this System.Drawing.Graphics.
+   PageScale: double;
+   PageUnit: <a href="/vignettes/clr/System/Drawing/GraphicsUnit.html">GraphicsUnit</a>;
+   # Gets or set a value specifying how pixels are offset during rendering of this
+   #  System.Drawing.Graphics.
+   PixelOffsetMode: <a href="/vignettes/clr/System/Drawing/Drawing2D/PixelOffsetMode.html">PixelOffsetMode</a>;
+   RenderingOrigin: <a href="/vignettes/clr/System/Drawing/Point.html">Point</a>;
+   Size: <a href="/vignettes/clr/System/Drawing/Size.html">Size</a>;
+   # Gets or sets the rendering quality for this System.Drawing.Graphics.
+   SmoothingMode: <a href="/vignettes/clr/System/Drawing/Drawing2D/SmoothingMode.html">SmoothingMode</a>;
+   # Default pen for drawing
+   Stroke: <a href="/vignettes/clr/System/Drawing/Pen.html">Pen</a>;
+   TextContrast: integer;
+   # Gets or sets the rendering mode for text associated with this System.Drawing.Graphics.
+   TextRenderingHint: <a href="/vignettes/clr/System/Drawing/Text/TextRenderingHint.html">TextRenderingHint</a>;
+}
+</code>
+        </pre>
+
+        <h3>.NET clr type reference tree</h3>
+
+        <ol>
+<li>this class extends from <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/IGraphics.html">IGraphics</a> class: <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/IGraphics.html">IGraphics</a></li>
+<li>use by <i>property</i> member <code>Background</code>: <a href="/vignettes/clr/System/Drawing/Color.html">Color</a></li>
+<li>use by <i>property</i> member <code>CompositingMode</code>: <a href="/vignettes/clr/System/Drawing/Drawing2D/CompositingMode.html">CompositingMode</a></li>
+<li>use by <i>property</i> member <code>CompositingQuality</code>: <a href="/vignettes/clr/System/Drawing/Drawing2D/CompositingQuality.html">CompositingQuality</a></li>
+<li>use by <i>property</i> member <code>Font</code>: <a href="/vignettes/clr/System/Drawing/Font.html">Font</a></li>
+<li>use by <i>property</i> member <code>Graphics</code>: <a href="/vignettes/clr/System/Drawing/Graphics.html">Graphics</a></li>
+<li>use by <i>property</i> member <code>InterpolationMode</code>: <a href="/vignettes/clr/System/Drawing/Drawing2D/InterpolationMode.html">InterpolationMode</a></li>
+<li>use by <i>property</i> member <code>PageUnit</code>: <a href="/vignettes/clr/System/Drawing/GraphicsUnit.html">GraphicsUnit</a></li>
+<li>use by <i>property</i> member <code>PixelOffsetMode</code>: <a href="/vignettes/clr/System/Drawing/Drawing2D/PixelOffsetMode.html">PixelOffsetMode</a></li>
+<li>use by <i>property</i> member <code>RenderingOrigin</code>: <a href="/vignettes/clr/System/Drawing/Point.html">Point</a></li>
+<li>use by <i>property</i> member <code>Size</code>: <a href="/vignettes/clr/System/Drawing/Size.html">Size</a></li>
+<li>use by <i>property</i> member <code>SmoothingMode</code>: <a href="/vignettes/clr/System/Drawing/Drawing2D/SmoothingMode.html">SmoothingMode</a></li>
+<li>use by <i>property</i> member <code>Stroke</code>: <a href="/vignettes/clr/System/Drawing/Pen.html">Pen</a></li>
+<li>use by <i>property</i> member <code>TextRenderingHint</code>: <a href="/vignettes/clr/System/Drawing/Text/TextRenderingHint.html">TextRenderingHint</a></li>
+</ol>
+
+
+        <hr />
+        <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a
+                href="../{$package}.html">Index</a>]
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="https://mzkit.org/assets/js/R_syntax.js"></script>
+<script type="text/javascript" src="https://mzkit.org/assets/js/highlights.js"></script>
+<script type="text/javascript">r_highlights("clr_ts");</script>
+
+</html>

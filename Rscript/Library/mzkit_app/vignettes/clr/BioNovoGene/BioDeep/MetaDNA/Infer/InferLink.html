@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml.AlignmentOutput</title>
+    <title>BioNovoGene.BioDeep.MetaDNA.Infer.InferLink</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
@@ -13,12 +13,12 @@
 
         <table style="width: 100%;">
             <tr>
-                <td>AlignmentOutput {BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml}</td>
+                <td>InferLink {BioNovoGene.BioDeep.MetaDNA.Infer}</td>
                 <td style="text-align: right;">.NET clr documentation</td>
             </tr>
         </table>
 
-        <h2>AlignmentOutput</h2>
+        <h2>InferLink</h2>
 
         <h3>Description</h3>
 
@@ -28,19 +28,26 @@
 
         <pre>
             <code id="clr_ts">
-# namespace BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
-export class AlignmentOutput {
+# namespace BioNovoGene.BioDeep.MetaDNA.Infer
+export class InferLink extends <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/Xml/AlignmentOutput.html">AlignmentOutput</a> {
    alignments: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/Xml/SSM2MatrixFragment.html">SSM2MatrixFragment[]</a>;
-   # the min value of <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/Xml/AlignmentOutput.html">AlignmentOutput</a>.<a href="#">forward</a> and <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/Xml/AlignmentOutput.html">AlignmentOutput</a>.<a href="#">reverse</a>
    cosine: double;
    entropy: double;
    forward: double;
+   # 推断链的长度
+   inferSize: integer;
    jaccard: double;
-   # get score mean result
+   # 当前的Feature被推断为的目标KEGG代谢物编号
+   kegg: <a href="/vignettes/clr/BioNovoGene/BioDeep/MSEngine/MzQuery.html">MzQuery</a>;
+   level: <a href="/vignettes/clr/BioNovoGene/BioDeep/MetaDNA/Infer/InferLevel.html">InferLevel</a>;
    mean: double;
    mirror: double;
    nhits: integer;
+   # 起始值为100
+   parentTrace: double;
    query: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/Xml/Meta.html">Meta</a>;
+   # the source file of where <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/Xml/AlignmentOutput.html">AlignmentOutput</a>.<a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/Xml/Meta.html">query</a> comes from.
+   rawFile: string;
    reference: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/Xml/Meta.html">Meta</a>;
    reverse: double;
 }
@@ -50,7 +57,10 @@ export class AlignmentOutput {
         <h3>.NET clr type reference tree</h3>
 
         <ol>
+<li>this class extends from <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/Xml/AlignmentOutput.html">AlignmentOutput</a> class: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/Xml/AlignmentOutput.html">AlignmentOutput</a></li>
 <li>use by <i>property</i> member <code>alignments</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/Xml/SSM2MatrixFragment.html">SSM2MatrixFragment</a></li>
+<li>use by <i>property</i> member <code>kegg</code>: <a href="/vignettes/clr/BioNovoGene/BioDeep/MSEngine/MzQuery.html">MzQuery</a></li>
+<li>use by <i>property</i> member <code>level</code>: <a href="/vignettes/clr/BioNovoGene/BioDeep/MetaDNA/Infer/InferLevel.html">InferLevel</a></li>
 <li>use by <i>property</i> member <code>query</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/Xml/Meta.html">Meta</a></li>
 <li>use by <i>property</i> member <code>reference</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/Xml/Meta.html">Meta</a></li>
 </ol>

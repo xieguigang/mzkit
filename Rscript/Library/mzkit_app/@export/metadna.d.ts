@@ -26,13 +26,15 @@ declare namespace metadna {
      * + default value Is ``'ppm:20'``.
      * @param excludes 
      * + default value Is ``null``.
+     * @param mass_range 
+     * + default value Is ``null``.
      * @param env -
      * 
      * + default value Is ``null``.
      * @return a data query engine model to run ms1 data search 
      *  for the kegg metaolite compounds.
    */
-   function annotationSet(kegg: any, precursors?: any, mzdiff?: any, excludes?: any, env?: object): object;
+   function annotationSet(kegg: any, precursors?: any, mzdiff?: any, excludes?: any, mass_range?: any, env?: object): object;
    module as {
       /**
         * @param env default value Is ``null``.
