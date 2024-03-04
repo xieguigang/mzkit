@@ -55,11 +55,11 @@
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.BioDeep.MetaDNA.Infer
+Imports BioNovoGene.BioDeep.MSEngine
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
-Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
 
 Module ResultHandler
 
@@ -72,28 +72,28 @@ Module ResultHandler
     ''' <returns></returns>
     <Extension>
     Public Iterator Function ExportTable(candidates As IEnumerable(Of CandidateInfer),
-                                         kegg As KEGGHandler,
+                                         kegg As MSSearch(Of GenericCompound),
                                          keggNetwork As Networking) As IEnumerable(Of MetaDNAResult)
 
         Dim precursorTypes As Dictionary(Of String, MzCalculator) = kegg.Calculators
 
         For Each infer As CandidateInfer In candidates
-            Dim compound As Compound = kegg.GetCompound(infer.kegg_id).KEGG
+            Dim compound As GenericCompound = kegg.GetCompound(infer.kegg_id)
 
             For Each type As Candidate In infer.infers
                 Dim partner As String = type.infer.reference.id.Split(":"c).Last.Trim
-                Dim links As NamedValue(Of String)() = keggNetwork.FindReactions(partner, compound.entry)
+                Dim links As NamedValue(Of String)() = keggNetwork.FindReactions(partner, compound.Identity)
 
                 Yield New MetaDNAResult With {
-                    .exactMass = compound.exactMass,
-                    .formula = compound.formula,
+                    .exactMass = compound.ExactMass,
+                    .formula = compound.Formula,
                     .query_id = type.infer.query.id,
                     .forward = type.infer.forward,
                     .reverse = type.infer.reverse,
                     .jaccard = type.infer.jaccard,
                     .inferLevel = type.infer.level.Description,
                     .KEGGId = infer.kegg_id,
-                    .name = If(compound.commonNames.FirstOrDefault, compound.formula),
+                    .name = If(compound.CommonName, compound.Formula),
                     .ppm = CInt(type.ppm),
                     .precursorType = type.precursorType,
                     .pvalue = type.pvalue,

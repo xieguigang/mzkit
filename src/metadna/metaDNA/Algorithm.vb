@@ -89,7 +89,7 @@ Public Class Algorithm
     Dim typeOrders As Index(Of String)
 
     Dim unknowns As UnknownSet
-    Dim kegg As KEGGHandler
+    Dim kegg As MSSearch(Of GenericCompound)
     Dim network As Networking
     Dim maxIterations As Integer = 1000
     Dim report As Action(Of String)

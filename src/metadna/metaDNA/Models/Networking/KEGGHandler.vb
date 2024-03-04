@@ -64,10 +64,10 @@ Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
 ''' <summary>
 ''' the metabolite annotation search engine for the kegg metabolites
 ''' </summary>
-Public NotInheritable Class KEGGHandler : Inherits MSSearch(Of KEGGCompound)
+Public NotInheritable Class KEGGHandler : Inherits MSSearch(Of GenericCompound)
 
     Private Sub New(compounds As IEnumerable(Of KEGGCompound), types As MzCalculator(), tolerance As Tolerance)
-        Call MyBase.New(compounds, tolerance, types)
+        Call MyBase.New(compounds.Select(Function(c) DirectCast(c, GenericCompound)), tolerance, types)
     End Sub
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -75,12 +75,12 @@ Public NotInheritable Class KEGGHandler : Inherits MSSearch(Of KEGGCompound)
         Return compounds.Where(Function(c) c.exactMass > 0).Select(Function(c) New KEGGCompound With {.KEGG = c})
     End Function
 
-    Public Overloads Shared Function CreateIndex(compounds As IEnumerable(Of KEGGCompound), types As MzCalculator(), tolerance As Tolerance) As MSSearch(Of KEGGCompound)
+    Public Overloads Shared Function CreateIndex(compounds As IEnumerable(Of KEGGCompound), types As MzCalculator(), tolerance As Tolerance) As MSSearch(Of GenericCompound)
         Return New KEGGHandler(compounds, types, tolerance)
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Overloads Shared Function CreateIndex(compounds As IEnumerable(Of Compound), types As MzCalculator(), tolerance As Tolerance) As MSSearch(Of KEGGCompound)
+    Public Overloads Shared Function CreateIndex(compounds As IEnumerable(Of Compound), types As MzCalculator(), tolerance As Tolerance) As MSSearch(Of GenericCompound)
         Return CreateIndex(Wraps(compounds), types, tolerance)
     End Function
 End Class
