@@ -88,6 +88,19 @@ Public NotInheritable Class CompoundSolver : Inherits MSSearch(Of GenericCompoun
     End Function
 
     ''' <summary>
+    ''' constructor for the generic compound collection, example as: pubchem, hmdb, lipidmaps, etc
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="compounds"></param>
+    ''' <param name="types"></param>
+    ''' <param name="tolerance"></param>
+    ''' <returns></returns>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Overloads Shared Function CreateIndex(Of T As GenericCompound)(compounds As IEnumerable(Of T), types As MzCalculator(), tolerance As Tolerance) As MSSearch(Of GenericCompound)
+        Return New CompoundSolver(compounds.Select(Function(c) DirectCast(c, GenericCompound)), types, tolerance)
+    End Function
+
+    ''' <summary>
     ''' constructor for the kegg compound collection
     ''' </summary>
     ''' <param name="compounds"></param>
