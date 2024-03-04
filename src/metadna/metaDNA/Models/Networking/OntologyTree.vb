@@ -30,9 +30,7 @@ Public Class OntologyTree : Inherits Networking
             If Not parent.direct_childrens Is Nothing Then
                 For Each child In parent.direct_childrens.Values
                     If child.ID <> kegg_id Then
-                        For Each c As GenericTree In GetChilds(child)
-                            Yield c.ID
-                        Next
+                        Yield child.ID
                     End If
                 Next
             End If
