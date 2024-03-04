@@ -54,7 +54,7 @@ declare namespace metadna {
        * 
        * 
         * @param metaDNA -
-        * @param result -
+        * @param result a collection of the @``T:BioNovoGene.BioDeep.MetaDNA.Infer.CandidateInfer``.
         * @param unique -
         * 
         * + default value Is ``false``.
@@ -76,6 +76,8 @@ declare namespace metadna {
        * 
         * @param metaDNA -
         * @param sample -
+        * 
+        * + default value Is ``null``.
         * @param seeds -
         * 
         * + default value Is ``null``.
@@ -83,7 +85,7 @@ declare namespace metadna {
         * 
         * + default value Is ``null``.
       */
-      function infer(metaDNA: object, sample: any, seeds?: any, env?: object): object;
+      function infer(metaDNA: object, sample?: any, seeds?: any, env?: object): object;
    }
    module kegg {
       /**
