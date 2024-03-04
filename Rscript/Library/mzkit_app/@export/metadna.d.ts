@@ -13,7 +13,7 @@ declare namespace metadna {
     * Create the kegg compound ms1 annotation query engine.
     * 
     * 
-     * @param kegg a set of kegg compound data
+     * @param kegg a set of kegg/pubchem/chebi/hmdb compound data.
      * @param precursors a character vector of the ms1 precursor ion names or 
      *  a list of the given mzcalculator object models.
      * 
@@ -124,6 +124,17 @@ declare namespace metadna {
         * + default value Is ``null``.
       */
       function kegg_network(metadna: object, links: any, env?: object): object;
+      /**
+       * load the ontology tree as the network graph for search
+       * 
+       * 
+        * @param metadna -
+        * @param obo raw data for build @``T:BioNovoGene.BioDeep.MetaDNA.OntologyTree``.
+        * @param env -
+        * 
+        * + default value Is ``null``.
+      */
+      function ontology(metadna: object, obo: object, env?: object): any;
       /**
        * set ms2 spectrum data for run the annotation
        * 

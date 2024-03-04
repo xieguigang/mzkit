@@ -62,6 +62,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.BioDeep
+Imports BioNovoGene.BioDeep.Chemistry.ChEBI
 Imports BioNovoGene.BioDeep.MetaDNA
 Imports BioNovoGene.BioDeep.MetaDNA.Infer
 Imports BioNovoGene.BioDeep.MetaDNA.Visual
@@ -75,6 +76,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.genomics.Data
 Imports SMRUCC.genomics.Data.KEGG.Metabolism
+Imports SMRUCC.genomics.foundation.OBO_Foundry.IO.Models
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Invokes
@@ -83,13 +85,11 @@ Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports KeggCompound = SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject.Compound
 Imports kegReactionClass = SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject.ReactionClass
+Imports metadata = BioNovoGene.BioDeep.Chemistry.MetaLib.Models.MetaInfo
 Imports MetaDNAAlgorithm = BioNovoGene.BioDeep.MetaDNA.Algorithm
 Imports ReactionClass = SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject.ReactionClass
 Imports ReactionClassTbl = BioNovoGene.BioDeep.MetaDNA.Visual.ReactionClass
 Imports REnv = SMRUCC.Rsharp.Runtime
-Imports metadata = BioNovoGene.BioDeep.Chemistry.MetaLib.Models.MetaInfo
-Imports SMRUCC.genomics.foundation.OBO_Foundry.IO.Models
-Imports BioNovoGene.BioDeep.Chemistry.ChEBI
 
 ''' <summary>
 ''' Metabolic Reaction Network-based Recursive Metabolite Annotation for Untargeted Metabolomics
@@ -355,22 +355,23 @@ Module metaDNAInfer
     <ExportAPI("DIA.infer")>
     <RApiReturn(GetType(CandidateInfer))>
     Public Function DIAInfer(metaDNA As Algorithm,
-                             <RRawVectorArgument> sample As Object,
+                             <RRawVectorArgument> Optional sample As Object = Nothing,
                              <RRawVectorArgument> Optional seeds As Object = Nothing,
                              Optional env As Environment = Nothing) As Object
 
-        Dim raw As pipeline = pipeline.TryCreatePipeline(Of PeakMs2)(sample, env)
+        Dim raw As pipeline = If(sample Is Nothing, Nothing, pipeline.TryCreatePipeline(Of PeakMs2)(sample, env))
         Dim infer As CandidateInfer()
 
-        If raw.isError Then
-            Return raw.getError
-        End If
-
         If seeds Is Nothing Then
-            infer = metaDNA _
-                .SetSamples(raw.populates(Of PeakMs2)(env)) _
-                .DIASearch _
-                .ToArray
+            If Not raw Is Nothing Then
+                If raw.isError Then
+                    Return raw.getError
+                End If
+
+                Call metaDNA.SetSamples(raw.populates(Of PeakMs2)(env))
+            End If
+
+            infer = metaDNA.DIASearch.ToArray
         ElseIf TypeOf seeds Is dataframe Then
             infer = DirectCast(seeds, dataframe).InferTable(raw, metaDNA, env)
         Else
@@ -480,7 +481,7 @@ Module metaDNAInfer
     ''' Extract the annotation result from metaDNA algorithm module as data table
     ''' </summary>
     ''' <param name="metaDNA"></param>
-    ''' <param name="result"></param>
+    ''' <param name="result">a collection of the <see cref="CandidateInfer"/>.</param>
     ''' <param name="unique"></param>
     ''' <param name="env"></param>
     ''' <returns>A collection of the <see cref="MetaDNAResult"/> data objects that could be
