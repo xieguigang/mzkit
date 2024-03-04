@@ -64,6 +64,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 ''' contains the basic annotation metadata: id, name, exact mass, and formula data
 ''' </remarks>
 Public Class MetaboliteAnnotation
+    Implements GenericCompound
     Implements IReadOnlyId, ICompoundNameProvider, IExactMassProvider, IFormulaProvider
 
     ''' <summary>
