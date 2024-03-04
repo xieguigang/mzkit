@@ -267,16 +267,19 @@ Module metaDNAInfer
     <ExportAPI("load.kegg")>
     <RApiReturn(GetType(MetaDNAAlgorithm))>
     Public Function SetKeggLibrary(metadna As Algorithm,
-                                   <RRawVectorArgument> kegg As Object,
+                                   <RRawVectorArgument>
+                                   kegg As Object,
                                    Optional env As Environment = Nothing) As Object
 
         Dim library As pipeline = pipeline.TryCreatePipeline(Of KeggCompound)(kegg, env)
 
-        If library.isError Then
-            Return library.getError
+        If Not library.isError Then
+            Return metadna.SetKeggLibrary(library.populates(Of KeggCompound)(env))
+        ElseIf TypeOf kegg Is CompoundSolver Then
+            Return metadna.SetLibrary(DirectCast(kegg, CompoundSolver))
         End If
 
-        Return metadna.SetKeggLibrary(library.populates(Of KeggCompound)(env))
+        Return library.getError
     End Function
 
     ''' <summary>

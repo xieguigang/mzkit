@@ -194,6 +194,11 @@ Public Class Algorithm
         Return Me
     End Function
 
+    Public Function SetLibrary(solver As CompoundSolver) As Algorithm
+        kegg = solver
+        Return Me
+    End Function
+
     Public Function SetNetwork(classLinks As IEnumerable(Of ReactionClass)) As Algorithm
         network = KEGGNetwork.CreateNetwork(classLinks)
         Return Me
