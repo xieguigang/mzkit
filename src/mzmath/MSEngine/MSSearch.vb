@@ -189,6 +189,7 @@ Public Class MSSearch(Of Compound As {IReadOnlyId, ICompoundNameProvider, IExact
         Return index.TryGetValue(id)
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function MSetAnnotation(mzlist As IEnumerable(Of Double), Optional topN As Integer = 3) As IEnumerable(Of MzQuery) Implements IMzQuery.MSetAnnotation
         Return mzlist.Select(AddressOf QueryByMz).IteratesALL
     End Function
@@ -239,6 +240,7 @@ Public Class MSSearch(Of Compound As {IReadOnlyId, ICompoundNameProvider, IExact
         Next
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Shared Function CreateIndex(compounds As IEnumerable(Of Compound), types As MzCalculator(), tolerance As Tolerance) As MSSearch(Of Compound)
         'Dim tree As New AVLTree(Of MassIndexKey, Compound)(MassIndexKey.ComparesMass(tolerance), AddressOf any.ToString)
         'Dim typesCache = types.Select(Function(t) (name:=t.ToString, type:=t)).ToArray
@@ -271,6 +273,7 @@ Public Class MSSearch(Of Compound As {IReadOnlyId, ICompoundNameProvider, IExact
         End If
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Private Function GetMetadata(uniqueId As String) As Object Implements IMzQuery.GetMetadata
         Return GetCompound(uniqueId)
     End Function

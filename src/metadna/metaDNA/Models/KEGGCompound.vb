@@ -60,7 +60,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
 
 ''' <summary>
-''' object model wrapper for the KEGG compound in order to apply of the generic ms search engine
+''' object model wrapper for the KEGG <see cref="Compound"/> in order to apply of the generic ms search engine
 ''' </summary>
 Public Structure KEGGCompound : Implements IReadOnlyId, IExactMassProvider, ICompoundNameProvider, IFormulaProvider
 
