@@ -61,6 +61,9 @@ Imports SMRUCC.genomics.Assembly.KEGG.WebServices.XML
 
 Public Class KEGGNetwork
 
+    ''' <summary>
+    ''' the partner id mapping which is build based on the reaction network
+    ''' </summary>
     Dim kegg_id As Dictionary(Of String, String())
     Dim reactionList As Dictionary(Of String, NamedValue(Of String)())
 
@@ -76,6 +79,12 @@ Public Class KEGGNetwork
         End If
     End Function
 
+    ''' <summary>
+    ''' find reaction list for export report table
+    ''' </summary>
+    ''' <param name="a"></param>
+    ''' <param name="b"></param>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function FindReactions(a As String, b As String) As NamedValue(Of String)()
         Return New String() {a, b} _
