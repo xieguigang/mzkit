@@ -69,7 +69,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
-Imports stdnum = System.Math
+Imports std = System.Math
 
 ''' <summary>
 ''' implements of the metadna algorithm in VisualBasic language
@@ -90,7 +90,7 @@ Public Class Algorithm
 
     Dim unknowns As UnknownSet
     Dim kegg As KEGGHandler
-    Dim network As KEGGNetwork
+    Dim network As Networking
     Dim maxIterations As Integer = 1000
     Dim report As Action(Of String)
 
@@ -204,6 +204,8 @@ Public Class Algorithm
     ''' </summary>
     ''' <param name="seeds"></param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function RunIteration(seeds As IEnumerable(Of AnnotatedSeed)) As IEnumerable(Of InferLink)
         Return seeds _
             .ToArray _
@@ -226,6 +228,7 @@ Public Class Algorithm
         Next
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Private Function alignKeggCompound(seed As AnnotatedSeed, compound As Compound) As IEnumerable(Of InferLink)
         Return precursorTypes _
             .Select(Function(type)
@@ -257,7 +260,7 @@ Public Class Algorithm
 
             alignment.kegg = kegg
 
-            If stdnum.Min(alignment.forward, alignment.reverse) < dotcutoff Then
+            If std.Min(alignment.forward, alignment.reverse) < dotcutoff Then
                 If alignment.jaccard >= 0.5 Then
                     alignment.level = InferLevel.Ms2
                     alignment.parentTrace *= (0.95 * dotcutoff)
@@ -270,7 +273,7 @@ Public Class Algorithm
                 End If
             Else
                 alignment.level = InferLevel.Ms2
-                alignment.parentTrace *= stdnum.Min(alignment.forward, alignment.reverse)
+                alignment.parentTrace *= std.Min(alignment.forward, alignment.reverse)
             End If
 
             Yield alignment
@@ -286,7 +289,7 @@ Public Class Algorithm
             align = MSalignment.CreateAlignment(hit.mzInto, ref.Value.ms2)
             score = MSalignment.GetScore(align.alignments)
 
-            If max Is Nothing OrElse stdnum.Min(score.forward, score.reverse) > stdnum.Min(max.forward, max.reverse) Then
+            If max Is Nothing OrElse std.Min(score.forward, score.reverse) > std.Min(max.forward, max.reverse) Then
                 max = New InferLink With {
                     .reverse = score.reverse,
                     .forward = score.forward,
