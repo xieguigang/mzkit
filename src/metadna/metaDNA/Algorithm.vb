@@ -256,39 +256,50 @@ Public Class Algorithm
             Return
         End If
 
-        For Each hit As PeakMs2 In candidates
-            Dim alignment As InferLink = GetBestQuery(hit, seed)
-            Dim kegg As New MzQuery With {
-                .mz = mz,
-                .unique_id = compound.Identity,
-                .precursorType = type.ToString,
-                .ppm = PPMmethod.PPM(mz, hit.mz)
-            }
+        For Each infer As InferLink In candidates _
+            .AsParallel _
+            .Select(Function(hit)
+                        Return inferAlignment(hit, mz, type, seed, compound)
+                    End Function)
 
-            If alignment Is Nothing Then
-                Continue For
+            If infer IsNot Nothing Then
+                Yield infer
             End If
-
-            alignment.kegg = kegg
-
-            If std.Min(alignment.forward, alignment.reverse) < dotcutoff Then
-                If alignment.jaccard >= 0.5 Then
-                    alignment.level = InferLevel.Ms2
-                    alignment.parentTrace *= (0.95 * dotcutoff)
-                ElseIf allowMs1 Then
-                    alignment.alignments = Nothing
-                    alignment.level = InferLevel.Ms1
-                    alignment.parentTrace *= (0.5 * dotcutoff)
-                Else
-                    Continue For
-                End If
-            Else
-                alignment.level = InferLevel.Ms2
-                alignment.parentTrace *= std.Min(alignment.forward, alignment.reverse)
-            End If
-
-            Yield alignment
         Next
+    End Function
+
+    Private Function inferAlignment(hit As PeakMs2, mz As Double, type As MzCalculator, seed As AnnotatedSeed, compound As GenericCompound) As InferLink
+        Dim alignment As InferLink = GetBestQuery(hit, seed)
+        Dim kegg As New MzQuery With {
+            .mz = mz,
+            .unique_id = compound.Identity,
+            .precursorType = type.ToString,
+            .ppm = PPMmethod.PPM(mz, hit.mz)
+        }
+
+        If alignment Is Nothing Then
+            Return Nothing
+        End If
+
+        alignment.kegg = kegg
+
+        If std.Min(alignment.forward, alignment.reverse) < dotcutoff Then
+            If alignment.jaccard >= 0.5 Then
+                alignment.level = InferLevel.Ms2
+                alignment.parentTrace *= (0.95 * dotcutoff)
+            ElseIf allowMs1 Then
+                alignment.alignments = Nothing
+                alignment.level = InferLevel.Ms1
+                alignment.parentTrace *= (0.5 * dotcutoff)
+            Else
+                Return Nothing
+            End If
+        Else
+            alignment.level = InferLevel.Ms2
+            alignment.parentTrace *= std.Min(alignment.forward, alignment.reverse)
+        End If
+
+        Return alignment
     End Function
 
     Private Function GetBestQuery(hit As PeakMs2, seed As AnnotatedSeed) As InferLink
