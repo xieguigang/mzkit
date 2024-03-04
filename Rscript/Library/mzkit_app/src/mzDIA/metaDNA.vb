@@ -69,6 +69,7 @@ Imports BioNovoGene.BioDeep.MetaDNA.Visual
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Language
@@ -569,12 +570,15 @@ Module metaDNAInfer
                                      Optional mzdiff As Object = "ppm:20",
                                      <RRawVectorArgument(TypeCodes.string)>
                                      Optional excludes As Object = Nothing,
+                                     <RRawVectorArgument(TypeCodes.double)>
+                                     Optional mass_range As Object = Nothing,
                                      Optional env As Environment = Nothing) As Object
 
         Dim keggSet = pipeline.TryCreatePipeline(Of KeggCompound)(kegg, env, suppress:=True)
         Dim mzErr = Math.getTolerance(mzdiff, env)
         Dim calculators As MzCalculator() = Math.GetPrecursorTypes(precursors, env)
         Dim excludesEntry As Index(Of String) = CLRVector.asCharacter(excludes).Indexing
+        Dim mz_range As Double() = CLRVector.asNumeric(mass_range)
 
         If mzErr Like GetType(Message) Then
             Return mzErr.TryCast(Of Message)
@@ -588,7 +592,8 @@ Module metaDNAInfer
                                Return Not c.entry Like excludesEntry
                            End Function),
                 types:=calculators,
-                tolerance:=mzErr.TryCast(Of Tolerance)
+                tolerance:=mzErr.TryCast(Of Tolerance),
+                mass_range:=If(mz_range.IsNullOrEmpty, Nothing, New DoubleRange(mz_range))
             )
         End If
 
@@ -606,7 +611,8 @@ Module metaDNAInfer
                                Return Not c.ID Like excludesEntry
                            End Function),
                 types:=calculators,
-                tolerance:=mzErr.TryCast(Of Tolerance)
+                tolerance:=mzErr.TryCast(Of Tolerance),
+                mass_range:=If(mz_range.IsNullOrEmpty, Nothing, New DoubleRange(mz_range))
             )
         End If
 

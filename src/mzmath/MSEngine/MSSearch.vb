@@ -66,6 +66,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.Annotations
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Linq
 
 <Assembly: InternalsVisibleTo("BioNovoGene.BioDeep.MetaDNA")>
@@ -132,7 +133,8 @@ Public Class MSSearch(Of Compound As {IReadOnlyId, ICompoundNameProvider, IExact
             tolerance As Tolerance,
             precursorTypes As MzCalculator(),
             Optional score As Func(Of Compound, Double) = Nothing,
-            Optional xrefs As Func(Of Compound, Dictionary(Of String, String)) = Nothing)
+            Optional xrefs As Func(Of Compound, Dictionary(Of String, String)) = Nothing,
+            Optional mass_range As DoubleRange = Nothing)
 
         Me.precursorTypes = precursorTypes
         Me.xrefs = xrefs
@@ -144,18 +146,28 @@ Public Class MSSearch(Of Compound As {IReadOnlyId, ICompoundNameProvider, IExact
                               Return cgroup.First
                           End Function)
 
-        Me.mzIndex = loadIndex(Me.index, precursorTypes, tolerance)
+        Me.mzIndex = loadIndex(Me.index,
+            precursorTypes:=precursorTypes,
+            tolerance:=tolerance,
+            mass_range:=mass_range)
     End Sub
 
     Private Shared Function loadIndex(index As Dictionary(Of String, Compound),
                                       precursorTypes As MzCalculator(),
-                                      tolerance As Tolerance) As MassSearchIndex(Of IonIndex)
+                                      tolerance As Tolerance,
+                                      mass_range As DoubleRange) As MassSearchIndex(Of IonIndex)
 
         Dim mzset As IonIndex() = index.Values _
             .Select(Function(c) DoEvalMz(c, precursorTypes)) _
             .IteratesALL _
             .Where(Function(i) i.mz > 0) _
             .ToArray
+
+        If mass_range IsNot Nothing AndAlso mass_range.Length > 0 Then
+            mzset = mzset _
+                .Where(Function(m) mass_range.IsInside(m.mz)) _
+                .ToArray
+        End If
 
         Return New MassSearchIndex(Of IonIndex)(mzset, Function(mz) New IonIndex(mz), tolerance)
     End Function

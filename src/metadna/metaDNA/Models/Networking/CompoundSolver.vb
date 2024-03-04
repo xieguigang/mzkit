@@ -58,6 +58,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.BioDeep.Chemoinformatics
 Imports BioNovoGene.BioDeep.MSEngine
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
 
 <Assembly: InternalsVisibleTo("mzkit")>
@@ -73,8 +74,11 @@ Public NotInheritable Class CompoundSolver : Inherits MSSearch(Of GenericCompoun
     ''' <param name="compounds"></param>
     ''' <param name="types"></param>
     ''' <param name="tolerance"></param>
-    Private Sub New(compounds As IEnumerable(Of GenericCompound), types As MzCalculator(), tolerance As Tolerance)
-        Call MyBase.New(compounds, tolerance, types)
+    Private Sub New(compounds As IEnumerable(Of GenericCompound), types As MzCalculator(),
+                    tolerance As Tolerance,
+                    mass_range As DoubleRange)
+
+        Call MyBase.New(compounds, tolerance, types, mass_range:=mass_range)
     End Sub
 
     ''' <summary>
@@ -96,8 +100,8 @@ Public NotInheritable Class CompoundSolver : Inherits MSSearch(Of GenericCompoun
     ''' <param name="tolerance"></param>
     ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Overloads Shared Function CreateIndex(Of T As GenericCompound)(compounds As IEnumerable(Of T), types As MzCalculator(), tolerance As Tolerance) As MSSearch(Of GenericCompound)
-        Return New CompoundSolver(compounds.Select(Function(c) DirectCast(c, GenericCompound)), types, tolerance)
+    Public Overloads Shared Function CreateIndex(Of T As GenericCompound)(compounds As IEnumerable(Of T), types As MzCalculator(), tolerance As Tolerance, Optional mass_range As DoubleRange = Nothing) As MSSearch(Of GenericCompound)
+        Return New CompoundSolver(compounds.Select(Function(c) DirectCast(c, GenericCompound)), types, tolerance, mass_range)
     End Function
 
     ''' <summary>
@@ -107,12 +111,12 @@ Public NotInheritable Class CompoundSolver : Inherits MSSearch(Of GenericCompoun
     ''' <param name="types"></param>
     ''' <param name="tolerance"></param>
     ''' <returns></returns>
-    Public Overloads Shared Function CreateIndex(compounds As IEnumerable(Of KEGGCompound), types As MzCalculator(), tolerance As Tolerance) As MSSearch(Of GenericCompound)
-        Return New CompoundSolver(compounds.Select(Function(c) DirectCast(c, GenericCompound)), types, tolerance)
+    Public Overloads Shared Function CreateIndex(compounds As IEnumerable(Of KEGGCompound), types As MzCalculator(), tolerance As Tolerance, Optional mass_range As DoubleRange = Nothing) As MSSearch(Of GenericCompound)
+        Return New CompoundSolver(compounds.Select(Function(c) DirectCast(c, GenericCompound)), types, tolerance, mass_range)
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Overloads Shared Function CreateIndex(compounds As IEnumerable(Of Compound), types As MzCalculator(), tolerance As Tolerance) As MSSearch(Of GenericCompound)
-        Return CreateIndex(Wraps(compounds), types, tolerance)
+    Public Overloads Shared Function CreateIndex(compounds As IEnumerable(Of Compound), types As MzCalculator(), tolerance As Tolerance, Optional mass_range As DoubleRange = Nothing) As MSSearch(Of GenericCompound)
+        Return CreateIndex(Wraps(compounds), types, tolerance, mass_range)
     End Function
 End Class
