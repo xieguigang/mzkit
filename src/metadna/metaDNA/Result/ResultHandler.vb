@@ -73,7 +73,7 @@ Module ResultHandler
     <Extension>
     Public Iterator Function ExportTable(candidates As IEnumerable(Of CandidateInfer),
                                          kegg As KEGGHandler,
-                                         keggNetwork As KEGGNetwork) As IEnumerable(Of MetaDNAResult)
+                                         keggNetwork As Networking) As IEnumerable(Of MetaDNAResult)
 
         Dim precursorTypes As Dictionary(Of String, MzCalculator) = kegg.Calculators
 

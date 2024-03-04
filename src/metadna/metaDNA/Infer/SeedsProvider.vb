@@ -62,7 +62,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Statistics.Hypothesis
 Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
-Imports stdnum = System.Math
+Imports std = System.Math
 
 Namespace Infer
 
@@ -146,13 +146,13 @@ Namespace Infer
             Dim t1 = 1 - (ppmVal / 20)
             Dim t2 = infer.parentTrace / 100
             ' 结构相似，保留时间应该是相近的？
-            Dim t3 = 1 - stdnum.Abs(tx - ty)
+            Dim t3 = 1 - std.Abs(tx - ty)
 
             If t3 >= 0.65 Then
                 t3 = 1
             End If
 
-            Dim scoreVal As Double = stdnum.Min(infer.forward, infer.reverse) + t1 + infer.mirror + t2 + t3
+            Dim scoreVal As Double = std.Min(infer.forward, infer.reverse) + t1 + infer.mirror + t2 + t3
 
             vec = {infer.forward, infer.reverse, t1, infer.mirror, t2, t3}
             pvalue = vec.Average
