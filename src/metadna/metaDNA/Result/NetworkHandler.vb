@@ -66,10 +66,10 @@ Public Module NetworkHandler
 
         For Each inferLink As MetaDNAResult In table
             If g.GetElementByID(inferLink.KEGGId) Is Nothing Then
-                g.CreateNode(inferLink.KEGGId)
+                Call g.CreateNode(inferLink.KEGGId)
             End If
             If g.GetElementByID(inferLink.partnerKEGGId) Is Nothing Then
-                g.CreateNode(inferLink.partnerKEGGId)
+                Call g.CreateNode(inferLink.partnerKEGGId)
             End If
 
             edgeData = New EdgeData With {

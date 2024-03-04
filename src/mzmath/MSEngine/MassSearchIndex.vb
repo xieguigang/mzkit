@@ -53,7 +53,7 @@ Public Class MassSearchIndex(Of T As IExactMassProvider) : Implements IMassSearc
         Me.massIndex = New BlockSearchFunction(Of T)(
             data:=mass,
             eval:=Function(m) m.ExactMass,
-            tolerance:=1,
+            tolerance:=1.5,
             factor:=3
         )
         Me.activator = activator

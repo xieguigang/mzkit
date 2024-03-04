@@ -56,13 +56,16 @@
 
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.Annotations
+Imports BioNovoGene.BioDeep.Chemoinformatics
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
 
 ''' <summary>
-''' object model wrapper for the KEGG compound in order to apply of the generic ms search engine
+''' object model wrapper for the KEGG <see cref="Compound"/> in order to apply of the generic ms search engine
 ''' </summary>
-Public Structure KEGGCompound : Implements IReadOnlyId, IExactMassProvider, ICompoundNameProvider, IFormulaProvider
+Public Structure KEGGCompound
+    Implements GenericCompound
+    Implements IReadOnlyId, IExactMassProvider, ICompoundNameProvider, IFormulaProvider
 
     Public ReadOnly Property ExactMass As Double Implements IExactMassProvider.ExactMass
         Get
@@ -91,7 +94,7 @@ Public Structure KEGGCompound : Implements IReadOnlyId, IExactMassProvider, ICom
             End If
 
             If KEGG.commonNames Is Nothing Then
-                Return kegg_id
+                Return Formula
             End If
 
             Return If(KEGG.commonNames.FirstOrDefault, kegg_id)

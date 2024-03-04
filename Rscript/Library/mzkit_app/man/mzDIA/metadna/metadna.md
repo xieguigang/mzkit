@@ -8,6 +8,7 @@ Metabolic Reaction Network-based Recursive Metabolite Annotation for Untargeted 
 + [range](metadna/range.1) Configs the precursor adducts range for the metaDNA algorithm
 + [load.kegg](metadna/load.kegg.1) Set kegg compound library
 + [load.kegg_network](metadna/load.kegg_network.1) set the kegg reaction class data links for the compounds
++ [load.ontology](metadna/load.ontology.1) load the ontology tree as the network graph for search
 + [load.raw](metadna/load.raw.1) set ms2 spectrum data for run the annotation
 + [DIA.infer](metadna/DIA.infer.1) apply of the metadna annotation workflow
 + [as.seeds](metadna/as.seeds.1) create seeds from mgf file data

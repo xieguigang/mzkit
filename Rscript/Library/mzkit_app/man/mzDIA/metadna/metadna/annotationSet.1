@@ -7,6 +7,7 @@ annotationSet \- Create the kegg compound ms1 annotation query engine.
 \fBprecursors\fR as any = "[M]+|[M+H]+|[M+H-H2O]+", 
 \fBmzdiff\fR as any = "ppm:20", 
 \fBexcludes\fR as any = \fB<NULL>\fR, 
+\fBmass_range\fR as any = \fB<NULL>\fR, 
 [\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
@@ -15,7 +16,7 @@ Create the kegg compound ms1 annotation query engine.
 .SH OPTIONS
 .PP
 \fBkegg\fB \fR\- 
- a set of kegg compound data
+ a set of kegg/pubchem/chebi/hmdb compound data.
 . 
 .PP
 .PP

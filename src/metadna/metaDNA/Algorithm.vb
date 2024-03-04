@@ -1,59 +1,59 @@
 ﻿#Region "Microsoft.VisualBasic::385a473a618dd77f9a395bf4bd0d54a6, mzkit\src\metadna\metaDNA\Algorithm.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 366
-    '    Code Lines: 267
-    ' Comment Lines: 46
-    '   Blank Lines: 53
-    '     File Size: 13.48 KB
+' Summaries:
 
 
-    ' Class Algorithm
-    ' 
-    '     Properties: ms1Err
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: (+2 Overloads) alignKeggCompound, (+2 Overloads) DIASearch, ExportTable, GetBestQuery, GetCandidateSeeds
-    '               GetPerfermanceCounter, GetUnknownSet, querySingle, RunInfer, RunIteration
-    '               SetKeggLibrary, SetNetwork, SetReportHandler, (+2 Overloads) SetSamples, SetSearchRange
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 366
+'    Code Lines: 267
+' Comment Lines: 46
+'   Blank Lines: 53
+'     File Size: 13.48 KB
+
+
+' Class Algorithm
+' 
+'     Properties: ms1Err
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Function: (+2 Overloads) alignKeggCompound, (+2 Overloads) DIASearch, ExportTable, GetBestQuery, GetCandidateSeeds
+'               GetPerfermanceCounter, GetUnknownSet, querySingle, RunInfer, RunIteration
+'               SetKeggLibrary, SetNetwork, SetReportHandler, (+2 Overloads) SetSamples, SetSearchRange
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -63,13 +63,14 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
+Imports BioNovoGene.BioDeep.Chemoinformatics
 Imports BioNovoGene.BioDeep.MetaDNA.Infer
 Imports BioNovoGene.BioDeep.MSEngine
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
-Imports stdnum = System.Math
+Imports std = System.Math
 
 ''' <summary>
 ''' implements of the metadna algorithm in VisualBasic language
@@ -89,8 +90,8 @@ Public Class Algorithm
     Dim typeOrders As Index(Of String)
 
     Dim unknowns As UnknownSet
-    Dim kegg As KEGGHandler
-    Dim network As KEGGNetwork
+    Dim kegg As MSSearch(Of GenericCompound)
+    Dim network As Networking
     Dim maxIterations As Integer = 1000
     Dim report As Action(Of String)
 
@@ -189,12 +190,22 @@ Public Class Algorithm
     ''' <param name="library"></param>
     ''' <returns></returns>
     Public Function SetKeggLibrary(library As IEnumerable(Of Compound)) As Algorithm
-        kegg = KEGGHandler.CreateIndex(library, precursorTypes, ms1ppm)
+        kegg = CompoundSolver.CreateIndex(library, precursorTypes, ms1ppm)
+        Return Me
+    End Function
+
+    Public Function SetLibrary(solver As CompoundSolver) As Algorithm
+        kegg = solver
         Return Me
     End Function
 
     Public Function SetNetwork(classLinks As IEnumerable(Of ReactionClass)) As Algorithm
         network = KEGGNetwork.CreateNetwork(classLinks)
+        Return Me
+    End Function
+
+    Public Function SetNetwork(networking As Networking) As Algorithm
+        network = networking
         Return Me
     End Function
 #End Region
@@ -204,6 +215,8 @@ Public Class Algorithm
     ''' </summary>
     ''' <param name="seeds"></param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function RunIteration(seeds As IEnumerable(Of AnnotatedSeed)) As IEnumerable(Of InferLink)
         Return seeds _
             .ToArray _
@@ -214,9 +227,9 @@ Public Class Algorithm
 
     Private Iterator Function RunInfer(seed As AnnotatedSeed) As IEnumerable(Of InferLink)
         For Each kegg_id As String In network.FindPartners(seed.kegg_id)
-            Dim compound As Compound = kegg.GetCompound(kegg_id)
+            Dim compound As GenericCompound = kegg.GetCompound(kegg_id)
 
-            If compound Is Nothing OrElse compound.exactMass <= 0 Then
+            If compound Is Nothing OrElse compound.ExactMass <= 0 Then
                 Continue For
             End If
 
@@ -226,7 +239,8 @@ Public Class Algorithm
         Next
     End Function
 
-    Private Function alignKeggCompound(seed As AnnotatedSeed, compound As Compound) As IEnumerable(Of InferLink)
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Private Function alignKeggCompound(seed As AnnotatedSeed, compound As GenericCompound) As IEnumerable(Of InferLink)
         Return precursorTypes _
             .Select(Function(type)
                         Return alignKeggCompound(type, seed, compound)
@@ -234,47 +248,58 @@ Public Class Algorithm
             .IteratesALL
     End Function
 
-    Private Iterator Function alignKeggCompound(type As MzCalculator, seed As AnnotatedSeed, compound As Compound) As IEnumerable(Of InferLink)
-        Dim mz As Double = type.CalcMZ(compound.exactMass)
+    Private Iterator Function alignKeggCompound(type As MzCalculator, seed As AnnotatedSeed, compound As GenericCompound) As IEnumerable(Of InferLink)
+        Dim mz As Double = type.CalcMZ(compound.ExactMass)
         Dim candidates As PeakMs2() = unknowns.QueryByParentMz(mz).ToArray
 
         If candidates.IsNullOrEmpty Then
             Return
         End If
 
-        For Each hit As PeakMs2 In candidates
-            Dim alignment As InferLink = GetBestQuery(hit, seed)
-            Dim kegg As New MzQuery With {
-                .mz = mz,
-                .unique_id = compound.entry,
-                .precursorType = type.ToString,
-                .ppm = PPMmethod.PPM(mz, hit.mz)
-            }
+        For Each infer As InferLink In candidates _
+            .AsParallel _
+            .Select(Function(hit)
+                        Return inferAlignment(hit, mz, type, seed, compound)
+                    End Function)
 
-            If alignment Is Nothing Then
-                Continue For
+            If infer IsNot Nothing Then
+                Yield infer
             End If
-
-            alignment.kegg = kegg
-
-            If stdnum.Min(alignment.forward, alignment.reverse) < dotcutoff Then
-                If alignment.jaccard >= 0.5 Then
-                    alignment.level = InferLevel.Ms2
-                    alignment.parentTrace *= (0.95 * dotcutoff)
-                ElseIf allowMs1 Then
-                    alignment.alignments = Nothing
-                    alignment.level = InferLevel.Ms1
-                    alignment.parentTrace *= (0.5 * dotcutoff)
-                Else
-                    Continue For
-                End If
-            Else
-                alignment.level = InferLevel.Ms2
-                alignment.parentTrace *= stdnum.Min(alignment.forward, alignment.reverse)
-            End If
-
-            Yield alignment
         Next
+    End Function
+
+    Private Function inferAlignment(hit As PeakMs2, mz As Double, type As MzCalculator, seed As AnnotatedSeed, compound As GenericCompound) As InferLink
+        Dim alignment As InferLink = GetBestQuery(hit, seed)
+        Dim kegg As New MzQuery With {
+            .mz = mz,
+            .unique_id = compound.Identity,
+            .precursorType = type.ToString,
+            .ppm = PPMmethod.PPM(mz, hit.mz)
+        }
+
+        If alignment Is Nothing Then
+            Return Nothing
+        End If
+
+        alignment.kegg = kegg
+
+        If std.Min(alignment.forward, alignment.reverse) < dotcutoff Then
+            If alignment.jaccard >= 0.5 Then
+                alignment.level = InferLevel.Ms2
+                alignment.parentTrace *= (0.95 * dotcutoff)
+            ElseIf allowMs1 Then
+                alignment.alignments = Nothing
+                alignment.level = InferLevel.Ms1
+                alignment.parentTrace *= (0.5 * dotcutoff)
+            Else
+                Return Nothing
+            End If
+        Else
+            alignment.level = InferLevel.Ms2
+            alignment.parentTrace *= std.Min(alignment.forward, alignment.reverse)
+        End If
+
+        Return alignment
     End Function
 
     Private Function GetBestQuery(hit As PeakMs2, seed As AnnotatedSeed) As InferLink
@@ -286,7 +311,7 @@ Public Class Algorithm
             align = MSalignment.CreateAlignment(hit.mzInto, ref.Value.ms2)
             score = MSalignment.GetScore(align.alignments)
 
-            If max Is Nothing OrElse stdnum.Min(score.forward, score.reverse) > stdnum.Min(max.forward, max.reverse) Then
+            If max Is Nothing OrElse std.Min(score.forward, score.reverse) > std.Min(max.forward, max.reverse) Then
                 max = New InferLink With {
                     .reverse = score.reverse,
                     .forward = score.forward,

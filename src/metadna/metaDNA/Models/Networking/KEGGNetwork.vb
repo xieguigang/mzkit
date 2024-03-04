@@ -59,8 +59,11 @@ Imports Microsoft.VisualBasic.Linq
 Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
 Imports SMRUCC.genomics.Assembly.KEGG.WebServices.XML
 
-Public Class KEGGNetwork
+Public Class KEGGNetwork : Inherits Networking
 
+    ''' <summary>
+    ''' the partner id mapping which is build based on the reaction network
+    ''' </summary>
     Dim kegg_id As Dictionary(Of String, String())
     Dim reactionList As Dictionary(Of String, NamedValue(Of String)())
 
@@ -68,7 +71,7 @@ Public Class KEGGNetwork
     End Sub
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Function FindPartners(kegg_id As String) As IEnumerable(Of String)
+    Public Overrides Function FindPartners(kegg_id As String) As IEnumerable(Of String)
         If Me.kegg_id.ContainsKey(kegg_id) Then
             Return Me.kegg_id(kegg_id)
         Else
@@ -76,8 +79,14 @@ Public Class KEGGNetwork
         End If
     End Function
 
+    ''' <summary>
+    ''' find reaction list for export report table
+    ''' </summary>
+    ''' <param name="a"></param>
+    ''' <param name="b"></param>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Function FindReactions(a As String, b As String) As NamedValue(Of String)()
+    Public Overrides Function FindReactions(a As String, b As String) As NamedValue(Of String)()
         Return New String() {a, b} _
             .OrderBy(Function(str) str) _
             .JoinBy("+") _

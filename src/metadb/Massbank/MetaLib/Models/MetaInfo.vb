@@ -80,6 +80,7 @@ Namespace MetaLib.Models
         Implements IEquatable(Of MetaInfo)
         ' the abstract metabolite annotation data model
         Implements IReadOnlyId, IExactMassProvider, ICompoundNameProvider, IFormulaProvider
+        Implements GenericCompound
 
         ''' <summary>
         ''' 该物质在整合库之中的唯一标识符
