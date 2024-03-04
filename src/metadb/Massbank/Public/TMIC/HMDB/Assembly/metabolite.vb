@@ -102,6 +102,9 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.Annotations
+Imports BioNovoGene.BioDeep.Chemoinformatics
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.Data.IO.MessagePack.Serialization
@@ -120,7 +123,7 @@ Namespace TMIC.HMDB
     ''' <remarks>
     ''' 主要是为了简化数据额存储
     ''' </remarks>
-    Public Class MetaReference : Implements INamedValue, IMolecule, IReadOnlyId
+    Public Class MetaReference : Implements INamedValue, IMolecule, IReadOnlyId, GenericCompound
 
         ''' <summary>
         ''' HMDB ID, hmdb的主编号
@@ -136,14 +139,14 @@ Namespace TMIC.HMDB
         ''' Common Name
         ''' </summary>
         ''' <returns></returns>
-        <MessagePackMember(2)> Public Property name As String Implements IMolecule.Name
+        <MessagePackMember(2)> Public Property name As String Implements IMolecule.Name, GenericCompound.CommonName
         <MessagePackMember(3)> Public Property description As String
         ''' <summary>
         ''' other synonym names from external database
         ''' </summary>
         ''' <returns></returns>
         <MessagePackMember(4)> Public Property synonyms As synonyms
-        <MessagePackMember(5)> Public Property chemical_formula As String Implements IMolecule.Formula
+        <MessagePackMember(5)> Public Property chemical_formula As String Implements IMolecule.Formula, GenericCompound.Formula
 
 #Region "有些代谢物的分子质量的值空字符串，在进行XML反序列化的时候会出错，所以在这里改成字符串来避免出错"
         <MessagePackMember(6)> Public Property average_molecular_weight As String
@@ -162,6 +165,12 @@ Namespace TMIC.HMDB
             Set(value As Double)
                 average_molecular_weight = value
             End Set
+        End Property
+
+        Private ReadOnly Property ExactMass As Double Implements IExactMassProvider.ExactMass
+            Get
+                Return FormulaScanner.EvaluateExactMass(formula:=chemical_formula)
+            End Get
         End Property
 #End Region
 
@@ -201,7 +210,6 @@ Namespace TMIC.HMDB
 
         <MessagePackMember(37)> Public Property synthesis_reference As String
         <MessagePackMember(38)> Public Property biological_properties As biological_properties
-
     End Class
 
     Public Class biological_properties

@@ -161,6 +161,9 @@ Namespace Formula
         ''' <returns>
         ''' this function will returns -1 if the <paramref name="formula"/> input is invalid
         ''' </returns>
+        ''' <remarks>
+        ''' the mapping from <paramref name="formula"/> string to the exact mass value will be cached in this function.
+        ''' </remarks>
         Public Shared Function EvaluateExactMass(formula$, Optional n% = 9999) As Double
             Static cache As New Dictionary(Of String, Double)
 
