@@ -58,4 +58,7 @@ Imports SMRUCC.Rsharp.Runtime.Interop
 
 Public Class zzz
 
+    Public Shared Sub onLoad()
+        Call metaDNAInfer.Main()
+    End Sub
 End Class

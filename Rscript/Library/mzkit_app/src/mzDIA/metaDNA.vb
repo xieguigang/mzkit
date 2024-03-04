@@ -103,9 +103,10 @@ Imports REnv = SMRUCC.Rsharp.Runtime
          Nature Communications, 
          2019, 10: 1516.")>
 <RTypeExport("metadna", GetType(MetaDNAAlgorithm))>
+<RTypeExport("obo_ontology", GetType(OBOFile))>
 Module metaDNAInfer
 
-    Sub New()
+    Sub Main()
         Call Internal.Object.Converts.makeDataframe.addHandler(GetType(MetaDNAResult()), AddressOf getResultTable)
     End Sub
 
