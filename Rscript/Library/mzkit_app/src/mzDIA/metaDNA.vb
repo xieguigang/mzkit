@@ -58,6 +58,7 @@
 
 Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
@@ -336,10 +337,23 @@ Module metaDNAInfer
                                  <RRawVectorArgument> sample As Object,
                                  Optional env As Environment = Nothing) As Object
 
-        Dim raw As pipeline = pipeline.TryCreatePipeline(Of PeakMs2)(sample, env)
+        Dim raw As pipeline = pipeline.TryCreatePipeline(Of PeakMs2)(sample, env, suppress:=True)
 
         If raw.isError Then
-            Return raw.getError
+            raw = pipeline.TryCreatePipeline(Of mzPack)(sample, env)
+
+            If raw.isError Then
+                Return raw.getError
+            End If
+
+            raw = pipeline.CreateFromPopulator(
+                Iterator Function() As IEnumerable(Of PeakMs2)
+                    For Each rawdata As mzPack In raw.populates(Of mzPack)(env)
+                        For Each peak As PeakMs2 In rawdata.GetMs2Peaks
+                            Yield peak
+                        Next
+                    Next
+                End Function())
         End If
 
         Return metadna.SetSamples(raw.populates(Of PeakMs2)(env))
