@@ -353,7 +353,7 @@ Module metaDNAInfer
                             Yield peak
                         Next
                     Next
-                End Function())
+                End Function().ToArray)
         End If
 
         Return metadna.SetSamples(raw.populates(Of PeakMs2)(env))
