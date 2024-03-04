@@ -87,6 +87,7 @@ Imports MetaDNAAlgorithm = BioNovoGene.BioDeep.MetaDNA.Algorithm
 Imports ReactionClass = SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject.ReactionClass
 Imports ReactionClassTbl = BioNovoGene.BioDeep.MetaDNA.Visual.ReactionClass
 Imports REnv = SMRUCC.Rsharp.Runtime
+Imports metadata = BioNovoGene.BioDeep.Chemistry.MetaLib.Models.MetaInfo
 
 ''' <summary>
 ''' Metabolic Reaction Network-based Recursive Metabolite Annotation for Untargeted Metabolomics
@@ -525,7 +526,7 @@ Module metaDNAInfer
     ''' Create the kegg compound ms1 annotation query engine.
     ''' </summary>
     ''' <param name="kegg">
-    ''' a set of kegg compound data
+    ''' a set of kegg/pubchem/chebi/hmdb compound data.
     ''' </param>
     ''' <param name="precursors">
     ''' a character vector of the ms1 precursor ion names or 
@@ -554,25 +555,40 @@ Module metaDNAInfer
 
         Dim keggSet = pipeline.TryCreatePipeline(Of KeggCompound)(kegg, env)
         Dim mzErr = Math.getTolerance(mzdiff, env)
-
-        If keggSet.isError Then
-            Return keggSet.getError
-        ElseIf mzErr Like GetType(Message) Then
-            Return mzErr.TryCast(Of Message)
-        End If
-
         Dim calculators As MzCalculator() = Math.GetPrecursorTypes(precursors, env)
         Dim excludesEntry As Index(Of String) = CLRVector.asCharacter(excludes).Indexing
 
-        Return CompoundSolver.CreateIndex(
-            compounds:=keggSet _
-                .populates(Of KeggCompound)(env) _
-                .Where(Function(c)
-                           Return Not c.entry Like excludesEntry
-                       End Function),
-            types:=calculators,
-            tolerance:=mzErr.TryCast(Of Tolerance)
-        )
+        If mzErr Like GetType(Message) Then
+            Return mzErr.TryCast(Of Message)
+        End If
+
+        If Not keggSet.isError Then
+            Return CompoundSolver.CreateIndex(
+                compounds:=keggSet _
+                    .populates(Of KeggCompound)(env) _
+                    .Where(Function(c)
+                               Return Not c.entry Like excludesEntry
+                           End Function),
+                types:=calculators,
+                tolerance:=mzErr.TryCast(Of Tolerance)
+            )
+        End If
+
+        keggSet = pipeline.TryCreatePipeline(Of metadata)(kegg, env)
+
+        If Not keggSet.isError Then
+            Return CompoundSolver.CreateIndex(
+                compounds:=keggSet _
+                    .populates(Of metadata)(env) _
+                    .Where(Function(c)
+                               Return Not c.ID Like excludesEntry
+                           End Function),
+                types:=calculators,
+                tolerance:=mzErr.TryCast(Of Tolerance)
+            )
+        End If
+
+        Return keggSet.getError
     End Function
 
     ''' <summary>
