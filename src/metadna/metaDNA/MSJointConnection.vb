@@ -70,7 +70,7 @@ Imports SMRUCC.genomics.Assembly.KEGG.WebServices.XML
 ''' </summary>
 Public Class MSJointConnection : Implements IMzQuery
 
-    ReadOnly kegg As KEGGHandler
+    ReadOnly kegg As CompoundSolver
 
     ''' <summary>
     ''' the GSEA background
@@ -83,7 +83,7 @@ Public Class MSJointConnection : Implements IMzQuery
         End Get
     End Property
 
-    Sub New(kegg As KEGGHandler, peakSet As Background)
+    Sub New(kegg As CompoundSolver, peakSet As Background)
         Me.kegg = kegg
         Me.jointSet = peakSet
     End Sub

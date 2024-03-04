@@ -189,7 +189,7 @@ Public Class Algorithm
     ''' <param name="library"></param>
     ''' <returns></returns>
     Public Function SetKeggLibrary(library As IEnumerable(Of Compound)) As Algorithm
-        kegg = KEGGHandler.CreateIndex(library, precursorTypes, ms1ppm)
+        kegg = CompoundSolver.CreateIndex(library, precursorTypes, ms1ppm)
         Return Me
     End Function
 

@@ -543,7 +543,7 @@ Module metaDNAInfer
     ''' for the kegg metaolite compounds.
     ''' </returns>
     <ExportAPI("annotationSet")>
-    <RApiReturn(GetType(KEGGHandler))>
+    <RApiReturn(GetType(CompoundSolver))>
     Public Function CreateKEGGSearch(<RRawVectorArgument> kegg As Object,
                                      <RRawVectorArgument()>
                                      Optional precursors As Object = "[M]+|[M+H]+|[M+H-H2O]+",
@@ -564,7 +564,7 @@ Module metaDNAInfer
         Dim calculators As MzCalculator() = Math.GetPrecursorTypes(precursors, env)
         Dim excludesEntry As Index(Of String) = CLRVector.asCharacter(excludes).Indexing
 
-        Return KEGGHandler.CreateIndex(
+        Return CompoundSolver.CreateIndex(
             compounds:=keggSet _
                 .populates(Of KeggCompound)(env) _
                 .Where(Function(c)

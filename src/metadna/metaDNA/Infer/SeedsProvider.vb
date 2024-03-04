@@ -70,10 +70,10 @@ Namespace Infer
 
         ReadOnly unknowns As UnknownSet
         ReadOnly precursorTypes As MzCalculator()
-        ReadOnly kegg As KEGGHandler
+        ReadOnly kegg As CompoundSolver
         ReadOnly da3 As Tolerance = Tolerance.DeltaMass(0.3)
 
-        Sub New(unknowns As UnknownSet, ranges As MzCalculator(), kegg As KEGGHandler)
+        Sub New(unknowns As UnknownSet, ranges As MzCalculator(), kegg As CompoundSolver)
             Me.unknowns = unknowns
             Me.precursorTypes = ranges
             Me.kegg = kegg
