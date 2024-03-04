@@ -312,12 +312,12 @@ Module metaDNAInfer
     ''' load the ontology tree as the network graph for search
     ''' </summary>
     ''' <param name="metadna"></param>
-    ''' <param name="obo"></param>
+    ''' <param name="obo">raw data for build <see cref="OntologyTree"/>.</param>
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("load.ontology")>
     Public Function loadOntologyTree(metadna As Algorithm, obo As OBOFile, Optional env As Environment = Nothing) As Object
-
+        Return metadna.SetNetwork(New OntologyTree(obo))
     End Function
 
     ''' <summary>

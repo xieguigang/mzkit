@@ -1,4 +1,5 @@
 ﻿Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Linq
 Imports SMRUCC.genomics.foundation.OBO_Foundry.IO.Models
 Imports SMRUCC.genomics.foundation.OBO_Foundry.Tree
 
@@ -24,6 +25,19 @@ Public Class OntologyTree : Inherits Networking
     ''' <param name="kegg_id"></param>
     ''' <returns></returns>
     Public Overrides Iterator Function FindPartners(kegg_id As String) As IEnumerable(Of String)
+        For Each parent In ontology(kegg_id).is_a.SafeQuery
+            ' get childs in the same parent
+            If Not parent.direct_childrens Is Nothing Then
+                For Each child In parent.direct_childrens.Values
+                    If child.ID <> kegg_id Then
+                        For Each c As GenericTree In GetChilds(child)
+                            Yield c.ID
+                        Next
+                    End If
+                Next
+            End If
+        Next
+
         ' populate all childs
         For Each child As GenericTree In GetChilds(node:=ontology(kegg_id))
             If child.ID <> kegg_id Then
@@ -54,6 +68,21 @@ Public Class OntologyTree : Inherits Networking
     ''' find common term in a given search depth
     ''' </remarks>
     Public Overrides Function FindReactions(a As String, b As String) As NamedValue(Of String)()
+        Dim p1 = ontology(a)
+        Dim p2 = ontology(b)
 
+        Return CheckLineage(p1, p2).JoinIterates(CheckLineage(p2, p1))
+    End Function
+
+    Private Iterator Function CheckLineage(ancestors As GenericTree, child As GenericTree) As IEnumerable(Of NamedValue(Of String))
+        For Each parent In child.is_a.SafeQuery
+            If parent.ID = ancestors.ID Then
+                Yield New NamedValue(Of String)(parent.ID, parent.name)
+            Else
+                For Each hit As NamedValue(Of String) In CheckLineage(ancestors, parent)
+                    Yield hit
+                Next
+            End If
+        Next
     End Function
 End Class

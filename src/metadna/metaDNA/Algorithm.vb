@@ -203,6 +203,11 @@ Public Class Algorithm
         network = KEGGNetwork.CreateNetwork(classLinks)
         Return Me
     End Function
+
+    Public Function SetNetwork(networking As Networking) As Algorithm
+        network = networking
+        Return Me
+    End Function
 #End Region
 
     ''' <summary>
