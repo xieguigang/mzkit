@@ -25,6 +25,10 @@ Namespace NCBI.PubChem.ExtensionModels
         Public Property cidsreactant As UInteger()
         Public Property cidsproduct As UInteger()
 
+        Public Overrides Function ToString() As String
+            Return $"[{source}:{externalid}] {definition}"
+        End Function
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function ParseJSON(str As String) As ReactionGraph()
             Return str.LoadJSON(Of ReactionGraph())
