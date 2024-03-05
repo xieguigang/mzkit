@@ -1,6 +1,8 @@
 ﻿
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports any = Microsoft.VisualBasic.Scripting
 
 Namespace NCBI.PubChem.ExtensionModels
 
@@ -16,14 +18,35 @@ Namespace NCBI.PubChem.ExtensionModels
         Public Property definition As String
         Public Property reaction As String
         Public Property control As String
-        Public Property cids As UInteger()
-        Public Property protacxns As String()
-        Public Property geneids As UInteger()
+        Public Property cids As Object
+        Public Property protacxns As Object
+        Public Property geneids As Object
         Public Property taxid As UInteger
         Public Property taxname As String
-        Public Property ecs As String()
-        Public Property cidsreactant As UInteger()
-        Public Property cidsproduct As UInteger()
+        Public Property ecs As Object
+        Public Property cidsreactant As Object
+        Public Property cidsproduct As Object
+
+        Public Function GetReactants() As String()
+            Return getArray(cidsreactant)
+        End Function
+
+        Public Function GetProducts() As String()
+            Return getArray(cidsproduct)
+        End Function
+
+        Private Shared Function getArray(val As Object) As String()
+            If val Is Nothing Then
+                Return {}
+            ElseIf val.GetType.IsArray Then
+                Return DirectCast(val, Array) _
+                    .AsObjectEnumerator _
+                    .Select(Function(o) any.ToString(o)) _
+                    .ToArray
+            Else
+                Return New String() {any.ToString(val)}
+            End If
+        End Function
 
         Public Overrides Function ToString() As String
             Return $"[{source}:{externalid}] {definition}"
@@ -31,7 +54,7 @@ Namespace NCBI.PubChem.ExtensionModels
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function ParseJSON(str As String) As ReactionGraph()
-            Return str.LoadJSON(Of ReactionGraph())
+            Return str.LoadJSON(Of ReactionGraph())(knownTypes:={GetType(String), GetType(String()), GetType(Long), GetType(Long())})
         End Function
 
     End Class
