@@ -11,7 +11,7 @@ Namespace NCBI.PubChem.ExtensionModels
     ''' </summary>
     Public Class ReactionGraph
 
-        Public Property name As String
+        Public Property name As Object
         Public Property source As String
         Public Property externalid As String
         Public Property url As String
@@ -29,6 +29,10 @@ Namespace NCBI.PubChem.ExtensionModels
 
         Public Function GetReactants() As String()
             Return getArray(cidsreactant)
+        End Function
+
+        Public Function GetName() As String
+            Return getArray(name).JoinBy("/")
         End Function
 
         Public Function GetProducts() As String()
