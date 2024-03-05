@@ -64,9 +64,11 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.BioDeep
 Imports BioNovoGene.BioDeep.Chemistry.ChEBI
+Imports BioNovoGene.BioDeep.Chemoinformatics
 Imports BioNovoGene.BioDeep.MetaDNA
 Imports BioNovoGene.BioDeep.MetaDNA.Infer
 Imports BioNovoGene.BioDeep.MetaDNA.Visual
+Imports BioNovoGene.BioDeep.MSEngine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
@@ -285,6 +287,25 @@ Module metaDNAInfer
         End If
 
         Return library.getError
+    End Function
+
+    <ExportAPI("setLibrary")>
+    Public Function setLibrary(metadna As Algorithm, [library] As Object, Optional env As Environment = Nothing) As Object
+        If library Is Nothing Then
+            Return Internal.debug.stop("the required compound library should not be nothing!", env)
+        End If
+        If TypeOf library Is CompoundSolver Then
+            Return metadna.SetLibrary(DirectCast(library, CompoundSolver))
+        ElseIf library.GetType.IsInheritsFrom(GetType(MSSearch(Of GenericCompound))) Then
+            Return metadna.SetLibrary(DirectCast(library, MSSearch(Of GenericCompound)))
+        Else
+            Return Message.InCompatibleType(GetType(CompoundSolver), library.GetType, env)
+        End If
+    End Function
+
+    <ExportAPI("setNetworking")>
+    Public Function setNetworking(metadna As Algorithm, networking As Networking) As Object
+        Return metadna.SetNetwork(networking)
     End Function
 
     ''' <summary>

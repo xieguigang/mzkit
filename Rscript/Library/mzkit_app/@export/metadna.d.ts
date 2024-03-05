@@ -227,4 +227,11 @@ declare namespace metadna {
       */
       function alignment(DIAinfer: any, table: any, env?: object): object;
    }
+   /**
+     * @param env default value Is ``null``.
+   */
+   function setLibrary(metadna: object, library: any, env?: object): any;
+   /**
+   */
+   function setNetworking(metadna: object, networking: object): any;
 }

@@ -194,7 +194,7 @@ Public Class Algorithm
         Return Me
     End Function
 
-    Public Function SetLibrary(solver As CompoundSolver) As Algorithm
+    Public Function SetLibrary(solver As MSSearch(Of GenericCompound)) As Algorithm
         kegg = solver
         Return Me
     End Function
