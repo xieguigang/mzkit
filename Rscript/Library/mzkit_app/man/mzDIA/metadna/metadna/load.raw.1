@@ -5,6 +5,9 @@ load.raw \- set ms2 spectrum data for run the annotation
 .SH SYNOPSIS
 \fIload.raw(\fBmetadna\fR as <generic> Algorithm, 
 \fBsample\fR as any, 
+\fBpeaktable\fR as any = \fB<NULL>\fR, 
+\fBms1diff\fR as double = 0.1, 
+\fBrt_win\fR as double = 30, 
 [\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
@@ -17,6 +20,11 @@ set ms2 spectrum data for run the annotation
 .PP
 \fBsample\fB \fR\- 
  a collection of the mzkit peak ms2 data objects
+. 
+.PP
+.PP
+\fBpeaktable\fB \fR\- 
+ used for generates the ROI id for matches with the ms1 peaks data 
 . 
 .PP
 .PP
