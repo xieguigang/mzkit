@@ -100,6 +100,7 @@ Public Class MetaDNAResult
     Public Property reverse As Double
     Public Property jaccard As Double
     Public Property mirror As Double
+    Public Property entropy As Double
     Public Property parentTrace As Double
     Public Property inferSize As Integer
     Public Property score1 As Double

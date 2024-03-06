@@ -111,7 +111,8 @@ Module ResultHandler
                     .mzCalc = precursorTypes(.precursorType).CalcMZ(.exactMass),
                     .ROI_id = type.ROI,
                     .mirror = type.infer.mirror,
-                    .alignment = MetaDNAResult.GetAlignment(type.infer).JoinBy(" ")
+                    .alignment = MetaDNAResult.GetAlignment(type.infer).JoinBy(" "),
+                    .entropy = type.infer.entropy
                 }
             Next
         Next
