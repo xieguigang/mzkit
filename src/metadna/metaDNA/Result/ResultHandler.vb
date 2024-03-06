@@ -110,7 +110,8 @@ Module ResultHandler
                     .fileName = type.infer.rawFile,
                     .mzCalc = precursorTypes(.precursorType).CalcMZ(.exactMass),
                     .ROI_id = type.ROI,
-                    .mirror = type.infer.mirror
+                    .mirror = type.infer.mirror,
+                    .alignment = MetaDNAResult.GetAlignment(type.infer).JoinBy(" ")
                 }
             Next
         Next
