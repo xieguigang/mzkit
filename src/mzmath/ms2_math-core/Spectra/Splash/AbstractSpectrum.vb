@@ -28,6 +28,13 @@ Namespace Spectra.SplashID
 
         Public Const MAX_RELATIVE_INTENSITY As Integer = 100
 
+        ReadOnly splashMs As New Splash(SpectrumType.MS)
+
+        <Extension>
+        Public Function MsSplashId(Of T As {New, ISpectrum})(spec As T) As String
+            Return splashMs.CalcSplashID(spec)
+        End Function
+
         ''' <summary>
         ''' returns the current spectrum's list of ions sorted by descending intensities
         ''' </summary>
@@ -69,7 +76,7 @@ Namespace Spectra.SplashID
         ''' <returns></returns>
         ''' 
         <Extension>
-        Public Function toRelative(spec As ISpectrum, scale As Integer) As List(Of ms2)
+        Public Function toRelative(spec As ISpectrum, Optional scale As Double = MAX_RELATIVE_INTENSITY) As List(Of ms2)
             Dim relativeIons As New List(Of ms2)(spec.GetIons)
             Dim maxInt = relativeIons.Max(Function(ion) ion.intensity)
 

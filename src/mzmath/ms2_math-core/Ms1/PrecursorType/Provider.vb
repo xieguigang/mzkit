@@ -56,6 +56,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 
 Namespace Ms1.PrecursorType
 
@@ -191,6 +192,15 @@ Namespace Ms1.PrecursorType
                 Return mz
             End Get
         End Property
+
+        Public Function ParseAdductModel(precursor_type As String) As MzCalculator
+            Static cache As New Dictionary(Of String, MzCalculator)
+            Return cache.ComputeIfAbsent(
+                key:=precursor_type,
+                lazyValue:=Function(type)
+                               Return Calculators(type).First
+                           End Function)
+        End Function
 
         ''' <summary>
         ''' get internal m/z calculator

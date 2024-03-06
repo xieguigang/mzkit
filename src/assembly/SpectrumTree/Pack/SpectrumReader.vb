@@ -222,7 +222,15 @@ Namespace PackLib
                 .IteratesALL
         End Function
 
-        Public Function BuildSearchIndex(ParamArray adducts As MzCalculator()) As SpectrumReader
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="println">printer function for verbose debug echo, value could be nothing</param>
+        ''' <param name="adducts"></param>
+        ''' <returns></returns>
+        Public Function BuildSearchIndex(println As Action(Of Object), ParamArray adducts As MzCalculator()) As SpectrumReader
+            ' the target reference spectrum has already been filter
+            ' in the loadMass function.
             Dim exactMass As MassIndex() = LoadMass().ToArray
             Dim mz As IonIndex() = exactMass _
                 .Select(Function(mass)
@@ -231,8 +239,21 @@ Namespace PackLib
                 .IteratesALL _
                 .ToArray
 
+            If println Is Nothing Then
+                ' mute
+                println = Sub()
+                              ' do nothing for mute
+                          End Sub
+            End If
+
             If exactMass.IsNullOrEmpty Then
-                Call ThrowNoMassIndex().Warning
+                Dim msg As String = ThrowNoMassIndex()
+
+                Call msg.Warning
+                Call println(msg.LineTokens)
+            Else
+                Call println($"get {mz.Length} ion targets based on the {exactMass.Length} metabolite targets!")
+                Call println(mz.Select(Function(i) i.ToString).ToArray)
             End If
 
             mzIndex = New MzIonSearch(mz, da:=Tolerance.DeltaMass(0.5))
@@ -240,6 +261,10 @@ Namespace PackLib
             Return Me
         End Function
 
+        ''' <summary>
+        ''' get error message
+        ''' </summary>
+        ''' <returns></returns>
         Private Function ThrowNoMassIndex() As String
             Dim err_msg As New StringBuilder("There is no ion mass index was loaded from this reference library stream!")
             Dim hasIdTargets As Boolean = targetSet.Count > 0
@@ -270,6 +295,7 @@ Namespace PackLib
         Private Function GetMassFiles() As IEnumerable(Of StreamBlock)
             Return DirectCast(file.GetObject("/massSet/"), StreamGroup) _
                 .ListFiles(safe:=True) _
+                .Where(Function(f) TypeOf f Is StreamBlock) _
                 .Select(Function(f) DirectCast(f, StreamBlock))
         End Function
 

@@ -61,6 +61,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Text.RegularExpressions
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MSP
 Imports BioNovoGene.BioDeep.Chemistry
+Imports BioNovoGene.BioDeep.Chemistry.ChEBI
 Imports BioNovoGene.BioDeep.Chemistry.LipidMaps
 Imports BioNovoGene.BioDeep.Chemistry.MetaLib
 Imports BioNovoGene.BioDeep.Chemistry.MetaLib.CrossReference

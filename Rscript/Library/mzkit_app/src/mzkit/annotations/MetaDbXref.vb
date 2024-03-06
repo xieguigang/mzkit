@@ -389,7 +389,7 @@ Module MetaDbXref
         metabolites = pipeline.TryCreatePipeline(Of Compound)(compounds, env, suppress:=True)
 
         If Not metabolites.isError Then
-            Return KEGGHandler.CreateIndex(metabolites.populates(Of Compound)(env), mz1, mzdiff.TryCast(Of Tolerance))
+            Return CompoundSolver.CreateIndex(metabolites.populates(Of Compound)(env), mz1, mzdiff.TryCast(Of Tolerance))
         End If
 
         metabolites = pipeline.TryCreatePipeline(Of MetaboliteAnnotation)(compounds, env, suppress:=True)
@@ -427,8 +427,8 @@ Module MetaDbXref
         Dim queryEngine As IMzQuery
         Dim println = env.WriteLineHandler
 
-        If TypeOf engine Is KEGGHandler Then
-            queryEngine = DirectCast(engine, KEGGHandler)
+        If TypeOf engine Is CompoundSolver Then
+            queryEngine = DirectCast(engine, CompoundSolver)
         ElseIf engine.GetType.ImplementInterface(Of IMzQuery) Then
             queryEngine = engine
         Else
@@ -991,7 +991,7 @@ Module MetaDbXref
         If engine Is Nothing Then
             env.AddMessage("the required ms annotation engine is nothing!", MSG_TYPES.WRN)
             Return anno
-        ElseIf TypeOf engine Is KEGGHandler Then
+        ElseIf TypeOf engine Is CompoundSolver Then
             Throw New NotImplementedException
         ElseIf TypeOf engine Is MSSearch(Of LipidMaps.MetaData) Then
             Dim data As LipidMaps.MetaData() = DirectCast(anno!unique_id, String()) _
@@ -1023,7 +1023,7 @@ Module MetaDbXref
 
             Return anno
         Else
-            Return Message.InCompatibleType(GetType(KEGGHandler), engine.GetType, env)
+            Return Message.InCompatibleType(GetType(CompoundSolver), engine.GetType, env)
         End If
     End Function
 

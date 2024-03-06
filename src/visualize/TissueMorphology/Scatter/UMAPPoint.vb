@@ -121,7 +121,7 @@ Public Class UMAPPoint
 
     Public Shared Iterator Function ParseCsvTable(file As String) As IEnumerable(Of UMAPPoint)
         Dim df As DataFrame = DataFrame.Load(file)
-        Dim labels As String() = df.Column(0).ToArray
+        Dim labels As String() = df.GetColumnVectors.First.ToArray
         Dim x As Double() = df.GetColumnValues("x").Select(AddressOf Val).ToArray
         Dim y As Double() = df.GetColumnValues("y").Select(AddressOf Val).ToArray
         Dim z As Double() = df.GetColumnValues("z").Select(AddressOf Val).ToArray

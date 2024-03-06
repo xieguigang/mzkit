@@ -1,61 +1,65 @@
 ﻿#Region "Microsoft.VisualBasic::86b23c33e2d41e238c6908b6d7b7e744, mzkit\src\metadna\metaDNA\Result\MetaDNAResult.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 51
-    '    Code Lines: 30
-    ' Comment Lines: 19
-    '   Blank Lines: 2
-    '     File Size: 1.77 KB
+' Summaries:
 
 
-    ' Class MetaDNAResult
-    ' 
-    '     Properties: exactMass, fileName, formula, forward, inferLevel
-    '                 inferSize, intensity, jaccard, KEGG_reaction, KEGGId
-    '                 mirror, mz, mzCalc, name, parentTrace
-    '                 partnerKEGGId, ppm, precursorType, pvalue, query_id
-    '                 reaction, reverse, ROI_id, rt, rt_adjust
-    '                 score1, score2, seed
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 51
+'    Code Lines: 30
+' Comment Lines: 19
+'   Blank Lines: 2
+'     File Size: 1.77 KB
+
+
+' Class MetaDNAResult
+' 
+'     Properties: exactMass, fileName, formula, forward, inferLevel
+'                 inferSize, intensity, jaccard, KEGG_reaction, KEGGId
+'                 mirror, mz, mzCalc, name, parentTrace
+'                 partnerKEGGId, ppm, precursorType, pvalue, query_id
+'                 reaction, reverse, ROI_id, rt, rt_adjust
+'                 score1, score2, seed
+' 
+' /********************************************************************************/
 
 #End Region
+
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
+Imports BioNovoGene.BioDeep.MetaDNA.Infer
+Imports Microsoft.VisualBasic.Linq
 
 ''' <summary>
 ''' table output of the metaDNA infer annotation result
@@ -96,6 +100,7 @@ Public Class MetaDNAResult
     Public Property reverse As Double
     Public Property jaccard As Double
     Public Property mirror As Double
+    Public Property entropy As Double
     Public Property parentTrace As Double
     Public Property inferSize As Integer
     Public Property score1 As Double
@@ -106,5 +111,27 @@ Public Class MetaDNAResult
     Public Property KEGG_reaction As String
     Public Property reaction As String
     Public Property fileName As String
+
+    ''' <summary>
+    ''' mz_into(query)_into(reference)[]
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property alignment As String
+
+    Public Overrides Function ToString() As String
+        Return $"{KEGGId}: {name}"
+    End Function
+
+    Public Shared Iterator Function GetAlignment(infer As InferLink) As IEnumerable(Of String)
+        If infer Is Nothing Then
+            Return
+        ElseIf infer.level = MetaDNA.Infer.InferLevel.Ms1 Then
+            Return
+        End If
+
+        For Each match As SSM2MatrixFragment In infer.alignments.SafeQuery
+            Yield $"{match.mz.ToString("F4")}_{match.query}_{match.ref}"
+        Next
+    End Function
 
 End Class

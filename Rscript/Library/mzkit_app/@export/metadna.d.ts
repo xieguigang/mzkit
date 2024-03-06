@@ -13,7 +13,7 @@ declare namespace metadna {
     * Create the kegg compound ms1 annotation query engine.
     * 
     * 
-     * @param kegg a set of kegg compound data
+     * @param kegg a set of kegg/pubchem/chebi/hmdb compound data.
      * @param precursors a character vector of the ms1 precursor ion names or 
      *  a list of the given mzcalculator object models.
      * 
@@ -26,13 +26,15 @@ declare namespace metadna {
      * + default value Is ``'ppm:20'``.
      * @param excludes 
      * + default value Is ``null``.
+     * @param mass_range 
+     * + default value Is ``null``.
      * @param env -
      * 
      * + default value Is ``null``.
      * @return a data query engine model to run ms1 data search 
      *  for the kegg metaolite compounds.
    */
-   function annotationSet(kegg: any, precursors?: any, mzdiff?: any, excludes?: any, env?: object): object;
+   function annotationSet(kegg: any, precursors?: any, mzdiff?: any, excludes?: any, mass_range?: any, env?: object): object;
    module as {
       /**
         * @param env default value Is ``null``.
@@ -54,7 +56,7 @@ declare namespace metadna {
        * 
        * 
         * @param metaDNA -
-        * @param result -
+        * @param result a collection of the @``T:BioNovoGene.BioDeep.MetaDNA.Infer.CandidateInfer``.
         * @param unique -
         * 
         * + default value Is ``false``.
@@ -76,6 +78,8 @@ declare namespace metadna {
        * 
         * @param metaDNA -
         * @param sample -
+        * 
+        * + default value Is ``null``.
         * @param seeds -
         * 
         * + default value Is ``null``.
@@ -83,7 +87,7 @@ declare namespace metadna {
         * 
         * + default value Is ``null``.
       */
-      function infer(metaDNA: object, sample: any, seeds?: any, env?: object): object;
+      function infer(metaDNA: object, sample?: any, seeds?: any, env?: object): object;
    }
    module kegg {
       /**
@@ -125,16 +129,34 @@ declare namespace metadna {
       */
       function kegg_network(metadna: object, links: any, env?: object): object;
       /**
+       * load the ontology tree as the network graph for search
+       * 
+       * 
+        * @param metadna -
+        * @param obo raw data for build @``T:BioNovoGene.BioDeep.MetaDNA.OntologyTree``.
+        * @param env -
+        * 
+        * + default value Is ``null``.
+      */
+      function ontology(metadna: object, obo: object, env?: object): any;
+      /**
        * set ms2 spectrum data for run the annotation
        * 
        * 
         * @param metadna -
         * @param sample a collection of the mzkit peak ms2 data objects
+        * @param peaktable used for generates the ROI id for matches with the ms1 peaks data
+        * 
+        * + default value Is ``null``.
+        * @param ms1diff 
+        * + default value Is ``0.1``.
+        * @param rt_win 
+        * + default value Is ``30``.
         * @param env -
         * 
         * + default value Is ``null``.
       */
-      function raw(metadna: object, sample: any, env?: object): object;
+      function raw(metadna: object, sample: any, peaktable?: any, ms1diff?: number, rt_win?: number, env?: object): object;
    }
    /**
     * Create an algorithm module for run metaDNA inferance
@@ -212,4 +234,11 @@ declare namespace metadna {
       */
       function alignment(DIAinfer: any, table: any, env?: object): object;
    }
+   /**
+     * @param env default value Is ``null``.
+   */
+   function setLibrary(metadna: object, library: any, env?: object): any;
+   /**
+   */
+   function setNetworking(metadna: object, networking: object): any;
 }
