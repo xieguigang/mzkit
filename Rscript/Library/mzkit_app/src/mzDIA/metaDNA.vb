@@ -81,10 +81,12 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.genomics.Data
 Imports SMRUCC.genomics.Data.KEGG.Metabolism
 Imports SMRUCC.genomics.foundation.OBO_Foundry.IO.Models
+Imports SMRUCC.Rsharp.Interpreter
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Invokes
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
+Imports SMRUCC.Rsharp.Runtime.Internal.Object.Converts
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports KeggCompound = SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject.Compound
@@ -359,7 +361,17 @@ Module metaDNAInfer
                                  <RRawVectorArgument> sample As Object,
                                  Optional env As Environment = Nothing) As Object
 
-        Dim raw As pipeline = pipeline.TryCreatePipeline(Of PeakMs2)(sample, env, suppress:=True)
+        Dim raw As pipeline
+
+        If TypeOf sample Is list Then
+            sample = RConversion.unlist(sample, env:=env)
+
+            If Program.isException(sample) Then
+                Return sample
+            End If
+        End If
+
+        raw = pipeline.TryCreatePipeline(Of PeakMs2)(sample, env, suppress:=True)
 
         If raw.isError Then
             raw = pipeline.TryCreatePipeline(Of mzPack)(sample, env)
