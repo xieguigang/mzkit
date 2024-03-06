@@ -153,6 +153,9 @@ Public Class Algorithm
     ''' create sample data set: <see cref="unknowns"/>
     ''' </summary>
     ''' <param name="sample"></param>
+    ''' <param name="autoROIid">
+    ''' assign the ms1 ROI id in <see cref="PeakMs2.meta"/> automatically?
+    ''' </param>
     ''' <returns></returns>
     Public Function SetSamples(sample As IEnumerable(Of PeakMs2), Optional autoROIid As Boolean = True) As Algorithm
         If autoROIid Then
@@ -161,15 +164,7 @@ Public Class Algorithm
             ' or stack overflow error will be happends
             sample = (Iterator Function() As IEnumerable(Of PeakMs2)
                           For Each peak As PeakMs2 In sample
-                              If Not peak.meta.ContainsKey("ROI") Then
-                                  If CInt(peak.rt) = 0 Then
-                                      peak.meta!ROI = $"M{CInt(peak.mz)}"
-                                  Else
-                                      peak.meta!ROI = $"M{CInt(peak.mz)}T{CInt(peak.rt)}"
-                                  End If
-                              End If
-
-                              Yield peak
+                              Yield SimpleSetROI(peak, id:=Nothing)
                           Next
                       End Function)().ToArray
         End If
@@ -177,6 +172,22 @@ Public Class Algorithm
         unknowns = UnknownSet.CreateTree(sample, ms1ppm)
 
         Return Me
+    End Function
+
+    Public Shared Function SimpleSetROI(peak As PeakMs2, id As String) As PeakMs2
+        If id.StringEmpty Then
+            If Not peak.meta.ContainsKey("ROI") Then
+                If CInt(peak.rt) = 0 Then
+                    peak.meta!ROI = $"M{CInt(peak.mz)}"
+                Else
+                    peak.meta!ROI = $"M{CInt(peak.mz)}T{CInt(peak.rt)}"
+                End If
+            End If
+        Else
+            peak.meta!ROI = id
+        End If
+
+        Return peak
     End Function
 
     Public Function SetSamples(sample As UnknownSet) As Algorithm

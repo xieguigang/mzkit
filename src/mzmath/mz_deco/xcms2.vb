@@ -134,6 +134,11 @@ Public Class xcms2 : Inherits DynamicPropertyBase(Of Double)
     Sub New()
     End Sub
 
+    Sub New(id As String, mz As Double, rt As Double)
+        Call Me.New(mz, rt)
+        Me.ID = id
+    End Sub
+
     Sub New(mz As Double, rt As Double)
         Me.mz = mz
         Me.mzmin = mz

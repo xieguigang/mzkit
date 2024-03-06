@@ -22,9 +22,9 @@ Public Class PeakSet
         Get
             Return m_peaksdata
         End Get
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Set(value As xcms2())
-            m_peaksdata = value
-            makeIndex()
+            Call SetPeakSet(value)
         End Set
     End Property
 
@@ -43,6 +43,19 @@ Public Class PeakSet
             Return peaks.TryCount
         End Get
     End Property
+
+    Public Sub New()
+    End Sub
+
+    Sub New(peakset As IEnumerable(Of xcms2))
+        Call SetPeakSet(peakset.SafeQuery.ToArray)
+    End Sub
+
+    Public Function SetPeakSet(peakset As xcms2()) As PeakSet
+        m_peaksdata = peakset
+        makeIndex()
+        Return Me
+    End Function
 
     Private Sub makeIndex()
         _sampleNames = peaks _

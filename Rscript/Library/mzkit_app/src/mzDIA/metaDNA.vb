@@ -59,6 +59,7 @@
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
+Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
@@ -96,6 +97,7 @@ Imports MetaDNAAlgorithm = BioNovoGene.BioDeep.MetaDNA.Algorithm
 Imports ReactionClass = SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject.ReactionClass
 Imports ReactionClassTbl = BioNovoGene.BioDeep.MetaDNA.Visual.ReactionClass
 Imports REnv = SMRUCC.Rsharp.Runtime
+Imports std = System.Math
 
 ''' <summary>
 ''' Metabolic Reaction Network-based Recursive Metabolite Annotation for Untargeted Metabolomics
@@ -353,15 +355,42 @@ Module metaDNAInfer
     ''' <param name="sample">
     ''' a collection of the mzkit peak ms2 data objects
     ''' </param>
+    ''' <param name="peaktable">
+    ''' used for generates the ROI id for matches with the ms1 peaks data 
+    ''' </param>
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("load.raw")>
     <RApiReturn(GetType(MetaDNAAlgorithm))>
-    Public Function handleSample(metadna As Algorithm,
-                                 <RRawVectorArgument> sample As Object,
+    Public Function handleSample(metadna As Algorithm, <RRawVectorArgument> sample As Object,
+                                 <RRawVectorArgument>
+                                 Optional peaktable As Object = Nothing,
+                                 Optional ms1diff As Double = 0.1,
+                                 Optional rt_win As Double = 30,
                                  Optional env As Environment = Nothing) As Object
-
         Dim raw As pipeline
+        Dim peakSet As pipeline = Nothing
+
+        If Not peaktable Is Nothing Then
+            peakSet = pipeline.TryCreatePipeline(Of xcms2)(peaktable, env)
+
+            If peakSet.isError AndAlso TypeOf peaktable Is dataframe Then
+                peakSet = pipeline.CreateFromPopulator(
+                    Iterator Function() As IEnumerable(Of xcms2)
+                        Dim df As dataframe = DirectCast(peaktable, dataframe)
+                        Dim mz As Double() = df.getVector(Of Double)("mz", "MZ", "m/z", "mass to charge")
+                        Dim rt As Double() = df.getVector(Of Double)("rt", "RT", "retention time", "retention_time")
+                        Dim xcms_id As String() = df.getVector(Of String)("xcms_id", "id", "ID", "roi", "ROI")
+
+                        For i As Integer = 0 To xcms_id.Length - 1
+                            Yield New xcms2(xcms_id(i), mz(i), rt(i))
+                        Next
+                    End Function())
+            End If
+            If peakSet.isError Then
+                Return peakSet.getError
+            End If
+        End If
 
         If TypeOf sample Is list Then
             sample = RConversion.unlist(sample, env:=env)
@@ -390,7 +419,39 @@ Module metaDNAInfer
                 End Function().ToArray)
         End If
 
-        Return metadna.SetSamples(raw.populates(Of PeakMs2)(env))
+        Dim pool As PeakMs2() = raw.populates(Of PeakMs2)(env).ToArray
+
+        If Not peakSet Is Nothing Then
+            Dim peaksdata As New PeakSet(peakSet.populates(Of xcms2)(env))
+            Dim println = env.WriteLineHandler
+
+            Call println("set ms2 peak data associated ROI id from the ms1 peaktable data!")
+
+            For i As Integer = 0 To pool.Length - 1
+                Dim peak2 As PeakMs2 = pool(i)
+                Dim peak1 = peaksdata.FindIonSet(peak2.mz, peak2.rt, ms1diff, rt_win).ToArray
+                Dim xcms_id As String = Nothing
+
+                If Not peak1.IsNullOrEmpty Then
+                    If peak1.Length = 1 Then
+                        xcms_id = peak1(0).ID
+                    Else
+                        With peak1 _
+                            .OrderBy(Function(p1)
+                                         Return std.Abs(p1.mz - peak2.mz + 0.0001) * std.Abs(p1.rt - peak2.rt + 0.1)
+                                     End Function) _
+                            .First
+
+                            xcms_id = .ID
+                        End With
+                    End If
+                End If
+
+                pool(i) = Algorithm.SimpleSetROI(peak2, xcms_id)
+            Next
+        End If
+
+        Return metadna.SetSamples(pool, autoROIid:=peakSet Is Nothing)
     End Function
 
     ''' <summary>
