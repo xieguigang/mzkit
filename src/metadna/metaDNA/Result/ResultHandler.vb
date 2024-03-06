@@ -95,7 +95,7 @@ Module ResultHandler
                     .inferLevel = type.infer.level.Description,
                     .KEGGId = infer.kegg_id,
                     .name = If(compound.CommonName, compound.Formula),
-                    .ppm = CInt(type.ppm),
+                    .ppm = type.ppm,
                     .precursorType = type.precursorType,
                     .pvalue = type.pvalue,
                     .partnerKEGGId = partner,
