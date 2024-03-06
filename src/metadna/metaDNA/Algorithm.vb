@@ -176,6 +176,10 @@ Public Class Algorithm
 
     Public Shared Function SimpleSetROI(peak As PeakMs2, id As String) As PeakMs2
         If id.StringEmpty Then
+            ' one ms1 peak feature may mapping to multiple peakms2
+            ' so the ROI id maybe duplicated
+            ' but the ms2 lib guid is unique identified for each
+            ' peakms2 feature data.
             If Not peak.meta.ContainsKey("ROI") Then
                 If CInt(peak.rt) = 0 Then
                     peak.meta!ROI = $"M{CInt(peak.mz)}"
