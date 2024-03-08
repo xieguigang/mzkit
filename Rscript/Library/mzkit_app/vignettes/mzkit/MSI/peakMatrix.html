@@ -43,15 +43,15 @@
 
 
 <dt>topN</dt>
-<dd><p>select top N ion feature in each spot and then union the ion features as <br />
- the features set, this parameter only works when the <strong><code>ionSet</code></strong> <br />
- parameter is empty or null. [as integer]</p></dd>
+<dd><p>`ionSet`. [as integer]</p></dd>
 
 
 <dt>ionSet</dt>
-<dd><p>A tuple list of the ion dataset range, the tuple list object should <br />
- be in data format of [unique_id => mz]. Or this parameter value could also<br />
- be a numeric vector of the target m/z feature values</p></dd>
+<dd><p>
+ A tuple list of the ion dataset range, the tuple list object should 
+ be in data format of [unique_id => mz]. Or this parameter value could also
+ be a numeric vector of the target m/z feature values
+ </p></dd>
 
 
 <dt>mzError</dt>
@@ -74,13 +74,11 @@
 
         <h3>Value</h3>
 
-        <p>the data format of the two kind of the output data result is keeps the same:</p>
-
-<ul>
-<li>for a raw matrix object, the column is the ion features and the rows is the spatial spots.</li>
-<li>for a dataset collection vector, the column is also the ion features and the <br />
-rows is the spatial spots.</li>
-</ul><h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/SingleCells/Deconvolute/MzMatrix.html">MzMatrix</a></li><li><a href="/vignettes/clr/Microsoft/VisualBasic/Data/csv/IO/DataSet.html">DataSet</a></li></ul>
+        the data format of the two kind of the output data result is keeps the same:
+ 
+ + for a raw matrix object, the column is the ion features and the rows is the spatial spots.
+ + for a dataset collection vector, the column is also the ion features and the 
+   rows is the spatial spots.<h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/SingleCells/Deconvolute/MzMatrix.html">MzMatrix</a></li><li><a href="/vignettes/clr/Microsoft/VisualBasic/Data/csv/IO/DataSet.html">DataSet</a></li></ul>
 
         <h3 style="display: block;">Examples</h3>
 

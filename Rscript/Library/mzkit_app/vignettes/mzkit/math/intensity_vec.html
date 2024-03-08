@@ -35,13 +35,11 @@
         <table>
             
 <dt>ms</dt>
-<dd><p>-</p></dd>
+<dd><p></p></dd>
 
 
 <dt>mzSet</dt>
-<dd><p>A peak index object, which could be generated based <br />
- on a given set of the peak m/z vector via the <br />
- function <code>mz_index</code>. [as <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/MzPool.html">MzPool</a>]</p></dd>
+<dd><p>mz_index. [as <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/MzPool.html">MzPool</a>]</p></dd>
 
         </table>
 
@@ -56,15 +54,13 @@
 
         <h3>Value</h3>
 
-        <p>the returns value of this function is based on the input <strong><code>ms</code></strong> data:</p>
-
-<ol>
-<li>for a single msdata object, then this function just returns a intensity numeric vector</li>
-<li>for a collection of the msdata object, then this function will returns a<br />
-dataframe object that each row is the element corresponding in the input msdata<br />
-collection and each column is the m/z peak intensity value across the input<br />
-msdata collection.</li>
-</ol><h4>clr value class</h4><ul><li>double</li></ul>
+        the returns value of this function is based on the input <strong>`ms`</strong> data:
+ 
+ 1. for a single msdata object, then this function just returns a intensity numeric vector
+ 2. for a collection of the msdata object, then this function will returns a
+    dataframe object that each row is the element corresponding in the input msdata
+    collection and each column is the m/z peak intensity value across the input
+    msdata collection.<h4>clr value class</h4><ul><li>double</li></ul>
 
         <h3 style="display: none;">Examples</h3>
 

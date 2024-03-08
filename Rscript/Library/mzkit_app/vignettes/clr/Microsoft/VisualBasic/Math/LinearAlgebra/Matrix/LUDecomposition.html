@@ -22,15 +22,16 @@
 
         <h3>Description</h3>
 
-        <p>LU Decomposition.<br />
- For an m-by-n matrix A with m >= n, the LU decomposition is an m-by-n<br />
- unit lower triangular matrix L, an n-by-n upper triangular matrix U,<br />
- and a permutation vector piv of length m so that A(piv,:) = L*U.<br />
- ' If m &lt; n, then L is m-by-m and U is m-by-n. '<br />
- The LU decompostion with pivoting always exists, even if the matrix is<br />
- singular, so the constructor will never fail.  The primary use of the<br />
- LU decomposition is in the solution of square systems of simultaneous<br />
- linear equations.  This will fail if IsNonSingular() returns false.</p>
+        LU Decomposition.
+ For an m-by-n matrix A with m >= n, the LU decomposition is an m-by-n
+ unit lower triangular matrix L, an n-by-n upper triangular matrix U,
+ and a permutation vector piv of length m so that A(piv,:) = L*U.
+ ' If m < n, then L is m-by-m and U is m-by-n. '
+ The LU decompostion with pivoting always exists, even if the matrix is
+ singular, so the constructor will never fail.  The primary use of the
+ LU decomposition is in the solution of square systems of simultaneous
+ linear equations.  This will fail if IsNonSingular() returns false.
+
 
         <h3>Declare</h3>        
 
