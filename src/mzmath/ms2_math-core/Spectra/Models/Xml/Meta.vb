@@ -57,7 +57,7 @@
 
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Linq
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Spectra.Xml
 
@@ -84,11 +84,11 @@ Namespace Spectra.Xml
             Return id
         End Function
 
-        Public Shared Iterator Function Log(data As IEnumerable(Of Meta), Optional base As Double = stdNum.E) As IEnumerable(Of Meta)
+        Public Shared Iterator Function Log(data As IEnumerable(Of Meta), Optional base As Double = std.E) As IEnumerable(Of Meta)
             For Each x As Meta In data.SafeQuery
                 Yield New Meta With {
                     .id = x.id,
-                    .intensity = stdNum.Log(x.intensity + 1, base),
+                    .intensity = std.Log(x.intensity + 1, base),
                     .mz = x.mz,
                     .scan_time = x.scan_time
                 }
