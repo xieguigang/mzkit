@@ -59,6 +59,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.BioDeep.Chemoinformatics
+Imports BioNovoGene.BioDeep.MSEngine
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Statistics.Hypothesis
@@ -70,10 +71,10 @@ Namespace Infer
 
         ReadOnly unknowns As UnknownSet
         ReadOnly precursorTypes As MzCalculator()
-        ReadOnly kegg As CompoundSolver
+        ReadOnly kegg As MSSearch(Of GenericCompound)
         ReadOnly da3 As Tolerance = Tolerance.DeltaMass(0.3)
 
-        Sub New(unknowns As UnknownSet, ranges As MzCalculator(), kegg As CompoundSolver)
+        Sub New(unknowns As UnknownSet, ranges As MzCalculator(), kegg As MSSearch(Of GenericCompound))
             Me.unknowns = unknowns
             Me.precursorTypes = ranges
             Me.kegg = kegg

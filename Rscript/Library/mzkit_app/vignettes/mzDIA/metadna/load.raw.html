@@ -5,7 +5,7 @@
     <title>set ms2 spectrum data for run the annotation</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-    <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
+    <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
 </head>
 
 <body>
@@ -27,7 +27,10 @@
         <h3>Usage</h3>
 
         <div style="width: 100%; padding-left: 3%; color: black;">
-            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>load.raw</strong>(<i>metadna</i>, <i>sample</i>);</code></pre>
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>load.raw</strong>(<i>metadna</i>, <i>sample</i>,
+    <i>peaktable</i> = <span style='color: blue !important;'>NULL</span>,
+    <i>ms1diff</i> = <span style='color: green;'>0.1</span>,
+    <i>rt.win</i> = <span style='color: green;'>30</span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
@@ -40,6 +43,10 @@
 
 <dt>sample</dt>
 <dd><p>a collection of the mzkit peak ms2 data objects</p></dd>
+
+
+<dt>peaktable</dt>
+<dd><p>used for generates the ROI id for matches with the ms1 peaks data </p></dd>
 
 
 <dt>env</dt>
@@ -71,8 +78,8 @@
     </div>
 </body>
 
-<script type="text/javascript" src="https://mzkit.org/assets/js/R_syntax.js"></script>
-<script type="text/javascript" src="https://mzkit.org/assets/js/highlights.js"></script>
+<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
+<script type="text/javascript" src="../../_assets/highlights.js"></script>
 <script type="text/javascript">r_highlights("example_r");</script>
 
 </html>

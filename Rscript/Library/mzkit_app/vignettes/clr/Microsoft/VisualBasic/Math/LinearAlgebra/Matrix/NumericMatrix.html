@@ -5,7 +5,7 @@
     <title>Microsoft.VisualBasic.Math.LinearAlgebra.Matrix.NumericMatrix</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-    <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
+    <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
 </head>
 
 <body>
@@ -54,12 +54,7 @@
 <p>Solve a linear system A x = b and compute the residual norm, <code>||b - A x||</code>.</p></li>
 </ul>
 
-<pre><code class="csharp">double[][] vals;
-GeneralMatrix A = New NumericMatrix(vals);
-GeneralMatrix b = GeneralMatrix.Random(3,1);
-GeneralMatrix x = A.Solve(b);
-GeneralMatrix r = A.Multiply(x).Subtract(b);
-double rnorm = r.NormInf();
+<pre><code class="csharp">^( {4}[^\n]+\n*)+
 </code></pre>
 
 <p>Access the internal two-dimensional array.<br />
@@ -109,8 +104,8 @@ export class NumericMatrix extends <a href="/vignettes/clr/Microsoft/VisualBasic
     </div>
 </body>
 
-<script type="text/javascript" src="https://mzkit.org/assets/js/R_syntax.js"></script>
-<script type="text/javascript" src="https://mzkit.org/assets/js/highlights.js"></script>
+<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
+<script type="text/javascript" src="../../_assets/highlights.js"></script>
 <script type="text/javascript">r_highlights("clr_ts");</script>
 
 </html>

@@ -95,7 +95,7 @@ Module ResultHandler
                     .inferLevel = type.infer.level.Description,
                     .KEGGId = infer.kegg_id,
                     .name = If(compound.CommonName, compound.Formula),
-                    .ppm = CInt(type.ppm),
+                    .ppm = type.ppm,  ' round ppm in the external code, just export the raw value at here
                     .precursorType = type.precursorType,
                     .pvalue = type.pvalue,
                     .partnerKEGGId = partner,
@@ -110,7 +110,9 @@ Module ResultHandler
                     .fileName = type.infer.rawFile,
                     .mzCalc = precursorTypes(.precursorType).CalcMZ(.exactMass),
                     .ROI_id = type.ROI,
-                    .mirror = type.infer.mirror
+                    .mirror = type.infer.mirror,
+                    .alignment = MetaDNAResult.GetAlignment(type.infer).JoinBy(" "),
+                    .entropy = type.infer.entropy
                 }
             Next
         Next

@@ -220,7 +220,7 @@ Module ReferenceTreePkg
 
         If isHDS Then
             Dim precursor_types = Math.GetPrecursorTypes(adducts, env)
-            Dim referenceSpectrum = New SpectrumReader(buf, targets).BuildSearchIndex(precursor_types)
+            Dim referenceSpectrum = New SpectrumReader(buf, targets).BuildSearchIndex(println, precursor_types)
 
             Call println("precursor adducts for filtering targets:")
             Call println(adducts)

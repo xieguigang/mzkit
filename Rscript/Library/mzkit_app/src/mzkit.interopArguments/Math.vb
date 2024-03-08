@@ -155,8 +155,8 @@ Module Math
 
     <Extension>
     Public Function PeakListFromDataframe(peaktable As dataframe) As PeakMs1()
-        Dim mz As Double() = peaktable.getVector(Of Double)("mz", "m/z")
-        Dim rt As Double() = peaktable.getVector(Of Double)("rt", "RT", "retention_time")
+        Dim mz As Double() = peaktable.getVector(Of Double)("mz", "m/z", "MZ", "mass to charge")
+        Dim rt As Double() = peaktable.getVector(Of Double)("rt", "RT", "retention_time", "retention time")
         Dim id As String() = peaktable.getVector(Of String)("xcms_id", "id", "ID", "name", "guid")
         Dim scan As Integer() = peaktable.getVector(Of Integer)("scan")
         Dim rtmin As Double() = peaktable.getVector(Of Double)("rtmin")

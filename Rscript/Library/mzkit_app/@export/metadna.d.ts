@@ -145,11 +145,18 @@ declare namespace metadna {
        * 
         * @param metadna -
         * @param sample a collection of the mzkit peak ms2 data objects
+        * @param peaktable used for generates the ROI id for matches with the ms1 peaks data
+        * 
+        * + default value Is ``null``.
+        * @param ms1diff 
+        * + default value Is ``0.1``.
+        * @param rt_win 
+        * + default value Is ``30``.
         * @param env -
         * 
         * + default value Is ``null``.
       */
-      function raw(metadna: object, sample: any, env?: object): object;
+      function raw(metadna: object, sample: any, peaktable?: any, ms1diff?: number, rt_win?: number, env?: object): object;
    }
    /**
     * Create an algorithm module for run metaDNA inferance
@@ -227,4 +234,11 @@ declare namespace metadna {
       */
       function alignment(DIAinfer: any, table: any, env?: object): object;
    }
+   /**
+     * @param env default value Is ``null``.
+   */
+   function setLibrary(metadna: object, library: any, env?: object): any;
+   /**
+   */
+   function setNetworking(metadna: object, networking: object): any;
 }
