@@ -29,15 +29,15 @@
 
 
  该文件每一行都是一个键值对， 基本格式为
- 
 
-<pre><code class="">
- 键: 值!注释
- ```
+<pre><code class=""> 键: 值!注释
+</code></pre>
 
- ##### 总体结构
- ```
- 文件头
+
+
+ <h5>总体结构
+
+<pre><code class=""> 文件头
  !包含若干行总体说明
  词条1![词条类型]占第一行， 后跟若干行说明
  词条2!不同的词条可用于描述同一对象的不同方面
@@ -46,11 +46,15 @@
  .
  !中间可以有若干空白行
  !OBO文件中可以在任意地方插入注释， 其注释以'!'开头
- ```
+</code></pre>
+
+</h5>
+
+
  
- ##### 文件头
- ```
- format-version:  1.2    !本文件所使用的OBO版本。本条目是必需的，以下文件头说明是可选的。
+ <h5>文件头
+
+<pre><code class=""> format-version:  1.2    !本文件所使用的OBO版本。本条目是必需的，以下文件头说明是可选的。
  data-version:  2012-12-09    !当前ontology的版本
  date :  07:12:2012 17:25    !当前日期
  saved-by: tanyaberardini!最后保存该文件的用户
@@ -66,13 +70,19 @@
  id-mapping: !将一个术语或关系对应到另一个术语或关系上
  idspace: !全局id和局部id的对应
  ontology: go
- ```
+</code></pre>
 
- ##### 词条：词条类型包括[Term]、[Typedef]、[Instance]
+</h5>
 
- ###### [Term]
- ```
- [Term]
+
+
+ <h5>词条：词条类型包括[Term]、[Typedef]、[Instance]</h5>
+
+
+
+ <h6>[Term]
+
+<pre><code class=""> [Term]
  id: GO : 0000001    !一个id即一个对象。一般情况下，id是全局性的，即唯一对应的，在任何地方都是一样的
  name: mitochondrion inheritance    !术语名，只能有一个
  namespace:  biological_process    !名称使用范围
@@ -98,11 +108,15 @@
  consider: !淘汰词备选的、还未被审核的替换术语
  created_by: !术语创造者
  creation_date: !术语创造时间
- ```
+</code></pre>
+
+</h6>
+
+
  
- ###### [Typedef]
- ```
- [Typedef]
+ <h6>[Typedef]
+
+<pre><code class=""> [Typedef]
  id: !通常是有一定含义的字符串， 而不是数字
  is_anonymous
  name
@@ -127,11 +141,15 @@
  is_obsolete
  replaced_by
  consider
- ```
+</code></pre>
+
+</h6>
+
+
  
- ###### [Instance]
- ```
- [Instance]
+ <h6>[Instance]
+
+<pre><code class=""> [Instance]
  id
  is_anonymous
  name
@@ -145,11 +163,15 @@
  is_obsolete
  replaced_by
  consider
- ```
+</code></pre>
+
+</h6>
+
+
  
- ##### 缺省的词条定义
- ```
- [Typedef]
+ <h5>缺省的词条定义
+
+<pre><code class=""> [Typedef]
  id: is_a
  name: is_a
  range: OBO:TERM_OR_TYPE
@@ -190,8 +212,9 @@
  range: OBO:TERM
  domain: OBO:TERM
  def: Indicates that a term Is the intersection Of several others [OBO:defs] 
- 
 </code></pre>
+
+</h5>
 
 
 

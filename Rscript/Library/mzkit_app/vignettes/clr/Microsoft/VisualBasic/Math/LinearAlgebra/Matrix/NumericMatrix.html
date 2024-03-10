@@ -53,17 +53,13 @@
  Example of use:
  
  Solve a linear system A x = b and compute the residual norm, <code>||b - A x||</code>.
- 
- 
 
-<pre><code class="">csharp
- double[][] vals;
+<pre><code class="csharp"> double[][] vals;
  GeneralMatrix A = New NumericMatrix(vals);
  GeneralMatrix b = GeneralMatrix.Random(3,1);
  GeneralMatrix x = A.Solve(b);
  GeneralMatrix r = A.Multiply(x).Subtract(b);
  double rnorm = r.NormInf();
- 
 </code></pre>
 
 
