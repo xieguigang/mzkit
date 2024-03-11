@@ -36,7 +36,6 @@ Public Class MergeSMSlides : Inherits MergeLinear
 
     Public Overrides Iterator Function JoinOneSample(shape As Polygon2D, sample As mzPack, left As Integer, top As Integer) As IEnumerable(Of ScanMS1)
         Dim minX As Integer = shape.xpoints.Min
-        Dim height As Integer = shape.height
         Dim deltaY As Integer = shape.ypoints.Min * -1 + top
         Dim sampleid As String = sample.source
 
