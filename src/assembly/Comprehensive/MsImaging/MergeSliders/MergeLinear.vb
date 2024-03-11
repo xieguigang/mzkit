@@ -1,7 +1,6 @@
 ﻿Imports System.Drawing
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports Microsoft.VisualBasic.ComponentModel.Collection
-Imports Microsoft.VisualBasic.Data.IO.MessagePack
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
@@ -37,7 +36,6 @@ Public Class MergeSMSlides : Inherits MergeLinear
 
     Public Overrides Iterator Function JoinOneSample(shape As Polygon2D, sample As mzPack, left As Integer, top As Integer) As IEnumerable(Of ScanMS1)
         Dim minX As Integer = shape.xpoints.Min
-        Dim height As Integer = shape.height
         Dim deltaY As Integer = shape.ypoints.Min * -1 + top
         Dim sampleid As String = sample.source
 
@@ -62,7 +60,7 @@ Public Class MergeSMSlides : Inherits MergeLinear
             End If
 
             If relativePos Then
-                Yield scan.generateNormScan(minX, left, deltaY, sampleid, norm)
+                Yield scan.generateNormScan(minX, left, deltaY, sampleid)
             Else
                 ' is absolute position, just merge the collection
                 Yield scan
@@ -126,7 +124,7 @@ Public Class MergeSTSlides : Inherits MergeLinear
             scan.mz = union_maps
 
             If relativePos Then
-                Yield scan.generateNormScan(minX, left, deltaY, sampleid, norm)
+                Yield scan.generateNormScan(minX, left, deltaY, sampleid)
             Else
                 ' is absolute position, just merge the collection
                 Yield scan
