@@ -22,16 +22,17 @@
 
         <h3>Description</h3>
 
-        <p>QR Decomposition.<br />
- For an m-by-n matrix A with m >= n, the QR decomposition is an m-by-n<br />
- orthogonal matrix Q and an n-by-n upper triangular matrix R so that<br />
- A = Q*R.</p>
+        QR Decomposition.
+ For an m-by-n matrix A with m >= n, the QR decomposition is an m-by-n
+ orthogonal matrix Q and an n-by-n upper triangular matrix R so that
+ A = Q*R.
+ 
+ The QR decompostion always exists, even if the matrix does not have
+ full rank, so the constructor will never fail.  The primary use of the
+ QR decomposition is in the least squares solution of nonsquare systems
+ of simultaneous linear equations.  This will fail if IsFullRank()
+ returns false.
 
-<p>The QR decompostion always exists, even if the matrix does not have<br />
- full rank, so the constructor will never fail.  The primary use of the<br />
- QR decomposition is in the least squares solution of nonsquare systems<br />
- of simultaneous linear equations.  This will fail if IsFullRank()<br />
- returns false.</p>
 
         <h3>Declare</h3>        
 

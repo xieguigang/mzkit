@@ -22,18 +22,19 @@
 
         <h3>Description</h3>
 
-        <p>Eigenvalues and eigenvectors of a real matrix. <br />
- If A is symmetric, then A = V*D*V' where the eigenvalue matrix D is<br />
- diagonal and the eigenvector matrix V is orthogonal.<br />
- I.e. A = V.Multiply(D.Multiply(V.Transpose())) and <br />
- V.Multiply(V.Transpose()) equals the identity matrix.<br />
- If A is not symmetric, then the eigenvalue matrix D is block diagonal<br />
- with the real eigenvalues in 1-by-1 blocks and any complex eigenvalues,<br />
- lambda + i*mu, in 2-by-2 blocks, [lambda, mu; -mu, lambda].  The<br />
- columns of V represent the eigenvectors in the sense that A*V = V*D,<br />
- i.e. A.Multiply(V) equals V.Multiply(D).  The matrix V may be badly<br />
- conditioned, or even singular, so the validity of the equation<br />
- A = V*D*Inverse(V) depends upon V.cond().</p>
+        Eigenvalues and eigenvectors of a real matrix. 
+ If A is symmetric, then A = V<em>D</em>V' where the eigenvalue matrix D is
+ diagonal and the eigenvector matrix V is orthogonal.
+ I.e. A = V.Multiply(D.Multiply(V.Transpose())) and 
+ V.Multiply(V.Transpose()) equals the identity matrix.
+ If A is not symmetric, then the eigenvalue matrix D is block diagonal
+ with the real eigenvalues in 1-by-1 blocks and any complex eigenvalues,
+ lambda + i*mu, in 2-by-2 blocks, [lambda, mu; -mu, lambda].  The
+ columns of V represent the eigenvectors in the sense that A<em>V = V</em>D,
+ i.e. A.Multiply(V) equals V.Multiply(D).  The matrix V may be badly
+ conditioned, or even singular, so the validity of the equation
+ A = V<em>D</em>Inverse(V) depends upon V.cond().
+
 
         <h3>Declare</h3>        
 
