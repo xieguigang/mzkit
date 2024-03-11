@@ -60,8 +60,10 @@ Public Module MergeLayoutSliders
                     Dim sample As mzPack = raw(col)
                     Dim sample_shape = polygons(col)
                     Dim rect As RectangleF = sample_shape.GetRectangle
+                    Dim minX As Integer = sample_shape.xpoints.Min
+                    Dim deltaY As Integer = sample_shape.ypoints.Min * -1 + top
 
-                    Call offsets.Add(col, {left, top})
+                    Call offsets.Add(col, {left, top, minX, deltaY})
                     Call merge.JoinOneSample(
                         shape:=sample_shape,
                         sample:=sample,

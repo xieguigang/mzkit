@@ -169,15 +169,13 @@ Public Module MergeSliders
     ''' <param name="left"></param>
     ''' <param name="deltaY"></param>
     ''' <param name="sampleid"></param>
-    ''' <param name="norm"></param>
     ''' <returns></returns>
     <Extension>
     Friend Function generateNormScan(scan As ScanMS1,
                                      minX As Integer,
                                      left As Integer,
                                      deltaY As Double,
-                                     sampleid As String,
-                                     norm As Boolean) As ScanMS1
+                                     sampleid As String) As ScanMS1
 
         Dim meta As New Dictionary(Of String, String)(scan.meta)
         Dim xy = scan.GetMSIPixel
