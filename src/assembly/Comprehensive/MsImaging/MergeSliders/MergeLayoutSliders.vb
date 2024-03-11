@@ -18,7 +18,10 @@ Public Module MergeLayoutSliders
     ''' </param>
     ''' <returns></returns>
     <Extension>
-    Public Function MergeDataWithLayout(raw As Dictionary(Of String, mzPack), layout As String()(), Optional merge As MergeLinear = Nothing) As mzPack
+    Public Function MergeDataWithLayout(raw As Dictionary(Of String, mzPack), layout As String()(),
+                                        Optional merge As MergeLinear = Nothing,
+                                        Optional ByRef offsets As Dictionary(Of String, Integer()) = Nothing) As mzPack
+
         Dim polygons = raw.ToDictionary(
             Function(m) m.Key,
             Function(m)
@@ -43,6 +46,9 @@ Public Module MergeLayoutSliders
         Dim mzmax As New List(Of Double)
         Dim res As New List(Of Double)
 
+        ' helper data for arrange the cdf layout
+        offsets = New Dictionary(Of String, Integer())
+
         For Each row As String() In layout
             Dim maxHeight As Double = averageHeight
 
@@ -55,6 +61,7 @@ Public Module MergeLayoutSliders
                     Dim sample_shape = polygons(col)
                     Dim rect As RectangleF = sample_shape.GetRectangle
 
+                    Call offsets.Add(col, {left, top})
                     Call merge.JoinOneSample(
                         shape:=sample_shape,
                         sample:=sample,
