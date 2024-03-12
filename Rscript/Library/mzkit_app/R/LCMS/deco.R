@@ -3,96 +3,40 @@ imports "mzweb" from "mzkit";
 imports "Parallel" from "snowFall";
 imports ["data","math"] from "mzkit";
 
-#' extract peak ms1 from a set of raw data files
+#' Do ms1 deconvolution of the rawdata
 #' 
-#' @param data_dir a directory path that contains multiple raw data files
+#' @param rawdata a directory path that contains the mzXML or mzML rawdata files.
+#' @param outputdir a directory path for save the peaktable result file and the
+#'     temp cache files.
+#' @param mzdiff the mass tolerance error for create the mz bins from the ms1 
+#'     rawdata, the XIC data is generated based on this parameter value
+#' @param peak.width the rt range of the peak data
 #' 
-const run.Deconvolution = function(data_dir = "./", 
-                                   mzdiff = "da:0.001", 
-                                   baseline = 0.65,
-                                   peakwidth = [3,20],
-                                   outputdir = "./", 
-                                   n_threads = 8) {
-    const args = list(
-        cache_dir = `${normalizePath(outputdir)}/.cache/`,
-        mzdiff = mzdiff,
-        baseline = baseline,
-        peakwidth = as.numeric(peakwidth)
-    );
-    const fileset = list.files(data_dir, 
-        pattern = "(.+.mzX?ML)|(.+.mzPack)", 
-        recursive = FALSE,
-        wildcard = FALSE
-    ) |> lapply(x -> x, names = x -> basename(x, withExtensionName = TRUE))
-    ;
-    const peakcache = `${normalizePath(outputdir)}/.cache/peaks/`;
+#' @return this function returns nothing 
+#' 
+const run.Deconvolution = function(rawdata, outputdir = "./", mzdiff = 0.005, 
+                                   peak.width = [3, 90]) {
+                                    
+    const xic_cache = `${outputdir}/XIC_data`;
+    const files = list.files(rawdata, pattern = ["*.mzML", "*.mzXML", "*.mzPack"]);
 
-    Parallel::parallel(rawfile = fileset, 
-                       n_threads = n_threads, 
-                       ignoreError = FALSE,
-                       log_tmp = `${normalizePath(outputdir)}/.cache/parallel/`) {
-
-        require(mzkit);
-        mzkit::.MS1deconv(rawfile, args);
-    };    
+    # create temp data of ms1 XIC
+    ms1_xic_bins(files, mzdiff = mzdiff, 
+        outputdir = xic_cache, 
+        n_threads = 32);
     
-    peakcache
-    |> alignment_peaksdata(mzdiff = mzdiff)
-    |> write.csv(
-        file = `${normalizePath(outputdir)}/peakdata.csv`, 
-        row.names = TRUE
-    );
-}
+    const xic_files = list.files(xic_cache, pattern = "*.xic");
+    const bins = ms1_mz_bins(files = xic_files);
 
-#' Do sample matrix merge
-#' 
-#' @param peakcache a directory path that contains multiple single raw
-#'   sample peakdata matrix files inside.
-#' 
-const alignment_peaksdata = function(peakcache, mzdiff = "da:0.001") {
-    let peakdata = NULL;
-    let peakfile = NULL;
+    write.csv(bins, file = `${outputdir}/mzbins.csv`, 
+        row.names = FALSE);
 
-    for(file in list.files(peakcache, pattern = "*.csv")) {
-        peakfile = load.csv(file, type = "peak_feature");
-        peakdata = append(peakdata, peakfile);
+    const peaktable = ms1_peaktable(xic_files, bins, 
+        mzdiff = mzdiff, 
+        peak.width = peak.width);
 
-        print(`[load_single_file] ${basename(file)}...`);
-    }
+    write.csv(peaktable, file = `${outputdir}/peaktable.csv`, 
+        row.names = TRUE);
 
-    peakdata = peak_alignment(peakdata, mzdiff, norm = TRUE);
-    peakdata = as.data.frame(peakdata);
-
-    rownames(peakdata) = make.ROI_names(list(
-        mz = peakdata$mz, 
-        rt = peakdata$rt
-    ));
-
-    return(peakdata);    
-}
-
-#' a single thread task for extract peaktable from a single raw data file
-#' 
-const .MS1deconv = function(rawfile, args = list(cache_dir = "./.cache/")) {
-    const packCache = `${args$cache_dir}/raw/${basename(rawfile)}.mzPack`;
-    const peakCache = `${args$cache_dir}/peaks/${basename(rawfile)}.csv`;
-
-    if (!file.exists(packCache)) {
-        rawfile 
-        |> open.mzpack() 
-        |> write.mzPack(file = packCache, version = 1)
-        ;
-    }
-
-    const raw = packCache |> open.mzpack();
-    const ms1raw = ms1_scans(raw);
-    const peaks = ms1raw |> mz.deco(
-        tolerance = args$mzdiff, 
-        baseline = args$baseline, 
-        peakwidth = args$peakwidth
-    ) |> as.data.frame()
-    ;
-
-    peaks[, "rawfile"] = basename(rawfile);
-    write.csv(peaks, file = peakCache, row.names = TRUE);
+    invisible(NULL);
 } 
