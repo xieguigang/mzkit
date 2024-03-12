@@ -15,9 +15,9 @@ const ms1_mz_bins = function(files) {
     let xic_data = lapply(files, path -> readBin(path, what = "mz_group"));
     let mz = lapply(xic_data, function(pack, i) {
         data.frame(
-                   mz = [pack]::mz,
-                  TIC = [pack]::TIC,
-              maxinto = [pack]::MaxInto,
+            mz = [pack]::mz,
+            TIC = [pack]::TIC,
+            maxinto = [pack]::MaxInto,
             row.names = `#${i}-${1:length(pack)}`
         );
     });

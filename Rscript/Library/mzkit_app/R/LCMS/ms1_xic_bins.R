@@ -38,10 +38,8 @@ const ms1_xic_bins = function(files, mzdiff = 0.005,
 
             # processing a single rawdata file
             __ms1_xic_bins_single(
-                     path = unlist(path), 
-                   mzdiff = unlist(mzdiff), 
-                outputdir = unlist(outputdir)
-            );
+                path = unlist(path), mzdiff = unlist(mzdiff), 
+                outputdir = unlist(outputdir));
         }
     }
 
@@ -55,8 +53,6 @@ const ms1_xic_bins = function(files, mzdiff = 0.005,
 #' @return this function returns nothing
 #' 
 const __ms1_xic_bins_single = function(path, mzdiff, outputdir) {
-    imports "mzDeco" from "mz_quantify";
-
     let xic_cache = `${outputdir}/${basename(path)}.xic`;
 
     if (file.size(xic_cache) > (1*1024*1024)) {
