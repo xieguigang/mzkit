@@ -1,0 +1,19 @@
+﻿.TH MS1_MZ_BINS 1 2024-Mar "" "Extract the ion m/z features"
+.SH NAME
+ms1_mz_bins \- ms1_mz_bins(files)
+.SH SYNOPSIS
+\fIms1_mz_bins(files)\fR
+.SH OPTIONS
+.PP
+\fBfiles\fB \fR\- . a character vector of file path of the XIC data files which are extract from the rawdata file via the ``ms1_xic_bins`` function.
+.PP
+.SH VALUE
+.PP
+a dataframe object that contains the ion m/z features, data fields are included inside this result table: 1. mz: the ion m/z feature numeric vector 2. into: the max intensity value of current ion feature
+.PP
+.SH FILES
+.PP
+SMRUCC/R#.declare_function.ms1_mz_bins at ms1_mz_bins.R:line 14
+.PP
+.SH COPYRIGHT
+Copyright © xieguigang, MIT Licensed 2024

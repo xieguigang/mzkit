@@ -1,0 +1,32 @@
+﻿.TH MS1_PEAKTABLE 1 2024-Mar "" "Export peakstable data from the XIC rawdata files"
+.SH NAME
+ms1_peaktable \- ms1_peaktable(files, mzbins,
+    <i>mzdiff</i> = <span style='color: green;'>0.005</span>,
+    <i>peak.width</i> = [3, 90])
+.SH SYNOPSIS
+\fIms1_peaktable(files, mzbins,
+    <i>mzdiff</i> = <span style='color: green;'>0.005</span>,
+    <i>peak.width</i> = [3, 90])\fR
+.SH OPTIONS
+.PP
+\fBfiles\fB \fR\- . a character vector of the file path of the XIC rawdata files
+.PP
+.PP
+\fBmzbins\fB \fR\- . A dataframe object that contains the target ion m/z feature set for do extract of the result peaktable data, a data field which is named ``mz`` must be included inside this dataframe object.
+.PP
+.PP
+\fBmzdiff\fB \fR\- 0.005. 
+.PP
+.PP
+\fBpeak.width\fB \fR\- [3, 90]. the peak time range of the peaks that could be accepted
+.PP
+.SH VALUE
+.PP
+this function generates a xcms format liked peaktable dataframe object for the input rawdata files.
+.PP
+.SH FILES
+.PP
+SMRUCC/R#.declare_function.ms1_peaktable at ms1_peaktable.R:line 16
+.PP
+.SH COPYRIGHT
+Copyright © xieguigang, MIT Licensed 2024

@@ -1,0 +1,34 @@
+﻿.TH MS1_XIC_BINS 1 2024-Mar "" "Create XIC rawdata file for run peaktable exports"
+.SH NAME
+ms1_xic_bins \- ms1_xic_bins(files,
+    <i>mzdiff</i> = <span style='color: green;'>0.005</span>,
+    <i>outputdir</i> = ./XIC/,
+    <i>n.threads</i> = <span style='color: green;'>32</span>)
+.SH SYNOPSIS
+\fIms1_xic_bins(files,
+    <i>mzdiff</i> = <span style='color: green;'>0.005</span>,
+    <i>outputdir</i> = ./XIC/,
+    <i>n.threads</i> = <span style='color: green;'>32</span>)\fR
+.SH OPTIONS
+.PP
+\fBfiles\fB \fR\- . the LCMS rawdata files, could be in format of mzXML or mzML.
+.PP
+.PP
+\fBmzdiff\fB \fR\- 0.005. a numeric vector for create ion m/z feature bins
+.PP
+.PP
+\fBoutputdir\fB \fR\- ./XIC/. a character vector of local filesystem directory path for save the XIC temp result data files.
+.PP
+.PP
+\fBn.threads\fB \fR\- 32. 
+.PP
+.SH VALUE
+.PP
+this function returns nothing
+.PP
+.SH FILES
+.PP
+SMRUCC/R#.declare_function.ms1_xic_bins at ms1_xic_bins.R:line 12
+.PP
+.SH COPYRIGHT
+Copyright © xieguigang, MIT Licensed 2024
