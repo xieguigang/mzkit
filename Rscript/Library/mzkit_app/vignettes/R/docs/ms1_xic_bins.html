@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Do ms1 deconvolution of the rawdata</title>
+    <title>Create XIC rawdata file for run peaktable exports</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
@@ -13,12 +13,12 @@
 
         <table style="width: 100%;">
             <tr>
-                <td>run.Deconvolution {mzkit}</td>
+                <td>ms1_xic_bins {mzkit}</td>
                 <td style="text-align: right;">R Documentation</td>
             </tr>
         </table>
 
-        <h2>Do ms1 deconvolution of the rawdata</h2>
+        <h2>Create XIC rawdata file for run peaktable exports</h2>
 
         <h3>Description</h3>
 
@@ -27,30 +27,30 @@
         <h3>Usage</h3>
 
         <div style="width: 100%; padding-left: 3%; color: black;">
-            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>run.Deconvolution</strong>(<i>rawdata</i>,
-    <i>outputdir</i> = ./,
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>ms1_xic_bins</strong>(<i>files</i>,
     <i>mzdiff</i> = <span style='color: green;'>0.005</span>,
-    <i>peak.width</i> = [3, 90]);</code></pre>
+    <i>outputdir</i> = ./XIC/,
+    <i>n.threads</i> = <span style='color: green;'>32</span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
 
         <table>
             
-<dt>rawdata</dt>
-<dd><p>a directory path that contains the mzXML or mzML rawdata files.</p></dd>
-
-
-<dt>outputdir</dt>
-<dd><p>a directory path for save the peaktable result file and the temp cache files.</p></dd>
+<dt>files</dt>
+<dd><p>the LCMS rawdata files, could be in format of mzXML or mzML.</p></dd>
 
 
 <dt>mzdiff</dt>
-<dd><p>the mass tolerance error for create the mz bins from the ms1 rawdata, the XIC data is generated based on this parameter value</p></dd>
+<dd><p>a numeric vector for create ion m/z feature bins</p></dd>
 
 
-<dt>peak.width</dt>
-<dd><p>the rt range of the peak data</p></dd>
+<dt>outputdir</dt>
+<dd><p>a character vector of local filesystem directory path for save the XIC temp result data files.</p></dd>
+
+
+<dt>n.threads</dt>
+<dd><p>thread number for read the rawdata files.</p></dd>
 
         </table>
 

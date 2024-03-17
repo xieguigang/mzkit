@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Do ms1 deconvolution of the rawdata</title>
+    <title>Extract the ion m/z features</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
@@ -13,12 +13,12 @@
 
         <table style="width: 100%;">
             <tr>
-                <td>run.Deconvolution {mzkit}</td>
+                <td>ms1_mz_bins {mzkit}</td>
                 <td style="text-align: right;">R Documentation</td>
             </tr>
         </table>
 
-        <h2>Do ms1 deconvolution of the rawdata</h2>
+        <h2>Extract the ion m/z features</h2>
 
         <h3>Description</h3>
 
@@ -27,30 +27,15 @@
         <h3>Usage</h3>
 
         <div style="width: 100%; padding-left: 3%; color: black;">
-            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>run.Deconvolution</strong>(<i>rawdata</i>,
-    <i>outputdir</i> = ./,
-    <i>mzdiff</i> = <span style='color: green;'>0.005</span>,
-    <i>peak.width</i> = [3, 90]);</code></pre>
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>ms1_mz_bins</strong>(<i>files</i>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
 
         <table>
             
-<dt>rawdata</dt>
-<dd><p>a directory path that contains the mzXML or mzML rawdata files.</p></dd>
-
-
-<dt>outputdir</dt>
-<dd><p>a directory path for save the peaktable result file and the temp cache files.</p></dd>
-
-
-<dt>mzdiff</dt>
-<dd><p>the mass tolerance error for create the mz bins from the ms1 rawdata, the XIC data is generated based on this parameter value</p></dd>
-
-
-<dt>peak.width</dt>
-<dd><p>the rt range of the peak data</p></dd>
+<dt>files</dt>
+<dd><p>a character vector of file path of the XIC data files which are extract from the rawdata file via the <code>ms1_xic_bins</code> function.</p></dd>
 
         </table>
 
@@ -65,7 +50,7 @@
 
         <h3>Value</h3>
 
-        this function returns nothing
+        a dataframe object that contains the ion m/z features, data fields are included inside this result table: 1. mz: the ion m/z feature numeric vector 2. into: the max intensity value of current ion feature
 
         <h3 style="display: none;">Examples</h3>
 

@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Do ms1 deconvolution of the rawdata</title>
+    <title>export XIC data for a single rawdata file</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
@@ -13,12 +13,12 @@
 
         <table style="width: 100%;">
             <tr>
-                <td>run.Deconvolution {mzkit}</td>
+                <td>__ms1_xic_bins_single {mzkit}</td>
                 <td style="text-align: right;">R Documentation</td>
             </tr>
         </table>
 
-        <h2>Do ms1 deconvolution of the rawdata</h2>
+        <h2>export XIC data for a single rawdata file</h2>
 
         <h3>Description</h3>
 
@@ -27,30 +27,15 @@
         <h3>Usage</h3>
 
         <div style="width: 100%; padding-left: 3%; color: black;">
-            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>run.Deconvolution</strong>(<i>rawdata</i>,
-    <i>outputdir</i> = ./,
-    <i>mzdiff</i> = <span style='color: green;'>0.005</span>,
-    <i>peak.width</i> = [3, 90]);</code></pre>
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>__ms1_xic_bins_single</strong>(<i>path</i>, <i>mzdiff</i>, <i>outputdir</i>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
 
         <table>
             
-<dt>rawdata</dt>
-<dd><p>a directory path that contains the mzXML or mzML rawdata files.</p></dd>
-
-
-<dt>outputdir</dt>
-<dd><p>a directory path for save the peaktable result file and the temp cache files.</p></dd>
-
-
-<dt>mzdiff</dt>
-<dd><p>the mass tolerance error for create the mz bins from the ms1 rawdata, the XIC data is generated based on this parameter value</p></dd>
-
-
-<dt>peak.width</dt>
-<dd><p>the rt range of the peak data</p></dd>
+<dt>path</dt>
+<dd><p>a single rawdata file its file path</p></dd>
 
         </table>
 
