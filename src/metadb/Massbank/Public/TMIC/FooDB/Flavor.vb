@@ -52,6 +52,10 @@
 
 #End Region
 
+Imports System.IO
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Serialization.JSON
+
 Namespace TMIC.FooDB
 
     Public Class Flavor
@@ -60,6 +64,19 @@ Namespace TMIC.FooDB
         Public Property name As String
         Public Property flavor_group As String
         Public Property category As String
+
+        Public Overrides Function ToString() As String
+            Return name
+        End Function
+
+        Public Shared Iterator Function LoadJSONDb(file As Stream) As IEnumerable(Of Flavor)
+            Dim s As New StreamReader(file)
+            Dim str As Value(Of String) = ""
+
+            Do While Not (str = s.ReadLine) Is Nothing
+                Yield CStr(str).LoadJSON(Of Flavor)
+            Loop
+        End Function
 
     End Class
 End Namespace
