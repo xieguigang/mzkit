@@ -57,9 +57,14 @@
 
 #End Region
 
+Imports System.IO
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Serialization.JSON
+
 Namespace TMIC.FooDB
 
     Public Class Compound
+
         Public Property id As String
         Public Property public_id As String
         Public Property name As String
@@ -80,5 +85,15 @@ Namespace TMIC.FooDB
         Public Overrides Function ToString() As String
             Return $"[{public_id}] {name}"
         End Function
+
+        Public Shared Iterator Function LoadJSONDb(file As Stream) As IEnumerable(Of Compound)
+            Dim s As New StreamReader(file)
+            Dim str As Value(Of String) = ""
+
+            Do While Not (str = s.ReadLine) Is Nothing
+                Yield CStr(str).LoadJSON(Of Compound)
+            Loop
+        End Function
+
     End Class
 End Namespace

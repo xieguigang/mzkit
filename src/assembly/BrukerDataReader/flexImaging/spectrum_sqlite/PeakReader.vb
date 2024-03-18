@@ -75,7 +75,7 @@ Public Class PeakReader : Implements IDisposable
 
     Public Iterator Function GetSpectra() As IEnumerable(Of Spectra)
         Dim table As Sqlite3Table = peaks.GetTable("Spectra")
-        Dim schema As Schema = table.SchemaDefinition.ParseSchema
+        Dim schema As SQLSchema.Schema = table.SchemaDefinition.ParseSchema
         Dim id As Integer = schema.GetOrdinal(NameOf(Spectra.Id))
         Dim chip As Integer = schema.GetOrdinal(NameOf(Spectra.Chip))
         Dim spot As Integer = schema.GetOrdinal(NameOf(Spectra.SpotName))
@@ -123,7 +123,7 @@ Public Class PeakReader : Implements IDisposable
 
     Public Iterator Function GetProperties() As IEnumerable(Of Properties)
         Dim table As Sqlite3Table = peaks.GetTable("Properties")
-        Dim schema As Schema = table.SchemaDefinition.ParseSchema
+        Dim schema As SQLSchema.Schema = table.SchemaDefinition.ParseSchema
         Dim key As Integer = schema.GetOrdinal("Key")
         Dim value As Integer = schema.GetOrdinal("Value")
 

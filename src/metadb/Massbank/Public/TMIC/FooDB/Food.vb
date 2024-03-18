@@ -56,9 +56,14 @@
 
 #End Region
 
+Imports System.IO
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Serialization.JSON
+
 Namespace TMIC.FooDB
 
     Public Class Food
+
         Public Property id As String
         Public Property name As String
         Public Property name_scientific As String
@@ -75,6 +80,15 @@ Namespace TMIC.FooDB
 
         Public Overrides Function ToString() As String
             Return $"[{id}] {name}({name_scientific})"
+        End Function
+
+        Public Shared Iterator Function LoadJSONDb(file As Stream) As IEnumerable(Of Food)
+            Dim s As New StreamReader(file)
+            Dim str As Value(Of String) = ""
+
+            Do While Not (str = s.ReadLine) Is Nothing
+                Yield CStr(str).LoadJSON(Of Food)
+            Loop
         End Function
 
     End Class
