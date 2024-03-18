@@ -30,9 +30,9 @@ toolkit for handling of the ncbi pubchem data
 + [read.pubmed](pubchem_kit/read.pubmed.1) read pubmed data table files
 + [image_fly](pubchem_kit/image_fly.1) Request the metabolite structure image via the pubchem image_fly api
 + [query.external](pubchem_kit/query.external.1) query of the pathways, taxonomy and reaction 
++ [query.knowlegde_graph](pubchem_kit/query.knowlegde_graph.1) Query the compound related biological context information from pubchem
 + [CID](pubchem_kit/CID.1) query cid from pubchem database
 + [pubchem_url](pubchem_kit/pubchem_url.1) Generate the url for get pubchem pugviews data object
-+ [query.knowlegde_graph](pubchem_kit/query.knowlegde_graph.1) Query the compound related biological context information from pubchem
 + [query](pubchem_kit/query.1) query of the pubchem database
 + [pugView](pubchem_kit/pugView.1) query pubchem data via a given cid value
 + [SID_map](pubchem_kit/SID_map.1) parse the pubchem sid map data file

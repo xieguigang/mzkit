@@ -150,6 +150,8 @@ declare namespace pubchem_kit {
         * @param cache -
         * 
         * + default value Is ``'./graph_kb'``.
+        * @param env 
+        * + default value Is ``null``.
         * @return A tuple list of the knowledge data that associated with the given pubchem metabolite:
         *  
         *  1. genes: the co-occurance genes with the compound 
@@ -159,7 +161,7 @@ declare namespace pubchem_kit {
         *  all of the slot data is a collection of the mzkit pubchem @``T:BioNovoGene.BioDeep.Chemistry.NCBI.PubChem.Graph.MeshGraph`` 
         *  clr object.
       */
-      function knowlegde_graph(cid: string, cache?: string): object;
+      function knowlegde_graph(cid: string, cache?: any, env?: object): object;
    }
    module read {
       /**
