@@ -1,6 +1,7 @@
 <link rel="manifest" href="/manifest.json">
 
 # <span style="font-size: 3em;">Mzkit</span> [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4456618.svg)](https://doi.org/10.5281/zenodo.4456618)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fxieguigang%2Fmzkit.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fxieguigang%2Fmzkit?ref=badge_shield)
 
 > Data toolkits for processing NMR, MALDI MSI, MALDI single cell, Raman Spectroscopy, LC-MS and GC-MS raw data, chemoinformatics data analysis and data visualization.
 
@@ -123,6 +124,9 @@ SOFTWARE.
 ![](docs/manual/plots/MS_alignment.png)
 
 <div style="page-break-after:always;"></div>
+
+
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fxieguigang%2Fmzkit.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fxieguigang%2Fmzkit?ref=badge_large)
 
 ##  1. <a name='RawDataViewerInstruction'></a>Raw Data Viewer Instruction
 
