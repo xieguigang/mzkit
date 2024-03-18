@@ -22,7 +22,8 @@
 
         <h3>Description</h3>
 
-        <p>gdi+ images: <a href="/vignettes/clr/System/Drawing/Image.html">Image</a>, <a href="/vignettes/clr/System/Drawing/Bitmap.html">Bitmap</a> / SVG image: <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/SVG/XML/SvgDocument.html">SvgDocument</a></p>
+        gdi+ images: <a href="/vignettes/clr/System/Drawing/Image.html">Image</a>, <a href="/vignettes/clr/System/Drawing/Bitmap.html">Bitmap</a> / SVG image: <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/SVG/XML/SvgDocument.html">SvgDocument</a>
+
 
         <h3>Declare</h3>        
 
@@ -32,13 +33,11 @@
 export class GraphicsData {
    content_type: string;
    # The graphics engine driver type indicator, 
-   # 
-   # <ul>
-   # <li>for <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/Driver/Drivers.html">Drivers</a>.<a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/Driver/Drivers.html">GDI</a> -> <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/Driver/ImageData.html">ImageData</a>(<a href="/vignettes/clr/System/Drawing/Image.html">Image</a>, <a href="/vignettes/clr/System/Drawing/Bitmap.html">Bitmap</a>)</li>
-   # <li>for <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/Driver/Drivers.html">Drivers</a>.<a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/Driver/Drivers.html">SVG</a> -> <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/Driver/SVGData.html">SVGData</a>(<a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/SVG/XML/SvgDocument.html">SvgDocument</a>)
-   # 
-   # (驱动程序的类型)</li>
-   # </ul>
+   #  
+   #  + for <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/Driver/Drivers.html">Drivers</a>.<a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/Driver/Drivers.html">GDI</a> -> <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/Driver/ImageData.html">ImageData</a>(<a href="/vignettes/clr/System/Drawing/Image.html">Image</a>, <a href="/vignettes/clr/System/Drawing/Bitmap.html">Bitmap</a>)
+   #  + for <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/Driver/Drivers.html">Drivers</a>.<a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/Driver/Drivers.html">SVG</a> -> <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/Driver/SVGData.html">SVGData</a>(<a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/SVG/XML/SvgDocument.html">SvgDocument</a>)
+   #  
+   #  (驱动程序的类型)
    Driver: <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/Driver/Drivers.html">Drivers</a>;
    Height: integer;
    # The image size

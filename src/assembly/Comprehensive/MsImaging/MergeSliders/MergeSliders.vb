@@ -55,6 +55,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports System.Runtime.InteropServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.Comprehensive.MsImaging
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
@@ -161,6 +162,16 @@ Public Module MergeSliders
         }
     End Function
 
+    Public Sub MoveLayout(<Out> ByRef x As Integer,
+                          <Out> ByRef y As Integer,
+                          minX As Integer,
+                          left As Integer,
+                          deltaY As Integer)
+
+        x = x - minX + left
+        y = deltaY + y
+    End Sub
+
     ''' <summary>
     ''' adjust of the sample spot location
     ''' </summary>
@@ -169,29 +180,24 @@ Public Module MergeSliders
     ''' <param name="left"></param>
     ''' <param name="deltaY"></param>
     ''' <param name="sampleid"></param>
-    ''' <param name="norm"></param>
     ''' <returns></returns>
     <Extension>
     Friend Function generateNormScan(scan As ScanMS1,
                                      minX As Integer,
                                      left As Integer,
                                      deltaY As Double,
-                                     sampleid As String,
-                                     norm As Boolean) As ScanMS1
+                                     sampleid As String) As ScanMS1
 
         Dim meta As New Dictionary(Of String, String)(scan.meta)
         Dim xy = scan.GetMSIPixel
-        Dim x As Integer = xy.X - minX + left
-        Dim y As Integer = deltaY + xy.Y
+        Dim x As Integer = xy.X
+        Dim y As Integer = xy.Y
         ' 20221013 try to avoid the duplicated scan id
         ' confliction in data merge by adding a prefix
         ' of the source tag
         Dim scan_id As String = $"{sampleid} - {scan.scan_id}"
-        'Dim normInto As New Vector(scan.into)
 
-        'If norm Then
-        '    normInto = (normInto / normInto.Sum) * (10 ^ 8)
-        'End If
+        Call MoveLayout(x, y, minX, left, deltaY)
 
         meta!x = x
         meta!y = y

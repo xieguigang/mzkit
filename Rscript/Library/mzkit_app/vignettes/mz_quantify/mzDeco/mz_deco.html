@@ -42,8 +42,10 @@
         <table>
             
 <dt>ms1</dt>
-<dd><p>a collection of the ms1 data or the mzpack raw data object, this parameter could also be<br />
- a XIC pool object which contains a collection of the ion XIC data for run deconvolution.</p></dd>
+<dd><p>
+ a collection of the ms1 data or the mzpack raw data object, this parameter could also be
+ a XIC pool object which contains a collection of the ion XIC data for run deconvolution.
+ </p></dd>
 
 
 <dt>tolerance</dt>
@@ -51,7 +53,9 @@
 
 
 <dt>feature</dt>
-<dd><p>a numeric vector of target feature ion m/z value for extract the XIC data.</p></dd>
+<dd><p>
+ a numeric vector of target feature ion m/z value for extract the XIC data.
+ </p></dd>
 
         </table>
 
@@ -66,12 +70,12 @@
 
         <h3>Value</h3>
 
-        <p>a vector of the peak deconvolution data,<br />
- in format of xcms peak table liked or mzkit <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/PeakFeature.html">PeakFeature</a><br />
- data object.</p>
-
-<p>the result data vector may contains the rt shift data result, where you can get this shift<br />
- value via the <code>rt.shift</code> attribute name, rt shift data model is clr type: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/RtShift.html">RtShift</a>.</p><h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/PeakFeature.html">PeakFeature</a></li><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/xcms2.html">xcms2</a></li></ul>
+        a vector of the peak deconvolution data,
+ in format of xcms peak table liked or mzkit <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/PeakFeature.html">PeakFeature</a>
+ data object.
+ 
+ the result data vector may contains the rt shift data result, where you can get this shift
+ value via the <code>rt.shift</code> attribute name, rt shift data model is clr type: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/RtShift.html">RtShift</a>.<h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/PeakFeature.html">PeakFeature</a></li><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/xcms2.html">xcms2</a></li></ul>
 
         <h3 style="display: block;">Examples</h3>
 
