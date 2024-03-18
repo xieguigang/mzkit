@@ -243,6 +243,60 @@ Module PubChemToolKit
     End Function
 
     ''' <summary>
+    ''' Query the compound related biological context information from pubchem
+    ''' </summary>
+    ''' <param name="cid"></param>
+    ''' <param name="cache"></param>
+    ''' <returns>
+    ''' A tuple list of the knowledge data that associated with the given pubchem metabolite:
+    ''' 
+    ''' 1. genes: the co-occurance genes with the compound 
+    ''' 2. disease: a list of the related disease with the compound
+    ''' 3. compounds: the co-occurance compound data
+    ''' 
+    ''' all of the slot data is a collection of the mzkit pubchem <see cref="MeshGraph"/> 
+    ''' clr object.
+    ''' </returns>
+    <ExportAPI("query.knowlegde_graph")>
+    <RApiReturn("genes", "disease", "compounds")>
+    Public Function QueryKnowledgeGraph(cid As String,
+                                        Optional cache As Object = "./graph_kb",
+                                        Optional env As Environment = Nothing) As Object
+
+        Dim geneSet As MeshGraph()
+        Dim diseaseSet As MeshGraph()
+        Dim metaboliteSet As MeshGraph()
+
+        If cache Is Nothing Then
+            cache = "./graph_kb/"
+            Call env.AddMessage("the required cache filesystem value is nothing, use the default './graph_kb' location.")
+        End If
+
+        If TypeOf cache Is String Then
+            ' is a directory path
+            geneSet = WebGraph.Query(cid, PubChem.Graph.Types.ChemicalGeneSymbolNeighbor, cache)
+            diseaseSet = WebGraph.Query(cid, PubChem.Graph.Types.ChemicalDiseaseNeighbor, cache)
+            metaboliteSet = WebGraph.Query(cid, PubChem.Graph.Types.ChemicalNeighbor, cache)
+        ElseIf cache.GetType.ImplementInterface(Of IFileSystemEnvironment) Then
+            Dim web As New WebGraph(DirectCast(cache, IFileSystemEnvironment))
+
+            geneSet = web.Query(cid, PubChem.Graph.Types.ChemicalGeneSymbolNeighbor)
+            diseaseSet = web.Query(cid, PubChem.Graph.Types.ChemicalDiseaseNeighbor)
+            metaboliteSet = web.Query(cid, PubChem.Graph.Types.ChemicalNeighbor)
+        Else
+            Return Message.InCompatibleType(GetType(IFileSystemEnvironment), cache.GetType, env)
+        End If
+
+        Return New list With {
+            .slots = New Dictionary(Of String, Object) From {
+                {"genes", geneSet},
+                {"disease", diseaseSet},
+                {"compounds", metaboliteSet}
+            }
+        }
+    End Function
+
+    ''' <summary>
     ''' query cid from pubchem database
     ''' </summary>
     ''' <param name="name">any search term for query the pubchem database</param>
@@ -296,37 +350,6 @@ Module PubChemToolKit
     <RApiReturn(GetType(String))>
     Public Function pubchemUrl(<RRawVectorArgument> cid As Object, Optional env As Environment = Nothing) As Object
         Return env.EvaluateFramework(Of String, String)(cid, AddressOf WebQuery.pugViewApi)
-    End Function
-
-    ''' <summary>
-    ''' Query the compound related biological context information from pubchem
-    ''' </summary>
-    ''' <param name="cid"></param>
-    ''' <param name="cache"></param>
-    ''' <returns>
-    ''' A tuple list of the knowledge data that associated with the given pubchem metabolite:
-    ''' 
-    ''' 1. genes: the co-occurance genes with the compound 
-    ''' 2. disease: a list of the related disease with the compound
-    ''' 3. compounds: the co-occurance compound data
-    ''' 
-    ''' all of the slot data is a collection of the mzkit pubchem <see cref="MeshGraph"/> 
-    ''' clr object.
-    ''' </returns>
-    <ExportAPI("query.knowlegde_graph")>
-    <RApiReturn("genes", "disease", "compounds")>
-    Public Function QueryKnowledgeGraph(cid As String, Optional cache As String = "./graph_kb") As list
-        Dim geneSet As MeshGraph() = WebGraph.Query(cid, PubChem.Graph.Types.ChemicalGeneSymbolNeighbor, cache)
-        Dim diseaseSet = WebGraph.Query(cid, PubChem.Graph.Types.ChemicalDiseaseNeighbor, cache)
-        Dim metaboliteSet = WebGraph.Query(cid, PubChem.Graph.Types.ChemicalNeighbor, cache)
-
-        Return New list With {
-            .slots = New Dictionary(Of String, Object) From {
-                {"genes", geneSet},
-                {"disease", diseaseSet},
-                {"compounds", metaboliteSet}
-            }
-        }
     End Function
 
     ''' <summary>
