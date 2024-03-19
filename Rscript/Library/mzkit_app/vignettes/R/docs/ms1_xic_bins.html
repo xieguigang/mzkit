@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Create XIC rawdata file for run peaktable exports</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <table style="width: 100%;">
+            <tr>
+                <td>ms1_xic_bins {mzkit}</td>
+                <td style="text-align: right;">R Documentation</td>
+            </tr>
+        </table>
+
+        <h2>Create XIC rawdata file for run peaktable exports</h2>
+
+        <h3>Description</h3>
+
+        
+
+        <h3>Usage</h3>
+
+        <div style="width: 100%; padding-left: 3%; color: black;">
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>ms1_xic_bins</strong>(<i>files</i>,
+    <i>mzdiff</i> = <span style='color: green;'>0.005</span>,
+    <i>outputdir</i> = ./XIC/,
+    <i>n.threads</i> = <span style='color: green;'>32</span>);</code></pre>
+        </div>
+
+        <h3>Arguments</h3>
+
+        <table>
+            
+<dt>files</dt>
+<dd><p>the LCMS rawdata files, could be in format of mzXML or mzML.</p></dd>
+
+
+<dt>mzdiff</dt>
+<dd><p>a numeric vector for create ion m/z feature bins</p></dd>
+
+
+<dt>outputdir</dt>
+<dd><p>a character vector of local filesystem directory path for save the XIC temp result data files.</p></dd>
+
+
+<dt>n.threads</dt>
+<dd><p>thread number for read the rawdata files.</p></dd>
+
+        </table>
+
+
+        <h3 style="display: none;">Details</h3>
+
+        
+
+        <h3 style="display: block">Authors</h3>
+
+        xieguigang
+
+        <h3>Value</h3>
+
+        this function returns nothing
+
+        <h3 style="display: none;">Examples</h3>
+
+        
+
+        <hr />
+        <div style="text-align: center;">[Package <em>mzkit</em> version 3.2.56.56444 <a
+                href="../mzkit.html">Index</a>]
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
+<script type="text/javascript" src="../../_assets/highlights.js"></script>
+<script type="text/javascript">r_highlights("example_r");</script>
+
+</html>

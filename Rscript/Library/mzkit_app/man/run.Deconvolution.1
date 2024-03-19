@@ -1,42 +1,34 @@
-﻿.TH RUN.DECONVOLUTION 1 2024-Mar "" "extract peak ms1 from a set of raw data files"
+﻿.TH RUN.DECONVOLUTION 1 2024-Mar "" "Do ms1 deconvolution of the rawdata"
 .SH NAME
-run.Deconvolution \- run.Deconvolution(
-    <i>data.dir</i> = ./,
-    <i>mzdiff</i> = da:0.001,
-    <i>baseline</i> = <span style='color: green;'>0.65</span>,
-    <i>peakwidth</i> = [3, 20],
+run.Deconvolution \- run.Deconvolution(rawdata,
     <i>outputdir</i> = ./,
-    <i>n.threads</i> = <span style='color: green;'>8</span>)
+    <i>mzdiff</i> = <span style='color: green;'>0.005</span>,
+    <i>peak.width</i> = [3, 90])
 .SH SYNOPSIS
-\fIrun.Deconvolution(
-    <i>data.dir</i> = ./,
-    <i>mzdiff</i> = da:0.001,
-    <i>baseline</i> = <span style='color: green;'>0.65</span>,
-    <i>peakwidth</i> = [3, 20],
+\fIrun.Deconvolution(rawdata,
     <i>outputdir</i> = ./,
-    <i>n.threads</i> = <span style='color: green;'>8</span>)\fR
+    <i>mzdiff</i> = <span style='color: green;'>0.005</span>,
+    <i>peak.width</i> = [3, 90])\fR
 .SH OPTIONS
 .PP
-\fBdata.dir\fB \fR\- ./. 
+\fBrawdata\fB \fR\- . a directory path that contains the mzXML or mzML rawdata files.
 .PP
 .PP
-\fBmzdiff\fB \fR\- da:0.001. 
+\fBoutputdir\fB \fR\- ./. a directory path for save the peaktable result file and the temp cache files.
 .PP
 .PP
-\fBbaseline\fB \fR\- 0.65. 
+\fBmzdiff\fB \fR\- 0.005. the mass tolerance error for create the mz bins from the ms1 rawdata, the XIC data is generated based on this parameter value
 .PP
 .PP
-\fBpeakwidth\fB \fR\- [3, 20]. 
+\fBpeak.width\fB \fR\- [3, 90]. the rt range of the peak data
 .PP
+.SH VALUE
 .PP
-\fBoutputdir\fB \fR\- ./. 
-.PP
-.PP
-\fBn.threads\fB \fR\- 8. 
+this function returns nothing
 .PP
 .SH FILES
 .PP
-SMRUCC/R#.declare_function.run.Deconvolution at deco.R:line 10
+SMRUCC/R#.declare_function.run.Deconvolution at deco.R:line 17
 .PP
 .SH COPYRIGHT
 Copyright © xieguigang, MIT Licensed 2024
