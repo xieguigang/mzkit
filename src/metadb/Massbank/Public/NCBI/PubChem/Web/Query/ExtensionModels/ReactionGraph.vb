@@ -39,6 +39,14 @@ Namespace NCBI.PubChem.ExtensionModels
             Return getArray(cidsproduct)
         End Function
 
+        Public Function GetGeneIdSet() As String()
+            Return getArray(geneids)
+        End Function
+
+        Public Function GetProteinIdSet() As String()
+            Return getArray(protacxns)
+        End Function
+
         Private Shared Function getArray(val As Object) As String()
             If val Is Nothing Then
                 Return {}
