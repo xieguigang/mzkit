@@ -24,6 +24,10 @@ Namespace NCBI.PubChem.ExtensionModels
         Public Property pmids As String()
         Public Property annotation As String()
 
+        Public Overrides Function ToString() As String
+            Return $"{pwacc}: {name}"
+        End Function
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function ParseJSON(str As String) As PathwayGraph()
             Return JsonParser _
