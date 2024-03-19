@@ -93,3 +93,22 @@ Public Class MetaboliteAnnotation
     End Function
 
 End Class
+
+''' <summary>
+''' a simple data model for associates the metabolite id with its exact mass value 
+''' </summary>
+Public Class ExactMassMapping : Implements IExactMassProvider
+
+    Public Property exact_mass As Double Implements IExactMassProvider.ExactMass
+
+    ''' <summary>
+    ''' the biodeep id in integer number format
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property id As String
+
+    Public Overrides Function ToString() As String
+        Return $"[{id}] {exact_mass}"
+    End Function
+
+End Class
