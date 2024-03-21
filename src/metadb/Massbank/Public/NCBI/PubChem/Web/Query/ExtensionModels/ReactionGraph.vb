@@ -1,7 +1,7 @@
 ﻿
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.MIME.application.json
 Imports any = Microsoft.VisualBasic.Scripting
 
 Namespace NCBI.PubChem.ExtensionModels
@@ -39,6 +39,14 @@ Namespace NCBI.PubChem.ExtensionModels
             Return getArray(cidsproduct)
         End Function
 
+        Public Function GetGeneIdSet() As String()
+            Return getArray(geneids)
+        End Function
+
+        Public Function GetProteinIdSet() As String()
+            Return getArray(protacxns)
+        End Function
+
         Private Shared Function getArray(val As Object) As String()
             If val Is Nothing Then
                 Return {}
@@ -58,7 +66,9 @@ Namespace NCBI.PubChem.ExtensionModels
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function ParseJSON(str As String) As ReactionGraph()
-            Return str.LoadJSON(Of ReactionGraph())(knownTypes:={GetType(String), GetType(String()), GetType(Long), GetType(Long())})
+            Return JsonParser _
+                .Parse(str, strictVectorSyntax:=False) _
+                .CreateObject(GetType(ReactionGraph()), decodeMetachar:=True)
         End Function
 
     End Class

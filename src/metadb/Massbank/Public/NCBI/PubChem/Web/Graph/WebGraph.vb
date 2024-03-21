@@ -71,6 +71,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Serialization.JSON
@@ -108,6 +109,17 @@ Namespace NCBI.PubChem.Graph
             )
         End Sub
 
+        Sub New(cache As IFileSystemEnvironment, Optional interval As Integer = -1, Optional offline As Boolean = False)
+            MyBase.New(
+                url:=AddressOf getJSONUrl,
+                contextGuid:=Function(q) $"{q.type}_{q.cid}",
+                parser:=AddressOf parseJSON,
+                prefix:=Function(q) q.Split("_"c).First & "/" & MD5(q).Substring(1, 2),
+                cache:=cache,
+                interval:=interval,
+                offline:=offline)
+        End Sub
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Shared Function parseJSON(data As String, schema As Type) As Object
             Return data.LoadJSON(Of GraphJSON)(throwEx:=False)
@@ -126,16 +138,23 @@ Namespace NCBI.PubChem.Graph
 
             Static web As New Dictionary(Of String, WebGraph)
 
-            Dim json As GraphJSON = web.ComputeIfAbsent(
-                key:=cache,
-                lazyValue:=Function() New WebGraph(cache, interval, offline)
-            ) _
-                .Query(Of GraphJSON)(
-                    context:=(cid, type),
-                    cacheType:=".json"
-                )
+            Return web _
+                .ComputeIfAbsent(
+                    key:=cache,
+                    lazyValue:=Function()
+                                   Return New WebGraph(cache, interval, offline)
+                               End Function
+                ) _
+                .Query(cid, type)
+        End Function
 
-            If json Is Nothing OrElse json.LinkDataSet Is Nothing OrElse json.LinkDataSet.LinkData Is Nothing Then
+        Public Overloads Function Query(cid As String, type As Types) As MeshGraph()
+            Dim json As GraphJSON = Query(Of GraphJSON)(context:=(cid, type), cacheType:=".json")
+
+            If json Is Nothing OrElse
+                json.LinkDataSet Is Nothing OrElse
+                json.LinkDataSet.LinkData Is Nothing Then
+
                 Return Nothing
             Else
                 Return json.LinkDataSet.LinkData
