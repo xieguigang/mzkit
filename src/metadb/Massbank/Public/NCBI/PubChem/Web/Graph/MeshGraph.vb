@@ -84,6 +84,17 @@ Namespace NCBI.PubChem.Graph
         Public Property MeSH As String
         Public Property GeneSymbol As String
 
+        ''' <summary>
+        ''' a union method for get the current id value:
+        ''' 
+        ''' + <see cref="CID"/>
+        ''' + <see cref="MeSH"/>
+        ''' + <see cref="GeneSymbol"/>
+        ''' 
+        ''' </summary>
+        ''' <returns></returns>
+        ''' 
+        <DataIgnored>
         Public ReadOnly Property GraphId As String
             Get
                 If Not CID.StringEmpty Then
