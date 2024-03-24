@@ -58,6 +58,7 @@ Imports Microsoft.VisualBasic.Data.GraphTheory
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text.Xml.Models
 Imports SMRUCC.genomics.Analysis.HTS.GSEA
+Imports SMRUCC.genomics.GCModeller.Workbench.Knowledge_base.NCBI.MeSH.Tree
 
 Namespace NCBI.MeSH
 

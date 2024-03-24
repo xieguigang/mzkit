@@ -77,6 +77,8 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports Microsoft.VisualBasic.Text.Xml.Models
 Imports SMRUCC.genomics.Analysis.HTS.GSEA
+Imports SMRUCC.genomics.GCModeller.Workbench.Knowledge_base.NCBI
+Imports SMRUCC.genomics.GCModeller.Workbench.Knowledge_base.NCBI.MeSH.Tree
 Imports SMRUCC.Rsharp
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
@@ -527,7 +529,7 @@ Module PubChemToolKit
             Return stream.TryCast(Of Message)
         End If
 
-        Return MeSH.ParseTree(New StreamReader(stream.TryCast(Of Stream)))
+        Return MeSH.Tree.ParseTree(New StreamReader(stream.TryCast(Of Stream)))
     End Function
 
     ''' <summary>
