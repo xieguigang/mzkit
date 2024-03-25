@@ -74,6 +74,7 @@ Imports System.ComponentModel
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Serialization.JSON
 
@@ -179,9 +180,18 @@ Namespace NCBI.PubChem.Graph
         End Function
     End Class
 
-    Public Class GraphJSON
+    Public Class GraphJSON : Implements Enumeration(Of MeshGraph)
 
         Public Property LinkDataSet As LinkDataSet
 
+        Public Iterator Function GenericEnumerator() As IEnumerator(Of MeshGraph) Implements Enumeration(Of MeshGraph).GenericEnumerator
+            If LinkDataSet Is Nothing Then
+                Return
+            End If
+
+            For Each item As MeshGraph In LinkDataSet.LinkData.SafeQuery
+                Yield item
+            Next
+        End Function
     End Class
 End Namespace
