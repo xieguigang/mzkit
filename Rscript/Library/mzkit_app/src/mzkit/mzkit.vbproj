@@ -289,6 +289,7 @@
 	  <ProjectReference Include="..\..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj" />
 	  <ProjectReference Include="..\..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\mime\text%html\html_netcore5.vbproj" />
 	  <ProjectReference Include="..\..\..\..\..\..\GCModeller\src\workbench\modules\ExperimentDesigner\designer-netcore5.vbproj" />
+	  <ProjectReference Include="..\..\..\..\..\..\GCModeller\src\workbench\modules\Knowledge_base\ncbi_kb\ncbi_kb.vbproj" />
 	  <ProjectReference Include="..\..\..\..\..\src\assembly\assembly\assembly-netcore5.vbproj" />
 	  <ProjectReference Include="..\..\..\..\..\src\assembly\Comprehensive\Comprehensive.NET5.vbproj" />
 	  <ProjectReference Include="..\..\..\..\..\src\assembly\LoadR.NET5\LoadR.NET5.vbproj" />
