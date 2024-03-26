@@ -29,7 +29,11 @@
         <pre>
             <code id="clr_ts">
 # namespace SMRUCC.genomics.GCModeller.Workbench.Knowledge_base.NCBI.MeSH.Tree
-export class Term {
+export class Term extends <a href="/vignettes/clr/SMRUCC/genomics/ComponentModel/DBLinkBuilder/Synonym.html">Synonym</a> {
+   accessionID: string;
+   alias: string;
+   category: <a href="/vignettes/clr/SMRUCC/genomics/GCModeller/Workbench/Knowledge_base/NCBI/MeSH/Tree/MeshCategory.html">iterates(MeshCategory)</a>;
+   description: string;
    term: string;
    tree: string;
 }
@@ -38,7 +42,10 @@ export class Term {
 
         <h3>.NET clr type reference tree</h3>
 
-        this clr type has no other .net clr type reference.
+        <ol>
+<li>this class extends from <a href="/vignettes/clr/SMRUCC/genomics/ComponentModel/DBLinkBuilder/Synonym.html">Synonym</a> class: <a href="/vignettes/clr/SMRUCC/genomics/ComponentModel/DBLinkBuilder/Synonym.html">Synonym</a></li>
+<li>use by <i>property</i> member <code>category</code>: <a href="/vignettes/clr/SMRUCC/genomics/GCModeller/Workbench/Knowledge_base/NCBI/MeSH/Tree/MeshCategory.html">iterates(MeshCategory)</a></li>
+</ol>
 
 
         <hr />

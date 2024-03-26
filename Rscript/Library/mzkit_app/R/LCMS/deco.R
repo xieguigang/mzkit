@@ -25,12 +25,30 @@ const run.Deconvolution = function(rawdata, outputdir = "./", mzdiff = 0.005,
         outputdir = xic_cache, 
         n_threads = 32);
     
+    # get xic file path list
     const xic_files = list.files(xic_cache, pattern = "*.xic");
-    const bins = ms1_mz_bins(files = xic_files);
+    const ion_features_csv = file.path(outputdir, "mzbins.csv");
 
-    write.csv(bins, file = `${outputdir}/mzbins.csv`, 
-        row.names = FALSE);
+    # and then extract the ion features from the input xic files
+    const bins = {
+        if (file.exists(ion_features_csv)) {
+            read.csv(ion_features_csv, row.names = NULL, check.names = FALSE);
+        } else {
+            print("start to extract the ion features from the XIC pool...");
+            # extract ion features and dump as table
+            xic_files 
+            |> ms1_mz_bins()
+            |> write.csv(file = ion_features_csv, 
+                row.names = FALSE);
+        }
+    };    
 
+    # the bin object just a dataframe object that with 
+    # two data column:
+    #
+    # 1. mz
+    # 2. into
+    #
     const peaktable = ms1_peaktable(xic_files, bins, 
         mzdiff = mzdiff, 
         peak.width = peak.width);

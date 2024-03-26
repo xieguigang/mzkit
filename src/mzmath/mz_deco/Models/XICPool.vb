@@ -25,12 +25,22 @@ Public Class XICPool
     End Sub
 
     Public Iterator Function GetXICMatrix(mz As Double, mzdiff As Tolerance) As IEnumerable(Of NamedValue(Of MzGroup))
+        Dim offsets As MzIndex
+
         For Each file As KeyValuePair(Of String, MzPool) In sampleIndex
-            Dim offsets As MzIndex = file.Value _
+            If file.Value Is Nothing Then
+                Continue For
+            End If
+
+            offsets = file.Value _
                 .Search(mz) _
                 .Where(Function(q) mzdiff(mz, q.mz)) _
                 .OrderBy(Function(q) mzdiff.MassError(q.mz, mz)) _
                 .FirstOrDefault
+
+            If offsets Is Nothing Then
+                Continue For
+            End If
 
             If offsets.mz > 0 Then
                 Dim XIC = samplefiles(file.Key)(offsets.index)

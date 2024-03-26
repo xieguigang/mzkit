@@ -36,6 +36,7 @@ const ms1_mz_bins = function(files) {
     mzraw <- centroid(mzraw, tolerance = "da:0.005", intoCutoff = 0);
     mzraw <- as.data.frame(mzraw);
 
+    print("get ion features:");
     print(mzraw, max.print = 6);
 
     return(mzraw);

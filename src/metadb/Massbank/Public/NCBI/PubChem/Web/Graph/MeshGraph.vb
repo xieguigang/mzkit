@@ -122,6 +122,7 @@ Namespace NCBI.PubChem.Graph
         Public Property ChemicalDiseaseNeighbor As PubChemGraph
         Public Property ChemicalGeneSymbolNeighbor As PubChemGraph
         Public Property ChemicalNeighbor As PubChemGraph
+        Public Property GeneSymbolDiseaseNeighbor As PubChemGraph
 
         ''' <summary>
         ''' a union method for get one of the evidence graph data for current knowledg graph:
@@ -141,6 +142,8 @@ Namespace NCBI.PubChem.Graph
                     Return ChemicalGeneSymbolNeighbor
                 ElseIf Not ChemicalNeighbor Is Nothing Then
                     Return ChemicalNeighbor
+                ElseIf Not GeneSymbolDiseaseNeighbor Is Nothing Then
+                    Return GeneSymbolDiseaseNeighbor
                 Else
                     Return Nothing
                 End If
@@ -158,6 +161,10 @@ Namespace NCBI.PubChem.Graph
         Public Property ID_2 As GraphId
         Public Property Evidence As Evidence
 
+        Public Overrides Function ToString() As String
+            Return $"{ID_1} - {ID_2}"
+        End Function
+
     End Class
 
     Public Class PubChemGraph
@@ -171,6 +178,10 @@ Namespace NCBI.PubChem.Graph
         Public Property ArticleCount As Integer
         Public Property CooccurrenceScore As Integer
         Public Property Article As Article()
+
+        Public Overrides Function ToString() As String
+            Return NeighborName
+        End Function
 
     End Class
 
@@ -190,6 +201,10 @@ Namespace NCBI.PubChem.Graph
         Public Property GeneSymbolName As String
         Public Property ChemicalName_1 As String
         Public Property ChemicalName_2 As String
+
+        Public Overrides Function ToString() As String
+            Return Title
+        End Function
 
     End Class
 End Namespace
