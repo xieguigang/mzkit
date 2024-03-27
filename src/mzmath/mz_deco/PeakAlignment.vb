@@ -108,7 +108,7 @@ Public Module PeakAlignment
         Dim RI_rawdata = samples.IteratesAll.GroupBy(Function(i) i.RI, offsets:=1).ToArray
         Dim unique_id As New Dictionary(Of String, Counter)
 
-        For Each ri_point In RI_rawdata
+        For Each ri_point As NamedCollection(Of PeakFeature) In RI_rawdata
             Dim mz_group = ri_point.GroupBy(Function(i) i.mz, offsets:=0.01).ToArray
 
             For Each peak In mz_group

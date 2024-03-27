@@ -367,9 +367,9 @@ Module mzDeco
     End Class
 
     ''' <summary>
-    ''' RI calculation
+    ''' RI calculation of a speicifc sample data
     ''' </summary>
-    ''' <param name="peakdata"></param>
+    ''' <param name="peakdata">should be a collection of the peak data from a single sample file.</param>
     ''' <param name="RI">should be a collection of the <see cref="RIRefer"/> data.</param>
     ''' <param name="env"></param>
     ''' <returns></returns>
