@@ -860,6 +860,7 @@ Module MsImaging
                           Optional cutoff As Object = "0.1,0.75",
                           <RRawVectorArgument>
                           Optional background As Object = NameOf(Color.Transparent),
+                          Optional raster As RasterPipeline = Nothing,
                           Optional env As Environment = Nothing) As Object
 
         Dim errors As [Variant](Of Tolerance, Message) = Math.getTolerance(tolerance, env)
@@ -888,7 +889,8 @@ Module MsImaging
                 colorSet:=color,
                 mapLevels:=levels,
                 background:=RColorPalette.getColor(background, "Translate"),
-                driver:=Drivers.GDI
+                driver:=Drivers.GDI,
+                filter:=raster
             ).AsGDIImage
         Else
             imaging = viewer.DrawLayer(
@@ -897,10 +899,12 @@ Module MsImaging
                 colorSet:=color,
                 mapLevels:=levels,
                 background:=RColorPalette.getColor(background, "Translate"),
-                driver:=Drivers.GDI
+                driver:=Drivers.GDI,
+                filter:=raster
             ).AsGDIImage
         End If
 
+        ' resize the raster image
         Return New RasterScaler(imaging).Scale(imaging.Width * pixel_size.Width, imaging.Height * pixel_size.Height)
     End Function
 

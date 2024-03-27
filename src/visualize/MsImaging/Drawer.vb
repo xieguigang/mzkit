@@ -67,6 +67,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Blender
+Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Blender.Scaler
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
@@ -236,7 +237,7 @@ Public Class Drawer : Implements IDisposable
                               Optional colorSet As String = "YlGnBu:c8",
                               Optional mapLevels% = 25,
                               Optional scale As InterpolationMode = InterpolationMode.Bilinear,
-                              Optional pixelDrawer As Boolean = True,
+                              Optional filter As RasterPipeline = Nothing,
                               Optional background As String = NameOf(Color.Transparent),
                               Optional driver As Drivers = Drivers.Default) As GraphicsData
 
@@ -246,6 +247,10 @@ Public Class Drawer : Implements IDisposable
 
         Dim pixels As PixelData() = pixelReader.LoadPixels({mz}, tolerance).ToArray
         Dim engine As New RectangleRender(driver, heatmapRender:=False)
+
+        If Not filter Is Nothing Then
+            pixels = filter.DoIntensityScale(pixels, dimSize:=dimension)
+        End If
 
         Call $"rendering {pixels.Length} pixel blocks...".__INFO_ECHO
 
@@ -309,7 +314,7 @@ Public Class Drawer : Implements IDisposable
                               Optional colorSet As String = "YlGnBu:c8",
                               Optional mapLevels% = 25,
                               Optional scale As InterpolationMode = InterpolationMode.Bilinear,
-                              Optional pixelDrawer As Boolean = True,
+                              Optional filter As RasterPipeline = Nothing,
                               Optional background As String = NameOf(Color.Transparent),
                               Optional driver As Drivers = Drivers.Default) As GraphicsData
 
@@ -319,9 +324,14 @@ Public Class Drawer : Implements IDisposable
         Call $"loading pixel datas [m/z={mz.Select(Function(mzi) mzi.ToString("F4")).JoinBy(", ")}] with tolerance {tolerance}...".__INFO_ECHO
 
         rawPixels = pixelReader.LoadPixels(mz, tolerance).ToArray
+
+        If Not filter Is Nothing Then
+            rawPixels = filter.DoIntensityScale(rawPixels, dimension)
+        End If
+
         rawPixels = ScalePixels(rawPixels, tolerance)
 
-        Call $"building pixel matrix from {rawPixels.Count} raw pixels...".__INFO_ECHO
+        Call $"building pixel matrix from {rawPixels.Length} raw pixels...".__INFO_ECHO
 
         Dim matrix As PixelData() = GetPixelsMatrix(rawPixels)
         Dim engine As Renderer = New RectangleRender(driver, heatmapRender:=False)
