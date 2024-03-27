@@ -100,6 +100,11 @@ Namespace NCBI.PubChem.Graph
         <Description("Metabolite Literature Co-Occurrence")>
         ChemicalNeighbor
 
+        ''' <summary>
+        ''' Gene Disease Association
+        ''' </summary>
+        <Description("Gene Disease Association")>
+        GeneSymbolDiseaseNeighbor
     End Enum
 
     Public Class LinkDataSet

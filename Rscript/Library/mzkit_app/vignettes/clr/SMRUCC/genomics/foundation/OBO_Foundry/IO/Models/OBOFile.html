@@ -24,7 +24,9 @@
 
         OBO file reader
 
+
 <h3>OBO文件格式1.2</h3>
+
 
 
 
@@ -35,7 +37,7 @@
 
 
 
- <h5>总体结构
+ ##### 总体结构
 
 <pre><code class=""> 文件头
  !包含若干行总体说明
@@ -48,11 +50,9 @@
  !OBO文件中可以在任意地方插入注释， 其注释以'!'开头
 </code></pre>
 
-</h5>
-
 
  
- <h5>文件头
+ ##### 文件头
 
 <pre><code class=""> format-version:  1.2    !本文件所使用的OBO版本。本条目是必需的，以下文件头说明是可选的。
  data-version:  2012-12-09    !当前ontology的版本
@@ -72,15 +72,11 @@
  ontology: go
 </code></pre>
 
-</h5>
 
 
+ ##### 词条：词条类型包括[Term]、[Typedef]、[Instance]
 
- <h5>词条：词条类型包括[Term]、[Typedef]、[Instance]</h5>
-
-
-
- <h6>[Term]
+ ###### [Term]
 
 <pre><code class=""> [Term]
  id: GO : 0000001    !一个id即一个对象。一般情况下，id是全局性的，即唯一对应的，在任何地方都是一样的
@@ -110,11 +106,9 @@
  creation_date: !术语创造时间
 </code></pre>
 
-</h6>
-
 
  
- <h6>[Typedef]
+ ###### [Typedef]
 
 <pre><code class=""> [Typedef]
  id: !通常是有一定含义的字符串， 而不是数字
@@ -143,11 +137,9 @@
  consider
 </code></pre>
 
-</h6>
-
 
  
- <h6>[Instance]
+ ###### [Instance]
 
 <pre><code class=""> [Instance]
  id
@@ -165,11 +157,9 @@
  consider
 </code></pre>
 
-</h6>
-
 
  
- <h5>缺省的词条定义
+ ##### 缺省的词条定义
 
 <pre><code class=""> [Typedef]
  id: is_a
@@ -213,8 +203,6 @@
  domain: OBO:TERM
  def: Indicates that a term Is the intersection Of several others [OBO:defs] 
 </code></pre>
-
-</h5>
 
 
 

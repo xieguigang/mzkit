@@ -31,7 +31,7 @@
 # namespace SMRUCC.Rsharp.Interpreter
 export class RInterpreter {
    configFile: <a href="/vignettes/clr/SMRUCC/Rsharp/Development/Configuration/ConfigFile.html">ConfigFile</a>;
-   # R<h1>running in debug mode.</h1>
+   # R# running in debug mode.
    debug: boolean;
    # Global runtime environment.(全局环境)
    globalEnvir: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/GlobalEnvironment.html">GlobalEnvironment</a>;
@@ -41,9 +41,7 @@ export class RInterpreter {
    # 是否重定向错误消息输出至@<code>M:SMRUCC.Rsharp.Interpreter.RInterpreter.RedirectOutput(System.IO.StreamWriter,SMRUCC.Rsharp.Runtime.OutputEnvironments)</code>函数所定义的输出设备之中
    redirectError2stdout: boolean;
    silent: boolean;
-   # 是否在严格模式下运行R<h1>脚本？默认为严格模式，即：</h1>
-   # 
-   # 
+   # 是否在严格模式下运行R#脚本？默认为严格模式，即：
    #  
    #  1. 所有的变量必须使用<code>let</code>关键词进行申明
    strict: boolean;
