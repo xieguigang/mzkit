@@ -19,8 +19,17 @@
 */
 declare namespace mzDeco {
    /**
-     * @param mzdiff default value Is ``0.01``.
-     * @param rt_win default value Is ``90``.
+    * 
+    * 
+     * @param peaktable the peaktable object, is a collection of the @``T:BioNovoGene.Analytical.MassSpectrometry.Math.xcms2`` object.
+     * @param mz -
+     * @param rt -
+     * @param mzdiff -
+     * 
+     * + default value Is ``0.01``.
+     * @param rt_win -
+     * 
+     * + default value Is ``90``.
    */
    function find_xcms_ionPeaks(peaktable: object, mz: number, rt: number, mzdiff?: number, rt_win?: number): object;
    module mz {
@@ -93,11 +102,13 @@ declare namespace mzDeco {
      * @param norm do total ion sum normalization after peak alignment and the peaktable object has been exported?
      * 
      * + default value Is ``false``.
+     * @param ri_alignment 
+     * + default value Is ``false``.
      * @param env -
      * 
      * + default value Is ``null``.
    */
-   function peak_alignment(samples: any, mzdiff?: any, norm?: boolean, env?: object): object;
+   function peak_alignment(samples: any, mzdiff?: any, norm?: boolean, ri_alignment?: boolean, env?: object): object;
    /**
     * make sample column projection
     * 
@@ -157,6 +168,21 @@ declare namespace mzDeco {
       */
       function xcms_peaks(file: string, tsv?: boolean, general_method?: boolean): object;
    }
+   /**
+    * RI calculation of a speicifc sample data
+    * 
+    * 
+     * @param peakdata should be a collection of the peak data from a single sample file.
+     * @param RI should be a collection of the @``T:BioNovoGene.Analytical.MassSpectrometry.Math.RIRefer`` data.
+     * @param ppm 
+     * + default value Is ``10``.
+     * @param dt 
+     * + default value Is ``3``.
+     * @param env -
+     * 
+     * + default value Is ``null``.
+   */
+   function RI_cal(peakdata: object, RI: any, ppm?: number, dt?: number, env?: object): any;
    module write {
       /**
        * write peak debug data

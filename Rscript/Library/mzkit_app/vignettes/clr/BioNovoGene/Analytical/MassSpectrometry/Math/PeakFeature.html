@@ -5,7 +5,7 @@
     <title>BioNovoGene.Analytical.MassSpectrometry.Math.PeakFeature</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-    <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
+    <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
 </head>
 
 <body>
@@ -39,17 +39,22 @@ export class PeakFeature {
    integration: double;
    # 这个区域的最大峰高度
    maxInto: double;
+   # the xic m/z
    mz: double;
    # 噪声的面积积分百分比
    noise: double;
    nticks: integer;
+   # the sample file name reference
    rawfile: string;
+   # the retention index of the corresponding <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/PeakFeature.html">PeakFeature</a>.<a href="#">rt</a> value.
+   RI: double;
    # 出峰达到峰高最大值<a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/PeakFeature.html">PeakFeature</a>.<a href="#">maxInto</a>的时间点
    rt: double;
    rtmax: double;
    rtmin: double;
    # 信噪比
    snRatio: double;
+   # the unique reference id of the current peak object
    xcms_id: string;
 }
 </code>
@@ -67,8 +72,8 @@ export class PeakFeature {
     </div>
 </body>
 
-<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
-<script type="text/javascript" src="../../_assets/highlights.js"></script>
+<script type="text/javascript" src="https://mzkit.org/assets/js/R_syntax.js"></script>
+<script type="text/javascript" src="https://mzkit.org/assets/js/highlights.js"></script>
 <script type="text/javascript">r_highlights("clr_ts");</script>
 
 </html>
