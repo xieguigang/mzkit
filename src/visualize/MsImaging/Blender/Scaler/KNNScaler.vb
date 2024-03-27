@@ -66,7 +66,7 @@ Namespace Blender.Scaler
 
         <XmlAttribute> Public Property k As Integer
         <XmlAttribute> Public Property q As Double
-        <XmlAttribute> Public Property random As Boolean = False
+        <XmlAttribute> Public Property random As Boolean
 
         Public Sub New(k As Integer, q As Double, random As Boolean)
             Me.k = k
