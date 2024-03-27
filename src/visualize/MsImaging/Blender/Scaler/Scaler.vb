@@ -135,7 +135,7 @@ Namespace Blender.Scaler
                 Case "denoise" : Return New DenoiseScaler(pars.next(0.01))
                 Case "triq" : Return New TrIQScaler(pars.next(0.65))
                 Case "q" : Return New QuantileScaler(pars.next(0.5), pars.next(False))
-                Case "knn_fill" : Return New KNNScaler(pars.next(3), pars.next(0.65))
+                Case "knn_fill" : Return New KNNScaler(pars.next(3), pars.next(0.65), pars.next(False))
                 Case "log" : Return New LogScaler(pars.next(System.Math.E))
                 Case "power" : Return New PowerScaler(pars.next(2.0))
                 Case "triq_clip" : Return New TrIQClip(pars.next(0.8), pars.next(100))

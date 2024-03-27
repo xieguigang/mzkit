@@ -66,14 +66,16 @@ Namespace Blender.Scaler
 
         <XmlAttribute> Public Property k As Integer
         <XmlAttribute> Public Property q As Double
+        <XmlAttribute> Public Property random As Boolean = False
 
-        Public Sub New(k As Integer, q As Double)
+        Public Sub New(k As Integer, q As Double, random As Boolean)
             Me.k = k
             Me.q = q
+            Me.random = random
         End Sub
 
         Sub New()
-            Call Me.New(k:=3, q:=0.65)
+            Call Me.New(k:=3, q:=0.65, random:=False)
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -82,7 +84,7 @@ Namespace Blender.Scaler
         End Function
 
         Public Overrides Function ToScript() As String
-            Return $"knn_fill({k},{q})"
+            Return $"knn_fill({k},{q},random={random.ToString.ToLower})"
         End Function
     End Class
 End Namespace
