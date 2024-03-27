@@ -467,6 +467,8 @@ extract_ms1:
         ' and then export the peaks and area data
         Dim peaksSet As NamedCollection(Of PeakFeature)() = dtw_aligned _
             .Select(Function(sample)
+                        ' extract all peaks from the XIC data
+                        ' for a single sample
                         Dim peaks = sample.Value.GetPeakGroups(
                                 peakwidth:=rtRange,
                                 quantile:=baseline,
