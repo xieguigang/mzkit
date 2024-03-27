@@ -2,6 +2,7 @@ imports "mzDeco" from "mz_quantify";
 imports "mzweb" from "mzkit";
 imports "Parallel" from "snowFall";
 imports ["data","math"] from "mzkit";
+imports "visual" from "mzplot";
 
 #' Do ms1 deconvolution of the rawdata
 #' 
@@ -52,9 +53,16 @@ const run.Deconvolution = function(rawdata, outputdir = "./", mzdiff = 0.005,
     const peaktable = ms1_peaktable(xic_files, bins, 
         mzdiff = mzdiff, 
         peak.width = peak.width);
+    const rt_shifts = attr(peaktable, "rt.shift");
 
     write.csv(peaktable, file = `${outputdir}/peaktable.csv`, 
         row.names = TRUE);
+    write.csv(rt_shifts, file = `${outputdir}/rt_shifts.csv`, 
+        row.names = TRUE);
+
+    svg(file = file.path(outputdir, "rt_shifts.svg")) {
+        plot(rt_shifts, res = 1000);
+    }
 
     invisible(NULL);
 } 

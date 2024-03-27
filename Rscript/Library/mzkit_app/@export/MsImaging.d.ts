@@ -157,10 +157,12 @@ declare namespace MsImaging {
      * + default value Is ``[0.1,0.75]``.
      * @param background 
      * + default value Is ``'Transparent'``.
+     * @param raster 
+     * + default value Is ``null``.
      * @param env 
      * + default value Is ``null``.
    */
-   function layer(viewer: object, mz: number, pixelSize?: any, tolerance?: any, color?: string, levels?: object, cutoff?: any, background?: any, env?: object): object;
+   function layer(viewer: object, mz: number, pixelSize?: any, tolerance?: any, color?: string, levels?: object, cutoff?: any, background?: any, raster?: object, env?: object): object;
    /**
     * 
     * 

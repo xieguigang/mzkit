@@ -10,6 +10,9 @@ Imports Microsoft.VisualBasic.Math.SignalProcessing
 Imports Microsoft.VisualBasic.Math.SignalProcessing.NDtw
 Imports Microsoft.VisualBasic.Math.SignalProcessing.NDtw.Preprocessing
 
+''' <summary>
+''' grouping ion XIC data from multiple sample data file
+''' </summary>
 Public Class XICPool
 
     ReadOnly samplefiles As New Dictionary(Of String, MzGroup())
@@ -24,6 +27,12 @@ Public Class XICPool
         Call sampleIndex.Add(sample, New MzPool(ions.Select(Function(i) i.mz)))
     End Sub
 
+    ''' <summary>
+    ''' get XIC data for ion matches
+    ''' </summary>
+    ''' <param name="mz">the given ion target m/z value</param>
+    ''' <param name="mzdiff">the mass tolerance error</param>
+    ''' <returns></returns>
     Public Iterator Function GetXICMatrix(mz As Double, mzdiff As Tolerance) As IEnumerable(Of NamedValue(Of MzGroup))
         Dim offsets As MzIndex
 

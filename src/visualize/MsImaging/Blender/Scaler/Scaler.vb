@@ -58,6 +58,7 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization.JSON
 
@@ -123,9 +124,12 @@ Namespace Blender.Scaler
             Yield GetType(TrIQScaler)         ' $"TrIQ({threshold.ToString("F4")})"
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function Parse(line As String) As Scaler
-            line = Strings.Trim(line).ToLower
+            Return ParserInternal(line:=Strings.Trim(line).ToLower)
+        End Function
 
+        Private Shared Function ParserInternal(line As String) As Scaler
             Dim config = line.GetTagValue("(", trim:=True)
             Dim par_str As String = config.Value.Trim(")"c)
             Dim pars As New ParameterSet(par_str.Split(","c))
@@ -135,7 +139,7 @@ Namespace Blender.Scaler
                 Case "denoise" : Return New DenoiseScaler(pars.next(0.01))
                 Case "triq" : Return New TrIQScaler(pars.next(0.65))
                 Case "q" : Return New QuantileScaler(pars.next(0.5), pars.next(False))
-                Case "knn_fill" : Return New KNNScaler(pars.next(3), pars.next(0.65))
+                Case "knn_fill" : Return New KNNScaler(pars.next(3), pars.next(0.65), pars.next(False))
                 Case "log" : Return New LogScaler(pars.next(System.Math.E))
                 Case "power" : Return New PowerScaler(pars.next(2.0))
                 Case "triq_clip" : Return New TrIQClip(pars.next(0.8), pars.next(100))
@@ -144,7 +148,6 @@ Namespace Blender.Scaler
                     Throw New NotImplementedException(line & ": " & config.Name)
             End Select
         End Function
-
     End Class
 
     Friend Class ParameterSet
@@ -156,16 +159,27 @@ Namespace Blender.Scaler
             Me.pars = pars
         End Sub
 
+        Private Function getValueParseString([default] As String) As String
+            Dim val_str As String = pars.ElementAtOrDefault(++offset, [default])
+            Dim tokens = val_str.Split(":"c, "="c)
+
+            If tokens.Length = 1 Then
+                Return tokens.First
+            Else
+                Return tokens.Last
+            End If
+        End Function
+
         Public Function [next](default#) As Double
-            Return Val(pars.ElementAtOrDefault(++offset, [default].ToString))
+            Return Val(getValueParseString([default].ToString))
         End Function
 
         Public Function [next]([default] As Boolean) As Boolean
-            Return pars.ElementAtOrDefault(++offset, [default].ToString).ParseBoolean
+            Return getValueParseString([default].ToString).ParseBoolean
         End Function
 
         Public Function [next](default%) As Integer
-            Return pars.ElementAtOrDefault(++offset, [default].ToString).ParseInteger
+            Return getValueParseString([default].ToString).ParseInteger
         End Function
 
         Public Overrides Function ToString() As String
