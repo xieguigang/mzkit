@@ -74,6 +74,7 @@ Imports SMRUCC.Rsharp.Runtime.Internal
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
+Imports std = System.Math
 Imports vec = SMRUCC.Rsharp.Runtime.Internal.Object.vector
 
 ''' <summary>
@@ -94,6 +95,7 @@ Imports vec = SMRUCC.Rsharp.Runtime.Internal.Object.vector
 <RTypeExport("peak_set", GetType(PeakSet))>
 <RTypeExport("xcms2", GetType(xcms2))>
 <RTypeExport("rt_shift", GetType(RtShift))>
+<RTypeExport("RI_refer", GetType(RIRefer))>
 Module mzDeco
 
     Sub Main()
@@ -363,6 +365,75 @@ Module mzDeco
             End SyncLock
         End Sub
     End Class
+
+    ''' <summary>
+    ''' RI calculation
+    ''' </summary>
+    ''' <param name="peakdata"></param>
+    ''' <param name="RI">should be a collection of the <see cref="RIRefer"/> data.</param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("RI_cal")>
+    Public Function RI_calc(peakdata As PeakFeature(), <RRawVectorArgument> RI As Object,
+                            Optional ppm As Double = 10,
+                            Optional dt As Double = 3,
+                            Optional env As Environment = Nothing) As Object
+
+        Dim RIrefers As pipeline = pipeline.TryCreatePipeline(Of RIRefer)(RI, env)
+
+        If RIrefers.isError Then
+            Return RIrefers.getError
+        End If
+
+        Dim ri_refers As RIRefer() = RIrefers.populates(Of RIRefer)(env).ToArray
+        Dim ppmErr As Tolerance = Tolerance.PPM(ppm)
+        Dim refer_points As New List(Of PeakFeature)
+
+        ' find a ri reference point at first
+        ' find a set of the candidate points
+        For Each refer As RIRefer In ri_refers
+            Dim target As PeakFeature = peakdata _
+                .Where(Function(pi) ppmErr(pi.mz, refer.mz) AndAlso std.Abs(pi.rt - refer.rt) <= dt) _
+                .OrderByDescending(Function(pi) pi.maxInto) _
+                .FirstOrDefault
+
+            If target Is Nothing Then
+                Throw New InvalidDataException($"the required retention index reference point({refer.ToString}) could not be found! please check the rt window parameter(dt) is too small?")
+            End If
+
+            target.RI = refer.RI
+            refer_points.Add(target)
+        Next
+
+        ' order raw data by rt
+        peakdata = peakdata.OrderBy(Function(i) i.rt).ToArray
+        refer_points = refer_points.OrderBy(Function(i) i.rt).ToList
+
+        Dim a As (rt As Double, ri As Double)
+        Dim b As (rt As Double, ri As Double)
+        Dim offset As Integer = 0
+
+        If peakdata(0).RI > 0 Then
+            a = (peakdata(0).rt, peakdata(0).RI)
+            offset = 1
+            b = (refer_points(1).rt, refer_points(1).RI)
+        Else
+            a = (peakdata(0).rt, 0)
+            b = (refer_points(0).rt, refer_points(0).RI)
+        End If
+
+        For i As Integer = offset To peakdata.Length - 1
+            If peakdata(i).RI = 0 Then
+                peakdata(i).RI = RetentionIndex(peakdata(i), a, b)
+            Else
+                a = b
+                b = (peakdata(i).rt, peakdata(i).RI)
+            End If
+        Next
+
+        ' and then evaluate the ri for each peak points
+        Return peakdata
+    End Function
 
     ''' <summary>
     ''' Chromatogram data deconvolution
