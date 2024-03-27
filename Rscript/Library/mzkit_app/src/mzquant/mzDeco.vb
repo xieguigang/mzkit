@@ -650,6 +650,7 @@ extract_ms1:
                                   samples As Object,
                                   Optional mzdiff As Object = "da:0.001",
                                   Optional norm As Boolean = False,
+                                  Optional ri_alignment As Boolean = False,
                                   Optional env As Environment = Nothing) As Object
 
         Dim mzErr = Math.getTolerance(mzdiff, env, [default]:="da:0.001")
@@ -686,9 +687,18 @@ extract_ms1:
                 .ToArray
         End If
 
-        Dim peaktable As xcms2() = sampleData _
-            .CowAlignment() _
-            .ToArray
+        Dim peaktable As xcms2()
+
+        If ri_alignment Then
+            peaktable = sampleData _
+                .RIAlignment _
+                .ToArray
+        Else
+            peaktable = sampleData _
+                .CowAlignment() _
+                .ToArray
+        End If
+
         Dim id As String() = peaktable.Select(Function(i) i.ID).uniqueNames
         Dim sampleNames As String() = sampleData.Keys.ToArray
 
