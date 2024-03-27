@@ -13,6 +13,7 @@ Public Module SaveSample
             Call bin.Write(If(point.rawfile, ""))
             Call bin.Write(point.mz)
             Call bin.Write(point.rt)
+            Call bin.Write(point.RI)
             Call bin.Write(point.rtmin)
             Call bin.Write(point.rtmax)
             Call bin.Write(point.maxInto)
@@ -41,6 +42,7 @@ Public Module SaveSample
                 .rawfile = rd.ReadString,
                 .mz = rd.ReadDouble,
                 .rt = rd.ReadDouble,
+                .RI = rd.ReadDouble,
                 .rtmin = rd.ReadDouble,
                 .rtmax = rd.ReadDouble,
                 .maxInto = rd.ReadDouble,
