@@ -307,12 +307,16 @@ Namespace Ms1
             End If
         End Function
 
-        Public Shared Function ToScript(err As Tolerance) As String
+        Public Overloads Shared Function ToScript(err As Tolerance) As String
             If TypeOf err Is DAmethod Then
                 Return $"da:{err.DeltaTolerance}"
             Else
                 Return $"ppm:{err.DeltaTolerance}"
             End If
+        End Function
+
+        Public Overloads Function ToScript() As String
+            Return ToScript(Me)
         End Function
 
         Public Shared Operator *(mzdiff As Tolerance, scale As Double) As Tolerance
