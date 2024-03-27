@@ -130,6 +130,11 @@ Public Class PeakFeature
     Public Property noise As Double
 
     Public Property nticks As Integer
+
+    ''' <summary>
+    ''' the sample file name reference
+    ''' </summary>
+    ''' <returns></returns>
     Public Property rawfile As String
 
     ''' <summary>

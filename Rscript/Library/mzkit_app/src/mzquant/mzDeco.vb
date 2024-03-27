@@ -687,7 +687,7 @@ extract_ms1:
         End If
 
         Dim peaktable As xcms2() = sampleData _
-            .CreateMatrix() _
+            .CowAlignment() _
             .ToArray
         Dim id As String() = peaktable.Select(Function(i) i.ID).uniqueNames
         Dim sampleNames As String() = sampleData.Keys.ToArray

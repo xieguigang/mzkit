@@ -102,7 +102,7 @@ Public Module PeakAlignment
     ''' <param name="samples">the peak collection for each sample file, a sample </param>
     ''' <returns></returns>
     <Extension>
-    Public Function CreateMatrix(samples As IEnumerable(Of NamedCollection(Of PeakFeature))) As IEnumerable(Of xcms2)
+    Public Function CowAlignment(samples As IEnumerable(Of NamedCollection(Of PeakFeature))) As IEnumerable(Of xcms2)
         Dim cow As New CowAlignment(Of PeakFeature)(AddressOf CreatePeak)
         Dim rawdata = samples.ToArray
         Dim refer = rawdata.PickReferenceSampleMaxIntensity
