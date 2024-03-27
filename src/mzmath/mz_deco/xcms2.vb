@@ -74,6 +74,8 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 ''' </summary>
 Public Class xcms2 : Inherits DynamicPropertyBase(Of Double)
     Implements INamedValue
+    Implements IRetentionIndex
+    Implements IRetentionTime
 
     ''' <summary>
     ''' the feature unique id
@@ -101,9 +103,15 @@ Public Class xcms2 : Inherits DynamicPropertyBase(Of Double)
     ''' the rt value in max peak data point
     ''' </summary>
     ''' <returns></returns>
-    <Category("MS1")> Public Property rt As Double
+    <Category("MS1")> Public Property rt As Double Implements IRetentionTime.rt
     <Category("MS1")> Public Property rtmin As Double
     <Category("MS1")> Public Property rtmax As Double
+
+    ''' <summary>
+    ''' the retention index value based on the rt transformation
+    ''' </summary>
+    ''' <returns></returns>
+    <Category("MS1")> Public Property RI As Double Implements IRetentionIndex.RI
 
     ''' <summary>
     ''' this feature has n sample data(value should be a positive number)

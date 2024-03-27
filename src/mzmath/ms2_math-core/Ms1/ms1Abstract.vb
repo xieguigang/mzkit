@@ -88,6 +88,16 @@ Public Interface IRetentionTime
 
 End Interface
 
+Public Interface IRetentionIndex
+
+    ''' <summary>
+    ''' the retention index
+    ''' </summary>
+    ''' <returns></returns>
+    Property RI As Double
+
+End Interface
+
 ''' <summary>
 ''' [mz, rt, intensity]
 ''' </summary>
