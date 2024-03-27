@@ -284,6 +284,15 @@ Module mzDeco
         Return peaktable.Subset(sampleNames)
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="peaktable">the peaktable object, is a collection of the <see cref="xcms2"/> object.</param>
+    ''' <param name="mz"></param>
+    ''' <param name="rt"></param>
+    ''' <param name="mzdiff"></param>
+    ''' <param name="rt_win"></param>
+    ''' <returns></returns>
     <ExportAPI("find_xcms_ionPeaks")>
     <RApiReturn(GetType(xcms2))>
     Public Function get_ionPeak(peaktable As PeakSet, mz As Double, rt As Double,
@@ -685,6 +694,11 @@ extract_ms1:
         End If
     End Function
 
+    ''' <summary>
+    ''' Load xic sample data files
+    ''' </summary>
+    ''' <param name="files">a character vector of a collection of the xic data files.</param>
+    ''' <returns></returns>
     <ExportAPI("xic_pool")>
     <RApiReturn(GetType(XICPool))>
     Public Function XICpool_func(files As String()) As Object

@@ -171,6 +171,10 @@ declare namespace mzDeco {
       function peaks(peaks: any, file: any, env?: object): any;
    }
    /**
+    * Load xic sample data files
+    * 
+    * 
+     * @param files a character vector of a collection of the xic data files.
    */
    function xic_pool(files: string): object;
 }

@@ -71,8 +71,16 @@ Public Class PeakFeature
     Implements IMs1Scan
     Implements INamedValue
 
+    ''' <summary>
+    ''' the unique reference id of the current peak object
+    ''' </summary>
+    ''' <returns></returns>
     Public Property xcms_id As String Implements IPeak2D.ID, INamedValue.Key
 
+    ''' <summary>
+    ''' the xic m/z
+    ''' </summary>
+    ''' <returns></returns>
     Public Property mz As Double Implements IMs1Scan.mz, IPeak2D.Dimension1
 
     ''' <summary>
@@ -82,6 +90,12 @@ Public Class PeakFeature
     Public Property rt As Double Implements IRetentionTime.rt, IPeak2D.Dimension2
     Public Property rtmin As Double Implements IROI.rtmin
     Public Property rtmax As Double Implements IROI.rtmax
+
+    ''' <summary>
+    ''' the retention index of the corresponding <see cref="rt"/> value.
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property RI As Double
 
     ''' <summary>
     ''' 这个区域的最大峰高度
