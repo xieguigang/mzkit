@@ -75,6 +75,15 @@ Namespace Blender.Scaler
             End Get
         End Property
 
+        Sub New()
+        End Sub
+
+        Sub New(ParamArray pipeline As Scaler())
+            For Each filter As Scaler In pipeline.SafeQuery
+                Call Add(filter)
+            Next
+        End Sub
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Add(scaler As Scaler)
             Call pipeline.Add(scaler)
