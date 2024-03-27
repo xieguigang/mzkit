@@ -80,7 +80,7 @@ Namespace Blender.Scaler
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function DoIntensityScale(layer As SingleIonLayer) As SingleIonLayer
-            Return layer.KnnFill(k, k, q)
+            Return layer.KnnFill(k, k, q, random)
         End Function
 
         Public Overrides Function ToScript() As String

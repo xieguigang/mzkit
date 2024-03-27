@@ -154,10 +154,11 @@ Namespace Blender
         Public Function KnnFill(layer As SingleIonLayer,
                                 Optional dx As Integer = 10,
                                 Optional dy As Integer = 10,
-                                Optional q As Double = 0.65) As SingleIonLayer
+                                Optional q As Double = 0.65,
+                                Optional random As Boolean = False) As SingleIonLayer
 
             Dim size As Size = layer.DimensionSize
-            Dim pixels As PixelData() = KnnFill(layer.MSILayer, size, dx, dy, q)
+            Dim pixels As PixelData() = KnnFill(layer.MSILayer, size, dx, dy, q, random:=random)
 
             Return New SingleIonLayer With {
                 .DimensionSize = layer.DimensionSize,
@@ -191,7 +192,8 @@ Namespace Blender
         Public Function KnnFill(pixels As PixelData(), size As Size,
                                 Optional dx As Integer = 3,
                                 Optional dy As Integer = 3,
-                                Optional q As Double = 0.65) As PixelData()
+                                Optional q As Double = 0.65,
+                                Optional random As Boolean = False) As PixelData()
 
             Dim graph As Grid(Of PixelData) = Grid(Of PixelData).Create(pixels)
             Dim outPixels As New List(Of PixelData)
@@ -203,7 +205,7 @@ Namespace Blender
                     point = graph.GetData(i, j)
 
                     If point Is Nothing Then
-                        point = graph.KnnInterpolation(i, j, deltaSize, q)
+                        point = graph.KnnInterpolation(i, j, deltaSize, q, random)
 
                         'If Not point Is Nothing Then
                         '    Call graph.Add(point)
@@ -220,7 +222,7 @@ Namespace Blender
         End Function
 
         <Extension>
-        Private Function KnnInterpolation(graph As Grid(Of PixelData), x As Integer, y As Integer, deltaSize As Size, q As Double) As PixelData
+        Private Function KnnInterpolation(graph As Grid(Of PixelData), x As Integer, y As Integer, deltaSize As Size, q As Double, random As Boolean) As PixelData
             ' get non-empty pixels in current region block
             Dim query As PixelData() = graph.Query(x, y, deltaSize).ToArray
             Dim A As Double = deltaSize.Width * deltaSize.Height
@@ -231,6 +233,7 @@ Namespace Blender
                 Return Nothing
             End If
 
+            ' get intensity value around the current pixel [x,y]
             Dim intensity As Double() = (From p As PixelData
                                          In query
                                          Where p.intensity > 0
@@ -238,8 +241,12 @@ Namespace Blender
                                          Select into).ToArray
             Dim mean As Double
 
+            ' no pixel intensity data
             If intensity.Length = 0 Then
                 Return Nothing
+            ElseIf random Then
+                ' using random point
+                mean = intensity.Random
             Else
                 mean = intensity.Min
             End If
