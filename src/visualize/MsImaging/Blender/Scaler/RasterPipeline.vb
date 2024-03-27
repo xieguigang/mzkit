@@ -58,13 +58,14 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Linq
 
 Namespace Blender.Scaler
 
     ''' <summary>
     ''' a collection of the raster data filter: <see cref="Scaler"/>
     ''' </summary>
-    Public Class RasterPipeline : Implements Scaler.LayerScaler, IEnumerable(Of Scaler)
+    Public Class RasterPipeline : Implements Scaler.LayerScaler, IEnumerable(Of Scaler), Enumeration(Of Scaler)
 
         ReadOnly pipeline As New List(Of Scaler)
 
@@ -127,7 +128,7 @@ Namespace Blender.Scaler
             Return filter
         End Function
 
-        Public Iterator Function GetEnumerator() As IEnumerator(Of Scaler) Implements IEnumerable(Of Scaler).GetEnumerator
+        Public Iterator Function GetEnumerator() As IEnumerator(Of Scaler) Implements IEnumerable(Of Scaler).GetEnumerator, Enumeration(Of Scaler).GenericEnumerator
             For Each scaler As Scaler In pipeline
                 Yield scaler
             Next
