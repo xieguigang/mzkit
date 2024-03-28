@@ -74,6 +74,7 @@ Imports SMRUCC.Rsharp.Runtime.Internal
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
+Imports std = System.Math
 Imports vec = SMRUCC.Rsharp.Runtime.Internal.Object.vector
 
 ''' <summary>
@@ -94,6 +95,7 @@ Imports vec = SMRUCC.Rsharp.Runtime.Internal.Object.vector
 <RTypeExport("peak_set", GetType(PeakSet))>
 <RTypeExport("xcms2", GetType(xcms2))>
 <RTypeExport("rt_shift", GetType(RtShift))>
+<RTypeExport("RI_refer", GetType(RIRefer))>
 Module mzDeco
 
     Sub Main()
@@ -284,6 +286,15 @@ Module mzDeco
         Return peaktable.Subset(sampleNames)
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="peaktable">the peaktable object, is a collection of the <see cref="xcms2"/> object.</param>
+    ''' <param name="mz"></param>
+    ''' <param name="rt"></param>
+    ''' <param name="mzdiff"></param>
+    ''' <param name="rt_win"></param>
+    ''' <returns></returns>
     <ExportAPI("find_xcms_ionPeaks")>
     <RApiReturn(GetType(xcms2))>
     Public Function get_ionPeak(peaktable As PeakSet, mz As Double, rt As Double,
@@ -354,6 +365,75 @@ Module mzDeco
             End SyncLock
         End Sub
     End Class
+
+    ''' <summary>
+    ''' RI calculation of a speicifc sample data
+    ''' </summary>
+    ''' <param name="peakdata">should be a collection of the peak data from a single sample file.</param>
+    ''' <param name="RI">should be a collection of the <see cref="RIRefer"/> data.</param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("RI_cal")>
+    Public Function RI_calc(peakdata As PeakFeature(), <RRawVectorArgument> RI As Object,
+                            Optional ppm As Double = 10,
+                            Optional dt As Double = 3,
+                            Optional env As Environment = Nothing) As Object
+
+        Dim RIrefers As pipeline = pipeline.TryCreatePipeline(Of RIRefer)(RI, env)
+
+        If RIrefers.isError Then
+            Return RIrefers.getError
+        End If
+
+        Dim ri_refers As RIRefer() = RIrefers.populates(Of RIRefer)(env).ToArray
+        Dim ppmErr As Tolerance = Tolerance.PPM(ppm)
+        Dim refer_points As New List(Of PeakFeature)
+
+        ' find a ri reference point at first
+        ' find a set of the candidate points
+        For Each refer As RIRefer In ri_refers
+            Dim target As PeakFeature = peakdata _
+                .Where(Function(pi) ppmErr(pi.mz, refer.mz) AndAlso std.Abs(pi.rt - refer.rt) <= dt) _
+                .OrderByDescending(Function(pi) pi.maxInto) _
+                .FirstOrDefault
+
+            If target Is Nothing Then
+                Throw New InvalidDataException($"the required retention index reference point({refer.ToString}) could not be found! please check the rt window parameter(dt) is too small?")
+            End If
+
+            target.RI = refer.RI
+            refer_points.Add(target)
+        Next
+
+        ' order raw data by rt
+        peakdata = peakdata.OrderBy(Function(i) i.rt).ToArray
+        refer_points = refer_points.OrderBy(Function(i) i.rt).ToList
+
+        Dim a As (rt As Double, ri As Double)
+        Dim b As (rt As Double, ri As Double)
+        Dim offset As Integer = 0
+
+        If peakdata(0).RI > 0 Then
+            a = (peakdata(0).rt, peakdata(0).RI)
+            offset = 1
+            b = (refer_points(1).rt, refer_points(1).RI)
+        Else
+            a = (peakdata(0).rt, 0)
+            b = (refer_points(0).rt, refer_points(0).RI)
+        End If
+
+        For i As Integer = offset To peakdata.Length - 1
+            If peakdata(i).RI = 0 Then
+                peakdata(i).RI = RetentionIndex(peakdata(i), a, b)
+            Else
+                a = b
+                b = (peakdata(i).rt, peakdata(i).RI)
+            End If
+        Next
+
+        ' and then evaluate the ri for each peak points
+        Return peakdata
+    End Function
 
     ''' <summary>
     ''' Chromatogram data deconvolution
@@ -570,6 +650,7 @@ extract_ms1:
                                   samples As Object,
                                   Optional mzdiff As Object = "da:0.001",
                                   Optional norm As Boolean = False,
+                                  Optional ri_alignment As Boolean = False,
                                   Optional env As Environment = Nothing) As Object
 
         Dim mzErr = Math.getTolerance(mzdiff, env, [default]:="da:0.001")
@@ -606,9 +687,18 @@ extract_ms1:
                 .ToArray
         End If
 
-        Dim peaktable As xcms2() = sampleData _
-            .CreateMatrix() _
-            .ToArray
+        Dim peaktable As xcms2()
+
+        If ri_alignment Then
+            peaktable = sampleData _
+                .RIAlignment _
+                .ToArray
+        Else
+            peaktable = sampleData _
+                .CowAlignment() _
+                .ToArray
+        End If
+
         Dim id As String() = peaktable.Select(Function(i) i.ID).uniqueNames
         Dim sampleNames As String() = sampleData.Keys.ToArray
 
@@ -687,6 +777,11 @@ extract_ms1:
         End If
     End Function
 
+    ''' <summary>
+    ''' Load xic sample data files
+    ''' </summary>
+    ''' <param name="files">a character vector of a collection of the xic data files.</param>
+    ''' <returns></returns>
     <ExportAPI("xic_pool")>
     <RApiReturn(GetType(XICPool))>
     Public Function XICpool_func(files As String()) As Object

@@ -71,8 +71,16 @@ Public Class PeakFeature
     Implements IMs1Scan
     Implements INamedValue
 
+    ''' <summary>
+    ''' the unique reference id of the current peak object
+    ''' </summary>
+    ''' <returns></returns>
     Public Property xcms_id As String Implements IPeak2D.ID, INamedValue.Key
 
+    ''' <summary>
+    ''' the xic m/z
+    ''' </summary>
+    ''' <returns></returns>
     Public Property mz As Double Implements IMs1Scan.mz, IPeak2D.Dimension1
 
     ''' <summary>
@@ -82,6 +90,12 @@ Public Class PeakFeature
     Public Property rt As Double Implements IRetentionTime.rt, IPeak2D.Dimension2
     Public Property rtmin As Double Implements IROI.rtmin
     Public Property rtmax As Double Implements IROI.rtmax
+
+    ''' <summary>
+    ''' the retention index of the corresponding <see cref="rt"/> value.
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property RI As Double
 
     ''' <summary>
     ''' 这个区域的最大峰高度
@@ -116,6 +130,11 @@ Public Class PeakFeature
     Public Property noise As Double
 
     Public Property nticks As Integer
+
+    ''' <summary>
+    ''' the sample file name reference
+    ''' </summary>
+    ''' <returns></returns>
     Public Property rawfile As String
 
     ''' <summary>
@@ -130,6 +149,27 @@ Public Class PeakFeature
 
     Public Overrides Function ToString() As String
         Return $"[{xcms_id}] {mz.ToString("F4")}@[{rtmin.ToString("F1")}, {rtmax.ToString("F1")}] = {area.ToString("G3")}"
+    End Function
+
+End Class
+
+''' <summary>
+''' the retention index reference
+''' </summary>
+Public Class RIRefer : Implements INamedValue, IReadOnlyId, IRetentionIndex, IRetentionTime, IMs1
+
+    Public Property name As String Implements INamedValue.Key, IReadOnlyId.Identity
+    Public Property mz As Double Implements IMs1.mz
+    Public Property rt As Double Implements IMs1.rt
+
+    ''' <summary>
+    ''' the reference retention index value
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property RI As Double Implements IRetentionIndex.RI
+
+    Public Overrides Function ToString() As String
+        Return name
     End Function
 
 End Class

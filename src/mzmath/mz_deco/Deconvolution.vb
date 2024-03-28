@@ -142,11 +142,12 @@ Public Module Deconvolution
 
     ''' <summary>
     ''' 1. Separation of mass signals, generate XIC sequence data.
-    ''' (进行原始数据的mz分组操作，然后进行rt的升序排序)
     ''' </summary>
     ''' <param name="scans"></param>
     ''' <returns></returns>
-    ''' 
+    ''' <remarks>
+    ''' (进行原始数据的mz分组操作，然后进行rt的升序排序)
+    ''' </remarks>
     <Extension>
     Public Iterator Function GetMzGroups(Of T As scan)(scans As IEnumerable(Of T),
                                                        Optional rtwin As Double = 0.05,
