@@ -386,7 +386,7 @@ Module mzDeco
             Return RIrefers.getError
         End If
 
-        Dim ri_refers As RIRefer() = RIrefers.populates(Of RIRefer)(env).ToArray
+        Dim ri_refers As RIRefer() = RIrefers.populates(Of RIRefer)(env).OrderBy(Function(i) i.rt).ToArray
         Dim ppmErr As Tolerance = Tolerance.PPM(ppm)
         Dim refer_points As New List(Of PeakFeature)
 

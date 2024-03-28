@@ -169,7 +169,7 @@ Public Class RIRefer : Implements INamedValue, IReadOnlyId, IRetentionIndex, IRe
     Public Property RI As Double Implements IRetentionIndex.RI
 
     Public Overrides Function ToString() As String
-        Return name
+        Return $"{rt} sec, " & name
     End Function
 
 End Class
