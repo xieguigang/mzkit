@@ -777,7 +777,7 @@ extract_ms1:
             Next
         End If
 
-        Dim vec As New vec(peaktable)
+        Dim vec As New vec(peaktable, RType.GetRSharpType(GetType(xcms2)))
         Call vec.setAttribute("rt.shift", rt_shifts.ToArray)
         Return vec
     End Function
