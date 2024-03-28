@@ -221,7 +221,7 @@ Public Module Deconvolution
                                  Optional parallel As Boolean = False,
                                  Optional source As String = Nothing) As IEnumerable(Of PeakFeature)
 
-        Dim groupData As MzGroup() = mzgroups.ToArray
+        Dim groupData As MzGroup() = mzgroups.Where(Function(xic) xic.size >= nticks).ToArray
         Dim features As PeakFeature() = groupData _
             .Populate(parallel) _
             .Select(Function(mz)
