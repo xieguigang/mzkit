@@ -125,7 +125,11 @@ Public Module PeakAlignment
                 }
 
                 For Each sample In peak
-                    peak1(sample.rawfile) += sample.area
+                    If peak1.HasProperty(sample.rawfile) Then
+                        peak1(sample.rawfile) = (peak1(sample.rawfile) + sample.area) / 2
+                    Else
+                        peak1(sample.rawfile) = sample.area
+                    End If
                 Next
 
                 Yield peak1
