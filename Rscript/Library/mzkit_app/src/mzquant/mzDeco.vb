@@ -400,8 +400,8 @@ Module mzDeco
     ''' <returns></returns>
     <ExportAPI("RI_cal")>
     Public Function RI_calc(peakdata As PeakFeature(), <RRawVectorArgument> RI As Object,
-                            Optional ppm As Double = 10,
-                            Optional dt As Double = 9,
+                            Optional ppm As Double = 20,
+                            Optional dt As Double = 15,
                             Optional rawfile As String = Nothing,
                             Optional env As Environment = Nothing) As Object
 
