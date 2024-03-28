@@ -521,7 +521,8 @@ Module mzDeco
             End If
         Else
 extract_ms1:
-            Dim ms1_scans As IEnumerable(Of IMs1Scan) = ms1Scans(ms1)
+            Dim source As String = Nothing
+            Dim ms1_scans As IEnumerable(Of IMs1Scan) = ms1Scans(ms1, source)
 
             ' usually used for make extract features
             ' for a single sample file
@@ -763,12 +764,13 @@ extract_ms1:
             .ToArray
     End Function
 
-    Private Function ms1Scans(ms1 As Object) As IEnumerable(Of IMs1Scan)
+    Private Function ms1Scans(ms1 As Object, Optional ByRef source As String = Nothing) As IEnumerable(Of IMs1Scan)
         If ms1 Is Nothing Then
             Return {}
         ElseIf ms1.GetType Is GetType(ms1_scan()) Then
             Return DirectCast(ms1, ms1_scan()).Select(Function(t) DirectCast(t, IMs1Scan))
         ElseIf TypeOf ms1 Is mzPack Then
+            source = DirectCast(ms1, mzPack).source
             Return DirectCast(ms1, mzPack) _
                 .GetAllScanMs1 _
                 .Select(Function(t) DirectCast(t, IMs1Scan))
