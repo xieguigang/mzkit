@@ -112,7 +112,7 @@ Public Module PeakAlignment
             Dim mz_group = ri_point.GroupBy(Function(i) i.mz, offsets:=0.01).ToArray
 
             For Each peak In mz_group
-                Dim mzri As Double = $"M{CInt(Val(peak.name))}RI{CInt(Val(ri_point.name))}"
+                Dim mzri As String = $"M{CInt(Val(peak.name))}RI{CInt(Val(ri_point.name))}"
                 Dim peak1 As New xcms2 With {
                    .ID = mzri,
                    .mz = Val(peak.name),
