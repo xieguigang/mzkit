@@ -131,7 +131,7 @@ Namespace Chromatogram
                 .ToArray
 
             If joint Then
-                peaks = peaks.JointPeaks().ToArray
+                peaks = peaks.JointPeaks(peakwidth.Max).ToArray
             End If
 
             For Each window As SignalPeak In peaks
@@ -162,7 +162,7 @@ Namespace Chromatogram
         End Function
 
         <Extension>
-        Private Iterator Function JointPeaks(raw As SignalPeak()) As IEnumerable(Of SignalPeak)
+        Private Iterator Function JointPeaks(raw As SignalPeak(), max_width As Double) As IEnumerable(Of SignalPeak)
             Dim q2 As Double
 
             If raw.IsNullOrEmpty Then
@@ -195,14 +195,25 @@ Namespace Chromatogram
             ' q2 = dt.Average * (3 / 4)
             q2 = quar.Outlier(dt).normal.Average
 
+            If q2 > max_width Then
+                q2 = max_width * 3 / 4
+            End If
+
+            Dim left As Double = raw(0).rtmin
+            Dim right As Double = 0
+
             For i As Integer = 1 To raw.Length - 1
-                If AccumulateROI.dt(raw(i), raw(i - 1)) <= q2 Then
+                right = raw(i).rtmax
+
+                If (right - left) <= max_width AndAlso AccumulateROI.dt(raw(i), raw(i - 1)) <= q2 Then
                     jointPeak.Add(raw(i))
                 Else
                     If jointPeak.Count > 0 Then
                         ' break
                         Yield AccumulateROI.JointPeak(jointPeak)
                     End If
+
+                    left = raw(i).rtmin
 
                     jointPeak.Clear()
                     jointPeak.Add(raw(i))
