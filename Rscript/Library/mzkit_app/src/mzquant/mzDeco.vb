@@ -430,7 +430,9 @@ Module mzDeco
             If target Is Nothing Then
                 Return Internal.debug.stop({
                     $"the required retention index reference point({refer.ToString}) could not be found! please check the rt window parameter(dt) is too small?",
-                    $"retention_index_reference: {ri_refers.GetJson}"
+                    $"retention_index_reference: {ri_refers.GetJson}",
+                    $"rawfile tag: {rawfile}",
+                    $"ms1_pars: {ppm} PPM, rt_win {dt} sec"
                 }, env)
             End If
 
