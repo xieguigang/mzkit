@@ -19,6 +19,16 @@
 */
 declare namespace mzDeco {
    /**
+    * adjust the reteintion time data to unit seconds
+    * 
+    * 
+     * @param rt_data -
+     * @param env -
+     * 
+     * + default value Is ``null``.
+   */
+   function adjust_to_seconds(rt_data: any, env?: object): any;
+   /**
     * 
     * 
      * @param peaktable the peaktable object, is a collection of the @``T:BioNovoGene.Analytical.MassSpectrometry.Math.xcms2`` object.
@@ -66,7 +76,7 @@ declare namespace mzDeco {
      * @param baseline 
      * + default value Is ``0.65``.
      * @param peak_width 
-     * + default value Is ``'3,20'``.
+     * + default value Is ``'3,15'``.
      * @param joint 
      * + default value Is ``false``.
      * @param parallel 
@@ -78,6 +88,8 @@ declare namespace mzDeco {
      * + default value Is ``null``.
      * @param rawfile 
      * + default value Is ``null``.
+     * @param sn_threshold 
+     * + default value Is ``1``.
      * @param env 
      * + default value Is ``null``.
      * @return a vector of the peak deconvolution data,
@@ -87,7 +99,7 @@ declare namespace mzDeco {
      *  the result data vector may contains the rt shift data result, where you can get this shift
      *  value via the ``rt.shift`` attribute name, rt shift data model is clr type: @``T:BioNovoGene.Analytical.MassSpectrometry.Math.RtShift``.
    */
-   function mz_deco(ms1: any, tolerance?: any, baseline?: number, peak_width?: any, joint?: boolean, parallel?: boolean, dtw?: boolean, feature?: any, rawfile?: string, env?: object): object|object;
+   function mz_deco(ms1: any, tolerance?: any, baseline?: number, peak_width?: any, joint?: boolean, parallel?: boolean, dtw?: boolean, feature?: any, rawfile?: string, sn_threshold?: number, env?: object): object|object;
    /**
     * Do COW peak alignment and export peaktable
     *  
@@ -177,14 +189,16 @@ declare namespace mzDeco {
      * @param peakdata should be a collection of the peak data from a single sample file.
      * @param RI should be a collection of the @``T:BioNovoGene.Analytical.MassSpectrometry.Math.RIRefer`` data.
      * @param ppm 
-     * + default value Is ``10``.
+     * + default value Is ``20``.
      * @param dt 
-     * + default value Is ``3``.
+     * + default value Is ``15``.
+     * @param rawfile 
+     * + default value Is ``null``.
      * @param env -
      * 
      * + default value Is ``null``.
    */
-   function RI_cal(peakdata: object, RI: any, ppm?: number, dt?: number, env?: object): any;
+   function RI_cal(peakdata: object, RI: any, ppm?: number, dt?: number, rawfile?: string, env?: object): any;
    module write {
       /**
        * write peak debug data
