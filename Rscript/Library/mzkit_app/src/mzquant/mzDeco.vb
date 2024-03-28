@@ -512,7 +512,7 @@ Module mzDeco
                             Optional tolerance As Object = "ppm:20",
                             Optional baseline# = 0.65,
                             <RRawVectorArgument>
-                            Optional peak_width As Object = "3,20",
+                            Optional peak_width As Object = "3,15",
                             Optional joint As Boolean = False,
                             Optional parallel As Boolean = False,
                             Optional dtw As Boolean = False,
@@ -522,7 +522,7 @@ Module mzDeco
                             Optional env As Environment = Nothing) As Object
 
         Dim errors As [Variant](Of Tolerance, Message) = Math.getTolerance(tolerance, env)
-        Dim rtRange = ApiArgumentHelpers.GetDoubleRange(peak_width, env, [default]:="3,20")
+        Dim rtRange = ApiArgumentHelpers.GetDoubleRange(peak_width, env, [default]:="3,15")
 
         If errors Like GetType(Message) Then
             Return errors.TryCast(Of Message)
