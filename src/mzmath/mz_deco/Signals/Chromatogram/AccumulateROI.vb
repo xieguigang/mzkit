@@ -59,6 +59,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.ComponentModel.TagData
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.Math.Quantile
 Imports Microsoft.VisualBasic.Math.Scripting
 Imports Microsoft.VisualBasic.Math.SignalProcessing.PeakFinding
 Imports Microsoft.VisualBasic.Scripting.Runtime
@@ -183,13 +184,16 @@ Namespace Chromatogram
             Dim jointPeak As New List(Of SignalPeak) From {
                 raw(0)
             }
+            Dim quar As DataQuartile = dt.Quartile
 
             'If dt.Length > 2 Then
             '    q2 = dt(dt.Length * (3 / 4)) * 1.25
             'Else
             '    q2 = 0
             'End If
-            q2 = dt.Average * (3 / 4)
+
+            ' q2 = dt.Average * (3 / 4)
+            q2 = quar.Outlier(dt).normal.Average
 
             For i As Integer = 1 To raw.Length - 1
                 If AccumulateROI.dt(raw(i), raw(i - 1)) <= q2 Then
