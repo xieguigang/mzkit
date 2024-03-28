@@ -478,6 +478,7 @@ Module mzDeco
                             Optional dtw As Boolean = False,
                             <RRawVectorArgument>
                             Optional feature As Object = Nothing,
+                            Optional rawfile As String = Nothing,
                             Optional env As Environment = Nothing) As Object
 
         Dim errors As [Variant](Of Tolerance, Message) = Math.getTolerance(tolerance, env)
@@ -524,6 +525,12 @@ extract_ms1:
             Dim source As String = Nothing
             Dim ms1_scans As IEnumerable(Of IMs1Scan) = ms1Scans(ms1, source)
 
+            source = If(rawfile, source)
+
+            If Not source.StringEmpty Then
+                Call VBDebugger.EchoLine($"run peak feature finding for rawdata: {source}.")
+            End If
+
             ' usually used for make extract features
             ' for a single sample file
             Return ms1_scans _
@@ -532,7 +539,8 @@ extract_ms1:
                     peakwidth:=rtRange.TryCast(Of DoubleRange),
                     quantile:=baseline,
                     parallel:=parallel,
-                    joint:=joint
+                    joint:=joint,
+                    source:=source
                 ) _
                 .ToArray
         End If
