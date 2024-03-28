@@ -164,7 +164,8 @@ Module Visual
         Return Scatter.Plot(lines, size:=size, padding:=padding, drawLine:=True, fill:=False,
                             Xlabel:="retention time(s)", Ylabel:="RT shift(s)",
                             XtickFormat:="F0", YtickFormat:="G4",
-                            gridFill:=fill_color)
+                            gridFill:=fill_color,
+                            driver:=env.getDriver)
     End Function
 
     <RGenericOverloads("plot")>
