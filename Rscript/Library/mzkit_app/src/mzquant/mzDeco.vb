@@ -519,6 +519,7 @@ Module mzDeco
                             <RRawVectorArgument>
                             Optional feature As Object = Nothing,
                             Optional rawfile As String = Nothing,
+                            Optional sn_threshold As Double = 1,
                             Optional env As Environment = Nothing) As Object
 
         Dim errors As [Variant](Of Tolerance, Message) = Math.getTolerance(tolerance, env)
@@ -580,7 +581,8 @@ extract_ms1:
                     quantile:=baseline,
                     parallel:=parallel,
                     joint:=joint,
-                    source:=source
+                    source:=source,
+                    sn:=sn_threshold
                 ) _
                 .ToArray
         End If
