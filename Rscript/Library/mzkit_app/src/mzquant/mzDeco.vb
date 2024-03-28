@@ -67,6 +67,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports SMRUCC.Rsharp
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
@@ -376,7 +377,7 @@ Module mzDeco
     <ExportAPI("RI_cal")>
     Public Function RI_calc(peakdata As PeakFeature(), <RRawVectorArgument> RI As Object,
                             Optional ppm As Double = 10,
-                            Optional dt As Double = 3,
+                            Optional dt As Double = 9,
                             Optional rawfile As String = Nothing,
                             Optional env As Environment = Nothing) As Object
 
@@ -390,6 +391,10 @@ Module mzDeco
         Dim ppmErr As Tolerance = Tolerance.PPM(ppm)
         Dim refer_points As New List(Of PeakFeature)
 
+        'For i As Integer = 0 To ri_refers.Length - 1
+        '    ri_refers(i).rt *= 60
+        'Next
+
         ' find a ri reference point at first
         ' find a set of the candidate points
         For Each refer As RIRefer In ri_refers
@@ -399,7 +404,10 @@ Module mzDeco
                 .FirstOrDefault
 
             If target Is Nothing Then
-                Throw New InvalidDataException($"the required retention index reference point({refer.ToString}) could not be found! please check the rt window parameter(dt) is too small?")
+                Return Internal.debug.stop({
+                    $"the required retention index reference point({refer.ToString}) could not be found! please check the rt window parameter(dt) is too small?",
+                    $"retention_index_reference: {ri_refers.GetJson}"
+                }, env)
             End If
 
             target.RI = refer.RI
@@ -408,7 +416,9 @@ Module mzDeco
 
         ' order raw data by rt
         peakdata = peakdata.OrderBy(Function(i) i.rt).ToArray
-        refer_points = refer_points.OrderBy(Function(i) i.rt).ToList
+        refer_points = refer_points.OrderBy(Function(i) i.rt).AsList
+        ' add a fake point
+        refer_points.Add(New PeakFeature With {.RI = refer_points.Last.RI + 100, .rt = peakdata.Last.rt})
 
         Dim a As (rt As Double, ri As Double)
         Dim b As (rt As Double, ri As Double)
@@ -430,7 +440,8 @@ Module mzDeco
                 peakdata(i).RI = RetentionIndex(peakdata(i), a, b)
             Else
                 a = b
-                b = (peakdata(i).rt, peakdata(i).RI)
+                offset += 1
+                b = (refer_points(offset).rt, refer_points(offset).RI)
             End If
         Next
 
