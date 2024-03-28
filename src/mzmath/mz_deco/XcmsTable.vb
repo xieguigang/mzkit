@@ -109,11 +109,23 @@ Public Module XcmsTable
     End Function
 End Module
 
+''' <summary>
+''' the rt shift result
+''' </summary>
 Public Class RtShift
 
+    ''' <summary>
+    ''' the sample name
+    ''' </summary>
+    ''' <returns></returns>
     Public Property sample As String
+    ''' <summary>
+    ''' the reference rt
+    ''' </summary>
+    ''' <returns></returns>
     Public Property refer_rt As Double
     Public Property sample_rt As Double
+    Public Property RI As Double
 
     Public ReadOnly Property shift As Double
         Get

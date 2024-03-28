@@ -739,10 +739,11 @@ extract_ms1:
         End If
 
         Dim peaktable As xcms2()
+        Dim rt_shifts As New List(Of RtShift)
 
         If ri_alignment Then
             peaktable = sampleData _
-                .RIAlignment _
+                .RIAlignment(rt_shifts) _
                 .ToArray
         Else
             peaktable = sampleData _
@@ -776,7 +777,9 @@ extract_ms1:
             Next
         End If
 
-        Return peaktable
+        Dim vec As New vec(peaktable)
+        Call vec.setAttribute("rt.shift", rt_shifts.ToArray)
+        Return vec
     End Function
 
     ''' <summary>
