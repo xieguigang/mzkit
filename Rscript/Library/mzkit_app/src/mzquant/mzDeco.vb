@@ -368,6 +368,30 @@ Module mzDeco
     End Class
 
     ''' <summary>
+    ''' adjust the reteintion time data to unit seconds
+    ''' </summary>
+    ''' <param name="rt_data"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("adjust_to_seconds")>
+    Public Function adjust_to_seconds(<RRawVectorArgument> rt_data As Object, Optional env As Environment = Nothing) As Object
+        Dim pull_data As pipeline = pipeline.TryCreatePipeline(Of IRetentionTime)(rt_data, env)
+
+        If pull_data.isError Then
+            Return pull_data.getError
+        End If
+
+        Dim ds As New List(Of IRetentionTime)
+
+        For Each xi As IRetentionTime In pull_data.populates(Of IRetentionTime)(env)
+            xi.rt *= 60
+            ds.Add(xi)
+        Next
+
+        Return ds.ToArray
+    End Function
+
+    ''' <summary>
     ''' RI calculation of a speicifc sample data
     ''' </summary>
     ''' <param name="peakdata">should be a collection of the peak data from a single sample file.</param>
