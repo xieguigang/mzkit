@@ -76,6 +76,8 @@ declare namespace mzDeco {
      * @param feature a numeric vector of target feature ion m/z value for extract the XIC data.
      * 
      * + default value Is ``null``.
+     * @param rawfile 
+     * + default value Is ``null``.
      * @param env 
      * + default value Is ``null``.
      * @return a vector of the peak deconvolution data,
@@ -85,7 +87,7 @@ declare namespace mzDeco {
      *  the result data vector may contains the rt shift data result, where you can get this shift
      *  value via the ``rt.shift`` attribute name, rt shift data model is clr type: @``T:BioNovoGene.Analytical.MassSpectrometry.Math.RtShift``.
    */
-   function mz_deco(ms1: any, tolerance?: any, baseline?: number, peak_width?: any, joint?: boolean, parallel?: boolean, dtw?: boolean, feature?: any, env?: object): object|object;
+   function mz_deco(ms1: any, tolerance?: any, baseline?: number, peak_width?: any, joint?: boolean, parallel?: boolean, dtw?: boolean, feature?: any, rawfile?: string, env?: object): object|object;
    /**
     * Do COW peak alignment and export peaktable
     *  

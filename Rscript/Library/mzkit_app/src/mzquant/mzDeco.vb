@@ -377,6 +377,7 @@ Module mzDeco
     Public Function RI_calc(peakdata As PeakFeature(), <RRawVectorArgument> RI As Object,
                             Optional ppm As Double = 10,
                             Optional dt As Double = 3,
+                            Optional rawfile As String = Nothing,
                             Optional env As Environment = Nothing) As Object
 
         Dim RIrefers As pipeline = pipeline.TryCreatePipeline(Of RIRefer)(RI, env)
@@ -423,6 +424,8 @@ Module mzDeco
         End If
 
         For i As Integer = offset To peakdata.Length - 1
+            peakdata(i).rawfile = If(rawfile, peakdata(i).rawfile)
+
             If peakdata(i).RI = 0 Then
                 peakdata(i).RI = RetentionIndex(peakdata(i), a, b)
             Else
