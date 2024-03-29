@@ -176,7 +176,8 @@ Module Visual
                             Ylabel:="RT shift(s)",
                             XtickFormat:="F0", YtickFormat:="G4",
                             gridFill:=fill_color,
-                            driver:=env.getDriver)
+                            driver:=env.getDriver,
+                            dpi:=300)
     End Function
 
     <RGenericOverloads("plot")>
