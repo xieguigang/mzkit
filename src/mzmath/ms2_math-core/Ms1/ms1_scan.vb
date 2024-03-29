@@ -70,6 +70,15 @@ Public Class ms1_scan : Implements IMs1, IMs1Scan, INumericKey, ITimeSignal
     <XmlAttribute> Public Property scan_time As Double Implements IMs1.rt, ITimeSignal.time
     <XmlAttribute> Public Property intensity As Double Implements IMs1Scan.intensity, ITimeSignal.intensity
 
+    Sub New()
+    End Sub
+
+    Sub New(mz As Double, rt As Double, intensity As Double)
+        _mz = mz
+        _scan_time = rt
+        _intensity = intensity
+    End Sub
+
     Public Overrides Function ToString() As String
         Return $"{mz.ToString("F4")}@{std.Round(scan_time)} ({intensity})"
     End Function
