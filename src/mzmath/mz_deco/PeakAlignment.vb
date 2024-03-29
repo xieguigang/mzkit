@@ -147,7 +147,8 @@ Public Module PeakAlignment
                         .refer_rt = refer_rt.rt,
                         .RI = ri,
                         .sample = sample.rawfile,
-                        .sample_rt = sample.rt
+                        .sample_rt = sample.rt,
+                        .xcms_id = mzri
                     })
                 Next
 

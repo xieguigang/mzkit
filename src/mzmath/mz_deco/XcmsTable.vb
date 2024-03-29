@@ -100,7 +100,8 @@ Public Module XcmsTable
                 rt_shifts.Add(New RtShift With {
                     .refer_rt = max_rt,
                     .sample = sample.rawfile,
-                    .sample_rt = sample.rt
+                    .sample_rt = sample.rt,
+                    .xcms_id = xcms.ID
                 })
             Next
 
@@ -119,6 +120,7 @@ Public Class RtShift
     ''' </summary>
     ''' <returns></returns>
     Public Property sample As String
+    Public Property xcms_id As String
     ''' <summary>
     ''' the reference rt
     ''' </summary>
