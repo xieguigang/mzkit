@@ -138,12 +138,22 @@ Module Visual
         Dim colors As Color() = Designer.GetColors(colorSet, n:=samples.Length + 1)
         Dim fill_color As String = RColorPalette.getColor(args.getBySynonyms("fill", "grid.fill"), "lightgray")
         Dim idx As i32 = 0
+        Dim plot_ri As Boolean = args.getValue({"x_axis.ri"}, env, False)
+        Dim points As NamedCollection(Of RtShift)()
 
         For Each sample As NamedCollection(Of RtShift) In samples
-            Dim points = sample _
-                .GroupBy(Function(a) a.refer_rt, offsets:=dt) _
-                .OrderBy(Function(a) Val(a.name)) _
-                .ToArray
+            If plot_ri Then
+                points = sample _
+                    .GroupBy(Function(a) a.RI, offsets:=dt) _
+                    .OrderBy(Function(a) Val(a.name)) _
+                    .ToArray
+            Else
+                points = sample _
+                    .GroupBy(Function(a) a.refer_rt, offsets:=dt) _
+                    .OrderBy(Function(a) Val(a.name)) _
+                    .ToArray
+            End If
+
             Dim shift_points = points _
                 .Select(Function(dti)
                             Return New PointData(Val(dti.name), Aggregate pt In dti Into Sum(pt.shift))
@@ -162,9 +172,12 @@ Module Visual
         Next
 
         Return Scatter.Plot(lines, size:=size, padding:=padding, drawLine:=True, fill:=False,
-                            Xlabel:="retention time(s)", Ylabel:="RT shift(s)",
+                            Xlabel:=If(plot_ri, "retention index", "retention time(s)"),
+                            Ylabel:="RT shift(s)",
                             XtickFormat:="F0", YtickFormat:="G4",
-                            gridFill:=fill_color)
+                            gridFill:=fill_color,
+                            driver:=env.getDriver,
+                            dpi:=300)
     End Function
 
     <RGenericOverloads("plot")>

@@ -79,6 +79,10 @@ Public Class MzGroup
     <XmlElement>
     Public Property XIC As ChromatogramTick()
 
+    ''' <summary>
+    ''' get point counts of <see cref="XIC"/>.
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property size As Integer
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get

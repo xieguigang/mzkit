@@ -209,7 +209,8 @@ Public Module Deconvolution
     ''' 2. 对得到的XIC进行峰查找
     ''' </summary>
     ''' <param name="mzgroups"></param>
-    ''' <param name="quantile#"></param>
+    ''' <param name="quantile"></param>
+    ''' <param name="source">set the source tag value to <see cref="PeakFeature.rawfile"/></param>
     ''' <returns></returns>
     <Extension>
     Public Function DecoMzGroups(mzgroups As IEnumerable(Of MzGroup), peakwidth As DoubleRange,
@@ -217,9 +218,10 @@ Public Module Deconvolution
                                  Optional sn As Double = 3,
                                  Optional nticks As Integer = 6,
                                  Optional joint As Boolean = True,
-                                 Optional parallel As Boolean = False) As IEnumerable(Of PeakFeature)
+                                 Optional parallel As Boolean = False,
+                                 Optional source As String = Nothing) As IEnumerable(Of PeakFeature)
 
-        Dim groupData As MzGroup() = mzgroups.ToArray
+        Dim groupData As MzGroup() = mzgroups.Where(Function(xic) xic.size >= nticks).ToArray
         Dim features As PeakFeature() = groupData _
             .Populate(parallel) _
             .Select(Function(mz)
@@ -229,11 +231,11 @@ Public Module Deconvolution
             .Where(Function(peak) peak.nticks >= nticks) _
             .ToArray
 
-        Return features.ExtractFeatureGroups
+        Return features.ExtractFeatureGroups(source)
     End Function
 
     <Extension>
-    Public Iterator Function ExtractFeatureGroups(peaks As IEnumerable(Of PeakFeature)) As IEnumerable(Of PeakFeature)
+    Public Iterator Function ExtractFeatureGroups(peaks As IEnumerable(Of PeakFeature), Optional source As String = Nothing) As IEnumerable(Of PeakFeature)
         Dim guid As New Dictionary(Of String, Counter)
         Dim uid As String
         Dim features As IGrouping(Of String, PeakFeature)() = peaks _
@@ -260,7 +262,8 @@ Public Module Deconvolution
                         feature.xcms_id = uid & "_" & guid(uid).ToString
                     End If
 
-                    Call guid(uid).Hit()
+                    feature.rawfile = If(source, feature.rawfile)
+                    guid(uid).Hit()
 
                     Yield feature
                 Next

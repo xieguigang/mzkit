@@ -178,34 +178,43 @@ Public Class mzPackReader : Inherits BinaryStreamReader
         If Not hasThumbnail Then
             Return Nothing
         Else
-            Dim offset As Long
-            Dim bytes As Byte()
-            Dim nsize As Long
-
-            file.Seek(file.Length - 8, SeekOrigin.Begin)
-            offset = file.ReadInt64
-
-            If offset <= 16 Then
+            Try
+                Return ReadThumbnailInternal()
+            Catch ex As Exception
+                Call App.LogException(New Exception("error while read the ver1 mzpack thumbnail image.", ex))
                 Return Nothing
-            End If
-
-            file.Seek(offset, SeekOrigin.Begin)
-            nsize = file.Length - 8 - offset
-
-            If nsize <= 0 Then
-                Call "negative bytes count?".Warning
-                Return Nothing
-            End If
-
-            bytes = file.ReadBytes(nsize)
-
-            If bytes.IsNullOrEmpty Then
-                Return Nothing
-            End If
-
-            Using buffer As New MemoryStream(bytes), img As Stream = buffer.UnGzipStream
-                Return Image.FromStream(img)
-            End Using
+            End Try
         End If
+    End Function
+
+    Private Function ReadThumbnailInternal() As Bitmap
+        Dim offset As Long
+        Dim bytes As Byte()
+        Dim nsize As Long
+
+        file.Seek(file.Length - 8, SeekOrigin.Begin)
+        offset = file.ReadInt64
+
+        If offset <= 16 Then
+            Return Nothing
+        End If
+
+        file.Seek(offset, SeekOrigin.Begin)
+        nsize = file.Length - 8 - offset
+
+        If nsize <= 0 Then
+            Call "negative bytes count?".Warning
+            Return Nothing
+        End If
+
+        bytes = file.ReadBytes(nsize)
+
+        If bytes.IsNullOrEmpty Then
+            Return Nothing
+        End If
+
+        Using buffer As New MemoryStream(bytes), img As Stream = buffer.UnGzipStream
+            Return Image.FromStream(img)
+        End Using
     End Function
 End Class

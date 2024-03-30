@@ -67,6 +67,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports SMRUCC.Rsharp
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
@@ -367,6 +368,30 @@ Module mzDeco
     End Class
 
     ''' <summary>
+    ''' adjust the reteintion time data to unit seconds
+    ''' </summary>
+    ''' <param name="rt_data"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("adjust_to_seconds")>
+    Public Function adjust_to_seconds(<RRawVectorArgument> rt_data As Object, Optional env As Environment = Nothing) As Object
+        Dim pull_data As pipeline = pipeline.TryCreatePipeline(Of IRetentionTime)(rt_data, env)
+
+        If pull_data.isError Then
+            Return pull_data.getError
+        End If
+
+        Dim ds As New List(Of IRetentionTime)
+
+        For Each xi As IRetentionTime In pull_data.populates(Of IRetentionTime)(env)
+            xi.rt *= 60
+            ds.Add(xi)
+        Next
+
+        Return ds.ToArray
+    End Function
+
+    ''' <summary>
     ''' RI calculation of a speicifc sample data
     ''' </summary>
     ''' <param name="peakdata">should be a collection of the peak data from a single sample file.</param>
@@ -375,8 +400,9 @@ Module mzDeco
     ''' <returns></returns>
     <ExportAPI("RI_cal")>
     Public Function RI_calc(peakdata As PeakFeature(), <RRawVectorArgument> RI As Object,
-                            Optional ppm As Double = 10,
-                            Optional dt As Double = 3,
+                            Optional ppm As Double = 20,
+                            Optional dt As Double = 15,
+                            Optional rawfile As String = Nothing,
                             Optional env As Environment = Nothing) As Object
 
         Dim RIrefers As pipeline = pipeline.TryCreatePipeline(Of RIRefer)(RI, env)
@@ -385,9 +411,13 @@ Module mzDeco
             Return RIrefers.getError
         End If
 
-        Dim ri_refers As RIRefer() = RIrefers.populates(Of RIRefer)(env).ToArray
+        Dim ri_refers As RIRefer() = RIrefers.populates(Of RIRefer)(env).OrderBy(Function(i) i.rt).ToArray
         Dim ppmErr As Tolerance = Tolerance.PPM(ppm)
         Dim refer_points As New List(Of PeakFeature)
+
+        'For i As Integer = 0 To ri_refers.Length - 1
+        '    ri_refers(i).rt *= 60
+        'Next
 
         ' find a ri reference point at first
         ' find a set of the candidate points
@@ -398,7 +428,12 @@ Module mzDeco
                 .FirstOrDefault
 
             If target Is Nothing Then
-                Throw New InvalidDataException($"the required retention index reference point({refer.ToString}) could not be found! please check the rt window parameter(dt) is too small?")
+                Return Internal.debug.stop({
+                    $"the required retention index reference point({refer.ToString}) could not be found! please check the rt window parameter(dt) is too small?",
+                    $"retention_index_reference: {ri_refers.GetJson}",
+                    $"rawfile tag: {rawfile}",
+                    $"ms1_pars: {ppm} PPM, rt_win {dt} sec"
+                }, env)
             End If
 
             target.RI = refer.RI
@@ -407,7 +442,9 @@ Module mzDeco
 
         ' order raw data by rt
         peakdata = peakdata.OrderBy(Function(i) i.rt).ToArray
-        refer_points = refer_points.OrderBy(Function(i) i.rt).ToList
+        refer_points = refer_points.OrderBy(Function(i) i.rt).AsList
+        ' add a fake point
+        refer_points.Add(New PeakFeature With {.RI = refer_points.Last.RI + 100, .rt = peakdata.Last.rt})
 
         Dim a As (rt As Double, ri As Double)
         Dim b As (rt As Double, ri As Double)
@@ -423,11 +460,14 @@ Module mzDeco
         End If
 
         For i As Integer = offset To peakdata.Length - 1
+            peakdata(i).rawfile = If(rawfile, peakdata(i).rawfile)
+
             If peakdata(i).RI = 0 Then
                 peakdata(i).RI = RetentionIndex(peakdata(i), a, b)
             Else
                 a = b
-                b = (peakdata(i).rt, peakdata(i).RI)
+                offset += 1
+                b = (refer_points(offset).rt, refer_points(offset).RI)
             End If
         Next
 
@@ -472,16 +512,18 @@ Module mzDeco
                             Optional tolerance As Object = "ppm:20",
                             Optional baseline# = 0.65,
                             <RRawVectorArgument>
-                            Optional peak_width As Object = "3,20",
+                            Optional peak_width As Object = "3,15",
                             Optional joint As Boolean = False,
                             Optional parallel As Boolean = False,
                             Optional dtw As Boolean = False,
                             <RRawVectorArgument>
                             Optional feature As Object = Nothing,
+                            Optional rawfile As String = Nothing,
+                            Optional sn_threshold As Double = 1,
                             Optional env As Environment = Nothing) As Object
 
         Dim errors As [Variant](Of Tolerance, Message) = Math.getTolerance(tolerance, env)
-        Dim rtRange = ApiArgumentHelpers.GetDoubleRange(peak_width, env, [default]:="3,20")
+        Dim rtRange = ApiArgumentHelpers.GetDoubleRange(peak_width, env, [default]:="3,15")
 
         If errors Like GetType(Message) Then
             Return errors.TryCast(Of Message)
@@ -521,7 +563,14 @@ Module mzDeco
             End If
         Else
 extract_ms1:
-            Dim ms1_scans As IEnumerable(Of IMs1Scan) = ms1Scans(ms1)
+            Dim source As String = Nothing
+            Dim ms1_scans As IEnumerable(Of IMs1Scan) = ms1Scans(ms1, source)
+
+            source = If(rawfile, source)
+
+            If Not source.StringEmpty Then
+                Call VBDebugger.EchoLine($"run peak feature finding for rawdata: {source}.")
+            End If
 
             ' usually used for make extract features
             ' for a single sample file
@@ -531,7 +580,9 @@ extract_ms1:
                     peakwidth:=rtRange.TryCast(Of DoubleRange),
                     quantile:=baseline,
                     parallel:=parallel,
-                    joint:=joint
+                    joint:=joint,
+                    source:=source,
+                    sn:=sn_threshold
                 ) _
                 .ToArray
         End If
@@ -688,10 +739,11 @@ extract_ms1:
         End If
 
         Dim peaktable As xcms2()
+        Dim rt_shifts As New List(Of RtShift)
 
         If ri_alignment Then
             peaktable = sampleData _
-                .RIAlignment _
+                .RIAlignment(rt_shifts) _
                 .ToArray
         Else
             peaktable = sampleData _
@@ -725,7 +777,9 @@ extract_ms1:
             Next
         End If
 
-        Return peaktable
+        Dim vec As New vec(peaktable, RType.GetRSharpType(GetType(xcms2)))
+        Call vec.setAttribute("rt.shift", rt_shifts.ToArray)
+        Return vec
     End Function
 
     ''' <summary>
@@ -763,12 +817,13 @@ extract_ms1:
             .ToArray
     End Function
 
-    Private Function ms1Scans(ms1 As Object) As IEnumerable(Of IMs1Scan)
+    Private Function ms1Scans(ms1 As Object, Optional ByRef source As String = Nothing) As IEnumerable(Of IMs1Scan)
         If ms1 Is Nothing Then
             Return {}
         ElseIf ms1.GetType Is GetType(ms1_scan()) Then
             Return DirectCast(ms1, ms1_scan()).Select(Function(t) DirectCast(t, IMs1Scan))
         ElseIf TypeOf ms1 Is mzPack Then
+            source = DirectCast(ms1, mzPack).source
             Return DirectCast(ms1, mzPack) _
                 .GetAllScanMs1 _
                 .Select(Function(t) DirectCast(t, IMs1Scan))

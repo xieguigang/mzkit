@@ -104,19 +104,27 @@ Public Module PeakAlignment
     ''' <param name="samples"></param>
     ''' <returns></returns>
     <Extension>
-    Public Iterator Function RIAlignment(samples As IEnumerable(Of NamedCollection(Of PeakFeature))) As IEnumerable(Of xcms2)
-        Dim RI_rawdata = samples.IteratesAll.GroupBy(Function(i) i.RI, offsets:=1).ToArray
+    Public Iterator Function RIAlignment(samples As IEnumerable(Of NamedCollection(Of PeakFeature)), Optional rt_shift As List(Of RtShift) = Nothing) As IEnumerable(Of xcms2)
+        Dim allData = samples.ToArray
+        Dim RI_rawdata = allData.IteratesAll.GroupBy(Function(i) i.RI, offsets:=0.5).ToArray
         Dim unique_id As New Dictionary(Of String, Counter)
+        Dim refer As String = allData.PickReferenceSampleMaxIntensity.name
+
+        If rt_shift Is Nothing Then
+            rt_shift = New List(Of RtShift)
+        End If
 
         For Each ri_point As NamedCollection(Of PeakFeature) In RI_rawdata
             Dim mz_group = ri_point.GroupBy(Function(i) i.mz, offsets:=0.01).ToArray
 
             For Each peak In mz_group
-                Dim mzri As Double = $"M{CInt(Val(peak.name))}RI{CInt(Val(ri_point.name))}"
+                Dim ri As Double = peak.Average(Function(a) a.RI)
+                Dim mzri As String = $"M{CInt(Val(peak.name))}RI{CInt(ri)}"
+                Dim refer_rt As PeakFeature = peak.Where(Function(p) p.rawfile = refer).FirstOrDefault
                 Dim peak1 As New xcms2 With {
                    .ID = mzri,
                    .mz = Val(peak.name),
-                   .RI = Val(ri_point.name),
+                   .RI = ri,
                    .rt = peak.OrderByDescending(Function(pi) pi.maxInto).First.rt,
                    .mzmin = peak.Select(Function(pi) pi.mz).Min,
                    .mzmax = peak.Select(Function(pi) pi.mz).Max,
@@ -124,8 +132,24 @@ Public Module PeakAlignment
                    .rtmin = peak.Select(Function(pi) pi.rt).Min
                 }
 
-                For Each sample In peak
-                    peak1(sample.rawfile) += sample.area
+                If refer_rt Is Nothing Then
+                    refer_rt = peak.OrderByDescending(Function(p) p.maxInto).First
+                End If
+
+                For Each sample As PeakFeature In peak
+                    If peak1.HasProperty(sample.rawfile) Then
+                        peak1(sample.rawfile) = (peak1(sample.rawfile) + sample.area) / 2
+                    Else
+                        peak1(sample.rawfile) = sample.area
+                    End If
+
+                    rt_shift.Add(New RtShift() With {
+                        .refer_rt = refer_rt.rt,
+                        .RI = ri,
+                        .sample = sample.rawfile,
+                        .sample_rt = sample.rt,
+                        .xcms_id = mzri
+                    })
                 Next
 
                 Yield peak1
