@@ -428,14 +428,24 @@ Public Class Algorithm
         Return DIASearch(GetCandidateSeeds)
     End Function
 
-    Private Function GetCandidateSeeds() As IEnumerable(Of AnnotatedSeed)
-        Call report("Create candidate seeds by query KEGG library...")
+    Private Iterator Function GetCandidateSeeds() As IEnumerable(Of AnnotatedSeed)
+        Dim ms2Peaks = unknowns.EnumerateAllUnknownFeatures.ToArray
+        Dim n As Integer = 0
 
-        Return unknowns _
-            .EnumerateAllUnknownFeatures _
+        Call report($"Create candidate seeds by query metabolite annotation library...")
+        Call report($"impute from {ms2Peaks.Length} ms2 peaks!")
+
+        For Each seeds As IEnumerable(Of AnnotatedSeed) In ms2Peaks _
             .AsParallel _
-            .Select(AddressOf querySingle) _
-            .IteratesALL
+            .Select(AddressOf querySingle)
+
+            For Each seed As AnnotatedSeed In seeds
+                n += 1
+                Yield seed
+            Next
+        Next
+
+        Call report($"populate out {n} candidate seeds for run metaDNA inferacne!")
     End Function
 
     Private Iterator Function querySingle(unknown As PeakMs2) As IEnumerable(Of AnnotatedSeed)
