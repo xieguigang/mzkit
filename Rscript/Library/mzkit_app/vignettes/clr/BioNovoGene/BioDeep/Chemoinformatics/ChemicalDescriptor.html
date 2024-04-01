@@ -5,7 +5,7 @@
     <title>BioNovoGene.BioDeep.Chemoinformatics.ChemicalDescriptor</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-    <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
+    <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
 </head>
 
 <body>
@@ -22,7 +22,8 @@
 
         <h3>Description</h3>
 
-        
+        Chemical descriptor
+
 
         <h3>Declare</h3>        
 
@@ -44,17 +45,21 @@ export class ChemicalDescriptor {
    FlashPoint: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemoinformatics/UnitValue.html">UnitValue[]</a>;
    FormalCharge: integer;
    HeavyAtoms: integer;
+   # Hydrogen Bond Acceptor count
    HydrogenAcceptor: integer;
+   # Hydrogen Bond Donor Count
    HydrogenDonors: integer;
    IsotopicAtomCount: integer;
    LogP: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemoinformatics/Value.html">Value[]</a>;
    MeltingPoint: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemoinformatics/UnitValue.html">UnitValue[]</a>;
    Odor: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemoinformatics/UnitValue.html">UnitValue[]</a>;
+   # Rotatable Bond Count
    RotatableBonds: integer;
    Solubility: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemoinformatics/UnitValue.html">UnitValue[]</a>;
    TautoCount: integer;
    TopologicalPolarSurfaceArea: double;
    VaporPressure: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemoinformatics/UnitValue.html">UnitValue[]</a>;
+   # Computed Octanol/Water Partition Coefficient
    XLogP3: double;
    XLogP3_AA: double;
 }
@@ -83,8 +88,8 @@ export class ChemicalDescriptor {
     </div>
 </body>
 
-<script type="text/javascript" src="https://mzkit.org/assets/js/R_syntax.js"></script>
-<script type="text/javascript" src="https://mzkit.org/assets/js/highlights.js"></script>
+<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
+<script type="text/javascript" src="../../_assets/highlights.js"></script>
 <script type="text/javascript">r_highlights("clr_ts");</script>
 
 </html>
