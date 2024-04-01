@@ -69,6 +69,7 @@ Imports BioNovoGene.BioDeep.MSEngine
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Parallel
 Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
 Imports std = System.Math
 
@@ -233,12 +234,43 @@ Public Class Algorithm
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function RunIteration(seeds As IEnumerable(Of AnnotatedSeed)) As IEnumerable(Of InferLink)
-        Return seeds _
-            .ToArray _
-            .AsParallel _
-            .Select(AddressOf RunInfer) _
-            .IteratesALL
+        Dim task As New NetworkInferTask(seeds.ToArray)
+        Call task.Run()
+        Return task.GetNetwork
     End Function
+
+    Private Class NetworkInferTask : Inherits VectorTask
+
+        ReadOnly seeds As AnnotatedSeed()
+        ReadOnly result_buffer As InferLink()()
+        ReadOnly metadna As Algorithm
+
+        Sub New(seeds As AnnotatedSeed())
+            Call MyBase.New(seeds.Length)
+
+            Me.seeds = seeds
+            Me.result_buffer = Allocate(Of InferLink())(all:=False)
+        End Sub
+
+        Public Iterator Function GetNetwork() As IEnumerable(Of InferLink)
+            For Each block As InferLink() In result_buffer
+                For Each link As InferLink In block
+                    Yield link
+                Next
+            Next
+        End Function
+
+        Protected Overrides Sub Solve(start As Integer, ends As Integer, cpu_id As Integer)
+            Dim result As New List(Of InferLink)
+
+            For i As Integer = start To ends
+                Call result.AddRange(metadna.RunInfer(seeds(i)))
+            Next
+
+            result_buffer(cpu_id) = result.ToArray
+            result.Clear()
+        End Sub
+    End Class
 
     Private Iterator Function RunInfer(seed As AnnotatedSeed) As IEnumerable(Of InferLink)
         For Each kegg_id As String In network.FindPartners(seed.kegg_id)
