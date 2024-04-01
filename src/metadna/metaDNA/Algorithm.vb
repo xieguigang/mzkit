@@ -234,7 +234,7 @@ Public Class Algorithm
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function RunIteration(seeds As IEnumerable(Of AnnotatedSeed)) As IEnumerable(Of InferLink)
-        Dim task As New NetworkInferTask(seeds.ToArray)
+        Dim task As New NetworkInferTask(seeds.ToArray, Me)
         Call task.Run()
         Return task.GetNetwork
     End Function
@@ -245,9 +245,10 @@ Public Class Algorithm
         ReadOnly result_buffer As InferLink()()
         ReadOnly metadna As Algorithm
 
-        Sub New(seeds As AnnotatedSeed())
+        Sub New(seeds As AnnotatedSeed(), metadna As Algorithm)
             Call MyBase.New(seeds.Length)
 
+            Me.metadna = metadna
             Me.seeds = seeds
             Me.result_buffer = Allocate(Of InferLink())(all:=False)
         End Sub
