@@ -481,7 +481,9 @@ Public Class Algorithm
     ''' 算法模块测试用
     ''' </remarks>
     Public Function DIASearch() As IEnumerable(Of CandidateInfer)
-        Return DIASearch(GetCandidateSeeds)
+        Dim pullAllSeeds As AnnotatedSeed() = GetCandidateSeeds.ToArray
+
+        Return DIASearch(pullAllSeeds)
     End Function
 
     Private Iterator Function GetCandidateSeeds() As IEnumerable(Of AnnotatedSeed)
