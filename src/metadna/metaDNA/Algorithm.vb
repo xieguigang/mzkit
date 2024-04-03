@@ -329,7 +329,6 @@ Public Class Algorithm
         End If
 
         For Each infer As InferLink In candidates _
-            .AsParallel _
             .Select(Function(hit)
                         Return inferAlignment(hit, mz, type, seed, compound)
                     End Function)
