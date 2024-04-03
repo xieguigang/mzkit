@@ -62,6 +62,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.SplashID
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
 Imports BioNovoGene.BioDeep.Chemoinformatics
 Imports BioNovoGene.BioDeep.MetaDNA.Infer
@@ -513,9 +514,11 @@ Public Class Algorithm
     Private Iterator Function querySingle(unknown As PeakMs2) As IEnumerable(Of AnnotatedSeed)
         Dim seedRef As New LibraryMatrix With {
             .ms2 = unknown.mzInto,
-            .name = unknown.ToString
+            .name = SplashID.MsSplashId(unknown)
         }
 
+        ' get metabolite hits just based on the parent ion
+        ' mz matches
         For Each DIAseed As MzQuery In kegg.QueryByMz(unknown.mz)
             Yield New AnnotatedSeed With {
                 .id = unknown.lib_guid,
