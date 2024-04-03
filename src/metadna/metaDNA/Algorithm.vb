@@ -62,7 +62,6 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
-Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.SplashID
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
 Imports BioNovoGene.BioDeep.Chemoinformatics
 Imports BioNovoGene.BioDeep.MetaDNA.Infer
@@ -483,7 +482,6 @@ Public Class Algorithm
     ''' </remarks>
     Public Function DIASearch() As IEnumerable(Of CandidateInfer)
         Dim pullAllSeeds As AnnotatedSeed() = GetCandidateSeeds.ToArray
-
         Return DIASearch(pullAllSeeds)
     End Function
 
