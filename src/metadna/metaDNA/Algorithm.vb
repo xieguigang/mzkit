@@ -277,8 +277,10 @@ Public Class Algorithm
                 Call result.AddRange(metadna.RunInfer(seeds(i)))
             Next
 
-            result_buffer(cpu_id) = result.ToArray
-            result.Clear()
+            SyncLock result_buffer
+                result_buffer(cpu_id) = result.ToArray
+                result.Clear()
+            End SyncLock
         End Sub
     End Class
 
