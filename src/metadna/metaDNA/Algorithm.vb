@@ -254,7 +254,16 @@ Public Class Algorithm
         End Sub
 
         Public Iterator Function GetNetwork() As IEnumerable(Of InferLink)
+            If result_buffer Is Nothing Then
+                Call $"the parallel result for metaDNA network infer could not be null???".Warning
+                Return
+            End If
+
             For Each block As InferLink() In result_buffer
+                If block Is Nothing Then
+                    Continue For
+                End If
+
                 For Each link As InferLink In block
                     Yield link
                 Next
