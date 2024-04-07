@@ -45,20 +45,23 @@
 
 
 <dt>QC.dataset</dt>
-<dd><p>
- Regular expression pattern string for match QC sample files
- . [as string]</p></dd>
+<dd><p>Regular expression pattern string for match QC sample files. [as string]</p></dd>
 
 
 <dt>ionsRaw</dt>
-<dd><p><code class=""> { 
+<dd><p>A list of ions ChromatogramTick data for run ion data plots.
+ the list data structure in format looks like:
+
+<pre><code class=""> { 
     ion_id1 {
         sample1: ChromatogramTick[],
         sample2: ChromatogramTick[],
         ...
     }
  }
-</code>. [as list]</p></dd>
+</code></pre>
+
+. [as list]</p></dd>
 
         </table>
 

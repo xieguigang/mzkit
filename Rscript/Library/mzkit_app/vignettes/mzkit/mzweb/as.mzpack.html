@@ -36,11 +36,20 @@
         <table>
             
 <dt>assembly</dt>
-<dd><p></p></dd>
+<dd><p>-</p></dd>
 
 
 <dt>args</dt>
-<dd><p>T:BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML.ibdReader. [as list]</p></dd>
+<dd><p>1. modtime: [GCxGC] the modulation time of the chromatographic run. 
+    modulation period in time unit 'seconds'.
+ 2. sample_rate: [GCxGC] the sampling rate of the equipment.
+    If sam_rate is missing, the sampling rate is calculated by the dividing 1 by
+    the difference of two adjacent scan time.
+ 3. imzml: [MS-Imaging] the pixel spot scan metadata collection for
+    read ms data from the ibd file, the corresponding assembly object should
+    be a <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/MarkupData/imzML/ibdReader.html">ibdReader</a> object
+ 4. dims: [MS-Imaging] the canvas dimension size value for the ms-imaging
+    heatmap rendering. [as list]</p></dd>
 
         </table>
 
