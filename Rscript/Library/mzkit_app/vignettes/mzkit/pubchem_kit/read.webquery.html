@@ -36,13 +36,14 @@
         <table>
             
 <dt>file</dt>
-<dd><p> https://pubchem.ncbi.nlm.nih.gov/sdq/sdqagent.cgi?infmt=json&outfmt=xml&query={%22download%22:%22<em>%22,%22collection%22:%22compound%22,%22order%22:[%22relevancescore,desc%22],%22start%22:1,%22limit%22:10000000,%22downloadfilename%22:%22PubChem_compound_text_kegg%22,%22where%22:{%22ands%22:[{%22. [as string]</p></dd>
+<dd><p>the file path to the pubchem query search result file, the data file which
+ could be downloaded from the query result url example like: 
+ 
+ > https://pubchem.ncbi.nlm.nih.gov/sdq/sdqagent.cgi?infmt=json&outfmt=xml&query={%22download%22:%22<em>%22,%22collection%22:%22compound%22,%22order%22:[%22relevancescore,desc%22],%22start%22:1,%22limit%22:10000000,%22downloadfilename%22:%22PubChem_compound_text_kegg%22,%22where%22:{%22ands%22:[{%22</em>%22:%22kegg%22}]}}. [as string]</p></dd>
 
 
 <dt>convert.std</dt>
-<dd><p>
- convert to a unify metabolite data model inside mzkit?
- . [as boolean]</p></dd>
+<dd><p>convert to a unify metabolite data model inside mzkit?. [as boolean]</p></dd>
 
         </table>
 
@@ -57,9 +58,9 @@
 
         <h3>Value</h3>
 
-        A collection of the pubchem query summary <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/NCBI/PubChem/Web/QueryXml.html">QueryXml</a> object
+        <p>A collection of the pubchem query summary <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/NCBI/PubChem/Web/QueryXml.html">QueryXml</a> object
  (or <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/MetaLib/Models/MetaLib.html">MetaLib</a> data model if the parameter <strong>`convert_std`</strong> 
- has been set to <code>true</code>) that parsed from download result file.<h4>clr value class</h4><ul><li><a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Internal/Object/pipeline.html">pipeline</a></li></ul>
+ has been set to <code>true</code>) that parsed from download result file.</p><h4>clr value class</h4><ul><li><a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Internal/Object/pipeline.html">pipeline</a></li></ul>
 
         <h3 style="display: none;">Examples</h3>
 

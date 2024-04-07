@@ -22,7 +22,7 @@
 
         <h3>Description</h3>
 
-         <br /> profile and centroid in Mass Spectrometry?<br /> <br /> 1. Profile means the continuous wave form in a mass spectrum.<br />   + Number of data points Is large.<br /> 2. Centroid means the peaks in a profile data Is changed to bars.<br />   + location of the bar Is center of the profile peak.<br />   + height of the bar Is area of the profile peak.
+        <p><br /> profile and centroid in Mass Spectrometry?<br /> <br /> 1. Profile means the continuous wave form in a mass spectrum.<br />   + Number of data points Is large.<br /> 2. Centroid means the peaks in a profile data Is changed to bars.<br />   + location of the bar Is center of the profile peak.<br />   + height of the bar Is area of the profile peak.</p>
 
         <h3>Usage</h3>
 
@@ -39,7 +39,13 @@
         <table>
             
 <dt>ions</dt>
-<dd><p>mz</code> and <code>intensity</p></dd>
+<dd><p>value of this parameter could be 
+ 
+ + a collection of peakMs2 data 
+ + a library matrix data 
+ + or a dataframe object which should contains at least <code>mz</code> and <code>intensity</code> columns.
+ + or just a m/z vector
+ + also could be a mzpack data object</p></dd>
 
         </table>
 
@@ -54,7 +60,7 @@
 
         <h3>Value</h3>
 
-        Peaks data in centroid mode or a new m/z vector in centroid.<h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/PeakMs2.html">PeakMs2</a></li><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/LibraryMatrix.html">LibraryMatrix</a></li><li>double</li></ul>
+        <p>Peaks data in centroid mode or a new m/z vector in centroid.</p><h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/PeakMs2.html">PeakMs2</a></li><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/LibraryMatrix.html">LibraryMatrix</a></li><li>double</li></ul>
 
         <h3 style="display: block;">Examples</h3>
 
