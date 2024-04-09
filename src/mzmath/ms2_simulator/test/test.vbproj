@@ -190,6 +190,10 @@
       <Project>{72f24667-7c64-4cd5-bc11-5c6b760fbe85}</Project>
       <Name>chemoinformatics-netcore5</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\metadb\FormulaSearch.Extensions\FormulaSearch.Extensions.NET5.vbproj">
+      <Project>{55aba88d-a8de-4da4-8eb7-694a001356df}</Project>
+      <Name>FormulaSearch.Extensions.NET5</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\metadb\SMILES\SMILES.NET5.vbproj">
       <Project>{d3efb10a-bf94-41d0-8b8c-dfcc87c3191a}</Project>
       <Name>SMILES.NET5</Name>
