@@ -63,12 +63,14 @@
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x64\Release\</OutputPath>
     <DocumentationFile>test.xml</DocumentationFile>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
-    <DebugType>pdbonly</DebugType>
+    <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biodeep|AnyCPU'">
     <DefineTrace>true</DefineTrace>
@@ -162,6 +164,10 @@
       <Project>{8187a0fd-f2df-4ab2-94be-c6b3a2a7a4f3}</Project>
       <Name>word2vec</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\DataMining\DataMining\DataMining.NET5.vbproj">
+      <Project>{8c524907-fdbe-45e0-9ded-0c32cd63993e}</Project>
+      <Name>DataMining.NET5</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Graph\graph-netcore5.vbproj">
       <Project>{2abbd328-6c77-410c-adaf-aa01d72ac9cf}</Project>
       <Name>graph-netcore5</Name>
@@ -201,6 +207,10 @@
     <ProjectReference Include="..\..\ms2_math-core\mzmath-netcore5.vbproj">
       <Project>{57919deb-45a1-4014-8213-648142a92c12}</Project>
       <Name>mzmath-netcore5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MSFinder\MSFinder.vbproj">
+      <Project>{8b31e925-c006-4d17-9bf7-dc15f8522add}</Project>
+      <Name>MSFinder</Name>
     </ProjectReference>
     <ProjectReference Include="..\ms2_simulator.NET5.vbproj">
       <Project>{6deeb540-a156-4a77-96ff-6ad19e237791}</Project>
