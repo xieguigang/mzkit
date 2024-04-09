@@ -6,12 +6,12 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{656710E7-4A50-4832-8A94-B0C78E9F9855}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <StartupObject>test.simulatorTest</StartupObject>
+    <StartupObject>test.graph_test</StartupObject>
     <RootNamespace>test</RootNamespace>
     <AssemblyName>test</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Console</MyType>
-    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -115,14 +115,12 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Module1.vb" />
-    <Compile Include="simulatorTest.vb" />
-    <Compile Include="rt_test.vb" />
-    <Compile Include="NWAlignTest.vb" />
+    <Compile Include="graph_test.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
       <DependentUpon>Application.myapp</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="My Project\Resources.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -156,73 +154,53 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\GCModeller\src\GCModeller\core\Bio.Assembly\Bio.Assembly.vbproj">
-      <Project>{c699d311-9923-4c19-bf70-5048d0e2cf5d}</Project>
-      <Name>Bio.Assembly</Name>
+    <ProjectReference Include="..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\Trinity\Trinity.NET5.vbproj">
+      <Project>{5e5f4a4b-cc36-45b4-abfc-95f1754cc6ba}</Project>
+      <Name>Trinity.NET5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\..\GCModeller\src\GCModeller\core\Bio.Repository\Bio.Repository.vbproj">
-      <Project>{216acc2d-c7a5-4c27-9dc9-bdfa4dbb6a37}</Project>
-      <Name>Bio.Repository</Name>
+    <ProjectReference Include="..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\word2vec\word2vec.vbproj">
+      <Project>{8187a0fd-f2df-4ab2-94be-c6b3a2a7a4f3}</Project>
+      <Name>word2vec</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\DataFrame\47_dotnet_ms-vb_data.framework.vbproj">
-      <Project>{7283c179-f852-4ead-8d8f-b82ef2cbd7db}</Project>
-      <Name>47_dotnet_ms-vb_data.framework</Name>
+    <ProjectReference Include="..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Graph\graph-netcore5.vbproj">
+      <Project>{2abbd328-6c77-410c-adaf-aa01d72ac9cf}</Project>
+      <Name>graph-netcore5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\DataMining\DataMining\DataMining.vbproj">
-      <Project>{1b42809b-603f-4cea-a0db-91276582b9ca}</Project>
-      <Name>DataMining</Name>
+    <ProjectReference Include="..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\MachineLearning\Bootstrapping\Bootstrapping.vbproj">
+      <Project>{c4513d63-4d04-4e81-a1a2-78f42d19cceb}</Project>
+      <Name>Bootstrapping</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Graph\GraphTheory.vbproj">
-      <Project>{203bc68f-a0cd-443a-ab62-4af4110f752f}</Project>
-      <Name>GraphTheory</Name>
+    <ProjectReference Include="..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\Math.Statistics\stats-netcore5.vbproj">
+      <Project>{c272bec1-5e0b-465c-8cef-5d8ac1589d74}</Project>
+      <Name>stats-netcore5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\MachineLearning\MachineLearning\MachineLearning.vbproj">
-      <Project>{a43ec013-2b55-4d25-b9f1-96bd5fb1e577}</Project>
-      <Name>MachineLearning</Name>
+    <ProjectReference Include="..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\Math\Math.NET5.vbproj">
+      <Project>{36d94cf4-1eb4-4269-a042-d1fd3c809211}</Project>
+      <Name>Math.NET5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\DataFittings\DataFittings.vbproj">
-      <Project>{fc125b0d-1942-496f-b502-9c0eb80e35b6}</Project>
-      <Name>DataFittings</Name>
+    <ProjectReference Include="..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\gr\network-visualization\Datavisualization.Network\network_graph-netcore5.vbproj">
+      <Project>{c376ee60-1183-44c6-b367-8aa6e4ccdcf0}</Project>
+      <Name>network_graph-netcore5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\Math\math-core.vbproj">
-      <Project>{e3367b88-5d0c-495a-8273-331656d4b5aa}</Project>
-      <Name>math-core</Name>
+    <ProjectReference Include="..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj">
+      <Project>{5c2b22b9-526f-4ed4-a0a8-e527cfc4f1c4}</Project>
+      <Name>Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\ODE\ODEsSolver.vbproj">
-      <Project>{14e0b048-3a0d-4fd6-aa79-9b815d6f1b30}</Project>
-      <Name>ODEsSolver</Name>
+    <ProjectReference Include="..\..\..\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj">
+      <Project>{72f24667-7c64-4cd5-bc11-5c6b760fbe85}</Project>
+      <Name>chemoinformatics-netcore5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\gr\network-visualization\Datavisualization.Network\Network.GraphTheory.vbproj">
-      <Project>{076315ee-b598-40dc-9280-c71cdf9b6a48}</Project>
-      <Name>Network.GraphTheory</Name>
+    <ProjectReference Include="..\..\..\metadb\SMILES\SMILES.NET5.vbproj">
+      <Project>{d3efb10a-bf94-41d0-8b8c-dfcc87c3191a}</Project>
+      <Name>SMILES.NET5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\gr\physics\physics.vbproj">
-      <Project>{3291389c-ea87-4b33-a9a5-65a2d60ba3e2}</Project>
-      <Name>physics</Name>
+    <ProjectReference Include="..\..\ms2_math-core\mzmath-netcore5.vbproj">
+      <Project>{57919deb-45a1-4014-8213-648142a92c12}</Project>
+      <Name>mzmath-netcore5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\47-dotnet_Microsoft.VisualBasic.vbproj">
-      <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
-      <Name>47-dotnet_Microsoft.VisualBasic</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Assembly\assembly\assembly.vbproj">
-      <Project>{95f7d65e-9db1-4605-9fd3-25433277af88}</Project>
-      <Name>assembly</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\visualize\KCF\KCF.Graph\KCF.Graph.vbproj">
-      <Project>{c60416d4-b3e2-45e5-bfe0-90d5021647f9}</Project>
-      <Name>KCF.Graph</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\visualize\KCF\KCF.IO\KCF.IO.vbproj">
-      <Project>{1bafa2bc-68b2-4ee0-9235-c60fae3377a0}</Project>
-      <Name>KCF.IO</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\ms2_math-core\MassSpectrum.math-core.vbproj">
-      <Project>{a2130297-2b4a-4b02-80b2-5cfa860f6dae}</Project>
-      <Name>MassSpectrum.math-core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ms2_simulator.vbproj">
-      <Project>{77683884-edf0-4c48-9d7c-b4343a561fd7}</Project>
-      <Name>ms2_simulator</Name>
+    <ProjectReference Include="..\ms2_simulator.NET5.vbproj">
+      <Project>{6deeb540-a156-4a77-96ff-6ad19e237791}</Project>
+      <Name>ms2_simulator.NET5</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
