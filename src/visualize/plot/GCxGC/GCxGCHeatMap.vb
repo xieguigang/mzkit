@@ -145,8 +145,8 @@ Public Class GCxGCHeatMap : Inherits Plot
             x = rect.Left
 
             For Each col As D2Chromatogram() In matrix(i)
-                scaleX = d3js.scale.linear.domain(values:=col.Select(Function(d) d.scan_time)).range({x, x + wx})
-                scaleY = d3js.scale.linear.domain(values:=col.Select(Function(d) d.times).IteratesALL).range({y, y + wy})
+                scaleX = d3js.scale.linear.domain(values:=col.Select(Function(d) d.scan_time)).range(values:={x, x + wx})
+                scaleY = d3js.scale.linear.domain(values:=col.Select(Function(d) d.times).IteratesALL).range(values:={y, y + wy})
                 n = col.Select(Function(d) d.size).Average
                 scale = New DataScaler() With {
                     .X = scaleX,

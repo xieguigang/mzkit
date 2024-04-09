@@ -150,9 +150,9 @@ Public Class GCxGCTIC3DPeaks : Inherits Plot
         Dim xTicks = gcxgc.Select(Function(s) s.scan_time).Range
         Dim yTicks = gcxgc.Select(Function(s) s.chromatogram.Select(Function(t) t.Time)).IteratesALL.Range
         Dim zTicks = gcxgc.Select(Function(s) s.chromatogram.Select(Function(p) p.Intensity)).IteratesALL.Range
-        Dim xscale = d3js.scale.linear.domain(xTicks).range(New Double() {0, xsize})
-        Dim yscale = d3js.scale.linear.domain(yTicks).range(New Double() {0, ysize})
-        Dim zscale = d3js.scale.linear.domain(zTicks).range(New Double() {0, zsize})
+        Dim xscale = d3js.scale.linear.domain(xTicks).range(values:=New Double() {0, xsize})
+        Dim yscale = d3js.scale.linear.domain(yTicks).range(values:=New Double() {0, ysize})
+        Dim zscale = d3js.scale.linear.domain(zTicks).range(values:=New Double() {0, zsize})
 
         gcxgc = (From scan As D2Chromatogram
                  In gcxgc
