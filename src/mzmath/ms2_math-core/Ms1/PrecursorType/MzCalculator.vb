@@ -231,14 +231,21 @@ Namespace Ms1.PrecursorType
         ''' </param>
         ''' <param name="mode"><see cref="ParseIonMode"/></param>
         ''' <returns></returns>
-        Public Shared Iterator Function EvaluateAll(mass#, mode As String, Optional exact_mass As Boolean = False) As IEnumerable(Of PrecursorInfo)
-            For Each type In Provider.Calculator(mode).Values
+        Public Shared Function EvaluateAll(mass#, mode As String, Optional exact_mass As Boolean = False) As IEnumerable(Of PrecursorInfo)
+            Return EvaluateAll(mass, Provider.Calculator(mode).Values, exact_mass)
+        End Function
+
+        Public Shared Iterator Function EvaluateAll(mass As Double,
+                                                    ions As IEnumerable(Of MzCalculator),
+                                                    Optional exact_mass As Boolean = False) As IEnumerable(Of PrecursorInfo)
+            For Each type As MzCalculator In ions
                 Yield New PrecursorInfo With {
                     .adduct = type.adducts,
                     .charge = type.charge,
                     .M = type.M,
                     .mz = If(exact_mass, type.CalcMass(mass), type.CalcMZ(mass)),
-                    .precursor_type = type.name
+                    .precursor_type = type.name,
+                    .ionMode = type.GetIonMode
                 }
             Next
         End Function

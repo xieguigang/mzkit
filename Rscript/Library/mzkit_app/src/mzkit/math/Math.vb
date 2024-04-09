@@ -160,6 +160,7 @@ Module MzMath
         Dim adduct As Double() = list.Select(Function(i) i.adduct).ToArray
         Dim mz As String() = list.Select(Function(i) i.mz).ToArray
         Dim ionMode As Integer() = list.Select(Function(i) i.ionMode).ToArray
+        Dim is_exact_mass As Boolean = args.getValue(Of Boolean)({"exact_mass", "is.exact_mass"}, env, [default]:=False)
 
         Return New dataframe With {
             .rownames = precursor_type,
@@ -168,7 +169,7 @@ Module MzMath
                 {"charge", charge},
                 {"M", M},
                 {"adduct", adduct},
-                {"m/z", mz},
+                {If(is_exact_mass, "exact_mass", "m/z"), mz},
                 {"ionMode", ionMode}
             }
         }
@@ -285,13 +286,32 @@ Module MzMath
     ''' <summary>
     ''' evaluate all exact mass for all known precursor type.
     ''' </summary>
-    ''' <param name="mz"></param>
-    ''' <param name="mode"></param>
-    ''' <returns></returns>
+    ''' <param name="mz">a single ion m/z value.</param>
+    ''' <param name="mode">the ion polarity mode ``+/-`` for evaluate all kind of 
+    ''' precursor type under the specific polarity mode, or a vector of the 
+    ''' <see cref="MzCalculator"/> precursor type model which is generates from 
+    ''' the ``math::precursor_types`` function.
+    ''' </param>
+    ''' <returns>a collection of the exact mass evaluation result, could be cast
+    ''' to dataframe via ``as.data.frame`` function.</returns>
     <ExportAPI("exact_mass")>
     <RApiReturn(GetType(PrecursorInfo))>
-    Public Function exact_mass(mz As Double, Optional mode As Object = "+") As Object
-        Return MzCalculator.EvaluateAll(mz, any.ToString(mode, "+"), True).ToArray
+    Public Function exact_mass(mz As Double,
+                               <RRawVectorArgument>
+                               Optional mode As Object = "+",
+                               Optional env As Environment = Nothing) As Object
+
+        Dim sym = CLRVector.asCharacter(mode)
+
+        If sym.IsNullOrEmpty Then
+            Return Internal.debug.stop("the required ion mode value should not be nothing!", env)
+        ElseIf sym.Length = 1 AndAlso ParseIonMode(sym(0), allowsUnknown:=True) <> IonModes.Unknown Then
+            Return MzCalculator.EvaluateAll(mz, sym(0), True).ToArray
+        Else
+            Dim ions As MzCalculator() = Math.GetPrecursorTypes(mode, env)
+            Dim mass = MzCalculator.EvaluateAll(mz, ions, exact_mass:=True).ToArray
+            Return mass
+        End If
     End Function
 
     ''' <summary>
@@ -880,7 +900,7 @@ Module MzMath
     ''' <summary>
     ''' create precursor type calculator
     ''' </summary>
-    ''' <param name="types"></param>
+    ''' <param name="types">a character vector of the precursor type symbols, example as ``[M+H]+``, etc.</param>
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("precursor_types")>
