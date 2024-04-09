@@ -16,7 +16,9 @@ Public Module MolecularGraph
             "-O-",
             "-NH2",
             "-NH3",
-            "-NH4"
+            "-NH4",
+            "C",
+            "N"
         })
     End Sub
 

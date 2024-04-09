@@ -14,6 +14,9 @@ Module graph_test
         data.Add(New ClusterEntity("leucine", vectorBuilder("CC(C)C[C@H](N)C(O)=O")))
         data.Add(New ClusterEntity("3-Isopropylmalic acid", vectorBuilder("CC(C)[C@@H]([C@@H](O)C(O)=O)C(O)=O")))
         data.Add(New ClusterEntity("Choline", vectorBuilder("C[N+](C)(C)CCO")))
+        data.Add(New ClusterEntity("Serylvaline", vectorBuilder("CC(C)[C@H](NC(=O)[C@@H](N)CO)C(O)=O")))
+        data.Add(New ClusterEntity("L-Valine", vectorBuilder("CC(C)[C@H](N)C(O)=O")))
+        data.Add(New ClusterEntity("Trigonelline", vectorBuilder("C[N+]1=CC=CC(=C1)C([O-])=O")))
 
         Pause()
     End Sub
