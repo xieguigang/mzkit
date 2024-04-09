@@ -35,7 +35,15 @@
         <table>
             
 <dt>ticks</dt>
-<dd><p>T:BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram.ChromatogramTick</p></dd>
+<dd><p>A vector of the <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Chromatogram/ChromatogramTick.html">ChromatogramTick</a> object or a dataframe object.
+ 
+ If the data input is a dataframe object, then the data fields is
+ required for create the chromatogram object:
+ 
+ 1. rt,RT,retention_time: used for represents the retention time data, data should be in time data unit seconds
+ 2. basePeak,BPC: used for represents the base peak ion intensity value
+ 3. totalIon,TIC: used for represents the total ions intensity value
+ 4. into,intensity: used for represents the ion intensity value if the basePeak or total ion data is not specific</p></dd>
 
         </table>
 
@@ -50,8 +58,8 @@
 
         <h3>Value</h3>
 
-        A chromatogram data object, which could be used for do 
- chromatogram overlaps or data plot visualization.<h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Chromatogram/Chromatogram.html">Chromatogram</a></li></ul>
+        <p>A chromatogram data object, which could be used for do 
+ chromatogram overlaps or data plot visualization.</p><h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Chromatogram/Chromatogram.html">Chromatogram</a></li></ul>
 
         <h3 style="display: none;">Examples</h3>
 

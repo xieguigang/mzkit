@@ -86,6 +86,7 @@ Public Class Algorithm
     ReadOnly MSalignment As AlignmentProvider
     ReadOnly mzwidth As Tolerance
     ReadOnly allowMs1 As Boolean = True
+    ReadOnly debug As Boolean = False
 
     Dim precursorTypes As MzCalculator()
     Dim typeOrders As Index(Of String)
@@ -118,7 +119,8 @@ Public Class Algorithm
             dotcutoff As Double,
             mzwidth As Tolerance,
             Optional allowMs1 As Boolean = True,
-            Optional maxIterations As Integer = 1000)
+            Optional maxIterations As Integer = 1000,
+            Optional debug As Boolean = False)
 
         Me.ms1ppm = ms1ppm
         Me.dotcutoff = dotcutoff
@@ -127,6 +129,11 @@ Public Class Algorithm
         Me.allowMs1 = allowMs1
         Me.maxIterations = maxIterations
         Me.report = AddressOf Console.WriteLine
+        Me.debug = debug
+
+        If debug Then
+            Call VBDebugger.EchoLine("run metadna algorithm in debug mode.")
+        End If
     End Sub
 
     Public Function SetReportHandler(report As Action(Of String)) As Algorithm
@@ -235,7 +242,13 @@ Public Class Algorithm
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function RunIteration(seeds As IEnumerable(Of AnnotatedSeed)) As IEnumerable(Of InferLink)
         Dim task As New NetworkInferTask(seeds.ToArray, Me)
-        Call task.Run()
+
+        If debug Then
+            Call task.Solve()
+        Else
+            Call task.Run()
+        End If
+
         Return task.GetNetwork
     End Function
 
@@ -254,7 +267,16 @@ Public Class Algorithm
         End Sub
 
         Public Iterator Function GetNetwork() As IEnumerable(Of InferLink)
+            If result_buffer Is Nothing Then
+                Call $"the parallel result for metaDNA network infer could not be null???".Warning
+                Return
+            End If
+
             For Each block As InferLink() In result_buffer
+                If block Is Nothing Then
+                    Continue For
+                End If
+
                 For Each link As InferLink In block
                     Yield link
                 Next
@@ -268,8 +290,10 @@ Public Class Algorithm
                 Call result.AddRange(metadna.RunInfer(seeds(i)))
             Next
 
-            result_buffer(cpu_id) = result.ToArray
-            result.Clear()
+            SyncLock result_buffer
+                result_buffer(cpu_id) = result.ToArray
+                result.Clear()
+            End SyncLock
         End Sub
     End Class
 
@@ -305,7 +329,6 @@ Public Class Algorithm
         End If
 
         For Each infer As InferLink In candidates _
-            .AsParallel _
             .Select(Function(hit)
                         Return inferAlignment(hit, mz, type, seed, compound)
                     End Function)
@@ -464,14 +487,18 @@ Public Class Algorithm
     Private Iterator Function GetCandidateSeeds() As IEnumerable(Of AnnotatedSeed)
         Dim ms2Peaks = unknowns.EnumerateAllUnknownFeatures.ToArray
         Dim n As Integer = 0
+        Dim popOut As Func(Of IEnumerable(Of IEnumerable(Of AnnotatedSeed)))
+
+        If debug Then
+            popOut = Function() ms2Peaks.Select(AddressOf querySingle)
+        Else
+            popOut = Function() DirectCast(ms2Peaks.AsParallel.Select(AddressOf querySingle), IEnumerable(Of IEnumerable(Of AnnotatedSeed)))
+        End If
 
         Call report($"Create candidate seeds by query metabolite annotation library...")
         Call report($"impute from {ms2Peaks.Length} ms2 peaks!")
 
-        For Each seeds As IEnumerable(Of AnnotatedSeed) In ms2Peaks _
-            .AsParallel _
-            .Select(AddressOf querySingle)
-
+        For Each seeds As IEnumerable(Of AnnotatedSeed) In popOut()
             For Each seed As AnnotatedSeed In seeds
                 n += 1
                 Yield seed
@@ -484,9 +511,11 @@ Public Class Algorithm
     Private Iterator Function querySingle(unknown As PeakMs2) As IEnumerable(Of AnnotatedSeed)
         Dim seedRef As New LibraryMatrix With {
             .ms2 = unknown.mzInto,
-            .name = unknown.ToString
+            .name = SplashID.MsSplashId(unknown)
         }
 
+        ' get metabolite hits just based on the parent ion
+        ' mz matches
         For Each DIAseed As MzQuery In kegg.QueryByMz(unknown.mz)
             Yield New AnnotatedSeed With {
                 .id = unknown.lib_guid,

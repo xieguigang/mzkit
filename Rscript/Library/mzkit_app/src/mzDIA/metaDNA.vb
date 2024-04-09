@@ -228,6 +228,7 @@ Module metaDNAInfer
                                      Optional dotcutoff As Double = 0.5,
                                      Optional allowMs1 As Boolean = True,
                                      Optional maxIterations As Integer = 1000,
+                                     Optional debug As Boolean = False,
                                      Optional env As Environment = Nothing) As Object
 
         Dim ms1Err As [Variant](Of Tolerance, Message) = Math.getTolerance(ms1ppm, env)
@@ -239,7 +240,9 @@ Module metaDNAInfer
             Return mz2Err.TryCast(Of Message)
         End If
 
-        Return New MetaDNAAlgorithm(ms1Err, dotcutoff, mz2Err, allowMs1, maxIterations)
+        Return New MetaDNAAlgorithm(ms1Err, dotcutoff, mz2Err, allowMs1,
+            maxIterations:=maxIterations,
+            debug:=debug)
     End Function
 
     ''' <summary>

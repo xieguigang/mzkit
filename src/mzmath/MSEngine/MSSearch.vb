@@ -216,7 +216,7 @@ Public Class MSSearch(Of Compound As {IReadOnlyId, ICompoundNameProvider, IExact
     ''' <remarks>
     ''' the query score is zero from this function
     ''' </remarks>
-    Public Iterator Function QueryByMz(mz As Double) As IEnumerable(Of MzQuery) Implements IMzQuery.QueryByMz
+    Public Overridable Iterator Function QueryByMz(mz As Double) As IEnumerable(Of MzQuery) Implements IMzQuery.QueryByMz
         Dim result As Compound() = mzIndex _
             .QueryByMass(mz) _
             .Select(Function(d) d.compound) _

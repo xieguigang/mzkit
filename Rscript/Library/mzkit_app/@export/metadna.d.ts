@@ -177,11 +177,13 @@ declare namespace metadna {
      * @param maxIterations -
      * 
      * + default value Is ``1000``.
+     * @param debug 
+     * + default value Is ``false``.
      * @param env -
      * 
      * + default value Is ``null``.
    */
-   function metadna(ms1ppm?: any, mzwidth?: any, dotcutoff?: number, allowMs1?: boolean, maxIterations?: object, env?: object): object;
+   function metadna(ms1ppm?: any, mzwidth?: any, dotcutoff?: number, allowMs1?: boolean, maxIterations?: object, debug?: boolean, env?: object): object;
    /**
     * Configs the precursor adducts range for the metaDNA algorithm
     * 
