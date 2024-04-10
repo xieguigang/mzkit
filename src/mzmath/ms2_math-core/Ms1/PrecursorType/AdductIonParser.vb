@@ -134,15 +134,17 @@ Namespace Ms1.PrecursorType
         ''' </summary>
         ''' <param name="formula"></param>
         ''' <returns></returns>
-        Public Function GetFormulaAndNumber(formula As String) As (String, Double)
+        Public Function GetFormulaAndNumber(formula As String) As (formula As String, multipliedNum As Double)
             Dim numString = String.Empty
-            For i = 0 To formula.Length - 1
+
+            For i As Integer = 0 To formula.Length - 1
                 If Char.IsNumber(formula(i)) Then
                     numString += formula(i)
                 Else
                     Exit For
                 End If
             Next
+
             Return (formula.Substring(numString.Length), If(String.IsNullOrEmpty(numString), 1, Double.Parse(numString)))
         End Function
 

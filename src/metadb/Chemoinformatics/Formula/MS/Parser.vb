@@ -36,10 +36,11 @@ Namespace Formula.MS
 
         Public Function CalculateAccurateMassAndIsotopeRatioOfMolecularFormula(rawFormula As String) As (Double, Double, Double)
             Dim formula As String = Nothing, multipliedNum As Double = Nothing
-            Dim nil As (formula As String, multipliedNum As Double) = GetFormulaAndNumber(rawFormula)
 
-            formula = nil.formula
-            multipliedNum = nil.multipliedNum
+            With GetFormulaAndNumber(rawFormula)
+                formula = .formula
+                multipliedNum = .multipliedNum
+            End With
 
             If String.IsNullOrWhiteSpace(formula) Then
                 Return (multipliedNum, 0, 0)
