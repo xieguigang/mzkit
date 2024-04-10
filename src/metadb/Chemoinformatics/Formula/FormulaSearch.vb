@@ -56,7 +56,7 @@
 
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Formula
 
@@ -141,7 +141,7 @@ Namespace Formula
                     Call progressReport($"find {formula} with tolerance error {formula.ppm} ppm!")
                 End If
 
-                formula.massdiff = stdNum.Abs(formula.ExactMass - exact_mass)
+                formula.massdiff = std.Abs(formula.ExactMass - exact_mass)
 
                 Yield formula
             Next
@@ -267,7 +267,7 @@ Namespace Formula
         Public Overloads Shared Function PPM(measured#, actualValue#) As Double
             ' （测量值-实际分子量）/ 实际分子量
             ' |(实验数据 - 数据库结果)| / 实验数据 * 1000000
-            Dim ppmd# = (stdNum.Abs(measured - actualValue) / actualValue) * 1000000
+            Dim ppmd# = (std.Abs(measured - actualValue) / actualValue) * 1000000
 
             If ppmd < 0 Then
                 ' 计算溢出了
