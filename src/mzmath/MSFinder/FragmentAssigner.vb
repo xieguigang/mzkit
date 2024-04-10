@@ -32,8 +32,8 @@ Public NotInheritable Class FragmentAssigner
     ''' <summary>
     ''' peaklist should be centroid and refined. For peaklist refining, use GetRefinedPeaklist.
     ''' </summary>
-    ''' <param name="peaklist"></param>
-    ''' <param name="formula"></param>
+    ''' <param name="peaklist">the ms2 spectrum matrix</param>
+    ''' <param name="formula">the annotated formula</param>
     ''' <remarks>
     ''' this function only populate out the product ion fragment which has 
     ''' the annotation result
@@ -164,11 +164,17 @@ Public NotInheritable Class FragmentAssigner
     ''' <param name="originalFormula"></param>
     ''' <param name="adductIon"></param>
     ''' <returns></returns>
-    Public Shared Function FastNeutralLossAssigner(neutralLosslist As List(Of NeutralLoss), neutralLossDB As List(Of NeutralLoss), originalFormula As Formula, ms2Tol As Double, massTolType As MassToleranceType, adductIon As AdductIon) As List(Of NeutralLoss)
-        Dim neutralLossResult = New List(Of NeutralLoss)()
+    Public Shared Function FastNeutralLossAssigner(neutralLosslist As List(Of NeutralLoss),
+                                                   neutralLossDB As List(Of NeutralLoss),
+                                                   originalFormula As Formula,
+                                                   ms2Tol As Double,
+                                                   massTolType As MassToleranceType,
+                                                   adductIon As AdductIon) As List(Of NeutralLoss)
+
+        Dim neutralLossResult As New List(Of NeutralLoss)()
         'double eMass = electron; if (adductIon.IonMode == IonMode.Negative) eMass = -1.0 * electron; 
 
-        For Each nloss In neutralLosslist
+        For Each nloss As NeutralLoss In neutralLosslist
             Dim mass = nloss.MassLoss
             Dim minDiff = Double.MaxValue
             Dim massTol = ms2Tol
@@ -192,22 +198,23 @@ Public NotInheritable Class FragmentAssigner
 
             If minID >= 0 Then
                 neutralLossResult.Add(New NeutralLoss() With {
-.Comment = neutralLossDB(minID).Comment,
-.Formula = neutralLossDB(minID).Formula,
-.Iontype = neutralLossDB(minID).Iontype,
-.CandidateInChIKeys = neutralLossDB(minID).CandidateInChIKeys,
-.CandidateOntologies = neutralLossDB(minID).CandidateOntologies,
-.Frequency = neutralLossDB(minID).Frequency,
-.MassLoss = nloss.MassLoss,
-.PrecursorMz = nloss.PrecursorMz,
-.ProductMz = nloss.ProductMz,
-.PrecursorIntensity = nloss.PrecursorIntensity,
-.ProductIntensity = nloss.ProductIntensity,
-.MassError = neutralLossDB(minID).Formula.ExactMass - mass,
-.Smiles = neutralLossDB(minID).Smiles
-})
+                    .Comment = neutralLossDB(minID).Comment,
+                    .Formula = neutralLossDB(minID).Formula,
+                    .Iontype = neutralLossDB(minID).Iontype,
+                    .CandidateInChIKeys = neutralLossDB(minID).CandidateInChIKeys,
+                    .CandidateOntologies = neutralLossDB(minID).CandidateOntologies,
+                    .Frequency = neutralLossDB(minID).Frequency,
+                    .MassLoss = nloss.MassLoss,
+                    .PrecursorMz = nloss.PrecursorMz,
+                    .ProductMz = nloss.ProductMz,
+                    .PrecursorIntensity = nloss.PrecursorIntensity,
+                    .ProductIntensity = nloss.ProductIntensity,
+                    .MassError = neutralLossDB(minID).Formula.ExactMass - mass,
+                    .Smiles = neutralLossDB(minID).Smiles
+                })
             End If
         Next
+
         Return neutralLossResult.OrderByDescending(Function(n) std.Max(n.PrecursorIntensity, n.ProductIntensity)).ToList()
     End Function
 
@@ -240,30 +247,34 @@ Public NotInheritable Class FragmentAssigner
         Dim monoIsotopicPeaklist = New List(Of SpectrumPeak)()
         Dim maxNeutralLoss = 1000
 
-        For Each peak In peaklist
+        For Each peak As SpectrumPeak In peaklist
             If Equals(peak.Annotation, "M") Then monoIsotopicPeaklist.Add(peak)
         Next
+
         monoIsotopicPeaklist = monoIsotopicPeaklist.OrderByDescending(Function(n) n.mz).ToList()
 
         Dim highestMz = monoIsotopicPeaklist(0).mz
-        If std.Abs(highestMz - precurosrMz) > masstol Then monoIsotopicPeaklist.Insert(0, New SpectrumPeak() With {
-.mz = precurosrMz,
-.intensity = 1,
-.Annotation = "Insearted precursor"
-})
 
-        For i = 0 To monoIsotopicPeaklist.Count - 1
-            For j = i + 1 To monoIsotopicPeaklist.Count - 1
+        If std.Abs(highestMz - precurosrMz) > masstol Then
+            monoIsotopicPeaklist.Insert(0, New SpectrumPeak() With {
+                .mz = precurosrMz,
+                .intensity = 1,
+                .Annotation = "Insearted precursor"
+            })
+        End If
+
+        For i As Integer = 0 To monoIsotopicPeaklist.Count - 1
+            For j As Integer = i + 1 To monoIsotopicPeaklist.Count - 1
                 If j > monoIsotopicPeaklist.Count - 1 Then Exit For
                 If monoIsotopicPeaklist(i).mz - monoIsotopicPeaklist(j).mz < 12 - masstol Then Continue For
 
                 neutralLosslist.Add(New NeutralLoss() With {
-.MassLoss = monoIsotopicPeaklist(i).mz - monoIsotopicPeaklist(j).mz,
-.PrecursorMz = monoIsotopicPeaklist(i).mz,
-.ProductMz = monoIsotopicPeaklist(j).mz,
-.PrecursorIntensity = monoIsotopicPeaklist(i).intensity,
-.ProductIntensity = monoIsotopicPeaklist(j).intensity
-})
+                    .MassLoss = monoIsotopicPeaklist(i).mz - monoIsotopicPeaklist(j).mz,
+                    .PrecursorMz = monoIsotopicPeaklist(i).mz,
+                    .ProductMz = monoIsotopicPeaklist(j).mz,
+                    .PrecursorIntensity = monoIsotopicPeaklist(i).intensity,
+                    .ProductIntensity = monoIsotopicPeaklist(j).intensity
+                })
             Next
         Next
 
@@ -272,7 +283,9 @@ Public NotInheritable Class FragmentAssigner
             Dim filteredList = New List(Of NeutralLoss)()
             For Each peak In neutralLosslist
                 filteredList.Add(peak)
-                If filteredList.Count > maxNeutralLoss Then Return filteredList.OrderByDescending(Function(n) n.PrecursorMz).ToList()
+                If filteredList.Count > maxNeutralLoss Then
+                    Return filteredList.OrderByDescending(Function(n) n.PrecursorMz).ToList()
+                End If
             Next
         End If
 
@@ -285,9 +298,14 @@ Public NotInheritable Class FragmentAssigner
     ''' <param name="peaklist"></param>
     ''' <param name="precursorMz"></param>
     ''' <returns></returns>
-    Public Shared Function GetRefinedPeaklist(peaklist As SpectrumPeak(), relativeAbundanceCutOff As Double, absoluteAbundanceCutOff As Double, precursorMz As Double, ms2Tol As Double, massTolType As MassToleranceType, Optional peakListMax As Integer = 1000, Optional isRemoveIsotopes As Boolean = False, Optional removeAfterPrecursor As Boolean = True) As List(Of SpectrumPeak)
-
-
+    Public Shared Function GetRefinedPeaklist(peaklist As SpectrumPeak(), relativeAbundanceCutOff As Double,
+                                              absoluteAbundanceCutOff As Double,
+                                              precursorMz As Double,
+                                              ms2Tol As Double,
+                                              massTolType As MassToleranceType,
+                                              Optional peakListMax As Integer = 1000,
+                                              Optional isRemoveIsotopes As Boolean = False,
+                                              Optional removeAfterPrecursor As Boolean = True) As List(Of SpectrumPeak)
 
         If peaklist Is Nothing OrElse peaklist.Length = 0 Then
             Return New List(Of SpectrumPeak)()
@@ -365,7 +383,12 @@ Public NotInheritable Class FragmentAssigner
     ''' <param name="peaklist"></param>
     ''' <param name="precursorMz"></param>
     ''' <returns></returns>
-    Public Shared Function GetRefinedPeaklist(peaklist As List(Of SpectrumPeak), relativeAbundanceCutOff As Double, absoluteAbundanceCutOff As Double, precursorMz As Double, ms2Tol As Double, massTolType As MassToleranceType) As List(Of SpectrumPeak)
+    Public Shared Function GetRefinedPeaklist(peaklist As List(Of SpectrumPeak),
+                                              relativeAbundanceCutOff As Double,
+                                              absoluteAbundanceCutOff As Double,
+                                              precursorMz As Double,
+                                              ms2Tol As Double,
+                                              massTolType As MassToleranceType) As List(Of SpectrumPeak)
 
         If peaklist Is Nothing OrElse peaklist.Count = 0 Then
             Return New List(Of SpectrumPeak)()
@@ -413,6 +436,7 @@ Public NotInheritable Class FragmentAssigner
     Private Shared Function getValenceCheckedFragmentFormulaList(formula As Formula, ionMode As IonModes, mass As Double, massTol As Double) As List(Of Formula)
         Dim fragmentFormulas = New List(Of Formula)()
         Dim hydrogen = 1
+
         If ionMode = IonModes.Negative Then hydrogen = -1
 
         Dim maxHmass = hMass * (formula!H + hydrogen)
@@ -485,7 +509,7 @@ Public NotInheritable Class FragmentAssigner
                                                         {"S", snum}, {"F", fnum}, {"Cl", clnum}, {"Br", brnum},
                                                         {"I", inum}, {"Si", sinum}
                                                     }
-                                                    Dim fragmentFormula = New Formula(counts)
+                                                    Dim fragmentFormula As New Formula(counts)
 
                                                     If SevenGoldenRulesCheck.ValenceCheckByHydrogenShift(fragmentFormula) Then
                                                         fragmentFormulas.Add(fragmentFormula)
