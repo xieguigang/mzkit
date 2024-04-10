@@ -46,7 +46,7 @@ Namespace Formula.MS
                 Return (multipliedNum, 0, 0)
             End If
 
-            'Common adduct check
+            ' Common adduct check
             Dim commonAcurateMass As Double = Nothing, m1Intensity As Double = Nothing, m2Intensity As Double = Nothing
 
             If IsCommonAdduct(formula, multipliedNum, commonAcurateMass, m1Intensity, m2Intensity) Then
@@ -60,9 +60,10 @@ Namespace Formula.MS
                 Return (multipliedNum * iron, 0, 0)
             End If
 
-            'Organic compound adduct check
+            ' Organic compound adduct check
             Dim formulaBean As Formula = Nothing, organicAcurateMass As Double = Nothing
             Dim nil2 As (formulaBean As Dictionary(Of String, Integer), organicAcurateMass As Double) = GetOrganicAdductFormulaAndMass(formula, multipliedNum)
+
             Return (organicAcurateMass, SevenGoldenRulesCheck.GetM1IsotopicAbundance(formulaBean), SevenGoldenRulesCheck.GetM2IsotopicAbundance(formulaBean))
         End Function
 
