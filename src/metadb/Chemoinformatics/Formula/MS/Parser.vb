@@ -72,10 +72,13 @@ Namespace Formula.MS
                 Return (0R, 0R, 0R)
             End If
 
-            Dim equationNum = CountChar(adductName, "+"c) + CountChar(adductName, "-"c)
+            Dim equationNum = adductName.Count("+"c) + adductName.Count("-"c)
             Dim formula = String.Empty
             Dim accAccurateMass As Double = 0, accM1Intensity As Double = 0, accM2Intensity As Double = 0
-            Dim accurateMass As Double = Nothing, m1Intensity As Double = Nothing, m2Intensity As Double = Nothing
+            Dim accurateMass As Double = 0
+            Dim m1Intensity As Double = 0
+            Dim m2Intensity As Double = 0
+
             For i = adductName.Length - 1 To 0 Step -1
                 If adductName(i).Equals("+"c) Then
                     Dim nul As (accurateMass As Double, m1Intensity As Double, m2Intensity As Double) = CalculateAccurateMassAndIsotopeRatioOfMolecularFormula(formula)
@@ -96,8 +99,12 @@ Namespace Formula.MS
                 Else
                     formula = adductName(i).ToString() & formula
                 End If
-                If equationNum <= 0 Then Exit For
+
+                If equationNum <= 0 Then
+                    Exit For
+                End If
             Next
+
             Return (accAccurateMass, accM1Intensity, accM2Intensity)
         End Function
     End Module

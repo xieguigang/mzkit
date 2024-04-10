@@ -156,12 +156,14 @@ Namespace Formula.MS
             End Select
         End Function
 
-        Public Shared ReadOnly [Default] As AdductIon = New AdductIon()
+        Public Shared ReadOnly [Default] As New AdductIon()
 
-        Private Shared ReadOnly ADDUCT_IONS As AdductIons = New AdductIons()
+        Private Shared ReadOnly ADDUCT_IONS As New AdductIons()
 
         Friend Class AdductIons
-            Private ReadOnly _dictionary As ConcurrentDictionary(Of String, AdductIon)
+
+            ReadOnly _dictionary As ConcurrentDictionary(Of String, AdductIon)
+
             Public Sub New()
                 _dictionary = New ConcurrentDictionary(Of String, AdductIon)()
                 _dictionary.TryAdd([Default].AdductIonName, [Default])
