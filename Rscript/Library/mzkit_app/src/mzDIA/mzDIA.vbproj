@@ -158,6 +158,7 @@
     <ProjectReference Include="../../..\..\..\src\visualize\KCF\KCF.IO\KCF_IO.NET5.vbproj" />
     <ProjectReference Include="../../..\..\..\src\visualize\MsImaging\MsImaging.NET5.vbproj" />
     <ProjectReference Include="..\..\..\..\..\src\metadb\FormulaSearch.Extensions\FormulaSearch.Extensions.NET5.vbproj" />
+    <ProjectReference Include="..\..\..\..\..\src\metadb\Massbank\massbank.NET5.vbproj" />
     <ProjectReference Include="..\..\..\..\..\src\metadb\SMILES\SMILES.NET5.vbproj" />
     <ProjectReference Include="..\..\..\..\..\src\mzmath\Oligonucleotide_MS\Oligonucleotide_MS.vbproj" />
   </ItemGroup>
