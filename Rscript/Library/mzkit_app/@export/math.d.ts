@@ -91,12 +91,19 @@ declare namespace math {
     * evaluate all exact mass for all known precursor type.
     * 
     * 
-     * @param mz -
-     * @param mode -
+     * @param mz a single ion m/z value.
+     * @param mode the ion polarity mode ``+/-`` for evaluate all kind of 
+     *  precursor type under the specific polarity mode, or a vector of the 
+     *  @``T:BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType.MzCalculator`` precursor type model which is generates from 
+     *  the ``math::precursor_types`` function.
      * 
      * + default value Is ``'+'``.
+     * @param env 
+     * + default value Is ``null``.
+     * @return a collection of the exact mass evaluation result, could be cast
+     *  to dataframe via ``as.data.frame`` function.
    */
-   function exact_mass(mz: number, mode?: any): object;
+   function exact_mass(mz: number, mode?: any, env?: object): object;
    /**
     * Extract an intensity vector based on a given peak index
     * 
@@ -246,7 +253,7 @@ declare namespace math {
     * create precursor type calculator
     * 
     * 
-     * @param types -
+     * @param types a character vector of the precursor type symbols, example as ``[M+H]+``, etc.
      * @param env -
      * 
      * + default value Is ``null``.
