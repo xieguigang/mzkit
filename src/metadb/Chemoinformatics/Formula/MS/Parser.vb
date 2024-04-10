@@ -6,16 +6,6 @@ Namespace Formula.MS
 
     Public Module Parser
 
-        ''' <summary>
-        ''' This method returns the AdductIon class variable from the adduct string.
-        ''' </summary>
-        ''' <param name="adductName">Add the formula string such as "C6H12O6"</param>
-        ''' <returns></returns>
-        <Obsolete("Use AdductIon.GetAddutIon instead of this method.")>
-        Public Function GetAdductIonBean(adductName As String) As AdductIon
-            Return AdductIon.GetAdductIon(adductName)
-        End Function
-
         Public Function ConvertDifferentChargedAdduct(adduct As AdductIon, chargeNumber As Integer) As AdductIon
             If chargeNumber = 0 Then Return adduct
             If adduct.FormatCheck = False Then Return adduct

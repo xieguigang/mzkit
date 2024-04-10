@@ -67,10 +67,6 @@ Namespace Formula.MS
     ''' This class is the storage of each neutral loss information used in MS-FINDER program.
     ''' </summary>
     Public Class NeutralLoss
-        Public Sub New()
-
-        End Sub
-
 
         Public Property MassLoss As Double
 
