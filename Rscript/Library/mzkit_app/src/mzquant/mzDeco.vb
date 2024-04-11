@@ -187,6 +187,7 @@ Module mzDeco
 
         table.add(NameOf(PeakFeature.mz), x.Select(Function(a) a.mz))
         table.add(NameOf(PeakFeature.rt), x.Select(Function(a) a.rt))
+        table.add(NameOf(PeakFeature.RI), x.Select(Function(a) a.RI))
         table.add(NameOf(PeakFeature.rtmin), x.Select(Function(a) a.rtmin))
         table.add(NameOf(PeakFeature.rtmax), x.Select(Function(a) a.rtmax))
         table.add(NameOf(PeakFeature.maxInto), x.Select(Function(a) a.maxInto))
