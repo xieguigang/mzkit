@@ -22,12 +22,7 @@
 
         <h3>Description</h3>
 
-        <p>A chemical formula is a notation used by scientists to show the 
- number and type of atoms present in a molecule, using the atomic 
- symbols and numerical subscripts. A chemical formula is a simple 
- representation, in writing, of a three dimensional molecule 
- that exists. A chemical formula describes a substance, down to 
- the exact atoms which make it up.</p>
+        
 
         <h3>Declare</h3>        
 
@@ -35,13 +30,9 @@
             <code id="clr_ts">
 # namespace BioNovoGene.BioDeep.Chemoinformatics.Formula
 export class Formula {
-   # atom<em>count</em>tuples
    CountsByElement: list;
-   # get all elements label that parse from current formula object
    Elements: string;
-   # get formula string
    EmpiricalFormula: string;
-   # sum all isotopic mass of the atom elements.
    ExactMass: double;
 }
 </code>
