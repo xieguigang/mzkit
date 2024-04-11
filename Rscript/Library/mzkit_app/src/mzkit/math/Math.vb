@@ -502,14 +502,24 @@ Module MzMath
             If Not peaks.isError Then
                 Dim querySet As PeakMs2() = peaks.populates(Of PeakMs2)(env).ToArray
                 Dim cos As list = list.empty
+                Dim input As LibraryMatrix
+                Dim score As AlignmentOutput
 
                 For Each q As PeakMs2 In querySet
-                    cos.add(q.lib_guid, cosine(New LibraryMatrix(q.lib_guid, q.mzInto), New LibraryMatrix(refSpec.TryCast(Of LibraryMatrix)), mzdiff, cutoff))
+                    input = New LibraryMatrix(q.lib_guid, q.mzInto)
+                    score = cosine(input, New LibraryMatrix(refSpec.TryCast(Of LibraryMatrix)), mzdiff, cutoff)
+                    score.query = New Meta With {
+                        .id = q.lib_guid,
+                        .intensity = q.intensity,
+                        .mz = q.mz,
+                        .scan_time = q.rt
+                    }
+
+                    Call cos.add(q.lib_guid, score)
                 Next
 
                 Return cos
             End If
-
 
             Return New NotImplementedException
         End If
