@@ -67,6 +67,11 @@ Namespace MetaLib.Models
 
         <MessagePackMember(0)> Public Property biosample As String
         <MessagePackMember(1)> Public Property source As String
+
+        ''' <summary>
+        ''' the reference source
+        ''' </summary>
+        ''' <returns></returns>
         <MessagePackMember(2)> Public Property reference As String
 
         Public Overrides Function ToString() As String
@@ -120,6 +125,8 @@ Namespace MetaLib.Models
         ''' <returns></returns>
         <MessagePackMember(15)> Public Property pathways As String()
         <MessagePackMember(16)> Public Property samples As BiosampleSource()
+
+        <MessagePackMember(17)> Public Property keywords As String()
 
         Sub New()
         End Sub
