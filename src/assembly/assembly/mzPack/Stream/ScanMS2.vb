@@ -98,5 +98,17 @@ Namespace mzData.mzWebCache
             }
         End Function
 
+        Public Function GetSpectrum2() As PeakMs2
+            Return New PeakMs2 With {
+                .mz = parentMz,
+                .intensity = intensity,
+                .lib_guid = scan_id.GetTagValue("#").Value,
+                .mzInto = GetMs.ToArray,
+                .rt = rt,
+                .collisionEnergy = collisionEnergy,
+                .activation = activationMethod.ToString
+            }
+        End Function
+
     End Class
 End Namespace

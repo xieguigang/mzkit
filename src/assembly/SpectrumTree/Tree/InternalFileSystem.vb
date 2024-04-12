@@ -119,15 +119,7 @@ Namespace Tree
             pool.Seek(block.position, SeekOrigin.Begin)
             scan2 = pool.ReadScanMs2
 
-            Return New PeakMs2 With {
-                .mz = scan2.parentMz,
-                .intensity = scan2.intensity,
-                .lib_guid = scan2.scan_id.GetTagValue("#").Value,
-                .mzInto = scan2.GetMs.ToArray,
-                .rt = scan2.rt,
-                .collisionEnergy = scan2.collisionEnergy,
-                .activation = scan2.activationMethod.ToString
-            }
+            Return scan2.GetSpectrum2
         End Function
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of BlockNode) Implements IEnumerable(Of BlockNode).GetEnumerator
