@@ -205,18 +205,6 @@ Public Class mzPack : Implements IMZPack
             .ToArray
     End Function
 
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Function GetXIC(mz As Double, mzErr As Tolerance) As ChromatogramTick()
-        Return MS _
-            .Select(Function(i)
-                        Return New ChromatogramTick With {
-                            .Time = i.rt,
-                            .Intensity = i.GetIntensity(mz, mzErr)
-                        }
-                    End Function) _
-            .ToArray
-    End Function
-
     Public Function GetAllScanMs1(Optional centroid As Tolerance = Nothing) As IEnumerable(Of ms1_scan)
         If Not centroid Is Nothing Then
             Return MS.GetAllCentroidScanMs1(centroid)
