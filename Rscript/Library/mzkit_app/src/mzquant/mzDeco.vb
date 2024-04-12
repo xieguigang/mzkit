@@ -274,6 +274,40 @@ Module mzDeco
         End If
     End Function
 
+    <ExportAPI("read.xcms_features")>
+    Public Function readXcmsFeaturePeaks(file As dataframe) As Object
+        Dim mz As Double() = CLRVector.asNumeric(file.getVector("mz", True))
+        Dim mzmin As Double() = CLRVector.asNumeric(file.getVector("mzmin", True))
+        Dim mzmax As Double() = CLRVector.asNumeric(file.getVector("mzmax", True))
+        Dim rt As Double() = CLRVector.asNumeric(file.getVector("rt", True))
+        Dim rtmin As Double() = CLRVector.asNumeric(file.getVector("rtmin", True))
+        Dim rtmax As Double() = CLRVector.asNumeric(file.getVector("rtmax", True))
+        Dim into As Double() = CLRVector.asNumeric(file.getVector("into", True))
+        Dim maxo As Double() = CLRVector.asNumeric(file.getVector("maxo", True))
+        Dim sn As Double() = CLRVector.asNumeric(file.getVector("sn", True))
+        Dim xcms_id As String() = mz.Select(Function(mzi, i) $"M{CInt(mzi)}T{CInt(rt(i))}").uniqueNames
+
+        Return xcms_id _
+            .Select(Function(id, i)
+                        Return New PeakFeature With {
+                            .xcms_id = xcms_id(i),
+                            .rt = rt(i),
+                            .area = into(i),
+                            .baseline = 0,
+                            .integration = 1,
+                            .maxInto = maxo(i),
+                            .mz = mz(i),
+                            .noise = 0,
+                            .nticks = 0,
+                            .rawfile = Nothing,
+                            .RI = 0,
+                            .rtmax = rtmax(i),
+                            .rtmin = rtmin(i)
+                        }
+                    End Function) _
+            .ToArray
+    End Function
+
     ''' <summary>
     ''' make sample column projection
     ''' </summary>

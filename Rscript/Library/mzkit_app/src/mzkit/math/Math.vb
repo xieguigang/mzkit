@@ -972,7 +972,17 @@ Module MzMath
     ''' <param name="rt"></param>
     ''' <returns></returns>
     <ExportAPI("xcms_id")>
-    Public Function xcms_id(mz As Double(), rt As Double()) As String()
+    <RApiReturn(TypeCodes.string)>
+    Public Function xcms_id(mz As Double(), rt As Double(), Optional env As Environment = Nothing) As Object
+        If mz.TryCount <> rt.TryCount Then
+            Return Internal.debug.stop("the dimension size of the ion m/z and its scan time rt should be equals!", env)
+        End If
+        ' size of mz is equals to rt
+        ' and also the size is zero
+        If mz.IsNullOrEmpty Then
+            Return Nothing
+        End If
+
         Dim allId As String() = mz _
             .Select(Function(mzi, i)
                         If CInt(rt(i)) = 0 Then

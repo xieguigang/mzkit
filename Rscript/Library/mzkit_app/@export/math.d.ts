@@ -388,6 +388,8 @@ declare namespace math {
     * 
      * @param mz -
      * @param rt -
+     * @param env 
+     * + default value Is ``null``.
    */
-   function xcms_id(mz: number, rt: number): string;
+   function xcms_id(mz: number, rt: number, env?: object): string;
 }

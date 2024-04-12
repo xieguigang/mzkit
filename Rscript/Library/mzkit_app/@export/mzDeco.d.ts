@@ -170,6 +170,9 @@ declare namespace mzDeco {
       */
       function peakFeatures(file: string, readBin?: boolean): object;
       /**
+      */
+      function xcms_features(file: object): any;
+      /**
        * read the peaktable file that in xcms2 output format
        * 
        * 

@@ -12,6 +12,7 @@ Extract peak and signal data from rawdata
  mass-to-charge ratio, retention time and chromatographic peak area.
 
 + [read.xcms_peaks](mzDeco/read.xcms_peaks.1) read the peaktable file that in xcms2 output format
++ [read.xcms_features](mzDeco/read.xcms_features.1) 
 + [peak_subset](mzDeco/peak_subset.1) make sample column projection
 + [find_xcms_ionPeaks](mzDeco/find_xcms_ionPeaks.1) 
 + [adjust_to_seconds](mzDeco/adjust_to_seconds.1) adjust the reteintion time data to unit seconds
