@@ -87,7 +87,6 @@ Imports SMRUCC.Rsharp.Runtime.Internal.Invokes
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
-Imports any = Microsoft.VisualBasic.Scripting
 Imports REnv = SMRUCC.Rsharp.Runtime
 Imports stdVector = Microsoft.VisualBasic.Math.LinearAlgebra.Vector
 
@@ -473,46 +472,74 @@ Module MzMath
     ''' <summary>
     ''' Do evaluate the spectra cosine similarity score
     ''' </summary>
-    ''' <param name="query"></param>
-    ''' <param name="ref"></param>
+    ''' <param name="query">the query input could be a collection of the sample spectrum data inputs.</param>
+    ''' <param name="ref">should be a single reference spectrum object</param>
     ''' <param name="tolerance"></param>
     ''' <param name="intocutoff"></param>
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("cosine")>
     <RApiReturn(GetType(AlignmentOutput))>
-    Public Function cosine(query As Object, ref As Object,
+    Public Function cosine(<RRawVectorArgument> query As Object, ref As Object,
                            Optional tolerance As Object = "da:0.3",
                            Optional intocutoff As Double = 0.05,
                            Optional env As Environment = Nothing) As Object
 
         Dim mzErr = Math.getTolerance(tolerance, env)
+        Dim refSpec = getSpectrum(ref, env)
 
         If mzErr Like GetType(Message) Then
             Return mzErr.TryCast(Of Message)
         End If
+        If refSpec Like GetType(Message) Then
+            Return refSpec.TryCast(Of Message)
+        End If
 
-        If TypeOf query Is LibraryMatrix AndAlso TypeOf ref Is LibraryMatrix Then
+        Dim mzdiff As Tolerance = mzErr
+        Dim cutoff As New RelativeIntensityCutoff(intocutoff)
+
+        If TypeOf query Is LibraryMatrix Then
             Return cosine(
                 query:=DirectCast(query, LibraryMatrix),
-                ref:=DirectCast(ref, LibraryMatrix),
-                mzErr:=mzErr.TryCast(Of Tolerance),
-                intocutoff:=New RelativeIntensityCutoff(intocutoff)
+                ref:=refSpec.TryCast(Of LibraryMatrix),
+                mzErr:=mzdiff,
+                intocutoff:=cutoff
             )
         ElseIf TypeOf query Is MzMatrix AndAlso TypeOf ref Is LibraryMatrix Then
             ' compares each spot with a reference spectrum
             Dim m As MzMatrix = query
-            Dim refSpec As LibraryMatrix = ref
             Dim cos As New list() With {.slots = New Dictionary(Of String, Object)}
-            Dim mzdiff As Tolerance = mzErr
-            Dim cutoff As New RelativeIntensityCutoff(intocutoff)
 
             For Each q As LibraryMatrix In m.GetSpectrum
-                cos.add(q.name, cosine(q, New LibraryMatrix(refSpec), mzdiff, cutoff))
+                cos.add(q.name, cosine(q, New LibraryMatrix(refSpec.TryCast(Of LibraryMatrix)), mzdiff, cutoff))
             Next
 
             Return cos
         Else
+            Dim peaks As pipeline = pipeline.TryCreatePipeline(Of PeakMs2)(query, env)
+
+            If Not peaks.isError Then
+                Dim querySet As PeakMs2() = peaks.populates(Of PeakMs2)(env).ToArray
+                Dim cos As list = list.empty
+                Dim input As LibraryMatrix
+                Dim score As AlignmentOutput
+
+                For Each q As PeakMs2 In querySet
+                    input = New LibraryMatrix(q.lib_guid, q.mzInto)
+                    score = cosine(input, New LibraryMatrix(refSpec.TryCast(Of LibraryMatrix)), mzdiff, cutoff)
+                    score.query = New Meta With {
+                        .id = q.lib_guid,
+                        .intensity = q.intensity,
+                        .mz = q.mz,
+                        .scan_time = q.rt
+                    }
+
+                    Call cos.add(q.lib_guid, score)
+                Next
+
+                Return cos
+            End If
+
             Return New NotImplementedException
         End If
     End Function

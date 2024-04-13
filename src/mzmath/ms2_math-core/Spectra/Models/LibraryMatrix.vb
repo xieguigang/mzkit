@@ -175,6 +175,11 @@ Namespace Spectra
             Me.centroid = centroid
         End Sub
 
+        Sub New(name As String, spectrum As IEnumerable(Of ms2))
+            Call MyBase.New(spectrum)
+            Me.name = name
+        End Sub
+
         <DebuggerStepThrough>
         Sub New(data As IEnumerable(Of ms2))
             Call MyBase.New(data)

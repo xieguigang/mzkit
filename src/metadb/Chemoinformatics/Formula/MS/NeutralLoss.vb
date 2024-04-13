@@ -9,9 +9,6 @@ Namespace Formula.MS
     ''' This class is the storage of product ion assignment used in MS-FINDER program.
     ''' </summary>
     Public Class ProductIon
-        Public Sub New()
-        End Sub
-
 
         Public Property Mass As Double
 
@@ -70,10 +67,6 @@ Namespace Formula.MS
     ''' This class is the storage of each neutral loss information used in MS-FINDER program.
     ''' </summary>
     Public Class NeutralLoss
-        Public Sub New()
-
-        End Sub
-
 
         Public Property MassLoss As Double
 
@@ -104,5 +97,6 @@ Namespace Formula.MS
         Public Property CandidateInChIKeys As List(Of String) = New List(Of String)()
 
         Public Property CandidateOntologies As List(Of String) = New List(Of String)()
+
     End Class
 End Namespace

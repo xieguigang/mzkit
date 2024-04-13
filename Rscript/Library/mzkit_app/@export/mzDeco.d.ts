@@ -194,11 +194,19 @@ declare namespace mzDeco {
      * + default value Is ``15``.
      * @param rawfile 
      * + default value Is ``null``.
+     * @param by_id 
+     * + default value Is ``false``.
      * @param env -
      * 
      * + default value Is ``null``.
    */
-   function RI_cal(peakdata: object, RI: any, ppm?: number, dt?: number, rawfile?: string, env?: object): any;
+   function RI_cal(peakdata: object, RI: any, ppm?: number, dt?: number, rawfile?: string, by_id?: boolean, env?: object): any;
+   /**
+    * Create RI reference dataset.
+    * 
+    * 
+   */
+   function RI_reference(xcms_id: string, mz: number, rt: number, ri: number): object;
    module write {
       /**
        * write peak debug data

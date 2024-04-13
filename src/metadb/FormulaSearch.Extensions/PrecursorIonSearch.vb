@@ -59,7 +59,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Public Class PrecursorIonSearch : Inherits FormulaSearch
 
@@ -106,9 +106,9 @@ Public Class PrecursorIonSearch : Inherits FormulaSearch
         End If
 
         If ionMode = 1 Then
-            parents = Provider.Positives.Where(Function(p) stdNum.Abs(p.charge) = stdNum.Abs(charge)).ToArray
+            parents = Provider.Positives.Where(Function(p) std.Abs(p.charge) = std.Abs(charge)).ToArray
         Else
-            parents = Provider.Negatives.Where(Function(p) stdNum.Abs(p.charge) = stdNum.Abs(charge)).ToArray
+            parents = Provider.Negatives.Where(Function(p) std.Abs(p.charge) = std.Abs(charge)).ToArray
         End If
 
         If Not (LimitPrecursorTypes Is Nothing OrElse LimitPrecursorTypes.Count = 0) Then

@@ -4,17 +4,27 @@
 exact_mass \- evaluate all exact mass for all known precursor type.
 .SH SYNOPSIS
 \fIexact_mass(\fBmz\fR as double, 
-\fBmode\fR as any = "+");\fR
+\fBmode\fR as any = "+", 
+[\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
 evaluate all exact mass for all known precursor type.
 .PP
 .SH OPTIONS
 .PP
-\fBmz\fB \fR\- -. 
+\fBmz\fB \fR\- a single ion m/z value.. 
 .PP
 .PP
-\fBmode\fB \fR\- -. 
+\fBmode\fB \fR\- the ion polarity mode \fB+/-\fR for evaluate all kind of 
+ precursor type under the specific polarity mode, or a vector of the 
+ @\fBT:BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType.MzCalculator\fR precursor type model which is generates from 
+ the \fBmath::precursor_types\fR function.
+. 
+.PP
+.SH VALUE
+.PP
+a collection of the exact mass evaluation result, could be cast
+ to dataframe via \fBas.data.frame\fR function.
 .PP
 .SH SEE ALSO
 math

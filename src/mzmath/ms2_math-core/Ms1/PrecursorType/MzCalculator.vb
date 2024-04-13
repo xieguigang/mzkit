@@ -69,6 +69,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Text
+Imports std = System.Math
 
 Namespace Ms1.PrecursorType
 
@@ -190,7 +191,7 @@ Namespace Ms1.PrecursorType
                                         IonMode As IonModes,
                                         Optional M As Integer = 1) As Double
 
-            Dim precursorMz = (exactMass * M + AdductIonAccurateMass) / chargeNumber
+            Dim precursorMz = std.abs((exactMass * M + AdductIonAccurateMass) / chargeNumber)
 
             If IonMode = IonModes.Positive Then
                 precursorMz -= ElectronMassInDalton * chargeNumber

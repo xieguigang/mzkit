@@ -78,8 +78,8 @@ Namespace Massbank
         <Extension>
         Public Function Join(peakData As IEnumerable(Of DoubleTagged(Of Double))) As String
             Return peakData _
-            .Select(Function(pk) $"{pk.Tag},{pk.Value}") _
-            .JoinBy(" ")
+                .Select(Function(pk) $"{pk.Tag},{pk.Value}") _
+                .JoinBy(" ")
         End Function
 
         ''' <summary>
@@ -116,16 +116,15 @@ Namespace Massbank
                     Throw New NotImplementedException
             End Select
 
-            Dim out As DoubleTagged(Of Double)() =
-            record _
-            .PK _
-            .PEAK _
-            .Select(Function(pk)
-                        Return New DoubleTagged(Of Double) With {
-                            .Tag = pk.mz,
-                            .Value = pk.relint / base
-                        }
-                    End Function).ToArray
+            Dim out As DoubleTagged(Of Double)() = record.PK.PEAK _
+                .Select(Function(pk)
+                            Return New DoubleTagged(Of Double) With {
+                                .Tag = pk.mz,
+                                .Value = pk.relint / base
+                            }
+                        End Function) _
+                .ToArray
+
             Return out
         End Function
     End Module
