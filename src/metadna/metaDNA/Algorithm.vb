@@ -297,8 +297,20 @@ Public Class Algorithm
         End Sub
     End Class
 
+    ReadOnly partner_cache As New Dictionary(Of String, String())
+
     Private Iterator Function RunInfer(seed As AnnotatedSeed) As IEnumerable(Of InferLink)
-        For Each kegg_id As String In network.FindPartners(seed.kegg_id)
+        Dim partners As String()
+
+        SyncLock partner_cache
+            partners = partner_cache.ComputeIfAbsent(
+                key:=seed.kegg_id,
+                lazyValue:=Function(kegg_id)
+                               Return network.FindPartners(seed.kegg_id).ToArray
+                           End Function)
+        End SyncLock
+
+        For Each kegg_id As String In partners
             Dim compound As GenericCompound = kegg.GetCompound(kegg_id)
 
             If compound Is Nothing OrElse compound.ExactMass <= 0 Then
