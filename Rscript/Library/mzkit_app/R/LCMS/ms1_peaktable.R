@@ -16,6 +16,9 @@ imports "mzDeco" from "mz_quantify";
 const ms1_peaktable = function(files, mzbins, mzdiff = 0.005, peak.width = [3,90]) {
     let pool = xic_pool(files);
     
+    print("get m/z bins input:");
+    str(mzbins);
+
     if (is.character(mzbins)) {
         mzbins = read.csv(mzbins, row.names = NULL, check.names = FALSE);
         mzbins = mzbins$mz;
