@@ -303,6 +303,7 @@ Public Class Algorithm
         Dim partners As String()
 
         SyncLock partner_cache
+            ' enable the cache for reduce the mysql query impact
             partners = partner_cache.ComputeIfAbsent(
                 key:=seed.kegg_id,
                 lazyValue:=Function(kegg_id)
