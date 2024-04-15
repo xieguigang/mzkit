@@ -36,6 +36,12 @@ Namespace PackLib
             Return Strings.Trim(name).Replace("\", "_").Replace("/", "_").Replace(""""c, "").Replace("?", ".").Replace("*", ".").Trim
         End Function
 
+        ''' <summary>
+        ''' the spectrum is reference to the given <paramref name="uuid"/> via the <see cref="PeakMs2.lib_guid"/>
+        ''' </summary>
+        ''' <param name="uuid"></param>
+        ''' <param name="formula"></param>
+        ''' <param name="spectrum"></param>
         Public Sub Push(uuid As String, formula As String, spectrum As PeakMs2)
             Dim index As MassIndex
 
