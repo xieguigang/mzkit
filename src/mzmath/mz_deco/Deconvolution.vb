@@ -74,14 +74,27 @@ Imports std = System.Math
 ''' </summary>
 Public Module Deconvolution
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="overlaps"></param>
+    ''' <param name="peakwidth"></param>
+    ''' <param name="quantile#"></param>
+    ''' <param name="sn_threshold"></param>
+    ''' <param name="joint"></param>
+    ''' <param name="single">take the top single peak feature in each <see cref="Chromatogram.Chromatogram"/>.</param>
+    ''' <returns></returns>
     <Extension>
     Public Iterator Function GetPeakGroups(overlaps As ChromatogramOverlapList, peakwidth As DoubleRange,
                                            Optional quantile# = 0.65,
                                            Optional sn_threshold As Double = 3,
-                                           Optional joint As Boolean = True) As IEnumerable(Of PeakFeature)
+                                           Optional joint As Boolean = True,
+                                           Optional [single] As Boolean = True) As IEnumerable(Of PeakFeature)
 
         For Each tag_data As NamedValue(Of Chromatogram.Chromatogram) In overlaps.EnumerateSignals
             Dim data = tag_data.Value.GetTic.Where(Function(ti) ti.Intensity > 0).TrimRTScatter(15, 5)
+            Dim peaks As New List(Of PeakFeature)
+            Dim peakdata As PeakFeature
 
             For Each ROI As ROI In data.Shadows.PopulateROI(
                 peakwidth:=peakwidth,
@@ -89,7 +102,7 @@ Public Module Deconvolution
                 joint:=joint,
                 snThreshold:=sn_threshold
             )
-                Yield New PeakFeature With {
+                peakdata = New PeakFeature With {
                     .mz = 0,
                     .baseline = ROI.baseline,
                     .integration = ROI.integration,
@@ -103,7 +116,20 @@ Public Module Deconvolution
                     .rawfile = tag_data.Name,
                     .xcms_id = tag_data.Name & $"[{(.rt / 60).ToString("F1")}min]"
                 }
+                peaks.Add(peakdata)
             Next
+
+            If peaks.Count > 0 AndAlso [single] Then
+                Yield peaks _
+                    .OrderByDescending(Function(pk) pk.integration) _
+                    .First
+            Else
+                ' zero list
+                ' or multiple for each chromatogram
+                For Each pk As PeakFeature In peaks
+                    Yield pk
+                Next
+            End If
         Next
     End Function
 
