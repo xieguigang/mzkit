@@ -86,7 +86,7 @@ Public Module Deconvolution
     End Function
 
     <Extension>
-       Private Function TrimRTScatter(scatter As ChromatogramTick() ,  rtwin As Double , min_points As Integer ) As  ChromatogramTick ()
+    Private Function TrimRTScatter(scatter As ChromatogramTick(), rtwin As Double, min_points As Integer) As  ChromatogramTick ()
         Dim dt_groups = scatter.GroupBy(Function(ti) ti.Time, offsets:=rtwin).ToArray
         Dim filter = dt_groups.Where(Function(d) d.Length >= min_points).ToArray
         Dim no_scatter As ChromatogramTick() = filter.Select(Function(a) a.value).IteratesALL.OrderBy(Function(a) a.Time).ToArray
