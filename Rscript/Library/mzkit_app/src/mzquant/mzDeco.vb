@@ -633,7 +633,7 @@ Module mzDeco
             End If
         ElseIf TypeOf ms1 Is ChromatogramOverlapList Then
             Return DirectCast(ms1, ChromatogramOverlapList) _
-                .GetPeakGroups(rtRange.TryCast(Of DoubleRange), quantile:=baseline, sn_threshold, joint) _
+                .GetPeakGroups(rtRange.TryCast(Of DoubleRange), quantile:=baseline, sn_threshold, joint, [single]:=False) _
                 .ToArray
         Else
 extract_ms1:
