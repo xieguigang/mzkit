@@ -455,59 +455,67 @@ Module mzDeco
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("RI_cal")>
-    Public Function RI_calc(peakdata As PeakFeature(), <RRawVectorArgument> RI As Object,
+    Public Function RI_calc(peakdata As PeakFeature(),
+                            <RRawVectorArgument>
+                            Optional RI As Object = Nothing,
                             Optional ppm As Double = 20,
                             Optional dt As Double = 15,
                             Optional rawfile As String = Nothing,
                             Optional by_id As Boolean = False,
                             Optional env As Environment = Nothing) As Object
 
-        Dim RIrefers As pipeline = pipeline.TryCreatePipeline(Of RIRefer)(RI, env)
-
-        If RIrefers.isError Then
-            Return RIrefers.getError
-        End If
-
-        Dim ri_refers As RIRefer() = RIrefers.populates(Of RIRefer)(env).OrderBy(Function(i) i.rt).ToArray
-        Dim ppmErr As Tolerance = Tolerance.PPM(ppm)
         Dim refer_points As New List(Of PeakFeature)
 
-        'For i As Integer = 0 To ri_refers.Length - 1
-        '    ri_refers(i).rt *= 60
-        'Next
-
-        If by_id Then
-            ' the RI is already has been assigned the peak id
-            ' get peak feature data by its id directly!
-            Dim peak1Index = peakdata.ToDictionary(Function(p1) p1.xcms_id)
-
-            For Each refer As RIRefer In ri_refers
-                Dim target As PeakFeature = peak1Index(refer.name)
-
-                target.RI = refer.RI
-                refer_points.Add(target)
-            Next
+        If RI Is Nothing Then
+            ' ri reference from the peakdata which has RI value assigned
+            Call refer_points.AddRange(From pk As PeakFeature In peakdata.SafeQuery Where pk.RI > 0 Order By pk.RI)
         Else
-            ' find a ri reference point at first
-            ' find a set of the candidate points
-            For Each refer As RIRefer In ri_refers
-                Dim target As PeakFeature = peakdata _
-                    .Where(Function(pi) ppmErr(pi.mz, refer.mz) AndAlso std.Abs(pi.rt - refer.rt) <= dt) _
-                    .OrderByDescending(Function(pi) pi.maxInto) _
-                    .FirstOrDefault
+            Dim RIrefers As pipeline = pipeline.TryCreatePipeline(Of RIRefer)(RI, env)
 
-                If target Is Nothing Then
-                    Return Internal.debug.stop({
-                        $"the required retention index reference point({refer.ToString}) could not be found! please check the rt window parameter(dt) is too small?",
-                        $"retention_index_reference: {ri_refers.GetJson}",
-                        $"rawfile tag: {rawfile}",
-                        $"ms1_pars: {ppm} PPM, rt_win {dt} sec"
-                    }, env)
-                End If
+            If RIrefers.isError Then
+                Return RIrefers.getError
+            End If
 
-                target.RI = refer.RI
-                refer_points.Add(target)
-            Next
+            Dim ri_refers As RIRefer() = RIrefers.populates(Of RIRefer)(env).OrderBy(Function(i) i.rt).ToArray
+            Dim ppmErr As Tolerance = Tolerance.PPM(ppm)
+
+            'For i As Integer = 0 To ri_refers.Length - 1
+            '    ri_refers(i).rt *= 60
+            'Next
+
+            If by_id Then
+                ' the RI is already has been assigned the peak id
+                ' get peak feature data by its id directly!
+                Dim peak1Index = peakdata.ToDictionary(Function(p1) p1.xcms_id)
+
+                For Each refer As RIRefer In ri_refers
+                    Dim target As PeakFeature = peak1Index(refer.name)
+
+                    target.RI = refer.RI
+                    refer_points.Add(target)
+                Next
+            Else
+                ' find a ri reference point at first
+                ' find a set of the candidate points
+                For Each refer As RIRefer In ri_refers
+                    Dim target As PeakFeature = peakdata _
+                        .Where(Function(pi) ppmErr(pi.mz, refer.mz) AndAlso std.Abs(pi.rt - refer.rt) <= dt) _
+                        .OrderByDescending(Function(pi) pi.maxInto) _
+                        .FirstOrDefault
+
+                    If target Is Nothing Then
+                        Return Internal.debug.stop({
+                            $"the required retention index reference point({refer.ToString}) could not be found! please check the rt window parameter(dt) is too small?",
+                            $"retention_index_reference: {ri_refers.GetJson}",
+                            $"rawfile tag: {rawfile}",
+                            $"ms1_pars: {ppm} PPM, rt_win {dt} sec"
+                        }, env)
+                    End If
+
+                    target.RI = refer.RI
+                    refer_points.Add(target)
+                Next
+            End If
         End If
 
         ' order raw data by rt
