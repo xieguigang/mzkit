@@ -98,6 +98,16 @@ Namespace Chromatogram
             End Get
         End Property
 
+        Public Sub Add(tic As Chromatogram)
+            Dim key As String = $"TIC_{overlaps.Count + 1}"
+
+            If Not tic.name.StringEmpty Then
+                key = tic.name
+            End If
+
+            Call overlaps.Add(key, tic)
+        End Sub
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
             Return overlaps.Keys.ToArray.GetJson

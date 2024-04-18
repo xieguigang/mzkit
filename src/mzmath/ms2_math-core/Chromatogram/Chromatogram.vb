@@ -55,12 +55,14 @@
 
 #End Region
 
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+
 Namespace Chromatogram
 
     ''' <summary>
     ''' A data union model of TIC/BPC
     ''' </summary>
-    Public Class Chromatogram
+    Public Class Chromatogram : Implements INamedValue
 
         Public Property scan_time As Double()
 
@@ -74,6 +76,12 @@ Namespace Chromatogram
         ''' </summary>
         ''' <returns></returns>
         Public Property BPC As Double()
+
+        ''' <summary>
+        ''' usually be a sample name
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property name As String Implements INamedValue.Key
 
         ''' <summary>
         ''' the length of <see cref="scan_time"/> data points.
