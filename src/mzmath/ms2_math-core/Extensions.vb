@@ -134,6 +134,19 @@ Imports std = System.Math
     End Function
 
     ''' <summary>
+    ''' Kovats retention index
+    ''' </summary>
+    ''' <param name="small_n"></param>
+    ''' <param name="large_N"></param>
+    ''' <param name="ti"></param>
+    ''' <param name="t_smalln"></param>
+    ''' <param name="t_largeN"></param>
+    ''' <returns></returns>
+    Public Function KovatsRI(small_n As Integer, large_N As Integer, ti As Double, t_smalln As Double, t_largeN As Double) As Double
+        Return 100 * (small_n + (large_N - small_n) * (std.Log(ti) - std.Log(t_smalln)) / (std.Log(t_largeN) - std.Log(t_smalln)))
+    End Function
+
+    ''' <summary>
     ''' 根据保留时间来计算出保留指数
     ''' </summary>
     ''' <param name="rt"></param>
