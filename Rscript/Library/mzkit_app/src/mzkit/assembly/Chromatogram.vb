@@ -456,7 +456,7 @@ Module ChromatogramTools
     <ExportAPI("read.pack")>
     Public Function ReadData(cdf As String) As ChromatogramOverlap
         Using file As Stream = cdf.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
-            Return file.ReadPackData
+            Return New ChromatogramOverlap(file.ReadPackData.overlaps)
         End Using
     End Function
 End Module

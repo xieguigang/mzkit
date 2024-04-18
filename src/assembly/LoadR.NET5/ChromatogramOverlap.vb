@@ -9,6 +9,13 @@ Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Public Class ChromatogramOverlap : Inherits ChromatogramOverlapList
     Implements RNames, RNameIndex
 
+    Sub New()
+    End Sub
+
+    Sub New(list_set As Dictionary(Of String, Chromatogram))
+        overlaps = New Dictionary(Of String, Chromatogram)(list_set)
+    End Sub
+
     Public Function setNames(names() As String, envir As Environment) As Object Implements RNames.setNames
         Dim renames As New Dictionary(Of String, Chromatogram)
         Dim oldNames As String() = overlaps.Keys.ToArray
