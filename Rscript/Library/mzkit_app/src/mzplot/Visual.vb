@@ -269,6 +269,7 @@ Module Visual
         Dim xlab As String = args.getValue("xlab", env, "Time (s)")
         Dim ylab As String = args.getValue("ylab", env, "Intensity")
         Dim reorderOverlaps As Boolean = args.getValue("reorder.overlaps", env, [default]:=False)
+        Dim legend_split_size As Integer = args.getValue("legend.split_size", env, [default]:=32)
         Dim overlaps As New List(Of NamedCollection(Of ChromatogramTick))
         Dim data As NamedCollection(Of ChromatogramTick)
 
@@ -311,7 +312,8 @@ Module Visual
                 xlabel:=xlab,
                 ylabel:=ylab,
                 axisTickFont:=axisTickCex,
-                showLegends:=showLegends
+                showLegends:=showLegends,
+                legend_split:=legend_split_size
             )
     End Function
 

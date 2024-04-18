@@ -210,7 +210,9 @@ Module ChromatogramTools
     ''' </returns>
     <ExportAPI("toChromatogram")>
     <RApiReturn(GetType(Chromatogram))>
-    Public Function toChromatogram(<RRawVectorArgument> ticks As Object, Optional env As Environment = Nothing) As Object
+    Public Function toChromatogram(<RRawVectorArgument> ticks As Object,
+                                   Optional name As String = Nothing,
+                                   Optional env As Environment = Nothing) As Object
         Dim totalIons As Double()
         Dim basePeaks As Double()
         Dim scan_time As Double()
@@ -258,7 +260,8 @@ Module ChromatogramTools
         Return New Chromatogram With {
             .BPC = basePeaks,
             .scan_time = scan_time,
-            .TIC = totalIons
+            .TIC = totalIons,
+            .name = name
         }
     End Function
 
