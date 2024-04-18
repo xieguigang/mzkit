@@ -103,6 +103,18 @@ Namespace Chromatogram
             End Get
         End Property
 
+        Public Iterator Function GetTic() As IEnumerable(Of ChromatogramTick)
+            For i As Integer = 0 To scan_time.Length - 1
+                Yield New ChromatogramTick(scan_time(i), TIC(i))
+            Next
+        End Function
+
+        Public Iterator Function GetBpc() As IEnumerable(Of ChromatogramTick)
+            For i As Integer = 0 To scan_time.Length - 1
+                Yield New ChromatogramTick(scan_time(i), BPC(i))
+            Next
+        End Function
+
         Public Overrides Function ToString() As String
             Return $"Chromatogram between scan_time [{CInt(scan_time.Min)},{CInt(scan_time.Max)}]"
         End Function

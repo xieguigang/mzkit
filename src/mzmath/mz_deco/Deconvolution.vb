@@ -81,12 +81,34 @@ Public Module Deconvolution
                                            Optional joint As Boolean = True) As IEnumerable(Of PeakFeature)
 
         For Each tag_data As NamedValue(Of Chromatogram.Chromatogram) In overlaps.EnumerateSignals
+            Dim data = tag_data.Value.GetTic.Where(Function(ti) ti.Intensity > 0).TrimRTScatter(15, 5)
 
+            For Each ROI As ROI In data.Shadows.PopulateROI(
+                peakwidth:=peakwidth,
+                baselineQuantile:=quantile,
+                joint:=joint,
+                snThreshold:=sn_threshold
+            )
+                Yield New PeakFeature With {
+                    .mz = 0,
+                    .baseline = ROI.baseline,
+                    .integration = ROI.integration,
+                    .maxInto = ROI.maxInto,
+                    .noise = ROI.noise,
+                    .rt = ROI.rt,
+                    .rtmax = ROI.time.Max,
+                    .rtmin = ROI.time.Min,
+                    .nticks = ROI.ticks.Length,
+                    .area = ROI.ticks.Select(Function(t) t.Intensity).Sum,
+                    .rawfile = tag_data.Name,
+                    .xcms_id = tag_data.Name & $"[{(.rt / 60).ToString("F1")}min]"
+                }
+            Next
         Next
     End Function
 
     <Extension>
-    Private Function TrimRTScatter(scatter As ChromatogramTick(), rtwin As Double, min_points As Integer) As  ChromatogramTick ()
+    Private Function TrimRTScatter(scatter As IEnumerable(Of ChromatogramTick), rtwin As Double, min_points As Integer) As ChromatogramTick()
         Dim dt_groups = scatter.GroupBy(Function(ti) ti.Time, offsets:=rtwin).ToArray
         Dim filter = dt_groups.Where(Function(d) d.Length >= min_points).ToArray
         Dim no_scatter As ChromatogramTick() = filter.Select(Function(a) a.value).IteratesALL.OrderBy(Function(a) a.Time).ToArray
