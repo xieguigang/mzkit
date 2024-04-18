@@ -526,7 +526,11 @@ Module mzDeco
         peakdata = peakdata.OrderBy(Function(i) i.rt).ToArray
         refer_points = refer_points.OrderBy(Function(i) i.rt).AsList
         ' add a fake point
-        refer_points.Add(New PeakFeature With {.RI = refer_points.Last.RI + 100, .rt = peakdata.Last.rt})
+        refer_points.Add(New PeakFeature With {
+            .RI = refer_points.Last.RI + 100,
+            .rt = peakdata.Last.rt,
+            .xcms_id = peakdata.Last.xcms_id
+        })
 
         Dim a As (rt As Double, ri As Double)
         Dim b As (rt As Double, ri As Double)
