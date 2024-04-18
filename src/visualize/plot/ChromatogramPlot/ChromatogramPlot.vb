@@ -199,7 +199,7 @@ Public Module ChromatogramPlot
     ''' <param name="size"></param>
     ''' <param name="margin"></param>
     ''' <param name="bg"></param>
-    ''' <param name="deln">legend每一列有多少个进行显示</param>
+    ''' <param name="legend_split">legend每一列有多少个进行显示</param>
     ''' <param name="labelColor"></param>
     ''' <param name="penStyle">
     ''' CSS value for controls of the line drawing style
@@ -225,7 +225,7 @@ Public Module ChromatogramPlot
                             Optional ylabel$ = "Intensity",
                             Optional showLegends As Boolean = True,
                             Optional legendFontCSS$ = CSSFont.Win10Normal,
-                            Optional deln% = 10,
+                            Optional legend_split% = 10,
                             Optional isXIC As Boolean = False,
                             Optional fillAlpha As Integer = 180,
                             Optional gridFill As String = "rgb(245,245,245)",
@@ -251,7 +251,8 @@ Public Module ChromatogramPlot
             .gridFill = gridFill,
             .drawLabels = showLabels,
             .tagColor = labelColor,
-            .axisStroke = axisStroke
+            .axisStroke = axisStroke,
+            .legendSplitSize = legend_split
         }
         Dim TIC As Plot
 
@@ -277,7 +278,6 @@ Public Module ChromatogramPlot
                 fillAlpha:=fillAlpha,
                 labelLayoutTicks:=labelLayoutTicks,
                 theme:=theme,
-                deln:=deln,
                 bspline:=spline
             ) With {
                 .xlabel = xlabel,

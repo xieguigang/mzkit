@@ -269,7 +269,6 @@ Public Class ScanVisual3D : Inherits Plot
                 fillCurve:=fillCurve,
                 fillAlpha:=fillAlpha,
                 labelLayoutTicks:=-1,
-                deln:=10,
                 theme:=theme,
                 bspline:=0
             ) With {

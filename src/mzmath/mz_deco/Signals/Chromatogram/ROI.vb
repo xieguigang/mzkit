@@ -126,6 +126,10 @@ Namespace Chromatogram
             End Get
         End Property
 
+        ''' <summary>
+        ''' the window length of retention <see cref="time"/>.
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property peakWidth As Single
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
