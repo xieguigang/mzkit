@@ -92,7 +92,7 @@ Public Module Deconvolution
                                            Optional [single] As Boolean = True) As IEnumerable(Of PeakFeature)
 
         For Each tag_data As NamedValue(Of Chromatogram.Chromatogram) In overlaps.EnumerateSignals
-            Dim data = tag_data.Value.GetTic.Where(Function(ti) ti.Intensity > 0).TrimRTScatter(15, 5)
+            Dim data = tag_data.Value.GetTic.Where(Function(ti) ti.Intensity > 0).ToArray '.TrimRTScatter(15, 5)
             Dim peaks As New List(Of PeakFeature)
             Dim peakdata As PeakFeature
 
