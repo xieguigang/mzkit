@@ -203,7 +203,7 @@ Public Class mzPackReader : Inherits BinaryStreamReader
         nsize = file.Length - 8 - offset
 
         If nsize <= 0 Then
-            Call "negative bytes count?".Warning
+            Call "mzpack stream offset error while read v1 mzpack thumbnail image: negative bytes count?".Warning
             Return Nothing
         End If
 
