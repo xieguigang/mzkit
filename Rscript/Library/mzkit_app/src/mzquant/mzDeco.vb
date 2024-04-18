@@ -56,6 +56,7 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection
@@ -75,6 +76,7 @@ Imports SMRUCC.Rsharp.Runtime.Internal
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
+Imports deco_math = BioNovoGene.Analytical.MassSpectrometry.Math.Extensions
 Imports std = System.Math
 Imports vec = SMRUCC.Rsharp.Runtime.Internal.Object.vector
 
@@ -531,7 +533,7 @@ Module mzDeco
             peakdata(i).rawfile = If(rawfile, peakdata(i).rawfile)
 
             If peakdata(i).RI = 0 Then
-                peakdata(i).RI = RetentionIndex(peakdata(i), a, b)
+                peakdata(i).RI = deco_math.RetentionIndex(peakdata(i), a, b)
             Else
                 a = b
                 offset += 1
@@ -629,6 +631,10 @@ Module mzDeco
             Else
                 GoTo extract_ms1
             End If
+        ElseIf TypeOf ms1 Is ChromatogramOverlapList Then
+            Return DirectCast(ms1, ChromatogramOverlapList) _
+                .GetPeakGroups(rtRange.TryCast(Of DoubleRange), quantile:=baseline, sn_threshold, joint) _
+                .ToArray
         Else
 extract_ms1:
             Dim source As String = Nothing

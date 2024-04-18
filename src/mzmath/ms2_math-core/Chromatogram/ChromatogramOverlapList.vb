@@ -113,6 +113,10 @@ Namespace Chromatogram
             Return overlaps.Keys.ToArray.GetJson
         End Function
 
+        ''' <summary>
+        ''' enumerates all <see cref="Chromatogram"/> from <see cref="overlaps"/>.
+        ''' </summary>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Iterator Function EnumerateSignals() As IEnumerable(Of NamedValue(Of Chromatogram))
             For Each item In overlaps

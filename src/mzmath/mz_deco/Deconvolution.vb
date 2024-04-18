@@ -75,8 +75,19 @@ Imports std = System.Math
 Public Module Deconvolution
 
     <Extension>
-    Public Function TrimRTScatter(xic As MzGroup, Optional rtwin As Double = 15, Optional min_points As Integer = 5) As MzGroup
-        Dim dt_groups = xic.XIC.GroupBy(Function(ti) ti.Time, offsets:=rtwin).ToArray
+    Public Iterator Function GetPeakGroups(overlaps As ChromatogramOverlapList, peakwidth As DoubleRange,
+                                           Optional quantile# = 0.65,
+                                           Optional sn_threshold As Double = 3,
+                                           Optional joint As Boolean = True) As IEnumerable(Of PeakFeature)
+
+        For Each tag_data As NamedValue(Of Chromatogram.Chromatogram) In overlaps.EnumerateSignals
+
+        Next
+    End Function
+
+    <Extension>
+       Private Function TrimRTScatter(scatter As ChromatogramTick() ,  rtwin As Double , min_points As Integer ) As  ChromatogramTick ()
+        Dim dt_groups = scatter.GroupBy(Function(ti) ti.Time, offsets:=rtwin).ToArray
         Dim filter = dt_groups.Where(Function(d) d.Length >= min_points).ToArray
         Dim no_scatter As ChromatogramTick() = filter.Select(Function(a) a.value).IteratesALL.OrderBy(Function(a) a.Time).ToArray
         Dim raw_peaks = no_scatter.Shadows.PopulateROI(
@@ -98,7 +109,12 @@ Public Module Deconvolution
             .OrderBy(Function(a) a.Time) _
             .ToArray
 
-        Return New MzGroup(xic.mz, no_scatter)
+        Return no_scatter
+    End Function
+
+    <Extension>
+    Public Function TrimRTScatter(xic As MzGroup, Optional rtwin As Double = 15, Optional min_points As Integer = 5) As MzGroup
+        Return New MzGroup(xic.mz, xic.XIC.TrimRTScatter(rtwin, min_points))
     End Function
 
     ''' <summary>
