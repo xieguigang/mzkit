@@ -119,7 +119,9 @@ Public Module Deconvolution
                 peaks.Add(peakdata)
             Next
 
-            If peaks.Count > 0 AndAlso [single] Then
+            If peaks.Count = 0 Then
+                Call $"no peaks feature was detected for '{tag_data.Name}'.".Warning
+            ElseIf [single] Then
                 Yield peaks _
                     .OrderByDescending(Function(pk) pk.integration) _
                     .First
