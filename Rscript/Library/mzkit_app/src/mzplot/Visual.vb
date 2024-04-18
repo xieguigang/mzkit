@@ -313,7 +313,8 @@ Module Visual
                 ylabel:=ylab,
                 axisTickFont:=axisTickCex,
                 showLegends:=showLegends,
-                legend_split:=legend_split_size
+                legend_split:=legend_split_size,
+                labelLayoutTicks:=-1
             )
     End Function
 
