@@ -19,4 +19,6 @@ Public Class RIRefer : Implements INamedValue, IReadOnlyId, IRetentionIndex, IRe
         Return $"m/z {mz}, {rt} sec, " & name
     End Function
 
+
+
 End Class
