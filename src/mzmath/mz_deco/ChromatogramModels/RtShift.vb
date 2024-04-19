@@ -1,4 +1,6 @@
-﻿
+﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Serialization.JSON
+
 ''' <summary>
 ''' the rt shift result
 ''' </summary>
@@ -18,7 +20,12 @@ Public Class RtShift
     Public Property sample_rt As Double
     Public Property RI As Double
 
+    ''' <summary>
+    ''' <see cref="sample_rt"/> - <see cref="refer_rt"/>. 
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property shift As Double
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
             Return sample_rt - refer_rt
         End Get
