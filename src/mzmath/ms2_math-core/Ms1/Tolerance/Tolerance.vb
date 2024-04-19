@@ -61,7 +61,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Math
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Ms1
 
@@ -200,7 +200,7 @@ Namespace Ms1
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function MatchTolerance([error] As Double) As Boolean
-            Return stdNum.Abs([error]) <= DeltaTolerance
+            Return std.Abs([error]) <= DeltaTolerance
         End Function
 
         Public Function GetScript() As String

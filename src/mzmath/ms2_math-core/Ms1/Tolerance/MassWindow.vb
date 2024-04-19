@@ -1,10 +1,21 @@
 ﻿Namespace Ms1
 
-    Public Class MassWindow
+    Public Interface IMassBin
 
-        Public ReadOnly Property mass As Double
-        Public ReadOnly Property mzmin As Double
-        Public ReadOnly Property mzmax As Double
+        Property mass As Double
+        Property min As Double
+        Property max As Double
+
+    End Interface
+
+    ''' <summary>
+    ''' the m/z bin data
+    ''' </summary>
+    Public Class MassWindow : Implements IMassBin
+
+        Public Property mass As Double Implements IMassBin.mass
+        Public Property mzmin As Double Implements IMassBin.min
+        Public Property mzmax As Double Implements IMassBin.max
 
         Sub New(mass As Double, ppm As Double)
             Me.mass = mass

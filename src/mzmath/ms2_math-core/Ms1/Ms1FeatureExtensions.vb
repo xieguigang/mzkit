@@ -57,7 +57,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Math
-Imports stdNum = System.Math
+Imports std = System.Math
 
 <HideModuleName>
 Public Module Ms1FeatureExtensions
@@ -116,7 +116,7 @@ Public Module Ms1FeatureExtensions
         For Each mzBlock As NamedCollection(Of T) In mzgroup
             For Each block As NamedCollection(Of T) In mzBlock _
                 .AsEnumerable _
-                .GroupBy(Function(i) i.rt, Function(x, y) stdNum.Abs(x - y) <= rtwin) _
+                .GroupBy(Function(i) i.rt, Function(x, y) std.Abs(x - y) <= rtwin) _
                 .OrderBy(Function(a) Val(a.name))
 
                 For Each ROI In block.OrderBy(Function(a) a.rt)
