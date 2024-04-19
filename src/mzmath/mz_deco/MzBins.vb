@@ -44,7 +44,7 @@ Public Module MzBins
                 .mass = peak.rt,
                 .mzmin = peak.rtmin,
                 .mzmax = peak.rtmax,
-                .annotation = (peak.integration * 100).ToString("F2") & "%"
+                .annotation = (peak.integration).ToString("F2") & "%"
             }
         Next
     End Function
