@@ -63,6 +63,7 @@
 
 Imports System.ComponentModel
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
@@ -76,6 +77,7 @@ Public Class xcms2 : Inherits DynamicPropertyBase(Of Double)
     Implements INamedValue
     Implements IRetentionIndex
     Implements IRetentionTime
+    Implements IMassBin
 
     ''' <summary>
     ''' the feature unique id
@@ -88,17 +90,17 @@ Public Class xcms2 : Inherits DynamicPropertyBase(Of Double)
     ''' the ion m/z
     ''' </summary>
     ''' <returns></returns>
-    <Category("MS1")> Public Property mz As Double
+    <Category("MS1")> Public Property mz As Double Implements IMassBin.mass
     ''' <summary>
     ''' the min of ion m/z value
     ''' </summary>
     ''' <returns></returns>
-    <Category("MS1")> Public Property mzmin As Double
+    <Category("MS1")> Public Property mzmin As Double Implements IMassBin.min
     ''' <summary>
     ''' the max of the ion m/z value
     ''' </summary>
     ''' <returns></returns>
-    <Category("MS1")> Public Property mzmax As Double
+    <Category("MS1")> Public Property mzmax As Double Implements IMassBin.max
     ''' <summary>
     ''' the rt value in max peak data point
     ''' </summary>

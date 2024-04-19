@@ -58,6 +58,7 @@
 #End Region
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 
 ''' <summary>
@@ -68,6 +69,7 @@ Public Class Peaktable
     Implements IRetentionTime
     Implements IROI
     Implements IMS1Annotation
+    Implements IMassBin
 
     ''' <summary>
     ''' 可以是差异代谢物的编号
@@ -77,9 +79,9 @@ Public Class Peaktable
     ''' xcms_id
     ''' </remarks>
     Public Property name As String Implements IMS1Annotation.Key
-    Public Property mz As Double Implements IMs1.mz
-    Public Property mzmin As Double
-    Public Property mzmax As Double
+    Public Property mz As Double Implements IMs1.mz, IMassBin.mass
+    Public Property mzmin As Double Implements IMassBin.min
+    Public Property mzmax As Double Implements IMassBin.max
     Public Property rt As Double Implements IMs1.rt
 
     ''' <summary>

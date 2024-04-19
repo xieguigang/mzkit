@@ -65,7 +65,7 @@ Imports Microsoft.VisualBasic.Math
 Namespace Chromatogram
 
     ''' <summary>
-    ''' Region of interest
+    ''' Region of interest(on retention time dimension).
     ''' </summary>
     Public Class ROI : Implements IRetentionTime
 

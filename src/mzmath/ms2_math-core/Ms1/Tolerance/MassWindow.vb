@@ -1,10 +1,43 @@
-﻿Namespace Ms1
+﻿Imports System.Xml.Serialization
+Imports std = System.Math
 
-    Public Class MassWindow
+Namespace Ms1
 
-        Public ReadOnly Property mass As Double
-        Public ReadOnly Property mzmin As Double
-        Public ReadOnly Property mzmax As Double
+    Public Interface IMassBin
+
+        Property mass As Double
+        Property min As Double
+        Property max As Double
+
+    End Interface
+
+    ''' <summary>
+    ''' the m/z bin data
+    ''' </summary>
+    Public Class MassWindow : Implements IMassBin
+
+        ''' <summary>
+        ''' the real mass value
+        ''' </summary>
+        ''' <returns></returns>
+        <XmlText>
+        Public Property mass As Double Implements IMassBin.mass
+
+        ''' <summary>
+        ''' the left of current mass window
+        ''' </summary>
+        ''' <returns></returns>
+        <XmlAttribute> Public Property mzmin As Double Implements IMassBin.min
+        ''' <summary>
+        ''' the right of current mass window
+        ''' </summary>
+        ''' <returns></returns>
+        <XmlAttribute> Public Property mzmax As Double Implements IMassBin.max
+
+        Public Property annotation As String
+
+        Sub New()
+        End Sub
 
         Sub New(mass As Double, ppm As Double)
             Me.mass = mass
@@ -30,7 +63,13 @@
         End Sub
 
         Public Overrides Function ToString() As String
-            Return $"{mass} [{mzmin}, {mzmax}]"
+            Dim ppm As Double = PPMmethod.PPM(mzmin, mzmax)
+
+            If ppm > 100 Then
+                Return $"{mass.ToString("F4")} [{std.Abs(mzmax - mzmin).ToString("F3")}da]{annotation}"
+            Else
+                Return $"{mass.ToString("F4")} [{CInt(ppm)}ppm]{annotation}"
+            End If
         End Function
 
     End Class

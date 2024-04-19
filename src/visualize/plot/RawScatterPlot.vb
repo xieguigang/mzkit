@@ -69,7 +69,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.MIME.Html.CSS
-Imports stdNum = System.Math
+Imports std = System.Math
 
 ''' <summary>
 ''' 横坐标为rt，纵坐标为m/z的散点图绘制
@@ -100,7 +100,7 @@ Public Class RawScatterPlot : Inherits Plot
            .Select(Function(compound)
                        Return New PointData() With {
                            .pt = New PointF(compound.scan_time, compound.mz),
-                           .value = stdNum.Log(compound.intensity)
+                           .value = std.Log(compound.intensity)
                        }
                    End Function) _
            .ToArray
@@ -118,7 +118,7 @@ Public Class RawScatterPlot : Inherits Plot
         Next
 
         Dim brushes = colors.Select(Function(colorStr) New SolidBrush(colorStr.TranslateColor)).ToArray
-        Dim ticks = points.Select(Function(a) a.value ^ stdNum.E).CreateAxisTicks
+        Dim ticks = points.Select(Function(a) a.value ^ std.E).CreateAxisTicks
         Dim tickStyle As Font = CSSFont.TryParse(theme.axisTickCSS).GDIObject(g.Dpi)
         Dim legendTitleStyle As Font = CSSFont.TryParse(theme.legendTitleCSS).GDIObject(g.Dpi)
         Dim tickAxisStroke As Pen = Stroke.TryParse(theme.axisStroke).GDIObject
