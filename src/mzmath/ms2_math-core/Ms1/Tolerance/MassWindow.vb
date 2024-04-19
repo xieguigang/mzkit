@@ -60,7 +60,7 @@ Namespace Ms1
         End Sub
 
         Public Overrides Function ToString() As String
-            Return $"{mass} [{mzmin}, {mzmax}]"
+            Return $"{mass.ToString("F4")} [{mzmin}, {mzmax}]"
         End Function
 
     End Class
