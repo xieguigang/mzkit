@@ -1,4 +1,6 @@
-﻿Namespace Ms1
+﻿Imports System.Xml.Serialization
+
+Namespace Ms1
 
     Public Interface IMassBin
 
@@ -13,9 +15,26 @@
     ''' </summary>
     Public Class MassWindow : Implements IMassBin
 
+        ''' <summary>
+        ''' the real mass value
+        ''' </summary>
+        ''' <returns></returns>
+        <XmlText>
         Public Property mass As Double Implements IMassBin.mass
-        Public Property mzmin As Double Implements IMassBin.min
-        Public Property mzmax As Double Implements IMassBin.max
+
+        ''' <summary>
+        ''' the left of current mass window
+        ''' </summary>
+        ''' <returns></returns>
+        <XmlAttribute> Public Property mzmin As Double Implements IMassBin.min
+        ''' <summary>
+        ''' the right of current mass window
+        ''' </summary>
+        ''' <returns></returns>
+        <XmlAttribute> Public Property mzmax As Double Implements IMassBin.max
+
+        Sub New()
+        End Sub
 
         Sub New(mass As Double, ppm As Double)
             Me.mass = mass
