@@ -30,6 +30,9 @@ Public Class PlotMassWindow : Inherits Plot
             Me.hist = .y
         End With
 
+        xlabel = "m/z"
+        ylabel = "histogram"
+
         bins = MzBins.GetMzBins(Me.mz, Me.hist).ToArray
     End Sub
 
@@ -39,6 +42,9 @@ Public Class PlotMassWindow : Inherits Plot
 
     Sub New(mz As Double(), hist As Double(), windows As MassWindow(), theme As Theme)
         Call MyBase.New(theme)
+
+        xlabel = "m/z"
+        ylabel = "histogram"
 
         Me.bins = windows.ToArray
         Me.mz = mz

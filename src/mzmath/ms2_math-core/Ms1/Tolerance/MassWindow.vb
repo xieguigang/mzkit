@@ -34,6 +34,8 @@ Namespace Ms1
         ''' <returns></returns>
         <XmlAttribute> Public Property mzmax As Double Implements IMassBin.max
 
+        Public Property annotation As String
+
         Sub New()
         End Sub
 
@@ -63,10 +65,10 @@ Namespace Ms1
         Public Overrides Function ToString() As String
             Dim ppm As Double = PPMmethod.PPM(mzmin, mzmax)
 
-            If ppm > 30 Then
-                Return $"{mass.ToString("F4")} [{std.Abs(mzmax - mzmin).ToString("F3")} da]"
+            If ppm > 100 Then
+                Return $"{mass.ToString("F4")} [{std.Abs(mzmax - mzmin).ToString("F3")}da]{annotation}"
             Else
-                Return $"{mass.ToString("F4")} [{CInt(ppm)} PPM]"
+                Return $"{mass.ToString("F4")} [{CInt(ppm)}ppm]{annotation}"
             End If
         End Function
 

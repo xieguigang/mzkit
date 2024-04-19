@@ -36,13 +36,15 @@ Public Module MzBins
         Dim scatter As New GeneralSignal(mz, hist)
         Dim peaks As SignalPeak() = New ElevationAlgorithm(angle, baseline) _
             .FindAllSignalPeaks(scatter) _
+            .OrderByDescending(Function(bin) bin.signalMax) _
             .ToArray
 
         For Each peak As SignalPeak In peaks
             Yield New MassWindow With {
                 .mass = peak.rt,
                 .mzmin = peak.rtmin,
-                .mzmax = peak.rtmax
+                .mzmax = peak.rtmax,
+                .annotation = (peak.integration * 100).ToString("F2") & "%"
             }
         Next
     End Function
