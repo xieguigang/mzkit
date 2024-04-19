@@ -34,9 +34,13 @@ Public Class PlotMassWindow : Inherits Plot
     End Sub
 
     Sub New(mz As Double(), hist As Double(), theme As Theme)
+        Call Me.New(mz, hist, MzBins.GetMzBins(mz, hist).ToArray, theme)
+    End Sub
+
+    Sub New(mz As Double(), hist As Double(), windows As MassWindow(), theme As Theme)
         Call MyBase.New(theme)
 
-        Me.bins = MzBins.GetMzBins(mz, hist).ToArray
+        Me.bins = windows.ToArray
         Me.mz = mz
         Me.hist = hist
     End Sub
