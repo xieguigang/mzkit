@@ -206,6 +206,13 @@ Public Module Deconvolution
         Next
     End Function
 
+    <Extension>
+    Public Iterator Function ToChromatogram(Of T As scan)(scans As IEnumerable(Of T)) As IEnumerable(Of ChromatogramTick)
+        For Each scan As T In scans.SafeQuery
+            Yield New ChromatogramTick(scan.rt, scan.intensity)
+        Next
+    End Function
+
     ''' <summary>
     ''' 1. Separation of mass signals, generate XIC sequence data.
     ''' </summary>

@@ -103,6 +103,14 @@ Namespace mzData.mzWebCache
             Return max
         End Function
 
+        Public Iterator Function GetMs(mz As Double, tolerance As Tolerance) As IEnumerable(Of ms1_scan)
+            For i As Integer = 0 To Me.mz.Length - 1
+                If tolerance(mz, Me.mz(i)) Then
+                    Yield New ms1_scan(Me.mz(i), rt, into(i))
+                End If
+            Next
+        End Function
+
         ''' <summary>
         ''' create matrix from [<see cref="mz"/>...] and [<see cref="into"/>...] these two vector
         ''' </summary>
