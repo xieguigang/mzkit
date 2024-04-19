@@ -1,4 +1,5 @@
 ﻿Imports System.Xml.Serialization
+Imports std = System.Math
 
 Namespace Ms1
 
@@ -60,7 +61,13 @@ Namespace Ms1
         End Sub
 
         Public Overrides Function ToString() As String
-            Return $"{mass.ToString("F4")} [{mzmin}, {mzmax}]"
+            Dim ppm As Double = PPMmethod.PPM(mzmin, mzmax)
+
+            If ppm > 30 Then
+                Return $"{mass.ToString("F4")} [{std.Abs(mzmax - mzmin).ToString("F3")} da]"
+            Else
+                Return $"{mass.ToString("F4")} [{CInt(ppm)} PPM]"
+            End If
         End Function
 
     End Class
