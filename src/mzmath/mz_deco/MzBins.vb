@@ -29,18 +29,12 @@ Public Module MzBins
         Return (x, y)
     End Function
 
-    <Extension>
-    Public Iterator Function GetMzBins(mz As IEnumerable(Of Double), Optional mzdiff As Double = 0.001) As IEnumerable(Of MassWindow)
-        Dim xy = mz.GetScatter(mzdiff)
-        Dim scatter As GeneralSignal
+    Public Iterator Function GetMzBins(mz As Double(), hist As Double(),
+                                       Optional angle As Double = 3,
+                                       Optional baseline As Double = 0.65) As IEnumerable(Of MassWindow)
 
-        If xy.x.IsNullOrEmpty Then
-            Return
-        Else
-            scatter = New GeneralSignal(xy.x, xy.y)
-        End If
-
-        Dim peaks As SignalPeak() = New ElevationAlgorithm(3, 0.65) _
+        Dim scatter As New GeneralSignal(mz, hist)
+        Dim peaks As SignalPeak() = New ElevationAlgorithm(angle, baseline) _
             .FindAllSignalPeaks(scatter) _
             .ToArray
 
@@ -51,6 +45,17 @@ Public Module MzBins
                 .mzmax = peak.rtmax
             }
         Next
+    End Function
+
+    <Extension>
+    Public Function GetMzBins(mz As IEnumerable(Of Double), Optional mzdiff As Double = 0.001) As IEnumerable(Of MassWindow)
+        With mz.GetScatter(mzdiff)
+            If .x.IsNullOrEmpty Then
+                Return {}
+            Else
+                Return GetMzBins(.x, .y)
+            End If
+        End With
     End Function
 
 End Module
