@@ -74,8 +74,8 @@ Public Module SaveSample
             rd.BaseStream.Seek(offset, SeekOrigin.Begin)
 
             Dim len As Integer = rd.ReadInt32
-            Dim mzBuf As Byte() = rd.ReadBytes(len)
-            Dim intoBuf As Byte() = rd.ReadBytes(len)
+            Dim mzBuf As Byte() = rd.ReadBytes(len * 8)
+            Dim intoBuf As Byte() = rd.ReadBytes(len * 8)
             Dim mz As Double() = decoder.ParseDouble(mzBuf)
             Dim into As Double() = decoder.ParseDouble(intoBuf)
             Dim spectrum As ms2() = mz.Select(Function(mzi, index) New ms2(mzi, into(index))).ToArray
