@@ -54,6 +54,7 @@
 
 #End Region
 
+Imports System.IO
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MSL
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
@@ -72,6 +73,7 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
+Imports SMRUCC.Rsharp.Runtime.Internal
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
@@ -81,11 +83,26 @@ Imports Rlist = SMRUCC.Rsharp.Runtime.Internal.Object.list
 ''' the targetted GCMS sim data quantification module
 ''' </summary>
 <Package("GCMS")>
+<RTypeExport("gcms_peak", GetType(GCMSPeak))>
 Module GCMSLinear
 
     Sub New()
         Call Internal.ConsolePrinter.AttachConsoleFormatter(Of TargetPeakPoint)(Function(pt) pt.ToString)
+
+        Call generic.add("readBin.gcms_peak", GetType(Stream), AddressOf readGCSample)
+        Call generic.add("writeBin", GetType(MzGroup), AddressOf writeSamples)
     End Sub
+
+    Private Function readGCSample(file As Stream, args As list, env As Environment) As Object
+        Return SaveSample.ReadGCSample(file).ToArray
+    End Function
+
+    Private Function writeSamples(samples As GCMSPeak(), args As list, env As Environment) As Object
+        Dim con As Stream = args!con
+        Call SaveSample.DumpGCMSPeaks(samples, con)
+        Call con.Flush()
+        Return True
+    End Function
 
     <ExportAPI("as.quantify.ion")>
     Public Function quantifyIons(ions As MSLIon(), Optional rtwin As Double = 1) As QuantifyIon()
