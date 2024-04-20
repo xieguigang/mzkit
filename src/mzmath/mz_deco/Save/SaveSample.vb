@@ -1,5 +1,7 @@
 ﻿Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Serialization.BinaryDumping
 
 Public Module SaveSample
 
@@ -27,6 +29,30 @@ Public Module SaveSample
         Next
 
         Call bin.Write(n)
+        Call bin.BaseStream.Flush()
+    End Sub
+
+    <Extension>
+    Public Sub DumpGCMSPeaks(sample As IEnumerable(Of GCMSPeak), file As Stream)
+        Dim bin As New BinaryWriter(file)
+        Dim pool As GCMSPeak() = sample.SafeQuery.ToArray
+        Dim encoder As New NetworkByteOrderBuffer
+
+        Call DumpSample(pool, file)
+
+        Dim offset As Long = file.Position
+
+        For i As Integer = 0 To pool.Length - 1
+            Dim mz As Double() = pool(i).Spectrum.Select(Function(a) a.mz).ToArray
+            Dim into As Double() = pool(i).Spectrum.Select(Function(a) a.intensity).ToArray
+
+            Call bin.Write(mz.Length)
+            Call bin.Write(encoder.GetBytes(mz))
+            Call bin.Write(encoder.GetBytes(into))
+        Next
+
+        Call bin.Write(offset)
+        Call bin.Write(pool.Length)
         Call bin.BaseStream.Flush()
     End Sub
 
