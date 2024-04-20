@@ -13,15 +13,6 @@
  * 
 */
 declare namespace chromatogram {
-   /**
-    * Add a chromatogram data in the chromatogram overlap collection
-    * 
-    * 
-     * @param overlaps A chromatogram overlap collection object to be add new layer to it
-     * @param name usually be a sample name
-     * @param data usually be a chromatogram data that extract from a sample data
-   */
-   function add(overlaps: object, name: string, data: object): object;
    module as {
       /**
        * convert dataset to chromatography dataset
@@ -113,12 +104,14 @@ declare namespace chromatogram {
      *  2. basePeak,BPC: used for represents the base peak ion intensity value
      *  3. totalIon,TIC: used for represents the total ions intensity value
      *  4. into,intensity: used for represents the ion intensity value if the basePeak or total ion data is not specific
+     * @param name 
+     * + default value Is ``null``.
      * @param env 
      * + default value Is ``null``.
      * @return A chromatogram data object, which could be used for do 
      *  chromatogram overlaps or data plot visualization.
    */
-   function toChromatogram(ticks: any, env?: object): object;
+   function toChromatogram(ticks: any, name?: string, env?: object): object;
    /**
    */
    function topInto(overlaps: object, n: object): object;

@@ -27,11 +27,13 @@
         <h3>Usage</h3>
 
         <div style="width: 100%; padding-left: 3%; color: black;">
-            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>RI_cal</strong>(<i>peakdata</i>, <i>RI</i>,
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>RI_cal</strong>(<i>peakdata</i>,
+    <i>RI</i> = <span style='color: blue !important;'>NULL</span>,
     <i>ppm</i> = <span style='color: green;'>20</span>,
     <i>dt</i> = <span style='color: green;'>15</span>,
     <i>rawfile</i> = <span style='color: blue !important;'>NULL</span>,
-    <i>by.id</i> = <span style='color: blue !important;'>FALSE</span>);</code></pre>
+    <i>by.id</i> = <span style='color: blue !important;'>FALSE</span>,
+    <i>C</i> = <span style='color: blue !important;'>NULL</span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
@@ -44,6 +46,10 @@
 
 <dt>RI</dt>
 <dd><p>should be a collection of the <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/RIRefer.html">RIRefer</a> data.</p></dd>
+
+
+<dt>C</dt>
+<dd><p>the number of carbon atoms for kovats retention index. [as list]</p></dd>
 
 
 <dt>env</dt>

@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>ROIlist</title>
+    <title>do peak detection for gc-ms rawdata</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
@@ -18,11 +18,11 @@
             </tr>
         </table>
 
-        <h2>ROIlist</h2>
+        <h2>do peak detection for gc-ms rawdata</h2>
 
         <h3>Description</h3>
 
-        ROIlist
+        
 
         <h3>Usage</h3>
 
@@ -30,13 +30,34 @@
             <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>ROIlist</strong>(<i>raw</i>,
     <i>peakwidth</i> = <span style='color: brown;'><strong>"3,20"</strong></span>,
     <i>baseline</i> = <span style='color: green;'>0.65</span>,
-    <i>sn</i> = <span style='color: green;'>3</span>);</code></pre>
+    <i>sn</i> = <span style='color: green;'>3</span>,
+    <i>joint</i> = <span style='color: blue !important;'>FALSE</span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
 
         <table>
             
+<dt>raw</dt>
+<dd><p>the input gcms rawdata, could be <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/GCMS/Raw.html">Raw</a> for 
+ targetted data and <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzPack.html">mzPack</a> for un-targetted gc-ms rawdata.</p></dd>
+
+
+<dt>peakwidth</dt>
+<dd><p>-</p></dd>
+
+
+<dt>baseline</dt>
+<dd><p>[as double]</p></dd>
+
+
+<dt>sn</dt>
+<dd><p>[as double]</p></dd>
+
+
+<dt>env</dt>
+<dd><p>[as <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Environment.html">Environment</a>]</p></dd>
+
         </table>
 
 
@@ -50,7 +71,7 @@
 
         <h3>Value</h3>
 
-        this function returns data object of type <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Chromatogram/ROI.html">ROI</a>.<h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Chromatogram/ROI.html">ROI</a></li></ul>
+        <p>a list of detected peak features</p><h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Chromatogram/ROI.html">ROI</a></li><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/GCMSPeak.html">GCMSPeak</a></li></ul>
 
         <h3 style="display: none;">Examples</h3>
 
