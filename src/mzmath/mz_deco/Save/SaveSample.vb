@@ -1,5 +1,6 @@
 ﻿Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.BinaryDumping
 
@@ -56,6 +57,53 @@ Public Module SaveSample
         Call bin.BaseStream.Flush()
     End Sub
 
+    Public Iterator Function ReadGCSample(file As Stream) As IEnumerable(Of GCMSPeak)
+        Dim rd As New BinaryReader(file)
+        rd.BaseStream.Seek(file.Length - 4, SeekOrigin.Begin)
+        Dim n As Integer = rd.ReadInt32
+        rd.BaseStream.Seek(file.Length - 4 - 8, SeekOrigin.Begin)
+        Dim offset As Long = rd.ReadInt64
+        Dim peak_offset As Long = Scan0
+        Dim peak As PeakFeature
+        Dim decoder As New NetworkByteOrderBuffer
+
+        For i As Integer = 1 To n
+            rd.BaseStream.Seek(peak_offset, SeekOrigin.Begin)
+            peak = readSingle(rd)
+            peak_offset = rd.BaseStream.Position
+            rd.BaseStream.Seek(offset, SeekOrigin.Begin)
+
+            Dim len As Integer = rd.ReadInt32
+            Dim mzBuf As Byte() = rd.ReadBytes(len)
+            Dim intoBuf As Byte() = rd.ReadBytes(len)
+            Dim mz As Double() = decoder.ParseDouble(mzBuf)
+            Dim into As Double() = decoder.ParseDouble(intoBuf)
+            Dim spectrum As ms2() = mz.Select(Function(mzi, index) New ms2(mzi, into(index))).ToArray
+
+            offset = rd.BaseStream.Position
+
+            Yield New GCMSPeak(peak) With {.Spectrum = spectrum}
+        Next
+    End Function
+
+    Private Function readSingle(rd As BinaryReader) As PeakFeature
+        Return New PeakFeature With {
+            .xcms_id = rd.ReadString,
+            .rawfile = rd.ReadString,
+            .mz = rd.ReadDouble,
+            .rt = rd.ReadDouble,
+            .RI = rd.ReadDouble,
+            .rtmin = rd.ReadDouble,
+            .rtmax = rd.ReadDouble,
+            .maxInto = rd.ReadDouble,
+            .baseline = rd.ReadDouble,
+            .integration = rd.ReadDouble,
+            .area = rd.ReadDouble,
+            .noise = rd.ReadDouble,
+            .nticks = rd.ReadInt32
+        }
+    End Function
+
     Public Iterator Function ReadSample(file As Stream) As IEnumerable(Of PeakFeature)
         Dim rd As New BinaryReader(file)
         rd.BaseStream.Seek(file.Length - 4, SeekOrigin.Begin)
@@ -63,21 +111,7 @@ Public Module SaveSample
         rd.BaseStream.Seek(Scan0, SeekOrigin.Begin)
 
         For i As Integer = 1 To n
-            Yield New PeakFeature With {
-                .xcms_id = rd.ReadString,
-                .rawfile = rd.ReadString,
-                .mz = rd.ReadDouble,
-                .rt = rd.ReadDouble,
-                .RI = rd.ReadDouble,
-                .rtmin = rd.ReadDouble,
-                .rtmax = rd.ReadDouble,
-                .maxInto = rd.ReadDouble,
-                .baseline = rd.ReadDouble,
-                .integration = rd.ReadDouble,
-                .area = rd.ReadDouble,
-                .noise = rd.ReadDouble,
-                .nticks = rd.ReadInt32
-            }
+            Yield readSingle(rd)
         Next
     End Function
 
