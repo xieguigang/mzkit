@@ -346,6 +346,9 @@ Module GCMSLinear
                             }
                         End Function) _
                 .ToArray
+
+            Call VBDebugger.EchoLine("extract ROI peak features for GC-MS untargetted rawdata.")
+
             Dim peaks As GCMSPeak() = GCMSDeconv _
                 .DeconvGCMSRawdata(scan1, range.TryCast(Of DoubleRange),
                                    quantile:=baseline,
