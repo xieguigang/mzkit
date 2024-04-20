@@ -356,6 +356,10 @@ Module GCMSLinear
                                    joint:=joint) _
                 .ToArray
 
+            For i As Integer = 0 To peaks.Length - 1
+                peaks(i).rawfile = rawdata.source
+            Next
+
             Return peaks
         Else
             Return Message.InCompatibleType(GetType(Raw), raw.GetType, env)
