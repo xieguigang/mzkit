@@ -37,11 +37,11 @@ declare namespace mzkit {
    */
    function convertToMzPack(file: string): object;
    /**
-     * @param export default value Is ``./``.
+     * @param export_dir default value Is ``./``.
      * @param peak.width default value Is ``[3, 90]``.
      * @param n_threads default value Is ``16``.
    */
-   function deconv_gcms(rawdata: any, export?: any, peak.width?: any, n_threads?: any): object;
+   function deconv_gcms(rawdata: any, export_dir?: any, peak.width?: any, n_threads?: any): object;
    /**
    */
    function GCMS_contentTable(mslIons: any, calfiles: string): object;

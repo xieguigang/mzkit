@@ -1,11 +1,11 @@
-let deconv_gcms = function(rawdata, export = "./", peak.width = [3, 90], n_threads = 16) {
+let deconv_gcms = function(rawdata, export_dir = "./", peak.width = [3, 90], n_threads = 16) {
     let files = list.files(rawdata, pattern = "*.mzPack");
-    let decode_gcms = function(file) {
+    let decode_gcms = function(filepath) {
         require(mzkit);
 
-        file 
+        filepath 
         |> __deconv_gcms_single(peak.width)
-        |> writeBin(con = file.path(export, "peaksdata", `${basename(file)}.peakdata`))
+        |> writeBin(con = file.path(export_dir, "peaksdata", `${basename(filepath)}.peakdata`))
         ;
     }
 
