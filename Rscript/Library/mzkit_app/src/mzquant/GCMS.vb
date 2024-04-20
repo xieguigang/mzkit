@@ -86,11 +86,11 @@ Imports Rlist = SMRUCC.Rsharp.Runtime.Internal.Object.list
 <RTypeExport("gcms_peak", GetType(GCMSPeak))>
 Module GCMSLinear
 
-    Sub New()
+    Sub Main()
         Call Internal.ConsolePrinter.AttachConsoleFormatter(Of TargetPeakPoint)(Function(pt) pt.ToString)
 
         Call generic.add("readBin.gcms_peak", GetType(Stream), AddressOf readGCSample)
-        Call generic.add("writeBin", GetType(MzGroup), AddressOf writeSamples)
+        Call generic.add("writeBin", GetType(GCMSPeak()), AddressOf writeSamples)
     End Sub
 
     Private Function readGCSample(file As Stream, args As list, env As Environment) As Object
