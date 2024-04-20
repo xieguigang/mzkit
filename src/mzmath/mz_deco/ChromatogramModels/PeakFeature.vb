@@ -147,6 +147,29 @@ Public Class PeakFeature
         End Get
     End Property
 
+    Sub New()
+    End Sub
+
+    ''' <summary>
+    ''' make data copy
+    ''' </summary>
+    ''' <param name="peakdata"></param>
+    Sub New(peakdata As PeakFeature)
+        Me.area = peakdata.area
+        Me.rawfile = peakdata.rawfile
+        Me.baseline = peakdata.baseline
+        Me.rt = peakdata.rt
+        Me.rtmin = peakdata.rtmin
+        Me.rtmax = peakdata.rtmax
+        Me.integration = peakdata.integration
+        Me.maxInto = peakdata.maxInto
+        Me.mz = peakdata.mz
+        Me.xcms_id = peakdata.xcms_id
+        Me.RI = peakdata.RI
+        Me.nticks = peakdata.nticks
+        Me.noise = peakdata.noise
+    End Sub
+
     Public Overrides Function ToString() As String
         Return $"[{xcms_id}] {mz.ToString("F4")}@[{rtmin.ToString("F1")}, {rtmax.ToString("F1")}] = {area.ToString("G3")}"
     End Function
