@@ -2,7 +2,7 @@
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 
-Namespace MetaLib
+Namespace MetaLib.CommonNames
 
     Public Module NameRanking
 
@@ -14,6 +14,7 @@ Namespace MetaLib
         ''' common name, example as: "Magneson I"
         ''' </summary>
         ReadOnly symbols As Char() = {"-", "/", "\", ":", "<", ">", "?", "(", ")", "[", "]", "{", "}", "|", ";", ",", "'", """"c, ".", "_"}
+        ReadOnly rules As RankingRule()
 
         Public Function Score(name As String, Optional maxLen As Integer = 32, Optional minLen As Integer = 5) As Double
             If name.StringEmpty(testEmptyFactor:=True) OrElse name Like empty_symbols Then
