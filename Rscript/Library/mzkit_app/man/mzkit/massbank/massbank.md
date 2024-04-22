@@ -23,6 +23,6 @@ Metabolite annotation database toolkit
 + [glycosyl.solver](massbank/glycosyl.solver.1) 
 + [parse.ChEBI_entity](massbank/parse.ChEBI_entity.1) 
 + [extract_chebi_compounds](massbank/extract_chebi_compounds.1) extract the chebi annotation data from the chebi ontology data
-+ [rankingNames](massbank/rankingNames.1) 
++ [rankingNames](massbank/rankingNames.1) Ranking a set of the given synonym string collection for find common name.
 + [metabo_anno](massbank/metabo_anno.1) construct a new metabolite annotation information data
 + [inchikey](massbank/inchikey.1) generates the inchikey hashcode based on the given inchi data
