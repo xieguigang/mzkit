@@ -69,7 +69,7 @@ Namespace MetaLib.CommonNames
             Return From name As String
                    In names
                    Let score = NameRanking.Score(name, maxLen, minLen)
-                   Select out = New NumericTagged(Of String)(score, name)
+                   Select out = New NumericTagged(Of String)(score.score, name, score.penalty.JoinBy(", "))
                    Order By out.tag Descending
         End Function
 
