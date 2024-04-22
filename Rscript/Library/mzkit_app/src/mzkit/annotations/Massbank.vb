@@ -63,7 +63,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MSP
 Imports BioNovoGene.BioDeep.Chemistry
 Imports BioNovoGene.BioDeep.Chemistry.ChEBI
 Imports BioNovoGene.BioDeep.Chemistry.LipidMaps
-Imports BioNovoGene.BioDeep.Chemistry.MetaLib
+Imports BioNovoGene.BioDeep.Chemistry.MetaLib.CommonNames
 Imports BioNovoGene.BioDeep.Chemistry.MetaLib.CrossReference
 Imports BioNovoGene.BioDeep.Chemistry.MetaLib.Models
 Imports BioNovoGene.BioDeep.Chemistry.TMIC
@@ -793,13 +793,17 @@ Module Massbank
         End If
 
         Dim ranking = NameRanking.Ranking(names, maxLen:=max_len, minLen:=min_len).ToArray
-        Dim name As String = ranking.First.value
+        Dim name As String = ranking.First.Value
         Dim synonym As New list With {
             .slots = New Dictionary(Of String, Object)
         }
 
         For Each eval As NumericTagged(Of String) In ranking
-            Call synonym.add(eval.value, eval.tag)
+            Call synonym.add(eval.Value, New list(
+                slot("synonym") = eval.Value,
+                slot("score") = eval.tag,
+                slot("penalty") = eval.description
+            ))
         Next
 
         Return New list(("name", CObj(name)), ("synonym", CObj(synonym)))
