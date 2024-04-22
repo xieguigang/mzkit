@@ -47,7 +47,8 @@ Namespace MetaLib
             End If
 
             If name.ToUpper = name Then
-                If name.All(Function(c) Char.IsDigit(c) OrElse Char.IsLetter(c)) Then
+                ' inchikey
+                If name.All(Function(c) Char.IsDigit(c) OrElse Char.IsLetter(c) OrElse c = "-"c) Then
                     eval /= 100
                 End If
             End If
