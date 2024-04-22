@@ -31,11 +31,13 @@ Namespace MetaLib
             End If
 
             ' avoid the chemical formula string
+            ' Ca3
             If name.IsPattern("([A-Z]([a-z]?)(\d+)?)+", RegexOptions.Singleline) Then
                 eval /= 1.356
             End If
             ' is number?
             ' avoid the number as name
+            ' 1.22
             If name.IsPattern("\d+(\.\d+)?") Then
                 eval /= 10000
             End If
@@ -43,6 +45,13 @@ Namespace MetaLib
             If name.IsPattern("[a-zA-Z]+\s*\d+") Then
                 eval /= 2.3
             End If
+
+            If name.ToUpper = name Then
+                If name.All(Function(c) Char.IsDigit(c) OrElse Char.IsLetter(c)) Then
+                    eval /= 100
+                End If
+            End If
+
             If name.All(Function(c)
                             If Char.IsLetter(c) AndAlso Char.IsUpper(c) Then
                                 Return True
