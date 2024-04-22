@@ -779,6 +779,13 @@ Module Massbank
             .ToArray
     End Function
 
+    ''' <summary>
+    ''' Ranking a set of the given synonym string collection for find common name.
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <param name="max_len"></param>
+    ''' <param name="min_len"></param>
+    ''' <returns></returns>
     <ExportAPI("rankingNames")>
     <RApiReturn("name", "synonym")>
     Public Function rankingNames(<RRawVectorArgument>
