@@ -6,23 +6,35 @@ Namespace MetaLib.CommonNames
 
     Public Module NameRanking
 
-        ReadOnly empty_symbols As Index(Of String) = {".", "_", "?"}
-
         ''' <summary>
         ''' the white space is exclude from the symbol list, due to 
         ''' the reason of the white space is recommended in the 
         ''' common name, example as: "Magneson I"
         ''' </summary>
         ReadOnly symbols As Char() = {"-", "/", "\", ":", "<", ">", "?", "(", ")", "[", "]", "{", "}", "|", ";", ",", "'", """"c, ".", "_"}
-        ReadOnly rules As RankingRule()
+        ReadOnly rules As RankingRule() = {
+            New ChemicalFormulaRule,
+            New NumberRule,
+            New DatabaseIdRule,
+            New InchiKeyRule,
+            New UpperCaseName
+        }
+        ReadOnly empty_symbols As Index(Of String) = symbols _
+            .Select(Function(c) c.ToString) _
+            .Indexing
 
-        Public Function Score(name As String, Optional maxLen As Integer = 32, Optional minLen As Integer = 5) As Double
+        Public Function Score(name As String, Optional maxLen As Integer = 32, Optional minLen As Integer = 5) As (score As Double, penalty As String())
             If name.StringEmpty(testEmptyFactor:=True) OrElse name Like empty_symbols Then
-                Return -1
+                Return (-1, {"empty_string"})
             End If
 
             Dim eval As Double
+            Dim penalty As New List(Of String)
+            Dim count As Integer = Aggregate c As Char
+                                   In symbols
+                                   Into Sum(name.Count(c))
 
+            ' score the name by length
             If name.Length < minLen Then
                 eval = 1
             ElseIf name.Length < maxLen Then
@@ -31,47 +43,16 @@ Namespace MetaLib.CommonNames
                 eval = 10 / name.Length
             End If
 
-            ' avoid the chemical formula string
-            ' Ca3
-            If name.IsPattern("([A-Z]([a-z]?)(\d+)?)+", RegexOptions.Singleline) Then
-                eval /= 1.356
-            End If
-            ' is number?
-            ' avoid the number as name
-            ' 1.22
-            If name.IsPattern("\d+(\.\d+)?") Then
-                eval /= 10000
-            End If
-            ' avoid the database id
-            If name.IsPattern("[a-zA-Z]+\s*\d+") Then
-                eval /= 2.3
-            End If
-
-            If name.ToUpper = name Then
-                ' inchikey
-                If name.All(Function(c) Char.IsDigit(c) OrElse Char.IsLetter(c) OrElse c = "-"c) Then
-                    eval /= 100
-                End If
-            End If
-
-            If name.All(Function(c)
-                            If Char.IsLetter(c) AndAlso Char.IsUpper(c) Then
-                                Return True
-                            ElseIf c = " "c Then
-                                Return True
-                            Else
-                                Return False
-                            End If
-                        End Function) Then
-                eval *= 0.953
-            End If
-
-            Dim count As Integer = Aggregate c As Char
-                                   In symbols
-                                   Into Sum(name.Count(c))
             eval /= (count / 3 + 1)
 
-            Return eval
+            For Each rule As RankingRule In rules
+                If rule.Match(name) Then
+                    eval /= rule.Penalty
+                    penalty.Add(rule.Type)
+                End If
+            Next
+
+            Return (eval, penalty.ToArray)
         End Function
 
         ''' <summary>
@@ -87,7 +68,7 @@ Namespace MetaLib.CommonNames
 
             Return From name As String
                    In names
-                   Let score As Double = NameRanking.Score(name, maxLen, minLen)
+                   Let score = NameRanking.Score(name, maxLen, minLen)
                    Select out = New NumericTagged(Of String)(score, name)
                    Order By out.tag Descending
         End Function

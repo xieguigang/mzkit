@@ -14,6 +14,10 @@ Namespace MetaLib.CommonNames
 
     End Class
 
+    ''' <summary>
+    ''' avoid the chemical formula string
+    ''' Ca3
+    ''' </summary>
     Friend Class ChemicalFormulaRule : Inherits RankingRule
 
         Public Overrides ReadOnly Property Penalty As Double = 1.5
@@ -24,6 +28,11 @@ Namespace MetaLib.CommonNames
         End Function
     End Class
 
+    ''' <summary>
+    ''' is number?
+    ''' avoid the number as name
+    ''' 1.22
+    ''' </summary>
     Friend Class NumberRule : Inherits RankingRule
 
         Public Overrides ReadOnly Property Penalty As Double = 10000
@@ -34,6 +43,9 @@ Namespace MetaLib.CommonNames
         End Function
     End Class
 
+    ''' <summary>
+    ''' avoid the database id
+    ''' </summary>
     Friend Class DatabaseIdRule : Inherits RankingRule
 
         Public Overrides ReadOnly Property Penalty As Double = 2.5
@@ -44,6 +56,9 @@ Namespace MetaLib.CommonNames
         End Function
     End Class
 
+    ''' <summary>
+    ''' inchikey
+    ''' </summary>
     Friend Class InchiKeyRule : Inherits RankingRule
 
         Public Overrides ReadOnly Property Penalty As Double = 100
