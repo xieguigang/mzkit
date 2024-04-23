@@ -222,6 +222,8 @@ Namespace Formula
 
             Static cache As New Dictionary(Of String, Formula)
 
+            formula = Strings.Trim(formula).Replace(" ", "")
+
             If formula.StringEmpty Then
                 Return Nothing
             Else
@@ -237,7 +239,7 @@ Namespace Formula
 
                 ' 4[O2Si].2[Al+3].3[O-2].H2O
                 For Each part As String In parts
-                    formula2 = ScanFormula(Strings.Trim(part), n)
+                    formula2 = ScanFormula(part, n)
                     f = f + formula2
                 Next
 
@@ -253,7 +255,7 @@ Namespace Formula
                 ' [O]2- for free O atom
                 If formula.Contains("["c) OrElse formula.Contains("]"c) Then
                     If formula.IsPattern("\d+\[.+\]") Then
-                        formula = $"({ formula.GetStackValue("[", "]")}){Val(formula)}"
+                        formula = $"({formula.GetStackValue("[", "]")}){Val(formula)}"
                     Else
                         formula = formula.GetStackValue("[", "]")
                     End If
