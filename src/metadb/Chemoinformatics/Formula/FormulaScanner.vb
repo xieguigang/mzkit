@@ -235,6 +235,7 @@ Namespace Formula
                 Dim parts As String() = formula.Split("."c)
                 Dim f As New Formula
 
+                ' 4[O2Si].2[Al+3].3[O-2].H2O
                 For Each part As String In parts
                     formula2 = ScanFormula(part, n)
                     f = f + formula2
@@ -251,7 +252,11 @@ Namespace Formula
                 ' [formula] charge value
                 ' [O]2- for free O atom
                 If formula.Contains("["c) OrElse formula.Contains("]"c) Then
-                    formula = formula.GetStackValue("[", "]")
+                    If formula.IsPattern("\d+\[.+\]") Then
+                        formula = $"({ formula.GetStackValue("[", "]")}){Val(formula)}"
+                    Else
+                        formula = formula.GetStackValue("[", "]")
+                    End If
                 End If
 
                 formula2 = New FormulaScanner(n).ScanFormula(New CharPtr(formula))
@@ -381,7 +386,17 @@ Namespace Formula
                     Call push(Nothing)
 
                     ' all is charge number for here
-                    Dim all = scaner.GetLeftsAll
+                    Dim all As New List(Of Char)
+
+                    Do While Not scaner.EndRead
+                        c = ++scaner
+
+                        If Char.IsDigit(c) Then
+                            all.Add(c)
+                        Else
+                            Exit Do
+                        End If
+                    Loop
 
                     If all.IsNullOrEmpty Then
                         ' just do nothing at here
