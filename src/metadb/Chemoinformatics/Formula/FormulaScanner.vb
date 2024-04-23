@@ -174,7 +174,11 @@ Namespace Formula
             If cache.ContainsKey(key) Then
                 Return cache(key)
             Else
-                mass = CDbl(ScanFormula(formula, n))
+                Try
+                    mass = CDbl(ScanFormula(formula, n))
+                Catch ex As Exception
+                    Throw New Exception($"the given formula string is: '{formula}'", ex)
+                End Try
 
                 SyncLock cache
                     If Not cache.ContainsKey(key) Then
