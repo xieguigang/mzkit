@@ -5,7 +5,7 @@
     <title>BioNovoGene.BioDeep.Chemoinformatics.MetaboliteAnnotation</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-    <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
+    <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
 </head>
 
 <body>
@@ -22,7 +22,9 @@
 
         <h3>Description</h3>
 
-        
+        <p>A basic metabolite annotation data model</p>
+
+<p>contains the basic annotation metadata: id, name, exact mass, and formula data</p>
 
         <h3>Declare</h3>        
 
@@ -30,9 +32,13 @@
             <code id="clr_ts">
 # namespace BioNovoGene.BioDeep.Chemoinformatics
 export class MetaboliteAnnotation {
+   # common name of the current metabolite
    CommonName: string;
+   # exact mass value of current metabolite, which it could be evaluated from the <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemoinformatics/MetaboliteAnnotation.html">MetaboliteAnnotation</a>.<a href="#">Formula</a>
    ExactMass: double;
+   # atom compositions of current metabolite
    Formula: string;
+   # the unique reference id of current metabolite
    Id: string;
 }
 </code>
@@ -50,8 +56,8 @@ export class MetaboliteAnnotation {
     </div>
 </body>
 
-<script type="text/javascript" src="https://mzkit.org/assets/js/R_syntax.js"></script>
-<script type="text/javascript" src="https://mzkit.org/assets/js/highlights.js"></script>
+<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
+<script type="text/javascript" src="../../_assets/highlights.js"></script>
 <script type="text/javascript">r_highlights("clr_ts");</script>
 
 </html>
