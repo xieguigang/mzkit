@@ -245,6 +245,10 @@ Namespace Formula
                 For Each part As String In parts
                     formula2 = ScanFormula(part, n)
                     f = f + formula2
+
+                    If formula2 Is Nothing Then
+                        Call $"invalid formula string '{part}' of the given input formula: '{formula}'".Warning
+                    End If
                 Next
 
                 SyncLock cache

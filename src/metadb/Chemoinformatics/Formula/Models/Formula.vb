@@ -158,7 +158,7 @@ Namespace Formula
         End Property
 
         ''' <summary>
-        ''' 
+        ''' constructor will make a value copy of the input element composition <paramref name="counts"/> vector.
         ''' </summary>
         ''' <param name="counts">
         ''' constructor will make a value copy of this element composition vector.
@@ -294,13 +294,23 @@ Namespace Formula
         ''' <param name="b"></param>
         ''' <returns></returns>
         Public Shared Operator +(a As Formula, b As Formula) As Formula
-            Dim newComposition = a.CountsByElement.Keys _
-                .JoinIterates(b.CountsByElement.Keys) _
-                .Distinct _
-                .ToDictionary(Function(e) e,
-                              Function(e)
-                                  Return a(e) + b(e)
-                              End Function)
+            Dim newComposition As Dictionary(Of String, Integer)
+
+            If a Is Nothing AndAlso b Is Nothing Then
+                Return New Formula
+            ElseIf a Is Nothing Then
+                newComposition = b.CountsByElement
+            ElseIf b Is Nothing Then
+                newComposition = a.CountsByElement
+            Else
+                newComposition = a.CountsByElement.Keys _
+                    .JoinIterates(b.CountsByElement.Keys) _
+                    .Distinct _
+                    .ToDictionary(Function(e) e,
+                                  Function(e)
+                                      Return a(e) + b(e)
+                                  End Function)
+            End If
 
             Return New Formula(newComposition)
         End Operator
