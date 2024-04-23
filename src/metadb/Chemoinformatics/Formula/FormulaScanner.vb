@@ -259,6 +259,11 @@ Namespace Formula
                     Else
                         formula = formula.GetStackValue("[", "]")
                     End If
+                ElseIf formula.IsPattern("\d+.+") Then
+                    ' 3H2O -> (H2O)3
+                    Dim multiply As String = formula.Match("\d+")
+                    formula = formula.Substring(multiply.Length)
+                    formula = $"({formula}){multiply}"
                 End If
 
                 formula2 = New FormulaScanner(n).ScanFormula(New CharPtr(formula))
