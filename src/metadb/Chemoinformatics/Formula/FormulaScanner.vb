@@ -237,7 +237,7 @@ Namespace Formula
 
                 ' 4[O2Si].2[Al+3].3[O-2].H2O
                 For Each part As String In parts
-                    formula2 = ScanFormula(part, n)
+                    formula2 = ScanFormula(Strings.Trim(part), n)
                     f = f + formula2
                 Next
 
