@@ -85,7 +85,7 @@ Imports SMRUCC.Rsharp.Runtime.Interop
 Imports any = Microsoft.VisualBasic.Scripting
 Imports RDataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
 Imports REnv = SMRUCC.Rsharp.Runtime.Internal.ConsolePrinter
-Imports stdNum = System.Math
+Imports std = System.Math
 
 ''' <summary>
 ''' The chemical formulae toolkit
@@ -418,7 +418,7 @@ Module FormulaTools
             For Each part In ion.TryCast(Of IEnumerable(Of (sign As Integer, expr As String)))
                 Dim subIon As Formula = FormulaScanner.ScanFormula(part.expr)
 
-                subIon *= stdNum.Abs(part.sign)
+                subIon *= std.Abs(part.sign)
 
                 If part.sign > 0 Then
                     ' delete part
