@@ -62,6 +62,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Text.Parser
 
 Namespace Formula
@@ -247,7 +248,15 @@ Namespace Formula
         Dim buf As New List(Of Char)
         Dim digits As New List(Of Char)
         Dim formula As New List(Of Char)
+        Dim charge As Integer
 
+        ''' <summary>
+        ''' end of current atom and clear the buffer
+        ''' </summary>
+        ''' <param name="c"></param>
+        ''' <remarks>
+        ''' the method will populate a new atom and its atom number
+        ''' </remarks>
         Private Sub push(c As Char)
             Dim element$ = buf.CharString
 
@@ -270,7 +279,7 @@ Namespace Formula
             buf *= 0
             digits *= 0
 
-            If c <> "("c AndAlso c <> ")"c Then
+            If c <> "("c AndAlso c <> ")"c AndAlso c <> ASCII.NUL Then
                 buf += c
             End If
         End Sub
@@ -343,6 +352,23 @@ Namespace Formula
 
                 ElseIf c = ")"c Then
                     ' 结束当前的堆栈
+                    Exit Do
+                ElseIf c = "-"c Or c = "+" Then
+                    ' end of the formula
+                    ' parse the charge value
+                    Call push(Nothing)
+
+                    ' all is charge number for here
+                    Dim all = scaner.GetLeftsAll
+
+                    If all.All(Function(ci) Char.IsDigit(ci)) Then
+                        charge = Integer.Parse(New String(all))
+                        charge = If(c = "-", -1, 1) * charge
+                    Else
+                        charge = 0
+                        Call $"string in invalid charge value format: {New String(all)}".Warning
+                    End If
+
                     Exit Do
                 End If
             Loop
