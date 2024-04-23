@@ -174,6 +174,13 @@ Namespace Formula
             End If
         End Sub
 
+        ''' <summary>
+        ''' construct a new empty formula object
+        ''' </summary>
+        ''' <remarks>
+        ''' you can create a new formula string by adding new atom number 
+        ''' profiles into atom composition <see cref="CountsByElement"/>.
+        ''' </remarks>
         Sub New()
             CountsByElement = New Dictionary(Of String, Integer)
         End Sub
@@ -279,6 +286,13 @@ Namespace Formula
             Return composition * n
         End Operator
 
+        ''' <summary>
+        ''' make union of the atom count number profile <see cref="CountsByElement"/> 
+        ''' between two given formula object.
+        ''' </summary>
+        ''' <param name="a"></param>
+        ''' <param name="b"></param>
+        ''' <returns></returns>
         Public Shared Operator +(a As Formula, b As Formula) As Formula
             Dim newComposition = a.CountsByElement.Keys _
                 .JoinIterates(b.CountsByElement.Keys) _

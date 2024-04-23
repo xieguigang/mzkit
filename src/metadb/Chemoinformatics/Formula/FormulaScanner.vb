@@ -231,7 +231,29 @@ Namespace Formula
             If cache.ContainsKey(key) Then
                 formula2 = cache(key)
                 formula2 = New Formula(formula2.CountsByElement, formula2.m_formula)
+            ElseIf formula.Contains("."c) Then
+                Dim parts As String() = formula.Split("."c)
+                Dim f As New Formula
+
+                For Each part As String In parts
+                    formula2 = ScanFormula(part, n)
+                    f = f + formula2
+                Next
+
+                SyncLock cache
+                    If Not cache.ContainsKey(key) Then
+                        Call cache.Add(key, f)
+                    End If
+                End SyncLock
+
+                formula2 = f
             Else
+                ' [formula] charge value
+                ' [O]2- for free O atom
+                If formula.Contains("["c) OrElse formula.Contains("]"c) Then
+                    formula = formula.GetStackValue("[", "]")
+                End If
+
                 formula2 = New FormulaScanner(n).ScanFormula(New CharPtr(formula))
 
                 SyncLock cache
@@ -361,7 +383,11 @@ Namespace Formula
                     ' all is charge number for here
                     Dim all = scaner.GetLeftsAll
 
-                    If all.All(Function(ci) Char.IsDigit(ci)) Then
+                    If all.IsNullOrEmpty Then
+                        ' just do nothing at here
+                        ' charge +1 or -1
+                        charge = If(c = "-", -1, 1)
+                    ElseIf all.All(Function(ci) Char.IsDigit(ci)) Then
                         charge = Integer.Parse(New String(all))
                         charge = If(c = "-", -1, 1) * charge
                     Else
