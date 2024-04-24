@@ -20,6 +20,27 @@ Public Class TreeCluster
         Return tree.ToString
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="rank">
+    ''' the score ranking function, higher score is better
+    ''' </param>
+    ''' <returns></returns>
+    Public Function GetTopCluster(rank As Func(Of PeakMs2(), Double)) As IEnumerable(Of PeakMs2)
+        Dim tree = GetTree()
+        Dim specIndex = spectrum.ToDictionary(Function(s) s.lib_guid)
+        Dim rank_desc = tree _
+            .OrderByDescending(Function(c)
+                                   Return rank(c.Value.Select(Function(a) specIndex(a)).ToArray)
+                               End Function) _
+            .First
+
+        Return rank_desc _
+            .Value _
+            .Select(Function(id) specIndex(id))
+    End Function
+
     Public Function GetTree() As Dictionary(Of String, String())
         Dim pull As New Dictionary(Of String, String())
         Call GetTree(tree, pull)
