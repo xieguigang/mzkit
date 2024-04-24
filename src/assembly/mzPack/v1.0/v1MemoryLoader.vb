@@ -60,6 +60,9 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports std = System.Math
 
+''' <summary>
+''' handling file format for mzPack version 1
+''' </summary>
 Public Class v1MemoryLoader
 
     ''' <summary>
@@ -118,6 +121,13 @@ Public Class v1MemoryLoader
         Next
     End Function
 
+    ''' <summary>
+    ''' write mzpack data file in version 1 format
+    ''' </summary>
+    ''' <param name="data"></param>
+    ''' <param name="file"></param>
+    ''' <param name="progress"></param>
+    ''' <returns></returns>
     Public Shared Function Write(data As mzPack, file As Stream, Optional progress As Action(Of String) = Nothing) As Boolean
         Using mzpack As New mzPackWriter(file)
             Dim d As Integer = data.MS.TryCount / 7
