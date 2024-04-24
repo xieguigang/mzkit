@@ -55,7 +55,7 @@
 
 Imports System.IO
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Tree
 
@@ -74,7 +74,7 @@ Namespace Tree
 
         Protected Overrides Sub Push(centroid() As ms2, node As BlockNode, raw As PeakMs2)
             Dim score = GlobalAlignment.TwoDirectionSSM(centroid, node.centroid, da)
-            Dim min = stdNum.Min(score.forward, score.reverse)
+            Dim min = std.Min(score.forward, score.reverse)
             Dim i As Integer = BlockNode.GetBinaryIndex(min)
 
             If i = 0 Then
