@@ -68,6 +68,7 @@ Public Class zzz
 
     Public Shared Sub onLoad()
         Call mzDeco.Main()
+        Call GCMSLinear.Main()
         Call Linears.Main()
 
         REnv.Internal.Object.Converts.makeDataframe.addHandler(GetType(ROI()), AddressOf ROISummary)

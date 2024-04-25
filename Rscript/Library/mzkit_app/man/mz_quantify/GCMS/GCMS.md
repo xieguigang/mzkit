@@ -7,8 +7,8 @@ the targetted GCMS sim data quantification module
 + [ScanIonExtractor](GCMS/ScanIonExtractor.1) 
 + [parseContents](GCMS/parseContents.1) 
 + [contentTable](GCMS/contentTable.1) 
-+ [read.raw](GCMS/read.raw.1) 
++ [read.raw](GCMS/read.raw.1) read gcms rawdata
 + [peakRaw](GCMS/peakRaw.1) read raw peaks data
 + [linear_algorithm](GCMS/linear_algorithm.1) create linear model handler
 + [linears](GCMS/linears.1) 
-+ [ROIlist](GCMS/ROIlist.1) 
++ [ROIlist](GCMS/ROIlist.1) do peak detection for gc-ms rawdata

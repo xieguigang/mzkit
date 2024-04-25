@@ -1,13 +1,40 @@
 .\" man page create by R# package system.
 .TH GCMS 1 2000-Jan "ROIlist" "ROIlist"
 .SH NAME
-ROIlist \- 
+ROIlist \- do peak detection for gc-ms rawdata
 .SH SYNOPSIS
-\fIROIlist(\fBraw\fR as <generic> Raw, 
+\fIROIlist(\fBraw\fR as any, 
 \fBpeakwidth\fR as any = "3,20", 
 \fBbaseline\fR as double = 0.65, 
 \fBsn\fR as double = 3, 
+\fBjoint\fR as boolean = FALSE, 
 [\fB<Environment>\fR]);\fR
+.SH DESCRIPTION
+.PP
+do peak detection for gc-ms rawdata
+.PP
+.SH OPTIONS
+.PP
+\fBraw\fB \fR\- the input gcms rawdata, could be @\fBT:BioNovoGene.Analytical.MassSpectrometry.Math.GCMS.Raw\fR for 
+ targetted data and @\fBT:BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack\fR for un-targetted gc-ms rawdata.
+. 
+.PP
+.PP
+\fBpeakwidth\fB \fR\- -. 
+.PP
+.PP
+\fBbaseline\fB \fR\- -. 
+.PP
+.PP
+\fBsn\fB \fR\- -. 
+.PP
+.PP
+\fBenv\fB \fR\- -. 
+.PP
+.SH VALUE
+.PP
+a list of detected peak features
+.PP
 .SH SEE ALSO
 GCMS
 .SH FILES

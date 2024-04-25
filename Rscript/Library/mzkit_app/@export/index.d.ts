@@ -24,6 +24,10 @@ declare namespace mzkit {
       function term_maps(x: any, type?: any): object;
    }
    /**
+     * @param peak.width default value Is ``[3, 90]``.
+   */
+   function __deconv_gcms_single(file: any, peak.width?: any): object;
+   /**
    */
    function __ms1_xic_bins_single(path: any, mzdiff: any, outputdir: any): object;
    /**
@@ -32,6 +36,12 @@ declare namespace mzkit {
    /**
    */
    function convertToMzPack(file: string): object;
+   /**
+     * @param export_dir default value Is ``./``.
+     * @param peak.width default value Is ``[3, 90]``.
+     * @param n_threads default value Is ``16``.
+   */
+   function deconv_gcms(rawdata: any, export_dir?: any, peak.width?: any, n_threads?: any): object;
    /**
    */
    function GCMS_contentTable(mslIons: any, calfiles: string): object;

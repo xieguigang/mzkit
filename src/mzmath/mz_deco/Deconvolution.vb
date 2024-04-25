@@ -74,6 +74,38 @@ Imports std = System.Math
 ''' </summary>
 Public Module Deconvolution
 
+    <Extension>
+    Public Iterator Function DeconvPeakGroups(TIC As IEnumerable(Of ChromatogramTick), peakwidth As DoubleRange,
+                                             Optional quantile# = 0.65,
+                                             Optional sn_threshold As Double = 3,
+                                             Optional joint As Boolean = True) As IEnumerable(Of PeakFeature)
+
+        Dim data As ChromatogramTick() = TIC.SafeQuery.ToArray
+        Dim peakdata As PeakFeature
+
+        For Each ROI As ROI In data.Shadows.PopulateROI(
+            peakwidth:=peakwidth,
+            baselineQuantile:=quantile,
+            joint:=joint,
+            snThreshold:=sn_threshold
+        )
+            peakdata = New PeakFeature With {
+                .mz = 0,
+                .baseline = ROI.baseline,
+                .integration = ROI.integration,
+                .maxInto = ROI.maxInto,
+                .noise = ROI.noise,
+                .rt = ROI.rt,
+                .rtmax = ROI.time.Max,
+                .rtmin = ROI.time.Min,
+                .nticks = ROI.ticks.Length,
+                .area = ROI.ticks.Select(Function(t) t.Intensity).Sum,
+                .xcms_id = ROI.rt / 60
+            }
+            Yield peakdata
+        Next
+    End Function
+
     ''' <summary>
     ''' 
     ''' </summary>
@@ -92,31 +124,16 @@ Public Module Deconvolution
                                            Optional [single] As Boolean = True) As IEnumerable(Of PeakFeature)
 
         For Each tag_data As NamedValue(Of Chromatogram.Chromatogram) In overlaps.EnumerateSignals
-            Dim data = tag_data.Value.GetTic.Where(Function(ti) ti.Intensity > 0).ToArray '.TrimRTScatter(15, 5)
             Dim peaks As New List(Of PeakFeature)
-            Dim peakdata As PeakFeature
 
-            For Each ROI As ROI In data.Shadows.PopulateROI(
-                peakwidth:=peakwidth,
-                baselineQuantile:=quantile,
-                joint:=joint,
-                snThreshold:=sn_threshold
-            )
-                peakdata = New PeakFeature With {
-                    .mz = 0,
-                    .baseline = ROI.baseline,
-                    .integration = ROI.integration,
-                    .maxInto = ROI.maxInto,
-                    .noise = ROI.noise,
-                    .rt = ROI.rt,
-                    .rtmax = ROI.time.Max,
-                    .rtmin = ROI.time.Min,
-                    .nticks = ROI.ticks.Length,
-                    .area = ROI.ticks.Select(Function(t) t.Intensity).Sum,
-                    .rawfile = tag_data.Name,
-                    .xcms_id = tag_data.Name & $"[{(.rt / 60).ToString("F1")}min]"
-                }
-                peaks.Add(peakdata)
+            For Each peak As PeakFeature In tag_data.Value _
+                .GetTic _
+                .Where(Function(ti) ti.Intensity > 0) _
+                .DeconvPeakGroups(peakwidth, quantile, sn_threshold, joint)
+
+                peak.rawfile = tag_data.Name
+                peak.xcms_id = tag_data.Name & $"[{(peak.rt / 60).ToString("F1")}min]"
+                peaks.Add(peak)
             Next
 
             If peaks.Count = 0 Then
