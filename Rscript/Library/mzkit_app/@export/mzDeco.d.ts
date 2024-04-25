@@ -79,7 +79,8 @@ declare namespace mzDeco {
      * + default value Is ``'3,15'``.
      * @param joint 
      * + default value Is ``false``.
-     * @param parallel 
+     * @param parallel run peak detection algorithm on mutliple xic data in parallel mode?
+     * 
      * + default value Is ``false``.
      * @param dtw 
      * + default value Is ``false``.
