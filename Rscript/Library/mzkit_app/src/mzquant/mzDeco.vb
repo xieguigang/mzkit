@@ -554,6 +554,9 @@ Module mzDeco
     ''' <param name="feature">
     ''' a numeric vector of target feature ion m/z value for extract the XIC data.
     ''' </param>
+    ''' <param name="parallel">
+    ''' run peak detection algorithm on mutliple xic data in parallel mode?
+    ''' </param>
     ''' <returns>a vector of the peak deconvolution data,
     ''' in format of xcms peak table liked or mzkit <see cref="PeakFeature"/>
     ''' data object.
