@@ -599,6 +599,7 @@ Module mzDeco
             Return rtRange.TryCast(Of Message)
         End If
 
+        ' 1. processing for XIC pool
         If TypeOf ms1 Is XICPool Then
             Dim pool As XICPool = DirectCast(ms1, XICPool)
             Dim features_mz As Double() = CLRVector.asNumeric(feature)
@@ -612,6 +613,7 @@ Module mzDeco
                                      baseline, joint, dtw, parallel)
             End If
         ElseIf TypeOf ms1 Is list Then
+            ' 2. processing for a set of the xic data
             Dim ls_xic = DirectCast(ms1, list) _
                 .AsGeneric(Of MzGroup)(env) _
                 .Select(Function(a) New NamedValue(Of MzGroup)(a.Key, a.Value)) _
@@ -630,6 +632,22 @@ Module mzDeco
                 GoTo extract_ms1
             End If
         Else
+            Dim pull_xic As pipeline = pipeline.TryCreatePipeline(Of MzGroup)(ms1, env, suppress:=True)
+
+            If Not pull_xic.isError Then
+                Return pull_xic _
+                    .populates(Of MzGroup)(env) _
+                    .DecoMzGroups(
+                        peakwidth:=rtRange.TryCast(Of DoubleRange),
+                        quantile:=baseline,
+                        parallel:=parallel,
+                        joint:=joint,
+                        source:=rawfile,
+                        sn:=sn_threshold
+                    ) _
+                    .ToArray
+            End If
+
 extract_ms1:
             Dim source As String = Nothing
             Dim ms1_scans As IEnumerable(Of IMs1Scan) = ms1Scans(ms1, source)
@@ -864,8 +882,10 @@ extract_ms1:
     ''' </returns>
     ''' <example>
     ''' let rawdata = open.mzpack(file = "/path/to/rawdata.mzpack");
-    ''' let XIC = mz.groups(ms1 = rawdata, mzdiff = "ppm:20");
+    ''' let xic = mz.groups(ms1 = rawdata, mzdiff = "ppm:20");
     ''' 
+    ''' # export the XIC data as binary data file.
+    ''' writeBin(xic, con = "/path/to/xic_data.dat");
     ''' </example>
     ''' <remarks>
     ''' the ion mz value is generated via the max intensity point in each ion 
@@ -873,7 +893,7 @@ extract_ms1:
     ''' time asc.
     ''' </remarks>
     <ExportAPI("mz.groups")>
-    <RApiReturn(GetType(MzGroup()))>
+    <RApiReturn(GetType(MzGroup))>
     Public Function mz_groups(<RRawVectorArgument>
                               ms1 As Object,
                               Optional mzdiff As Object = "ppm:20",
