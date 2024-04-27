@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::88f48497c9f9f2b46d69d9858fd67f20, mzkit\src\visualize\plot\NMR\NMRSpectrum.vb"
+﻿#Region "Microsoft.VisualBasic::ac9082cd1993297757b208dfdecdd56b, G:/mzkit/src/visualize/plot//NMR/NMRSpectrum.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 59
     ' Comment Lines: 9
     '   Blank Lines: 6
-    '     File Size: 2.41 KB
+    '     File Size: 2.49 KB
 
 
     ' Class NMRSpectrum

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a898d3326b96449c6ca1ccce9757fb5f, mzkit\src\visualize\plot\NMR\FrequencyPlot.vb"
+﻿#Region "Microsoft.VisualBasic::c5e7e5c946bafe709ea88bfac708bd10, G:/mzkit/src/visualize/plot//NMR/FrequencyPlot.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 35
     ' Comment Lines: 0
     '   Blank Lines: 6
-    '     File Size: 1.34 KB
+    '     File Size: 1.38 KB
 
 
     ' Class nmrSpectrumPlot

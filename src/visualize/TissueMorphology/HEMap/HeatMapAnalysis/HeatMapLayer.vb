@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0bdc5b9d745a5d769e940b9f3b07bfac, mzkit\src\visualize\TissueMorphology\HEMap\HeatMapLayer.vb"
+﻿#Region "Microsoft.VisualBasic::4dd9692535477a2b5a6beac4ea298e76, G:/mzkit/src/visualize/TissueMorphology//HEMap/HeatMapAnalysis/HeatMapLayer.vb"
 
     ' Author:
     ' 
@@ -37,22 +37,23 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 73
-    '    Code Lines: 63
-    ' Comment Lines: 0
-    '   Blank Lines: 10
-    '     File Size: 2.72 KB
+    '   Total Lines: 79
+    '    Code Lines: 65
+    ' Comment Lines: 3
+    '   Blank Lines: 11
+    '     File Size: 3.08 KB
 
 
-    ' Module HeatMapLayer
+    '     Module HeatMapLayer
     ' 
-    '     Function: GetHeatMapLayer, RSD
+    '         Function: GetHeatMapLayer, RSD
     ' 
-    ' Enum Layers
+    '     Enum Layers
     ' 
-    '     Density, Pixels, Ratio
+    '         Density, Pixels, Ratio
     ' 
     '  
+    ' 
     ' 
     ' 
     ' 

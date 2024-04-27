@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b51bf44b0e1550efe58ee391929ff937, mzkit\src\visualize\MsImaging\IndexedCache\XIC.vb"
+﻿#Region "Microsoft.VisualBasic::b51bf44b0e1550efe58ee391929ff937, G:/mzkit/src/visualize/MsImaging//IndexedCache/XIC.vb"
 
     ' Author:
     ' 
