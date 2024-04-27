@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::783c24a05072c501254b12dd4cfbc966, G:/mzkit/src/assembly/SpectrumTree//Pack/Compression.vb"
+﻿#Region "Microsoft.VisualBasic::c4d95e3ab5bd13fcc94901bfd792dab5, G:/mzkit/src/assembly/SpectrumTree//Pack/Compression.vb"
 
     ' Author:
     ' 
@@ -146,4 +146,3 @@ Public Class Compression
         Next
     End Sub
 End Class
-

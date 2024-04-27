@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aee0cfdb5e45fd1e5e11ae1fde25d415, G:/mzkit/src/assembly/SpectrumTree//Utils.vb"
+﻿#Region "Microsoft.VisualBasic::6b006fd397620a211600b717a2fadc91, G:/mzkit/src/assembly/SpectrumTree//Utils.vb"
 
     ' Author:
     ' 
@@ -162,4 +162,3 @@ Public Module Utils
         Return (peaks.ToArray, spectrum.OrderBy(Function(s) s.rt).ToArray)
     End Function
 End Module
-

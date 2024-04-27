@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::76c80c70753aad3c14b4a898ba1df675, G:/mzkit/src/assembly/SignalReader//UVSpectroscopyReader.vb"
+﻿#Region "Microsoft.VisualBasic::b720cf515f8c80dfb067b78dbcabc96d, G:/mzkit/src/assembly/SignalReader//UVSpectroscopyReader.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 99
     ' Comment Lines: 29
     '   Blank Lines: 12
-    '     File Size: 6.00 KB
+    '     File Size: 5.99 KB
 
 
     ' Module UVSpectroscopyReader
@@ -192,4 +192,3 @@ Public Module UVSpectroscopyReader
         Next
     End Function
 End Module
-

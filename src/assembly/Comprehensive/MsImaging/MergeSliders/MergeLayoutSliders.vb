@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::78772ceb6c334063c7cbb065f5f146f2, G:/mzkit/src/assembly/Comprehensive//MsImaging/MergeSliders/MergeLayoutSliders.vb"
+﻿#Region "Microsoft.VisualBasic::00156c4d6fe8af3f726a60fa1578be49, G:/mzkit/src/assembly/Comprehensive//MsImaging/MergeSliders/MergeLayoutSliders.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 96
     ' Comment Lines: 12
     '   Blank Lines: 19
-    '     File Size: 4.93 KB
+    '     File Size: 4.92 KB
 
 
     ' Module MergeLayoutSliders
@@ -179,4 +179,3 @@ Public Module MergeLayoutSliders
         }
     End Function
 End Module
-

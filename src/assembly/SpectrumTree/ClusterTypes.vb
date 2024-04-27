@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a5804b6871490281426799b245ece975, G:/mzkit/src/assembly/SpectrumTree//ClusterTypes.vb"
+﻿#Region "Microsoft.VisualBasic::c80f8340d893527506ab6d29d957a9ab, G:/mzkit/src/assembly/SpectrumTree//ClusterTypes.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 30
+    '   Total Lines: 29
     '    Code Lines: 6
     ' Comment Lines: 21
-    '   Blank Lines: 3
-    '     File Size: 870 B
+    '   Blank Lines: 2
+    '     File Size: 866 B
 
 
     ' Enum ClusterTypes
@@ -55,7 +55,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 ''' <summary>
 ''' the constant value for enumerate the reference library data types
@@ -86,4 +85,3 @@ Public Enum ClusterTypes
     ''' </summary>
     Pack
 End Enum
-

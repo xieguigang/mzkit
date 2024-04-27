@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::566202b625d0aebb498cdcbe77f0c179, G:/mzkit/src/assembly/Comprehensive//MsImaging/MergeSliders/MergeFakeSTImagingSliders.vb"
+﻿#Region "Microsoft.VisualBasic::2a34f9ef3bbb87575f1ab2f44ffdf55f, G:/mzkit/src/assembly/Comprehensive//MsImaging/MergeSliders/MergeFakeSTImagingSliders.vb"
 
     ' Author:
     ' 
@@ -123,4 +123,3 @@ Public Module MergeFakeSTImagingSliders
         Return TweaksSTData(union, raw.Values.Select(Function(m) m.metadata), unionGeneIds)
     End Function
 End Module
-

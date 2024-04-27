@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0dae6875da66a21298ae3adf1fb16dd7, G:/mzkit/src/assembly/mzPackExtensions//MRM.vb"
+﻿#Region "Microsoft.VisualBasic::09502ac6e57a73aeb7b79d4e1fd58bff, G:/mzkit/src/assembly/mzPackExtensions//MRM.vb"
 
     ' Author:
     ' 
@@ -153,4 +153,3 @@ Public Module MRM
         Next
     End Function
 End Module
-

@@ -28,7 +28,7 @@ G:\mzkit\src\assembly\assembly\assembly-netcore5.vbproj,assembly\MarkupData\imzM
 G:\mzkit\src\assembly\assembly\assembly-netcore5.vbproj,assembly\MarkupData\imzML\Writer\DataWriter.vb,41,3,7,31,1,0,0,2,0,1281,1.28 KB
 G:\mzkit\src\assembly\assembly\assembly-netcore5.vbproj,assembly\MarkupData\imzML\Writer\mzPackWriter.vb,340,21,33,286,1,0,14,5,0,19635,19.64 KB
 G:\mzkit\src\assembly\assembly\assembly-netcore5.vbproj,assembly\MarkupData\imzML\XML\ibdPtr.vb,43,3,8,32,1,4,0,2,0,1561,1.56 KB
-G:\mzkit\src\assembly\assembly\assembly-netcore5.vbproj,assembly\MarkupData\imzML\XML\imzMLMetadata.vb,138,16,20,102,1,15,2,1,0,6340,6.34 KB
+G:\mzkit\src\assembly\assembly\assembly-netcore5.vbproj,assembly\MarkupData\imzML\XML\imzMLMetadata.vb,137,16,19,102,1,15,2,1,0,6338,6.34 KB
 G:\mzkit\src\assembly\assembly\assembly-netcore5.vbproj,assembly\MarkupData\imzML\XML\IntensitySummary.vb,21,12,1,8,1,0,0,0,0,548,548 B
 G:\mzkit\src\assembly\assembly\assembly-netcore5.vbproj,assembly\MarkupData\imzML\XML\MSISummary.vb,146,26,20,100,1,4,0,7,0,5375,5.38 KB
 G:\mzkit\src\assembly\assembly\assembly-netcore5.vbproj,assembly\MarkupData\imzML\XML\Scan3DReader.vb,63,0,15,48,2,6,1,2,0,1766,1.77 KB
@@ -103,7 +103,7 @@ G:\mzkit\src\assembly\assembly\assembly-netcore5.vbproj,assembly\UnifyReader\Pro
 G:\mzkit\src\assembly\assembly\assembly-netcore5.vbproj,assembly\UnifyReader\FileFormats\imzMLScan.vb,61,0,15,46,1,0,0,13,0,2137,2.14 KB
 G:\mzkit\src\assembly\assembly\assembly-netcore5.vbproj,assembly\UnifyReader\FileFormats\mzMLScan.vb,109,0,19,90,1,0,0,13,0,4623,4.62 KB
 G:\mzkit\src\assembly\assembly\assembly-netcore5.vbproj,assembly\UnifyReader\FileFormats\mzXMLScan.vb,95,11,15,69,1,0,0,13,0,3793,3.79 KB
-G:\mzkit\src\assembly\assembly\assembly-netcore5.vbproj,<project>,8127,1219,1360,5548,158,405,87,314,0,305432,305.43 KB
+G:\mzkit\src\assembly\assembly\assembly-netcore5.vbproj,<project>,8126,1219,1359,5548,158,405,87,314,0,305430,305.43 KB
 G:\mzkit\src\assembly\assembly\test\test.vbproj,test\Module1.vb,64,27,21,16,1,0,2,0,0,2445,2.44 KB
 G:\mzkit\src\assembly\assembly\test\test.vbproj,test\Program.vb,19,0,3,16,1,0,2,0,0,700,700 B
 G:\mzkit\src\assembly\assembly\test\test.vbproj,test\read_imzML.vb,28,0,8,20,1,0,3,0,0,958,958 B
@@ -136,15 +136,15 @@ G:\mzkit\src\assembly\BrukerDataReader\BrukerDataReader.NET5.vbproj,BrukerDataRe
 G:\mzkit\src\assembly\BrukerDataReader\BrukerDataReader.NET5.vbproj,BrukerDataReader\XMass\Project.vb,40,3,6,31,1,6,0,1,0,1602,1.60 KB
 G:\mzkit\src\assembly\BrukerDataReader\BrukerDataReader.NET5.vbproj,BrukerDataReader\XMass\PropertyFileReader.vb,45,5,8,32,1,0,1,2,0,1464,1.46 KB
 G:\mzkit\src\assembly\BrukerDataReader\BrukerDataReader.NET5.vbproj,BrukerDataReader\XMass\pdata\pdata.vb,30,0,6,24,1,4,0,2,0,999,999 B
-G:\mzkit\src\assembly\BrukerDataReader\BrukerDataReader.NET5.vbproj,BrukerDataReader\XMass\pdata\peaklist.vb,44,3,8,33,2,25,0,0,0,1341,1.34 KB
+G:\mzkit\src\assembly\BrukerDataReader\BrukerDataReader.NET5.vbproj,BrukerDataReader\XMass\pdata\peaklist.vb,43,3,7,33,2,25,0,0,0,1339,1.34 KB
 G:\mzkit\src\assembly\BrukerDataReader\BrukerDataReader.NET5.vbproj,BrukerDataReader\XMass\pdata\RawReader.vb,6,0,2,4,1,0,0,0,0,77,77 B
-G:\mzkit\src\assembly\BrukerDataReader\BrukerDataReader.NET5.vbproj,BrukerDataReader\XMass\Xml\AnalysisMethod.vb,77,3,14,60,10,36,0,0,0,2872,2.87 KB
-G:\mzkit\src\assembly\BrukerDataReader\BrukerDataReader.NET5.vbproj,BrukerDataReader\XMass\Xml\AnalysisParameter.vb,26,4,6,16,1,10,0,0,0,732,732 B
-G:\mzkit\src\assembly\BrukerDataReader\BrukerDataReader.NET5.vbproj,<project>,2357,565,360,1432,50,173,59,41,0,87078,87.08 KB
+G:\mzkit\src\assembly\BrukerDataReader\BrukerDataReader.NET5.vbproj,BrukerDataReader\XMass\Xml\AnalysisMethod.vb,76,3,13,60,10,36,0,0,0,2870,2.87 KB
+G:\mzkit\src\assembly\BrukerDataReader\BrukerDataReader.NET5.vbproj,BrukerDataReader\XMass\Xml\AnalysisParameter.vb,25,4,5,16,1,10,0,0,0,730,730 B
+G:\mzkit\src\assembly\BrukerDataReader\BrukerDataReader.NET5.vbproj,<project>,2354,565,357,1432,50,173,59,41,0,87072,87.07 KB
 G:\mzkit\src\assembly\BrukerDataReader\test\test.vbproj,test\Program.vb,49,2,11,36,1,0,4,0,0,1532,1.53 KB
 G:\mzkit\src\assembly\BrukerDataReader\test\test.vbproj,<project>,49,2,11,36,1,0,4,0,0,1532,1.53 KB
 G:\mzkit\src\assembly\Comprehensive\Comprehensive.NET5.vbproj,Comprehensive\GCxGC\D2Chromatogram.vb,138,21,18,99,1,5,3,4,0,5502,5.50 KB
-G:\mzkit\src\assembly\Comprehensive\Comprehensive.NET5.vbproj,Comprehensive\GCxGC\Data.vb,47,0,4,43,1,0,0,3,0,1895,1.90 KB
+G:\mzkit\src\assembly\Comprehensive\Comprehensive.NET5.vbproj,Comprehensive\GCxGC\Data.vb,47,0,4,43,1,0,0,3,0,1893,1.89 KB
 G:\mzkit\src\assembly\Comprehensive\Comprehensive.NET5.vbproj,Comprehensive\GCxGC\GC2Dimensional.vb,280,82,33,165,1,0,0,10,0,10654,10.65 KB
 G:\mzkit\src\assembly\Comprehensive\Comprehensive.NET5.vbproj,Comprehensive\MsImaging\Correction.vb,13,3,4,6,1,0,0,0,0,354,354 B
 G:\mzkit\src\assembly\Comprehensive\Comprehensive.NET5.vbproj,Comprehensive\MsImaging\Metadata.vb,144,64,15,65,1,8,3,3,0,5096,5.10 KB
@@ -157,8 +157,8 @@ G:\mzkit\src\assembly\Comprehensive\Comprehensive.NET5.vbproj,Comprehensive\MsIm
 G:\mzkit\src\assembly\Comprehensive\Comprehensive.NET5.vbproj,Comprehensive\MsImaging\3D_MALDI\Imports3DMSI.vb,55,0,10,45,1,0,0,2,0,2438,2.44 KB
 G:\mzkit\src\assembly\Comprehensive\Comprehensive.NET5.vbproj,Comprehensive\MsImaging\3D_MALDI\MALDIPointCloud.vb,113,0,22,91,1,0,3,3,0,4958,4.96 KB
 G:\mzkit\src\assembly\Comprehensive\Comprehensive.NET5.vbproj,Comprehensive\MsImaging\Converter\ConvertSingleScan.vb,74,13,12,49,1,0,1,3,0,2751,2.75 KB
-G:\mzkit\src\assembly\Comprehensive\Comprehensive.NET5.vbproj,Comprehensive\MsImaging\MergeSliders\MergeFakeSTImagingSliders.vb,71,13,11,47,1,0,0,3,0,3230,3.23 KB
-G:\mzkit\src\assembly\Comprehensive\Comprehensive.NET5.vbproj,Comprehensive\MsImaging\MergeSliders\MergeLayoutSliders.vb,127,12,19,96,1,0,0,1,0,4927,4.93 KB
+G:\mzkit\src\assembly\Comprehensive\Comprehensive.NET5.vbproj,Comprehensive\MsImaging\MergeSliders\MergeFakeSTImagingSliders.vb,71,13,11,47,1,0,0,3,0,3228,3.23 KB
+G:\mzkit\src\assembly\Comprehensive\Comprehensive.NET5.vbproj,Comprehensive\MsImaging\MergeSliders\MergeLayoutSliders.vb,127,12,19,96,1,0,0,1,0,4925,4.92 KB
 G:\mzkit\src\assembly\Comprehensive\Comprehensive.NET5.vbproj,Comprehensive\MsImaging\MergeSliders\MergeLinear.vb,138,18,27,93,3,0,3,4,0,5421,5.42 KB
 G:\mzkit\src\assembly\Comprehensive\Comprehensive.NET5.vbproj,Comprehensive\MsImaging\MergeSliders\MergeSliders.vb,170,34,20,116,1,0,1,3,0,6419,6.42 KB
 G:\mzkit\src\assembly\Comprehensive\Comprehensive.NET5.vbproj,Comprehensive\MsImaging\Udp\UDPPrj.vb,111,4,20,87,4,27,0,7,0,3519,3.52 KB
@@ -167,13 +167,13 @@ G:\mzkit\src\assembly\Comprehensive\Comprehensive.NET5.vbproj,Comprehensive\test
 G:\mzkit\src\assembly\Comprehensive\Comprehensive.NET5.vbproj,Comprehensive\test\My Project\AssemblyInfo.vb,35,15,7,13,0,0,0,0,0,1043,1.04 KB
 G:\mzkit\src\assembly\Comprehensive\Comprehensive.NET5.vbproj,Comprehensive\test\My Project\Resources.Designer.vb,62,23,8,31,1,2,0,0,0,2766,2.77 KB
 G:\mzkit\src\assembly\Comprehensive\Comprehensive.NET5.vbproj,Comprehensive\test\My Project\Settings.Designer.vb,73,9,13,51,2,2,1,0,0,2966,2.97 KB
-G:\mzkit\src\assembly\Comprehensive\Comprehensive.NET5.vbproj,<project>,2300,400,332,1568,28,47,20,68,0,89113,89.11 KB
-G:\mzkit\src\assembly\LoadR.NET5\LoadR.NET5.vbproj,LoadR.NET5\ChromatogramOverlap.vb,113,8,21,84,1,0,2,7,0,3759,3.76 KB
+G:\mzkit\src\assembly\Comprehensive\Comprehensive.NET5.vbproj,<project>,2300,400,332,1568,28,47,20,68,0,89107,89.11 KB
+G:\mzkit\src\assembly\LoadR.NET5\LoadR.NET5.vbproj,LoadR.NET5\ChromatogramOverlap.vb,113,8,21,84,1,0,2,7,0,3757,3.76 KB
 G:\mzkit\src\assembly\LoadR.NET5\LoadR.NET5.vbproj,LoadR.NET5\LoadR.vb,72,2,12,58,1,0,0,2,0,2659,2.66 KB
-G:\mzkit\src\assembly\LoadR.NET5\LoadR.NET5.vbproj,LoadR.NET5\ReadXcmsRData.vb,88,1,15,72,1,5,0,3,0,2979,2.98 KB
-G:\mzkit\src\assembly\LoadR.NET5\LoadR.NET5.vbproj,LoadR.NET5\SpatialMatrixReader.vb,143,9,26,108,1,0,2,6,0,4751,4.75 KB
+G:\mzkit\src\assembly\LoadR.NET5\LoadR.NET5.vbproj,LoadR.NET5\ReadXcmsRData.vb,88,1,15,72,1,5,0,3,0,2977,2.98 KB
+G:\mzkit\src\assembly\LoadR.NET5\LoadR.NET5.vbproj,LoadR.NET5\SpatialMatrixReader.vb,143,9,26,108,1,0,2,6,0,4749,4.75 KB
 G:\mzkit\src\assembly\LoadR.NET5\LoadR.NET5.vbproj,LoadR.NET5\test\Program.vb,62,10,11,41,1,0,2,0,0,2375,2.38 KB
-G:\mzkit\src\assembly\LoadR.NET5\LoadR.NET5.vbproj,<project>,478,30,85,363,5,5,6,18,0,16523,16.52 KB
+G:\mzkit\src\assembly\LoadR.NET5\LoadR.NET5.vbproj,<project>,478,30,85,363,5,5,6,18,0,16517,16.52 KB
 G:\mzkit\src\assembly\LoadR.NET5\test\test.vbproj,test\Program.vb,62,10,11,41,1,0,2,0,0,2375,2.38 KB
 G:\mzkit\src\assembly\LoadR.NET5\test\test.vbproj,<project>,62,10,11,41,1,0,2,0,0,2375,2.38 KB
 G:\mzkit\src\assembly\mzPack\mzpack.NET5.vbproj,mzPack\Converter.vb,292,20,34,238,1,0,0,7,0,12501,12.50 KB
@@ -188,7 +188,7 @@ G:\mzkit\src\assembly\mzPack\mzpack.NET5.vbproj,mzPack\v1.0\v1MemoryLoader.vb,88
 G:\mzkit\src\assembly\mzPack\mzpack.NET5.vbproj,mzPack\v2.0\mzStream.vb,394,47,65,282,1,6,6,12,0,14119,14.12 KB
 G:\mzkit\src\assembly\mzPack\mzpack.NET5.vbproj,mzPack\v2.0\mzStreamWriter.vb,248,27,44,177,1,0,4,3,0,9758,9.76 KB
 G:\mzkit\src\assembly\mzPack\mzpack.NET5.vbproj,<project>,2264,272,344,1648,12,44,29,61,0,84033,84.03 KB
-G:\mzkit\src\assembly\mzPackExtensions\mzPackExtensions.NET5.vbproj,mzPackExtensions\MRM.vb,101,3,10,88,1,0,0,2,0,4154,4.15 KB
+G:\mzkit\src\assembly\mzPackExtensions\mzPackExtensions.NET5.vbproj,mzPackExtensions\MRM.vb,101,3,10,88,1,0,0,2,0,4152,4.15 KB
 G:\mzkit\src\assembly\mzPackExtensions\mzPackExtensions.NET5.vbproj,mzPackExtensions\RawStream.vb,45,0,8,37,1,0,0,3,0,1517,1.52 KB
 G:\mzkit\src\assembly\mzPackExtensions\mzPackExtensions.NET5.vbproj,mzPackExtensions\ToCDFWriter.vb,74,5,9,60,1,0,1,1,0,4109,4.11 KB
 G:\mzkit\src\assembly\mzPackExtensions\mzPackExtensions.NET5.vbproj,mzPackExtensions\MSImaging\Extensions.vb,40,0,7,33,1,0,0,1,0,1496,1.50 KB
@@ -206,7 +206,7 @@ G:\mzkit\src\assembly\mzPackExtensions\mzPackExtensions.NET5.vbproj,mzPackExtens
 G:\mzkit\src\assembly\mzPackExtensions\mzPackExtensions.NET5.vbproj,mzPackExtensions\VendorStream\VendorStreamLoader.vb,66,0,13,53,1,0,1,1,0,2562,2.56 KB
 G:\mzkit\src\assembly\mzPackExtensions\mzPackExtensions.NET5.vbproj,mzPackExtensions\VendorStream\WiffRawStream.vb,152,4,25,123,1,2,3,2,0,5360,5.36 KB
 G:\mzkit\src\assembly\mzPackExtensions\mzPackExtensions.NET5.vbproj,mzPackExtensions\VendorStream\XRawStream.vb,98,3,15,80,1,2,2,2,0,3500,3.50 KB
-G:\mzkit\src\assembly\mzPackExtensions\mzPackExtensions.NET5.vbproj,<project>,1603,169,262,1172,17,17,23,41,0,61034,61.03 KB
+G:\mzkit\src\assembly\mzPackExtensions\mzPackExtensions.NET5.vbproj,<project>,1603,169,262,1172,17,17,23,41,0,61032,61.03 KB
 G:\mzkit\src\assembly\NMRFidTool\NMRFidTool.vbproj,NMRFidTool\AbstractFastFourierTransformTool.vb,171,47,26,98,1,4,6,2,0,6673,6.67 KB
 G:\mzkit\src\assembly\NMRFidTool\NMRFidTool.vbproj,NMRFidTool\Acqu.vb,434,27,80,327,6,23,8,11,0,13238,13.24 KB
 G:\mzkit\src\assembly\NMRFidTool\NMRFidTool.vbproj,NMRFidTool\Fid.vb,103,30,13,60,1,3,5,1,0,3089,3.09 KB
@@ -251,15 +251,15 @@ G:\mzkit\src\assembly\ProteoWizard.Interop\ProteoWizard.Interop.NET5.vbproj,Prot
 G:\mzkit\src\assembly\ProteoWizard.Interop\ProteoWizard.Interop.NET5.vbproj,<project>,650,273,87,290,10,7,7,14,0,26732,26.73 KB
 G:\mzkit\src\assembly\RamanSpectroscopy\RamanSpectroscopy.vbproj,RamanSpectroscopy\read_WDF.vb,170,44,12,114,2,5,0,2,0,4671,4.67 KB
 G:\mzkit\src\assembly\RamanSpectroscopy\RamanSpectroscopy.vbproj,<project>,170,44,12,114,2,5,0,2,0,4671,4.67 KB
-G:\mzkit\src\assembly\SignalReader\SignalReader.vbproj,SignalReader\ChromatogramReader.vb,151,22,18,111,1,0,0,8,0,6650,6.65 KB
-G:\mzkit\src\assembly\SignalReader\SignalReader.vbproj,SignalReader\RamanSpectroscopy.vb,31,0,3,28,1,0,0,2,0,1285,1.28 KB
-G:\mzkit\src\assembly\SignalReader\SignalReader.vbproj,SignalReader\UVSpectroscopyReader.vb,140,29,12,99,1,0,0,5,0,5995,6.00 KB
-G:\mzkit\src\assembly\SignalReader\SignalReader.vbproj,<project>,322,51,33,238,3,0,0,15,0,13930,13.93 KB
-G:\mzkit\src\assembly\SpectrumTree\spectrumTree.NETCore5.vbproj,SpectrumTree\Cleanup.vb,111,6,10,95,1,0,0,3,0,4471,4.47 KB
-G:\mzkit\src\assembly\SpectrumTree\spectrumTree.NETCore5.vbproj,SpectrumTree\ClusterTypes.vb,30,21,3,6,1,0,0,0,0,870,870 B
+G:\mzkit\src\assembly\SignalReader\SignalReader.vbproj,SignalReader\ChromatogramReader.vb,151,22,18,111,1,0,0,8,0,6648,6.65 KB
+G:\mzkit\src\assembly\SignalReader\SignalReader.vbproj,SignalReader\RamanSpectroscopy.vb,31,0,3,28,1,0,0,2,0,1283,1.28 KB
+G:\mzkit\src\assembly\SignalReader\SignalReader.vbproj,SignalReader\UVSpectroscopyReader.vb,140,29,12,99,1,0,0,5,0,5993,5.99 KB
+G:\mzkit\src\assembly\SignalReader\SignalReader.vbproj,<project>,322,51,33,238,3,0,0,15,0,13924,13.92 KB
+G:\mzkit\src\assembly\SpectrumTree\spectrumTree.NETCore5.vbproj,SpectrumTree\Cleanup.vb,111,6,10,95,1,0,0,3,0,4469,4.47 KB
+G:\mzkit\src\assembly\SpectrumTree\spectrumTree.NETCore5.vbproj,SpectrumTree\ClusterTypes.vb,29,21,2,6,1,0,0,0,0,866,866 B
 G:\mzkit\src\assembly\SpectrumTree\spectrumTree.NETCore5.vbproj,SpectrumTree\PrecursorAdductsAssignRuler.vb,83,0,17,66,1,0,1,5,0,3064,3.06 KB
-G:\mzkit\src\assembly\SpectrumTree\spectrumTree.NETCore5.vbproj,SpectrumTree\Utils.vb,110,8,11,91,1,0,0,3,0,4563,4.56 KB
-G:\mzkit\src\assembly\SpectrumTree\spectrumTree.NETCore5.vbproj,SpectrumTree\Pack\Compression.vb,93,1,20,72,1,0,3,0,0,3224,3.22 KB
+G:\mzkit\src\assembly\SpectrumTree\spectrumTree.NETCore5.vbproj,SpectrumTree\Utils.vb,110,8,11,91,1,0,0,3,0,4561,4.56 KB
+G:\mzkit\src\assembly\SpectrumTree\spectrumTree.NETCore5.vbproj,SpectrumTree\Pack\Compression.vb,93,1,20,72,1,0,3,0,0,3222,3.22 KB
 G:\mzkit\src\assembly\SpectrumTree\spectrumTree.NETCore5.vbproj,SpectrumTree\Pack\MassIndex.vb,44,19,6,19,1,5,0,1,0,1525,1.52 KB
 G:\mzkit\src\assembly\SpectrumTree\spectrumTree.NETCore5.vbproj,SpectrumTree\Pack\MzIonSearch.vb,51,7,9,35,1,1,1,2,0,1727,1.73 KB
 G:\mzkit\src\assembly\SpectrumTree\spectrumTree.NETCore5.vbproj,SpectrumTree\Pack\PackAlignment.vb,148,51,15,82,3,4,1,2,0,5967,5.97 KB
@@ -278,7 +278,7 @@ G:\mzkit\src\assembly\SpectrumTree\spectrumTree.NETCore5.vbproj,SpectrumTree\Tre
 G:\mzkit\src\assembly\SpectrumTree\spectrumTree.NETCore5.vbproj,SpectrumTree\Tree\NodeBuffer.vb,70,3,9,58,1,0,1,1,0,2823,2.82 KB
 G:\mzkit\src\assembly\SpectrumTree\spectrumTree.NETCore5.vbproj,SpectrumTree\Tree\ReferenceBinaryTree.vb,46,10,6,30,1,0,2,0,0,1628,1.63 KB
 G:\mzkit\src\assembly\SpectrumTree\spectrumTree.NETCore5.vbproj,SpectrumTree\Tree\ReferenceTree.vb,127,27,21,79,1,0,7,0,0,4742,4.74 KB
-G:\mzkit\src\assembly\SpectrumTree\spectrumTree.NETCore5.vbproj,<project>,2397,491,336,1570,25,52,31,57,0,91649,91.65 KB
+G:\mzkit\src\assembly\SpectrumTree\spectrumTree.NETCore5.vbproj,<project>,2396,491,335,1570,25,52,31,57,0,91639,91.64 KB
 G:\mzkit\src\assembly\ThermoRawFileReader\MSFileReader.NET5.vbproj,ThermoRawFileReader\DeviceInfo.vb,144,49,22,73,1,11,1,2,0,4587,4.59 KB
 G:\mzkit\src\assembly\ThermoRawFileReader\MSFileReader.NET5.vbproj,ThermoRawFileReader\LabelParser.vb,69,14,11,44,1,0,0,0,0,4997,5.00 KB
 G:\mzkit\src\assembly\ThermoRawFileReader\MSFileReader.NET5.vbproj,ThermoRawFileReader\MSFileReader.vb,209,31,35,143,1,6,2,7,0,7411,7.41 KB
@@ -300,10 +300,10 @@ G:\mzkit\src\assembly\ThermoRawFileReader\MSFileReader.NET5.vbproj,ThermoRawFile
 G:\mzkit\src\assembly\ThermoRawFileReader\MSFileReader.NET5.vbproj,ThermoRawFileReader\Enums\IntensityCutoffTypeConstants.vb,21,13,2,6,1,0,0,0,0,600,600 B
 G:\mzkit\src\assembly\ThermoRawFileReader\MSFileReader.NET5.vbproj,ThermoRawFileReader\Enums\MRMScanTypeConstants.vb,30,18,4,8,1,0,0,0,0,626,626 B
 G:\mzkit\src\assembly\ThermoRawFileReader\MSFileReader.NET5.vbproj,ThermoRawFileReader\test\Module1.vb,16,0,5,11,1,0,1,0,0,458,458 B
-G:\mzkit\src\assembly\ThermoRawFileReader\MSFileReader.NET5.vbproj,ThermoRawFileReader\test\Module2.vb,67,52,15,0,0,0,0,0,0,2462,2.46 KB
+G:\mzkit\src\assembly\ThermoRawFileReader\MSFileReader.NET5.vbproj,ThermoRawFileReader\test\Module2.vb,67,52,15,0,0,0,0,0,0,2460,2.46 KB
 G:\mzkit\src\assembly\ThermoRawFileReader\MSFileReader.NET5.vbproj,ThermoRawFileReader\test\My Project\Application.Designer.vb,12,9,1,2,0,0,0,0,0,434,434 B
 G:\mzkit\src\assembly\ThermoRawFileReader\MSFileReader.NET5.vbproj,ThermoRawFileReader\test\My Project\AssemblyInfo.vb,35,15,7,13,0,0,0,0,0,1143,1.14 KB
 G:\mzkit\src\assembly\ThermoRawFileReader\MSFileReader.NET5.vbproj,ThermoRawFileReader\test\My Project\Resources.Designer.vb,62,23,8,31,1,2,0,0,0,2766,2.77 KB
 G:\mzkit\src\assembly\ThermoRawFileReader\MSFileReader.NET5.vbproj,ThermoRawFileReader\test\My Project\Settings.Designer.vb,73,9,13,51,2,2,1,0,0,2966,2.97 KB
-G:\mzkit\src\assembly\ThermoRawFileReader\MSFileReader.NET5.vbproj,<project>,4268,1287,722,2259,26,78,29,63,0,170508,170.51 KB
-../src/assembly,<root>,56568,11582,8842,36144,754,1780,706,1506,0,2153434,2.15 MB
+G:\mzkit\src\assembly\ThermoRawFileReader\MSFileReader.NET5.vbproj,<project>,4268,1287,722,2259,26,78,29,63,0,170506,170.51 KB
+../src/assembly,<root>,56558,11582,8832,36144,754,1780,706,1506,0,2153354,2.15 MB

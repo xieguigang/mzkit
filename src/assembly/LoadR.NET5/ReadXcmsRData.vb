@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::58e4bcdad43dada8ed244cea80dfff61, G:/mzkit/src/assembly/LoadR.NET5//ReadXcmsRData.vb"
+﻿#Region "Microsoft.VisualBasic::573e1f9790a5a6904e20041d23a3e65b, G:/mzkit/src/assembly/LoadR.NET5//ReadXcmsRData.vb"
 
     ' Author:
     ' 
@@ -142,4 +142,3 @@ Public Class XcmsRData
     End Function
 
 End Class
-

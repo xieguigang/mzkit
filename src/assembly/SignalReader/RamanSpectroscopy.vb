@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::de9deedfed2f9ebfd5a498e2fd5bf778, G:/mzkit/src/assembly/SignalReader//RamanSpectroscopy.vb"
+﻿#Region "Microsoft.VisualBasic::558d04392a6deb1748c207e9acef0e6f, G:/mzkit/src/assembly/SignalReader//RamanSpectroscopy.vb"
 
     ' Author:
     ' 
@@ -83,4 +83,3 @@ Public Module RamanSpectroscopy
             .ToArray
     End Function
 End Module
-

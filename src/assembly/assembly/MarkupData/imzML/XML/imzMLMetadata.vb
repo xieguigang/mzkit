@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9edeacdb1cdd65f9342d5e697c52032b, G:/mzkit/src/assembly/assembly//MarkupData/imzML/XML/imzMLMetadata.vb"
+﻿#Region "Microsoft.VisualBasic::a2de10998aee0ddf8fee33ec63f1f55f, G:/mzkit/src/assembly/assembly//MarkupData/imzML/XML/imzMLMetadata.vb"
 
     ' Author:
     ' 
@@ -37,10 +37,10 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 138
+    '   Total Lines: 137
     '    Code Lines: 102
     ' Comment Lines: 16
-    '   Blank Lines: 20
+    '   Blank Lines: 19
     '     File Size: 6.34 KB
 
 
@@ -58,7 +58,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.Drawing
 Imports System.Runtime.InteropServices

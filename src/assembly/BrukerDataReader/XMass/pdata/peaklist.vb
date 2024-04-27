@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9196a0fed673b938f911358cfbd72529, G:/mzkit/src/assembly/BrukerDataReader//XMass/pdata/peaklist.vb"
+﻿#Region "Microsoft.VisualBasic::6e496d2aaa7beb654a6bf0a1fd8f97db, G:/mzkit/src/assembly/BrukerDataReader//XMass/pdata/peaklist.vb"
 
     ' Author:
     ' 
@@ -37,10 +37,10 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 44
+    '   Total Lines: 43
     '    Code Lines: 33
     ' Comment Lines: 3
-    '   Blank Lines: 8
+    '   Blank Lines: 7
     '     File Size: 1.34 KB
 
 
@@ -60,7 +60,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.Xml.Serialization
 

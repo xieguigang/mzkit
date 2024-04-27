@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bfc14ca7bdcdf8739506aaa127757261, G:/mzkit/src/assembly/Comprehensive//GCxGC/Data.vb"
+﻿#Region "Microsoft.VisualBasic::9be37d3081aff51a31ab7a3c0d5f849c, G:/mzkit/src/assembly/Comprehensive//GCxGC/Data.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 43
     ' Comment Lines: 0
     '   Blank Lines: 4
-    '     File Size: 1.90 KB
+    '     File Size: 1.89 KB
 
 
     ' Module Data
@@ -99,4 +99,3 @@ Public Module Data
         }
     End Function
 End Module
-

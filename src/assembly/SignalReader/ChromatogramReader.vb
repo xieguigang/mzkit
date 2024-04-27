@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bb5b75e83fc9c99915caf0a6e7023478, G:/mzkit/src/assembly/SignalReader//ChromatogramReader.vb"
+﻿#Region "Microsoft.VisualBasic::6fb02a313751062fc2fd279d2ca5de9b, G:/mzkit/src/assembly/SignalReader//ChromatogramReader.vb"
 
     ' Author:
     ' 
@@ -204,4 +204,3 @@ Public Module ChromatogramReader
         }
     End Function
 End Module
-

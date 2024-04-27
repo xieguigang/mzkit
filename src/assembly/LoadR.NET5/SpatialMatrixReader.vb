@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::29a598cb8b5f19643e1112aaa9afe21a, G:/mzkit/src/assembly/LoadR.NET5//SpatialMatrixReader.vb"
+﻿#Region "Microsoft.VisualBasic::ecfa7152d41786887de40b4f3fa70e4f, G:/mzkit/src/assembly/LoadR.NET5//SpatialMatrixReader.vb"
 
     ' Author:
     ' 
@@ -200,4 +200,3 @@ Public Class SpatialMatrixReader : Implements IdataframeReader, IReflector
         Return m
     End Function
 End Class
-

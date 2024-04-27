@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::57f5c9b764ba58b88388f57a2e85f7aa, G:/mzkit/src/assembly/BrukerDataReader//XMass/Xml/AnalysisParameter.vb"
+﻿#Region "Microsoft.VisualBasic::0df44ca16a3a9fdc7683b9c6b49fa835, G:/mzkit/src/assembly/BrukerDataReader//XMass/Xml/AnalysisParameter.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 26
+    '   Total Lines: 25
     '    Code Lines: 16
     ' Comment Lines: 4
-    '   Blank Lines: 6
-    '     File Size: 732 B
+    '   Blank Lines: 5
+    '     File Size: 730 B
 
 
     '     Class AnnotationParameter
@@ -53,7 +53,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.Xml.Serialization
 

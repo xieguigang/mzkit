@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::79777fe2752e33ddc1ebd5009ef866a8, G:/mzkit/src/assembly/LoadR.NET5//ChromatogramOverlap.vb"
+﻿#Region "Microsoft.VisualBasic::2e034050c18daf7ef900b0e7ab4617b0, G:/mzkit/src/assembly/LoadR.NET5//ChromatogramOverlap.vb"
 
     ' Author:
     ' 
@@ -166,4 +166,3 @@ Public Class ChromatogramOverlap : Inherits ChromatogramOverlapList
         End If
     End Function
 End Class
-
