@@ -37,6 +37,7 @@ const ms1_xic_bins = function(files, mzdiff = 0.005,
             require(mzkit);
 
             # processing a single rawdata file
+            # extract XIC data for run the downstream peak detection.
             __ms1_xic_bins_single(
                 path = unlist(path), mzdiff = unlist(mzdiff), 
                 outputdir = unlist(outputdir));
@@ -48,7 +49,10 @@ const ms1_xic_bins = function(files, mzdiff = 0.005,
 
 #' export XIC data for a single rawdata file
 #' 
-#' @param path a single rawdata file its file path
+#' @param path a single rawdata file its file path, should be in mzpack file format.
+#' @param mzdiff the mass tolerance error in delta dalton for extract the
+#'    xic values from the ms1 data.
+#' @param outputdir a directory for save the temp file
 #' 
 #' @return this function returns nothing
 #' 

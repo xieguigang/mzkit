@@ -66,12 +66,15 @@
 
         <h3>Value</h3>
 
-        <p>create a list of XIC dataset for run downstream deconv operation</p><h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/MzGroup.html">MzGroup[]</a></li></ul>
+        <p>create a list of XIC dataset for run downstream deconv operation</p><h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/MzGroup.html">MzGroup</a></li></ul>
 
         <h3 style="display: block;">Examples</h3>
 
         <pre><code id="example_r"> let rawdata = open.mzpack(file = "/path/to/rawdata.mzpack");
- let XIC = mz.groups(ms1 = rawdata, mzdiff = "ppm:20");</code></pre>
+ let xic = mz.groups(ms1 = rawdata, mzdiff = "ppm:20");
+ 
+ # export the XIC data as binary data file.
+ writeBin(xic, con = "/path/to/xic_data.dat");</code></pre>
 
         <hr />
         <div style="text-align: center;">[Package <em>mzDeco</em> version 1.0.0.0 <a

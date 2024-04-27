@@ -80,6 +80,10 @@ Public Class ms1_scan : Implements IMs1, IMs1Scan, INumericKey, ITimeSignal
         _intensity = intensity
     End Sub
 
+    Sub New(scan As IMs1Scan)
+        Call Me.New(scan.mz, scan.rt, scan.intensity)
+    End Sub
+
     Public Overrides Function ToString() As String
         Return $"{mz.ToString("F4")}@{std.Round(scan_time)} ({intensity})"
     End Function

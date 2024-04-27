@@ -67,7 +67,7 @@ Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Text
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Query
 
@@ -186,7 +186,7 @@ Namespace Query
 
             For Each hit As BlockNode In candidates
                 Dim score = GlobalAlignment.TwoDirectionSSM(centroid, hit.centroid, da)
-                Dim min = stdNum.Min(score.forward, score.reverse)
+                Dim min = std.Min(score.forward, score.reverse)
 
                 If min > max.score Then
                     max = (min, score, hit)
@@ -215,7 +215,7 @@ Namespace Query
 
             Do While True
                 Dim score = GlobalAlignment.TwoDirectionSSM(centroid, node.centroid, da)
-                Dim min = stdNum.Min(score.forward, score.reverse)
+                Dim min = std.Min(score.forward, score.reverse)
                 Dim index As Integer
 
                 If is_binary Then

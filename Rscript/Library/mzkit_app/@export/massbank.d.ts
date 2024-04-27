@@ -141,8 +141,16 @@ declare namespace massbank {
       function ChEBI_entity(xml: string): object;
    }
    /**
-     * @param max_len default value Is ``32``.
-     * @param min_len default value Is ``5``.
+    * Ranking a set of the given synonym string collection for find common name.
+    * 
+    * 
+     * @param x -
+     * @param max_len -
+     * 
+     * + default value Is ``32``.
+     * @param min_len -
+     * 
+     * + default value Is ``5``.
    */
    function rankingNames(x: any, max_len?: object, min_len?: object): object;
    module read {
