@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fa43ce2bc3b5e54a68b7a96945f01fe4, G:/mzkit/src/metadna/metaDNA//Models/Networking/Networking.vb"
+﻿#Region "Microsoft.VisualBasic::e300981184d105fa395fe45611243876, G:/mzkit/src/metadna/metaDNA//Models/Networking/Networking.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 5
     ' Comment Lines: 6
     '   Blank Lines: 3
-    '     File Size: 497 B
+    '     File Size: 495 B
 
 
     ' Class Networking
@@ -66,4 +66,3 @@ Public MustInherit Class Networking
     Public MustOverride Function FindReactions(a As String, b As String) As NamedValue(Of String)()
 
 End Class
-

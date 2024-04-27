@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2a38ebecfb55b4342dd31a822dbed94b, G:/mzkit/src/metadna/metaDNA//Models/Networking/OntologyTree.vb"
+﻿#Region "Microsoft.VisualBasic::1b55b780b1f4be62f86082fd67923b5e, G:/mzkit/src/metadna/metaDNA//Models/Networking/OntologyTree.vb"
 
     ' Author:
     ' 
@@ -139,4 +139,3 @@ Public Class OntologyTree : Inherits Networking
         Next
     End Function
 End Class
-

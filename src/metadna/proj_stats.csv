@@ -12,13 +12,13 @@ G:\mzkit\src\metadna\metaDNA\metaDNA.NET5.vbproj,metaDNA\Models\KEGGCompound.vb,
 G:\mzkit\src\metadna\metaDNA\metaDNA.NET5.vbproj,metaDNA\Models\UnknownSet.vb,196,33,27,136,1,0,2,8,0,7118,7.12 KB
 G:\mzkit\src\metadna\metaDNA\metaDNA.NET5.vbproj,metaDNA\Models\Networking\CompoundSolver.vb,67,29,8,30,1,0,1,4,0,3312,3.31 KB
 G:\mzkit\src\metadna\metaDNA\metaDNA.NET5.vbproj,metaDNA\Models\Networking\KEGGNetwork.vb,92,9,14,69,1,0,1,4,0,3670,3.67 KB
-G:\mzkit\src\metadna\metaDNA\metaDNA.NET5.vbproj,metaDNA\Models\Networking\Networking.vb,14,6,3,5,1,0,0,0,0,497,497 B
-G:\mzkit\src\metadna\metaDNA\metaDNA.NET5.vbproj,metaDNA\Models\Networking\OntologyTree.vb,86,22,10,54,1,0,1,4,0,3103,3.10 KB
+G:\mzkit\src\metadna\metaDNA\metaDNA.NET5.vbproj,metaDNA\Models\Networking\Networking.vb,14,6,3,5,1,0,0,0,0,495,495 B
+G:\mzkit\src\metadna\metaDNA\metaDNA.NET5.vbproj,metaDNA\Models\Networking\OntologyTree.vb,86,22,10,54,1,0,1,4,0,3101,3.10 KB
 G:\mzkit\src\metadna\metaDNA\metaDNA.NET5.vbproj,metaDNA\Result\MetaDNARawSet.vb,32,3,6,23,1,2,0,2,0,977,977 B
 G:\mzkit\src\metadna\metaDNA\metaDNA.NET5.vbproj,metaDNA\Result\MetaDNAResult.vb,78,23,7,48,1,30,0,2,0,2653,2.65 KB
 G:\mzkit\src\metadna\metaDNA\metaDNA.NET5.vbproj,metaDNA\Result\NetworkHandler.vb,36,0,6,30,1,0,0,1,0,1396,1.40 KB
 G:\mzkit\src\metadna\metaDNA\metaDNA.NET5.vbproj,metaDNA\Result\ResultHandler.vb,103,7,12,84,1,0,0,3,0,5271,5.27 KB
-G:\mzkit\src\metadna\metaDNA\metaDNA.NET5.vbproj,<project>,1871,259,267,1345,21,57,11,78,0,71029,71.03 KB
+G:\mzkit\src\metadna\metaDNA\metaDNA.NET5.vbproj,<project>,1871,259,267,1345,21,57,11,78,0,71025,71.03 KB
 G:\mzkit\src\metadna\MetaDNA_visual\metaDNA_visual.NET5.vbproj,MetaDNA_visual\Extensions.vb,29,5,4,20,1,0,0,2,0,1171,1.17 KB
 G:\mzkit\src\metadna\MetaDNA_visual\metaDNA_visual.NET5.vbproj,MetaDNA_visual\GraphAlgorithm.vb,117,5,13,99,1,0,0,1,0,5182,5.18 KB
 G:\mzkit\src\metadna\MetaDNA_visual\metaDNA_visual.NET5.vbproj,MetaDNA_visual\ReactionClass.vb,11,0,3,8,1,5,0,0,0,346,346 B
@@ -33,4 +33,4 @@ G:\mzkit\src\metadna\MetaDNA_visual\metaDNA_visual.NET5.vbproj,MetaDNA_visual\XM
 G:\mzkit\src\metadna\MetaDNA_visual\metaDNA_visual.NET5.vbproj,MetaDNA_visual\XML\unknown.vb,22,5,4,13,1,6,0,1,0,809,809 B
 G:\mzkit\src\metadna\MetaDNA_visual\metaDNA_visual.NET5.vbproj,MetaDNA_visual\XML\XML.vb,26,4,4,18,1,1,0,2,0,757,757 B
 G:\mzkit\src\metadna\MetaDNA_visual\metaDNA_visual.NET5.vbproj,<project>,482,86,80,316,12,22,4,9,0,18810,18.81 KB
-../src/metadna,<root>,4706,690,694,3322,66,158,30,174,0,179678,179.68 KB
+../src/metadna,<root>,4706,690,694,3322,66,158,30,174,0,179670,179.67 KB
