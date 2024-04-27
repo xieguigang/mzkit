@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::747c9d75361d901c1b661ff31b0012e2, mzkit\src\metadb\Chemoinformatics\ChemicalDescriptor.vb"
+﻿#Region "Microsoft.VisualBasic::6fc8d4f241a4da1c2e3c343a0201fad7, G:/mzkit/src/metadb/Chemoinformatics//ChemicalDescriptor.vb"
 
     ' Author:
     ' 
@@ -37,33 +37,38 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 191
-    '    Code Lines: 136
+    '   Total Lines: 205
+    '    Code Lines: 146
     ' Comment Lines: 22
-    '   Blank Lines: 33
-    '     File Size: 6.62 KB
+    '   Blank Lines: 37
+    '     File Size: 7.03 KB
 
 
+    ' Class Value
+    ' 
+    '     Properties: reference, value
+    ' 
     ' Class UnitValue
     ' 
-    '     Properties: unit, value
+    '     Properties: condition, unit
     ' 
     '     Constructor: (+1 Overloads) Sub New
     '     Function: ToString
     ' 
     ' Class CCS
     ' 
-    '     Properties: reference, value
+    '     Properties: ion, reference, value
     ' 
     '     Function: ToString
     ' 
     ' Class ChemicalDescriptor
     ' 
-    '     Properties: AtomDefStereoCount, AtomUdefStereoCount, BondDefStereoCount, BondUdefStereoCount, CCS
-    '                 Complexity, ComponentCount, CovalentlyBonded, ExactMass, FormalCharge
-    '                 HeavyAtoms, HydrogenAcceptor, HydrogenDonors, IsotopicAtomCount, LogP
-    '                 MeltingPoint, RotatableBonds, schema, Solubility, TautoCount
-    '                 TopologicalPolarSurfaceArea, XLogP3, XLogP3_AA
+    '     Properties: AtomDefStereoCount, AtomUdefStereoCount, BoilingPoint, BondDefStereoCount, BondUdefStereoCount
+    '                 CCS, Complexity, ComponentCount, CovalentlyBonded, Density
+    '                 ExactMass, FlashPoint, FormalCharge, HeavyAtoms, HydrogenAcceptor
+    '                 HydrogenDonors, IsotopicAtomCount, LogP, MeltingPoint, Odor
+    '                 RotatableBonds, schema, Solubility, TautoCount, TopologicalPolarSurfaceArea
+    '                 VaporPressure, XLogP3, XLogP3_AA
     ' 
     '     Constructor: (+2 Overloads) Sub New
     '     Function: FromBytes, GetBytesBuffer, GetEnumerator, getOne, TryParseDouble

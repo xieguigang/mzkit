@@ -1,4 +1,66 @@
-﻿Imports Microsoft.VisualBasic.ComponentModel.Algorithm
+﻿#Region "Microsoft.VisualBasic::c29e06f2032969979a50c4e60966cc71, G:/mzkit/src/metadb/Lipidomics//MolecularSpeciesLevelChains.vb"
+
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 91
+    '    Code Lines: 73
+    ' Comment Lines: 0
+    '   Blank Lines: 18
+    '     File Size: 4.04 KB
+
+
+    ' Class MolecularSpeciesLevelChains
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: Accept, Equals, GetCandidateSets, GetChainByPosition, Includes
+    '               ToString
+    '     Class ChainComparer
+    ' 
+    '         Function: Compare, TypeToOrder
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports Microsoft.VisualBasic.ComponentModel.Algorithm
 
 
 Public Class MolecularSpeciesLevelChains
@@ -88,4 +150,5 @@ Public Class MolecularSpeciesLevelChains
     End Class
 
 End Class
+
 

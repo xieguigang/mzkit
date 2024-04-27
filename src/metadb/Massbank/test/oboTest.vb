@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::855ca6cf813264fda3c360483f0727ff, mzkit\src\metadb\Massbank\test\oboTest.vb"
+﻿#Region "Microsoft.VisualBasic::c2454f62df1a6d77424db9ff82d0149c, G:/mzkit/src/metadb/Massbank/test//oboTest.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 0
     ' Comment Lines: 56
     '   Blank Lines: 15
-    '     File Size: 2.70 KB
+    '     File Size: 2.77 KB
 
 
     ' 

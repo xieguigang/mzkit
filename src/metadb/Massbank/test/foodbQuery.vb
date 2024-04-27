@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::79aec10b5992dc8df4b9d5541b093b11, mzkit\src\metadb\Massbank\test\foodbQuery.vb"
+﻿#Region "Microsoft.VisualBasic::48970eb098e2e0e9023e305553ae102e, G:/mzkit/src/metadb/Massbank/test//foodbQuery.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 0
     ' Comment Lines: 92
     '   Blank Lines: 21
-    '     File Size: 4.01 KB
+    '     File Size: 4.13 KB
 
 
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e1dd63d909082ec851708f03f1b2f359, mzkit\src\metadb\Massbank\Public\TMIC\HMDB\Spectra\NMR1D.vb"
+﻿#Region "Microsoft.VisualBasic::e1dd63d909082ec851708f03f1b2f359, G:/mzkit/src/metadb/Massbank//Public/TMIC/HMDB/Spectra/NMR1D.vb"
 
     ' Author:
     ' 

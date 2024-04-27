@@ -1,60 +1,61 @@
-﻿#Region "Microsoft.VisualBasic::076876942d03a612aac707b99a11419e, mzkit\src\metadb\SMILES\Graph\ChemicalElement.vb"
+﻿#Region "Microsoft.VisualBasic::cb8d6194800e3a3bd20213fda16a8812, G:/mzkit/src/metadb/SMILES//Graph/ChemicalElement.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 132
-'    Code Lines: 84
-' Comment Lines: 34
-'   Blank Lines: 14
-'     File Size: 4.42 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Class ChemicalElement
-' 
-'     Properties: charge, coordinate, elementName, group, Keys
-' 
-'     Constructor: (+2 Overloads) Sub New
-' 
-'     Function: GetConnection
-' 
-'     Sub: (+2 Overloads) SetAtomGroups
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 172
+    '    Code Lines: 108
+    ' Comment Lines: 47
+    '   Blank Lines: 17
+    '     File Size: 5.81 KB
+
+
+    ' Class ChemicalElement
+    ' 
+    '     Properties: charge, coordinate, elementName, group, hydrogen
+    '                 Keys
+    ' 
+    '     Constructor: (+2 Overloads) Sub New
+    ' 
+    '     Function: GetConnection
+    ' 
+    '     Sub: (+2 Overloads) SetAtomGroups, setAtomLabel
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

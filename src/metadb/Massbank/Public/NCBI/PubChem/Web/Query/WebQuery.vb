@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::99fb5899f25f936c6d68c4db02c76609, mzkit\src\metadb\Massbank\Public\NCBI\PubChem\Web\Query\WebQuery.vb"
+﻿#Region "Microsoft.VisualBasic::9f5df98176673efd42c8a901d328df45, G:/mzkit/src/metadb/Massbank//Public/NCBI/PubChem/Web/Query/WebQuery.vb"
 
     ' Author:
     ' 
@@ -37,16 +37,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 123
-    '    Code Lines: 82
+    '   Total Lines: 138
+    '    Code Lines: 95
     ' Comment Lines: 18
-    '   Blank Lines: 23
-    '     File Size: 4.17 KB
+    '   Blank Lines: 25
+    '     File Size: 4.80 KB
 
 
     '     Class CIDQuery
     ' 
-    '         Constructor: (+1 Overloads) Sub New
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: loadQueryJson, normalizeFileName, prefix, queryApi
     ' 
     '     Class WebQuery

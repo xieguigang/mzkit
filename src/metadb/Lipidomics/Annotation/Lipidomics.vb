@@ -1,4 +1,75 @@
-﻿Imports System.IO
+﻿#Region "Microsoft.VisualBasic::202107cb49d4dc98d5c8b4eae0ffd73b, G:/mzkit/src/metadb/Lipidomics//Annotation/Lipidomics.vb"
+
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 693
+    '    Code Lines: 560
+    ' Comment Lines: 56
+    '   Blank Lines: 77
+    '     File Size: 52.96 KB
+
+
+    ' Class LipidMolecule
+    ' 
+    '     Properties: Adduct, AnnotationLevel, Formula, InChIKey, IonMode
+    '                 IsValidatedFormat, LipidCategory, LipidClass, LipidName, LipidSubclass
+    '                 Mz, Rt, Score, Smiles, Sn1AcylChainString
+    '                 Sn1CarbonCount, Sn1DoubleBondCount, Sn1Oxidizedount, Sn2AcylChainString, Sn2CarbonCount
+    '                 Sn2DoubleBondCount, Sn2Oxidizedount, Sn3AcylChainString, Sn3CarbonCount, Sn3DoubleBondCount
+    '                 Sn3Oxidizedount, Sn4AcylChainString, Sn4CarbonCount, Sn4DoubleBondCount, Sn4Oxidizedount
+    '                 SublevelLipidName, TotalCarbonCount, TotalChainString, TotalDoubleBondCount, TotalOxidizedCount
+    ' 
+    ' Class LipidAnnotation
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: Characterize, ConvertToRequiredSpectrumFormat, GetDatabaseStartIndex
+    ' 
+    ' Class LipidLibraryParser
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: getLipidClassEnum, ReadLibrary
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.IO
 Imports System.Text
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
@@ -690,4 +761,5 @@ Public NotInheritable Class LipidLibraryParser
         Return LbmClass.Undefined
     End Function
 End Class
+
 

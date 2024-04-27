@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6af0ae85b7b44d9708f24c4cac4cd858, mzkit\src\metadb\Chemoinformatics\test\inchiTest.vb"
+﻿#Region "Microsoft.VisualBasic::6af0ae85b7b44d9708f24c4cac4cd858, G:/mzkit/src/metadb/Chemoinformatics/test//inchiTest.vb"
 
     ' Author:
     ' 

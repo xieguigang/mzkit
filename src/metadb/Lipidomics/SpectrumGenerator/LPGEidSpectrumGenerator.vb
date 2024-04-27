@@ -1,4 +1,61 @@
-﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+﻿#Region "Microsoft.VisualBasic::0ee642290f79666ada298e884b31c8cb, G:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/LPGEidSpectrumGenerator.vb"
+
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 163
+    '    Code Lines: 139
+    ' Comment Lines: 1
+    '   Blank Lines: 23
+    '     File Size: 9.02 KB
+
+
+    ' Class LPGEidSpectrumGenerator
+    ' 
+    '     Constructor: (+2 Overloads) Sub New
+    '     Function: CanGenerate, CreateReference, EidSpecificSpectrum, Generate, GetAcylDoubleBondSpectrum
+    '               (+2 Overloads) GetAcylLevelSpectrum, GetAcylPositionSpectrum, GetLPGSpectrum
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.ElementsExactMass
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
 Imports BioNovoGene.BioDeep.MSEngine
@@ -160,4 +217,5 @@ Public Class LPGEidSpectrumGenerator
     Private ReadOnly spectrumGenerator As ISpectrumPeakGenerator
 
 End Class
+
 

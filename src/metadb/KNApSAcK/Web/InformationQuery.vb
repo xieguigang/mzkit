@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7d25d6a1458abbd3627606f9c38f1542, mzkit\src\metadb\KNApSAcK\Web\InformationQuery.vb"
+﻿#Region "Microsoft.VisualBasic::7d25d6a1458abbd3627606f9c38f1542, G:/mzkit/src/metadb/KNApSAcK//Web/InformationQuery.vb"
 
     ' Author:
     ' 

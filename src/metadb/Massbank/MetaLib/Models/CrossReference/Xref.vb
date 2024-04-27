@@ -1,61 +1,62 @@
-﻿#Region "Microsoft.VisualBasic::9de666079bd82ffde70b62cc3943cead, mzkit\src\metadb\Massbank\MetaLib\Models\Xref.vb"
+﻿#Region "Microsoft.VisualBasic::169414a2043ce8479d0c5546dc421fb3, G:/mzkit/src/metadb/Massbank//MetaLib/Models/CrossReference/Xref.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 184
-'    Code Lines: 140
-' Comment Lines: 26
-'   Blank Lines: 18
-'     File Size: 6.89 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class xref
-' 
-'         Properties: CAS, chebi, ChEMBL, ChemIDplus, DrugBank
-'                     HMDB, InChI, InChIkey, KEGG, lipidmaps
-'                     MeSH, metlin, pubchem, SMILES, Wikipedia
-' 
-'         Constructor: (+3 Overloads) Sub New
-'         Function: IsCASNumber, IsChEBI, IsEmpty, IsEmptyXrefId, IsHMDB
-'                   IsKEGG, Join, ToString
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 157
+    '    Code Lines: 94
+    ' Comment Lines: 50
+    '   Blank Lines: 13
+    '     File Size: 6.45 KB
+
+
+    '     Class xref
+    ' 
+    '         Properties: CAS, chebi, ChEMBL, ChemIDplus, chemspider
+    '                     DrugBank, extras, foodb, HMDB, InChI
+    '                     InChIkey, KEGG, KEGGdrug, KNApSAcK, lipidmaps
+    '                     MeSH, MetaCyc, metlin, pubchem, SMILES
+    '                     Wikipedia
+    ' 
+    '         Constructor: (+3 Overloads) Sub New
+    '         Function: Join, PopulateXrefs, ToString
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

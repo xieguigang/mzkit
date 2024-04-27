@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c0e53af5314e8eba94919001f49f8f52, mzkit\src\metadb\Massbank\Public\NCBI\PubChem\Web\Models\PugView.vb"
+﻿#Region "Microsoft.VisualBasic::ba9de90281d6dd1e4cc638cb534a7591, G:/mzkit/src/metadb/Massbank//Public/NCBI/PubChem/Web/Models/PugView.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 22
+    '   Total Lines: 29
     '    Code Lines: 16
-    ' Comment Lines: 0
+    ' Comment Lines: 7
     '   Blank Lines: 6
-    '     File Size: 695 B
+    '     File Size: 948 B
 
 
     '     Class PugViewRecord

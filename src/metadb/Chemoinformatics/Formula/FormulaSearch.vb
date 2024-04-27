@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3eb3338bedd08649e6fa1c47e53c3161, mzkit\src\metadb\Chemoinformatics\Formula\FormulaSearch.vb"
+﻿#Region "Microsoft.VisualBasic::9df874df5b1eb109f343d6b4e1626dee, G:/mzkit/src/metadb/Chemoinformatics//Formula/FormulaSearch.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 232
-    '    Code Lines: 154
-    ' Comment Lines: 36
-    '   Blank Lines: 42
-    '     File Size: 9.85 KB
+    '   Total Lines: 224
+    '    Code Lines: 150
+    ' Comment Lines: 33
+    '   Blank Lines: 41
+    '     File Size: 9.50 KB
 
 
     '     Class FormulaSearch

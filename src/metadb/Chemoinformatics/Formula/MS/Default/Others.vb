@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c5c6a6b5a50c86122ae20c8afd573753, mzkit\src\metadb\FormulaSearch.Extensions\AtomGroups\Default\Others.vb"
+﻿#Region "Microsoft.VisualBasic::dc428b06bbaafdd711cf9f86510d494f, G:/mzkit/src/metadb/Chemoinformatics//Formula/MS/Default/Others.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 10
     ' Comment Lines: 0
     '   Blank Lines: 4
-    '     File Size: 609 B
+    '     File Size: 622 B
 
 
     '     Class Others

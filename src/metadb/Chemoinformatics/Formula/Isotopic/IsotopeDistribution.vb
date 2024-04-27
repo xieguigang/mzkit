@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2077da851aeacaff678a23b26cdaae9a, mzkit\src\metadb\Chemoinformatics\Formula\Isotopic\IsotopeDistribution.vb"
+﻿#Region "Microsoft.VisualBasic::941743ceacd3098a7a20b6848721abc6, G:/mzkit/src/metadb/Chemoinformatics//Formula/Isotopic/IsotopeDistribution.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 94
-    '    Code Lines: 68
+    '   Total Lines: 93
+    '    Code Lines: 67
     ' Comment Lines: 9
     '   Blank Lines: 17
-    '     File Size: 4.40 KB
+    '     File Size: 4.35 KB
 
 
     '     Class IsotopeDistribution

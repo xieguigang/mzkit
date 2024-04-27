@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b3c3bdf51c82bed16f6a1cc64f5fa6a5, mzkit\src\metadb\Massbank\Public\TMIC\HMDB\Spectra\MSMS.vb"
+﻿#Region "Microsoft.VisualBasic::db93de6720f0ac1fe8f8cc5676d9803f, G:/mzkit/src/metadb/Massbank//Public/TMIC/HMDB/Spectra/MSMS.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 25
-    '    Code Lines: 17
-    ' Comment Lines: 0
+    '   Total Lines: 29
+    '    Code Lines: 18
+    ' Comment Lines: 3
     '   Blank Lines: 8
-    '     File Size: 882 B
+    '     File Size: 973 B
 
 
     '     Class MSMS

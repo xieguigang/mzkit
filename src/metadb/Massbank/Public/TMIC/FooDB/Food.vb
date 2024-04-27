@@ -1,58 +1,59 @@
-﻿#Region "Microsoft.VisualBasic::8e83428c6064d2caedd7f04aa17eaacf, mzkit\src\metadb\FooDB\FooDB\Food.vb"
+﻿#Region "Microsoft.VisualBasic::a9f1b6867acad5c315f8947a8827ef28, G:/mzkit/src/metadb/Massbank//Public/TMIC/FooDB/Food.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 20
-'    Code Lines: 18
-' Comment Lines: 0
-'   Blank Lines: 2
-'     File Size: 695 B
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Class Food
-' 
-'     Properties: category, description, food_group, food_subgroup, food_type
-'                 id, itis_id, legacy_id, name, name_scientific
-'                 ncbi_taxonomy_id, public_id, wikipedia_id
-' 
-'     Function: ToString
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 37
+    '    Code Lines: 30
+    ' Comment Lines: 0
+    '   Blank Lines: 7
+    '     File Size: 1.25 KB
+
+
+    '     Class Food
+    ' 
+    '         Properties: category, description, food_group, food_subgroup, food_type
+    '                     id, itis_id, legacy_id, name, name_scientific
+    '                     ncbi_taxonomy_id, public_id, wikipedia_id
+    ' 
+    '         Function: LoadJSONDb, ToString
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9304093281114eca65544b5a11a034a3, mzkit\src\metadb\Chemoinformatics\MetaboliteAnnotation.vb"
+﻿#Region "Microsoft.VisualBasic::f858319ddfd4c6cfce1d4b1beff6859d, G:/mzkit/src/metadb/Chemoinformatics//MetaboliteAnnotation.vb"
 
     ' Author:
     ' 
@@ -37,16 +37,22 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 16
-    '    Code Lines: 12
-    ' Comment Lines: 0
-    '   Blank Lines: 4
-    '     File Size: 690 B
+    '   Total Lines: 58
+    '    Code Lines: 20
+    ' Comment Lines: 29
+    '   Blank Lines: 9
+    '     File Size: 1.99 KB
 
 
     ' Class MetaboliteAnnotation
     ' 
-    '     Properties: CommonName, ExactMass, Formula, UniqueId
+    '     Properties: CommonName, ExactMass, Formula, Id
+    ' 
+    '     Function: ToString
+    ' 
+    ' Class ExactMassMapping
+    ' 
+    '     Properties: exact_mass, id
     ' 
     '     Function: ToString
     ' 

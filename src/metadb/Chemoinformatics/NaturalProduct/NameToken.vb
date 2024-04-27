@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c17940d26a8100873a53e007c86e2069, mzkit\src\metadb\Chemoinformatics\NaturalProduct\NameToken.vb"
+﻿#Region "Microsoft.VisualBasic::c17940d26a8100873a53e007c86e2069, G:/mzkit/src/metadb/Chemoinformatics//NaturalProduct/NameToken.vb"
 
     ' Author:
     ' 

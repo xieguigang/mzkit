@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::11354f1b8ccd0966fa708e65438955da, mzkit\src\metadb\KNApSAcK\Data\QueryInput.vb"
+﻿#Region "Microsoft.VisualBasic::11354f1b8ccd0966fa708e65438955da, G:/mzkit/src/metadb/KNApSAcK//Data/QueryInput.vb"
 
     ' Author:
     ' 

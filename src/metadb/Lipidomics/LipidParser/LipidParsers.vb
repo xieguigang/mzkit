@@ -1,4 +1,307 @@
-﻿Imports System.Text.RegularExpressions
+﻿#Region "Microsoft.VisualBasic::393de10e7523a5f0840b5ef672f688e8, G:/mzkit/src/metadb/Lipidomics//LipidParser/LipidParsers.vb"
+
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 908
+    '    Code Lines: 734
+    ' Comment Lines: 4
+    '   Blank Lines: 170
+    '     File Size: 42.77 KB
+
+
+    ' Class PCLipidParser
+    ' 
+    '     Properties: Target
+    ' 
+    '     Function: Parse
+    ' 
+    ' Class PELipidParser
+    ' 
+    '     Properties: Target
+    ' 
+    '     Function: Parse
+    ' 
+    ' Class PALipidParser
+    ' 
+    '     Properties: Target
+    ' 
+    '     Function: Parse
+    ' 
+    ' Class PGLipidParser
+    ' 
+    '     Properties: Target
+    ' 
+    '     Function: Parse
+    ' 
+    ' Class PILipidParser
+    ' 
+    '     Properties: Target
+    ' 
+    '     Function: Parse
+    ' 
+    ' Class PSLipidParser
+    ' 
+    '     Properties: Target
+    ' 
+    '     Function: Parse
+    ' 
+    ' Class LPCLipidParser
+    ' 
+    '     Properties: Target
+    ' 
+    '     Function: Parse
+    ' 
+    ' Class LPELipidParser
+    ' 
+    '     Properties: Target
+    ' 
+    '     Function: Parse
+    ' 
+    ' Class LPGLipidParser
+    ' 
+    '     Properties: Target
+    ' 
+    '     Function: Parse
+    ' 
+    ' Class LPILipidParser
+    ' 
+    '     Properties: Target
+    ' 
+    '     Function: Parse
+    ' 
+    ' Class LPSLipidParser
+    ' 
+    '     Properties: Target
+    ' 
+    '     Function: Parse
+    ' 
+    ' Class TGLipidParser
+    ' 
+    '     Properties: Target
+    ' 
+    '     Function: Parse
+    ' 
+    ' Class MGLipidParser
+    ' 
+    '     Properties: Target
+    ' 
+    '     Function: Parse
+    ' 
+    ' Class DGLipidParser
+    ' 
+    '     Properties: Target
+    ' 
+    '     Function: Parse
+    ' 
+    ' Class CARLipidParser
+    ' 
+    '     Properties: Target
+    ' 
+    '     Function: Parse
+    ' 
+    ' Class DGTALipidParser
+    ' 
+    '     Properties: Target
+    ' 
+    '     Function: Parse
+    ' 
+    ' Class DGTSLipidParser
+    ' 
+    '     Properties: Target
+    ' 
+    '     Function: Parse
+    ' 
+    ' Class LDGTALipidParser
+    ' 
+    '     Properties: Target
+    ' 
+    '     Function: Parse
+    ' 
+    ' Class LDGTSLipidParser
+    ' 
+    '     Properties: Target
+    ' 
+    '     Function: Parse
+    ' 
+    ' Class EtherLPCLipidParser
+    ' 
+    '     Properties: Target
+    ' 
+    '     Function: Parse
+    ' 
+    ' Class EtherPCLipidParser
+    ' 
+    '     Properties: Target
+    ' 
+    '     Function: Parse
+    ' 
+    ' Class EtherLPELipidParser
+    ' 
+    '     Properties: Target
+    ' 
+    '     Function: Parse
+    ' 
+    ' Class EtherPELipidParser
+    ' 
+    '     Properties: Target
+    ' 
+    '     Function: Parse
+    ' 
+    ' Class BMPLipidParser
+    ' 
+    '     Properties: Target
+    ' 
+    '     Function: Parse
+    ' 
+    ' Class GM3LipidParser
+    ' 
+    '     Properties: Target
+    ' 
+    '     Function: Parse
+    ' 
+    ' Class SHexCerLipidParser
+    ' 
+    '     Properties: Target
+    ' 
+    '     Function: Parse
+    ' 
+    ' Class SMLipidParser
+    ' 
+    '     Properties: Target
+    ' 
+    '     Function: Parse
+    ' 
+    ' Class PCd5LipidParser
+    ' 
+    '     Properties: Target
+    ' 
+    '     Function: Parse
+    ' 
+    ' Class PEd5LipidParser
+    ' 
+    '     Properties: Target
+    ' 
+    '     Function: Parse
+    ' 
+    ' Class PGd5LipidParser
+    ' 
+    '     Properties: Target
+    ' 
+    '     Function: Parse
+    ' 
+    ' Class PId5LipidParser
+    ' 
+    '     Properties: Target
+    ' 
+    '     Function: Parse
+    ' 
+    ' Class PSd5LipidParser
+    ' 
+    '     Properties: Target
+    ' 
+    '     Function: Parse
+    ' 
+    ' Class LPCd5LipidParser
+    ' 
+    '     Properties: Target
+    ' 
+    '     Function: Parse
+    ' 
+    ' Class LPEd5LipidParser
+    ' 
+    '     Properties: Target
+    ' 
+    '     Function: Parse
+    ' 
+    ' Class LPGd5LipidParser
+    ' 
+    '     Properties: Target
+    ' 
+    '     Function: Parse
+    ' 
+    ' Class LPId5LipidParser
+    ' 
+    '     Properties: Target
+    ' 
+    '     Function: Parse
+    ' 
+    ' Class LPSd5LipidParser
+    ' 
+    '     Properties: Target
+    ' 
+    '     Function: Parse
+    ' 
+    ' Class TGd5LipidParser
+    ' 
+    '     Properties: Target
+    ' 
+    '     Function: Parse
+    ' 
+    ' Class DGd5LipidParser
+    ' 
+    '     Properties: Target
+    ' 
+    '     Function: Parse
+    ' 
+    ' Class SMd9LipidParser
+    ' 
+    '     Properties: Target
+    ' 
+    '     Function: Parse
+    ' 
+    ' Class CELipidParser
+    ' 
+    '     Properties: Target
+    ' 
+    '     Function: Parse
+    ' 
+    ' Class CEd7LipidParser
+    ' 
+    '     Properties: Target
+    ' 
+    '     Function: Parse
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Text.RegularExpressions
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.ElementsExactMass
 
 ' <auto-generated>
@@ -905,4 +1208,5 @@ Public Class CEd7LipidParser
         Return Nothing
     End Function
 End Class
+
 

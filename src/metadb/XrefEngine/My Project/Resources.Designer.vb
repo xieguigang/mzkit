@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::246a3f3602987976c091d7d943b2eaae, mzkit\src\metadb\XrefEngine\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::ddad58557b6e3fb0111c505379d0ac9f, G:/mzkit/src/metadb/XrefEngine//My Project/Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 32
     ' Comment Lines: 23
     '   Blank Lines: 8
-    '     File Size: 2.73 KB
+    '     File Size: 2.80 KB
 
 
     '     Module Resources

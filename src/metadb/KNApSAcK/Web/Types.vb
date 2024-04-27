@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fe9b3bf44df311953e568bd640901672, mzkit\src\metadb\KNApSAcK\Web\Types.vb"
+﻿#Region "Microsoft.VisualBasic::fe9b3bf44df311953e568bd640901672, G:/mzkit/src/metadb/KNApSAcK//Web/Types.vb"
 
     ' Author:
     ' 

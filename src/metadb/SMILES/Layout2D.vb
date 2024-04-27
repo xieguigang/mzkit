@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a129dc6362ebc9002a03bee2072254dd, mzkit\src\metadb\SMILES\Layout2D.vb"
+﻿#Region "Microsoft.VisualBasic::bc5f41fde6182382cf19f9420b73eeb7, G:/mzkit/src/metadb/SMILES//Layout2D.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 120
+    '   Total Lines: 121
     '    Code Lines: 87
     ' Comment Lines: 9
-    '   Blank Lines: 24
-    '     File Size: 3.91 KB
+    '   Blank Lines: 25
+    '     File Size: 4.04 KB
 
 
     ' Module Layout2D
