@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::26053c13aa93e37303aa2b80c78333ad, mzkit\src\assembly\NMRFidTool\Reader\FidReader.vb"
+﻿#Region "Microsoft.VisualBasic::526c2ac51a1f2585c18afd8b7d46d7da, G:/mzkit/src/assembly/NMRFidTool//Reader/FidReader.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 5
     ' Comment Lines: 25
     '   Blank Lines: 5
-    '     File Size: 1.03 KB
+    '     File Size: 1.07 KB
 
 
     '     Interface FidReader

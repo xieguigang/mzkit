@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eb726b48058d53263403323fcf9281e4, mzkit\src\assembly\Comprehensive\MsImaging\3D_MALDI\MALDIPointCloud.vb"
+﻿#Region "Microsoft.VisualBasic::d701cb919d9dab7c7e84ebc4f8d4cb1b, G:/mzkit/src/assembly/Comprehensive//MsImaging/3D_MALDI/MALDIPointCloud.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 91
     ' Comment Lines: 0
     '   Blank Lines: 22
-    '     File Size: 4.85 KB
+    '     File Size: 4.96 KB
 
 
     '     Module MALDIPointCloud

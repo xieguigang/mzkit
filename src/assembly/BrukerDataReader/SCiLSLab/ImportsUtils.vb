@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::efe51e4aa7016f4b1448b87b29491437, mzkit\src\assembly\BrukerDataReader\SCiLSLab\ImportsUtils.vb"
+﻿#Region "Microsoft.VisualBasic::efe51e4aa7016f4b1448b87b29491437, G:/mzkit/src/assembly/BrukerDataReader//SCiLSLab/ImportsUtils.vb"
 
     ' Author:
     ' 

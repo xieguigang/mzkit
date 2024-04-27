@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5d9080c932296d492fce48c5a22a289b, mzkit\src\assembly\NMRFidTool\Fid.vb"
+﻿#Region "Microsoft.VisualBasic::97f281f8fbd37bf97b81e7b3b8154d72, G:/mzkit/src/assembly/NMRFidTool//Fid.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 60
     ' Comment Lines: 30
     '   Blank Lines: 13
-    '     File Size: 2.99 KB
+    '     File Size: 3.09 KB
 
 
     ' Class Fid

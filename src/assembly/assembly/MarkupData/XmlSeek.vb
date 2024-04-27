@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::75e718791d342bca63bd94313bf07cd5, mzkit\src\assembly\assembly\MarkupData\XmlSeek.vb"
+﻿#Region "Microsoft.VisualBasic::75e718791d342bca63bd94313bf07cd5, G:/mzkit/src/assembly/assembly//MarkupData/XmlSeek.vb"
 
     ' Author:
     ' 

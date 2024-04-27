@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::505a65ff61d8c4b16e2ecfab90d19733, mzkit\src\assembly\Comprehensive\MsImaging\ScanTimeCorrection.vb"
+﻿#Region "Microsoft.VisualBasic::4fdb1cdf96bbdb73c0b57fadebe1f764, G:/mzkit/src/assembly/Comprehensive//MsImaging/ScanTimeCorrection.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 29
     ' Comment Lines: 19
     '   Blank Lines: 8
-    '     File Size: 2.01 KB
+    '     File Size: 2.00 KB
 
 
     '     Class ScanTimeCorrection

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::75152b15b6d2e115780a251c41d57e86, mzkit\src\assembly\assembly\MarkupData\nmrML\nmrML.vb"
+﻿#Region "Microsoft.VisualBasic::5c6251a0e8f93283454a8b6178f4d03a, G:/mzkit/src/assembly/assembly//MarkupData/nmrML/nmrML.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 61
     ' Comment Lines: 0
     '   Blank Lines: 26
-    '     File Size: 2.62 KB
+    '     File Size: 2.71 KB
 
 
     '     Class XML

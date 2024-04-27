@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0a4535512e4e252f9dcf32435399cd08, mzkit\src\assembly\assembly\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::0a4535512e4e252f9dcf32435399cd08, G:/mzkit/src/assembly/assembly//NamespaceDoc.vb"
 
     ' Author:
     ' 

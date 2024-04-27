@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c5d9380bd3e258e329642d52b59bfd97, mzkit\src\assembly\assembly\mzPack\mzWebCache\ScanPopulator.vb"
+﻿#Region "Microsoft.VisualBasic::73af51cc48e4a9b43de1df2f1d120bc4, G:/mzkit/src/assembly/assembly//mzPack/mzWebCache/ScanPopulator.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 153
-    '    Code Lines: 123
-    ' Comment Lines: 5
-    '   Blank Lines: 25
-    '     File Size: 6.12 KB
+    '   Total Lines: 170
+    '    Code Lines: 127
+    ' Comment Lines: 17
+    '   Blank Lines: 26
+    '     File Size: 6.97 KB
 
 
     '     Interface IScanReader

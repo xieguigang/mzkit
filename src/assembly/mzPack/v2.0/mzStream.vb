@@ -1,61 +1,63 @@
-﻿#Region "Microsoft.VisualBasic::0e25e4296f47527875c1da779619a2e8, mzkit\src\assembly\mzPack\v2.0\mzStream.vb"
+﻿#Region "Microsoft.VisualBasic::2e04355e4db6919de0595402395642db, G:/mzkit/src/assembly/mzPack//v2.0/mzStream.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 350
-'    Code Lines: 254
-' Comment Lines: 38
-'   Blank Lines: 58
-'     File Size: 12.27 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Class mzStream
-' 
-'     Properties: Application, MS1, rtmax, SampleScans, sourceName
-' 
-'     Constructor: (+2 Overloads) Sub New
-' 
-'     Function: findScan1Name, GetMetadata, GetSampleTags, GetThumbnail, hasMs2
-'               ReadModel, ReadMS1, ReadScan, safeParseClassType
-' 
-'     Sub: cacheScanIndex, (+2 Overloads) Dispose, ReadChromatogramTick
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 394
+    '    Code Lines: 282
+    ' Comment Lines: 47
+    '   Blank Lines: 65
+    '     File Size: 14.12 KB
+
+
+    ' Class mzStream
+    ' 
+    '     Properties: Application, metadata, MS1, rtmax, SampleScans
+    '                 sourceName
+    ' 
+    '     Constructor: (+2 Overloads) Sub New
+    ' 
+    '     Function: findScan1Name, GetMetadata, GetSampleTags, GetThumbnail, hasMs2
+    '               loadAnnotations, ReadModel, ReadMS1, ReadScan, safeParseClassType
+    '               (+2 Overloads) SafeParseClassType
+    ' 
+    '     Sub: cacheScanIndex, (+2 Overloads) Dispose, ReadChromatogramTick
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

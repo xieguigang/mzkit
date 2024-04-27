@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4df76eb1bc14040705fb1dea904ce68b, mzkit\src\assembly\assembly\ASCII\MGF\Ions.vb"
+﻿#Region "Microsoft.VisualBasic::c3ff3864fc011e72f6abde22bec0caf3, G:/mzkit/src/assembly/assembly//ASCII/MGF/Ions.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 83
-    '    Code Lines: 37
-    ' Comment Lines: 37
-    '   Blank Lines: 9
-    '     File Size: 2.51 KB
+    '   Total Lines: 109
+    '    Code Lines: 55
+    ' Comment Lines: 42
+    '   Blank Lines: 12
+    '     File Size: 3.50 KB
 
 
     '     Class Ions

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::01d8e3ab3619bdae93235b3a60672290, mzkit\src\assembly\assembly\MarkupData\FastSeekIndex.vb"
+﻿#Region "Microsoft.VisualBasic::70a4af574c18a66f4915cc17ee5d1085, G:/mzkit/src/assembly/assembly//MarkupData/FastSeekIndex.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 229
-    '    Code Lines: 172
+    '   Total Lines: 230
+    '    Code Lines: 173
     ' Comment Lines: 23
     '   Blank Lines: 34
-    '     File Size: 10.26 KB
+    '     File Size: 10.32 KB
 
 
     '     Class FastSeekIndex

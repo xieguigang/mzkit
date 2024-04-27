@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eca7400f950202e20553a8e431489fb0, mzkit\src\assembly\assembly\MarkupData\imzML\XML\MSISummary.vb"
+﻿#Region "Microsoft.VisualBasic::38da0be5f847096acaa869889c1ac5d6, G:/mzkit/src/assembly/assembly//MarkupData/imzML/XML/MSISummary.vb"
 
     ' Author:
     ' 
@@ -37,27 +37,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 123
-    '    Code Lines: 87
-    ' Comment Lines: 19
-    '   Blank Lines: 17
-    '     File Size: 4.39 KB
+    '   Total Lines: 146
+    '    Code Lines: 100
+    ' Comment Lines: 26
+    '   Blank Lines: 20
+    '     File Size: 5.38 KB
 
 
     '     Class MSISummary
     ' 
-    '         Properties: rowScans, size
+    '         Properties: rowScans, size, x, y
     ' 
-    '         Function: FromPixels, GetBasePeakMz, GetLayer, GetRowScan, ToArray
-    '                   ToString
-    ' 
-    '     Enum IntensitySummary
-    ' 
-    '         Average, BasePeak, Total
-    ' 
-    '  
-    ' 
-    ' 
+    '         Function: FromPixels, GetBasePeakMz, GetLayer, GetPixel, GetRowScan
+    '                   ToArray, ToString
     ' 
     ' 
     ' /********************************************************************************/

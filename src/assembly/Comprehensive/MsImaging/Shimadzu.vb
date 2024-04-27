@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::45f069b3e1582a62104f06fb5d2e47b0, mzkit\src\assembly\Comprehensive\MsImaging\Shimadzu.vb"
+﻿#Region "Microsoft.VisualBasic::45f069b3e1582a62104f06fb5d2e47b0, G:/mzkit/src/assembly/Comprehensive//MsImaging/Shimadzu.vb"
 
     ' Author:
     ' 

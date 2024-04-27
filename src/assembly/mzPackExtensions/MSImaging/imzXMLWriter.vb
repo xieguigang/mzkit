@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::06e67a0a2ee9045148505b92aaaf7e70, mzkit\src\assembly\mzPackExtensions\MSImaging\imzXMLWriter.vb"
+﻿#Region "Microsoft.VisualBasic::70af07937715e3bcc30a9e788f63c3ab, G:/mzkit/src/assembly/mzPackExtensions//MSImaging/imzXMLWriter.vb"
 
     ' Author:
     ' 
@@ -37,16 +37,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 42
-    '    Code Lines: 28
-    ' Comment Lines: 7
-    '   Blank Lines: 7
-    '     File Size: 1.34 KB
+    '   Total Lines: 67
+    '    Code Lines: 41
+    ' Comment Lines: 15
+    '   Blank Lines: 11
+    '     File Size: 2.23 KB
 
 
     ' Module imzXMLWriter
     ' 
-    '     Function: WriteXML
+    '     Function: GetDimension, WriteXML
     ' 
     ' /********************************************************************************/
 

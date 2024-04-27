@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d2f7887e1a7a81f3673bac7419e3c973, mzkit\src\assembly\assembly\MarkupData\mzML\XML\Configurations.vb"
+﻿#Region "Microsoft.VisualBasic::167447c006387b0ccfbc1faff222ba9f, G:/mzkit/src/assembly/assembly//MarkupData/mzML/XML/Configurations.vb"
 
     ' Author:
     ' 
@@ -37,16 +37,22 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 30
-    '    Code Lines: 18
+    '   Total Lines: 42
+    '    Code Lines: 26
     ' Comment Lines: 0
-    '   Blank Lines: 12
-    '     File Size: 724 B
+    '   Blank Lines: 16
+    '     File Size: 1.04 KB
 
 
+    '     Class instrumentConfigurationList
+    ' 
+    '         Properties: instrumentConfiguration
+    ' 
     '     Class instrumentConfiguration
     ' 
     '         Properties: componentList, id
+    ' 
+    '         Function: ToString
     ' 
     '     Class componentList
     ' 

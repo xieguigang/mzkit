@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::044ac8df237972425fbf5e152ffce067, mzkit\src\assembly\BrukerDataReader\flexImaging\spectrum_sqlite\PeakReader.vb"
+﻿#Region "Microsoft.VisualBasic::1c535a8c60fe85976da5b144f1db29d8, G:/mzkit/src/assembly/BrukerDataReader//flexImaging/spectrum_sqlite/PeakReader.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 77
     ' Comment Lines: 15
     '   Blank Lines: 13
-    '     File Size: 4.02 KB
+    '     File Size: 4.15 KB
 
 
     ' Class PeakReader
