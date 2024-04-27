@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::558b64ace7885b17c726c043286cfa24, G:/mzkit/Rscript/Library/mzkit_app/src/mzquant//Math.vb"
+﻿#Region "Microsoft.VisualBasic::5084739fa90910e578f8662741fe457c, G:/mzkit/Rscript/Library/mzkit_app/src/mzquant//Math.vb"
 
     ' Author:
     ' 
@@ -37,10 +37,10 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 156
+    '   Total Lines: 155
     '    Code Lines: 109
     ' Comment Lines: 28
-    '   Blank Lines: 19
+    '   Blank Lines: 18
     '     File Size: 6.33 KB
 
 
@@ -51,7 +51,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports Microsoft.VisualBasic.CommandLine.Reflection
@@ -208,4 +207,3 @@ Module QuantifyMath
             .ToArray
     End Function
 End Module
-

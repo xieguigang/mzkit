@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5f16028f265faaef6f064e9c12180c8c, G:/mzkit/Rscript/Library/mzkit_app/src/mzDIA//LCLipidomics.vb"
+﻿#Region "Microsoft.VisualBasic::c73d0511a8a72cd04b9218cc604197be, G:/mzkit/Rscript/Library/mzkit_app/src/mzDIA//LCLipidomics.vb"
 
     ' Author:
     ' 
@@ -102,4 +102,3 @@ Module LCLipidomics
         Throw New NotImplementedException
     End Function
 End Module
-

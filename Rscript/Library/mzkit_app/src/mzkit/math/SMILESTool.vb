@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c98b34923b585ecdab5331d4fbb0e5fe, G:/mzkit/Rscript/Library/mzkit_app/src/mzkit//math/SMILESTool.vb"
+﻿#Region "Microsoft.VisualBasic::f82a0ff0a31e32bf83125e1464831c17, G:/mzkit/Rscript/Library/mzkit_app/src/mzkit//math/SMILESTool.vb"
 
     ' Author:
     ' 
@@ -37,10 +37,10 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 132
+    '   Total Lines: 131
     '    Code Lines: 86
     ' Comment Lines: 33
-    '   Blank Lines: 13
+    '   Blank Lines: 12
     '     File Size: 5.77 KB
 
 
@@ -54,7 +54,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
@@ -187,4 +186,3 @@ Module SMILESTool
         }
     End Function
 End Module
-

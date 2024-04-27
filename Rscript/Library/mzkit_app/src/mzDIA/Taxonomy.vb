@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a37974078fe0bb11db32acd9d4f86ca8, G:/mzkit/Rscript/Library/mzkit_app/src/mzDIA//Taxonomy.vb"
+﻿#Region "Microsoft.VisualBasic::9f43e6b414601d3c9a667c974ba81202, G:/mzkit/Rscript/Library/mzkit_app/src/mzDIA//Taxonomy.vb"
 
     ' Author:
     ' 
@@ -37,10 +37,10 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 158
+    '   Total Lines: 157
     '    Code Lines: 108
     ' Comment Lines: 26
-    '   Blank Lines: 24
+    '   Blank Lines: 23
     '     File Size: 6.01 KB
 
 
@@ -57,7 +57,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
@@ -216,4 +215,3 @@ Module Taxonomy
     End Function
 
 End Module
-

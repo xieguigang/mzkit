@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9519644e334819ae78d200fad30def24, G:/mzkit/Rscript/Library/mzkit_app/src/mzDIA//MolecularSpectrumPool.vb"
+﻿#Region "Microsoft.VisualBasic::fad85a578950d43fd88a57dce89873ba, G:/mzkit/Rscript/Library/mzkit_app/src/mzDIA//MolecularSpectrumPool.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 357
+    '   Total Lines: 356
     '    Code Lines: 180
     ' Comment Lines: 137
-    '   Blank Lines: 40
-    '     File Size: 14.28 KB
+    '   Blank Lines: 39
+    '     File Size: 14.27 KB
 
 
     ' Module MolecularSpectrumPool
@@ -53,7 +53,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
@@ -411,4 +410,3 @@ Public Module MolecularSpectrumPool
         Return pool
     End Function
 End Module
-

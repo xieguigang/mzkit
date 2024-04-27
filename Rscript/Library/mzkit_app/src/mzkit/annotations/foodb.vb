@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f89af8c5356d6937747fefe2ceafc027, G:/mzkit/Rscript/Library/mzkit_app/src/mzkit//annotations/foodb.vb"
+﻿#Region "Microsoft.VisualBasic::8027794455322aba5ee9325bd42bc294, G:/mzkit/Rscript/Library/mzkit_app/src/mzkit//annotations/foodb.vb"
 
     ' Author:
     ' 
@@ -98,4 +98,3 @@ Module foodbTools
         Return foodsData
     End Function
 End Module
-

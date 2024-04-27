@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fb8aafa4249a44447169d4c52644ffb2, G:/mzkit/Rscript/Library/mzkit_app/src/mzkit//assembly/RamanSpectroscopy.vb"
+﻿#Region "Microsoft.VisualBasic::0186df8dfeb82618a709e04b7f55eb56, G:/mzkit/Rscript/Library/mzkit_app/src/mzkit//assembly/RamanSpectroscopy.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 69
+    '   Total Lines: 68
     '    Code Lines: 20
     ' Comment Lines: 43
-    '   Blank Lines: 6
-    '     File Size: 3.95 KB
+    '   Blank Lines: 5
+    '     File Size: 3.94 KB
 
 
     ' Module RamanSpectroscopy
@@ -51,7 +51,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.IO
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.Raman
@@ -121,4 +120,3 @@ Public Module RamanSpectroscopy
         Return FileReader.ParseTextFile(New StreamReader(buf))
     End Function
 End Module
-

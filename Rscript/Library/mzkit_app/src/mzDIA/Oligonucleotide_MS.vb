@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::99dc591d276cf8af64db3c87d6aa7d6a, G:/mzkit/Rscript/Library/mzkit_app/src/mzDIA//Oligonucleotide_MS.vb"
+﻿#Region "Microsoft.VisualBasic::537690ee5d6b812ae15882651358df53, G:/mzkit/Rscript/Library/mzkit_app/src/mzDIA//Oligonucleotide_MS.vb"
 
     ' Author:
     ' 
@@ -37,10 +37,10 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 46
+    '   Total Lines: 45
     '    Code Lines: 34
     ' Comment Lines: 5
-    '   Blank Lines: 7
+    '   Blank Lines: 6
     '     File Size: 1.72 KB
 
 
@@ -51,7 +51,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
@@ -98,4 +97,3 @@ Public Module Oligonucleotide_MS
     End Function
 
 End Module
-
