@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9c09ca066253a0ad5ff640f8433c7d69, mzkit\src\mzmath\TargetedMetabolomics\LinearQuantitative\LinearPack\CDFWriter.vb"
+﻿#Region "Microsoft.VisualBasic::ce5c391ae4cafdb004a0a24f6226d5bc, G:/mzkit/src/mzmath/TargetedMetabolomics//LinearQuantitative/LinearPack/CDFWriter.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 180
-    '    Code Lines: 152
-    ' Comment Lines: 0
-    '   Blank Lines: 28
-    '     File Size: 8.69 KB
+    '   Total Lines: 197
+    '    Code Lines: 163
+    ' Comment Lines: 4
+    '   Blank Lines: 30
+    '     File Size: 9.60 KB
 
 
     '     Module CDFWriter

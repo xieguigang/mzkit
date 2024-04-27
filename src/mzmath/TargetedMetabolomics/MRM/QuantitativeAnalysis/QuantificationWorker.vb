@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ac089443455e89da10a1d034c85507bd, mzkit\src\mzmath\TargetedMetabolomics\MRM\QuantitativeAnalysis\QuantificationWorker.vb"
+﻿#Region "Microsoft.VisualBasic::ac089443455e89da10a1d034c85507bd, G:/mzkit/src/mzmath/TargetedMetabolomics//MRM/QuantitativeAnalysis/QuantificationWorker.vb"
 
     ' Author:
     ' 

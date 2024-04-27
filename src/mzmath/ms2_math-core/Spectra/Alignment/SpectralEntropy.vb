@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8e0451c87ca548c0ecab829a4ef4a559, mzkit\src\mzmath\ms2_math-core\Spectra\Alignment\SpectralEntropy.vb"
+﻿#Region "Microsoft.VisualBasic::9e2a3806f02c5b053ead222c4637563a, G:/mzkit/src/mzmath/ms2_math-core//Spectra/Alignment/SpectralEntropy.vb"
 
     ' Author:
     ' 
@@ -37,17 +37,17 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 135
-    '    Code Lines: 85
-    ' Comment Lines: 28
-    '   Blank Lines: 22
-    '     File Size: 5.62 KB
+    '   Total Lines: 156
+    '    Code Lines: 100
+    ' Comment Lines: 30
+    '   Blank Lines: 26
+    '     File Size: 6.46 KB
 
 
     '     Module SpectralEntropy
     ' 
-    '         Function: _entropy_similarity, _get_entropy_and_weighted_intensity, (+3 Overloads) calculate_entropy_similarity, entropy_distance, StandardizeSpectrum
-    '                   unweighted_entropy_distance, WeightIntensityByEntropy
+    '         Function: _entropy_similarity, _get_entropy_and_weighted_intensity, (+3 Overloads) calculate_entropy_similarity, Entropy, entropy_distance
+    '                   StandardizeSpectrum, unweighted_entropy_distance, WeightIntensityByEntropy
     ' 
     ' 
     ' /********************************************************************************/

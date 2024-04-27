@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3a5a6220b5e1c32f99585f9738c19b74, mzkit\src\mzmath\mz_deco\PeakAlignment.vb"
+﻿#Region "Microsoft.VisualBasic::db63d020a35229ffe3c92efbbfb148bf, G:/mzkit/src/mzmath/mz_deco//PeakAlignment.vb"
 
     ' Author:
     ' 
@@ -37,16 +37,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 67
-    '    Code Lines: 55
-    ' Comment Lines: 6
-    '   Blank Lines: 6
-    '     File Size: 2.78 KB
+    '   Total Lines: 154
+    '    Code Lines: 117
+    ' Comment Lines: 16
+    '   Blank Lines: 21
+    '     File Size: 6.30 KB
 
 
     ' Module PeakAlignment
     ' 
-    '     Function: CreateMatrix
+    '     Function: CowAlignment, CreatePeak, PickReferenceSampleMaxIntensity, RIAlignment
     ' 
     ' /********************************************************************************/
 

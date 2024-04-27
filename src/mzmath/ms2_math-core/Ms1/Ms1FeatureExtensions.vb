@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::63a2b588503664b1cb066fd09b7e4ea9, mzkit\src\mzmath\ms2_math-core\Ms1\Ms1FeatureExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::e443b56422d32dda8605350c41af7755, G:/mzkit/src/mzmath/ms2_math-core//Ms1/Ms1FeatureExtensions.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 54
     ' Comment Lines: 23
     '   Blank Lines: 10
-    '     File Size: 3.29 KB
+    '     File Size: 3.30 KB
 
 
     ' Module Ms1FeatureExtensions

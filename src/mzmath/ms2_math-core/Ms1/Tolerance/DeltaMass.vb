@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7c8ba45623986f4d4b384a4c7debe53f, mzkit\src\mzmath\ms2_math-core\Ms1\Tolerance\DeltaMass.vb"
+﻿#Region "Microsoft.VisualBasic::0b5fc33cf880d5db1a51cf164bd12e60, G:/mzkit/src/mzmath/ms2_math-core//Ms1/Tolerance/DeltaMass.vb"
 
     ' Author:
     ' 
@@ -37,18 +37,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 45
-    '    Code Lines: 33
-    ' Comment Lines: 3
-    '   Blank Lines: 9
-    '     File Size: 1.62 KB
+    '   Total Lines: 69
+    '    Code Lines: 47
+    ' Comment Lines: 9
+    '   Blank Lines: 13
+    '     File Size: 2.44 KB
 
 
     '     Class DAmethod
     ' 
+    '         Properties: Type
+    ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: AsScore, Equals, MassError, MassErrorDescription, Scale
-    '                   ToString
+    '         Function: AsScore, Equals, GetErrorDalton, GetErrorPPM, MassError
+    '                   MassErrorDescription, Scale, ToString
     ' 
     ' 
     ' /********************************************************************************/

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::58950ea696dcfdc4d85f07e24fdaeccf, mzkit\src\mzmath\ms2_math-core\Ms1\Tolerance\PPM.vb"
+﻿#Region "Microsoft.VisualBasic::1fc65071cc316dd881af06639c48b946, G:/mzkit/src/mzmath/ms2_math-core//Ms1/Tolerance/PPM.vb"
 
     ' Author:
     ' 
@@ -37,18 +37,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 65
-    '    Code Lines: 40
-    ' Comment Lines: 12
-    '   Blank Lines: 13
-    '     File Size: 2.21 KB
+    '   Total Lines: 88
+    '    Code Lines: 57
+    ' Comment Lines: 14
+    '   Blank Lines: 17
+    '     File Size: 3.01 KB
 
 
     '     Class PPMmethod
     ' 
+    '         Properties: Type
+    ' 
     '         Constructor: (+2 Overloads) Sub New
-    '         Function: AsScore, Equals, MassError, MassErrorDescription, PPM
-    '                   Scale, ToString
+    '         Function: AsScore, ConvertPpmToMassAccuracy, Equals, GetErrorDalton, GetErrorPPM
+    '                   MassError, MassErrorDescription, PPM, Scale, ToString
     ' 
     ' 
     ' /********************************************************************************/

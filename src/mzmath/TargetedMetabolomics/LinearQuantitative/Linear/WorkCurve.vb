@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c81b67ff7935faf251899994f347cfd9, mzkit\src\mzmath\TargetedMetabolomics\LinearQuantitative\Linear\WorkCurve.vb"
+﻿#Region "Microsoft.VisualBasic::c81b67ff7935faf251899994f347cfd9, G:/mzkit/src/mzmath/TargetedMetabolomics//LinearQuantitative/Linear/WorkCurve.vb"
 
     ' Author:
     ' 

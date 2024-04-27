@@ -1,60 +1,68 @@
-﻿#Region "Microsoft.VisualBasic::3e88b7221f56eeb530b085aabefa6bed, mzkit\src\mzmath\ms2_math-core\Ms1\Tolerance\Tolerance.vb"
+﻿#Region "Microsoft.VisualBasic::ab51f7b28199f3fb5d1bb0b25f05cd71, G:/mzkit/src/mzmath/ms2_math-core//Ms1/Tolerance/Tolerance.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 180
-'    Code Lines: 99
-' Comment Lines: 56
-'   Blank Lines: 25
-'     File Size: 6.45 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class Tolerance
-' 
-'         Properties: [Interface], DefaultTolerance
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Function: AddPPM, DeltaMass, GetScript, MatchTolerance, ParseScript
-'                   PPM, SubPPM, ToScript
-'         Operators: *, /
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 284
+    '    Code Lines: 138
+    ' Comment Lines: 112
+    '   Blank Lines: 34
+    '     File Size: 10.14 KB
+
+
+    '     Enum MassToleranceType
+    ' 
+    '         Da, Ppm
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Class Tolerance
+    ' 
+    '         Properties: [Interface], DefaultTolerance
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: AddPPM, Compares, DeltaMass, GetScript, MatchTolerance
+    '                   ParseScript, PPM, SubPPM, (+2 Overloads) ToScript
+    '         Operators: *, /, <, >
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

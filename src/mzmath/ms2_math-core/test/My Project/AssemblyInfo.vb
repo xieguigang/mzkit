@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::307ea8be54236377c5411714e3fd62a8, mzkit\src\mzmath\ms2_math-core\test\My Project\AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::a767328a5674a32ff8c75626b9e6ea33, G:/mzkit/src/mzmath/ms2_math-core//test/My Project/AssemblyInfo.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 13
     ' Comment Lines: 15
     '   Blank Lines: 7
-    '     File Size: 1.11 KB
+    '     File Size: 1.14 KB
 
 
     ' 

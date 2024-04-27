@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::63770385240196eaeb181a8f7f496656, mzkit\src\mzmath\ms2_math-core\Spectra\Models\Xml\SSM2MatrixFragment.vb"
+﻿#Region "Microsoft.VisualBasic::6e5952e6613c7c7a0ffa25f2ee76ba7c, G:/mzkit/src/mzmath/ms2_math-core//Spectra/Models/Xml/SSM2MatrixFragment.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 58
+    '   Total Lines: 61
     '    Code Lines: 40
-    ' Comment Lines: 8
+    ' Comment Lines: 11
     '   Blank Lines: 10
-    '     File Size: 1.75 KB
+    '     File Size: 1.86 KB
 
 
     '     Class SSM2MatrixFragment

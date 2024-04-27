@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::25dfbe4736e54790dda9916c13735daf, mzkit\src\mzmath\ms2_math-core\Spectra\Models\LibraryMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::839b763f6d16f6e0e975e6a3dd6297e3, G:/mzkit/src/mzmath/ms2_math-core//Spectra/Models/LibraryMatrix.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 189
-    '    Code Lines: 124
-    ' Comment Lines: 43
-    '   Blank Lines: 22
-    '     File Size: 6.58 KB
+    '   Total Lines: 259
+    '    Code Lines: 153
+    ' Comment Lines: 75
+    '   Blank Lines: 31
+    '     File Size: 9.24 KB
 
 
     '     Class LibraryMatrix
@@ -49,8 +49,12 @@
     '         Properties: centroid, entropy, intensity, ms2, mz
     '                     name, parentMz, totalIon
     ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: AlignMatrix, GetMaxInto
+    '         Constructor: (+5 Overloads) Sub New
+    ' 
+    '         Function: AlignMatrix, GetIons, GetMaxInto, ParseStream, ToString
+    ' 
+    '         Sub: SetIons
+    ' 
     '         Operators: *, /
     ' 
     ' 

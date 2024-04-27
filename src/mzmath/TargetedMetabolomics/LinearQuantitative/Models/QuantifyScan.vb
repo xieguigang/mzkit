@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8e923a8f5b43461fa59f96fe0ac35a63, mzkit\src\mzmath\TargetedMetabolomics\LinearQuantitative\Models\QuantifyScan.vb"
+﻿#Region "Microsoft.VisualBasic::8e923a8f5b43461fa59f96fe0ac35a63, G:/mzkit/src/mzmath/TargetedMetabolomics//LinearQuantitative/Models/QuantifyScan.vb"
 
     ' Author:
     ' 

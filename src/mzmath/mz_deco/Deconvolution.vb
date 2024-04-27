@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e71cf6d4b1a75e156afd6dbbfbab8bef, mzkit\src\mzmath\mz_deco\Deconvolution.vb"
+﻿#Region "Microsoft.VisualBasic::6aceb0160b42716fb4a991b7c1526a9c, G:/mzkit/src/mzmath/mz_deco//Deconvolution.vb"
 
     ' Author:
     ' 
@@ -37,16 +37,17 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 172
-    '    Code Lines: 125
-    ' Comment Lines: 28
-    '   Blank Lines: 19
-    '     File Size: 6.75 KB
+    '   Total Lines: 309
+    '    Code Lines: 225
+    ' Comment Lines: 53
+    '   Blank Lines: 31
+    '     File Size: 12.96 KB
 
 
     ' Module Deconvolution
     ' 
-    '     Function: DecoMzGroups, (+2 Overloads) GetMzGroups, GetPeakGroups, localMax, localMin
+    '     Function: DecoMzGroups, DeconvPeakGroups, ExtractFeatureGroups, (+2 Overloads) GetMzGroups, (+2 Overloads) GetPeakGroups
+    '               ToChromatogram, (+2 Overloads) TrimRTScatter
     ' 
     ' /********************************************************************************/
 
