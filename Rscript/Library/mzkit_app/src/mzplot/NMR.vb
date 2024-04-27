@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5c7020fca5b93170beacac0ae8cb3da4, mzkit\Rscript\Library\mzkit.plot\NMR.vb"
+﻿#Region "Microsoft.VisualBasic::229b062cf2da15a4969b460930bdf06c, G:/mzkit/Rscript/Library/mzkit_app/src/mzplot//NMR.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 44
     ' Comment Lines: 3
     '   Blank Lines: 8
-    '     File Size: 2.37 KB
+    '     File Size: 2.42 KB
 
 
     ' Module plotNMR

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2b253c02e9660f250e6e43a46a14768c, mzkit\Rscript\Library\mzkit\assembly\vendors\ProteoWizard.vb"
+﻿#Region "Microsoft.VisualBasic::25679da18b46104dd28711820b4d2ebb, G:/mzkit/Rscript/Library/mzkit_app/src/mzkit//assembly/vendors/ProteoWizard.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 92
     ' Comment Lines: 31
     '   Blank Lines: 20
-    '     File Size: 4.96 KB
+    '     File Size: 5.11 KB
 
 
     ' Module ProteoWizard

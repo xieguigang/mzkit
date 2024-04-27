@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::892d0e2f3344f73e04a28ffd0f53a770, mzkit\Rscript\Library\mzkit\assembly\Assembly.vb"
+﻿#Region "Microsoft.VisualBasic::d0e45d5b88b5f265b808ac70aa89159d, G:/mzkit/Rscript/Library/mzkit_app/src/mzkit//assembly/Assembly.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 554
-    '    Code Lines: 420
-    ' Comment Lines: 70
-    '   Blank Lines: 64
-    '     File Size: 23.31 KB
+    '   Total Lines: 607
+    '    Code Lines: 439
+    ' Comment Lines: 101
+    '   Blank Lines: 67
+    '     File Size: 26.32 KB
 
 
     ' Module Assembly
