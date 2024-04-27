@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a9db313f3e9de68cc579d3115666e7e6, G:/mzkit/src/metadb/Lipidomics//MsCharacterization/GM3EadMsCharacterization.vb"
+﻿#Region "Microsoft.VisualBasic::f3eb8947ee1c704aef090c347faf996d, G:/mzkit/src/metadb/Lipidomics//MsCharacterization/GM3EadMsCharacterization.vb"
 
     ' Author:
     ' 
@@ -37,17 +37,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 10
+    '   Total Lines: 9
     '    Code Lines: 8
     ' Comment Lines: 0
-    '   Blank Lines: 2
-    '     File Size: 586 B
+    '   Blank Lines: 1
+    '     File Size: 582 B
 
 
     ' Module GM3EadMsCharacterization
     ' 
     '     Function: Characterize
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -62,5 +61,3 @@ Public Module GM3EadMsCharacterization
         Return GetDefaultCharacterizationResultForCeramides(molecule, defaultResult)
     End Function
 End Module
-
-

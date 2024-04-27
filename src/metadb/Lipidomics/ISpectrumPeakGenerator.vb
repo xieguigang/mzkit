@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fa0c4c8850bc1ba59d96c6336d171e60, G:/mzkit/src/metadb/Lipidomics//ISpectrumPeakGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::2abe88bf5088c64c946ddbb8754a8c94, G:/mzkit/src/metadb/Lipidomics//ISpectrumPeakGenerator.vb"
 
     ' Author:
     ' 
@@ -37,17 +37,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 10
+    '   Total Lines: 9
     '    Code Lines: 7
     ' Comment Lines: 0
-    '   Blank Lines: 3
-    '     File Size: 708 B
+    '   Blank Lines: 2
+    '     File Size: 704 B
 
 
     ' Interface ISpectrumPeakGenerator
     ' 
     '     Function: GetAcylDoubleBondSpectrum, GetAlkylDoubleBondSpectrum, GetSphingoDoubleBondSpectrum
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -62,5 +61,3 @@ Public Interface ISpectrumPeakGenerator
     Function GetAlkylDoubleBondSpectrum(lipid As ILipid, acylChain As AlkylChain, adduct As AdductIon, nlMass As Double, abundance As Double) As IEnumerable(Of SpectrumPeak)
     Function GetSphingoDoubleBondSpectrum(lipid As ILipid, acylChain As SphingoChain, adduct As AdductIon, nlMass As Double, abundance As Double) As IEnumerable(Of SpectrumPeak)
 End Interface
-
-

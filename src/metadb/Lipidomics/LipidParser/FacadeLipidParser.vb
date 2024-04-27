@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::35e73ddf2e131a0595febf3c2d859dba, G:/mzkit/src/metadb/Lipidomics//LipidParser/FacadeLipidParser.vb"
+﻿#Region "Microsoft.VisualBasic::59207ceb92f54062e1c536883c13289e, G:/mzkit/src/metadb/Lipidomics//LipidParser/FacadeLipidParser.vb"
 
     ' Author:
     ' 
@@ -37,10 +37,10 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 103
+    '   Total Lines: 102
     '    Code Lines: 93
     ' Comment Lines: 0
-    '   Blank Lines: 10
+    '   Blank Lines: 9
     '     File Size: 4.17 KB
 
 
@@ -51,7 +51,6 @@
     '     Function: Parse
     ' 
     '     Sub: Add, Remove
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -159,5 +158,3 @@ Public Class FacadeLipidParser
     Private Shared defaultField As ILipidParser
 
 End Class
-
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d2bd1266ca95e50975a1fbd612052cfd, G:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/PISpectrumGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::2e7ca8533930b37853fa0e065f01e645, G:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/PISpectrumGenerator.vb"
 
     ' Author:
     ' 
@@ -37,10 +37,10 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 149
+    '   Total Lines: 148
     '    Code Lines: 124
     ' Comment Lines: 0
-    '   Blank Lines: 25
+    '   Blank Lines: 24
     '     File Size: 8.26 KB
 
 
@@ -49,7 +49,6 @@
     '     Constructor: (+2 Overloads) Sub New
     '     Function: CanGenerate, CreateReference, Generate, GetAcylDoubleBondSpectrum, (+2 Overloads) GetAcylLevelSpectrum
     '               GetAcylPositionSpectrum, GetPISpectrum
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -203,5 +202,3 @@ New SpectrumPeak(Gly_O + adductmass, 200.0R, "Gly-O") With {
     Private Shared ReadOnly comparer As IEqualityComparer(Of SpectrumPeak) = New SpectrumEqualityComparer()
 
 End Class
-
-

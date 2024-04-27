@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::38130cc00280f79e0258eaf3c0484a47, G:/mzkit/src/metadb/FormulaSearch.Extensions//SMILESGraph.vb"
+﻿#Region "Microsoft.VisualBasic::8e5fe5089de0cda9d0f335493588680a, G:/mzkit/src/metadb/FormulaSearch.Extensions//SMILESGraph.vb"
 
     ' Author:
     ' 
@@ -89,4 +89,3 @@ Public Module SMILESGraph
     End Function
 
 End Module
-

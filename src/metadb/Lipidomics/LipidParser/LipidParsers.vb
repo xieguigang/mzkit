@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::393de10e7523a5f0840b5ef672f688e8, G:/mzkit/src/metadb/Lipidomics//LipidParser/LipidParsers.vb"
+﻿#Region "Microsoft.VisualBasic::019d0eafcf49a1644e7688dda7707bc9, G:/mzkit/src/metadb/Lipidomics//LipidParser/LipidParsers.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 908
+    '   Total Lines: 907
     '    Code Lines: 734
     ' Comment Lines: 4
-    '   Blank Lines: 170
-    '     File Size: 42.77 KB
+    '   Blank Lines: 169
+    '     File Size: 42.76 KB
 
 
     ' Class PCLipidParser
@@ -295,7 +295,6 @@
     '     Properties: Target
     ' 
     '     Function: Parse
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -1208,5 +1207,3 @@ Public Class CEd7LipidParser
         Return Nothing
     End Function
 End Class
-
-

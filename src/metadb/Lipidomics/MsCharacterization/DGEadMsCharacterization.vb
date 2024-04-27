@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e26771fbda7ad2396d63438a386b39dc, G:/mzkit/src/metadb/Lipidomics//MsCharacterization/DGEadMsCharacterization.vb"
+﻿#Region "Microsoft.VisualBasic::b148a46300aa0fe5aa0bb38845e05667, G:/mzkit/src/metadb/Lipidomics//MsCharacterization/DGEadMsCharacterization.vb"
 
     ' Author:
     ' 
@@ -74,4 +74,3 @@ Public Module DGEadMsCharacterization
         Return GetDefaultCharacterizationResultForGlycerophospholipid(molecule, defaultResult)
     End Function
 End Module
-

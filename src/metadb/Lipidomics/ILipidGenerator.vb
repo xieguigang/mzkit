@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::653ee1d5fbeef363aa97c9a9afdb046a, G:/mzkit/src/metadb/Lipidomics//ILipidGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::9326f4356587219b01e932fcda406536, G:/mzkit/src/metadb/Lipidomics//ILipidGenerator.vb"
 
     ' Author:
     ' 
@@ -37,10 +37,10 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 32
+    '   Total Lines: 30
     '    Code Lines: 22
     ' Comment Lines: 0
-    '   Blank Lines: 10
+    '   Blank Lines: 8
     '     File Size: 1.16 KB
 
 
@@ -52,7 +52,6 @@
     ' 
     '         Constructor: (+2 Overloads) Sub New
     '         Function: CanGenerate, Generate
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -88,6 +87,3 @@ Public Interface ILipidGenerator
             Return lipid.Chains.GetCandidateSets(totalChainGenerator).[Select](Function(chains) New Lipid(lipid.LipidClass, lipid.Mass, chains))
         End Function
     End Class
-
-
-

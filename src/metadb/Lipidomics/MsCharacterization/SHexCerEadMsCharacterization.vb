@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::404312a15d11b84d31e1227f7a8cb41d, G:/mzkit/src/metadb/Lipidomics//MsCharacterization/SHexCerEadMsCharacterization.vb"
+﻿#Region "Microsoft.VisualBasic::1f4feed3807f6b1aa71b88dd27f91a67, G:/mzkit/src/metadb/Lipidomics//MsCharacterization/SHexCerEadMsCharacterization.vb"
 
     ' Author:
     ' 
@@ -37,17 +37,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 10
+    '   Total Lines: 9
     '    Code Lines: 8
     ' Comment Lines: 0
-    '   Blank Lines: 2
-    '     File Size: 610 B
+    '   Blank Lines: 1
+    '     File Size: 606 B
 
 
     ' Module SHexCerEadMsCharacterization
     ' 
     '     Function: Characterize
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -62,5 +61,3 @@ Public Module SHexCerEadMsCharacterization
             Return GetDefaultCharacterizationResultForCeramides(molecule, defaultResult)
         End Function
     End Module
-
-

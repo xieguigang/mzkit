@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8d1cdcbdda2b64b473f44ddb2d3efdcd, G:/mzkit/src/metadb/Lipidomics//ShorthandNotationDirector.vb"
+﻿#Region "Microsoft.VisualBasic::d46c75ce75450ef8fa5cfcb31cd50cb8, G:/mzkit/src/metadb/Lipidomics//ShorthandNotationDirector.vb"
 
     ' Author:
     ' 
@@ -37,10 +37,10 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 65
+    '   Total Lines: 64
     '    Code Lines: 51
     ' Comment Lines: 4
-    '   Blank Lines: 10
+    '   Blank Lines: 9
     '     File Size: 3.02 KB
 
 
@@ -53,7 +53,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Public NotInheritable Class ShorthandNotationDirector
     Private ReadOnly _builder As ILipidomicsVisitorBuilder
@@ -119,4 +118,3 @@ Public NotInheritable Class ShorthandNotationDirector
         _builder.SetSphingoOxidized(OxidizedIndeterminateState.AllPositions.Exclude(1))
     End Sub
 End Class
-

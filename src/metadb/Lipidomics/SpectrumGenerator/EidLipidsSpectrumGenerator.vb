@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2b986cd92724cebca4f638b35f052f3e, G:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/EidLipidsSpectrumGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::e36308dee52acb91f59032be2d9b534c, G:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/EidLipidsSpectrumGenerator.vb"
 
     ' Author:
     ' 
@@ -37,17 +37,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 89
+    '   Total Lines: 88
     '    Code Lines: 75
     ' Comment Lines: 0
-    '   Blank Lines: 14
-    '     File Size: 4.94 KB
+    '   Blank Lines: 13
+    '     File Size: 4.93 KB
 
 
     ' Class EidLipidSpectrumGenerator
     ' 
     '     Function: doublebondPositions, EidSpecificSpectrum, GetClassEidFragmentSpectrum
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -141,5 +140,3 @@ Public Class EidLipidSpectrumGenerator
 
 
 End Class
-
-

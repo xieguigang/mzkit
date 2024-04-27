@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9d277fd29314bc242ec1c2dec6ae8697, G:/mzkit/src/metadb/Chemoinformatics//Formula/Isotopic/IsotopeCalc.vb"
+﻿#Region "Microsoft.VisualBasic::7ef70ad16aa6687cfb030acc71ff9fe3, G:/mzkit/src/metadb/Chemoinformatics//Formula/Isotopic/IsotopeCalc.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 1744
     ' Comment Lines: 17
     '   Blank Lines: 644
-    '     File Size: 159.04 KB
+    '     File Size: 159.03 KB
 
 
     '     Module IsotopeCalculator
@@ -2465,4 +2465,3 @@ Namespace Formula.IsotopicPatterns
 
     End Module
 End Namespace
-

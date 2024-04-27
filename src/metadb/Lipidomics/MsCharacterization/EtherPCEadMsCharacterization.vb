@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::31d996198dc6c37e6af4f91cfa0b8344, G:/mzkit/src/metadb/Lipidomics//MsCharacterization/EtherPCEadMsCharacterization.vb"
+﻿#Region "Microsoft.VisualBasic::f989eb444b114f512dd8e250e44098a1, G:/mzkit/src/metadb/Lipidomics//MsCharacterization/EtherPCEadMsCharacterization.vb"
 
     ' Author:
     ' 
@@ -37,17 +37,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 12
+    '   Total Lines: 11
     '    Code Lines: 8
     ' Comment Lines: 0
-    '   Blank Lines: 4
-    '     File Size: 623 B
+    '   Blank Lines: 3
+    '     File Size: 619 B
 
 
     ' Module EtherPCEadMsCharacterization
     ' 
     '     Function: Characterize
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -64,5 +63,3 @@ Public Module EtherPCEadMsCharacterization
             Return GetDefaultCharacterizationResultForAlkylAcylGlycerols(molecule, defaultResult)
         End Function
     End Module
-
-

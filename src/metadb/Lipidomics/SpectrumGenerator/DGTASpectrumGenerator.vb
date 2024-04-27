@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5f19d247a5a387ebb162d867c944c1d1, G:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/DGTASpectrumGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::1b7a429c16c6b02ad2244289ed8fa18e, G:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/DGTASpectrumGenerator.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 106
     ' Comment Lines: 0
     '   Blank Lines: 19
-    '     File Size: 6.57 KB
+    '     File Size: 6.56 KB
 
 
     ' Class DGTASpectrumGenerator
@@ -179,4 +179,3 @@ Public Class DGTASpectrumGenerator
     Private Shared ReadOnly comparer As IEqualityComparer(Of SpectrumPeak) = New SpectrumEqualityComparer()
 
 End Class
-

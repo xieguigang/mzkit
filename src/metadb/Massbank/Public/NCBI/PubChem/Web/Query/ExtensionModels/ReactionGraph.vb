@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7cbfcf0e2115838100363e7f4d79e52a, G:/mzkit/src/metadb/Massbank//Public/NCBI/PubChem/Web/Query/ExtensionModels/ReactionGraph.vb"
+﻿#Region "Microsoft.VisualBasic::51b8022e6fa4bbcfc91efc681b041adc, G:/mzkit/src/metadb/Massbank//Public/NCBI/PubChem/Web/Query/ExtensionModels/ReactionGraph.vb"
 
     ' Author:
     ' 
@@ -37,10 +37,10 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 75
+    '   Total Lines: 74
     '    Code Lines: 59
     ' Comment Lines: 3
-    '   Blank Lines: 13
+    '   Blank Lines: 12
     '     File Size: 2.56 KB
 
 
@@ -57,7 +57,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Linq

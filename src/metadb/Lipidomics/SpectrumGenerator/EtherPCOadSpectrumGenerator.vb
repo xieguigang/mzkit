@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7a656999fab679440ec5c1ab4ec8a3f9, G:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/EtherPCOadSpectrumGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::5f9e77fc1aa0a39f954d3fe056600c77, G:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/EtherPCOadSpectrumGenerator.vb"
 
     ' Author:
     ' 
@@ -37,10 +37,10 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 130
+    '   Total Lines: 129
     '    Code Lines: 94
     ' Comment Lines: 19
-    '   Blank Lines: 17
+    '   Blank Lines: 16
     '     File Size: 7.16 KB
 
 
@@ -49,7 +49,6 @@
     '     Constructor: (+2 Overloads) Sub New
     '     Function: CanGenerate, CreateReference, Generate, GetEtherPCOadSpectrum, GetEtherPCOSpectrum
     '               GetEtherPCPSpectrum
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -184,5 +183,3 @@ Public Class EtherPCOadSpectrumGenerator
 
 
 End Class
-
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::058896b86b236dd0f31f790bc6ac8c16, G:/mzkit/src/metadb/Lipidomics//OadDefaultCharacterization.vb"
+﻿#Region "Microsoft.VisualBasic::09a1f6fa46588b57fae5dd558eeb4dd0, G:/mzkit/src/metadb/Lipidomics//OadDefaultCharacterization.vb"
 
     ' Author:
     ' 
@@ -37,10 +37,10 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 39
+    '   Total Lines: 38
     '    Code Lines: 26
     ' Comment Lines: 0
-    '   Blank Lines: 13
+    '   Blank Lines: 12
     '     File Size: 2.52 KB
 
 
@@ -48,7 +48,6 @@
     ' 
     '     Constructor: (+1 Overloads) Sub New
     '     Function: Characterize4AlkylAcylGlycerols, Characterize4Ceramides, Characterize4DiacylGlycerols, Characterize4SingleAcylChainLiipid, Characterize4TriacylGlycerols
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -92,5 +91,3 @@ Public NotInheritable Class OadDefaultCharacterization
     End Function
 
 End Class
-
-

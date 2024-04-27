@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::26ed5a5b6d3daa01c0d9e713ddfb2f51, G:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/CARSpectrumGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::2e209dbcfebc4ed238ad4f4a4eee0fe1, G:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/CARSpectrumGenerator.vb"
 
     ' Author:
     ' 
@@ -149,4 +149,3 @@ Public Class CARSpectrumGenerator
     Private Shared ReadOnly comparer As IEqualityComparer(Of SpectrumPeak) = New SpectrumEqualityComparer()
 
 End Class
-

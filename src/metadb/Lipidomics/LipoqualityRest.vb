@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::948264e2d7461040597b12efb17f35ca, G:/mzkit/src/metadb/Lipidomics//LipoqualityRest.vb"
+﻿#Region "Microsoft.VisualBasic::d83cc099f8135b3c18afbf97cb8eaaf0, G:/mzkit/src/metadb/Lipidomics//LipoqualityRest.vb"
 
     ' Author:
     ' 
@@ -553,4 +553,3 @@ Public NotInheritable Class LipoqualityRest
         End Select
     End Function
 End Class
-

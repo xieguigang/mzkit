@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::99ab4141f45aa564f05bd7205d427022, G:/mzkit/src/metadb/Lipidomics//IChainGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::5c42de56b9d449fabb8da8390183ebbb, G:/mzkit/src/metadb/Lipidomics//IChainGenerator.vb"
 
     ' Author:
     ' 
@@ -37,17 +37,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 12
+    '   Total Lines: 11
     '    Code Lines: 7
     ' Comment Lines: 0
-    '   Blank Lines: 5
-    '     File Size: 413 B
+    '   Blank Lines: 4
+    '     File Size: 409 B
 
 
     ' Interface IChainGenerator
     ' 
     '     Function: CarbonIsValid, DoubleBondIsValid, (+3 Overloads) Generate
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -64,5 +63,3 @@ Public Interface IChainGenerator
 
     Function DoubleBondIsValid(carbon As Integer, doubleBond As Integer) As Boolean
 End Interface
-
-

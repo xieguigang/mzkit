@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ca4d0f6d5a7cef1be20698ed5bc22f07, G:/mzkit/src/metadb/Lipidomics//ChainGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::bb6f8fd21b8b2fcf61c0d146694ca1e9, G:/mzkit/src/metadb/Lipidomics//ChainGenerator.vb"
 
     ' Author:
     ' 
@@ -157,4 +157,3 @@ Public Class ChainGenerator
         Return db = 0 OrElse carbon >= Begin + Skip * (db - 1) + [End]
     End Function
 End Class
-

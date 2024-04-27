@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::506873704fe5ea65e1f004f2385b884f, G:/mzkit/src/metadb/Massbank//Public/NCBI/PubChem/Web/Query/QueryXml.vb"
+﻿#Region "Microsoft.VisualBasic::bd6d6a2711bd88d2e9e5c77e4ac5de78, G:/mzkit/src/metadb/Massbank//Public/NCBI/PubChem/Web/Query/QueryXml.vb"
 
     ' Author:
     ' 
@@ -37,10 +37,10 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 149
+    '   Total Lines: 148
     '    Code Lines: 92
     ' Comment Lines: 41
-    '   Blank Lines: 16
+    '   Blank Lines: 15
     '     File Size: 6.70 KB
 
 
@@ -60,7 +60,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.Runtime.CompilerServices
 Imports System.Xml

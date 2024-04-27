@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::883684ab2c75ea99de2f1d3b137e1eb1, G:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/SMOadSpectrumGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::d9bc63ae64e69b224ceebd26a7df29cb, G:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/SMOadSpectrumGenerator.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 82
     ' Comment Lines: 40
     '   Blank Lines: 17
-    '     File Size: 6.89 KB
+    '     File Size: 6.88 KB
 
 
     ' Class SMOadSpectrumGenerator
@@ -192,4 +192,3 @@ Public Class SMOadSpectrumGenerator
     Private Shared ReadOnly comparer As IEqualityComparer(Of SpectrumPeak) = New SpectrumEqualityComparer()
 
 End Class
-

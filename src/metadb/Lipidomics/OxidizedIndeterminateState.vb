@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::de0e560a5bd9ca089c1cc2ce04f10f67, G:/mzkit/src/metadb/Lipidomics//OxidizedIndeterminateState.vb"
+﻿#Region "Microsoft.VisualBasic::4698e4079e2090830530e3ccbaacc7dc, G:/mzkit/src/metadb/Lipidomics//OxidizedIndeterminateState.vb"
 
     ' Author:
     ' 
@@ -166,4 +166,3 @@ Public NotInheritable Class OxidizedIndeterminateState
         End Function
     End Class
 End Class
-

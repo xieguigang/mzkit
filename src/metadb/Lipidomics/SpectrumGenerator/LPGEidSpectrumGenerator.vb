@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0ee642290f79666ada298e884b31c8cb, G:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/LPGEidSpectrumGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::bb978f40064667e613354a11fd6d77b8, G:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/LPGEidSpectrumGenerator.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 163
+    '   Total Lines: 162
     '    Code Lines: 139
     ' Comment Lines: 1
-    '   Blank Lines: 23
-    '     File Size: 9.02 KB
+    '   Blank Lines: 22
+    '     File Size: 9.01 KB
 
 
     ' Class LPGEidSpectrumGenerator
@@ -49,7 +49,6 @@
     '     Constructor: (+2 Overloads) Sub New
     '     Function: CanGenerate, CreateReference, EidSpecificSpectrum, Generate, GetAcylDoubleBondSpectrum
     '               (+2 Overloads) GetAcylLevelSpectrum, GetAcylPositionSpectrum, GetLPGSpectrum
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -217,5 +216,3 @@ Public Class LPGEidSpectrumGenerator
     Private ReadOnly spectrumGenerator As ISpectrumPeakGenerator
 
 End Class
-
-

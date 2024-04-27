@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::94f73e3f4e14e833a399430328623f7e, G:/mzkit/src/metadb/Lipidomics//MsCharacterization/DMEDFAHFAEadMsCharacterization.vb"
+﻿#Region "Microsoft.VisualBasic::481ec4d92e5ceb7b9d6c84c052dd8912, G:/mzkit/src/metadb/Lipidomics//MsCharacterization/DMEDFAHFAEadMsCharacterization.vb"
 
     ' Author:
     ' 
@@ -75,4 +75,3 @@ Friend Class DMEDFAHFAEadMsCharacterization
         Return GetDefaultCharacterizationResultForGlycerophospholipid(molecule, defaultResult)
     End Function
 End Class
-

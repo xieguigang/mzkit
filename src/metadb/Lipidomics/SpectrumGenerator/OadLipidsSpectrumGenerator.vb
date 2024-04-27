@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e2c9ad884110904940c1abd7a4c2d5a9, G:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/OadLipidsSpectrumGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::01a3ca5613416a0d41d392c652ca9d0b, G:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/OadLipidsSpectrumGenerator.vb"
 
     ' Author:
     ' 
@@ -37,17 +37,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 173
+    '   Total Lines: 172
     '    Code Lines: 161
     ' Comment Lines: 0
-    '   Blank Lines: 12
+    '   Blank Lines: 11
     '     File Size: 9.55 KB
 
 
     ' Class OadLipidSpectrumGenerator
     ' 
     '     Function: GetClassFragmentSpectrum
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -225,5 +224,3 @@ Public Class OadLipidSpectrumGenerator
 
 
 End Class
-
-

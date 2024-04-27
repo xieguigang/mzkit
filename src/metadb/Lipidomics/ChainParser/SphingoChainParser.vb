@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4607ddba6bbc6cb0688cd6ffc91a993c, G:/mzkit/src/metadb/Lipidomics//ChainParser/SphingoChainParser.vb"
+﻿#Region "Microsoft.VisualBasic::0a63719113f82c5fe86b7bb9ee16798f, G:/mzkit/src/metadb/Lipidomics//ChainParser/SphingoChainParser.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 57
     ' Comment Lines: 1
     '   Blank Lines: 7
-    '     File Size: 3.00 KB
+    '     File Size: 2.99 KB
 
 
     ' Class SphingoChainParser
@@ -117,4 +117,3 @@ Public Class SphingoChainParser
         Return New Oxidized(0)
     End Function
 End Class
-

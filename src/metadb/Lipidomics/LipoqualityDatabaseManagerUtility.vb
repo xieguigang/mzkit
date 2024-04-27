@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a900265cd235b2b820d100e5ee685623, G:/mzkit/src/metadb/Lipidomics//LipoqualityDatabaseManagerUtility.vb"
+﻿#Region "Microsoft.VisualBasic::ba2e03c277e0819f16ef981a65e7374c, G:/mzkit/src/metadb/Lipidomics//LipoqualityDatabaseManagerUtility.vb"
 
     ' Author:
     ' 
@@ -858,4 +858,3 @@ Public NotInheritable Class LipoqualityDatabaseManagerUtility
         End Select
     End Function
 End Class
-

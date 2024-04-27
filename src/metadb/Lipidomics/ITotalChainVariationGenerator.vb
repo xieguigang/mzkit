@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::11c9581d90774e13237bdb2534012ca9, G:/mzkit/src/metadb/Lipidomics//ITotalChainVariationGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::d62ba56e1bcf995c08f2d1f7e11caddd, G:/mzkit/src/metadb/Lipidomics//ITotalChainVariationGenerator.vb"
 
     ' Author:
     ' 
@@ -37,17 +37,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 11
+    '   Total Lines: 10
     '    Code Lines: 6
     ' Comment Lines: 0
-    '   Blank Lines: 5
-    '     File Size: 378 B
+    '   Blank Lines: 4
+    '     File Size: 374 B
 
 
     ' Interface ITotalChainVariationGenerator
     ' 
     '     Function: Permutate, Product, Separate
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -63,5 +62,3 @@ Public Interface ITotalChainVariationGenerator
 
         Function Product(chains As PositionLevelChains) As IEnumerable(Of ITotalChain)
     End Interface
-
-

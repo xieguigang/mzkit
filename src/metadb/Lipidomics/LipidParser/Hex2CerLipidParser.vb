@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::00b49680710520ffd7c408c062aeeb54, G:/mzkit/src/metadb/Lipidomics//LipidParser/Hex2CerLipidParser.vb"
+﻿#Region "Microsoft.VisualBasic::c9220940ceb2bcca4ea5f26db5565ea1, G:/mzkit/src/metadb/Lipidomics//LipidParser/Hex2CerLipidParser.vb"
 
     ' Author:
     ' 
@@ -78,4 +78,3 @@ Public Class Hex2CerLipidParser
         Return Nothing
     End Function
 End Class
-

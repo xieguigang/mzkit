@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c9b0beb5fc08f49b54b8a53e4f03c4c9, G:/mzkit/src/metadb/Lipidomics//Annotation/ILipid.vb"
+﻿#Region "Microsoft.VisualBasic::8b3c9c0358b7d8919e780dccb7fe5e9e, G:/mzkit/src/metadb/Lipidomics//Annotation/ILipid.vb"
 
     ' Author:
     ' 
@@ -37,10 +37,10 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 120
+    '   Total Lines: 119
     '    Code Lines: 98
     ' Comment Lines: 1
-    '   Blank Lines: 21
+    '   Blank Lines: 20
     '     File Size: 4.79 KB
 
 
@@ -70,7 +70,6 @@
     '     Constructor: (+1 Overloads) Sub New
     '     Function: Accept, Equals, Generate, GenerateSpectrum, GetAnnotationLevel
     '               Includes, ToString
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -195,5 +194,3 @@ Public Class Lipid
     End Function
 
 End Class
-
-

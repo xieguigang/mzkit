@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::91d2806c3f7f7a64ca071c068a5959f3, G:/mzkit/src/metadb/Lipidomics//IDoubleBondInfo.vb"
+﻿#Region "Microsoft.VisualBasic::36b64fcd03f7e5d47a88440e0ac69b62, G:/mzkit/src/metadb/Lipidomics//IDoubleBondInfo.vb"
 
     ' Author:
     ' 
@@ -37,10 +37,10 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 79
+    '   Total Lines: 78
     '    Code Lines: 65
     ' Comment Lines: 0
-    '   Blank Lines: 14
+    '   Blank Lines: 13
     '     File Size: 3.03 KB
 
 
@@ -65,7 +65,6 @@
     '     Constructor: (+1 Overloads) Sub New
     '     Function: Create, E, (+2 Overloads) Equals, GetHashCode, Includes
     '               ToString, Z
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -149,5 +148,3 @@ Public Class DoubleBondInfo
         Return Position = other.Position AndAlso State = other.State
     End Function
 End Class
-
-

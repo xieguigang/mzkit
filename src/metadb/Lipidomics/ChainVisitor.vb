@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2d95a9ed4b16085d56a0e41cc4e61314, G:/mzkit/src/metadb/Lipidomics//ChainVisitor.vb"
+﻿#Region "Microsoft.VisualBasic::b8d7b74371719b763380f66cfec84526, G:/mzkit/src/metadb/Lipidomics//ChainVisitor.vb"
 
     ' Author:
     ' 
@@ -153,4 +153,3 @@ Friend NotInheritable Class SphingosineChainVisitor
     End Function
 
 End Class
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6d004b17bc7690af452da19b0c811a52, G:/mzkit/src/metadb/Chemoinformatics//CASNumber.vb"
+﻿#Region "Microsoft.VisualBasic::a6400a4614e00fc2d4690b5c9f9eb646, G:/mzkit/src/metadb/Chemoinformatics//CASNumber.vb"
 
     ' Author:
     ' 
@@ -95,4 +95,3 @@ Public Class CASNumber
         Return code = code2
     End Function
 End Class
-

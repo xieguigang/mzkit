@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ec5036028d60fd7c97d7ab65f0af0cce, G:/mzkit/src/metadb/Lipidomics//EidDefaultCharacterization.vb"
+﻿#Region "Microsoft.VisualBasic::3b8acbf706d0384426e6ff34ff9f1264, G:/mzkit/src/metadb/Lipidomics//EidDefaultCharacterization.vb"
 
     ' Author:
     ' 
@@ -37,10 +37,10 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 46
+    '   Total Lines: 45
     '    Code Lines: 30
     ' Comment Lines: 0
-    '   Blank Lines: 16
+    '   Blank Lines: 15
     '     File Size: 3.00 KB
 
 
@@ -49,7 +49,6 @@
     '     Constructor: (+1 Overloads) Sub New
     '     Function: Characterize4AlkylAcylGlycerols, Characterize4Ceramides, Characterize4DiacylGlycerols, Characterize4MonoacylGlycerols, Characterize4SingleAcylChain
     '               Characterize4TriacylGlycerols
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -100,5 +99,3 @@ Public NotInheritable Class EidDefaultCharacterization
         Return GetDefaultCharacterizationResultForTriacylGlycerols(molecule, defaultResult)
     End Function
 End Class
-
-

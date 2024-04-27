@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::202107cb49d4dc98d5c8b4eae0ffd73b, G:/mzkit/src/metadb/Lipidomics//Annotation/Lipidomics.vb"
+﻿#Region "Microsoft.VisualBasic::50f0e5d7a5ba9a7fb690a76174492a43, G:/mzkit/src/metadb/Lipidomics//Annotation/Lipidomics.vb"
 
     ' Author:
     ' 
@@ -37,10 +37,10 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 693
+    '   Total Lines: 692
     '    Code Lines: 560
     ' Comment Lines: 56
-    '   Blank Lines: 77
+    '   Blank Lines: 76
     '     File Size: 52.96 KB
 
 
@@ -63,7 +63,6 @@
     ' 
     '     Constructor: (+1 Overloads) Sub New
     '     Function: getLipidClassEnum, ReadLibrary
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -761,5 +760,3 @@ Public NotInheritable Class LipidLibraryParser
         Return LbmClass.Undefined
     End Function
 End Class
-
-

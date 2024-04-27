@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8f41911f8fc28dedfef240a7c59d39bc, G:/mzkit/src/metadb/Lipidomics//NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::8c25da2b1e2582c47c52b92168e9a7dd, G:/mzkit/src/metadb/Lipidomics//NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 2
     ' Comment Lines: 0
     '   Blank Lines: 1
-    '     File Size: 40 B
+    '     File Size: 38 B
 
 
     ' Class NamespaceDoc
@@ -55,4 +55,3 @@
 Public Class NamespaceDoc
 
 End Class
-

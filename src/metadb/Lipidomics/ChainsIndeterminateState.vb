@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::71977add8df089f53fa22da315491caf, G:/mzkit/src/metadb/Lipidomics//ChainsIndeterminateState.vb"
+﻿#Region "Microsoft.VisualBasic::c0418aff9e111d4ab888d3ffd84ca816, G:/mzkit/src/metadb/Lipidomics//ChainsIndeterminateState.vb"
 
     ' Author:
     ' 
@@ -177,4 +177,3 @@ Public NotInheritable Class ChainsIndeterminateState
         End Function
     End Class
 End Class
-

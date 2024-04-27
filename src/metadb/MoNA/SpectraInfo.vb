@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6910c9432f8bbde6d850a19945b86eff, G:/mzkit/src/metadb/MoNA//SpectraInfo.vb"
+﻿#Region "Microsoft.VisualBasic::d0ada6fdef3178d6b2be9b08d8a6c662, G:/mzkit/src/metadb/MoNA//SpectraInfo.vb"
 
     ' Author:
     ' 
@@ -123,4 +123,3 @@ Public Class SpectraInfo
         }
     End Function
 End Class
-

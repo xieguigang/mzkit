@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7ce35bc00bd4ede45364c34d1cea68ac, G:/mzkit/src/metadb/Lipidomics//Annotation/LipidAnnotationLevelConverter.vb"
+﻿#Region "Microsoft.VisualBasic::a7d73a99e921345412c4d75a0d2ffa37, G:/mzkit/src/metadb/Lipidomics//Annotation/LipidAnnotationLevelConverter.vb"
 
     ' Author:
     ' 
@@ -100,4 +100,3 @@ Friend NotInheritable Class LipidAnnotationLevelConverter
         Return New Lipid(item.LipidClass, item.Mass, converted)
     End Function
 End Class
-

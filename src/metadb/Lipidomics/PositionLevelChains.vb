@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::410388c63acd3c0b585dfc69f4dcb7ce, G:/mzkit/src/metadb/Lipidomics//PositionLevelChains.vb"
+﻿#Region "Microsoft.VisualBasic::75691394c62cf75c18a9daec79277d48, G:/mzkit/src/metadb/Lipidomics//PositionLevelChains.vb"
 
     ' Author:
     ' 
@@ -37,10 +37,10 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 54
+    '   Total Lines: 53
     '    Code Lines: 43
     ' Comment Lines: 0
-    '   Blank Lines: 11
+    '   Blank Lines: 10
     '     File Size: 2.60 KB
 
 
@@ -49,7 +49,6 @@
     '     Constructor: (+1 Overloads) Sub New
     '     Function: Accept, Equals, GetCandidateSets, GetChainByPosition, Includes
     '               ToString
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -108,5 +107,3 @@ Public Class PositionLevelChains : Inherits SeparatedChains
     End Function
 
 End Class
-
-

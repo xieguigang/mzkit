@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cf589b74d2392d404734c9f35ff9a126, G:/mzkit/src/metadb/Lipidomics//LipidParser/HexCerLipidParser.vb"
+﻿#Region "Microsoft.VisualBasic::fd0b7985cca300af860753f347830e74, G:/mzkit/src/metadb/Lipidomics//LipidParser/HexCerLipidParser.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 70
+    '   Total Lines: 69
     '    Code Lines: 64
     ' Comment Lines: 0
-    '   Blank Lines: 6
-    '     File Size: 3.26 KB
+    '   Blank Lines: 5
+    '     File Size: 3.25 KB
 
 
     ' Class HexCerLipidParser
@@ -49,7 +49,6 @@
     '     Properties: Target
     ' 
     '     Function: Parse
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -124,5 +123,3 @@ Public Class HexCerLipidParser
         Return Nothing
     End Function
 End Class
-
-

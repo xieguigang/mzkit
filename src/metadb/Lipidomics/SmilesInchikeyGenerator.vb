@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7c68af70365c4db120c420f1dccc88a9, G:/mzkit/src/metadb/Lipidomics//SmilesInchikeyGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::4b4e482f135b1483943e8739349a4643, G:/mzkit/src/metadb/Lipidomics//SmilesInchikeyGenerator.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 244
+    '   Total Lines: 243
     '    Code Lines: 191
     ' Comment Lines: 36
-    '   Blank Lines: 17
-    '     File Size: 17.43 KB
+    '   Blank Lines: 16
+    '     File Size: 17.42 KB
 
 
     ' Class SmilesInchikeyGenerator
@@ -57,7 +57,6 @@
     ' Class SmilesLipidHeader
     ' 
     '     Constructor: (+1 Overloads) Sub New
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -306,5 +305,3 @@ Public NotInheritable Class SmilesLipidHeader
     {"STSPHex", "CCC(C=CC(C)C1CCC2C3CC=C4CC(CCC4(C)C3CCC12C)OC1OC(COP(O)(=O)OCC(CO%10)O%20)C(O)C(O)C1O)C(C)C."}'bacterial lipid'{"Ac2PIM1", "OCC1OC(OC2C(O)C(O)C(O)C(O)C2OP(O)(=O)OCC(O%10)C(O%20))C(O)C(O)C1O."},'{"Ac2PIM2", "OCC1OC(OC2C(O)C(O)C(O)C(OC3OC(CO)C(O)C(O)C3O)C2OP(O)(=O)OCC(O%10)C(O%20))C(O)C(O)C1O."},'{"Ac3PIM2", "OCC1OC(OC2C(O)C(O)C(O)C(OC3OC(C(O%30))C(O)C(O)C3O)C2OP(O)(=O)OCC(O%10)C(O%20))C(O)C(O)C1O."},'{"Ac4PIM2", "OCC1OC(OC2C(O)C(O)C(O%40)C(OC3OC(C(O%30))C(O)C(O)C3O)C2OP(O)(=O)OCC(O%10)C(O%20))C(O)C(O)C1O."},'{"LipidA", "OCC1O[C@@H](OCC2O[C@H](OP(O)(O)=O)C(N%10)[C@@H](O%20)[C@@H]2O)C(N%30)[C@@H](O%40)[C@@H]1OP(O)(O)=O."},
 }
 End Class
-
-

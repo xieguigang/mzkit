@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b806cbd831f02211cced7b577405a233, G:/mzkit/src/metadb/Lipidomics//MsCharacterization/SMEadMsCharacterization.vb"
+﻿#Region "Microsoft.VisualBasic::705270009df3b52919e274ce7015c3f9, G:/mzkit/src/metadb/Lipidomics//MsCharacterization/SMEadMsCharacterization.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 8
     ' Comment Lines: 0
     '   Blank Lines: 2
-    '     File Size: 585 B
+    '     File Size: 583 B
 
 
     ' Module SMEadMsCharacterization
@@ -62,4 +62,3 @@ Public Module SMEadMsCharacterization
         Return GetDefaultCharacterizationResultForCeramides(molecule, defaultResult)
     End Function
 End Module
-

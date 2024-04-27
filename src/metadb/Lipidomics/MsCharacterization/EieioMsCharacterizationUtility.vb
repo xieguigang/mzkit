@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1829bf35cafc02de8412de08ef3bdd55, G:/mzkit/src/metadb/Lipidomics//MsCharacterization/EieioMsCharacterizationUtility.vb"
+﻿#Region "Microsoft.VisualBasic::80fe99de4909ccd978f22e220949afd4, G:/mzkit/src/metadb/Lipidomics//MsCharacterization/EieioMsCharacterizationUtility.vb"
 
     ' Author:
     ' 
@@ -37,10 +37,10 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 400
+    '   Total Lines: 399
     '    Code Lines: 318
     ' Comment Lines: 20
-    '   Blank Lines: 62
+    '   Blank Lines: 61
     '     File Size: 22.45 KB
 
 
@@ -67,7 +67,6 @@
     ' Module EieioMsCharacterizationUtility
     ' 
     '     Function: GetDefaultScore
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -472,5 +471,3 @@ Public Module EieioMsCharacterizationUtility
     End Function
 
 End Module
-
-

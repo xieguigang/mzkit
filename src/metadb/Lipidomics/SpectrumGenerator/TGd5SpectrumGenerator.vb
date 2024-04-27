@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6b34856a26635da411f1eef4bfb0c9e7, G:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/TGd5SpectrumGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::ecc82100fb83b14ef92826176762ebaa, G:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/TGd5SpectrumGenerator.vb"
 
     ' Author:
     ' 
@@ -222,4 +222,3 @@ New SpectrumPeak(adduct.ConvertToMz(lipid.Mass), 999.0R, "Precursor") With {
     End Function
     Private Shared ReadOnly comparer As IEqualityComparer(Of SpectrumPeak) = New SpectrumEqualityComparer()
 End Class
-

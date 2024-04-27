@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::da96cc2b0757087516c3557a8cb60205, G:/mzkit/src/metadb/Lipidomics//IDoubleBond.vb"
+﻿#Region "Microsoft.VisualBasic::621cb9ffd07f5a553958d807fadff17e, G:/mzkit/src/metadb/Lipidomics//IDoubleBond.vb"
 
     ' Author:
     ' 
@@ -37,10 +37,10 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 102
+    '   Total Lines: 101
     '    Code Lines: 75
     ' Comment Lines: 0
-    '   Blank Lines: 27
+    '   Blank Lines: 26
     '     File Size: 4.29 KB
 
 
@@ -57,7 +57,6 @@
     '     Constructor: (+4 Overloads) Sub New
     '     Function: Accept, Add, CreateFromPosition, Decide, Equals
     '               Includes, Indeterminate, ToString
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -164,5 +163,3 @@ Public NotInheritable Class DoubleBond
     End Function
 
 End Class
-
-

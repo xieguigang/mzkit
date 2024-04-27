@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ea9ee3c1086e90bff1f6e74d8ddc577e, G:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/EidSpecificSpectrumGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::9203c4c62e3ab076c5513c6e8bae711b, G:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/EidSpecificSpectrumGenerator.vb"
 
     ' Author:
     ' 
@@ -37,17 +37,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 83
+    '   Total Lines: 82
     '    Code Lines: 79
     ' Comment Lines: 0
-    '   Blank Lines: 4
+    '   Blank Lines: 3
     '     File Size: 5.20 KB
 
 
     ' Class EidSpecificSpectrumGenerator
     ' 
     '     Function: EidSpecificSpectrumGen
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -135,5 +134,3 @@ Public Class EidSpecificSpectrumGenerator
             Return peaks.ToArray()
         End Function
     End Class
-
-

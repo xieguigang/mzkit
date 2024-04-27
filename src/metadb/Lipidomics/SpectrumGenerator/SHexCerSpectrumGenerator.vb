@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1bc3d5098205631bb02e236816783749, G:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/SHexCerSpectrumGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::82a9203b4b8b70d1d29fe046b081318b, G:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/SHexCerSpectrumGenerator.vb"
 
     ' Author:
     ' 
@@ -37,10 +37,10 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 161
+    '   Total Lines: 160
     '    Code Lines: 145
     ' Comment Lines: 2
-    '   Blank Lines: 14
+    '   Blank Lines: 13
     '     File Size: 9.32 KB
 
 
@@ -49,7 +49,6 @@
     '     Constructor: (+2 Overloads) Sub New
     '     Function: CanGenerate, CreateReference, Generate, GetAcylSpectrum, GetSHexCerSpectrum
     '               GetSphingoSpectrum
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -215,5 +214,3 @@ New SpectrumPeak(adduct.ConvertToMz(lipid.Mass - SO3 - H2O), 200.0R, "[M-H2SO4+H
     Private Shared ReadOnly comparer As IEqualityComparer(Of SpectrumPeak) = New SpectrumEqualityComparer()
 
 End Class
-
-

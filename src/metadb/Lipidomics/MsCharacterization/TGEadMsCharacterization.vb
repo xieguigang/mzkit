@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8cc7cb0e6e874854c36a42a10920347e, G:/mzkit/src/metadb/Lipidomics//MsCharacterization/TGEadMsCharacterization.vb"
+﻿#Region "Microsoft.VisualBasic::7096fe1c2ba63244c56529ded926fca2, G:/mzkit/src/metadb/Lipidomics//MsCharacterization/TGEadMsCharacterization.vb"
 
     ' Author:
     ' 
@@ -88,4 +88,3 @@ Public Module TGEadMsCharacterization
         Return a.CarbonCount = b.CarbonCount AndAlso a.DoubleBond Is b.DoubleBond
     End Function
 End Module
-

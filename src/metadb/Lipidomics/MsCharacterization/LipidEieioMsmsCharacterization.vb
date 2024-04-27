@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::32a89563def079f122d663f27f732108, G:/mzkit/src/metadb/Lipidomics//MsCharacterization/LipidEieioMsmsCharacterization.vb"
+﻿#Region "Microsoft.VisualBasic::b0a4559dc2befb5b0fe8622d843b7c20, G:/mzkit/src/metadb/Lipidomics//MsCharacterization/LipidEieioMsmsCharacterization.vb"
 
     ' Author:
     ' 
@@ -37,10 +37,10 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 3571
+    '   Total Lines: 3570
     '    Code Lines: 2945
     ' Comment Lines: 244
-    '   Blank Lines: 382
+    '   Blank Lines: 381
     '     File Size: 227.38 KB
 
 
@@ -56,7 +56,6 @@
     '               JudgeIfPhosphatidylglycerol, JudgeIfPhosphatidylglycerolD5, JudgeIfPhosphatidylinositol, JudgeIfPhosphatidylinositolD5, JudgeIfPhosphatidylserine
     '               JudgeIfPhosphatidylserineD5, JudgeIfPicermide, JudgeIfShexcer, JudgeIfSphingomyelin, JudgeIfSphingomyelinD9
     '               JudgeIfSphingosine, JudgeIfTriacylglycerolD5, setSnPositionAtTwoChains
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -3632,5 +3631,3 @@ New SpectrumPeak() With {
     End Function
 
 End Class
-
-

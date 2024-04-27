@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7dd2dd2f64464823aa4b69a9983a95ed, G:/mzkit/src/metadb/Lipidomics//ChainsVisitor.vb"
+﻿#Region "Microsoft.VisualBasic::31a09ef16c4c82057a758a4969f5f0e1, G:/mzkit/src/metadb/Lipidomics//ChainsVisitor.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 13
     ' Comment Lines: 0
     '   Blank Lines: 2
-    '     File Size: 765 B
+    '     File Size: 763 B
 
 
     ' Class ChainsVisitor
@@ -68,4 +68,3 @@ Friend NotInheritable Class ChainsVisitor
         Return converted.Accept(_chainVisitor, New ChainsDecomposer())
     End Function
 End Class
-

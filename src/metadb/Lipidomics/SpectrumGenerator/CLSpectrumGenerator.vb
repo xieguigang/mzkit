@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f5192594689b3361c76b7a7039e304bd, G:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/CLSpectrumGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::e30475eb5021082052355a2292f9337c, G:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/CLSpectrumGenerator.vb"
 
     ' Author:
     ' 
@@ -224,4 +224,3 @@ New SpectrumPeak(lipidMass - nlMass - chainMass - CH2, 20.0R, "-CH2(Sn1)") With 
     Private Shared ReadOnly comparer As IEqualityComparer(Of SpectrumPeak) = New SpectrumEqualityComparer()
 
 End Class
-

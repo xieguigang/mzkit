@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1da51aad215410c8889d75323aab73ca, G:/mzkit/src/metadb/Lipidomics//SpectrumGeneratorUtility.vb"
+﻿#Region "Microsoft.VisualBasic::441a3c18e70bfde5e9b1ca84d438338e, G:/mzkit/src/metadb/Lipidomics//SpectrumGeneratorUtility.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 54
     ' Comment Lines: 0
     '   Blank Lines: 11
-    '     File Size: 3.11 KB
+    '     File Size: 3.10 KB
 
 
     ' Module SpectrumGeneratorUtility
@@ -117,4 +117,3 @@ Public Module SpectrumGeneratorUtility
         Return peaks
     End Function
 End Module
-

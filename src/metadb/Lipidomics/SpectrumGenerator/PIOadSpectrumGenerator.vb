@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b2f6d5c672f437d111d36e2fc1a10600, G:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/PIOadSpectrumGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::944960395d485b229002294008e21473, G:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/PIOadSpectrumGenerator.vb"
 
     ' Author:
     ' 
@@ -37,10 +37,10 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 140
+    '   Total Lines: 139
     '    Code Lines: 102
     ' Comment Lines: 22
-    '   Blank Lines: 16
+    '   Blank Lines: 15
     '     File Size: 6.93 KB
 
 
@@ -48,7 +48,6 @@
     ' 
     '     Constructor: (+2 Overloads) Sub New
     '     Function: CanGenerate, CreateReference, Generate, GetPIOadSpectrum
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -193,5 +192,3 @@ Public Class PIOadSpectrumGenerator
 
 
 End Class
-
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::22e1bb11803591c086081b34dbf81910, G:/mzkit/src/metadb/Lipidomics//ChainVisitorBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::59ed6756cb09da450204681ce41930b3, G:/mzkit/src/metadb/Lipidomics//ChainVisitorBuilder.vb"
 
     ' Author:
     ' 
@@ -37,10 +37,10 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 38
+    '   Total Lines: 37
     '    Code Lines: 31
     ' Comment Lines: 0
-    '   Blank Lines: 7
+    '   Blank Lines: 6
     '     File Size: 2.05 KB
 
 
@@ -54,7 +54,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Friend NotInheritable Class ChainVisitorBuilder
     Implements ILipidomicsVisitorBuilder
@@ -93,4 +92,3 @@ Friend NotInheritable Class ChainVisitorBuilder
     End Sub
 
 End Class
-

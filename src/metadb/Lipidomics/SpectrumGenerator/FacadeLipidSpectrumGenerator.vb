@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b7d0dec6b2153641ee1a806a5015675b, G:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/FacadeLipidSpectrumGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::9a9f03782007e85db06ed1ef0ef80a3c, G:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/FacadeLipidSpectrumGenerator.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 189
+    '   Total Lines: 188
     '    Code Lines: 169
     ' Comment Lines: 8
-    '   Blank Lines: 12
-    '     File Size: 12.62 KB
+    '   Blank Lines: 11
+    '     File Size: 12.61 KB
 
 
     ' Class FacadeLipidSpectrumGenerator
@@ -51,7 +51,6 @@
     '     Function: CanGenerate, Generate
     ' 
     '     Sub: Add, Remove
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -245,5 +244,3 @@ Public Class FacadeLipidSpectrumGenerator
         Private Shared eidlipidgeneratorField As ILipidSpectrumGenerator
 
     End Class
-
-

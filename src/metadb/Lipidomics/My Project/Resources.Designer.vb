@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1e9f006d2645a7cc51b0e3d0454fd575, G:/mzkit/src/metadb/Lipidomics//My Project/Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::3f3d63ac1e7dd21ce80817d7413576b1, G:/mzkit/src/metadb/Lipidomics//My Project/Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -175,4 +175,3 @@ Namespace My.Resources
         End Property
     End Module
 End Namespace
-

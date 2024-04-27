@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0fd222f9c925eb03956cea23f2dc9dbe, G:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/EtherPCEidSpectrumGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::bbec300daead99cd3031caef2d018adc, G:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/EtherPCEidSpectrumGenerator.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 147
+    '   Total Lines: 146
     '    Code Lines: 123
     ' Comment Lines: 2
-    '   Blank Lines: 22
-    '     File Size: 7.84 KB
+    '   Blank Lines: 21
+    '     File Size: 7.83 KB
 
 
     ' Class EtherPCEidSpectrumGenerator
@@ -49,7 +49,6 @@
     '     Constructor: (+2 Overloads) Sub New
     '     Function: CanGenerate, CreateReference, EidSpecificSpectrum, Generate, GetEtherPCOSpectrum
     '               GetEtherPCPSpectrum, GetEtherPCSpectrum, GetSn1PositionSpectrum
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -201,5 +200,3 @@ New SpectrumPeak(adduct.ConvertToMz(lipid.Mass) / 2, 200.0R, "[Precursor]2+") Wi
 
 
 End Class
-
-

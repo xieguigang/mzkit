@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3bd8733491f0f1f45387c889961f49c4, G:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/EidDefaultSpectrumGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::248d34b95533ea0bd932dc2b8f93ef77, G:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/EidDefaultSpectrumGenerator.vb"
 
     ' Author:
     ' 
@@ -37,10 +37,10 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 51
+    '   Total Lines: 50
     '    Code Lines: 42
     ' Comment Lines: 0
-    '   Blank Lines: 9
+    '   Blank Lines: 8
     '     File Size: 2.57 KB
 
 
@@ -48,7 +48,6 @@
     ' 
     '     Constructor: (+2 Overloads) Sub New
     '     Function: CanGenerate, CreateReference, Generate
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -104,5 +103,3 @@ Public Class EidDefaultSpectrumGenerator
 
 
 End Class
-
-

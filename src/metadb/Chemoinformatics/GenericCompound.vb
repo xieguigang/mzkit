@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2eef30c212c4678ba37c48b433d36a69, G:/mzkit/src/metadb/Chemoinformatics//GenericCompound.vb"
+﻿#Region "Microsoft.VisualBasic::f6166a789093c1a4e56f568ee1e9d0f7, G:/mzkit/src/metadb/Chemoinformatics//GenericCompound.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 8
     ' Comment Lines: 3
     '   Blank Lines: 2
-    '     File Size: 397 B
+    '     File Size: 395 B
 
 
     ' Interface GenericCompound
@@ -65,4 +65,3 @@ Public Interface GenericCompound
     Inherits IFormulaProvider
 
 End Interface
-

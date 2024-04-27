@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::62f976b83df9bf09395c4b0040b766be, G:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/LDGTSSpectrumGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::79b7845e91f038b1c39bb3e7eb3abb73, G:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/LDGTSSpectrumGenerator.vb"
 
     ' Author:
     ' 
@@ -37,10 +37,10 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 133
+    '   Total Lines: 132
     '    Code Lines: 112
     ' Comment Lines: 0
-    '   Blank Lines: 21
+    '   Blank Lines: 20
     '     File Size: 7.03 KB
 
 
@@ -49,7 +49,6 @@
     '     Constructor: (+2 Overloads) Sub New
     '     Function: CanGenerate, CreateReference, Generate, GetAcylDoubleBondSpectrum, (+2 Overloads) GetAcylLevelSpectrum
     '               GetAcylPositionSpectrum, GetLDGTSSpectrum
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -187,5 +186,3 @@ New SpectrumPeak(adduct.ConvertToMz(C7H13NO2 - CH2 * 2 + HydrogenMass), 200.0R, 
     Private Shared ReadOnly comparer As IEqualityComparer(Of SpectrumPeak) = New SpectrumEqualityComparer()
 
 End Class
-
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a0827685ebb28eb84484aa0609a7a710, G:/mzkit/src/metadb/Lipidomics//MsCharacterization/HBMPEadMsCharacterization.vb"
+﻿#Region "Microsoft.VisualBasic::9078339882583095ecb8cda8d472305f, G:/mzkit/src/metadb/Lipidomics//MsCharacterization/HBMPEadMsCharacterization.vb"
 
     ' Author:
     ' 
@@ -37,17 +37,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 16
+    '   Total Lines: 15
     '    Code Lines: 11
     ' Comment Lines: 0
-    '   Blank Lines: 5
-    '     File Size: 750 B
+    '   Blank Lines: 4
+    '     File Size: 746 B
 
 
     ' Module HBMPEadMsCharacterization
     ' 
     '     Function: Characterize
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -68,5 +67,3 @@ Public Module HBMPEadMsCharacterization
             Return GetDefaultCharacterizationResultForTriacylGlycerols(molecule, defaultResult)
         End Function
     End Module
-
-

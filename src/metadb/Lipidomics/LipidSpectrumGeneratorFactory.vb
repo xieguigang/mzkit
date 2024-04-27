@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7d1fef2010bf5484a2350ce2c6cbbf39, G:/mzkit/src/metadb/Lipidomics//LipidSpectrumGeneratorFactory.vb"
+﻿#Region "Microsoft.VisualBasic::b25a6a37d6611e0299d8c3e6cf83394c, G:/mzkit/src/metadb/Lipidomics//LipidSpectrumGeneratorFactory.vb"
 
     ' Author:
     ' 
@@ -37,10 +37,10 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 228
+    '   Total Lines: 227
     '    Code Lines: 187
     ' Comment Lines: 0
-    '   Blank Lines: 41
+    '   Blank Lines: 40
     '     File Size: 8.83 KB
 
 
@@ -116,7 +116,6 @@
     ' 
     '     Constructor: (+1 Overloads) Sub New
     '     Function: Evaluate
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -349,5 +348,3 @@ Public Class MzVariableProxy
         Return cache
     End Function
 End Class
-
-

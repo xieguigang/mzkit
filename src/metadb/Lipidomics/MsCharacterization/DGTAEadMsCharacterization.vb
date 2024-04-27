@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8bbef380f749a56382a4365e002a2266, G:/mzkit/src/metadb/Lipidomics//MsCharacterization/DGTAEadMsCharacterization.vb"
+﻿#Region "Microsoft.VisualBasic::0be60cdbc3a10729855018eb2bdfb7fe, G:/mzkit/src/metadb/Lipidomics//MsCharacterization/DGTAEadMsCharacterization.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 8
     ' Comment Lines: 0
     '   Blank Lines: 3
-    '     File Size: 599 B
+    '     File Size: 597 B
 
 
     ' Module DGTAEadMsCharacterization
@@ -63,4 +63,3 @@ Public Module DGTAEadMsCharacterization
         Return GetDefaultCharacterizationResultForGlycerophospholipid(molecule, defaultResult)
     End Function
 End Module
-

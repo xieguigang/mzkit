@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ec9a45669697f6645ccb090021bbb337, G:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/ILipidSpectrumGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::e312ec24ff1e91d57b7ae39cdf021107, G:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/ILipidSpectrumGenerator.vb"
 
     ' Author:
     ' 
@@ -37,17 +37,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 9
+    '   Total Lines: 8
     '    Code Lines: 7
     ' Comment Lines: 0
-    '   Blank Lines: 2
-    '     File Size: 422 B
+    '   Blank Lines: 1
+    '     File Size: 418 B
 
 
     ' Interface ILipidSpectrumGenerator
     ' 
     '     Function: CanGenerate, Generate
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -61,5 +60,3 @@ Public Interface ILipidSpectrumGenerator
     Function CanGenerate(lipid As ILipid, adduct As AdductIon) As Boolean
     Function Generate(lipid As Lipid, adduct As AdductIon, Optional molecule As IMoleculeProperty = Nothing) As IMSScanProperty
 End Interface
-
-

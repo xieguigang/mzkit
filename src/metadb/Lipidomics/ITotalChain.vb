@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2505ae86750bc2d79066357271a5eb1d, G:/mzkit/src/metadb/Lipidomics//ITotalChain.vb"
+﻿#Region "Microsoft.VisualBasic::173b28b10d4c00117909efae37947f91, G:/mzkit/src/metadb/Lipidomics//ITotalChain.vb"
 
     ' Author:
     ' 
@@ -37,10 +37,10 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 107
+    '   Total Lines: 106
     '    Code Lines: 84
     ' Comment Lines: 13
-    '   Blank Lines: 10
+    '   Blank Lines: 9
     '     File Size: 5.04 KB
 
 
@@ -56,7 +56,6 @@
     '     Function: Deconstruct, GetChains, GetEachChains, GetTypedChains
     ' 
     '     Sub: (+2 Overloads) ApplyToChain
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -168,5 +167,3 @@ Public Module TotalChainExtension
         End If
     End Sub
 End Module
-
-

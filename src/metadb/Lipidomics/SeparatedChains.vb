@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::508c2358c0f96c39072926a216a83e08, G:/mzkit/src/metadb/Lipidomics//SeparatedChains.vb"
+﻿#Region "Microsoft.VisualBasic::8fd9649d59b2d304c63510c3f53f44a1, G:/mzkit/src/metadb/Lipidomics//SeparatedChains.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 198
     ' Comment Lines: 16
     '   Blank Lines: 23
-    '     File Size: 9.69 KB
+    '     File Size: 9.68 KB
 
 
     ' Class SeparatedChains
@@ -306,4 +306,3 @@ Public Class SeparatedChains
     End Class
 
 End Class
-

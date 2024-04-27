@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::29f783dbf4eb31f87ad8408ff47c3dc5, G:/mzkit/src/metadb/Lipidomics//MsCharacterization/MsmsCharacterization.vb"
+﻿#Region "Microsoft.VisualBasic::54843a48703c0e5c57e2c2b87d16029b, G:/mzkit/src/metadb/Lipidomics//MsCharacterization/MsmsCharacterization.vb"
 
     ' Author:
     ' 
@@ -16896,4 +16896,3 @@ New SpectrumPeak() With {
         Return Nothing
     End Function
 End Class
-

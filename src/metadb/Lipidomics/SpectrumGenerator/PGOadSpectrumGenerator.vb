@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f3590b73703fb2aa01f83d68cb720dd8, G:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/PGOadSpectrumGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::f4d02503a2ddd1dc71576343a87c28ee, G:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/PGOadSpectrumGenerator.vb"
 
     ' Author:
     ' 
@@ -37,10 +37,10 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 138
+    '   Total Lines: 137
     '    Code Lines: 98
     ' Comment Lines: 26
-    '   Blank Lines: 14
+    '   Blank Lines: 13
     '     File Size: 6.67 KB
 
 
@@ -48,7 +48,6 @@
     ' 
     '     Constructor: (+2 Overloads) Sub New
     '     Function: CanGenerate, CreateReference, Generate, GetPGOadSpectrum
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -191,5 +190,3 @@ Public Class PGOadSpectrumGenerator
     Private Shared ReadOnly comparer As IEqualityComparer(Of SpectrumPeak) = New SpectrumEqualityComparer()
 
 End Class
-
-

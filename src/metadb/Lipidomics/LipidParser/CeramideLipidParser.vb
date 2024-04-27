@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ce0f35d60e7df4c547c33bde37870484, G:/mzkit/src/metadb/Lipidomics//LipidParser/CeramideLipidParser.vb"
+﻿#Region "Microsoft.VisualBasic::9d599db5f361247ee2d1bc47b9c593af, G:/mzkit/src/metadb/Lipidomics//LipidParser/CeramideLipidParser.vb"
 
     ' Author:
     ' 
@@ -144,4 +144,3 @@ Public Class CeramideLipidParser
         Return Nothing
     End Function
 End Class
-

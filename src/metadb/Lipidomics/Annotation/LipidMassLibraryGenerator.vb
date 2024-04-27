@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fa79761240e44258d2a188270929c291, G:/mzkit/src/metadb/Lipidomics//Annotation/LipidMassLibraryGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::02615ad448df53601c4808544eaa6350, G:/mzkit/src/metadb/Lipidomics//Annotation/LipidMassLibraryGenerator.vb"
 
     ' Author:
     ' 
@@ -37,10 +37,10 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 1207
+    '   Total Lines: 1206
     '    Code Lines: 1070
     ' Comment Lines: 21
-    '   Blank Lines: 116
+    '   Blank Lines: 115
     '     File Size: 90.62 KB
 
 
@@ -76,7 +76,6 @@
     ' Class LipidIon
     ' 
     '     Properties: [class], adduct, lipidname, mz, total_formula
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -1288,5 +1287,3 @@ Public Class LipidIon
     Public Property [class] As LbmClass
 
 End Class
-
-

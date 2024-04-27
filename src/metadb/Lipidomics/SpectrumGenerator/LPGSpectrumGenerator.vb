@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fa9eaedcbec533f83008cf6a124a38ed, G:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/LPGSpectrumGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::e1c6e97bcd928f58e435a1dd15fd36fc, G:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/LPGSpectrumGenerator.vb"
 
     ' Author:
     ' 
@@ -37,10 +37,10 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 164
+    '   Total Lines: 163
     '    Code Lines: 141
     ' Comment Lines: 1
-    '   Blank Lines: 22
+    '   Blank Lines: 21
     '     File Size: 8.95 KB
 
 
@@ -49,7 +49,6 @@
     '     Constructor: (+2 Overloads) Sub New
     '     Function: CanGenerate, CreateReference, Generate, GetAcylDoubleBondSpectrum, (+2 Overloads) GetAcylLevelSpectrum
     '               GetAcylPositionSpectrum, GetLPGSpectrum
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -218,5 +217,3 @@ Public Class LPGSpectrumGenerator
     Private ReadOnly spectrumGenerator As ISpectrumPeakGenerator
 
 End Class
-
-

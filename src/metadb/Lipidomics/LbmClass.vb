@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8f6bcfcef3dafde5786686737a30efb6, G:/mzkit/src/metadb/Lipidomics//LbmClass.vb"
+﻿#Region "Microsoft.VisualBasic::665fe02c2ce591b513d06e8b7cafafa7, G:/mzkit/src/metadb/Lipidomics//LbmClass.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 217
+    '   Total Lines: 216
     '    Code Lines: 206
     ' Comment Lines: 3
-    '   Blank Lines: 8
-    '     File Size: 2.46 KB
+    '   Blank Lines: 7
+    '     File Size: 2.45 KB
 
 
     ' Enum LbmClass
@@ -95,7 +95,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 ''' <summary>
 ''' enumerates the lipid structure class

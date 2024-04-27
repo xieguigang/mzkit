@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::067ca747c03693b1489a00b3e7a6651a, G:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/GM3SpectrumGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::633b159fb45c5de30c5fa75617b4a7a4, G:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/GM3SpectrumGenerator.vb"
 
     ' Author:
     ' 
@@ -37,10 +37,10 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 154
+    '   Total Lines: 153
     '    Code Lines: 139
     ' Comment Lines: 1
-    '   Blank Lines: 14
+    '   Blank Lines: 13
     '     File Size: 8.96 KB
 
 
@@ -49,7 +49,6 @@
     '     Constructor: (+2 Overloads) Sub New
     '     Function: CanGenerate, CreateReference, Generate, GetAcylSpectrum, GetGM3Spectrum
     '               GetSphingoSpectrum
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -208,5 +207,3 @@ New SpectrumPeak(C11H15NO7 + C6H10O5 * 2 + H2O * 2 + C2H3N + adductmass, 300.0R,
     Private Shared ReadOnly comparer As IEqualityComparer(Of SpectrumPeak) = New SpectrumEqualityComparer()
 
 End Class
-
-

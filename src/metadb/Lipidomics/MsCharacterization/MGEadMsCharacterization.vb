@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c06c2257e1b324a1e9dfd59e29e0c969, G:/mzkit/src/metadb/Lipidomics//MsCharacterization/MGEadMsCharacterization.vb"
+﻿#Region "Microsoft.VisualBasic::ccd5931ba4e157e8bcc2623b0a54e71a, G:/mzkit/src/metadb/Lipidomics//MsCharacterization/MGEadMsCharacterization.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 8
     ' Comment Lines: 0
     '   Blank Lines: 2
-    '     File Size: 641 B
+    '     File Size: 639 B
 
 
     ' Class MGEadMsCharacterization
@@ -62,4 +62,3 @@ Friend Class MGEadMsCharacterization
         Return GetDefaultCharacterizationResultForGlycerophospholipid(molecule, defaultResult)
     End Function
 End Class
-

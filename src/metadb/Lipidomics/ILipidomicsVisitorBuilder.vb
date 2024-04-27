@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e513bb36824167427d5f90477f63e6d1, G:/mzkit/src/metadb/Lipidomics//ILipidomicsVisitorBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::dfba23d3a55bac34ed5402665dc241a4, G:/mzkit/src/metadb/Lipidomics//ILipidomicsVisitorBuilder.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 11
+    '   Total Lines: 9
     '    Code Lines: 9
     ' Comment Lines: 0
-    '   Blank Lines: 2
-    '     File Size: 546 B
+    '   Blank Lines: 0
+    '     File Size: 540 B
 
 
     ' Interface ILipidomicsVisitorBuilder
@@ -49,11 +49,9 @@
     '     Sub: SetAcylDoubleBond, SetAcylOxidized, SetAlkylDoubleBond, SetAlkylOxidized, SetChainsState
     '          SetSphingoDoubleBond, SetSphingoOxidized
     ' 
-    ' 
     ' /********************************************************************************/
 
 #End Region
-
 
 Public Interface ILipidomicsVisitorBuilder
         Sub SetChainsState(state As ChainsIndeterminateState)
@@ -64,5 +62,3 @@ Public Interface ILipidomicsVisitorBuilder
         Sub SetSphingoDoubleBond(state As DoubleBondIndeterminateState)
         Sub SetSphingoOxidized(state As OxidizedIndeterminateState)
     End Interface
-
-

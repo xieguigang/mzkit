@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a508e9200239c64d85049d408601ad99, G:/mzkit/src/metadb/Lipidomics//MsCharacterization/DMEDFAEadMsCharacterization.vb"
+﻿#Region "Microsoft.VisualBasic::5acab639f751d37429934c0155d48118, G:/mzkit/src/metadb/Lipidomics//MsCharacterization/DMEDFAEadMsCharacterization.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 8
     ' Comment Lines: 0
     '   Blank Lines: 3
-    '     File Size: 607 B
+    '     File Size: 605 B
 
 
     ' Class DMEDFAEadMsCharacterization
@@ -63,4 +63,3 @@ Friend Class DMEDFAEadMsCharacterization
         Return GetDefaultCharacterizationResultForSingleAcylChainLipid(molecule, defaultResult)
     End Function
 End Class
-

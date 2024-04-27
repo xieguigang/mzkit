@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::df806bd85a6640eeaf53f9337185debf, G:/mzkit/src/metadb/Lipidomics//MsCharacterization/Hex2CerEadMsCharacterization.vb"
+﻿#Region "Microsoft.VisualBasic::ddd6c5fc50e4589e5f1fd98ca59d5374, G:/mzkit/src/metadb/Lipidomics//MsCharacterization/Hex2CerEadMsCharacterization.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 8
     ' Comment Lines: 0
     '   Blank Lines: 2
-    '     File Size: 590 B
+    '     File Size: 588 B
 
 
     ' Module Hex2CerEadMsCharacterization
@@ -62,4 +62,3 @@ Public Module Hex2CerEadMsCharacterization
         Return GetDefaultCharacterizationResultForCeramides(molecule, defaultResult)
     End Function
 End Module
-

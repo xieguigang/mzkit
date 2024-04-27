@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ef5bc72029763d78d616608087da004c, G:/mzkit/src/metadb/Lipidomics//ChainParser/AcylChain.vb"
+﻿#Region "Microsoft.VisualBasic::58e1e1ebed1a68af2d06066ca0ffbce3, G:/mzkit/src/metadb/Lipidomics//ChainParser/AcylChain.vb"
 
     ' Author:
     ' 
@@ -312,4 +312,3 @@ Public Class SphingoChain
         Return TypeOf other Is SphingoChain AndAlso CarbonCount = other.CarbonCount AndAlso DoubleBond.Equals(other.DoubleBond) AndAlso Oxidized.Equals(other.Oxidized)
     End Function
 End Class
-

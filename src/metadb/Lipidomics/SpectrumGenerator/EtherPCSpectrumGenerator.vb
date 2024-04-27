@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fb4b7fb5983169b9a1e559900cacb95d, G:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/EtherPCSpectrumGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::65c94fd85b26e6cee20ed0c27bd8725c, G:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/EtherPCSpectrumGenerator.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 145
+    '   Total Lines: 144
     '    Code Lines: 124
     ' Comment Lines: 0
-    '   Blank Lines: 21
-    '     File Size: 7.77 KB
+    '   Blank Lines: 20
+    '     File Size: 7.76 KB
 
 
     ' Class EtherPCSpectrumGenerator
@@ -49,7 +49,6 @@
     '     Constructor: (+2 Overloads) Sub New
     '     Function: CanGenerate, CreateReference, Generate, GetEtherPCOSpectrum, GetEtherPCPSpectrum
     '               GetEtherPCSpectrum, GetSn1PositionSpectrum
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -199,5 +198,3 @@ New SpectrumPeak(adduct.ConvertToMz(C5H14NO4P), 500.0R, "Header") With {
     Private Shared ReadOnly comparer As IEqualityComparer(Of SpectrumPeak) = New SpectrumEqualityComparer()
 
 End Class
-
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2e2bc7a0f1672060bb414aa82e15115f, G:/mzkit/src/metadb/Lipidomics//SpectrumPeakGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::8bd9107e66f1a9dd7556c2f527c34fdf, G:/mzkit/src/metadb/Lipidomics//SpectrumPeakGenerator.vb"
 
     ' Author:
     ' 
@@ -301,4 +301,3 @@ Public Class SpectrumPeakGenerator
         Return peaks
     End Function
 End Class
-

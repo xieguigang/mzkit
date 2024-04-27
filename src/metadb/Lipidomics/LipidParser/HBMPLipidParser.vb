@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3a9a75d148ccfe0cedfbf004e6292ec1, G:/mzkit/src/metadb/Lipidomics//LipidParser/HBMPLipidParser.vb"
+﻿#Region "Microsoft.VisualBasic::003f650b0949050f347e5f892ef40134, G:/mzkit/src/metadb/Lipidomics//LipidParser/HBMPLipidParser.vb"
 
     ' Author:
     ' 
@@ -90,4 +90,3 @@ Public Class HBMPLipidParser
         Return Nothing
     End Function
 End Class
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4e98181199774612a79041451ffc37dc, G:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/TGOadSpectrumGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::75ba5f63e213b01ec93146657ea780ba, G:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/TGOadSpectrumGenerator.vb"
 
     ' Author:
     ' 
@@ -149,4 +149,3 @@ Public Class TGOadSpectrumGenerator
     Private Shared ReadOnly comparer As IEqualityComparer(Of SpectrumPeak) = New SpectrumEqualityComparer()
 
 End Class
-

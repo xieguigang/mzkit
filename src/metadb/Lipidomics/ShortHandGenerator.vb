@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::adc54be5efd001b9b996e82d7838f586, G:/mzkit/src/metadb/Lipidomics//ShortHandGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::de0b0002e844e2a7a7b12a2bb1d7eff4, G:/mzkit/src/metadb/Lipidomics//ShortHandGenerator.vb"
 
     ' Author:
     ' 
@@ -37,17 +37,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 19
+    '   Total Lines: 18
     '    Code Lines: 15
     ' Comment Lines: 0
-    '   Blank Lines: 4
-    '     File Size: 848 B
+    '   Blank Lines: 3
+    '     File Size: 844 B
 
 
     ' Class ShortHandGenerator
     ' 
     '     Function: [Short], Permutate, Product, Separate
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -71,5 +70,3 @@ Public Class ShortHandGenerator
         Yield chain
     End Function
 End Class
-
-

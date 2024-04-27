@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e70a81f2530486d0a50b286c5b7f9087, G:/mzkit/src/metadb/Lipidomics//Annotation/LipidomicsConverter.vb"
+﻿#Region "Microsoft.VisualBasic::1adc550849d8e94bdb67df9193fec692, G:/mzkit/src/metadb/Lipidomics//Annotation/LipidomicsConverter.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 5507
+    '   Total Lines: 5506
     '    Code Lines: 1791
     ' Comment Lines: 3288
-    '   Blank Lines: 428
-    '     File Size: 219.34 KB
+    '   Blank Lines: 427
+    '     File Size: 219.33 KB
 
 
     ' Module LipidomicsConverter
@@ -51,7 +51,6 @@
     ' 
     '     Sub: RetrieveSterolHeaderChainStrings, SetBasicMoleculerProperties, setChainPropertiesVS2, (+2 Overloads) SetCoqMolecule, setDiAcylChainProperty
     '          (+2 Overloads) SetLipidAcylChainProperties, setMonoAcylChainProperty, (+2 Overloads) SetSingleLipidStructure, setTetraAcylChainProperty, setTriAcylChainProperty
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -5563,5 +5562,3 @@ Public Module LipidomicsConverter
         End Select
     End Function
 End Module
-
-

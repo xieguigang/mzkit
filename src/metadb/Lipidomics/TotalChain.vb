@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::99f7956b402baa926a9def9419a361a9, G:/mzkit/src/metadb/Lipidomics//TotalChain.vb"
+﻿#Region "Microsoft.VisualBasic::487fd2d1882a6f3d0ab8dc0579ced4de, G:/mzkit/src/metadb/Lipidomics//TotalChain.vb"
 
     ' Author:
     ' 
@@ -166,4 +166,3 @@ Public Class TotalChain : Implements ITotalChain
     End Function
 
 End Class
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8d138318a5065e1100513e2dac8a972c, G:/mzkit/src/metadb/Lipidomics//LipidConverterBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::9ff2c74880acc24cc5793d67a92965a6, G:/mzkit/src/metadb/Lipidomics//LipidConverterBuilder.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 45
+    '   Total Lines: 43
     '    Code Lines: 35
     ' Comment Lines: 0
-    '   Blank Lines: 10
-    '     File Size: 2.37 KB
+    '   Blank Lines: 8
+    '     File Size: 2.36 KB
 
 
     ' Class LipidConverterBuilder
@@ -51,11 +51,9 @@
     '     Sub: SetAcylDoubleBond, SetAcylOxidized, SetAlkylDoubleBond, SetAlkylOxidized, SetChainsState
     '          SetSphingoDoubleBond, SetSphingoOxidized
     ' 
-    ' 
     ' /********************************************************************************/
 
 #End Region
-
 
 Friend NotInheritable Class LipidConverterBuilder
     Implements ILipidomicsVisitorBuilder
@@ -100,5 +98,3 @@ Friend NotInheritable Class LipidConverterBuilder
         _sphingosineOxidizedState = state
     End Sub
 End Class
-
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c3f96f877dfb5ab154bcfa4461e42465, G:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/HexCerSpectrumGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::48db0019795420f5acbcd76974e67f3f, G:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/HexCerSpectrumGenerator.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 160
+    '   Total Lines: 159
     '    Code Lines: 149
     ' Comment Lines: 0
-    '   Blank Lines: 11
-    '     File Size: 9.11 KB
+    '   Blank Lines: 10
+    '     File Size: 9.10 KB
 
 
     ' Class HexCerSpectrumGenerator
@@ -49,7 +49,6 @@
     '     Constructor: (+2 Overloads) Sub New
     '     Function: CanGenerate, CreateReference, Generate, GetAcylSpectrum, GetHexCerNSSpectrum
     '               GetSphingoSpectrum
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -214,5 +213,3 @@ Public Class HexCerSpectrumGenerator
     Private Shared ReadOnly comparer As IEqualityComparer(Of SpectrumPeak) = New SpectrumEqualityComparer()
 
 End Class
-
-

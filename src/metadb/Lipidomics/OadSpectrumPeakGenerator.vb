@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ee0fe3f52900fac80a9dbe869cf2d85d, G:/mzkit/src/metadb/Lipidomics//OadSpectrumPeakGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::a6e5d7fc456df98c814cf7605b896efe, G:/mzkit/src/metadb/Lipidomics//OadSpectrumPeakGenerator.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 365
+    '   Total Lines: 364
     '    Code Lines: 243
     ' Comment Lines: 97
-    '   Blank Lines: 25
-    '     File Size: 24.58 KB
+    '   Blank Lines: 24
+    '     File Size: 24.57 KB
 
 
     ' Class OadSpectrumPeakGenerator
@@ -52,7 +52,6 @@
     ' Class OadFragmentPeaks
     ' 
     '     Properties: OadId, spectrum
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -422,5 +421,3 @@ Public Class OadFragmentPeaks
     Public Property OadId As String
     Public Property spectrum As SpectrumPeak
 End Class
-
-

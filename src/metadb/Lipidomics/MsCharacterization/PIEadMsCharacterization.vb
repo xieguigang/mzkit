@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4ce9a8fc81f3a98e6669d4d51e799849, G:/mzkit/src/metadb/Lipidomics//MsCharacterization/PIEadMsCharacterization.vb"
+﻿#Region "Microsoft.VisualBasic::7842d8f3251818da484f72606fffe7c8, G:/mzkit/src/metadb/Lipidomics//MsCharacterization/PIEadMsCharacterization.vb"
 
     ' Author:
     ' 
@@ -37,17 +37,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 26
+    '   Total Lines: 25
     '    Code Lines: 21
     ' Comment Lines: 0
-    '   Blank Lines: 5
+    '   Blank Lines: 4
     '     File Size: 1.25 KB
 
 
     ' Module PIEadMsCharacterization
     ' 
     '     Function: Characterize
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -78,5 +77,3 @@ Public Module PIEadMsCharacterization
             Return GetDefaultCharacterizationResultForGlycerophospholipid(molecule, defaultResult)
         End Function
     End Module
-
-

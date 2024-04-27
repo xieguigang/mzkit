@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e335a84695369a4e027df092b5c6a7a5, G:/mzkit/src/metadb/Lipidomics//Annotation/LipidAnnotation.vb"
+﻿#Region "Microsoft.VisualBasic::2c73ac6e27ffd6dc72411c0fb7b78260, G:/mzkit/src/metadb/Lipidomics//Annotation/LipidAnnotation.vb"
 
     ' Author:
     ' 
@@ -37,10 +37,10 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 26
+    '   Total Lines: 25
     '    Code Lines: 23
     ' Comment Lines: 0
-    '   Blank Lines: 3
+    '   Blank Lines: 2
     '     File Size: 1.17 KB
 
 
@@ -50,7 +50,6 @@
     '                 IonMode, LipidClass, LipidSuperClass, Mz, Name
     '                 Rt, Smiles, Sn1AcylChain, Sn2AcylChain, Sn3AcylChain
     '                 Sn4AcylChain, SpotID, StandardDeviation, TotalChain
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -81,5 +80,3 @@ Public Class LipoqualityAnnotation
     Public Property Formula As String = String.Empty
     Public Property Intensities As List(Of Double) = New List(Of Double)()
 End Class
-
-

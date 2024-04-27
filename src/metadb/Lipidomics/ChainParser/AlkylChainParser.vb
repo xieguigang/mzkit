@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c7be0b1420c56f48181f498674afca14, G:/mzkit/src/metadb/Lipidomics//ChainParser/AlkylChainParser.vb"
+﻿#Region "Microsoft.VisualBasic::92b11762819af8ac468fb4b6acd2a9bc, G:/mzkit/src/metadb/Lipidomics//ChainParser/AlkylChainParser.vb"
 
     ' Author:
     ' 
@@ -123,4 +123,3 @@ Public Class AlkylChainParser
         Return New Oxidized(0)
     End Function
 End Class
-

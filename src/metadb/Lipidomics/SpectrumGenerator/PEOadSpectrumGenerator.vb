@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5e943999351d2e2b4cdb97bacce65f37, G:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/PEOadSpectrumGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::2c8cc366e516faa0d670f4d70b2e96a1, G:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/PEOadSpectrumGenerator.vb"
 
     ' Author:
     ' 
@@ -37,10 +37,10 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 155
+    '   Total Lines: 154
     '    Code Lines: 114
     ' Comment Lines: 24
-    '   Blank Lines: 17
+    '   Blank Lines: 16
     '     File Size: 7.59 KB
 
 
@@ -48,7 +48,6 @@
     ' 
     '     Constructor: (+2 Overloads) Sub New
     '     Function: CanGenerate, CreateReference, Generate, GetPEOadSpectrum
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -208,5 +207,3 @@ Public Class PEOadSpectrumGenerator
     Private Shared ReadOnly comparer As IEqualityComparer(Of SpectrumPeak) = New SpectrumEqualityComparer()
 
 End Class
-
-

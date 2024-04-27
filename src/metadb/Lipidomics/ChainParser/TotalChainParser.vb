@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a417f4663db36358c3ed406b57364d47, G:/mzkit/src/metadb/Lipidomics//ChainParser/TotalChainParser.vb"
+﻿#Region "Microsoft.VisualBasic::c2aafd2b35a8adebbf19faaa2fbd291b, G:/mzkit/src/metadb/Lipidomics//ChainParser/TotalChainParser.vb"
 
     ' Author:
     ' 
@@ -189,4 +189,3 @@ Public Class TotalChainParser
     End Function
 
 End Class
-

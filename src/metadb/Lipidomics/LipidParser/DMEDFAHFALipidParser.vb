@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d1b2f0fa8267f1ef1da023b89d95d282, G:/mzkit/src/metadb/Lipidomics//LipidParser/DMEDFAHFALipidParser.vb"
+﻿#Region "Microsoft.VisualBasic::611a3bba9e3de99138908c0750f4e5c2, G:/mzkit/src/metadb/Lipidomics//LipidParser/DMEDFAHFALipidParser.vb"
 
     ' Author:
     ' 
@@ -37,10 +37,10 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 22
+    '   Total Lines: 21
     '    Code Lines: 19
     ' Comment Lines: 0
-    '   Blank Lines: 3
+    '   Blank Lines: 2
     '     File Size: 1.15 KB
 
 
@@ -49,7 +49,6 @@
     '     Properties: Target
     ' 
     '     Function: Parse
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -76,5 +75,3 @@ Public Class DMEDFAHFALipidParser
             Return Nothing
         End Function
     End Class
-
-

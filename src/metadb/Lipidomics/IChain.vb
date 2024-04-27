@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bf74a98f2f646b5ae625b9a8091013d7, G:/mzkit/src/metadb/Lipidomics//IChain.vb"
+﻿#Region "Microsoft.VisualBasic::25be272405b8121a8bc4e12b9fe6452b, G:/mzkit/src/metadb/Lipidomics//IChain.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 13
+    '   Total Lines: 12
     '    Code Lines: 11
     ' Comment Lines: 0
-    '   Blank Lines: 2
-    '     File Size: 510 B
+    '   Blank Lines: 1
+    '     File Size: 506 B
 
 
     ' Interface IChain
@@ -50,7 +50,6 @@
     '                 OxidizedCount
     ' 
     '     Function: GetCandidates, Includes
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -68,5 +67,3 @@ Public Interface IChain
     Function Includes(chain As IChain) As Boolean
     Function GetCandidates(generator As IChainGenerator) As IEnumerable(Of IChain)
 End Interface
-
-

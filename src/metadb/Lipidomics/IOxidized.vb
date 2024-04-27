@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4c00adcdfd1dd71788c48cbc8321f7b4, G:/mzkit/src/metadb/Lipidomics//IOxidized.vb"
+﻿#Region "Microsoft.VisualBasic::e050bcc7f2cad2382428bbf457460c1d, G:/mzkit/src/metadb/Lipidomics//IOxidized.vb"
 
     ' Author:
     ' 
@@ -37,10 +37,10 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 79
+    '   Total Lines: 78
     '    Code Lines: 59
     ' Comment Lines: 2
-    '   Blank Lines: 18
+    '   Blank Lines: 17
     '     File Size: 3.11 KB
 
 
@@ -56,7 +56,6 @@
     ' 
     '     Constructor: (+2 Overloads) Sub New
     '     Function: Accept, CreateFromPosition, Equals, Includes, ToString
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -140,5 +139,3 @@ Public NotInheritable Class Oxidized
     End Function
 
 End Class
-
-

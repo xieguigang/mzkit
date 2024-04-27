@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::285fad43d25602b1b0eada3f0266115a, G:/mzkit/src/metadb/Lipidomics//ShorthandNotation.vb"
+﻿#Region "Microsoft.VisualBasic::ec2aef193916fa5ced2d2da6bb429d89, G:/mzkit/src/metadb/Lipidomics//ShorthandNotation.vb"
 
     ' Author:
     ' 
@@ -37,10 +37,10 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 26
+    '   Total Lines: 25
     '    Code Lines: 20
     ' Comment Lines: 0
-    '   Blank Lines: 6
+    '   Blank Lines: 5
     '     File Size: 1.22 KB
 
 
@@ -50,7 +50,6 @@
     ' 
     '     Constructor: (+1 Overloads) Sub New
     '     Function: (+3 Overloads) Visit
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -81,5 +80,3 @@ Friend Class ChainShorthandNotation
         Return CType(_chainVisitor, IVisitor(Of SphingoChain, SphingoChain)).Visit(item)
     End Function
 End Class
-
-

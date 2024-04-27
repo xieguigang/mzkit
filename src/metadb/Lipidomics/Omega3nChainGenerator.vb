@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d2a51d52b3854777f77172a295f465a8, G:/mzkit/src/metadb/Lipidomics//Omega3nChainGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::4a6ff212abfffe7695ee073b90ac720b, G:/mzkit/src/metadb/Lipidomics//Omega3nChainGenerator.vb"
 
     ' Author:
     ' 
@@ -288,4 +288,3 @@ Public Class Omega3nChainGenerator
         Return rec(begin, New List(Of Integer)(oxidized.UnDecidedCount))
     End Function
 End Class
-

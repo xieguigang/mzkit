@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3fddb9958bf2fc8dd78893f7a852267e, G:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/CeramideNsD7SpectrumGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::2a2a8c6b1f14cb83e67ad40b4b97cb71, G:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/CeramideNsD7SpectrumGenerator.vb"
 
     ' Author:
     ' 
@@ -276,4 +276,3 @@ Public Class CerNSd7SpectrumGenerator
     Private Shared ReadOnly comparer As IEqualityComparer(Of SpectrumPeak) = New SpectrumEqualityComparer()
 
 End Class
-

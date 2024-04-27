@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e2427957c5c8e532cac5c84ec216ae33, G:/mzkit/src/metadb/Lipidomics//ChainsDecomposer.vb"
+﻿#Region "Microsoft.VisualBasic::16c7ea230869dde0070285aed7f04714, G:/mzkit/src/metadb/Lipidomics//ChainsDecomposer.vb"
 
     ' Author:
     ' 
@@ -68,4 +68,3 @@ Friend NotInheritable Class ChainsDecomposer
         Return New PositionLevelChains(chains)
     End Function
 End Class
-

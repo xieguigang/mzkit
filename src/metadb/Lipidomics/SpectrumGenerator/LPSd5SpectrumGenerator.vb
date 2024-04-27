@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::13a989adfbe5be88f5771de92c9118d1, G:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/LPSd5SpectrumGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::8f9a7f721f73e359ff4bd44360a33ed4, G:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/LPSd5SpectrumGenerator.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 146
+    '   Total Lines: 145
     '    Code Lines: 120
     ' Comment Lines: 1
-    '   Blank Lines: 25
-    '     File Size: 9.06 KB
+    '   Blank Lines: 24
+    '     File Size: 9.05 KB
 
 
     ' Class LPSd5SpectrumGenerator
@@ -49,7 +49,6 @@
     '     Constructor: (+2 Overloads) Sub New
     '     Function: CanGenerate, CreateReference, Generate, GetAcylDoubleBondSpectrum, (+2 Overloads) GetAcylLevelSpectrum
     '               GetAcylPositionSpectrum, GetLPSSpectrum
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -200,5 +199,3 @@ Public Class LPSd5SpectrumGenerator
     Private Shared ReadOnly comparer As IEqualityComparer(Of SpectrumPeak) = New SpectrumEqualityComparer()
 
 End Class
-
-

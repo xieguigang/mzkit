@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c29e06f2032969979a50c4e60966cc71, G:/mzkit/src/metadb/Lipidomics//MolecularSpeciesLevelChains.vb"
+﻿#Region "Microsoft.VisualBasic::af28b83f56ffde37916405be8b41f257, G:/mzkit/src/metadb/Lipidomics//MolecularSpeciesLevelChains.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 91
+    '   Total Lines: 90
     '    Code Lines: 73
     ' Comment Lines: 0
-    '   Blank Lines: 18
-    '     File Size: 4.04 KB
+    '   Blank Lines: 17
+    '     File Size: 4.03 KB
 
 
     ' Class MolecularSpeciesLevelChains
@@ -52,7 +52,6 @@
     '     Class ChainComparer
     ' 
     '         Function: Compare, TypeToOrder
-    ' 
     ' 
     ' 
     ' 
@@ -150,5 +149,3 @@ Public Class MolecularSpeciesLevelChains
     End Class
 
 End Class
-
-

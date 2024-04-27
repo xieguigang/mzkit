@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b1a07cf51633058d17f7ce99ecb07dd4, G:/mzkit/src/metadb/Lipidomics//LipidParser/ILipidParser.vb"
+﻿#Region "Microsoft.VisualBasic::05331457b8cce07da0f71d35be572e2a, G:/mzkit/src/metadb/Lipidomics//LipidParser/ILipidParser.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 6
+    '   Total Lines: 4
     '    Code Lines: 4
     ' Comment Lines: 0
-    '   Blank Lines: 2
-    '     File Size: 152 B
+    '   Blank Lines: 0
+    '     File Size: 146 B
 
 
     ' Interface ILipidParser
@@ -50,15 +50,11 @@
     ' 
     '     Function: Parse
     ' 
-    ' 
     ' /********************************************************************************/
 
 #End Region
-
 
 Public Interface ILipidParser
         ReadOnly Property Target As String
         Function Parse(lipidStr As String) As ILipid
     End Interface
-
-

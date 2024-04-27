@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::abdc30584c1003e1b4c32c7ac7ed7456, G:/mzkit/src/metadb/Lipidomics//DoubleBondIndeterminateState.vb"
+﻿#Region "Microsoft.VisualBasic::b0f2dbe9c6ebc39f0e1b05adfef8bdc5, G:/mzkit/src/metadb/Lipidomics//DoubleBondIndeterminateState.vb"
 
     ' Author:
     ' 
@@ -37,10 +37,10 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 122
+    '   Total Lines: 121
     '    Code Lines: 106
     ' Comment Lines: 0
-    '   Blank Lines: 16
+    '   Blank Lines: 15
     '     File Size: 5.96 KB
 
 
@@ -63,7 +63,6 @@
     '         Function: Visit
     ' 
     '  
-    ' 
     ' 
     ' 
     ' 
@@ -192,5 +191,3 @@ Public NotInheritable Class DoubleBondIndeterminateState
         End Function
     End Class
 End Class
-
-

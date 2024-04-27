@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6dceadbd145654508906bed994991817, G:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/LPIEidSpectrumGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::ff8c624ae654d2a75b9e66bc2125abef, G:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/LPIEidSpectrumGenerator.vb"
 
     ' Author:
     ' 
@@ -37,10 +37,10 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 172
+    '   Total Lines: 171
     '    Code Lines: 146
     ' Comment Lines: 1
-    '   Blank Lines: 25
+    '   Blank Lines: 24
     '     File Size: 8.76 KB
 
 
@@ -49,7 +49,6 @@
     '     Constructor: (+2 Overloads) Sub New
     '     Function: CanGenerate, CreateReference, EidSpecificSpectrum, Generate, GetAcylDoubleBondSpectrum
     '               (+2 Overloads) GetAcylLevelSpectrum, GetAcylPositionSpectrum, GetLPISpectrum
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -226,5 +225,3 @@ New SpectrumPeak(lipidMass - H2O, 800, "[M+H]+ -H2O")
     Private Shared ReadOnly comparer As IEqualityComparer(Of SpectrumPeak) = New SpectrumEqualityComparer()
 
 End Class
-
-

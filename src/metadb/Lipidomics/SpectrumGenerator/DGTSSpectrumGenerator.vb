@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4d5e550aa1dd4ad5b56944fe9448bbd4, G:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/DGTSSpectrumGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::357e03b90aed6d51f57f515b888de5d1, G:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/DGTSSpectrumGenerator.vb"
 
     ' Author:
     ' 
@@ -184,4 +184,3 @@ Public Class DGTSSpectrumGenerator
     Private Shared ReadOnly comparer As IEqualityComparer(Of SpectrumPeak) = New SpectrumEqualityComparer()
 
 End Class
-

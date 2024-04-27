@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3c72842c97ea464ef61ef4bf3bd76c93, G:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/DMEDFAHFASpectrumGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::8733ca6054a43e7e2add45b4b8ef55c7, G:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/DMEDFAHFASpectrumGenerator.vb"
 
     ' Author:
     ' 
@@ -37,10 +37,10 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 135
+    '   Total Lines: 134
     '    Code Lines: 116
     ' Comment Lines: 1
-    '   Blank Lines: 18
+    '   Blank Lines: 17
     '     File Size: 7.09 KB
 
 
@@ -49,7 +49,6 @@
     '     Constructor: (+2 Overloads) Sub New
     '     Function: CanGenerate, CreateReference, Generate, GetAcylDoubleBondSpectrum, GetAcylLevelSpectrum
     '               GetDMEDFAHFASpectrum, GetOxPositionSpectrum
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -189,5 +188,3 @@ New SpectrumPeak(adduct.ConvertToMz(lipid.Mass - C2NH7), 50.0R, "Precursor - C2N
     Private Shared ReadOnly comparer As IEqualityComparer(Of SpectrumPeak) = New SpectrumEqualityComparer()
 
 End Class
-
-
