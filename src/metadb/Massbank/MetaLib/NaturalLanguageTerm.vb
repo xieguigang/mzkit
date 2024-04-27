@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6e453a29f7cf604eacaa69f476e25a48, mzkit\src\metadb\Massbank\MetaLib\NaturalLanguageTerm.vb"
+﻿#Region "Microsoft.VisualBasic::2ea9a1bb4db8a4fe2ebdf5edf865d7cc, G:/mzkit/src/metadb/Massbank//MetaLib/NaturalLanguageTerm.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 59
-    '    Code Lines: 40
+    '   Total Lines: 60
+    '    Code Lines: 41
     ' Comment Lines: 8
     '   Blank Lines: 11
-    '     File Size: 2.11 KB
+    '     File Size: 2.13 KB
 
 
     '     Module NaturalLanguageTerm

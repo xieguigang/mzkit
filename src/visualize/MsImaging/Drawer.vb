@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b3d3a1d5341519ee471dbc42f020eec7, mzkit\src\visualize\MsImaging\Drawer.vb"
+﻿#Region "Microsoft.VisualBasic::fc735c717e3d2b15806f4aff2aab170a, G:/mzkit/src/visualize/MsImaging//Drawer.vb"
 
     ' Author:
     ' 
@@ -37,20 +37,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 286
-    '    Code Lines: 181
-    ' Comment Lines: 62
-    '   Blank Lines: 43
-    '     File Size: 11.67 KB
+    '   Total Lines: 315
+    '    Code Lines: 199
+    ' Comment Lines: 68
+    '   Blank Lines: 48
+    '     File Size: 12.82 KB
 
 
     ' Class Drawer
     ' 
     '     Properties: dimension, pixelReader
     ' 
-    '     Constructor: (+3 Overloads) Sub New
+    '     Constructor: (+4 Overloads) Sub New
     ' 
-    '     Function: (+2 Overloads) DrawLayer, GetPixelsMatrix, LoadPixels, ReadXY, RenderSummaryLayer
+    '     Function: (+2 Overloads) DrawLayer, GetPixelsMatrix, (+2 Overloads) LoadPixels, ReadXY, RenderSummaryLayer
     '               (+2 Overloads) ScaleLayer, ScalePixels, ShowSummaryRendering
     ' 
     '     Sub: (+2 Overloads) Dispose

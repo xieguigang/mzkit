@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2c27949042de186c73ff8f56d6a00efe, mzkit\Rscript\Library\mzkit.quantify\My Project\AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::5e3941b07e7e09dc1b5bd1a3900af26b, G:/mzkit/Rscript/Library/mzkit_app/src/mzquant//My Project/AssemblyInfo.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 15
     ' Comment Lines: 15
     '   Blank Lines: 6
-    '     File Size: 1.24 KB
+    '     File Size: 1.28 KB
 
 
     ' 

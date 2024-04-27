@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::483cf061dd600e768a1e4a461cfc071c, mzkit\Rscript\Library\mzkit.insilicons\My Project\AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::9127fe8ccd0415382e6d6d78b830c49a, G:/mzkit/Rscript/Library/mzkit_app/src/mzDIA//My Project/AssemblyInfo.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 15
     ' Comment Lines: 15
     '   Blank Lines: 6
-    '     File Size: 1.16 KB
+    '     File Size: 1.20 KB
 
 
     ' 

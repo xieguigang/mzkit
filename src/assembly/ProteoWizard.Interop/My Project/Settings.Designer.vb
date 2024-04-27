@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a2d06a622b72e4d558ac26903b01d97a, mzkit\src\assembly\ProteoWizard.Interop\My Project\Settings.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::91fa0f381de34f13020e83e18e4b23ee, G:/mzkit/src/assembly/ProteoWizard.Interop//My Project/Settings.Designer.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 53
     ' Comment Lines: 9
     '   Blank Lines: 13
-    '     File Size: 2.94 KB
+    '     File Size: 3.02 KB
 
 
     '     Class MySettings

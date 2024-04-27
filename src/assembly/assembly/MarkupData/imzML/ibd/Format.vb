@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::20f9b4cd47456daa830848e30677bcdd, mzkit\src\assembly\assembly\MarkupData\imzML\ibd\Format.vb"
+﻿#Region "Microsoft.VisualBasic::20f9b4cd47456daa830848e30677bcdd, G:/mzkit/src/assembly/assembly//MarkupData/imzML/ibd/Format.vb"
 
     ' Author:
     ' 

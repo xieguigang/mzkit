@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::10d8c0dd19d931ce3f21204479228ea2, mzkit\src\mzmath\ms2_math-core\Ms1\PrecursorType\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::abf6f9c93bfc649e0fe47c321383fc5e, G:/mzkit/src/mzmath/ms2_math-core//Ms1/PrecursorType/Extensions.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 198
-    '    Code Lines: 144
+    '   Total Lines: 201
+    '    Code Lines: 147
     ' Comment Lines: 21
     '   Blank Lines: 33
-    '     File Size: 7.54 KB
+    '     File Size: 7.75 KB
 
 
     '     Module Parser

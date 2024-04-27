@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f00f0f31ddb332fe034d3056e50cac48, mzkit\src\assembly\BrukerDataReader\Raw\Check.vb"
+﻿#Region "Microsoft.VisualBasic::f00f0f31ddb332fe034d3056e50cac48, G:/mzkit/src/assembly/BrukerDataReader//Raw/Check.vb"
 
     ' Author:
     ' 

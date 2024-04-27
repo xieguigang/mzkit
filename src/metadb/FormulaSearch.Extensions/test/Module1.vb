@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1b68fa6ed45653c62bbdca37b2ecca09, mzkit\src\metadb\FormulaSearch.Extensions\test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::11407ed9f0ce188cf3da8d75582bbda8, G:/mzkit/src/metadb/FormulaSearch.Extensions//test/Module1.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 40
     ' Comment Lines: 2
     '   Blank Lines: 13
-    '     File Size: 2.25 KB
+    '     File Size: 2.26 KB
 
 
     ' Module Module1

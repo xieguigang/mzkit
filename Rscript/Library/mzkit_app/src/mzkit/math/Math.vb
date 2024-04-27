@@ -1,59 +1,60 @@
-﻿#Region "Microsoft.VisualBasic::d9b25d3eed3358524d383e2fdb072054, mzkit\Rscript\Library\mzkit\math\Math.vb"
+﻿#Region "Microsoft.VisualBasic::4f26c705a602b1694868e0525e719fda, G:/mzkit/Rscript/Library/mzkit_app/src/mzkit//math/Math.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 695
-'    Code Lines: 477
-' Comment Lines: 124
-'   Blank Lines: 94
-'     File Size: 27.74 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module MzMath
-' 
-'     Constructor: (+1 Overloads) Sub New
-'     Function: centroid, cosine, CreateMSMatrix, createTolerance, defaultPrecursors
-'               exact_mass, getAlignmentTable, GetClusters, getPrecursorTable, jaccard
-'               jaccardSet, mz, MzUnique, peaktable, ppm
-'               precursorTypes, printCalculator, printMzTable, sequenceOrder, spectrumEntropy
-'               SpectrumTreeCluster, SSMCompares, xcms_id, XICTable
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 1050
+    '    Code Lines: 683
+    ' Comment Lines: 231
+    '   Blank Lines: 136
+    '     File Size: 44.10 KB
+
+
+    ' Module MzMath
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: alignIntensity, centroid, centroidDataframe, (+2 Overloads) cosine, cosine_pairwise
+    '               CreateMSMatrix, CreateMzIndex, createTolerance, defaultPrecursors, exact_mass
+    '               getAlignmentTable, GetClusters, getPrecursorTable, jaccard, jaccardSet
+    '               mz, MzUnique, normMs2, ppm, precursorTypes
+    '               printCalculator, printMzTable, sequenceOrder, spectrumEntropy, SpectrumTreeCluster
+    '               SSMCompares, summaryTolerance, union, xcms_id, XICTable
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1f34aa1f2c5836a758615c4004c72cf9, mzkit\src\metadb\Massbank\MetaLib\KEGGExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::1f34aa1f2c5836a758615c4004c72cf9, G:/mzkit/src/metadb/Massbank//MetaLib/KEGGExtensions.vb"
 
     ' Author:
     ' 

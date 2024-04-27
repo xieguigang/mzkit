@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aafaccb9ab6d41e7d575f6eec4f78fda, mzkit\src\assembly\ProteoWizard.Interop\ProteoWizardCLI.vb"
+﻿#Region "Microsoft.VisualBasic::c55cbab147ebb554984a8a6f051d100a, G:/mzkit/src/assembly/ProteoWizard.Interop//ProteoWizardCLI.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 80
     ' Comment Lines: 177
     '   Blank Lines: 27
-    '     File Size: 13.39 KB
+    '     File Size: 13.67 KB
 
 
     ' Class ProteoWizardCLI

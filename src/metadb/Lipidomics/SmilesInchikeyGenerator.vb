@@ -1,4 +1,68 @@
-﻿Public Class SmilesInchikeyGenerator
+﻿#Region "Microsoft.VisualBasic::4b4e482f135b1483943e8739349a4643, G:/mzkit/src/metadb/Lipidomics//SmilesInchikeyGenerator.vb"
+
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 243
+    '    Code Lines: 191
+    ' Comment Lines: 36
+    '   Blank Lines: 16
+    '     File Size: 17.42 KB
+
+
+    ' Class SmilesInchikeyGenerator
+    ' 
+    '     Function: ChainSmilesGen, Generate
+    ' 
+    ' Class SmilesInchikey
+    ' 
+    '     Properties: InchiKey, Smiles
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    ' Class SmilesLipidHeader
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Public Class SmilesInchikeyGenerator
     Public Shared Function Generate(lipid As Lipid) As SmilesInchikey
         'Dim plChains As PositionLevelChains = TryCast(lipid.Chains, PositionLevelChains)
 
@@ -241,4 +305,3 @@ Public NotInheritable Class SmilesLipidHeader
     {"STSPHex", "CCC(C=CC(C)C1CCC2C3CC=C4CC(CCC4(C)C3CCC12C)OC1OC(COP(O)(=O)OCC(CO%10)O%20)C(O)C(O)C1O)C(C)C."}'bacterial lipid'{"Ac2PIM1", "OCC1OC(OC2C(O)C(O)C(O)C(O)C2OP(O)(=O)OCC(O%10)C(O%20))C(O)C(O)C1O."},'{"Ac2PIM2", "OCC1OC(OC2C(O)C(O)C(O)C(OC3OC(CO)C(O)C(O)C3O)C2OP(O)(=O)OCC(O%10)C(O%20))C(O)C(O)C1O."},'{"Ac3PIM2", "OCC1OC(OC2C(O)C(O)C(O)C(OC3OC(C(O%30))C(O)C(O)C3O)C2OP(O)(=O)OCC(O%10)C(O%20))C(O)C(O)C1O."},'{"Ac4PIM2", "OCC1OC(OC2C(O)C(O)C(O%40)C(OC3OC(C(O%30))C(O)C(O)C3O)C2OP(O)(=O)OCC(O%10)C(O%20))C(O)C(O)C1O."},'{"LipidA", "OCC1O[C@@H](OCC2O[C@H](OP(O)(O)=O)C(N%10)[C@@H](O%20)[C@@H]2O)C(N%30)[C@@H](O%40)[C@@H]1OP(O)(O)=O."},
 }
 End Class
-

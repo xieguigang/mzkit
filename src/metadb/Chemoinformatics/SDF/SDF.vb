@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2fc0e6f2732dc88983096014da953323, mzkit\src\metadb\Chemoinformatics\SDF\SDF.vb"
+﻿#Region "Microsoft.VisualBasic::ff068b2d1875e7a55f8d7b2485f1964a, G:/mzkit/src/metadb/Chemoinformatics//SDF/SDF.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 93
+    '   Total Lines: 103
     '    Code Lines: 40
-    ' Comment Lines: 40
-    '   Blank Lines: 13
-    '     File Size: 4.06 KB
+    ' Comment Lines: 48
+    '   Blank Lines: 15
+    '     File Size: 4.36 KB
 
 
     '     Class SDF

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0915cd6d98941b0d8d0ab0894f74284a, mzkit\src\assembly\SpectrumTree\Query\Ms2Search.vb"
+﻿#Region "Microsoft.VisualBasic::11d519a9d6dabc32823e6fe044ee5792, G:/mzkit/src/assembly/SpectrumTree//Query/Ms2Search.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 17
     ' Comment Lines: 0
     '   Blank Lines: 7
-    '     File Size: 782 B
+    '     File Size: 802 B
 
 
     '     Class Ms2Search

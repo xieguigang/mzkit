@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aca06a371533b558cf87ca568a50f68c, mzkit\src\metadb\Chemoinformatics\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::aca06a371533b558cf87ca568a50f68c, G:/mzkit/src/metadb/Chemoinformatics//Extensions.vb"
 
     ' Author:
     ' 

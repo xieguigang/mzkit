@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6deab45f067fbc5889793b920313721a, mzkit\src\metadb\SMILES\Language\Token.vb"
+﻿#Region "Microsoft.VisualBasic::bb72acae88455f03700a6405241137ec, G:/mzkit/src/metadb/SMILES//Language/Token.vb"
 
     ' Author:
     ' 
@@ -37,19 +37,24 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 20
-    '    Code Lines: 16
+    '   Total Lines: 32
+    '    Code Lines: 24
     ' Comment Lines: 0
-    '   Blank Lines: 4
-    '     File Size: 571 B
+    '   Blank Lines: 8
+    '     File Size: 903 B
 
 
-    ' Class Token
+    '     Class Token
     ' 
-    '     Properties: charge, ring
+    '         Properties: charge, ring
     ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: ToString
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: ToString
+    ' 
+    '     Class MultipleTokens
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     ' 
     ' /********************************************************************************/
 

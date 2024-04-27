@@ -1,59 +1,59 @@
-﻿#Region "Microsoft.VisualBasic::aa7412a28fe12413efdc82ab9cad6d80, mzkit\Rscript\Library\mzkit.plot\Visual.vb"
+﻿#Region "Microsoft.VisualBasic::cf70154e320dad41c5cac778950407bd, G:/mzkit/Rscript/Library/mzkit_app/src/mzplot//Visual.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 643
-'    Code Lines: 504
-' Comment Lines: 74
-'   Blank Lines: 65
-'     File Size: 28.00 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module Visual
-' 
-'     Function: getSpectrum, plotAlignments, plotChromatogram, PlotGCxGCHeatMap, plotGCxGCTic2D
-'               plotMolecularNetworkingHistogram, plotMS, plotOverlaps, plotPeaktable, plotRawChromatogram
-'               PlotRawScatter, plotSignal, plotSignal2, plotTIC, plotTIC2
-'               PlotUVSignals, Snapshot3D, SpectrumPlot
-' 
-'     Sub: Main
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 740
+    '    Code Lines: 582
+    ' Comment Lines: 91
+    '   Blank Lines: 67
+    '     File Size: 33.78 KB
+
+
+    ' Module Visual
+    ' 
+    '     Function: assembleOverlaps, plotAlignments, plotChromatogram, PlotGCxGCHeatMap, plotGCxGCTic2D
+    '               plotMolecularNetworkingHistogram, plotMS, plotOverlaps, plotPeaktable, plotRawChromatogram
+    '               PlotRawScatter, plotRtShifts, plotSignal, plotSignal2, plotTIC
+    '               plotTIC2, PlotUVSignals, Snapshot3D, SpectrumPlot
+    ' 
+    '     Sub: Main
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d31b7ba2592f23d9591b46ed873ac417, mzkit\src\visualize\MsImaging\PixelsCDF.vb"
+﻿#Region "Microsoft.VisualBasic::1d75fc1921301017ea396f507d769026, G:/mzkit/src/visualize/MsImaging//Layer/PixelsCDF.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 202
-    '    Code Lines: 155
-    ' Comment Lines: 19
-    '   Blank Lines: 28
-    '     File Size: 7.71 KB
+    '   Total Lines: 220
+    '    Code Lines: 163
+    ' Comment Lines: 27
+    '   Blank Lines: 30
+    '     File Size: 8.51 KB
 
 
     ' Module PixelsCDF

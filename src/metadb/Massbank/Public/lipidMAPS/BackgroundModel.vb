@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::79d4037dee33e1b3bcec8f8c55c8021c, mzkit\src\metadb\Massbank\Public\lipidMAPS\BackgroundModel.vb"
+﻿#Region "Microsoft.VisualBasic::dbbce4cfbe435adc81fdba6a6eef7be0, G:/mzkit/src/metadb/Massbank//Public/lipidMAPS/BackgroundModel.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 137
     ' Comment Lines: 0
     '   Blank Lines: 28
-    '     File Size: 6.54 KB
+    '     File Size: 6.70 KB
 
 
     '     Module BackgroundModel

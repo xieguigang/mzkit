@@ -1,4 +1,79 @@
-﻿Imports System.IO
+﻿#Region "Microsoft.VisualBasic::4599997c21495ae0c6237e013e48bccc, G:/mzkit/src/assembly/BrukerDataReader//XMass/FidReader.vb"
+
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 310
+    '    Code Lines: 72
+    ' Comment Lines: 223
+    '   Blank Lines: 15
+    '     File Size: 10.29 KB
+
+
+    '     Class FidReader
+    ' 
+    '         Function: readAcquFile, readFidFile
+    ' 
+    '     Class AcquMetadata
+    ' 
+    '         Properties: [Date], acquisitionDate, acquisitionMethod, acquisitionMode, acquisitionOperatorMode
+    '                     byteOrder, calibrationConstants, comments, dataSystem, deflection
+    '                     deflectionPulserCal1, deflectionPulserMass, digitizerType, fidFile, flexControlVersion
+    '                     hpcCoefficients, hpcLimits, hpcOrder, hpcUse, id
+    '                     inlet, instrument, instrumentId, instrumentType, ionizationMode
+    '                     laserAttenuation, laserRepetition, laserShots, massError, number
+    '                     patch, path, sampleName, spectrometerType, spectrumType
+    '                     spot, targetCount, targetIdString, targetSerialNumber, targetTypeNumber
+    '                     timeDelay, timeDelta, tofMode
+    ' 
+    '     Class hpcLimits
+    ' 
+    '         Properties: maxMass, minMass
+    ' 
+    '     Class calibrationConstants
+    ' 
+    '         Properties: ML1, ML2, ML3
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.IO
 Imports Microsoft.VisualBasic.Data.IO
 
 Namespace XMass

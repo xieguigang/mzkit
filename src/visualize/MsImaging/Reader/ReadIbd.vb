@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dae1785713f331db4c3f076edeb78fa9, mzkit\src\visualize\MsImaging\Reader\ReadIbd.vb"
+﻿#Region "Microsoft.VisualBasic::dae1785713f331db4c3f076edeb78fa9, G:/mzkit/src/visualize/MsImaging//Reader/ReadIbd.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::de2b694f3b7baf864bcbc139f1622216, mzkit\src\assembly\SpectrumTree\BlockNode.vb"
+﻿#Region "Microsoft.VisualBasic::1d5676c36c25261ae954df4f51f72a9b, G:/mzkit/src/assembly/SpectrumTree//Tree/BlockNode.vb"
 
     ' Author:
     ' 
@@ -37,19 +37,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 107
-    '    Code Lines: 55
+    '   Total Lines: 115
+    '    Code Lines: 61
     ' Comment Lines: 46
-    '   Blank Lines: 6
-    '     File Size: 3.06 KB
+    '   Blank Lines: 8
+    '     File Size: 3.88 KB
 
 
-    ' Class BlockNode
+    '     Class BlockNode
     ' 
-    '     Properties: Block, centroid, childs, Id, isBlank
-    '                 isLeaf, Members, mz, rt
+    '         Properties: Block, centroid, childs, Id, isBlank
+    '                     isLeaf, Members, mz, rt
     ' 
-    '     Function: GetBinaryIndex, GetIndex
+    '         Function: GetBinaryIndex, GetIndex, ToString
+    ' 
     ' 
     ' /********************************************************************************/
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7ffd1418ecfbd0ef715753b35b9415a4, mzkit\src\metadb\Massbank\MetaLib\Models\XrefExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::e6c2f32ea0178f5b412a98daeedbbee5, G:/mzkit/src/metadb/Massbank//MetaLib/Models/CrossReference/XrefExtensions.vb"
 
     ' Author:
     ' 
@@ -37,16 +37,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 34
+    '   Total Lines: 47
     '    Code Lines: 28
-    ' Comment Lines: 0
+    ' Comment Lines: 13
     '   Blank Lines: 6
-    '     File Size: 889 B
+    '     File Size: 1.44 KB
 
 
     '     Module XrefExtensions
     ' 
-    '         Function: FormatChEbiID, FormatHMDBId
+    '         Function: FormatChEBI, FormatHMDB
     ' 
     ' 
     ' /********************************************************************************/

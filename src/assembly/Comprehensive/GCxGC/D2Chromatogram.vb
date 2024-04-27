@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cfc3a21dbe699dacb04992b6852f475b, mzkit\src\assembly\Comprehensive\GCxGC\D2Chromatogram.vb"
+﻿#Region "Microsoft.VisualBasic::73e6bb086fb8fcba659b578a485bb121, G:/mzkit/src/assembly/Comprehensive//GCxGC/D2Chromatogram.vb"
 
     ' Author:
     ' 
@@ -37,17 +37,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 110
-    '    Code Lines: 91
-    ' Comment Lines: 4
-    '   Blank Lines: 15
-    '     File Size: 4.64 KB
+    '   Total Lines: 138
+    '    Code Lines: 99
+    ' Comment Lines: 21
+    '   Blank Lines: 18
+    '     File Size: 5.50 KB
 
 
     ' Class D2Chromatogram
     ' 
-    '     Properties: chromatogram, intensity, scan_time, size
+    '     Properties: chromatogram, intensity, scan_id, scan_time, size
     ' 
+    '     Constructor: (+3 Overloads) Sub New
     '     Function: DecodeCDF, EncodeCDF, times, ToString
     ' 
     ' /********************************************************************************/

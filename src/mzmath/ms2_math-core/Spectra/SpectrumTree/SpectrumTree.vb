@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a4d8c3395d9913f922fb82d5bd3dcc4f, mzkit\src\mzmath\ms2_math-core\Spectra\SpectrumTree\SpectrumTree.vb"
+﻿#Region "Microsoft.VisualBasic::a4d8c3395d9913f922fb82d5bd3dcc4f, G:/mzkit/src/mzmath/ms2_math-core//Spectra/SpectrumTree/SpectrumTree.vb"
 
     ' Author:
     ' 

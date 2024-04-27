@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bcf1fe221c7307eb02a7a40fcfacc47a, mzkit\src\metadb\Massbank\Public\Massbank\RecordIO.vb"
+﻿#Region "Microsoft.VisualBasic::2c2919dd2b3156a377fc772033a31fb2, G:/mzkit/src/metadb/Massbank//Public/Massbank/RecordIO.vb"
 
     ' Author:
     ' 
@@ -37,16 +37,17 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 189
-    '    Code Lines: 155
+    '   Total Lines: 199
+    '    Code Lines: 161
     ' Comment Lines: 1
-    '   Blank Lines: 33
-    '     File Size: 7.11 KB
+    '   Blank Lines: 37
+    '     File Size: 7.42 KB
 
 
     '     Module RecordIO
     ' 
-    '         Function: (+2 Overloads) __createObject, __createPeaksData, __loadSection, LoadFile, ScanLoad
+    '         Function: (+2 Overloads) __createObject, __createPeaksData, __loadSection, LoadFile, ParseAnnotations
+    '                   ScanLoad
     ' 
     ' 
     ' /********************************************************************************/

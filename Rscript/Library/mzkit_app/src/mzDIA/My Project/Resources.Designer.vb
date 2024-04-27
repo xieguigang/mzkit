@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::850244c6937b1fc62bd9159edd650e8d, mzkit\Rscript\Library\mzkit.insilicons\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::5689b24f70eeda94aacfd779bcf146d6, G:/mzkit/Rscript/Library/mzkit_app/src/mzDIA//My Project/Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 32
     ' Comment Lines: 23
     '   Blank Lines: 8
-    '     File Size: 2.71 KB
+    '     File Size: 2.77 KB
 
 
     '     Module Resources

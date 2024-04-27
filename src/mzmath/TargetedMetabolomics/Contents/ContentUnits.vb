@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6bee199acd85b896b745a20ff4ddde8d, mzkit\src\mzmath\TargetedMetabolomics\Contents\ContentUnits.vb"
+﻿#Region "Microsoft.VisualBasic::6bee199acd85b896b745a20ff4ddde8d, G:/mzkit/src/mzmath/TargetedMetabolomics//Contents/ContentUnits.vb"
 
     ' Author:
     ' 

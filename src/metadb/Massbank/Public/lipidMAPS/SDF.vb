@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cfbdbb02352498b85297f46236f6e89c, mzkit\src\metadb\Massbank\Public\lipidMAPS\SDF.vb"
+﻿#Region "Microsoft.VisualBasic::1cdf82aab90617aef8346539f2498c57, G:/mzkit/src/metadb/Massbank//Public/lipidMAPS/SDF.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 117
-    '    Code Lines: 81
-    ' Comment Lines: 27
-    '   Blank Lines: 9
-    '     File Size: 6.90 KB
+    '   Total Lines: 131
+    '    Code Lines: 90
+    ' Comment Lines: 31
+    '   Blank Lines: 10
+    '     File Size: 7.70 KB
 
 
     '     Class MetaData
@@ -53,7 +53,7 @@
     '                     PUBCHEM_SID, PUBCHEM_SUBSTANCE_URL, SMILES, STATUS, SUB_CLASS
     '                     SWISSLIPIDS_ID, SYNONYMS, SYSTEMATIC_NAME
     ' 
-    '         Function: Data, EqualsAny, ToString
+    '         Function: Data, EqualsAny, GetAnnotation, ToString
     ' 
     ' 
     ' /********************************************************************************/

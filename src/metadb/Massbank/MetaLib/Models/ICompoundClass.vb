@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5be677e82e504cdff8024ea81b7c364d, mzkit\src\metadb\Massbank\MetaLib\Models\ICompoundClass.vb"
+﻿#Region "Microsoft.VisualBasic::9013f51dd1269bd512e012cbfcd68015, G:/mzkit/src/metadb/Massbank//MetaLib/Models/ICompoundClass.vb"
 
     ' Author:
     ' 
@@ -37,16 +37,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 15
-    '    Code Lines: 9
-    ' Comment Lines: 3
-    '   Blank Lines: 3
-    '     File Size: 406 B
+    '   Total Lines: 73
+    '    Code Lines: 40
+    ' Comment Lines: 22
+    '   Blank Lines: 11
+    '     File Size: 2.48 KB
 
 
     '     Interface ICompoundClass
     ' 
     '         Properties: [class], kingdom, molecular_framework, sub_class, super_class
+    ' 
+    '     Class ClassReader
+    ' 
+    '         Function: GetLastNode, ToSet
     ' 
     ' 
     ' /********************************************************************************/

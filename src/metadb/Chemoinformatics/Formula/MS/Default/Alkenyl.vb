@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c9a8db01ba679e5315f45d5d7db0c3af, mzkit\src\metadb\FormulaSearch.Extensions\AtomGroups\Default\Alkenyl.vb"
+﻿#Region "Microsoft.VisualBasic::f60d5f4a401b22016047ed4fb1ed289b, G:/mzkit/src/metadb/Chemoinformatics//Formula/MS/Default/Alkenyl.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 6
     ' Comment Lines: 0
     '   Blank Lines: 4
-    '     File Size: 234 B
+    '     File Size: 245 B
 
 
     '     Class Alkenyl

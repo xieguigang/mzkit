@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e6ebc3b59ed7ad6c41625bfaa79aaaea, mzkit\Rscript\Library\mzkit.insilicons\zzz.vb"
+﻿#Region "Microsoft.VisualBasic::444fdbadcaabe831ccd83a3fd1cf7edf, G:/mzkit/Rscript/Library/mzkit_app/src/mzDIA//zzz.vb"
 
     ' Author:
     ' 
@@ -37,16 +37,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 7
-    '    Code Lines: 4
+    '   Total Lines: 10
+    '    Code Lines: 7
     ' Comment Lines: 0
     '   Blank Lines: 3
-    '     File Size: 100 B
+    '     File Size: 179 B
 
 
     ' Class zzz
     ' 
-    ' 
+    '     Sub: onLoad
     ' 
     ' /********************************************************************************/
 

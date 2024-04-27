@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b3e88729a777c6352ef39a898d58e26c, mzkit\src\assembly\mzPackExtensions\VendorStream\XRawStream.vb"
+﻿#Region "Microsoft.VisualBasic::15a72e37c6fadeb5767d6e91c15aa53c, G:/mzkit/src/assembly/mzPackExtensions//VendorStream/XRawStream.vb"
 
     ' Author:
     ' 
@@ -37,16 +37,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 92
-    '    Code Lines: 75
+    '   Total Lines: 98
+    '    Code Lines: 80
     ' Comment Lines: 3
-    '   Blank Lines: 14
-    '     File Size: 3.32 KB
+    '   Blank Lines: 15
+    '     File Size: 3.50 KB
 
 
     ' Class XRawStream
     ' 
-    '     Properties: rawFileName
+    '     Properties: getExperimentType, rawFileName
     ' 
     '     Constructor: (+1 Overloads) Sub New
     ' 

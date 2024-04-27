@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e656c5f56a02ba8248617c76153a5700, mzkit\src\assembly\assembly\MarkupData\mzML\XML\MsData\spectrum.vb"
+﻿#Region "Microsoft.VisualBasic::cf35688cef8e3ac627735db40c2dc348, G:/mzkit/src/assembly/assembly//MarkupData/mzML/XML/MsData/spectrum.vb"
 
     ' Author:
     ' 
@@ -37,17 +37,17 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 173
-    '    Code Lines: 127
+    '   Total Lines: 186
+    '    Code Lines: 139
     ' Comment Lines: 21
-    '   Blank Lines: 25
-    '     File Size: 6.52 KB
+    '   Blank Lines: 26
+    '     File Size: 7.05 KB
 
 
     '     Class spectrum
     ' 
-    '         Properties: controllerNumber, controllerType, ms_level, precursorList, profile
-    '                     scan, scan_time, scanList, selectedIon
+    '         Properties: controllerNumber, controllerType, ms_level, polarity, precursorList
+    '                     profile, scan, scan_time, scanList, selectedIon
     ' 
     '         Function: GetRawMatrix, ScanData, ToString
     ' 

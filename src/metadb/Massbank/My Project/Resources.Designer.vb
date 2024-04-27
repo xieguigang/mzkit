@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bc85ef4b0c03818f258b29d4d2c9c4aa, mzkit\src\metadb\Massbank\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::1b985ece50798a7cce2b3aa20b673981, G:/mzkit/src/metadb/Massbank//My Project/Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 32
     ' Comment Lines: 23
     '   Blank Lines: 8
-    '     File Size: 2.73 KB
+    '     File Size: 2.79 KB
 
 
     '     Module Resources

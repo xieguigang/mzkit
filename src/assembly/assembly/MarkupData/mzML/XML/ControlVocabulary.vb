@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::66207bf8066b3ad577eae29d6e6ead3f, mzkit\src\assembly\assembly\MarkupData\mzML\XML\ControlVocabulary.vb"
+﻿#Region "Microsoft.VisualBasic::2a08ef3143cea20fed1f9c43632f23dc, G:/mzkit/src/assembly/assembly//MarkupData/mzML/XML/ControlVocabulary.vb"
 
     ' Author:
     ' 
@@ -37,16 +37,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 78
-    '    Code Lines: 53
-    ' Comment Lines: 7
-    '   Blank Lines: 18
-    '     File Size: 2.88 KB
+    '   Total Lines: 114
+    '    Code Lines: 65
+    ' Comment Lines: 28
+    '   Blank Lines: 21
+    '     File Size: 4.61 KB
 
 
     '     Class cvList
     ' 
     '         Properties: list
+    ' 
+    '         Function: ToString
     ' 
     '     Structure cv
     ' 
@@ -57,6 +59,8 @@
     '     Class Params
     ' 
     '         Properties: cvParams, cvTerm, userParams
+    ' 
+    '         Function: FindVocabulary
     ' 
     '     Class userParam
     ' 

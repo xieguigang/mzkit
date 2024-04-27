@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c40d3574d7e6f01f23d7718f634fc544, mzkit\src\metadb\Chemoinformatics\SDF\Struct\Mol.vb"
+﻿#Region "Microsoft.VisualBasic::c40d3574d7e6f01f23d7718f634fc544, G:/mzkit/src/metadb/Chemoinformatics//SDF/Struct/Mol.vb"
 
     ' Author:
     ' 

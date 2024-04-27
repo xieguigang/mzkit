@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a7f579bc136ac2ca5df957cd7fb3241e, mzkit\src\metadb\Chemoinformatics\My Project\Settings.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::b2a448d940302d499324c683aaa9c2ab, G:/mzkit/src/metadb/Chemoinformatics//My Project/Settings.Designer.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 53
     ' Comment Lines: 9
     '   Blank Lines: 14
-    '     File Size: 2.98 KB
+    '     File Size: 3.05 KB
 
 
     '     Class MySettings

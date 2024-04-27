@@ -1,4 +1,67 @@
-﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
+﻿#Region "Microsoft.VisualBasic::b0a4559dc2befb5b0fe8622d843b7c20, G:/mzkit/src/metadb/Lipidomics//MsCharacterization/LipidEieioMsmsCharacterization.vb"
+
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 3570
+    '    Code Lines: 2945
+    ' Comment Lines: 244
+    '   Blank Lines: 381
+    '     File Size: 227.38 KB
+
+
+    ' Class LipidEieioMsmsCharacterization
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: getEtherPhospholipidMoleculeObjAsPositionChain, getTriacylglycerolMoleculeObjAsPositionChain, getTwoChainLipidMoleculeObjAsPositionChain, JudgeIfAcylcarnitine, JudgeIfAcylsm
+    '               JudgeIfBismonoacylglycerophosphate, JudgeIfCeramidensD7, JudgeIfCholesterylEster, JudgeIfCholesterylEsterD7, JudgeIfDag
+    '               JudgeIfDagD5, JudgeIfDgts, JudgeIfEtherpc, JudgeIfEtherpe, JudgeIfLdgts
+    '               JudgeIfLysopc, JudgeIfLysopcD5, JudgeIfLysope, JudgeIfLysopeD5, JudgeIfLysopg
+    '               JudgeIfLysopgD5, JudgeIfLysopi, JudgeIfLysopiD5, JudgeIfLysops, JudgeIfLysopsD5
+    '               JudgeIfNAcylGlyOxFa, JudgeIfPhosphatidylcholine, JudgeIfPhosphatidylcholineD5, JudgeIfPhosphatidylethanolamine, JudgeIfPhosphatidylethanolamineD5
+    '               JudgeIfPhosphatidylglycerol, JudgeIfPhosphatidylglycerolD5, JudgeIfPhosphatidylinositol, JudgeIfPhosphatidylinositolD5, JudgeIfPhosphatidylserine
+    '               JudgeIfPhosphatidylserineD5, JudgeIfPicermide, JudgeIfShexcer, JudgeIfSphingomyelin, JudgeIfSphingomyelinD9
+    '               JudgeIfSphingosine, JudgeIfTriacylglycerolD5, setSnPositionAtTwoChains
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.ElementsExactMass
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
@@ -3568,4 +3631,3 @@ New SpectrumPeak() With {
     End Function
 
 End Class
-

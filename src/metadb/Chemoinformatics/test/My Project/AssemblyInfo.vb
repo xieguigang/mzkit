@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::34bdee291ef2110bccea218c3cbcb794, mzkit\src\metadb\Chemoinformatics\test\My Project\AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::6f97d8da12a3f1012c6165cd2065b3fd, G:/mzkit/src/metadb/Chemoinformatics/test//My Project/AssemblyInfo.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 15
     ' Comment Lines: 15
     '   Blank Lines: 6
-    '     File Size: 1.14 KB
+    '     File Size: 1.17 KB
 
 
     ' 

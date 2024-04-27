@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1680beeb599535cd869e84eea18f1d93, mzkit\src\assembly\NMRFidTool\Reader\Simple1DFidReader.vb"
+﻿#Region "Microsoft.VisualBasic::84e1403d2f7ee43f7ad3a11af77b7765, G:/mzkit/src/assembly/NMRFidTool//Reader/Simple1DFidReader.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 41
     ' Comment Lines: 30
     '   Blank Lines: 12
-    '     File Size: 3.15 KB
+    '     File Size: 3.23 KB
 
 
     '     Class Simple1DFidReader

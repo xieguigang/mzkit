@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eba7b68f9d2d602681d9f25daa6fc964, mzkit\src\assembly\mzPack\v1.0\mzPackReader.vb"
+﻿#Region "Microsoft.VisualBasic::1bb3077a7d443cebb9bcdb36474560ef, G:/mzkit/src/assembly/mzPack//v1.0/mzPackReader.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 150
-    '    Code Lines: 110
+    '   Total Lines: 160
+    '    Code Lines: 119
     ' Comment Lines: 9
-    '   Blank Lines: 31
-    '     File Size: 4.24 KB
+    '   Blank Lines: 32
+    '     File Size: 4.78 KB
 
 
     ' Class mzPackReader
@@ -50,7 +50,7 @@
     ' 
     '     Constructor: (+2 Overloads) Sub New
     ' 
-    '     Function: GetThumbnail, OpenScannerData
+    '     Function: GetThumbnail, OpenScannerData, ReadThumbnailInternal
     ' 
     '     Sub: loadChromatogram, loadIndex, loadScannerIndex
     ' 

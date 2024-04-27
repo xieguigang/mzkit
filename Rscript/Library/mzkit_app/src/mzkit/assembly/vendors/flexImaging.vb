@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::16d124606a46f9cf9e5cea546a1a80c0, mzkit\Rscript\Library\mzkit\assembly\vendors\flexImaging.vb"
+﻿#Region "Microsoft.VisualBasic::984c21cad6d18159178822af2d537c7d, G:/mzkit/Rscript/Library/mzkit_app/src/mzkit//assembly/vendors/flexImaging.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 50
     ' Comment Lines: 0
     '   Blank Lines: 12
-    '     File Size: 2.36 KB
+    '     File Size: 2.42 KB
 
 
     ' Module flexImaging

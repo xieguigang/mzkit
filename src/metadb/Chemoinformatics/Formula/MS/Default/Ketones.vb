@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f1949c2fad8ded7ddf4d277493783d4c, mzkit\src\metadb\FormulaSearch.Extensions\AtomGroups\Default\Ketones.vb"
+﻿#Region "Microsoft.VisualBasic::7b0c2ceaaac99dcb6a7e02b7f3cf08bd, G:/mzkit/src/metadb/Chemoinformatics//Formula/MS/Default/Ketones.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 14
     ' Comment Lines: 8
     '   Blank Lines: 5
-    '     File Size: 1.81 KB
+    '     File Size: 1.83 KB
 
 
     '     Class Ketones

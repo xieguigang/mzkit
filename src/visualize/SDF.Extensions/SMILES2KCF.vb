@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7446a585bebb6869ed77392a2a3f6558, mzkit\src\visualize\SDF.Extensions\SMILES2KCF.vb"
+﻿#Region "Microsoft.VisualBasic::7446a585bebb6869ed77392a2a3f6558, G:/mzkit/src/visualize/SDF.Extensions//SMILES2KCF.vb"
 
     ' Author:
     ' 

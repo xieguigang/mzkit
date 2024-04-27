@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9910bcac8d5750f866bf174c53ccdd16, mzkit\src\assembly\SpectrumTree\Query\JaccardSearch.vb"
+﻿#Region "Microsoft.VisualBasic::916598bc18a6600c0f33eec5c7a55508, G:/mzkit/src/assembly/SpectrumTree//Query/JaccardSearch.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 112
-    '    Code Lines: 68
-    ' Comment Lines: 30
-    '   Blank Lines: 14
-    '     File Size: 4.86 KB
+    '   Total Lines: 131
+    '    Code Lines: 76
+    ' Comment Lines: 39
+    '   Blank Lines: 16
+    '     File Size: 5.71 KB
 
 
     '     Class JaccardSearch

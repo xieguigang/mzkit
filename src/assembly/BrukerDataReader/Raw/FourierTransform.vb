@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::80cb6fb4e6e4d557700633cd0a0fb007, mzkit\src\assembly\BrukerDataReader\Raw\FourierTransform.vb"
+﻿#Region "Microsoft.VisualBasic::2cfcd702ed87b0d6e37e29ebe1f97dbe, G:/mzkit/src/assembly/BrukerDataReader//Raw/FourierTransform.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 92
     ' Comment Lines: 13
     '   Blank Lines: 22
-    '     File Size: 3.81 KB
+    '     File Size: 3.94 KB
 
 
     '     Class FourierTransform

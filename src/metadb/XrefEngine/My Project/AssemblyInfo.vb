@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bc621217729df44157381c3e2c27049f, mzkit\src\metadb\XrefEngine\My Project\AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::a2cff72161911b773d7d82cbf7274d91, G:/mzkit/src/metadb/XrefEngine//My Project/AssemblyInfo.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 15
     ' Comment Lines: 15
     '   Blank Lines: 6
-    '     File Size: 1.15 KB
+    '     File Size: 1.18 KB
 
 
     ' 

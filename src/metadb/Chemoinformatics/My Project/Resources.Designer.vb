@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eb4c1627799eba8569ac028bee8c8c3f, mzkit\src\metadb\Chemoinformatics\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::8304e419a00fb5fb51a8a581e9fac807, G:/mzkit/src/metadb/Chemoinformatics//My Project/Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 32
     ' Comment Lines: 23
     '   Blank Lines: 8
-    '     File Size: 2.74 KB
+    '     File Size: 2.80 KB
 
 
     '     Module Resources

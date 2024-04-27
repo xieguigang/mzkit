@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1702047411bf7a39105ea5ce84ab33d4, mzkit\src\assembly\mzPack\MemoryReader.vb"
+﻿#Region "Microsoft.VisualBasic::b848e86520a7e61fd9499795daacdcdf, G:/mzkit/src/assembly/mzPack//MemoryReader.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 65
-    '    Code Lines: 51
+    '   Total Lines: 69
+    '    Code Lines: 54
     ' Comment Lines: 3
-    '   Blank Lines: 11
-    '     File Size: 2.42 KB
+    '   Blank Lines: 12
+    '     File Size: 2.54 KB
 
 
     ' Class MemoryReader

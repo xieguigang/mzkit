@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5b40616aace9901783c19a68846c4710, mzkit\src\assembly\assembly\MarkupData\mzXML\XML.vb"
+﻿#Region "Microsoft.VisualBasic::d35d8fc441d87a6570b92b764869a3a4, G:/mzkit/src/assembly/assembly//MarkupData/mzXML/XML.vb"
 
     ' Author:
     ' 
@@ -37,18 +37,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 130
-    '    Code Lines: 77
+    '   Total Lines: 140
+    '    Code Lines: 85
     ' Comment Lines: 36
-    '   Blank Lines: 17
-    '     File Size: 5.50 KB
+    '   Blank Lines: 19
+    '     File Size: 5.86 KB
 
 
     '     Class XML
     ' 
     '         Properties: index, indexOffset, msRun, shal
     ' 
-    '         Function: ExportPeaktable, LoadScanPeaks, LoadScans, ReadSingleFile
+    '         Function: ExportPeaktable, GetMSInstrumentManufacturer, LoadScanPeaks, LoadScans, ReadSingleFile
     ' 
     ' 
     ' /********************************************************************************/

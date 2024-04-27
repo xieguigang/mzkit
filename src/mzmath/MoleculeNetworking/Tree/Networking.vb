@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cfc4822cbf1fa8148eb74eddf2de360b, mzkit\src\mzmath\MoleculeNetworking\Networking.vb"
+﻿#Region "Microsoft.VisualBasic::693b8d5f74b398d907f1aa4cb9cbdcd1, G:/mzkit/src/mzmath/MoleculeNetworking//Tree/Networking.vb"
 
     ' Author:
     ' 
@@ -37,16 +37,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 91
-    '    Code Lines: 82
-    ' Comment Lines: 0
+    '   Total Lines: 132
+    '    Code Lines: 81
+    ' Comment Lines: 42
     '   Blank Lines: 9
-    '     File Size: 3.50 KB
+    '     File Size: 5.04 KB
 
 
     ' Module Networking
     ' 
-    '     Function: RepresentativeSpectrum, Tree
+    '     Function: normPeaki, RepresentativeSpectrum, Tree, unionMetadata
     ' 
     ' /********************************************************************************/
 

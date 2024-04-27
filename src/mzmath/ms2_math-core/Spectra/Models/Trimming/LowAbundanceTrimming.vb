@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9a74689eb08aed4fc5b7821842e1c984, mzkit\src\mzmath\ms2_math-core\Spectra\Models\Trimming\LowAbundanceTrimming.vb"
+﻿#Region "Microsoft.VisualBasic::7ba8f11bf29e29dbaec10f393dcaf04e, G:/mzkit/src/mzmath/ms2_math-core//Spectra/Models/Trimming/LowAbundanceTrimming.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 87
+    '   Total Lines: 92
     '    Code Lines: 56
-    ' Comment Lines: 16
+    ' Comment Lines: 21
     '   Blank Lines: 15
-    '     File Size: 3.05 KB
+    '     File Size: 3.37 KB
 
 
     '     Class LowAbundanceTrimming

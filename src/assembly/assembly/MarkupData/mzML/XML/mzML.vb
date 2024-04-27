@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::75a4e0207708d985ae588165706e7511, mzkit\src\assembly\assembly\MarkupData\mzML\XML\mzML.vb"
+﻿#Region "Microsoft.VisualBasic::286ff91233fde1a11d6a50271da7e7f4, G:/mzkit/src/assembly/assembly//MarkupData/mzML/XML/mzML.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 27
+    '   Total Lines: 32
     '    Code Lines: 20
-    ' Comment Lines: 0
+    ' Comment Lines: 5
     '   Blank Lines: 7
-    '     File Size: 916 B
+    '     File Size: 1.10 KB
 
 
     '     Class mzML

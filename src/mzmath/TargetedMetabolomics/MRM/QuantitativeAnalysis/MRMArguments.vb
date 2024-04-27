@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d9e6dc043db13aacebc1cbe1db46e88d, mzkit\src\mzmath\TargetedMetabolomics\MRM\QuantitativeAnalysis\MRMArguments.vb"
+﻿#Region "Microsoft.VisualBasic::39f9c3bf2e03852713a3beac853f104e, G:/mzkit/src/mzmath/TargetedMetabolomics//MRM/QuantitativeAnalysis/MRMArguments.vb"
 
     ' Author:
     ' 
@@ -37,18 +37,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 79
-    '    Code Lines: 61
+    '   Total Lines: 81
+    '    Code Lines: 62
     ' Comment Lines: 8
-    '   Blank Lines: 10
-    '     File Size: 3.13 KB
+    '   Blank Lines: 11
+    '     File Size: 3.19 KB
 
 
     '     Class MRMArguments
     ' 
     '         Properties: angleThreshold, baselineQuantile, bspline_degree, bspline_density, integratorTicks
-    '                     peakAreaMethod, peakwidth, sn_threshold, timeWindowSize, tolerance
-    '                     TPAFactors
+    '                     peakAreaMethod, peakwidth, sn_threshold, strict, timeWindowSize
+    '                     tolerance, TPAFactors
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: GetDefaultArguments, ToString

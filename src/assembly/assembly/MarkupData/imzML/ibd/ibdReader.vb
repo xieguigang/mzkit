@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cbb91f6795524757ab04ae4ab2681900, mzkit\src\assembly\assembly\MarkupData\imzML\ibd\ibdReader.vb"
+﻿#Region "Microsoft.VisualBasic::71acdb1bb700cbfc96fa166efec434a4, G:/mzkit/src/assembly/assembly//MarkupData/imzML/ibd/ibdReader.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 163
-    '    Code Lines: 107
-    ' Comment Lines: 31
-    '   Blank Lines: 25
-    '     File Size: 5.91 KB
+    '   Total Lines: 180
+    '    Code Lines: 112
+    ' Comment Lines: 42
+    '   Blank Lines: 26
+    '     File Size: 6.54 KB
 
 
     '     Class ibdReader
@@ -52,7 +52,7 @@
     ' 
     '         Function: GetMSMS, GetMSMSPipe, Open, (+2 Overloads) ReadArray, ToString
     ' 
-    '         Sub: (+2 Overloads) Dispose
+    '         Sub: (+2 Overloads) Dispose, GetMSVector
     ' 
     ' 
     ' /********************************************************************************/

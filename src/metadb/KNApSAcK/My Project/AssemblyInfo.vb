@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::618fd6d0889d3fb41040cc8fafdf30e0, mzkit\src\metadb\KNApSAcK\My Project\AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::fe64cda05588ade4a9807bdc542d4a5d, G:/mzkit/src/metadb/KNApSAcK//My Project/AssemblyInfo.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 15
     ' Comment Lines: 15
     '   Blank Lines: 8
-    '     File Size: 1.15 KB
+    '     File Size: 1.18 KB
 
 
     ' 

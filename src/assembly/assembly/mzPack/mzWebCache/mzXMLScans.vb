@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a6405e8c7cc2dd242d06442cb27b0a4c, mzkit\src\assembly\assembly\mzPack\mzWebCache\mzXMLScans.vb"
+﻿#Region "Microsoft.VisualBasic::a83236ccf75eb2a4b785d72410376746, G:/mzkit/src/assembly/assembly//mzPack/mzWebCache/mzXMLScans.vb"
 
     ' Author:
     ' 
@@ -37,17 +37,17 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 24
-    '    Code Lines: 19
+    '   Total Lines: 30
+    '    Code Lines: 24
     ' Comment Lines: 0
-    '   Blank Lines: 5
-    '     File Size: 901 B
+    '   Blank Lines: 6
+    '     File Size: 1.21 KB
 
 
     '     Class mzXMLScans
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: dataReader, loadScans
+    '         Function: dataReader, loadScans, msManufacturer
     ' 
     ' 
     ' /********************************************************************************/

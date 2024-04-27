@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8af31f12471b7e8ba214e025be981e12, mzkit\src\mzmath\ms2_math-core\Chromatogram\Quantile.vb"
+﻿#Region "Microsoft.VisualBasic::8af31f12471b7e8ba214e025be981e12, G:/mzkit/src/mzmath/mz_deco//Signals/Chromatogram/Quantile.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::43e8dc74bf138c302c654f8400ffc6e9, mzkit\src\assembly\Comprehensive\MsImaging\3D_MALDI\Imports3DMSI.vb"
+﻿#Region "Microsoft.VisualBasic::93f59c8ced350663307688beb8c65a15, G:/mzkit/src/assembly/Comprehensive//MsImaging/3D_MALDI/Imports3DMSI.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 45
     ' Comment Lines: 0
     '   Blank Lines: 10
-    '     File Size: 2.38 KB
+    '     File Size: 2.44 KB
 
 
     '     Module Imports3DMSI

@@ -1,4 +1,110 @@
-﻿Imports System.Runtime.InteropServices
+﻿#Region "Microsoft.VisualBasic::54843a48703c0e5c57e2c2b87d16029b, G:/mzkit/src/metadb/Lipidomics//MsCharacterization/MsmsCharacterization.vb"
+
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 16792
+    '    Code Lines: 12569
+    ' Comment Lines: 1881
+    '   Blank Lines: 2342
+    '     File Size: 1.04 MB
+
+
+    ' Class LipidMsmsCharacterizationUtility
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: acylCainMass, fattyacidProductIon, getAcylglycerolMoleculeObjAsLevel2, getAcylhexceramideMoleculeObjAsLevel2, getAcylhexceramideMoleculeObjAsLevel2_0
+    '               getAcylhexceramideMoleculeObjAsLevel2_1, getAdggaMoleculeObjAsLevel2, getAlphaOxfaMoleculeObjAsLevel1, getAsmMoleculeObjAsLevel2, getAsmMoleculeObjAsLevel2_0
+    '               getCardiolipinMoleculeObjAsLevel2_0, getCardiolipinMoleculeObjAsLevel2_1, getCardiolipinMoleculeObjAsLevel2_2, getCeramideMoleculeObjAsLevel2, getCeramideoxMoleculeObjAsLevel2
+    '               getDiacylglycerolMoleculeObjAsLevel2, getEsterceramideMoleculeObjAsLevel2, getEsterceramideMoleculeObjAsLevel2_0, getEsterceramideMoleculeObjAsLevel2_1, getEtherOxPxMoleculeObjAsLevel2
+    '               getEtherPhospholipidMoleculeObjAsLevel2, getEthertagMoleculeObjAsLevel2, getFahfamideMoleculeObjAsLevel2, getFahfaMoleculeObjAsLevel2_0, getFahfaTriacylglycerolMoleculeObjAsLevel2
+    '               getLipidAnnotaionAsSubLevel, getLysocardiolipinMoleculeObjAsLevel2, getNacylphospholipidMoleculeObjAsLevel2, getOxTriacylglycerolMoleculeObjAsLevel2, getOxydizedPhospholipidMoleculeObjAsLevel1
+    '               getOxydizedPhospholipidMoleculeObjAsLevel2, getPhospholipidMoleculeObjAsLevel2, getSingleacylchainMoleculeObjAsLevel2, getSingleacylchainwithsuffixMoleculeObjAsLevel2, getSingleacyloxMoleculeObjAsLevel1
+    '               getSteroidalEtherMoleculeObj, getTriacylglycerolMoleculeObjAsLevel2, getWaxEsterObjAsLevel2_0, isDiagnosticFragmentExist, isFragment1GreaterThanFragment2
+    '               isPeakFoundWithACritetion, returnAnnotationNoChainResult, returnAnnotationResult, SphingoChainMass
+    ' 
+    '     Sub: countFragmentExistence
+    ' 
+    ' Class LipidMsmsCharacterization
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: JudgeIfAcylcarnitine, JudgeIfAcylcerbds, JudgeIfAcylglcadg, JudgeIfAcylhexcer, JudgeIfAcylsm
+    '               JudgeIfAhexbrseSpecies, JudgeIfAhexcaseSpecies, JudgeIfAhexceSpecies, JudgeIfAhexsiseSpecies, JudgeIfAhexstseSpecies
+    '               JudgeIfAnandamide, JudgeIfAshexcer, JudgeIfBetaMethylPhosphatidylcholine, JudgeIfBismelpa, JudgeIfBismonoacylglycerophosphate
+    '               JudgeIfBrseSpecies, (+2 Overloads) JudgeIfCardiolipin, JudgeIfCaseSpecies, JudgeIfCeramideads, JudgeIfCeramideap
+    '               JudgeIfCeramideas, JudgeIfCeramidebds, JudgeIfCeramidebs, JudgeIfCeramidedos, JudgeIfCeramideeods
+    '               JudgeIfCeramideeos, JudgeIfCeramidends, JudgeIfCeramidenp, JudgeIfCeramidens, JudgeIfCeramidensD7
+    '               JudgeIfCeramideo, JudgeIfCeramideos, JudgeIfCeramidePhosphate, JudgeIfCholesterylEster, JudgeIfCholesterylEsterD7
+    '               JudgeIfCoenzymeq, JudgeIfDag, JudgeIfDagD5, JudgeIfDcae, JudgeIfDehydroErgoSESpecies
+    '               JudgeIfDesmosterolSpecies, JudgeIfDgcc, JudgeIfDgdg, JudgeIfDgmg, JudgeIfDgts
+    '               JudgeIfDilysocardiolipin, JudgeIfDiMethylPE, JudgeIfDmedFattyacid, JudgeIfDmedOxfattyacid, JudgeIfErgoSESpecies
+    '               JudgeIfEtherDAG, JudgeIfEtherdgdg, JudgeIfEtherlysopc, JudgeIfEtherlysope, JudgeIfEtherlysopg
+    '               JudgeIfEthermgdg, JudgeIfEtheroxpc, JudgeIfEtheroxpe, JudgeIfEtherpc, JudgeIfEtherpe
+    '               JudgeIfEtherpg, JudgeIfEtherpi, JudgeIfEtherps, JudgeIfEtherSmgdg, JudgeIfEthertag
+    '               JudgeIfFahfa, JudgeIfFahfaDMED, JudgeIfFahfamidegly, JudgeIfFahfamideglyser, JudgeIfFahfamideorn
+    '               JudgeIfFahfaTriacylglycerol, JudgeIfFattyacid, JudgeIfGD1a, JudgeIfGD1b, JudgeIfGD2
+    '               JudgeIfGD3, JudgeIfGdcae, JudgeIfGlcadg, JudgeIfGlcae, JudgeIfGM1
+    '               JudgeIfGm3, JudgeIfGpnae, JudgeIfGQ1b, JudgeIfGT1b, JudgeIfHemiismonoacylglycerophosphate
+    '               JudgeIfHexceramideap, JudgeIfHexceramideeos, JudgeIfHexceramidends, JudgeIfHexceramidens, JudgeIfHexceramideo
+    '               JudgeIfHexhexceramidens, JudgeIfHexhexhexceramidens, JudgeIfKdcae, JudgeIfKlcae, JudgeIfLcae
+    '               JudgeIfLdgcc, JudgeIfLdgts, JudgeIfLysocardiolipin, JudgeIfLysopa, JudgeIfLysopc
+    '               JudgeIfLysopcD5, JudgeIfLysope, JudgeIfLysopeD5, JudgeIfLysopg, JudgeIfLysopgD5
+    '               JudgeIfLysopi, JudgeIfLysopiD5, JudgeIfLysops, JudgeIfLysopsD5, JudgeIfMag
+    '               JudgeIfMgdg, JudgeIfMgmg, JudgeIfMipc, JudgeIfMonoMethylPE, JudgeIfNAcyl5HT
+    '               JudgeIfNAcylAla, JudgeIfNAcylGln, JudgeIfNAcylGlyOxFa, JudgeIfNAcylGlySerOxFa, JudgeIfNAcylLeu
+    '               JudgeIfNAcylOrnOxFa, JudgeIfNAcylPheFa, JudgeIfNacylphosphatidylethanolamine, JudgeIfNacylphosphatidylserine, JudgeIfNAcylSer
+    '               JudgeIfNAcylTauFa, JudgeIfNAcylTryA, JudgeIfNAcylVal, JudgeIfNGcGM3, JudgeIfnoChainSterol
+    '               JudgeIfOxfattyacid, JudgeIfOxpc, JudgeIfOxpe, JudgeIfOxpg, JudgeIfOxpi
+    '               JudgeIfOxps, JudgeIfOxTriacylglycerol, JudgeIfPbtoh, JudgeIfPecermide, JudgeIfPetoh
+    '               JudgeIfPhosphatidicacid, JudgeIfPhosphatidylcholine, JudgeIfPhosphatidylcholineD5, JudgeIfPhosphatidylethanolamine, JudgeIfPhosphatidylethanolamineD5
+    '               JudgeIfPhosphatidylglycerol, JudgeIfPhosphatidylglycerolD5, JudgeIfPhosphatidylinositol, JudgeIfPhosphatidylinositolD5, JudgeIfPhosphatidylserine
+    '               JudgeIfPhosphatidylserineD5, JudgeIfPhosphatidylThreonine, JudgeIfPhytosphingosine, JudgeIfPicermide, JudgeIfPmeoh
+    '               JudgeIfShexcer, JudgeIfSiseSpecies, JudgeIfSmgdg, JudgeIfSpeSpecies, JudgeIfSphinganine
+    '               JudgeIfSphingomyelin, JudgeIfSphingomyelinD9, JudgeIfSphingomyelinPhyto, JudgeIfSphingosine, JudgeIfSqdg
+    '               JudgeIfSteroidWithLpa, JudgeIfSteroidWithPa, JudgeIfSterolHexoside, JudgeIfSterolSulfate, JudgeIfStseSpecies
+    '               JudgeIfSulfonolipid, JudgeIfTdcae, JudgeIfTlcae, JudgeIfTriacylglycerol, JudgeIfTriacylglycerolD5
+    '               JudgeIfVitaminaestermolecules, JudgeIfVitaminDmolecules, JudgeIfVitaminEmolecules, JudgeIfWaxEster
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Runtime.InteropServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.ElementsExactMass

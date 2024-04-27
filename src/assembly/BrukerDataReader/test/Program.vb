@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e3f9a8aac45e5528d84a220e792d89df, mzkit\src\assembly\BrukerDataReader\test\Program.vb"
+﻿#Region "Microsoft.VisualBasic::367bbd34cab7ec1778ba1587cb9b73f4, G:/mzkit/src/assembly/BrukerDataReader/test//Program.vb"
 
     ' Author:
     ' 
@@ -37,16 +37,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 42
-    '    Code Lines: 31
+    '   Total Lines: 49
+    '    Code Lines: 36
     ' Comment Lines: 2
-    '   Blank Lines: 9
-    '     File Size: 1.30 KB
+    '   Blank Lines: 11
+    '     File Size: 1.53 KB
 
 
     ' Module Program
     ' 
-    '     Sub: Main, mcf, spectrum
+    '     Sub: Main, mcf, spectrum, xmassReader
     ' 
     ' /********************************************************************************/
 

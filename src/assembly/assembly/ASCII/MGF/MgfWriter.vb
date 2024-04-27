@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fb401e477db5a58ec155d1f30b5013dd, mzkit\src\assembly\assembly\ASCII\MGF\MgfWriter.vb"
+﻿#Region "Microsoft.VisualBasic::68c14095dd6a584f325e4c9db1c6b6c8, G:/mzkit/src/assembly/assembly//ASCII/MGF/MgfWriter.vb"
 
     ' Author:
     ' 
@@ -37,18 +37,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 161
-    '    Code Lines: 126
-    ' Comment Lines: 15
-    '   Blank Lines: 20
-    '     File Size: 6.05 KB
+    '   Total Lines: 184
+    '    Code Lines: 141
+    ' Comment Lines: 20
+    '   Blank Lines: 23
+    '     File Size: 6.87 KB
 
 
     '     Module MgfWriter
     ' 
-    '         Function: ionTitle, (+2 Overloads) MgfIon, (+2 Overloads) SaveTo
+    '         Function: ionTitle, (+2 Overloads) MgfIon, SaveAsMgfIons, (+2 Overloads) SaveTo
     ' 
-    '         Sub: WriteAsciiMgf, writeIf
+    '         Sub: SaveTo, WriteAsciiMgf, writeIf
     ' 
     ' 
     ' /********************************************************************************/

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6fb99b3c3916562156aaa4d86857ebc2, mzkit\Rscript\Library\mzkit.plot\zzz.vb"
+﻿#Region "Microsoft.VisualBasic::5220017fbead52d0c00e3e78c6aaba95, G:/mzkit/Rscript/Library/mzkit_app/src/mzplot//zzz.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 13
-    '    Code Lines: 10
+    '   Total Lines: 14
+    '    Code Lines: 11
     ' Comment Lines: 0
     '   Blank Lines: 3
-    '     File Size: 296 B
+    '     File Size: 336 B
 
 
     ' Class zzz

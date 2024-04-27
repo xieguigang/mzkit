@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::942ed70471057945b74d3e30faa47796, mzkit\src\mzmath\ms2_simulator\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::e5a000d44326f4be7f692e22f6fe80cd, G:/mzkit/src/mzmath/ms2_simulator//My Project/Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 37
     ' Comment Lines: 55
     '   Blank Lines: 9
-    '     File Size: 3.92 KB
+    '     File Size: 4.02 KB
 
 
     '     Module Resources

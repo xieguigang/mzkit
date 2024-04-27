@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9c4b073b8079e4ab7afdd16dedf791e8, mzkit\src\metadb\Massbank\Public\NCBI\MeSH\KnowledgeBackground.vb"
+﻿#Region "Microsoft.VisualBasic::d93c9c4d64c4c44ee65c5eda0d0eecdc, G:/mzkit/src/metadb/Massbank//Public/NCBI/MeSH/KnowledgeBackground.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 108
-    '    Code Lines: 96
+    '   Total Lines: 109
+    '    Code Lines: 97
     ' Comment Lines: 0
     '   Blank Lines: 12
-    '     File Size: 4.13 KB
+    '     File Size: 4.32 KB
 
 
     '     Module KnowledgeBackground

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c4258b2efd8fd66cfca4bf4b1f8106e3, mzkit\src\assembly\assembly\mzPack\Stream\ScanMS2.vb"
+﻿#Region "Microsoft.VisualBasic::f8fa7ca170b1996020e152c480a2aea7, G:/mzkit/src/assembly/assembly//mzPack/Stream/ScanMS2.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 34
-    '    Code Lines: 22
+    '   Total Lines: 56
+    '    Code Lines: 42
     ' Comment Lines: 7
-    '   Blank Lines: 5
-    '     File Size: 1.11 KB
+    '   Blank Lines: 7
+    '     File Size: 1.88 KB
 
 
     '     Class ScanMS2
@@ -49,7 +49,7 @@
     '         Properties: activationMethod, centroided, charge, collisionEnergy, intensity
     '                     parentMz, polarity, rt
     ' 
-    '         Function: GetMatrix
+    '         Function: GetMatrix, GetScanMeta, GetSpectrum2
     ' 
     ' 
     ' /********************************************************************************/

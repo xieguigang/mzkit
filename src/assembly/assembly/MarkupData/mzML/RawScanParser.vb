@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7a249eb4788ef16b6403ce970e7ee91a, mzkit\src\assembly\assembly\MarkupData\mzML\RawScanParser.vb"
+﻿#Region "Microsoft.VisualBasic::5393fef44a77bd7e365449836dd49256, G:/mzkit/src/assembly/assembly//MarkupData/mzML/RawScanParser.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 45
+    '   Total Lines: 48
     '    Code Lines: 28
-    ' Comment Lines: 10
+    ' Comment Lines: 13
     '   Blank Lines: 7
-    '     File Size: 1.71 KB
+    '     File Size: 1.81 KB
 
 
     '     Class RawScanParser

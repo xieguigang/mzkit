@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::777138c3cbf842414a1b8c702c717233, mzkit\Rscript\Library\mzkit\assembly\NMR.vb"
+﻿#Region "Microsoft.VisualBasic::2a578ecaeb8e9210bbace575dc93658a, G:/mzkit/Rscript/Library/mzkit_app/src/mzkit//assembly/NMR.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 37
     ' Comment Lines: 18
     '   Blank Lines: 9
-    '     File Size: 2.03 KB
+    '     File Size: 2.10 KB
 
 
     ' Module NMRTool

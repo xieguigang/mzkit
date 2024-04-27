@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c26a38bf599b91c8b2bc819b7064e2ea, mzkit\src\metadb\FooDB\test\Program.vb"
+﻿#Region "Microsoft.VisualBasic::0573a25d0345577aecf5f74eacb35120, G:/mzkit/src/metadb/Massbank/test//food_testProgram.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 123
     ' Comment Lines: 4
     '   Blank Lines: 29
-    '     File Size: 8.31 KB
+    '     File Size: 8.46 KB
 
 
     ' Module Program

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a47b9eaa26a96d54c3dfeb8b831b35e1, mzkit\src\metadb\Massbank\My Project\AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::bcf18f3bee40dd4e20a02d4bc8288644, G:/mzkit/src/metadb/Massbank//My Project/AssemblyInfo.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 15
     ' Comment Lines: 15
     '   Blank Lines: 8
-    '     File Size: 1.16 KB
+    '     File Size: 1.20 KB
 
 
     ' 

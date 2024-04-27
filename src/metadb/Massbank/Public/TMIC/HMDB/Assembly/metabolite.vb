@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fd0ffae0ba62bdd052117d61bc915902, mzkit\src\metadb\Massbank\Public\TMIC\HMDB\Assembly\metabolite.vb"
+﻿#Region "Microsoft.VisualBasic::22d3014de5c11438660d72f3040653e8, G:/mzkit/src/metadb/Massbank//Public/TMIC/HMDB/Assembly/metabolite.vb"
 
     ' Author:
     ' 
@@ -37,23 +37,24 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 189
-    '    Code Lines: 128
-    ' Comment Lines: 29
-    '   Blank Lines: 32
-    '     File Size: 6.94 KB
+    '   Total Lines: 246
+    '    Code Lines: 145
+    ' Comment Lines: 68
+    '   Blank Lines: 33
+    '     File Size: 10.94 KB
 
 
     '     Class MetaReference
     ' 
     '         Properties: accession, average_molecular_weight, bigg_id, biocyc_id, biological_properties
     '                     cas_registry_number, chebi_id, chemical_formula, chemspider_id, description
-    '                     drugbank_id, drugbank_metabolite_id, fbonto_id, foodb_id, het_id
-    '                     inchi, inchikey, iupac_name, kegg_id, knapsack_id
-    '                     Mass, meta_cyc_id, metagene, metlin_id, monisotopic_molecular_weight
-    '                     name, nugowiki, pdb_id, phenol_explorer_compound_id, phenol_explorer_metabolite_id
-    '                     pubchem_compound_id, secondary_accessions, smiles, synonyms, synthesis_reference
-    '                     taxonomy, traditional_iupac, vmh_id, wikipedia_id, wikipidia
+    '                     drugbank_id, drugbank_metabolite_id, ExactMass, fbonto_id, foodb_id
+    '                     het_id, inchi, inchikey, iupac_name, kegg_id
+    '                     knapsack_id, Mass, meta_cyc_id, metagene, metlin_id
+    '                     monisotopic_molecular_weight, name, nugowiki, pdb_id, phenol_explorer_compound_id
+    '                     phenol_explorer_metabolite_id, pubchem_compound_id, secondary_accessions, smiles, synonyms
+    '                     synthesis_reference, taxonomy, traditional_iupac, vmh_id, wikipedia_id
+    '                     wikipidia
     ' 
     '     Class biological_properties
     ' 

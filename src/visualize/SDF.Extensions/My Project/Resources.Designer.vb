@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c09d423474dc8ccd133ce2537b925b77, mzkit\src\visualize\SDF.Extensions\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::83c84299ebb6c4b645144034227333f1, G:/mzkit/src/visualize/SDF.Extensions//My Project/Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 32
     ' Comment Lines: 23
     '   Blank Lines: 8
-    '     File Size: 2.74 KB
+    '     File Size: 2.81 KB
 
 
     '     Module Resources

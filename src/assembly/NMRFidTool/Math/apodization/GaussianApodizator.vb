@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8186d39db78fceaf457c89c94c4b112a, mzkit\src\assembly\NMRFidTool\Math\apodization\GaussianApodizator.vb"
+﻿#Region "Microsoft.VisualBasic::472863564ce36c6b9c533a3d55bde3ec, G:/mzkit/src/assembly/NMRFidTool//Math/apodization/GaussianApodizator.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 20
     ' Comment Lines: 40
     '   Blank Lines: 11
-    '     File Size: 2.66 KB
+    '     File Size: 2.74 KB
 
 
     '     Class GaussianApodizator

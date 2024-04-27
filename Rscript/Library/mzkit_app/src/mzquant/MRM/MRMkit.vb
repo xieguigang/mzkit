@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cfdc2aa455fc234d20a1579ca5114a93, mzkit\Rscript\Library\mzkit.quantify\MRM\MRMkit.vb"
+﻿#Region "Microsoft.VisualBasic::7c37c9539007c4c838e659a7a087ff42, G:/mzkit/Rscript/Library/mzkit_app/src/mzquant//MRM/MRMkit.vb"
 
     ' Author:
     ' 
@@ -37,20 +37,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 832
-    '    Code Lines: 579
+    '   Total Lines: 774
+    '    Code Lines: 528
     ' Comment Lines: 166
-    '   Blank Lines: 87
-    '     File Size: 35.91 KB
+    '   Blank Lines: 80
+    '     File Size: 33.10 KB
 
 
     ' Module MRMkit
     ' 
     '     Constructor: (+1 Overloads) Sub New
-    '     Function: asIonPair, ExtractIonData, ExtractPeakROI, GetPeakROIList, GetRTAlignments
-    '               IsomerismIonPairs, Linears, MRMarguments, printIonPairs, R2
-    '               readCompoundReference, readIonPairs, readIS, ROISummary, RTShiftSummary
-    '               (+2 Overloads) SampleQuantify, ScanPeakTable, ScanPeakTable2, (+2 Overloads) ScanWiffRaw, WiffRawFile
+    '     Function: asIonPair, ExtractIonData, ExtractPeakROI, GetRTAlignments, IsomerismIonPairs
+    '               Linears, MRMarguments, printIonPairs, R2, readCompoundReference
+    '               readIonPairs, readIS, RTShiftSummary, (+2 Overloads) SampleQuantify, ScanPeakTable
+    '               ScanPeakTable2, (+2 Overloads) ScanWiffRaw, WiffRawFile
     ' 
     ' /********************************************************************************/
 

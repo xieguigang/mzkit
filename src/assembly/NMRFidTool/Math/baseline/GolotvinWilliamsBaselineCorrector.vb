@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::10cba8e7f7406e0aeefcaec7373dcedb, mzkit\src\assembly\NMRFidTool\Math\baseline\GolotvinWilliamsBaselineCorrector.vb"
+﻿#Region "Microsoft.VisualBasic::bc82b3344247bed1da7951292ba9cb2f, G:/mzkit/src/assembly/NMRFidTool//Math/baseline/GolotvinWilliamsBaselineCorrector.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 162
     ' Comment Lines: 48
     '   Blank Lines: 26
-    '     File Size: 11.94 KB
+    '     File Size: 12.17 KB
 
 
     '     Class GolotvinWilliamsBaselineCorrector

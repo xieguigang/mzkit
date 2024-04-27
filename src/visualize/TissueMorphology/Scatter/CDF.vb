@@ -1,54 +1,55 @@
-﻿#Region "Microsoft.VisualBasic::a6e603723b4db43a8dfd25c17dd11aac, mzkit\src\visualize\TissueMorphology\Scatter\CDF.vb"
+﻿#Region "Microsoft.VisualBasic::1920d2c9c3f029399c29f6f9240e0f52, G:/mzkit/src/visualize/TissueMorphology//Scatter/CDF.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 217
-'    Code Lines: 168
-' Comment Lines: 18
-'   Blank Lines: 31
-'     File Size: 8.92 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module CDF
-' 
-'     Function: (+2 Overloads) GetDimension, IsTissueMorphologyCDF, (+2 Overloads) ReadTissueMorphology, (+2 Overloads) ReadUMAP, WriteCDF
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 300
+    '    Code Lines: 221
+    ' Comment Lines: 37
+    '   Blank Lines: 42
+    '     File Size: 12.38 KB
+
+
+    ' Module CDF
+    ' 
+    '     Function: encodeClusterLabels, (+2 Overloads) GetDimension, IsTissueMorphologyCDF, ReadClusterLabelv2, (+2 Overloads) ReadTissueMorphology
+    '               (+2 Overloads) ReadUMAP, WriteCDF
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

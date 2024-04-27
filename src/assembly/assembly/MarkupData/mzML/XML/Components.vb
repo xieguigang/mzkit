@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b6a48cbf4e048fb57bdf4718b5c3a02f, mzkit\src\assembly\assembly\MarkupData\mzML\XML\Components.vb"
+﻿#Region "Microsoft.VisualBasic::5893a25b7afca092fe3b358cf6a6a244, G:/mzkit/src/assembly/assembly//MarkupData/mzML/XML/Components.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 56
-    '    Code Lines: 38
-    ' Comment Lines: 0
-    '   Blank Lines: 18
-    '     File Size: 1.70 KB
+    '   Total Lines: 73
+    '    Code Lines: 44
+    ' Comment Lines: 10
+    '   Blank Lines: 19
+    '     File Size: 2.25 KB
 
 
     '     Class fileDescription
@@ -53,6 +53,8 @@
     '     Class SourceFileList
     ' 
     '         Properties: sourceFile
+    ' 
+    '         Function: GetFileList
     ' 
     '     Class SourceFile
     ' 

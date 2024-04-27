@@ -1,58 +1,69 @@
-﻿#Region "Microsoft.VisualBasic::fa8f4991546eaba8428c31456f05ef13, mzkit\src\metadb\Massbank\MetaLib\Models\MetaLib.vb"
+﻿#Region "Microsoft.VisualBasic::2f4e4702d58a74c4eb6386c9cecf8555, G:/mzkit/src/metadb/Massbank//MetaLib/Models/MetaLib.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 58
-'    Code Lines: 33
-' Comment Lines: 13
-'   Blank Lines: 12
-'     File Size: 2.36 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class MetaLib
-' 
-'         Properties: [class], chemical, kingdom, molecular_framework, organism
-'                     pathways, samples, sub_class, super_class
-' 
-'         Function: Equals, ToString
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 113
+    '    Code Lines: 62
+    ' Comment Lines: 28
+    '   Blank Lines: 23
+    '     File Size: 4.52 KB
+
+
+    '     Class BiosampleSource
+    ' 
+    '         Properties: biosample, reference, source
+    ' 
+    '         Function: ToString
+    ' 
+    '     Class CompoundClass
+    ' 
+    '         Properties: [class], kingdom, molecular_framework, sub_class, super_class
+    ' 
+    '     Class MetaLib
+    ' 
+    '         Properties: [class], chemical, keywords, kingdom, molecular_framework
+    '                     organism, pathways, samples, sub_class, super_class
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: Equals, ToString
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

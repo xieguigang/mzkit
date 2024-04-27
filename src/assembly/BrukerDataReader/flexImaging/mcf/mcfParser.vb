@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::323feb211fb8b636bd8e3d3cb2a25519, mzkit\src\assembly\BrukerDataReader\flexImaging\mcf\mcfParser.vb"
+﻿#Region "Microsoft.VisualBasic::f03731d20f0ac995d7c060dafa42363e, G:/mzkit/src/assembly/BrukerDataReader//flexImaging/mcf/mcfParser.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 26
     ' Comment Lines: 10
     '   Blank Lines: 10
-    '     File Size: 1.53 KB
+    '     File Size: 1.58 KB
 
 
     ' Class mcfParser

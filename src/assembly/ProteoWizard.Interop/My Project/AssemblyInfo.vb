@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c24c42f84991e21135d39cb5eb8693d3, mzkit\src\assembly\ProteoWizard.Interop\My Project\AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::6d0d11a4df995e8724d9770503d70458, G:/mzkit/src/assembly/ProteoWizard.Interop//My Project/AssemblyInfo.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 15
     ' Comment Lines: 15
     '   Blank Lines: 8
-    '     File Size: 1.17 KB
+    '     File Size: 1.21 KB
 
 
     ' 

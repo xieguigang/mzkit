@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f4002c7c28c14750dcb8baf43ec5d974, mzkit\src\assembly\assembly\MarkupData\IBase64Container.vb"
+﻿#Region "Microsoft.VisualBasic::f4002c7c28c14750dcb8baf43ec5d974, G:/mzkit/src/assembly/assembly//MarkupData/IBase64Container.vb"
 
     ' Author:
     ' 

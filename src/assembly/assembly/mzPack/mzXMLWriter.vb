@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f8007484bdf61359444ad1f93bca602e, mzkit\src\assembly\assembly\mzPack\mzXMLWriter.vb"
+﻿#Region "Microsoft.VisualBasic::f8007484bdf61359444ad1f93bca602e, G:/mzkit/src/assembly/assembly//mzPack/mzXMLWriter.vb"
 
     ' Author:
     ' 
