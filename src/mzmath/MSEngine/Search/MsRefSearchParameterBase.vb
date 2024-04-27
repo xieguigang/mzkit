@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::85ad60f4b2512ba3c08ff226dc63b909, G:/mzkit/src/mzmath/MSEngine//Search/MsRefSearchParameterBase.vb"
+﻿#Region "Microsoft.VisualBasic::e3cd6f4384937a26488a913803a37397, G:/mzkit/src/mzmath/MSEngine//Search/MsRefSearchParameterBase.vb"
 
     ' Author:
     ' 
@@ -37,10 +37,10 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 74
+    '   Total Lines: 73
     '    Code Lines: 45
     ' Comment Lines: 3
-    '   Blank Lines: 26
+    '   Blank Lines: 25
     '     File Size: 2.61 KB
 
 
@@ -56,7 +56,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Public Class MsRefSearchParameterBase
 
@@ -131,4 +130,3 @@ Public Class MsRefSearchParameterBase
         IsUseCcsForAnnotationScoring = parameter.IsUseCcsForAnnotationScoring
     End Sub
 End Class
-

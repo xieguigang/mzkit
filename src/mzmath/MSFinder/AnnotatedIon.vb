@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::559b90b8e50cc5ab902b4a1024ea9d1e, G:/mzkit/src/mzmath/MSFinder//AnnotatedIon.vb"
+﻿#Region "Microsoft.VisualBasic::e21c2ad02b1f695fb63d39128672057e, G:/mzkit/src/mzmath/MSFinder//AnnotatedIon.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 49
+    '   Total Lines: 48
     '    Code Lines: 41
     ' Comment Lines: 4
-    '   Blank Lines: 4
-    '     File Size: 1.77 KB
+    '   Blank Lines: 3
+    '     File Size: 1.76 KB
 
 
     ' Class AnnotatedIon
@@ -64,7 +64,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
 ''' <summary>

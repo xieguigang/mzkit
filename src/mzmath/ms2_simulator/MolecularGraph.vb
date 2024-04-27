@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::258438b434539241c00c628a419a694c, G:/mzkit/src/mzmath/ms2_simulator//MolecularGraph.vb"
+﻿#Region "Microsoft.VisualBasic::0e4b826474d5004120d195d2e8ec1695, G:/mzkit/src/mzmath/ms2_simulator//MolecularGraph.vb"
 
     ' Author:
     ' 
@@ -95,4 +95,3 @@ Public Module MolecularGraph
     End Function
 
 End Module
-

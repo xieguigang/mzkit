@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::129b24385b936fef1a08d495e10a8950, G:/mzkit/src/mzmath/Oligonucleotide_MS//VBA/Dim2.vb"
+﻿#Region "Microsoft.VisualBasic::e23b2485d249d3d7fff6b8326a41a605, G:/mzkit/src/mzmath/Oligonucleotide_MS//VBA/Dim2.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 5
     ' Comment Lines: 0
     '   Blank Lines: 1
-    '     File Size: 130 B
+    '     File Size: 128 B
 
 
     ' Class Dim2
@@ -58,4 +58,3 @@ Friend Class Dim2 : Inherits VB6DimensionVector(Of Integer)
         Call MyBase.New(2)
     End Sub
 End Class
-

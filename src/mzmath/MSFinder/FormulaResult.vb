@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::415fada6d80c21a0a8f26e8c03b3beb4, G:/mzkit/src/mzmath/MSFinder//FormulaResult.vb"
+﻿#Region "Microsoft.VisualBasic::2a0e923b688e91a7d9bc9acce3e7bb4d, G:/mzkit/src/mzmath/MSFinder//FormulaResult.vb"
 
     ' Author:
     ' 
@@ -100,4 +100,3 @@ Public Class FormulaResult
 
 #End Region
 End Class
-

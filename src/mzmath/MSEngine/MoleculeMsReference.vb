@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8afabd3fabc1bb2b0bce7138b85687f5, G:/mzkit/src/mzmath/MSEngine//MoleculeMsReference.vb"
+﻿#Region "Microsoft.VisualBasic::b78154a4e0742279855dca46b21b4298, G:/mzkit/src/mzmath/MSEngine//MoleculeMsReference.vb"
 
     ' Author:
     ' 
@@ -202,4 +202,3 @@ Public Class MoleculeMsReference : Implements IMoleculeMsProperty
         End Get
     End Property
 End Class
-

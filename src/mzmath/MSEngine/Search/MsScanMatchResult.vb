@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bec86ac0ce9f87ac5360517e881d0fb3, G:/mzkit/src/mzmath/MSEngine//Search/MsScanMatchResult.vb"
+﻿#Region "Microsoft.VisualBasic::afa8d69266a4b7138399668236f81d3c, G:/mzkit/src/mzmath/MSEngine//Search/MsScanMatchResult.vb"
 
     ' Author:
     ' 
@@ -204,4 +204,3 @@ Public Class MsScanMatchResult
         Return CType(MemberwiseClone(), MsScanMatchResult)
     End Function
 End Class
-

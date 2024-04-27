@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::daccac56b0bb55bf2fdaeef5bd6014d8, G:/mzkit/src/mzmath/Mummichog//Annealing/AnnotationSet.vb"
+﻿#Region "Microsoft.VisualBasic::1a61679df5ee7eb87b8e5fb5f08629a6, G:/mzkit/src/mzmath/Mummichog//Annealing/AnnotationSet.vb"
 
     ' Author:
     ' 
@@ -153,4 +153,3 @@ Public Class AnnotationSet : Implements Chromosome(Of AnnotationSet)
         Return clone
     End Function
 End Class
-

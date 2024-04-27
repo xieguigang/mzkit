@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8ad127fc4b6ae4d43b3d934651f19046, G:/mzkit/src/mzmath/MoleculeNetworking//NLPEmbedding/IonEmbedding.vb"
+﻿#Region "Microsoft.VisualBasic::09ba472b848b9a0060c03d6259429a73, G:/mzkit/src/mzmath/MoleculeNetworking//NLPEmbedding/IonEmbedding.vb"
 
     ' Author:
     ' 
@@ -118,4 +118,3 @@ Public Class IonEmbedding
     End Function
 
 End Class
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::85c9fafff1ea9b6e924dab36de774d28, G:/mzkit/src/mzmath/Oligonucleotide_MS//MS2_Spectrum_Matcher/ColorMap.vb"
+﻿#Region "Microsoft.VisualBasic::877df2a72dac86699a57fc2a28eb7286, G:/mzkit/src/mzmath/Oligonucleotide_MS//MS2_Spectrum_Matcher/ColorMap.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 8
     ' Comment Lines: 0
     '   Blank Lines: 3
-    '     File Size: 227 B
+    '     File Size: 225 B
 
 
     ' Class ColorMap
@@ -65,4 +65,3 @@ Public Class ColorMap
     End Sub
 
 End Class
-

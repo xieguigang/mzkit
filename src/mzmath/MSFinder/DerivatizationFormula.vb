@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::40f61e4a76ae63d07a10d01b81851865, G:/mzkit/src/mzmath/MSFinder//DerivatizationFormula.vb"
+﻿#Region "Microsoft.VisualBasic::85623becac4e0530d4d5b2479bdd46c1, G:/mzkit/src/mzmath/MSFinder//DerivatizationFormula.vb"
 
     ' Author:
     ' 
@@ -129,4 +129,3 @@ Public Class DerivatizationFormula : Inherits Formula
     End Sub
 
 End Class
-

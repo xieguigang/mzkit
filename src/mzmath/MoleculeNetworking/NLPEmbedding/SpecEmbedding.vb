@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8155b9294c0a7efb71df82a6362bfb0f, G:/mzkit/src/mzmath/MoleculeNetworking//NLPEmbedding/SpecEmbedding.vb"
+﻿#Region "Microsoft.VisualBasic::96284cf1b4080e6d8335122437efc6ab, G:/mzkit/src/mzmath/MoleculeNetworking//NLPEmbedding/SpecEmbedding.vb"
 
     ' Author:
     ' 
@@ -137,4 +137,3 @@ Public Class SpecEmbedding
         Return wv.outputVector
     End Function
 End Class
-

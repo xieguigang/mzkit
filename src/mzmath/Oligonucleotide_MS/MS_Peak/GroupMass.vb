@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::703cbb14d947b1428f1ee590706cfd91, G:/mzkit/src/mzmath/Oligonucleotide_MS//MS_Peak/GroupMass.vb"
+﻿#Region "Microsoft.VisualBasic::f3cec54cd0b93c99f679b9f2d664cf33, G:/mzkit/src/mzmath/Oligonucleotide_MS//MS_Peak/GroupMass.vb"
 
     ' Author:
     ' 
@@ -90,4 +90,3 @@ Public Class GroupMass
     End Function
 
 End Class
-

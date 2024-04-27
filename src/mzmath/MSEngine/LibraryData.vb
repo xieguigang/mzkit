@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4e790da939c67291f7af218e160b9193, G:/mzkit/src/mzmath/MSEngine//LibraryData.vb"
+﻿#Region "Microsoft.VisualBasic::448b673914460c806373c91797990667, G:/mzkit/src/mzmath/MSEngine//LibraryData.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 14
+    '   Total Lines: 13
     '    Code Lines: 8
     ' Comment Lines: 3
-    '   Blank Lines: 3
-    '     File Size: 379 B
+    '   Blank Lines: 2
+    '     File Size: 377 B
 
 
     ' Class LibraryData
@@ -52,7 +52,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 ''' <summary>
 ''' the library reference data model for mass spectrum search

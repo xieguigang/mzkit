@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::628f9abc0c71cb63badcbd0499df0efd, G:/mzkit/src/mzmath/mz_deco//ChromatogramModels/XICPool.vb"
+﻿#Region "Microsoft.VisualBasic::1147a6802241362934bda5bdfcdfa73d, G:/mzkit/src/mzmath/mz_deco//ChromatogramModels/XICPool.vb"
 
     ' Author:
     ' 
@@ -211,4 +211,3 @@ Public Class XICPool
     End Function
 
 End Class
-

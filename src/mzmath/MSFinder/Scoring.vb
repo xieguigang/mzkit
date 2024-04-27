@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::14bad86c6880471d95e4339b1be967fd, G:/mzkit/src/mzmath/MSFinder//Scoring.vb"
+﻿#Region "Microsoft.VisualBasic::838cffd72c89f6358cacd51e96eb212a, G:/mzkit/src/mzmath/MSFinder//Scoring.vb"
 
     ' Author:
     ' 
@@ -149,4 +149,3 @@ Public NotInheritable Class Scoring
         Return score
     End Function
 End Class
-

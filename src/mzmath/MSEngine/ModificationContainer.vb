@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::41d07885070766c9e6c805b3da5ada41, G:/mzkit/src/mzmath/MSEngine//ModificationContainer.vb"
+﻿#Region "Microsoft.VisualBasic::cadc4166d8edc8942f1feabaa3910233, G:/mzkit/src/mzmath/MSEngine//ModificationContainer.vb"
 
     ' Author:
     ' 
@@ -577,4 +577,3 @@ Public Class ModificationSite
 
     Public Property DiagnosticNLs As List(Of NeutralLoss) = New List(Of NeutralLoss)()
 End Class
-

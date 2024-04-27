@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bda30cf6d040b44a8023a63f8ddb95dc, G:/mzkit/src/mzmath/MSEngine//SpectrumHandler.vb"
+﻿#Region "Microsoft.VisualBasic::03d3b29bc455ff2320d7bad16e3583a9, G:/mzkit/src/mzmath/MSEngine//SpectrumHandler.vb"
 
     ' Author:
     ' 
@@ -463,4 +463,3 @@ Public NotInheritable Class SpectrumHandler
 
     End Function
 End Class
-

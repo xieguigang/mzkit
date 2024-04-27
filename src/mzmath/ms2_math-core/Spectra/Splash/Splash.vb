@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c81e125771154ead1d8099dbf6bdb35e, G:/mzkit/src/mzmath/ms2_math-core//Spectra/Splash/Splash.vb"
+﻿#Region "Microsoft.VisualBasic::5b14d0fe7b504e4b26fe8f1d86f2f419, G:/mzkit/src/mzmath/ms2_math-core//Spectra/Splash/Splash.vb"
 
     ' Author:
     ' 
@@ -380,4 +380,3 @@ Namespace Spectra.SplashID
         End Function
     End Class
 End Namespace
-

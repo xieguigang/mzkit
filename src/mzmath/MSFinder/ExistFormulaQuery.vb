@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::052cf03da48e7f8386db6b6e392a0bba, G:/mzkit/src/mzmath/MSFinder//ExistFormulaQuery.vb"
+﻿#Region "Microsoft.VisualBasic::5766dbe21639c15a068d93ec6afec438, G:/mzkit/src/mzmath/MSFinder//ExistFormulaQuery.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 34
+    '   Total Lines: 33
     '    Code Lines: 19
     ' Comment Lines: 5
-    '   Blank Lines: 10
-    '     File Size: 1.08 KB
+    '   Blank Lines: 9
+    '     File Size: 1.07 KB
 
 
     ' Class ExistFormulaQuery
@@ -49,7 +49,6 @@
     '     Properties: Formula, FormulaRecords, PubchemCidList, ResourceNames, ResourceNumber
     ' 
     '     Constructor: (+2 Overloads) Sub New
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -88,5 +87,3 @@ Public Class ExistFormulaQuery
     Public Property ResourceNames As String
 
 End Class
-
-

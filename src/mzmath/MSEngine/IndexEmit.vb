@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3477493c2653cb29599324d8a1909f70, G:/mzkit/src/mzmath/MSEngine//IndexEmit.vb"
+﻿#Region "Microsoft.VisualBasic::b91ccfda25e1e80ac4475e8c95e6b16a, G:/mzkit/src/mzmath/MSEngine//IndexEmit.vb"
 
     ' Author:
     ' 
@@ -131,4 +131,3 @@ Public Class IndexEmit
         End If
     End Function
 End Class
-

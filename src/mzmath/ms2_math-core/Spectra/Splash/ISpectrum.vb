@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d9e00605885c52d7902e82af0a5f05a9, G:/mzkit/src/mzmath/ms2_math-core//Spectra/Splash/ISpectrum.vb"
+﻿#Region "Microsoft.VisualBasic::56f83af71f8f6dfc49f125455bce33ae, G:/mzkit/src/mzmath/ms2_math-core//Spectra/Splash/ISpectrum.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 6
     ' Comment Lines: 29
     '   Blank Lines: 4
-    '     File Size: 1.34 KB
+    '     File Size: 1.33 KB
 
 
     '     Interface ISpectrum
@@ -94,4 +94,3 @@ Namespace Spectra.SplashID
 
     End Interface
 End Namespace
-

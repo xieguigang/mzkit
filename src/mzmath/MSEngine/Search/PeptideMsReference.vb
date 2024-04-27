@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3f639c5c2dc6e8d7ffe5086175cdb01c, G:/mzkit/src/mzmath/MSEngine//Search/PeptideMsReference.vb"
+﻿#Region "Microsoft.VisualBasic::b71d8d3a768713344367b17dd1ef5591, G:/mzkit/src/mzmath/MSEngine//Search/PeptideMsReference.vb"
 
     ' Author:
     ' 
@@ -355,4 +355,3 @@ Public Class PeptideMsReference
 
     Public Property IsAnnotated As Boolean
 End Class
-

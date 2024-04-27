@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::358d060ce62c86bbea5d51898616db99, G:/mzkit/src/mzmath/Mummichog//Annealing/ContextFitness.vb"
+﻿#Region "Microsoft.VisualBasic::6be143f6ad55e7649cdb36df1dcab82a, G:/mzkit/src/mzmath/Mummichog//Annealing/ContextFitness.vb"
 
     ' Author:
     ' 
@@ -112,4 +112,3 @@ Public Class ContextFitness : Implements Fitness(Of AnnotationSet)
         End If
     End Function
 End Class
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::681ac1d2c6c3c1335bd537713efd330d, G:/mzkit/src/mzmath/Oligonucleotide_MS//MS2_Spectrum_Matcher/Fragmentation.vb"
+﻿#Region "Microsoft.VisualBasic::6e70adad4a28762bb54bd6f4da81ca50, G:/mzkit/src/mzmath/Oligonucleotide_MS//MS2_Spectrum_Matcher/Fragmentation.vb"
 
     ' Author:
     ' 
@@ -37,10 +37,10 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 49
+    '   Total Lines: 48
     '    Code Lines: 40
     ' Comment Lines: 3
-    '   Blank Lines: 6
+    '   Blank Lines: 5
     '     File Size: 1.79 KB
 
 
@@ -52,7 +52,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 ''' <summary>
 ''' An excellent reference is: Timar, Z. in Handbook of Analysis of Oligonucleotides and Related Products. (eds. J.V. Bonilla & G.S. Srivatsa) 167-218 (CRC Press, 2011)
@@ -102,4 +101,3 @@ Public Class Fragmentation
     End Function
 
 End Class
-

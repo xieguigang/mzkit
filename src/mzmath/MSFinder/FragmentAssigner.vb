@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9e2f890dc9781eced8d6456f19398dd3, G:/mzkit/src/mzmath/MSFinder//FragmentAssigner.vb"
+﻿#Region "Microsoft.VisualBasic::e0a8e1a4e3b3cc4d703c31fe210aa13b, G:/mzkit/src/mzmath/MSFinder//FragmentAssigner.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 528
     ' Comment Lines: 74
     '   Blank Lines: 116
-    '     File Size: 36.25 KB
+    '     File Size: 36.24 KB
 
 
     ' Class FragmentAssigner
@@ -778,4 +778,3 @@ Public NotInheritable Class FragmentAssigner
     End Function
 
 End Class
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::50c2860b293bd0a58b12e899870d4176, G:/mzkit/src/mzmath/MSFinder//DatabaseQuery.vb"
+﻿#Region "Microsoft.VisualBasic::839ac4054a02e7189bca0eea1fc31dce, G:/mzkit/src/mzmath/MSFinder//DatabaseQuery.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 22
     ' Comment Lines: 0
     '   Blank Lines: 1
-    '     File Size: 767 B
+    '     File Size: 765 B
 
 
     ' Class DatabaseQuery
@@ -80,4 +80,3 @@ Public Class DatabaseQuery
     Public Property Npa As Boolean
     Public Property Coconut As Boolean
 End Class
-

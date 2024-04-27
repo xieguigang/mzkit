@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::61f3a1f58bf07c434643f0ae169e1335, G:/mzkit/src/mzmath/Mummichog//Annealing/GAPeakListAnnotation.vb"
+﻿#Region "Microsoft.VisualBasic::1d6903880dc6fd69b673ba941fc059f7, G:/mzkit/src/mzmath/Mummichog//Annealing/GAPeakListAnnotation.vb"
 
     ' Author:
     ' 
@@ -106,4 +106,3 @@ Public Module GAPeakListAnnotation
         Return result
     End Function
 End Module
-

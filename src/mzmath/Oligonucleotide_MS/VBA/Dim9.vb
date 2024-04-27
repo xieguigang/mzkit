@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7f4b7d7754a9d6082b9077b335fd01a9, G:/mzkit/src/mzmath/Oligonucleotide_MS//VBA/Dim9.vb"
+﻿#Region "Microsoft.VisualBasic::995ee5e822c95593715f3e8e0182fd77, G:/mzkit/src/mzmath/Oligonucleotide_MS//VBA/Dim9.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 21
     ' Comment Lines: 0
     '   Blank Lines: 6
-    '     File Size: 710 B
+    '     File Size: 708 B
 
 
     ' Class Dim9
@@ -80,4 +80,3 @@ Friend Class Dim9 : Inherits VB6DimensionVector(Of Object)
     End Function
 
 End Class
-

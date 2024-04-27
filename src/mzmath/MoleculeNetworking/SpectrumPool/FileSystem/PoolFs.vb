@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4b7a180b5005013e06ce69210aeb1d43, G:/mzkit/src/mzmath/MoleculeNetworking//SpectrumPool/FileSystem/PoolFs.vb"
+﻿#Region "Microsoft.VisualBasic::0efad75cef06fea1d3f81446dc716266, G:/mzkit/src/mzmath/MoleculeNetworking//SpectrumPool/FileSystem/PoolFs.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 151
+    '   Total Lines: 150
     '    Code Lines: 90
     ' Comment Lines: 37
-    '   Blank Lines: 24
-    '     File Size: 6.12 KB
+    '   Blank Lines: 23
+    '     File Size: 6.11 KB
 
 
     '     Class PoolFs
@@ -56,7 +56,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1

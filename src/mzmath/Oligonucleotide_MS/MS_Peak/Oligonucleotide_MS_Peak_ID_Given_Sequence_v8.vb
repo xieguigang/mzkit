@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::219e13616291a82b40cf287bf4b7bbcf, G:/mzkit/src/mzmath/Oligonucleotide_MS//MS_Peak/Oligonucleotide_MS_Peak_ID_Given_Sequence_v8.vb"
+﻿#Region "Microsoft.VisualBasic::45ebd450ebebf486860fc0c5a59eb921, G:/mzkit/src/mzmath/Oligonucleotide_MS//MS_Peak/Oligonucleotide_MS_Peak_ID_Given_Sequence_v8.vb"
 
     ' Author:
     ' 
@@ -582,4 +582,3 @@ Public Class MS_Peak_ID
         Return (outputwrite, MatchedInputList.ToArray)
     End Function
 End Class
-

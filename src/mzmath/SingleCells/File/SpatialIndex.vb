@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4901820354f11950e11320bf82881639, G:/mzkit/src/mzmath/SingleCells//File/SpatialIndex.vb"
+﻿#Region "Microsoft.VisualBasic::041caeed30b9ada156d5f719308db671, G:/mzkit/src/mzmath/SingleCells//File/SpatialIndex.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 19
     ' Comment Lines: 24
     '   Blank Lines: 7
-    '     File Size: 1.42 KB
+    '     File Size: 1.41 KB
 
 
     ' Structure SpatialIndex
@@ -106,4 +106,3 @@ Public Structure SpatialIndex : Implements IPoint3D
     End Operator
 
 End Structure
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7a03ed646b45d29a0b8b54bc1de74f60, G:/mzkit/src/mzmath/MSFinder//AnalysisParamOfMsfinder.vb"
+﻿#Region "Microsoft.VisualBasic::c8ccf3ca4e8b7a72c50925713402e399, G:/mzkit/src/mzmath/MSFinder//AnalysisParamOfMsfinder.vb"
 
     ' Author:
     ' 
@@ -37,10 +37,10 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 301
+    '   Total Lines: 300
     '    Code Lines: 238
     ' Comment Lines: 23
-    '   Blank Lines: 40
+    '   Blank Lines: 39
     '     File Size: 11.56 KB
 
 
@@ -81,7 +81,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula

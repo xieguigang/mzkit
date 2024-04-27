@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::185b2d0f764f9007350ef2224c726d4b, G:/mzkit/src/mzmath/MoleculeNetworking//Tree/TreeCluster.vb"
+﻿#Region "Microsoft.VisualBasic::da21caf56d494e4c15ad3503363299aa, G:/mzkit/src/mzmath/MoleculeNetworking//Tree/TreeCluster.vb"
 
     ' Author:
     ' 
@@ -147,4 +147,3 @@ Public Class TreeCluster
     End Function
 
 End Class
-

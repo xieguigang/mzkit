@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2533e27d23502f927ce9bdd2b8225db0, G:/mzkit/src/mzmath/MSFinder//FormulaGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::56a7295749470c474f2a8abce7b1fa6d, G:/mzkit/src/mzmath/MSFinder//FormulaGenerator.vb"
 
     ' Author:
     ' 
@@ -1039,4 +1039,3 @@ Public Class FormulaGenerator
         Return New Formula(counts)
     End Function
 End Class
-

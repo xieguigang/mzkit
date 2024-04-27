@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e83ac909bc7ec926291fab6900a74efb, G:/mzkit/src/mzmath/MSFinder//FormulaStringParcer.vb"
+﻿#Region "Microsoft.VisualBasic::fa8163ba20b44e7f40a2cabaec2aa470, G:/mzkit/src/mzmath/MSFinder//FormulaStringParcer.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 485
     ' Comment Lines: 3
     '   Blank Lines: 72
-    '     File Size: 21.52 KB
+    '     File Size: 21.51 KB
 
 
     ' Module FormulaStringParcer
@@ -615,4 +615,3 @@ Public Module FormulaStringParcer
     End Sub
 
 End Module
-

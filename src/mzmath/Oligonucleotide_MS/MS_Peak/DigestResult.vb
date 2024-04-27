@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e53edc45bcdf587f0f4fe3a181f7ba6b, G:/mzkit/src/mzmath/Oligonucleotide_MS//MS_Peak/DigestResult.vb"
+﻿#Region "Microsoft.VisualBasic::68bc3e1e9113fd0dc935dddc2ad35f58, G:/mzkit/src/mzmath/Oligonucleotide_MS//MS_Peak/DigestResult.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 10
     ' Comment Lines: 0
     '   Blank Lines: 3
-    '     File Size: 391 B
+    '     File Size: 389 B
 
 
     ' Class DigestResult
@@ -66,4 +66,3 @@ Public Class DigestResult
     Public Property digest As TheoreticalDigestMass()
 
 End Class
-

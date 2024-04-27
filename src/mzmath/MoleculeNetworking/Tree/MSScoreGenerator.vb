@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::71bcabb50a8238e70890a7df71742623, G:/mzkit/src/mzmath/MoleculeNetworking//Tree/MSScoreGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::42881ea20d0f404e90bd3417e28d0108, G:/mzkit/src/mzmath/MoleculeNetworking//Tree/MSScoreGenerator.vb"
 
     ' Author:
     ' 
@@ -186,4 +186,3 @@ Public Class MSScoreGenerator : Inherits ComparisonProvider
         Return GetSpectral(guid:=id)
     End Function
 End Class
-

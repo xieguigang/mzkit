@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d86379309cf1bab8e9d61b9fa62c7fa8, G:/mzkit/src/mzmath/MSEngine//MassSearchArguments.vb"
+﻿#Region "Microsoft.VisualBasic::8d1b11642e50f97b02511f25091b0eed, G:/mzkit/src/mzmath/MSEngine//MassSearchArguments.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 7
     ' Comment Lines: 0
     '   Blank Lines: 3
-    '     File Size: 305 B
+    '     File Size: 303 B
 
 
     ' Class MassSearchArguments
@@ -62,4 +62,3 @@ Public Class MassSearchArguments
     Public Property Optionals As Dictionary(Of String, String)
 
 End Class
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4cc1e982c0b4f96c99004a3a1100d1ca, G:/mzkit/src/mzmath/MSEngine//MsScanMatching.vb"
+﻿#Region "Microsoft.VisualBasic::729115dddd524ac0a47b222a1b5524f1, G:/mzkit/src/mzmath/MSEngine//MsScanMatching.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 1321
+    '   Total Lines: 1320
     '    Code Lines: 882
     ' Comment Lines: 237
-    '   Blank Lines: 202
-    '     File Size: 68.34 KB
+    '   Blank Lines: 201
+    '     File Size: 68.33 KB
 
 
     ' Class MatchedPeak
@@ -59,7 +59,6 @@
     '               GetTotalSimilarityUsingSimpleDotProduct, GetWeightedDotProduct, (+2 Overloads) IsComparedAvailable
     ' 
     '     Sub: SearchMatchedPeaks
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -1385,5 +1384,3 @@ Public NotInheritable Class MsScanMatching
         End If
     End Function
 End Class
-
-

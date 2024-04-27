@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4dcc79d2487d9b1d324dec41972ea127, G:/mzkit/src/mzmath/MSEngine//MassSearchIndex.vb"
+﻿#Region "Microsoft.VisualBasic::9437612d0e427638f8ff55b40d826cfc, G:/mzkit/src/mzmath/MSEngine//MassSearchIndex.vb"
 
     ' Author:
     ' 
@@ -139,4 +139,3 @@ Public Class MassSearchIndex(Of T As IExactMassProvider) : Implements IMassSearc
         Return QueryByMass(mass)
     End Function
 End Class
-

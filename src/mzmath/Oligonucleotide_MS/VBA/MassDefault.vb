@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::16c3a033e22f978ac53c0eab7e442733, G:/mzkit/src/mzmath/Oligonucleotide_MS//VBA/MassDefault.vb"
+﻿#Region "Microsoft.VisualBasic::208623632655cf857a4cdf86cadb7cb0, G:/mzkit/src/mzmath/Oligonucleotide_MS//VBA/MassDefault.vb"
 
     ' Author:
     ' 
@@ -143,4 +143,3 @@ Module MassDefault
         Yield New Element("cp", -18.0153)
     End Function
 End Module
-

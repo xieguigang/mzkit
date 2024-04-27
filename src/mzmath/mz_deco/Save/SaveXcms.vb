@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7cdacfd699f90059a7c5403653818048, G:/mzkit/src/mzmath/mz_deco//Save/SaveXcms.vb"
+﻿#Region "Microsoft.VisualBasic::86f01581a9b6bb15ce0762e2888b225a, G:/mzkit/src/mzmath/mz_deco//Save/SaveXcms.vb"
 
     ' Author:
     ' 
@@ -215,4 +215,3 @@ Public Module SaveXcms
         Return New PeakSet With {.peaks = peaks}
     End Function
 End Module
-

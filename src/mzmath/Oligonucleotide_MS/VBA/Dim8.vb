@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a0881ec6b19ef251c2d30130e0ed907b, G:/mzkit/src/mzmath/Oligonucleotide_MS//VBA/Dim8.vb"
+﻿#Region "Microsoft.VisualBasic::0c7d7f501aa5537f537b52e88717de37, G:/mzkit/src/mzmath/Oligonucleotide_MS//VBA/Dim8.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 5
     ' Comment Lines: 0
     '   Blank Lines: 1
-    '     File Size: 129 B
+    '     File Size: 127 B
 
 
     ' Class Dim8
@@ -58,4 +58,3 @@ Friend Class Dim8 : Inherits VB6DimensionVector(Of Object)
         Call MyBase.New(8)
     End Sub
 End Class
-

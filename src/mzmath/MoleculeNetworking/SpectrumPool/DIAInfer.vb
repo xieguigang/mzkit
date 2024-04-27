@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::09bc0bef980640287c8607a42c3c8bb7, G:/mzkit/src/mzmath/MoleculeNetworking//SpectrumPool/DIAInfer.vb"
+﻿#Region "Microsoft.VisualBasic::b046d25acdd424f4d1e2d6e6f04e9849, G:/mzkit/src/mzmath/MoleculeNetworking//SpectrumPool/DIAInfer.vb"
 
     ' Author:
     ' 
@@ -37,10 +37,10 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 237
+    '   Total Lines: 236
     '    Code Lines: 154
     ' Comment Lines: 56
-    '   Blank Lines: 27
+    '   Blank Lines: 26
     '     File Size: 10.77 KB
 
 
@@ -53,7 +53,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType

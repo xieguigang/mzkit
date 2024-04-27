@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c7c77a915c47a66abcfb0c172b66586c, G:/mzkit/src/mzmath/Oligonucleotide_MS//VBA/VB6DimensionVector.vb"
+﻿#Region "Microsoft.VisualBasic::ec152d44d954d469218875126b806062, G:/mzkit/src/mzmath/Oligonucleotide_MS//VBA/VB6DimensionVector.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 18
     ' Comment Lines: 0
     '   Blank Lines: 5
-    '     File Size: 494 B
+    '     File Size: 492 B
 
 
     ' Class VB6DimensionVector
@@ -76,4 +76,3 @@ Friend Class VB6DimensionVector(Of T)
         Return Cells.GetJson
     End Function
 End Class
-

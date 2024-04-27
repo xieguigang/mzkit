@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fdda9e38515290dc472d09ac688777d6, G:/mzkit/src/mzmath/SingleCells//File/MatrixReader.vb"
+﻿#Region "Microsoft.VisualBasic::42e2031b46cad555ab884e166ff73d9f, G:/mzkit/src/mzmath/SingleCells//File/MatrixReader.vb"
 
     ' Author:
     ' 
@@ -342,4 +342,3 @@ Public Class MatrixReader : Implements IDisposable
         GC.SuppressFinalize(Me)
     End Sub
 End Class
-

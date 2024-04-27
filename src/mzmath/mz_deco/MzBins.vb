@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b868f8c1a80281f21d35a733b364d14b, G:/mzkit/src/mzmath/mz_deco//MzBins.vb"
+﻿#Region "Microsoft.VisualBasic::9a6738d5f226c36149f68de1af0fbbe8, G:/mzkit/src/mzmath/mz_deco//MzBins.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 50
     ' Comment Lines: 3
     '   Blank Lines: 10
-    '     File Size: 2.34 KB
+    '     File Size: 2.33 KB
 
 
     ' Module MzBins
@@ -115,4 +115,3 @@ Public Module MzBins
     End Function
 
 End Module
-

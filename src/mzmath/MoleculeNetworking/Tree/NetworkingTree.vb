@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7a77380e12f929facbaf74bbe36a0bce, G:/mzkit/src/mzmath/MoleculeNetworking//Tree/NetworkingTree.vb"
+﻿#Region "Microsoft.VisualBasic::cb95c7977a3d969a967283eeecdf348c, G:/mzkit/src/mzmath/MoleculeNetworking//Tree/NetworkingTree.vb"
 
     ' Author:
     ' 
@@ -173,4 +173,3 @@ Public Class NetworkingTree
         }
     End Function
 End Class
-

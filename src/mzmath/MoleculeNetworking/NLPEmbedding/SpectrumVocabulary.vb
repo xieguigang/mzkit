@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::28a4cf026c4f21151dc2b3ecfe878e15, G:/mzkit/src/mzmath/MoleculeNetworking//NLPEmbedding/SpectrumVocabulary.vb"
+﻿#Region "Microsoft.VisualBasic::ae0d9a144d3956fbfeb18652c5a02d06, G:/mzkit/src/mzmath/MoleculeNetworking//NLPEmbedding/SpectrumVocabulary.vb"
 
     ' Author:
     ' 
@@ -90,4 +90,3 @@ Public Class SpectrumVocabulary
     End Function
 
 End Class
-

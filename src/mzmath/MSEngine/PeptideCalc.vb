@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e216d5d49635e6a5b49580eee6a023f8, G:/mzkit/src/mzmath/MSEngine//PeptideCalc.vb"
+﻿#Region "Microsoft.VisualBasic::e7df0ee7ee8c9f6e769b5010d11d8696, G:/mzkit/src/mzmath/MSEngine//PeptideCalc.vb"
 
     ' Author:
     ' 
@@ -468,4 +468,3 @@ Public NotInheritable Class PeptideCalc
         Return New DerivatizationFormula(carbon, hydrogen - offsetHydrogen, nitrogen, oxygen - offsetOxygen, 0, sulfur, 0, 0, 0, 0, 0)
     End Function
 End Class
-

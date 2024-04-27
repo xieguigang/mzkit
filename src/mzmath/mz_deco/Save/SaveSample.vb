@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e749c953226e7b0ddfa04710fb653793, G:/mzkit/src/mzmath/mz_deco//Save/SaveSample.vb"
+﻿#Region "Microsoft.VisualBasic::785a236242ad57fac072b38525012c8c, G:/mzkit/src/mzmath/mz_deco//Save/SaveSample.vb"
 
     ' Author:
     ' 
@@ -172,4 +172,3 @@ Public Module SaveSample
     End Function
 
 End Module
-

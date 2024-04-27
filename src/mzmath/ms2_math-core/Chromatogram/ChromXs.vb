@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2e92bbf1289f3cc903ee631ec175877b, G:/mzkit/src/mzmath/ms2_math-core//Chromatogram/ChromXs.vb"
+﻿#Region "Microsoft.VisualBasic::d0d70c5c30b48756bfcc88b9a47bf167, G:/mzkit/src/mzmath/ms2_math-core//Chromatogram/ChromXs.vb"
 
     ' Author:
     ' 
@@ -321,4 +321,3 @@ Namespace Chromatogram
         End Class
     End Class
 End Namespace
-

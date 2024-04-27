@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::05b8f3c27273b0e56a8ac9d94d9bd3c4, G:/mzkit/src/mzmath/MSEngine//Search/SpectrumEqualityComparer.vb"
+﻿#Region "Microsoft.VisualBasic::b8cd27200ad92a644477aebf5a290ad3, G:/mzkit/src/mzmath/MSEngine//Search/SpectrumEqualityComparer.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 12
     ' Comment Lines: 0
     '   Blank Lines: 2
-    '     File Size: 653 B
+    '     File Size: 651 B
 
 
     ' Class SpectrumEqualityComparer
@@ -66,4 +66,3 @@ Public Class SpectrumEqualityComparer
         Return std.Round(obj.mz, 6).GetHashCode()
     End Function
 End Class
-

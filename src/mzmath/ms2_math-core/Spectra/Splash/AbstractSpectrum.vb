@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::be88285882a89983c5f89e25d7b53740, G:/mzkit/src/mzmath/ms2_math-core//Spectra/Splash/AbstractSpectrum.vb"
+﻿#Region "Microsoft.VisualBasic::3d7fba89c491552578baf47f22bfe245, G:/mzkit/src/mzmath/ms2_math-core//Spectra/Splash/AbstractSpectrum.vb"
 
     ' Author:
     ' 
@@ -145,4 +145,3 @@ Namespace Spectra.SplashID
 
     End Module
 End Namespace
-

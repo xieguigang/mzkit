@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::30fdd7be1d63fb3ba53ae88602307445, G:/mzkit/src/mzmath/Oligonucleotide_MS//MS_Peak/TheoreticalDigestMass.vb"
+﻿#Region "Microsoft.VisualBasic::261cabde8980fe51cf59c8e4d01e5e40, G:/mzkit/src/mzmath/Oligonucleotide_MS//MS_Peak/TheoreticalDigestMass.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 54
     ' Comment Lines: 40
     '   Blank Lines: 10
-    '     File Size: 3.29 KB
+    '     File Size: 3.28 KB
 
 
     ' Class TheoreticalDigestMass
@@ -161,4 +161,3 @@ Public Class TheoreticalDigestMass
     End Sub
 
 End Class
-

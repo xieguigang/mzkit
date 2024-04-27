@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8adfc089869049549049d2af83ca7680, G:/mzkit/src/mzmath/MoleculeNetworking//SpectrumPool/MetadataPool/HttpRESTMetadataPool.vb"
+﻿#Region "Microsoft.VisualBasic::2ed7fd62990b089d935a58d20dbe523d, G:/mzkit/src/mzmath/MoleculeNetworking//SpectrumPool/MetadataPool/HttpRESTMetadataPool.vb"
 
     ' Author:
     ' 
@@ -37,10 +37,10 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 301
+    '   Total Lines: 300
     '    Code Lines: 203
     ' Comment Lines: 50
-    '   Blank Lines: 48
+    '   Blank Lines: 47
     '     File Size: 11.31 KB
 
 
@@ -58,7 +58,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.Collections.Specialized
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml

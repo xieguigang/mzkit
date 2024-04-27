@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f5861b3bccf8d5182760ac731557656c, G:/mzkit/src/mzmath/MSEngine//SequenceToSpec.vb"
+﻿#Region "Microsoft.VisualBasic::cacf98272c844493d32da8093c2e787e, G:/mzkit/src/mzmath/MSEngine//SequenceToSpec.vb"
 
     ' Author:
     ' 
@@ -491,4 +491,3 @@ Public NotInheritable Class SequenceToSpec
         Return msref
     End Function
 End Class
-
