@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7ca9da3c7ae15ed3d28327e251d93ffa, mzkit\src\metadna\metaDNA\MSJointConnection.vb"
+﻿#Region "Microsoft.VisualBasic::a8b1a5f16b57b1f44bc95feb9a31ac52, G:/mzkit/src/metadna/metaDNA//MSJointConnection.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 257
-    '    Code Lines: 206
+    '   Total Lines: 258
+    '    Code Lines: 207
     ' Comment Lines: 26
     '   Blank Lines: 25
-    '     File Size: 10.11 KB
+    '     File Size: 10.53 KB
 
 
     ' Class MSJointConnection
