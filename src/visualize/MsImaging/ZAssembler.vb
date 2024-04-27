@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6f250810d45cf49050762b01ad3dc26d, G:/mzkit/src/visualize/MsImaging//ZAssembler.vb"
+﻿#Region "Microsoft.VisualBasic::df70e485f4d7e354f2af2af11c621ca7, G:/mzkit/src/visualize/MsImaging//ZAssembler.vb"
 
     ' Author:
     ' 
@@ -186,4 +186,3 @@ Public Class ZAssembler : Implements IDisposable
         GC.SuppressFinalize(Me)
     End Sub
 End Class
-

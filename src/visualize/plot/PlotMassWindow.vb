@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3bfb717259a545b1d1428a4583c06c74, G:/mzkit/src/visualize/plot//PlotMassWindow.vb"
+﻿#Region "Microsoft.VisualBasic::986303da82bbfd379fea4893065c43e7, G:/mzkit/src/visualize/plot//PlotMassWindow.vb"
 
     ' Author:
     ' 
@@ -152,4 +152,3 @@ Public Class PlotMassWindow : Inherits Plot
         Call plot.Plot(g, canvas)
     End Sub
 End Class
-

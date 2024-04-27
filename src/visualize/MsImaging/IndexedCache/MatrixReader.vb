@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dd030fe61fb75b5409d8c852f38c8d00, G:/mzkit/src/visualize/MsImaging//IndexedCache/MatrixReader.vb"
+﻿#Region "Microsoft.VisualBasic::f3980edf94a2c2cdbbeb396a44557299, G:/mzkit/src/visualize/MsImaging//IndexedCache/MatrixReader.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 40
     ' Comment Lines: 7
     '   Blank Lines: 9
-    '     File Size: 1.91 KB
+    '     File Size: 1.90 KB
 
 
     ' Class MatrixReader
@@ -109,4 +109,3 @@ Public Class MatrixReader
         Next
     End Function
 End Class
-

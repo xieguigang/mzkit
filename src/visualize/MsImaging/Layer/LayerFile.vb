@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::de6873e34e80ea8da10502e4f6f31e56, G:/mzkit/src/visualize/MsImaging//Layer/LayerFile.vb"
+﻿#Region "Microsoft.VisualBasic::9ed1ff4706aec9df3712af0422c26566, G:/mzkit/src/visualize/MsImaging//Layer/LayerFile.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 74
     ' Comment Lines: 3
     '   Blank Lines: 14
-    '     File Size: 3.11 KB
+    '     File Size: 3.10 KB
 
 
     ' Module LayerFile
@@ -145,4 +145,3 @@ Public Module LayerFile
     End Function
 
 End Module
-
