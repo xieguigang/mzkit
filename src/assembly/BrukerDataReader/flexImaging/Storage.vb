@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dac7abd2e2467ddbc2b9d8a7f2e2d93f, mzkit\src\assembly\BrukerDataReader\flexImaging\Storage.vb"
+﻿#Region "Microsoft.VisualBasic::ae1b00cffea5ae982526b574ae2a8d25, G:/mzkit/src/assembly/BrukerDataReader//flexImaging/Storage.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 50
     ' Comment Lines: 3
     '   Blank Lines: 7
-    '     File Size: 2.28 KB
+    '     File Size: 2.34 KB
 
 
     ' Module Storage

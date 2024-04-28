@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::948a50e03b484e23aa144233d76e9049, mzkit\src\assembly\NMRFidTool\Proc.vb"
+﻿#Region "Microsoft.VisualBasic::bca6d5413637dd8cfeaced06463e0444, G:/mzkit/src/assembly/NMRFidTool//Proc.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 241
     ' Comment Lines: 38
     '   Blank Lines: 51
-    '     File Size: 11.03 KB
+    '     File Size: 11.36 KB
 
 
     ' Class Proc

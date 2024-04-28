@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d97fe33669acecfe4abc288e6a20a3c4, mzkit\src\metadb\FormulaSearch.Extensions\test\My Project\AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::cfea037119446cb8e68a07c643b64a9d, G:/mzkit/src/metadb/FormulaSearch.Extensions//test/My Project/AssemblyInfo.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 13
     ' Comment Lines: 15
     '   Blank Lines: 7
-    '     File Size: 985 B
+    '     File Size: 1019 B
 
 
     ' 

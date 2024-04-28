@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::780f623cc70d2cb933036ffb4a6f622c, mzkit\Rscript\Library\mzkit.insilicons\My Project\Application.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::694b0c9f3261c95224d10f94bba4c539, G:/mzkit/Rscript/Library/mzkit_app/src/mzDIA//My Project/Application.Designer.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 2
     ' Comment Lines: 9
     '   Blank Lines: 1
-    '     File Size: 423 B
+    '     File Size: 434 B
 
 
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8dd0fc341097084cc30f79fe84df65ab, mzkit\src\assembly\BrukerDataReader\flexImaging\spectrum_sqlite\Properties.vb"
+﻿#Region "Microsoft.VisualBasic::881cd3e678c64a1365755f2ef9b59316, G:/mzkit/src/assembly/BrukerDataReader//flexImaging/spectrum_sqlite/Properties.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 7
     ' Comment Lines: 0
     '   Blank Lines: 2
-    '     File Size: 207 B
+    '     File Size: 215 B
 
 
     ' Class Properties

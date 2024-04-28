@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a21861fe84e0c8fae4a32a8b54fc0a2a, mzkit\src\metadb\Chemoinformatics\Formula\Models\Canonical.vb"
+﻿#Region "Microsoft.VisualBasic::7051ed9b1b2a7fcb3ad2de72770a5ddd, G:/mzkit/src/metadb/Chemoinformatics//Formula/Models/Canonical.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 33
     ' Comment Lines: 3
     '   Blank Lines: 9
-    '     File Size: 1.79 KB
+    '     File Size: 1.83 KB
 
 
     '     Module Canonical

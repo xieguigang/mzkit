@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ad050c6c08ac68e01d73bcdd4a8955a6, mzkit\src\visualize\MsImaging\Blender\Renderer\RectangleRender.vb"
+﻿#Region "Microsoft.VisualBasic::1bc4d5ad34062b66064f9324eaa58bd7, G:/mzkit/src/visualize/MsImaging//Blender/Renderer/RectangleRender.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 166
     ' Comment Lines: 16
     '   Blank Lines: 30
-    '     File Size: 9.77 KB
+    '     File Size: 9.98 KB
 
 
     '     Class RectangleRender

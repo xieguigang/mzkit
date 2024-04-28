@@ -1,4 +1,81 @@
-﻿Imports System.Runtime.CompilerServices
+﻿#Region "Microsoft.VisualBasic::8b3c9c0358b7d8919e780dccb7fe5e9e, G:/mzkit/src/metadb/Lipidomics//Annotation/ILipid.vb"
+
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 119
+    '    Code Lines: 98
+    ' Comment Lines: 1
+    '   Blank Lines: 20
+    '     File Size: 4.79 KB
+
+
+    ' Enum LipidDescription
+    ' 
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    ' Module LipidDescriptionExtensions
+    ' 
+    '     Function: Has
+    ' 
+    ' Interface ILipid
+    ' 
+    '     Properties: AnnotationLevel, ChainCount, Chains, Description, LipidClass
+    '                 Mass, Name
+    ' 
+    '     Function: Generate, GenerateSpectrum, Includes
+    ' 
+    ' Class Lipid
+    ' 
+    '     Properties: AnnotationLevel, ChainCount, Chains, Description, LipidClass
+    '                 Mass, Name
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: Accept, Equals, Generate, GenerateSpectrum, GetAnnotationLevel
+    '               Includes, ToString
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.BioDeep.MSEngine
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
@@ -117,4 +194,3 @@ Public Class Lipid
     End Function
 
 End Class
-

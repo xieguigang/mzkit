@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6bfcd178b1ca28f6469f6598d52ea27f, mzkit\src\mzmath\TargetedMetabolomics\Contents\SampleContentLevels.vb"
+﻿#Region "Microsoft.VisualBasic::6bfcd178b1ca28f6469f6598d52ea27f, G:/mzkit/src/mzmath/TargetedMetabolomics//Contents/SampleContentLevels.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,76 @@
-﻿Public NotInheritable Class DoubleBondIndeterminateState
+﻿#Region "Microsoft.VisualBasic::b0f2dbe9c6ebc39f0e1b05adfef8bdc5, G:/mzkit/src/metadb/Lipidomics//DoubleBondIndeterminateState.vb"
+
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 121
+    '    Code Lines: 106
+    ' Comment Lines: 0
+    '   Blank Lines: 15
+    '     File Size: 5.96 KB
+
+
+    ' Class DoubleBondIndeterminateState
+    ' 
+    '     Properties: AllCisTransIsomers, AllPositions, Identity
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: AsVisitor, CisTransIsomer, CisTransIsomerExclude, Exclude, Include
+    '               Indeterminate, Positions, PositionsExclude
+    '     Enum State
+    ' 
+    '         CisTransIsomerExclude, CisTransIsomerInclude, None, PositionExclude, PositionInclude
+    ' 
+    ' 
+    ' 
+    '     Class DoubleBondIndeterminateVisitor
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: Visit
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Public NotInheritable Class DoubleBondIndeterminateState
     Public Shared ReadOnly Property AllPositions As DoubleBondIndeterminateState = New DoubleBondIndeterminateState(State.PositionExclude, Nothing)
     Public Shared ReadOnly Property AllCisTransIsomers As DoubleBondIndeterminateState = New DoubleBondIndeterminateState(State.CisTransIsomerExclude, Nothing)
     Public Shared ReadOnly Property Identity As DoubleBondIndeterminateState = New DoubleBondIndeterminateState(State.None, Nothing)
@@ -119,4 +191,3 @@
         End Function
     End Class
 End Class
-

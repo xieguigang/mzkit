@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::36141ca2e80595c7ae43d4c1ac5a6673, mzkit\src\assembly\LoadR.NET5\LoadR.vb"
+﻿#Region "Microsoft.VisualBasic::5ec2fa3f9c89dcb71ef53025fdb481b3, G:/mzkit/src/assembly/LoadR.NET5//LoadR.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 58
     ' Comment Lines: 2
     '   Blank Lines: 12
-    '     File Size: 2.59 KB
+    '     File Size: 2.66 KB
 
 
     ' Module LoadR

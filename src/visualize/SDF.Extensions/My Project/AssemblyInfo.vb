@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d46d67fac7c9238aeffa9621fc19786f, mzkit\src\visualize\SDF.Extensions\My Project\AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::877a803e8e5e93416504b9f17c9e3622, G:/mzkit/src/visualize/SDF.Extensions//My Project/AssemblyInfo.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 15
     ' Comment Lines: 15
     '   Blank Lines: 6
-    '     File Size: 1.05 KB
+    '     File Size: 1.09 KB
 
 
     ' 

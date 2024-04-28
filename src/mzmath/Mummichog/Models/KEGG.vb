@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cf3a7ab6ecb1fdb45c147346ad9089e0, mzkit\src\mzmath\Mummichog\Models\KEGG.vb"
+﻿#Region "Microsoft.VisualBasic::6c08be7bf370b62684dac068073d1134, G:/mzkit/src/mzmath/Mummichog//Models/KEGG.vb"
 
     ' Author:
     ' 
@@ -37,16 +37,25 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 95
-    '    Code Lines: 67
+    '   Total Lines: 120
+    '    Code Lines: 84
     ' Comment Lines: 18
-    '   Blank Lines: 10
-    '     File Size: 3.65 KB
+    '   Blank Lines: 18
+    '     File Size: 4.67 KB
 
 
+    ' Class MapGraphPopulator
+    ' 
+    ' 
+    ' 
+    ' Class DefaultMapGraphPopulator
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: CreateGraphModel
+    ' 
     ' Module KEGG
     ' 
-    '     Function: CreateBackground, graphModel
+    '     Function: (+2 Overloads) CreateBackground, graphModel
     ' 
     ' /********************************************************************************/
 

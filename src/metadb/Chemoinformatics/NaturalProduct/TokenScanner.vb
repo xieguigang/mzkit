@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::34c2c7724a58ed2c99c3ce9d2b31349d, mzkit\src\metadb\Chemoinformatics\NaturalProduct\TokenScanner.vb"
+﻿#Region "Microsoft.VisualBasic::34c2c7724a58ed2c99c3ce9d2b31349d, G:/mzkit/src/metadb/Chemoinformatics//NaturalProduct/TokenScanner.vb"
 
     ' Author:
     ' 

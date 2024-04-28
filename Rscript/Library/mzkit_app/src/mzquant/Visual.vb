@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3a7bb42a396e0d4c0b6969377e1b75ed, mzkit\Rscript\Library\mzkit.quantify\Visual.vb"
+﻿#Region "Microsoft.VisualBasic::e63cc19761770ec5a3917d2aa30293b2, G:/mzkit/Rscript/Library/mzkit_app/src/mzquant//Visual.vb"
 
     ' Author:
     ' 
@@ -37,16 +37,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 162
-    '    Code Lines: 126
-    ' Comment Lines: 25
-    '   Blank Lines: 11
-    '     File Size: 7.84 KB
+    '   Total Lines: 144
+    '    Code Lines: 104
+    ' Comment Lines: 32
+    '   Blank Lines: 8
+    '     File Size: 7.12 KB
 
 
     ' Module Visual
     ' 
-    '     Function: asChromatogram, chromatogramPlot, DrawStandardCurve, MRMchromatogramPeakPlot
+    '     Function: chromatogramPlot, DrawStandardCurve, MRMchromatogramPeakPlot
     ' 
     ' /********************************************************************************/
 

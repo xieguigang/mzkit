@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b2514c3d65f9bb32aaa78119688ffe64, mzkit\src\mzmath\TargetedMetabolomics\MRM\Data\IonChromatogram.vb"
+﻿#Region "Microsoft.VisualBasic::5cd8ac598e98fc2ad537ec93c1bdd6ab, G:/mzkit/src/mzmath/TargetedMetabolomics//MRM/Data/IonChromatogram.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 32
     ' Comment Lines: 0
     '   Blank Lines: 7
-    '     File Size: 1.23 KB
+    '     File Size: 1.24 KB
 
 
     '     Structure IonChromatogram

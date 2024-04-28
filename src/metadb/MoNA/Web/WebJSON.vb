@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4d69b34bb8e46b1437d5ec08238cb63e, mzkit\src\metadb\MoNA\Web\WebJSON.vb"
+﻿#Region "Microsoft.VisualBasic::42ad9033af1be93e7ab64544e216268e, G:/mzkit/src/metadb/MoNA//Web/WebJSON.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 101
-    '    Code Lines: 84
+    '   Total Lines: 64
+    '    Code Lines: 52
     ' Comment Lines: 0
-    '   Blank Lines: 17
-    '     File Size: 3.81 KB
+    '   Blank Lines: 12
+    '     File Size: 2.47 KB
 
 
     ' Class WebJSON
@@ -49,11 +49,6 @@
     '     Properties: id, spectrum
     ' 
     '     Function: GetJson, ParseMatrix, SearchLCMSByName, ToString
-    ' 
-    ' Class QueryWeb
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: getRestUrl, parseJSON
     ' 
     ' /********************************************************************************/
 
@@ -123,5 +118,3 @@ Public Class WebJSON
     End Function
 
 End Class
-
-

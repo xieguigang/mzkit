@@ -1,54 +1,54 @@
-﻿#Region "Microsoft.VisualBasic::bbaaa8379959b4fe07ceb710044652ba, mzkit\src\visualize\plot\ChromatogramPlot\ChromatogramPlot.vb"
+﻿#Region "Microsoft.VisualBasic::858981a2224b3e3ea735b0336ce20e41, G:/mzkit/src/visualize/plot//ChromatogramPlot/ChromatogramPlot.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 236
-'    Code Lines: 192
-' Comment Lines: 32
-'   Blank Lines: 12
-'     File Size: 10.89 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module ChromatogramPlot
-' 
-'     Function: MRMChromatogramPlot, Plot, (+2 Overloads) TICplot
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 236
+    '    Code Lines: 192
+    ' Comment Lines: 32
+    '   Blank Lines: 12
+    '     File Size: 10.91 KB
+
+
+    ' Module ChromatogramPlot
+    ' 
+    '     Function: MRMChromatogramPlot, Plot, (+2 Overloads) TICplot
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -199,7 +199,7 @@ Public Module ChromatogramPlot
     ''' <param name="size"></param>
     ''' <param name="margin"></param>
     ''' <param name="bg"></param>
-    ''' <param name="deln">legend每一列有多少个进行显示</param>
+    ''' <param name="legend_split">legend每一列有多少个进行显示</param>
     ''' <param name="labelColor"></param>
     ''' <param name="penStyle">
     ''' CSS value for controls of the line drawing style
@@ -225,7 +225,7 @@ Public Module ChromatogramPlot
                             Optional ylabel$ = "Intensity",
                             Optional showLegends As Boolean = True,
                             Optional legendFontCSS$ = CSSFont.Win10Normal,
-                            Optional deln% = 10,
+                            Optional legend_split% = 10,
                             Optional isXIC As Boolean = False,
                             Optional fillAlpha As Integer = 180,
                             Optional gridFill As String = "rgb(245,245,245)",
@@ -251,7 +251,8 @@ Public Module ChromatogramPlot
             .gridFill = gridFill,
             .drawLabels = showLabels,
             .tagColor = labelColor,
-            .axisStroke = axisStroke
+            .axisStroke = axisStroke,
+            .legendSplitSize = legend_split
         }
         Dim TIC As Plot
 
@@ -277,7 +278,6 @@ Public Module ChromatogramPlot
                 fillAlpha:=fillAlpha,
                 labelLayoutTicks:=labelLayoutTicks,
                 theme:=theme,
-                deln:=deln,
                 bspline:=spline
             ) With {
                 .xlabel = xlabel,

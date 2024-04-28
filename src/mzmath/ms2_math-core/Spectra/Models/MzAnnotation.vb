@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4dbd909eb8a750be8a2559acf11d1cff, mzkit\src\mzmath\ms2_math-core\Spectra\Models\MzAnnotation.vb"
+﻿#Region "Microsoft.VisualBasic::4dbd909eb8a750be8a2559acf11d1cff, G:/mzkit/src/mzmath/ms2_math-core//Spectra/Models/MzAnnotation.vb"
 
     ' Author:
     ' 

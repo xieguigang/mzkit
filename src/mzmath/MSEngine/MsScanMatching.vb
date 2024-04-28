@@ -1,4 +1,70 @@
-﻿Imports System.Runtime.InteropServices
+﻿#Region "Microsoft.VisualBasic::729115dddd524ac0a47b222a1b5524f1, G:/mzkit/src/mzmath/MSEngine//MsScanMatching.vb"
+
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 1320
+    '    Code Lines: 882
+    ' Comment Lines: 237
+    '   Blank Lines: 201
+    '     File Size: 68.33 KB
+
+
+    ' Class MatchedPeak
+    ' 
+    '     Properties: Intensity, IsNeutralLossMatched, IsProductIonMatched, Mass, MatchedIntensity
+    ' 
+    ' Class MsScanMatching
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: (+2 Overloads) CompareBasicMSScanProperties, (+2 Overloads) CompareEIMSScanProperties, CompareMS2ProteomicsScanProperties, (+2 Overloads) CompareMS2ScanProperties, (+2 Overloads) CompareMSScanProperties
+    '               GetAndromedaScore, GetBonanzaScore, (+3 Overloads) GetGaussianSimilarity, GetIntegratedSpectraSimilarity, GetIsotopeRatioSimilarity
+    '               (+2 Overloads) GetMachedSpectralPeaks, (+2 Overloads) GetMatchedPeaksScores, GetModifiedDotProductScore, GetProcessedSpectrum, GetReverseDotProduct
+    '               GetSimpleDotProduct, GetSpectralEntropy, GetSpetralEntropySimilarity, GetTotalScore, (+5 Overloads) GetTotalSimilarity
+    '               GetTotalSimilarityUsingSimpleDotProduct, GetWeightedDotProduct, (+2 Overloads) IsComparedAvailable
+    ' 
+    '     Sub: SearchMatchedPeaks
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Runtime.InteropServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
@@ -1318,4 +1384,3 @@ Public NotInheritable Class MsScanMatching
         End If
     End Function
 End Class
-

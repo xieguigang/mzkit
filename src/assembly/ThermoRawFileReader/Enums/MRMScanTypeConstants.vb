@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::22abfcd3abc0c49d29b4262692a49c3d, mzkit\src\assembly\ThermoRawFileReader\Enums\MRMScanTypeConstants.vb"
+﻿#Region "Microsoft.VisualBasic::22abfcd3abc0c49d29b4262692a49c3d, G:/mzkit/src/assembly/ThermoRawFileReader//Enums/MRMScanTypeConstants.vb"
 
     ' Author:
     ' 

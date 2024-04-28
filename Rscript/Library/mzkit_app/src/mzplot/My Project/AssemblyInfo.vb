@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2fecbbf4919d0172ed272426aaa082a3, mzkit\Rscript\Library\mzkit.plot\My Project\AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::ae51d40121d9bc5c76cbac48d3e561f6, G:/mzkit/Rscript/Library/mzkit_app/src/mzplot//My Project/AssemblyInfo.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 15
     ' Comment Lines: 15
     '   Blank Lines: 6
-    '     File Size: 1.15 KB
+    '     File Size: 1.19 KB
 
 
     ' 

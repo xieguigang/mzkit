@@ -1,68 +1,64 @@
-﻿#Region "Microsoft.VisualBasic::71ddb62d865bfaeedeb10435bcd7d467, mzkit\src\mzmath\mz_deco\xcms2.vb"
+﻿#Region "Microsoft.VisualBasic::fe49be1025b6ffca413a836830e4e07b, G:/mzkit/src/mzmath/mz_deco//xcms2.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 88
-'    Code Lines: 73
-' Comment Lines: 3
-'   Blank Lines: 12
-'     File Size: 2.85 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Class xcms2
-' 
-'     Properties: mz, mzmax, mzmin, npeaks, rt
-'                 rtmax, rtmin
-' 
-'     Function: Load, totalPeakSum
-' 
-' Class PeakSet
-' 
-'     Properties: peaks, sampleNames
-' 
-'     Function: Norm, Subset
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 155
+    '    Code Lines: 95
+    ' Comment Lines: 42
+    '   Blank Lines: 18
+    '     File Size: 4.92 KB
+
+
+    ' Class xcms2
+    ' 
+    '     Properties: ID, mz, mzmax, mzmin, npeaks
+    '                 Properties, RI, rt, rtmax, rtmin
+    ' 
+    '     Constructor: (+3 Overloads) Sub New
+    '     Function: MakeUniqueId, ToString, totalPeakSum
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
 Imports System.ComponentModel
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
@@ -76,6 +72,7 @@ Public Class xcms2 : Inherits DynamicPropertyBase(Of Double)
     Implements INamedValue
     Implements IRetentionIndex
     Implements IRetentionTime
+    Implements IMassBin
 
     ''' <summary>
     ''' the feature unique id
@@ -88,17 +85,17 @@ Public Class xcms2 : Inherits DynamicPropertyBase(Of Double)
     ''' the ion m/z
     ''' </summary>
     ''' <returns></returns>
-    <Category("MS1")> Public Property mz As Double
+    <Category("MS1")> Public Property mz As Double Implements IMassBin.mass
     ''' <summary>
     ''' the min of ion m/z value
     ''' </summary>
     ''' <returns></returns>
-    <Category("MS1")> Public Property mzmin As Double
+    <Category("MS1")> Public Property mzmin As Double Implements IMassBin.min
     ''' <summary>
     ''' the max of the ion m/z value
     ''' </summary>
     ''' <returns></returns>
-    <Category("MS1")> Public Property mzmax As Double
+    <Category("MS1")> Public Property mzmax As Double Implements IMassBin.max
     ''' <summary>
     ''' the rt value in max peak data point
     ''' </summary>
@@ -214,4 +211,3 @@ Public Class xcms2 : Inherits DynamicPropertyBase(Of Double)
         }
     End Function
 End Class
-

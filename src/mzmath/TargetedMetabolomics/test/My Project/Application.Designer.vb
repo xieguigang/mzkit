@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2be9b3ef216c9b7a8f9ab57dadd4773d, mzkit\src\mzmath\TargetedMetabolomics\test\My Project\Application.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::2f560b88ef6ef660399bf1150ab8b6b5, G:/mzkit/src/mzmath/TargetedMetabolomics/test//My Project/Application.Designer.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 2
     ' Comment Lines: 9
     '   Blank Lines: 1
-    '     File Size: 440 B
+    '     File Size: 451 B
 
 
     ' 

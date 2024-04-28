@@ -1,54 +1,63 @@
-﻿#Region "Microsoft.VisualBasic::939cf287b770cf913a2f692d6d9ad2c7, mzkit\src\assembly\mzPack\GCMSConvertor.vb"
+﻿#Region "Microsoft.VisualBasic::7a05537ba294e1646b145edff81efd4b, G:/mzkit/src/assembly/mzPack//GCMSConvertor.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 125
-'    Code Lines: 101
-' Comment Lines: 2
-'   Blank Lines: 22
-'     File Size: 5.06 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module GCMSConvertor
-' 
-'     Function: ConvertGCMS, CreateMSScans, LoadMs1Scans, readIntoMatrix, readMzMatrix
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 252
+    '    Code Lines: 190
+    ' Comment Lines: 19
+    '   Blank Lines: 43
+    '     File Size: 9.65 KB
+
+
+    ' Class GCMSnetCDF
+    ' 
+    '     Properties: a_d_coaddition_factor, a_d_sampling_rate, actual_scan_number, error_log, flag_count
+    '                 intensity_values, inter_scan_time, mass_range_max, mass_range_min, mass_values
+    '                 metadata, point_count, resolution, scan_acquisition_time, scan_duration
+    '                 scan_index, time_range_max, time_range_min, total_intensity
+    ' 
+    '     Function: readIntoMatrix, readMzmatrix
+    ' 
+    ' Module GCMSConvertor
+    ' 
+    '     Function: (+2 Overloads) ConvertGCMS, CreateMSScans, (+2 Overloads) LoadMs1Scans, readIntoMatrix, readMzMatrix
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

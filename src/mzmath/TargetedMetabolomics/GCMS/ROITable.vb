@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e2cb9f40fa3e896aba2be3e31f85c6b6, mzkit\src\mzmath\TargetedMetabolomics\GCMS\ROITable.vb"
+﻿#Region "Microsoft.VisualBasic::e2cb9f40fa3e896aba2be3e31f85c6b6, G:/mzkit/src/mzmath/TargetedMetabolomics//GCMS/ROITable.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9741818f1b10d572065109ce0a93903d, mzkit\src\metadb\FormulaSearch.Extensions\AtomGroups\Default\Amines.vb"
+﻿#Region "Microsoft.VisualBasic::4ed716ede260d825ce327c32405496ae, G:/mzkit/src/metadb/Chemoinformatics//Formula/MS/Default/Amines.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 6
     ' Comment Lines: 0
     '   Blank Lines: 4
-    '     File Size: 240 B
+    '     File Size: 251 B
 
 
     '     Class Amines

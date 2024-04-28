@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::415e12795140f048a44ac61b297ea7bf, mzkit\src\mzmath\ms2_math-core\Spectra\Models\PeakMs2.vb"
+﻿#Region "Microsoft.VisualBasic::fe8b871b5ff834526532429cd898cfd0, G:/mzkit/src/mzmath/ms2_math-core//Spectra/Models/PeakMs2.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 129
-    '    Code Lines: 64
-    ' Comment Lines: 49
-    '   Blank Lines: 16
-    '     File Size: 4.49 KB
+    '   Total Lines: 158
+    '    Code Lines: 84
+    ' Comment Lines: 53
+    '   Blank Lines: 21
+    '     File Size: 5.70 KB
 
 
     '     Class PeakMs2
@@ -50,7 +50,11 @@
     '                     lib_guid, meta, Ms2Intensity, mz, mzInto
     '                     precursor_type, rt, scan
     ' 
-    '         Function: AlignMatrix, GetIntensity, RtInSecond, ToString
+    '         Constructor: (+3 Overloads) Sub New
+    ' 
+    '         Function: AlignMatrix, GetIntensity, GetIons, RtInSecond, ToString
+    ' 
+    '         Sub: SetIons
     ' 
     ' 
     ' /********************************************************************************/

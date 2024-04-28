@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b5459e9a36cc0e77fd6b3ce73cdcec7c, mzkit\src\metadb\MoNA\Metadata\MetaData.vb"
+﻿#Region "Microsoft.VisualBasic::9adc3b18e1a0ac4d90bc752b353a3a12, G:/mzkit/src/metadb/MoNA//Metadata/MetaData.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 209
-    '    Code Lines: 174
-    ' Comment Lines: 7
-    '   Blank Lines: 28
-    '     File Size: 7.59 KB
+    '   Total Lines: 223
+    '    Code Lines: 181
+    ' Comment Lines: 11
+    '   Blank Lines: 31
+    '     File Size: 8.20 KB
 
 
     ' Class MetaData
@@ -67,7 +67,7 @@
     '                 solvent_a, solvent_acetonitrile, solvent_b, source_temperature, spectrum_type
     '                 SPLASH, spray_voltage, tube_lens_voltage, whole, wikipedia
     ' 
-    '     Function: ToString
+    '     Function: GetFormula, ToString
     ' 
     ' /********************************************************************************/
 

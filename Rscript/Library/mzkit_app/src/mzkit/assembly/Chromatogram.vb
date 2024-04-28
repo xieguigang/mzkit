@@ -1,60 +1,60 @@
-﻿#Region "Microsoft.VisualBasic::9142e7df40420e443591c249015032d4, mzkit\Rscript\Library\mzkit\assembly\Chromatogram.vb"
+﻿#Region "Microsoft.VisualBasic::c344e554f7a5b17fe4d8a2551a6ec710, G:/mzkit/Rscript/Library/mzkit_app/src/mzkit//assembly/Chromatogram.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 285
-'    Code Lines: 215
-' Comment Lines: 29
-'   Blank Lines: 41
-'     File Size: 10.80 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module ChromatogramTools
-' 
-'     Constructor: (+1 Overloads) Sub New
-' 
-'     Function: addOverlaps, asChromatogram, overlaps, overlapsMatrix, overlapsSummary
-'               overlapsTable, ReadData, scaleScanTime, setLabels, subset
-'               toChromatogram, topInto
-' 
-'     Sub: PackData
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 402
+    '    Code Lines: 256
+    ' Comment Lines: 92
+    '   Blank Lines: 54
+    '     File Size: 15.71 KB
+
+
+    ' Module ChromatogramTools
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: addOverlaps, asChromatogram, overlapFromList, overlapFromVector, overlaps
+    '               overlapsMatrix, overlapsSummary, overlapsTable, ReadData, scaleScanTime
+    '               setLabels, subset, toChromatogram, topInto
+    ' 
+    '     Sub: PackData
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -210,7 +210,9 @@ Module ChromatogramTools
     ''' </returns>
     <ExportAPI("toChromatogram")>
     <RApiReturn(GetType(Chromatogram))>
-    Public Function toChromatogram(<RRawVectorArgument> ticks As Object, Optional env As Environment = Nothing) As Object
+    Public Function toChromatogram(<RRawVectorArgument> ticks As Object,
+                                   Optional name As String = Nothing,
+                                   Optional env As Environment = Nothing) As Object
         Dim totalIons As Double()
         Dim basePeaks As Double()
         Dim scan_time As Double()
@@ -258,7 +260,8 @@ Module ChromatogramTools
         Return New Chromatogram With {
             .BPC = basePeaks,
             .scan_time = scan_time,
-            .TIC = totalIons
+            .TIC = totalIons,
+            .name = name
         }
     End Function
 
@@ -266,12 +269,11 @@ Module ChromatogramTools
     ''' Add a chromatogram data in the chromatogram overlap collection
     ''' </summary>
     ''' <param name="overlaps">A chromatogram overlap collection object to be add new layer to it</param>
-    ''' <param name="name">usually be a sample name</param>
     ''' <param name="data">usually be a chromatogram data that extract from a sample data</param>
     ''' <returns></returns>
-    <ExportAPI("add")>
-    Public Function addOverlaps(overlaps As ChromatogramOverlap, name$, data As Chromatogram) As ChromatogramOverlap
-        Call overlaps.overlaps.Add(name, data)
+    <ROperator("+")>
+    Public Function addOverlaps(overlaps As ChromatogramOverlap, data As Chromatogram) As ChromatogramOverlap
+        Call overlaps.Add(data)
         Return overlaps
     End Function
 
@@ -454,7 +456,7 @@ Module ChromatogramTools
     <ExportAPI("read.pack")>
     Public Function ReadData(cdf As String) As ChromatogramOverlap
         Using file As Stream = cdf.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
-            Return file.ReadPackData
+            Return New ChromatogramOverlap(file.ReadPackData.overlaps)
         End Using
     End Function
 End Module

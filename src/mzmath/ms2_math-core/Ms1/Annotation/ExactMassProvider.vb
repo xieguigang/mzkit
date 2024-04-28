@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::68a9d3e7e32e727ed8d60f92f144552b, mzkit\src\mzmath\ms2_math-core\Ms1\Annotation\ExactMassProvider.vb"
+﻿#Region "Microsoft.VisualBasic::35077982ac95664925d9902b874f1953, G:/mzkit/src/mzmath/ms2_math-core//Ms1/Annotation/ExactMassProvider.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 11
     ' Comment Lines: 203
     '   Blank Lines: 9
-    '     File Size: 11.93 KB
+    '     File Size: 11.94 KB
 
 
     '     Interface IExactMassProvider

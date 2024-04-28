@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8a4fdf2c7bb39bdb349ecc8ecf417e8f, mzkit\src\assembly\NMRFidTool\Math\FFT\FastFourierTransform1D.vb"
+﻿#Region "Microsoft.VisualBasic::5159dddf6314b4164fca87f656cb863c, G:/mzkit/src/assembly/NMRFidTool//Math/FFT/FastFourierTransform1D.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 40
     ' Comment Lines: 28
     '   Blank Lines: 12
-    '     File Size: 3.19 KB
+    '     File Size: 3.27 KB
 
 
     '     Class FastFourierTransform1D

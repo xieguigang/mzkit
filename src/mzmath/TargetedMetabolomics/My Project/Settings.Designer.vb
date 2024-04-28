@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2cfe69bac2d6f07b787b37cd118aaa7a, mzkit\src\mzmath\TargetedMetabolomics\My Project\Settings.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::fb4b18dabf1022a1c356bf94607186b2, G:/mzkit/src/mzmath/TargetedMetabolomics//My Project/Settings.Designer.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 53
     ' Comment Lines: 9
     '   Blank Lines: 12
-    '     File Size: 2.99 KB
+    '     File Size: 3.06 KB
 
 
     '     Class MySettings

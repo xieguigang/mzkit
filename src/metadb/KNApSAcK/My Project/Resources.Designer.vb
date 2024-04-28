@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3db851d2843a244779eab616084f3bfa, mzkit\src\metadb\KNApSAcK\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::aae1c4d6df9cd808f686c08b8974ed8b, G:/mzkit/src/metadb/KNApSAcK//My Project/Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 47
     ' Comment Lines: 32
     '   Blank Lines: 11
-    '     File Size: 3.83 KB
+    '     File Size: 3.92 KB
 
 
     '     Module Resources

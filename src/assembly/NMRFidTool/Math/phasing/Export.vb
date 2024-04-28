@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::526d12bde38a2641eb5da1822a173834, mzkit\src\assembly\NMRFidTool\Math\phasing\Export.vb"
+﻿#Region "Microsoft.VisualBasic::3db6528367d17ad63178462c340b52be, G:/mzkit/src/assembly/NMRFidTool//Math/phasing/Export.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 12
     ' Comment Lines: 0
     '   Blank Lines: 2
-    '     File Size: 657 B
+    '     File Size: 670 B
 
 
     '     Module Export

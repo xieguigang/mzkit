@@ -1,4 +1,87 @@
-﻿Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
+﻿#Region "Microsoft.VisualBasic::02615ad448df53601c4808544eaa6350, G:/mzkit/src/metadb/Lipidomics//Annotation/LipidMassLibraryGenerator.vb"
+
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 1206
+    '    Code Lines: 1070
+    ' Comment Lines: 21
+    '   Blank Lines: 115
+    '     File Size: 90.62 KB
+
+
+    ' Class LipidMassLibraryGenerator
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: commonCeramideEsterGenerator, commonCeramideGenerator, commonCeramideOxGenerator, commonCoenzymeqlipidsGenerator, commonGlycerolipidsEtherGenerator
+    '               commonGlycerolipidsGenerator, commonGlycerolipidsOxEtherGenerator, commonGlycerolipidsOxGenerator, commonSinglemoleculeGenerator, commonSphingosineGenerator
+    '               commonSulfonolipidGenerator, fahfaGenerator, generateAcarSpecies, generateAcylcerbdsSpecies, generateAcylglcadgSpecies
+    '               generateAcylhexcerasSpecies, generateAcylsmSpecies, generateAhexbrseSpecies, generateAhexcaseSpecies, generateAhexceSpecies
+    '               generateAhexsiseSpecies, generateAhexstseSpecies, generateAnandamideSpecies, generateBmpSpecies, generateBrseSpecies
+    '               generateCaseSpecies, generateCeradsSpecies, generateCerapSpecies, generateCerasSpecies, generateCerbdsSpecies
+    '               generateCerbsSpecies, generateCereodsSpecies, generateCereosSpecies, generateCerndsSpecies, generateCernpSpecies
+    '               generateCernsSpecies, generateCerosSpecies, generateCeSpecies, generateClSpecies, generateCoenzymeqSpecies
+    '               generateDagSpecies, generateDcaesSpecies, generateDgdgSpecies, generateDgtsSpecies, generateDlclSpecies
+    '               generateEtherdgdgSpecies, generateEtherlpcSpecies, generateEtherlpeSpecies, generateEtherlpgSpecies, generateEthermgdgSpecies
+    '               generateEtherpcSpecies, generateEtherpeSpecies, generateEtherpgSpecies, generateEtherpiSpecies, generateEtherpsSpecies
+    '               generateEthertagSpecies, generateFAHFAmideGlySerSpecies, generateFAHFAmideGlySpecies, generateFAHFAmideOrnSpecies, generateFahfaSpecies
+    '               generateFaSpecies, generateGdcaesSpecies, generateGlcadgSpecies, generateGlcaesSpecies, generateGm3Species
+    '               generateHbmpSpecies, generateHexcerapSpecies, generateHexcereosSpecies, generateHexcerndsSpecies, generateHexcernsSpecies
+    '               generateHexhexcernsSpecies, generateHexhexhexcernsSpecies, generateLclSpecies, generateLdgtsSpecies, generateLnapeSpecies
+    '               generateLnapsSpecies, generateLpaSpecies, generateLpcSpecies, generateLpeSpecies, generateLpgSpecies
+    '               generateLpiSpecies, generateLpsSpecies, generateMagSpecies, generateMgdgSpecies, generateOxfaSpecies
+    '               generateOxpcEtherSpecies, generateOxpcSpecies, generateOxpeEtherSpecies, generateOxpeSpecies, generateOxpgSpecies
+    '               generateOxpiSpecies, generateOxpsSpecies, generatePaSpecies, generatePbtohSpecies, generatePcSpecies
+    '               generatePedceramideSpecies, generatePeSpecies, generatePetceramideSpecies, generatePetohSpecies, generatePgSpecies
+    '               generatePhytosphingosineSpecies, generatePiceramideDihydroxySpecies, generatePiceramideOxDihydroxySpecies, generatePiceramideTrihydroxySpecies, generatePiSpecies
+    '               generatePmeohSpecies, generatePsSpecies, generateShexcerOxSpecies, generateShexcerSpecies, generateSiseSpecies
+    '               generateSmSpecies, generateSphinganineSpecies, generateSphingosineSpecies, generateSqdgSpecies, generateStseSpecies
+    '               generateSulfonolipidSpecies, generateTagSpecies, generateTdcaesSpecies, generateTlcaesSpecies, generateVitaminASpecies
+    '               generateVitaminDSpecies, generateVitaminESpecies, GetIons, isPracticalDoubleBondSize
+    ' 
+    ' Class LipidIon
+    ' 
+    '     Properties: [class], adduct, lipidname, mz, total_formula
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
 Imports BioNovoGene.BioDeep.MSFinder
 Imports Microsoft.VisualBasic.Linq
 
@@ -1204,4 +1287,3 @@ Public Class LipidIon
     Public Property [class] As LbmClass
 
 End Class
-

@@ -4,11 +4,12 @@
 RI_cal \- RI calculation of a speicifc sample data
 .SH SYNOPSIS
 \fIRI_cal(\fBpeakdata\fR as <generic> PeakFeature[], 
-\fBRI\fR as any, 
+\fBRI\fR as any = \fB<NULL>\fR, 
 \fBppm\fR as double = 20, 
 \fBdt\fR as double = 15, 
 \fBrawfile\fR as string = \fB<NULL>\fR, 
 \fBby_id\fR as boolean = FALSE, 
+\fBC\fR as list = \fB<NULL>\fR, 
 [\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
@@ -20,6 +21,11 @@ RI calculation of a speicifc sample data
 .PP
 .PP
 \fBRI\fB \fR\- should be a collection of the @\fBT:BioNovoGene.Analytical.MassSpectrometry.Math.RIRefer\fR data.. 
+.PP
+.PP
+\fBC\fB \fR\- 
+ the number of carbon atoms for kovats retention index
+. 
 .PP
 .PP
 \fBenv\fB \fR\- -. 

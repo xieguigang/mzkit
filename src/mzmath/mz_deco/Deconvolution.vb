@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e71cf6d4b1a75e156afd6dbbfbab8bef, mzkit\src\mzmath\mz_deco\Deconvolution.vb"
+﻿#Region "Microsoft.VisualBasic::6aceb0160b42716fb4a991b7c1526a9c, G:/mzkit/src/mzmath/mz_deco//Deconvolution.vb"
 
     ' Author:
     ' 
@@ -37,16 +37,17 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 172
-    '    Code Lines: 125
-    ' Comment Lines: 28
-    '   Blank Lines: 19
-    '     File Size: 6.75 KB
+    '   Total Lines: 309
+    '    Code Lines: 225
+    ' Comment Lines: 53
+    '   Blank Lines: 31
+    '     File Size: 12.96 KB
 
 
     ' Module Deconvolution
     ' 
-    '     Function: DecoMzGroups, (+2 Overloads) GetMzGroups, GetPeakGroups, localMax, localMin
+    '     Function: DecoMzGroups, DeconvPeakGroups, ExtractFeatureGroups, (+2 Overloads) GetMzGroups, (+2 Overloads) GetPeakGroups
+    '               ToChromatogram, (+2 Overloads) TrimRTScatter
     ' 
     ' /********************************************************************************/
 
@@ -75,8 +76,86 @@ Imports std = System.Math
 Public Module Deconvolution
 
     <Extension>
-    Public Function TrimRTScatter(xic As MzGroup, Optional rtwin As Double = 15, Optional min_points As Integer = 5) As MzGroup
-        Dim dt_groups = xic.XIC.GroupBy(Function(ti) ti.Time, offsets:=rtwin).ToArray
+    Public Iterator Function DeconvPeakGroups(TIC As IEnumerable(Of ChromatogramTick), peakwidth As DoubleRange,
+                                             Optional quantile# = 0.65,
+                                             Optional sn_threshold As Double = 3,
+                                             Optional joint As Boolean = True) As IEnumerable(Of PeakFeature)
+
+        Dim data As ChromatogramTick() = TIC.SafeQuery.ToArray
+        Dim peakdata As PeakFeature
+
+        For Each ROI As ROI In data.Shadows.PopulateROI(
+            peakwidth:=peakwidth,
+            baselineQuantile:=quantile,
+            joint:=joint,
+            snThreshold:=sn_threshold
+        )
+            peakdata = New PeakFeature With {
+                .mz = 0,
+                .baseline = ROI.baseline,
+                .integration = ROI.integration,
+                .maxInto = ROI.maxInto,
+                .noise = ROI.noise,
+                .rt = ROI.rt,
+                .rtmax = ROI.time.Max,
+                .rtmin = ROI.time.Min,
+                .nticks = ROI.ticks.Length,
+                .area = ROI.ticks.Select(Function(t) t.Intensity).Sum,
+                .xcms_id = ROI.rt / 60
+            }
+            Yield peakdata
+        Next
+    End Function
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="overlaps"></param>
+    ''' <param name="peakwidth"></param>
+    ''' <param name="quantile#"></param>
+    ''' <param name="sn_threshold"></param>
+    ''' <param name="joint"></param>
+    ''' <param name="single">take the top single peak feature in each <see cref="Chromatogram.Chromatogram"/>.</param>
+    ''' <returns></returns>
+    <Extension>
+    Public Iterator Function GetPeakGroups(overlaps As ChromatogramOverlapList, peakwidth As DoubleRange,
+                                           Optional quantile# = 0.65,
+                                           Optional sn_threshold As Double = 3,
+                                           Optional joint As Boolean = True,
+                                           Optional [single] As Boolean = True) As IEnumerable(Of PeakFeature)
+
+        For Each tag_data As NamedValue(Of Chromatogram.Chromatogram) In overlaps.EnumerateSignals
+            Dim peaks As New List(Of PeakFeature)
+
+            For Each peak As PeakFeature In tag_data.Value _
+                .GetTic _
+                .Where(Function(ti) ti.Intensity > 0) _
+                .DeconvPeakGroups(peakwidth, quantile, sn_threshold, joint)
+
+                peak.rawfile = tag_data.Name
+                peak.xcms_id = tag_data.Name & $"[{(peak.rt / 60).ToString("F1")}min]"
+                peaks.Add(peak)
+            Next
+
+            If peaks.Count = 0 Then
+                Call $"no peaks feature was detected for '{tag_data.Name}'.".Warning
+            ElseIf [single] Then
+                Yield peaks _
+                    .OrderByDescending(Function(pk) pk.integration) _
+                    .First
+            Else
+                ' zero list
+                ' or multiple for each chromatogram
+                For Each pk As PeakFeature In peaks
+                    Yield pk
+                Next
+            End If
+        Next
+    End Function
+
+    <Extension>
+    Private Function TrimRTScatter(scatter As IEnumerable(Of ChromatogramTick), rtwin As Double, min_points As Integer) As ChromatogramTick()
+        Dim dt_groups = scatter.GroupBy(Function(ti) ti.Time, offsets:=rtwin).ToArray
         Dim filter = dt_groups.Where(Function(d) d.Length >= min_points).ToArray
         Dim no_scatter As ChromatogramTick() = filter.Select(Function(a) a.value).IteratesALL.OrderBy(Function(a) a.Time).ToArray
         Dim raw_peaks = no_scatter.Shadows.PopulateROI(
@@ -98,7 +177,12 @@ Public Module Deconvolution
             .OrderBy(Function(a) a.Time) _
             .ToArray
 
-        Return New MzGroup(xic.mz, no_scatter)
+        Return no_scatter
+    End Function
+
+    <Extension>
+    Public Function TrimRTScatter(xic As MzGroup, Optional rtwin As Double = 15, Optional min_points As Integer = 5) As MzGroup
+        Return New MzGroup(xic.mz, xic.XIC.TrimRTScatter(rtwin, min_points))
     End Function
 
     ''' <summary>
@@ -137,6 +221,13 @@ Public Module Deconvolution
                 .nticks = ROI.ticks.Length,
                 .area = ROI.ticks.Select(Function(t) t.Intensity).Sum
             }
+        Next
+    End Function
+
+    <Extension>
+    Public Iterator Function ToChromatogram(Of T As scan)(scans As IEnumerable(Of T)) As IEnumerable(Of ChromatogramTick)
+        For Each scan As T In scans.SafeQuery
+            Yield New ChromatogramTick(scan.rt, scan.intensity)
         Next
     End Function
 

@@ -1,4 +1,87 @@
-﻿
+﻿#Region "Microsoft.VisualBasic::c8ccf3ca4e8b7a72c50925713402e399, G:/mzkit/src/mzmath/MSFinder//AnalysisParamOfMsfinder.vb"
+
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 300
+    '    Code Lines: 238
+    ' Comment Lines: 23
+    '   Blank Lines: 39
+    '     File Size: 11.56 KB
+
+
+    ' Enum FseaNonsignificantDef
+    ' 
+    '     LowAbundantIons, OntologySpace, ReverseSpectrum
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    ' Class AnalysisParamOfMsfinder
+    ' 
+    '     Properties: BrLabelMass, CanExcuteMS1AdductSearch, CanExcuteMS2AdductSearch, CcsAdductInChIKeyDictionaryFilepath, CcsToleranceForSpectralSearching
+    '                 CcsToleranceForStructureElucidation, CLabelMass, ClLabelMass, Coeff_RtPrediction, CoverRange
+    '                 DatabaseQuery, FLabelMass, FormulaMaximumReportNumber, FormulaPredictionTimeOut, FormulaScoreCutOff
+    '                 FseanonsignificantDef, FseaPvalueCutOff, FseaRelativeAbundanceCutOff, HLabelMass, ILabelMass
+    '                 Intercept_RtPrediction, IsAllProcess, IsBrCheck, IsClCheck, IsElementProbabilityCheck
+    '                 IsFcheck, IsFormulaFinder, IsIcheck, IsLewisAndSeniorCheck, IsMinesAllTime
+    '                 IsMinesNeverUse, IsMinesOnlyUseForNecessary, IsMmnFormulaBioreaction, IsMmnLocalCytoscape, IsMmnMsdialOutput
+    '                 IsMmnOntologySimilarityUsed, IsMmnRetentionRestrictionUsed, IsMmnSelectedFileCentricProcess, IsNcheck, IsNeutralLossCheck
+    '                 IsNitrogenRule, IsOcheck, IsotopicAbundanceTolerance, IsPcheck, IsPrecursorOrientedSearch
+    '                 IsPubChemAllTime, IsPubChemNeverUse, IsPubChemOnlyUseForNecessary, IsRunInSilicoFragmenterSearch, IsRunSpectralDbSearch
+    '                 IsScheck, IsSiCheck, IsStructureFinder, IsTmsMeoxDerivative, IsUseCcsForFilteringCandidates
+    '                 IsUseCcsInchikeyAdductLibrary, IsUseEiFragmentDB, IsUseExperimentalCcsForSpectralSearching, IsUseExperimentalRtForSpectralSearching, IsUseInSilicoSpectralDbForLipids
+    '                 IsUseInternalExperimentalSpectralDb, IsUsePredictedCcsForStructureElucidation, IsUsePredictedRtForStructureElucidation, IsUserDefinedDB, IsUseRtForFilteringCandidates
+    '                 IsUseRtInchikeyLibrary, IsUseUserDefinedSpectralDb, IsUseXlogpPrediction, Mass1Tolerance, Mass2Tolerance
+    '                 MassRangeMax, MassRangeMin, MassTolType, MinimumMeoxCount, MinimumTmsCount
+    '                 MmnMassSimilarityCutOff, MmnMassTolerance, MmnOntologySimilarityCutOff, MmnOutputFolderPath, MmnRelativeCutoff
+    '                 MmnRtTolerance, MmnRtToleranceForReaction, MS1NegativeAdductIonList, MS1PositiveAdductIonList, MS2NegativeAdductIonList
+    '                 MS2PositiveAdductIonList, NLabelMass, OLabelMass, PLabelMass, RelativeAbundanceCutOff
+    '                 RtInChIKeyDictionaryFilepath, RtPredictionSummaryReport, RtSmilesDictionaryFilepath, RtToleranceForSpectralSearching, RtToleranceForStructureElucidation
+    '                 ScoreCutOffForSpectralMatch, SiLabelMass, SLabelMass, StructureMaximumReportNumber, StructurePredictionTimeOut
+    '                 StructureScoreCutOff, TreeDepth, TryTopNmolecularFormulaSearch, UserDefinedDbFilePath, UserDefinedSpectralDbFilePath
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b04e4cc8c00574520ef5061df79c3590, mzkit\src\metadb\Chemoinformatics\Formula\Models\Element.vb"
+﻿#Region "Microsoft.VisualBasic::16967c7b8e151456c67ab62091622afa, G:/mzkit/src/metadb/Chemoinformatics//Formula/Models/Element.vb"
 
     ' Author:
     ' 
@@ -37,18 +37,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 298
-    '    Code Lines: 263
-    ' Comment Lines: 26
-    '   Blank Lines: 9
-    '     File Size: 28.00 KB
+    '   Total Lines: 320
+    '    Code Lines: 273
+    ' Comment Lines: 34
+    '   Blank Lines: 13
+    '     File Size: 28.98 KB
 
 
     '     Class Element
     ' 
-    '         Properties: charge, isotopes, isotopic, meta, name
-    '                     symbol, z
+    '         Properties: charge, id, isotopes, isotopic, meta
+    '                     name, symbol, z
     ' 
+    '         Constructor: (+3 Overloads) Sub New
     '         Function: Isotope, MemoryLoadElements, MemoryPopulateElements, ToString
     ' 
     ' 

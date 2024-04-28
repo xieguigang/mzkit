@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::826b877700c4cd2d51c8186440c4fd70, mzkit\src\assembly\ThermoRawFileReader\DataObjects\ParentIonInfoType.vb"
+﻿#Region "Microsoft.VisualBasic::826b877700c4cd2d51c8186440c4fd70, G:/mzkit/src/assembly/ThermoRawFileReader//DataObjects/ParentIonInfoType.vb"
 
     ' Author:
     ' 

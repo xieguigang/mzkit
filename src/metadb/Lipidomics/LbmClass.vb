@@ -1,4 +1,101 @@
-﻿
+﻿#Region "Microsoft.VisualBasic::665fe02c2ce591b513d06e8b7cafafa7, G:/mzkit/src/metadb/Lipidomics//LbmClass.vb"
+
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 216
+    '    Code Lines: 206
+    ' Comment Lines: 3
+    '   Blank Lines: 7
+    '     File Size: 2.45 KB
+
+
+    ' Enum LbmClass
+    ' 
+    '     [CASE], Ac2PIM1, Ac2PIM2, Ac3PIM2, Ac4PIM2
+    '     ADGGA, AHexBRS, AHexCAS, AHexCer, AHexCS
+    '     AHexSIS, AHexSTS, ASHexCer, ASM, BAHex
+    '     BASulfate, BileAcid, BisMeLPA, BMP, bmPC
+    '     BRSE, BRSLPHex, BRSPHex, CAR, CASLPHex
+    '     CASPHex, CE, CE_d7, Cer_ADS, Cer_AP
+    '     Cer_AS, Cer_BDS, Cer_BS, Cer_EBDS, Cer_EODS
+    '     Cer_EOS, Cer_HDS, Cer_HS, Cer_NDOS, Cer_NDS
+    '     Cer_NP, Cer_NS, Cer_NS_d7, Cer_OS, CerP
+    '     CL, CoQ, CSLPHex, CSPHex, DCAE
+    '     DEGSE, DG, DG_d5, DGCC, DGDG
+    '     DGGA, DGMG, DGTA, DGTS, DHSph
+    '     DLCL, DMEDFA, DMEDFAHFA, DMEDOxFA, DMPE
+    '     DSMSE, EGSE, EtherDG, EtherDGDG, EtherLPC
+    '     EtherLPE, EtherLPG, EtherLPI, EtherLPS, EtherMGDG
+    '     EtherOxPC, EtherOxPE, EtherPC, EtherPE, EtherPG
+    '     EtherPI, EtherPS, EtherSMGDG, EtherTG, FA
+    '     FAHFA, GD1a, GD1b, GD2, GD3
+    '     GDCAE, GLCAE, GM1, GM3, GPNAE
+    '     GQ1b, GT1b, HBMP, Hex2Cer, Hex3Cer
+    '     HexCer_AP, HexCer_EOS, HexCer_HDS, HexCer_HS, HexCer_NDS
+    '     HexCer_NS, KDCAE, KLCAE, LCAE, LDGCC
+    '     LDGTA, LDGTS, LipidA, LNAPE, LNAPS
+    '     LPA, LPC, LPC_d5, LPE, LPE_d5
+    '     LPG, LPG_d5, LPI, LPI_d5, LPS
+    '     LPS_d5, MG, MGDG, MGMG, MIPC
+    '     MLCL, MMPE, NA5HT, NAAla, NAE
+    '     NAGln, NAGly, NAGlySer, NALeu, NAOrn
+    '     NAPhe, NASer, NATau, NATryA, NAVal
+    '     NGcGM3, Others, OxFA, OxPA, OxPC
+    '     OxPE, OxPG, OxPI, OxPS, OxTG
+    '     PA, PBtOH, PC, PC_d5, PE
+    '     PE_Cer, PE_d5, PEtOH, PG, PG_d5
+    '     PhytoSph, PI, PI_Cer, PI_d5, PMeOH
+    '     PS, PS_d5, PT, SHex, SHexCer
+    '     SISE, SISLPHex, SISPHex, SL, SM
+    '     SM_d9, SMGDG, SPE, SPEHex, SPGHex
+    '     Sph, SPLASH, SQDG, SSulfate, ST
+    '     STSE, STSLPHex, STSPHex, TDCAE, TG
+    '     TG_d5, TG_EST, TLCAE, Undefined, Unknown
+    '     VAE, Vitamin_D, Vitamin_E, WE
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 ''' <summary>
 ''' enumerates the lipid structure class
 ''' </summary>

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6e130513385413172d14d1d1c913820d, mzkit\src\assembly\ThermoRawFileReader\test\My Project\AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::7c2d3d423f8e1a56bc9c81a6f546b2c0, G:/mzkit/src/assembly/ThermoRawFileReader//test/My Project/AssemblyInfo.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 13
     ' Comment Lines: 15
     '   Blank Lines: 7
-    '     File Size: 1.11 KB
+    '     File Size: 1.14 KB
 
 
     ' 

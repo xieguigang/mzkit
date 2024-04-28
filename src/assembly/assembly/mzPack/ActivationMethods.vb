@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b73e452bd7d7e597fa2ca2f69732f8ac, mzkit\src\assembly\assembly\mzPack\ActivationMethods.vb"
+﻿#Region "Microsoft.VisualBasic::b73e452bd7d7e597fa2ca2f69732f8ac, G:/mzkit/src/assembly/assembly//mzPack/ActivationMethods.vb"
 
     ' Author:
     ' 

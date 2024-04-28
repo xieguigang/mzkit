@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::307c17053e4a3c3705764f72ef2038dc, mzkit\src\visualize\TissueMorphology\SpatialMapping\SpatialMapping.vb"
+﻿#Region "Microsoft.VisualBasic::af46a4a98a588c66f570766cca85acf2, G:/mzkit/src/visualize/TissueMorphology//SpatialMapping/SpatialMapping.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 64
+    '   Total Lines: 99
     '    Code Lines: 40
-    ' Comment Lines: 13
-    '   Blank Lines: 11
-    '     File Size: 1.87 KB
+    ' Comment Lines: 47
+    '   Blank Lines: 12
+    '     File Size: 3.04 KB
 
 
     ' Class SpatialMapping

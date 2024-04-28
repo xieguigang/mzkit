@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::36f3fe4f8df8052a0849bab79e60a491, mzkit\src\mzmath\TargetedMetabolomics\LinearQuantitative\LinearPack\StandardCurveCDF.vb"
+﻿#Region "Microsoft.VisualBasic::c0e77fffc4054a7d27ff8ba9ce6e35fa, G:/mzkit/src/mzmath/TargetedMetabolomics//LinearQuantitative/LinearPack/StandardCurveCDF.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 123
-    '    Code Lines: 105
+    '   Total Lines: 126
+    '    Code Lines: 108
     ' Comment Lines: 0
     '   Blank Lines: 18
-    '     File Size: 6.99 KB
+    '     File Size: 7.24 KB
 
 
     '     Module StandardCurveCDF

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6612dd33694017c31daca40b58a73922, mzkit\src\visualize\MsImaging\SingleIonLayer.vb"
+﻿#Region "Microsoft.VisualBasic::1a3ff9e966dd8a06def929c886bc5528, G:/mzkit/src/visualize/MsImaging//Layer/SingleIonLayer.vb"
 
     ' Author:
     ' 
@@ -37,17 +37,17 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 185
-    '    Code Lines: 130
-    ' Comment Lines: 30
-    '   Blank Lines: 25
-    '     File Size: 6.32 KB
+    '   Total Lines: 253
+    '    Code Lines: 155
+    ' Comment Lines: 69
+    '   Blank Lines: 29
+    '     File Size: 8.65 KB
 
 
     ' Class SingleIonLayer
     ' 
-    '     Properties: DimensionSize, hasZeroPixels, IonMz, Item, maxinto
-    '                 MSILayer
+    '     Properties: DimensionSize, hasMultipleSamples, hasZeroPixels, IonMz, Item
+    '                 maxinto, MSILayer, sampleTags, size
     ' 
     '     Function: GetIntensity, (+3 Overloads) GetLayer, GetQuartile, IntensityCutoff, MeasureUninSize
     '               Take, (+2 Overloads) ToString, Trim

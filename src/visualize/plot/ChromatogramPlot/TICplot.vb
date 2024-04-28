@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::904b341c3a1551df1c36aae0458346fa, mzkit\src\visualize\plot\ChromatogramPlot\TICplot.vb"
+﻿#Region "Microsoft.VisualBasic::e090325b42e9d70d7dc86dc87b7c6eb1, G:/mzkit/src/visualize/plot//ChromatogramPlot/TICplot.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 336
-    '    Code Lines: 274
+    '   Total Lines: 334
+    '    Code Lines: 272
     ' Comment Lines: 10
     '   Blank Lines: 52
-    '     File Size: 13.24 KB
+    '     File Size: 13.26 KB
 
 
     ' Class TICplot
@@ -87,7 +87,6 @@ Public Class TICplot : Inherits Plot
     ReadOnly fillCurve As Boolean
     ReadOnly fillAlpha As Integer
     ReadOnly labelLayoutTicks As Integer = 100
-    ReadOnly deln As Integer = 10
     ReadOnly bspline As Single = 0!
     ''' <summary>
     ''' 当两个滑窗点的时间距离过长的时候，就不进行连接线的绘制操作了
@@ -102,7 +101,6 @@ Public Class TICplot : Inherits Plot
                    fillCurve As Boolean,
                    fillAlpha As Integer,
                    labelLayoutTicks As Integer,
-                   deln As Integer,
                    bspline As Single,
                    theme As Theme)
 
@@ -114,7 +112,6 @@ Public Class TICplot : Inherits Plot
         Me.fillCurve = fillCurve
         Me.fillAlpha = fillAlpha
         Me.labelLayoutTicks = labelLayoutTicks
-        Me.deln = deln
         Me.bspline = bspline
 
         If timeRange Is Nothing Then
@@ -305,7 +302,7 @@ Public Class TICplot : Inherits Plot
         labels = GetLabels(g, scaler, peakTimes).ToArray
 
         If theme.drawLabels Then Call DrawLabels(g, rect, labels, theme, labelLayoutTicks)
-        If theme.drawLegend Then Call DrawTICLegends(g, canvas, legends, deln, outside:=False)
+        If theme.drawLegend Then Call DrawTICLegends(g, canvas, legends, theme.legendSplitSize, outside:=False)
     End Sub
 
     Private Iterator Function GetLabels(g As IGraphics, scaler As DataScaler, peakTimes As IEnumerable(Of NamedValue(Of ChromatogramTick))) As IEnumerable(Of Label)
@@ -355,9 +352,10 @@ Public Class TICplot : Inherits Plot
         Next
     End Sub
 
-    Friend Shared Sub DrawTICLegends(g As IGraphics, canvas As GraphicsRegion, legends As LegendObject(), deln As Integer, outside As Boolean)
+    Friend Shared Sub DrawTICLegends(g As IGraphics, canvas As GraphicsRegion, legends As LegendObject(), split_size As Integer, outside As Boolean)
         ' 如果离子数量非常多的话,则会显示不完
         ' 这时候每20个换一列
+        Dim deln As Integer = If(split_size <= 0, 16, split_size)
         Dim cols = legends.Length / deln
 
         If cols > Fix(cols) Then

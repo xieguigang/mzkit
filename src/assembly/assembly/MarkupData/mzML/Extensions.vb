@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3b7b3c7547f5be7457622b23852d5f03, mzkit\src\assembly\assembly\MarkupData\mzML\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::3e601329df475954efddf3d598ff3a8d, G:/mzkit/src/assembly/assembly//MarkupData/mzML/Extensions.vb"
 
     ' Author:
     ' 
@@ -37,17 +37,17 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 167
-    '    Code Lines: 128
-    ' Comment Lines: 21
-    '   Blank Lines: 18
-    '     File Size: 6.98 KB
+    '   Total Lines: 98
+    '    Code Lines: 72
+    ' Comment Lines: 16
+    '   Blank Lines: 10
+    '     File Size: 3.99 KB
 
 
     '     Module Extensions
     ' 
-    '         Function: ByteArray, FilterAllSpectrum, GetAllMs1, GetAllMs2, (+2 Overloads) GetIonsChromatogram
-    '                   LoadChromatogramList, MRMTargetMz, PopulateMS1, PopulateMS2, Ticks
+    '         Function: ByteArray, FilterAllSpectrum, GetAllMs1, GetAllMs2, LoadChromatogramList
+    '                   PopulateMS1, PopulateMS2
     ' 
     ' 
     ' /********************************************************************************/

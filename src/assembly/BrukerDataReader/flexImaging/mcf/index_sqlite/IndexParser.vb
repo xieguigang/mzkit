@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::89a002cabf4933bafbad60a04c815f7a, mzkit\src\assembly\BrukerDataReader\flexImaging\mcf\index_sqlite\IndexParser.vb"
+﻿#Region "Microsoft.VisualBasic::4bddebfcc9c89b7e86d71e28976a56f6, G:/mzkit/src/assembly/BrukerDataReader//flexImaging/mcf/index_sqlite/IndexParser.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 53
     ' Comment Lines: 10
     '   Blank Lines: 13
-    '     File Size: 3.03 KB
+    '     File Size: 3.10 KB
 
 
     ' Class IndexParser

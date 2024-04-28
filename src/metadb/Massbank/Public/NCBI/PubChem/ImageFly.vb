@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e04d7a0d7eed4de6a30389d267456edd, mzkit\src\metadb\Massbank\Public\NCBI\PubChem\ImageFly.vb"
+﻿#Region "Microsoft.VisualBasic::e04d7a0d7eed4de6a30389d267456edd, G:/mzkit/src/metadb/Massbank//Public/NCBI/PubChem/ImageFly.vb"
 
     ' Author:
     ' 

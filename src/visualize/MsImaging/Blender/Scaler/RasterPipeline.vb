@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::84a36f3444f1e07f94d2cdc76e4749d4, mzkit\src\visualize\MsImaging\Blender\Scaler\RasterPipeline.vb"
+﻿#Region "Microsoft.VisualBasic::ef1e9b54fd613c36827b9e0c5ef4b67a, G:/mzkit/src/visualize/MsImaging//Blender/Scaler/RasterPipeline.vb"
 
     ' Author:
     ' 
@@ -37,17 +37,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 57
-    '    Code Lines: 44
-    ' Comment Lines: 0
-    '   Blank Lines: 13
-    '     File Size: 2.05 KB
+    '   Total Lines: 92
+    '    Code Lines: 68
+    ' Comment Lines: 3
+    '   Blank Lines: 21
+    '     File Size: 3.24 KB
 
 
     '     Class RasterPipeline
     ' 
-    '         Function: [Then], (+2 Overloads) DoIntensityScale, GetDefaultPipeline, GetEnumerator, IEnumerable_GetEnumerator
-    '                   ToString
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '         Function: [Then], (+3 Overloads) DoIntensityScale, GetDefaultPipeline, GetEnumerator, IEnumerable_GetEnumerator
+    '                   Parse, ToScript, ToString
     ' 
     '         Sub: Add
     ' 

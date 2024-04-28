@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::398d8e450357bc050c2fce7b3493b1f9, mzkit\src\assembly\BrukerDataReader\Raw\Exceptions\PostconditionException.vb"
+﻿#Region "Microsoft.VisualBasic::398d8e450357bc050c2fce7b3493b1f9, G:/mzkit/src/assembly/BrukerDataReader//Raw/Exceptions/PostconditionException.vb"
 
     ' Author:
     ' 

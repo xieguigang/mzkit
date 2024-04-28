@@ -1,55 +1,56 @@
-﻿#Region "Microsoft.VisualBasic::08d28b45e9fc277ea57b94d74ef4807a, mzkit\Rscript\Library\mzkit\annotations\ReferenceTree.vb"
+﻿#Region "Microsoft.VisualBasic::258fbcc9a73902c885e99edd7d748432, G:/mzkit/Rscript/Library/mzkit_app/src/mzkit//pipeline/ReferenceTree.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 251
-'    Code Lines: 167
-' Comment Lines: 49
-'   Blank Lines: 35
-'     File Size: 9.18 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module ReferenceTreePkg
-' 
-'     Function: addBucket, createJaccardSet, CreateNew, open, (+2 Overloads) QuerySingle
-'               (+2 Overloads) QueryTree, set_dotcutoff
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 617
+    '    Code Lines: 398
+    ' Comment Lines: 143
+    '   Blank Lines: 76
+    '     File Size: 24.82 KB
+
+
+    ' Module ReferenceTreePkg
+    ' 
+    '     Function: addBucket, compress, createJaccardSet, CreateNew, embedding
+    '               GetSpectrum, GetTestSample, open, (+2 Overloads) QuerySingle, (+2 Overloads) QueryTree
+    '               ReadPack, set_dotcutoff
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

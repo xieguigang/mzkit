@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7940ea7ac76f6162c3276fd74a457350, mzkit\src\assembly\NMRFidTool\Math\apodization\LorentzGausApodizatior.vb"
+﻿#Region "Microsoft.VisualBasic::78b350bcd176dfefee43c55f2a5b41dd, G:/mzkit/src/assembly/NMRFidTool//Math/apodization/LorentzGausApodizatior.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 25
     ' Comment Lines: 63
     '   Blank Lines: 10
-    '     File Size: 4.47 KB
+    '     File Size: 4.57 KB
 
 
     '     Class LorentzGausApodizatior

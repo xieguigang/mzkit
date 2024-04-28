@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bee77824bdfe76b55b170f7adc94f547, mzkit\src\metadb\Massbank\MetaLib\Models\ICompoundNames.vb"
+﻿#Region "Microsoft.VisualBasic::3c83e21a89df04fecb0178ca368edb6a, G:/mzkit/src/metadb/Massbank//MetaLib/Models/ICompoundNames.vb"
 
     ' Author:
     ' 
@@ -37,16 +37,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 8
-    '    Code Lines: 5
+    '   Total Lines: 14
+    '    Code Lines: 8
     ' Comment Lines: 0
-    '   Blank Lines: 3
-    '     File Size: 158 B
+    '   Blank Lines: 6
+    '     File Size: 298 B
 
 
     '     Interface ICompoundNames
     ' 
     '         Function: GetSynonym
+    ' 
+    '     Class CompoundNameReader
+    ' 
+    ' 
     ' 
     ' 
     ' /********************************************************************************/

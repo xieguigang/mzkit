@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5a77ee0dc02d66332cb5b6911c498980, mzkit\src\assembly\SpectrumTree\ReferenceBinaryTree.vb"
+﻿#Region "Microsoft.VisualBasic::8f70fc70b0eea16af875d3229663c398, G:/mzkit/src/assembly/SpectrumTree//Tree/ReferenceBinaryTree.vb"
 
     ' Author:
     ' 
@@ -37,17 +37,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 39
-    '    Code Lines: 28
-    ' Comment Lines: 6
-    '   Blank Lines: 5
-    '     File Size: 1.21 KB
+    '   Total Lines: 46
+    '    Code Lines: 30
+    ' Comment Lines: 10
+    '   Blank Lines: 6
+    '     File Size: 1.63 KB
 
 
-    ' Class ReferenceBinaryTree
+    '     Class ReferenceBinaryTree
     ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Sub: Push
+    '         Constructor: (+1 Overloads) Sub New
+    '         Sub: Push
+    ' 
     ' 
     ' /********************************************************************************/
 

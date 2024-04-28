@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6e51c796322bdb6d567054cfc0cdd9a3, mzkit\src\assembly\mzPackExtensions\MZWork\WorkspaceAccess.vb"
+﻿#Region "Microsoft.VisualBasic::6e51c796322bdb6d567054cfc0cdd9a3, G:/mzkit/src/assembly/mzPackExtensions//MZWork/WorkspaceAccess.vb"
 
     ' Author:
     ' 

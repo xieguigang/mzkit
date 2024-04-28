@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7b9488e10a66fb97a440ca8ffc861ee5, mzkit\src\assembly\assembly\UnifyReader\Provider.vb"
+﻿#Region "Microsoft.VisualBasic::7b9488e10a66fb97a440ca8ffc861ee5, G:/mzkit/src/assembly/assembly//UnifyReader/Provider.vb"
 
     ' Author:
     ' 

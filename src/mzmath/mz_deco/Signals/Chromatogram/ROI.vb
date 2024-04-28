@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eb4bb6e3966188ca370b922da5ecb410, mzkit\src\mzmath\ms2_math-core\Chromatogram\ROI.vb"
+﻿#Region "Microsoft.VisualBasic::becbd5622a6a72cd485e1a82218927c8, G:/mzkit/src/mzmath/mz_deco//Signals/Chromatogram/ROI.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 109
+    '   Total Lines: 113
     '    Code Lines: 57
-    ' Comment Lines: 39
+    ' Comment Lines: 43
     '   Blank Lines: 13
-    '     File Size: 4.00 KB
+    '     File Size: 4.18 KB
 
 
     '     Class ROI
@@ -65,7 +65,7 @@ Imports Microsoft.VisualBasic.Math
 Namespace Chromatogram
 
     ''' <summary>
-    ''' Region of interest
+    ''' Region of interest(on retention time dimension).
     ''' </summary>
     Public Class ROI : Implements IRetentionTime
 

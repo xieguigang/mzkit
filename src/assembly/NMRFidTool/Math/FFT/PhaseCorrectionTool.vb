@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3e84e36b605a78fb53c8fd365fee2e50, mzkit\src\assembly\NMRFidTool\Math\FFT\PhaseCorrectionTool.vb"
+﻿#Region "Microsoft.VisualBasic::166b79c283f87421be3d585aa04ecf74, G:/mzkit/src/assembly/NMRFidTool//Math/FFT/PhaseCorrectionTool.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 25
     ' Comment Lines: 26
     '   Blank Lines: 12
-    '     File Size: 2.09 KB
+    '     File Size: 2.15 KB
 
 
     '     Class PhaseCorrectionTool

@@ -1,9 +1,62 @@
-﻿Imports System.Runtime.CompilerServices
+﻿#Region "Microsoft.VisualBasic::6e8a96297ee22c20651aa36038f0ae16, G:/mzkit/src/mzmath/mz_deco//XcmsTable.vb"
+
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 110
+    '    Code Lines: 80
+    ' Comment Lines: 16
+    '   Blank Lines: 14
+    '     File Size: 4.07 KB
+
+
+    ' Module XcmsTable
+    ' 
+    '     Function: XcmsTable, XicTable
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Quantile
-Imports Microsoft.VisualBasic.Serialization.JSON
 Imports std = System.Math
 
 ''' <summary>
@@ -109,34 +162,3 @@ Public Module XcmsTable
         Next
     End Function
 End Module
-
-''' <summary>
-''' the rt shift result
-''' </summary>
-Public Class RtShift
-
-    ''' <summary>
-    ''' the sample name
-    ''' </summary>
-    ''' <returns></returns>
-    Public Property sample As String
-    Public Property xcms_id As String
-    ''' <summary>
-    ''' the reference rt
-    ''' </summary>
-    ''' <returns></returns>
-    Public Property refer_rt As Double
-    Public Property sample_rt As Double
-    Public Property RI As Double
-
-    Public ReadOnly Property shift As Double
-        Get
-            Return sample_rt - refer_rt
-        End Get
-    End Property
-
-    Public Overrides Function ToString() As String
-        Return Me.GetJson
-    End Function
-
-End Class

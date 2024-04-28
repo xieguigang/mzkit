@@ -1,54 +1,67 @@
-﻿#Region "Microsoft.VisualBasic::0cb17be81195d2e5c3ded08472c9430e, mzkit\Rscript\Library\mzkit.quantify\mzDeco.vb"
+﻿#Region "Microsoft.VisualBasic::dae8ef40ce66ab5c94881e6ed356d177, G:/mzkit/Rscript/Library/mzkit_app/src/mzquant//mzDeco.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 140
-'    Code Lines: 106
-' Comment Lines: 15
-'   Blank Lines: 19
-'     File Size: 5.35 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module mzDeco
-' 
-'     Function: ms1Scans, mz_deco, mz_groups, peakAlignment, readPeakData
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 997
+    '    Code Lines: 665
+    ' Comment Lines: 212
+    '   Blank Lines: 120
+    '     File Size: 40.99 KB
+
+
+    ' Module mzDeco
+    ' 
+    '     Function: adjust_to_seconds, dumpPeaks, extractAlignedPeaks, get_ionPeak, ms1Scans
+    '               mz_deco, mz_groups, peakAlignment, peaksetMatrix, peakSubset
+    '               peaktable, pull_xic, readPeakData, readPeaktable, readSamples
+    '               readXcmsFeaturePeaks, readXcmsPeaks, readXIC, RI_calc, RI_reference
+    '               writePeaktable, writeSamples, writeXIC, writeXIC1, xic_deco
+    '               xic_dtw_list, xic_matrix_list, XICpool_func
+    ' 
+    '     Sub: Main
+    '     Class xic_deco_task
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Sub: Solve
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -56,6 +69,7 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection
@@ -75,6 +89,7 @@ Imports SMRUCC.Rsharp.Runtime.Internal
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
+Imports deco_math = BioNovoGene.Analytical.MassSpectrometry.Math.Extensions
 Imports std = System.Math
 Imports vec = SMRUCC.Rsharp.Runtime.Internal.Object.vector
 
@@ -450,92 +465,131 @@ Module mzDeco
     ''' </summary>
     ''' <param name="peakdata">should be a collection of the peak data from a single sample file.</param>
     ''' <param name="RI">should be a collection of the <see cref="RIRefer"/> data.</param>
+    ''' <param name="C">
+    ''' the number of carbon atoms for kovats retention index
+    ''' </param>
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("RI_cal")>
-    Public Function RI_calc(peakdata As PeakFeature(), <RRawVectorArgument> RI As Object,
+    Public Function RI_calc(peakdata As PeakFeature(),
+                            <RRawVectorArgument>
+                            Optional RI As Object = Nothing,
                             Optional ppm As Double = 20,
                             Optional dt As Double = 15,
                             Optional rawfile As String = Nothing,
                             Optional by_id As Boolean = False,
+                            Optional C As list = Nothing,
                             Optional env As Environment = Nothing) As Object
 
-        Dim RIrefers As pipeline = pipeline.TryCreatePipeline(Of RIRefer)(RI, env)
-
-        If RIrefers.isError Then
-            Return RIrefers.getError
-        End If
-
-        Dim ri_refers As RIRefer() = RIrefers.populates(Of RIRefer)(env).OrderBy(Function(i) i.rt).ToArray
-        Dim ppmErr As Tolerance = Tolerance.PPM(ppm)
         Dim refer_points As New List(Of PeakFeature)
 
-        'For i As Integer = 0 To ri_refers.Length - 1
-        '    ri_refers(i).rt *= 60
-        'Next
-
-        If by_id Then
-            ' the RI is already has been assigned the peak id
-            ' get peak feature data by its id directly!
-            Dim peak1Index = peakdata.ToDictionary(Function(p1) p1.xcms_id)
-
-            For Each refer As RIRefer In ri_refers
-                Dim target As PeakFeature = peak1Index(refer.name)
-
-                target.RI = refer.RI
-                refer_points.Add(target)
-            Next
+        If RI Is Nothing Then
+            ' ri reference from the peakdata which has RI value assigned
+            Call refer_points.AddRange(From pk As PeakFeature In peakdata.SafeQuery Where pk.RI > 0 Order By pk.RI)
         Else
-            ' find a ri reference point at first
-            ' find a set of the candidate points
-            For Each refer As RIRefer In ri_refers
-                Dim target As PeakFeature = peakdata _
-                    .Where(Function(pi) ppmErr(pi.mz, refer.mz) AndAlso std.Abs(pi.rt - refer.rt) <= dt) _
-                    .OrderByDescending(Function(pi) pi.maxInto) _
-                    .FirstOrDefault
+            Dim RIrefers As pipeline = pipeline.TryCreatePipeline(Of RIRefer)(RI, env)
 
-                If target Is Nothing Then
-                    Return Internal.debug.stop({
-                        $"the required retention index reference point({refer.ToString}) could not be found! please check the rt window parameter(dt) is too small?",
-                        $"retention_index_reference: {ri_refers.GetJson}",
-                        $"rawfile tag: {rawfile}",
-                        $"ms1_pars: {ppm} PPM, rt_win {dt} sec"
-                    }, env)
-                End If
+            If RIrefers.isError Then
+                Return RIrefers.getError
+            End If
 
-                target.RI = refer.RI
-                refer_points.Add(target)
-            Next
+            Dim ri_refers As RIRefer() = RIrefers.populates(Of RIRefer)(env).OrderBy(Function(i) i.rt).ToArray
+            Dim ppmErr As Tolerance = Tolerance.PPM(ppm)
+
+            'For i As Integer = 0 To ri_refers.Length - 1
+            '    ri_refers(i).rt *= 60
+            'Next
+
+            If by_id Then
+                ' the RI is already has been assigned the peak id
+                ' get peak feature data by its id directly!
+                Dim peak1Index = peakdata.ToDictionary(Function(p1) p1.xcms_id)
+
+                For Each refer As RIRefer In ri_refers
+                    Dim target As PeakFeature = peak1Index(refer.name)
+
+                    target.RI = refer.RI
+                    refer_points.Add(target)
+                Next
+            Else
+                ' find a ri reference point at first
+                ' find a set of the candidate points
+                For Each refer As RIRefer In ri_refers
+                    Dim target As PeakFeature = peakdata _
+                        .Where(Function(pi) ppmErr(pi.mz, refer.mz) AndAlso std.Abs(pi.rt - refer.rt) <= dt) _
+                        .OrderByDescending(Function(pi) pi.maxInto) _
+                        .FirstOrDefault
+
+                    If target Is Nothing Then
+                        Return Internal.debug.stop({
+                            $"the required retention index reference point({refer.ToString}) could not be found! please check the rt window parameter(dt) is too small?",
+                            $"retention_index_reference: {ri_refers.GetJson}",
+                            $"rawfile tag: {rawfile}",
+                            $"ms1_pars: {ppm} PPM, rt_win {dt} sec"
+                        }, env)
+                    End If
+
+                    target.RI = refer.RI
+                    refer_points.Add(target)
+                Next
+            End If
         End If
 
         ' order raw data by rt
         peakdata = peakdata.OrderBy(Function(i) i.rt).ToArray
         refer_points = refer_points.OrderBy(Function(i) i.rt).AsList
         ' add a fake point
-        refer_points.Add(New PeakFeature With {.RI = refer_points.Last.RI + 100, .rt = peakdata.Last.rt})
+        refer_points.Add(New PeakFeature With {
+            .RI = refer_points.Last.RI + 100,
+            .rt = peakdata.Last.rt,
+            .xcms_id = peakdata.Last.xcms_id
+        })
 
         Dim a As (rt As Double, ri As Double)
         Dim b As (rt As Double, ri As Double)
         Dim offset As Integer = 0
+        Dim id_a, id_b As String
+        Dim c_atoms As Dictionary(Of String, Integer) = Nothing
+
+        If Not C Is Nothing Then
+            c_atoms = C.AsGeneric(Of Integer)(env)
+
+            If Not c_atoms.ContainsKey(peakdata(0).xcms_id) Then
+                c_atoms.Add(peakdata(0).xcms_id, c_atoms.Values.Min - 1)
+            End If
+            If Not c_atoms.ContainsKey(peakdata.Last.xcms_id) Then
+                c_atoms.Add(peakdata.Last.xcms_id, c_atoms.Values.Max + 1)
+            End If
+        End If
 
         If peakdata(0).RI > 0 Then
             a = (peakdata(0).rt, peakdata(0).RI)
+            id_a = peakdata(0).xcms_id
             offset = 1
             b = (refer_points(1).rt, refer_points(1).RI)
+            id_b = refer_points(1).xcms_id
         Else
             a = (peakdata(0).rt, 0)
             b = (refer_points(0).rt, refer_points(0).RI)
+            id_a = peakdata(0).xcms_id
+            id_b = refer_points(0).xcms_id
         End If
 
         For i As Integer = offset To peakdata.Length - 1
             peakdata(i).rawfile = If(rawfile, peakdata(i).rawfile)
 
             If peakdata(i).RI = 0 Then
-                peakdata(i).RI = RetentionIndex(peakdata(i), a, b)
+                If c_atoms Is Nothing Then
+                    peakdata(i).RI = deco_math.RetentionIndex(peakdata(i), a, b)
+                Else
+                    peakdata(i).RI = deco_math.KovatsRI(c_atoms(id_a), c_atoms(id_b), peakdata(i).rt, a.rt, b.rt)
+                End If
             Else
                 a = b
+                id_a = id_b
                 offset += 1
                 b = (refer_points(offset).rt, refer_points(offset).RI)
+                id_b = refer_points(offset).xcms_id
             End If
         Next
 
@@ -634,6 +688,10 @@ Module mzDeco
             Else
                 GoTo extract_ms1
             End If
+        ElseIf TypeOf ms1 Is ChromatogramOverlapList Then
+            Return DirectCast(ms1, ChromatogramOverlapList) _
+                .GetPeakGroups(rtRange.TryCast(Of DoubleRange), quantile:=baseline, sn_threshold, joint, [single]:=False) _
+                .ToArray
         Else
             Dim pull_xic As pipeline = pipeline.TryCreatePipeline(Of MzGroup)(ms1, env, suppress:=True)
 

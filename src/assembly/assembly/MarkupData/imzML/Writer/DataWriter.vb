@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::16452bc74559931395666b8be6e1db32, mzkit\src\assembly\assembly\MarkupData\imzML\Writer\DataWriter.vb"
+﻿#Region "Microsoft.VisualBasic::16452bc74559931395666b8be6e1db32, G:/mzkit/src/assembly/assembly//MarkupData/imzML/Writer/DataWriter.vb"
 
     ' Author:
     ' 

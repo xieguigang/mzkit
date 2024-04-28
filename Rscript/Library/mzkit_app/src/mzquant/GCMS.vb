@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f45d574b3337099e9792d02a308cf1f1, mzkit\Rscript\Library\mzkit.quantify\GCMS.vb"
+﻿#Region "Microsoft.VisualBasic::9a93906830374ed8b2eb765a7e1ebc1f, G:/mzkit/Rscript/Library/mzkit_app/src/mzquant//GCMS.vb"
 
     ' Author:
     ' 
@@ -37,23 +37,27 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 238
-    '    Code Lines: 191
-    ' Comment Lines: 12
-    '   Blank Lines: 35
-    '     File Size: 10.09 KB
+    '   Total Lines: 312
+    '    Code Lines: 237
+    ' Comment Lines: 32
+    '   Blank Lines: 43
+    '     File Size: 13.10 KB
 
 
     ' Module GCMSLinear
     ' 
-    '     Constructor: (+1 Overloads) Sub New
     '     Function: algorithm, ContentTable, createScanIonExtract, createSIMIonExtract, extractSampleRaw
-    '               FileNames2Contents, GetRawROIlist, InternalStandardMethod, quantifyIons, readRaw
+    '               FileNames2Contents, GetRawROIlist, InternalStandardMethod, quantifyIons, readGCSample
+    '               readRaw, writeSamples
+    ' 
+    '     Sub: Main
     ' 
     ' /********************************************************************************/
 
 #End Region
 
+Imports System.IO
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MSL
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
@@ -62,6 +66,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.GCMS
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.GCMS.QuantifyAnalysis
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative.Linear
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Linq
@@ -70,6 +75,7 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
+Imports SMRUCC.Rsharp.Runtime.Internal
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
@@ -79,11 +85,26 @@ Imports Rlist = SMRUCC.Rsharp.Runtime.Internal.Object.list
 ''' the targetted GCMS sim data quantification module
 ''' </summary>
 <Package("GCMS")>
+<RTypeExport("gcms_peak", GetType(GCMSPeak))>
 Module GCMSLinear
 
-    Sub New()
+    Sub Main()
         Call Internal.ConsolePrinter.AttachConsoleFormatter(Of TargetPeakPoint)(Function(pt) pt.ToString)
+
+        Call generic.add("readBin.gcms_peak", GetType(Stream), AddressOf readGCSample)
+        Call generic.add("writeBin", GetType(GCMSPeak()), AddressOf writeSamples)
     End Sub
+
+    Private Function readGCSample(file As Stream, args As list, env As Environment) As Object
+        Return SaveSample.ReadGCSample(file).ToArray
+    End Function
+
+    Private Function writeSamples(samples As GCMSPeak(), args As list, env As Environment) As Object
+        Dim con As Stream = args!con
+        Call SaveSample.DumpGCMSPeaks(samples, con)
+        Call con.Flush()
+        Return True
+    End Function
 
     <ExportAPI("as.quantify.ion")>
     Public Function quantifyIons(ions As MSLIon(), Optional rtwin As Double = 1) As QuantifyIon()
@@ -193,6 +214,11 @@ Module GCMSLinear
         End If
     End Function
 
+    ''' <summary>
+    ''' read gcms rawdata
+    ''' </summary>
+    ''' <param name="file"></param>
+    ''' <returns></returns>
     <ExportAPI("read.raw")>
     Public Function readRaw(file As String) As Raw
         Return GCMS.OpenRawAuto(file)
@@ -269,13 +295,25 @@ Module GCMSLinear
             .ToArray
     End Function
 
+    ''' <summary>
+    ''' do peak detection for gc-ms rawdata
+    ''' </summary>
+    ''' <param name="raw">the input gcms rawdata, could be <see cref="Raw"/> for 
+    ''' targetted data and <see cref="mzPack"/> for un-targetted gc-ms rawdata.
+    ''' </param>
+    ''' <param name="peakwidth"></param>
+    ''' <param name="baseline"></param>
+    ''' <param name="sn"></param>
+    ''' <param name="env"></param>
+    ''' <returns>a list of detected peak features</returns>
     <ExportAPI("ROIlist")>
-    <RApiReturn(GetType(ROI))>
-    Public Function GetRawROIlist(raw As Raw,
+    <RApiReturn(GetType(ROI), GetType(GCMSPeak))>
+    Public Function GetRawROIlist(raw As Object,
                                   <RRawVectorArgument>
                                   Optional peakwidth As Object = "3,20",
                                   Optional baseline# = 0.65,
                                   Optional sn# = 3,
+                                  Optional joint As Boolean = False,
                                   Optional env As Environment = Nothing) As Object
 
         Dim range = ApiArgumentHelpers.GetDoubleRange(peakwidth, env, "3,20")
@@ -284,14 +322,49 @@ Module GCMSLinear
             Return range.TryCast(Of Message)
         End If
 
-        Return raw _
-            .GetTIC _
-            .Shadows _
-            .PopulateROI(
-                peakwidth:=range.TryCast(Of DoubleRange),
-                baselineQuantile:=baseline,
-                snThreshold:=sn
-            ) _
-            .ToArray
+        If raw Is Nothing Then
+            Return Nothing
+        End If
+
+        If TypeOf raw Is Raw Then
+            Return DirectCast(raw, Raw) _
+                .GetTIC _
+                .Shadows _
+                .PopulateROI(
+                    peakwidth:=range.TryCast(Of DoubleRange),
+                    baselineQuantile:=baseline,
+                    snThreshold:=sn
+                ) _
+                .ToArray
+        ElseIf TypeOf raw Is mzPack Then
+            ' processing the un-targetted data
+            Dim rawdata As mzPack = DirectCast(raw, mzPack)
+            Dim scan1 As PeakMs2() = rawdata.MS _
+                .SafeQuery _
+                .Select(Function(s1)
+                            Return New PeakMs2(s1.scan_id, s1.GetPeaks) With {
+                                .rt = s1.rt,
+                                .intensity = s1.TIC
+                            }
+                        End Function) _
+                .ToArray
+
+            Call VBDebugger.EchoLine("extract ROI peak features for GC-MS untargetted rawdata.")
+
+            Dim peaks As GCMSPeak() = GCMSDeconv _
+                .DeconvGCMSRawdata(scan1, range.TryCast(Of DoubleRange),
+                                   quantile:=baseline,
+                                   sn_threshold:=sn,
+                                   joint:=joint) _
+                .ToArray
+
+            For i As Integer = 0 To peaks.Length - 1
+                peaks(i).rawfile = rawdata.source
+            Next
+
+            Return peaks
+        Else
+            Return Message.InCompatibleType(GetType(Raw), raw.GetType, env)
+        End If
     End Function
 End Module

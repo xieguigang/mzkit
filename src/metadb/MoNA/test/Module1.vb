@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b2ccbd399a1be2c0904fbe24f5a134f9, mzkit\src\metadb\MoNA\test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::b2ccbd399a1be2c0904fbe24f5a134f9, G:/mzkit/src/metadb/MoNA//test/Module1.vb"
 
     ' Author:
     ' 

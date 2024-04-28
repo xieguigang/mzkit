@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::84ef33ed67610207823e2b4984b2fafe, mzkit\Rscript\Library\mzkit\math\TestFormulaSymbolLang.vb"
+﻿#Region "Microsoft.VisualBasic::84ef33ed67610207823e2b4984b2fafe, G:/mzkit/Rscript/Library/mzkit_app/src/mzkit//math/TestFormulaSymbolLang.vb"
 
     ' Author:
     ' 

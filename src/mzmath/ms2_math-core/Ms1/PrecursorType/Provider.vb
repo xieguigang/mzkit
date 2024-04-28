@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5a593f2eaa1818e387dc4ad2a58cdeab, mzkit\src\mzmath\ms2_math-core\Ms1\PrecursorType\Provider.vb"
+﻿#Region "Microsoft.VisualBasic::524d3f926325a02fa3e1f255aae87ecb, G:/mzkit/src/mzmath/ms2_math-core//Ms1/PrecursorType/Provider.vb"
 
     ' Author:
     ' 
@@ -37,18 +37,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 208
-    '    Code Lines: 85
-    ' Comment Lines: 101
-    '   Blank Lines: 22
-    '     File Size: 10.04 KB
+    '   Total Lines: 242
+    '    Code Lines: 107
+    ' Comment Lines: 109
+    '   Blank Lines: 26
+    '     File Size: 11.68 KB
 
 
     '     Module Provider
     ' 
     '         Properties: Negative, Negatives, Positive, Positives
     ' 
-    '         Function: Calculator, Calculators, GetCalculator, ParseIonMode
+    '         Function: Calculator, Calculators, (+2 Overloads) GetCalculator, ParseAdductModel, ParseIonMode
     ' 
     ' 
     ' /********************************************************************************/

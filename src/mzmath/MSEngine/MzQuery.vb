@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::13217484beac2aa474c9a6c0eeb692ee, mzkit\src\mzmath\MSEngine\MzQuery.vb"
+﻿#Region "Microsoft.VisualBasic::5977d4d91c38a602cbab75a611295fd4, G:/mzkit/src/mzmath/MSEngine//MzQuery.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 95
-    '    Code Lines: 52
+    '   Total Lines: 96
+    '    Code Lines: 53
     ' Comment Lines: 30
     '   Blank Lines: 13
-    '     File Size: 2.83 KB
+    '     File Size: 3.03 KB
 
 
     ' Class MzQuery

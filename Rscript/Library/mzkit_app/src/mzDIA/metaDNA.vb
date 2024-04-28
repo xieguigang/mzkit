@@ -1,58 +1,60 @@
-﻿#Region "Microsoft.VisualBasic::dc8f09faca442980b6908d1f6f0008f4, mzkit\Rscript\Library\mzkit.insilicons\metaDNA.vb"
+﻿#Region "Microsoft.VisualBasic::9de58af663d244f127c923d7569596ba, G:/mzkit/Rscript/Library/mzkit_app/src/mzDIA//metaDNA.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 538
-'    Code Lines: 377
-' Comment Lines: 88
-'   Blank Lines: 73
-'     File Size: 22.83 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module metaDNAInfer
-' 
-'     Constructor: (+1 Overloads) Sub New
-'     Function: CreateKEGGSearch, DIAInfer, ExportNetwork, getResultTable, handleSample
-'               InferTable, loadCompoundLibrary, loadKeggNetwork, loadMetaDNAInferNetwork, MetaDNAAlgorithm
-'               MgfSeeds, readReactionClassTable, ResultAlignments, ResultTable, SaveAlgorithmPerfermance
-'               SetInferNetwork, SetKeggLibrary, SetSearchRange
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 717
+    '    Code Lines: 491
+    ' Comment Lines: 134
+    '   Blank Lines: 92
+    '     File Size: 31.70 KB
+
+
+    ' Module metaDNAInfer
+    ' 
+    '     Function: CreateKEGGSearch, DIAInfer, ExportNetwork, getResultTable, handleSample
+    '               InferTable, loadCompoundLibrary, loadKeggNetwork, loadMetaDNAInferNetwork, loadOntologyTree
+    '               MetaDNAAlgorithm, MgfSeeds, readReactionClassTable, ResultAlignments, ResultTable
+    '               SaveAlgorithmPerfermance, SetInferNetwork, SetKeggLibrary, setLibrary, setNetworking
+    '               SetSearchRange
+    ' 
+    '     Sub: Main
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cf5663f578641da677db290724e63f7c, mzkit\src\visualize\MsImaging\Blender\Renderer\Renderer.vb"
+﻿#Region "Microsoft.VisualBasic::ab31aacf540c5d0adb499980b3dfcd5b, G:/mzkit/src/visualize/MsImaging//Blender/Renderer/Renderer.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 91
     ' Comment Lines: 40
     '   Blank Lines: 20
-    '     File Size: 6.44 KB
+    '     File Size: 6.58 KB
 
 
     '     Class Renderer

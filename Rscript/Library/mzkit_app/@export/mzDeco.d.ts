@@ -192,6 +192,8 @@ declare namespace mzDeco {
     * 
      * @param peakdata should be a collection of the peak data from a single sample file.
      * @param RI should be a collection of the @``T:BioNovoGene.Analytical.MassSpectrometry.Math.RIRefer`` data.
+     * 
+     * + default value Is ``null``.
      * @param ppm 
      * + default value Is ``20``.
      * @param dt 
@@ -200,11 +202,14 @@ declare namespace mzDeco {
      * + default value Is ``null``.
      * @param by_id 
      * + default value Is ``false``.
+     * @param C the number of carbon atoms for kovats retention index
+     * 
+     * + default value Is ``null``.
      * @param env -
      * 
      * + default value Is ``null``.
    */
-   function RI_cal(peakdata: object, RI: any, ppm?: number, dt?: number, rawfile?: string, by_id?: boolean, env?: object): any;
+   function RI_cal(peakdata: object, RI?: any, ppm?: number, dt?: number, rawfile?: string, by_id?: boolean, C?: object, env?: object): any;
    /**
     * Create RI reference dataset.
     * 

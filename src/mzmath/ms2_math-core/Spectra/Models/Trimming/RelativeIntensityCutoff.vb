@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2ea9c61b700695b41f8f8d6f488d0d06, mzkit\src\mzmath\ms2_math-core\Spectra\Models\Trimming\RelativeIntensityCutoff.vb"
+﻿#Region "Microsoft.VisualBasic::67f756742465ce471bda9de673b779ff, G:/mzkit/src/mzmath/ms2_math-core//Spectra/Models/Trimming/RelativeIntensityCutoff.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 39
     ' Comment Lines: 10
     '   Blank Lines: 12
-    '     File Size: 1.95 KB
+    '     File Size: 2.01 KB
 
 
     '     Class RelativeIntensityCutoff

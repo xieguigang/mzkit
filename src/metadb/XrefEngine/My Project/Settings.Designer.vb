@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b87800d960213f004e50e76473246293, mzkit\src\metadb\XrefEngine\My Project\Settings.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::ea588734fbf23dd92075893cccc12cb2, G:/mzkit/src/metadb/XrefEngine//My Project/Settings.Designer.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 53
     ' Comment Lines: 9
     '   Blank Lines: 12
-    '     File Size: 2.97 KB
+    '     File Size: 3.04 KB
 
 
     '     Class MySettings

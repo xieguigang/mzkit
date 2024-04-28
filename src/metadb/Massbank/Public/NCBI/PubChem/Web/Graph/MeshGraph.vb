@@ -1,76 +1,82 @@
-﻿#Region "Microsoft.VisualBasic::a0e38ad12f630a8597a3631cf52d9ae4, mzkit\src\metadb\Massbank\Public\NCBI\PubChem\Web\Graph\MeshGraph.vb"
+﻿#Region "Microsoft.VisualBasic::3642123d522b6eaa535ff443dd870ed4, G:/mzkit/src/metadb/Massbank//Public/NCBI/PubChem/Web/Graph/MeshGraph.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 93
-'    Code Lines: 74
-' Comment Lines: 3
-'   Blank Lines: 16
-'     File Size: 3.00 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class GraphId
-' 
-'         Properties: CID, GeneSymbol, GraphId, MeSH
-' 
-'         Function: ToString
-' 
-'     Class Evidence
-' 
-'         Properties: ChemicalDiseaseNeighbor, ChemicalGeneSymbolNeighbor, ChemicalNeighbor, Graph
-' 
-'     Class MeshGraph
-' 
-'         Properties: Evidence, ID_1, ID_2
-' 
-'     Class PubChemGraph
-' 
-'         Properties: Article, ArticleCount, CooccurrenceScore, EffectiveTotalArticleCount, NeighborArticleCount
-'                     NeighborName, OrderingByCooccurrenceScore, QueryArticleCount, TotalArticleCount
-' 
-'     Class Article
-' 
-'         Properties: Author, ChemicalName, ChemicalName_1, ChemicalName_2, Citation
-'                     DiseaseName, DOI, GenericArticleId, GeneSymbolName, IsReview
-'                     Journal, PMID, PublicationDate, RelevanceScore, Title
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 134
+    '    Code Lines: 89
+    ' Comment Lines: 25
+    '   Blank Lines: 20
+    '     File Size: 4.47 KB
+
+
+    '     Class GraphId
+    ' 
+    '         Properties: CID, GeneSymbol, GraphId, MeSH
+    ' 
+    '         Function: ToString
+    ' 
+    '     Class Evidence
+    ' 
+    '         Properties: ChemicalDiseaseNeighbor, ChemicalGeneSymbolNeighbor, ChemicalNeighbor, GeneSymbolDiseaseNeighbor, Graph
+    ' 
+    '     Class MeshGraph
+    ' 
+    '         Properties: Evidence, ID_1, ID_2
+    ' 
+    '         Function: ToString
+    ' 
+    '     Class PubChemGraph
+    ' 
+    '         Properties: Article, ArticleCount, CooccurrenceScore, EffectiveTotalArticleCount, NeighborArticleCount
+    '                     NeighborName, OrderingByCooccurrenceScore, QueryArticleCount, TotalArticleCount
+    ' 
+    '         Function: ToString
+    ' 
+    '     Class Article
+    ' 
+    '         Properties: Author, ChemicalName, ChemicalName_1, ChemicalName_2, Citation
+    '                     DiseaseName, DOI, GenericArticleId, GeneSymbolName, IsReview
+    '                     Journal, PMID, PublicationDate, RelevanceScore, Title
+    ' 
+    '         Function: ToString
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

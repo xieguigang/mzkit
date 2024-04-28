@@ -1,0 +1,469 @@
+﻿proj,files,totalLines,commentLines,blankLines,lineOfCodes,class,property,method,functions,operator,size(bytes),size
+G:\mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\CASNumber.vb,43,15,8,20,1,0,0,1,0,1477,1.48 KB
+G:\mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\ChemicalDescriptor.vb,205,22,37,146,4,35,3,8,0,7032,7.03 KB
+G:\mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\Extensions.vb,17,0,3,14,1,0,0,1,0,456,456 B
+G:\mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\GenericCompound.vb,13,3,2,8,1,0,0,0,0,395,395 B
+G:\mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\MetaboliteAnnotation.vb,58,29,9,20,2,6,0,2,0,1990,1.99 KB
+G:\mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\Formula\AbbrevStatsType.vb,65,45,5,15,1,8,0,1,0,2719,2.72 KB
+G:\mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\Formula\DNPOrWileyType.vb,7,0,1,6,1,0,0,0,0,108,108 B
+G:\mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\Formula\ElementDictionary.vb,596,0,2,594,1,0,0,0,0,15985,15.98 KB
+G:\mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\Formula\ElementNumType.vb,51,0,7,44,1,0,1,0,0,1368,1.37 KB
+G:\mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\Formula\ElementSearchCandiate.vb,14,0,4,10,1,3,0,1,0,374,374 B
+G:\mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\Formula\FormalCharge.vb,76,13,15,48,1,0,0,2,0,3299,3.30 KB
+G:\mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\Formula\FormulaCalculateUtility.vb,305,0,33,272,2,0,0,11,0,17570,17.57 KB
+G:\mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\Formula\FormulaScanner.vb,302,51,43,208,1,0,3,5,0,11545,11.54 KB
+G:\mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\Formula\FormulaSearch.vb,224,33,41,150,1,0,1,6,0,9501,9.50 KB
+G:\mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\Formula\SearchOption.vb,167,14,25,128,1,4,2,8,0,6301,6.30 KB
+G:\mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\Formula\SevenGoldenRulesCheck.vb,404,36,39,329,2,0,1,9,0,21880,21.88 KB
+G:\mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\Formula\Isotopic\Calculator.vb,110,32,15,63,1,0,0,4,0,4337,4.34 KB
+G:\mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\Formula\Isotopic\Isotope.vb,26,12,4,10,1,3,0,1,0,680,680 B
+G:\mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\Formula\Isotopic\IsotopeCalc.vb,2405,17,644,1744,1,0,5,30,0,159034,159.03 KB
+G:\mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\Formula\Isotopic\IsotopeCount.vb,88,15,14,59,1,1,0,2,0,3148,3.15 KB
+G:\mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\Formula\Isotopic\IsotopeDistribution.vb,93,9,17,67,1,6,0,3,0,4354,4.35 KB
+G:\mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\Formula\Isotopic\IsotopeProperty.vb,102,12,35,55,4,16,3,1,0,3429,3.43 KB
+G:\mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\Formula\Isotopic\IsotopicPeak.vb,33,5,10,18,1,5,2,0,0,1066,1.07 KB
+G:\mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\Formula\Models\Canonical.vb,45,3,9,33,1,0,0,2,0,1834,1.83 KB
+G:\mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\Formula\Models\Element.vb,320,34,13,273,1,8,3,4,0,28975,28.98 KB
+G:\mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\Formula\Models\ElementsExactMass.vb,68,4,7,57,1,0,0,0,0,3478,3.48 KB
+G:\mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\Formula\Models\Formula.vb,311,76,43,192,1,7,2,3,13,11758,11.76 KB
+G:\mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\Formula\Models\FormulaComposition.vb,78,21,10,47,1,4,1,3,0,2746,2.75 KB
+G:\mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\Formula\MS\AdductIon.vb,178,25,30,123,3,13,3,7,0,6887,6.89 KB
+G:\mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\Formula\MS\NeutralLoss.vb,102,6,34,62,2,28,0,1,0,3277,3.28 KB
+G:\mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\Formula\MS\Parser.vb,103,3,24,76,1,0,0,3,0,4814,4.81 KB
+G:\mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\Formula\MS\Default\Alkenyl.vb,10,0,4,6,1,1,0,0,0,245,245 B
+G:\mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\Formula\MS\Default\Alkyl.vb,60,43,3,14,1,10,0,0,0,2404,2.40 KB
+G:\mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\Formula\MS\Default\Amines.vb,10,0,4,6,1,1,0,0,0,251,251 B
+G:\mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\Formula\MS\Default\Glycosides.vb,6,0,2,4,1,0,0,0,0,94,94 B
+G:\mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\Formula\MS\Default\Ketones.vb,27,8,5,14,1,9,0,0,0,1827,1.83 KB
+G:\mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\Formula\MS\Default\Lipids.vb,6,0,2,4,1,0,0,0,0,90,90 B
+G:\mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\Formula\MS\Default\Others.vb,14,0,4,10,1,5,0,0,0,622,622 B
+G:\mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\InChI\Components.vb,229,124,23,82,6,8,0,1,0,9617,9.62 KB
+G:\mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\InChI\Extensions.vb,150,11,27,112,1,0,0,3,0,4595,4.59 KB
+G:\mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\InChI\InChI.vb,64,12,10,42,1,9,1,2,0,2524,2.52 KB
+G:\mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\InChI\InChIKey.vb,54,3,12,39,1,5,1,1,0,1394,1.39 KB
+G:\mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\InChI\Layers.vb,129,45,19,65,2,0,0,7,0,4719,4.72 KB
+G:\mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\Lipid\Chain.vb,135,7,27,101,3,9,0,5,0,4441,4.44 KB
+G:\mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\Lipid\LipidName.vb,95,25,15,55,1,3,0,5,0,3174,3.17 KB
+G:\mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\My Project\Application.Designer.vb,12,9,1,2,0,0,0,0,0,434,434 B
+G:\mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\My Project\AssemblyInfo.vb,36,15,6,15,0,0,0,0,0,1195,1.20 KB
+G:\mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\My Project\Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2801,2.80 KB
+G:\mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\My Project\Settings.Designer.vb,76,9,14,53,2,2,1,0,0,3052,3.05 KB
+G:\mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\NaturalProduct\Extensions.vb,14,0,2,12,1,0,0,1,0,363,363 B
+G:\mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\NaturalProduct\GlycosylNameSolver.vb,285,6,42,237,1,0,1,9,0,10564,10.56 KB
+G:\mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\NaturalProduct\NameToken.vb,34,15,4,15,2,0,1,0,0,780,780 B
+G:\mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\NaturalProduct\QuantityPrefix.vb,17,0,1,16,1,0,0,0,0,264,264 B
+G:\mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\NaturalProduct\TokenScanner.vb,63,0,13,50,1,0,1,4,0,1853,1.85 KB
+G:\mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\SDF\NamespaceDoc.vb,8,3,1,4,1,0,0,0,0,174,174 B
+G:\mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\SDF\SDF.vb,103,48,15,40,1,6,0,5,0,4362,4.36 KB
+G:\mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\SDF\SDFParser.vb,197,34,28,135,1,0,0,7,0,7614,7.61 KB
+G:\mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\SDF\Struct\Elements.vb,153,12,26,115,2,6,0,7,0,4973,4.97 KB
+G:\mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\SDF\Struct\Enums.vb,35,18,2,15,2,0,0,0,0,798,798 B
+G:\mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\SDF\Struct\Mol.vb,89,27,11,51,1,2,0,4,0,3244,3.24 KB
+G:\mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\SDF\Struct\Point3D.vb,10,0,3,7,1,3,0,0,0,193,193 B
+G:\mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\test\inchiTest.vb,28,8,9,11,1,0,1,0,0,671,671 B
+G:\mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\test\IsotopicTest.vb,28,12,5,11,1,0,1,0,0,772,772 B
+G:\mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\test\nameTest.vb,53,3,14,36,1,0,3,0,0,2268,2.27 KB
+G:\mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\test\PeakAnnotations.vb,81,67,14,0,0,0,0,0,0,2870,2.87 KB
+G:\mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\test\My Project\Application.Designer.vb,12,9,1,2,0,0,0,0,0,434,434 B
+G:\mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\test\My Project\AssemblyInfo.vb,36,15,6,15,0,0,0,0,0,1171,1.17 KB
+G:\mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\test\My Project\Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2769,2.77 KB
+G:\mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,Chemoinformatics\test\My Project\Settings.Designer.vb,74,9,12,53,2,2,1,0,0,2982,2.98 KB
+G:\mzkit\src\metadb\Chemoinformatics\chemoinformatics-netcore5.vbproj,<project>,9168,1178,1586,6404,89,232,42,180,13,434415,434.42 KB
+G:\mzkit\src\metadb\Chemoinformatics\test\unitTest.vbproj,test\inchiTest.vb,28,8,9,11,1,0,1,0,0,671,671 B
+G:\mzkit\src\metadb\Chemoinformatics\test\unitTest.vbproj,test\IsotopicTest.vb,28,12,5,11,1,0,1,0,0,772,772 B
+G:\mzkit\src\metadb\Chemoinformatics\test\unitTest.vbproj,test\nameTest.vb,53,3,14,36,1,0,3,0,0,2268,2.27 KB
+G:\mzkit\src\metadb\Chemoinformatics\test\unitTest.vbproj,test\PeakAnnotations.vb,81,67,14,0,0,0,0,0,0,2870,2.87 KB
+G:\mzkit\src\metadb\Chemoinformatics\test\unitTest.vbproj,test\My Project\Application.Designer.vb,12,9,1,2,0,0,0,0,0,434,434 B
+G:\mzkit\src\metadb\Chemoinformatics\test\unitTest.vbproj,test\My Project\AssemblyInfo.vb,36,15,6,15,0,0,0,0,0,1171,1.17 KB
+G:\mzkit\src\metadb\Chemoinformatics\test\unitTest.vbproj,test\My Project\Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2769,2.77 KB
+G:\mzkit\src\metadb\Chemoinformatics\test\unitTest.vbproj,test\My Project\Settings.Designer.vb,74,9,12,53,2,2,1,0,0,2982,2.98 KB
+G:\mzkit\src\metadb\Chemoinformatics\test\unitTest.vbproj,<project>,375,146,69,160,6,4,6,0,0,13937,13.94 KB
+G:\mzkit\src\metadb\FormulaSearch.Extensions\FormulaSearch.Extensions.NET5.vbproj,FormulaSearch.Extensions\IsotopicAlignment.vb,56,5,6,45,1,0,0,2,0,2204,2.20 KB
+G:\mzkit\src\metadb\FormulaSearch.Extensions\FormulaSearch.Extensions.NET5.vbproj,FormulaSearch.Extensions\PeakAnnotation.vb,109,19,10,80,1,2,2,2,0,4315,4.32 KB
+G:\mzkit\src\metadb\FormulaSearch.Extensions\FormulaSearch.Extensions.NET5.vbproj,FormulaSearch.Extensions\PrecursorIonComposition.vb,14,0,3,11,1,3,1,0,0,504,504 B
+G:\mzkit\src\metadb\FormulaSearch.Extensions\FormulaSearch.Extensions.NET5.vbproj,FormulaSearch.Extensions\PrecursorIonSearch.vb,82,9,14,59,1,1,1,2,0,3258,3.26 KB
+G:\mzkit\src\metadb\FormulaSearch.Extensions\FormulaSearch.Extensions.NET5.vbproj,FormulaSearch.Extensions\SMILESGraph.vb,37,5,6,26,1,0,0,1,0,1283,1.28 KB
+G:\mzkit\src\metadb\FormulaSearch.Extensions\FormulaSearch.Extensions.NET5.vbproj,FormulaSearch.Extensions\test\Module1.vb,55,2,13,40,1,0,2,0,0,2258,2.26 KB
+G:\mzkit\src\metadb\FormulaSearch.Extensions\FormulaSearch.Extensions.NET5.vbproj,FormulaSearch.Extensions\test\peakTest.vb,79,0,15,64,1,0,3,1,0,2410,2.41 KB
+G:\mzkit\src\metadb\FormulaSearch.Extensions\FormulaSearch.Extensions.NET5.vbproj,FormulaSearch.Extensions\test\My Project\Application.Designer.vb,12,9,1,2,0,0,0,0,0,434,434 B
+G:\mzkit\src\metadb\FormulaSearch.Extensions\FormulaSearch.Extensions.NET5.vbproj,FormulaSearch.Extensions\test\My Project\AssemblyInfo.vb,35,15,7,13,0,0,0,0,0,1019,1019 B
+G:\mzkit\src\metadb\FormulaSearch.Extensions\FormulaSearch.Extensions.NET5.vbproj,FormulaSearch.Extensions\test\My Project\Resources.Designer.vb,62,23,8,31,1,2,0,0,0,2766,2.77 KB
+G:\mzkit\src\metadb\FormulaSearch.Extensions\FormulaSearch.Extensions.NET5.vbproj,FormulaSearch.Extensions\test\My Project\Settings.Designer.vb,73,9,13,51,2,2,1,0,0,2966,2.97 KB
+G:\mzkit\src\metadb\FormulaSearch.Extensions\FormulaSearch.Extensions.NET5.vbproj,<project>,614,96,96,422,10,10,10,8,0,23417,23.42 KB
+G:\mzkit\src\metadb\KNApSAcK\KNApSAcK.NET5.vbproj,KNApSAcK\Extensions.vb,33,0,4,29,1,0,0,1,0,1176,1.18 KB
+G:\mzkit\src\metadb\KNApSAcK\KNApSAcK.NET5.vbproj,KNApSAcK\KNApSAcKRef.vb,36,4,6,26,1,10,0,2,0,1216,1.22 KB
+G:\mzkit\src\metadb\KNApSAcK\KNApSAcK.NET5.vbproj,KNApSAcK\Data\Information.vb,37,8,5,24,2,15,0,1,0,1094,1.09 KB
+G:\mzkit\src\metadb\KNApSAcK\KNApSAcK.NET5.vbproj,KNApSAcK\Data\InformationTable.vb,71,4,9,58,1,12,0,1,0,2787,2.79 KB
+G:\mzkit\src\metadb\KNApSAcK\KNApSAcK.NET5.vbproj,KNApSAcK\Data\QueryInput.vb,12,0,3,9,1,0,0,1,0,279,279 B
+G:\mzkit\src\metadb\KNApSAcK\KNApSAcK.NET5.vbproj,KNApSAcK\Data\ResultEntry.vb,12,0,3,9,1,5,0,0,0,291,291 B
+G:\mzkit\src\metadb\KNApSAcK\KNApSAcK.NET5.vbproj,KNApSAcK\My Project\Application.Designer.vb,12,9,1,2,0,0,0,0,0,434,434 B
+G:\mzkit\src\metadb\KNApSAcK\KNApSAcK.NET5.vbproj,KNApSAcK\My Project\AssemblyInfo.vb,38,15,8,15,0,0,0,0,0,1184,1.18 KB
+G:\mzkit\src\metadb\KNApSAcK\KNApSAcK.NET5.vbproj,KNApSAcK\My Project\Resources.Designer.vb,90,32,11,47,1,5,0,0,0,3919,3.92 KB
+G:\mzkit\src\metadb\KNApSAcK\KNApSAcK.NET5.vbproj,KNApSAcK\My Project\Settings.Designer.vb,75,9,13,53,2,2,1,0,0,3073,3.07 KB
+G:\mzkit\src\metadb\KNApSAcK\KNApSAcK.NET5.vbproj,KNApSAcK\Web\InformationQuery.vb,85,0,12,73,1,0,1,4,0,3409,3.41 KB
+G:\mzkit\src\metadb\KNApSAcK\KNApSAcK.NET5.vbproj,KNApSAcK\Web\Search.vb,41,0,9,32,1,0,0,2,0,1497,1.50 KB
+G:\mzkit\src\metadb\KNApSAcK\KNApSAcK.NET5.vbproj,KNApSAcK\Web\SearchQuery.vb,60,0,9,51,1,0,1,4,0,2111,2.11 KB
+G:\mzkit\src\metadb\KNApSAcK\KNApSAcK.NET5.vbproj,KNApSAcK\Web\Types.vb,11,0,0,11,1,0,0,0,0,141,141 B
+G:\mzkit\src\metadb\KNApSAcK\KNApSAcK.NET5.vbproj,<project>,613,81,93,439,14,49,3,16,0,22611,22.61 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\ChainGenerator.vb,100,0,16,84,1,3,1,9,0,4832,4.83 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\ChainsDecomposer.vb,16,0,2,14,1,0,0,3,0,1270,1.27 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\ChainsIndeterminateState.vb,81,0,16,65,10,3,1,8,0,3308,3.31 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\ChainsVisitor.vb,15,0,2,13,1,0,1,1,0,763,763 B
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\ChainVisitor.vb,85,0,14,71,4,0,4,6,0,4101,4.10 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\ChainVisitorBuilder.vb,37,0,6,31,1,0,7,1,0,2046,2.05 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\DoubleBondIndeterminateState.vb,121,0,15,106,3,3,2,9,0,5961,5.96 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\EidDefaultCharacterization.vb,45,0,15,30,1,0,1,6,0,2997,3.00 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\IChain.vb,12,0,1,11,1,6,0,2,0,506,506 B
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\IChainGenerator.vb,11,0,4,7,1,0,0,5,0,409,409 B
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\IDoubleBond.vb,101,0,26,75,2,8,4,12,0,4291,4.29 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\IDoubleBondInfo.vb,78,0,13,65,3,6,1,9,0,3027,3.03 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\ILipidGenerator.vb,30,0,8,22,2,0,2,4,0,1155,1.16 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\ILipidomicsVisitorBuilder.vb,9,0,0,9,1,0,7,0,0,540,540 B
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\IOadSpectrumPeakGenerator.vb,9,0,2,7,1,0,0,3,0,764,764 B
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\IOxidized.vb,78,2,17,59,2,8,2,6,0,3109,3.11 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\ISpectrumPeakGenerator.vb,9,0,2,7,1,0,0,3,0,704,704 B
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\ITotalChain.vb,106,13,9,84,2,9,2,8,0,5040,5.04 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\ITotalChainVariationGenerator.vb,10,0,4,6,1,0,0,3,0,374,374 B
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\LbmClass.vb,216,3,7,206,1,0,0,0,0,2453,2.45 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\LipidClassDictionary.vb,76,1,14,61,2,8,2,1,0,2757,2.76 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\LipidConverterBuilder.vb,43,0,8,35,1,0,7,1,0,2361,2.36 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\LipidSpectrumGeneratorFactory.vb,227,0,40,187,13,12,7,17,0,8826,8.83 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\LipoqualityDatabaseManagerUtility.vb,802,80,98,624,1,0,5,4,0,32343,32.34 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\LipoqualityRest.vb,497,13,20,464,1,0,2,1,0,37898,37.90 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\MolecularSpeciesLevelChains.vb,90,0,17,73,3,0,1,8,0,4031,4.03 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\NamespaceDoc.vb,3,0,1,2,1,0,0,0,0,38,38 B
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\OadDefaultCharacterization.vb,38,0,12,26,1,0,1,5,0,2521,2.52 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\OadSpectrumPeakGenerator.vb,364,97,24,243,2,2,0,7,0,24572,24.57 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\Omega3nChainGenerator.vb,233,0,21,212,1,0,0,18,0,11893,11.89 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\OxidizedIndeterminateState.vb,96,0,13,83,3,2,2,7,0,4247,4.25 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\PositionLevelChains.vb,53,0,10,43,1,0,1,6,0,2597,2.60 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SeparatedChains.vb,237,16,23,198,5,11,5,8,0,9683,9.68 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\ShortHandGenerator.vb,18,0,3,15,1,0,0,4,0,844,844 B
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\ShorthandNotation.vb,25,0,5,20,1,1,1,3,0,1220,1.22 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\ShorthandNotationDirector.vb,64,4,9,51,1,0,9,0,0,3017,3.02 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SmilesInchikeyGenerator.vb,243,36,16,191,3,2,2,2,0,17421,17.42 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGeneratorUtility.vb,65,0,11,54,1,0,0,2,0,3104,3.10 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumPeakGenerator.vb,249,56,26,167,1,0,0,4,0,12819,12.82 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\TotalChain.vb,109,0,20,89,1,9,1,10,0,5351,5.35 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\TotalChainVariationGenerator.vb,247,1,44,202,7,9,4,17,0,15290,15.29 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\Annotation\ILipid.vb,119,1,20,98,4,14,1,11,0,4788,4.79 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\Annotation\LipidAnnotation.vb,25,0,2,23,1,19,0,0,0,1166,1.17 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\Annotation\LipidAnnotationLevelConverter.vb,41,0,7,34,2,1,1,2,0,1761,1.76 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\Annotation\LipidMassLibraryGenerator.vb,1206,21,115,1070,2,5,1,124,0,90619,90.62 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\Annotation\Lipidomics.vb,692,56,76,560,3,35,2,5,0,52960,52.96 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\Annotation\LipidomicsConverter.vb,5506,3288,427,1791,1,0,13,9,0,219333,219.33 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\Annotation\Search\MsScanMatching.vb,1630,82,319,1229,1,0,1,14,0,114463,114.46 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\ChainParser\AcylChain.vb,237,8,47,182,3,19,3,21,0,10421,10.42 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\ChainParser\AcylChainParser.vb,56,1,6,49,1,0,0,4,0,2566,2.57 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\ChainParser\AlkylChainParser.vb,71,1,6,64,1,0,0,4,0,3337,3.34 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\ChainParser\SphingoChainParser.vb,65,1,7,57,1,0,0,4,0,2994,2.99 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\ChainParser\TotalChainParser.vb,133,1,19,113,1,3,1,9,0,7466,7.47 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\LipidParser\CeramideLipidParser.vb,90,1,8,81,1,1,0,1,0,4027,4.03 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\LipidParser\CeramideNsD7LipidParser.vb,24,0,5,19,1,1,0,1,0,1192,1.19 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\LipidParser\CLLipidParser.vb,50,8,8,34,1,1,0,1,0,2849,2.85 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\LipidParser\DMEDFAHFALipidParser.vb,21,0,2,19,1,1,0,1,0,1149,1.15 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\LipidParser\DMEDFALipidParser.vb,23,0,4,19,1,1,0,1,0,1141,1.14 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\LipidParser\FacadeLipidParser.vb,102,0,9,93,1,2,2,1,0,4165,4.17 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\LipidParser\HBMPLipidParser.vb,36,5,5,26,1,1,0,1,0,1872,1.87 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\LipidParser\Hex2CerLipidParser.vb,24,2,3,19,1,1,0,1,0,1368,1.37 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\LipidParser\HexCerLipidParser.vb,69,0,5,64,1,1,0,1,0,3253,3.25 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\LipidParser\ILipidParser.vb,4,0,0,4,1,1,0,1,0,146,146 B
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\LipidParser\LipidParsers.vb,907,4,169,734,42,42,0,42,0,42763,42.76 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\MsCharacterization\BMPEadMsCharacterization.vb,21,0,2,19,1,0,0,1,0,1080,1.08 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\MsCharacterization\CAREadMsCharacterization.vb,11,0,3,8,1,0,0,1,0,602,602 B
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\MsCharacterization\CEEadMsCharacterization.vb,11,0,3,8,1,0,0,1,0,642,642 B
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\MsCharacterization\CeramideEadMsCharacterization.vb,11,0,3,8,1,0,0,1,0,591,591 B
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\MsCharacterization\DGEadMsCharacterization.vb,22,0,3,19,1,0,0,1,0,1137,1.14 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\MsCharacterization\DGTAEadMsCharacterization.vb,11,0,3,8,1,0,0,1,0,597,597 B
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\MsCharacterization\DGTSEadMsCharacterization.vb,10,0,2,8,1,0,0,1,0,595,595 B
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\MsCharacterization\DMEDFAEadMsCharacterization.vb,11,0,3,8,1,0,0,1,0,605,605 B
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\MsCharacterization\DMEDFAHFAEadMsCharacterization.vb,23,0,2,21,1,0,0,1,0,1239,1.24 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\MsCharacterization\EieioMsCharacterizationUtility.vb,399,20,61,318,5,18,1,13,0,22446,22.45 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\MsCharacterization\EtherPCEadMsCharacterization.vb,11,0,3,8,1,0,0,1,0,619,619 B
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\MsCharacterization\EtherPEEadMsCharacterization.vb,10,0,2,8,1,0,0,1,0,617,617 B
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\MsCharacterization\GM3EadMsCharacterization.vb,9,0,1,8,1,0,0,1,0,582,582 B
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\MsCharacterization\HBMPEadMsCharacterization.vb,15,0,4,11,1,0,0,1,0,746,746 B
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\MsCharacterization\Hex2CerEadMsCharacterization.vb,10,0,2,8,1,0,0,1,0,588,588 B
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\MsCharacterization\HexCerEadMsCharacterization.vb,10,0,2,8,1,0,0,1,0,587,587 B
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\MsCharacterization\LDGTAEadMsCharacterization.vb,11,0,3,8,1,0,0,1,0,618,618 B
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\MsCharacterization\LDGTSEadMsCharacterization.vb,10,0,2,8,1,0,0,1,0,616,616 B
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\MsCharacterization\LipidEieioMsmsCharacterization.vb,3570,244,381,2945,1,0,1,43,0,227378,227.38 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\MsCharacterization\LPCEadMsCharacterization.vb,11,0,3,8,1,0,0,1,0,616,616 B
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\MsCharacterization\LPEEadMsCharacterization.vb,11,0,3,8,1,0,0,1,0,616,616 B
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\MsCharacterization\LPGEadMsCharacterization.vb,10,0,2,8,1,0,0,1,0,614,614 B
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\MsCharacterization\LPIEadMsCharacterization.vb,11,0,3,8,1,0,0,1,0,616,616 B
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\MsCharacterization\LPSEadMsCharacterization.vb,11,0,3,8,1,0,0,1,0,596,596 B
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\MsCharacterization\MGEadMsCharacterization.vb,10,0,2,8,1,0,0,1,0,639,639 B
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\MsCharacterization\MsmsCharacterization.vb,16792,1881,2342,12569,2,0,3,224,0,1036200,1.04 MB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\MsCharacterization\PAEadMsCharacterization.vb,11,0,3,8,1,0,0,1,0,595,595 B
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\MsCharacterization\PCEadMsCharacterization.vb,23,0,5,18,1,0,0,1,0,1116,1.12 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\MsCharacterization\PEEadMsCharacterization.vb,25,0,4,21,1,0,0,1,0,1245,1.25 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\MsCharacterization\PGEadMsCharacterization.vb,25,0,4,21,1,0,0,1,0,1247,1.25 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\MsCharacterization\PIEadMsCharacterization.vb,25,0,4,21,1,0,0,1,0,1247,1.25 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\MsCharacterization\PSEadMsCharacterization.vb,25,0,4,21,1,0,0,1,0,1245,1.25 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\MsCharacterization\SHexCerEadMsCharacterization.vb,9,0,1,8,1,0,0,1,0,606,606 B
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\MsCharacterization\SMEadMsCharacterization.vb,10,0,2,8,1,0,0,1,0,583,583 B
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\MsCharacterization\TGEadMsCharacterization.vb,36,0,4,32,1,0,0,2,0,1790,1.79 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\My Project\Resources.Designer.vb,122,70,10,42,1,4,0,0,0,5035,5.04 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\BMPEidSpectrumGenerator.vb,165,1,21,143,1,0,2,9,0,9188,9.19 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\BMPSpectrumGenerator.vb,150,0,22,128,1,0,2,8,0,8023,8.02 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\CARSpectrumGenerator.vb,95,0,15,80,1,0,2,6,0,4772,4.77 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\CEd7SpectrumGenerator.vb,97,1,13,83,1,0,2,6,0,5149,5.15 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\CeramideNsD7SpectrumGenerator.vb,222,9,19,194,1,0,2,7,0,11816,11.82 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\CeramideOadSpectrumGenerator.vb,136,21,18,97,1,0,2,6,0,6173,6.17 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\CeramidePhytoSphSpectrumGenerator.vb,142,0,12,130,1,0,2,6,0,7605,7.61 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\CeramideSpectrumGenerator.vb,140,0,13,127,1,0,2,6,0,7519,7.52 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\CESpectrumGenerator.vb,99,1,15,83,1,0,2,6,0,4977,4.98 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\CLEidSpectrumGenerator.vb,217,11,26,180,1,0,2,9,0,11805,11.80 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\CLSpectrumGenerator.vb,170,5,23,142,1,0,2,8,0,9012,9.01 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\DGd5SpectrumGenerator.vb,128,1,17,110,1,0,2,8,0,7092,7.09 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\DGEidSpectrumGenerator.vb,143,0,18,125,1,0,2,9,0,7652,7.65 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\DGOadSpectrumGenerator.vb,128,32,14,82,1,0,2,4,0,5633,5.63 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\DGSpectrumGenerator.vb,128,0,17,111,1,0,2,8,0,7003,7.00 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\DGTASpectrumGenerator.vb,125,0,19,106,1,0,2,8,0,6563,6.56 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\DGTSSpectrumGenerator.vb,130,0,21,109,1,0,2,8,0,7109,7.11 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\DMEDFAHFASpectrumGenerator.vb,134,1,17,116,1,0,2,7,0,7091,7.09 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\DMEDFASpectrumGenerator.vb,95,0,18,77,1,0,2,5,0,4652,4.65 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\EidDefaultSpectrumGenerator.vb,50,0,8,42,1,0,2,3,0,2568,2.57 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\EidLipidsSpectrumGenerator.vb,88,0,13,75,1,0,0,3,0,4934,4.93 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\EidSpecificSpectrumGenerator.vb,82,0,3,79,1,0,0,1,0,5195,5.20 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\EtherPCEidSpectrumGenerator.vb,146,2,21,123,1,0,2,8,0,7835,7.83 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\EtherPCOadSpectrumGenerator.vb,129,19,16,94,1,0,2,6,0,7156,7.16 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\EtherPCSpectrumGenerator.vb,144,0,20,124,1,0,2,7,0,7765,7.76 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\EtherPEEidSpectrumGenerator.vb,187,2,24,161,1,0,2,8,0,10201,10.20 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\EtherPESpectrumGenerator.vb,175,3,23,149,1,0,2,7,0,10160,10.16 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\FacadeLipidSpectrumGenerator.vb,188,8,11,169,1,3,2,2,0,12613,12.61 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\GM3SpectrumGenerator.vb,153,1,13,139,1,0,2,6,0,8955,8.96 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\HBMPEidSpectrumGenerator.vb,197,7,24,166,1,0,2,9,0,11242,11.24 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\HBMPSpectrumGenerator.vb,170,13,24,133,1,0,2,8,0,9820,9.82 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\Hex2CerSpectrumGenerator.vb,131,3,10,118,1,0,2,6,0,7510,7.51 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\HexCerSpectrumGenerator.vb,159,0,10,149,1,0,2,6,0,9104,9.10 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\ILipidSpectrumGenerator.vb,8,0,1,7,1,0,0,2,0,418,418 B
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\LDGTASpectrumGenerator.vb,129,0,20,109,1,0,2,8,0,6831,6.83 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\LDGTSSpectrumGenerator.vb,132,0,20,112,1,0,2,8,0,7027,7.03 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\LPCd5SpectrumGenerator.vb,141,3,23,115,1,0,2,8,0,7560,7.56 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\LPCEidSpectrumGenerator.vb,149,3,25,121,1,0,2,9,0,7764,7.76 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\LPCOadSpectrumGenerator.vb,115,10,16,89,1,0,2,4,0,5386,5.39 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\LPCSpectrumGenerator.vb,142,3,24,115,1,0,2,8,0,7416,7.42 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\LPEd5SpectrumGenerator.vb,143,0,23,120,1,0,2,8,0,7362,7.36 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\LPEEidSpectrumGenerator.vb,149,0,24,125,1,0,2,9,0,7626,7.63 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\LPEOadSpectrumGenerator.vb,115,11,17,87,1,0,2,4,0,5273,5.27 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\LPESpectrumGenerator.vb,143,0,23,120,1,0,2,8,0,7300,7.30 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\LPGd5SpectrumGenerator.vb,162,1,21,140,1,0,2,8,0,8961,8.96 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\LPGEidSpectrumGenerator.vb,162,1,22,139,1,0,2,9,0,9013,9.01 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\LPGSpectrumGenerator.vb,163,1,21,141,1,0,2,8,0,8945,8.95 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\LPId5SpectrumGenerator.vb,163,6,23,134,1,0,2,8,0,8319,8.32 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\LPIEidSpectrumGenerator.vb,171,1,24,146,1,0,2,9,0,8760,8.76 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\LPISpectrumGenerator.vb,163,6,23,134,1,0,2,8,0,8260,8.26 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\LPSd5SpectrumGenerator.vb,145,1,24,120,1,0,2,8,0,9055,9.05 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\LPSEidSpectrumGenerator.vb,151,0,25,126,1,0,2,9,0,9010,9.01 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\LPSSpectrumGenerator.vb,145,1,24,120,1,0,2,8,0,8410,8.41 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\MGEidSpectrumGenerator.vb,143,6,18,119,1,0,2,9,0,7740,7.74 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\MGSpectrumGenerator.vb,140,14,18,108,1,0,2,8,0,7682,7.68 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\OadDefaultSpectrumGenerator.vb,88,0,13,75,2,2,3,3,0,4787,4.79 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\OadLipidsSpectrumGenerator.vb,172,0,11,161,1,0,0,1,0,9547,9.55 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\PAEidSpectrumGenerator.vb,150,0,22,128,1,0,2,9,0,8268,8.27 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\PASpectrumGenerator.vb,134,0,21,113,1,0,2,8,0,7286,7.29 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\PCd5SpectrumGenerator.vb,127,0,19,108,1,0,2,8,0,6706,6.71 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\PCEidSpectrumGenerator.vb,141,0,20,121,1,0,2,9,0,7352,7.35 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\PCOadSpectrumGenerator.vb,136,18,15,103,1,0,2,4,0,6850,6.85 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\PCSpectrumGenerator.vb,127,0,19,108,1,0,2,8,0,6662,6.66 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\PEd5SpectrumGenerator.vb,157,0,23,134,1,0,2,8,0,8390,8.39 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\PEEidSpectrumGenerator.vb,154,0,22,132,1,0,2,9,0,8245,8.24 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\PEOadSpectrumGenerator.vb,154,24,16,114,1,0,2,4,0,7587,7.59 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\PESpectrumGenerator.vb,160,10,22,128,1,0,2,8,0,8397,8.40 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\PGd5SpectrumGenerator.vb,155,0,21,134,1,0,2,8,0,8213,8.21 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\PGEidSpectrumGenerator.vb,158,0,23,135,1,0,2,9,0,8703,8.70 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\PGOadSpectrumGenerator.vb,137,26,13,98,1,0,2,4,0,6671,6.67 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\PGSpectrumGenerator.vb,155,0,21,134,1,0,2,8,0,8171,8.17 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\PId5SpectrumGenerator.vb,148,0,24,124,1,0,2,8,0,8303,8.30 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\PIEidSpectrumGenerator.vb,166,0,25,141,1,0,2,9,0,9084,9.08 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\PIOadSpectrumGenerator.vb,139,22,15,102,1,0,2,4,0,6931,6.93 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\PISpectrumGenerator.vb,148,0,24,124,1,0,2,8,0,8259,8.26 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\PSd5SpectrumGenerator.vb,159,1,23,135,1,0,2,8,0,8768,8.77 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\PSEidSpectrumGenerator.vb,148,0,24,124,1,0,2,9,0,8052,8.05 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\PSSpectrumGenerator.vb,160,1,24,135,1,0,2,8,0,8740,8.74 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\SHexCerSpectrumGenerator.vb,160,2,13,145,1,0,2,6,0,9320,9.32 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\SMd9SpectrumGenerator.vb,127,0,11,116,1,0,2,6,0,6774,6.77 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\SMEidSpectrumGenerator.vb,148,0,14,134,1,0,2,7,0,7879,7.88 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\SMOadSpectrumGenerator.vb,139,40,17,82,1,0,2,4,0,6884,6.88 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\SMSpectrumGenerator.vb,137,0,11,126,1,0,2,6,0,7502,7.50 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\TGd5SpectrumGenerator.vb,168,9,19,140,1,0,2,8,0,9777,9.78 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\TGEidSpectrumGenerator.vb,196,0,20,176,1,0,2,9,0,10855,10.86 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\TGOadSpectrumGenerator.vb,96,8,12,76,1,0,2,4,0,4688,4.69 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,Lipidomics\SpectrumGenerator\TGSpectrumGenerator.vb,172,0,19,153,1,0,2,8,0,9384,9.38 KB
+G:\mzkit\src\metadb\Lipidomics\Lipidomics.vbproj,<project>,49865,6387,6380,37098,293,278,282,1397,0,2813818,2.81 MB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\SDFExtensions.vb,176,14,16,146,1,0,0,6,0,6695,6.70 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Statistics.vb,114,14,17,83,1,0,0,2,0,3952,3.95 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Concentration\Concentration.vb,100,2,6,92,1,0,0,1,0,6012,6.01 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Concentration\Units.vb,102,69,4,29,1,0,0,0,0,2771,2.77 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\MetaLib\KEGGExtensions.vb,53,10,11,32,1,0,0,1,0,1956,1.96 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\MetaLib\NameRanking.vb,85,16,13,56,1,0,0,2,0,3254,3.25 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\MetaLib\NaturalLanguageTerm.vb,60,8,11,41,1,0,0,2,0,2128,2.13 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\MetaLib\Match\ComparesIdXrefInteger.vb,61,3,9,49,1,0,2,1,0,1767,1.77 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\MetaLib\Match\ExactMassSearch.vb,76,4,18,54,3,1,2,6,0,2758,2.76 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\MetaLib\Match\MetaEquals.vb,81,3,17,61,1,0,2,3,0,2827,2.83 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\MetaLib\Match\NameEquality.vb,80,23,11,46,1,0,0,5,0,2894,2.89 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\MetaLib\Match\SynonymIndex.vb,54,0,11,43,1,0,2,5,0,1997,2.00 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\MetaLib\Match\TreeSearch.vb,55,7,11,37,1,0,1,3,0,1747,1.75 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\MetaLib\Models\ICompoundClass.vb,73,22,11,40,2,5,0,2,0,2483,2.48 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\MetaLib\Models\ICompoundNames.vb,14,0,6,8,2,0,0,1,0,298,298 B
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\MetaLib\Models\MetaInfo.vb,105,18,13,74,1,8,0,3,0,4545,4.54 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\MetaLib\Models\MetaLib.vb,113,28,23,62,3,18,2,3,0,4519,4.52 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\MetaLib\Models\CrossReference\Validation.vb,90,18,12,60,1,0,0,7,0,3362,3.36 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\MetaLib\Models\CrossReference\Xref.vb,157,50,13,94,1,21,3,3,0,6452,6.45 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\MetaLib\Models\CrossReference\XrefExtensions.vb,47,13,6,28,1,0,0,2,0,1436,1.44 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\MetaLib\Models\CrossReference\XrefSchema.vb,121,16,15,90,1,0,1,2,0,5300,5.30 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\My Project\Application.Designer.vb,12,9,1,2,0,0,0,0,0,434,434 B
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\My Project\AssemblyInfo.vb,38,15,8,15,0,0,0,0,0,1201,1.20 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\My Project\Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2794,2.79 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\My Project\Settings.Designer.vb,74,9,12,53,2,2,1,0,0,3034,3.03 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Public\ChEBI\ChEBIObo.vb,67,0,6,61,1,0,0,3,0,3196,3.20 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Public\ChEBI\Wraper.vb,42,0,9,33,1,5,0,1,0,1388,1.39 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Public\lipidMAPS\BackgroundModel.vb,165,0,28,137,2,1,0,7,0,6699,6.70 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Public\lipidMAPS\MapsHelper.vb,193,27,25,141,3,1,2,7,0,7643,7.64 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Public\lipidMAPS\MetaTable.vb,53,11,9,33,1,0,0,3,0,1963,1.96 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Public\lipidMAPS\SDF.vb,131,31,10,90,1,28,0,4,0,7697,7.70 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Public\Massbank\Model.vb,113,0,11,102,1,0,0,6,0,5230,5.23 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Public\Massbank\PeakDataHelper.vb,67,21,8,38,2,0,0,2,0,2733,2.73 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Public\Massbank\RecordIO.vb,199,1,37,161,1,0,0,7,0,7415,7.42 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Public\Massbank\DATA\Model.vb,54,0,12,42,3,22,0,3,0,1775,1.77 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Public\Massbank\DATA\Record.vb,119,15,29,75,7,38,0,5,0,3391,3.39 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Public\NCBI\NamespaceDoc.vb,8,3,1,4,1,0,0,0,0,191,191 B
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Public\NCBI\PubChemDescriptorRepo.vb,228,34,50,144,2,0,6,1,0,10875,10.88 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Public\NCBI\PubMed.vb,64,7,10,47,1,17,0,3,0,2176,2.18 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Public\NCBI\SDFExtensions.vb,27,0,5,22,1,0,0,3,0,931,931 B
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Public\NCBI\MeSH\KnowledgeBackground.vb,109,0,12,97,1,0,0,5,0,4315,4.32 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Public\NCBI\PubChem\CIDSynonym.vb,154,27,19,108,1,6,0,3,0,5719,5.72 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Public\NCBI\PubChem\ImageFly.vb,61,18,8,35,1,0,0,2,0,2297,2.30 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Public\NCBI\PubChem\MetaData.vb,61,6,6,49,1,33,1,1,0,2885,2.88 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Public\NCBI\PubChem\SIDMap.vb,77,24,10,43,1,4,0,2,0,2745,2.75 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Public\NCBI\PubChem\PCXml\Elements.vb,25,0,4,21,3,12,0,0,0,1093,1.09 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Public\NCBI\PubChem\PCXml\Extensions.vb,31,0,5,26,1,0,0,2,0,1081,1.08 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Public\NCBI\PubChem\PCXml\PC-Compound.vb,30,0,8,22,3,4,0,1,0,820,820 B
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Public\NCBI\PubChem\Web\Extensions.vb,207,28,24,155,1,0,0,10,0,8779,8.78 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Public\NCBI\PubChem\Web\MetaInfoReader.vb,416,19,49,348,1,0,0,16,0,18827,18.83 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Public\NCBI\PubChem\Web\Graph\MeshGraph.vb,134,25,20,89,5,36,0,4,0,4472,4.47 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Public\NCBI\PubChem\Web\Graph\WebGraph.vb,130,12,24,94,4,2,2,5,0,4944,4.94 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Public\NCBI\PubChem\Web\Models\Information.vb,206,11,32,163,7,37,0,5,0,7482,7.48 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Public\NCBI\PubChem\Web\Models\InformationSection.vb,84,19,11,54,4,14,0,1,0,2899,2.90 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Public\NCBI\PubChem\Web\Models\PugView.vb,29,7,6,16,1,4,0,1,0,948,948 B
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Public\NCBI\PubChem\Web\Query\CIDExport.vb,41,0,8,33,1,0,1,3,0,1545,1.54 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Public\NCBI\PubChem\Web\Query\MetadataConvertor.vb,67,0,5,62,1,0,0,2,0,2755,2.75 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Public\NCBI\PubChem\Web\Query\Query.vb,131,34,20,77,1,0,0,6,0,5691,5.69 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Public\NCBI\PubChem\Web\Query\QueryPathways.vb,70,1,13,56,2,0,2,1,0,3326,3.33 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Public\NCBI\PubChem\Web\Query\QueryXml.vb,148,41,15,92,1,35,0,5,0,6697,6.70 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Public\NCBI\PubChem\Web\Query\WebQuery.vb,138,18,25,95,5,6,3,9,0,4800,4.80 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Public\NCBI\PubChem\Web\Query\WebResponse.vb,51,5,7,39,3,27,0,0,0,2001,2.00 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Public\NCBI\PubChem\Web\Query\ExtensionModels\PathwayGraph.vb,38,0,5,33,1,18,0,2,0,1412,1.41 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Public\NCBI\PubChem\Web\Query\ExtensionModels\ReactionGraph.vb,74,3,12,59,1,15,0,8,0,2563,2.56 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Public\NCBI\PubChem\Web\Query\ExtensionModels\TaxonomyGraph.vb,25,0,5,20,1,8,0,1,0,887,887 B
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Public\TMIC\FooDB\Compound.vb,40,0,7,33,1,16,0,2,0,1388,1.39 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Public\TMIC\FooDB\CompoundFlavor.vb,11,0,2,9,1,5,0,0,0,316,316 B
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Public\TMIC\FooDB\Content.vb,27,11,3,13,1,9,0,0,0,1083,1.08 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Public\TMIC\FooDB\Flavor.vb,28,0,7,21,1,4,0,2,0,805,805 B
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Public\TMIC\FooDB\Food.vb,37,0,7,30,1,13,0,2,0,1253,1.25 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Public\TMIC\FooDB\FoodData.vb,31,0,5,26,1,3,2,0,0,1003,1003 B
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Public\TMIC\FooDB\FoodSource.vb,47,8,7,32,3,11,0,3,0,1647,1.65 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Public\TMIC\FooDB\StoredProcedure.vb,113,72,16,25,1,0,0,1,0,4346,4.35 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Public\TMIC\HMDB\Extensions.vb,306,34,38,234,1,0,0,14,0,13397,13.40 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Public\TMIC\HMDB\HmdbConvertor.vb,56,0,5,51,1,0,0,2,0,2411,2.41 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Public\TMIC\HMDB\Assembly\disease.vb,31,0,9,22,3,10,0,1,0,1054,1.05 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Public\TMIC\HMDB\Assembly\metabolite.vb,246,68,33,145,8,64,0,6,0,10943,10.94 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Public\TMIC\HMDB\Assembly\property.vb,78,0,13,65,4,12,0,3,0,2860,2.86 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Public\TMIC\HMDB\Assembly\taxonomy.vb,129,13,33,83,11,21,0,5,0,3850,3.85 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Public\TMIC\HMDB\MetaReference\BioSamples.vb,80,13,10,57,2,0,0,2,0,3016,3.02 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Public\TMIC\HMDB\MetaReference\RepositoryExtensions.vb,53,13,7,33,1,0,0,3,0,2016,2.02 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Public\TMIC\HMDB\MetaReference\WebQuery.vb,29,0,5,24,1,0,1,1,0,1172,1.17 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Public\TMIC\HMDB\Spectra\Abstract.vb,102,10,21,71,6,38,0,2,0,4315,4.32 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Public\TMIC\HMDB\Spectra\CMS.vb,25,0,8,17,2,7,0,0,0,969,969 B
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Public\TMIC\HMDB\Spectra\EIMS.vb,17,0,5,12,2,2,0,0,0,495,495 B
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Public\TMIC\HMDB\Spectra\Extensions.vb,58,7,8,43,2,0,0,2,0,2305,2.31 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Public\TMIC\HMDB\Spectra\MSMS.vb,29,3,8,18,2,6,0,0,0,973,973 B
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Public\TMIC\HMDB\Spectra\NMR1D.vb,18,0,6,12,2,3,0,0,0,507,507 B
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Public\TMIC\HMDB\Spectra\NMR2D.vb,18,0,6,12,2,4,0,0,0,584,584 B
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Public\TMIC\HMDB\Tables\ChemicalDescriptor.vb,151,12,13,126,1,23,2,2,0,6972,6.97 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Public\TMIC\HMDB\Tables\MetaDBTable.vb,279,3,32,244,3,53,1,8,0,12709,12.71 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Public\TMIC\HMDB\Tables\NameValue.vb,29,0,6,23,1,5,0,3,0,1024,1.02 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Public\TMIC\MarkerDB\DataSet.vb,124,33,18,73,9,52,0,0,0,4075,4.08 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Public\TMIC\MarkerDB\Exports.vb,9,3,2,4,1,0,0,0,0,168,168 B
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\Public\TMIC\MarkerDB\Tables.vb,4,0,2,2,0,0,0,0,0,42,42 B
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\test\ChemOntTest.vb,39,8,9,22,1,0,2,0,0,1432,1.43 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\test\foodbQuery.vb,113,92,21,0,0,0,0,0,0,4127,4.13 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\test\food_testProgram.vb,156,4,29,123,1,0,5,0,0,8465,8.46 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\test\HMDBqueryTest.vb,10,0,3,7,1,0,1,0,0,199,199 B
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\test\inchiTest.vb,28,8,9,11,1,0,1,0,0,671,671 B
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\test\metaLibLoaderTest.vb,44,0,14,30,2,1,3,0,0,1394,1.39 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\test\Module1.vb,38,1,12,25,1,0,3,0,0,926,926 B
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\test\nameTest.vb,15,0,4,11,1,0,1,0,0,398,398 B
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\test\oboTest.vb,71,56,15,0,0,0,0,0,0,2774,2.77 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\test\pubchemTest.vb,63,0,22,41,1,0,5,0,0,1517,1.52 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\test\My Project\Application.Designer.vb,12,9,1,2,0,0,0,0,0,434,434 B
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\test\My Project\AssemblyInfo.vb,36,15,6,15,0,0,0,0,0,1190,1.19 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\test\My Project\Resources.Designer.vb,62,23,8,31,1,2,0,0,0,2766,2.77 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,Massbank\test\My Project\Settings.Designer.vb,74,9,12,53,2,2,1,0,0,2995,3.00 KB
+G:\mzkit\src\metadb\Massbank\massbank.NET5.vbproj,<project>,9037,1370,1393,6274,197,796,61,274,0,357888,357.89 KB
+G:\mzkit\src\metadb\Massbank\test\unitTest.vbproj,test\ChemOntTest.vb,39,8,9,22,1,0,2,0,0,1432,1.43 KB
+G:\mzkit\src\metadb\Massbank\test\unitTest.vbproj,test\foodbQuery.vb,113,92,21,0,0,0,0,0,0,4127,4.13 KB
+G:\mzkit\src\metadb\Massbank\test\unitTest.vbproj,test\food_testProgram.vb,156,4,29,123,1,0,5,0,0,8465,8.46 KB
+G:\mzkit\src\metadb\Massbank\test\unitTest.vbproj,test\HMDBqueryTest.vb,10,0,3,7,1,0,1,0,0,199,199 B
+G:\mzkit\src\metadb\Massbank\test\unitTest.vbproj,test\inchiTest.vb,28,8,9,11,1,0,1,0,0,671,671 B
+G:\mzkit\src\metadb\Massbank\test\unitTest.vbproj,test\metaLibLoaderTest.vb,44,0,14,30,2,1,3,0,0,1394,1.39 KB
+G:\mzkit\src\metadb\Massbank\test\unitTest.vbproj,test\Module1.vb,38,1,12,25,1,0,3,0,0,926,926 B
+G:\mzkit\src\metadb\Massbank\test\unitTest.vbproj,test\nameTest.vb,15,0,4,11,1,0,1,0,0,398,398 B
+G:\mzkit\src\metadb\Massbank\test\unitTest.vbproj,test\oboTest.vb,71,56,15,0,0,0,0,0,0,2774,2.77 KB
+G:\mzkit\src\metadb\Massbank\test\unitTest.vbproj,test\pubchemTest.vb,63,0,22,41,1,0,5,0,0,1517,1.52 KB
+G:\mzkit\src\metadb\Massbank\test\unitTest.vbproj,test\My Project\Application.Designer.vb,12,9,1,2,0,0,0,0,0,434,434 B
+G:\mzkit\src\metadb\Massbank\test\unitTest.vbproj,test\My Project\AssemblyInfo.vb,36,15,6,15,0,0,0,0,0,1190,1.19 KB
+G:\mzkit\src\metadb\Massbank\test\unitTest.vbproj,test\My Project\Resources.Designer.vb,62,23,8,31,1,2,0,0,0,2766,2.77 KB
+G:\mzkit\src\metadb\Massbank\test\unitTest.vbproj,test\My Project\Settings.Designer.vb,74,9,12,53,2,2,1,0,0,2995,3.00 KB
+G:\mzkit\src\metadb\Massbank\test\unitTest.vbproj,<project>,761,225,165,371,12,5,22,0,0,29288,29.29 KB
+G:\mzkit\src\metadb\MoNA\MoNA.NET5.vbproj,MoNA\NamespaceDoc.vb,13,9,0,4,1,0,1,0,0,581,581 B
+G:\mzkit\src\metadb\MoNA\MoNA.NET5.vbproj,MoNA\ReaderViews.vb,91,6,15,70,1,0,0,6,0,2887,2.89 KB
+G:\mzkit\src\metadb\MoNA\MoNA.NET5.vbproj,MoNA\SpectraInfo.vb,66,6,9,51,1,17,0,1,0,2632,2.63 KB
+G:\mzkit\src\metadb\MoNA\MoNA.NET5.vbproj,MoNA\SpectraSection.vb,135,25,15,95,1,7,2,1,0,4555,4.55 KB
+G:\mzkit\src\metadb\MoNA\MoNA.NET5.vbproj,MoNA\UnionReader.vb,176,8,28,140,1,13,2,2,0,4951,4.95 KB
+G:\mzkit\src\metadb\MoNA\MoNA.NET5.vbproj,MoNA\Metadata\DataReader.vb,42,5,7,30,1,0,0,2,0,1556,1.56 KB
+G:\mzkit\src\metadb\MoNA\MoNA.NET5.vbproj,MoNA\Metadata\MetaData.vb,223,11,31,181,1,100,0,2,0,8202,8.20 KB
+G:\mzkit\src\metadb\MoNA\MoNA.NET5.vbproj,MoNA\Metadata\SchemaMapper.vb,100,12,15,73,1,0,1,3,0,3675,3.67 KB
+G:\mzkit\src\metadb\MoNA\MoNA.NET5.vbproj,MoNA\MSP\MspReader.vb,47,5,7,35,1,0,0,3,0,1783,1.78 KB
+G:\mzkit\src\metadb\MoNA\MoNA.NET5.vbproj,MoNA\SDF\SDFReader.vb,321,45,38,238,1,0,0,7,0,12845,12.85 KB
+G:\mzkit\src\metadb\MoNA\MoNA.NET5.vbproj,MoNA\test\Module1.vb,15,0,4,11,1,0,2,0,0,462,462 B
+G:\mzkit\src\metadb\MoNA\MoNA.NET5.vbproj,MoNA\test\My Project\Application.Designer.vb,12,9,1,2,0,0,0,0,0,434,434 B
+G:\mzkit\src\metadb\MoNA\MoNA.NET5.vbproj,MoNA\test\My Project\AssemblyInfo.vb,35,15,7,13,0,0,0,0,0,1143,1.14 KB
+G:\mzkit\src\metadb\MoNA\MoNA.NET5.vbproj,MoNA\test\My Project\Resources.Designer.vb,62,23,8,31,1,2,0,0,0,2766,2.77 KB
+G:\mzkit\src\metadb\MoNA\MoNA.NET5.vbproj,MoNA\test\My Project\Settings.Designer.vb,73,9,13,51,2,2,1,0,0,2966,2.97 KB
+G:\mzkit\src\metadb\MoNA\MoNA.NET5.vbproj,MoNA\Web\QueryWeb.vb,41,0,5,36,1,0,1,2,0,1502,1.50 KB
+G:\mzkit\src\metadb\MoNA\MoNA.NET5.vbproj,MoNA\Web\WebJSON.vb,64,0,12,52,1,2,0,4,0,2474,2.47 KB
+G:\mzkit\src\metadb\MoNA\MoNA.NET5.vbproj,<project>,1516,188,215,1113,16,143,10,33,0,55414,55.41 KB
+G:\mzkit\src\metadb\SMILES\SMILES.NET5.vbproj,SMILES\Atom.vb,202,9,45,148,1,5,1,7,0,5963,5.96 KB
+G:\mzkit\src\metadb\SMILES\SMILES.NET5.vbproj,SMILES\FormulaBuilder.vb,98,11,15,72,1,0,4,1,0,3343,3.34 KB
+G:\mzkit\src\metadb\SMILES\SMILES.NET5.vbproj,SMILES\Layout2D.vb,121,9,25,87,1,0,1,2,0,4036,4.04 KB
+G:\mzkit\src\metadb\SMILES\SMILES.NET5.vbproj,SMILES\ParseChain.vb,132,3,22,107,1,0,4,3,0,4492,4.49 KB
+G:\mzkit\src\metadb\SMILES\SMILES.NET5.vbproj,SMILES\Embedding\AtomLink.vb,13,0,3,10,1,6,0,0,0,348,348 B
+G:\mzkit\src\metadb\SMILES\SMILES.NET5.vbproj,SMILES\Embedding\Embedding.vb,94,0,14,80,1,0,0,2,0,3615,3.62 KB
+G:\mzkit\src\metadb\SMILES\SMILES.NET5.vbproj,SMILES\Embedding\SmilesAtom.vb,14,3,1,10,1,6,0,0,0,430,430 B
+G:\mzkit\src\metadb\SMILES\SMILES.NET5.vbproj,SMILES\Graph\Bonds.vb,18,8,2,8,1,0,0,0,0,547,547 B
+G:\mzkit\src\metadb\SMILES\SMILES.NET5.vbproj,SMILES\Graph\ChemicalElement.vb,172,47,17,108,1,6,5,1,0,5808,5.81 KB
+G:\mzkit\src\metadb\SMILES\SMILES.NET5.vbproj,SMILES\Graph\ChemicalFormula.vb,80,11,11,58,1,2,0,4,0,2942,2.94 KB
+G:\mzkit\src\metadb\SMILES\SMILES.NET5.vbproj,SMILES\Graph\ChemicalKey.vb,18,7,4,7,1,1,0,1,0,510,510 B
+G:\mzkit\src\metadb\SMILES\SMILES.NET5.vbproj,SMILES\Language\ElementTypes.vb,48,34,3,11,1,0,0,0,0,1797,1.80 KB
+G:\mzkit\src\metadb\SMILES\SMILES.NET5.vbproj,SMILES\Language\Scanner.vb,295,104,31,160,1,0,1,4,0,13306,13.31 KB
+G:\mzkit\src\metadb\SMILES\SMILES.NET5.vbproj,SMILES\Language\Token.vb,32,0,8,24,2,2,2,1,0,903,903 B
+G:\mzkit\src\metadb\SMILES\SMILES.NET5.vbproj,SMILES\Language\Utils.vb,16,0,4,12,1,0,0,0,0,373,373 B
+G:\mzkit\src\metadb\SMILES\SMILES.NET5.vbproj,SMILES\test\Module1.vb,47,4,12,31,1,0,4,0,0,1698,1.70 KB
+G:\mzkit\src\metadb\SMILES\SMILES.NET5.vbproj,SMILES\test\My Project\Application.Designer.vb,12,9,1,2,0,0,0,0,0,434,434 B
+G:\mzkit\src\metadb\SMILES\SMILES.NET5.vbproj,SMILES\test\My Project\AssemblyInfo.vb,35,15,7,13,0,0,0,0,0,1143,1.14 KB
+G:\mzkit\src\metadb\SMILES\SMILES.NET5.vbproj,SMILES\test\My Project\Resources.Designer.vb,62,23,8,31,1,2,0,0,0,2766,2.77 KB
+G:\mzkit\src\metadb\SMILES\SMILES.NET5.vbproj,SMILES\test\My Project\Settings.Designer.vb,73,9,13,51,2,2,1,0,0,2966,2.97 KB
+G:\mzkit\src\metadb\SMILES\SMILES.NET5.vbproj,<project>,1582,306,246,1030,20,32,23,26,0,57420,57.42 KB
+G:\mzkit\src\metadb\XrefEngine\XrefEngine.NET5.vbproj,XrefEngine\ChemOntClassify.vb,117,31,13,73,1,5,1,3,0,3518,3.52 KB
+G:\mzkit\src\metadb\XrefEngine\XrefEngine.NET5.vbproj,XrefEngine\ClassyfireAnnotation.vb,22,11,2,9,1,4,0,1,0,689,689 B
+G:\mzkit\src\metadb\XrefEngine\XrefEngine.NET5.vbproj,XrefEngine\ClassyfireInfoTable.vb,94,6,12,76,1,6,0,2,0,4744,4.74 KB
+G:\mzkit\src\metadb\XrefEngine\XrefEngine.NET5.vbproj,XrefEngine\FillClass.vb,66,11,11,44,1,0,0,3,0,3015,3.02 KB
+G:\mzkit\src\metadb\XrefEngine\XrefEngine.NET5.vbproj,XrefEngine\My Project\Application.Designer.vb,12,9,1,2,0,0,0,0,0,434,434 B
+G:\mzkit\src\metadb\XrefEngine\XrefEngine.NET5.vbproj,XrefEngine\My Project\AssemblyInfo.vb,36,15,6,15,0,0,0,0,0,1184,1.18 KB
+G:\mzkit\src\metadb\XrefEngine\XrefEngine.NET5.vbproj,XrefEngine\My Project\Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2797,2.80 KB
+G:\mzkit\src\metadb\XrefEngine\XrefEngine.NET5.vbproj,XrefEngine\My Project\Settings.Designer.vb,74,9,12,53,2,2,1,0,0,3039,3.04 KB
+G:\mzkit\src\metadb\XrefEngine\XrefEngine.NET5.vbproj,<project>,484,115,65,304,7,19,2,9,0,19420,19.42 KB
+../src/metadb,<root>,148030,20184,20616,107230,1328,3136,922,3886,26,7655256,7.66 MB
