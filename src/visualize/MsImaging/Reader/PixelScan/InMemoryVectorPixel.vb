@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bb9ee3de37ad885a236329fad1c9d6fa, G:/mzkit/src/visualize/MsImaging//Reader/PixelScan/InMemoryVectorPixel.vb"
+﻿#Region "Microsoft.VisualBasic::bb9ee3de37ad885a236329fad1c9d6fa, E:/mzkit/src/visualize/MsImaging//Reader/PixelScan/InMemoryVectorPixel.vb"
 
     ' Author:
     ' 

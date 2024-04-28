@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b016866f45bbd9faf668f5067c7fe020, G:/mzkit/src/visualize/MsImaging//Reader/PixelReader.vb"
+﻿#Region "Microsoft.VisualBasic::b016866f45bbd9faf668f5067c7fe020, E:/mzkit/src/visualize/MsImaging//Reader/PixelReader.vb"
 
     ' Author:
     ' 

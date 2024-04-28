@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a880e4879943a57f0f369f39139a29ff, G:/mzkit/src/visualize/MsImaging//Blender/Scaler/LogScaler.vb"
+﻿#Region "Microsoft.VisualBasic::a880e4879943a57f0f369f39139a29ff, E:/mzkit/src/visualize/MsImaging//Blender/Scaler/LogScaler.vb"
 
     ' Author:
     ' 

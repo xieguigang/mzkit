@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7033f690bc95a35444da3d63ab1033d2, G:/mzkit/src/visualize/MsImaging//Reader/PixelScan/mzPackPixel.vb"
+﻿#Region "Microsoft.VisualBasic::7033f690bc95a35444da3d63ab1033d2, E:/mzkit/src/visualize/MsImaging//Reader/PixelScan/mzPackPixel.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a3efa580d6bfdac4bfe4ca4c51f9272b, G:/mzkit/src/visualize/MsImaging//PixelsSampler.vb"
+﻿#Region "Microsoft.VisualBasic::a3efa580d6bfdac4bfe4ca4c51f9272b, E:/mzkit/src/visualize/MsImaging//PixelsSampler.vb"
 
     ' Author:
     ' 
