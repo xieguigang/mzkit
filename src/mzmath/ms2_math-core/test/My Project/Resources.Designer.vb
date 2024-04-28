@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6410bb579f55ac1d8bc70774b849d88a, G:/mzkit/src/mzmath/ms2_math-core//test/My Project/Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::6410bb579f55ac1d8bc70774b849d88a, E:/mzkit/src/mzmath/ms2_math-core//test/My Project/Resources.Designer.vb"
 
     ' Author:
     ' 

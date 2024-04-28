@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::de9cb0c2cfb2c3dd45037d58fe9d2621, G:/mzkit/src/mzmath/ms2_math-core//CollisionType.vb"
+﻿#Region "Microsoft.VisualBasic::de9cb0c2cfb2c3dd45037d58fe9d2621, E:/mzkit/src/mzmath/ms2_math-core//CollisionType.vb"
 
     ' Author:
     ' 

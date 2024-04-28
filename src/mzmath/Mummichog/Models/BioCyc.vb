@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5aa972d89c326e3c9382e8598b4f09ae, G:/mzkit/src/mzmath/Mummichog//Models/BioCyc.vb"
+﻿#Region "Microsoft.VisualBasic::5aa972d89c326e3c9382e8598b4f09ae, E:/mzkit/src/mzmath/Mummichog//Models/BioCyc.vb"
 
     ' Author:
     ' 

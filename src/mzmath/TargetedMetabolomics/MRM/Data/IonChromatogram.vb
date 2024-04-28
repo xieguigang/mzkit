@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5cd8ac598e98fc2ad537ec93c1bdd6ab, G:/mzkit/src/mzmath/TargetedMetabolomics//MRM/Data/IonChromatogram.vb"
+﻿#Region "Microsoft.VisualBasic::5cd8ac598e98fc2ad537ec93c1bdd6ab, E:/mzkit/src/mzmath/TargetedMetabolomics//MRM/Data/IonChromatogram.vb"
 
     ' Author:
     ' 

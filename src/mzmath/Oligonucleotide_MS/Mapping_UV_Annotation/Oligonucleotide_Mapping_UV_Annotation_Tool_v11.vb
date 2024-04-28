@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d86351931470853fb79dbe7d1ef3d557, G:/mzkit/src/mzmath/Oligonucleotide_MS//Mapping_UV_Annotation/Oligonucleotide_Mapping_UV_Annotation_Tool_v11.vb"
+﻿#Region "Microsoft.VisualBasic::d86351931470853fb79dbe7d1ef3d557, E:/mzkit/src/mzmath/Oligonucleotide_MS//Mapping_UV_Annotation/Oligonucleotide_Mapping_UV_Annotation_Tool_v11.vb"
 
     ' Author:
     ' 

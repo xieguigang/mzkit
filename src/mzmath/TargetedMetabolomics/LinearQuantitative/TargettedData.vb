@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bf50663ad35a3c15c9ec37392a2adb0a, G:/mzkit/src/mzmath/TargetedMetabolomics//LinearQuantitative/TargettedData.vb"
+﻿#Region "Microsoft.VisualBasic::bf50663ad35a3c15c9ec37392a2adb0a, E:/mzkit/src/mzmath/TargetedMetabolomics//LinearQuantitative/TargettedData.vb"
 
     ' Author:
     ' 

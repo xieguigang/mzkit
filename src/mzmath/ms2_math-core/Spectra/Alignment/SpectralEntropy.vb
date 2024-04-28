@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9e2a3806f02c5b053ead222c4637563a, G:/mzkit/src/mzmath/ms2_math-core//Spectra/Alignment/SpectralEntropy.vb"
+﻿#Region "Microsoft.VisualBasic::9e2a3806f02c5b053ead222c4637563a, E:/mzkit/src/mzmath/ms2_math-core//Spectra/Alignment/SpectralEntropy.vb"
 
     ' Author:
     ' 

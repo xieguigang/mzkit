@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d58022c85f38f4028339628796a98743, G:/mzkit/src/mzmath/MSEngine//IMzQuery.vb"
+﻿#Region "Microsoft.VisualBasic::d58022c85f38f4028339628796a98743, E:/mzkit/src/mzmath/MSEngine//IMzQuery.vb"
 
     ' Author:
     ' 

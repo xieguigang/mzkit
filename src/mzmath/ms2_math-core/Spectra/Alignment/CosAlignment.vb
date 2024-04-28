@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::775f1b916072534e029ab022b7cca7ef, G:/mzkit/src/mzmath/ms2_math-core//Spectra/Alignment/CosAlignment.vb"
+﻿#Region "Microsoft.VisualBasic::775f1b916072534e029ab022b7cca7ef, E:/mzkit/src/mzmath/ms2_math-core//Spectra/Alignment/CosAlignment.vb"
 
     ' Author:
     ' 

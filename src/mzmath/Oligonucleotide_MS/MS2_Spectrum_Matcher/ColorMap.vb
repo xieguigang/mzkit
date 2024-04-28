@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::877df2a72dac86699a57fc2a28eb7286, G:/mzkit/src/mzmath/Oligonucleotide_MS//MS2_Spectrum_Matcher/ColorMap.vb"
+﻿#Region "Microsoft.VisualBasic::877df2a72dac86699a57fc2a28eb7286, E:/mzkit/src/mzmath/Oligonucleotide_MS//MS2_Spectrum_Matcher/ColorMap.vb"
 
     ' Author:
     ' 

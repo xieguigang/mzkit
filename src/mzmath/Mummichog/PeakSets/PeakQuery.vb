@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::600911f61596f6f3b338d3be7a55cfee, G:/mzkit/src/mzmath/Mummichog//PeakSets/PeakQuery.vb"
+﻿#Region "Microsoft.VisualBasic::600911f61596f6f3b338d3be7a55cfee, E:/mzkit/src/mzmath/Mummichog//PeakSets/PeakQuery.vb"
 
     ' Author:
     ' 

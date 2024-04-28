@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b53a0170d63ac2984e5d15bdce3ddb4e, G:/mzkit/src/mzmath/ms2_math-core//Spectra/Models/SpectrumPeak.vb"
+﻿#Region "Microsoft.VisualBasic::b53a0170d63ac2984e5d15bdce3ddb4e, E:/mzkit/src/mzmath/ms2_math-core//Spectra/Models/SpectrumPeak.vb"
 
     ' Author:
     ' 

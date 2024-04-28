@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6600b12fc5ff5d820e82660198b13a94, G:/mzkit/src/mzmath/ms2_math-core//Spectra/SpectrumTree/IMSScanProperty.vb"
+﻿#Region "Microsoft.VisualBasic::6600b12fc5ff5d820e82660198b13a94, E:/mzkit/src/mzmath/ms2_math-core//Spectra/SpectrumTree/IMSScanProperty.vb"
 
     ' Author:
     ' 

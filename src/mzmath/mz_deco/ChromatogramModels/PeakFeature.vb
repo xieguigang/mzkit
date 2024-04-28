@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::01878e6f33a73cf63896da4c6ee40d21, G:/mzkit/src/mzmath/mz_deco//ChromatogramModels/PeakFeature.vb"
+﻿#Region "Microsoft.VisualBasic::01878e6f33a73cf63896da4c6ee40d21, E:/mzkit/src/mzmath/mz_deco//ChromatogramModels/PeakFeature.vb"
 
     ' Author:
     ' 

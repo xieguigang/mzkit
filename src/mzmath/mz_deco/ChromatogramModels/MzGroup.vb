@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4e2ad78d1d8030447fc601b8adee0ef5, G:/mzkit/src/mzmath/mz_deco//ChromatogramModels/MzGroup.vb"
+﻿#Region "Microsoft.VisualBasic::4e2ad78d1d8030447fc601b8adee0ef5, E:/mzkit/src/mzmath/mz_deco//ChromatogramModels/MzGroup.vb"
 
     ' Author:
     ' 

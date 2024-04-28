@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::606e862455f2ec47fa03ee08be3e0ecf, G:/mzkit/src/mzmath/ms2_math-core//Chromatogram/ChromXType.vb"
+﻿#Region "Microsoft.VisualBasic::606e862455f2ec47fa03ee08be3e0ecf, E:/mzkit/src/mzmath/ms2_math-core//Chromatogram/ChromXType.vb"
 
     ' Author:
     ' 

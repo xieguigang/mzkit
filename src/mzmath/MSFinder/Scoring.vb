@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::838cffd72c89f6358cacd51e96eb212a, G:/mzkit/src/mzmath/MSFinder//Scoring.vb"
+﻿#Region "Microsoft.VisualBasic::838cffd72c89f6358cacd51e96eb212a, E:/mzkit/src/mzmath/MSFinder//Scoring.vb"
 
     ' Author:
     ' 

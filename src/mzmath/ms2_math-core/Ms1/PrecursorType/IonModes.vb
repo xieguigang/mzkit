@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c02ccbbed90d0b114963ccd9456e902b, G:/mzkit/src/mzmath/ms2_math-core//Ms1/PrecursorType/IonModes.vb"
+﻿#Region "Microsoft.VisualBasic::c02ccbbed90d0b114963ccd9456e902b, E:/mzkit/src/mzmath/ms2_math-core//Ms1/PrecursorType/IonModes.vb"
 
     ' Author:
     ' 
