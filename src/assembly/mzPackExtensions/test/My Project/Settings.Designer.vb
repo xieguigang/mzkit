@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6655ba666928ff86ccd13cf6913d8af6, G:/mzkit/src/assembly/mzPackExtensions//test/My Project/Settings.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::6655ba666928ff86ccd13cf6913d8af6, E:/mzkit/src/assembly/mzPackExtensions//test/My Project/Settings.Designer.vb"
 
     ' Author:
     ' 

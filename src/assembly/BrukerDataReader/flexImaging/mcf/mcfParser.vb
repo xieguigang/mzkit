@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f03731d20f0ac995d7c060dafa42363e, G:/mzkit/src/assembly/BrukerDataReader//flexImaging/mcf/mcfParser.vb"
+﻿#Region "Microsoft.VisualBasic::f03731d20f0ac995d7c060dafa42363e, E:/mzkit/src/assembly/BrukerDataReader//flexImaging/mcf/mcfParser.vb"
 
     ' Author:
     ' 

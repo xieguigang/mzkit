@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4bddebfcc9c89b7e86d71e28976a56f6, G:/mzkit/src/assembly/BrukerDataReader//flexImaging/mcf/index_sqlite/IndexParser.vb"
+﻿#Region "Microsoft.VisualBasic::4bddebfcc9c89b7e86d71e28976a56f6, E:/mzkit/src/assembly/BrukerDataReader//flexImaging/mcf/index_sqlite/IndexParser.vb"
 
     ' Author:
     ' 

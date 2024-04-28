@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a93dbef743ad1142f952ceba37e42bbd, G:/mzkit/src/assembly/ProteoWizard.Interop//Filters/scanTime.vb"
+﻿#Region "Microsoft.VisualBasic::a93dbef743ad1142f952ceba37e42bbd, E:/mzkit/src/assembly/ProteoWizard.Interop//Filters/scanTime.vb"
 
     ' Author:
     ' 

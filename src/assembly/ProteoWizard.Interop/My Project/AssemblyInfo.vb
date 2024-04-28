@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6d0d11a4df995e8724d9770503d70458, G:/mzkit/src/assembly/ProteoWizard.Interop//My Project/AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::6d0d11a4df995e8724d9770503d70458, E:/mzkit/src/assembly/ProteoWizard.Interop//My Project/AssemblyInfo.vb"
 
     ' Author:
     ' 

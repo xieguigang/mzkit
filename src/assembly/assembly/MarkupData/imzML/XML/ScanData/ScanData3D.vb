@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b880ac0496e6c580787808c91a74eb95, G:/mzkit/src/assembly/assembly//MarkupData/imzML/XML/ScanData/ScanData3D.vb"
+﻿#Region "Microsoft.VisualBasic::b880ac0496e6c580787808c91a74eb95, E:/mzkit/src/assembly/assembly//MarkupData/imzML/XML/ScanData/ScanData3D.vb"
 
     ' Author:
     ' 

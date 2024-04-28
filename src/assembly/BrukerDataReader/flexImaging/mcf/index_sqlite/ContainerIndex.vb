@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0e5b2d754e450bc2872997a90bbfaefd, G:/mzkit/src/assembly/BrukerDataReader//flexImaging/mcf/index_sqlite/ContainerIndex.vb"
+﻿#Region "Microsoft.VisualBasic::0e5b2d754e450bc2872997a90bbfaefd, E:/mzkit/src/assembly/BrukerDataReader//flexImaging/mcf/index_sqlite/ContainerIndex.vb"
 
     ' Author:
     ' 

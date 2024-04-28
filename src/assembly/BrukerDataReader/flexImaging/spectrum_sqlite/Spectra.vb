@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6ec5d63dca07988a30fb7533d10feae1, G:/mzkit/src/assembly/BrukerDataReader//flexImaging/spectrum_sqlite/Spectra.vb"
+﻿#Region "Microsoft.VisualBasic::6ec5d63dca07988a30fb7533d10feae1, E:/mzkit/src/assembly/BrukerDataReader//flexImaging/spectrum_sqlite/Spectra.vb"
 
     ' Author:
     ' 

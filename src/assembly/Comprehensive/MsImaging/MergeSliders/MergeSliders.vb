@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3d52bb0017b5d17254a59d3a84e325b5, G:/mzkit/src/assembly/Comprehensive//MsImaging/MergeSliders/MergeSliders.vb"
+﻿#Region "Microsoft.VisualBasic::3d52bb0017b5d17254a59d3a84e325b5, E:/mzkit/src/assembly/Comprehensive//MsImaging/MergeSliders/MergeSliders.vb"
 
     ' Author:
     ' 

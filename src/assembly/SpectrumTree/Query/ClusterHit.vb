@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::060ac8264719eac72c5ed176fcf98d12, G:/mzkit/src/assembly/SpectrumTree//Query/ClusterHit.vb"
+﻿#Region "Microsoft.VisualBasic::060ac8264719eac72c5ed176fcf98d12, E:/mzkit/src/assembly/SpectrumTree//Query/ClusterHit.vb"
 
     ' Author:
     ' 

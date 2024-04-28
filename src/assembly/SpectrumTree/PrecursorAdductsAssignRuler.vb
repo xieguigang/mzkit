@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1320d084f92a345c52e0f3c4cc47f11a, G:/mzkit/src/assembly/SpectrumTree//PrecursorAdductsAssignRuler.vb"
+﻿#Region "Microsoft.VisualBasic::1320d084f92a345c52e0f3c4cc47f11a, E:/mzkit/src/assembly/SpectrumTree//PrecursorAdductsAssignRuler.vb"
 
     ' Author:
     ' 

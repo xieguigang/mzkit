@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cf35688cef8e3ac627735db40c2dc348, G:/mzkit/src/assembly/assembly//MarkupData/mzML/XML/MsData/spectrum.vb"
+﻿#Region "Microsoft.VisualBasic::cf35688cef8e3ac627735db40c2dc348, E:/mzkit/src/assembly/assembly//MarkupData/mzML/XML/MsData/spectrum.vb"
 
     ' Author:
     ' 

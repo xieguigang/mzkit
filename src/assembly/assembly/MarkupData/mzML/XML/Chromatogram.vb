@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2f5f6b5b34c31a81aff1131c508a64f1, G:/mzkit/src/assembly/assembly//MarkupData/mzML/XML/Chromatogram.vb"
+﻿#Region "Microsoft.VisualBasic::2f5f6b5b34c31a81aff1131c508a64f1, E:/mzkit/src/assembly/assembly//MarkupData/mzML/XML/Chromatogram.vb"
 
     ' Author:
     ' 

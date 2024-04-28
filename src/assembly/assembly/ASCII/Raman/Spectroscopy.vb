@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ee32ecf2839f26aaa335ab1614c466e7, G:/mzkit/src/assembly/assembly//ASCII/Raman/Spectroscopy.vb"
+﻿#Region "Microsoft.VisualBasic::ee32ecf2839f26aaa335ab1614c466e7, E:/mzkit/src/assembly/assembly//ASCII/Raman/Spectroscopy.vb"
 
     ' Author:
     ' 

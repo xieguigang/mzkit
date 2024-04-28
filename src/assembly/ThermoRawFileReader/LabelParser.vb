@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f333fe2a19bf552d4b017ad86f31815d, G:/mzkit/src/assembly/ThermoRawFileReader//LabelParser.vb"
+﻿#Region "Microsoft.VisualBasic::f333fe2a19bf552d4b017ad86f31815d, E:/mzkit/src/assembly/ThermoRawFileReader//LabelParser.vb"
 
     ' Author:
     ' 

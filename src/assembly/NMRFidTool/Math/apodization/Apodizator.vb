@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3e22e56d7269c265a684fe7722b3d961, G:/mzkit/src/assembly/NMRFidTool//Math/apodization/Apodizator.vb"
+﻿#Region "Microsoft.VisualBasic::3e22e56d7269c265a684fe7722b3d961, E:/mzkit/src/assembly/NMRFidTool//Math/apodization/Apodizator.vb"
 
     ' Author:
     ' 
