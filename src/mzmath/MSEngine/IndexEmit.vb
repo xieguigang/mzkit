@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b91ccfda25e1e80ac4475e8c95e6b16a, G:/mzkit/src/mzmath/MSEngine//IndexEmit.vb"
+﻿#Region "Microsoft.VisualBasic::b91ccfda25e1e80ac4475e8c95e6b16a, E:/mzkit/src/mzmath/MSEngine//IndexEmit.vb"
 
     ' Author:
     ' 

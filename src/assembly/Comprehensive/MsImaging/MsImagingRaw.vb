@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::90e3aefb6a2959a367362ba5f48c7e91, G:/mzkit/src/assembly/Comprehensive//MsImaging/MsImagingRaw.vb"
+﻿#Region "Microsoft.VisualBasic::90e3aefb6a2959a367362ba5f48c7e91, E:/mzkit/src/assembly/Comprehensive//MsImaging/MsImagingRaw.vb"
 
     ' Author:
     ' 

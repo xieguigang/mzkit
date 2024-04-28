@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4271aab9c216c7d81ccc6940b1c66e53, G:/mzkit/Rscript/Library/mzkit_app/src/mzkit//comprehensive/MSI.vb"
+﻿#Region "Microsoft.VisualBasic::4271aab9c216c7d81ccc6940b1c66e53, E:/mzkit/Rscript/Library/mzkit_app/src/mzkit//comprehensive/MSI.vb"
 
     ' Author:
     ' 
@@ -195,6 +195,7 @@ Module MSI
         Call table.add(NameOf(IonStat.density), ions.Select(Function(i) i.density))
         Call table.add("basePixel.X", ions.Select(Function(i) i.basePixelX))
         Call table.add("basePixel.Y", ions.Select(Function(i) i.basePixelY))
+        Call table.add(NameOf(IonStat.averageIntensity), ions.Select(Function(i) i.averageIntensity))
         Call table.add(NameOf(IonStat.maxIntensity), ions.Select(Function(i) i.maxIntensity))
         Call table.add(NameOf(IonStat.Q1Intensity), ions.Select(Function(i) i.Q1Intensity))
         Call table.add(NameOf(IonStat.Q2Intensity), ions.Select(Function(i) i.Q2Intensity))

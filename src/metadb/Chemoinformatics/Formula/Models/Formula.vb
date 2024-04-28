@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9682d7f2ee03de6340c549279e59d1b7, G:/mzkit/src/metadb/Chemoinformatics//Formula/Models/Formula.vb"
+﻿#Region "Microsoft.VisualBasic::293653ce8fa42b75ffbc7d5f7b9ef283, E:/mzkit/src/metadb/Chemoinformatics//Formula/Models/Formula.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 311
-    '    Code Lines: 192
-    ' Comment Lines: 76
-    '   Blank Lines: 43
-    '     File Size: 11.76 KB
+    '   Total Lines: 335
+    '    Code Lines: 201
+    ' Comment Lines: 90
+    '   Blank Lines: 44
+    '     File Size: 12.85 KB
 
 
     '     Class Formula
@@ -159,7 +159,7 @@ Namespace Formula
         End Property
 
         ''' <summary>
-        ''' 
+        ''' constructor will make a value copy of the input element composition <paramref name="counts"/> vector.
         ''' </summary>
         ''' <param name="counts">
         ''' constructor will make a value copy of this element composition vector.
@@ -175,6 +175,13 @@ Namespace Formula
             End If
         End Sub
 
+        ''' <summary>
+        ''' construct a new empty formula object
+        ''' </summary>
+        ''' <remarks>
+        ''' you can create a new formula string by adding new atom number 
+        ''' profiles into atom composition <see cref="CountsByElement"/>.
+        ''' </remarks>
         Sub New()
             CountsByElement = New Dictionary(Of String, Integer)
         End Sub
@@ -280,14 +287,31 @@ Namespace Formula
             Return composition * n
         End Operator
 
+        ''' <summary>
+        ''' make union of the atom count number profile <see cref="CountsByElement"/> 
+        ''' between two given formula object.
+        ''' </summary>
+        ''' <param name="a"></param>
+        ''' <param name="b"></param>
+        ''' <returns></returns>
         Public Shared Operator +(a As Formula, b As Formula) As Formula
-            Dim newComposition = a.CountsByElement.Keys _
-                .JoinIterates(b.CountsByElement.Keys) _
-                .Distinct _
-                .ToDictionary(Function(e) e,
-                              Function(e)
-                                  Return a(e) + b(e)
-                              End Function)
+            Dim newComposition As Dictionary(Of String, Integer)
+
+            If a Is Nothing AndAlso b Is Nothing Then
+                Return New Formula
+            ElseIf a Is Nothing Then
+                newComposition = b.CountsByElement
+            ElseIf b Is Nothing Then
+                newComposition = a.CountsByElement
+            Else
+                newComposition = a.CountsByElement.Keys _
+                    .JoinIterates(b.CountsByElement.Keys) _
+                    .Distinct _
+                    .ToDictionary(Function(e) e,
+                                  Function(e)
+                                      Return a(e) + b(e)
+                                  End Function)
+            End If
 
             Return New Formula(newComposition)
         End Operator

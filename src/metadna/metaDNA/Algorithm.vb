@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::84608a0632dfa6abf5f6332dc06d9216, G:/mzkit/src/metadna/metaDNA//Algorithm.vb"
+﻿#Region "Microsoft.VisualBasic::84608a0632dfa6abf5f6332dc06d9216, E:/mzkit/src/metadna/metaDNA//Algorithm.vb"
 
     ' Author:
     ' 

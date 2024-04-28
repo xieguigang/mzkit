@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b78154a4e0742279855dca46b21b4298, G:/mzkit/src/mzmath/MSEngine//MoleculeMsReference.vb"
+﻿#Region "Microsoft.VisualBasic::b78154a4e0742279855dca46b21b4298, E:/mzkit/src/mzmath/MSEngine//MoleculeMsReference.vb"
 
     ' Author:
     ' 

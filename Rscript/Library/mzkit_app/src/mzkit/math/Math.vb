@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4f26c705a602b1694868e0525e719fda, G:/mzkit/Rscript/Library/mzkit_app/src/mzkit//math/Math.vb"
+﻿#Region "Microsoft.VisualBasic::4f26c705a602b1694868e0525e719fda, E:/mzkit/Rscript/Library/mzkit_app/src/mzkit//math/Math.vb"
 
     ' Author:
     ' 

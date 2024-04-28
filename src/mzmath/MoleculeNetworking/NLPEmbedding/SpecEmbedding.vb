@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::96284cf1b4080e6d8335122437efc6ab, G:/mzkit/src/mzmath/MoleculeNetworking//NLPEmbedding/SpecEmbedding.vb"
+﻿#Region "Microsoft.VisualBasic::96284cf1b4080e6d8335122437efc6ab, E:/mzkit/src/mzmath/MoleculeNetworking//NLPEmbedding/SpecEmbedding.vb"
 
     ' Author:
     ' 

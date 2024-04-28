@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fa035978c408ad21c516a477ca1b3f9e, G:/mzkit/src/assembly/assembly//mzPack/Binary/IMzPackReader.vb"
+﻿#Region "Microsoft.VisualBasic::fa035978c408ad21c516a477ca1b3f9e, E:/mzkit/src/assembly/assembly//mzPack/Binary/IMzPackReader.vb"
 
     ' Author:
     ' 

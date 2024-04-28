@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cfea037119446cb8e68a07c643b64a9d, G:/mzkit/src/metadb/FormulaSearch.Extensions//test/My Project/AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::cfea037119446cb8e68a07c643b64a9d, E:/mzkit/src/metadb/FormulaSearch.Extensions//test/My Project/AssemblyInfo.vb"
 
     ' Author:
     ' 

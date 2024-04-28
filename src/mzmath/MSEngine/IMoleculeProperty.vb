@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::37c666a7ef7b93d77a6631e21967d257, G:/mzkit/src/mzmath/MSEngine//IMoleculeProperty.vb"
+﻿#Region "Microsoft.VisualBasic::37c666a7ef7b93d77a6631e21967d257, E:/mzkit/src/mzmath/MSEngine//IMoleculeProperty.vb"
 
     ' Author:
     ' 

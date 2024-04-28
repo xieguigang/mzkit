@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::42440b0d2bd3359c8461c2648ee2c196, G:/mzkit/src/metadb/Massbank//Public/TMIC/FooDB/CompoundFlavor.vb"
+﻿#Region "Microsoft.VisualBasic::42440b0d2bd3359c8461c2648ee2c196, E:/mzkit/src/metadb/Massbank//Public/TMIC/FooDB/CompoundFlavor.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ef814ebbf2a8b5e19861fcd3571abb26, G:/mzkit/src/assembly/ProteoWizard.Interop//OutFileTypes.vb"
+﻿#Region "Microsoft.VisualBasic::ef814ebbf2a8b5e19861fcd3571abb26, E:/mzkit/src/assembly/ProteoWizard.Interop//OutFileTypes.vb"
 
     ' Author:
     ' 

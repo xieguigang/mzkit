@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2a08ef3143cea20fed1f9c43632f23dc, G:/mzkit/src/assembly/assembly//MarkupData/mzML/XML/ControlVocabulary.vb"
+﻿#Region "Microsoft.VisualBasic::2a08ef3143cea20fed1f9c43632f23dc, E:/mzkit/src/assembly/assembly//MarkupData/mzML/XML/ControlVocabulary.vb"
 
     ' Author:
     ' 

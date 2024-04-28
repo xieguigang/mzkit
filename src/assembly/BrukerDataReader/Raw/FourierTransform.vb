@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2cfcd702ed87b0d6e37e29ebe1f97dbe, G:/mzkit/src/assembly/BrukerDataReader//Raw/FourierTransform.vb"
+﻿#Region "Microsoft.VisualBasic::2cfcd702ed87b0d6e37e29ebe1f97dbe, E:/mzkit/src/assembly/BrukerDataReader//Raw/FourierTransform.vb"
 
     ' Author:
     ' 

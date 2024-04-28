@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bc5b76a3a8c2b641efa14299c5cf4467, G:/mzkit/src/metadna/MetaDNA_visual//test/My Project/AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::bc5b76a3a8c2b641efa14299c5cf4467, E:/mzkit/src/metadna/MetaDNA_visual//test/My Project/AssemblyInfo.vb"
 
     ' Author:
     ' 

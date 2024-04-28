@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3566540453b0170b8e8fe718188dcf17, G:/mzkit/src/assembly/BrukerDataReader//XMass/Project.vb"
+﻿#Region "Microsoft.VisualBasic::3566540453b0170b8e8fe718188dcf17, E:/mzkit/src/assembly/BrukerDataReader//XMass/Project.vb"
 
     ' Author:
     ' 

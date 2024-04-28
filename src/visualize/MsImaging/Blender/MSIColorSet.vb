@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b82b1b9677f0f0f4829f3c43288a1ffe, G:/mzkit/src/visualize/MsImaging//Blender/MSIColorSet.vb"
+﻿#Region "Microsoft.VisualBasic::b82b1b9677f0f0f4829f3c43288a1ffe, E:/mzkit/src/visualize/MsImaging//Blender/MSIColorSet.vb"
 
     ' Author:
     ' 

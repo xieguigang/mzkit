@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::621cb9ffd07f5a553958d807fadff17e, G:/mzkit/src/metadb/Lipidomics//IDoubleBond.vb"
+﻿#Region "Microsoft.VisualBasic::621cb9ffd07f5a553958d807fadff17e, E:/mzkit/src/metadb/Lipidomics//IDoubleBond.vb"
 
     ' Author:
     ' 

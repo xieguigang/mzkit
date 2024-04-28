@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9e3f7379715f9b5f5faddafd3a95ab19, G:/mzkit/src/assembly/assembly/test//Module1.vb"
+﻿#Region "Microsoft.VisualBasic::9e3f7379715f9b5f5faddafd3a95ab19, E:/mzkit/src/assembly/assembly/test//Module1.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5c42de56b9d449fabb8da8390183ebbb, G:/mzkit/src/metadb/Lipidomics//IChainGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::5c42de56b9d449fabb8da8390183ebbb, E:/mzkit/src/metadb/Lipidomics//IChainGenerator.vb"
 
     ' Author:
     ' 

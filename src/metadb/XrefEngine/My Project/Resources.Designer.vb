@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ddad58557b6e3fb0111c505379d0ac9f, G:/mzkit/src/metadb/XrefEngine//My Project/Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::ddad58557b6e3fb0111c505379d0ac9f, E:/mzkit/src/metadb/XrefEngine//My Project/Resources.Designer.vb"
 
     ' Author:
     ' 

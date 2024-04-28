@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6f9b57d2ff0dccdce174b6c761c4bd22, G:/mzkit/src/metadb/SMILES//test/Module1.vb"
+﻿#Region "Microsoft.VisualBasic::6f9b57d2ff0dccdce174b6c761c4bd22, E:/mzkit/src/metadb/SMILES//test/Module1.vb"
 
     ' Author:
     ' 

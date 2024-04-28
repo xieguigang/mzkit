@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f4e0645bdbd847d677350edc4ce21497, G:/mzkit/src/visualize/MsImaging//Blender/Renderer/RenderingModes.vb"
+﻿#Region "Microsoft.VisualBasic::f4e0645bdbd847d677350edc4ce21497, E:/mzkit/src/visualize/MsImaging//Blender/Renderer/RenderingModes.vb"
 
     ' Author:
     ' 

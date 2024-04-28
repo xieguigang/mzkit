@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c0e77fffc4054a7d27ff8ba9ce6e35fa, G:/mzkit/src/mzmath/TargetedMetabolomics//LinearQuantitative/LinearPack/StandardCurveCDF.vb"
+﻿#Region "Microsoft.VisualBasic::c0e77fffc4054a7d27ff8ba9ce6e35fa, E:/mzkit/src/mzmath/TargetedMetabolomics//LinearQuantitative/LinearPack/StandardCurveCDF.vb"
 
     ' Author:
     ' 

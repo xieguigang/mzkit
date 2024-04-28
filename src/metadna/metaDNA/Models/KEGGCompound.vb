@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6cf7b1d5eceb7e9ba26b7e87289b3c6f, G:/mzkit/src/metadna/metaDNA//Models/KEGGCompound.vb"
+﻿#Region "Microsoft.VisualBasic::6cf7b1d5eceb7e9ba26b7e87289b3c6f, E:/mzkit/src/metadna/metaDNA//Models/KEGGCompound.vb"
 
     ' Author:
     ' 

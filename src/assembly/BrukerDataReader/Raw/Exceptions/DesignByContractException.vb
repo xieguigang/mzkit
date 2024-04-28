@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7133a71d376234644f030754dcbc7bc0, G:/mzkit/src/assembly/BrukerDataReader//Raw/Exceptions/DesignByContractException.vb"
+﻿#Region "Microsoft.VisualBasic::7133a71d376234644f030754dcbc7bc0, E:/mzkit/src/assembly/BrukerDataReader//Raw/Exceptions/DesignByContractException.vb"
 
     ' Author:
     ' 

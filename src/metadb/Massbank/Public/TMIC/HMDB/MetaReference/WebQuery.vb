@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c49307bda843618b1b00767446106f1e, G:/mzkit/src/metadb/Massbank//Public/TMIC/HMDB/MetaReference/WebQuery.vb"
+﻿#Region "Microsoft.VisualBasic::c49307bda843618b1b00767446106f1e, E:/mzkit/src/metadb/Massbank//Public/TMIC/HMDB/MetaReference/WebQuery.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::71d7733989d9a2ae00d0a960b8a56af5, G:/mzkit/src/assembly/assembly//MarkupData/mzML/XML/IonTargeted/IMRMSelector.vb"
+﻿#Region "Microsoft.VisualBasic::71d7733989d9a2ae00d0a960b8a56af5, E:/mzkit/src/assembly/assembly//MarkupData/mzML/XML/IonTargeted/IMRMSelector.vb"
 
     ' Author:
     ' 

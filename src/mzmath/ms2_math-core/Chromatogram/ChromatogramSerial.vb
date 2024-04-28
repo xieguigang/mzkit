@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::623d83f57f7679d7653a74fb289ab7fa, G:/mzkit/src/mzmath/ms2_math-core//Chromatogram/ChromatogramSerial.vb"
+﻿#Region "Microsoft.VisualBasic::623d83f57f7679d7653a74fb289ab7fa, E:/mzkit/src/mzmath/ms2_math-core//Chromatogram/ChromatogramSerial.vb"
 
     ' Author:
     ' 

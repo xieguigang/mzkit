@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b020f9efd6aa54b410bf20ba510062e7, G:/mzkit/src/assembly/assembly//MarkupData/nmrML/FIDByteFormats.vb"
+﻿#Region "Microsoft.VisualBasic::b020f9efd6aa54b410bf20ba510062e7, E:/mzkit/src/assembly/assembly//MarkupData/nmrML/FIDByteFormats.vb"
 
     ' Author:
     ' 

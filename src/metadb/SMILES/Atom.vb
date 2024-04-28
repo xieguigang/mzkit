@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::58ad4d2cbb16775f09a142d6af0384f3, G:/mzkit/src/metadb/SMILES//Atom.vb"
+﻿#Region "Microsoft.VisualBasic::58ad4d2cbb16775f09a142d6af0384f3, E:/mzkit/src/metadb/SMILES//Atom.vb"
 
     ' Author:
     ' 

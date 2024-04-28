@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aae1c4d6df9cd808f686c08b8974ed8b, G:/mzkit/src/metadb/KNApSAcK//My Project/Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::aae1c4d6df9cd808f686c08b8974ed8b, E:/mzkit/src/metadb/KNApSAcK//My Project/Resources.Designer.vb"
 
     ' Author:
     ' 

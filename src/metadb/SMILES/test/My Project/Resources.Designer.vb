@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1297c1cc342515bd59373d169a359386, G:/mzkit/src/metadb/SMILES//test/My Project/Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::1297c1cc342515bd59373d169a359386, E:/mzkit/src/metadb/SMILES//test/My Project/Resources.Designer.vb"
 
     ' Author:
     ' 

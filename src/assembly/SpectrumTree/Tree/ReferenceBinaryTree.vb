@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8f70fc70b0eea16af875d3229663c398, G:/mzkit/src/assembly/SpectrumTree//Tree/ReferenceBinaryTree.vb"
+﻿#Region "Microsoft.VisualBasic::fa011eeb3529da964adc6abc33647a4d, E:/mzkit/src/assembly/SpectrumTree//Tree/ReferenceBinaryTree.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 30
     ' Comment Lines: 10
     '   Blank Lines: 6
-    '     File Size: 1.63 KB
+    '     File Size: 1.62 KB
 
 
     '     Class ReferenceBinaryTree
@@ -56,7 +56,7 @@
 
 Imports System.IO
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Tree
 
@@ -75,7 +75,7 @@ Namespace Tree
 
         Protected Overrides Sub Push(centroid() As ms2, node As BlockNode, raw As PeakMs2)
             Dim score = GlobalAlignment.TwoDirectionSSM(centroid, node.centroid, da)
-            Dim min = stdNum.Min(score.forward, score.reverse)
+            Dim min = std.Min(score.forward, score.reverse)
             Dim i As Integer = BlockNode.GetBinaryIndex(min)
 
             If i = 0 Then

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3bfc0edd0ed000295f4ccac967a527ad, G:/mzkit/Rscript/Library/mzkit_app/src/mzkit//math/Formula.vb"
+﻿#Region "Microsoft.VisualBasic::c96b95f10b33cb8cc25e34c11f2b490e, E:/mzkit/Rscript/Library/mzkit_app/src/mzkit//math/Formula.vb"
 
     ' Author:
     ' 
@@ -84,7 +84,7 @@ Imports SMRUCC.Rsharp.Runtime.Interop
 Imports any = Microsoft.VisualBasic.Scripting
 Imports RDataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
 Imports REnv = SMRUCC.Rsharp.Runtime.Internal.ConsolePrinter
-Imports stdNum = System.Math
+Imports std = System.Math
 
 ''' <summary>
 ''' The chemical formulae toolkit
@@ -417,7 +417,7 @@ Module FormulaTools
             For Each part In ion.TryCast(Of IEnumerable(Of (sign As Integer, expr As String)))
                 Dim subIon As Formula = FormulaScanner.ScanFormula(part.expr)
 
-                subIon *= stdNum.Abs(part.sign)
+                subIon *= std.Abs(part.sign)
 
                 If part.sign > 0 Then
                     ' delete part

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f60d5f4a401b22016047ed4fb1ed289b, G:/mzkit/src/metadb/Chemoinformatics//Formula/MS/Default/Alkenyl.vb"
+﻿#Region "Microsoft.VisualBasic::f60d5f4a401b22016047ed4fb1ed289b, E:/mzkit/src/metadb/Chemoinformatics//Formula/MS/Default/Alkenyl.vb"
 
     ' Author:
     ' 

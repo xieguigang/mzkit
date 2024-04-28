@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2b4be9c6d7422a34c1718d2b5194b90f, G:/mzkit/src/assembly/RamanSpectroscopy//read_WDF.vb"
+﻿#Region "Microsoft.VisualBasic::2b4be9c6d7422a34c1718d2b5194b90f, E:/mzkit/src/assembly/RamanSpectroscopy//read_WDF.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::42881ea20d0f404e90bd3417e28d0108, G:/mzkit/src/mzmath/MoleculeNetworking//Tree/MSScoreGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::42881ea20d0f404e90bd3417e28d0108, E:/mzkit/src/mzmath/MoleculeNetworking//Tree/MSScoreGenerator.vb"
 
     ' Author:
     ' 

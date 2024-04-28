@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::208623632655cf857a4cdf86cadb7cb0, G:/mzkit/src/mzmath/Oligonucleotide_MS//VBA/MassDefault.vb"
+﻿#Region "Microsoft.VisualBasic::208623632655cf857a4cdf86cadb7cb0, E:/mzkit/src/mzmath/Oligonucleotide_MS//VBA/MassDefault.vb"
 
     ' Author:
     ' 

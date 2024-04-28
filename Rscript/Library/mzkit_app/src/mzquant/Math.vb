@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5084739fa90910e578f8662741fe457c, G:/mzkit/Rscript/Library/mzkit_app/src/mzquant//Math.vb"
+﻿#Region "Microsoft.VisualBasic::5084739fa90910e578f8662741fe457c, E:/mzkit/Rscript/Library/mzkit_app/src/mzquant//Math.vb"
 
     ' Author:
     ' 

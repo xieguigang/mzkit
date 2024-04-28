@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::448b673914460c806373c91797990667, G:/mzkit/src/mzmath/MSEngine//LibraryData.vb"
+﻿#Region "Microsoft.VisualBasic::448b673914460c806373c91797990667, E:/mzkit/src/mzmath/MSEngine//LibraryData.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::74d929c3a46b7d7f7fcb319c6f14fd21, G:/mzkit/src/visualize/MsImaging//Layer/PixelData.vb"
+﻿#Region "Microsoft.VisualBasic::74d929c3a46b7d7f7fcb319c6f14fd21, E:/mzkit/src/visualize/MsImaging//Layer/PixelData.vb"
 
     ' Author:
     ' 

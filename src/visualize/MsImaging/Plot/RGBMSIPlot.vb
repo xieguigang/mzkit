@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::38f8649ad9641356a2b12eaf715a1fb9, G:/mzkit/src/visualize/MsImaging//Plot/RGBMSIPlot.vb"
+﻿#Region "Microsoft.VisualBasic::38f8649ad9641356a2b12eaf715a1fb9, E:/mzkit/src/visualize/MsImaging//Plot/RGBMSIPlot.vb"
 
     ' Author:
     ' 

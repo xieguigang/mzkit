@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ec5faac40a476ed792a2b69040f07df5, G:/mzkit/src/metadb/Massbank//Public/NCBI/PubChem/Web/Query/QueryPathways.vb"
+﻿#Region "Microsoft.VisualBasic::ec5faac40a476ed792a2b69040f07df5, E:/mzkit/src/metadb/Massbank//Public/NCBI/PubChem/Web/Query/QueryPathways.vb"
 
     ' Author:
     ' 

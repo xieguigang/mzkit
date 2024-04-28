@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::34905eedf1f912c0aa1e5c2bf6c8c829, G:/mzkit/src/metadb/Chemoinformatics//NaturalProduct/GlycosylNameSolver.vb"
+﻿#Region "Microsoft.VisualBasic::34905eedf1f912c0aa1e5c2bf6c8c829, E:/mzkit/src/metadb/Chemoinformatics//NaturalProduct/GlycosylNameSolver.vb"
 
     ' Author:
     ' 

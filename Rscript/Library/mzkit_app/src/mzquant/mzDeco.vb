@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dae8ef40ce66ab5c94881e6ed356d177, G:/mzkit/Rscript/Library/mzkit_app/src/mzquant//mzDeco.vb"
+﻿#Region "Microsoft.VisualBasic::c5eb4b5acf2497c098b390f6586b330a, E:/mzkit/Rscript/Library/mzkit_app/src/mzquant//mzDeco.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 997
-    '    Code Lines: 665
-    ' Comment Lines: 212
-    '   Blank Lines: 120
-    '     File Size: 40.99 KB
+    '   Total Lines: 1020
+    '    Code Lines: 679
+    ' Comment Lines: 219
+    '   Blank Lines: 122
+    '     File Size: 41.94 KB
 
 
     ' Module mzDeco
@@ -608,6 +608,9 @@ Module mzDeco
     ''' <param name="feature">
     ''' a numeric vector of target feature ion m/z value for extract the XIC data.
     ''' </param>
+    ''' <param name="parallel">
+    ''' run peak detection algorithm on mutliple xic data in parallel mode?
+    ''' </param>
     ''' <returns>a vector of the peak deconvolution data,
     ''' in format of xcms peak table liked or mzkit <see cref="PeakFeature"/>
     ''' data object.
@@ -653,6 +656,7 @@ Module mzDeco
             Return rtRange.TryCast(Of Message)
         End If
 
+        ' 1. processing for XIC pool
         If TypeOf ms1 Is XICPool Then
             Dim pool As XICPool = DirectCast(ms1, XICPool)
             Dim features_mz As Double() = CLRVector.asNumeric(feature)
@@ -666,6 +670,7 @@ Module mzDeco
                                      baseline, joint, dtw, parallel)
             End If
         ElseIf TypeOf ms1 Is list Then
+            ' 2. processing for a set of the xic data
             Dim ls_xic = DirectCast(ms1, list) _
                 .AsGeneric(Of MzGroup)(env) _
                 .Select(Function(a) New NamedValue(Of MzGroup)(a.Key, a.Value)) _
@@ -688,6 +693,22 @@ Module mzDeco
                 .GetPeakGroups(rtRange.TryCast(Of DoubleRange), quantile:=baseline, sn_threshold, joint, [single]:=False) _
                 .ToArray
         Else
+            Dim pull_xic As pipeline = pipeline.TryCreatePipeline(Of MzGroup)(ms1, env, suppress:=True)
+
+            If Not pull_xic.isError Then
+                Return pull_xic _
+                    .populates(Of MzGroup)(env) _
+                    .DecoMzGroups(
+                        peakwidth:=rtRange.TryCast(Of DoubleRange),
+                        quantile:=baseline,
+                        parallel:=parallel,
+                        joint:=joint,
+                        source:=rawfile,
+                        sn:=sn_threshold
+                    ) _
+                    .ToArray
+            End If
+
 extract_ms1:
             Dim source As String = Nothing
             Dim ms1_scans As IEnumerable(Of IMs1Scan) = ms1Scans(ms1, source)
@@ -922,8 +943,10 @@ extract_ms1:
     ''' </returns>
     ''' <example>
     ''' let rawdata = open.mzpack(file = "/path/to/rawdata.mzpack");
-    ''' let XIC = mz.groups(ms1 = rawdata, mzdiff = "ppm:20");
+    ''' let xic = mz.groups(ms1 = rawdata, mzdiff = "ppm:20");
     ''' 
+    ''' # export the XIC data as binary data file.
+    ''' writeBin(xic, con = "/path/to/xic_data.dat");
     ''' </example>
     ''' <remarks>
     ''' the ion mz value is generated via the max intensity point in each ion 
@@ -931,7 +954,7 @@ extract_ms1:
     ''' time asc.
     ''' </remarks>
     <ExportAPI("mz.groups")>
-    <RApiReturn(GetType(MzGroup()))>
+    <RApiReturn(GetType(MzGroup))>
     Public Function mz_groups(<RRawVectorArgument>
                               ms1 As Object,
                               Optional mzdiff As Object = "ppm:20",

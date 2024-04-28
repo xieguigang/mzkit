@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::da10e83a85ca166ec4385f10157c8507, G:/mzkit/src/mzmath/ms2_math-core//Spectra/MoleculeNetworking/NetworkingNode.vb"
+﻿#Region "Microsoft.VisualBasic::da10e83a85ca166ec4385f10157c8507, E:/mzkit/src/mzmath/ms2_math-core//Spectra/MoleculeNetworking/NetworkingNode.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c7bbb9a397fb8d4b0458af9c248f5551, G:/mzkit/src/metadb/Chemoinformatics//Formula/FormulaScanner.vb"
+﻿#Region "Microsoft.VisualBasic::7fdecf168550977a20ad49a13d28b016, E:/mzkit/src/metadb/Chemoinformatics//Formula/FormulaScanner.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 302
-    '    Code Lines: 208
-    ' Comment Lines: 51
-    '   Blank Lines: 43
-    '     File Size: 11.54 KB
+    '   Total Lines: 384
+    '    Code Lines: 263
+    ' Comment Lines: 67
+    '   Blank Lines: 54
+    '     File Size: 14.85 KB
 
 
     '     Class FormulaScanner
@@ -62,6 +62,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Text.Parser
 
 Namespace Formula
@@ -173,7 +174,11 @@ Namespace Formula
             If cache.ContainsKey(key) Then
                 Return cache(key)
             Else
-                mass = CDbl(ScanFormula(formula, n))
+                Try
+                    mass = CDbl(ScanFormula(formula, n))
+                Catch ex As Exception
+                    Throw New Exception($"the given formula string is: '{formula}'", ex)
+                End Try
 
                 SyncLock cache
                     If Not cache.ContainsKey(key) Then
@@ -221,6 +226,8 @@ Namespace Formula
 
             Static cache As New Dictionary(Of String, Formula)
 
+            formula = Strings.Trim(formula).Replace(" ", "")
+
             If formula.StringEmpty Then
                 Return Nothing
             Else
@@ -230,7 +237,43 @@ Namespace Formula
             If cache.ContainsKey(key) Then
                 formula2 = cache(key)
                 formula2 = New Formula(formula2.CountsByElement, formula2.m_formula)
+            ElseIf formula.Contains("."c) Then
+                Dim parts As String() = formula.Split("."c)
+                Dim f As New Formula
+
+                ' 4[O2Si].2[Al+3].3[O-2].H2O
+                For Each part As String In parts
+                    formula2 = ScanFormula(part, n)
+                    f = f + formula2
+
+                    If formula2 Is Nothing Then
+                        Call $"invalid formula string '{part}' of the given input formula: '{formula}'".Warning
+                    End If
+                Next
+
+                SyncLock cache
+                    If Not cache.ContainsKey(key) Then
+                        Call cache.Add(key, f)
+                    End If
+                End SyncLock
+
+                formula2 = f
             Else
+                ' [formula] charge value
+                ' [O]2- for free O atom
+                If formula.Contains("["c) OrElse formula.Contains("]"c) Then
+                    If formula.IsPattern("\d+\[.+\]") Then
+                        formula = $"({formula.GetStackValue("[", "]")}){Val(formula)}"
+                    Else
+                        formula = formula.GetStackValue("[", "]")
+                    End If
+                ElseIf formula.IsPattern("\d+.+") Then
+                    ' 3H2O -> (H2O)3
+                    Dim multiply As String = formula.Match("\d+")
+                    formula = formula.Substring(multiply.Length)
+                    formula = $"({formula}){multiply}"
+                End If
+
                 formula2 = New FormulaScanner(n).ScanFormula(New CharPtr(formula))
 
                 SyncLock cache
@@ -247,7 +290,15 @@ Namespace Formula
         Dim buf As New List(Of Char)
         Dim digits As New List(Of Char)
         Dim formula As New List(Of Char)
+        Dim charge As Integer
 
+        ''' <summary>
+        ''' end of current atom and clear the buffer
+        ''' </summary>
+        ''' <param name="c"></param>
+        ''' <remarks>
+        ''' the method will populate a new atom and its atom number
+        ''' </remarks>
         Private Sub push(c As Char)
             Dim element$ = buf.CharString
 
@@ -270,7 +321,7 @@ Namespace Formula
             buf *= 0
             digits *= 0
 
-            If c <> "("c AndAlso c <> ")"c Then
+            If c <> "("c AndAlso c <> ")"c AndAlso c <> ASCII.NUL Then
                 buf += c
             End If
         End Sub
@@ -343,6 +394,37 @@ Namespace Formula
 
                 ElseIf c = ")"c Then
                     ' 结束当前的堆栈
+                    Exit Do
+                ElseIf c = "-"c Or c = "+" Then
+                    ' end of the formula
+                    ' parse the charge value
+                    Call push(Nothing)
+
+                    ' all is charge number for here
+                    Dim all As New List(Of Char)
+
+                    Do While Not scaner.EndRead
+                        c = ++scaner
+
+                        If Char.IsDigit(c) Then
+                            all.Add(c)
+                        Else
+                            Exit Do
+                        End If
+                    Loop
+
+                    If all.IsNullOrEmpty Then
+                        ' just do nothing at here
+                        ' charge +1 or -1
+                        charge = If(c = "-", -1, 1)
+                    ElseIf all.All(Function(ci) Char.IsDigit(ci)) Then
+                        charge = Integer.Parse(New String(all))
+                        charge = If(c = "-", -1, 1) * charge
+                    Else
+                        charge = 0
+                        Call $"string in invalid charge value format: {New String(all)}".Warning
+                    End If
+
                     Exit Do
                 End If
             Loop

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::06b5c361e2ffe3da16c70a13d0b14b8d, G:/mzkit/src/assembly/assembly//MarkupData/XmlParser.vb"
+﻿#Region "Microsoft.VisualBasic::06b5c361e2ffe3da16c70a13d0b14b8d, E:/mzkit/src/assembly/assembly//MarkupData/XmlParser.vb"
 
     ' Author:
     ' 

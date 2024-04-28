@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2117cc4889ff24af58cf93b86cda8e49, G:/mzkit/src/assembly/assembly//MarkupData/imzML/XML/IntensitySummary.vb"
+﻿#Region "Microsoft.VisualBasic::2117cc4889ff24af58cf93b86cda8e49, E:/mzkit/src/assembly/assembly//MarkupData/imzML/XML/IntensitySummary.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fa8163ba20b44e7f40a2cabaec2aa470, G:/mzkit/src/mzmath/MSFinder//FormulaStringParcer.vb"
+﻿#Region "Microsoft.VisualBasic::fa8163ba20b44e7f40a2cabaec2aa470, E:/mzkit/src/mzmath/MSFinder//FormulaStringParcer.vb"
 
     ' Author:
     ' 

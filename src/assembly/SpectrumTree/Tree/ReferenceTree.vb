@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b3048b852a5b51cf26ba796ab77df74c, G:/mzkit/src/assembly/SpectrumTree//Tree/ReferenceTree.vb"
+﻿#Region "Microsoft.VisualBasic::2668401c1e564f5de1eb122992699bc4, E:/mzkit/src/assembly/SpectrumTree//Tree/ReferenceTree.vb"
 
     ' Author:
     ' 
@@ -60,7 +60,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Text
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Tree
 
@@ -120,7 +120,7 @@ Namespace Tree
 
         Protected Overridable Sub Push(centroid As ms2(), node As BlockNode, raw As PeakMs2)
             Dim score = GlobalAlignment.TwoDirectionSSM(centroid, node.centroid, da)
-            Dim min As Double = stdNum.Min(score.forward, score.reverse)
+            Dim min As Double = std.Min(score.forward, score.reverse)
             Dim i As Integer = BlockNode.GetIndex(min)
 
             If i = -1 Then

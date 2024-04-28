@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::74172fe23634d714141212fa7e8cd1cc, G:/mzkit/src/assembly/assembly//MarkupData/mzML/MRMHelper.vb"
+﻿#Region "Microsoft.VisualBasic::74172fe23634d714141212fa7e8cd1cc, E:/mzkit/src/assembly/assembly//MarkupData/mzML/MRMHelper.vb"
 
     ' Author:
     ' 

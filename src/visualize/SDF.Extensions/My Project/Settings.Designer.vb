@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8491a87d0b8d128c23a520531822b291, G:/mzkit/src/visualize/SDF.Extensions//My Project/Settings.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::8491a87d0b8d128c23a520531822b291, E:/mzkit/src/visualize/SDF.Extensions//My Project/Settings.Designer.vb"
 
     ' Author:
     ' 

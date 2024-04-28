@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bc1d422dc7c14a5847a528ed92db8602, G:/mzkit/src/mzmath/mz_deco//Signals/UV/UVScanPoint.vb"
+﻿#Region "Microsoft.VisualBasic::bc1d422dc7c14a5847a528ed92db8602, E:/mzkit/src/mzmath/mz_deco//Signals/UV/UVScanPoint.vb"
 
     ' Author:
     ' 

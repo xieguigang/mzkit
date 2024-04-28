@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bc82b3344247bed1da7951292ba9cb2f, G:/mzkit/src/assembly/NMRFidTool//Math/baseline/GolotvinWilliamsBaselineCorrector.vb"
+﻿#Region "Microsoft.VisualBasic::bc82b3344247bed1da7951292ba9cb2f, E:/mzkit/src/assembly/NMRFidTool//Math/baseline/GolotvinWilliamsBaselineCorrector.vb"
 
     ' Author:
     ' 

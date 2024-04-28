@@ -5,7 +5,7 @@
     <title>do ``m/z`` grouping under the given tolerance</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-    <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
+    <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
 </head>
 
 <body>
@@ -66,12 +66,15 @@
 
         <h3>Value</h3>
 
-        <p>create a list of XIC dataset for run downstream deconv operation</p><h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/MzGroup.html">MzGroup[]</a></li></ul>
+        <p>create a list of XIC dataset for run downstream deconv operation</p><h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/MzGroup.html">MzGroup</a></li></ul>
 
         <h3 style="display: block;">Examples</h3>
 
         <pre><code id="example_r"> let rawdata = open.mzpack(file = "/path/to/rawdata.mzpack");
- let XIC = mz.groups(ms1 = rawdata, mzdiff = "ppm:20");</code></pre>
+ let xic = mz.groups(ms1 = rawdata, mzdiff = "ppm:20");
+ 
+ # export the XIC data as binary data file.
+ writeBin(xic, con = "/path/to/xic_data.dat");</code></pre>
 
         <hr />
         <div style="text-align: center;">[Package <em>mzDeco</em> version 1.0.0.0 <a
@@ -80,8 +83,8 @@
     </div>
 </body>
 
-<script type="text/javascript" src="https://mzkit.org/assets/js/R_syntax.js"></script>
-<script type="text/javascript" src="https://mzkit.org/assets/js/highlights.js"></script>
+<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
+<script type="text/javascript" src="../../_assets/highlights.js"></script>
 <script type="text/javascript">r_highlights("example_r");</script>
 
 </html>

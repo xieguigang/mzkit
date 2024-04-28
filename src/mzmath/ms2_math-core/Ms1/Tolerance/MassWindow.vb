@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4147844685b5e8869765226a6678376a, G:/mzkit/src/mzmath/ms2_math-core//Ms1/Tolerance/MassWindow.vb"
+﻿#Region "Microsoft.VisualBasic::4147844685b5e8869765226a6678376a, E:/mzkit/src/mzmath/ms2_math-core//Ms1/Tolerance/MassWindow.vb"
 
     ' Author:
     ' 

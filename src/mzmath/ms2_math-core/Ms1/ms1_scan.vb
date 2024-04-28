@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e5868e66ac435077589df36fe6b01041, G:/mzkit/src/mzmath/ms2_math-core//Ms1/ms1_scan.vb"
+﻿#Region "Microsoft.VisualBasic::72f270337d822bcacbf27738ab6ca5d4, E:/mzkit/src/mzmath/ms2_math-core//Ms1/ms1_scan.vb"
 
     ' Author:
     ' 
@@ -37,18 +37,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 61
-    '    Code Lines: 39
+    '   Total Lines: 65
+    '    Code Lines: 42
     ' Comment Lines: 14
-    '   Blank Lines: 8
-    '     File Size: 2.49 KB
+    '   Blank Lines: 9
+    '     File Size: 2.59 KB
 
 
     ' Class ms1_scan
     ' 
     '     Properties: intensity, mz, scan_time
     ' 
-    '     Constructor: (+2 Overloads) Sub New
+    '     Constructor: (+3 Overloads) Sub New
     '     Function: GroupByMz, ToString
     ' 
     ' /********************************************************************************/
@@ -78,6 +78,10 @@ Public Class ms1_scan : Implements IMs1, IMs1Scan, INumericKey, ITimeSignal
         _mz = mz
         _scan_time = rt
         _intensity = intensity
+    End Sub
+
+    Sub New(scan As IMs1Scan)
+        Call Me.New(scan.mz, scan.rt, scan.intensity)
     End Sub
 
     Public Overrides Function ToString() As String

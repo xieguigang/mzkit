@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::67d0774c548628e9099066a2fd6af6eb, G:/mzkit/src/assembly/assembly//UnifyReader/ChromatogramBuffer.vb"
+﻿#Region "Microsoft.VisualBasic::67d0774c548628e9099066a2fd6af6eb, E:/mzkit/src/assembly/assembly//UnifyReader/ChromatogramBuffer.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3f1554392d1acb5ad4bc090f4dbbff2b, G:/mzkit/src/mzmath/ms2_math-core//Ms1/PrecursorType/PrecursorType.vb"
+﻿#Region "Microsoft.VisualBasic::3f1554392d1acb5ad4bc090f4dbbff2b, E:/mzkit/src/mzmath/ms2_math-core//Ms1/PrecursorType/PrecursorType.vb"
 
     ' Author:
     ' 

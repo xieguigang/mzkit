@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::76d8fbce7e3f3bdfc31283153983a92d, G:/mzkit/src/metadb/Massbank//Public/NCBI/PubChem/Web/Models/Information.vb"
+﻿#Region "Microsoft.VisualBasic::76d8fbce7e3f3bdfc31283153983a92d, E:/mzkit/src/metadb/Massbank//Public/NCBI/PubChem/Web/Models/Information.vb"
 
     ' Author:
     ' 

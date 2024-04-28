@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9072a4167165801067d207e89a423b9b, G:/mzkit/src/metadb/Chemoinformatics//Formula/MS/Default/Glycosides.vb"
+﻿#Region "Microsoft.VisualBasic::9072a4167165801067d207e89a423b9b, E:/mzkit/src/metadb/Chemoinformatics//Formula/MS/Default/Glycosides.vb"
 
     ' Author:
     ' 

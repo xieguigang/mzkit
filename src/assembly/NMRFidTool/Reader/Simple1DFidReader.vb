@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::84e1403d2f7ee43f7ad3a11af77b7765, G:/mzkit/src/assembly/NMRFidTool//Reader/Simple1DFidReader.vb"
+﻿#Region "Microsoft.VisualBasic::84e1403d2f7ee43f7ad3a11af77b7765, E:/mzkit/src/assembly/NMRFidTool//Reader/Simple1DFidReader.vb"
 
     ' Author:
     ' 

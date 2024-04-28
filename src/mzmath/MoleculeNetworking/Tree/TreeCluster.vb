@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::da21caf56d494e4c15ad3503363299aa, G:/mzkit/src/mzmath/MoleculeNetworking//Tree/TreeCluster.vb"
+﻿#Region "Microsoft.VisualBasic::f0329227b7f9809af8f3bdeab5eb60ec, E:/mzkit/src/mzmath/MoleculeNetworking//Tree/TreeCluster.vb"
 
     ' Author:
     ' 
@@ -37,18 +37,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 91
-    '    Code Lines: 69
-    ' Comment Lines: 6
-    '   Blank Lines: 16
-    '     File Size: 3.19 KB
+    '   Total Lines: 112
+    '    Code Lines: 81
+    ' Comment Lines: 13
+    '   Blank Lines: 18
+    '     File Size: 3.93 KB
 
 
     ' Class TreeCluster
     ' 
     '     Properties: clusters, spectrum, tree
     ' 
-    '     Function: GetTree, ToString, Union
+    '     Function: GetTopCluster, GetTree, ToString, Union
     ' 
     '     Sub: GetTree
     ' 
@@ -76,6 +76,27 @@ Public Class TreeCluster
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overrides Function ToString() As String
         Return tree.ToString
+    End Function
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="rank">
+    ''' the score ranking function, higher score is better
+    ''' </param>
+    ''' <returns></returns>
+    Public Function GetTopCluster(rank As Func(Of PeakMs2(), Double)) As IEnumerable(Of PeakMs2)
+        Dim tree = GetTree()
+        Dim specIndex = spectrum.ToDictionary(Function(s) s.lib_guid)
+        Dim rank_desc = tree _
+            .OrderByDescending(Function(c)
+                                   Return rank(c.Value.Select(Function(a) specIndex(a)).ToArray)
+                               End Function) _
+            .First
+
+        Return rank_desc _
+            .Value _
+            .Select(Function(id) specIndex(id))
     End Function
 
     Public Function GetTree() As Dictionary(Of String, String())

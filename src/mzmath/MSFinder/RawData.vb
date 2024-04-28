@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3cb5a9da84c9aec0b441cc922039c6e7, G:/mzkit/src/mzmath/MSFinder//RawData.vb"
+﻿#Region "Microsoft.VisualBasic::3cb5a9da84c9aec0b441cc922039c6e7, E:/mzkit/src/mzmath/MSFinder//RawData.vb"
 
     ' Author:
     ' 

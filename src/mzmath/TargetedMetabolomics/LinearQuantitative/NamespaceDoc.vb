@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f21b8a589e1ab797fc26474a9aa09269, G:/mzkit/src/mzmath/TargetedMetabolomics//LinearQuantitative/NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::f21b8a589e1ab797fc26474a9aa09269, E:/mzkit/src/mzmath/TargetedMetabolomics//LinearQuantitative/NamespaceDoc.vb"
 
     ' Author:
     ' 

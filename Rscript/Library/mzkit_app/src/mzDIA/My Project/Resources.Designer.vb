@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5689b24f70eeda94aacfd779bcf146d6, G:/mzkit/Rscript/Library/mzkit_app/src/mzDIA//My Project/Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::5689b24f70eeda94aacfd779bcf146d6, E:/mzkit/Rscript/Library/mzkit_app/src/mzDIA//My Project/Resources.Designer.vb"
 
     ' Author:
     ' 

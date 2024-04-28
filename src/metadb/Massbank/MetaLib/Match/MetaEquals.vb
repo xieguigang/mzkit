@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::17ca1c7f2b16dd2447da604abfebad39, G:/mzkit/src/metadb/Massbank//MetaLib/Match/MetaEquals.vb"
+﻿#Region "Microsoft.VisualBasic::17ca1c7f2b16dd2447da604abfebad39, E:/mzkit/src/metadb/Massbank//MetaLib/Match/MetaEquals.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ff068b2d1875e7a55f8d7b2485f1964a, G:/mzkit/src/metadb/Chemoinformatics//SDF/SDF.vb"
+﻿#Region "Microsoft.VisualBasic::ff068b2d1875e7a55f8d7b2485f1964a, E:/mzkit/src/metadb/Chemoinformatics//SDF/SDF.vb"
 
     ' Author:
     ' 
