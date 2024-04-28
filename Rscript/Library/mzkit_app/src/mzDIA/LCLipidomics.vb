@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c73d0511a8a72cd04b9218cc604197be, G:/mzkit/Rscript/Library/mzkit_app/src/mzDIA//LCLipidomics.vb"
+﻿#Region "Microsoft.VisualBasic::c73d0511a8a72cd04b9218cc604197be, E:/mzkit/Rscript/Library/mzkit_app/src/mzDIA//LCLipidomics.vb"
 
     ' Author:
     ' 

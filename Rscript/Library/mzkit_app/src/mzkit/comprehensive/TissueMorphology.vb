@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::625fab0572f190babdf1508200a34fdb, G:/mzkit/Rscript/Library/mzkit_app/src/mzkit//comprehensive/TissueMorphology.vb"
+﻿#Region "Microsoft.VisualBasic::625fab0572f190babdf1508200a34fdb, E:/mzkit/Rscript/Library/mzkit_app/src/mzkit//comprehensive/TissueMorphology.vb"
 
     ' Author:
     ' 

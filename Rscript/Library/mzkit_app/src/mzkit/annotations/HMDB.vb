@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::561b33b2a1e34cdd02ee0c4fbb790869, G:/mzkit/Rscript/Library/mzkit_app/src/mzkit//annotations/HMDB.vb"
+﻿#Region "Microsoft.VisualBasic::561b33b2a1e34cdd02ee0c4fbb790869, E:/mzkit/Rscript/Library/mzkit_app/src/mzkit//annotations/HMDB.vb"
 
     ' Author:
     ' 
