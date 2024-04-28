@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::455171ea5d924a6810ed09abd1b2f1ad, G:/mzkit/src/metadna/metaDNA//Models/Networking/KEGGNetwork.vb"
+﻿#Region "Microsoft.VisualBasic::455171ea5d924a6810ed09abd1b2f1ad, E:/mzkit/src/metadna/metaDNA//Models/Networking/KEGGNetwork.vb"
 
     ' Author:
     ' 
