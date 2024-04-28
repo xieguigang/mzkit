@@ -13,6 +13,18 @@ const ms1_xic_bins = function(files, mzdiff = 0.005,
                               outputdir = "./XIC/", 
                               n_threads = 32) {
 
+    let cache_exists = function(file, min_size, cache.enable = TRUE) {
+        if (nchar(file) == 0) {
+            FALSE;
+        } else {
+            if (file.size(file) < min_size) {
+                FALSE;
+            } else {
+                cache.enable;
+            }
+        }
+    }
+
     let xic_cache = `${outputdir}/${basename(files)}.xic`;
     let i = sapply(xic_cache, cache -> cache_exists(cache, 
         min_size = 1*1024*1024, cache.enable = TRUE)
