@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0a63719113f82c5fe86b7bb9ee16798f, G:/mzkit/src/metadb/Lipidomics//ChainParser/SphingoChainParser.vb"
+﻿#Region "Microsoft.VisualBasic::0a63719113f82c5fe86b7bb9ee16798f, E:/mzkit/src/metadb/Lipidomics//ChainParser/SphingoChainParser.vb"
 
     ' Author:
     ' 

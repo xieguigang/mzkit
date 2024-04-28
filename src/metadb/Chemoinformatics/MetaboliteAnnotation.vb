@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f858319ddfd4c6cfce1d4b1beff6859d, G:/mzkit/src/metadb/Chemoinformatics//MetaboliteAnnotation.vb"
+﻿#Region "Microsoft.VisualBasic::f858319ddfd4c6cfce1d4b1beff6859d, E:/mzkit/src/metadb/Chemoinformatics//MetaboliteAnnotation.vb"
 
     ' Author:
     ' 

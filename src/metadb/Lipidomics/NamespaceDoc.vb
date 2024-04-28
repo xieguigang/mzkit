@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8c25da2b1e2582c47c52b92168e9a7dd, G:/mzkit/src/metadb/Lipidomics//NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::8c25da2b1e2582c47c52b92168e9a7dd, E:/mzkit/src/metadb/Lipidomics//NamespaceDoc.vb"
 
     ' Author:
     ' 

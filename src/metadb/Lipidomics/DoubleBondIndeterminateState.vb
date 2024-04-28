@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b0f2dbe9c6ebc39f0e1b05adfef8bdc5, G:/mzkit/src/metadb/Lipidomics//DoubleBondIndeterminateState.vb"
+﻿#Region "Microsoft.VisualBasic::b0f2dbe9c6ebc39f0e1b05adfef8bdc5, E:/mzkit/src/metadb/Lipidomics//DoubleBondIndeterminateState.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fe64cda05588ade4a9807bdc542d4a5d, G:/mzkit/src/metadb/KNApSAcK//My Project/AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::fe64cda05588ade4a9807bdc542d4a5d, E:/mzkit/src/metadb/KNApSAcK//My Project/AssemblyInfo.vb"
 
     ' Author:
     ' 

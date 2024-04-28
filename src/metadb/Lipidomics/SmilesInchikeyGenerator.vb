@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4b4e482f135b1483943e8739349a4643, G:/mzkit/src/metadb/Lipidomics//SmilesInchikeyGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::4b4e482f135b1483943e8739349a4643, E:/mzkit/src/metadb/Lipidomics//SmilesInchikeyGenerator.vb"
 
     ' Author:
     ' 

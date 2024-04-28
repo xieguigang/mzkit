@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a7d73a99e921345412c4d75a0d2ffa37, G:/mzkit/src/metadb/Lipidomics//Annotation/LipidAnnotationLevelConverter.vb"
+﻿#Region "Microsoft.VisualBasic::a7d73a99e921345412c4d75a0d2ffa37, E:/mzkit/src/metadb/Lipidomics//Annotation/LipidAnnotationLevelConverter.vb"
 
     ' Author:
     ' 

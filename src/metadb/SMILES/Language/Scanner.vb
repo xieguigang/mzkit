@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::22f0052d09c5409368c3bb971a4fc5b0, G:/mzkit/src/metadb/SMILES//Language/Scanner.vb"
+﻿#Region "Microsoft.VisualBasic::22f0052d09c5409368c3bb971a4fc5b0, E:/mzkit/src/metadb/SMILES//Language/Scanner.vb"
 
     ' Author:
     ' 

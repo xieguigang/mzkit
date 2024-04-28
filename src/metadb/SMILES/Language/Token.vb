@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bb72acae88455f03700a6405241137ec, G:/mzkit/src/metadb/SMILES//Language/Token.vb"
+﻿#Region "Microsoft.VisualBasic::bb72acae88455f03700a6405241137ec, E:/mzkit/src/metadb/SMILES//Language/Token.vb"
 
     ' Author:
     ' 

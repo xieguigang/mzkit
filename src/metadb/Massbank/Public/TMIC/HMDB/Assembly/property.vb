@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e87ae6a07d4ffa777244f8c18fa6110b, G:/mzkit/src/metadb/Massbank//Public/TMIC/HMDB/Assembly/property.vb"
+﻿#Region "Microsoft.VisualBasic::e87ae6a07d4ffa777244f8c18fa6110b, E:/mzkit/src/metadb/Massbank//Public/TMIC/HMDB/Assembly/property.vb"
 
     ' Author:
     ' 

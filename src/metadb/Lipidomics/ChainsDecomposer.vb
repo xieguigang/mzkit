@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::16c7ea230869dde0070285aed7f04714, G:/mzkit/src/metadb/Lipidomics//ChainsDecomposer.vb"
+﻿#Region "Microsoft.VisualBasic::16c7ea230869dde0070285aed7f04714, E:/mzkit/src/metadb/Lipidomics//ChainsDecomposer.vb"
 
     ' Author:
     ' 

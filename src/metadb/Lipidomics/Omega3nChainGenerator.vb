@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4a6ff212abfffe7695ee073b90ac720b, G:/mzkit/src/metadb/Lipidomics//Omega3nChainGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::4a6ff212abfffe7695ee073b90ac720b, E:/mzkit/src/metadb/Lipidomics//Omega3nChainGenerator.vb"
 
     ' Author:
     ' 

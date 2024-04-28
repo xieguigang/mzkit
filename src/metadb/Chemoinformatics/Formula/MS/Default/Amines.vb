@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4ed716ede260d825ce327c32405496ae, G:/mzkit/src/metadb/Chemoinformatics//Formula/MS/Default/Amines.vb"
+﻿#Region "Microsoft.VisualBasic::4ed716ede260d825ce327c32405496ae, E:/mzkit/src/metadb/Chemoinformatics//Formula/MS/Default/Amines.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cb8d6194800e3a3bd20213fda16a8812, G:/mzkit/src/metadb/SMILES//Graph/ChemicalElement.vb"
+﻿#Region "Microsoft.VisualBasic::cb8d6194800e3a3bd20213fda16a8812, E:/mzkit/src/metadb/SMILES//Graph/ChemicalElement.vb"
 
     ' Author:
     ' 

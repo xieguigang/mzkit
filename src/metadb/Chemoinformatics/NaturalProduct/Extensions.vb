@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::926959fa32f50bfc632fe809aefe1ced, G:/mzkit/src/metadb/Chemoinformatics//NaturalProduct/Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::926959fa32f50bfc632fe809aefe1ced, E:/mzkit/src/metadb/Chemoinformatics//NaturalProduct/Extensions.vb"
 
     ' Author:
     ' 

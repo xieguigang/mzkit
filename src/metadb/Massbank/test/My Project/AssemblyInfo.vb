@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fd215b54fc429ef2d2c00086c2c8ee74, G:/mzkit/src/metadb/Massbank/test//My Project/AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::fd215b54fc429ef2d2c00086c2c8ee74, E:/mzkit/src/metadb/Massbank/test//My Project/AssemblyInfo.vb"
 
     ' Author:
     ' 

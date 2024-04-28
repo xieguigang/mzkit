@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::721585ec2a7d0fb623ae2dea47f34945, G:/mzkit/src/metadb/Chemoinformatics//Lipid/LipidName.vb"
+﻿#Region "Microsoft.VisualBasic::721585ec2a7d0fb623ae2dea47f34945, E:/mzkit/src/metadb/Chemoinformatics//Lipid/LipidName.vb"
 
     ' Author:
     ' 

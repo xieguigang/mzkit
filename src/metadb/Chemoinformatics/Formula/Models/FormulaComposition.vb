@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1a334a9b9985ce1fa94ff216310ed705, G:/mzkit/src/metadb/Chemoinformatics//Formula/Models/FormulaComposition.vb"
+﻿#Region "Microsoft.VisualBasic::1a334a9b9985ce1fa94ff216310ed705, E:/mzkit/src/metadb/Chemoinformatics//Formula/Models/FormulaComposition.vb"
 
     ' Author:
     ' 

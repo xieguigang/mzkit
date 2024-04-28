@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::02615ad448df53601c4808544eaa6350, G:/mzkit/src/metadb/Lipidomics//Annotation/LipidMassLibraryGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::02615ad448df53601c4808544eaa6350, E:/mzkit/src/metadb/Lipidomics//Annotation/LipidMassLibraryGenerator.vb"
 
     ' Author:
     ' 
