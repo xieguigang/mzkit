@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2ad3664d212085e47bdbb89074953865, G:/mzkit/src/metadb/Massbank//Public/lipidMAPS/MetaTable.vb"
+﻿#Region "Microsoft.VisualBasic::2ad3664d212085e47bdbb89074953865, E:/mzkit/src/metadb/Massbank//Public/lipidMAPS/MetaTable.vb"
 
     ' Author:
     ' 

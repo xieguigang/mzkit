@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::65fa889bca6b790972c1144a3cd2bbc3, G:/mzkit/src/assembly/ThermoRawFileReader//ThermoReaderOptions.vb"
+﻿#Region "Microsoft.VisualBasic::65fa889bca6b790972c1144a3cd2bbc3, E:/mzkit/src/assembly/ThermoRawFileReader//ThermoReaderOptions.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3ae6c74a7253403205cec90cb63c1856, G:/mzkit/src/metadb/Massbank//Public/ChEBI/ChEBIObo.vb"
+﻿#Region "Microsoft.VisualBasic::3ae6c74a7253403205cec90cb63c1856, E:/mzkit/src/metadb/Massbank//Public/ChEBI/ChEBIObo.vb"
 
     ' Author:
     ' 

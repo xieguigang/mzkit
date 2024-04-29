@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a49c5ebb173bbbc917fa9adb85109f94, G:/mzkit/src/assembly/mzPack//v1.0/v1MemoryLoader.vb"
+﻿#Region "Microsoft.VisualBasic::635ac2e1aa8c0234b4d677a761ab4540, E:/mzkit/src/assembly/mzPack//v1.0/v1MemoryLoader.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 88
-    '    Code Lines: 67
-    ' Comment Lines: 5
-    '   Blank Lines: 16
-    '     File Size: 3.31 KB
+    '   Total Lines: 103
+    '    Code Lines: 71
+    ' Comment Lines: 15
+    '   Blank Lines: 17
+    '     File Size: 3.81 KB
 
 
     ' Class v1MemoryLoader

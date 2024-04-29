@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::89bc286eb820109ec11a19cf5323ea19, G:/mzkit/src/assembly/ThermoRawFileReader//DataObjects/TuneMethod.vb"
+﻿#Region "Microsoft.VisualBasic::89bc286eb820109ec11a19cf5323ea19, E:/mzkit/src/assembly/ThermoRawFileReader//DataObjects/TuneMethod.vb"
 
     ' Author:
     ' 

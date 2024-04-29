@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4f4a1bf4d1226c7ab11cf25a8e1bf2b9, G:/mzkit/src/assembly/mzPackExtensions//MZWork/ParseArchive.vb"
+﻿#Region "Microsoft.VisualBasic::4f4a1bf4d1226c7ab11cf25a8e1bf2b9, E:/mzkit/src/assembly/mzPackExtensions//MZWork/ParseArchive.vb"
 
     ' Author:
     ' 

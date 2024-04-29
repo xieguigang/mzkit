@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ae1ab4d2aab484e27432463d294beed4, G:/mzkit/src/assembly/mzPackExtensions//VendorStream/VendorStreamLoader.vb"
+﻿#Region "Microsoft.VisualBasic::ae1ab4d2aab484e27432463d294beed4, E:/mzkit/src/assembly/mzPackExtensions//VendorStream/VendorStreamLoader.vb"
 
     ' Author:
     ' 

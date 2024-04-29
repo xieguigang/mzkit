@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::31aba5aea8723a7b521cf04d2e365afa, G:/mzkit/src/assembly/Comprehensive//MsImaging/Udp/UDPPrj.vb"
+﻿#Region "Microsoft.VisualBasic::31aba5aea8723a7b521cf04d2e365afa, E:/mzkit/src/assembly/Comprehensive//MsImaging/Udp/UDPPrj.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c0418aff9e111d4ab888d3ffd84ca816, G:/mzkit/src/metadb/Lipidomics//ChainsIndeterminateState.vb"
+﻿#Region "Microsoft.VisualBasic::c0418aff9e111d4ab888d3ffd84ca816, E:/mzkit/src/metadb/Lipidomics//ChainsIndeterminateState.vb"
 
     ' Author:
     ' 

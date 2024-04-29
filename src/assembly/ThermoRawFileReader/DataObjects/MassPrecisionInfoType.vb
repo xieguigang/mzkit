@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a2bf43a23ab2278de9f6c08f13fe3945, G:/mzkit/src/assembly/ThermoRawFileReader//DataObjects/MassPrecisionInfoType.vb"
+﻿#Region "Microsoft.VisualBasic::a2bf43a23ab2278de9f6c08f13fe3945, E:/mzkit/src/assembly/ThermoRawFileReader//DataObjects/MassPrecisionInfoType.vb"
 
     ' Author:
     ' 

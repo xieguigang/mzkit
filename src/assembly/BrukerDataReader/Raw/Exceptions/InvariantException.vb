@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e65d4b3b28eb7af6c103b7517cb4b769, G:/mzkit/src/assembly/BrukerDataReader//Raw/Exceptions/InvariantException.vb"
+﻿#Region "Microsoft.VisualBasic::e65d4b3b28eb7af6c103b7517cb4b769, E:/mzkit/src/assembly/BrukerDataReader//Raw/Exceptions/InvariantException.vb"
 
     ' Author:
     ' 

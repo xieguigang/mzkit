@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d83cc099f8135b3c18afbf97cb8eaaf0, G:/mzkit/src/metadb/Lipidomics//LipoqualityRest.vb"
+﻿#Region "Microsoft.VisualBasic::d83cc099f8135b3c18afbf97cb8eaaf0, E:/mzkit/src/metadb/Lipidomics//LipoqualityRest.vb"
 
     ' Author:
     ' 

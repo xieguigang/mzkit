@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f0d77bfc0d705d5f0e173a50087486dd, G:/mzkit/src/metadb/Massbank//Public/NCBI/PubChem/Web/Query/MetadataConvertor.vb"
+﻿#Region "Microsoft.VisualBasic::e6e31c8dba5c4ee1294e190407aa7fc1, E:/mzkit/src/metadb/Massbank//Public/NCBI/PubChem/Web/Query/MetadataConvertor.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 62
     ' Comment Lines: 0
     '   Blank Lines: 5
-    '     File Size: 2.75 KB
+    '     File Size: 2.77 KB
 
 
     '     Module MetadataConvertor
@@ -53,8 +53,6 @@
 
 #End Region
 
-Imports System.Runtime.CompilerServices
-Imports BioNovoGene.BioDeep.Chemistry.MetaLib
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.BioDeep.Chemistry.MetaLib.CommonNames
 Imports BioNovoGene.BioDeep.Chemistry.MetaLib.CrossReference

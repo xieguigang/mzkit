@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::445663b595e6ba36dd74d3a3d5bfdf01, G:/mzkit/src/assembly/BrukerDataReader//Raw/Exceptions/PreconditionException.vb"
+﻿#Region "Microsoft.VisualBasic::445663b595e6ba36dd74d3a3d5bfdf01, E:/mzkit/src/assembly/BrukerDataReader//Raw/Exceptions/PreconditionException.vb"
 
     ' Author:
     ' 

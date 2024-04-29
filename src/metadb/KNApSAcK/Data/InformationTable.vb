@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9a3b0dc6c96cc69929d1e4ed2c218aa9, G:/mzkit/src/metadb/KNApSAcK//Data/InformationTable.vb"
+﻿#Region "Microsoft.VisualBasic::9a3b0dc6c96cc69929d1e4ed2c218aa9, E:/mzkit/src/metadb/KNApSAcK//Data/InformationTable.vb"
 
     ' Author:
     ' 

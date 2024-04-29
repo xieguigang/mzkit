@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1a64a9f68043a0621e28bc604c8e0fd2, G:/mzkit/src/mzmath/ms2_math-core//Spectra/GlobalAlignment.vb"
+﻿#Region "Microsoft.VisualBasic::1a64a9f68043a0621e28bc604c8e0fd2, E:/mzkit/src/mzmath/ms2_math-core//Spectra/GlobalAlignment.vb"
 
     ' Author:
     ' 

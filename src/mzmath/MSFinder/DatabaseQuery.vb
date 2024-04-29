@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::839ac4054a02e7189bca0eea1fc31dce, G:/mzkit/src/mzmath/MSFinder//DatabaseQuery.vb"
+﻿#Region "Microsoft.VisualBasic::839ac4054a02e7189bca0eea1fc31dce, E:/mzkit/src/mzmath/MSFinder//DatabaseQuery.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f427165eb1a764394544a9662052b54b, G:/mzkit/src/assembly/assembly//MarkupData/imzML/XML/ScanData/iPixelIntensity.vb"
+﻿#Region "Microsoft.VisualBasic::f427165eb1a764394544a9662052b54b, E:/mzkit/src/assembly/assembly//MarkupData/imzML/XML/ScanData/iPixelIntensity.vb"
 
     ' Author:
     ' 

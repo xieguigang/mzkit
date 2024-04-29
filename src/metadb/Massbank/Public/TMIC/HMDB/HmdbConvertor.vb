@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0f521114befbb371c8683f79a637282d, G:/mzkit/src/metadb/Massbank//Public/TMIC/HMDB/HmdbConvertor.vb"
+﻿#Region "Microsoft.VisualBasic::0f521114befbb371c8683f79a637282d, E:/mzkit/src/metadb/Massbank//Public/TMIC/HMDB/HmdbConvertor.vb"
 
     ' Author:
     ' 

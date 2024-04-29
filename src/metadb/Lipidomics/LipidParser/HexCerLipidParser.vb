@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fd0b7985cca300af860753f347830e74, G:/mzkit/src/metadb/Lipidomics//LipidParser/HexCerLipidParser.vb"
+﻿#Region "Microsoft.VisualBasic::fd0b7985cca300af860753f347830e74, E:/mzkit/src/metadb/Lipidomics//LipidParser/HexCerLipidParser.vb"
 
     ' Author:
     ' 

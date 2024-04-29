@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7b0c2ceaaac99dcb6a7e02b7f3cf08bd, G:/mzkit/src/metadb/Chemoinformatics//Formula/MS/Default/Ketones.vb"
+﻿#Region "Microsoft.VisualBasic::7b0c2ceaaac99dcb6a7e02b7f3cf08bd, E:/mzkit/src/metadb/Chemoinformatics//Formula/MS/Default/Ketones.vb"
 
     ' Author:
     ' 

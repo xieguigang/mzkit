@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c4c6b7be4b04b8f1cd9e57540bc5a362, G:/mzkit/src/assembly/assembly//mzPack/Stream/IMZPack.vb"
+﻿#Region "Microsoft.VisualBasic::c4c6b7be4b04b8f1cd9e57540bc5a362, E:/mzkit/src/assembly/assembly//mzPack/Stream/IMZPack.vb"
 
     ' Author:
     ' 

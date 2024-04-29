@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::646e38f1f11ed7c8b24bc304d455f910, G:/mzkit/src/assembly/Comprehensive//MsImaging/Metadata.vb"
+﻿#Region "Microsoft.VisualBasic::646e38f1f11ed7c8b24bc304d455f910, E:/mzkit/src/assembly/Comprehensive//MsImaging/Metadata.vb"
 
     ' Author:
     ' 

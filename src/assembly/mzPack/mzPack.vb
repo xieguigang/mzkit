@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::74bab324523bf91a0ee17ac99f19eda2, G:/mzkit/src/assembly/mzPack//mzPack.vb"
+﻿#Region "Microsoft.VisualBasic::74bab324523bf91a0ee17ac99f19eda2, E:/mzkit/src/assembly/mzPack//mzPack.vb"
 
     ' Author:
     ' 

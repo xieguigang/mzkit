@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::58e1e1ebed1a68af2d06066ca0ffbce3, G:/mzkit/src/metadb/Lipidomics//ChainParser/AcylChain.vb"
+﻿#Region "Microsoft.VisualBasic::58e1e1ebed1a68af2d06066ca0ffbce3, E:/mzkit/src/metadb/Lipidomics//ChainParser/AcylChain.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7d002fba8879b9c81986b5778ff43eb0, G:/mzkit/src/assembly/SpectrumTree//Query/TreeSearch.vb"
+﻿#Region "Microsoft.VisualBasic::3d0bddf079a8600fdb43a123509cef3d, E:/mzkit/src/assembly/SpectrumTree//Query/TreeSearch.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 178
     ' Comment Lines: 45
     '   Blank Lines: 38
-    '     File Size: 10.26 KB
+    '     File Size: 10.25 KB
 
 
     '     Class TreeSearch

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b2f1b03e35111b96fa17a84dbe0db847, G:/mzkit/src/assembly/NMRFidTool//Spectrum.vb"
+﻿#Region "Microsoft.VisualBasic::b2f1b03e35111b96fa17a84dbe0db847, E:/mzkit/src/assembly/NMRFidTool//Spectrum.vb"
 
     ' Author:
     ' 

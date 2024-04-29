@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d93c9c4d64c4c44ee65c5eda0d0eecdc, G:/mzkit/src/metadb/Massbank//Public/NCBI/MeSH/KnowledgeBackground.vb"
+﻿#Region "Microsoft.VisualBasic::d93c9c4d64c4c44ee65c5eda0d0eecdc, E:/mzkit/src/metadb/Massbank//Public/NCBI/MeSH/KnowledgeBackground.vb"
 
     ' Author:
     ' 

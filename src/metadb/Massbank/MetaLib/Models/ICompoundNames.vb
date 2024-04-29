@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3c83e21a89df04fecb0178ca368edb6a, G:/mzkit/src/metadb/Massbank//MetaLib/Models/ICompoundNames.vb"
+﻿#Region "Microsoft.VisualBasic::3c83e21a89df04fecb0178ca368edb6a, E:/mzkit/src/metadb/Massbank//MetaLib/Models/ICompoundNames.vb"
 
     ' Author:
     ' 

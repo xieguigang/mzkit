@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::da21caf56d494e4c15ad3503363299aa, G:/mzkit/src/mzmath/MoleculeNetworking//Tree/TreeCluster.vb"
+﻿#Region "Microsoft.VisualBasic::f0329227b7f9809af8f3bdeab5eb60ec, E:/mzkit/src/mzmath/MoleculeNetworking//Tree/TreeCluster.vb"
 
     ' Author:
     ' 
@@ -37,18 +37,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 91
-    '    Code Lines: 69
-    ' Comment Lines: 6
-    '   Blank Lines: 16
-    '     File Size: 3.19 KB
+    '   Total Lines: 112
+    '    Code Lines: 81
+    ' Comment Lines: 13
+    '   Blank Lines: 18
+    '     File Size: 3.93 KB
 
 
     ' Class TreeCluster
     ' 
     '     Properties: clusters, spectrum, tree
     ' 
-    '     Function: GetTree, ToString, Union
+    '     Function: GetTopCluster, GetTree, ToString, Union
     ' 
     '     Sub: GetTree
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::217ce15a5960e7da517b628fc36aa225, G:/mzkit/src/metadb/SMILES//test/My Project/AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::217ce15a5960e7da517b628fc36aa225, E:/mzkit/src/metadb/SMILES//test/My Project/AssemblyInfo.vb"
 
     ' Author:
     ' 

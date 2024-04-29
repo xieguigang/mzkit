@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::76c195ebee549485b2e67913549a72f7, G:/mzkit/src/assembly/assembly//MarkupData/imzML/XML/ScanData/IMSIPixel.vb"
+﻿#Region "Microsoft.VisualBasic::76c195ebee549485b2e67913549a72f7, E:/mzkit/src/assembly/assembly//MarkupData/imzML/XML/ScanData/IMSIPixel.vb"
 
     ' Author:
     ' 

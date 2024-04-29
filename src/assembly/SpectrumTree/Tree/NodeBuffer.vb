@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f32332c6af9dcf01711040f4ceb36b0f, G:/mzkit/src/assembly/SpectrumTree//Tree/NodeBuffer.vb"
+﻿#Region "Microsoft.VisualBasic::f32332c6af9dcf01711040f4ceb36b0f, E:/mzkit/src/assembly/SpectrumTree//Tree/NodeBuffer.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::18a75eaeaedc33e421b5ff81e18c0c62, G:/mzkit/src/metadb/Massbank//Public/TMIC/HMDB/MetaReference/BioSamples.vb"
+﻿#Region "Microsoft.VisualBasic::18a75eaeaedc33e421b5ff81e18c0c62, E:/mzkit/src/metadb/Massbank//Public/TMIC/HMDB/MetaReference/BioSamples.vb"
 
     ' Author:
     ' 

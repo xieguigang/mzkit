@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::558d04392a6deb1748c207e9acef0e6f, G:/mzkit/src/assembly/SignalReader//RamanSpectroscopy.vb"
+﻿#Region "Microsoft.VisualBasic::558d04392a6deb1748c207e9acef0e6f, E:/mzkit/src/assembly/SignalReader//RamanSpectroscopy.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::57b7990107997052ca389a13f2627fb1, G:/mzkit/src/assembly/mzPackExtensions//MSImaging/MSIRawPack.vb"
+﻿#Region "Microsoft.VisualBasic::57b7990107997052ca389a13f2627fb1, E:/mzkit/src/assembly/mzPackExtensions//MSImaging/MSIRawPack.vb"
 
     ' Author:
     ' 

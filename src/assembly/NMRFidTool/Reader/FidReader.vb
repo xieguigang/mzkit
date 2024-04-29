@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::526c2ac51a1f2585c18afd8b7d46d7da, G:/mzkit/src/assembly/NMRFidTool//Reader/FidReader.vb"
+﻿#Region "Microsoft.VisualBasic::526c2ac51a1f2585c18afd8b7d46d7da, E:/mzkit/src/assembly/NMRFidTool//Reader/FidReader.vb"
 
     ' Author:
     ' 

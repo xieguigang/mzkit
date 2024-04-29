@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::594c055a47562804db879c15ddcaa438, G:/mzkit/src/assembly/assembly//UnifyReader/IDataReader.vb"
+﻿#Region "Microsoft.VisualBasic::594c055a47562804db879c15ddcaa438, E:/mzkit/src/assembly/assembly//UnifyReader/IDataReader.vb"
 
     ' Author:
     ' 

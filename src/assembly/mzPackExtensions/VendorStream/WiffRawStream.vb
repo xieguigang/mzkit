@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::29fa623b784c7cc2d71039404991c645, G:/mzkit/src/assembly/mzPackExtensions//VendorStream/WiffRawStream.vb"
+﻿#Region "Microsoft.VisualBasic::29fa623b784c7cc2d71039404991c645, E:/mzkit/src/assembly/mzPackExtensions//VendorStream/WiffRawStream.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f48b7a5dd6264f4a5c3b60815e6b67cb, G:/mzkit/src/assembly/BrukerDataReader//XMass/pdata/pdata.vb"
+﻿#Region "Microsoft.VisualBasic::f48b7a5dd6264f4a5c3b60815e6b67cb, E:/mzkit/src/assembly/BrukerDataReader//XMass/pdata/pdata.vb"
 
     ' Author:
     ' 

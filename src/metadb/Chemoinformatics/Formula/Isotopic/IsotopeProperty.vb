@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8f3fa4851342b7d72a35d8f0547351d1, G:/mzkit/src/metadb/Chemoinformatics//Formula/Isotopic/IsotopeProperty.vb"
+﻿#Region "Microsoft.VisualBasic::8f3fa4851342b7d72a35d8f0547351d1, E:/mzkit/src/metadb/Chemoinformatics//Formula/Isotopic/IsotopeProperty.vb"
 
     ' Author:
     ' 

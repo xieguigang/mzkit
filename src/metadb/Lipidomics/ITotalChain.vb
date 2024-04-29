@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::173b28b10d4c00117909efae37947f91, G:/mzkit/src/metadb/Lipidomics//ITotalChain.vb"
+﻿#Region "Microsoft.VisualBasic::173b28b10d4c00117909efae37947f91, E:/mzkit/src/metadb/Lipidomics//ITotalChain.vb"
 
     ' Author:
     ' 

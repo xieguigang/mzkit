@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::73314f2473beb3b87b43f47d855134e3, G:/mzkit/src/assembly/ThermoRawFileReader//DataObjects/MRMMassRangeType.vb"
+﻿#Region "Microsoft.VisualBasic::73314f2473beb3b87b43f47d855134e3, E:/mzkit/src/assembly/ThermoRawFileReader//DataObjects/MRMMassRangeType.vb"
 
     ' Author:
     ' 

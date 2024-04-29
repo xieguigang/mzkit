@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cc2ef3d83a90c678b2e0aea385575bc5, G:/mzkit/src/visualize/MsImaging//Reader/ReadRawPack.vb"
+﻿#Region "Microsoft.VisualBasic::cc2ef3d83a90c678b2e0aea385575bc5, E:/mzkit/src/visualize/MsImaging//Reader/ReadRawPack.vb"
 
     ' Author:
     ' 

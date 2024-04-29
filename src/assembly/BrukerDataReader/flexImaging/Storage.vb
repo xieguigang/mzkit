@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ae1b00cffea5ae982526b574ae2a8d25, G:/mzkit/src/assembly/BrukerDataReader//flexImaging/Storage.vb"
+﻿#Region "Microsoft.VisualBasic::ae1b00cffea5ae982526b574ae2a8d25, E:/mzkit/src/assembly/BrukerDataReader//flexImaging/Storage.vb"
 
     ' Author:
     ' 

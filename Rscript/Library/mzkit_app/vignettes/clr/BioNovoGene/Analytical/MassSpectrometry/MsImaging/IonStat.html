@@ -30,12 +30,15 @@
             <code id="clr_ts">
 # namespace BioNovoGene.Analytical.MassSpectrometry.MsImaging
 export class IonStat {
+   # the average intensity value of current ion across all pixels
    averageIntensity: double;
    # the x axis position of the pixel which has the max intensity value of current ion layer
    basePixelX: integer;
    # the y axis position of the pixel which has the max intensity value of current ion layer
    basePixelY: integer;
+   # the average spatial density
    density: double;
+   # the max intensity value of current ion across all pixels
    maxIntensity: double;
    # Moran-I index value of current ion layer geometry data
    #  
@@ -52,12 +55,15 @@ export class IonStat {
    mzmin: double;
    # the description text of the mz range: mzmax - mzmin
    mzwidth: string;
-   # the average spatial density
+   # the total pixel number of current ion m/z occurs.
    pixels: integer;
    # the Moran-I test p-value
    pvalue: double;
+   # the intensity value of quartile Q1 level(25% quantile)
    Q1Intensity: double;
+   # the intensity value of quartile Q2 level(median value, 50% quantile)
    Q2Intensity: double;
+   # the intensity value of quartile Q3 level(75% quantile)
    Q3Intensity: double;
 }
 </code>

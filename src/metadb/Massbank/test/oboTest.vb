@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c2454f62df1a6d77424db9ff82d0149c, G:/mzkit/src/metadb/Massbank/test//oboTest.vb"
+﻿#Region "Microsoft.VisualBasic::c2454f62df1a6d77424db9ff82d0149c, E:/mzkit/src/metadb/Massbank/test//oboTest.vb"
 
     ' Author:
     ' 

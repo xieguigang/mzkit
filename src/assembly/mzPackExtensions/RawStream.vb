@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9b379da7bdebc546491e1aba73156021, G:/mzkit/src/assembly/mzPackExtensions//RawStream.vb"
+﻿#Region "Microsoft.VisualBasic::9b379da7bdebc546491e1aba73156021, E:/mzkit/src/assembly/mzPackExtensions//RawStream.vb"
 
     ' Author:
     ' 

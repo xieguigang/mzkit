@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c7ea2bc7bb1f2a05ea0cca459d12a6e8, G:/mzkit/src/metadb/SMILES//Language/ElementTypes.vb"
+﻿#Region "Microsoft.VisualBasic::c7ea2bc7bb1f2a05ea0cca459d12a6e8, E:/mzkit/src/metadb/SMILES//Language/ElementTypes.vb"
 
     ' Author:
     ' 

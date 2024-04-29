@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2a0e923b688e91a7d9bc9acce3e7bb4d, G:/mzkit/src/mzmath/MSFinder//FormulaResult.vb"
+﻿#Region "Microsoft.VisualBasic::2a0e923b688e91a7d9bc9acce3e7bb4d, E:/mzkit/src/mzmath/MSFinder//FormulaResult.vb"
 
     ' Author:
     ' 

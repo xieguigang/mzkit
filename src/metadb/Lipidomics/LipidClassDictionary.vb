@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::076c3b270f78b15554c88d09c13a92a7, G:/mzkit/src/metadb/Lipidomics//LipidClassDictionary.vb"
+﻿#Region "Microsoft.VisualBasic::076c3b270f78b15554c88d09c13a92a7, E:/mzkit/src/metadb/Lipidomics//LipidClassDictionary.vb"
 
     ' Author:
     ' 

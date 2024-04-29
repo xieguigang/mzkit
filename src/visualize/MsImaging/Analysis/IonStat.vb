@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6ca55bc3e0648ff841af39a6fd6442aa, G:/mzkit/src/visualize/MsImaging//Analysis/IonStat.vb"
+﻿#Region "Microsoft.VisualBasic::6ca55bc3e0648ff841af39a6fd6442aa, E:/mzkit/src/visualize/MsImaging//Analysis/IonStat.vb"
 
     ' Author:
     ' 
@@ -106,18 +106,32 @@ Public Class IonStat
     ''' <returns></returns>
     <Category("MSdata")> <DisplayName("mz.diff")>
     Public Property mzwidth As String
+
+    ''' <summary>
+    ''' the total pixel number of current ion m/z occurs.
+    ''' </summary>
+    ''' <returns></returns>
+    <Category("Spatial")> Public Property pixels As Integer
     ''' <summary>
     ''' the average spatial density
     ''' </summary>
     ''' <returns></returns>
-    <Category("Spatial")> Public Property pixels As Integer
     <Category("Spatial")>
     <TypeConverter(GetType(FormattedDoubleConverter)), FormattedDoubleFormatString("F2")>
     Public Property density As Double
 
+    ''' <summary>
+    ''' the max intensity value of current ion across all pixels
+    ''' </summary>
+    ''' <returns></returns>
     <Category("MSdata")> <DisplayName("max.into")>
     <TypeConverter(GetType(FormattedDoubleConverter)), FormattedDoubleFormatString("G5")>
     Public Property maxIntensity As Double
+
+    ''' <summary>
+    ''' the average intensity value of current ion across all pixels
+    ''' </summary>
+    ''' <returns></returns>
     <Category("MSdata")> <DisplayName("mean.into")>
     <TypeConverter(GetType(FormattedDoubleConverter)), FormattedDoubleFormatString("G5")>
     Public Property averageIntensity As Double
@@ -135,12 +149,24 @@ Public Class IonStat
     <DisplayName("basepeak.y")>
     <Category("Spatial")> Public Property basePixelY As Integer
 
+    ''' <summary>
+    ''' the intensity value of quartile Q1 level(25% quantile)
+    ''' </summary>
+    ''' <returns></returns>
     <Category("MSdata")> <DisplayName("intensity(Q1)")>
     <TypeConverter(GetType(FormattedDoubleConverter)), FormattedDoubleFormatString("G5")>
     Public Property Q1Intensity As Double
+    ''' <summary>
+    ''' the intensity value of quartile Q2 level(median value, 50% quantile)
+    ''' </summary>
+    ''' <returns></returns>
     <Category("MSdata")> <DisplayName("intensity(Q2)")>
     <TypeConverter(GetType(FormattedDoubleConverter)), FormattedDoubleFormatString("G5")>
     Public Property Q2Intensity As Double
+    ''' <summary>
+    ''' the intensity value of quartile Q3 level(75% quantile)
+    ''' </summary>
+    ''' <returns></returns>
     <Category("MSdata")> <DisplayName("intensity(Q3)")>
     <TypeConverter(GetType(FormattedDoubleConverter)), FormattedDoubleFormatString("G5")>
     Public Property Q3Intensity As Double
@@ -166,6 +192,15 @@ Public Class IonStat
     <TypeConverter(GetType(FormattedDoubleConverter)), FormattedDoubleFormatString("G4")>
     Public Property pvalue As Double
 
+    ''' <summary>
+    ''' extract the ion features from the pixel data collection
+    ''' </summary>
+    ''' <param name="allPixels"></param>
+    ''' <param name="nsize"></param>
+    ''' <param name="da"></param>
+    ''' <param name="mz"></param>
+    ''' <param name="parallel"></param>
+    ''' <returns></returns>
     Public Shared Function DoStat(allPixels As PixelScan(),
                                   Optional nsize As Integer = 5,
                                   Optional da As Double = 0.05,

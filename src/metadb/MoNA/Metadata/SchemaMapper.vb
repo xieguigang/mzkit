@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3b8e054c1179110fb2645e361ce9e24d, G:/mzkit/src/metadb/MoNA//Metadata/SchemaMapper.vb"
+﻿#Region "Microsoft.VisualBasic::3b8e054c1179110fb2645e361ce9e24d, E:/mzkit/src/metadb/MoNA//Metadata/SchemaMapper.vb"
 
     ' Author:
     ' 

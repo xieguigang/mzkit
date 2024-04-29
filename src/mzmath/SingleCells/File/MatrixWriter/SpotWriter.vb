@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ce308f21dd4d22b5596c9f85e0e95046, G:/mzkit/src/mzmath/SingleCells//File/MatrixWriter/SpotWriter.vb"
+﻿#Region "Microsoft.VisualBasic::ce308f21dd4d22b5596c9f85e0e95046, E:/mzkit/src/mzmath/SingleCells//File/MatrixWriter/SpotWriter.vb"
 
     ' Author:
     ' 
