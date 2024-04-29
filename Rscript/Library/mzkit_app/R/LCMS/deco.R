@@ -21,6 +21,9 @@ const run.Deconvolution = function(rawdata, outputdir = "./", mzdiff = 0.005,
     const xic_cache = `${outputdir}/XIC_data`;
     const files = list.files(rawdata, pattern = ["*.mzML", "*.mzXML", "*.mzPack"]);
 
+    print("run deconvolution for rawdata files:");
+    print(basename(files));
+
     # create temp data of ms1 XIC
     ms1_xic_bins(files, mzdiff = mzdiff, 
         outputdir = xic_cache, 
