@@ -95,6 +95,7 @@ Imports stdVector = Microsoft.VisualBasic.Math.LinearAlgebra.Vector
 ''' mass spectrometry data math toolkit
 ''' </summary>
 <Package("math", Category:=APICategories.UtilityTools, Publisher:="gg.xie@bionovogene.com")>
+<RTypeExport("spectrum_alignment", GetType(AlignmentOutput))>
 Module MzMath
 
     Sub New()
@@ -175,6 +176,14 @@ Module MzMath
         }
     End Function
 
+    ''' <summary>
+    ''' convert the spectrum alignment details as dataframe
+    ''' </summary>
+    ''' <param name="align"></param>
+    ''' <param name="args"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <RGenericOverloads("as.data.frame")>
     Private Function getAlignmentTable(align As AlignmentOutput, args As list, env As Environment) As dataframe
         Dim mz As Double() = align.alignments.Select(Function(a) a.mz).ToArray
         Dim query As Double() = align.alignments.Select(Function(a) a.query).ToArray
@@ -562,6 +571,17 @@ Module MzMath
         Return align
     End Function
 
+    ''' <summary>
+    ''' pairwise alignment of the spectrum peak set
+    ''' </summary>
+    ''' <param name="query">a spectrum set of the sample query input.</param>
+    ''' <param name="ref">a spectrum set of the reference library</param>
+    ''' <param name="tolerance">the ion m/z mass tolerance value for make the peak alignment</param>
+    ''' <param name="intocutoff">spectrum peak cutoff by relative intensity</param>
+    ''' <param name="env"></param>
+    ''' <returns>
+    ''' a collection of the <see cref="AlignmentOutput"/> from the pairwise alignment between the query and reference.
+    ''' </returns>
     <ExportAPI("cosine.pairwise")>
     <RApiReturn(GetType(AlignmentOutput))>
     Public Function cosine_pairwise(<RRawVectorArgument> query As Object, <RRawVectorArgument> ref As Object,
