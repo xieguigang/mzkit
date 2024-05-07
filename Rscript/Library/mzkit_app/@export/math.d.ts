@@ -74,9 +74,21 @@ declare namespace math {
    }
    module cosine {
       /**
-        * @param tolerance default value Is ``'da:0.3'``.
-        * @param intocutoff default value Is ``0.05``.
-        * @param env default value Is ``null``.
+       * pairwise alignment of the spectrum peak set
+       * 
+       * 
+        * @param query a spectrum set of the sample query input.
+        * @param ref a spectrum set of the reference library
+        * @param tolerance the ion m/z mass tolerance value for make the peak alignment
+        * 
+        * + default value Is ``'da:0.3'``.
+        * @param intocutoff spectrum peak cutoff by relative intensity
+        * 
+        * + default value Is ``0.05``.
+        * @param env -
+        * 
+        * + default value Is ``null``.
+        * @return a collection of the @``T:BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml.AlignmentOutput`` from the pairwise alignment between the query and reference.
       */
       function pairwise(query: any, ref: any, tolerance?: any, intocutoff?: number, env?: object): object;
    }
