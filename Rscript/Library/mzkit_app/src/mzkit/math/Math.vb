@@ -727,8 +727,11 @@ Module MzMath
     ''' profile and centroid in Mass Spectrometry?
     ''' 
     ''' 1. Profile means the continuous wave form in a mass spectrum.
+    ''' 
     '''   + Number of data points Is large.
+    '''   
     ''' 2. Centroid means the peaks in a profile data Is changed to bars.
+    ''' 
     '''   + location of the bar Is center of the profile peak.
     '''   + height of the bar Is area of the profile peak.
     '''   
@@ -748,6 +751,20 @@ Module MzMath
     ''' </returns>
     ''' <example>
     ''' print(centroid([452.7627 67.563 457.336 347.8 242.3], tolerance = "da:0.1"));
+    ''' # [1]      67.563   242.3    347.8    452.763  457.336 
+    ''' 
+    ''' let spec = data.frame(mz = [452.7627 67.563 457.336 347.8 242.3], 
+    '''    intensity = [312 4353 6664 6765 1119]);
+    '''    
+    ''' print(as.data.frame(spec));
+    ''' #              mz intensity                                                                                                                                                                                                           
+    ''' # --------------------------                                                                                                                                                                                                          
+    ''' # &lt;mode> &lt;Double> &lt;integer>                                                                                                                                                                                                        
+    ''' # [1, ]   452.763       312                                                                                                                                                                                                           
+    ''' # [2, ]    67.563      4353                                                                                                                                                                                                           
+    ''' # [3, ]   457.336      6664                                                                                                                                                                                                           
+    ''' # [4, ]     347.8      6765                                                                                                                                                                                                           
+    ''' # [5, ]     242.3      1119
     ''' </example>
     <ExportAPI("centroid")>
     <RApiReturn(GetType(PeakMs2), GetType(LibraryMatrix), GetType(Double))>
