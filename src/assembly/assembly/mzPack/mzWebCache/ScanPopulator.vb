@@ -187,7 +187,7 @@ Namespace mzData.mzWebCache
                 End If
 
                 ' adjust to 17 for make progress less verbose
-                If isMs1 AndAlso progress IsNot Nothing AndAlso CInt(i) Mod 17 = 0 Then
+                If isMs1 AndAlso progress IsNot Nothing AndAlso CInt(i) Mod 111 = 0 Then
                     Call progress(scanVal.scan_id)
                 End If
             Next
