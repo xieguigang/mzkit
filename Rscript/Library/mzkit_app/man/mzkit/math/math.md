@@ -10,7 +10,7 @@ mass spectrometry data math toolkit
 + [spectral_entropy](math/spectral_entropy.1) Search spectra with entropy similarity
 + [jaccardSet](math/jaccardSet.1) search spectrum via the jaccard index method
 + [cosine](math/cosine.1) Do evaluate the spectra cosine similarity score
-+ [cosine.pairwise](math/cosine.pairwise.1) 
++ [cosine.pairwise](math/cosine.pairwise.1) pairwise alignment of the spectrum peak set
 + [spectrum_tree.cluster](math/spectrum_tree.cluster.1) create spectrum tree cluster based on the spectrum to spectrum similarity comparison.
 + [cluster.nodes](math/cluster.nodes.1) get all nodes from the spectrum tree cluster result
 + [ions.unique](math/ions.unique.1) data pre-processing helper, make the spectra ion data unique

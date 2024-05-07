@@ -59,17 +59,39 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Linq
 
+''' <summary>
+''' a collection of the spectrum items that matched with the same exact mass value.
+''' </summary>
+''' <typeparam name="T"></typeparam>
 Public Class PeakQuery(Of T As IMS1Annotation)
 
+    ''' <summary>
+    ''' the exact mass value that multiple <see cref="peaks"/> spectrum data matched.
+    ''' </summary>
+    ''' <returns></returns>
     Public Property exactMass As Double
+    ''' <summary>
+    ''' a collection of the spectrum object, the precursor m/z value of 
+    ''' these spectrum object maybe different, but has the same exact 
+    ''' mass value in different precursor type computation result. 
+    ''' </summary>
+    ''' <returns></returns>
     Public Property peaks As T()
 
+    ''' <summary>
+    ''' the number of the <see cref="peaks"/> collection.
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property size As Integer
         Get
             Return peaks.TryCount
         End Get
     End Property
 
+    ''' <summary>
+    ''' a collection of the matched precursor type of the precursors
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property adducts As String()
         Get
             Return peaks _
@@ -79,6 +101,10 @@ Public Class PeakQuery(Of T As IMS1Annotation)
         End Get
     End Property
 
+    ''' <summary>
+    ''' a group of unqiue reference id of <see cref="peaks"/>.
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property id_group As String()
         Get
             Return peaks _

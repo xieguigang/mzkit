@@ -71,7 +71,7 @@
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 
 ''' <summary>
-''' 
+''' [mz, rt] tuple
 ''' </summary>
 Public Interface IMs1 : Inherits IRetentionTime
 
@@ -92,6 +92,9 @@ Public Interface IRetentionTime
 
 End Interface
 
+''' <summary>
+''' A time point related data
+''' </summary>
 Public Interface IRetentionIndex
 
     ''' <summary>

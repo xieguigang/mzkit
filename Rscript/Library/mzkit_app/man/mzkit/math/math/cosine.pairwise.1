@@ -1,13 +1,37 @@
 .\" man page create by R# package system.
 .TH MATH 4 2000-Jan "cosine.pairwise" "cosine.pairwise"
 .SH NAME
-cosine.pairwise \- 
+cosine.pairwise \- pairwise alignment of the spectrum peak set
 .SH SYNOPSIS
 \fIcosine.pairwise(\fBquery\fR as any, 
 \fBref\fR as any, 
 \fBtolerance\fR as any = "da:0.3", 
 \fBintocutoff\fR as double = 0.05, 
 [\fB<Environment>\fR]);\fR
+.SH DESCRIPTION
+.PP
+pairwise alignment of the spectrum peak set
+.PP
+.SH OPTIONS
+.PP
+\fBquery\fB \fR\- a spectrum set of the sample query input.. 
+.PP
+.PP
+\fBref\fB \fR\- a spectrum set of the reference library. 
+.PP
+.PP
+\fBtolerance\fB \fR\- the ion m/z mass tolerance value for make the peak alignment. 
+.PP
+.PP
+\fBintocutoff\fB \fR\- spectrum peak cutoff by relative intensity. 
+.PP
+.PP
+\fBenv\fB \fR\- -. 
+.PP
+.SH VALUE
+.PP
+a collection of the @\fBT:BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml.AlignmentOutput\fR from the pairwise alignment between the query and reference.
+.PP
 .SH SEE ALSO
 math
 .SH FILES

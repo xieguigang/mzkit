@@ -5,7 +5,7 @@
     <title>Converts profiles peak data to peak data in centroid mode.</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-    <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
+    <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
 </head>
 
 <body>
@@ -22,7 +22,7 @@
 
         <h3>Description</h3>
 
-        <p><br /> profile and centroid in Mass Spectrometry?<br /> <br /> 1. Profile means the continuous wave form in a mass spectrum.<br />   + Number of data points Is large.<br /> 2. Centroid means the peaks in a profile data Is changed to bars.<br />   + location of the bar Is center of the profile peak.<br />   + height of the bar Is area of the profile peak.</p>
+        <p><br /> profile and centroid in Mass Spectrometry?<br /> <br /> 1. Profile means the continuous wave form in a mass spectrum.<br /> <br />   + Number of data points Is large.<br />   <br /> 2. Centroid means the peaks in a profile data Is changed to bars.<br /> <br />   + location of the bar Is center of the profile peak.<br />   + height of the bar Is area of the profile peak.</p>
 
         <h3>Usage</h3>
 
@@ -64,7 +64,21 @@
 
         <h3 style="display: block;">Examples</h3>
 
-        <pre><code id="example_r"> print(centroid([452.7627 67.563 457.336 347.8 242.3], tolerance = "da:0.1"));</code></pre>
+        <pre><code id="example_r"> print(centroid([452.7627 67.563 457.336 347.8 242.3], tolerance = "da:0.1"));
+ # [1]      67.563   242.3    347.8    452.763  457.336 
+ 
+ let spec = data.frame(mz = [452.7627 67.563 457.336 347.8 242.3], 
+    intensity = [312 4353 6664 6765 1119]);
+    
+ print(as.data.frame(spec));
+ #              mz intensity                                                                                                                                                                                                           
+ # --------------------------                                                                                                                                                                                                          
+ # <mode> <Double> <integer>                                                                                                                                                                                                        
+ # [1, ]   452.763       312                                                                                                                                                                                                           
+ # [2, ]    67.563      4353                                                                                                                                                                                                           
+ # [3, ]   457.336      6664                                                                                                                                                                                                           
+ # [4, ]     347.8      6765                                                                                                                                                                                                           
+ # [5, ]     242.3      1119</code></pre>
 
         <hr />
         <div style="text-align: center;">[Package <em>math</em> version 1.0.0.0 <a
@@ -73,8 +87,8 @@
     </div>
 </body>
 
-<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
-<script type="text/javascript" src="../../_assets/highlights.js"></script>
+<script type="text/javascript" src="https://mzkit.org/assets/js/R_syntax.js"></script>
+<script type="text/javascript" src="https://mzkit.org/assets/js/highlights.js"></script>
 <script type="text/javascript">r_highlights("example_r");</script>
 
 </html>

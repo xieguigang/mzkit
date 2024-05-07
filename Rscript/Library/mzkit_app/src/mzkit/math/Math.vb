@@ -95,6 +95,7 @@ Imports stdVector = Microsoft.VisualBasic.Math.LinearAlgebra.Vector
 ''' mass spectrometry data math toolkit
 ''' </summary>
 <Package("math", Category:=APICategories.UtilityTools, Publisher:="gg.xie@bionovogene.com")>
+<RTypeExport("spectrum_alignment", GetType(AlignmentOutput))>
 Module MzMath
 
     Sub New()
@@ -175,6 +176,14 @@ Module MzMath
         }
     End Function
 
+    ''' <summary>
+    ''' convert the spectrum alignment details as dataframe
+    ''' </summary>
+    ''' <param name="align"></param>
+    ''' <param name="args"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <RGenericOverloads("as.data.frame")>
     Private Function getAlignmentTable(align As AlignmentOutput, args As list, env As Environment) As dataframe
         Dim mz As Double() = align.alignments.Select(Function(a) a.mz).ToArray
         Dim query As Double() = align.alignments.Select(Function(a) a.query).ToArray
@@ -562,6 +571,17 @@ Module MzMath
         Return align
     End Function
 
+    ''' <summary>
+    ''' pairwise alignment of the spectrum peak set
+    ''' </summary>
+    ''' <param name="query">a spectrum set of the sample query input.</param>
+    ''' <param name="ref">a spectrum set of the reference library</param>
+    ''' <param name="tolerance">the ion m/z mass tolerance value for make the peak alignment</param>
+    ''' <param name="intocutoff">spectrum peak cutoff by relative intensity</param>
+    ''' <param name="env"></param>
+    ''' <returns>
+    ''' a collection of the <see cref="AlignmentOutput"/> from the pairwise alignment between the query and reference.
+    ''' </returns>
     <ExportAPI("cosine.pairwise")>
     <RApiReturn(GetType(AlignmentOutput))>
     Public Function cosine_pairwise(<RRawVectorArgument> query As Object, <RRawVectorArgument> ref As Object,
@@ -707,8 +727,11 @@ Module MzMath
     ''' profile and centroid in Mass Spectrometry?
     ''' 
     ''' 1. Profile means the continuous wave form in a mass spectrum.
+    ''' 
     '''   + Number of data points Is large.
+    '''   
     ''' 2. Centroid means the peaks in a profile data Is changed to bars.
+    ''' 
     '''   + location of the bar Is center of the profile peak.
     '''   + height of the bar Is area of the profile peak.
     '''   
@@ -728,6 +751,20 @@ Module MzMath
     ''' </returns>
     ''' <example>
     ''' print(centroid([452.7627 67.563 457.336 347.8 242.3], tolerance = "da:0.1"));
+    ''' # [1]      67.563   242.3    347.8    452.763  457.336 
+    ''' 
+    ''' let spec = data.frame(mz = [452.7627 67.563 457.336 347.8 242.3], 
+    '''    intensity = [312 4353 6664 6765 1119]);
+    '''    
+    ''' print(as.data.frame(spec));
+    ''' #              mz intensity                                                                                                                                                                                                           
+    ''' # --------------------------                                                                                                                                                                                                          
+    ''' # &lt;mode> &lt;Double> &lt;integer>                                                                                                                                                                                                        
+    ''' # [1, ]   452.763       312                                                                                                                                                                                                           
+    ''' # [2, ]    67.563      4353                                                                                                                                                                                                           
+    ''' # [3, ]   457.336      6664                                                                                                                                                                                                           
+    ''' # [4, ]     347.8      6765                                                                                                                                                                                                           
+    ''' # [5, ]     242.3      1119
     ''' </example>
     <ExportAPI("centroid")>
     <RApiReturn(GetType(PeakMs2), GetType(LibraryMatrix), GetType(Double))>

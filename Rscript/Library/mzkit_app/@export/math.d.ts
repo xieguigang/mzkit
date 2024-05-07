@@ -18,8 +18,11 @@ declare namespace math {
     *  profile and centroid in Mass Spectrometry?
     *  
     *  1. Profile means the continuous wave form in a mass spectrum.
+    *  
     *    + Number of data points Is large.
+    *    
     *  2. Centroid means the peaks in a profile data Is changed to bars.
+    *  
     *    + location of the bar Is center of the profile peak.
     *    + height of the bar Is area of the profile peak.
     * 
@@ -74,9 +77,21 @@ declare namespace math {
    }
    module cosine {
       /**
-        * @param tolerance default value Is ``'da:0.3'``.
-        * @param intocutoff default value Is ``0.05``.
-        * @param env default value Is ``null``.
+       * pairwise alignment of the spectrum peak set
+       * 
+       * 
+        * @param query a spectrum set of the sample query input.
+        * @param ref a spectrum set of the reference library
+        * @param tolerance the ion m/z mass tolerance value for make the peak alignment
+        * 
+        * + default value Is ``'da:0.3'``.
+        * @param intocutoff spectrum peak cutoff by relative intensity
+        * 
+        * + default value Is ``0.05``.
+        * @param env -
+        * 
+        * + default value Is ``null``.
+        * @return a collection of the @``T:BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml.AlignmentOutput`` from the pairwise alignment between the query and reference.
       */
       function pairwise(query: any, ref: any, tolerance?: any, intocutoff?: number, env?: object): object;
    }
