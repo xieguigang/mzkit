@@ -22,7 +22,9 @@
 
         <h3>Description</h3>
 
-        
+        <p>A <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Ms1/PrecursorType/MzCalculator.html">MzCalculator</a> liked precursor m/z evaluation model.
+ 
+ This is the storage of adduct ion information.</p>
 
         <h3>Declare</h3>        
 
@@ -31,10 +33,12 @@
 # namespace BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
 export class AdductIon {
    AdductIonAccurateMass: double;
+   # the precursor adduct name, example as <code>[M+H]+</code>
    AdductIonName: string;
    AdductIonXmer: integer;
    ChargeNumber: integer;
    FormatCheck: boolean;
+   # false value for <code>[M]+</code> or <code>[M]-</code>.
    HasAdduct: boolean;
    IonMode: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Ms1/PrecursorType/IonModes.html">IonModes</a>;
    IsFA: boolean;
