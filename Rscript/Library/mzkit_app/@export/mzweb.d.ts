@@ -115,7 +115,7 @@ declare namespace mzweb {
      * @param env 
      * + default value Is ``null``.
    */
-   function ms1_scans(mzpack: object, mz?: number, tolerance?: any, env?: object): object;
+   function ms1_scans(mzpack: object, mz?: object, tolerance?: any, env?: object): object;
    /**
     * extract ms2 peaks data from the mzpack data object
     * 
