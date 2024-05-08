@@ -207,6 +207,11 @@ Public Class mzPack : Implements IMZPack
             .ToArray
     End Function
 
+    ''' <summary>
+    ''' get all ms1 scan data points
+    ''' </summary>
+    ''' <param name="centroid"></param>
+    ''' <returns></returns>
     Public Function GetAllScanMs1(Optional centroid As Tolerance = Nothing) As IEnumerable(Of ms1_scan)
         If Not centroid Is Nothing Then
             Return MS.GetAllCentroidScanMs1(centroid)

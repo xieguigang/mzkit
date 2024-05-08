@@ -86,7 +86,6 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Components.Interface
-Imports SMRUCC.Rsharp.Runtime.Internal.Invokes
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
@@ -100,7 +99,23 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader
 ''' biodeep mzweb data viewer raw data file helper
 ''' </summary>
 <Package("mzweb")>
+<RTypeExport("ms1_data", GetType(ms1_scan))>
 Module MzWeb
+
+    Sub Main()
+        Call Internal.Object.Converts.makeDataframe.addHandler(GetType(ms1_scan()), AddressOf getMs1PointTable)
+    End Sub
+
+    <RGenericOverloads("as.data.frame")>
+    Public Function getMs1PointTable(data As ms1_scan(), args As list, env As Environment) As dataframe
+        Dim df As New dataframe With {.columns = New Dictionary(Of String, Array)}
+
+        Call df.add("mz", data.Select(Function(i) i.mz))
+        Call df.add("scan_time", data.Select(Function(i) i.scan_time))
+        Call df.add("intensity", data.Select(Function(i) i.intensity))
+
+        Return df
+    End Function
 
     ''' <summary>
     ''' load the xcms cache dataset
@@ -588,10 +603,41 @@ Module MzWeb
     ''' let rawdata = open.mzpack(file = "./rawdata.mzPack");
     ''' let ms1 = rawdata |> ms1_scans();
     ''' 
+    ''' # get xic liked data
+    ''' let xic = rawdata |> ms1_scans(mz = 999.0911, tolerance = "da:0.01");
+    ''' let mz_vec = [xic]::mz;
+    ''' 
+    ''' print(as.data.frame(xic));
+    ''' 
+    ''' bitmap(file = "./mz_histogram.png") {
+    '''     plot(hist(mz_vec));
+    ''' }
     ''' </example>
     <ExportAPI("ms1_scans")>
-    Public Function Ms1ScanPoints(mzpack As mzPack) As ms1_scan()
-        Return mzpack.GetAllScanMs1.ToArray
+    <RApiReturn(GetType(ms1_scan))>
+    Public Function Ms1ScanPoints(mzpack As mzPack,
+                                  Optional mz As Double? = Nothing,
+                                  Optional tolerance As Object = "ppm:20",
+                                  Optional env As Environment = Nothing) As Object
+
+        Dim mzdiff = Math.getTolerance(tolerance, env, [default]:="ppm:20")
+
+        If mzdiff Like GetType(Message) Then
+            Return mzdiff.TryCast(Of Message)
+        End If
+
+        If mz Is Nothing Then
+            Return mzpack.GetAllScanMs1.ToArray
+        Else
+            Dim mzVal As Double = mz
+            Dim err As Tolerance = mzdiff.TryCast(Of Tolerance)
+            Dim xic As ms1_scan() = mzpack.GetAllScanMs1 _
+                .AsParallel _
+                .Where(Function(i) err(i.mz, mzVal)) _
+                .ToArray
+
+            Return xic
+        End If
     End Function
 
     ''' <summary>

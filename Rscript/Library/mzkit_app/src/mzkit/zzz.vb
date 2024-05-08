@@ -73,6 +73,7 @@ Public Class zzz
         Call Massbank.Main()
         Call Mummichog.Main()
         Call PubChemToolKit.Main()
+        Call MzWeb.Main()
 
         Call data.Main()
         Call MSI.Main()
