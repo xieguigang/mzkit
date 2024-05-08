@@ -108,8 +108,14 @@ declare namespace mzweb {
     * 
     * 
      * @param mzpack -
+     * @param mz 
+     * + default value Is ``null``.
+     * @param tolerance 
+     * + default value Is ``'ppm:20'``.
+     * @param env 
+     * + default value Is ``null``.
    */
-   function ms1_scans(mzpack: object): object;
+   function ms1_scans(mzpack: object, mz?: number, tolerance?: any, env?: object): object;
    /**
     * extract ms2 peaks data from the mzpack data object
     * 

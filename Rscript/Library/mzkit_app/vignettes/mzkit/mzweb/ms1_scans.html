@@ -27,7 +27,9 @@
         <h3>Usage</h3>
 
         <div style="width: 100%; padding-left: 3%; color: black;">
-            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>ms1_scans</strong>(<i>mzpack</i>);</code></pre>
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>ms1_scans</strong>(<i>mzpack</i>,
+    <i>mz</i> = <span style='color: blue !important;'>NULL</span>,
+    <i>tolerance</i> = <span style='color: brown;'><strong>"ppm:20"</strong></span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
@@ -50,12 +52,22 @@
 
         <h3>Value</h3>
 
-        this function returns data object of type <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/ms1_scan.html">ms1_scan[]</a>.<h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/ms1_scan.html">ms1_scan[]</a></li></ul>
+        this function returns data object of type <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/ms1_scan.html">ms1_scan</a>.<h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/ms1_scan.html">ms1_scan</a></li></ul>
 
         <h3 style="display: block;">Examples</h3>
 
         <pre><code id="example_r"> let rawdata = open.mzpack(file = "./rawdata.mzPack");
- let ms1 = rawdata |> ms1_scans();</code></pre>
+ let ms1 = rawdata |> ms1_scans();
+ 
+ # get xic liked data
+ let xic = rawdata |> ms1_scans(mz = 999.0911, tolerance = "da:0.01");
+ let mz_vec = [xic]::mz;
+ 
+ print(as.data.frame(xic));
+ 
+ bitmap(file = "./mz_histogram.png") {
+     plot(hist(mz_vec));
+ }</code></pre>
 
         <hr />
         <div style="text-align: center;">[Package <em>mzweb</em> version 1.0.0.0 <a
