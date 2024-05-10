@@ -124,7 +124,7 @@ Public Class Peaktable
     Public Property formula As String
 
     Public Overrides Function ToString() As String
-        Dim display As String = $"#{scan} {mz}@{rt}_{ionization}_{energy}V"
+        Dim display As String = $"#{scan} {mass}@{rt}_{ionization}_{energy}V"
 
         If annotation.StringEmpty Then
             Return display

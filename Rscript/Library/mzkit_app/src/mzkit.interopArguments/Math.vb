@@ -173,16 +173,16 @@ Module Math
         Return id _
             .Select(Function(uid, i)
                         Return New PeakMs1 With {
-                            .mz = mz(i),
+                            .mass = mz(i),
                             .rt = rt(i),
-                            .name = id(i),
+                            .id = id(i),
                             .scan = scan(i),
                             .rtmin = rtmin.ElementAtOrDefault(i, .rt),
                             .rtmax = rtmax.ElementAtOrDefault(i, .rt),
                             .into = area.ElementAtOrDefault(i),
                             .maxo = maxinto.ElementAtOrDefault(i),
-                            .mzmin = mzmin.ElementAtOrDefault(i, .mz),
-                            .mzmax = mzmax.ElementAtOrDefault(i, .mz)
+                            .mzmin = mzmin.ElementAtOrDefault(i, .mass),
+                            .mzmax = mzmax.ElementAtOrDefault(i, .mass)
                         }
                     End Function) _
             .ToArray
