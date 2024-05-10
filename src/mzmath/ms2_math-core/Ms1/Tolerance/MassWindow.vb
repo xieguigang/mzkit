@@ -65,6 +65,9 @@ Imports std = System.Math
 
 Namespace Ms1
 
+    ''' <summary>
+    ''' an abstract mass window model
+    ''' </summary>
     Public Interface IMassBin
 
         Property mass As Double
