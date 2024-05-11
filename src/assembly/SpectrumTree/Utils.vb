@@ -88,7 +88,7 @@ Public Module Utils
                 .sn = 1,
                 .energy = "NA",
                 .ionization = "HCD",
-                .mz = mzi.Average(Function(a) a.mz),
+                .mass = mzi.Average(Function(a) a.mz),
                 .mzmax = mzi.Select(Function(a) a.mz).Max,
                 .mzmin = mzi.Select(Function(a) a.mz).Min
             }

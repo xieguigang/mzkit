@@ -177,7 +177,7 @@ Namespace MarkupData.mzXML
                                                 .scan = scan.num,
                                                 .rt = rt,
                                                 .sample = sample,
-                                                .mz = mz.mz,
+                                                .mass = mz.mz,
                                                 .into = mz.intensity,
                                                 .energy = scan.collisionEnergy
                                             }

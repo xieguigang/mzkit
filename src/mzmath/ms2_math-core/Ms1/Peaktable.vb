@@ -78,8 +78,9 @@ Public Class Peaktable
     ''' <remarks>
     ''' xcms_id
     ''' </remarks>
-    Public Property name As String Implements IMS1Annotation.Key
-    Public Property mz As Double Implements IMs1.mz, IMassBin.mass
+    Public Property id As String Implements IMS1Annotation.Key
+    Public Property name As String
+    Public Property mass As Double Implements IMs1.mz, IMassBin.mass
     Public Property mzmin As Double Implements IMassBin.min
     Public Property mzmax As Double Implements IMassBin.max
     Public Property rt As Double Implements IMs1.rt
@@ -114,10 +115,16 @@ Public Class Peaktable
     ''' <returns></returns>
     Public Property ionization As String
     Public Property energy As String
+
+    ''' <summary>
+    ''' the precursor adducts
+    ''' </summary>
+    ''' <returns></returns>
     Public Property annotation As String Implements IMS1Annotation.precursor_type
+    Public Property formula As String
 
     Public Overrides Function ToString() As String
-        Dim display As String = $"#{scan} {mz}@{rt}_{ionization}_{energy}V"
+        Dim display As String = $"#{scan} {mass}@{rt}_{ionization}_{energy}V"
 
         If annotation.StringEmpty Then
             Return display

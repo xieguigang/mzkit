@@ -182,7 +182,7 @@ Public Class PeakCorrelation
             .into = peak.into,
             .ionization = peak.ionization,
             .maxo = peak.maxo,
-            .mz = peak.mz,
+            .mass = peak.mass,
             .mzmax = peak.mzmax,
             .mzmin = peak.mzmin,
             .name = peak.name,
@@ -246,8 +246,8 @@ Public Class PeakCorrelation
 
         Dim peakList As Peaktable() = (From d As Peaktable
                                        In peaktable
-                                       Where d.mz > 0
-                                       Order By d.mz).ToArray
+                                       Where d.mass > 0
+                                       Order By d.mass).ToArray
 
         Return FindExactMass(peakList, ms1_isotopic, ms1_adducts, deltaRt, mzdiff)
     End Function

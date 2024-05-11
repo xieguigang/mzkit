@@ -133,7 +133,7 @@ Namespace PackLib.Validation
                         .annotation = mset.Key,
                         .name = mset.Key & $"_{++n}",
                         .index = ++i,
-                        .mz = mz.Average,
+                        .mass = mz.Average,
                         .maxo = 0,
                         .energy = "NA",
                         .intb = 0,
