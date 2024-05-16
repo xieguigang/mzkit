@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::18e623ae8520f40da9aba24bc2e5ac29, E:/mzkit/src/visualize/plot//PeakAssign.vb"
+﻿#Region "Microsoft.VisualBasic::18e623ae8520f40da9aba24bc2e5ac29, visualize\plot\PeakAssign.vb"
 
     ' Author:
     ' 

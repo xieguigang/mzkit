@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9624b1af122078fa3f61d437451b4328, E:/mzkit/src/visualize/MsImaging//Blender/Scaler/Scaler.vb"
+﻿#Region "Microsoft.VisualBasic::9624b1af122078fa3f61d437451b4328, visualize\MsImaging\Blender\Scaler\Scaler.vb"
 
     ' Author:
     ' 

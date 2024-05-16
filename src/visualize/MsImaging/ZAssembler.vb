@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::df70e485f4d7e354f2af2af11c621ca7, E:/mzkit/src/visualize/MsImaging//ZAssembler.vb"
+﻿#Region "Microsoft.VisualBasic::df70e485f4d7e354f2af2af11c621ca7, visualize\MsImaging\ZAssembler.vb"
 
     ' Author:
     ' 

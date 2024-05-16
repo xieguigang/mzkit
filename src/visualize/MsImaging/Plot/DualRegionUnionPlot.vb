@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0fe847c6a3580066863edd13a259e4d3, E:/mzkit/src/visualize/MsImaging//Plot/DualRegionUnionPlot.vb"
+﻿#Region "Microsoft.VisualBasic::0fe847c6a3580066863edd13a259e4d3, visualize\MsImaging\Plot\DualRegionUnionPlot.vb"
 
     ' Author:
     ' 

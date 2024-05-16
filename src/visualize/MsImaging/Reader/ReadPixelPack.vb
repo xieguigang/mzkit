@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9c65f6ceebeb1170f599c2ac8fe5e013, E:/mzkit/src/visualize/MsImaging//Reader/ReadPixelPack.vb"
+﻿#Region "Microsoft.VisualBasic::9c65f6ceebeb1170f599c2ac8fe5e013, visualize\MsImaging\Reader\ReadPixelPack.vb"
 
     ' Author:
     ' 

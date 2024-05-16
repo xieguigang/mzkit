@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5511a83f7494b772e00409b9ddb50c23, E:/mzkit/src/visualize/plot//NMR/fidDataPlot.vb"
+﻿#Region "Microsoft.VisualBasic::5511a83f7494b772e00409b9ddb50c23, visualize\plot\NMR\fidDataPlot.vb"
 
     ' Author:
     ' 

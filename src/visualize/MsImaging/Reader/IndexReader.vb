@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d53b019ded8f4a481e6804b6d5d8ccee, E:/mzkit/src/visualize/MsImaging//Reader/IndexReader.vb"
+﻿#Region "Microsoft.VisualBasic::d53b019ded8f4a481e6804b6d5d8ccee, visualize\MsImaging\Reader\IndexReader.vb"
 
     ' Author:
     ' 

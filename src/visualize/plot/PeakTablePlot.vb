@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::62452009c45301cf387ce9171db48a2a, E:/mzkit/src/visualize/plot//PeakTablePlot.vb"
+﻿#Region "Microsoft.VisualBasic::62452009c45301cf387ce9171db48a2a, visualize\plot\PeakTablePlot.vb"
 
     ' Author:
     ' 

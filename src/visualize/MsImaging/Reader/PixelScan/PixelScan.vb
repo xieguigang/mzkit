@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::48d3f5653ed3177f0ace253d68db5b2e, E:/mzkit/src/visualize/MsImaging//Reader/PixelScan/PixelScan.vb"
+﻿#Region "Microsoft.VisualBasic::48d3f5653ed3177f0ace253d68db5b2e, visualize\MsImaging\Reader\PixelScan\PixelScan.vb"
 
     ' Author:
     ' 

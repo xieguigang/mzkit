@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aaac8c1ccea0017d5165871ba5e67d65, E:/mzkit/src/visualize/MsImaging//Blender/MzLayerColorSet.vb"
+﻿#Region "Microsoft.VisualBasic::aaac8c1ccea0017d5165871ba5e67d65, visualize\MsImaging\Blender\MzLayerColorSet.vb"
 
     ' Author:
     ' 

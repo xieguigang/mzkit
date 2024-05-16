@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9bf5496e818ffbf0f1de58fef1b61128, E:/mzkit/src/visualize/MsImaging//Blender/Renderer/RGBConfigs.vb"
+﻿#Region "Microsoft.VisualBasic::9bf5496e818ffbf0f1de58fef1b61128, visualize\MsImaging\Blender\Renderer\RGBConfigs.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ddfaaf622294d243d7e93bba787158c0, E:/mzkit/src/visualize/MsImaging//Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::ddfaaf622294d243d7e93bba787158c0, visualize\MsImaging\Extensions.vb"
 
     ' Author:
     ' 

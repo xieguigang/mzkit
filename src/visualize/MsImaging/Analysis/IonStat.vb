@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6ca55bc3e0648ff841af39a6fd6442aa, E:/mzkit/src/visualize/MsImaging//Analysis/IonStat.vb"
+﻿#Region "Microsoft.VisualBasic::acb455ae94dac6e8d01d93e94bcadf70, visualize\MsImaging\Analysis\IonStat.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 340
+    '   Total Lines: 375
     '    Code Lines: 227
-    ' Comment Lines: 74
-    '   Blank Lines: 39
-    '     File Size: 14.21 KB
+    ' Comment Lines: 107
+    '   Blank Lines: 41
+    '     File Size: 15.35 KB
 
 
     ' Class IonStat

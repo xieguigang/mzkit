@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::986303da82bbfd379fea4893065c43e7, E:/mzkit/src/visualize/plot//PlotMassWindow.vb"
+﻿#Region "Microsoft.VisualBasic::986303da82bbfd379fea4893065c43e7, visualize\plot\PlotMassWindow.vb"
 
     ' Author:
     ' 

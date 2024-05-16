@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::375070b5936b6e194acd2fee6f537e91, E:/mzkit/src/visualize/MsImaging//IndexedCache/XICPackWriter.vb"
+﻿#Region "Microsoft.VisualBasic::375070b5936b6e194acd2fee6f537e91, visualize\MsImaging\IndexedCache\XICPackWriter.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4174d0919e3bbc85b1ae30b5bfd9c757, E:/mzkit/src/visualize/MsImaging//Blender/Scaler/QuantileScaler.vb"
+﻿#Region "Microsoft.VisualBasic::4174d0919e3bbc85b1ae30b5bfd9c757, visualize\MsImaging\Blender\Scaler\QuantileScaler.vb"
 
     ' Author:
     ' 

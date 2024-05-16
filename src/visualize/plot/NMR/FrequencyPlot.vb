@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c5e7e5c946bafe709ea88bfac708bd10, E:/mzkit/src/visualize/plot//NMR/FrequencyPlot.vb"
+﻿#Region "Microsoft.VisualBasic::c5e7e5c946bafe709ea88bfac708bd10, visualize\plot\NMR\FrequencyPlot.vb"
 
     ' Author:
     ' 

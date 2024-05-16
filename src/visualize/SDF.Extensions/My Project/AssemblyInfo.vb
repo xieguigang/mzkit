@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::877a803e8e5e93416504b9f17c9e3622, E:/mzkit/src/visualize/SDF.Extensions//My Project/AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::877a803e8e5e93416504b9f17c9e3622, visualize\SDF.Extensions\My Project\AssemblyInfo.vb"
 
     ' Author:
     ' 
