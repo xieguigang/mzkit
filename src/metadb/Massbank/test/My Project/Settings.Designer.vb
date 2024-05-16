@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eb6c369b27c8a0f374dde9e73a6cef0a, E:/mzkit/src/metadb/Massbank/test//My Project/Settings.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::eb6c369b27c8a0f374dde9e73a6cef0a, metadb\Massbank\test\My Project\Settings.Designer.vb"
 
     ' Author:
     ' 

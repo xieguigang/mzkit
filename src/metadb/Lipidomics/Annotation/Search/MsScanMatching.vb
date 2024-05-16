@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::360d0e1e89ec2140e817e247e33e436d, E:/mzkit/src/metadb/Lipidomics//Annotation/Search/MsScanMatching.vb"
+﻿#Region "Microsoft.VisualBasic::360d0e1e89ec2140e817e247e33e436d, metadb\Lipidomics\Annotation\Search\MsScanMatching.vb"
 
     ' Author:
     ' 

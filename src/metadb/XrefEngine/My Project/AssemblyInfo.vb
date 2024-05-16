@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a2cff72161911b773d7d82cbf7274d91, E:/mzkit/src/metadb/XrefEngine//My Project/AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::a2cff72161911b773d7d82cbf7274d91, metadb\XrefEngine\My Project\AssemblyInfo.vb"
 
     ' Author:
     ' 

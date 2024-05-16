@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1f4feed3807f6b1aa71b88dd27f91a67, E:/mzkit/src/metadb/Lipidomics//MsCharacterization/SHexCerEadMsCharacterization.vb"
+﻿#Region "Microsoft.VisualBasic::1f4feed3807f6b1aa71b88dd27f91a67, metadb\Lipidomics\MsCharacterization\SHexCerEadMsCharacterization.vb"
 
     ' Author:
     ' 

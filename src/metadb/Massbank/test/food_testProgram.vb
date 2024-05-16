@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0573a25d0345577aecf5f74eacb35120, E:/mzkit/src/metadb/Massbank/test//food_testProgram.vb"
+﻿#Region "Microsoft.VisualBasic::0573a25d0345577aecf5f74eacb35120, metadb\Massbank\test\food_testProgram.vb"
 
     ' Author:
     ' 

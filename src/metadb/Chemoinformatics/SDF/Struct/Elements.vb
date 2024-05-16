@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::84f55f675a27cc1588a459e713be5b35, E:/mzkit/src/metadb/Chemoinformatics//SDF/Struct/Elements.vb"
+﻿#Region "Microsoft.VisualBasic::84f55f675a27cc1588a459e713be5b35, metadb\Chemoinformatics\SDF\Struct\Elements.vb"
 
     ' Author:
     ' 

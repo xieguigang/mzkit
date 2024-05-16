@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::531ad7dff0a5f9a658ceee99def95b36, E:/mzkit/src/metadb/Chemoinformatics//Formula/FormalCharge.vb"
+﻿#Region "Microsoft.VisualBasic::531ad7dff0a5f9a658ceee99def95b36, metadb\Chemoinformatics\Formula\FormalCharge.vb"
 
     ' Author:
     ' 

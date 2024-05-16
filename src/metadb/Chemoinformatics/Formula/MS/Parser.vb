@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d512084251c4ca0a2c11285b43d95f30, E:/mzkit/src/metadb/Chemoinformatics//Formula/MS/Parser.vb"
+﻿#Region "Microsoft.VisualBasic::d512084251c4ca0a2c11285b43d95f30, metadb\Chemoinformatics\Formula\MS\Parser.vb"
 
     ' Author:
     ' 

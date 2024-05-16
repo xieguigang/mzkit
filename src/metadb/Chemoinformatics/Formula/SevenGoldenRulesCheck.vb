@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::507d64108a249c4e02655174ccdf03f4, E:/mzkit/src/metadb/Chemoinformatics//Formula/SevenGoldenRulesCheck.vb"
+﻿#Region "Microsoft.VisualBasic::507d64108a249c4e02655174ccdf03f4, metadb\Chemoinformatics\Formula\SevenGoldenRulesCheck.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9326f4356587219b01e932fcda406536, E:/mzkit/src/metadb/Lipidomics//ILipidGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::9326f4356587219b01e932fcda406536, metadb\Lipidomics\ILipidGenerator.vb"
 
     ' Author:
     ' 

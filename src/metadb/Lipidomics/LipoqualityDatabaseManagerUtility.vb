@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ba2e03c277e0819f16ef981a65e7374c, E:/mzkit/src/metadb/Lipidomics//LipoqualityDatabaseManagerUtility.vb"
+﻿#Region "Microsoft.VisualBasic::ba2e03c277e0819f16ef981a65e7374c, metadb\Lipidomics\LipoqualityDatabaseManagerUtility.vb"
 
     ' Author:
     ' 

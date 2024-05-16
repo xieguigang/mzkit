@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::50f0e5d7a5ba9a7fb690a76174492a43, E:/mzkit/src/metadb/Lipidomics//Annotation/Lipidomics.vb"
+﻿#Region "Microsoft.VisualBasic::50f0e5d7a5ba9a7fb690a76174492a43, metadb\Lipidomics\Annotation\Lipidomics.vb"
 
     ' Author:
     ' 

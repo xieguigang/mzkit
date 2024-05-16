@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::146c86f00a2fee256597c35fd3dae058, E:/mzkit/src/metadb/Massbank//Statistics.vb"
+﻿#Region "Microsoft.VisualBasic::146c86f00a2fee256597c35fd3dae058, metadb\Massbank\Statistics.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::41a0fdf0c9d9877a4595893129b6a4f8, E:/mzkit/src/metadb/Massbank//Public/TMIC/MarkerDB/DataSet.vb"
+﻿#Region "Microsoft.VisualBasic::41a0fdf0c9d9877a4595893129b6a4f8, metadb\Massbank\Public\TMIC\MarkerDB\DataSet.vb"
 
     ' Author:
     ' 

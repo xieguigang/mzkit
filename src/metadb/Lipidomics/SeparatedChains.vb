@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8fd9649d59b2d304c63510c3f53f44a1, E:/mzkit/src/metadb/Lipidomics//SeparatedChains.vb"
+﻿#Region "Microsoft.VisualBasic::8fd9649d59b2d304c63510c3f53f44a1, metadb\Lipidomics\SeparatedChains.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b311214792a54c347589c8b9e3ea993b, E:/mzkit/src/metadb/Chemoinformatics/test//PeakAnnotations.vb"
+﻿#Region "Microsoft.VisualBasic::b311214792a54c347589c8b9e3ea993b, metadb\Chemoinformatics\test\PeakAnnotations.vb"
 
     ' Author:
     ' 

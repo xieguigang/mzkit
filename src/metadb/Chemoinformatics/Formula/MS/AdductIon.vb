@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cbf228eaf6374fe6845a1f76c772cfbb, E:/mzkit/src/metadb/Chemoinformatics//Formula/MS/AdductIon.vb"
+﻿#Region "Microsoft.VisualBasic::cbf228eaf6374fe6845a1f76c772cfbb, metadb\Chemoinformatics\Formula\MS\AdductIon.vb"
 
     ' Author:
     ' 

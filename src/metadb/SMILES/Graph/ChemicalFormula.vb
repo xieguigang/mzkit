@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1bdd6bff2691d86c2297e4d741eb99df, E:/mzkit/src/metadb/SMILES//Graph/ChemicalFormula.vb"
+﻿#Region "Microsoft.VisualBasic::1bdd6bff2691d86c2297e4d741eb99df, metadb\SMILES\Graph\ChemicalFormula.vb"
 
     ' Author:
     ' 

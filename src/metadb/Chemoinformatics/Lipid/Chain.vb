@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8e62a5c29beb44e7f56119b91c90ff54, E:/mzkit/src/metadb/Chemoinformatics//Lipid/Chain.vb"
+﻿#Region "Microsoft.VisualBasic::8e62a5c29beb44e7f56119b91c90ff54, metadb\Chemoinformatics\Lipid\Chain.vb"
 
     ' Author:
     ' 

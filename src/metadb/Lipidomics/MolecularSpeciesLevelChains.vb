@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::af28b83f56ffde37916405be8b41f257, E:/mzkit/src/metadb/Lipidomics//MolecularSpeciesLevelChains.vb"
+﻿#Region "Microsoft.VisualBasic::af28b83f56ffde37916405be8b41f257, metadb\Lipidomics\MolecularSpeciesLevelChains.vb"
 
     ' Author:
     ' 

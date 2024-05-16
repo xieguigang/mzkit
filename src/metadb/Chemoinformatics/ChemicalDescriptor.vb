@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6fc8d4f241a4da1c2e3c343a0201fad7, E:/mzkit/src/metadb/Chemoinformatics//ChemicalDescriptor.vb"
+﻿#Region "Microsoft.VisualBasic::6fc8d4f241a4da1c2e3c343a0201fad7, metadb\Chemoinformatics\ChemicalDescriptor.vb"
 
     ' Author:
     ' 

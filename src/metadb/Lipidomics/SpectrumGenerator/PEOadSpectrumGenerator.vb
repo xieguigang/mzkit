@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2c8cc366e516faa0d670f4d70b2e96a1, E:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/PEOadSpectrumGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::2c8cc366e516faa0d670f4d70b2e96a1, metadb\Lipidomics\SpectrumGenerator\PEOadSpectrumGenerator.vb"
 
     ' Author:
     ' 

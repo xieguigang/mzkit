@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::54ef42fb96594b9b010bd6984d49d150, E:/mzkit/src/metadb/MoNA//test/My Project/AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::54ef42fb96594b9b010bd6984d49d150, metadb\MoNA\test\My Project\AssemblyInfo.vb"
 
     ' Author:
     ' 

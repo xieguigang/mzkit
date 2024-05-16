@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b2a448d940302d499324c683aaa9c2ab, E:/mzkit/src/metadb/Chemoinformatics//My Project/Settings.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::b2a448d940302d499324c683aaa9c2ab, metadb\Chemoinformatics\My Project\Settings.Designer.vb"
 
     ' Author:
     ' 

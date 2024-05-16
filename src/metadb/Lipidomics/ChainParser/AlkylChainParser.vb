@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::92b11762819af8ac468fb4b6acd2a9bc, E:/mzkit/src/metadb/Lipidomics//ChainParser/AlkylChainParser.vb"
+﻿#Region "Microsoft.VisualBasic::92b11762819af8ac468fb4b6acd2a9bc, metadb\Lipidomics\ChainParser\AlkylChainParser.vb"
 
     ' Author:
     ' 

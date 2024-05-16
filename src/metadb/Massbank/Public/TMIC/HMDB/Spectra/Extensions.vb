@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c7acd1fca07ca818b052ada1ce50211e, E:/mzkit/src/metadb/Massbank//Public/TMIC/HMDB/Spectra/Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::c7acd1fca07ca818b052ada1ce50211e, metadb\Massbank\Public\TMIC\HMDB\Spectra\Extensions.vb"
 
     ' Author:
     ' 

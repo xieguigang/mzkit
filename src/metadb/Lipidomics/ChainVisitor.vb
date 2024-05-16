@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b8d7b74371719b763380f66cfec84526, E:/mzkit/src/metadb/Lipidomics//ChainVisitor.vb"
+﻿#Region "Microsoft.VisualBasic::b8d7b74371719b763380f66cfec84526, metadb\Lipidomics\ChainVisitor.vb"
 
     ' Author:
     ' 

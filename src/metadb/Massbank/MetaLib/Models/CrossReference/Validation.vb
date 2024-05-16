@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0171f5d8ac463052720273f533683b82, E:/mzkit/src/metadb/Massbank//MetaLib/Models/CrossReference/Validation.vb"
+﻿#Region "Microsoft.VisualBasic::0171f5d8ac463052720273f533683b82, metadb\Massbank\MetaLib\Models\CrossReference\Validation.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dfba23d3a55bac34ed5402665dc241a4, E:/mzkit/src/metadb/Lipidomics//ILipidomicsVisitorBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::dfba23d3a55bac34ed5402665dc241a4, metadb\Lipidomics\ILipidomicsVisitorBuilder.vb"
 
     ' Author:
     ' 

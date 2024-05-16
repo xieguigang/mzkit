@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f6166a789093c1a4e56f568ee1e9d0f7, E:/mzkit/src/metadb/Chemoinformatics//GenericCompound.vb"
+﻿#Region "Microsoft.VisualBasic::f6166a789093c1a4e56f568ee1e9d0f7, metadb\Chemoinformatics\GenericCompound.vb"
 
     ' Author:
     ' 

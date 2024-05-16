@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f339f6eae4c1ea519731db0978ffe772, E:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/CeramidePhytoSphSpectrumGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::f339f6eae4c1ea519731db0978ffe772, metadb\Lipidomics\SpectrumGenerator\CeramidePhytoSphSpectrumGenerator.vb"
 
     ' Author:
     ' 

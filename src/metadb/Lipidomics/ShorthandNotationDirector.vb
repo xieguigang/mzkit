@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d46c75ce75450ef8fa5cfcb31cd50cb8, E:/mzkit/src/metadb/Lipidomics//ShorthandNotationDirector.vb"
+﻿#Region "Microsoft.VisualBasic::d46c75ce75450ef8fa5cfcb31cd50cb8, metadb\Lipidomics\ShorthandNotationDirector.vb"
 
     ' Author:
     ' 

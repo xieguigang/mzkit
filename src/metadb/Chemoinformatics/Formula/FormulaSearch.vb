@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9df874df5b1eb109f343d6b4e1626dee, E:/mzkit/src/metadb/Chemoinformatics//Formula/FormulaSearch.vb"
+﻿#Region "Microsoft.VisualBasic::9df874df5b1eb109f343d6b4e1626dee, metadb\Chemoinformatics\Formula\FormulaSearch.vb"
 
     ' Author:
     ' 

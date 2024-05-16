@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8975116fc6a6cc880b595f2b1eae91e3, E:/mzkit/src/metadb/Massbank//Public/TMIC/FooDB/Content.vb"
+﻿#Region "Microsoft.VisualBasic::8975116fc6a6cc880b595f2b1eae91e3, metadb\Massbank\Public\TMIC\FooDB\Content.vb"
 
     ' Author:
     ' 

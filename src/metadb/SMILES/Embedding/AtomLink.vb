@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5c183015165687318a03e06eb5974ea8, E:/mzkit/src/metadb/SMILES//Embedding/AtomLink.vb"
+﻿#Region "Microsoft.VisualBasic::5c183015165687318a03e06eb5974ea8, metadb\SMILES\Embedding\AtomLink.vb"
 
     ' Author:
     ' 

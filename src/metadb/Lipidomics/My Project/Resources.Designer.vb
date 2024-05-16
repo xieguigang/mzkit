@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::525eb3e306497faed5ac3af8fbff11a9, E:/mzkit/src/metadb/Lipidomics//My Project/Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::525eb3e306497faed5ac3af8fbff11a9, metadb\Lipidomics\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 

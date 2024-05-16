@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::27e4a1ced16d6c38ca7f94cca58c17bb, E:/mzkit/src/metadb/Massbank//Public/NCBI/PubMed.vb"
+﻿#Region "Microsoft.VisualBasic::27e4a1ced16d6c38ca7f94cca58c17bb, metadb\Massbank\Public\NCBI\PubMed.vb"
 
     ' Author:
     ' 

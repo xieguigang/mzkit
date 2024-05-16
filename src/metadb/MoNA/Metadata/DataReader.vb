@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d852c22fb665cbfc77c429296f908e1f, E:/mzkit/src/metadb/MoNA//Metadata/DataReader.vb"
+﻿#Region "Microsoft.VisualBasic::d852c22fb665cbfc77c429296f908e1f, metadb\MoNA\Metadata\DataReader.vb"
 
     ' Author:
     ' 

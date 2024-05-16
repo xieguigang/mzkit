@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::11407ed9f0ce188cf3da8d75582bbda8, E:/mzkit/src/metadb/FormulaSearch.Extensions//test/Module1.vb"
+﻿#Region "Microsoft.VisualBasic::11407ed9f0ce188cf3da8d75582bbda8, metadb\FormulaSearch.Extensions\test\Module1.vb"
 
     ' Author:
     ' 

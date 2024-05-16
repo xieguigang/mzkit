@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9adc3b18e1a0ac4d90bc752b353a3a12, E:/mzkit/src/metadb/MoNA//Metadata/MetaData.vb"
+﻿#Region "Microsoft.VisualBasic::9adc3b18e1a0ac4d90bc752b353a3a12, metadb\MoNA\Metadata\MetaData.vb"
 
     ' Author:
     ' 

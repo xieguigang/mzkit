@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::665fe02c2ce591b513d06e8b7cafafa7, E:/mzkit/src/metadb/Lipidomics//LbmClass.vb"
+﻿#Region "Microsoft.VisualBasic::665fe02c2ce591b513d06e8b7cafafa7, metadb\Lipidomics\LbmClass.vb"
 
     ' Author:
     ' 
