@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1085277a37abe1b6411c76f9f0d7271f, E:/mzkit/src/assembly/ThermoRawFileReader//SimpleScanAccessTruncated.vb"
+﻿#Region "Microsoft.VisualBasic::1085277a37abe1b6411c76f9f0d7271f, assembly\ThermoRawFileReader\SimpleScanAccessTruncated.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1d5676c36c25261ae954df4f51f72a9b, E:/mzkit/src/assembly/SpectrumTree//Tree/BlockNode.vb"
+﻿#Region "Microsoft.VisualBasic::1d5676c36c25261ae954df4f51f72a9b, assembly\SpectrumTree\Tree\BlockNode.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f282babb84b614891174471c9bb63222, E:/mzkit/src/assembly/mzPack//Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::f282babb84b614891174471c9bb63222, assembly\mzPack\Extensions.vb"
 
     ' Author:
     ' 

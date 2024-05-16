@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2e04355e4db6919de0595402395642db, E:/mzkit/src/assembly/mzPack//v2.0/mzStream.vb"
+﻿#Region "Microsoft.VisualBasic::2e04355e4db6919de0595402395642db, assembly\mzPack\v2.0\mzStream.vb"
 
     ' Author:
     ' 

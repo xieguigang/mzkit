@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::78b350bcd176dfefee43c55f2a5b41dd, E:/mzkit/src/assembly/NMRFidTool//Math/apodization/LorentzGausApodizatior.vb"
+﻿#Region "Microsoft.VisualBasic::78b350bcd176dfefee43c55f2a5b41dd, assembly\NMRFidTool\Math\apodization\LorentzGausApodizatior.vb"
 
     ' Author:
     ' 

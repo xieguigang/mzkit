@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::76f8e8547fbf931ef1e10b45909dfe2a, E:/mzkit/src/assembly/assembly//MarkupData/mzML/UV/ExtractUVData.vb"
+﻿#Region "Microsoft.VisualBasic::76f8e8547fbf931ef1e10b45909dfe2a, assembly\assembly\MarkupData\mzML\UV\ExtractUVData.vb"
 
     ' Author:
     ' 

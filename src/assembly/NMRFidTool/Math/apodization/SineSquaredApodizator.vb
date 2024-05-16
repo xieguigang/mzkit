@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5a82f84f16a71783f1f83af4d479595a, E:/mzkit/src/assembly/NMRFidTool//Math/apodization/SineSquaredApodizator.vb"
+﻿#Region "Microsoft.VisualBasic::5a82f84f16a71783f1f83af4d479595a, assembly\NMRFidTool\Math\apodization\SineSquaredApodizator.vb"
 
     ' Author:
     ' 

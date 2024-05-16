@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::71acdb1bb700cbfc96fa166efec434a4, E:/mzkit/src/assembly/assembly//MarkupData/imzML/ibd/ibdReader.vb"
+﻿#Region "Microsoft.VisualBasic::71acdb1bb700cbfc96fa166efec434a4, assembly\assembly\MarkupData\imzML\ibd\ibdReader.vb"
 
     ' Author:
     ' 

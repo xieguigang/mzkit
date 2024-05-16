@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4c366d1a47feece02a6b7bfb5281783b, E:/mzkit/src/assembly/assembly//mzPack/Binary/Version.vb"
+﻿#Region "Microsoft.VisualBasic::4c366d1a47feece02a6b7bfb5281783b, assembly\assembly\mzPack\Binary\Version.vb"
 
     ' Author:
     ' 

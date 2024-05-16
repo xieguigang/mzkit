@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::65088d934fe21097805ea4627c177790, E:/mzkit/src/assembly/BrukerDataReader//XMass/pdata/RawReader.vb"
+﻿#Region "Microsoft.VisualBasic::65088d934fe21097805ea4627c177790, assembly\BrukerDataReader\XMass\pdata\RawReader.vb"
 
     ' Author:
     ' 

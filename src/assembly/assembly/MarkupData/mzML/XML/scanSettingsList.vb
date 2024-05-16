@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ec8302ecd0632c37ab6a1e09ae0bcfcb, E:/mzkit/src/assembly/assembly//MarkupData/mzML/XML/scanSettingsList.vb"
+﻿#Region "Microsoft.VisualBasic::ec8302ecd0632c37ab6a1e09ae0bcfcb, assembly\assembly\MarkupData\mzML\XML\scanSettingsList.vb"
 
     ' Author:
     ' 

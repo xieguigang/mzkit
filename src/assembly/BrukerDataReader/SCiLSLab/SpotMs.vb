@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::324ac7c0a84df388fd8934eb63d933f0, E:/mzkit/src/assembly/BrukerDataReader//SCiLSLab/SpotMs.vb"
+﻿#Region "Microsoft.VisualBasic::324ac7c0a84df388fd8934eb63d933f0, assembly\BrukerDataReader\SCiLSLab\SpotMs.vb"
 
     ' Author:
     ' 

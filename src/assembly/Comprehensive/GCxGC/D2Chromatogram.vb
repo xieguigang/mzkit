@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::73e6bb086fb8fcba659b578a485bb121, E:/mzkit/src/assembly/Comprehensive//GCxGC/D2Chromatogram.vb"
+﻿#Region "Microsoft.VisualBasic::73e6bb086fb8fcba659b578a485bb121, assembly\Comprehensive\GCxGC\D2Chromatogram.vb"
 
     ' Author:
     ' 

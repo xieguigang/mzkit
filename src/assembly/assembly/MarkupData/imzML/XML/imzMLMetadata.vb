@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a2de10998aee0ddf8fee33ec63f1f55f, E:/mzkit/src/assembly/assembly//MarkupData/imzML/XML/imzMLMetadata.vb"
+﻿#Region "Microsoft.VisualBasic::a2de10998aee0ddf8fee33ec63f1f55f, assembly\assembly\MarkupData\imzML\XML\imzMLMetadata.vb"
 
     ' Author:
     ' 

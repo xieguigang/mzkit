@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::573e1f9790a5a6904e20041d23a3e65b, E:/mzkit/src/assembly/LoadR.NET5//ReadXcmsRData.vb"
+﻿#Region "Microsoft.VisualBasic::573e1f9790a5a6904e20041d23a3e65b, assembly\LoadR.NET5\ReadXcmsRData.vb"
 
     ' Author:
     ' 

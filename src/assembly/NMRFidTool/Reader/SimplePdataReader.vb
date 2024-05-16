@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e0e26cdf546e7ecf5c04c9784a6b49e9, E:/mzkit/src/assembly/NMRFidTool//Reader/SimplePdataReader.vb"
+﻿#Region "Microsoft.VisualBasic::e0e26cdf546e7ecf5c04c9784a6b49e9, assembly\NMRFidTool\Reader\SimplePdataReader.vb"
 
     ' Author:
     ' 

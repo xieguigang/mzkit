@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d701cb919d9dab7c7e84ebc4f8d4cb1b, E:/mzkit/src/assembly/Comprehensive//MsImaging/3D_MALDI/MALDIPointCloud.vb"
+﻿#Region "Microsoft.VisualBasic::d701cb919d9dab7c7e84ebc4f8d4cb1b, assembly\Comprehensive\MsImaging\3D_MALDI\MALDIPointCloud.vb"
 
     ' Author:
     ' 

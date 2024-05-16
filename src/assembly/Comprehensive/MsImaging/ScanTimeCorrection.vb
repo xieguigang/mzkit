@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4fdb1cdf96bbdb73c0b57fadebe1f764, E:/mzkit/src/assembly/Comprehensive//MsImaging/ScanTimeCorrection.vb"
+﻿#Region "Microsoft.VisualBasic::4fdb1cdf96bbdb73c0b57fadebe1f764, assembly\Comprehensive\MsImaging\ScanTimeCorrection.vb"
 
     ' Author:
     ' 

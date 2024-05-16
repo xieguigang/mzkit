@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0837d12e5c497a5c50e02fbf34369cba, E:/mzkit/src/assembly/assembly//mzPack/Binary/BinaryStreamWriter.vb"
+﻿#Region "Microsoft.VisualBasic::0837d12e5c497a5c50e02fbf34369cba, assembly\assembly\mzPack\Binary\BinaryStreamWriter.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::455887c773a088fed1b786211a37eca5, E:/mzkit/src/assembly/assembly//MarkupData/imzML/XML/ScanReader.vb"
+﻿#Region "Microsoft.VisualBasic::455887c773a088fed1b786211a37eca5, assembly\assembly\MarkupData\imzML\XML\ScanReader.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b720cf515f8c80dfb067b78dbcabc96d, E:/mzkit/src/assembly/SignalReader//UVSpectroscopyReader.vb"
+﻿#Region "Microsoft.VisualBasic::b720cf515f8c80dfb067b78dbcabc96d, assembly\SignalReader\UVSpectroscopyReader.vb"
 
     ' Author:
     ' 

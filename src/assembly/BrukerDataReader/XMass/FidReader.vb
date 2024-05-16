@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4599997c21495ae0c6237e013e48bccc, E:/mzkit/src/assembly/BrukerDataReader//XMass/FidReader.vb"
+﻿#Region "Microsoft.VisualBasic::4599997c21495ae0c6237e013e48bccc, assembly\BrukerDataReader\XMass\FidReader.vb"
 
     ' Author:
     ' 

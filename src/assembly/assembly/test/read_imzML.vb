@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6b7c4291c28bca82ad5084acc68303a5, E:/mzkit/src/assembly/assembly/test//read_imzML.vb"
+﻿#Region "Microsoft.VisualBasic::6b7c4291c28bca82ad5084acc68303a5, assembly\assembly\test\read_imzML.vb"
 
     ' Author:
     ' 

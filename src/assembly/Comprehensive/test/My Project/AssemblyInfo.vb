@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cfdd81a171d0e9eb5cd2ea25521e0452, E:/mzkit/src/assembly/Comprehensive//test/My Project/AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::cfdd81a171d0e9eb5cd2ea25521e0452, assembly\Comprehensive\test\My Project\AssemblyInfo.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9be37d3081aff51a31ab7a3c0d5f849c, E:/mzkit/src/assembly/Comprehensive//GCxGC/Data.vb"
+﻿#Region "Microsoft.VisualBasic::9be37d3081aff51a31ab7a3c0d5f849c, assembly\Comprehensive\GCxGC\Data.vb"
 
     ' Author:
     ' 

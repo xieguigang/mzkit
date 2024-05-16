@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ecfa7152d41786887de40b4f3fa70e4f, E:/mzkit/src/assembly/LoadR.NET5//SpatialMatrixReader.vb"
+﻿#Region "Microsoft.VisualBasic::ecfa7152d41786887de40b4f3fa70e4f, assembly\LoadR.NET5\SpatialMatrixReader.vb"
 
     ' Author:
     ' 

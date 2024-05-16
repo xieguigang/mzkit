@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3db6528367d17ad63178462c340b52be, E:/mzkit/src/assembly/NMRFidTool//Math/phasing/Export.vb"
+﻿#Region "Microsoft.VisualBasic::3db6528367d17ad63178462c340b52be, assembly\NMRFidTool\Math\phasing\Export.vb"
 
     ' Author:
     ' 

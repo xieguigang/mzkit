@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d1afc95a907e12f12bc6dd64fe60c209, E:/mzkit/src/assembly/assembly//MarkupData/mzML/XML/IonTargeted/precursor.vb"
+﻿#Region "Microsoft.VisualBasic::d1afc95a907e12f12bc6dd64fe60c209, assembly\assembly\MarkupData\mzML\XML\IonTargeted\precursor.vb"
 
     ' Author:
     ' 

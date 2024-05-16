@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::38da0be5f847096acaa869889c1ac5d6, E:/mzkit/src/assembly/assembly//MarkupData/imzML/XML/MSISummary.vb"
+﻿#Region "Microsoft.VisualBasic::38da0be5f847096acaa869889c1ac5d6, assembly\assembly\MarkupData\imzML\XML\MSISummary.vb"
 
     ' Author:
     ' 

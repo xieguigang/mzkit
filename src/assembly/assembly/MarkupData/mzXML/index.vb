@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e6385e76fa46f42851ae6ae5c432577b, E:/mzkit/src/assembly/assembly//MarkupData/mzXML/index.vb"
+﻿#Region "Microsoft.VisualBasic::e6385e76fa46f42851ae6ae5c432577b, assembly\assembly\MarkupData\mzXML\index.vb"
 
     ' Author:
     ' 

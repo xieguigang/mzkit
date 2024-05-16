@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9ffb2aa50fe2af0f51002defa34369c6, E:/mzkit/src/assembly/assembly//MarkupData/XmlFileTypes.vb"
+﻿#Region "Microsoft.VisualBasic::9ffb2aa50fe2af0f51002defa34369c6, assembly\assembly\MarkupData\XmlFileTypes.vb"
 
     ' Author:
     ' 

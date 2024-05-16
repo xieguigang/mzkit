@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5ec2fa3f9c89dcb71ef53025fdb481b3, E:/mzkit/src/assembly/LoadR.NET5//LoadR.vb"
+﻿#Region "Microsoft.VisualBasic::5ec2fa3f9c89dcb71ef53025fdb481b3, assembly\LoadR.NET5\LoadR.vb"
 
     ' Author:
     ' 

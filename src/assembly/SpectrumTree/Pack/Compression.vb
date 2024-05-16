@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c4d95e3ab5bd13fcc94901bfd792dab5, E:/mzkit/src/assembly/SpectrumTree//Pack/Compression.vb"
+﻿#Region "Microsoft.VisualBasic::c4d95e3ab5bd13fcc94901bfd792dab5, assembly\SpectrumTree\Pack\Compression.vb"
 
     ' Author:
     ' 

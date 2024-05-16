@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c55cbab147ebb554984a8a6f051d100a, E:/mzkit/src/assembly/ProteoWizard.Interop//ProteoWizardCLI.vb"
+﻿#Region "Microsoft.VisualBasic::c55cbab147ebb554984a8a6f051d100a, assembly\ProteoWizard.Interop\ProteoWizardCLI.vb"
 
     ' Author:
     ' 

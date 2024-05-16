@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2a5f0f78d36826088aa2d122aa9c996e, E:/mzkit/src/assembly/NMRFidTool//Math/phasing/DSPPhaseCorrection.vb"
+﻿#Region "Microsoft.VisualBasic::2a5f0f78d36826088aa2d122aa9c996e, assembly\NMRFidTool\Math\phasing\DSPPhaseCorrection.vb"
 
     ' Author:
     ' 

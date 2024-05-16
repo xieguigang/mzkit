@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1c535a8c60fe85976da5b144f1db29d8, E:/mzkit/src/assembly/BrukerDataReader//flexImaging/spectrum_sqlite/PeakReader.vb"
+﻿#Region "Microsoft.VisualBasic::1c535a8c60fe85976da5b144f1db29d8, assembly\BrukerDataReader\flexImaging\spectrum_sqlite\PeakReader.vb"
 
     ' Author:
     ' 

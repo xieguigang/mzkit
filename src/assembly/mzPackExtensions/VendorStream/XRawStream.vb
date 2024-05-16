@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::15a72e37c6fadeb5767d6e91c15aa53c, E:/mzkit/src/assembly/mzPackExtensions//VendorStream/XRawStream.vb"
+﻿#Region "Microsoft.VisualBasic::15a72e37c6fadeb5767d6e91c15aa53c, assembly\mzPackExtensions\VendorStream\XRawStream.vb"
 
     ' Author:
     ' 
