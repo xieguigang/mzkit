@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7612097ffe5412de28dc7a69a5d57026, E:/mzkit/src/assembly/NMRFidTool//Math/apodization/TrafsApodizator.vb"
+﻿#Region "Microsoft.VisualBasic::7612097ffe5412de28dc7a69a5d57026, assembly\NMRFidTool\Math\apodization\TrafsApodizator.vb"
 
     ' Author:
     ' 

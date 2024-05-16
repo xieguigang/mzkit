@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e6112c255eaec50c90bfff9ae42d673e, E:/mzkit/src/assembly/assembly//MarkupData/mzML/XML/Decoder/BinaryData.vb"
+﻿#Region "Microsoft.VisualBasic::e6112c255eaec50c90bfff9ae42d673e, assembly\assembly\MarkupData\mzML\XML\Decoder\BinaryData.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8242b16da5ac8cc59ce1f2a0fe60da65, E:/mzkit/src/metadb/MoNA//ReaderViews.vb"
+﻿#Region "Microsoft.VisualBasic::8242b16da5ac8cc59ce1f2a0fe60da65, metadb\MoNA\ReaderViews.vb"
 
     ' Author:
     ' 

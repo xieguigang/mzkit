@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cab025b7c179822cf12a802c9678124d, E:/mzkit/src/metadb/Chemoinformatics//SDF/SDFParser.vb"
+﻿#Region "Microsoft.VisualBasic::cab025b7c179822cf12a802c9678124d, metadb\Chemoinformatics\SDF\SDFParser.vb"
 
     ' Author:
     ' 

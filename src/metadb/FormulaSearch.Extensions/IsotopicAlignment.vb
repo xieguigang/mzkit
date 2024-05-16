@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5790b8a1545a4cc8145ec068d6e1f976, E:/mzkit/src/metadb/FormulaSearch.Extensions//IsotopicAlignment.vb"
+﻿#Region "Microsoft.VisualBasic::5790b8a1545a4cc8145ec068d6e1f976, metadb\FormulaSearch.Extensions\IsotopicAlignment.vb"
 
     ' Author:
     ' 

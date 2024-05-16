@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c80f8340d893527506ab6d29d957a9ab, E:/mzkit/src/assembly/SpectrumTree//ClusterTypes.vb"
+﻿#Region "Microsoft.VisualBasic::c80f8340d893527506ab6d29d957a9ab, assembly\SpectrumTree\ClusterTypes.vb"
 
     ' Author:
     ' 

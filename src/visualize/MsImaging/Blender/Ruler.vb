@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::09771544be37abc74220f87908b64c78, E:/mzkit/src/visualize/MsImaging//Blender/Ruler.vb"
+﻿#Region "Microsoft.VisualBasic::09771544be37abc74220f87908b64c78, visualize\MsImaging\Blender\Ruler.vb"
 
     ' Author:
     ' 

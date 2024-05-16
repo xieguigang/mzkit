@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::95e7154044ce02cec4ec7de2c1bb6406, E:/mzkit/src/assembly/assembly//UnifyReader/MsDataReader.vb"
+﻿#Region "Microsoft.VisualBasic::95e7154044ce02cec4ec7de2c1bb6406, assembly\assembly\UnifyReader\MsDataReader.vb"
 
     ' Author:
     ' 

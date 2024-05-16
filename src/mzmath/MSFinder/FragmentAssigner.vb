@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e0a8e1a4e3b3cc4d703c31fe210aa13b, E:/mzkit/src/mzmath/MSFinder//FragmentAssigner.vb"
+﻿#Region "Microsoft.VisualBasic::e0a8e1a4e3b3cc4d703c31fe210aa13b, mzmath\MSFinder\FragmentAssigner.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f82a0ff0a31e32bf83125e1464831c17, E:/mzkit/Rscript/Library/mzkit_app/src/mzkit//math/SMILESTool.vb"
+﻿#Region "Microsoft.VisualBasic::f82a0ff0a31e32bf83125e1464831c17, Rscript\Library\mzkit_app\src\mzkit\math\SMILESTool.vb"
 
     ' Author:
     ' 

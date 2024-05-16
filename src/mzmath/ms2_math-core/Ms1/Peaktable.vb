@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f40ce460ce93846ae42906ad81d84ba0, E:/mzkit/src/mzmath/ms2_math-core//Ms1/Peaktable.vb"
+﻿#Region "Microsoft.VisualBasic::165793d95cd2df1a95a6de8dc0285b83, mzmath\ms2_math-core\Ms1\Peaktable.vb"
 
     ' Author:
     ' 
@@ -37,19 +37,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 69
-    '    Code Lines: 41
-    ' Comment Lines: 22
-    '   Blank Lines: 6
-    '     File Size: 2.21 KB
+    '   Total Lines: 76
+    '    Code Lines: 43
+    ' Comment Lines: 26
+    '   Blank Lines: 7
+    '     File Size: 2.39 KB
 
 
     ' Class Peaktable
     ' 
-    '     Properties: annotation, energy, index, intb, into
-    '                 ionization, maxo, mz, mzmax, mzmin
-    '                 name, rt, rtmax, rtmin, rtMinute
-    '                 sample, scan, sn
+    '     Properties: annotation, energy, formula, id, index
+    '                 intb, into, ionization, mass, maxo
+    '                 mzmax, mzmin, name, rt, rtmax
+    '                 rtmin, rtMinute, sample, scan, sn
     ' 
     '     Function: ToString
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b478de33a5d26b24feed85e372492004, E:/mzkit/src/visualize/plot//ChromatogramPlot/ChromatogramPeakPlot.vb"
+﻿#Region "Microsoft.VisualBasic::b478de33a5d26b24feed85e372492004, visualize\plot\ChromatogramPlot\ChromatogramPeakPlot.vb"
 
     ' Author:
     ' 

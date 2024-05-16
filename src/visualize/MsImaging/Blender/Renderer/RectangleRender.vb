@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1bc4d5ad34062b66064f9324eaa58bd7, E:/mzkit/src/visualize/MsImaging//Blender/Renderer/RectangleRender.vb"
+﻿#Region "Microsoft.VisualBasic::1bc4d5ad34062b66064f9324eaa58bd7, visualize\MsImaging\Blender\Renderer\RectangleRender.vb"
 
     ' Author:
     ' 

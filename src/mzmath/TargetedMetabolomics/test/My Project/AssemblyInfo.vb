@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::acfa8181875b87699bd3d46e126946c0, E:/mzkit/src/mzmath/TargetedMetabolomics/test//My Project/AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::acfa8181875b87699bd3d46e126946c0, mzmath\TargetedMetabolomics\test\My Project\AssemblyInfo.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b5fae6dff68f58adab926a00ebeeb020, E:/mzkit/src/assembly/assembly//MarkupData/mzML/UV/UVScan.vb"
+﻿#Region "Microsoft.VisualBasic::b5fae6dff68f58adab926a00ebeeb020, assembly\assembly\MarkupData\mzML\UV\UVScan.vb"
 
     ' Author:
     ' 

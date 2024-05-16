@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::becbd5622a6a72cd485e1a82218927c8, E:/mzkit/src/mzmath/mz_deco//Signals/Chromatogram/ROI.vb"
+﻿#Region "Microsoft.VisualBasic::becbd5622a6a72cd485e1a82218927c8, mzmath\mz_deco\Signals\Chromatogram\ROI.vb"
 
     ' Author:
     ' 

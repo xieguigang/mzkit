@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0e4b826474d5004120d195d2e8ec1695, E:/mzkit/src/mzmath/ms2_simulator//MolecularGraph.vb"
+﻿#Region "Microsoft.VisualBasic::0e4b826474d5004120d195d2e8ec1695, mzmath\ms2_simulator\MolecularGraph.vb"
 
     ' Author:
     ' 

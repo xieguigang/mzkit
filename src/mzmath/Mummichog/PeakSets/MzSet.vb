@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8569fda9d066ef0449cafb4d9afe50ce, E:/mzkit/src/mzmath/Mummichog//PeakSets/MzSet.vb"
+﻿#Region "Microsoft.VisualBasic::8569fda9d066ef0449cafb4d9afe50ce, mzmath\Mummichog\PeakSets\MzSet.vb"
 
     ' Author:
     ' 

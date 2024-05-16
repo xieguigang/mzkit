@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4698e4079e2090830530e3ccbaacc7dc, E:/mzkit/src/metadb/Lipidomics//OxidizedIndeterminateState.vb"
+﻿#Region "Microsoft.VisualBasic::4698e4079e2090830530e3ccbaacc7dc, metadb\Lipidomics\OxidizedIndeterminateState.vb"
 
     ' Author:
     ' 

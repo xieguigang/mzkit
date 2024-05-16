@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0b1b492df813cafd8fda50e95611844e, E:/mzkit/src/mzmath/ms2_math-core//Spectra/MoleculeNetworking/ProtocolPipeline.vb"
+﻿#Region "Microsoft.VisualBasic::0b1b492df813cafd8fda50e95611844e, mzmath\ms2_math-core\Spectra\MoleculeNetworking\ProtocolPipeline.vb"
 
     ' Author:
     ' 

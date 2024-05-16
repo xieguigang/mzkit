@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::56664efb12e498843d484c006a992874, E:/mzkit/src/mzmath/TargetedMetabolomics//LinearQuantitative/LinearPack/LinearPack.vb"
+﻿#Region "Microsoft.VisualBasic::56664efb12e498843d484c006a992874, mzmath\TargetedMetabolomics\LinearQuantitative\LinearPack\LinearPack.vb"
 
     ' Author:
     ' 

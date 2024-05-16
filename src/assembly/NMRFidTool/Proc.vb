@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bca6d5413637dd8cfeaced06463e0444, E:/mzkit/src/assembly/NMRFidTool//Proc.vb"
+﻿#Region "Microsoft.VisualBasic::bca6d5413637dd8cfeaced06463e0444, assembly\NMRFidTool\Proc.vb"
 
     ' Author:
     ' 

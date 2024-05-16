@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e844b729b888aea0c8c7b1893a742119, E:/mzkit/src/assembly/SpectrumTree//Pack/MzIonSearch.vb"
+﻿#Region "Microsoft.VisualBasic::e844b729b888aea0c8c7b1893a742119, assembly\SpectrumTree\Pack\MzIonSearch.vb"
 
     ' Author:
     ' 

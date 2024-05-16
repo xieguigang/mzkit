@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3ec65b25fbbdd9575705e2e8495316c4, E:/mzkit/src/assembly/ThermoRawFileReader//DataObjects/RawFileInfo.vb"
+﻿#Region "Microsoft.VisualBasic::3ec65b25fbbdd9575705e2e8495316c4, assembly\ThermoRawFileReader\DataObjects\RawFileInfo.vb"
 
     ' Author:
     ' 

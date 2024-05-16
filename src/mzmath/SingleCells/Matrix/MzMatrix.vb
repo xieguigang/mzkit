@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::659702cdb9e2bbf8edf6ae6e4cb68cf4, E:/mzkit/src/mzmath/SingleCells//Matrix/MzMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::659702cdb9e2bbf8edf6ae6e4cb68cf4, mzmath\SingleCells\Matrix\MzMatrix.vb"
 
     ' Author:
     ' 

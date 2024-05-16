@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::635ac2e1aa8c0234b4d677a761ab4540, E:/mzkit/src/assembly/mzPack//v1.0/v1MemoryLoader.vb"
+﻿#Region "Microsoft.VisualBasic::635ac2e1aa8c0234b4d677a761ab4540, assembly\mzPack\v1.0\v1MemoryLoader.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::99547276ceb3581488eaec0ebf297310, E:/mzkit/src/assembly/Comprehensive//test/Module1.vb"
+﻿#Region "Microsoft.VisualBasic::99547276ceb3581488eaec0ebf297310, assembly\Comprehensive\test\Module1.vb"
 
     ' Author:
     ' 

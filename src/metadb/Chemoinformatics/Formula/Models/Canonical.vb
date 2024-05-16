@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7051ed9b1b2a7fcb3ad2de72770a5ddd, E:/mzkit/src/metadb/Chemoinformatics//Formula/Models/Canonical.vb"
+﻿#Region "Microsoft.VisualBasic::7051ed9b1b2a7fcb3ad2de72770a5ddd, metadb\Chemoinformatics\Formula\Models\Canonical.vb"
 
     ' Author:
     ' 

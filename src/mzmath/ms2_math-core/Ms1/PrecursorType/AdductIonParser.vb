@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ce2fe4ff04c68b07a6338d4a5c487995, E:/mzkit/src/mzmath/ms2_math-core//Ms1/PrecursorType/AdductIonParser.vb"
+﻿#Region "Microsoft.VisualBasic::ce2fe4ff04c68b07a6338d4a5c487995, mzmath\ms2_math-core\Ms1\PrecursorType\AdductIonParser.vb"
 
     ' Author:
     ' 

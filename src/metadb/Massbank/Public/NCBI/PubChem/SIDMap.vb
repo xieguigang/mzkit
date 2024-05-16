@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a5f34845706efd769d49a6a17acc7d8f, E:/mzkit/src/metadb/Massbank//Public/NCBI/PubChem/SIDMap.vb"
+﻿#Region "Microsoft.VisualBasic::a5f34845706efd769d49a6a17acc7d8f, metadb\Massbank\Public\NCBI\PubChem\SIDMap.vb"
 
     ' Author:
     ' 

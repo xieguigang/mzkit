@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::25a64716a7f5fe1965d12d7e0553c16b, E:/mzkit/src/assembly/SpectrumTree//Pack/MassIndex.vb"
+﻿#Region "Microsoft.VisualBasic::25a64716a7f5fe1965d12d7e0553c16b, assembly\SpectrumTree\Pack\MassIndex.vb"
 
     ' Author:
     ' 

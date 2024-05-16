@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8a225349d49ed4a38135c7391ab06d3e, E:/mzkit/src/assembly/BrukerDataReader//SCiLSLab/PackFile.vb"
+﻿#Region "Microsoft.VisualBasic::8a225349d49ed4a38135c7391ab06d3e, assembly\BrukerDataReader\SCiLSLab\PackFile.vb"
 
     ' Author:
     ' 

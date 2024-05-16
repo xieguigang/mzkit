@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::600911f61596f6f3b338d3be7a55cfee, E:/mzkit/src/mzmath/Mummichog//PeakSets/PeakQuery.vb"
+﻿#Region "Microsoft.VisualBasic::e91db8dc77de8ebec5494b8e24991c7e, mzmath\Mummichog\PeakSets\PeakQuery.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 50
+    '   Total Lines: 76
     '    Code Lines: 38
-    ' Comment Lines: 4
+    ' Comment Lines: 30
     '   Blank Lines: 8
-    '     File Size: 1.44 KB
+    '     File Size: 2.43 KB
 
 
     ' Class PeakQuery

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::def5da58aa5a3dd24d1e20219278a240, E:/mzkit/src/mzmath/SingleCells//Deconvolute/Math.vb"
+﻿#Region "Microsoft.VisualBasic::def5da58aa5a3dd24d1e20219278a240, mzmath\SingleCells\Deconvolute\Math.vb"
 
     ' Author:
     ' 

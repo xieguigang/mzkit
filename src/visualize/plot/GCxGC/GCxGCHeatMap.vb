@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f761d23e8bd1fe1cff4cc07794bdc949, E:/mzkit/src/visualize/plot//GCxGC/GCxGCHeatMap.vb"
+﻿#Region "Microsoft.VisualBasic::f761d23e8bd1fe1cff4cc07794bdc949, visualize\plot\GCxGC\GCxGCHeatMap.vb"
 
     ' Author:
     ' 

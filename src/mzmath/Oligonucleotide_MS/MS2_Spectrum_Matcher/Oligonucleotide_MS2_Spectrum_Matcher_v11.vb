@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f74cc5cebc2d6ad567a38729ffc5f8a4, E:/mzkit/src/mzmath/Oligonucleotide_MS//MS2_Spectrum_Matcher/Oligonucleotide_MS2_Spectrum_Matcher_v11.vb"
+﻿#Region "Microsoft.VisualBasic::f74cc5cebc2d6ad567a38729ffc5f8a4, mzmath\Oligonucleotide_MS\MS2_Spectrum_Matcher\Oligonucleotide_MS2_Spectrum_Matcher_v11.vb"
 
     ' Author:
     ' 

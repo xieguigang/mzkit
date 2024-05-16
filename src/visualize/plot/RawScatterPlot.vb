@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::51ce5c839ed529d8ffa6c59fa3bb64a0, E:/mzkit/src/visualize/plot//RawScatterPlot.vb"
+﻿#Region "Microsoft.VisualBasic::51ce5c839ed529d8ffa6c59fa3bb64a0, visualize\plot\RawScatterPlot.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c100b18fd1ac70356a8f2e2b2086c9cb, E:/mzkit/src/metadb/Massbank//Public/ChEBI/Wraper.vb"
+﻿#Region "Microsoft.VisualBasic::c100b18fd1ac70356a8f2e2b2086c9cb, metadb\Massbank\Public\ChEBI\Wraper.vb"
 
     ' Author:
     ' 

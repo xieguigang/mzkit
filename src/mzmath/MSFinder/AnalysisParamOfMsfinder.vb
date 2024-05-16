@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c8ccf3ca4e8b7a72c50925713402e399, E:/mzkit/src/mzmath/MSFinder//AnalysisParamOfMsfinder.vb"
+﻿#Region "Microsoft.VisualBasic::c8ccf3ca4e8b7a72c50925713402e399, mzmath\MSFinder\AnalysisParamOfMsfinder.vb"
 
     ' Author:
     ' 

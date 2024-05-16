@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7886f2d5f485d530be881114f302a11d, E:/mzkit/src/assembly/ThermoRawFileReader//Enums/InstFlags.vb"
+﻿#Region "Microsoft.VisualBasic::7886f2d5f485d530be881114f302a11d, assembly\ThermoRawFileReader\Enums\InstFlags.vb"
 
     ' Author:
     ' 

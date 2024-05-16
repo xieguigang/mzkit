@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a76b410ba68b1088e9ceda2ad703ca12, E:/mzkit/src/metadb/Chemoinformatics//NaturalProduct/QuantityPrefix.vb"
+﻿#Region "Microsoft.VisualBasic::a76b410ba68b1088e9ceda2ad703ca12, metadb\Chemoinformatics\NaturalProduct\QuantityPrefix.vb"
 
     ' Author:
     ' 

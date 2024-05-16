@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d62ba56e1bcf995c08f2d1f7e11caddd, E:/mzkit/src/metadb/Lipidomics//ITotalChainVariationGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::d62ba56e1bcf995c08f2d1f7e11caddd, metadb\Lipidomics\ITotalChainVariationGenerator.vb"
 
     ' Author:
     ' 

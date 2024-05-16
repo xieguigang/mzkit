@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c344e554f7a5b17fe4d8a2551a6ec710, E:/mzkit/Rscript/Library/mzkit_app/src/mzkit//assembly/Chromatogram.vb"
+﻿#Region "Microsoft.VisualBasic::c344e554f7a5b17fe4d8a2551a6ec710, Rscript\Library\mzkit_app\src\mzkit\assembly\Chromatogram.vb"
 
     ' Author:
     ' 

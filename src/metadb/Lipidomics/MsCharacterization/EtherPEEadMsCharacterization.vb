@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dfca9bf952ab4288078a18e9cacc6603, E:/mzkit/src/metadb/Lipidomics//MsCharacterization/EtherPEEadMsCharacterization.vb"
+﻿#Region "Microsoft.VisualBasic::dfca9bf952ab4288078a18e9cacc6603, metadb\Lipidomics\MsCharacterization\EtherPEEadMsCharacterization.vb"
 
     ' Author:
     ' 

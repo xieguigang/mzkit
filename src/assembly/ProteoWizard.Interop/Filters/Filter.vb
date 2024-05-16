@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c51226803a0ad5ed3bbc1d7e75366b9f, E:/mzkit/src/assembly/ProteoWizard.Interop//Filters/Filter.vb"
+﻿#Region "Microsoft.VisualBasic::c51226803a0ad5ed3bbc1d7e75366b9f, assembly\ProteoWizard.Interop\Filters\Filter.vb"
 
     ' Author:
     ' 

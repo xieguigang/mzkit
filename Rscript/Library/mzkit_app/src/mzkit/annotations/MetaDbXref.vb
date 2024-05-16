@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d222fecb5fb1629de7dd361f45304fe4, E:/mzkit/Rscript/Library/mzkit_app/src/mzkit//annotations/MetaDbXref.vb"
+﻿#Region "Microsoft.VisualBasic::d222fecb5fb1629de7dd361f45304fe4, Rscript\Library\mzkit_app\src\mzkit\annotations\MetaDbXref.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9ed1ff4706aec9df3712af0422c26566, E:/mzkit/src/visualize/MsImaging//Layer/LayerFile.vb"
+﻿#Region "Microsoft.VisualBasic::9ed1ff4706aec9df3712af0422c26566, visualize\MsImaging\Layer\LayerFile.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::24afaba7fd9f7df37ab2b2f52738e00c, E:/mzkit/src/assembly/Comprehensive//MsImaging/Converter/ConvertSingleScan.vb"
+﻿#Region "Microsoft.VisualBasic::24afaba7fd9f7df37ab2b2f52738e00c, assembly\Comprehensive\MsImaging\Converter\ConvertSingleScan.vb"
 
     ' Author:
     ' 

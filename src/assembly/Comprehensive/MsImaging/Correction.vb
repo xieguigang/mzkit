@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6a2c59846e883708fae642d01f7c5104, E:/mzkit/src/assembly/Comprehensive//MsImaging/Correction.vb"
+﻿#Region "Microsoft.VisualBasic::6a2c59846e883708fae642d01f7c5104, assembly\Comprehensive\MsImaging\Correction.vb"
 
     ' Author:
     ' 

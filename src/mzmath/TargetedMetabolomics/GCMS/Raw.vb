@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b8bb546f12ca564e37eee2b8b2cf1740, E:/mzkit/src/mzmath/TargetedMetabolomics//GCMS/Raw.vb"
+﻿#Region "Microsoft.VisualBasic::b8bb546f12ca564e37eee2b8b2cf1740, mzmath\TargetedMetabolomics\GCMS\Raw.vb"
 
     ' Author:
     ' 

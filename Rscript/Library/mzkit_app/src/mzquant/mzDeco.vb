@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c5eb4b5acf2497c098b390f6586b330a, E:/mzkit/Rscript/Library/mzkit_app/src/mzquant//mzDeco.vb"
+﻿#Region "Microsoft.VisualBasic::c5eb4b5acf2497c098b390f6586b330a, Rscript\Library\mzkit_app\src\mzquant\mzDeco.vb"
 
     ' Author:
     ' 

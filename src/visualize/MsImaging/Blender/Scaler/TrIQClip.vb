@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1e160f9c0e7c556fd78e60582a4e4768, E:/mzkit/src/visualize/MsImaging//Blender/Scaler/TrIQClip.vb"
+﻿#Region "Microsoft.VisualBasic::1e160f9c0e7c556fd78e60582a4e4768, visualize\MsImaging\Blender\Scaler\TrIQClip.vb"
 
     ' Author:
     ' 

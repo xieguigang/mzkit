@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7f4791419fc86091299cf295a716fc31, E:/mzkit/src/assembly/mzPackExtensions//MZWork/Raw.vb"
+﻿#Region "Microsoft.VisualBasic::7f4791419fc86091299cf295a716fc31, assembly\mzPackExtensions\MZWork\Raw.vb"
 
     ' Author:
     ' 

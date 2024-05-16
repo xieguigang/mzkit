@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::09914fc06f7804d32b059e75bbf69d10, E:/mzkit/src/assembly/assembly//ASCII/MSP/MspParser.vb"
+﻿#Region "Microsoft.VisualBasic::09914fc06f7804d32b059e75bbf69d10, assembly\assembly\ASCII\MSP\MspParser.vb"
 
     ' Author:
     ' 

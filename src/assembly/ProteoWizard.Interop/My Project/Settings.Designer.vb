@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::91fa0f381de34f13020e83e18e4b23ee, E:/mzkit/src/assembly/ProteoWizard.Interop//My Project/Settings.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::91fa0f381de34f13020e83e18e4b23ee, assembly\ProteoWizard.Interop\My Project\Settings.Designer.vb"
 
     ' Author:
     ' 

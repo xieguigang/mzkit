@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::93f59c8ced350663307688beb8c65a15, E:/mzkit/src/assembly/Comprehensive//MsImaging/3D_MALDI/Imports3DMSI.vb"
+﻿#Region "Microsoft.VisualBasic::93f59c8ced350663307688beb8c65a15, assembly\Comprehensive\MsImaging\3D_MALDI\Imports3DMSI.vb"
 
     ' Author:
     ' 

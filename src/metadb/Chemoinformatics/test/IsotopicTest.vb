@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::57c3aad748b63a21af887632d9cd2b81, E:/mzkit/src/metadb/Chemoinformatics/test//IsotopicTest.vb"
+﻿#Region "Microsoft.VisualBasic::57c3aad748b63a21af887632d9cd2b81, metadb\Chemoinformatics\test\IsotopicTest.vb"
 
     ' Author:
     ' 

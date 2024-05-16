@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ac9082cd1993297757b208dfdecdd56b, E:/mzkit/src/visualize/plot//NMR/NMRSpectrum.vb"
+﻿#Region "Microsoft.VisualBasic::ac9082cd1993297757b208dfdecdd56b, visualize\plot\NMR\NMRSpectrum.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::087e5a0b94063a1a9e262df94879c746, E:/mzkit/src/metadb/Chemoinformatics//Formula/MS/Default/Lipids.vb"
+﻿#Region "Microsoft.VisualBasic::087e5a0b94063a1a9e262df94879c746, metadb\Chemoinformatics\Formula\MS\Default\Lipids.vb"
 
     ' Author:
     ' 

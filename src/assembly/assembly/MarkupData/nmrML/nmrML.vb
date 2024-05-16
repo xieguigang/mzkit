@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5c6251a0e8f93283454a8b6178f4d03a, E:/mzkit/src/assembly/assembly//MarkupData/nmrML/nmrML.vb"
+﻿#Region "Microsoft.VisualBasic::5c6251a0e8f93283454a8b6178f4d03a, assembly\assembly\MarkupData\nmrML\nmrML.vb"
 
     ' Author:
     ' 

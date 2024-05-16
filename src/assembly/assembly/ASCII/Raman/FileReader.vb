@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fe55cac20302ca28071a17c1a7ddc074, E:/mzkit/src/assembly/assembly//ASCII/Raman/FileReader.vb"
+﻿#Region "Microsoft.VisualBasic::fe55cac20302ca28071a17c1a7ddc074, assembly\assembly\ASCII\Raman\FileReader.vb"
 
     ' Author:
     ' 

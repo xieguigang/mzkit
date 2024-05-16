@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b848e86520a7e61fd9499795daacdcdf, E:/mzkit/src/assembly/mzPack//MemoryReader.vb"
+﻿#Region "Microsoft.VisualBasic::b848e86520a7e61fd9499795daacdcdf, assembly\mzPack\MemoryReader.vb"
 
     ' Author:
     ' 

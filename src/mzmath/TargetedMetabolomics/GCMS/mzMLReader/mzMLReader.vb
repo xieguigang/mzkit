@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3229b1f9f8eb9b0912484b27f578638e, E:/mzkit/src/mzmath/TargetedMetabolomics//GCMS/mzMLReader/mzMLReader.vb"
+﻿#Region "Microsoft.VisualBasic::3229b1f9f8eb9b0912484b27f578638e, mzmath\TargetedMetabolomics\GCMS\mzMLReader\mzMLReader.vb"
 
     ' Author:
     ' 

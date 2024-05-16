@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b71d8d3a768713344367b17dd1ef5591, E:/mzkit/src/mzmath/MSEngine//Search/PeptideMsReference.vb"
+﻿#Region "Microsoft.VisualBasic::b71d8d3a768713344367b17dd1ef5591, mzmath\MSEngine\Search\PeptideMsReference.vb"
 
     ' Author:
     ' 

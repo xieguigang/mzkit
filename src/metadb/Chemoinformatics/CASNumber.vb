@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a6400a4614e00fc2d4690b5c9f9eb646, E:/mzkit/src/metadb/Chemoinformatics//CASNumber.vb"
+﻿#Region "Microsoft.VisualBasic::a6400a4614e00fc2d4690b5c9f9eb646, metadb\Chemoinformatics\CASNumber.vb"
 
     ' Author:
     ' 

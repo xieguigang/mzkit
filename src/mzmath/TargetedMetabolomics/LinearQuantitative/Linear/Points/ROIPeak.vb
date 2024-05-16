@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0908a1abf1250420c3bcc4812eb578c1, E:/mzkit/src/mzmath/TargetedMetabolomics//LinearQuantitative/Linear/Points/ROIPeak.vb"
+﻿#Region "Microsoft.VisualBasic::0908a1abf1250420c3bcc4812eb578c1, mzmath\TargetedMetabolomics\LinearQuantitative\Linear\Points\ROIPeak.vb"
 
     ' Author:
     ' 

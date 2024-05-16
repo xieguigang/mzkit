@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bc5f41fde6182382cf19f9420b73eeb7, E:/mzkit/src/metadb/SMILES//Layout2D.vb"
+﻿#Region "Microsoft.VisualBasic::bc5f41fde6182382cf19f9420b73eeb7, metadb\SMILES\Layout2D.vb"
 
     ' Author:
     ' 

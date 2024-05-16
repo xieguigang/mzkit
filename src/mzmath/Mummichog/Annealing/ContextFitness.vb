@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6be143f6ad55e7649cdb36df1dcab82a, E:/mzkit/src/mzmath/Mummichog//Annealing/ContextFitness.vb"
+﻿#Region "Microsoft.VisualBasic::6be143f6ad55e7649cdb36df1dcab82a, mzmath\Mummichog\Annealing\ContextFitness.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6655ba666928ff86ccd13cf6913d8af6, E:/mzkit/src/metadb/MoNA//test/My Project/Settings.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::6655ba666928ff86ccd13cf6913d8af6, metadb\MoNA\test\My Project\Settings.Designer.vb"
 
     ' Author:
     ' 

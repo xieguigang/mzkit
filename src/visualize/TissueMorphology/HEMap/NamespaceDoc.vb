@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2bf9ee0d2ae546767047fa8410070f11, E:/mzkit/src/visualize/TissueMorphology//HEMap/NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::2bf9ee0d2ae546767047fa8410070f11, visualize\TissueMorphology\HEMap\NamespaceDoc.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e055a893e5243863fc1cf43b0ba79bef, E:/mzkit/src/visualize/TissueMorphology//HEMap/MSIRegistration.vb"
+﻿#Region "Microsoft.VisualBasic::e055a893e5243863fc1cf43b0ba79bef, visualize\TissueMorphology\HEMap\MSIRegistration.vb"
 
     ' Author:
     ' 

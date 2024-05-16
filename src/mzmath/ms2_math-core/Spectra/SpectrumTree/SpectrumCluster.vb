@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d892d8f64f470b66d339013bc2d41c12, E:/mzkit/src/mzmath/ms2_math-core//Spectra/SpectrumTree/SpectrumCluster.vb"
+﻿#Region "Microsoft.VisualBasic::d892d8f64f470b66d339013bc2d41c12, mzmath\ms2_math-core\Spectra\SpectrumTree\SpectrumCluster.vb"
 
     ' Author:
     ' 

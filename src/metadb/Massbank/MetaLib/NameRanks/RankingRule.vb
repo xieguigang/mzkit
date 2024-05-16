@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c81a78ef06129f87590627636d4964f5, E:/mzkit/src/metadb/Massbank//MetaLib/NameRanks/RankingRule.vb"
+﻿#Region "Microsoft.VisualBasic::c81a78ef06129f87590627636d4964f5, metadb\Massbank\MetaLib\NameRanks\RankingRule.vb"
 
     ' Author:
     ' 

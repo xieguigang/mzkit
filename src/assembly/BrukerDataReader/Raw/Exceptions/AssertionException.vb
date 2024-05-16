@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c9ea8550e24291fe74a9c34facd81e81, E:/mzkit/src/assembly/BrukerDataReader//Raw/Exceptions/AssertionException.vb"
+﻿#Region "Microsoft.VisualBasic::c9ea8550e24291fe74a9c34facd81e81, assembly\BrukerDataReader\Raw\Exceptions\AssertionException.vb"
 
     ' Author:
     ' 

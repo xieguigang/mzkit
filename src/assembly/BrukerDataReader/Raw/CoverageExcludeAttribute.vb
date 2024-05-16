@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0fae540140504f646e2e3dd78efecce2, E:/mzkit/src/assembly/BrukerDataReader//Raw/CoverageExcludeAttribute.vb"
+﻿#Region "Microsoft.VisualBasic::0fae540140504f646e2e3dd78efecce2, assembly\BrukerDataReader\Raw\CoverageExcludeAttribute.vb"
 
     ' Author:
     ' 

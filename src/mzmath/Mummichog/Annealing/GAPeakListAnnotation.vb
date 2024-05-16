@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1d6903880dc6fd69b673ba941fc059f7, E:/mzkit/src/mzmath/Mummichog//Annealing/GAPeakListAnnotation.vb"
+﻿#Region "Microsoft.VisualBasic::1d6903880dc6fd69b673ba941fc059f7, mzmath\Mummichog\Annealing\GAPeakListAnnotation.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::93c29630b69c66178fda73e6006adf23, E:/mzkit/src/assembly/mzPack//Stream/PackCDF.vb"
+﻿#Region "Microsoft.VisualBasic::93c29630b69c66178fda73e6006adf23, assembly\mzPack\Stream\PackCDF.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6c08be7bf370b62684dac068073d1134, E:/mzkit/src/mzmath/Mummichog//Models/KEGG.vb"
+﻿#Region "Microsoft.VisualBasic::6c08be7bf370b62684dac068073d1134, mzmath\Mummichog\Models\KEGG.vb"
 
     ' Author:
     ' 

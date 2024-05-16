@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::59315bd2de952eb3a65fcae6ee3463e5, E:/mzkit/src/metadb/Massbank//MetaLib/Models/CrossReference/XrefSchema.vb"
+﻿#Region "Microsoft.VisualBasic::59315bd2de952eb3a65fcae6ee3463e5, metadb\Massbank\MetaLib\Models\CrossReference\XrefSchema.vb"
 
     ' Author:
     ' 

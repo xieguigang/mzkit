@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::05331457b8cce07da0f71d35be572e2a, E:/mzkit/src/metadb/Lipidomics//LipidParser/ILipidParser.vb"
+﻿#Region "Microsoft.VisualBasic::05331457b8cce07da0f71d35be572e2a, metadb\Lipidomics\LipidParser\ILipidParser.vb"
 
     ' Author:
     ' 

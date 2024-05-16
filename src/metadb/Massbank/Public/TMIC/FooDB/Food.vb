@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a9f1b6867acad5c315f8947a8827ef28, E:/mzkit/src/metadb/Massbank//Public/TMIC/FooDB/Food.vb"
+﻿#Region "Microsoft.VisualBasic::a9f1b6867acad5c315f8947a8827ef28, metadb\Massbank\Public\TMIC\FooDB\Food.vb"
 
     ' Author:
     ' 

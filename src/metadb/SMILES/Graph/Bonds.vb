@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5a7274f68cba00297a5be650226dfab2, E:/mzkit/src/metadb/SMILES//Graph/Bonds.vb"
+﻿#Region "Microsoft.VisualBasic::5a7274f68cba00297a5be650226dfab2, metadb\SMILES\Graph\Bonds.vb"
 
     ' Author:
     ' 

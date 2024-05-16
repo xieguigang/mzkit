@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::820270bc1428861aa475011d3f09ad5c, E:/mzkit/src/metadb/Chemoinformatics//Formula/Isotopic/Calculator.vb"
+﻿#Region "Microsoft.VisualBasic::820270bc1428861aa475011d3f09ad5c, metadb\Chemoinformatics\Formula\Isotopic\Calculator.vb"
 
     ' Author:
     ' 

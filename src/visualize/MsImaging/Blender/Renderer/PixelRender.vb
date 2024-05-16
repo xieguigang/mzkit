@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::64cec1de180d95b2287c2a2348d36c2c, E:/mzkit/src/visualize/MsImaging//Blender/Renderer/PixelRender.vb"
+﻿#Region "Microsoft.VisualBasic::64cec1de180d95b2287c2a2348d36c2c, visualize\MsImaging\Blender\Renderer\PixelRender.vb"
 
     ' Author:
     ' 

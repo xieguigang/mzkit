@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1c0e9e9f1a7cd9d11c17dfcef7d6950f, E:/mzkit/src/mzmath/TargetedMetabolomics//GCMS/QuantifyAnalysis/ScanIonExtract.vb"
+﻿#Region "Microsoft.VisualBasic::1c0e9e9f1a7cd9d11c17dfcef7d6950f, mzmath\TargetedMetabolomics\GCMS\QuantifyAnalysis\ScanIonExtract.vb"
 
     ' Author:
     ' 

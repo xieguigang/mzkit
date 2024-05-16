@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bdded4075d4abeb79b5bd68037fefa3a, E:/mzkit/src/mzmath/TargetedMetabolomics//LinearQuantitative/Models/IonTPA.vb"
+﻿#Region "Microsoft.VisualBasic::bdded4075d4abeb79b5bd68037fefa3a, mzmath\TargetedMetabolomics\LinearQuantitative\Models\IonTPA.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2ed7fd62990b089d935a58d20dbe523d, E:/mzkit/src/mzmath/MoleculeNetworking//SpectrumPool/MetadataPool/HttpRESTMetadataPool.vb"
+﻿#Region "Microsoft.VisualBasic::2ed7fd62990b089d935a58d20dbe523d, mzmath\MoleculeNetworking\SpectrumPool\MetadataPool\HttpRESTMetadataPool.vb"
 
     ' Author:
     ' 

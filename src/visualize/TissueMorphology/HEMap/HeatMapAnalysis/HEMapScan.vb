@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fd271c29127132290fea14310f07908b, E:/mzkit/src/visualize/TissueMorphology//HEMap/HeatMapAnalysis/HEMapScan.vb"
+﻿#Region "Microsoft.VisualBasic::fd271c29127132290fea14310f07908b, visualize\TissueMorphology\HEMap\HeatMapAnalysis\HEMapScan.vb"
 
     ' Author:
     ' 

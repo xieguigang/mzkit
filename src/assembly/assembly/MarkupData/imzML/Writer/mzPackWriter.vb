@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dbd9ed206bee3df53b0b6a04e956c262, E:/mzkit/src/assembly/assembly//MarkupData/imzML/Writer/mzPackWriter.vb"
+﻿#Region "Microsoft.VisualBasic::dbd9ed206bee3df53b0b6a04e956c262, assembly\assembly\MarkupData\imzML\Writer\mzPackWriter.vb"
 
     ' Author:
     ' 

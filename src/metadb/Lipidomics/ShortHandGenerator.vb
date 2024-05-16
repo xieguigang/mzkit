@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::de0b0002e844e2a7a7b12a2bb1d7eff4, E:/mzkit/src/metadb/Lipidomics//ShortHandGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::de0b0002e844e2a7a7b12a2bb1d7eff4, metadb\Lipidomics\ShortHandGenerator.vb"
 
     ' Author:
     ' 

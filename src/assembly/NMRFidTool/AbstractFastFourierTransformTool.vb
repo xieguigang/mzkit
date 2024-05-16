@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5cd1426f924d71c156fab95a65aa3004, E:/mzkit/src/assembly/NMRFidTool//AbstractFastFourierTransformTool.vb"
+﻿#Region "Microsoft.VisualBasic::5cd1426f924d71c156fab95a65aa3004, assembly\NMRFidTool\AbstractFastFourierTransformTool.vb"
 
     ' Author:
     ' 

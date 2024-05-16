@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f3cec54cd0b93c99f679b9f2d664cf33, E:/mzkit/src/mzmath/Oligonucleotide_MS//MS_Peak/GroupMass.vb"
+﻿#Region "Microsoft.VisualBasic::f3cec54cd0b93c99f679b9f2d664cf33, mzmath\Oligonucleotide_MS\MS_Peak\GroupMass.vb"
 
     ' Author:
     ' 

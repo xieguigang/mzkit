@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9befff8e3fd91d093138e5dc77178bb9, E:/mzkit/src/metadb/Chemoinformatics//Formula/FormulaCalculateUtility.vb"
+﻿#Region "Microsoft.VisualBasic::9befff8e3fd91d093138e5dc77178bb9, metadb\Chemoinformatics\Formula\FormulaCalculateUtility.vb"
 
     ' Author:
     ' 

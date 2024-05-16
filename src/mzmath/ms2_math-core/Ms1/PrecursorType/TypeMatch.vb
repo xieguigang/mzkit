@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ef2239175080cb8f1c53c894756d086a, E:/mzkit/src/mzmath/ms2_math-core//Ms1/PrecursorType/TypeMatch.vb"
+﻿#Region "Microsoft.VisualBasic::ef2239175080cb8f1c53c894756d086a, mzmath\ms2_math-core\Ms1\PrecursorType\TypeMatch.vb"
 
     ' Author:
     ' 

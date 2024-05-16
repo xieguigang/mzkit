@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4eff9f04e506667e7a6bbb1e2b675089, E:/mzkit/src/assembly/BrukerDataReader//XMass/Xml/AnalysisMethod.vb"
+﻿#Region "Microsoft.VisualBasic::4eff9f04e506667e7a6bbb1e2b675089, assembly\BrukerDataReader\XMass\Xml\AnalysisMethod.vb"
 
     ' Author:
     ' 

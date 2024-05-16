@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c4fbdcff68bc4eb5baba686fc5dbfacb, E:/mzkit/src/assembly/NMRFidTool//Math/FFT/FFTBase.vb"
+﻿#Region "Microsoft.VisualBasic::c4fbdcff68bc4eb5baba686fc5dbfacb, assembly\NMRFidTool\Math\FFT\FFTBase.vb"
 
     ' Author:
     ' 

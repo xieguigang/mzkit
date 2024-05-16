@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cf6cd2e829e8abd3c60c7a3b6b342054, E:/mzkit/src/visualize/MsImaging//Blender/Scaler/DenoiseScaler.vb"
+﻿#Region "Microsoft.VisualBasic::cf6cd2e829e8abd3c60c7a3b6b342054, visualize\MsImaging\Blender\Scaler\DenoiseScaler.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::70af07937715e3bcc30a9e788f63c3ab, E:/mzkit/src/assembly/mzPackExtensions//MSImaging/imzXMLWriter.vb"
+﻿#Region "Microsoft.VisualBasic::70af07937715e3bcc30a9e788f63c3ab, assembly\mzPackExtensions\MSImaging\imzXMLWriter.vb"
 
     ' Author:
     ' 

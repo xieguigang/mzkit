@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0d87a7286a1e52018f320745026acbdc, E:/mzkit/src/mzmath/mz_deco//Signals/MRM/MS1.vb"
+﻿#Region "Microsoft.VisualBasic::0d87a7286a1e52018f320745026acbdc, mzmath\mz_deco\Signals\MRM\MS1.vb"
 
     ' Author:
     ' 

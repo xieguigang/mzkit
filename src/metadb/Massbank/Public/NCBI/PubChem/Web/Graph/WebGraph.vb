@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0ba5d7e8848ddbc0fb2909eb3a4b1f8b, E:/mzkit/src/metadb/Massbank//Public/NCBI/PubChem/Web/Graph/WebGraph.vb"
+﻿#Region "Microsoft.VisualBasic::0ba5d7e8848ddbc0fb2909eb3a4b1f8b, metadb\Massbank\Public\NCBI\PubChem\Web\Graph\WebGraph.vb"
 
     ' Author:
     ' 

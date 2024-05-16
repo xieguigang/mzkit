@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1b9144d438a659e09de7e7fcf2cbb940, E:/mzkit/src/assembly/mzPackExtensions//ToCDFWriter.vb"
+﻿#Region "Microsoft.VisualBasic::1b9144d438a659e09de7e7fcf2cbb940, assembly\mzPackExtensions\ToCDFWriter.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8c61d1b1bb15a4c9b301a3475a39f169, E:/mzkit/src/mzmath/Oligonucleotide_MS//MS_Peak/MatchedInput.vb"
+﻿#Region "Microsoft.VisualBasic::8c61d1b1bb15a4c9b301a3475a39f169, mzmath\Oligonucleotide_MS\MS_Peak\MatchedInput.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5766dbe21639c15a068d93ec6afec438, E:/mzkit/src/mzmath/MSFinder//ExistFormulaQuery.vb"
+﻿#Region "Microsoft.VisualBasic::5766dbe21639c15a068d93ec6afec438, mzmath\MSFinder\ExistFormulaQuery.vb"
 
     ' Author:
     ' 

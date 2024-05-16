@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6fb02a313751062fc2fd279d2ca5de9b, E:/mzkit/src/assembly/SignalReader//ChromatogramReader.vb"
+﻿#Region "Microsoft.VisualBasic::6fb02a313751062fc2fd279d2ca5de9b, assembly\SignalReader\ChromatogramReader.vb"
 
     ' Author:
     ' 

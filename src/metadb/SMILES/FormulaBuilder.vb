@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b08b1db674510a8999c9d28e60415458, E:/mzkit/src/metadb/SMILES//FormulaBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::b08b1db674510a8999c9d28e60415458, metadb\SMILES\FormulaBuilder.vb"
 
     ' Author:
     ' 

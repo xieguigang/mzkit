@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dcf20c9153a0857496bbead1d8b69425, E:/mzkit/src/visualize/plot//UVsignalPlot.vb"
+﻿#Region "Microsoft.VisualBasic::dcf20c9153a0857496bbead1d8b69425, visualize\plot\UVsignalPlot.vb"
 
     ' Author:
     ' 

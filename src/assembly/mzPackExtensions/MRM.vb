@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::09502ac6e57a73aeb7b79d4e1fd58bff, E:/mzkit/src/assembly/mzPackExtensions//MRM.vb"
+﻿#Region "Microsoft.VisualBasic::09502ac6e57a73aeb7b79d4e1fd58bff, assembly\mzPackExtensions\MRM.vb"
 
     ' Author:
     ' 

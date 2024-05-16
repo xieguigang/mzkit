@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ea426c1ce20f59f2d540a5a1831cc9fe, E:/mzkit/src/metadb/SMILES//ParseChain.vb"
+﻿#Region "Microsoft.VisualBasic::ea426c1ce20f59f2d540a5a1831cc9fe, metadb\SMILES\ParseChain.vb"
 
     ' Author:
     ' 

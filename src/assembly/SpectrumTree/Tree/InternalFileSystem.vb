@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::10acb8c238e44c0b5af4186fc53c7335, E:/mzkit/src/assembly/SpectrumTree//Tree/InternalFileSystem.vb"
+﻿#Region "Microsoft.VisualBasic::10acb8c238e44c0b5af4186fc53c7335, assembly\SpectrumTree\Tree\InternalFileSystem.vb"
 
     ' Author:
     ' 

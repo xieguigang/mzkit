@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::70a4af574c18a66f4915cc17ee5d1085, E:/mzkit/src/assembly/assembly//MarkupData/FastSeekIndex.vb"
+﻿#Region "Microsoft.VisualBasic::70a4af574c18a66f4915cc17ee5d1085, assembly\assembly\MarkupData\FastSeekIndex.vb"
 
     ' Author:
     ' 

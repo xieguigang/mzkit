@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5b2156f7b3e75f14901d41c6615a8a15, E:/mzkit/src/assembly/assembly//UnifyReader/FileFormats/mzMLScan.vb"
+﻿#Region "Microsoft.VisualBasic::5b2156f7b3e75f14901d41c6615a8a15, assembly\assembly\UnifyReader\FileFormats\mzMLScan.vb"
 
     ' Author:
     ' 

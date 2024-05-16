@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bf5e6833af783da9a5437caea4728e1b, E:/mzkit/src/assembly/SpectrumTree//Pack/Validations/DataSetParameters.vb"
+﻿#Region "Microsoft.VisualBasic::bf5e6833af783da9a5437caea4728e1b, assembly\SpectrumTree\Pack\Validations\DataSetParameters.vb"
 
     ' Author:
     ' 

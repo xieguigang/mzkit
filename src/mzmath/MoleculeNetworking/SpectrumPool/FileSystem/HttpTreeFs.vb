@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dc861883c13230fc9f65459ae91b86b7, E:/mzkit/src/mzmath/MoleculeNetworking//SpectrumPool/FileSystem/HttpTreeFs.vb"
+﻿#Region "Microsoft.VisualBasic::dc861883c13230fc9f65459ae91b86b7, mzmath\MoleculeNetworking\SpectrumPool\FileSystem\HttpTreeFs.vb"
 
     ' Author:
     ' 

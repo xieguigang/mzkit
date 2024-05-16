@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b3dd250c21600ffc53a3ab73d1b2f98a, E:/mzkit/src/metadb/Chemoinformatics//Formula/MS/NeutralLoss.vb"
+﻿#Region "Microsoft.VisualBasic::b3dd250c21600ffc53a3ab73d1b2f98a, metadb\Chemoinformatics\Formula\MS\NeutralLoss.vb"
 
     ' Author:
     ' 

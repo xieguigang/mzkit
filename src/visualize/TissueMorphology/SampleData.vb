@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f6804942c151fe61b27a27863fdc87dd, E:/mzkit/src/visualize/TissueMorphology//SampleData.vb"
+﻿#Region "Microsoft.VisualBasic::f6804942c151fe61b27a27863fdc87dd, visualize\TissueMorphology\SampleData.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1b2dbac03cdea1bf14bf198be23beae0, E:/mzkit/src/assembly/SpectrumTree//Pack/PackAlignment.vb"
+﻿#Region "Microsoft.VisualBasic::1b2dbac03cdea1bf14bf198be23beae0, assembly\SpectrumTree\Pack\PackAlignment.vb"
 
     ' Author:
     ' 

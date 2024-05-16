@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e090325b42e9d70d7dc86dc87b7c6eb1, E:/mzkit/src/visualize/plot//ChromatogramPlot/TICplot.vb"
+﻿#Region "Microsoft.VisualBasic::e090325b42e9d70d7dc86dc87b7c6eb1, visualize\plot\ChromatogramPlot\TICplot.vb"
 
     ' Author:
     ' 

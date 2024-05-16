@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::afa8d69266a4b7138399668236f81d3c, E:/mzkit/src/mzmath/MSEngine//Search/MsScanMatchResult.vb"
+﻿#Region "Microsoft.VisualBasic::afa8d69266a4b7138399668236f81d3c, mzmath\MSEngine\Search\MsScanMatchResult.vb"
 
     ' Author:
     ' 

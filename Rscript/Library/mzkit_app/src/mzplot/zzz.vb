@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5220017fbead52d0c00e3e78c6aaba95, E:/mzkit/Rscript/Library/mzkit_app/src/mzplot//zzz.vb"
+﻿#Region "Microsoft.VisualBasic::5220017fbead52d0c00e3e78c6aaba95, Rscript\Library\mzkit_app\src\mzplot\zzz.vb"
 
     ' Author:
     ' 

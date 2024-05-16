@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f514bbac69004f4346dcbff88b6f36d4, E:/mzkit/src/metadb/Lipidomics//MsCharacterization/LPCEadMsCharacterization.vb"
+﻿#Region "Microsoft.VisualBasic::f514bbac69004f4346dcbff88b6f36d4, metadb\Lipidomics\MsCharacterization\LPCEadMsCharacterization.vb"
 
     ' Author:
     ' 

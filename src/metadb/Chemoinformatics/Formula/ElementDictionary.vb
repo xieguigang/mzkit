@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::97dae9c48f74bda93ea780b25aa87e84, E:/mzkit/src/metadb/Chemoinformatics//Formula/ElementDictionary.vb"
+﻿#Region "Microsoft.VisualBasic::97dae9c48f74bda93ea780b25aa87e84, metadb\Chemoinformatics\Formula\ElementDictionary.vb"
 
     ' Author:
     ' 

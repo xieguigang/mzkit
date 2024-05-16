@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ea588734fbf23dd92075893cccc12cb2, E:/mzkit/src/metadb/XrefEngine//My Project/Settings.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::ea588734fbf23dd92075893cccc12cb2, metadb\XrefEngine\My Project\Settings.Designer.vb"
 
     ' Author:
     ' 

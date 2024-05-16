@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7c37c9539007c4c838e659a7a087ff42, E:/mzkit/Rscript/Library/mzkit_app/src/mzquant//MRM/MRMkit.vb"
+﻿#Region "Microsoft.VisualBasic::7c37c9539007c4c838e659a7a087ff42, Rscript\Library\mzkit_app\src\mzquant\MRM\MRMkit.vb"
 
     ' Author:
     ' 

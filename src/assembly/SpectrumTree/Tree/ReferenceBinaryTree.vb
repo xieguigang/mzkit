@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fa011eeb3529da964adc6abc33647a4d, E:/mzkit/src/assembly/SpectrumTree//Tree/ReferenceBinaryTree.vb"
+﻿#Region "Microsoft.VisualBasic::fa011eeb3529da964adc6abc33647a4d, assembly\SpectrumTree\Tree\ReferenceBinaryTree.vb"
 
     ' Author:
     ' 

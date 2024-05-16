@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2f9d18a1256d746c78a1c96def306f30, E:/mzkit/src/mzmath/ms2_math-core//test/Module1.vb"
+﻿#Region "Microsoft.VisualBasic::2f9d18a1256d746c78a1c96def306f30, mzmath\ms2_math-core\test\Module1.vb"
 
     ' Author:
     ' 

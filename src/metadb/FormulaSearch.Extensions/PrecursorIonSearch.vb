@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::64b02e30593c675f4c2179532aa491f7, E:/mzkit/src/metadb/FormulaSearch.Extensions//PrecursorIonSearch.vb"
+﻿#Region "Microsoft.VisualBasic::64b02e30593c675f4c2179532aa491f7, metadb\FormulaSearch.Extensions\PrecursorIonSearch.vb"
 
     ' Author:
     ' 

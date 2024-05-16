@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b01fb0c3d1b3f237dd8be28e33d5200c, E:/mzkit/src/assembly/ThermoRawFileReader//DataObjects/SingleScanInfo.vb"
+﻿#Region "Microsoft.VisualBasic::b01fb0c3d1b3f237dd8be28e33d5200c, assembly\ThermoRawFileReader\DataObjects\SingleScanInfo.vb"
 
     ' Author:
     ' 

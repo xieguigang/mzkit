@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::71a9cd0f091f3397cd0fad24ccc9871f, E:/mzkit/src/assembly/Comprehensive//MsImaging/MSIMeasurement.vb"
+﻿#Region "Microsoft.VisualBasic::71a9cd0f091f3397cd0fad24ccc9871f, assembly\Comprehensive\MsImaging\MSIMeasurement.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::671f6af17799d8dd9e3e76b7529a1ac8, E:/mzkit/src/assembly/assembly//Utils.vb"
+﻿#Region "Microsoft.VisualBasic::671f6af17799d8dd9e3e76b7529a1ac8, assembly\assembly\Utils.vb"
 
     ' Author:
     ' 

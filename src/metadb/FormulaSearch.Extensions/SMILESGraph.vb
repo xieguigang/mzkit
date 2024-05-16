@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8e5fe5089de0cda9d0f335493588680a, E:/mzkit/src/metadb/FormulaSearch.Extensions//SMILESGraph.vb"
+﻿#Region "Microsoft.VisualBasic::8e5fe5089de0cda9d0f335493588680a, metadb\FormulaSearch.Extensions\SMILESGraph.vb"
 
     ' Author:
     ' 

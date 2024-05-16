@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::47e6af95db28b30a389b2d94c32e11d4, E:/mzkit/src/mzmath/mz_deco/test//My Project/AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::47e6af95db28b30a389b2d94c32e11d4, mzmath\mz_deco\test\My Project\AssemblyInfo.vb"
 
     ' Author:
     ' 

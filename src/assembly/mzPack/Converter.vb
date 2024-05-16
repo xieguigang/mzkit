@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::37c8dcf6e3777cb7b511d1b68186b933, E:/mzkit/src/assembly/mzPack//Converter.vb"
+﻿#Region "Microsoft.VisualBasic::37c8dcf6e3777cb7b511d1b68186b933, assembly\mzPack\Converter.vb"
 
     ' Author:
     ' 

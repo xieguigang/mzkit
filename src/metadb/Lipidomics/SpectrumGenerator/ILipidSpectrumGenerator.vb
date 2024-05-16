@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e312ec24ff1e91d57b7ae39cdf021107, E:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/ILipidSpectrumGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::e312ec24ff1e91d57b7ae39cdf021107, metadb\Lipidomics\SpectrumGenerator\ILipidSpectrumGenerator.vb"
 
     ' Author:
     ' 

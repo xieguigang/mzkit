@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3f0e3db03d073e20c1ec6d6e0c428aea, E:/mzkit/src/assembly/BrukerDataReader//XMass/PropertyFileReader.vb"
+﻿#Region "Microsoft.VisualBasic::3f0e3db03d073e20c1ec6d6e0c428aea, assembly\BrukerDataReader\XMass\PropertyFileReader.vb"
 
     ' Author:
     ' 

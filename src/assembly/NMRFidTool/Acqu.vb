@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::09baccea3e27fffd41fcd7ace5476559, E:/mzkit/src/assembly/NMRFidTool//Acqu.vb"
+﻿#Region "Microsoft.VisualBasic::09baccea3e27fffd41fcd7ace5476559, assembly\NMRFidTool\Acqu.vb"
 
     ' Author:
     ' 

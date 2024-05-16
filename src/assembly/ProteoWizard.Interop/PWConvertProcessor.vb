@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::50ae7f080bb34d28612681c6c5d32d7c, E:/mzkit/src/assembly/ProteoWizard.Interop//PWConvertProcessor.vb"
+﻿#Region "Microsoft.VisualBasic::50ae7f080bb34d28612681c6c5d32d7c, assembly\ProteoWizard.Interop\PWConvertProcessor.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8deb9040930162c7f7a6e2c93264054f, E:/mzkit/src/mzmath/Mummichog//PeakCorrelation.vb"
+﻿#Region "Microsoft.VisualBasic::e7c7bbb9ad2aef2eed2685b1919471c4, mzmath\Mummichog\PeakCorrelation.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '    Code Lines: 162
     ' Comment Lines: 44
     '   Blank Lines: 30
-    '     File Size: 11.75 KB
+    '     File Size: 11.76 KB
 
 
     ' Class PeakCorrelation

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e23a20a0ccc80055967bac52093efd94, E:/mzkit/src/metadb/KNApSAcK//Data/ResultEntry.vb"
+﻿#Region "Microsoft.VisualBasic::e23a20a0ccc80055967bac52093efd94, metadb\KNApSAcK\Data\ResultEntry.vb"
 
     ' Author:
     ' 

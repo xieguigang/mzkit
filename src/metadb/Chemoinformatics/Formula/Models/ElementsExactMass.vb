@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f6bce9ccd9a7451d51c14b337f5d5995, E:/mzkit/src/metadb/Chemoinformatics//Formula/Models/ElementsExactMass.vb"
+﻿#Region "Microsoft.VisualBasic::f6bce9ccd9a7451d51c14b337f5d5995, metadb\Chemoinformatics\Formula\Models\ElementsExactMass.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ae0d9a144d3956fbfeb18652c5a02d06, E:/mzkit/src/mzmath/MoleculeNetworking//NLPEmbedding/SpectrumVocabulary.vb"
+﻿#Region "Microsoft.VisualBasic::ae0d9a144d3956fbfeb18652c5a02d06, mzmath\MoleculeNetworking\NLPEmbedding\SpectrumVocabulary.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5648683cf739ff453f1781f53dcfd504, E:/mzkit/src/metadna/metaDNA//Models/AnnotatedSeed.vb"
+﻿#Region "Microsoft.VisualBasic::5648683cf739ff453f1781f53dcfd504, metadna\metaDNA\Models\AnnotatedSeed.vb"
 
     ' Author:
     ' 

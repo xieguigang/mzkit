@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::74bab324523bf91a0ee17ac99f19eda2, E:/mzkit/src/assembly/mzPack//mzPack.vb"
+﻿#Region "Microsoft.VisualBasic::950a6a898319c55456c1411feefc0fa4, assembly\mzPack\mzPack.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 338
+    '   Total Lines: 343
     '    Code Lines: 226
-    ' Comment Lines: 75
+    ' Comment Lines: 80
     '   Blank Lines: 37
-    '     File Size: 12.34 KB
+    '     File Size: 12.48 KB
 
 
     ' Class mzPack

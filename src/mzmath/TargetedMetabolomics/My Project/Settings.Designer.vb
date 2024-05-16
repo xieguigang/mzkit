@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fb4b18dabf1022a1c356bf94607186b2, E:/mzkit/src/mzmath/TargetedMetabolomics//My Project/Settings.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::fb4b18dabf1022a1c356bf94607186b2, mzmath\TargetedMetabolomics\My Project\Settings.Designer.vb"
 
     ' Author:
     ' 

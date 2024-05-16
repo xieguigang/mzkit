@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ae07c7f932525f69348d806356850df0, E:/mzkit/src/visualize/MsImaging//Blender/Scaler/SoftenScaler.vb"
+﻿#Region "Microsoft.VisualBasic::ae07c7f932525f69348d806356850df0, visualize\MsImaging\Blender\Scaler\SoftenScaler.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::57c57fab5ac3292b9d9583d518b5d834, E:/mzkit/src/visualize/MsImaging//Reader/PixelScan/ibdPixel.vb"
+﻿#Region "Microsoft.VisualBasic::57c57fab5ac3292b9d9583d518b5d834, visualize\MsImaging\Reader\PixelScan\ibdPixel.vb"
 
     ' Author:
     ' 

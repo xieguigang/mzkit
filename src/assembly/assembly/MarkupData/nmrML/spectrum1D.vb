@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1ce6b3b3d90cf460951fa6f4d511b14b, E:/mzkit/src/assembly/assembly//MarkupData/nmrML/spectrum1D.vb"
+﻿#Region "Microsoft.VisualBasic::1ce6b3b3d90cf460951fa6f4d511b14b, assembly\assembly\MarkupData\nmrML\spectrum1D.vb"
 
     ' Author:
     ' 

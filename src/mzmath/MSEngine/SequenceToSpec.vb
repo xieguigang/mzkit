@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cacf98272c844493d32da8093c2e787e, E:/mzkit/src/mzmath/MSEngine//SequenceToSpec.vb"
+﻿#Region "Microsoft.VisualBasic::cacf98272c844493d32da8093c2e787e, mzmath\MSEngine\SequenceToSpec.vb"
 
     ' Author:
     ' 

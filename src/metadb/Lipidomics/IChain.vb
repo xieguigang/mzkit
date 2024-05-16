@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::25be272405b8121a8bc4e12b9fe6452b, E:/mzkit/src/metadb/Lipidomics//IChain.vb"
+﻿#Region "Microsoft.VisualBasic::25be272405b8121a8bc4e12b9fe6452b, metadb\Lipidomics\IChain.vb"
 
     ' Author:
     ' 

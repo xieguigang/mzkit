@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7e18a519d65e3ee93284d4c5f1309b17, E:/mzkit/src/metadb/Massbank//Public/TMIC/FooDB/StoredProcedure.vb"
+﻿#Region "Microsoft.VisualBasic::7e18a519d65e3ee93284d4c5f1309b17, metadb\Massbank\Public\TMIC\FooDB\StoredProcedure.vb"
 
     ' Author:
     ' 

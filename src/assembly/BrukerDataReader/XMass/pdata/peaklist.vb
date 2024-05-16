@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6e496d2aaa7beb654a6bf0a1fd8f97db, E:/mzkit/src/assembly/BrukerDataReader//XMass/pdata/peaklist.vb"
+﻿#Region "Microsoft.VisualBasic::6e496d2aaa7beb654a6bf0a1fd8f97db, assembly\BrukerDataReader\XMass\pdata\peaklist.vb"
 
     ' Author:
     ' 

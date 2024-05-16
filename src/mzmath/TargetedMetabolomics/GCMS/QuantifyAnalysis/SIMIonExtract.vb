@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9261bf84f77f892dd722dd83f32de6a1, E:/mzkit/src/mzmath/TargetedMetabolomics//GCMS/QuantifyAnalysis/SIMIonExtract.vb"
+﻿#Region "Microsoft.VisualBasic::9261bf84f77f892dd722dd83f32de6a1, mzmath\TargetedMetabolomics\GCMS\QuantifyAnalysis\SIMIonExtract.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e23b2485d249d3d7fff6b8326a41a605, E:/mzkit/src/mzmath/Oligonucleotide_MS//VBA/Dim2.vb"
+﻿#Region "Microsoft.VisualBasic::e23b2485d249d3d7fff6b8326a41a605, mzmath\Oligonucleotide_MS\VBA\Dim2.vb"
 
     ' Author:
     ' 

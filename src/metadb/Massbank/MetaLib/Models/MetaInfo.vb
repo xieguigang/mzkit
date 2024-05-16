@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::38f89486af25a42a6e1c644578decc68, E:/mzkit/src/metadb/Massbank//MetaLib/Models/MetaInfo.vb"
+﻿#Region "Microsoft.VisualBasic::38f89486af25a42a6e1c644578decc68, metadb\Massbank\MetaLib\Models\MetaInfo.vb"
 
     ' Author:
     ' 

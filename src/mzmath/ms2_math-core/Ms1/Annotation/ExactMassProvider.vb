@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::35077982ac95664925d9902b874f1953, E:/mzkit/src/mzmath/ms2_math-core//Ms1/Annotation/ExactMassProvider.vb"
+﻿#Region "Microsoft.VisualBasic::35077982ac95664925d9902b874f1953, mzmath\ms2_math-core\Ms1\Annotation\ExactMassProvider.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::938e77c8dbef161a3e6af2932db16b98, E:/mzkit/src/assembly/assembly//mzPack/Binary/Serialization.vb"
+﻿#Region "Microsoft.VisualBasic::938e77c8dbef161a3e6af2932db16b98, assembly\assembly\mzPack\Binary\Serialization.vb"
 
     ' Author:
     ' 
