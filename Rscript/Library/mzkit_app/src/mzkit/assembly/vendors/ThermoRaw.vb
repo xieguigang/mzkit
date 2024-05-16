@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::941dce3dba42fb5c5eed4cb774266159, E:/mzkit/Rscript/Library/mzkit_app/src/mzkit//assembly/vendors/ThermoRaw.vb"
+﻿#Region "Microsoft.VisualBasic::941dce3dba42fb5c5eed4cb774266159, Rscript\Library\mzkit_app\src\mzkit\assembly\vendors\ThermoRaw.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9a69ad03178bb3c51319c9ffd2242a8a, E:/mzkit/Rscript/Library/mzkit_app/src/mzplot//My Project/Settings.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::9a69ad03178bb3c51319c9ffd2242a8a, Rscript\Library\mzkit_app\src\mzplot\My Project\Settings.Designer.vb"
 
     ' Author:
     ' 

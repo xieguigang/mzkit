@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fd3999d8bfc68e69a687fc4b190ba8c2, E:/mzkit/Rscript/Library/mzkit_app/src/mzplot//MsImaging.vb"
+﻿#Region "Microsoft.VisualBasic::fd3999d8bfc68e69a687fc4b190ba8c2, Rscript\Library\mzkit_app\src\mzplot\MsImaging.vb"
 
     ' Author:
     ' 

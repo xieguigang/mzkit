@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2a578ecaeb8e9210bbace575dc93658a, E:/mzkit/Rscript/Library/mzkit_app/src/mzkit//assembly/NMR.vb"
+﻿#Region "Microsoft.VisualBasic::2a578ecaeb8e9210bbace575dc93658a, Rscript\Library\mzkit_app\src\mzkit\assembly\NMR.vb"
 
     ' Author:
     ' 

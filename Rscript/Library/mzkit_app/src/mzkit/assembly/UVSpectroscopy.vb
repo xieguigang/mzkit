@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4b4663a9d3470e884c743c4db847a7b6, E:/mzkit/Rscript/Library/mzkit_app/src/mzkit//assembly/UVSpectroscopy.vb"
+﻿#Region "Microsoft.VisualBasic::4b4663a9d3470e884c743c4db847a7b6, Rscript\Library\mzkit_app\src\mzkit\assembly\UVSpectroscopy.vb"
 
     ' Author:
     ' 

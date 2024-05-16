@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7da9277c8ecb9cbdc1244ed7f54d1caa, E:/mzkit/Rscript/Library/mzkit_app/src/mzDIA//ms2_simulator.vb"
+﻿#Region "Microsoft.VisualBasic::7da9277c8ecb9cbdc1244ed7f54d1caa, Rscript\Library\mzkit_app\src\mzDIA\ms2_simulator.vb"
 
     ' Author:
     ' 
