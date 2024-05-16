@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1147a6802241362934bda5bdfcdfa73d, E:/mzkit/src/mzmath/mz_deco//ChromatogramModels/XICPool.vb"
+﻿#Region "Microsoft.VisualBasic::1147a6802241362934bda5bdfcdfa73d, mzmath\mz_deco\ChromatogramModels\XICPool.vb"
 
     ' Author:
     ' 

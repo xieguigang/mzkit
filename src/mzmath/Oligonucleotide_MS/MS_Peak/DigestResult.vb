@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::68bc3e1e9113fd0dc935dddc2ad35f58, E:/mzkit/src/mzmath/Oligonucleotide_MS//MS_Peak/DigestResult.vb"
+﻿#Region "Microsoft.VisualBasic::68bc3e1e9113fd0dc935dddc2ad35f58, mzmath\Oligonucleotide_MS\MS_Peak\DigestResult.vb"
 
     ' Author:
     ' 

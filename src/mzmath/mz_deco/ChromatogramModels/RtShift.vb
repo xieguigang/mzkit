@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f73e74eca3400bfb156ccbe0398e6103, E:/mzkit/src/mzmath/mz_deco//ChromatogramModels/RtShift.vb"
+﻿#Region "Microsoft.VisualBasic::f73e74eca3400bfb156ccbe0398e6103, mzmath\mz_deco\ChromatogramModels\RtShift.vb"
 
     ' Author:
     ' 

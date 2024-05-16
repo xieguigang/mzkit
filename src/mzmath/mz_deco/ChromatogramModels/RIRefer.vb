@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::54e81e6cfae8e4868ea42dbe0bb89b03, E:/mzkit/src/mzmath/mz_deco//ChromatogramModels/RIRefer.vb"
+﻿#Region "Microsoft.VisualBasic::54e81e6cfae8e4868ea42dbe0bb89b03, mzmath\mz_deco\ChromatogramModels\RIRefer.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f8e05fd5d47d847fd2f36f2f47c9db6b, E:/mzkit/src/mzmath/MoleculeNetworking//SpectrumPool/FileSystem/TreeFs.vb"
+﻿#Region "Microsoft.VisualBasic::f8e05fd5d47d847fd2f36f2f47c9db6b, mzmath\MoleculeNetworking\SpectrumPool\FileSystem\TreeFs.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a2ca02a8eae8938e7053a5fff317e902, E:/mzkit/src/mzmath/ms2_math-core//Ms1/IROI.vb"
+﻿#Region "Microsoft.VisualBasic::a2ca02a8eae8938e7053a5fff317e902, mzmath\ms2_math-core\Ms1\IROI.vb"
 
     ' Author:
     ' 

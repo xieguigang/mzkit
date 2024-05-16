@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::785a236242ad57fac072b38525012c8c, E:/mzkit/src/mzmath/mz_deco//Save/SaveSample.vb"
+﻿#Region "Microsoft.VisualBasic::785a236242ad57fac072b38525012c8c, mzmath\mz_deco\Save\SaveSample.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f8f5242b68044171ba568544a2d8cd2e, E:/mzkit/src/mzmath/ms2_math-core//Spectra/Alignment/JaccardAlignment.vb"
+﻿#Region "Microsoft.VisualBasic::f8f5242b68044171ba568544a2d8cd2e, mzmath\ms2_math-core\Spectra\Alignment\JaccardAlignment.vb"
 
     ' Author:
     ' 

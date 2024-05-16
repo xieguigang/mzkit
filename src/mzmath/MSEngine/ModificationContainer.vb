@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cadc4166d8edc8942f1feabaa3910233, E:/mzkit/src/mzmath/MSEngine//ModificationContainer.vb"
+﻿#Region "Microsoft.VisualBasic::cadc4166d8edc8942f1feabaa3910233, mzmath\MSEngine\ModificationContainer.vb"
 
     ' Author:
     ' 

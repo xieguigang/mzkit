@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9c486c84b579fb335cef8f0872dab04d, E:/mzkit/src/mzmath/mz_deco//Signals/Chromatogram/Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::9c486c84b579fb335cef8f0872dab04d, mzmath\mz_deco\Signals\Chromatogram\Extensions.vb"
 
     ' Author:
     ' 

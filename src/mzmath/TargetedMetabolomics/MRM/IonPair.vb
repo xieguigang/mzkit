@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4db361f916fe1dedc5b5e2fc54575382, E:/mzkit/src/mzmath/TargetedMetabolomics//MRM/IonPair.vb"
+﻿#Region "Microsoft.VisualBasic::4db361f916fe1dedc5b5e2fc54575382, mzmath\TargetedMetabolomics\MRM\IonPair.vb"
 
     ' Author:
     ' 

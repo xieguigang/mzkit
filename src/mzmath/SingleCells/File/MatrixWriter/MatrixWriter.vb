@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::95c446f8ad64ee51af6404632243ca37, E:/mzkit/src/mzmath/SingleCells//File/MatrixWriter/MatrixWriter.vb"
+﻿#Region "Microsoft.VisualBasic::95c446f8ad64ee51af6404632243ca37, mzmath\SingleCells\File\MatrixWriter\MatrixWriter.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9a6738d5f226c36149f68de1af0fbbe8, E:/mzkit/src/mzmath/mz_deco//MzBins.vb"
+﻿#Region "Microsoft.VisualBasic::9a6738d5f226c36149f68de1af0fbbe8, mzmath\mz_deco\MzBins.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d0c10a04644e1e5f6e4d5ba5332d77a3, E:/mzkit/src/mzmath/Oligonucleotide_MS//zzz.vb"
+﻿#Region "Microsoft.VisualBasic::d0c10a04644e1e5f6e4d5ba5332d77a3, mzmath\Oligonucleotide_MS\zzz.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1a61679df5ee7eb87b8e5fb5f08629a6, E:/mzkit/src/mzmath/Mummichog//Annealing/AnnotationSet.vb"
+﻿#Region "Microsoft.VisualBasic::1a61679df5ee7eb87b8e5fb5f08629a6, mzmath\Mummichog\Annealing\AnnotationSet.vb"
 
     ' Author:
     ' 

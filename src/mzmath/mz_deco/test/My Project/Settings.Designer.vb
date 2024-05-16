@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6882a50af12533e561fe11cc6b179131, E:/mzkit/src/mzmath/mz_deco/test//My Project/Settings.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::6882a50af12533e561fe11cc6b179131, mzmath\mz_deco\test\My Project\Settings.Designer.vb"
 
     ' Author:
     ' 

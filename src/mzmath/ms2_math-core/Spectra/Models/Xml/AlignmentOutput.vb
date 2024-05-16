@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4a07a0940e0798792646d5e25b2a3a7c, E:/mzkit/src/mzmath/ms2_math-core//Spectra/Models/Xml/AlignmentOutput.vb"
+﻿#Region "Microsoft.VisualBasic::4a07a0940e0798792646d5e25b2a3a7c, mzmath\ms2_math-core\Spectra\Models\Xml\AlignmentOutput.vb"
 
     ' Author:
     ' 

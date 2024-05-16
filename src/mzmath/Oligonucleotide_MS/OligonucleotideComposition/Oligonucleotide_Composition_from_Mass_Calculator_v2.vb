@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::58c84233ff897f0bdf3a0a2de6b71bd6, E:/mzkit/src/mzmath/Oligonucleotide_MS//OligonucleotideComposition/Oligonucleotide_Composition_from_Mass_Calculator_v2.vb"
+﻿#Region "Microsoft.VisualBasic::58c84233ff897f0bdf3a0a2de6b71bd6, mzmath\Oligonucleotide_MS\OligonucleotideComposition\Oligonucleotide_Composition_from_Mass_Calculator_v2.vb"
 
     ' Author:
     ' 

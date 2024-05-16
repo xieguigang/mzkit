@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f45cddbe555f28e4729898b48342f0d6, E:/mzkit/src/mzmath/TargetedMetabolomics//TPAExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::f45cddbe555f28e4729898b48342f0d6, mzmath\TargetedMetabolomics\TPAExtensions.vb"
 
     ' Author:
     ' 

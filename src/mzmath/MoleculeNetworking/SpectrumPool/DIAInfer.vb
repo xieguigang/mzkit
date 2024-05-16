@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b046d25acdd424f4d1e2d6e6f04e9849, E:/mzkit/src/mzmath/MoleculeNetworking//SpectrumPool/DIAInfer.vb"
+﻿#Region "Microsoft.VisualBasic::b046d25acdd424f4d1e2d6e6f04e9849, mzmath\MoleculeNetworking\SpectrumPool\DIAInfer.vb"
 
     ' Author:
     ' 

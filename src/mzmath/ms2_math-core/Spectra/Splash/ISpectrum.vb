@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::56f83af71f8f6dfc49f125455bce33ae, E:/mzkit/src/mzmath/ms2_math-core//Spectra/Splash/ISpectrum.vb"
+﻿#Region "Microsoft.VisualBasic::56f83af71f8f6dfc49f125455bce33ae, mzmath\ms2_math-core\Spectra\Splash\ISpectrum.vb"
 
     ' Author:
     ' 

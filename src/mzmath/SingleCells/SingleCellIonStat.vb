@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::51ddb66d0e0a6bfb7a2d853a282ceffa, E:/mzkit/src/mzmath/SingleCells//SingleCellIonStat.vb"
+﻿#Region "Microsoft.VisualBasic::51ddb66d0e0a6bfb7a2d853a282ceffa, mzmath\SingleCells\SingleCellIonStat.vb"
 
     ' Author:
     ' 

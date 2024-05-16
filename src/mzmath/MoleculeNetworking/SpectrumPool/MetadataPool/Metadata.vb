@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::49ce5daf9e284075aea9cd9c3edb094a, E:/mzkit/src/mzmath/MoleculeNetworking//SpectrumPool/MetadataPool/Metadata.vb"
+﻿#Region "Microsoft.VisualBasic::49ce5daf9e284075aea9cd9c3edb094a, mzmath\MoleculeNetworking\SpectrumPool\MetadataPool\Metadata.vb"
 
     ' Author:
     ' 

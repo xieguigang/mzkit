@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::72021dcdce7e04b987a9850ffd5fa05e, E:/mzkit/src/mzmath/ms2_simulator//test/graph_test.vb"
+﻿#Region "Microsoft.VisualBasic::72021dcdce7e04b987a9850ffd5fa05e, mzmath\ms2_simulator\test\graph_test.vb"
 
     ' Author:
     ' 

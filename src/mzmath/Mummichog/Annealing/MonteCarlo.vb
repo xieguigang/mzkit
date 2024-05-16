@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a9dd6db53d78792d93905c0db12e48af, E:/mzkit/src/mzmath/Mummichog//Annealing/MonteCarlo.vb"
+﻿#Region "Microsoft.VisualBasic::a9dd6db53d78792d93905c0db12e48af, mzmath\Mummichog\Annealing\MonteCarlo.vb"
 
     ' Author:
     ' 

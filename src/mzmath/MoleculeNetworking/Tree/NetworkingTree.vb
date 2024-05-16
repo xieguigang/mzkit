@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cb95c7977a3d969a967283eeecdf348c, E:/mzkit/src/mzmath/MoleculeNetworking//Tree/NetworkingTree.vb"
+﻿#Region "Microsoft.VisualBasic::cb95c7977a3d969a967283eeecdf348c, mzmath\MoleculeNetworking\Tree\NetworkingTree.vb"
 
     ' Author:
     ' 

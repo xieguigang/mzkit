@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::72f270337d822bcacbf27738ab6ca5d4, E:/mzkit/src/mzmath/ms2_math-core//Ms1/ms1_scan.vb"
+﻿#Region "Microsoft.VisualBasic::72f270337d822bcacbf27738ab6ca5d4, mzmath\ms2_math-core\Ms1\ms1_scan.vb"
 
     ' Author:
     ' 

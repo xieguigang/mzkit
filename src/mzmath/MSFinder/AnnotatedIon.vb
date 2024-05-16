@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e21c2ad02b1f695fb63d39128672057e, E:/mzkit/src/mzmath/MSFinder//AnnotatedIon.vb"
+﻿#Region "Microsoft.VisualBasic::e21c2ad02b1f695fb63d39128672057e, mzmath\MSFinder\AnnotatedIon.vb"
 
     ' Author:
     ' 

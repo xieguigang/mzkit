@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4147844685b5e8869765226a6678376a, E:/mzkit/src/mzmath/ms2_math-core//Ms1/Tolerance/MassWindow.vb"
+﻿#Region "Microsoft.VisualBasic::a3bd86d964afc1f2f7cdac43fdd118d2, mzmath\ms2_math-core\Ms1\Tolerance\MassWindow.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 76
+    '   Total Lines: 79
     '    Code Lines: 45
-    ' Comment Lines: 15
+    ' Comment Lines: 18
     '   Blank Lines: 16
-    '     File Size: 2.17 KB
+    '     File Size: 2.25 KB
 
 
     '     Interface IMassBin

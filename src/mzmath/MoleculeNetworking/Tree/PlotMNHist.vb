@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6afd9cee35c1580f5df9e408951a444e, E:/mzkit/src/mzmath/MoleculeNetworking//Tree/PlotMNHist.vb"
+﻿#Region "Microsoft.VisualBasic::6afd9cee35c1580f5df9e408951a444e, mzmath\MoleculeNetworking\Tree\PlotMNHist.vb"
 
     ' Author:
     ' 

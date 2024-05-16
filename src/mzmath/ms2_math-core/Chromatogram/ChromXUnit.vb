@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::961dfcd6a1e2c6893296c9f3dd246808, E:/mzkit/src/mzmath/ms2_math-core//Chromatogram/ChromXUnit.vb"
+﻿#Region "Microsoft.VisualBasic::961dfcd6a1e2c6893296c9f3dd246808, mzmath\ms2_math-core\Chromatogram\ChromXUnit.vb"
 
     ' Author:
     ' 

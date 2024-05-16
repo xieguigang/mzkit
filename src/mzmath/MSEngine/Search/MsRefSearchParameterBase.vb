@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e3cd6f4384937a26488a913803a37397, E:/mzkit/src/mzmath/MSEngine//Search/MsRefSearchParameterBase.vb"
+﻿#Region "Microsoft.VisualBasic::e3cd6f4384937a26488a913803a37397, mzmath\MSEngine\Search\MsRefSearchParameterBase.vb"
 
     ' Author:
     ' 
