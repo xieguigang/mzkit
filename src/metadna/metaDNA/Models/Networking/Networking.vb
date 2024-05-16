@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e300981184d105fa395fe45611243876, E:/mzkit/src/metadna/metaDNA//Models/Networking/Networking.vb"
+﻿#Region "Microsoft.VisualBasic::e300981184d105fa395fe45611243876, metadna\metaDNA\Models\Networking\Networking.vb"
 
     ' Author:
     ' 
