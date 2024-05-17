@@ -125,9 +125,20 @@ Namespace MarkupData.mzXML
         <XmlAttribute> Public Property value As String
     End Structure
 
+    ''' <summary>
+    ''' the orginal rawdata file of current mzXML file where it converts from
+    ''' </summary>
     Public Structure parentFile
 
+        ''' <summary>
+        ''' the file path
+        ''' </summary>
+        ''' <returns></returns>
         <XmlAttribute> Public Property fileName As String
+        ''' <summary>
+        ''' the file data operation name
+        ''' </summary>
+        ''' <returns></returns>
         <XmlAttribute> Public Property fileType As String
         <XmlAttribute> Public Property fileShal As String
 
