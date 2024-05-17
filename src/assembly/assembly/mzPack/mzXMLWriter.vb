@@ -163,6 +163,12 @@ Namespace MarkupData.mzXML
         Public Sub WriteData(mzData As ScanMS1(), Optional print As Action(Of String) = Nothing)
             Dim scanCount As Integer = mzData.Select(Function(si) si.products.Length + 1).Sum
 
+            If print Is Nothing Then
+                print = Sub(any)
+                            ' do nothing
+                        End Sub
+            End If
+
             mzData = mzData _
                 .OrderBy(Function(si) si.rt) _
                 .ToArray
