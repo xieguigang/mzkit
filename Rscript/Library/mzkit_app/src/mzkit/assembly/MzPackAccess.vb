@@ -75,7 +75,7 @@ Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
-Imports stdNum = System.Math
+Imports std = System.Math
 
 ''' <summary>
 ''' raw data accessor for the mzpack data object
@@ -428,7 +428,7 @@ Module MzPackAccess
             .populates(Of PeakMs2)(env) _
             .GroupBy(Function(t) t.rt,
                      Function(t1, t2)
-                         Return stdNum.Abs(t1 - t2) <= timeWindow
+                         Return std.Abs(t1 - t2) <= timeWindow
                      End Function) _
             .ToArray
         Dim groupMs1 = (From list As NamedCollection(Of PeakMs2)

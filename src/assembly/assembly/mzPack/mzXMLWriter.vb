@@ -65,11 +65,13 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Text
 
 Namespace MarkupData.mzXML
 
+    ''' <summary>
+    ''' module for export mass spectrum to mzXML file
+    ''' </summary>
     Public Class mzXMLWriter : Implements IDisposable
 
         ReadOnly mzXML As BinaryDataWriter
