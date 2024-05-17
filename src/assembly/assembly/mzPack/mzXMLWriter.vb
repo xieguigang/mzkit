@@ -97,11 +97,11 @@ Namespace MarkupData.mzXML
 
             ' ISO-8859-1
             Call println("
-<?xml version=""1.0"" encoding=""utf8""?>
+<?xml version=""1.0"" encoding=""ISO-8859-1""?>
 <mzXML xmlns=""http://sashimi.sourceforge.net/schema_revision/mzXML_3.2""
        xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance""
        xsi:schemaLocation=""http://sashimi.sourceforge.net/schema_revision/mzXML_3.2 http://sashimi.sourceforge.net/schema_revision/mzXML_3.2/mzXML_idx_3.2.xsd"">
-")
+".Trim(" "c, vbCr, vbLf))
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
