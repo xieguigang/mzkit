@@ -161,7 +161,10 @@ Namespace MarkupData.mzXML
         End Sub
 
         Public Sub WriteData(mzData As ScanMS1(), Optional print As Action(Of String) = Nothing)
-            Dim scanCount As Integer = mzData.Select(Function(si) si.products.Length + 1).Sum
+            Dim scanCount As Integer = Aggregate s1 As ScanMS1
+                                       In mzData
+                                       Let m2 = s1.products.Where(Function(m2) m2.mz.Any).Count + 1
+                                       Into Sum(m2)
 
             If print Is Nothing Then
                 print = Sub(any)
