@@ -247,6 +247,10 @@ Namespace MarkupData.mzXML
             Dim mzint As String = encode(scan, len:=size)
             Dim i As String = ++scanNum
 
+            If scan.mz.IsNullOrEmpty Then
+                Return
+            End If
+
             Call scanOffsets.Add(i, mzXML.Position)
             Call println($"<scan num=""{i}""
           scanType=""Full""
