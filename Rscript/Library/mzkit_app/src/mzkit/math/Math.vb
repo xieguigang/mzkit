@@ -966,13 +966,32 @@ Module MzMath
     ''' create precursor type calculator
     ''' </summary>
     ''' <param name="types">a character vector of the precursor type symbols, example as ``[M+H]+``, etc.</param>
+    ''' <param name="unsafe">
+    ''' this parameter indicates that how the function handling of the string parser error when the given string value is empty:
+    ''' 
+    ''' 1. for unsafe, an exception will be throw
+    ''' 2. for unsafe is false, corresponding null value will be generated.
+    ''' </param>
     ''' <param name="env"></param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' a collection of the ion precursor adducts object.
+    ''' </returns>
     <ExportAPI("precursor_types")>
     <RApiReturn(GetType(MzCalculator))>
-    Public Function precursorTypes(<RRawVectorArgument> types As Object, Optional env As Environment = Nothing) As Object
+    Public Function precursorTypes(<RRawVectorArgument> types As Object,
+                                   Optional unsafe As Boolean = True,
+                                   Optional env As Environment = Nothing) As Object
+
         Return env.EvaluateFramework(Of String, MzCalculator)(
             types, Function(type)
+                       If type.StringEmpty Then
+                           If unsafe Then
+                               Throw New InvalidExpressionException("the given string is empty which is not valid for parse the precursor adducts object!")
+                           Else
+                               Return Nothing
+                           End If
+                       End If
+
                        Return Ms1.PrecursorType.ParseMzCalculator(type, type.Last)
                    End Function)
     End Function
