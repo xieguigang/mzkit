@@ -250,7 +250,20 @@ Module MzMath
     Public Function mz(mass As Double,
                        <RRawVectorArgument>
                        Optional mode As Object = "+",
+                       Optional unsafe As Boolean = True,
                        Optional env As Environment = Nothing) As Object
+
+        If mode Is Nothing Then
+            Const null_value = "the required polarity mode or precursor adducts object should not be nothing!"
+
+            Call env.AddMessage(null_value)
+
+            If unsafe Then
+                Return Internal.debug.stop(null_value, env)
+            Else
+                Return 0
+            End If
+        End If
 
         If TypeOf mode Is MzCalculator Then
             Return DirectCast(mode, MzCalculator).CalcMZ(mass)
@@ -757,13 +770,13 @@ Module MzMath
     '''    intensity = [312 4353 6664 6765 1119]);
     '''    
     ''' print(as.data.frame(spec));
-    ''' #              mz intensity                                                                                                                                                                                                           
-    ''' # --------------------------                                                                                                                                                                                                          
-    ''' # &lt;mode> &lt;Double> &lt;integer>                                                                                                                                                                                                        
-    ''' # [1, ]   452.763       312                                                                                                                                                                                                           
-    ''' # [2, ]    67.563      4353                                                                                                                                                                                                           
-    ''' # [3, ]   457.336      6664                                                                                                                                                                                                           
-    ''' # [4, ]     347.8      6765                                                                                                                                                                                                           
+    ''' #              mz intensity                   
+    ''' # --------------------------                                                                                                 
+    ''' # &lt;mode> &lt;Double> &lt;integer>                                                                                                   
+    ''' # [1, ]   452.763       312                                             
+    ''' # [2, ]    67.563      4353                                                                    
+    ''' # [3, ]   457.336      6664                                                                                                
+    ''' # [4, ]     347.8      6765                                                                                           
     ''' # [5, ]     242.3      1119
     ''' </example>
     <ExportAPI("centroid")>
@@ -982,11 +995,15 @@ Module MzMath
                                    Optional unsafe As Boolean = True,
                                    Optional env As Environment = Nothing) As Object
 
+        Const empty_string = "the given string is empty which is not valid for parse the precursor adducts object!"
+
         Return env.EvaluateFramework(Of String, MzCalculator)(
             types, Function(type)
                        If type.StringEmpty Then
+                           Call env.AddMessage(empty_string)
+
                            If unsafe Then
-                               Throw New InvalidExpressionException("the given string is empty which is not valid for parse the precursor adducts object!")
+                               Throw New InvalidExpressionException(empty_string)
                            Else
                                Return Nothing
                            End If
@@ -1025,9 +1042,12 @@ Module MzMath
     ''' <summary>
     ''' makes xcms_id format liked ROI unique id
     ''' </summary>
-    ''' <param name="mz"></param>
-    ''' <param name="rt"></param>
+    ''' <param name="mz">a numeric vector of the ion m/z value</param>
+    ''' <param name="rt">the corresponding scan time rt vector.</param>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' the dimension size of the ion m/z vector and the corresponding scan time vector should be equals.
+    ''' </remarks>
     <ExportAPI("xcms_id")>
     <RApiReturn(TypeCodes.string)>
     Public Function xcms_id(mz As Double(), rt As Double(), Optional env As Environment = Nothing) As Object
