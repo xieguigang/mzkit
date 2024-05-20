@@ -196,10 +196,12 @@ declare namespace math {
      *  4. a list of the mz calculator object and a list of corresponding mz value will be evaluated.
      * 
      * + default value Is ``'+'``.
+     * @param unsafe 
+     * + default value Is ``true``.
      * @param env 
      * + default value Is ``null``.
    */
-   function mz(mass: number, mode?: any, env?: object): object|number;
+   function mz(mass: number, mode?: any, unsafe?: boolean, env?: object): object|number;
    /**
     * Create a peak index
     * 
@@ -269,11 +271,18 @@ declare namespace math {
     * 
     * 
      * @param types a character vector of the precursor type symbols, example as ``[M+H]+``, etc.
+     * @param unsafe this parameter indicates that how the function handling of the string parser error when the given string value is empty:
+     *  
+     *  1. for unsafe, an exception will be throw
+     *  2. for unsafe is false, corresponding null value will be generated.
+     * 
+     * + default value Is ``true``.
      * @param env -
      * 
      * + default value Is ``null``.
+     * @return a collection of the ion precursor adducts object.
    */
-   function precursor_types(types: any, env?: object): object;
+   function precursor_types(types: any, unsafe?: boolean, env?: object): object;
    /**
     * Do resample of the chromatogram data
     * 
@@ -400,9 +409,10 @@ declare namespace math {
    /**
     * makes xcms_id format liked ROI unique id
     * 
+    * > the dimension size of the ion m/z vector and the corresponding scan time vector should be equals.
     * 
-     * @param mz -
-     * @param rt -
+     * @param mz a numeric vector of the ion m/z value
+     * @param rt the corresponding scan time rt vector.
      * @param env 
      * + default value Is ``null``.
    */
