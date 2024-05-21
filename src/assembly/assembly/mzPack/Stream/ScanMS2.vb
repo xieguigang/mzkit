@@ -68,6 +68,7 @@ Namespace mzData.mzWebCache
     Public Class ScanMS2 : Inherits MSScan
         Implements IMs1
         Implements IMs1Scan
+        Implements ISpectrumScanData
 
         ''' <summary>
         ''' the parent ion m/z
@@ -78,8 +79,8 @@ Namespace mzData.mzWebCache
         Public Property intensity As Double Implements IMs1Scan.intensity
         Public Property polarity As Integer
         Public Property charge As Integer
-        Public Property activationMethod As ActivationMethods
-        Public Property collisionEnergy As Double
+        Public Property activationMethod As ActivationMethods Implements ISpectrumScanData.ActivationMethod
+        Public Property collisionEnergy As Double Implements ISpectrumScanData.CollisionEnergy
         Public Property centroided As Boolean
 
         Public Function GetMatrix() As LibraryMatrix

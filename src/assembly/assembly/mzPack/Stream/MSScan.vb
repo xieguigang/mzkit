@@ -74,6 +74,7 @@ Namespace mzData.mzWebCache
         Implements INamedValue
         Implements IMsScan
         Implements ISpectrum
+        Implements IReadOnlyId
 
         ''' <summary>
         ''' the scan time of current spectrum scan data object.
@@ -85,7 +86,7 @@ Namespace mzData.mzWebCache
         ''' the unique reference id of current spectrum scan data object
         ''' </summary>
         ''' <returns></returns>
-        Public Property scan_id As String Implements INamedValue.Key
+        Public Property scan_id As String Implements INamedValue.Key, IReadOnlyId.Identity
 
         Private Sub SetIons(ions As IEnumerable(Of ms2)) Implements ISpectrum.SetIons
             With ions.ToArray

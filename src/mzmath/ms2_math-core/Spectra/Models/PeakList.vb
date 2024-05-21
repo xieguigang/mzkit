@@ -77,20 +77,20 @@ Namespace Spectra
     ''' if the <see cref="MRM"/> data is not empty, then it means current spectrum
     ''' peaks data is the data for MRM targetted analysis
     ''' </remarks>
-    Public Class PeakList
+    Public Class PeakList : Implements ISpectrumVector
 
         ''' <summary>
         ''' the ion fragment mass list
         ''' </summary>
         ''' <returns></returns>
-        Public Property mz As Double()
+        Public Property mz As Double() Implements ISpectrumVector.Peaks
         ''' <summary>
         ''' the signal intensity strength 
         ''' value of the corresponding ion 
         ''' fragment mass data.
         ''' </summary>
         ''' <returns></returns>
-        Public Property into As Double()
+        Public Property into As Double() Implements ISpectrumVector.PeaksIntensity
 
         Public Property MRM As MRM()
 
@@ -156,6 +156,13 @@ Namespace Spectra
 
         Function GetMs() As IEnumerable(Of ms2)
         Function GetMzIonIntensity(mz As Double, mzdiff As Tolerance) As Double
+
+    End Interface
+
+    Public Interface ISpectrumVector
+
+        ReadOnly Property Peaks As Double()
+        ReadOnly Property PeaksIntensity As Double()
 
     End Interface
 End Namespace
