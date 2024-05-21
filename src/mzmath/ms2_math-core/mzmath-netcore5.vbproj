@@ -17,6 +17,13 @@
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
 	  <OutputPath>../../../Rscript\Library\mzkit_app\assembly\</OutputPath>
+	  <UseApplicationFramework>True</UseApplicationFramework>
+	  <Title>MZKit spectrum math provider</Title>
+	  <Description>a basic spectrum math algorithm and abstract data model provider module for mzkit</Description>
+	  <Copyright>mzkit</Copyright>
+	  <PackageTags>mzkit</PackageTags>
+	  <IncludeSymbols>True</IncludeSymbols>
+	  <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
