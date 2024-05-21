@@ -367,7 +367,7 @@ Namespace Ms1
             Return Equals(x.Mass, y.Mass)
         End Function
 
-        Public Overloads Function GetHashCode(<DisallowNull> obj As ISpectrumPeak) As Integer Implements IEqualityComparer(Of ISpectrumPeak).GetHashCode
+        Friend Overloads Function GetHashCode(obj As ISpectrumPeak) As Integer Implements IEqualityComparer(Of ISpectrumPeak).GetHashCode
             Return std.Round(obj.Mass, 6).GetHashCode()
         End Function
     End Class
