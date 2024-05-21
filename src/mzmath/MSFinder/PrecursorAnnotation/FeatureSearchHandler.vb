@@ -1,12 +1,33 @@
 ﻿
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 Imports std = System.Math
 
 Public Module FeatureSearchHandler
+
+    ''' <summary>
+    ''' run search in parallel with auto task schedule.
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="rawdata"></param>
+    ''' <param name="exact_mass"></param>
+    ''' <param name="ppm"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Iterator Function MatchByExactMass(Of T As ISpectrumScanData)(rawdata As IEnumerable(Of NamedValue(Of T())),
+                                                                         exact_mass As Double,
+                                                                         ppm As Tolerance) As IEnumerable(Of NamedCollection(Of ParentMatch))
+        Dim pool = rawdata.SafeQuery.ToArray
+
+        If pool.Length = 1 Then
+
+        End If
+    End Function
 
     ''' <summary>
     ''' 
@@ -52,5 +73,13 @@ Public Module FeatureSearchHandler
 
             ' Call System.Windows.Forms.Application.DoEvents()
         Next
+    End Function
+
+    <Extension>
+    Private Iterator Function MatchByExactMass(scan As ISpectrumScanData, adducts As PolarityData(Of PrecursorInfo()),
+                                               source As String,
+                                               exact_mass As Double,
+                                               ppm As Tolerance) As IEnumerable(Of ParentMatch)
+
     End Function
 End Module
