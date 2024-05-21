@@ -198,7 +198,4 @@ New SpectrumPeak(Gly_O + adductmass, 200.0R, "Gly-O") With {
 }}
     End Function
 
-
-    Private Shared ReadOnly comparer As IEqualityComparer(Of SpectrumPeak) = New SpectrumEqualityComparer()
-
 End Class

@@ -132,8 +132,6 @@ Public Class OadDefaultSpectrumGenerator
 }
     End Function
 
-    Private Shared ReadOnly comparer As IEqualityComparer(Of SpectrumPeak) = New SpectrumEqualityComparer()
-
     Private ReadOnly map As Dictionary(Of LbmClass, List(Of ILipidSpectrumGenerator)) = New Dictionary(Of LbmClass, List(Of ILipidSpectrumGenerator))()
     Public Sub Add(lipidClass As LbmClass, generator As ILipidSpectrumGenerator)
         If Not map.ContainsKey(lipidClass) Then

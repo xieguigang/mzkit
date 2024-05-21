@@ -59,6 +59,7 @@ Imports System.Runtime.InteropServices
 Imports System.Text.RegularExpressions
 
 Public Module FormulaStringParcer
+
     Public Function OrganicElementsReader(formulaString As String) As DerivatizationFormula
         If Equals(formulaString, Nothing) Then Return Nothing
         If Equals(formulaString, String.Empty) Then Return Nothing

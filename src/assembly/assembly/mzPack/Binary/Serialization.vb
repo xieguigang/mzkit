@@ -119,7 +119,7 @@ Namespace mzData.mzWebCache
             Call file.Write(scan.parentMz)
             Call file.Write(scan.rt)
             Call file.Write(scan.intensity)
-            Call file.Write(scan.polarity)
+            Call file.Write(CInt(scan.polarity))
             Call file.Write(scan.charge)
             Call file.Write(scan.activationMethod)
             Call file.Write(scan.collisionEnergy)

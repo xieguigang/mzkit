@@ -68,7 +68,7 @@ Namespace Ms1.PrecursorType
     ''' do not modify the constant value at here
     ''' </remarks>
     <CLSCompliant(True)>
-    Public Enum IonModes
+    Public Enum IonModes As Integer
         ''' <summary>
         ''' Unknown Ion Mode
         ''' </summary>

@@ -187,6 +187,4 @@ Public Class PGOadSpectrumGenerator
 }
     End Function
 
-    Private Shared ReadOnly comparer As IEqualityComparer(Of SpectrumPeak) = New SpectrumEqualityComparer()
-
 End Class

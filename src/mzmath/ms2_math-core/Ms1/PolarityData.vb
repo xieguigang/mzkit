@@ -56,6 +56,10 @@
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 
+''' <summary>
+''' tuple data model of the polarity data
+''' </summary>
+''' <typeparam name="T"></typeparam>
 Public Class PolarityData(Of T)
 
     Public Property positive As T
@@ -63,20 +67,37 @@ Public Class PolarityData(Of T)
 
     Default Public Property Item(ionMode As String) As T
         Get
-            If Provider.ParseIonMode(ionMode) = 1 Then
+            Return Me(Provider.ParseIonMode(ionMode))
+        End Get
+        Set
+            Me(Provider.ParseIonMode(ionMode)) = Value
+        End Set
+    End Property
+
+    Default Public Property Item(ionMode As IonModes) As T
+        Get
+            If ionMode = IonModes.Positive Then
                 Return positive
             Else
                 Return negative
             End If
         End Get
-        Set
-            If Provider.ParseIonMode(ionMode) = 1 Then
-                positive = Value
+        Set(value As T)
+            If ionMode = IonModes.Positive Then
+                positive = value
             Else
-                negative = Value
+                negative = value
             End If
         End Set
     End Property
+
+    Sub New()
+    End Sub
+
+    Sub New(pos As T, neg As T)
+        positive = pos
+        negative = neg
+    End Sub
 
     Public Overrides Function ToString() As String
         Return $"(+) {positive} / (-) {negative}"

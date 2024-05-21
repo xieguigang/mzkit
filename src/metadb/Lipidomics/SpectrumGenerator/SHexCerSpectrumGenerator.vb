@@ -211,6 +211,4 @@ New SpectrumPeak(adduct.ConvertToMz(lipid.Mass - SO3 - H2O), 200.0R, "[M-H2SO4+H
         Return spectrum.ToArray()
     End Function
 
-    Private Shared ReadOnly comparer As IEqualityComparer(Of SpectrumPeak) = New SpectrumEqualityComparer()
-
 End Class

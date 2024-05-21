@@ -298,6 +298,11 @@ Public Module CDF
         Next
     End Function
 
+    ''' <summary>
+    ''' read umap data of the spectrum
+    ''' </summary>
+    ''' <param name="file"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function ReadUMAP(file As Stream) As UMAPPoint()
         Using cdf As New netCDFReader(file)
@@ -305,6 +310,11 @@ Public Module CDF
         End Using
     End Function
 
+    ''' <summary>
+    ''' read cluster data
+    ''' </summary>
+    ''' <param name="cdf"></param>
+    ''' <returns></returns>
     <Extension>
     Public Iterator Function ReadTissueMorphology(cdf As netCDFReader) As IEnumerable(Of TissueRegion)
         Dim regions As Integer = any.ToString(cdf.getAttribute("regions")).ParseInteger

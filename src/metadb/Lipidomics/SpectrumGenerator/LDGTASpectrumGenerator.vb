@@ -180,6 +180,4 @@ New SpectrumPeak(adduct.ConvertToMz(C7H13NO2 + OxygenMass), 200.0R, "Header + O"
         Return acylChains.SelectMany(Function(acylChain) spectrumGenerator.GetAcylDoubleBondSpectrum(lipid, acylChain, adduct, 0R, 30.0R))
     End Function
 
-    Private Shared ReadOnly comparer As IEqualityComparer(Of SpectrumPeak) = New SpectrumEqualityComparer()
-
 End Class

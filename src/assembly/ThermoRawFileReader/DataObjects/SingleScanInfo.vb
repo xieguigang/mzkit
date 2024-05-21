@@ -1,73 +1,73 @@
 ﻿#Region "Microsoft.VisualBasic::b01fb0c3d1b3f237dd8be28e33d5200c, assembly\ThermoRawFileReader\DataObjects\SingleScanInfo.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 301
-    '    Code Lines: 107
-    ' Comment Lines: 141
-    '   Blank Lines: 53
-    '     File Size: 11.24 KB
+' Summaries:
 
 
-    '     Class SingleScanInfo
-    ' 
-    '         Properties: ActivationType, BasePeakIntensity, BasePeakMZ, CacheDateUTC, ChargeState
-    '                     CollisionMode, EventNumber, FilterText, Frequency, HighMass
-    '                     IonInjectionTime, IonMode, IsCentroided, IsFTMS, IsolationWindowTargetMZ
-    '                     LowMass, MRMInfo, MRMScanType, MSData, MSLevel
-    '                     NumChannels, NumPeaks, ParentIonMonoisotopicMZ, ParentIonMZ, RetentionTime
-    '                     ScanEvents, ScanNumber, SIMScan, StatusLog, TotalIonCurrent
-    '                     UniformTime, ZoomScan
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: ToString, TryGetScanEvent
-    ' 
-    '         Sub: StoreScanEvents, StoreStatusLog
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 301
+'    Code Lines: 107
+' Comment Lines: 141
+'   Blank Lines: 53
+'     File Size: 11.24 KB
+
+
+'     Class SingleScanInfo
+' 
+'         Properties: ActivationType, BasePeakIntensity, BasePeakMZ, CacheDateUTC, ChargeState
+'                     CollisionMode, EventNumber, FilterText, Frequency, HighMass
+'                     IonInjectionTime, IonMode, IsCentroided, IsFTMS, IsolationWindowTargetMZ
+'                     LowMass, MRMInfo, MRMScanType, MSData, MSLevel
+'                     NumChannels, NumPeaks, ParentIonMonoisotopicMZ, ParentIonMZ, RetentionTime
+'                     ScanEvents, ScanNumber, SIMScan, StatusLog, TotalIonCurrent
+'                     UniformTime, ZoomScan
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: ToString, TryGetScanEvent
+' 
+'         Sub: StoreScanEvents, StoreStatusLog
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.InteropServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData
+Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 
 Namespace DataObjects

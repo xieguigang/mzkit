@@ -144,7 +144,4 @@ Public Class DMEDFASpectrumGenerator : Implements ILipidSpectrumGenerator ' DMED
 
         Return spectrum.ToArray()
     End Function
-
-    Private Shared ReadOnly comparer As IEqualityComparer(Of SpectrumPeak) = New SpectrumEqualityComparer()
-
 End Class

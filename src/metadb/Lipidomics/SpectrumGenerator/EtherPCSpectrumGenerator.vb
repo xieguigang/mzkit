@@ -195,6 +195,4 @@ New SpectrumPeak(adduct.ConvertToMz(C5H14NO4P), 500.0R, "Header") With {
 }}
     End Function
 
-    Private Shared ReadOnly comparer As IEqualityComparer(Of SpectrumPeak) = New SpectrumEqualityComparer()
-
 End Class

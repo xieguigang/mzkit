@@ -196,7 +196,4 @@ New SpectrumPeak(adduct.ConvertToMz(lipid.Mass) / 2, 200.0R, "[Precursor]2+") Wi
         Return spectrum.ToArray()
     End Function
 
-    Private Shared ReadOnly comparer As IEqualityComparer(Of SpectrumPeak) = New SpectrumEqualityComparer()
-
-
 End Class

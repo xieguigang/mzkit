@@ -211,8 +211,6 @@ Public Class LPGd5SpectrumGenerator
 }}
     End Function
 
-
-    Private Shared ReadOnly comparer As IEqualityComparer(Of SpectrumPeak) = New SpectrumEqualityComparer()
     Private ReadOnly spectrumGenerator As ISpectrumPeakGenerator
 
 End Class

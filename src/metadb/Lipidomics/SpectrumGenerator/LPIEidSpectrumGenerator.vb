@@ -222,6 +222,4 @@ New SpectrumPeak(lipidMass - H2O, 800, "[M+H]+ -H2O")
         Return spectrum.ToArray()
     End Function
 
-    Private Shared ReadOnly comparer As IEqualityComparer(Of SpectrumPeak) = New SpectrumEqualityComparer()
-
 End Class

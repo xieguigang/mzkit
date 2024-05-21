@@ -60,7 +60,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
 Imports Microsoft.VisualBasic.Math.Information
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Spectra
 
@@ -182,7 +182,7 @@ Namespace Spectra
             Dim merged As Vector = ia.intensity + ib.intensity
             Dim entropy_merged = (merged / merged.Sum).ShannonEntropy
 
-            Static log4 As Double = stdNum.Log(4)
+            Static log4 As Double = std.Log(4)
 
             Dim similarity As Double = 1 - (2 * entropy_merged - ia.spectral_entropy - ib.spectral_entropy) / log4
 
