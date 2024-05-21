@@ -63,7 +63,33 @@
 ''' <remarks>
 ''' This enum mirrors ThermoFisher.CommonCore.Data.FilterEnums.ActivationType/CollisionType
 ''' 
+''' 在质谱数据中，Collision Type（碰撞类型）和Activation Method（活化方法）通常是指代同一概念的不同术语。
+''' 在质谱分析中，为了将大分子（如蛋白质、多肽、聚合物等）打碎成更小的片段以进行分析，常使用一种称为碰撞
+''' 诱导解离（Collision-Induced Dissociation, CID）的技术。这个过程中，使用高能碰撞来激活分子，
+''' 从而产生碎片。
 ''' 
+''' 活化方法（Activation Method）是一个更广泛的术语，它包括了碰撞诱导解离（CID）以及其他可能的活化技术，
+''' 例如电子捕获解离（Electron Capture Dissociation, ECD）、红外多光子解离（Infrared Multiphoton 
+''' Dissociation, IRMPD）和黑体红外辐射解离（Blackbody Infrared Radiative Dissociation, BIRD）等。
+''' 
+''' 碰撞类型（Collision Type）则更具体地指明了在碰撞诱导解离过程中所使用的特定类型，例如使用氩、氖等气体作为碰撞气体来产生碰撞。
+''' 
+''' 因此，虽然这两个术语在语境上有所不同，但它们都是描述在质谱分析中用来使分子离子发生裂解的方法。
+''' 在具体的实验和文献中，它们的含义可能会根据上下文有所变化，但基本上可以认为是相关的概念。
+'''
+''' 除了碰撞诱导解离（CID），还有其他几种常见的活化方法，用于在质谱分析中产生离子碎片，以便进行结构解析和表征。
+''' 这些方法包括：
+''' 
+''' + 电子捕获解离（Electron Capture Dissociation, ECD）：这种方法在低温下使用电子来断裂分子中的键，特别适用于大分子，如蛋白质和肽。ECD通常用于保持分子中的非共价相互作用，以便更好地理解分子结构。
+''' + 红外多光子解离（Infrared Multiphoton Dissociation, IRMPD）：IRMPD使用红外激光的光子能量来激发分子振动，从而导致分子内部的键断裂。这种方法对于具有强红外吸收的分子特别有效。
+''' + 黑体红外辐射解离（Blackbody Infrared Radiative Dissociation, BIRD）：BIRD是一种利用黑体辐射源的红外光子能量来解离分子中的键的方法。这种方法通常用于研究大分子和生物大分子。
+''' + 快速加热解离（Pulsed Q-TOF）:这种方法通过在离子飞行管中施加快速电压脉冲，使离子加速并获得足够的动能，从而在碰撞过程中发生解离。
+''' + 紫外光解离（Ultraviolet Photodissociation, UVPD）：UVPD使用紫外光来激发离子，导致特定的键断裂。这种方法对于具有特定紫外线吸收特性的分子非常有效。
+''' + 活化离子飞行时间质谱（Activating Ion Time-of-Flight, ACTOF）：这是一种将离子在飞行管中加速并使其在特定的距离内发生碰撞，从而产生碎片的方法。
+''' + 溶剂辅助解离（Solvent Assisted Dissociation, SAD）：SAD是一种在离子源中引入溶剂，以促进离子在形成过程中的解离。
+''' 
+''' 这些活化方法的选择取决于分析物的类型、所需的解析水平和质谱仪的配置。不同的活化方法可以提供不同的碎片模式和
+''' 结构信息，因此在实际应用中，研究人员会根据具体的研究目的选择最合适的活化方法。
 ''' 
 ''' (这个枚举值为Byte类型，请勿修改，否则mzPack文件格式读写会出现问题)
 ''' </remarks>
