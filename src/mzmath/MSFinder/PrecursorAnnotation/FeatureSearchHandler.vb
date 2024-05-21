@@ -43,34 +43,15 @@ Public Module FeatureSearchHandler
     <Extension>
     Public Iterator Function MatchByExactMass(Of T As ISpectrumScanData)(raw As IEnumerable(Of T), exact_mass As Double, source As String, ppm As Tolerance) As IEnumerable(Of ParentMatch)
         ' C25H40N4O5
-        Dim pos = MzCalculator.EvaluateAll(exact_mass, "+", False).ToArray
-        Dim neg = MzCalculator.EvaluateAll(exact_mass, "-", False).ToArray
-        Dim info As PrecursorInfo()
+        Dim adducts As New PolarityData(Of PrecursorInfo())(
+            pos:=MzCalculator.EvaluateAll(exact_mass, "+", False).ToArray,
+            neg:=MzCalculator.EvaluateAll(exact_mass, "-", False).ToArray
+        )
 
         For Each scan As ISpectrumScanData In raw
-            If scan.Polarity > 0 Then
-                info = pos
-            Else
-                info = neg
-            End If
-
-            For Each mode As PrecursorInfo In info
-                If ppm(scan.mz, Val(mode.mz)) Then
-                    Yield New ParentMatch With {
-                        .BPC = scan.PeaksIntensity.Max,
-                        .TIC = scan.PeaksIntensity.Sum,
-                        .M = mode.M,
-                        .adducts = mode.adduct,
-                        .precursor_type = mode.precursor_type,
-                        .ppm = PPMmethod.PPM(scan.mz, Val(mode.mz)).ToString("F0"),
-                        .XIC = scan.intensity,
-                        .rawfile = source,
-                        .da = std.Round(std.Abs(scan.mz - Val(mode.mz)), 3),
-                        .scan = scan
-                    }
-                End If
+            For Each match As ParentMatch In scan.MatchByExactMass(adducts, source, exact_mass, ppm)
+                Yield match
             Next
-
             ' Call System.Windows.Forms.Application.DoEvents()
         Next
     End Function
@@ -81,5 +62,21 @@ Public Module FeatureSearchHandler
                                                exact_mass As Double,
                                                ppm As Tolerance) As IEnumerable(Of ParentMatch)
 
+        For Each mode As PrecursorInfo In adducts(scan.Polarity)
+            If ppm(scan.mz, Val(mode.mz)) Then
+                Yield New ParentMatch With {
+                    .BPC = scan.PeaksIntensity.Max,
+                    .TIC = scan.PeaksIntensity.Sum,
+                    .M = mode.M,
+                    .adducts = mode.adduct,
+                    .precursor_type = mode.precursor_type,
+                    .ppm = PPMmethod.PPM(scan.mz, Val(mode.mz)).ToString("F0"),
+                    .XIC = scan.intensity,
+                    .rawfile = source,
+                    .da = std.Round(std.Abs(scan.mz - Val(mode.mz)), 3),
+                    .scan = scan
+                }
+            End If
+        Next
     End Function
 End Module

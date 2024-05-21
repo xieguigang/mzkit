@@ -56,6 +56,10 @@
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 
+''' <summary>
+''' tuple data model of the polarity data
+''' </summary>
+''' <typeparam name="T"></typeparam>
 Public Class PolarityData(Of T)
 
     Public Property positive As T
@@ -86,6 +90,14 @@ Public Class PolarityData(Of T)
             End If
         End Set
     End Property
+
+    Sub New()
+    End Sub
+
+    Sub New(pos As T, neg As T)
+        positive = pos
+        negative = neg
+    End Sub
 
     Public Overrides Function ToString() As String
         Return $"(+) {positive} / (-) {negative}"
