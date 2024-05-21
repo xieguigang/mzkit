@@ -1,59 +1,60 @@
 ﻿#Region "Microsoft.VisualBasic::e186e830f4fee7912271d09395d46e35, metadb\Lipidomics\SpectrumGenerator\CeramideOadSpectrumGenerator.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 136
-    '    Code Lines: 97
-    ' Comment Lines: 21
-    '   Blank Lines: 18
-    '     File Size: 6.17 KB
+' Summaries:
 
 
-    ' Class CeramideOadSpectrumGenerator
-    ' 
-    '     Constructor: (+2 Overloads) Sub New
-    '     Function: CanGenerate, CreateReference, Generate, GetAcylSpectrum, GetCerNsOadSpectrum
-    '               GetSphingoSpectrum
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 136
+'    Code Lines: 97
+' Comment Lines: 21
+'   Blank Lines: 18
+'     File Size: 6.17 KB
+
+
+' Class CeramideOadSpectrumGenerator
+' 
+'     Constructor: (+2 Overloads) Sub New
+'     Function: CanGenerate, CreateReference, Generate, GetAcylSpectrum, GetCerNsOadSpectrum
+'               GetSphingoSpectrum
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.ElementsExactMass
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
@@ -124,7 +125,7 @@ Public Class CeramideOadSpectrumGenerator
             'spectrum.AddRange(GetAcylSpectrum(lipid, acyl, adduct));
             spectrum.AddRange(spectrumGenerator.GetAcylDoubleBondSpectrum(lipid, acyl, adduct, nlMass, 30.0R, oadId))
         End If
-        spectrum = spectrum.GroupBy(Function(spec) spec, comparer).[Select](Function(specs) New SpectrumPeak(Enumerable.First(specs).mz, specs.Sum(Function(n) n.Intensity), String.Join(", ", specs.[Select](Function(spec) spec.Annotation)), specs.Aggregate(SpectrumComment.none, Function(a, b) a Or b.SpectrumComment))).OrderBy(Function(peak) peak.mz).ToList()
+        spectrum = spectrum.GroupBy(Function(spec) spec, comparer).[Select](Function(specs) New SpectrumPeak(Enumerable.First(specs).mz, specs.Sum(Function(n) n.intensity), String.Join(", ", specs.[Select](Function(spec) spec.Annotation)), specs.Aggregate(SpectrumComment.none, Function(a, b) a Or b.SpectrumComment))).OrderBy(Function(peak) peak.mz).ToList()
         Return CreateReference(lipid, adduct, spectrum, molecule)
     End Function
 
@@ -173,20 +174,18 @@ Public Class CeramideOadSpectrumGenerator
 
     Private Function CreateReference(lipid As ILipid, adduct As AdductIon, spectrum As List(Of SpectrumPeak), molecule As IMoleculeProperty) As MoleculeMsReference
         Return New MoleculeMsReference With {
-    .PrecursorMz = adduct.ConvertToMz(lipid.Mass),
-    .IonMode = adduct.IonMode,
-    .spectrum = spectrum,
-    .Name = lipid.Name,
-    .Formula = molecule?.Formula,
-    .Ontology = molecule?.Ontology,
-    .SMILES = molecule?.SMILES,
-    .InChIKey = molecule?.InChIKey,
-    .AdductType = adduct,
-    .CompoundClass = lipid.LipidClass.ToString(),
-    .Charge = adduct.ChargeNumber
-}
+            .PrecursorMz = adduct.ConvertToMz(lipid.Mass),
+            .IonMode = adduct.IonMode,
+            .Spectrum = spectrum,
+            .Name = lipid.Name,
+            .Formula = molecule?.Formula,
+            .Ontology = molecule?.Ontology,
+            .SMILES = molecule?.SMILES,
+            .InChIKey = molecule?.InChIKey,
+            .AdductType = adduct,
+            .CompoundClass = lipid.LipidClass.ToString(),
+            .Charge = adduct.ChargeNumber
+        }
     End Function
-
-    Private Shared ReadOnly comparer As IEqualityComparer(Of SpectrumPeak) = New SpectrumEqualityComparer()
 
 End Class

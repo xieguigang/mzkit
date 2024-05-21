@@ -99,7 +99,4 @@ Public Class EidDefaultSpectrumGenerator
 }
     End Function
 
-    Private Shared ReadOnly comparer As IEqualityComparer(Of SpectrumPeak) = New SpectrumEqualityComparer()
-
-
 End Class

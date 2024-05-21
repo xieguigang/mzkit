@@ -267,7 +267,4 @@ New SpectrumPeak(lipidMass - chainMass - nlMass - CH2, 20.0R, "-CH2(Sn1)") With 
         End If
         Return spectrum.ToArray()
     End Function
-
-    Private Shared ReadOnly comparer As IEqualityComparer(Of SpectrumPeak) = New SpectrumEqualityComparer()
-
 End Class

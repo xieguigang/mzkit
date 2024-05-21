@@ -217,6 +217,4 @@ New SpectrumPeak(lipid.Mass - C6H10O5 + adduct.AdductIonAccurateMass, 100.0R, "P
         Return spectrum.ToArray()
     End Function
 
-    Private Shared ReadOnly comparer As IEqualityComparer(Of SpectrumPeak) = New SpectrumEqualityComparer()
-
 End Class

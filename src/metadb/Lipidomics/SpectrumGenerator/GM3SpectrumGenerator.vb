@@ -204,6 +204,5 @@ New SpectrumPeak(C11H15NO7 + C6H10O5 * 2 + H2O * 2 + C2H3N + adductmass, 300.0R,
         Return spectrum.ToArray()
     End Function
 
-    Private Shared ReadOnly comparer As IEqualityComparer(Of SpectrumPeak) = New SpectrumEqualityComparer()
 
 End Class

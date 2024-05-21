@@ -200,8 +200,4 @@ New SpectrumPeak(adduct.ConvertToMz(Gly_O), 100.0R, "Gly-O") With {
         End If
         Return spectrum.ToArray()
     End Function
-
-
-    Private Shared ReadOnly comparer As IEqualityComparer(Of SpectrumPeak) = New SpectrumEqualityComparer()
-
 End Class

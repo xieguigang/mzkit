@@ -205,7 +205,4 @@ New SpectrumPeak(lipidMass - chainMass - H2O + adductmass, 100.0R, $"-{acylChain
 }}
     End Function
 
-
-    Private Shared ReadOnly comparer As IEqualityComparer(Of SpectrumPeak) = New SpectrumEqualityComparer()
-
 End Class
