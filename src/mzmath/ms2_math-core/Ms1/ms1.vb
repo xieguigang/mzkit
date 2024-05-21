@@ -61,7 +61,7 @@
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
-Imports stdNum = System.Math
+Imports std = System.Math
 
 ''' <summary>
 ''' The ms1 peak
@@ -74,7 +74,7 @@ Public Class Ms1Feature : Implements INamedValue, IMs1, IRetentionTime
     Public Property rt As Double Implements IMs1.rt
 
     Public Overrides Function ToString() As String
-        Return $"{stdNum.Round(mz, 4)}@{rt}"
+        Return $"{std.Round(mz, 4)}@{rt}"
     End Function
 End Class
 

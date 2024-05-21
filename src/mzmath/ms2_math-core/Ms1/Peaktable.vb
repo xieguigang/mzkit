@@ -80,6 +80,10 @@ Public Class Peaktable
     ''' </remarks>
     Public Property id As String Implements IMS1Annotation.Key
     Public Property name As String
+    ''' <summary>
+    ''' the ion m/z(mass value).
+    ''' </summary>
+    ''' <returns></returns>
     Public Property mass As Double Implements IMs1.mz, IMassBin.mass
     Public Property mzmin As Double Implements IMassBin.min
     Public Property mzmax As Double Implements IMassBin.max
