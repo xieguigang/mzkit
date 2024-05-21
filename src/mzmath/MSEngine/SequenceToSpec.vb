@@ -78,26 +78,26 @@ Public NotInheritable Class SequenceToSpec
     ''' </summary>
     Private Shared ReadOnly comparer As IEqualityComparer(Of ISpectrumPeak) = Tolerance.PPM(20)
 
-    Public Shared Function Convert2SpecObj(peptide As Peptide, adduct As AdductIon, [cType] As CollisionType, Optional minMz As Double = 100, Optional maxMz As Double = 1000000) As MoleculeMsReference
+    Public Shared Function Convert2SpecObj(peptide As Peptide, adduct As AdductIon, [cType] As ActivationMethods, Optional minMz As Double = 100, Optional maxMz As Double = 1000000) As MoleculeMsReference
         Select Case [cType]
-            Case CollisionType.CID
+            Case ActivationMethods.CID
                 Return GetTheoreticalSpectrumByHCD(peptide, adduct)
-            Case CollisionType.HCD
+            Case ActivationMethods.HCD
                 Return GetTheoreticalSpectrumByHCD(peptide, adduct)
             Case Else
                 Return GetTheoreticalSpectrumByHCD(peptide, adduct)
         End Select
     End Function
 
-    Public Shared Function Convert2SpecPeaks(peptide As Peptide, adduct As AdductIon, [cType] As CollisionType, Optional minMz As Double = 100, Optional maxMz As Double = 1000000) As List(Of SpectrumPeak)
+    Public Shared Function Convert2SpecPeaks(peptide As Peptide, adduct As AdductIon, [cType] As ActivationMethods, Optional minMz As Double = 100, Optional maxMz As Double = 1000000) As List(Of SpectrumPeak)
         Select Case [cType]
-            Case CollisionType.CID
+            Case ActivationMethods.CID
                 Return GetSpectrumPeaksByHCD(peptide, adduct, minMz, maxMz)
-            Case CollisionType.HCD
+            Case ActivationMethods.HCD
                 Return GetSpectrumPeaksByHCD(peptide, adduct, minMz, maxMz)
-            Case CollisionType.ECD
+            Case ActivationMethods.ECD
                 Return GetSpectrumPeaksByECD(peptide, adduct, minMz, maxMz)
-            Case CollisionType.HotECD
+            Case ActivationMethods.HotECD
                 Return GetSpectrumPeaksByHotECD(peptide, adduct, minMz, maxMz)
             Case Else
                 Return GetSpectrumPeaksByHCD(peptide, adduct, minMz, maxMz)
@@ -119,12 +119,14 @@ Public NotInheritable Class SequenceToSpec
         Dim precursorMz = adduct.ConvertToMz(peptide.ExactMass)
 
         Dim spectrum = New List(Of SpectrumPeak)()
-        If precursorMz >= minMz AndAlso precursorMz <= maxMz Then spectrum.Add(New SpectrumPeak() With {
-.mz = precursorMz,
-.intensity = 1000,
-.SpectrumComment = SpectrumComment.precursor,
-.PeakID = sequence.Count
-})
+        If precursorMz >= minMz AndAlso precursorMz <= maxMz Then
+            spectrum.Add(New SpectrumPeak() With {
+                .mz = precursorMz,
+                .intensity = 1000,
+                .SpectrumComment = SpectrumComment.precursor,
+                .PeakID = sequence.Count
+            })
+        End If
         'if (precursorMz * 0.5 >= minMz && precursorMz * 0.5 <= maxMz)
         '    spectrum.Add(new SpectrumPeak() { Mass = (precursorMz + Proton) * 0.5, Intensity = 1000, SpectrumComment = SpectrumComment.precursor, PeakID = sequence.Count });
 

@@ -75,20 +75,20 @@ Public Class ParentMatch
 
     Public Function ToMs2() As PeakMs2
         Return New PeakMs2 With {
-            .activation = activationMethod.Description,
-            .collisionEnergy = collisionEnergy,
+            .activation = scan.ActivationMethod.Description,
+            .collisionEnergy = scan.CollisionEnergy,
             .file = rawfile,
             .intensity = BPC,
-            .mz = parentMz,
-            .rt = rt,
+            .mz = scan.mz,
+            .rt = scan.rt,
             .precursor_type = precursor_type,
-            .scan = scan_id,
-            .lib_guid = scan_id,
-            .mzInto = mz _
+            .scan = scan.Identity,
+            .lib_guid = scan.Identity,
+            .mzInto = scan.Peaks _
                 .Select(Function(mzi, i)
                             Return New ms2 With {
                                 .mz = mzi,
-                                .intensity = into(i)
+                                .intensity = scan.PeaksIntensity(i)
                             }
                         End Function) _
                 .ToArray

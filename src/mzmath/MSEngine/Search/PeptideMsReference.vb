@@ -290,13 +290,13 @@ Public Class PeptideMsReference
 
     Public Property MaxMs2 As Single
 
-    Public Property CollisionType As CollisionType
+    Public Property CollisionType As ActivationMethods
 
     Public Sub New(peptide As Peptide)
         Me.Peptide = peptide
     End Sub
 
-    Public Sub New(peptide As Peptide, fs As Stream, seekPoint As Long, adduct As AdductIon, id As Integer, minMs2 As Single, maxMs2 As Single, type As CollisionType)
+    Public Sub New(peptide As Peptide, fs As Stream, seekPoint As Long, adduct As AdductIon, id As Integer, minMs2 As Single, maxMs2 As Single, type As ActivationMethods)
         Me.Peptide = peptide
         Me.Fs = fs
         SeekPoint2MS = seekPoint
