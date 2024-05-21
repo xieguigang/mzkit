@@ -102,6 +102,10 @@ Public Class UMAPPoint
         Me.z = z
     End Sub
 
+    Public Overrides Function ToString() As String
+        Return $"[{x}, {y}, {z}] {[class]}"
+    End Function
+
     Private Shared Function GetClusterLabels(df As DataFrame) As String()
         Dim [class] As String()
 
