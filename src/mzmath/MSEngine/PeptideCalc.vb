@@ -64,6 +64,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports SMRUCC.genomics.SequenceModel.Polypeptides
 
 Public NotInheritable Class PeptideCalc
+
     Private Sub New()
     End Sub
 
@@ -117,7 +118,11 @@ Public NotInheritable Class PeptideCalc
         Return Sequence2PeptidesByVariableModifications(peptide, container, maxNumberOfModificationsPerPeptide, minPeptideMass, maxPeptideMass)
     End Function
 
-    Public Shared Function Sequence2FastPeptides(peptide As Peptide, container As ModificationContainer, Optional maxNumberOfModificationsPerPeptide As Integer = 2, Optional minPeptideMass As Double = 300, Optional maxPeptideMass As Double = 4600) As List(Of Peptide)
+    Public Shared Function Sequence2FastPeptides(peptide As Peptide, container As ModificationContainer,
+                                                 Optional maxNumberOfModificationsPerPeptide As Integer = 2,
+                                                 Optional minPeptideMass As Double = 300,
+                                                 Optional maxPeptideMass As Double = 4600) As List(Of Peptide)
+
         Dim fmPeptide = Sequence2PeptideByFixedModifications(peptide, container, maxPeptideMass)
         If fmPeptide Is Nothing Then Return Nothing
         If fmPeptide.CountModifiedAminoAcids() > maxNumberOfModificationsPerPeptide Then Return Nothing

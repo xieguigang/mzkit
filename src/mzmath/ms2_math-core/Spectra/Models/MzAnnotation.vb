@@ -67,7 +67,16 @@ Namespace Spectra
 
     Public Class MzAnnotation : Implements IMzAnnotation
 
+        ''' <summary>
+        ''' the target ion m/z value
+        ''' </summary>
+        ''' <returns></returns>
         <XmlAttribute> Public Property productMz As Double Implements IMzAnnotation.mz
+        ''' <summary>
+        ''' the ion annotation result, could be the metabolite id 
+        ''' or metabolite name, something else.
+        ''' </summary>
+        ''' <returns></returns>
         <XmlAttribute> Public Property annotation As String Implements IMzAnnotation.annotation
 
         Public Overrides Function ToString() As String
