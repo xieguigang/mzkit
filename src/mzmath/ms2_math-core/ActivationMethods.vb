@@ -101,6 +101,8 @@ Public Enum ActivationMethods As Byte
     ''' </summary>
     Unknown = -1
 
+#Region "enum integer value is mapping to ThermoFisher rawdata file reader type, do not modify the enum value or change the orders!"
+
     ''' <summary>
     ''' Collision-Induced Dissociation
     ''' 
@@ -313,9 +315,10 @@ Public Enum ActivationMethods As Byte
     ''' Last Activation
     ''' </summary>
     LastActivation = 38
+#End Region
 
     ' ! 在这之前的枚举值不可以修改，否则无法正确映射
-    ' Raw文件之中的枚举值
+    ' ThermoFisher Raw文件之中的枚举值
 
     ''' <summary>
     ''' Collisional activation upon impact of precursor ions on solid surfaces, 
