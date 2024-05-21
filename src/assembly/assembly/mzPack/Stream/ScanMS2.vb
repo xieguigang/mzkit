@@ -57,6 +57,7 @@
 #End Region
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
 
@@ -77,8 +78,8 @@ Namespace mzData.mzWebCache
         Public Property parentMz As Double Implements IMs1.mz
         Public Overrides Property rt As Double Implements IRetentionTime.rt
         Public Property intensity As Double Implements IMs1Scan.intensity
-        Public Property polarity As Integer
-        Public Property charge As Integer
+        Public Property polarity As IonModes Implements ISpectrumScanData.Polarity
+        Public Property charge As Integer Implements ISpectrumScanData.Charge
         Public Property activationMethod As ActivationMethods Implements ISpectrumScanData.ActivationMethod
         Public Property collisionEnergy As Double Implements ISpectrumScanData.CollisionEnergy
         Public Property centroided As Boolean

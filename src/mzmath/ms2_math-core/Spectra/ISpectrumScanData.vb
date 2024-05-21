@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 
 Namespace Spectra
 
@@ -10,6 +11,8 @@ Namespace Spectra
 
         ReadOnly Property ActivationMethod As ActivationMethods
         ReadOnly Property CollisionEnergy As Double
+        ReadOnly Property Charge As Integer
+        ReadOnly Property Polarity As IonModes
 
     End Interface
 End Namespace
