@@ -274,6 +274,9 @@ Public Class mzPack : Implements IMZPack
     ''' <param name="skipMsn"></param>
     ''' <param name="verbose"></param>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' auto check of the file format version.
+    ''' </remarks>
     Public Shared Function Read(filepath As String,
                                 Optional ignoreThumbnail As Boolean = False,
                                 Optional skipMsn As Boolean = False,
@@ -322,7 +325,6 @@ Public Class mzPack : Implements IMZPack
     ''' <summary>
     ''' load all content data in <see cref="mzPack"/> object into memory at one time.
     ''' the file format version is test from the magic number.
-    ''' (一次性加载所有原始数据)
     ''' </summary>
     ''' <param name="file">
     ''' the file version will be automatically detected
@@ -335,6 +337,9 @@ Public Class mzPack : Implements IMZPack
     ''' <returns>
     ''' a unify mzpack in-memory data model
     ''' </returns>
+    ''' <remarks>
+    ''' read data with format version auto checks.(一次性加载所有原始数据)
+    ''' </remarks>
     Public Shared Function ReadAll(file As Stream,
                                    Optional ignoreThumbnail As Boolean = False,
                                    Optional skipMsn As Boolean = False,
