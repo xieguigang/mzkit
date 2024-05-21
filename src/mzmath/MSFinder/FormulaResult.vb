@@ -63,13 +63,7 @@ Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 
 Public Class FormulaResult
-    Public Sub New()
-
-    End Sub
-
-#Region "properties"
-    Public Property Formula As Formula = New Formula()
-
+    Public Property Formula As New Formula()
     Public Property MatchedMass As Double
     Public Property MassDiff As Double
     Public Property M1IsotopicDiff As Double
@@ -98,5 +92,4 @@ Public Class FormulaResult
     Public Property ChemicalOntologyScores As List(Of Double) = New List(Of Double)()
     Public Property ChemicalOntologyRepresentativeInChIKeys As List(Of String) = New List(Of String)()
 
-#End Region
 End Class

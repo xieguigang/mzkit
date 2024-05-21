@@ -86,11 +86,6 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
 
-Public Enum FseaNonsignificantDef
-    OntologySpace
-    ReverseSpectrum
-    LowAbundantIons
-End Enum
 ''' <summary>
 ''' This is the storage of analysis parameters used in MS-FINDER program.
 ''' </summary>

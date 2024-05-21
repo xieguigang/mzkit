@@ -180,6 +180,7 @@ Public Class FormulaGenerator
         End Select
 
         Me.maxMassFoldChange = Me.hMaxFold * hMass
+
         If fCheck Then Me.maxMassFoldChange += Me.fMaxFold * fMass
         If clCheck Then Me.maxMassFoldChange += Me.clMaxFold * clMass
         If brCheck Then Me.maxMassFoldChange += Me.brMaxFold * brMass
@@ -200,7 +201,10 @@ Public Class FormulaGenerator
     ''' <param name="rawData"></param>
     ''' <param name="adductIon"></param>
     ''' <returns></returns>
-    Public Function GetFormulaCandidateList(productIonDB As List(Of ProductIon), neutralLossDB As List(Of NeutralLoss), existFormulaDB As List(Of ExistFormulaQuery), param As AnalysisParamOfMsfinder, mass As Double, m1Intensity As Double, m2Intensity As Double, rawData As RawData, adductIon As AdductIon, isotopeCheck As Boolean) As List(Of FormulaResult)
+    Public Function GetFormulaCandidateList(productIonDB As List(Of ProductIon), neutralLossDB As List(Of NeutralLoss), existFormulaDB As List(Of ExistFormulaQuery),
+                                            param As AnalysisParamOfMsfinder,
+                                            mass As Double, m1Intensity As Double, m2Intensity As Double,
+                                            rawData As RawData, adductIon As AdductIon, isotopeCheck As Boolean) As List(Of FormulaResult)
 
         'param set
         Dim ms1Tol = param.Mass1Tolerance

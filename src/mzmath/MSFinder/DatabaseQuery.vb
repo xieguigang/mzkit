@@ -58,8 +58,6 @@
 #End Region
 
 Public Class DatabaseQuery
-    Public Sub New()
-    End Sub
 
     Public Property Chebi As Boolean
     Public Property Ymdb As Boolean
@@ -79,4 +77,5 @@ Public Class DatabaseQuery
     Public Property Blexp As Boolean
     Public Property Npa As Boolean
     Public Property Coconut As Boolean
+
 End Class

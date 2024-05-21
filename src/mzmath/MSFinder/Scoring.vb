@@ -61,6 +61,7 @@ Imports Microsoft.VisualBasic.Math.Distributions
 Imports std = System.Math
 
 Public NotInheritable Class Scoring
+
     Private Sub New()
     End Sub
 
@@ -126,7 +127,6 @@ Public NotInheritable Class Scoring
         Dim countDouble = CDbl(totalCount)
         Return hitsDouble / countDouble
     End Function
-
 
     Public Shared Function DatabaseScore(recordNum As Integer, recordName As String) As Double
         Dim lDatabaseScore = 0.0

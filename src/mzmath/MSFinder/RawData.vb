@@ -55,6 +55,9 @@
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 
+''' <summary>
+''' a spectrum data which is extract from the raw data file.
+''' </summary>
 Public Class RawData : Inherits PeakMs2
 
     Public Property CarbonNumberFromLabeledExperiment As Integer
@@ -65,4 +68,5 @@ Public Class RawData : Inherits PeakMs2
     Public Property CarbonSulfurNumberFromLabeledExperiment As Integer
     Public Property NitrogenSulfurNumberFromLabeledExperiment As Integer
     Public Property CarbonNitrogenSulfurNumberFromLabeledExperiment As Integer
+
 End Class

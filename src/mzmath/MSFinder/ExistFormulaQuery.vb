@@ -63,6 +63,16 @@ Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 ''' </summary>
 Public Class ExistFormulaQuery
 
+    Public Property Formula As Formula
+
+    Public Property PubchemCidList As List(Of Integer)
+
+    Public Property FormulaRecords As Integer
+
+    Public Property ResourceNumber As Integer
+
+    Public Property ResourceNames As String
+
     Public Sub New()
         PubchemCidList = New List(Of Integer)()
         Formula = New Formula()
@@ -75,15 +85,5 @@ Public Class ExistFormulaQuery
         ResourceNumber = dbRecords
         ResourceNames = dbNames
     End Sub
-
-    Public Property Formula As Formula
-
-    Public Property PubchemCidList As List(Of Integer)
-
-    Public Property FormulaRecords As Integer
-
-    Public Property ResourceNumber As Integer
-
-    Public Property ResourceNames As String
 
 End Class
