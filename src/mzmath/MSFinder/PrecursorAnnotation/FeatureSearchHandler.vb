@@ -1,14 +1,9 @@
 ﻿
 Imports System.Runtime.CompilerServices
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.Linq
-Imports Mzkit_win32.BasicMDIForm
-Imports RibbonLib.Interop
-Imports WeifenLuo.WinFormsUI.Docking
 Imports std = System.Math
 
 Public Module FeatureSearchHandler
