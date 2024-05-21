@@ -1,72 +1,74 @@
 ﻿#Region "Microsoft.VisualBasic::ab51f7b28199f3fb5d1bb0b25f05cd71, mzmath\ms2_math-core\Ms1\Tolerance\Tolerance.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 284
-    '    Code Lines: 138
-    ' Comment Lines: 112
-    '   Blank Lines: 34
-    '     File Size: 10.14 KB
+' Summaries:
 
 
-    '     Enum MassToleranceType
-    ' 
-    '         Da, Ppm
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
-    '     Class Tolerance
-    ' 
-    '         Properties: [Interface], DefaultTolerance
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: AddPPM, Compares, DeltaMass, GetScript, MatchTolerance
-    '                   ParseScript, PPM, SubPPM, (+2 Overloads) ToScript
-    '         Operators: *, /, <, >
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 284
+'    Code Lines: 138
+' Comment Lines: 112
+'   Blank Lines: 34
+'     File Size: 10.14 KB
+
+
+'     Enum MassToleranceType
+' 
+'         Da, Ppm
+' 
+'  
+' 
+' 
+' 
+'     Class Tolerance
+' 
+'         Properties: [Interface], DefaultTolerance
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: AddPPM, Compares, DeltaMass, GetScript, MatchTolerance
+'                   ParseScript, PPM, SubPPM, (+2 Overloads) ToScript
+'         Operators: *, /, <, >
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Diagnostics.CodeAnalysis
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Math
 Imports std = System.Math
@@ -88,10 +90,13 @@ Namespace Ms1
     End Enum
 
     ''' <summary>
-    ''' The m/z tolerance methods.
-    ''' (可以直接使用这个对象的索引属性来进行计算判断,索引属性表示两个``m/z``值之间是否相等)
+    ''' The m/z tolerance methods, spectrum equality comparer.
     ''' </summary>
+    ''' <remarks>
+    ''' (可以直接使用这个对象的索引属性来进行计算判断,索引属性表示两个``m/z``值之间是否相等)
+    ''' </remarks>
     Public MustInherit Class Tolerance : Inherits NumberEqualityComparer
+        Implements IEqualityComparer(Of ISpectrumPeak)
 
         ''' <summary>
         ''' <see cref="DeltaTolerance"/>(分子质量误差的上限值)
@@ -348,5 +353,22 @@ Namespace Ms1
         Public Shared Operator <(d1 As Tolerance, d2 As Tolerance) As Boolean
             Return Not d1 > d2
         End Operator
+
+        ''' <summary>
+        ''' SpectrumEqualityComparer
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <param name="y"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' could be used for group the peaks data via the .net framework internal groupby function by implements this interface.
+        ''' </remarks>
+        Public Overloads Function Equals(x As ISpectrumPeak, y As ISpectrumPeak) As Boolean Implements IEqualityComparer(Of ISpectrumPeak).Equals
+            Return Equals(x.Mass, y.Mass)
+        End Function
+
+        Public Overloads Function GetHashCode(<DisallowNull> obj As ISpectrumPeak) As Integer Implements IEqualityComparer(Of ISpectrumPeak).GetHashCode
+            Return std.Round(obj.Mass, 6).GetHashCode()
+        End Function
     End Class
 End Namespace

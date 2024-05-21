@@ -107,9 +107,23 @@ Namespace Spectra
         z2 = &H800000
     End Enum
 
+    ''' <summary>
+    ''' an abstract spectrum fragment peak model
+    ''' </summary>
     Public Interface ISpectrumPeak
+
+        ''' <summary>
+        ''' the ion fragment peak m/z(mass value)
+        ''' </summary>
+        ''' <returns></returns>
         Property Mass As Double
+
+        ''' <summary>
+        ''' the peak intensity value in mass spectrum
+        ''' </summary>
+        ''' <returns></returns>
         Property Intensity As Double
+
     End Interface
 
     Public Enum PeakQuality

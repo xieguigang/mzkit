@@ -169,30 +169,30 @@ Public Class AminoAcid
     End Sub
 
     Public Shared ReadOnly OneChar2Formula As Dictionary(Of Char, Formula) = New Dictionary(Of Char, Formula) From {
-{"A"c, FormulaScanner.Convert2FormulaObjV2("C3H7O2N")},
-{"R"c, FormulaScanner.Convert2FormulaObjV2("C6H14O2N4")},
-{"N"c, FormulaScanner.Convert2FormulaObjV2("C4H8O3N2")},
-{"D"c, FormulaScanner.Convert2FormulaObjV2("C4H7O4N")},
-{"C"c, FormulaScanner.Convert2FormulaObjV2("C3H7O2NS")},
-{"E"c, FormulaScanner.Convert2FormulaObjV2("C5H9O4N")},
-{"Q"c, FormulaScanner.Convert2FormulaObjV2("C5H10O3N2")},
-{"G"c, FormulaScanner.Convert2FormulaObjV2("C2H5O2N")},
-{"H"c, FormulaScanner.Convert2FormulaObjV2("C6H9O2N3")},
-{"I"c, FormulaScanner.Convert2FormulaObjV2("C6H13O2N")},
-{"L"c, FormulaScanner.Convert2FormulaObjV2("C6H13O2N")},
-{"J"c, FormulaScanner.Convert2FormulaObjV2("C6H13O2N")},
-{"K"c, FormulaScanner.Convert2FormulaObjV2("C6H14O2N2")},
-{"M"c, FormulaScanner.Convert2FormulaObjV2("C5H11O2NS")},
-{"F"c, FormulaScanner.Convert2FormulaObjV2("C9H11O2N")},
-{"P"c, FormulaScanner.Convert2FormulaObjV2("C5H9O2N")},
-{"S"c, FormulaScanner.Convert2FormulaObjV2("C3H7O3N")},
-{"T"c, FormulaScanner.Convert2FormulaObjV2("C4H9O3N")},
-{"W"c, FormulaScanner.Convert2FormulaObjV2("C11H12O2N2")},
-{"Y"c, FormulaScanner.Convert2FormulaObjV2("C9H11O3N")},
-{"V"c, FormulaScanner.Convert2FormulaObjV2("C5H11O2N")},
-{"O"c, FormulaScanner.Convert2FormulaObjV2("C12H21N3O3")},
-{"U"c, FormulaScanner.Convert2FormulaObjV2("C3H7NO2Se")}
-}
+        {"A"c, FormulaScanner.Convert2FormulaObjV2("C3H7O2N")},
+        {"R"c, FormulaScanner.Convert2FormulaObjV2("C6H14O2N4")},
+        {"N"c, FormulaScanner.Convert2FormulaObjV2("C4H8O3N2")},
+        {"D"c, FormulaScanner.Convert2FormulaObjV2("C4H7O4N")},
+        {"C"c, FormulaScanner.Convert2FormulaObjV2("C3H7O2NS")},
+        {"E"c, FormulaScanner.Convert2FormulaObjV2("C5H9O4N")},
+        {"Q"c, FormulaScanner.Convert2FormulaObjV2("C5H10O3N2")},
+        {"G"c, FormulaScanner.Convert2FormulaObjV2("C2H5O2N")},
+        {"H"c, FormulaScanner.Convert2FormulaObjV2("C6H9O2N3")},
+        {"I"c, FormulaScanner.Convert2FormulaObjV2("C6H13O2N")},
+        {"L"c, FormulaScanner.Convert2FormulaObjV2("C6H13O2N")},
+        {"J"c, FormulaScanner.Convert2FormulaObjV2("C6H13O2N")},
+        {"K"c, FormulaScanner.Convert2FormulaObjV2("C6H14O2N2")},
+        {"M"c, FormulaScanner.Convert2FormulaObjV2("C5H11O2NS")},
+        {"F"c, FormulaScanner.Convert2FormulaObjV2("C9H11O2N")},
+        {"P"c, FormulaScanner.Convert2FormulaObjV2("C5H9O2N")},
+        {"S"c, FormulaScanner.Convert2FormulaObjV2("C3H7O3N")},
+        {"T"c, FormulaScanner.Convert2FormulaObjV2("C4H9O3N")},
+        {"W"c, FormulaScanner.Convert2FormulaObjV2("C11H12O2N2")},
+        {"Y"c, FormulaScanner.Convert2FormulaObjV2("C9H11O3N")},
+        {"V"c, FormulaScanner.Convert2FormulaObjV2("C5H11O2N")},
+        {"O"c, FormulaScanner.Convert2FormulaObjV2("C12H21N3O3")},
+        {"U"c, FormulaScanner.Convert2FormulaObjV2("C3H7NO2Se")}
+    }
 End Class
 
 
