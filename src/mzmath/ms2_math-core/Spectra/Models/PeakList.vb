@@ -123,6 +123,10 @@ Namespace Spectra
         Sub New()
         End Sub
 
+        ''' <summary>
+        ''' get spectrum data from current scan data object.
+        ''' </summary>
+        ''' <returns></returns>
         Public Iterator Function GetPeaks() As IEnumerable(Of ms2)
             For i As Integer = 0 To mz.Length - 1
                 Yield New ms2(_mz(i), _into(i))
