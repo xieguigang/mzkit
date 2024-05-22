@@ -21,7 +21,7 @@ const pack_singleCells = function(rawdata, tag = NULL) {
     print(basename(rawdata));
 
     rawdata 
-    |> lapply(file -> open.mzpack(file))
+    |> lapply(file -> open.mzpack(file, verbose = FALSE))
     |> cellsPack::pack_cells()
     ;
 }
