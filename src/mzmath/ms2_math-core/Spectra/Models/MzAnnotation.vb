@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4dbd909eb8a750be8a2559acf11d1cff, mzmath\ms2_math-core\Spectra\Models\MzAnnotation.vb"
+﻿#Region "Microsoft.VisualBasic::930c72bb2ed5d64e2097e0356998347b, mzmath\ms2_math-core\Spectra\Models\MzAnnotation.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 28
-    '    Code Lines: 19
-    ' Comment Lines: 0
-    '   Blank Lines: 9
-    '     File Size: 857 B
+    '   Total Lines: 37
+    '    Code Lines: 19 (51.35%)
+    ' Comment Lines: 9 (24.32%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 9 (24.32%)
+    '     File Size: 1.17 KB
 
 
     '     Class MzAnnotation

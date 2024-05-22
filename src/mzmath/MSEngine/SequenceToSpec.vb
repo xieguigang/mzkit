@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cacf98272c844493d32da8093c2e787e, mzmath\MSEngine\SequenceToSpec.vb"
+﻿#Region "Microsoft.VisualBasic::8c5f2439b899a585487ab06d5bafcbc0, mzmath\MSEngine\SequenceToSpec.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 437
-    '    Code Lines: 324
-    ' Comment Lines: 48
-    '   Blank Lines: 65
-    '     File Size: 20.32 KB
+    '   Total Lines: 460
+    '    Code Lines: 341 (74.13%)
+    ' Comment Lines: 51 (11.09%)
+    '    - Xml Docs: 5.88%
+    ' 
+    '   Blank Lines: 68 (14.78%)
+    '     File Size: 21.09 KB
 
 
     ' Class SequenceToSpec

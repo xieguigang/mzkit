@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::74e81b1e551d770814964182cda86093, mzmath\ms2_math-core\Spectra\Models\PeakList.vb"
+﻿#Region "Microsoft.VisualBasic::5ed32260cb1551c848315125c6f79e50, mzmath\ms2_math-core\Spectra\Models\PeakList.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 94
-    '    Code Lines: 45
-    ' Comment Lines: 32
-    '   Blank Lines: 17
-    '     File Size: 2.67 KB
+    '   Total Lines: 105
+    '    Code Lines: 49 (46.67%)
+    ' Comment Lines: 36 (34.29%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 20 (19.05%)
+    '     File Size: 3.08 KB
 
 
     '     Class PeakList
@@ -59,6 +61,10 @@
     '     Interface IMsScan
     ' 
     '         Function: GetMs, GetMzIonIntensity
+    ' 
+    '     Interface ISpectrumVector
+    ' 
+    '         Properties: Peaks, PeaksIntensity
     ' 
     ' 
     ' /********************************************************************************/

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b71d8d3a768713344367b17dd1ef5591, mzmath\MSEngine\Search\PeptideMsReference.vb"
+﻿#Region "Microsoft.VisualBasic::9f8e76cbcc623f7b82ecd4adbd61f4aa, mzmath\MSEngine\Search\PeptideMsReference.vb"
 
     ' Author:
     ' 
@@ -38,10 +38,12 @@
     ' Code Statistics:
 
     '   Total Lines: 277
-    '    Code Lines: 200
-    ' Comment Lines: 1
-    '   Blank Lines: 76
-    '     File Size: 10.17 KB
+    '    Code Lines: 200 (72.20%)
+    ' Comment Lines: 1 (0.36%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 76 (27.44%)
+    '     File Size: 10.37 KB
 
 
     ' Class AminoAcid

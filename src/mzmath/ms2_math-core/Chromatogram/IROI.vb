@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a2ca02a8eae8938e7053a5fff317e902, mzmath\ms2_math-core\Ms1\IROI.vb"
+﻿#Region "Microsoft.VisualBasic::a2ca02a8eae8938e7053a5fff317e902, mzmath\ms2_math-core\Chromatogram\IROI.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 23
-    '    Code Lines: 6
-    ' Comment Lines: 13
-    '   Blank Lines: 4
+    '    Code Lines: 6 (26.09%)
+    ' Comment Lines: 13 (56.52%)
+    '    - Xml Docs: 92.31%
+    ' 
+    '   Blank Lines: 4 (17.39%)
     '     File Size: 620 B
 
 

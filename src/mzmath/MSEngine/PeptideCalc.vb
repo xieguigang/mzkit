@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e7df0ee7ee8c9f6e769b5010d11d8696, mzmath\MSEngine\PeptideCalc.vb"
+﻿#Region "Microsoft.VisualBasic::698fddbcbb3e5c06191c04ee26f7ea97, mzmath\MSEngine\PeptideCalc.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 410
-    '    Code Lines: 330
-    ' Comment Lines: 13
-    '   Blank Lines: 67
-    '     File Size: 20.59 KB
+    '   Total Lines: 415
+    '    Code Lines: 333 (80.24%)
+    ' Comment Lines: 13 (3.13%)
+    '    - Xml Docs: 53.85%
+    ' 
+    '   Blank Lines: 69 (16.63%)
+    '     File Size: 20.74 KB
 
 
     ' Class PeptideCalc

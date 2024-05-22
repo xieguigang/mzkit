@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2a0e923b688e91a7d9bc9acce3e7bb4d, mzmath\MSFinder\FormulaResult.vb"
+﻿#Region "Microsoft.VisualBasic::feb4e43e7daaa87f4c7bf0522b15f6c3, mzmath\MSFinder\FormulaResult.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 41
-    '    Code Lines: 36
-    ' Comment Lines: 0
-    '   Blank Lines: 5
-    '     File Size: 1.90 KB
+    '   Total Lines: 34
+    '    Code Lines: 32 (94.12%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 2 (5.88%)
+    '     File Size: 1.81 KB
 
 
     ' Class FormulaResult
@@ -52,8 +54,6 @@
     '                 NeutralLossHits, NeutralLossNum, NeutralLossResult, NeutralLossScore, ProductIonHits
     '                 ProductIonNum, ProductIonResult, ProductIonScore, PubchemResources, ResourceNames
     '                 ResourceRecords, ResourceScore, TotalScore
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
     ' 
     ' /********************************************************************************/
 
