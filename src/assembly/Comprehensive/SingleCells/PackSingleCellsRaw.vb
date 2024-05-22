@@ -80,22 +80,31 @@ Namespace SingleCells
             Dim sample_names As New List(Of String)
             Dim metadata As New Dictionary(Of String, String)
             Dim sample_index As i32 = 1
-            Dim total_cells As Integer = 0
+            Dim source_tag As String
 
             For Each sample As mzPack In single_samples
-                Call metadata.Add($"sample_{++sample_index}", sample.source)
-                Call VBDebugger.EchoLine($" processing {sample.source}...")
+                source_tag = sample.source.BaseName
+
+                Call metadata.Add($"sample_{++sample_index}", source_tag)
+                Call VBDebugger.EchoLine($" processing { source_tag}...")
 
                 For Each cell As ScanMS1 In sample.MS
-                    cell.meta("cluster") = sample.source
-                    cell.meta("sample") = sample.source
+                    If cell.meta Is Nothing Then
+                        cell.meta = New Dictionary(Of String, String)
+                    End If
+
+                    cell.meta("cluster") = source_tag
+                    cell.meta("sample") = source_tag
 
                     Call single_cells.Add(cell)
                 Next
             Next
 
-            Call metadata.Add("sample_sources", sample_names.Count)
-            Call metadata.Add("total_cells", total_cells)
+            Call metadata.Add("num_single_sources", sample_names.Count)
+            Call metadata.Add("total_cells", single_cells.Count)
+
+            Call VBDebugger.EchoLine($"number of single sources: {sample_names.Count}")
+            Call VBDebugger.EchoLine($"total cells: {single_cells.Count}")
 
             Return New mzPack With {
                 .Annotations = New Dictionary(Of String, String),
