@@ -27,6 +27,7 @@ Namespace SingleCells
 
             For Each sample As mzPack In single_samples
                 Call metadata.Add($"sample_{++sample_index}", sample.source)
+                Call VBDebugger.EchoLine($" processing {sample.source}...")
 
                 For Each cell As ScanMS1 In sample.MS
                     cell.meta("cluster") = sample.source
