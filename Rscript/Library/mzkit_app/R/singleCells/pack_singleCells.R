@@ -9,6 +9,9 @@ const pack_singleCells = function(rawdata, tag = NULL) {
         rawdata <- list.files(rawdata, ["*.mzPack"]);
     }
 
+    print("pack single cells raw data files:");
+    print(basename(rawdata));
+
     rawdata 
     |> lapply(file -> open.mzpack(file))
     |> cellsPack::pack_cells()
