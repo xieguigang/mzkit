@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ec20fb3f3ed88080c0481b0eefcb96af, Rscript\Library\mzkit_app\src\mzkit\assembly\MzPackAccess.vb"
+﻿#Region "Microsoft.VisualBasic::da3f13b72cf7f04aea1f2dbe11c8e5e9, Rscript\Library\mzkit_app\src\mzkit\assembly\MzPackAccess.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 515
-    '    Code Lines: 320
-    ' Comment Lines: 141
-    '   Blank Lines: 54
+    '    Code Lines: 320 (62.14%)
+    ' Comment Lines: 141 (27.38%)
+    '    - Xml Docs: 95.04%
+    ' 
+    '   Blank Lines: 54 (10.49%)
     '     File Size: 19.95 KB
 
 
