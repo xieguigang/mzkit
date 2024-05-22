@@ -75,7 +75,7 @@ Namespace SingleCells
         ''' </param>
         ''' <returns></returns>
         <Extension>
-        Public Function PackRawData(single_samples As IEnumerable(Of mzPack), Optional tag As String = Nothing) As mzPack
+        Public Function PackRawData(single_samples As IEnumerable(Of mzPack), Optional tag As String = Nothing, Optional ignore_ms2 As Boolean = True) As mzPack
             Dim single_cells As New List(Of ScanMS1)
             Dim sample_names As New List(Of String)
             Dim metadata As New Dictionary(Of String, String)
@@ -92,6 +92,9 @@ Namespace SingleCells
                 For Each cell As ScanMS1 In sample.MS
                     If cell.meta Is Nothing Then
                         cell.meta = New Dictionary(Of String, String)
+                    End If
+                    If ignore_ms2 Then
+                        cell.products = Nothing
                     End If
 
                     cell.meta("cluster") = source_tag
