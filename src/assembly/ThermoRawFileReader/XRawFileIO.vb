@@ -1,70 +1,72 @@
-﻿#Region "Microsoft.VisualBasic::2ace10cac463f0e1e197b1d2b2948a6d, assembly\ThermoRawFileReader\XRawFileIO.vb"
+﻿#Region "Microsoft.VisualBasic::f8e005e2e39b963ea3edb1164f0ba78f, assembly\ThermoRawFileReader\XRawFileIO.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 2531
-'    Code Lines: 1499
-' Comment Lines: 591
-'   Blank Lines: 441
-'     File Size: 109.28 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Class XRawFileIO
-' 
-'     Properties: FileInfo, Options, RawFilePath, ScanEnd, ScanInfoCacheMaxSize
-'                 ScanStart, TraceMode
-' 
-'     Constructor: (+4 Overloads) Sub New
-' 
-'     Function: CapitalizeCollisionMode, ContainsAny, ContainsText, DetermineIonizationMode, DetermineMRMScanType
-'               ExtractMSLevel, (+3 Overloads) ExtractParentIonMZFromFilterText, FillFileInfo, GetActivationType, GetCapturedValue
-'               GetChromatogramData, GetChromatogramData2D, GetCollisionEnergy, GetCollisionEnergyUnnormalized, GetDeviceInfo
-'               GetDeviceStats, getFtLabelData, GetMSLevel, GetNumScans, GetRetentionTime
-'               (+3 Overloads) GetScanData, (+3 Overloads) GetScanData2D, GetScanDataSumScans, GetScanInfo, GetScanInfoInternal
-'               GetScanLabelData, GetScanPrecisionData, GetScanTypeNameFromThermoScanFilterText, LoadFileInfoInternal, MakeGenericThermoScanFilter
-'               MakeGenericThermoScanFilterInternal, OpenRawFile, ReadScanData, ScanIsFTMS, SetMSController
-'               ToString, TuneMethodsMatch, ValidateAndSelectDevice, ValidateMSScan
-' 
-'     Sub: CacheScanInfo, CloseRawFile, Dispose, ExtractMRMMasses, GetTuneData
-'          LoadMethodInfo, Options_OptionsUpdatedEvent, RaiseErrorMessage, RaiseWarningMessage, RemoveCachedScanInfoOverLimit
-'          UpdateReaderOptions
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 2531
+    '    Code Lines: 1499 (59.23%)
+    ' Comment Lines: 591 (23.35%)
+    '    - Xml Docs: 55.50%
+    ' 
+    '   Blank Lines: 441 (17.42%)
+    '     File Size: 109.27 KB
+
+
+    ' Class XRawFileIO
+    ' 
+    '     Properties: FileInfo, Options, RawFilePath, ScanEnd, ScanInfoCacheMaxSize
+    '                 ScanStart, TraceMode
+    ' 
+    '     Constructor: (+4 Overloads) Sub New
+    ' 
+    '     Function: CapitalizeCollisionMode, ContainsAny, ContainsText, DetermineIonizationMode, DetermineMRMScanType
+    '               ExtractMSLevel, (+3 Overloads) ExtractParentIonMZFromFilterText, FillFileInfo, GetActivationType, GetCapturedValue
+    '               GetChromatogramData, GetChromatogramData2D, GetCollisionEnergy, GetCollisionEnergyUnnormalized, GetDeviceInfo
+    '               GetDeviceStats, getFtLabelData, GetMSLevel, GetNumScans, GetRetentionTime
+    '               (+3 Overloads) GetScanData, (+3 Overloads) GetScanData2D, GetScanDataSumScans, GetScanInfo, GetScanInfoInternal
+    '               GetScanLabelData, GetScanPrecisionData, GetScanTypeNameFromThermoScanFilterText, LoadFileInfoInternal, MakeGenericThermoScanFilter
+    '               MakeGenericThermoScanFilterInternal, OpenRawFile, ReadScanData, ScanIsFTMS, SetMSController
+    '               ToString, TuneMethodsMatch, ValidateAndSelectDevice, ValidateMSScan
+    ' 
+    '     Sub: CacheScanInfo, CloseRawFile, Dispose, ExtractMRMMasses, GetTuneData
+    '          LoadMethodInfo, Options_OptionsUpdatedEvent, RaiseErrorMessage, RaiseWarningMessage, RemoveCachedScanInfoOverLimit
+    '          UpdateReaderOptions
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
