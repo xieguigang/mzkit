@@ -85,6 +85,7 @@ Namespace SingleCells
             For Each sample As mzPack In single_samples
                 source_tag = sample.source.BaseName
 
+                Call sample_names.Add(source_tag)
                 Call metadata.Add($"sample_{++sample_index}", source_tag)
                 Call VBDebugger.EchoLine($" processing { source_tag}...")
 
