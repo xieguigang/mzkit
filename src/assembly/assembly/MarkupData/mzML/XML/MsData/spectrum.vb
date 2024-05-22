@@ -128,7 +128,14 @@ Namespace MarkupData.mzML
         ''' <returns></returns>
         Public ReadOnly Property scan_time As Double
             Get
-                With scanList.scans(0).cvParams.KeyItem("scan start time")
+                Dim rtParams = scanList.scans(0).cvParams
+
+                ' rt parameter maybe missing in lidms or maldi-ms
+                If rtParams Is Nothing Then
+                    Return 0
+                End If
+
+                With rtParams.KeyItem("scan start time")
                     Dim time# = Val(.value)
 
                     If .unitName = "second" Then
