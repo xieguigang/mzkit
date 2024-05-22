@@ -75,7 +75,8 @@ Namespace DataReader
         End Function
 
         Public Overrides Function GetScanId(scan As spectrum) As String
-            Dim scanType As String = scan.scanList.scans(0).cvParams.KeyItem("filter string")?.value
+            Dim scanParams = scan.scanList.scans(0).cvParams
+            Dim scanType As String = If(scanParams Is Nothing, "?", scanParams.KeyItem("filter string")?.value)
             Dim polarity As String = GetPolarity(scan)
 
             If scan.ms_level = 1 Then
