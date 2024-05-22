@@ -111,6 +111,11 @@ Namespace Spectra
             Me.intensity = intensity
         End Sub
 
+        Sub New(peak As IMs1Scan)
+            Me.mz = peak.mz
+            Me.intensity = peak.intensity
+        End Sub
+
         Public Overrides Function ToString() As String
             Dim mzinto As String
 

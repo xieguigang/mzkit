@@ -1,62 +1,62 @@
 ﻿#Region "Microsoft.VisualBasic::a0b4d3f93082a0db6d481d571d899a31, Rscript\Library\mzkit_app\src\mzkit\math\Math.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 1087
-    '    Code Lines: 685 (63.02%)
-    ' Comment Lines: 266 (24.47%)
-    '    - Xml Docs: 90.60%
-    ' 
-    '   Blank Lines: 136 (12.51%)
-    '     File Size: 47.09 KB
+' Summaries:
 
 
-    ' Module MzMath
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: alignIntensity, centroid, centroidDataframe, (+2 Overloads) cosine, cosine_pairwise
-    '               CreateMSMatrix, CreateMzIndex, createTolerance, defaultPrecursors, exact_mass
-    '               getAlignmentTable, GetClusters, getPrecursorTable, jaccard, jaccardSet
-    '               mz, MzUnique, normMs2, ppm, precursorTypes
-    '               printCalculator, printMzTable, sequenceOrder, spectrumEntropy, SpectrumTreeCluster
-    '               SSMCompares, summaryTolerance, union, xcms_id, XICTable
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 1087
+'    Code Lines: 685 (63.02%)
+' Comment Lines: 266 (24.47%)
+'    - Xml Docs: 90.60%
+' 
+'   Blank Lines: 136 (12.51%)
+'     File Size: 47.09 KB
+
+
+' Module MzMath
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Function: alignIntensity, centroid, centroidDataframe, (+2 Overloads) cosine, cosine_pairwise
+'               CreateMSMatrix, CreateMzIndex, createTolerance, defaultPrecursors, exact_mass
+'               getAlignmentTable, GetClusters, getPrecursorTable, jaccard, jaccardSet
+'               mz, MzUnique, normMs2, ppm, precursorTypes
+'               printCalculator, printMzTable, sequenceOrder, spectrumEntropy, SpectrumTreeCluster
+'               SSMCompares, summaryTolerance, union, xcms_id, XICTable
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -848,6 +848,15 @@ Module MzMath
             Return ms2
         ElseIf inputType Is GetType(dataframe) Then
             Return DirectCast(ions, dataframe).centroidDataframe(errors, threshold, aggregate_sum, env)
+        ElseIf inputType Is GetType(ms1_scan()) Then
+            Dim ms1 = DirectCast(ions, ms1_scan())
+            Dim ms As New LibraryMatrix With {
+                .ms2 = ms1.Select(Function(i) New ms2(i)).ToArray
+            }
+
+            ms = ms.CentroidMode(errors, threshold)
+
+            Return ms
         ElseIf inputType Is GetType(ScanMS1) Then
             Dim scan1 As ScanMS1 = DirectCast(ions, ScanMS1)
             Dim msdata As ms2() = scan1 _
