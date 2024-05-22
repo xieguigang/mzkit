@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::75ba5f63e213b01ec93146657ea780ba, metadb\Lipidomics\SpectrumGenerator\TGOadSpectrumGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::016fa6931467224b0aaa7a95097bb4c1, metadb\Lipidomics\SpectrumGenerator\TGOadSpectrumGenerator.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 96
-    '    Code Lines: 76
-    ' Comment Lines: 8
-    '   Blank Lines: 12
-    '     File Size: 4.69 KB
+    '   Total Lines: 94
+    '    Code Lines: 75 (79.79%)
+    ' Comment Lines: 8 (8.51%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 11 (11.70%)
+    '     File Size: 4.58 KB
 
 
     ' Class TGOadSpectrumGenerator

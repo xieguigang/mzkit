@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::de01f83115a2be38bf34fb53acf6945c, metadb\Lipidomics\SpectrumGenerator\PCOadSpectrumGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::c8d65189146f942a542029e746ddbf7b, metadb\Lipidomics\SpectrumGenerator\PCOadSpectrumGenerator.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 136
-    '    Code Lines: 103
-    ' Comment Lines: 18
-    '   Blank Lines: 15
-    '     File Size: 6.85 KB
+    '   Total Lines: 134
+    '    Code Lines: 102 (76.12%)
+    ' Comment Lines: 18 (13.43%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 14 (10.45%)
+    '     File Size: 6.74 KB
 
 
     ' Class PCOadSpectrumGenerator

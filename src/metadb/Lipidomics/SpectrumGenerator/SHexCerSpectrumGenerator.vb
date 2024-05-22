@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::82a9203b4b8b70d1d29fe046b081318b, metadb\Lipidomics\SpectrumGenerator\SHexCerSpectrumGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::40506277ef503612e6fcc657c1d4d92a, metadb\Lipidomics\SpectrumGenerator\SHexCerSpectrumGenerator.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 160
-    '    Code Lines: 145
-    ' Comment Lines: 2
-    '   Blank Lines: 13
-    '     File Size: 9.32 KB
+    '   Total Lines: 158
+    '    Code Lines: 144 (91.14%)
+    ' Comment Lines: 2 (1.27%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 12 (7.59%)
+    '     File Size: 9.21 KB
 
 
     ' Class SHexCerSpectrumGenerator

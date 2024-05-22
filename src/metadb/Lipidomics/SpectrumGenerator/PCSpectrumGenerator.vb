@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0975c0bcea8b0439674e77d20f9bbcb2, metadb\Lipidomics\SpectrumGenerator\PCSpectrumGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::e6125ad2eaaa2b8b069e63d6179e01cc, metadb\Lipidomics\SpectrumGenerator\PCSpectrumGenerator.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 127
-    '    Code Lines: 108
-    ' Comment Lines: 0
-    '   Blank Lines: 19
-    '     File Size: 6.66 KB
+    '   Total Lines: 124
+    '    Code Lines: 107 (86.29%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 17 (13.71%)
+    '     File Size: 6.55 KB
 
 
     ' Class PCSpectrumGenerator

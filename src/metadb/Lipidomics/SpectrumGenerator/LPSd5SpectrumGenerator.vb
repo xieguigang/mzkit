@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8f9a7f721f73e359ff4bd44360a33ed4, metadb\Lipidomics\SpectrumGenerator\LPSd5SpectrumGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::592474738c81eb8c7ea4467cb7ecfa1d, metadb\Lipidomics\SpectrumGenerator\LPSd5SpectrumGenerator.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 145
-    '    Code Lines: 120
-    ' Comment Lines: 1
-    '   Blank Lines: 24
-    '     File Size: 9.05 KB
+    '   Total Lines: 142
+    '    Code Lines: 119 (83.80%)
+    ' Comment Lines: 1 (0.70%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 22 (15.49%)
+    '     File Size: 8.94 KB
 
 
     ' Class LPSd5SpectrumGenerator

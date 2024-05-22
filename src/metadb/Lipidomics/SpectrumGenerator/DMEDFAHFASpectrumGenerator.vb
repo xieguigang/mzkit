@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8733ca6054a43e7e2add45b4b8ef55c7, metadb\Lipidomics\SpectrumGenerator\DMEDFAHFASpectrumGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::7d77188ecf7c02792914813a2a2e7f84, metadb\Lipidomics\SpectrumGenerator\DMEDFAHFASpectrumGenerator.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 134
-    '    Code Lines: 116
-    ' Comment Lines: 1
-    '   Blank Lines: 17
-    '     File Size: 7.09 KB
+    '   Total Lines: 132
+    '    Code Lines: 115 (87.12%)
+    ' Comment Lines: 1 (0.76%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 16 (12.12%)
+    '     File Size: 6.98 KB
 
 
     ' Class DMEDFAHFASpectrumGenerator

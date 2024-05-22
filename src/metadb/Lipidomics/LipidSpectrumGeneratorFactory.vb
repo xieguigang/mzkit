@@ -1,123 +1,125 @@
-﻿#Region "Microsoft.VisualBasic::b25a6a37d6611e0299d8c3e6cf83394c, metadb\Lipidomics\LipidSpectrumGeneratorFactory.vb"
+﻿#Region "Microsoft.VisualBasic::ea328c55672c6b57e48bed8d9cd237d0, metadb\Lipidomics\LipidSpectrumGeneratorFactory.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 227
-'    Code Lines: 187
-' Comment Lines: 0
-'   Blank Lines: 40
-'     File Size: 8.83 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Class LipidSpectrumGeneratorFactory
-' 
-'     Function: Create
-' 
-' Class RuleBaseSpectrumGenerator
-' 
-'     Properties: Adduct, LipidClass, Rules
-' 
-'     Constructor: (+1 Overloads) Sub New
-'     Function: CanGenerate, Generate
-' 
-' Interface ISpectrumGenerationRule
-' 
-'     Function: Create
-' 
-' Class MzVariableRule
-' 
-'     Properties: Comment, Intensity, Mz
-' 
-'     Constructor: (+1 Overloads) Sub New
-'     Function: Create
-' 
-' Interface IMzVariable
-' 
-'     Function: Evaluate
-' 
-' Class EmptyMz
-' 
-'     Function: Evaluate
-' 
-' Class ConstantMz
-' 
-'     Properties: ExactMass
-' 
-'     Constructor: (+1 Overloads) Sub New
-'     Function: Evaluate, ToString
-' 
-' Class PrecursorMz
-' 
-'     Function: Evaluate, ToString
-' 
-' Class MolecularLevelChains
-' 
-'     Function: Evaluate
-' 
-' Class PositionChainMz
-' 
-'     Properties: Position
-' 
-'     Constructor: (+1 Overloads) Sub New
-'     Function: Evaluate
-' 
-' Class ChainDesorptionMz
-' 
-'     Properties: Position
-' 
-'     Constructor: (+1 Overloads) Sub New
-'     Function: CreateSpectrum, Evaluate
-' 
-' Class LossMz
-' 
-'     Properties: Left, Right
-' 
-'     Constructor: (+1 Overloads) Sub New
-'     Function: Evaluate
-' 
-' Class MzVariableProxy
-' 
-'     Properties: Mz
-' 
-'     Constructor: (+1 Overloads) Sub New
-'     Function: Evaluate
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 226
+    '    Code Lines: 187 (82.74%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 39 (17.26%)
+    '     File Size: 8.77 KB
+
+
+    ' Class LipidSpectrumGeneratorFactory
+    ' 
+    '     Function: Create
+    ' 
+    ' Class RuleBaseSpectrumGenerator
+    ' 
+    '     Properties: Adduct, LipidClass, Rules
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: CanGenerate, Generate
+    ' 
+    ' Interface ISpectrumGenerationRule
+    ' 
+    '     Function: Create
+    ' 
+    ' Class MzVariableRule
+    ' 
+    '     Properties: Comment, Intensity, Mz
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: Create
+    ' 
+    ' Interface IMzVariable
+    ' 
+    '     Function: Evaluate
+    ' 
+    ' Class EmptyMz
+    ' 
+    '     Function: Evaluate
+    ' 
+    ' Class ConstantMz
+    ' 
+    '     Properties: ExactMass
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: Evaluate, ToString
+    ' 
+    ' Class PrecursorMz
+    ' 
+    '     Function: Evaluate, ToString
+    ' 
+    ' Class MolecularLevelChains
+    ' 
+    '     Function: Evaluate
+    ' 
+    ' Class PositionChainMz
+    ' 
+    '     Properties: Position
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: Evaluate
+    ' 
+    ' Class ChainDesorptionMz
+    ' 
+    '     Properties: Position
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: CreateSpectrum, Evaluate
+    ' 
+    ' Class LossMz
+    ' 
+    '     Properties: Left, Right
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: Evaluate
+    ' 
+    ' Class MzVariableProxy
+    ' 
+    '     Properties: Mz
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: Evaluate
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

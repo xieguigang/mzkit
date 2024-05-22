@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::45617bbd690694f66e6783eaabb90362, metadb\Lipidomics\SpectrumGenerator\CeramideSpectrumGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::01787f86b677e0c7f801fd40b662cfa6, metadb\Lipidomics\SpectrumGenerator\CeramideSpectrumGenerator.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 140
-    '    Code Lines: 127
-    ' Comment Lines: 0
-    '   Blank Lines: 13
-    '     File Size: 7.52 KB
+    '   Total Lines: 138
+    '    Code Lines: 126 (91.30%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 12 (8.70%)
+    '     File Size: 7.41 KB
 
 
     ' Class CeramideSpectrumGenerator

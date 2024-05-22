@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bbec300daead99cd3031caef2d018adc, metadb\Lipidomics\SpectrumGenerator\EtherPCEidSpectrumGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::111c4b9708c8bedbb70f7758cd22aef4, metadb\Lipidomics\SpectrumGenerator\EtherPCEidSpectrumGenerator.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 146
-    '    Code Lines: 123
-    ' Comment Lines: 2
-    '   Blank Lines: 21
-    '     File Size: 7.83 KB
+    '   Total Lines: 143
+    '    Code Lines: 122 (85.31%)
+    ' Comment Lines: 2 (1.40%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 19 (13.29%)
+    '     File Size: 7.72 KB
 
 
     ' Class EtherPCEidSpectrumGenerator
