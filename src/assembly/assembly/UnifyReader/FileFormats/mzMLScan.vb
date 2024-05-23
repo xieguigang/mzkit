@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0fe3341c3f0c571a4cbb9f010f18771a, assembly\assembly\UnifyReader\FileFormats\mzMLScan.vb"
+﻿#Region "Microsoft.VisualBasic::6014733d9becf907f9a724b49f7a8b3f, assembly\assembly\UnifyReader\FileFormats\mzMLScan.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 109
-    '    Code Lines: 90 (82.57%)
+    '   Total Lines: 110
+    '    Code Lines: 91 (82.73%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 19 (17.43%)
-    '     File Size: 4.61 KB
+    '   Blank Lines: 19 (17.27%)
+    '     File Size: 4.68 KB
 
 
     '     Class mzMLScan
