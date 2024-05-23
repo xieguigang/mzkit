@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3fccaa54deefeaf21ac9646f667f46f7, mzmath\MSFinder\Const\FseaNonsignificantDef.vb"
+﻿#Region "Microsoft.VisualBasic::fc8d0507b0b8b401c1170de5774d4fa7, mzmath\MSFinder\Const\FseaNonsignificantDef.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 6
-    '    Code Lines: 5 (83.33%)
+    '   Total Lines: 5
+    '    Code Lines: 5 (100.00%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 1 (16.67%)
-    '     File Size: 106 B
+    '   Blank Lines: 0 (0.00%)
+    '     File Size: 104 B
 
 
     ' Enum FseaNonsignificantDef
@@ -57,7 +57,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Public Enum FseaNonsignificantDef
     OntologySpace

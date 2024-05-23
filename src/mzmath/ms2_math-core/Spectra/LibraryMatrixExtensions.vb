@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::01e8216e4f00dcb8318fb5e521ea5d7a, mzmath\ms2_math-core\Spectra\LibraryMatrixExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::c271429d3c6d9e5d3e6a3054c5f66aa3, mzmath\ms2_math-core\Spectra\LibraryMatrixExtensions.vb"
 
     ' Author:
     ' 
@@ -43,13 +43,13 @@
     '    - Xml Docs: 72.06%
     ' 
     '   Blank Lines: 29 (11.28%)
-    '     File Size: 10.22 KB
+    '     File Size: 10.35 KB
 
 
     '     Module LibraryMatrixExtensions
     ' 
-    '         Function: AbSciexBaselineHandling, AsMatrix, Centroid, CentroidMode, CentroidSum
-    '                   GetStream, Max, (+2 Overloads) ParseStream, SumMs
+    '         Function: AbSciexBaselineHandling, AsMatrix, (+2 Overloads) Centroid, CentroidMode, GetStream
+    '                   Max, (+2 Overloads) ParseStream, SumMs
     ' 
     ' 
     ' /********************************************************************************/

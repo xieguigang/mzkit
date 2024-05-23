@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::728c15bc5c54a741d9214b92c84e9552, mzmath\MSFinder\PrecursorAnnotation\FeatureSearchHandler.vb"
+﻿#Region "Microsoft.VisualBasic::545746b6bef600cd76cc1f406045e152, mzmath\MSFinder\PrecursorAnnotation\FeatureSearchHandler.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 105
-    '    Code Lines: 73 (69.52%)
-    ' Comment Lines: 21 (20.00%)
+    '   Total Lines: 104
+    '    Code Lines: 73 (70.19%)
+    ' Comment Lines: 21 (20.19%)
     '    - Xml Docs: 80.95%
     ' 
-    '   Blank Lines: 11 (10.48%)
-    '     File Size: 4.58 KB
+    '   Blank Lines: 10 (9.62%)
+    '     File Size: 4.57 KB
 
 
     ' Module FeatureSearchHandler
@@ -53,7 +53,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
@@ -159,4 +158,3 @@ Public Module FeatureSearchHandler
         Next
     End Function
 End Module
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3221fb971af0b27aafeb40fd338590a9, mzmath\ms2_math-core\Spectra\Models\ms2.vb"
+﻿#Region "Microsoft.VisualBasic::be6c055001deb576efe23839b8b737f1, mzmath\ms2_math-core\Spectra\Models\ms2.vb"
 
     ' Author:
     ' 
@@ -37,20 +37,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 131
-    '    Code Lines: 74 (56.49%)
-    ' Comment Lines: 40 (30.53%)
+    '   Total Lines: 136
+    '    Code Lines: 78 (57.35%)
+    ' Comment Lines: 40 (29.41%)
     '    - Xml Docs: 92.50%
     ' 
-    '   Blank Lines: 17 (12.98%)
-    '     File Size: 5.06 KB
+    '   Blank Lines: 18 (13.24%)
+    '     File Size: 5.19 KB
 
 
     '     Class ms2
     ' 
     '         Properties: Annotation, intensity, mz
     ' 
-    '         Constructor: (+2 Overloads) Sub New
+    '         Constructor: (+3 Overloads) Sub New
     '         Function: AbsoluteIntensity, CompareTo, RelativeIntensity, ToString
     '         Operators: -
     ' 

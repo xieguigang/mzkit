@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d322bd6e3e154e2ac0058fcde6a9b129, mzmath\ms2_math-core\Spectra\MzIndex.vb"
+﻿#Region "Microsoft.VisualBasic::f239af8e4d75f9276f98343d57957076, mzmath\ms2_math-core\Spectra\MzIndex.vb"
 
     ' Author:
     ' 
@@ -37,12 +37,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 57
-    '    Code Lines: 27 (47.37%)
-    ' Comment Lines: 17 (29.82%)
+    '   Total Lines: 56
+    '    Code Lines: 27 (48.21%)
+    ' Comment Lines: 17 (30.36%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 13 (22.81%)
+    '   Blank Lines: 12 (21.43%)
     '     File Size: 1.60 KB
 
 
@@ -58,7 +58,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.Runtime.CompilerServices
 
