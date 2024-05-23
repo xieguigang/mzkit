@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5766dbe21639c15a068d93ec6afec438, mzmath\MSFinder\ExistFormulaQuery.vb"
+﻿#Region "Microsoft.VisualBasic::79dc8209179d11483b6f7fd807c5accf, mzmath\MSFinder\ExistFormulaQuery.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 33
-    '    Code Lines: 19
-    ' Comment Lines: 5
-    '   Blank Lines: 9
+    '    Code Lines: 19 (57.58%)
+    ' Comment Lines: 5 (15.15%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 9 (27.27%)
     '     File Size: 1.07 KB
 
 

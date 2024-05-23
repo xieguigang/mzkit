@@ -30,7 +30,7 @@
             <code id="clr_ts">
 # namespace BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 export class ScanMS2 extends <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/mzWebCache/MSScan.html">MSScan</a> {
-   activationMethod: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/ActivationMethods.html">ActivationMethods</a>;
+   activationMethod: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/ActivationMethods.html">ActivationMethods</a>;
    centroided: boolean;
    charge: integer;
    collisionEnergy: double;
@@ -40,7 +40,7 @@ export class ScanMS2 extends <a href="/vignettes/clr/BioNovoGene/Analytical/Mass
    mz: double;
    # the parent ion m/z
    parentMz: double;
-   polarity: integer;
+   polarity: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Ms1/PrecursorType/IonModes.html">IonModes</a>;
    rt: double;
    scan_id: string;
    size: integer;
@@ -52,8 +52,9 @@ export class ScanMS2 extends <a href="/vignettes/clr/BioNovoGene/Analytical/Mass
 
         <ol>
 <li>this class extends from <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/mzWebCache/MSScan.html">MSScan</a> class: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/mzWebCache/MSScan.html">MSScan</a></li>
-<li>use by <i>property</i> member <code>activationMethod</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/mzData/ActivationMethods.html">ActivationMethods</a></li>
+<li>use by <i>property</i> member <code>activationMethod</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/ActivationMethods.html">ActivationMethods</a></li>
 <li>use by <i>property</i> member <code>MRM</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/MRM.html">MRM</a></li>
+<li>use by <i>property</i> member <code>polarity</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Ms1/PrecursorType/IonModes.html">IonModes</a></li>
 </ol>
 
 

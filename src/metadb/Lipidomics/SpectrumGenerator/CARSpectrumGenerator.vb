@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2e209dbcfebc4ed238ad4f4a4eee0fe1, metadb\Lipidomics\SpectrumGenerator\CARSpectrumGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::da124a9636dec702cb4c488c7b50c685, metadb\Lipidomics\SpectrumGenerator\CARSpectrumGenerator.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 95
-    '    Code Lines: 80
-    ' Comment Lines: 0
-    '   Blank Lines: 15
-    '     File Size: 4.77 KB
+    '   Total Lines: 93
+    '    Code Lines: 79 (84.95%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 14 (15.05%)
+    '     File Size: 4.66 KB
 
 
     ' Class CARSpectrumGenerator

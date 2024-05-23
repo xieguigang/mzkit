@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::83fac6f7805c875b74227fa60519111d, metadb\Lipidomics\SpectrumGenerator\LDGTASpectrumGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::adb0a16bea259ec4a9d8d1db0b1f10d2, metadb\Lipidomics\SpectrumGenerator\LDGTASpectrumGenerator.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 129
-    '    Code Lines: 109
-    ' Comment Lines: 0
-    '   Blank Lines: 20
-    '     File Size: 6.83 KB
+    '   Total Lines: 127
+    '    Code Lines: 108 (85.04%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 19 (14.96%)
+    '     File Size: 6.72 KB
 
 
     ' Class LDGTASpectrumGenerator

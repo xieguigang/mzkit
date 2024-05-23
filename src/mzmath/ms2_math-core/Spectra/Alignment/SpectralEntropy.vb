@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9e2a3806f02c5b053ead222c4637563a, mzmath\ms2_math-core\Spectra\Alignment\SpectralEntropy.vb"
+﻿#Region "Microsoft.VisualBasic::f171fda0fd35ea3027494bb795029d68, mzmath\ms2_math-core\Spectra\Alignment\SpectralEntropy.vb"
 
     ' Author:
     ' 
@@ -38,10 +38,12 @@
     ' Code Statistics:
 
     '   Total Lines: 156
-    '    Code Lines: 100
-    ' Comment Lines: 30
-    '   Blank Lines: 26
-    '     File Size: 6.46 KB
+    '    Code Lines: 100 (64.10%)
+    ' Comment Lines: 30 (19.23%)
+    '    - Xml Docs: 90.00%
+    ' 
+    '   Blank Lines: 26 (16.67%)
+    '     File Size: 6.45 KB
 
 
     '     Module SpectralEntropy

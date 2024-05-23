@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3221fb971af0b27aafeb40fd338590a9, mzmath\ms2_math-core\Spectra\Models\ms2.vb"
+﻿#Region "Microsoft.VisualBasic::be6c055001deb576efe23839b8b737f1, mzmath\ms2_math-core\Spectra\Models\ms2.vb"
 
     ' Author:
     ' 
@@ -37,18 +37,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 131
-    '    Code Lines: 74
-    ' Comment Lines: 40
-    '   Blank Lines: 17
-    '     File Size: 5.06 KB
+    '   Total Lines: 136
+    '    Code Lines: 78 (57.35%)
+    ' Comment Lines: 40 (29.41%)
+    '    - Xml Docs: 92.50%
+    ' 
+    '   Blank Lines: 18 (13.24%)
+    '     File Size: 5.19 KB
 
 
     '     Class ms2
     ' 
     '         Properties: Annotation, intensity, mz
     ' 
-    '         Constructor: (+2 Overloads) Sub New
+    '         Constructor: (+3 Overloads) Sub New
     '         Function: AbsoluteIntensity, CompareTo, RelativeIntensity, ToString
     '         Operators: -
     ' 
@@ -107,6 +109,11 @@ Namespace Spectra
         Sub New(mz As Double, intensity As Double)
             Me.mz = mz
             Me.intensity = intensity
+        End Sub
+
+        Sub New(peak As IMs1Scan)
+            Me.mz = peak.mz
+            Me.intensity = peak.intensity
         End Sub
 
         Public Overrides Function ToString() As String

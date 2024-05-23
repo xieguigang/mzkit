@@ -27,7 +27,8 @@
         <h3>Usage</h3>
 
         <div style="width: 100%; padding-left: 3%; color: black;">
-            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>precursor_types</strong>(<i>types</i>);</code></pre>
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>precursor_types</strong>(<i>types</i>,
+    <i>unsafe</i> = <span style='color: blue !important;'>TRUE</span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
@@ -36,6 +37,13 @@
             
 <dt>types</dt>
 <dd><p>a character vector of the precursor type symbols, example as <code>[M+H]+</code>, etc.</p></dd>
+
+
+<dt>unsafe</dt>
+<dd><p>this parameter indicates that how the function handling of the string parser error when the given string value is empty:
+ 
+ 1. for unsafe, an exception will be throw
+ 2. for unsafe is false, corresponding null value will be generated. [as boolean]</p></dd>
 
 
 <dt>env</dt>
@@ -54,7 +62,7 @@
 
         <h3>Value</h3>
 
-        this function returns data object of type <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Ms1/PrecursorType/MzCalculator.html">MzCalculator</a>.<h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Ms1/PrecursorType/MzCalculator.html">MzCalculator</a></li></ul>
+        <p>a collection of the ion precursor adducts object.</p><h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Ms1/PrecursorType/MzCalculator.html">MzCalculator</a></li></ul>
 
         <h3 style="display: none;">Examples</h3>
 

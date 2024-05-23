@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c02ccbbed90d0b114963ccd9456e902b, mzmath\ms2_math-core\Ms1\PrecursorType\IonModes.vb"
+﻿#Region "Microsoft.VisualBasic::a8443ac6bdcced2bb49e5e3d60048e8f, mzmath\ms2_math-core\Ms1\PrecursorType\IonModes.vb"
 
     ' Author:
     ' 
@@ -38,10 +38,12 @@
     ' Code Statistics:
 
     '   Total Lines: 29
-    '    Code Lines: 9
-    ' Comment Lines: 16
-    '   Blank Lines: 4
-    '     File Size: 707 B
+    '    Code Lines: 9 (31.03%)
+    ' Comment Lines: 16 (55.17%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 4 (13.79%)
+    '     File Size: 723 B
 
 
     '     Enum IonModes
@@ -61,7 +63,7 @@ Imports System.ComponentModel
 Namespace Ms1.PrecursorType
 
     ''' <summary>
-    ''' Ion Modes
+    ''' Ion Modes, +/-
     ''' </summary>
     ''' <remarks>
     ''' integer value is matched with the thermo fisher ms raw file reader

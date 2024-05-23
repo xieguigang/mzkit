@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4f75b63ffbc5abf8162286e7e8318e46, metadb\Lipidomics\SpectrumGenerator\DGEidSpectrumGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::6166787204e2a88730db3cce1247c02b, metadb\Lipidomics\SpectrumGenerator\DGEidSpectrumGenerator.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 143
-    '    Code Lines: 125
-    ' Comment Lines: 0
-    '   Blank Lines: 18
-    '     File Size: 7.65 KB
+    '   Total Lines: 141
+    '    Code Lines: 124 (87.94%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 17 (12.06%)
+    '     File Size: 7.54 KB
 
 
     ' Class DGEidSpectrumGenerator

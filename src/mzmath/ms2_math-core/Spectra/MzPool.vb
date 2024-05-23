@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a548231a6cf635cdcdc8797b633f235a, mzmath\ms2_math-core\Spectra\MzPool.vb"
+﻿#Region "Microsoft.VisualBasic::55e2740bc93ed35ca0622a0fb4745bff, mzmath\ms2_math-core\Spectra\MzPool.vb"
 
     ' Author:
     ' 
@@ -37,21 +37,15 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 146
-    '    Code Lines: 72
-    ' Comment Lines: 52
-    '   Blank Lines: 22
-    '     File Size: 5.09 KB
+    '   Total Lines: 95
+    '    Code Lines: 48 (50.53%)
+    ' Comment Lines: 35 (36.84%)
+    '    - Xml Docs: 97.14%
+    ' 
+    '   Blank Lines: 12 (12.63%)
+    '     File Size: 3.57 KB
 
 
-    '     Class MzIndex
-    ' 
-    '         Properties: index, mz
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: ToString, Tuple
-    '         Operators: *
-    ' 
     '     Class MzPool
     ' 
     '         Properties: raw, size

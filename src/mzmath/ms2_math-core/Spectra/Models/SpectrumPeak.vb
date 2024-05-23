@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b53a0170d63ac2984e5d15bdce3ddb4e, mzmath\ms2_math-core\Spectra\Models\SpectrumPeak.vb"
+﻿#Region "Microsoft.VisualBasic::4c27a6d57893c9dfb68e431d6d030c50, mzmath\ms2_math-core\Spectra\Models\SpectrumPeak.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 102
-    '    Code Lines: 73
-    ' Comment Lines: 10
-    '   Blank Lines: 19
-    '     File Size: 2.89 KB
+    '   Total Lines: 116
+    '    Code Lines: 73 (62.93%)
+    ' Comment Lines: 21 (18.10%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 22 (18.97%)
+    '     File Size: 3.25 KB
 
 
     '     Enum SpectrumComment

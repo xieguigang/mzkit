@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5945c96bbbdda86aea65ab8ebb3248b9, mzmath\mz_deco\GCMS\GCMSDeconv.vb"
+﻿#Region "Microsoft.VisualBasic::4edf8936c8ccbfc10e6f5eba3ef7da74, mzmath\mz_deco\GCMS\GCMSDeconv.vb"
 
     ' Author:
     ' 
@@ -38,10 +38,12 @@
     ' Code Statistics:
 
     '   Total Lines: 56
-    '    Code Lines: 37
-    ' Comment Lines: 9
-    '   Blank Lines: 10
-    '     File Size: 2.28 KB
+    '    Code Lines: 37 (66.07%)
+    ' Comment Lines: 9 (16.07%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 10 (17.86%)
+    '     File Size: 2.31 KB
 
 
     ' Module GCMSDeconv
@@ -94,7 +96,7 @@ Public Module GCMSDeconv
                 .Select(Function(p) p.mzInto) _
                 .IteratesALL _
                 .ToArray _
-                .CentroidSum(da, cutoff) _
+                .Centroid(da, cutoff, aggregate:=Function(x) x.Sum) _
                 .ToArray
 
             Yield New GCMSPeak(peak) With {.Spectrum = union}

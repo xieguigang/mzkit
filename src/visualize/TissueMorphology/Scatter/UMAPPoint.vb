@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1e4a3d5fbb2d167ffba1e74a35db7a08, visualize\TissueMorphology\Scatter\UMAPPoint.vb"
+﻿#Region "Microsoft.VisualBasic::c1a4d17659f8e9d8dcdd4cc0b5e92dae, visualize\TissueMorphology\Scatter\UMAPPoint.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 100
-    '    Code Lines: 63
-    ' Comment Lines: 23
-    '   Blank Lines: 14
-    '     File Size: 3.23 KB
+    '   Total Lines: 104
+    '    Code Lines: 66 (63.46%)
+    ' Comment Lines: 23 (22.12%)
+    '    - Xml Docs: 91.30%
+    ' 
+    '   Blank Lines: 15 (14.42%)
+    '     File Size: 3.35 KB
 
 
     ' Class UMAPPoint
@@ -50,7 +52,7 @@
     '                 z
     ' 
     '     Constructor: (+2 Overloads) Sub New
-    '     Function: GetClusterLabels, ParseCsvTable
+    '     Function: GetClusterLabels, ParseCsvTable, ToString
     ' 
     ' /********************************************************************************/
 

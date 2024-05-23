@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::32a65a7d28e55b4ab2efd472570381ec, Rscript\Library\mzkit_app\src\mzkit\comprehensive\SingleCells.vb"
+﻿#Region "Microsoft.VisualBasic::798383c22c6c8ff5369b402ce3b3387f, Rscript\Library\mzkit_app\src\mzkit\comprehensive\SingleCells.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 684
-    '    Code Lines: 404
-    ' Comment Lines: 208
-    '   Blank Lines: 72
-    '     File Size: 26.59 KB
+    '   Total Lines: 683
+    '    Code Lines: 403 (59.00%)
+    ' Comment Lines: 208 (30.45%)
+    '    - Xml Docs: 94.23%
+    ' 
+    '   Blank Lines: 72 (10.54%)
+    '     File Size: 26.53 KB
 
 
     ' Module SingleCells
@@ -68,7 +70,6 @@ Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
 Imports BioNovoGene.BioDeep.MassSpectrometry.MoleculeNetworking
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Data.NLP.Word2Vec
-Imports Microsoft.VisualBasic.DataMining.BinaryTree
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.ComponentModel.Activations

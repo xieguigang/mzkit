@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e0a8e1a4e3b3cc4d703c31fe210aa13b, mzmath\MSFinder\FragmentAssigner.vb"
+﻿#Region "Microsoft.VisualBasic::12dc1cbcb6bd6c53a2fea48f0e6051ee, mzmath\MSFinder\FragmentAssigner.vb"
 
     ' Author:
     ' 
@@ -38,10 +38,12 @@
     ' Code Statistics:
 
     '   Total Lines: 718
-    '    Code Lines: 528
-    ' Comment Lines: 74
-    '   Blank Lines: 116
-    '     File Size: 36.24 KB
+    '    Code Lines: 528 (73.54%)
+    ' Comment Lines: 74 (10.31%)
+    '    - Xml Docs: 64.86%
+    ' 
+    '   Blank Lines: 116 (16.16%)
+    '     File Size: 36.19 KB
 
 
     ' Class FragmentAssigner

@@ -40,10 +40,13 @@ const run.Deconvolution = function(rawdata, outputdir = "./", mzdiff = 0.005,
         } else {
             print("start to extract the ion features from the XIC pool...");
             # extract ion features and dump as table
-            xic_files 
+            let massSet = xic_files 
             |> ms1_mz_bins()
-            |> write.csv(file = ion_features_csv, 
+            ;
+
+            massSet |> write.csv(file = ion_features_csv, 
                 row.names = FALSE);
+            massSet;
         }
     };    
 

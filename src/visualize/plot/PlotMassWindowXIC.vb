@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bef756c153ddca76f66674917ed60775, visualize\plot\PlotMassWindowXIC.vb"
+﻿#Region "Microsoft.VisualBasic::95e4e9513a9dd773a640c5a197b1d5b6, visualize\plot\PlotMassWindowXIC.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 110
-    '    Code Lines: 86
-    ' Comment Lines: 12
-    '   Blank Lines: 12
-    '     File Size: 4.64 KB
+    '   Total Lines: 109
+    '    Code Lines: 86 (78.90%)
+    ' Comment Lines: 12 (11.01%)
+    '    - Xml Docs: 91.67%
+    ' 
+    '   Blank Lines: 11 (10.09%)
+    '     File Size: 4.63 KB
 
 
     ' Class PlotMassWindowXIC
@@ -55,7 +57,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
@@ -166,4 +167,3 @@ Public Class PlotMassWindowXIC : Inherits Plot
         Call New Scatter2D(mass_scatter, theme).Plot(g, layout:=part2)
     End Sub
 End Class
-

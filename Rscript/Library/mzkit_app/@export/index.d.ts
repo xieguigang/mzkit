@@ -126,6 +126,10 @@ declare namespace mzkit {
    */
    function output_datatables(quantify: any, linears: any, output_dir?: any): object;
    /**
+     * @param tag default value Is ``null``.
+   */
+   function pack_singleCells(rawdata: any, tag?: any): object;
+   /**
    */
    function parseDescriptors(descriptors: any): object;
    /**

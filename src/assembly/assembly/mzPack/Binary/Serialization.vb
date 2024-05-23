@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::938e77c8dbef161a3e6af2932db16b98, assembly\assembly\mzPack\Binary\Serialization.vb"
+﻿#Region "Microsoft.VisualBasic::5f427749dbf678efdb0026062412746f, assembly\assembly\mzPack\Binary\Serialization.vb"
 
     ' Author:
     ' 
@@ -38,10 +38,12 @@
     ' Code Statistics:
 
     '   Total Lines: 110
-    '    Code Lines: 73
-    ' Comment Lines: 24
-    '   Blank Lines: 13
-    '     File Size: 4.12 KB
+    '    Code Lines: 73 (66.36%)
+    ' Comment Lines: 24 (21.82%)
+    '    - Xml Docs: 70.83%
+    ' 
+    '   Blank Lines: 13 (11.82%)
+    '     File Size: 4.13 KB
 
 
     '     Module Serialization

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a0b4d3f93082a0db6d481d571d899a31, Rscript\Library\mzkit_app\src\mzkit\math\Math.vb"
+﻿#Region "Microsoft.VisualBasic::876cdf107b4b3844b4f8cec64fa6d532, Rscript\Library\mzkit_app\src\mzkit\math\Math.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 1087
-    '    Code Lines: 685
-    ' Comment Lines: 266
-    '   Blank Lines: 136
-    '     File Size: 47.09 KB
+    '   Total Lines: 1139
+    '    Code Lines: 714 (62.69%)
+    ' Comment Lines: 280 (24.58%)
+    '    - Xml Docs: 90.71%
+    ' 
+    '   Blank Lines: 145 (12.73%)
+    '     File Size: 48.37 KB
 
 
     ' Module MzMath
@@ -82,6 +84,7 @@ Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Information
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp
+Imports SMRUCC.Rsharp.Development.Components
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Invokes
@@ -250,7 +253,20 @@ Module MzMath
     Public Function mz(mass As Double,
                        <RRawVectorArgument>
                        Optional mode As Object = "+",
+                       Optional unsafe As Boolean = True,
                        Optional env As Environment = Nothing) As Object
+
+        If mode Is Nothing Then
+            Const null_value = "the required polarity mode or precursor adducts object should not be nothing!"
+
+            Call env.AddMessage(null_value)
+
+            If unsafe Then
+                Return Internal.debug.stop(null_value, env)
+            Else
+                Return 0
+            End If
+        End If
 
         If TypeOf mode Is MzCalculator Then
             Return DirectCast(mode, MzCalculator).CalcMZ(mass)
@@ -736,6 +752,9 @@ Module MzMath
     '''   + height of the bar Is area of the profile peak.
     '''   
     ''' </summary>
+    ''' <param name="aggregate">
+    ''' default is get the max intensity value.
+    ''' </param>
     ''' <param name="ions">
     ''' value of this parameter could be 
     ''' 
@@ -757,13 +776,13 @@ Module MzMath
     '''    intensity = [312 4353 6664 6765 1119]);
     '''    
     ''' print(as.data.frame(spec));
-    ''' #              mz intensity                                                                                                                                                                                                           
-    ''' # --------------------------                                                                                                                                                                                                          
-    ''' # &lt;mode> &lt;Double> &lt;integer>                                                                                                                                                                                                        
-    ''' # [1, ]   452.763       312                                                                                                                                                                                                           
-    ''' # [2, ]    67.563      4353                                                                                                                                                                                                           
-    ''' # [3, ]   457.336      6664                                                                                                                                                                                                           
-    ''' # [4, ]     347.8      6765                                                                                                                                                                                                           
+    ''' #              mz intensity                   
+    ''' # --------------------------                                                                                                 
+    ''' # &lt;mode> &lt;Double> &lt;integer>                                                                                                   
+    ''' # [1, ]   452.763       312                                             
+    ''' # [2, ]    67.563      4353                                                                    
+    ''' # [3, ]   457.336      6664                                                                                                
+    ''' # [4, ]     347.8      6765                                                                                           
     ''' # [5, ]     242.3      1119
     ''' </example>
     <ExportAPI("centroid")>
@@ -773,7 +792,7 @@ Module MzMath
                              Optional tolerance As Object = "da:0.1",
                              Optional intoCutoff As Double = 0.05,
                              Optional parallel As Boolean = False,
-                             Optional aggregate_sum As Boolean = False,
+                             Optional aggregate As AggregateFunction = Nothing,
                              Optional env As Environment = Nothing) As Object
 
         Dim inputType As Type = ions.GetType
@@ -840,12 +859,21 @@ Module MzMath
             Dim ms2 As LibraryMatrix = DirectCast(ions, LibraryMatrix)
 
             If Not ms2.centroid Then
-                ms2 = ms2.CentroidMode(errors, threshold)
+                ms2 = ms2.CentroidMode(errors, threshold, aggregate:=aggregate?.aggregate)
             End If
 
             Return ms2
         ElseIf inputType Is GetType(dataframe) Then
-            Return DirectCast(ions, dataframe).centroidDataframe(errors, threshold, aggregate_sum, env)
+            Return DirectCast(ions, dataframe).centroidDataframe(errors, threshold, aggregate, env)
+        ElseIf inputType Is GetType(ms1_scan()) Then
+            Dim ms1 = DirectCast(ions, ms1_scan())
+            Dim ms As New LibraryMatrix With {
+                .ms2 = ms1.Select(Function(i) New ms2(i)).ToArray
+            }
+
+            ms = ms.CentroidMode(errors, threshold, aggregate:=aggregate?.aggregate)
+
+            Return ms
         ElseIf inputType Is GetType(ScanMS1) Then
             Dim scan1 As ScanMS1 = DirectCast(ions, ScanMS1)
             Dim msdata As ms2() = scan1 _
@@ -873,7 +901,7 @@ Module MzMath
     Private Function centroidDataframe(msdata As dataframe,
                                        errors As Tolerance,
                                        threshold As LowAbundanceTrimming,
-                                       aggregate_sum As Boolean,
+                                       fun As AggregateFunction,
                                        env As Environment) As Object
 
         Dim mz As Double() = CLRVector.asNumeric(msdata.getBySynonym("mz", "m/z", "MZ"))
@@ -900,7 +928,7 @@ Module MzMath
                 .ToArray
         }
 
-        Return ms2.CentroidMode(errors, threshold, sum:=aggregate_sum)
+        Return ms2.CentroidMode(errors, threshold, aggregate:=fun.aggregate)
     End Function
 
     ''' <summary>
@@ -966,13 +994,36 @@ Module MzMath
     ''' create precursor type calculator
     ''' </summary>
     ''' <param name="types">a character vector of the precursor type symbols, example as ``[M+H]+``, etc.</param>
+    ''' <param name="unsafe">
+    ''' this parameter indicates that how the function handling of the string parser error when the given string value is empty:
+    ''' 
+    ''' 1. for unsafe, an exception will be throw
+    ''' 2. for unsafe is false, corresponding null value will be generated.
+    ''' </param>
     ''' <param name="env"></param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' a collection of the ion precursor adducts object.
+    ''' </returns>
     <ExportAPI("precursor_types")>
     <RApiReturn(GetType(MzCalculator))>
-    Public Function precursorTypes(<RRawVectorArgument> types As Object, Optional env As Environment = Nothing) As Object
+    Public Function precursorTypes(<RRawVectorArgument> types As Object,
+                                   Optional unsafe As Boolean = True,
+                                   Optional env As Environment = Nothing) As Object
+
+        Const empty_string = "the given string is empty which is not valid for parse the precursor adducts object!"
+
         Return env.EvaluateFramework(Of String, MzCalculator)(
             types, Function(type)
+                       If type.StringEmpty Then
+                           Call env.AddMessage(empty_string)
+
+                           If unsafe Then
+                               Throw New InvalidExpressionException(empty_string)
+                           Else
+                               Return Nothing
+                           End If
+                       End If
+
                        Return Ms1.PrecursorType.ParseMzCalculator(type, type.Last)
                    End Function)
     End Function
@@ -1006,9 +1057,12 @@ Module MzMath
     ''' <summary>
     ''' makes xcms_id format liked ROI unique id
     ''' </summary>
-    ''' <param name="mz"></param>
-    ''' <param name="rt"></param>
+    ''' <param name="mz">a numeric vector of the ion m/z value</param>
+    ''' <param name="rt">the corresponding scan time rt vector.</param>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' the dimension size of the ion m/z vector and the corresponding scan time vector should be equals.
+    ''' </remarks>
     <ExportAPI("xcms_id")>
     <RApiReturn(TypeCodes.string)>
     Public Function xcms_id(mz As Double(), rt As Double(), Optional env As Environment = Nothing) As Object

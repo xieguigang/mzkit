@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9f93a8ed12ae3c7febbafe5a60e69ee6, mzmath\ms2_math-core\Ms1\PolarityData.vb"
+﻿#Region "Microsoft.VisualBasic::86fab24cf6a0e479de044f741bee9923, mzmath\ms2_math-core\Ms1\PolarityData.vb"
 
     ' Author:
     ' 
@@ -37,17 +37,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 35
-    '    Code Lines: 30
-    ' Comment Lines: 0
-    '   Blank Lines: 5
-    '     File Size: 1015 B
+    '   Total Lines: 56
+    '    Code Lines: 44 (78.57%)
+    ' Comment Lines: 4 (7.14%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 8 (14.29%)
+    '     File Size: 1.50 KB
 
 
     ' Class PolarityData
     ' 
     '     Properties: negative, positive
     ' 
+    '     Constructor: (+2 Overloads) Sub New
     '     Function: ToString
     ' 
     ' /********************************************************************************/

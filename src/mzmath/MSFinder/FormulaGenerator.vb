@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::56a7295749470c474f2a8abce7b1fa6d, mzmath\MSFinder\FormulaGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::c0e8a22407098085b3ff239313ba0842, mzmath\MSFinder\FormulaGenerator.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 981
-    '    Code Lines: 600
-    ' Comment Lines: 197
-    '   Blank Lines: 184
-    '     File Size: 58.77 KB
+    '   Total Lines: 985
+    '    Code Lines: 603 (61.22%)
+    ' Comment Lines: 197 (20.00%)
+    '    - Xml Docs: 17.26%
+    ' 
+    '   Blank Lines: 185 (18.78%)
+    '     File Size: 58.90 KB
 
 
     ' Class FormulaGenerator

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5efc70b009f7fcb7367a7ca63e83d6cb, assembly\assembly\mzPack\Stream\MSScan.vb"
+﻿#Region "Microsoft.VisualBasic::50a3373014ff1e9a9695441ece7ac136, assembly\assembly\mzPack\Stream\MSScan.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 74
-    '    Code Lines: 53
-    ' Comment Lines: 10
-    '   Blank Lines: 11
-    '     File Size: 2.66 KB
+    '   Total Lines: 88
+    '    Code Lines: 54 (61.36%)
+    ' Comment Lines: 22 (25.00%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 12 (13.64%)
+    '     File Size: 3.17 KB
 
 
     '     Class MSScan
