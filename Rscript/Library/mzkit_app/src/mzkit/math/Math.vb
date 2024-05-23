@@ -859,7 +859,7 @@ Module MzMath
             Dim ms2 As LibraryMatrix = DirectCast(ions, LibraryMatrix)
 
             If Not ms2.centroid Then
-                ms2 = ms2.CentroidMode(errors, threshold)
+                ms2 = ms2.CentroidMode(errors, threshold, aggregate:=aggregate?.aggregate)
             End If
 
             Return ms2
@@ -871,7 +871,7 @@ Module MzMath
                 .ms2 = ms1.Select(Function(i) New ms2(i)).ToArray
             }
 
-            ms = ms.CentroidMode(errors, threshold)
+            ms = ms.CentroidMode(errors, threshold, aggregate:=aggregate?.aggregate)
 
             Return ms
         ElseIf inputType Is GetType(ScanMS1) Then
