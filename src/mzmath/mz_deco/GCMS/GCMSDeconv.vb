@@ -94,7 +94,7 @@ Public Module GCMSDeconv
                 .Select(Function(p) p.mzInto) _
                 .IteratesALL _
                 .ToArray _
-                .CentroidSum(da, cutoff) _
+                .Centroid(da, cutoff, aggregate:=Function(x) x.Sum) _
                 .ToArray
 
             Yield New GCMSPeak(peak) With {.Spectrum = union}

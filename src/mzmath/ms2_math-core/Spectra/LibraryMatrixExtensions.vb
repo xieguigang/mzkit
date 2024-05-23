@@ -141,11 +141,11 @@ Namespace Spectra
         Public Function CentroidMode([lib] As LibraryMatrix,
                                      tolerance As Tolerance,
                                      Optional cutoff As LowAbundanceTrimming = Nothing,
-                                     Optional sum As Boolean = False) As LibraryMatrix
+                                     Optional aggregate As Func(Of IEnumerable(Of Double), Double) = Nothing) As LibraryMatrix
 
-            If sum Then
+            If aggregate IsNot Nothing Then
                 [lib].ms2 = [lib].ms2 _
-                    .CentroidSum(tolerance, cutoff Or LowAbundanceTrimming.Default) _
+                    .Centroid(tolerance, cutoff Or LowAbundanceTrimming.Default, aggregate) _
                     .ToArray
             Else
                 [lib].ms2 = [lib].ms2 _
@@ -212,7 +212,7 @@ Namespace Spectra
         ''' <param name="cutoff"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function CentroidSum(peaks As ms2(), tolerance As Tolerance, cutoff As LowAbundanceTrimming) As IEnumerable(Of ms2)
+        Public Function Centroid(peaks As ms2(), tolerance As Tolerance, cutoff As LowAbundanceTrimming, aggregate As Func(Of IEnumerable(Of Double), Double)) As IEnumerable(Of ms2)
             ' removes low intensity fragment peaks
             ' for save calculation time
             peaks = cutoff.Trim(peaks)
@@ -235,7 +235,7 @@ Namespace Spectra
                                     .JoinBy(", ")
                                 Dim sum As Double = If(g.Length = 1,
                                     max.intensity,
-                                    g.Sum(Function(mzi) mzi.intensity)
+                                    aggregate(g.Select(Function(mzi) mzi.intensity))
                                 )
 
                                 Return New ms2(max.mz, sum) With {
