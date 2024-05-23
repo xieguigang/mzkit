@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5511a83f7494b772e00409b9ddb50c23, E:/mzkit/src/visualize/plot//NMR/fidDataPlot.vb"
+﻿#Region "Microsoft.VisualBasic::5511a83f7494b772e00409b9ddb50c23, visualize\plot\NMR\fidDataPlot.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 51
-    '    Code Lines: 45
-    ' Comment Lines: 0
-    '   Blank Lines: 6
+    '    Code Lines: 45 (88.24%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 6 (11.76%)
     '     File Size: 1.83 KB
 
 

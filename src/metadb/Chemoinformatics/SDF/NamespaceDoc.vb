@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7b952797062c171d332197f7fdb70597, E:/mzkit/src/metadb/Chemoinformatics//SDF/NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::7b952797062c171d332197f7fdb70597, metadb\Chemoinformatics\SDF\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 8
-    '    Code Lines: 4
-    ' Comment Lines: 3
-    '   Blank Lines: 1
+    '    Code Lines: 4 (50.00%)
+    ' Comment Lines: 3 (37.50%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 1 (12.50%)
     '     File Size: 174 B
 
 

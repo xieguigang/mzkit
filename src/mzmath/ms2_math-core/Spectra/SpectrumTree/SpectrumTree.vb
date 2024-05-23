@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a4d8c3395d9913f922fb82d5bd3dcc4f, E:/mzkit/src/mzmath/ms2_math-core//Spectra/SpectrumTree/SpectrumTree.vb"
+﻿#Region "Microsoft.VisualBasic::a4d8c3395d9913f922fb82d5bd3dcc4f, mzmath\ms2_math-core\Spectra\SpectrumTree\SpectrumTree.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 167
-    '    Code Lines: 101
-    ' Comment Lines: 43
-    '   Blank Lines: 23
+    '    Code Lines: 101 (60.48%)
+    ' Comment Lines: 43 (25.75%)
+    '    - Xml Docs: 93.02%
+    ' 
+    '   Blank Lines: 23 (13.77%)
     '     File Size: 6.88 KB
 
 

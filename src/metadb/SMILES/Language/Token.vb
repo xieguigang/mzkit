@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bb72acae88455f03700a6405241137ec, E:/mzkit/src/metadb/SMILES//Language/Token.vb"
+﻿#Region "Microsoft.VisualBasic::bb72acae88455f03700a6405241137ec, metadb\SMILES\Language\Token.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 32
-    '    Code Lines: 24
-    ' Comment Lines: 0
-    '   Blank Lines: 8
+    '    Code Lines: 24 (75.00%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 8 (25.00%)
     '     File Size: 903 B
 
 

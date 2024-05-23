@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e1dd63d909082ec851708f03f1b2f359, E:/mzkit/src/metadb/Massbank//Public/TMIC/HMDB/Spectra/NMR1D.vb"
+﻿#Region "Microsoft.VisualBasic::e1dd63d909082ec851708f03f1b2f359, metadb\Massbank\Public\TMIC\HMDB\Spectra\NMR1D.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 18
-    '    Code Lines: 12
-    ' Comment Lines: 0
-    '   Blank Lines: 6
+    '    Code Lines: 12 (66.67%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 6 (33.33%)
     '     File Size: 507 B
 
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::838cffd72c89f6358cacd51e96eb212a, E:/mzkit/src/mzmath/MSFinder//Scoring.vb"
+﻿#Region "Microsoft.VisualBasic::b1a3c33c6646a0c41a10a9b643fd5dd6, mzmath\MSFinder\Scoring.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 95
-    '    Code Lines: 75
-    ' Comment Lines: 4
-    '   Blank Lines: 16
+    '    Code Lines: 75 (78.95%)
+    ' Comment Lines: 4 (4.21%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 16 (16.84%)
     '     File Size: 4.26 KB
 
 
@@ -61,6 +63,7 @@ Imports Microsoft.VisualBasic.Math.Distributions
 Imports std = System.Math
 
 Public NotInheritable Class Scoring
+
     Private Sub New()
     End Sub
 
@@ -126,7 +129,6 @@ Public NotInheritable Class Scoring
         Dim countDouble = CDbl(totalCount)
         Return hitsDouble / countDouble
     End Function
-
 
     Public Shared Function DatabaseScore(recordNum As Integer, recordName As String) As Double
         Dim lDatabaseScore = 0.0

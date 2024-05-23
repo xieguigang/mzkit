@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b016866f45bbd9faf668f5067c7fe020, E:/mzkit/src/visualize/MsImaging//Reader/PixelReader.vb"
+﻿#Region "Microsoft.VisualBasic::b016866f45bbd9faf668f5067c7fe020, visualize\MsImaging\Reader\PixelReader.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 333
-    '    Code Lines: 240
-    ' Comment Lines: 44
-    '   Blank Lines: 49
+    '    Code Lines: 240 (72.07%)
+    ' Comment Lines: 44 (13.21%)
+    '    - Xml Docs: 68.18%
+    ' 
+    '   Blank Lines: 49 (14.71%)
     '     File Size: 13.92 KB
 
 

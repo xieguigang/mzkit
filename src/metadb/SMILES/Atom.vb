@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::58ad4d2cbb16775f09a142d6af0384f3, E:/mzkit/src/metadb/SMILES//Atom.vb"
+﻿#Region "Microsoft.VisualBasic::58ad4d2cbb16775f09a142d6af0384f3, metadb\SMILES\Atom.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 202
-    '    Code Lines: 148
-    ' Comment Lines: 9
-    '   Blank Lines: 45
+    '    Code Lines: 148 (73.27%)
+    ' Comment Lines: 9 (4.46%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 45 (22.28%)
     '     File Size: 5.96 KB
 
 

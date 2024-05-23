@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0b5fc33cf880d5db1a51cf164bd12e60, E:/mzkit/src/mzmath/ms2_math-core//Ms1/Tolerance/DeltaMass.vb"
+﻿#Region "Microsoft.VisualBasic::0b5fc33cf880d5db1a51cf164bd12e60, mzmath\ms2_math-core\Ms1\Tolerance\DeltaMass.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 69
-    '    Code Lines: 47
-    ' Comment Lines: 9
-    '   Blank Lines: 13
+    '    Code Lines: 47 (68.12%)
+    ' Comment Lines: 9 (13.04%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 13 (18.84%)
     '     File Size: 2.44 KB
 
 

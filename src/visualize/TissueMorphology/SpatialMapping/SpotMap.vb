@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::906e8adcabaa13547ffc20f5102d2efe, E:/mzkit/src/visualize/TissueMorphology//SpatialMapping/SpotMap.vb"
+﻿#Region "Microsoft.VisualBasic::906e8adcabaa13547ffc20f5102d2efe, visualize\TissueMorphology\SpatialMapping\SpotMap.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 86
-    '    Code Lines: 38
-    ' Comment Lines: 38
-    '   Blank Lines: 10
+    '    Code Lines: 38 (44.19%)
+    ' Comment Lines: 38 (44.19%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 10 (11.63%)
     '     File Size: 2.42 KB
 
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fe8b871b5ff834526532429cd898cfd0, E:/mzkit/src/mzmath/ms2_math-core//Spectra/Models/PeakMs2.vb"
+﻿#Region "Microsoft.VisualBasic::fe8b871b5ff834526532429cd898cfd0, mzmath\ms2_math-core\Spectra\Models\PeakMs2.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 158
-    '    Code Lines: 84
-    ' Comment Lines: 53
-    '   Blank Lines: 21
+    '    Code Lines: 84 (53.16%)
+    ' Comment Lines: 53 (33.54%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 21 (13.29%)
     '     File Size: 5.70 KB
 
 

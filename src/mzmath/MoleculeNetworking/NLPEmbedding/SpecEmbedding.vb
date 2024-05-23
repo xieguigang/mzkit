@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::96284cf1b4080e6d8335122437efc6ab, E:/mzkit/src/mzmath/MoleculeNetworking//NLPEmbedding/SpecEmbedding.vb"
+﻿#Region "Microsoft.VisualBasic::96284cf1b4080e6d8335122437efc6ab, mzmath\MoleculeNetworking\NLPEmbedding\SpecEmbedding.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 79
-    '    Code Lines: 54
-    ' Comment Lines: 12
-    '   Blank Lines: 13
+    '    Code Lines: 54 (68.35%)
+    ' Comment Lines: 12 (15.19%)
+    '    - Xml Docs: 83.33%
+    ' 
+    '   Blank Lines: 13 (16.46%)
     '     File Size: 2.49 KB
 
 

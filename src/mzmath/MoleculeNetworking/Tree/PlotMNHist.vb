@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6afd9cee35c1580f5df9e408951a444e, E:/mzkit/src/mzmath/MoleculeNetworking//Tree/PlotMNHist.vb"
+﻿#Region "Microsoft.VisualBasic::6afd9cee35c1580f5df9e408951a444e, mzmath\MoleculeNetworking\Tree\PlotMNHist.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 76
-    '    Code Lines: 63
-    ' Comment Lines: 4
-    '   Blank Lines: 9
+    '    Code Lines: 63 (82.89%)
+    ' Comment Lines: 4 (5.26%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 9 (11.84%)
     '     File Size: 3.06 KB
 
 

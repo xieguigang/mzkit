@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::29fa623b784c7cc2d71039404991c645, E:/mzkit/src/assembly/mzPackExtensions//VendorStream/WiffRawStream.vb"
+﻿#Region "Microsoft.VisualBasic::32eee997d7561fa881193e24de30fd9e, assembly\mzPackExtensions\VendorStream\WiffRawStream.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 152
-    '    Code Lines: 123
-    ' Comment Lines: 4
-    '   Blank Lines: 25
-    '     File Size: 5.36 KB
+    '   Total Lines: 153
+    '    Code Lines: 124 (81.05%)
+    ' Comment Lines: 4 (2.61%)
+    '    - Xml Docs: 75.00%
+    ' 
+    '   Blank Lines: 25 (16.34%)
+    '     File Size: 5.41 KB
 
 
     ' Class WiffRawStream
@@ -64,6 +66,7 @@
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.sciexWiffReader
+Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Clearcore2.Data.DataAccess.SampleData
 Imports Microsoft.VisualBasic.Language

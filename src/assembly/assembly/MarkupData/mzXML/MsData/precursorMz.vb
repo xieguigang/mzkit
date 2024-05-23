@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5f6271966ba9c642477c10ecb7c3dd67, E:/mzkit/src/assembly/assembly//MarkupData/mzXML/MsData/precursorMz.vb"
+﻿#Region "Microsoft.VisualBasic::5f6271966ba9c642477c10ecb7c3dd67, assembly\assembly\MarkupData\mzXML\MsData\precursorMz.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 38
-    '    Code Lines: 25
-    ' Comment Lines: 7
-    '   Blank Lines: 6
+    '    Code Lines: 25 (65.79%)
+    ' Comment Lines: 7 (18.42%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 6 (15.79%)
     '     File Size: 1.55 KB
 
 

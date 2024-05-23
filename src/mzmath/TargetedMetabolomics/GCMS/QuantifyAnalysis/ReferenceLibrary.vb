@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c4c2e5c01056f8c830d295188f3013b6, E:/mzkit/src/mzmath/TargetedMetabolomics//GCMS/QuantifyAnalysis/ReferenceLibrary.vb"
+﻿#Region "Microsoft.VisualBasic::c4c2e5c01056f8c830d295188f3013b6, mzmath\TargetedMetabolomics\GCMS\QuantifyAnalysis\ReferenceLibrary.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 80
-    '    Code Lines: 49
-    ' Comment Lines: 23
-    '   Blank Lines: 8
+    '    Code Lines: 49 (61.25%)
+    ' Comment Lines: 23 (28.75%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 8 (10.00%)
     '     File Size: 3.77 KB
 
 

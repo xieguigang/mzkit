@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4dd9692535477a2b5a6beac4ea298e76, E:/mzkit/src/visualize/TissueMorphology//HEMap/HeatMapAnalysis/HeatMapLayer.vb"
+﻿#Region "Microsoft.VisualBasic::4dd9692535477a2b5a6beac4ea298e76, visualize\TissueMorphology\HEMap\HeatMapAnalysis\HeatMapLayer.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 79
-    '    Code Lines: 65
-    ' Comment Lines: 3
-    '   Blank Lines: 11
+    '    Code Lines: 65 (82.28%)
+    ' Comment Lines: 3 (3.80%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 11 (13.92%)
     '     File Size: 3.08 KB
 
 

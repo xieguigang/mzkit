@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::668f1dbcee2d5fdc52caaa66d74f0fec, E:/mzkit/src/mzmath/Mummichog//Annotation.vb"
+﻿#Region "Microsoft.VisualBasic::668f1dbcee2d5fdc52caaa66d74f0fec, mzmath\Mummichog\Annotation.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 164
-    '    Code Lines: 110
-    ' Comment Lines: 33
-    '   Blank Lines: 21
+    '    Code Lines: 110 (67.07%)
+    ' Comment Lines: 33 (20.12%)
+    '    - Xml Docs: 96.97%
+    ' 
+    '   Blank Lines: 21 (12.80%)
     '     File Size: 6.44 KB
 
 

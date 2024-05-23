@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5cd8ac598e98fc2ad537ec93c1bdd6ab, E:/mzkit/src/mzmath/TargetedMetabolomics//MRM/Data/IonChromatogram.vb"
+﻿#Region "Microsoft.VisualBasic::5cd8ac598e98fc2ad537ec93c1bdd6ab, mzmath\TargetedMetabolomics\MRM\Data\IonChromatogram.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 39
-    '    Code Lines: 32
-    ' Comment Lines: 0
-    '   Blank Lines: 7
+    '    Code Lines: 32 (82.05%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 7 (17.95%)
     '     File Size: 1.24 KB
 
 

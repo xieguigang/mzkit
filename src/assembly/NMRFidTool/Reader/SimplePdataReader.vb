@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e0e26cdf546e7ecf5c04c9784a6b49e9, E:/mzkit/src/assembly/NMRFidTool//Reader/SimplePdataReader.vb"
+﻿#Region "Microsoft.VisualBasic::e0e26cdf546e7ecf5c04c9784a6b49e9, assembly\NMRFidTool\Reader\SimplePdataReader.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 117
-    '    Code Lines: 63
-    ' Comment Lines: 41
-    '   Blank Lines: 13
+    '    Code Lines: 63 (53.85%)
+    ' Comment Lines: 41 (35.04%)
+    '    - Xml Docs: 19.51%
+    ' 
+    '   Blank Lines: 13 (11.11%)
     '     File Size: 5.44 KB
 
 

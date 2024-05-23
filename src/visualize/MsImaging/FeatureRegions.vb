@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::da9c4dc46354b0be9a308cea2592ecb3, E:/mzkit/src/visualize/MsImaging//FeatureRegions.vb"
+﻿#Region "Microsoft.VisualBasic::da9c4dc46354b0be9a308cea2592ecb3, visualize\MsImaging\FeatureRegions.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 93
-    '    Code Lines: 77
-    ' Comment Lines: 5
-    '   Blank Lines: 11
+    '    Code Lines: 77 (82.80%)
+    ' Comment Lines: 5 (5.38%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 11 (11.83%)
     '     File Size: 3.95 KB
 
 

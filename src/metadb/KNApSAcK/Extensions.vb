@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a47c0eb0591723f26eeb2512f66b289f, E:/mzkit/src/metadb/KNApSAcK//Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::a47c0eb0591723f26eeb2512f66b289f, metadb\KNApSAcK\Extensions.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 33
-    '    Code Lines: 29
-    ' Comment Lines: 0
-    '   Blank Lines: 4
+    '    Code Lines: 29 (87.88%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 4 (12.12%)
     '     File Size: 1.18 KB
 
 

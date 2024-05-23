@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::db63d020a35229ffe3c92efbbfb148bf, E:/mzkit/src/mzmath/mz_deco//PeakAlignment.vb"
+﻿#Region "Microsoft.VisualBasic::db63d020a35229ffe3c92efbbfb148bf, mzmath\mz_deco\PeakAlignment.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 154
-    '    Code Lines: 117
-    ' Comment Lines: 16
-    '   Blank Lines: 21
+    '    Code Lines: 117 (75.97%)
+    ' Comment Lines: 16 (10.39%)
+    '    - Xml Docs: 93.75%
+    ' 
+    '   Blank Lines: 21 (13.64%)
     '     File Size: 6.30 KB
 
 

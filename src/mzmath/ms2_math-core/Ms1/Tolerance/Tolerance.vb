@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ab51f7b28199f3fb5d1bb0b25f05cd71, E:/mzkit/src/mzmath/ms2_math-core//Ms1/Tolerance/Tolerance.vb"
+﻿#Region "Microsoft.VisualBasic::3c30fdea6447b59a6bbbd363e3035208, mzmath\ms2_math-core\Ms1\Tolerance\Tolerance.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 284
-    '    Code Lines: 138
-    ' Comment Lines: 112
-    '   Blank Lines: 34
-    '     File Size: 10.14 KB
+    '   Total Lines: 306
+    '    Code Lines: 147 (48.04%)
+    ' Comment Lines: 123 (40.20%)
+    '    - Xml Docs: 91.06%
+    ' 
+    '   Blank Lines: 36 (11.76%)
+    '     File Size: 11.17 KB
 
 
     '     Enum MassToleranceType
@@ -57,8 +59,9 @@
     '         Properties: [Interface], DefaultTolerance
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: AddPPM, Compares, DeltaMass, GetScript, MatchTolerance
-    '                   ParseScript, PPM, SubPPM, (+2 Overloads) ToScript
+    '         Function: AddPPM, Compares, DeltaMass, Equals, GetHashCode
+    '                   GetScript, MatchTolerance, ParseScript, PPM, SubPPM
+    '                   (+2 Overloads) ToScript
     '         Operators: *, /, <, >
     ' 
     ' 
@@ -66,7 +69,9 @@
 
 #End Region
 
+Imports System.Diagnostics.CodeAnalysis
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Math
 Imports std = System.Math
@@ -88,10 +93,13 @@ Namespace Ms1
     End Enum
 
     ''' <summary>
-    ''' The m/z tolerance methods.
-    ''' (可以直接使用这个对象的索引属性来进行计算判断,索引属性表示两个``m/z``值之间是否相等)
+    ''' The m/z tolerance methods, spectrum equality comparer.
     ''' </summary>
+    ''' <remarks>
+    ''' (可以直接使用这个对象的索引属性来进行计算判断,索引属性表示两个``m/z``值之间是否相等)
+    ''' </remarks>
     Public MustInherit Class Tolerance : Inherits NumberEqualityComparer
+        Implements IEqualityComparer(Of ISpectrumPeak)
 
         ''' <summary>
         ''' <see cref="DeltaTolerance"/>(分子质量误差的上限值)
@@ -348,5 +356,22 @@ Namespace Ms1
         Public Shared Operator <(d1 As Tolerance, d2 As Tolerance) As Boolean
             Return Not d1 > d2
         End Operator
+
+        ''' <summary>
+        ''' SpectrumEqualityComparer
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <param name="y"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' could be used for group the peaks data via the .net framework internal groupby function by implements this interface.
+        ''' </remarks>
+        Public Overloads Function Equals(x As ISpectrumPeak, y As ISpectrumPeak) As Boolean Implements IEqualityComparer(Of ISpectrumPeak).Equals
+            Return Equals(x.Mass, y.Mass)
+        End Function
+
+        Friend Overloads Function GetHashCode(obj As ISpectrumPeak) As Integer Implements IEqualityComparer(Of ISpectrumPeak).GetHashCode
+            Return std.Round(obj.Mass, 6).GetHashCode()
+        End Function
     End Class
 End Namespace

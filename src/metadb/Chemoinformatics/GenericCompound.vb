@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f6166a789093c1a4e56f568ee1e9d0f7, E:/mzkit/src/metadb/Chemoinformatics//GenericCompound.vb"
+﻿#Region "Microsoft.VisualBasic::f6166a789093c1a4e56f568ee1e9d0f7, metadb\Chemoinformatics\GenericCompound.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 13
-    '    Code Lines: 8
-    ' Comment Lines: 3
-    '   Blank Lines: 2
+    '    Code Lines: 8 (61.54%)
+    ' Comment Lines: 3 (23.08%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 2 (15.38%)
     '     File Size: 395 B
 
 

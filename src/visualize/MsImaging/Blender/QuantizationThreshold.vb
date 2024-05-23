@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::10b83477b304e5ad587c81df2401f791, E:/mzkit/src/visualize/MsImaging//Blender/QuantizationThreshold.vb"
+﻿#Region "Microsoft.VisualBasic::10b83477b304e5ad587c81df2401f791, visualize\MsImaging\Blender\QuantizationThreshold.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 127
-    '    Code Lines: 73
-    ' Comment Lines: 33
-    '   Blank Lines: 21
+    '    Code Lines: 73 (57.48%)
+    ' Comment Lines: 33 (25.98%)
+    '    - Xml Docs: 84.85%
+    ' 
+    '   Blank Lines: 21 (16.54%)
     '     File Size: 4.16 KB
 
 

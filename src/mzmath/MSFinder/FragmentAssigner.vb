@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e0a8e1a4e3b3cc4d703c31fe210aa13b, E:/mzkit/src/mzmath/MSFinder//FragmentAssigner.vb"
+﻿#Region "Microsoft.VisualBasic::12dc1cbcb6bd6c53a2fea48f0e6051ee, mzmath\MSFinder\FragmentAssigner.vb"
 
     ' Author:
     ' 
@@ -38,10 +38,12 @@
     ' Code Statistics:
 
     '   Total Lines: 718
-    '    Code Lines: 528
-    ' Comment Lines: 74
-    '   Blank Lines: 116
-    '     File Size: 36.24 KB
+    '    Code Lines: 528 (73.54%)
+    ' Comment Lines: 74 (10.31%)
+    '    - Xml Docs: 64.86%
+    ' 
+    '   Blank Lines: 116 (16.16%)
+    '     File Size: 36.19 KB
 
 
     ' Class FragmentAssigner
@@ -677,7 +679,7 @@ Public NotInheritable Class FragmentAssigner
             Dim m2TheoreticalCarbonInt = m1Intensity * maxCarbon * (maxCarbon - 1) * 0.5 * std.Pow(c13_c12_Ratio, 2)
             Dim ms2Tol = massTol
             If massTolType = MassToleranceType.Ppm Then ms2Tol = PPMmethod.ConvertPpmToMassAccuracy(mass, massTol)
-            If annotations(i).PeakType = AnnotatedIon.AnnotationType.Product Then
+            If annotations(i).PeakType = AnnotationType.Product Then
                 If i = peaklist.Count - 1 Then Exit For
                 Dim m2Intensity = 0.0
                 Dim m2mass = 0.0
@@ -715,7 +717,7 @@ Public NotInheritable Class FragmentAssigner
 
         For i = 0 To peaklist.Count - 1
             Dim peak = peaklist(i)
-            If annotations(i).PeakType <> AnnotatedIon.AnnotationType.Product Then Continue For
+            If annotations(i).PeakType <> AnnotationType.Product Then Continue For
             Dim centralExactMass = mainAdduct.ConvertToExactMass(peak.mz)
             Dim ppm = massTol
             If massTolType <> MassToleranceType.Ppm Then ppm = PPMmethod.PPM(200, 200 + massTol)
@@ -736,7 +738,7 @@ Public NotInheritable Class FragmentAssigner
                 If j = i Then Continue For
                 Dim targetPeak = peaklist(j)
                 Dim targetAnnotation = annotations(j)
-                If targetAnnotation.PeakType <> AnnotatedIon.AnnotationType.Product Then Continue For
+                If targetAnnotation.PeakType <> AnnotationType.Product Then Continue For
 
                 For Each targetAdduct In referenceAdductIons
                     If std.Abs(peak.mz - precursorMz) > massTol2 Then
@@ -750,7 +752,7 @@ Public NotInheritable Class FragmentAssigner
 
                         targetAnnotation.LinkedAccurateMass = peak.mz
                         targetAnnotation.AdductIon = targetAdduct.AdductIon
-                        targetAnnotation.PeakType = AnnotatedIon.AnnotationType.Adduct
+                        targetAnnotation.PeakType = AnnotationType.Adduct
                         Exit For
                     End If
                 Next

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3554498aee7554ec5bb186a207b76c95, E:/mzkit/src/metadb/Massbank//Public/TMIC/FooDB/Compound.vb"
+﻿#Region "Microsoft.VisualBasic::3554498aee7554ec5bb186a207b76c95, metadb\Massbank\Public\TMIC\FooDB\Compound.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 40
-    '    Code Lines: 33
-    ' Comment Lines: 0
-    '   Blank Lines: 7
+    '    Code Lines: 33 (82.50%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 7 (17.50%)
     '     File Size: 1.39 KB
 
 

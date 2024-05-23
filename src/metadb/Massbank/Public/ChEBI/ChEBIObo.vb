@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3ae6c74a7253403205cec90cb63c1856, E:/mzkit/src/metadb/Massbank//Public/ChEBI/ChEBIObo.vb"
+﻿#Region "Microsoft.VisualBasic::3ae6c74a7253403205cec90cb63c1856, metadb\Massbank\Public\ChEBI\ChEBIObo.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 67
-    '    Code Lines: 61
-    ' Comment Lines: 0
-    '   Blank Lines: 6
+    '    Code Lines: 61 (91.04%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 6 (8.96%)
     '     File Size: 3.20 KB
 
 

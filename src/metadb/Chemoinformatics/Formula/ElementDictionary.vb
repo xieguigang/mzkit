@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::97dae9c48f74bda93ea780b25aa87e84, E:/mzkit/src/metadb/Chemoinformatics//Formula/ElementDictionary.vb"
+﻿#Region "Microsoft.VisualBasic::97dae9c48f74bda93ea780b25aa87e84, metadb\Chemoinformatics\Formula\ElementDictionary.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 596
-    '    Code Lines: 594
-    ' Comment Lines: 0
-    '   Blank Lines: 2
+    '    Code Lines: 594 (99.66%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 2 (0.34%)
     '     File Size: 15.98 KB
 
 

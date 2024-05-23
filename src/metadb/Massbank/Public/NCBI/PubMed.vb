@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::27e4a1ced16d6c38ca7f94cca58c17bb, E:/mzkit/src/metadb/Massbank//Public/NCBI/PubMed.vb"
+﻿#Region "Microsoft.VisualBasic::27e4a1ced16d6c38ca7f94cca58c17bb, metadb\Massbank\Public\NCBI\PubMed.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 64
-    '    Code Lines: 47
-    ' Comment Lines: 7
-    '   Blank Lines: 10
+    '    Code Lines: 47 (73.44%)
+    ' Comment Lines: 7 (10.94%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 10 (15.62%)
     '     File Size: 2.18 KB
 
 

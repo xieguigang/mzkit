@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e3cd6f4384937a26488a913803a37397, E:/mzkit/src/mzmath/MSEngine//Search/MsRefSearchParameterBase.vb"
+﻿#Region "Microsoft.VisualBasic::e3cd6f4384937a26488a913803a37397, mzmath\MSEngine\Search\MsRefSearchParameterBase.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 73
-    '    Code Lines: 45
-    ' Comment Lines: 3
-    '   Blank Lines: 25
+    '    Code Lines: 45 (61.64%)
+    ' Comment Lines: 3 (4.11%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 25 (34.25%)
     '     File Size: 2.61 KB
 
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6ec5d63dca07988a30fb7533d10feae1, E:/mzkit/src/assembly/BrukerDataReader//flexImaging/spectrum_sqlite/Spectra.vb"
+﻿#Region "Microsoft.VisualBasic::6ec5d63dca07988a30fb7533d10feae1, assembly\BrukerDataReader\flexImaging\spectrum_sqlite\Spectra.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 40
-    '    Code Lines: 11
-    ' Comment Lines: 26
-    '   Blank Lines: 3
+    '    Code Lines: 11 (27.50%)
+    ' Comment Lines: 26 (65.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 3 (7.50%)
     '     File Size: 1.17 KB
 
 

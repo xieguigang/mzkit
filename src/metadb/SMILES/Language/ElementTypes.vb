@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c7ea2bc7bb1f2a05ea0cca459d12a6e8, E:/mzkit/src/metadb/SMILES//Language/ElementTypes.vb"
+﻿#Region "Microsoft.VisualBasic::c7ea2bc7bb1f2a05ea0cca459d12a6e8, metadb\SMILES\Language\ElementTypes.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 48
-    '    Code Lines: 11
-    ' Comment Lines: 34
-    '   Blank Lines: 3
+    '    Code Lines: 11 (22.92%)
+    ' Comment Lines: 34 (70.83%)
+    '    - Xml Docs: 88.24%
+    ' 
+    '   Blank Lines: 3 (6.25%)
     '     File Size: 1.80 KB
 
 

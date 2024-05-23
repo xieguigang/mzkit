@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a870708098ceabe7ddcbc08260e0724d, E:/mzkit/src/assembly/assembly//ASCII/MSL/FileReader.vb"
+﻿#Region "Microsoft.VisualBasic::a870708098ceabe7ddcbc08260e0724d, assembly\assembly\ASCII\MSL\FileReader.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 132
-    '    Code Lines: 110
-    ' Comment Lines: 1
-    '   Blank Lines: 21
+    '    Code Lines: 110 (83.33%)
+    ' Comment Lines: 1 (0.76%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 21 (15.91%)
     '     File Size: 5.69 KB
 
 

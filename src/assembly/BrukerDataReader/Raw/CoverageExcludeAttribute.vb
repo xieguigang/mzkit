@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0fae540140504f646e2e3dd78efecce2, E:/mzkit/src/assembly/BrukerDataReader//Raw/CoverageExcludeAttribute.vb"
+﻿#Region "Microsoft.VisualBasic::0fae540140504f646e2e3dd78efecce2, assembly\BrukerDataReader\Raw\CoverageExcludeAttribute.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 8
-    '    Code Lines: 6
-    ' Comment Lines: 0
-    '   Blank Lines: 2
+    '    Code Lines: 6 (75.00%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 2 (25.00%)
     '     File Size: 171 B
 
 

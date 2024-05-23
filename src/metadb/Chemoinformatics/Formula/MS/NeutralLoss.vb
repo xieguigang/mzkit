@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b3dd250c21600ffc53a3ab73d1b2f98a, E:/mzkit/src/metadb/Chemoinformatics//Formula/MS/NeutralLoss.vb"
+﻿#Region "Microsoft.VisualBasic::b3dd250c21600ffc53a3ab73d1b2f98a, metadb\Chemoinformatics\Formula\MS\NeutralLoss.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 102
-    '    Code Lines: 62
-    ' Comment Lines: 6
-    '   Blank Lines: 34
+    '    Code Lines: 62 (60.78%)
+    ' Comment Lines: 6 (5.88%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 34 (33.33%)
     '     File Size: 3.28 KB
 
 

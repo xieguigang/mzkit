@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5b2156f7b3e75f14901d41c6615a8a15, E:/mzkit/src/assembly/assembly//UnifyReader/FileFormats/mzMLScan.vb"
+﻿#Region "Microsoft.VisualBasic::0fe3341c3f0c571a4cbb9f010f18771a, assembly\assembly\UnifyReader\FileFormats\mzMLScan.vb"
 
     ' Author:
     ' 
@@ -38,10 +38,12 @@
     ' Code Statistics:
 
     '   Total Lines: 109
-    '    Code Lines: 90
-    ' Comment Lines: 0
-    '   Blank Lines: 19
-    '     File Size: 4.62 KB
+    '    Code Lines: 90 (82.57%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 19 (17.43%)
+    '     File Size: 4.61 KB
 
 
     '     Class mzMLScan
@@ -59,7 +61,7 @@ Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML.ControlVocabulary
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData
+Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 
@@ -73,7 +75,8 @@ Namespace DataReader
         End Function
 
         Public Overrides Function GetScanId(scan As spectrum) As String
-            Dim scanType As String = scan.scanList.scans(0).cvParams.KeyItem("filter string")?.value
+            Dim scanParams = scan.scanList.scans(0).cvParams
+            Dim scanType As String = If(scanParams Is Nothing, "?", scanParams.KeyItem("filter string")?.value)
             Dim polarity As String = GetPolarity(scan)
 
             If scan.ms_level = 1 Then

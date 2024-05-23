@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6d024b7f3de2633695befc7a9a272efc, E:/mzkit/Rscript/Library/mzkit_app/src/mzkit//annotations/PubChem.vb"
+﻿#Region "Microsoft.VisualBasic::6d024b7f3de2633695befc7a9a272efc, Rscript\Library\mzkit_app\src\mzkit\annotations\PubChem.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 504
-    '    Code Lines: 286
-    ' Comment Lines: 170
-    '   Blank Lines: 48
+    '    Code Lines: 286 (56.75%)
+    ' Comment Lines: 170 (33.73%)
+    '    - Xml Docs: 95.29%
+    ' 
+    '   Blank Lines: 48 (9.52%)
     '     File Size: 22.14 KB
 
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::561b33b2a1e34cdd02ee0c4fbb790869, E:/mzkit/Rscript/Library/mzkit_app/src/mzkit//annotations/HMDB.vb"
+﻿#Region "Microsoft.VisualBasic::561b33b2a1e34cdd02ee0c4fbb790869, Rscript\Library\mzkit_app\src\mzkit\annotations\HMDB.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 291
-    '    Code Lines: 177
-    ' Comment Lines: 85
-    '   Blank Lines: 29
+    '    Code Lines: 177 (60.82%)
+    ' Comment Lines: 85 (29.21%)
+    '    - Xml Docs: 90.59%
+    ' 
+    '   Blank Lines: 29 (9.97%)
     '     File Size: 12.51 KB
 
 

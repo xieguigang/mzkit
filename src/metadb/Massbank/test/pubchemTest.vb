@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fc3c888d2369eb44529dac69fa475979, E:/mzkit/src/metadb/Massbank/test//pubchemTest.vb"
+﻿#Region "Microsoft.VisualBasic::fc3c888d2369eb44529dac69fa475979, metadb\Massbank\test\pubchemTest.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 63
-    '    Code Lines: 41
-    ' Comment Lines: 0
-    '   Blank Lines: 22
+    '    Code Lines: 41 (65.08%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 22 (34.92%)
     '     File Size: 1.52 KB
 
 

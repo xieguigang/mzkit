@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::45319e30a7051e0aa8f5b773d28ab3a9, E:/mzkit/src/assembly/assembly//mzPack/Binary/ScanModel.vb"
+﻿#Region "Microsoft.VisualBasic::45319e30a7051e0aa8f5b773d28ab3a9, assembly\assembly\mzPack\Binary\ScanModel.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 58
-    '    Code Lines: 48
-    ' Comment Lines: 3
-    '   Blank Lines: 7
+    '    Code Lines: 48 (82.76%)
+    ' Comment Lines: 3 (5.17%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 7 (12.07%)
     '     File Size: 2.06 KB
 
 

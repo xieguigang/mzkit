@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c89c9753b1f731bcab06d2de4d6e08ec, E:/mzkit/src/assembly/assembly//MarkupData/CompressionMode.vb"
+﻿#Region "Microsoft.VisualBasic::c89c9753b1f731bcab06d2de4d6e08ec, assembly\assembly\MarkupData\CompressionMode.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 23
-    '    Code Lines: 19
-    ' Comment Lines: 0
-    '   Blank Lines: 4
+    '    Code Lines: 19 (82.61%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 4 (17.39%)
     '     File Size: 633 B
 
 

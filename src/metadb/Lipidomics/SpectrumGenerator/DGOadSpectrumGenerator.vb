@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5e7d69cf99fe82d32c09d9c4fa484cea, E:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/DGOadSpectrumGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::84728a3d73aaae9e395f1eccae7eb08d, metadb\Lipidomics\SpectrumGenerator\DGOadSpectrumGenerator.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 128
-    '    Code Lines: 82
-    ' Comment Lines: 32
-    '   Blank Lines: 14
-    '     File Size: 5.63 KB
+    '   Total Lines: 127
+    '    Code Lines: 81 (63.78%)
+    ' Comment Lines: 32 (25.20%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 14 (11.02%)
+    '     File Size: 5.52 KB
 
 
     ' Class DGOadSpectrumGenerator
@@ -178,6 +180,5 @@ Public Class DGOadSpectrumGenerator
 }
     End Function
 
-    Private Shared ReadOnly comparer As IEqualityComparer(Of SpectrumPeak) = New SpectrumEqualityComparer()
 
 End Class

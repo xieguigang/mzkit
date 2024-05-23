@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::858981a2224b3e3ea735b0336ce20e41, E:/mzkit/src/visualize/plot//ChromatogramPlot/ChromatogramPlot.vb"
+﻿#Region "Microsoft.VisualBasic::858981a2224b3e3ea735b0336ce20e41, visualize\plot\ChromatogramPlot\ChromatogramPlot.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 236
-    '    Code Lines: 192
-    ' Comment Lines: 32
-    '   Blank Lines: 12
+    '    Code Lines: 192 (81.36%)
+    ' Comment Lines: 32 (13.56%)
+    '    - Xml Docs: 96.88%
+    ' 
+    '   Blank Lines: 12 (5.08%)
     '     File Size: 10.91 KB
 
 

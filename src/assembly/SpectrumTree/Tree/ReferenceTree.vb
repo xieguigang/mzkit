@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2668401c1e564f5de1eb122992699bc4, E:/mzkit/src/assembly/SpectrumTree//Tree/ReferenceTree.vb"
+﻿#Region "Microsoft.VisualBasic::2668401c1e564f5de1eb122992699bc4, assembly\SpectrumTree\Tree\ReferenceTree.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 127
-    '    Code Lines: 79
-    ' Comment Lines: 27
-    '   Blank Lines: 21
+    '    Code Lines: 79 (62.20%)
+    ' Comment Lines: 27 (21.26%)
+    '    - Xml Docs: 40.74%
+    ' 
+    '   Blank Lines: 21 (16.54%)
     '     File Size: 4.74 KB
 
 

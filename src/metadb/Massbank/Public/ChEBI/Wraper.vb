@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c100b18fd1ac70356a8f2e2b2086c9cb, E:/mzkit/src/metadb/Massbank//Public/ChEBI/Wraper.vb"
+﻿#Region "Microsoft.VisualBasic::c100b18fd1ac70356a8f2e2b2086c9cb, metadb\Massbank\Public\ChEBI\Wraper.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 42
-    '    Code Lines: 33
-    ' Comment Lines: 0
-    '   Blank Lines: 9
+    '    Code Lines: 33 (78.57%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 9 (21.43%)
     '     File Size: 1.39 KB
 
 

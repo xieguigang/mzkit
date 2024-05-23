@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e21c2ad02b1f695fb63d39128672057e, E:/mzkit/src/mzmath/MSFinder//AnnotatedIon.vb"
+﻿#Region "Microsoft.VisualBasic::23baa35190498729ef2378d1147db072, mzmath\MSFinder\AnnotatedIon.vb"
 
     ' Author:
     ' 
@@ -37,23 +37,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 48
-    '    Code Lines: 41
-    ' Comment Lines: 4
-    '   Blank Lines: 3
-    '     File Size: 1.76 KB
+    '   Total Lines: 45
+    '    Code Lines: 35 (77.78%)
+    ' Comment Lines: 4 (8.89%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 6 (13.33%)
+    '     File Size: 1.66 KB
 
 
     ' Class AnnotatedIon
-    ' 
-    ' 
-    '     Enum AnnotationType
-    ' 
-    '         Adduct, Isotope, Precursor, Product
-    ' 
-    ' 
-    ' 
-    '  
     ' 
     '     Properties: AccurateMass, AdductIon, Intensity, IsotopeName, IsotopeWeightNumber
     '                 LinkedAccurateMass, LinkedIntensity, PeakType
@@ -66,16 +59,12 @@
 #End Region
 
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
+
 ''' <summary>
 ''' This class is the storage of adduct or isotope ion assignment used in MS-FINDER program.
 ''' </summary>
 Public Class AnnotatedIon
-    Public Enum AnnotationType
-        Precursor
-        Product
-        Isotope
-        Adduct
-    End Enum
+
     Public Property PeakType As AnnotationType
     Public Property AccurateMass As Double
     Public Property Intensity As Double
@@ -85,6 +74,7 @@ Public Class AnnotatedIon
     Public Property IsotopeWeightNumber As Integer
     ''' <summary> C-13, O-18, and something </summary>
     Public Property IsotopeName As String
+
     Public Sub New()
         PeakType = AnnotationType.Product
     End Sub

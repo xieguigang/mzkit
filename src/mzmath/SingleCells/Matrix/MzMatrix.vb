@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::659702cdb9e2bbf8edf6ae6e4cb68cf4, E:/mzkit/src/mzmath/SingleCells//Matrix/MzMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::659702cdb9e2bbf8edf6ae6e4cb68cf4, mzmath\SingleCells\Matrix\MzMatrix.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 203
-    '    Code Lines: 103
-    ' Comment Lines: 71
-    '   Blank Lines: 29
+    '    Code Lines: 103 (50.74%)
+    ' Comment Lines: 71 (34.98%)
+    '    - Xml Docs: 95.77%
+    ' 
+    '   Blank Lines: 29 (14.29%)
     '     File Size: 8.26 KB
 
 

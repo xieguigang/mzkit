@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b0f2dbe9c6ebc39f0e1b05adfef8bdc5, E:/mzkit/src/metadb/Lipidomics//DoubleBondIndeterminateState.vb"
+﻿#Region "Microsoft.VisualBasic::b0f2dbe9c6ebc39f0e1b05adfef8bdc5, metadb\Lipidomics\DoubleBondIndeterminateState.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 121
-    '    Code Lines: 106
-    ' Comment Lines: 0
-    '   Blank Lines: 15
+    '    Code Lines: 106 (87.60%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 15 (12.40%)
     '     File Size: 5.96 KB
 
 

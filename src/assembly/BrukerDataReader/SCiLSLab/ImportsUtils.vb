@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::efe51e4aa7016f4b1448b87b29491437, E:/mzkit/src/assembly/BrukerDataReader//SCiLSLab/ImportsUtils.vb"
+﻿#Region "Microsoft.VisualBasic::efe51e4aa7016f4b1448b87b29491437, assembly\BrukerDataReader\SCiLSLab\ImportsUtils.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 102
-    '    Code Lines: 65
-    ' Comment Lines: 20
-    '   Blank Lines: 17
+    '    Code Lines: 65 (63.73%)
+    ' Comment Lines: 20 (19.61%)
+    '    - Xml Docs: 90.00%
+    ' 
+    '   Blank Lines: 17 (16.67%)
     '     File Size: 3.85 KB
 
 

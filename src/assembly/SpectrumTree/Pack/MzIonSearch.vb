@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e844b729b888aea0c8c7b1893a742119, E:/mzkit/src/assembly/SpectrumTree//Pack/MzIonSearch.vb"
+﻿#Region "Microsoft.VisualBasic::e844b729b888aea0c8c7b1893a742119, assembly\SpectrumTree\Pack\MzIonSearch.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 51
-    '    Code Lines: 35
-    ' Comment Lines: 7
-    '   Blank Lines: 9
+    '    Code Lines: 35 (68.63%)
+    ' Comment Lines: 7 (13.73%)
+    '    - Xml Docs: 71.43%
+    ' 
+    '   Blank Lines: 9 (17.65%)
     '     File Size: 1.73 KB
 
 

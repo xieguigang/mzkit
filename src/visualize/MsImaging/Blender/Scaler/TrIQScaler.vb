@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d0cce20266d2f6d7a748093d73bb310d, E:/mzkit/src/visualize/MsImaging//Blender/Scaler/TrIQScaler.vb"
+﻿#Region "Microsoft.VisualBasic::d0cce20266d2f6d7a748093d73bb310d, visualize\MsImaging\Blender\Scaler\TrIQScaler.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 47
-    '    Code Lines: 29
-    ' Comment Lines: 9
-    '   Blank Lines: 9
+    '    Code Lines: 29 (61.70%)
+    ' Comment Lines: 9 (19.15%)
+    '    - Xml Docs: 66.67%
+    ' 
+    '   Blank Lines: 9 (19.15%)
     '     File Size: 1.29 KB
 
 

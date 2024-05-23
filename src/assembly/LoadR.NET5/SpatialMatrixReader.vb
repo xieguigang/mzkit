@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ecfa7152d41786887de40b4f3fa70e4f, E:/mzkit/src/assembly/LoadR.NET5//SpatialMatrixReader.vb"
+﻿#Region "Microsoft.VisualBasic::ecfa7152d41786887de40b4f3fa70e4f, assembly\LoadR.NET5\SpatialMatrixReader.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 143
-    '    Code Lines: 108
-    ' Comment Lines: 9
-    '   Blank Lines: 26
+    '    Code Lines: 108 (75.52%)
+    ' Comment Lines: 9 (6.29%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 26 (18.18%)
     '     File Size: 4.75 KB
 
 

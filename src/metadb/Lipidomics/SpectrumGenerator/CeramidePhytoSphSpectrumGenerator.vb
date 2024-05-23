@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f339f6eae4c1ea519731db0978ffe772, E:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/CeramidePhytoSphSpectrumGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::48ecde01e658eb27dd1a4e5219067d2a, metadb\Lipidomics\SpectrumGenerator\CeramidePhytoSphSpectrumGenerator.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 142
-    '    Code Lines: 130
-    ' Comment Lines: 0
-    '   Blank Lines: 12
-    '     File Size: 7.61 KB
+    '   Total Lines: 141
+    '    Code Lines: 130 (92.20%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 11 (7.80%)
+    '     File Size: 7.55 KB
 
 
     ' Class CeramidePhytoSphSpectrumGenerator
@@ -54,6 +56,7 @@
 
 #End Region
 
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.ElementsExactMass
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
@@ -103,7 +106,7 @@ Public Class CeramidePhytoSphSpectrumGenerator
             spectrum.AddRange(GetAcylSpectrum(lipid, acyl, adduct))
             spectrum.AddRange(spectrumGenerator.GetAcylDoubleBondSpectrum(lipid, acyl, adduct, nlmass, 30.0R))
         End If
-        spectrum = spectrum.GroupBy(Function(spec) spec, comparer).[Select](Function(specs) New SpectrumPeak(Enumerable.First(specs).mz, specs.Sum(Function(n) n.Intensity), String.Join(", ", specs.[Select](Function(spec) spec.Annotation)), specs.Aggregate(SpectrumComment.none, Function(a, b) a Or b.SpectrumComment))).OrderBy(Function(peak) peak.mz).ToList()
+        spectrum = spectrum.GroupBy(Function(spec) spec, comparer).[Select](Function(specs) New SpectrumPeak(Enumerable.First(specs).mz, specs.Sum(Function(n) n.intensity), String.Join(", ", specs.[Select](Function(spec) spec.Annotation)), specs.Aggregate(SpectrumComment.none, Function(a, b) a Or b.SpectrumComment))).OrderBy(Function(peak) peak.mz).ToList()
         Return CreateReference(lipid, adduct, spectrum, molecule)
     End Function
     Private Function CreateReference(lipid As ILipid, adduct As AdductIon, spectrum As List(Of SpectrumPeak), molecule As IMoleculeProperty) As MoleculeMsReference
@@ -192,7 +195,5 @@ Public Class CeramidePhytoSphSpectrumGenerator
         End If
         Return spectrum.ToArray()
     End Function
-
-    Private Shared ReadOnly comparer As IEqualityComparer(Of SpectrumPeak) = New SpectrumEqualityComparer()
 
 End Class

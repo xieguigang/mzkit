@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a8c34c1e5a0c486e0e1901c99030893a, E:/mzkit/src/mzmath/SingleCells//File/MatrixWriter/MatrixHeader.vb"
+﻿#Region "Microsoft.VisualBasic::a8c34c1e5a0c486e0e1901c99030893a, mzmath\SingleCells\File\MatrixWriter\MatrixHeader.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 49
-    '    Code Lines: 13
-    ' Comment Lines: 29
-    '   Blank Lines: 7
+    '    Code Lines: 13 (26.53%)
+    ' Comment Lines: 29 (59.18%)
+    '    - Xml Docs: 96.55%
+    ' 
+    '   Blank Lines: 7 (14.29%)
     '     File Size: 1.66 KB
 
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4c883dafcc6339ecfe33cbe89ec6f279, E:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/DMEDFASpectrumGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::c5494c4ecc0ce215b7282525c30bfa0f, metadb\Lipidomics\SpectrumGenerator\DMEDFASpectrumGenerator.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 95
-    '    Code Lines: 77
-    ' Comment Lines: 0
-    '   Blank Lines: 18
-    '     File Size: 4.65 KB
+    '   Total Lines: 92
+    '    Code Lines: 76 (82.61%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 16 (17.39%)
+    '     File Size: 4.54 KB
 
 
     ' Class DMEDFASpectrumGenerator
@@ -144,7 +146,4 @@ Public Class DMEDFASpectrumGenerator : Implements ILipidSpectrumGenerator ' DMED
 
         Return spectrum.ToArray()
     End Function
-
-    Private Shared ReadOnly comparer As IEqualityComparer(Of SpectrumPeak) = New SpectrumEqualityComparer()
-
 End Class

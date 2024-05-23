@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ab31aacf540c5d0adb499980b3dfcd5b, E:/mzkit/src/visualize/MsImaging//Blender/Renderer/Renderer.vb"
+﻿#Region "Microsoft.VisualBasic::ab31aacf540c5d0adb499980b3dfcd5b, visualize\MsImaging\Blender\Renderer\Renderer.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 151
-    '    Code Lines: 91
-    ' Comment Lines: 40
-    '   Blank Lines: 20
+    '    Code Lines: 91 (60.26%)
+    ' Comment Lines: 40 (26.49%)
+    '    - Xml Docs: 95.00%
+    ' 
+    '   Blank Lines: 20 (13.25%)
     '     File Size: 6.58 KB
 
 

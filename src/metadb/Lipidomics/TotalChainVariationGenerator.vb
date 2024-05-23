@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f7653597d709ddfc928974a6aab394fc, E:/mzkit/src/metadb/Lipidomics//TotalChainVariationGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::f7653597d709ddfc928974a6aab394fc, metadb\Lipidomics\TotalChainVariationGenerator.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 247
-    '    Code Lines: 202
-    ' Comment Lines: 1
-    '   Blank Lines: 44
+    '    Code Lines: 202 (81.78%)
+    ' Comment Lines: 1 (0.40%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 44 (17.81%)
     '     File Size: 15.29 KB
 
 

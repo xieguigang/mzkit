@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3b8acbf706d0384426e6ff34ff9f1264, E:/mzkit/src/metadb/Lipidomics//EidDefaultCharacterization.vb"
+﻿#Region "Microsoft.VisualBasic::3b8acbf706d0384426e6ff34ff9f1264, metadb\Lipidomics\EidDefaultCharacterization.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 45
-    '    Code Lines: 30
-    ' Comment Lines: 0
-    '   Blank Lines: 15
+    '    Code Lines: 30 (66.67%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 15 (33.33%)
     '     File Size: 3.00 KB
 
 

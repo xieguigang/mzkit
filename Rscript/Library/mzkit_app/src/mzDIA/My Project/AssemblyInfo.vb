@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9127fe8ccd0415382e6d6d78b830c49a, E:/mzkit/Rscript/Library/mzkit_app/src/mzDIA//My Project/AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::9127fe8ccd0415382e6d6d78b830c49a, Rscript\Library\mzkit_app\src\mzDIA\My Project\AssemblyInfo.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 36
-    '    Code Lines: 15
-    ' Comment Lines: 15
-    '   Blank Lines: 6
+    '    Code Lines: 15 (41.67%)
+    ' Comment Lines: 15 (41.67%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 6 (16.67%)
     '     File Size: 1.20 KB
 
 

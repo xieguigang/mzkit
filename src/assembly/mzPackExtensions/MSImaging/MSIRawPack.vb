@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::57b7990107997052ca389a13f2627fb1, E:/mzkit/src/assembly/mzPackExtensions//MSImaging/MSIRawPack.vb"
+﻿#Region "Microsoft.VisualBasic::57b7990107997052ca389a13f2627fb1, assembly\mzPackExtensions\MSImaging\MSIRawPack.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 262
-    '    Code Lines: 191
-    ' Comment Lines: 26
-    '   Blank Lines: 45
+    '    Code Lines: 191 (72.90%)
+    ' Comment Lines: 26 (9.92%)
+    '    - Xml Docs: 65.38%
+    ' 
+    '   Blank Lines: 45 (17.18%)
     '     File Size: 9.88 KB
 
 

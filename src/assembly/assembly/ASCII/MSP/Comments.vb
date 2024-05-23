@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::091b0f369f7a234fa421cb233a4e3825, E:/mzkit/src/assembly/assembly//ASCII/MSP/Comments.vb"
+﻿#Region "Microsoft.VisualBasic::091b0f369f7a234fa421cb233a4e3825, assembly\assembly\ASCII\MSP\Comments.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 53
-    '    Code Lines: 28
-    ' Comment Lines: 16
-    '   Blank Lines: 9
+    '    Code Lines: 28 (52.83%)
+    ' Comment Lines: 16 (30.19%)
+    '    - Xml Docs: 87.50%
+    ' 
+    '   Blank Lines: 9 (16.98%)
     '     File Size: 1.82 KB
 
 

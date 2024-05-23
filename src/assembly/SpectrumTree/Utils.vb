@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6b006fd397620a211600b717a2fadc91, E:/mzkit/src/assembly/SpectrumTree//Utils.vb"
+﻿#Region "Microsoft.VisualBasic::8bb8680b91339f0625bcfb3927a4fb8c, assembly\SpectrumTree\Utils.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 110
-    '    Code Lines: 91
-    ' Comment Lines: 8
-    '   Blank Lines: 11
+    '    Code Lines: 91 (82.73%)
+    ' Comment Lines: 8 (7.27%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 11 (10.00%)
     '     File Size: 4.56 KB
 
 
@@ -88,7 +90,7 @@ Public Module Utils
                 .sn = 1,
                 .energy = "NA",
                 .ionization = "HCD",
-                .mz = mzi.Average(Function(a) a.mz),
+                .mass = mzi.Average(Function(a) a.mz),
                 .mzmax = mzi.Select(Function(a) a.mz).Max,
                 .mzmin = mzi.Select(Function(a) a.mz).Min
             }

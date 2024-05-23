@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4147844685b5e8869765226a6678376a, E:/mzkit/src/mzmath/ms2_math-core//Ms1/Tolerance/MassWindow.vb"
+﻿#Region "Microsoft.VisualBasic::a3bd86d964afc1f2f7cdac43fdd118d2, mzmath\ms2_math-core\Ms1\Tolerance\MassWindow.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 76
-    '    Code Lines: 45
-    ' Comment Lines: 15
-    '   Blank Lines: 16
-    '     File Size: 2.17 KB
+    '   Total Lines: 79
+    '    Code Lines: 45 (56.96%)
+    ' Comment Lines: 18 (22.78%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 16 (20.25%)
+    '     File Size: 2.25 KB
 
 
     '     Interface IMassBin
@@ -65,6 +67,9 @@ Imports std = System.Math
 
 Namespace Ms1
 
+    ''' <summary>
+    ''' an abstract mass window model
+    ''' </summary>
     Public Interface IMassBin
 
         Property mass As Double

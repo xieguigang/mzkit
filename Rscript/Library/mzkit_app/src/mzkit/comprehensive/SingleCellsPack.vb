@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b8cd27200ad92a644477aebf5a290ad3, E:/mzkit/src/mzmath/MSEngine//Search/SpectrumEqualityComparer.vb"
+﻿#Region "Microsoft.VisualBasic::1e5a6aa8c2733e87fe6749fecc542246, Rscript\Library\mzkit_app\src\mzkit\comprehensive\SingleCellsPack.vb"
 
     ' Author:
     ' 
@@ -37,32 +37,50 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 14
-    '    Code Lines: 12
-    ' Comment Lines: 0
-    '   Blank Lines: 2
-    '     File Size: 651 B
-
-
-    ' Class SpectrumEqualityComparer
+    '   Total Lines: 29
+    '    Code Lines: 23 (79.31%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
     ' 
-    '     Function: Equals, GetHashCode
+    '   Blank Lines: 6 (20.69%)
+    '     File Size: 1.05 KB
+
+
+    ' Module SingleCellsPack
+    ' 
+    '     Function: PackSingleCells
     ' 
     ' /********************************************************************************/
 
 #End Region
 
-Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
-Imports std = System.Math
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.Comprehensive.SingleCells
+Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports SMRUCC.Rsharp.Runtime
+Imports SMRUCC.Rsharp.Runtime.Internal.[Object]
+Imports SMRUCC.Rsharp.Runtime.Interop
 
-Public Class SpectrumEqualityComparer
-    Implements IEqualityComparer(Of SpectrumPeak)
-    Private Shared ReadOnly EPS As Double = 1000000.0
-    Public Overloads Function Equals(x As SpectrumPeak, y As SpectrumPeak) As Boolean Implements IEqualityComparer(Of SpectrumPeak).Equals
-        Return std.Abs(x.mz - y.mz) <= EPS
+<Package("cellsPack")>
+Module SingleCellsPack
+
+    <ExportAPI("pack_cells")>
+    Public Function PackSingleCells(<RRawVectorArgument>
+                                    rawdata As Object,
+                                    Optional source_tag As String = Nothing,
+                                    Optional env As Environment = Nothing) As Object
+
+        Dim cell_packs As pipeline = pipeline.TryCreatePipeline(Of mzPack)(rawdata, env)
+
+        If cell_packs.isError Then
+            Return cell_packs.getError
+        End If
+
+        Return cell_packs _
+            .populates(Of mzPack)(env) _
+            .PackRawData(source_tag)
     End Function
 
-    Public Overloads Function GetHashCode(obj As SpectrumPeak) As Integer Implements IEqualityComparer(Of SpectrumPeak).GetHashCode
-        Return std.Round(obj.mz, 6).GetHashCode()
-    End Function
-End Class
+End Module
+

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8fdecc935d8fc7d44d91493bd85948c5, E:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/Hex2CerSpectrumGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::f51aad6d482eaafa9badd19fb2cbbffa, metadb\Lipidomics\SpectrumGenerator\Hex2CerSpectrumGenerator.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 131
-    '    Code Lines: 118
-    ' Comment Lines: 3
-    '   Blank Lines: 10
-    '     File Size: 7.51 KB
+    '   Total Lines: 130
+    '    Code Lines: 117 (90.00%)
+    ' Comment Lines: 3 (2.31%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 10 (7.69%)
+    '     File Size: 7.40 KB
 
 
     ' Class Hex2CerSpectrumGenerator
@@ -182,6 +184,5 @@ New SpectrumPeak(adduct.ConvertToMz(lipid.Mass), 999.0R, "Precursor") With {
         Return spectrum.ToArray()
     End Function
 
-    Private Shared ReadOnly comparer As IEqualityComparer(Of SpectrumPeak) = New SpectrumEqualityComparer()
 
 End Class

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5ab1fbd99aba20678a5a6ae317ad5e40, E:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/PId5SpectrumGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::7a904de7bd576aa7841822885fdebd73, metadb\Lipidomics\SpectrumGenerator\PId5SpectrumGenerator.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 148
-    '    Code Lines: 124
-    ' Comment Lines: 0
-    '   Blank Lines: 24
-    '     File Size: 8.30 KB
+    '   Total Lines: 145
+    '    Code Lines: 123 (84.83%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 22 (15.17%)
+    '     File Size: 8.19 KB
 
 
     ' Class PId5SpectrumGenerator
@@ -197,8 +199,5 @@ New SpectrumPeak(Gly_O + adductmass, 200.0R, "Gly-O") With {
 .SpectrumComment = SpectrumComment.snposition'new SpectrumPeak(lipidMass - chainMass - C6H13O9P-H2O - CD2 , 50d, "-Header -CD2(Sn1)") { SpectrumComment = SpectrumComment.snposition },
 }}
     End Function
-
-
-    Private Shared ReadOnly comparer As IEqualityComparer(Of SpectrumPeak) = New SpectrumEqualityComparer()
 
 End Class

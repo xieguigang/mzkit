@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5b5393827ac3a2be1a68c4d7c6970f23, E:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/HBMPSpectrumGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::407d1bfef50a2d9ac20e43114c808c05, metadb\Lipidomics\SpectrumGenerator\HBMPSpectrumGenerator.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 170
-    '    Code Lines: 133
-    ' Comment Lines: 13
-    '   Blank Lines: 24
-    '     File Size: 9.82 KB
+    '   Total Lines: 168
+    '    Code Lines: 132 (78.57%)
+    ' Comment Lines: 13 (7.74%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 23 (13.69%)
+    '     File Size: 9.71 KB
 
 
     ' Class HBMPSpectrumGenerator
@@ -220,7 +222,5 @@ New SpectrumPeak(lipidMass - chainMass - H2O - CH2, 50.0R, "-CH2(Sn1)") With {
         Return spectrum.ToArray()
     End Function
 
-
-    Private Shared ReadOnly comparer As IEqualityComparer(Of SpectrumPeak) = New SpectrumEqualityComparer()
 
 End Class

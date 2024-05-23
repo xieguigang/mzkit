@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7133a71d376234644f030754dcbc7bc0, E:/mzkit/src/assembly/BrukerDataReader//Raw/Exceptions/DesignByContractException.vb"
+﻿#Region "Microsoft.VisualBasic::7133a71d376234644f030754dcbc7bc0, assembly\BrukerDataReader\Raw\Exceptions\DesignByContractException.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 26
-    '    Code Lines: 16
-    ' Comment Lines: 6
-    '   Blank Lines: 4
+    '    Code Lines: 16 (61.54%)
+    ' Comment Lines: 6 (23.08%)
+    '    - Xml Docs: 83.33%
+    ' 
+    '   Blank Lines: 4 (15.38%)
     '     File Size: 701 B
 
 

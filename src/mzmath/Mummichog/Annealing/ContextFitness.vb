@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6be143f6ad55e7649cdb36df1dcab82a, E:/mzkit/src/mzmath/Mummichog//Annealing/ContextFitness.vb"
+﻿#Region "Microsoft.VisualBasic::6be143f6ad55e7649cdb36df1dcab82a, mzmath\Mummichog\Annealing\ContextFitness.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 57
-    '    Code Lines: 40
-    ' Comment Lines: 9
-    '   Blank Lines: 8
+    '    Code Lines: 40 (70.18%)
+    ' Comment Lines: 9 (15.79%)
+    '    - Xml Docs: 88.89%
+    ' 
+    '   Blank Lines: 8 (14.04%)
     '     File Size: 2.08 KB
 
 

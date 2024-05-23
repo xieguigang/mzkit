@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c81a78ef06129f87590627636d4964f5, E:/mzkit/src/metadb/Massbank//MetaLib/NameRanks/RankingRule.vb"
+﻿#Region "Microsoft.VisualBasic::c81a78ef06129f87590627636d4964f5, metadb\Massbank\MetaLib\NameRanks\RankingRule.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 101
-    '    Code Lines: 62
-    ' Comment Lines: 16
-    '   Blank Lines: 23
+    '    Code Lines: 62 (61.39%)
+    ' Comment Lines: 16 (15.84%)
+    '    - Xml Docs: 93.75%
+    ' 
+    '   Blank Lines: 23 (22.77%)
     '     File Size: 3.30 KB
 
 

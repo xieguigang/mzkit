@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ec5faac40a476ed792a2b69040f07df5, E:/mzkit/src/metadb/Massbank//Public/NCBI/PubChem/Web/Query/QueryPathways.vb"
+﻿#Region "Microsoft.VisualBasic::ec5faac40a476ed792a2b69040f07df5, metadb\Massbank\Public\NCBI\PubChem\Web\Query\QueryPathways.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 70
-    '    Code Lines: 56
-    ' Comment Lines: 1
-    '   Blank Lines: 13
+    '    Code Lines: 56 (80.00%)
+    ' Comment Lines: 1 (1.43%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 13 (18.57%)
     '     File Size: 3.33 KB
 
 

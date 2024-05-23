@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2c878083dddb015cbba3d7062a201c7e, E:/mzkit/src/mzmath/TargetedMetabolomics//GCMS/CDFReader/Vendors/agilentHPLC.vb"
+﻿#Region "Microsoft.VisualBasic::2c878083dddb015cbba3d7062a201c7e, mzmath\TargetedMetabolomics\GCMS\CDFReader\Vendors\agilentHPLC.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 6
-    '    Code Lines: 4
-    ' Comment Lines: 0
-    '   Blank Lines: 2
+    '    Code Lines: 4 (66.67%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 2 (33.33%)
     '     File Size: 86 B
 
 

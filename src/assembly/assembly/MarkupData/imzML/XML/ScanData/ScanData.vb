@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::35de912963eca3f04214e34f51c8eb2b, E:/mzkit/src/assembly/assembly//MarkupData/imzML/XML/ScanData/ScanData.vb"
+﻿#Region "Microsoft.VisualBasic::35de912963eca3f04214e34f51c8eb2b, assembly\assembly\MarkupData\imzML\XML\ScanData\ScanData.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 62
-    '    Code Lines: 43
-    ' Comment Lines: 7
-    '   Blank Lines: 12
+    '    Code Lines: 43 (69.35%)
+    ' Comment Lines: 7 (11.29%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 12 (19.35%)
     '     File Size: 2.25 KB
 
 

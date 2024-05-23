@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c73d0511a8a72cd04b9218cc604197be, E:/mzkit/Rscript/Library/mzkit_app/src/mzDIA//LCLipidomics.vb"
+﻿#Region "Microsoft.VisualBasic::c73d0511a8a72cd04b9218cc604197be, Rscript\Library\mzkit_app\src\mzDIA\LCLipidomics.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 50
-    '    Code Lines: 27
-    ' Comment Lines: 18
-    '   Blank Lines: 5
+    '    Code Lines: 27 (54.00%)
+    ' Comment Lines: 18 (36.00%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 5 (10.00%)
     '     File Size: 2.10 KB
 
 

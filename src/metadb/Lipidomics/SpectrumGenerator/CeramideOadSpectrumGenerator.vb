@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e186e830f4fee7912271d09395d46e35, E:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/CeramideOadSpectrumGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::786490ad7fba54c099fa6cb0b22337bf, metadb\Lipidomics\SpectrumGenerator\CeramideOadSpectrumGenerator.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 136
-    '    Code Lines: 97
-    ' Comment Lines: 21
-    '   Blank Lines: 18
-    '     File Size: 6.17 KB
+    '   Total Lines: 135
+    '    Code Lines: 97 (71.85%)
+    ' Comment Lines: 21 (15.56%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 17 (12.59%)
+    '     File Size: 6.22 KB
 
 
     ' Class CeramideOadSpectrumGenerator
@@ -54,6 +56,7 @@
 
 #End Region
 
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.ElementsExactMass
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
@@ -124,7 +127,7 @@ Public Class CeramideOadSpectrumGenerator
             'spectrum.AddRange(GetAcylSpectrum(lipid, acyl, adduct));
             spectrum.AddRange(spectrumGenerator.GetAcylDoubleBondSpectrum(lipid, acyl, adduct, nlMass, 30.0R, oadId))
         End If
-        spectrum = spectrum.GroupBy(Function(spec) spec, comparer).[Select](Function(specs) New SpectrumPeak(Enumerable.First(specs).mz, specs.Sum(Function(n) n.Intensity), String.Join(", ", specs.[Select](Function(spec) spec.Annotation)), specs.Aggregate(SpectrumComment.none, Function(a, b) a Or b.SpectrumComment))).OrderBy(Function(peak) peak.mz).ToList()
+        spectrum = spectrum.GroupBy(Function(spec) spec, comparer).[Select](Function(specs) New SpectrumPeak(Enumerable.First(specs).mz, specs.Sum(Function(n) n.intensity), String.Join(", ", specs.[Select](Function(spec) spec.Annotation)), specs.Aggregate(SpectrumComment.none, Function(a, b) a Or b.SpectrumComment))).OrderBy(Function(peak) peak.mz).ToList()
         Return CreateReference(lipid, adduct, spectrum, molecule)
     End Function
 
@@ -173,20 +176,18 @@ Public Class CeramideOadSpectrumGenerator
 
     Private Function CreateReference(lipid As ILipid, adduct As AdductIon, spectrum As List(Of SpectrumPeak), molecule As IMoleculeProperty) As MoleculeMsReference
         Return New MoleculeMsReference With {
-    .PrecursorMz = adduct.ConvertToMz(lipid.Mass),
-    .IonMode = adduct.IonMode,
-    .spectrum = spectrum,
-    .Name = lipid.Name,
-    .Formula = molecule?.Formula,
-    .Ontology = molecule?.Ontology,
-    .SMILES = molecule?.SMILES,
-    .InChIKey = molecule?.InChIKey,
-    .AdductType = adduct,
-    .CompoundClass = lipid.LipidClass.ToString(),
-    .Charge = adduct.ChargeNumber
-}
+            .PrecursorMz = adduct.ConvertToMz(lipid.Mass),
+            .IonMode = adduct.IonMode,
+            .Spectrum = spectrum,
+            .Name = lipid.Name,
+            .Formula = molecule?.Formula,
+            .Ontology = molecule?.Ontology,
+            .SMILES = molecule?.SMILES,
+            .InChIKey = molecule?.InChIKey,
+            .AdductType = adduct,
+            .CompoundClass = lipid.LipidClass.ToString(),
+            .Charge = adduct.ChargeNumber
+        }
     End Function
-
-    Private Shared ReadOnly comparer As IEqualityComparer(Of SpectrumPeak) = New SpectrumEqualityComparer()
 
 End Class

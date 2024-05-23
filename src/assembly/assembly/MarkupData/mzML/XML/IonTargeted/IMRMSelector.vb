@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::71d7733989d9a2ae00d0a960b8a56af5, E:/mzkit/src/assembly/assembly//MarkupData/mzML/XML/IonTargeted/IMRMSelector.vb"
+﻿#Region "Microsoft.VisualBasic::71d7733989d9a2ae00d0a960b8a56af5, assembly\assembly\MarkupData\mzML\XML\IonTargeted\IMRMSelector.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 10
-    '    Code Lines: 6
-    ' Comment Lines: 0
-    '   Blank Lines: 4
+    '    Code Lines: 6 (60.00%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 4 (40.00%)
     '     File Size: 250 B
 
 

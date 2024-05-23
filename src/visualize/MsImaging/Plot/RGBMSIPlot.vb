@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::38f8649ad9641356a2b12eaf715a1fb9, E:/mzkit/src/visualize/MsImaging//Plot/RGBMSIPlot.vb"
+﻿#Region "Microsoft.VisualBasic::38f8649ad9641356a2b12eaf715a1fb9, visualize\MsImaging\Plot\RGBMSIPlot.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 98
-    '    Code Lines: 85
-    ' Comment Lines: 1
-    '   Blank Lines: 12
+    '    Code Lines: 85 (86.73%)
+    ' Comment Lines: 1 (1.02%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 12 (12.24%)
     '     File Size: 4.16 KB
 
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6014c098c1f4fc70d51d2f4c2495db28, E:/mzkit/src/metadb/Massbank//Concentration/Units.vb"
+﻿#Region "Microsoft.VisualBasic::6014c098c1f4fc70d51d2f4c2495db28, metadb\Massbank\Concentration\Units.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 102
-    '    Code Lines: 29
-    ' Comment Lines: 69
-    '   Blank Lines: 4
+    '    Code Lines: 29 (28.43%)
+    ' Comment Lines: 69 (67.65%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 4 (3.92%)
     '     File Size: 2.77 KB
 
 

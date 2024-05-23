@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7e3b5aa260f93f0971394130c1aa1114, E:/mzkit/src/assembly/assembly//MarkupData/mzXML/MsData/peaks.vb"
+﻿#Region "Microsoft.VisualBasic::7e3b5aa260f93f0971394130c1aa1114, assembly\assembly\MarkupData\mzXML\MsData\peaks.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 43
-    '    Code Lines: 29
-    ' Comment Lines: 6
-    '   Blank Lines: 8
+    '    Code Lines: 29 (67.44%)
+    ' Comment Lines: 6 (13.95%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 8 (18.60%)
     '     File Size: 1.49 KB
 
 

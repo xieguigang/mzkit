@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9f43e6b414601d3c9a667c974ba81202, E:/mzkit/Rscript/Library/mzkit_app/src/mzDIA//Taxonomy.vb"
+﻿#Region "Microsoft.VisualBasic::9f43e6b414601d3c9a667c974ba81202, Rscript\Library\mzkit_app\src\mzDIA\Taxonomy.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 157
-    '    Code Lines: 108
-    ' Comment Lines: 26
-    '   Blank Lines: 23
+    '    Code Lines: 108 (68.79%)
+    ' Comment Lines: 26 (16.56%)
+    '    - Xml Docs: 92.31%
+    ' 
+    '   Blank Lines: 23 (14.65%)
     '     File Size: 6.01 KB
 
 

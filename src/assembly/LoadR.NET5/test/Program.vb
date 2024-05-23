@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5cdfe47b03d8a25a7d5ee1861fe5abbc, E:/mzkit/src/assembly/LoadR.NET5/test//Program.vb"
+﻿#Region "Microsoft.VisualBasic::5cdfe47b03d8a25a7d5ee1861fe5abbc, assembly\LoadR.NET5\test\Program.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 62
-    '    Code Lines: 41
-    ' Comment Lines: 10
-    '   Blank Lines: 11
+    '    Code Lines: 41 (66.13%)
+    ' Comment Lines: 10 (16.13%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 11 (17.74%)
     '     File Size: 2.38 KB
 
 

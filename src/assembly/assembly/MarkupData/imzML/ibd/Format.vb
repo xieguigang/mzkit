@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::20f9b4cd47456daa830848e30677bcdd, E:/mzkit/src/assembly/assembly//MarkupData/imzML/ibd/Format.vb"
+﻿#Region "Microsoft.VisualBasic::20f9b4cd47456daa830848e30677bcdd, assembly\assembly\MarkupData\imzML\ibd\Format.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 23
-    '    Code Lines: 6
-    ' Comment Lines: 16
-    '   Blank Lines: 1
+    '    Code Lines: 6 (26.09%)
+    ' Comment Lines: 16 (69.57%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 1 (4.35%)
     '     File Size: 879 B
 
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::09a1f6fa46588b57fae5dd558eeb4dd0, E:/mzkit/src/metadb/Lipidomics//OadDefaultCharacterization.vb"
+﻿#Region "Microsoft.VisualBasic::09a1f6fa46588b57fae5dd558eeb4dd0, metadb\Lipidomics\OadDefaultCharacterization.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 38
-    '    Code Lines: 26
-    ' Comment Lines: 0
-    '   Blank Lines: 12
+    '    Code Lines: 26 (68.42%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 12 (31.58%)
     '     File Size: 2.52 KB
 
 

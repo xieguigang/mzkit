@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::34c2c7724a58ed2c99c3ce9d2b31349d, E:/mzkit/src/metadb/Chemoinformatics//NaturalProduct/TokenScanner.vb"
+﻿#Region "Microsoft.VisualBasic::34c2c7724a58ed2c99c3ce9d2b31349d, metadb\Chemoinformatics\NaturalProduct\TokenScanner.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 63
-    '    Code Lines: 50
-    ' Comment Lines: 0
-    '   Blank Lines: 13
+    '    Code Lines: 50 (79.37%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 13 (20.63%)
     '     File Size: 1.85 KB
 
 

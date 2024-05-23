@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e806891a13747e09e7203409b5d8cb56, E:/mzkit/src/visualize/MsImaging//Blender/KnnInterpolation.vb"
+﻿#Region "Microsoft.VisualBasic::e806891a13747e09e7203409b5d8cb56, visualize\MsImaging\Blender\KnnInterpolation.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 213
-    '    Code Lines: 157
-    ' Comment Lines: 22
-    '   Blank Lines: 34
+    '    Code Lines: 157 (73.71%)
+    ' Comment Lines: 22 (10.33%)
+    '    - Xml Docs: 45.45%
+    ' 
+    '   Blank Lines: 34 (15.96%)
     '     File Size: 8.57 KB
 
 

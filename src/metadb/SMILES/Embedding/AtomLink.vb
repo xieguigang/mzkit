@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5c183015165687318a03e06eb5974ea8, E:/mzkit/src/metadb/SMILES//Embedding/AtomLink.vb"
+﻿#Region "Microsoft.VisualBasic::5c183015165687318a03e06eb5974ea8, metadb\SMILES\Embedding\AtomLink.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 13
-    '    Code Lines: 10
-    ' Comment Lines: 0
-    '   Blank Lines: 3
+    '    Code Lines: 10 (76.92%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 3 (23.08%)
     '     File Size: 348 B
 
 

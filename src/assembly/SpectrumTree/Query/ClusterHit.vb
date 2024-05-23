@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::060ac8264719eac72c5ed176fcf98d12, E:/mzkit/src/assembly/SpectrumTree//Query/ClusterHit.vb"
+﻿#Region "Microsoft.VisualBasic::060ac8264719eac72c5ed176fcf98d12, assembly\SpectrumTree\Query\ClusterHit.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 83
-    '    Code Lines: 39
-    ' Comment Lines: 34
-    '   Blank Lines: 10
+    '    Code Lines: 39 (46.99%)
+    ' Comment Lines: 34 (40.96%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 10 (12.05%)
     '     File Size: 2.69 KB
 
 

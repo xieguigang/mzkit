@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::32b5c45429a906b10cc102ba9e8b1afd, E:/mzkit/src/assembly/SpectrumTree//Pack/Validations/DataSetGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::85bd13cf0b50020d2d1a90807e33b6c2, assembly\SpectrumTree\Pack\Validations\DataSetGenerator.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 162
-    '    Code Lines: 131
-    ' Comment Lines: 8
-    '   Blank Lines: 23
+    '    Code Lines: 131 (80.86%)
+    ' Comment Lines: 8 (4.94%)
+    '    - Xml Docs: 75.00%
+    ' 
+    '   Blank Lines: 23 (14.20%)
     '     File Size: 6.62 KB
 
 
@@ -133,7 +135,7 @@ Namespace PackLib.Validation
                         .annotation = mset.Key,
                         .name = mset.Key & $"_{++n}",
                         .index = ++i,
-                        .mz = mz.Average,
+                        .mass = mz.Average,
                         .maxo = 0,
                         .energy = "NA",
                         .intb = 0,

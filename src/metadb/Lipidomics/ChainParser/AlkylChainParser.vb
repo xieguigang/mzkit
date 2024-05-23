@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::92b11762819af8ac468fb4b6acd2a9bc, E:/mzkit/src/metadb/Lipidomics//ChainParser/AlkylChainParser.vb"
+﻿#Region "Microsoft.VisualBasic::92b11762819af8ac468fb4b6acd2a9bc, metadb\Lipidomics\ChainParser\AlkylChainParser.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 71
-    '    Code Lines: 64
-    ' Comment Lines: 1
-    '   Blank Lines: 6
+    '    Code Lines: 64 (90.14%)
+    ' Comment Lines: 1 (1.41%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 6 (8.45%)
     '     File Size: 3.34 KB
 
 

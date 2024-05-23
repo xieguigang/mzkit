@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2b9dfbc574ba4f2821f07d4e95ab0622, E:/mzkit/src/mzmath/ms2_math-core//Ms1/PrecursorType/PrecursorInfo.vb"
+﻿#Region "Microsoft.VisualBasic::2b9dfbc574ba4f2821f07d4e95ab0622, mzmath\ms2_math-core\Ms1\PrecursorType\PrecursorInfo.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 52
-    '    Code Lines: 26
-    ' Comment Lines: 19
-    '   Blank Lines: 7
+    '    Code Lines: 26 (50.00%)
+    ' Comment Lines: 19 (36.54%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 7 (13.46%)
     '     File Size: 1.61 KB
 
 

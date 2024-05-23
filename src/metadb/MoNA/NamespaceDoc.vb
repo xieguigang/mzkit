@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f16c9b475f6e0b8284518130918bae43, E:/mzkit/src/metadb/MoNA//NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::f16c9b475f6e0b8284518130918bae43, metadb\MoNA\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 13
-    '    Code Lines: 4
-    ' Comment Lines: 9
-    '   Blank Lines: 0
+    '    Code Lines: 4 (30.77%)
+    ' Comment Lines: 9 (69.23%)
+    '    - Xml Docs: 88.89%
+    ' 
+    '   Blank Lines: 0 (0.00%)
     '     File Size: 581 B
 
 

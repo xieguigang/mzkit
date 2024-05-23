@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::35f8d49f1b3e0038c67fd77b479895c3, E:/mzkit/src/assembly/assembly//MarkupData/mzML/XML/IonTargeted/selectedIonList.vb"
+﻿#Region "Microsoft.VisualBasic::35f8d49f1b3e0038c67fd77b479895c3, assembly\assembly\MarkupData\mzML\XML\IonTargeted\selectedIonList.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 29
-    '    Code Lines: 24
-    ' Comment Lines: 0
-    '   Blank Lines: 5
+    '    Code Lines: 24 (82.76%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 5 (17.24%)
     '     File Size: 1.06 KB
 
 

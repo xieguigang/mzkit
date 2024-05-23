@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9203c4c62e3ab076c5513c6e8bae711b, E:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/EidSpecificSpectrumGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::9203c4c62e3ab076c5513c6e8bae711b, metadb\Lipidomics\SpectrumGenerator\EidSpecificSpectrumGenerator.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 82
-    '    Code Lines: 79
-    ' Comment Lines: 0
-    '   Blank Lines: 3
+    '    Code Lines: 79 (96.34%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 3 (3.66%)
     '     File Size: 5.20 KB
 
 

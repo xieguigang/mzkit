@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6e0f28ad0b1c72a173510b336a8f1ac9, E:/mzkit/src/metadb/Chemoinformatics/test//nameTest.vb"
+﻿#Region "Microsoft.VisualBasic::6e0f28ad0b1c72a173510b336a8f1ac9, metadb\Chemoinformatics\test\nameTest.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 53
-    '    Code Lines: 36
-    ' Comment Lines: 3
-    '   Blank Lines: 14
+    '    Code Lines: 36 (67.92%)
+    ' Comment Lines: 3 (5.66%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 14 (26.42%)
     '     File Size: 2.27 KB
 
 

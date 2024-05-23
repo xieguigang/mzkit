@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fa8163ba20b44e7f40a2cabaec2aa470, E:/mzkit/src/mzmath/MSFinder//FormulaStringParcer.vb"
+﻿#Region "Microsoft.VisualBasic::261269cce74709d16c8f2f56ee402450, mzmath\MSFinder\FormulaStringParcer.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 560
-    '    Code Lines: 485
-    ' Comment Lines: 3
-    '   Blank Lines: 72
-    '     File Size: 21.51 KB
+    '   Total Lines: 561
+    '    Code Lines: 485 (86.45%)
+    ' Comment Lines: 3 (0.53%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 73 (13.01%)
+    '     File Size: 21.52 KB
 
 
     ' Module FormulaStringParcer
@@ -59,6 +61,7 @@ Imports System.Runtime.InteropServices
 Imports System.Text.RegularExpressions
 
 Public Module FormulaStringParcer
+
     Public Function OrganicElementsReader(formulaString As String) As DerivatizationFormula
         If Equals(formulaString, Nothing) Then Return Nothing
         If Equals(formulaString, String.Empty) Then Return Nothing

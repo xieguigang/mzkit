@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::50f0e5d7a5ba9a7fb690a76174492a43, E:/mzkit/src/metadb/Lipidomics//Annotation/Lipidomics.vb"
+﻿#Region "Microsoft.VisualBasic::50f0e5d7a5ba9a7fb690a76174492a43, metadb\Lipidomics\Annotation\Lipidomics.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 692
-    '    Code Lines: 560
-    ' Comment Lines: 56
-    '   Blank Lines: 76
+    '    Code Lines: 560 (80.92%)
+    ' Comment Lines: 56 (8.09%)
+    '    - Xml Docs: 39.29%
+    ' 
+    '   Blank Lines: 76 (10.98%)
     '     File Size: 52.96 KB
 
 

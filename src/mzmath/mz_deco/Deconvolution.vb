@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6aceb0160b42716fb4a991b7c1526a9c, E:/mzkit/src/mzmath/mz_deco//Deconvolution.vb"
+﻿#Region "Microsoft.VisualBasic::6aceb0160b42716fb4a991b7c1526a9c, mzmath\mz_deco\Deconvolution.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 309
-    '    Code Lines: 225
-    ' Comment Lines: 53
-    '   Blank Lines: 31
+    '    Code Lines: 225 (72.82%)
+    ' Comment Lines: 53 (17.15%)
+    '    - Xml Docs: 84.91%
+    ' 
+    '   Blank Lines: 31 (10.03%)
     '     File Size: 12.96 KB
 
 

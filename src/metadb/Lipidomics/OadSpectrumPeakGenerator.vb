@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a6e5d7fc456df98c814cf7605b896efe, E:/mzkit/src/metadb/Lipidomics//OadSpectrumPeakGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::a6e5d7fc456df98c814cf7605b896efe, metadb\Lipidomics\OadSpectrumPeakGenerator.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 364
-    '    Code Lines: 243
-    ' Comment Lines: 97
-    '   Blank Lines: 24
+    '    Code Lines: 243 (66.76%)
+    ' Comment Lines: 97 (26.65%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 24 (6.59%)
     '     File Size: 24.57 KB
 
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::31fdc9f29330da80309a21d3913f3496, E:/mzkit/src/assembly/mzPackExtensions//MZWork/SaveArchive.vb"
+﻿#Region "Microsoft.VisualBasic::31fdc9f29330da80309a21d3913f3496, assembly\mzPackExtensions\MZWork\SaveArchive.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 78
-    '    Code Lines: 58
-    ' Comment Lines: 7
-    '   Blank Lines: 13
+    '    Code Lines: 58 (74.36%)
+    ' Comment Lines: 7 (8.97%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 13 (16.67%)
     '     File Size: 2.99 KB
 
 

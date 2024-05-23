@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::91fa0f381de34f13020e83e18e4b23ee, E:/mzkit/src/assembly/ProteoWizard.Interop//My Project/Settings.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::91fa0f381de34f13020e83e18e4b23ee, assembly\ProteoWizard.Interop\My Project\Settings.Designer.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 75
-    '    Code Lines: 53
-    ' Comment Lines: 9
-    '   Blank Lines: 13
+    '    Code Lines: 53 (70.67%)
+    ' Comment Lines: 9 (12.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 13 (17.33%)
     '     File Size: 3.02 KB
 
 

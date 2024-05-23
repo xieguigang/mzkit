@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::01a3ca5613416a0d41d392c652ca9d0b, E:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/OadLipidsSpectrumGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::01a3ca5613416a0d41d392c652ca9d0b, metadb\Lipidomics\SpectrumGenerator\OadLipidsSpectrumGenerator.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 172
-    '    Code Lines: 161
-    ' Comment Lines: 0
-    '   Blank Lines: 11
+    '    Code Lines: 161 (93.60%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 11 (6.40%)
     '     File Size: 9.55 KB
 
 

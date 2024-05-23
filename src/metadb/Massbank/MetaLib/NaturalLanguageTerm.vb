@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2ea9a1bb4db8a4fe2ebdf5edf865d7cc, E:/mzkit/src/metadb/Massbank//MetaLib/NaturalLanguageTerm.vb"
+﻿#Region "Microsoft.VisualBasic::2ea9a1bb4db8a4fe2ebdf5edf865d7cc, metadb\Massbank\MetaLib\NaturalLanguageTerm.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 60
-    '    Code Lines: 41
-    ' Comment Lines: 8
-    '   Blank Lines: 11
+    '    Code Lines: 41 (68.33%)
+    ' Comment Lines: 8 (13.33%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 11 (18.33%)
     '     File Size: 2.13 KB
 
 

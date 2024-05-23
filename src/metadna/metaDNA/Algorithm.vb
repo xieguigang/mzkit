@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::84608a0632dfa6abf5f6332dc06d9216, E:/mzkit/src/metadna/metaDNA//Algorithm.vb"
+﻿#Region "Microsoft.VisualBasic::84608a0632dfa6abf5f6332dc06d9216, metadna\metaDNA\Algorithm.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 491
-    '    Code Lines: 357
-    ' Comment Lines: 57
-    '   Blank Lines: 77
+    '    Code Lines: 357 (72.71%)
+    ' Comment Lines: 57 (11.61%)
+    '    - Xml Docs: 78.95%
+    ' 
+    '   Blank Lines: 77 (15.68%)
     '     File Size: 17.80 KB
 
 

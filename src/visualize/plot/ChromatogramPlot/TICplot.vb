@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e090325b42e9d70d7dc86dc87b7c6eb1, E:/mzkit/src/visualize/plot//ChromatogramPlot/TICplot.vb"
+﻿#Region "Microsoft.VisualBasic::e090325b42e9d70d7dc86dc87b7c6eb1, visualize\plot\ChromatogramPlot\TICplot.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 334
-    '    Code Lines: 272
-    ' Comment Lines: 10
-    '   Blank Lines: 52
+    '    Code Lines: 272 (81.44%)
+    ' Comment Lines: 10 (2.99%)
+    '    - Xml Docs: 40.00%
+    ' 
+    '   Blank Lines: 52 (15.57%)
     '     File Size: 13.26 KB
 
 

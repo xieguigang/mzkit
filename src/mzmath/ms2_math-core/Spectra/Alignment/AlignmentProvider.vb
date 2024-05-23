@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f8ba009242ef7189a17408c1f1400db9, E:/mzkit/src/mzmath/ms2_math-core//Spectra/Alignment/AlignmentProvider.vb"
+﻿#Region "Microsoft.VisualBasic::f8ba009242ef7189a17408c1f1400db9, mzmath\ms2_math-core\Spectra\Alignment\AlignmentProvider.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 88
-    '    Code Lines: 67
-    ' Comment Lines: 3
-    '   Blank Lines: 18
+    '    Code Lines: 67 (76.14%)
+    ' Comment Lines: 3 (3.41%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 18 (20.45%)
     '     File Size: 3.18 KB
 
 

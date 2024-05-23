@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1920d2c9c3f029399c29f6f9240e0f52, E:/mzkit/src/visualize/TissueMorphology//Scatter/CDF.vb"
+﻿#Region "Microsoft.VisualBasic::5d790f277402042fd0ae6627db21fbc1, visualize\TissueMorphology\Scatter\CDF.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 300
-    '    Code Lines: 221
-    ' Comment Lines: 37
-    '   Blank Lines: 42
-    '     File Size: 12.38 KB
+    '   Total Lines: 310
+    '    Code Lines: 221 (71.29%)
+    ' Comment Lines: 47 (15.16%)
+    '    - Xml Docs: 74.47%
+    ' 
+    '   Blank Lines: 42 (13.55%)
+    '     File Size: 12.66 KB
 
 
     ' Module CDF
@@ -298,6 +300,11 @@ Public Module CDF
         Next
     End Function
 
+    ''' <summary>
+    ''' read umap data of the spectrum
+    ''' </summary>
+    ''' <param name="file"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function ReadUMAP(file As Stream) As UMAPPoint()
         Using cdf As New netCDFReader(file)
@@ -305,6 +312,11 @@ Public Module CDF
         End Using
     End Function
 
+    ''' <summary>
+    ''' read cluster data
+    ''' </summary>
+    ''' <param name="cdf"></param>
+    ''' <returns></returns>
     <Extension>
     Public Iterator Function ReadTissueMorphology(cdf As netCDFReader) As IEnumerable(Of TissueRegion)
         Dim regions As Integer = any.ToString(cdf.getAttribute("regions")).ParseInteger

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::96dd01d09a2462f5e258adeb294e84d3, E:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/PEd5SpectrumGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::c9fd631e3ff870a7023cc22fafbe5251, metadb\Lipidomics\SpectrumGenerator\PEd5SpectrumGenerator.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 157
-    '    Code Lines: 134
-    ' Comment Lines: 0
-    '   Blank Lines: 23
-    '     File Size: 8.39 KB
+    '   Total Lines: 154
+    '    Code Lines: 133 (86.36%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 21 (13.64%)
+    '     File Size: 8.28 KB
 
 
     ' Class PEd5SpectrumGenerator
@@ -206,8 +208,5 @@ New SpectrumPeak(adduct.ConvertToMz(lipid.Mass - chainMass - OxygenMass - CD2), 
         End If
         Return spectrum.ToArray()
     End Function
-
-
-    Private Shared ReadOnly comparer As IEqualityComparer(Of SpectrumPeak) = New SpectrumEqualityComparer()
 
 End Class

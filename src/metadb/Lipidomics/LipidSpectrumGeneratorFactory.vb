@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b25a6a37d6611e0299d8c3e6cf83394c, E:/mzkit/src/metadb/Lipidomics//LipidSpectrumGeneratorFactory.vb"
+﻿#Region "Microsoft.VisualBasic::ea328c55672c6b57e48bed8d9cd237d0, metadb\Lipidomics\LipidSpectrumGeneratorFactory.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 227
-    '    Code Lines: 187
-    ' Comment Lines: 0
-    '   Blank Lines: 40
-    '     File Size: 8.83 KB
+    '   Total Lines: 226
+    '    Code Lines: 187 (82.74%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 39 (17.26%)
+    '     File Size: 8.77 KB
 
 
     ' Class LipidSpectrumGeneratorFactory
@@ -121,6 +123,7 @@
 
 #End Region
 
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.ElementsExactMass
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
@@ -152,7 +155,7 @@ Friend Class RuleBaseSpectrumGenerator
         If Not CanGenerate(lipid, adduct) Then
             Return Nothing
         End If
-        Dim spectrum = Rules.SelectMany(Function(rule) rule.Create(lipid, adduct)).GroupBy(Function(spec) spec, comparer).[Select](Function(specs) New SpectrumPeak(Enumerable.First(specs).mz, Enumerable.First(specs).Intensity, String.Join(", ", specs.[Select](Function(spec) spec.Annotation)))).OrderBy(Function(peak) peak.mz).ToList()
+        Dim spectrum = Rules.SelectMany(Function(rule) rule.Create(lipid, adduct)).GroupBy(Function(spec) spec, comparer).[Select](Function(specs) New SpectrumPeak(Enumerable.First(specs).mz, Enumerable.First(specs).intensity, String.Join(", ", specs.[Select](Function(spec) spec.Annotation)))).OrderBy(Function(peak) peak.mz).ToList()
 
         Return New MoleculeMsReference With {
 .PrecursorMz = adduct.ConvertToMz(lipid.Mass),
@@ -168,8 +171,6 @@ Friend Class RuleBaseSpectrumGenerator
 .Charge = adduct.ChargeNumber
 }
     End Function
-
-    Private Shared ReadOnly comparer As IEqualityComparer(Of SpectrumPeak) = New SpectrumEqualityComparer()
 End Class
 
 Public Interface ISpectrumGenerationRule

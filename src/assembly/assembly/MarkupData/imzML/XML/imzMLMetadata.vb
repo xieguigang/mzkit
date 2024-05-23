@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a2de10998aee0ddf8fee33ec63f1f55f, E:/mzkit/src/assembly/assembly//MarkupData/imzML/XML/imzMLMetadata.vb"
+﻿#Region "Microsoft.VisualBasic::a2de10998aee0ddf8fee33ec63f1f55f, assembly\assembly\MarkupData\imzML\XML\imzMLMetadata.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 137
-    '    Code Lines: 102
-    ' Comment Lines: 16
-    '   Blank Lines: 19
+    '    Code Lines: 102 (74.45%)
+    ' Comment Lines: 16 (11.68%)
+    '    - Xml Docs: 93.75%
+    ' 
+    '   Blank Lines: 19 (13.87%)
     '     File Size: 6.34 KB
 
 

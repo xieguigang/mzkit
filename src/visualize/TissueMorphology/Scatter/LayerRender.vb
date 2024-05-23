@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4832aad295402ab161feda92cda1f281, E:/mzkit/src/visualize/TissueMorphology//Scatter/LayerRender.vb"
+﻿#Region "Microsoft.VisualBasic::4832aad295402ab161feda92cda1f281, visualize\TissueMorphology\Scatter\LayerRender.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 64
-    '    Code Lines: 49
-    ' Comment Lines: 4
-    '   Blank Lines: 11
+    '    Code Lines: 49 (76.56%)
+    ' Comment Lines: 4 (6.25%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 11 (17.19%)
     '     File Size: 2.31 KB
 
 

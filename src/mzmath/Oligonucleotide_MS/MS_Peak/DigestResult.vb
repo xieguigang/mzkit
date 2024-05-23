@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::68bc3e1e9113fd0dc935dddc2ad35f58, E:/mzkit/src/mzmath/Oligonucleotide_MS//MS_Peak/DigestResult.vb"
+﻿#Region "Microsoft.VisualBasic::68bc3e1e9113fd0dc935dddc2ad35f58, mzmath\Oligonucleotide_MS\MS_Peak\DigestResult.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 13
-    '    Code Lines: 10
-    ' Comment Lines: 0
-    '   Blank Lines: 3
+    '    Code Lines: 10 (76.92%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 3 (23.08%)
     '     File Size: 389 B
 
 

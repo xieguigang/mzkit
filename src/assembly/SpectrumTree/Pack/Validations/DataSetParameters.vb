@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bf5e6833af783da9a5437caea4728e1b, E:/mzkit/src/assembly/SpectrumTree//Pack/Validations/DataSetParameters.vb"
+﻿#Region "Microsoft.VisualBasic::bf5e6833af783da9a5437caea4728e1b, assembly\SpectrumTree\Pack\Validations\DataSetParameters.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 19
-    '    Code Lines: 11
-    ' Comment Lines: 4
-    '   Blank Lines: 4
+    '    Code Lines: 11 (57.89%)
+    ' Comment Lines: 4 (21.05%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 4 (21.05%)
     '     File Size: 534 B
 
 

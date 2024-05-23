@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::65fa889bca6b790972c1144a3cd2bbc3, E:/mzkit/src/assembly/ThermoRawFileReader//ThermoReaderOptions.vb"
+﻿#Region "Microsoft.VisualBasic::65fa889bca6b790972c1144a3cd2bbc3, assembly\ThermoRawFileReader\ThermoReaderOptions.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 110
-    '    Code Lines: 36
-    ' Comment Lines: 58
-    '   Blank Lines: 16
+    '    Code Lines: 36 (32.73%)
+    ' Comment Lines: 58 (52.73%)
+    '    - Xml Docs: 98.28%
+    ' 
+    '   Blank Lines: 16 (14.55%)
     '     File Size: 3.54 KB
 
 

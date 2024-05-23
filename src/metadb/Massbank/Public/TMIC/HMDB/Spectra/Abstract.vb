@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dd9424b3c30a46d62181e57b2f7cb07a, E:/mzkit/src/metadb/Massbank//Public/TMIC/HMDB/Spectra/Abstract.vb"
+﻿#Region "Microsoft.VisualBasic::dd9424b3c30a46d62181e57b2f7cb07a, metadb\Massbank\Public\TMIC\HMDB\Spectra\Abstract.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 102
-    '    Code Lines: 71
-    ' Comment Lines: 10
-    '   Blank Lines: 21
+    '    Code Lines: 71 (69.61%)
+    ' Comment Lines: 10 (9.80%)
+    '    - Xml Docs: 40.00%
+    ' 
+    '   Blank Lines: 21 (20.59%)
     '     File Size: 4.32 KB
 
 

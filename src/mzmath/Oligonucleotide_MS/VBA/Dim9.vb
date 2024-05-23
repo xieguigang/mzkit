@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::995ee5e822c95593715f3e8e0182fd77, E:/mzkit/src/mzmath/Oligonucleotide_MS//VBA/Dim9.vb"
+﻿#Region "Microsoft.VisualBasic::995ee5e822c95593715f3e8e0182fd77, mzmath\Oligonucleotide_MS\VBA\Dim9.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 27
-    '    Code Lines: 21
-    ' Comment Lines: 0
-    '   Blank Lines: 6
+    '    Code Lines: 21 (77.78%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 6 (22.22%)
     '     File Size: 708 B
 
 

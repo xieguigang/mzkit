@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1b2dbac03cdea1bf14bf198be23beae0, E:/mzkit/src/assembly/SpectrumTree//Pack/PackAlignment.vb"
+﻿#Region "Microsoft.VisualBasic::1b2dbac03cdea1bf14bf198be23beae0, assembly\SpectrumTree\Pack\PackAlignment.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 148
-    '    Code Lines: 82
-    ' Comment Lines: 51
-    '   Blank Lines: 15
+    '    Code Lines: 82 (55.41%)
+    ' Comment Lines: 51 (34.46%)
+    '    - Xml Docs: 80.39%
+    ' 
+    '   Blank Lines: 15 (10.14%)
     '     File Size: 5.97 KB
 
 

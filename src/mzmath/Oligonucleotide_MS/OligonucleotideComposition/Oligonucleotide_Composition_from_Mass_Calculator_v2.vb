@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::58c84233ff897f0bdf3a0a2de6b71bd6, E:/mzkit/src/mzmath/Oligonucleotide_MS//OligonucleotideComposition/Oligonucleotide_Composition_from_Mass_Calculator_v2.vb"
+﻿#Region "Microsoft.VisualBasic::58c84233ff897f0bdf3a0a2de6b71bd6, mzmath\Oligonucleotide_MS\OligonucleotideComposition\Oligonucleotide_Composition_from_Mass_Calculator_v2.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 194
-    '    Code Lines: 165
-    ' Comment Lines: 4
-    '   Blank Lines: 25
+    '    Code Lines: 165 (85.05%)
+    ' Comment Lines: 4 (2.06%)
+    '    - Xml Docs: 75.00%
+    ' 
+    '   Blank Lines: 25 (12.89%)
     '     File Size: 8.40 KB
 
 

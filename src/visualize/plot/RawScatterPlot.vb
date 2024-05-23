@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::51ce5c839ed529d8ffa6c59fa3bb64a0, E:/mzkit/src/visualize/plot//RawScatterPlot.vb"
+﻿#Region "Microsoft.VisualBasic::51ce5c839ed529d8ffa6c59fa3bb64a0, visualize\plot\RawScatterPlot.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 127
-    '    Code Lines: 100
-    ' Comment Lines: 14
-    '   Blank Lines: 13
+    '    Code Lines: 100 (78.74%)
+    ' Comment Lines: 14 (11.02%)
+    '    - Xml Docs: 85.71%
+    ' 
+    '   Blank Lines: 13 (10.24%)
     '     File Size: 5.59 KB
 
 

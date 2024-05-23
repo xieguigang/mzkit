@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6559aa50121b6151c390bc86465593e1, E:/mzkit/src/assembly/assembly//ASCII/MGF/MetaData.vb"
+﻿#Region "Microsoft.VisualBasic::6559aa50121b6151c390bc86465593e1, assembly\assembly\ASCII\MGF\MetaData.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 144
-    '    Code Lines: 121
-    ' Comment Lines: 0
-    '   Blank Lines: 23
+    '    Code Lines: 121 (84.03%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 23 (15.97%)
     '     File Size: 3.94 KB
 
 

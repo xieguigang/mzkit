@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::229b062cf2da15a4969b460930bdf06c, E:/mzkit/Rscript/Library/mzkit_app/src/mzplot//NMR.vb"
+﻿#Region "Microsoft.VisualBasic::229b062cf2da15a4969b460930bdf06c, Rscript\Library\mzkit_app\src\mzplot\NMR.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 55
-    '    Code Lines: 44
-    ' Comment Lines: 3
-    '   Blank Lines: 8
+    '    Code Lines: 44 (80.00%)
+    ' Comment Lines: 3 (5.45%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 8 (14.55%)
     '     File Size: 2.42 KB
 
 

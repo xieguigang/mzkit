@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ce2fe4ff04c68b07a6338d4a5c487995, E:/mzkit/src/mzmath/ms2_math-core//Ms1/PrecursorType/AdductIonParser.vb"
+﻿#Region "Microsoft.VisualBasic::ce2fe4ff04c68b07a6338d4a5c487995, mzmath\ms2_math-core\Ms1\PrecursorType\AdductIonParser.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 404
-    '    Code Lines: 357
-    ' Comment Lines: 13
-    '   Blank Lines: 34
+    '    Code Lines: 357 (88.37%)
+    ' Comment Lines: 13 (3.22%)
+    '    - Xml Docs: 69.23%
+    ' 
+    '   Blank Lines: 34 (8.42%)
     '     File Size: 22.20 KB
 
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3557bf5483260775412fdc6081d1eeb9, E:/mzkit/src/metadb/Massbank/test//nameTest.vb"
+﻿#Region "Microsoft.VisualBasic::3557bf5483260775412fdc6081d1eeb9, metadb\Massbank\test\nameTest.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 15
-    '    Code Lines: 11
-    ' Comment Lines: 0
-    '   Blank Lines: 4
+    '    Code Lines: 11 (73.33%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 4 (26.67%)
     '     File Size: 398 B
 
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a79db58a41dafad9580e8a2677da66d8, E:/mzkit/src/metadna/metaDNA//Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::a79db58a41dafad9580e8a2677da66d8, metadna\metaDNA\Extensions.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 66
-    '    Code Lines: 55
-    ' Comment Lines: 2
-    '   Blank Lines: 9
+    '    Code Lines: 55 (83.33%)
+    ' Comment Lines: 2 (3.03%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 9 (13.64%)
     '     File Size: 2.45 KB
 
 

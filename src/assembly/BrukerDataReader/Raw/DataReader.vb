@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ec8cb8d768dff5d78c86ed714b41f400, E:/mzkit/src/assembly/BrukerDataReader//Raw/DataReader.vb"
+﻿#Region "Microsoft.VisualBasic::ec8cb8d768dff5d78c86ed714b41f400, assembly\BrukerDataReader\Raw\DataReader.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 324
-    '    Code Lines: 206
-    ' Comment Lines: 61
-    '   Blank Lines: 57
+    '    Code Lines: 206 (63.58%)
+    ' Comment Lines: 61 (18.83%)
+    '    - Xml Docs: 83.61%
+    ' 
+    '   Blank Lines: 57 (17.59%)
     '     File Size: 15.84 KB
 
 

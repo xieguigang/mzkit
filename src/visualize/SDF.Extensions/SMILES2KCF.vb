@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7446a585bebb6869ed77392a2a3f6558, E:/mzkit/src/visualize/SDF.Extensions//SMILES2KCF.vb"
+﻿#Region "Microsoft.VisualBasic::7446a585bebb6869ed77392a2a3f6558, visualize\SDF.Extensions\SMILES2KCF.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 46
-    '    Code Lines: 41
-    ' Comment Lines: 0
-    '   Blank Lines: 5
+    '    Code Lines: 41 (89.13%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 5 (10.87%)
     '     File Size: 1.49 KB
 
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::becbd5622a6a72cd485e1a82218927c8, E:/mzkit/src/mzmath/mz_deco//Signals/Chromatogram/ROI.vb"
+﻿#Region "Microsoft.VisualBasic::becbd5622a6a72cd485e1a82218927c8, mzmath\mz_deco\Signals\Chromatogram\ROI.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 113
-    '    Code Lines: 57
-    ' Comment Lines: 43
-    '   Blank Lines: 13
+    '    Code Lines: 57 (50.44%)
+    ' Comment Lines: 43 (38.05%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 13 (11.50%)
     '     File Size: 4.18 KB
 
 

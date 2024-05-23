@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::70af07937715e3bcc30a9e788f63c3ab, E:/mzkit/src/assembly/mzPackExtensions//MSImaging/imzXMLWriter.vb"
+﻿#Region "Microsoft.VisualBasic::70af07937715e3bcc30a9e788f63c3ab, assembly\mzPackExtensions\MSImaging\imzXMLWriter.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 67
-    '    Code Lines: 41
-    ' Comment Lines: 15
-    '   Blank Lines: 11
+    '    Code Lines: 41 (61.19%)
+    ' Comment Lines: 15 (22.39%)
+    '    - Xml Docs: 93.33%
+    ' 
+    '   Blank Lines: 11 (16.42%)
     '     File Size: 2.23 KB
 
 

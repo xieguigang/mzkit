@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c4c6b7be4b04b8f1cd9e57540bc5a362, E:/mzkit/src/assembly/assembly//mzPack/Stream/IMZPack.vb"
+﻿#Region "Microsoft.VisualBasic::c4c6b7be4b04b8f1cd9e57540bc5a362, assembly\assembly\mzPack\Stream\IMZPack.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 45
-    '    Code Lines: 28
-    ' Comment Lines: 10
-    '   Blank Lines: 7
+    '    Code Lines: 28 (62.22%)
+    ' Comment Lines: 10 (22.22%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 7 (15.56%)
     '     File Size: 1.56 KB
 
 

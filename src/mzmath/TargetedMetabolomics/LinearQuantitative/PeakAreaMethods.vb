@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::af84cd48b8aea6bf935184af1bc0637c, E:/mzkit/src/mzmath/TargetedMetabolomics//LinearQuantitative/PeakAreaMethods.vb"
+﻿#Region "Microsoft.VisualBasic::af84cd48b8aea6bf935184af1bc0637c, mzmath\TargetedMetabolomics\LinearQuantitative\PeakAreaMethods.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 29
-    '    Code Lines: 10
-    ' Comment Lines: 17
-    '   Blank Lines: 2
+    '    Code Lines: 10 (34.48%)
+    ' Comment Lines: 17 (58.62%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 2 (6.90%)
     '     File Size: 984 B
 
 

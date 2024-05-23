@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::384cf917967f540852334db6bc55c99e, E:/mzkit/src/metadb/MoNA//Web/QueryWeb.vb"
+﻿#Region "Microsoft.VisualBasic::384cf917967f540852334db6bc55c99e, metadb\MoNA\Web\QueryWeb.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 41
-    '    Code Lines: 36
-    ' Comment Lines: 0
-    '   Blank Lines: 5
+    '    Code Lines: 36 (87.80%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 5 (12.20%)
     '     File Size: 1.50 KB
 
 

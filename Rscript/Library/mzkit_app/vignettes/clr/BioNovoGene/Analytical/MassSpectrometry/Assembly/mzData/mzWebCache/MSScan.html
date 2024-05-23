@@ -22,7 +22,8 @@
 
         <h3>Description</h3>
 
-        
+        <p>an abstract spectrum scan data model with unique reference id,
+ scan time and its spectrum data.</p>
 
         <h3>Declare</h3>        
 
@@ -33,7 +34,9 @@ export class MSScan extends <a href="/vignettes/clr/BioNovoGene/Analytical/MassS
    into: double;
    MRM: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/MRM.html">MRM[]</a>;
    mz: double;
+   # the scan time of current spectrum scan data object.
    rt: double;
+   # the unique reference id of current spectrum scan data object
    scan_id: string;
    size: integer;
 }

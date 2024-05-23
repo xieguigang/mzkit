@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bb6f8fd21b8b2fcf61c0d146694ca1e9, E:/mzkit/src/metadb/Lipidomics//ChainGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::bb6f8fd21b8b2fcf61c0d146694ca1e9, metadb\Lipidomics\ChainGenerator.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 100
-    '    Code Lines: 84
-    ' Comment Lines: 0
-    '   Blank Lines: 16
+    '    Code Lines: 84 (84.00%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 16 (16.00%)
     '     File Size: 4.83 KB
 
 

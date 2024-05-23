@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cda0f09083a3fb9f2c527d52e6cf903c, E:/mzkit/src/metadb/Massbank//Public/NCBI/PubChem/CIDSynonym.vb"
+﻿#Region "Microsoft.VisualBasic::cda0f09083a3fb9f2c527d52e6cf903c, metadb\Massbank\Public\NCBI\PubChem\CIDSynonym.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 154
-    '    Code Lines: 108
-    ' Comment Lines: 27
-    '   Blank Lines: 19
+    '    Code Lines: 108 (70.13%)
+    ' Comment Lines: 27 (17.53%)
+    '    - Xml Docs: 66.67%
+    ' 
+    '   Blank Lines: 19 (12.34%)
     '     File Size: 5.72 KB
 
 

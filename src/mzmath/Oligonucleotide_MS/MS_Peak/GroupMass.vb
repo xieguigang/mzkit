@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f3cec54cd0b93c99f679b9f2d664cf33, E:/mzkit/src/mzmath/Oligonucleotide_MS//MS_Peak/GroupMass.vb"
+﻿#Region "Microsoft.VisualBasic::f3cec54cd0b93c99f679b9f2d664cf33, mzmath\Oligonucleotide_MS\MS_Peak\GroupMass.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 35
-    '    Code Lines: 25
-    ' Comment Lines: 4
-    '   Blank Lines: 6
+    '    Code Lines: 25 (71.43%)
+    ' Comment Lines: 4 (11.43%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 6 (17.14%)
     '     File Size: 1.12 KB
 
 

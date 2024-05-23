@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::041caeed30b9ada156d5f719308db671, E:/mzkit/src/mzmath/SingleCells//File/SpatialIndex.vb"
+﻿#Region "Microsoft.VisualBasic::041caeed30b9ada156d5f719308db671, mzmath\SingleCells\File\SpatialIndex.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 50
-    '    Code Lines: 19
-    ' Comment Lines: 24
-    '   Blank Lines: 7
+    '    Code Lines: 19 (38.00%)
+    ' Comment Lines: 24 (48.00%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 7 (14.00%)
     '     File Size: 1.41 KB
 
 

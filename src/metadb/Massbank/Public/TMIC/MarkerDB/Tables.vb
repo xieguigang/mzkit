@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2e14f356df604fcc6c9a6b027e484d5a, E:/mzkit/src/metadb/Massbank//Public/TMIC/MarkerDB/Tables.vb"
+﻿#Region "Microsoft.VisualBasic::2e14f356df604fcc6c9a6b027e484d5a, metadb\Massbank\Public\TMIC\MarkerDB\Tables.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 4
-    '    Code Lines: 2
-    ' Comment Lines: 0
-    '   Blank Lines: 2
+    '    Code Lines: 2 (50.00%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 2 (50.00%)
     '     File Size: 42 B
 
 

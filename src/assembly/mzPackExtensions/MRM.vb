@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::09502ac6e57a73aeb7b79d4e1fd58bff, E:/mzkit/src/assembly/mzPackExtensions//MRM.vb"
+﻿#Region "Microsoft.VisualBasic::09502ac6e57a73aeb7b79d4e1fd58bff, assembly\mzPackExtensions\MRM.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 101
-    '    Code Lines: 88
-    ' Comment Lines: 3
-    '   Blank Lines: 10
+    '    Code Lines: 88 (87.13%)
+    ' Comment Lines: 3 (2.97%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 10 (9.90%)
     '     File Size: 4.15 KB
 
 

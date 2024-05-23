@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::91c10f368a821172ae38ae6d89cd1c8f, E:/mzkit/src/assembly/assembly//UnifyReader/FileFormats/imzMLScan.vb"
+﻿#Region "Microsoft.VisualBasic::c2154b40e2e583c148d398adde7752c0, assembly\assembly\UnifyReader\FileFormats\imzMLScan.vb"
 
     ' Author:
     ' 
@@ -38,10 +38,12 @@
     ' Code Statistics:
 
     '   Total Lines: 61
-    '    Code Lines: 46
-    ' Comment Lines: 0
-    '   Blank Lines: 15
-    '     File Size: 2.14 KB
+    '    Code Lines: 46 (75.41%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 15 (24.59%)
+    '     File Size: 2.13 KB
 
 
     '     Class imzMLScan
@@ -56,7 +58,7 @@
 #End Region
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData
+Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 
 Namespace DataReader

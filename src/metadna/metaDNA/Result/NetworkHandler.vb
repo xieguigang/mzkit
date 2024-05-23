@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2ab0c9653546ddb2a258cad35c0168ee, E:/mzkit/src/metadna/metaDNA//Result/NetworkHandler.vb"
+﻿#Region "Microsoft.VisualBasic::2ab0c9653546ddb2a258cad35c0168ee, metadna\metaDNA\Result\NetworkHandler.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 36
-    '    Code Lines: 30
-    ' Comment Lines: 0
-    '   Blank Lines: 6
+    '    Code Lines: 30 (83.33%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 6 (16.67%)
     '     File Size: 1.40 KB
 
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cacf98272c844493d32da8093c2e787e, E:/mzkit/src/mzmath/MSEngine//SequenceToSpec.vb"
+﻿#Region "Microsoft.VisualBasic::8c5f2439b899a585487ab06d5bafcbc0, mzmath\MSEngine\SequenceToSpec.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 437
-    '    Code Lines: 324
-    ' Comment Lines: 48
-    '   Blank Lines: 65
-    '     File Size: 20.32 KB
+    '   Total Lines: 460
+    '    Code Lines: 341 (74.13%)
+    ' Comment Lines: 51 (11.09%)
+    '    - Xml Docs: 5.88%
+    ' 
+    '   Blank Lines: 68 (14.78%)
+    '     File Size: 21.09 KB
 
 
     ' Class SequenceToSpec
@@ -55,10 +57,12 @@
 #End Region
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
 
 Public NotInheritable Class SequenceToSpec
+
     Private Sub New()
     End Sub
 
@@ -71,27 +75,31 @@ Public NotInheritable Class SequenceToSpec
     Private Shared NH2 As Double = 16.01872407
     Private Shared H3PO4 As Double = 97.976895575
 
-    Private Shared ReadOnly comparer As IEqualityComparer(Of SpectrumPeak) = New SpectrumEqualityComparer()
-    Public Shared Function Convert2SpecObj(peptide As Peptide, adduct As AdductIon, [cType] As CollisionType, Optional minMz As Double = 100, Optional maxMz As Double = 1000000) As MoleculeMsReference
+    ''' <summary>
+    ''' default is 20ppm tolerance error for treated the two mass value as equals.
+    ''' </summary>
+    Private Shared ReadOnly comparer As IEqualityComparer(Of ISpectrumPeak) = Tolerance.PPM(20)
+
+    Public Shared Function Convert2SpecObj(peptide As Peptide, adduct As AdductIon, [cType] As ActivationMethods, Optional minMz As Double = 100, Optional maxMz As Double = 1000000) As MoleculeMsReference
         Select Case [cType]
-            Case CollisionType.CID
+            Case ActivationMethods.CID
                 Return GetTheoreticalSpectrumByHCD(peptide, adduct)
-            Case CollisionType.HCD
+            Case ActivationMethods.HCD
                 Return GetTheoreticalSpectrumByHCD(peptide, adduct)
             Case Else
                 Return GetTheoreticalSpectrumByHCD(peptide, adduct)
         End Select
     End Function
 
-    Public Shared Function Convert2SpecPeaks(peptide As Peptide, adduct As AdductIon, [cType] As CollisionType, Optional minMz As Double = 100, Optional maxMz As Double = 1000000) As List(Of SpectrumPeak)
+    Public Shared Function Convert2SpecPeaks(peptide As Peptide, adduct As AdductIon, [cType] As ActivationMethods, Optional minMz As Double = 100, Optional maxMz As Double = 1000000) As List(Of SpectrumPeak)
         Select Case [cType]
-            Case CollisionType.CID
+            Case ActivationMethods.CID
                 Return GetSpectrumPeaksByHCD(peptide, adduct, minMz, maxMz)
-            Case CollisionType.HCD
+            Case ActivationMethods.HCD
                 Return GetSpectrumPeaksByHCD(peptide, adduct, minMz, maxMz)
-            Case CollisionType.ECD
+            Case ActivationMethods.ECD
                 Return GetSpectrumPeaksByECD(peptide, adduct, minMz, maxMz)
-            Case CollisionType.HotECD
+            Case ActivationMethods.HotECD
                 Return GetSpectrumPeaksByHotECD(peptide, adduct, minMz, maxMz)
             Case Else
                 Return GetSpectrumPeaksByHCD(peptide, adduct, minMz, maxMz)
@@ -113,12 +121,14 @@ Public NotInheritable Class SequenceToSpec
         Dim precursorMz = adduct.ConvertToMz(peptide.ExactMass)
 
         Dim spectrum = New List(Of SpectrumPeak)()
-        If precursorMz >= minMz AndAlso precursorMz <= maxMz Then spectrum.Add(New SpectrumPeak() With {
-.mz = precursorMz,
-.Intensity = 1000,
-.SpectrumComment = SpectrumComment.precursor,
-.PeakID = sequence.Count
-})
+        If precursorMz >= minMz AndAlso precursorMz <= maxMz Then
+            spectrum.Add(New SpectrumPeak() With {
+                .mz = precursorMz,
+                .intensity = 1000,
+                .SpectrumComment = SpectrumComment.precursor,
+                .PeakID = sequence.Count
+            })
+        End If
         'if (precursorMz * 0.5 >= minMz && precursorMz * 0.5 <= maxMz)
         '    spectrum.Add(new SpectrumPeak() { Mass = (precursorMz + Proton) * 0.5, Intensity = 1000, SpectrumComment = SpectrumComment.precursor, PeakID = sequence.Count });
 
@@ -134,7 +144,7 @@ Public NotInheritable Class SequenceToSpec
         If yModSequence.Contains("Y[Phospho]") Then
             spectrum.Add(New SpectrumPeak() With {
                 .mz = 216.042021256,
-                .Intensity = 50,
+                .intensity = 50,
                 .SpectrumComment = SpectrumComment.tyrosinep,
                 .PeakID = 0
             })
@@ -158,14 +168,14 @@ Public NotInheritable Class SequenceToSpec
             If bMz >= minMz AndAlso bMz <= maxMz Then
                 spectrum.Add(New SpectrumPeak() With {
                     .mz = bMz,
-                    .Intensity = 1000,
+                    .intensity = 1000,
                     .SpectrumComment = SpectrumComment.b,
                     .PeakID = i + 1
                 })
             End If
             If yMz >= minMz AndAlso yMz <= maxMz Then spectrum.Add(New SpectrumPeak() With {
 .mz = yMz,
-.Intensity = 1000,
+.intensity = 1000,
 .SpectrumComment = SpectrumComment.y,
 .PeakID = sequence.Count - i - 1
 })
@@ -178,7 +188,7 @@ Public NotInheritable Class SequenceToSpec
             If bSequence.Contains("D") OrElse bSequence.Contains("E") OrElse bSequence.Contains("S") OrElse bSequence.Contains("T") Then
                 If bMz - H2O >= minMz AndAlso bMz - H2O <= maxMz Then spectrum.Add(New SpectrumPeak() With {
 .mz = bMz - H2O,
-.Intensity = 200,
+.intensity = 200,
 .SpectrumComment = SpectrumComment.b_h2o,
 .PeakID = i + 1
 })
@@ -186,7 +196,7 @@ Public NotInheritable Class SequenceToSpec
             If ySequence.Contains("D") OrElse ySequence.Contains("E") OrElse ySequence.Contains("S") OrElse ySequence.Contains("T") Then
                 If yMz - H2O >= minMz AndAlso yMz - H2O <= maxMz Then spectrum.Add(New SpectrumPeak() With {
 .mz = yMz - H2O,
-.Intensity = 200,
+.intensity = 200,
 .SpectrumComment = SpectrumComment.y_h2o,
 .PeakID = sequence.Count - i - 1
 })
@@ -195,7 +205,7 @@ Public NotInheritable Class SequenceToSpec
             If bSequence.Contains("K") OrElse bSequence.Contains("N") OrElse bSequence.Contains("Q") OrElse bSequence.Contains("R") Then
                 If bMz - NH3 >= minMz AndAlso bMz - NH3 <= maxMz Then spectrum.Add(New SpectrumPeak() With {
 .mz = bMz - NH3,
-.Intensity = 200,
+.intensity = 200,
 .SpectrumComment = SpectrumComment.b_nh3,
 .PeakID = i + 1
 })
@@ -203,7 +213,7 @@ Public NotInheritable Class SequenceToSpec
             If ySequence.Contains("K") OrElse ySequence.Contains("N") OrElse ySequence.Contains("Q") OrElse ySequence.Contains("R") Then
                 If yMz - NH3 >= minMz AndAlso yMz - NH3 <= maxMz Then spectrum.Add(New SpectrumPeak() With {
 .mz = yMz - NH3,
-.Intensity = 200,
+.intensity = 200,
 .SpectrumComment = SpectrumComment.y_nh3,
 .PeakID = sequence.Count - i - 1
 })
@@ -212,7 +222,7 @@ Public NotInheritable Class SequenceToSpec
             If bModSequence.Contains("S[Phospho]") OrElse bModSequence.Contains("T[Phospho]") Then
                 If bMz - H3PO4 >= minMz AndAlso bMz - H3PO4 <= maxMz Then spectrum.Add(New SpectrumPeak() With {
 .mz = bMz - H3PO4,
-.Intensity = 400,
+.intensity = 400,
 .SpectrumComment = SpectrumComment.b_h3po4,
 .PeakID = i + 1
 })
@@ -220,35 +230,49 @@ Public NotInheritable Class SequenceToSpec
             If yModSequence.Contains("S[Phospho]") OrElse yModSequence.Contains("T[Phospho]") Then
                 If yMz - H3PO4 >= minMz AndAlso yMz - H3PO4 <= maxMz Then spectrum.Add(New SpectrumPeak() With {
 .mz = yMz - H3PO4,
-.Intensity = 400,
+.intensity = 400,
 .SpectrumComment = SpectrumComment.y_h3po4,
 .PeakID = sequence.Count - i - 1
 })
             End If
         Next
 
-        spectrum = spectrum.GroupBy(Function(spec) spec, comparer).[Select](Function(specs) New SpectrumPeak(Enumerable.First(specs).mz, specs.Max(Function(n) n.intensity), String.Join(", ", specs.[Select](Function(spec) spec.Annotation)), specs.Aggregate(SpectrumComment.none, Function(a, b) a Or b.SpectrumComment))).OrderBy(Function(peak) peak.mz).ToList()
+        spectrum = spectrum _
+            .GroupBy(Function(spec) spec, comparer) _
+            .Select(Function(specs)
+                        Return New SpectrumPeak(
+                            Enumerable.First(specs).mz,
+                            specs.Max(Function(n) n.intensity),
+                            String.Join(", ", specs.[Select](Function(spec) spec.Annotation)),
+                            specs.Aggregate(SpectrumComment.none, Function(a, b) a Or b.SpectrumComment))
+                    End Function) _
+            .OrderBy(Function(peak) peak.mz) _
+            .ToList()
+
         Return spectrum
     End Function
 
     Public Shared Function GetSpectrumPeaksByHotECD(peptide As Peptide, adduct As AdductIon, Optional minMz As Double = 100, Optional maxMz As Double = 1000000) As List(Of SpectrumPeak)
-
         Dim sequence = peptide.SequenceObj
         Dim precursorMz = adduct.ConvertToMz(peptide.ExactMass)
 
         Dim spectrum = New List(Of SpectrumPeak)()
-        If precursorMz >= minMz AndAlso precursorMz <= maxMz Then spectrum.Add(New SpectrumPeak() With {
-.mz = precursorMz,
-.Intensity = 1000,
-.SpectrumComment = SpectrumComment.precursor,
-.PeakID = sequence.Count
-})
-        If precursorMz * 0.5 >= minMz AndAlso precursorMz * 0.5 <= maxMz Then spectrum.Add(New SpectrumPeak() With {
-.mz = (precursorMz + Proton) * 0.5,
-.Intensity = 1000,
-.SpectrumComment = SpectrumComment.precursor,
-.PeakID = sequence.Count
-})
+        If precursorMz >= minMz AndAlso precursorMz <= maxMz Then
+            spectrum.Add(New SpectrumPeak() With {
+                .mz = precursorMz,
+                .intensity = 1000,
+                .SpectrumComment = SpectrumComment.precursor,
+                .PeakID = sequence.Count
+            })
+        End If
+        If precursorMz * 0.5 >= minMz AndAlso precursorMz * 0.5 <= maxMz Then
+            spectrum.Add(New SpectrumPeak() With {
+                .mz = (precursorMz + Proton) * 0.5,
+                .intensity = 1000,
+                .SpectrumComment = SpectrumComment.precursor,
+                .PeakID = sequence.Count
+            })
+        End If
 
         Dim bMz = Proton
         Dim yMz = precursorMz
@@ -261,9 +285,10 @@ Public NotInheritable Class SequenceToSpec
 
         Dim cMz = Proton + NH2 + H * 2.0
         Dim zMz = precursorMz - NH2
+
         spectrum.Add(New SpectrumPeak() With {
             .mz = zMz,
-            .Intensity = 1000,
+            .intensity = 1000,
             .SpectrumComment = SpectrumComment.z,
             .PeakID = sequence.Count
         })
@@ -277,7 +302,7 @@ Public NotInheritable Class SequenceToSpec
         If yModSequence.Contains("Y[Phospho]") Then
             spectrum.Add(New SpectrumPeak() With {
                 .mz = 216.042021256,
-                .Intensity = 50,
+                .intensity = 50,
                 .SpectrumComment = SpectrumComment.tyrosinep,
                 .PeakID = 0
             })
@@ -298,13 +323,13 @@ Public NotInheritable Class SequenceToSpec
 
             If bMz >= minMz AndAlso bMz <= maxMz Then spectrum.Add(New SpectrumPeak() With {
 .mz = bMz,
-.Intensity = 1000,
+.intensity = 1000,
 .SpectrumComment = SpectrumComment.b,
 .PeakID = i + 1
 })
             If yMz >= minMz AndAlso yMz <= maxMz Then spectrum.Add(New SpectrumPeak() With {
 .mz = yMz,
-.Intensity = 1000,
+.intensity = 1000,
 .SpectrumComment = SpectrumComment.y,
 .PeakID = sequence.Count - i - 1
 })
@@ -343,7 +368,7 @@ Public NotInheritable Class SequenceToSpec
 
             If zMz >= minMz AndAlso zMz <= maxMz Then spectrum.Add(New SpectrumPeak() With {
 .mz = zMz,
-.Intensity = 1000,
+.intensity = 1000,
 .SpectrumComment = SpectrumComment.z,
 .PeakID = sequence.Count - i - 1
 })
@@ -351,7 +376,7 @@ Public NotInheritable Class SequenceToSpec
             If bModSequence.Contains("S[Phospho]") OrElse bModSequence.Contains("T[Phospho]") Then
                 If bMz - H3PO4 >= minMz AndAlso bMz - H3PO4 <= maxMz Then spectrum.Add(New SpectrumPeak() With {
 .mz = bMz - H3PO4,
-.Intensity = 400,
+.intensity = 400,
 .SpectrumComment = SpectrumComment.b_h3po4,
 .PeakID = i + 1
 })
@@ -359,7 +384,7 @@ Public NotInheritable Class SequenceToSpec
             If yModSequence.Contains("S[Phospho]") OrElse yModSequence.Contains("T[Phospho]") Then
                 If yMz - H3PO4 >= minMz AndAlso yMz - H3PO4 <= maxMz Then spectrum.Add(New SpectrumPeak() With {
 .mz = yMz - H3PO4,
-.Intensity = 400,
+.intensity = 400,
 .SpectrumComment = SpectrumComment.y_h3po4,
 .PeakID = sequence.Count - i - 1
 })
@@ -377,13 +402,13 @@ Public NotInheritable Class SequenceToSpec
         Dim spectrum = New List(Of SpectrumPeak)()
         If precursorMz >= minMz AndAlso precursorMz <= maxMz Then spectrum.Add(New SpectrumPeak() With {
 .mz = precursorMz,
-.Intensity = 1000,
+.intensity = 1000,
 .SpectrumComment = SpectrumComment.precursor,
 .PeakID = sequence.Count
 })
         If precursorMz * 0.5 >= minMz AndAlso precursorMz * 0.5 <= maxMz Then spectrum.Add(New SpectrumPeak() With {
 .mz = (precursorMz + Proton) * 0.5,
-.Intensity = 1000,
+.intensity = 1000,
 .SpectrumComment = SpectrumComment.precursor,
 .PeakID = sequence.Count
 })
@@ -392,7 +417,7 @@ Public NotInheritable Class SequenceToSpec
         Dim zMz = precursorMz - NH2
         spectrum.Add(New SpectrumPeak() With {
             .mz = zMz,
-            .Intensity = 1000,
+            .intensity = 1000,
             .SpectrumComment = SpectrumComment.z,
             .PeakID = sequence.Count
         })
@@ -406,7 +431,7 @@ Public NotInheritable Class SequenceToSpec
         If zModSequence.Contains("Y[Phospho]") Then
             spectrum.Add(New SpectrumPeak() With {
                 .mz = 216.042021256,
-                .Intensity = 50,
+                .intensity = 50,
                 .SpectrumComment = SpectrumComment.tyrosinep,
                 .PeakID = 0
             })
@@ -428,7 +453,7 @@ Public NotInheritable Class SequenceToSpec
             '    spectrum.Add(new SpectrumPeak() { Mass = cMz, Intensity = 1000, SpectrumComment = SpectrumComment.c, PeakID = i + 1 });
             If zMz >= minMz AndAlso zMz <= maxMz Then spectrum.Add(New SpectrumPeak() With {
 .mz = zMz,
-.Intensity = 1000,
+.intensity = 1000,
 .SpectrumComment = SpectrumComment.z,
 .PeakID = sequence.Count - i - 1
 })
@@ -459,7 +484,7 @@ Public NotInheritable Class SequenceToSpec
             If cModSequence.Contains("S[Phospho]") OrElse cModSequence.Contains("T[Phospho]") Then
                 If cMz - H3PO4 >= minMz AndAlso cMz - H3PO4 <= maxMz Then spectrum.Add(New SpectrumPeak() With {
 .mz = cMz - H3PO4,
-.Intensity = 400,
+.intensity = 400,
 .SpectrumComment = SpectrumComment.b_h3po4,
 .PeakID = i + 1
 })
@@ -467,7 +492,7 @@ Public NotInheritable Class SequenceToSpec
             If zModSequence.Contains("S[Phospho]") OrElse zModSequence.Contains("T[Phospho]") Then
                 If zMz - H3PO4 >= minMz AndAlso zMz - H3PO4 <= maxMz Then spectrum.Add(New SpectrumPeak() With {
 .mz = zMz - H3PO4,
-.Intensity = 400,
+.intensity = 400,
 .SpectrumComment = SpectrumComment.y_h3po4,
 .PeakID = sequence.Count - i - 1
 })

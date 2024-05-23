@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9a9f03782007e85db06ed1ef0ef80a3c, E:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/FacadeLipidSpectrumGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::9a9f03782007e85db06ed1ef0ef80a3c, metadb\Lipidomics\SpectrumGenerator\FacadeLipidSpectrumGenerator.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 188
-    '    Code Lines: 169
-    ' Comment Lines: 8
-    '   Blank Lines: 11
+    '    Code Lines: 169 (89.89%)
+    ' Comment Lines: 8 (4.26%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 11 (5.85%)
     '     File Size: 12.61 KB
 
 

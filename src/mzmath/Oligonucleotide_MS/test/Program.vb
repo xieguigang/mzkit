@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a117178542f4709f422056fd6e44f22c, E:/mzkit/src/mzmath/Oligonucleotide_MS/test//Program.vb"
+﻿#Region "Microsoft.VisualBasic::a117178542f4709f422056fd6e44f22c, mzmath\Oligonucleotide_MS\test\Program.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 54
-    '    Code Lines: 30
-    ' Comment Lines: 10
-    '   Blank Lines: 14
+    '    Code Lines: 30 (55.56%)
+    ' Comment Lines: 10 (18.52%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 14 (25.93%)
     '     File Size: 15.05 KB
 
 

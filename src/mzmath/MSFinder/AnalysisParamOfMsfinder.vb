@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c8ccf3ca4e8b7a72c50925713402e399, E:/mzkit/src/mzmath/MSFinder//AnalysisParamOfMsfinder.vb"
+﻿#Region "Microsoft.VisualBasic::1d8e75bf0eaf888979fe792a2a7aa13a, mzmath\MSFinder\AnalysisParamOfMsfinder.vb"
 
     ' Author:
     ' 
@@ -37,21 +37,15 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 300
-    '    Code Lines: 238
-    ' Comment Lines: 23
-    '   Blank Lines: 39
-    '     File Size: 11.56 KB
+    '   Total Lines: 295
+    '    Code Lines: 233 (78.98%)
+    ' Comment Lines: 23 (7.80%)
+    '    - Xml Docs: 13.04%
+    ' 
+    '   Blank Lines: 39 (13.22%)
+    '     File Size: 11.68 KB
 
 
-    ' Enum FseaNonsignificantDef
-    ' 
-    '     LowAbundantIons, OntologySpace, ReverseSpectrum
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
     ' Class AnalysisParamOfMsfinder
     ' 
     '     Properties: BrLabelMass, CanExcuteMS1AdductSearch, CanExcuteMS2AdductSearch, CcsAdductInChIKeyDictionaryFilepath, CcsToleranceForSpectralSearching
@@ -86,11 +80,6 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
 
-Public Enum FseaNonsignificantDef
-    OntologySpace
-    ReverseSpectrum
-    LowAbundantIons
-End Enum
 ''' <summary>
 ''' This is the storage of analysis parameters used in MS-FINDER program.
 ''' </summary>
@@ -140,25 +129,25 @@ Public Class AnalysisParamOfMsfinder
         TryTopNmolecularFormulaSearch = 5
 
         DatabaseQuery = New DatabaseQuery() With {
-.Chebi = True,
-.Ymdb = True,
-.Unpd = True,
-.Smpdb = True,
-.Pubchem = True,
-.Hmdb = True,
-.Plantcyc = True,
-.Knapsack = True,
-.Bmdb = True,
-.Drugbank = True,
-.Ecmdb = True,
-.Foodb = True,
-.T3db = True,
-.Stoff = True,
-.Nanpdb = True,
-.Blexp = True,
-.Npa = True,
-.Coconut = True
-}
+            .Chebi = True,
+            .Ymdb = True,
+            .Unpd = True,
+            .Smpdb = True,
+            .Pubchem = True,
+            .Hmdb = True,
+            .Plantcyc = True,
+            .Knapsack = True,
+            .Bmdb = True,
+            .Drugbank = True,
+            .Ecmdb = True,
+            .Foodb = True,
+            .T3db = True,
+            .Stoff = True,
+            .Nanpdb = True,
+            .Blexp = True,
+            .Npa = True,
+            .Coconut = True
+        }
 
         IsUserDefinedDB = False
         UserDefinedDbFilePath = String.Empty

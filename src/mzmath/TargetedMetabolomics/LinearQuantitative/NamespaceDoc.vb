@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f21b8a589e1ab797fc26474a9aa09269, E:/mzkit/src/mzmath/TargetedMetabolomics//LinearQuantitative/NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::f21b8a589e1ab797fc26474a9aa09269, mzmath\TargetedMetabolomics\LinearQuantitative\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 8
-    '    Code Lines: 4
-    ' Comment Lines: 3
-    '   Blank Lines: 1
+    '    Code Lines: 4 (50.00%)
+    ' Comment Lines: 3 (37.50%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 1 (12.50%)
     '     File Size: 195 B
 
 

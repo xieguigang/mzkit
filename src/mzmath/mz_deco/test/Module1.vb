@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2ce4250103d4c083d3df799650b72e66, E:/mzkit/src/mzmath/mz_deco/test//Module1.vb"
+﻿#Region "Microsoft.VisualBasic::2ce4250103d4c083d3df799650b72e66, mzmath\mz_deco\test\Module1.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 81
-    '    Code Lines: 61
-    ' Comment Lines: 1
-    '   Blank Lines: 19
+    '    Code Lines: 61 (75.31%)
+    ' Comment Lines: 1 (1.23%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 19 (23.46%)
     '     File Size: 2.86 KB
 
 

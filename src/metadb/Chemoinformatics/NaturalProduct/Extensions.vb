@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::926959fa32f50bfc632fe809aefe1ced, E:/mzkit/src/metadb/Chemoinformatics//NaturalProduct/Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::926959fa32f50bfc632fe809aefe1ced, metadb\Chemoinformatics\NaturalProduct\Extensions.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 14
-    '    Code Lines: 12
-    ' Comment Lines: 0
-    '   Blank Lines: 2
+    '    Code Lines: 12 (85.71%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 2 (14.29%)
     '     File Size: 363 B
 
 

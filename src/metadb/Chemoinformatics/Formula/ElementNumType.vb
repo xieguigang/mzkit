@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::848df95b2745986c5e6c76774dbb277f, E:/mzkit/src/metadb/Chemoinformatics//Formula/ElementNumType.vb"
+﻿#Region "Microsoft.VisualBasic::848df95b2745986c5e6c76774dbb277f, metadb\Chemoinformatics\Formula\ElementNumType.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 51
-    '    Code Lines: 44
-    ' Comment Lines: 0
-    '   Blank Lines: 7
+    '    Code Lines: 44 (86.27%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 7 (13.73%)
     '     File Size: 1.37 KB
 
 

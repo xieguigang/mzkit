@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6462ecdedce0732e44adf6faedc50471, E:/mzkit/src/metadb/Massbank//MetaLib/Match/ExactMassSearch.vb"
+﻿#Region "Microsoft.VisualBasic::6462ecdedce0732e44adf6faedc50471, metadb\Massbank\MetaLib\Match\ExactMassSearch.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 76
-    '    Code Lines: 54
-    ' Comment Lines: 4
-    '   Blank Lines: 18
+    '    Code Lines: 54 (71.05%)
+    ' Comment Lines: 4 (5.26%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 18 (23.68%)
     '     File Size: 2.76 KB
 
 

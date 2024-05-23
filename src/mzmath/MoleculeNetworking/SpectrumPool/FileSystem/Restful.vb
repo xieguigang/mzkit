@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2bf0f68dacc8a68b6d91ded83445b541, E:/mzkit/src/mzmath/MoleculeNetworking//SpectrumPool/FileSystem/Restful.vb"
+﻿#Region "Microsoft.VisualBasic::2bf0f68dacc8a68b6d91ded83445b541, mzmath\MoleculeNetworking\SpectrumPool\FileSystem\Restful.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 40
-    '    Code Lines: 33
-    ' Comment Lines: 0
-    '   Blank Lines: 7
+    '    Code Lines: 33 (82.50%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 7 (17.50%)
     '     File Size: 1.41 KB
 
 

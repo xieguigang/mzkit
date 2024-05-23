@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9013f51dd1269bd512e012cbfcd68015, E:/mzkit/src/metadb/Massbank//MetaLib/Models/ICompoundClass.vb"
+﻿#Region "Microsoft.VisualBasic::9013f51dd1269bd512e012cbfcd68015, metadb\Massbank\MetaLib\Models\ICompoundClass.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 73
-    '    Code Lines: 40
-    ' Comment Lines: 22
-    '   Blank Lines: 11
+    '    Code Lines: 40 (54.79%)
+    ' Comment Lines: 22 (30.14%)
+    '    - Xml Docs: 95.45%
+    ' 
+    '   Blank Lines: 11 (15.07%)
     '     File Size: 2.48 KB
 
 

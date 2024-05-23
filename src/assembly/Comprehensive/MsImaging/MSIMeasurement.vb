@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::71a9cd0f091f3397cd0fad24ccc9871f, E:/mzkit/src/assembly/Comprehensive//MsImaging/MSIMeasurement.vb"
+﻿#Region "Microsoft.VisualBasic::71a9cd0f091f3397cd0fad24ccc9871f, assembly\Comprehensive\MsImaging\MSIMeasurement.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 98
-    '    Code Lines: 75
-    ' Comment Lines: 3
-    '   Blank Lines: 20
+    '    Code Lines: 75 (76.53%)
+    ' Comment Lines: 3 (3.06%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 20 (20.41%)
     '     File Size: 3.32 KB
 
 

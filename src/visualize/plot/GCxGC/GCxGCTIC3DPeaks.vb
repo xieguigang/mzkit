@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eddab7c3de3d962c8816046b5a25a9ca, E:/mzkit/src/visualize/plot//GCxGC/GCxGCTIC3DPeaks.vb"
+﻿#Region "Microsoft.VisualBasic::eddab7c3de3d962c8816046b5a25a9ca, visualize\plot\GCxGC\GCxGCTIC3DPeaks.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 129
-    '    Code Lines: 106
-    ' Comment Lines: 6
-    '   Blank Lines: 17
+    '    Code Lines: 106 (82.17%)
+    ' Comment Lines: 6 (4.65%)
+    '    - Xml Docs: 50.00%
+    ' 
+    '   Blank Lines: 17 (13.18%)
     '     File Size: 6.34 KB
 
 

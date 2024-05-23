@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::31aba5aea8723a7b521cf04d2e365afa, E:/mzkit/src/assembly/Comprehensive//MsImaging/Udp/UDPPrj.vb"
+﻿#Region "Microsoft.VisualBasic::31aba5aea8723a7b521cf04d2e365afa, assembly\Comprehensive\MsImaging\Udp\UDPPrj.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 111
-    '    Code Lines: 87
-    ' Comment Lines: 4
-    '   Blank Lines: 20
+    '    Code Lines: 87 (78.38%)
+    ' Comment Lines: 4 (3.60%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 20 (18.02%)
     '     File Size: 3.52 KB
 
 

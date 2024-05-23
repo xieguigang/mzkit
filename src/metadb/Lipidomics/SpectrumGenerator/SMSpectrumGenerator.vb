@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b779e090477e4c4fbc498868b3e9c0ca, E:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/SMSpectrumGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::dd341975ba0c078151f071cd352e04b4, metadb\Lipidomics\SpectrumGenerator\SMSpectrumGenerator.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 137
-    '    Code Lines: 126
-    ' Comment Lines: 0
-    '   Blank Lines: 11
-    '     File Size: 7.50 KB
+    '   Total Lines: 136
+    '    Code Lines: 126 (92.65%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 10 (7.35%)
+    '     File Size: 7.45 KB
 
 
     ' Class SMSpectrumGenerator
@@ -54,6 +56,7 @@
 
 #End Region
 
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.ElementsExactMass
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
@@ -187,7 +190,5 @@ Public Class SMSpectrumGenerator
 }
         Return spectrum.ToArray()
     End Function
-
-    Private Shared ReadOnly comparer As IEqualityComparer(Of SpectrumPeak) = New SpectrumEqualityComparer()
 
 End Class

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::941dce3dba42fb5c5eed4cb774266159, E:/mzkit/Rscript/Library/mzkit_app/src/mzkit//assembly/vendors/ThermoRaw.vb"
+﻿#Region "Microsoft.VisualBasic::941dce3dba42fb5c5eed4cb774266159, Rscript\Library\mzkit_app\src\mzkit\assembly\vendors\ThermoRaw.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 80
-    '    Code Lines: 61
-    ' Comment Lines: 6
-    '   Blank Lines: 13
+    '    Code Lines: 61 (76.25%)
+    ' Comment Lines: 6 (7.50%)
+    '    - Xml Docs: 83.33%
+    ' 
+    '   Blank Lines: 13 (16.25%)
     '     File Size: 2.92 KB
 
 

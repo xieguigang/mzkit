@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e055a893e5243863fc1cf43b0ba79bef, E:/mzkit/src/visualize/TissueMorphology//HEMap/MSIRegistration.vb"
+﻿#Region "Microsoft.VisualBasic::e055a893e5243863fc1cf43b0ba79bef, visualize\TissueMorphology\HEMap\MSIRegistration.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 47
-    '    Code Lines: 31
-    ' Comment Lines: 10
-    '   Blank Lines: 6
+    '    Code Lines: 31 (65.96%)
+    ' Comment Lines: 10 (21.28%)
+    '    - Xml Docs: 60.00%
+    ' 
+    '   Blank Lines: 6 (12.77%)
     '     File Size: 1.89 KB
 
 

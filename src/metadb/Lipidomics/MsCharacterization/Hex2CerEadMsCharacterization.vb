@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ddd6c5fc50e4589e5f1fd98ca59d5374, E:/mzkit/src/metadb/Lipidomics//MsCharacterization/Hex2CerEadMsCharacterization.vb"
+﻿#Region "Microsoft.VisualBasic::ddd6c5fc50e4589e5f1fd98ca59d5374, metadb\Lipidomics\MsCharacterization\Hex2CerEadMsCharacterization.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 10
-    '    Code Lines: 8
-    ' Comment Lines: 0
-    '   Blank Lines: 2
+    '    Code Lines: 8 (80.00%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 2 (20.00%)
     '     File Size: 588 B
 
 

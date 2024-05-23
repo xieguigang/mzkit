@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a93dbef743ad1142f952ceba37e42bbd, E:/mzkit/src/assembly/ProteoWizard.Interop//Filters/scanTime.vb"
+﻿#Region "Microsoft.VisualBasic::a93dbef743ad1142f952ceba37e42bbd, assembly\ProteoWizard.Interop\Filters\scanTime.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 23
-    '    Code Lines: 17
-    ' Comment Lines: 0
-    '   Blank Lines: 6
+    '    Code Lines: 17 (73.91%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 6 (26.09%)
     '     File Size: 590 B
 
 

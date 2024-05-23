@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e050bcc7f2cad2382428bbf457460c1d, E:/mzkit/src/metadb/Lipidomics//IOxidized.vb"
+﻿#Region "Microsoft.VisualBasic::e050bcc7f2cad2382428bbf457460c1d, metadb\Lipidomics\IOxidized.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 78
-    '    Code Lines: 59
-    ' Comment Lines: 2
-    '   Blank Lines: 17
+    '    Code Lines: 59 (75.64%)
+    ' Comment Lines: 2 (2.56%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 17 (21.79%)
     '     File Size: 3.11 KB
 
 

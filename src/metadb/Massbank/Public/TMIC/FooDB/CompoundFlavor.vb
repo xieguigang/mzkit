@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::42440b0d2bd3359c8461c2648ee2c196, E:/mzkit/src/metadb/Massbank//Public/TMIC/FooDB/CompoundFlavor.vb"
+﻿#Region "Microsoft.VisualBasic::42440b0d2bd3359c8461c2648ee2c196, metadb\Massbank\Public\TMIC\FooDB\CompoundFlavor.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 11
-    '    Code Lines: 9
-    ' Comment Lines: 0
-    '   Blank Lines: 2
+    '    Code Lines: 9 (81.82%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 2 (18.18%)
     '     File Size: 316 B
 
 

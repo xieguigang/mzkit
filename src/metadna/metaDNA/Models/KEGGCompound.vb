@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6cf7b1d5eceb7e9ba26b7e87289b3c6f, E:/mzkit/src/metadna/metaDNA//Models/KEGGCompound.vb"
+﻿#Region "Microsoft.VisualBasic::6cf7b1d5eceb7e9ba26b7e87289b3c6f, metadna\metaDNA\Models\KEGGCompound.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 78
-    '    Code Lines: 59
-    ' Comment Lines: 3
-    '   Blank Lines: 16
+    '    Code Lines: 59 (75.64%)
+    ' Comment Lines: 3 (3.85%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 16 (20.51%)
     '     File Size: 2.28 KB
 
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::12e5ae80d06bffe82878d4dc7bbdd8c1, E:/mzkit/src/mzmath/mz_deco//ChromatogramModels/PeakROI.vb"
+﻿#Region "Microsoft.VisualBasic::12e5ae80d06bffe82878d4dc7bbdd8c1, mzmath\mz_deco\ChromatogramModels\PeakROI.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 8
-    '    Code Lines: 5
-    ' Comment Lines: 0
-    '   Blank Lines: 3
+    '    Code Lines: 5 (62.50%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 3 (37.50%)
     '     File Size: 192 B
 
 

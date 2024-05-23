@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0186df8dfeb82618a709e04b7f55eb56, E:/mzkit/Rscript/Library/mzkit_app/src/mzkit//assembly/RamanSpectroscopy.vb"
+﻿#Region "Microsoft.VisualBasic::0186df8dfeb82618a709e04b7f55eb56, Rscript\Library\mzkit_app\src\mzkit\assembly\RamanSpectroscopy.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 68
-    '    Code Lines: 20
-    ' Comment Lines: 43
-    '   Blank Lines: 5
+    '    Code Lines: 20 (29.41%)
+    ' Comment Lines: 43 (63.24%)
+    '    - Xml Docs: 90.70%
+    ' 
+    '   Blank Lines: 5 (7.35%)
     '     File Size: 3.94 KB
 
 

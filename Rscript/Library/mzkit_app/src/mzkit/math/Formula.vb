@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c96b95f10b33cb8cc25e34c11f2b490e, E:/mzkit/Rscript/Library/mzkit_app/src/mzkit//math/Formula.vb"
+﻿#Region "Microsoft.VisualBasic::c96b95f10b33cb8cc25e34c11f2b490e, Rscript\Library\mzkit_app\src\mzkit\math\Formula.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 584
-    '    Code Lines: 366
-    ' Comment Lines: 139
-    '   Blank Lines: 79
+    '    Code Lines: 366 (62.67%)
+    ' Comment Lines: 139 (23.80%)
+    '    - Xml Docs: 85.61%
+    ' 
+    '   Blank Lines: 79 (13.53%)
     '     File Size: 25.07 KB
 
 

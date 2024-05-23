@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2f5f6b5b34c31a81aff1131c508a64f1, E:/mzkit/src/assembly/assembly//MarkupData/mzML/XML/Chromatogram.vb"
+﻿#Region "Microsoft.VisualBasic::2f5f6b5b34c31a81aff1131c508a64f1, assembly\assembly\MarkupData\mzML\XML\Chromatogram.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 39
-    '    Code Lines: 23
-    ' Comment Lines: 8
-    '   Blank Lines: 8
+    '    Code Lines: 23 (58.97%)
+    ' Comment Lines: 8 (20.51%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 8 (20.51%)
     '     File Size: 1.08 KB
 
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3642123d522b6eaa535ff443dd870ed4, E:/mzkit/src/metadb/Massbank//Public/NCBI/PubChem/Web/Graph/MeshGraph.vb"
+﻿#Region "Microsoft.VisualBasic::3642123d522b6eaa535ff443dd870ed4, metadb\Massbank\Public\NCBI\PubChem\Web\Graph\MeshGraph.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 134
-    '    Code Lines: 89
-    ' Comment Lines: 25
-    '   Blank Lines: 20
+    '    Code Lines: 89 (66.42%)
+    ' Comment Lines: 25 (18.66%)
+    '    - Xml Docs: 80.00%
+    ' 
+    '   Blank Lines: 20 (14.93%)
     '     File Size: 4.47 KB
 
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::74d54fba9671f1a5877db40a4fe3a044, E:/mzkit/src/assembly/Comprehensive//GCxGC/GC2Dimensional.vb"
+﻿#Region "Microsoft.VisualBasic::ae989306485c729034dd5dda172fc710, assembly\Comprehensive\GCxGC\GC2Dimensional.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 280
-    '    Code Lines: 165
-    ' Comment Lines: 82
-    '   Blank Lines: 33
-    '     File Size: 10.65 KB
+    '   Total Lines: 281
+    '    Code Lines: 166 (59.07%)
+    ' Comment Lines: 82 (29.18%)
+    '    - Xml Docs: 90.24%
+    ' 
+    '   Blank Lines: 33 (11.74%)
+    '     File Size: 10.70 KB
 
 
     ' Module GC2Dimensional
@@ -56,6 +58,7 @@
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
+Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.TagData
@@ -224,7 +227,7 @@ Public Module GC2Dimensional
         Dim d2 As ScanMS2() = rt1 _
             .Select(Function(t)
                         Return New ScanMS2 With {
-                            .activationMethod = mzData.ActivationMethods.AnyType,
+                            .activationMethod = ActivationMethods.AnyType,
                             .centroided = False,
                             .charge = 0,
                             .collisionEnergy = 0,

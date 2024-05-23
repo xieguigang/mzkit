@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f9e03bb073bc46798b79f5a4ad75c297, E:/mzkit/src/metadb/Chemoinformatics//Formula/AbbrevStatsType.vb"
+﻿#Region "Microsoft.VisualBasic::f9e03bb073bc46798b79f5a4ad75c297, metadb\Chemoinformatics\Formula\AbbrevStatsType.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 65
-    '    Code Lines: 15
-    ' Comment Lines: 45
-    '   Blank Lines: 5
+    '    Code Lines: 15 (23.08%)
+    ' Comment Lines: 45 (69.23%)
+    '    - Xml Docs: 57.78%
+    ' 
+    '   Blank Lines: 5 (7.69%)
     '     File Size: 2.72 KB
 
 

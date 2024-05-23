@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::93c29630b69c66178fda73e6006adf23, E:/mzkit/src/assembly/mzPack//Stream/PackCDF.vb"
+﻿#Region "Microsoft.VisualBasic::93c29630b69c66178fda73e6006adf23, assembly\mzPack\Stream\PackCDF.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 121
-    '    Code Lines: 91
-    ' Comment Lines: 17
-    '   Blank Lines: 13
+    '    Code Lines: 91 (75.21%)
+    ' Comment Lines: 17 (14.05%)
+    '    - Xml Docs: 94.12%
+    ' 
+    '   Blank Lines: 13 (10.74%)
     '     File Size: 4.73 KB
 
 

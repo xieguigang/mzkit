@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fb0e2bbc2e6cf1e062a7a5588877d25a, E:/mzkit/Rscript/Library/mzkit_app/src/mzDIA//MoleculeNetworking.vb"
+﻿#Region "Microsoft.VisualBasic::fb0e2bbc2e6cf1e062a7a5588877d25a, Rscript\Library\mzkit_app\src\mzDIA\MoleculeNetworking.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 346
-    '    Code Lines: 191
-    ' Comment Lines: 123
-    '   Blank Lines: 32
+    '    Code Lines: 191 (55.20%)
+    ' Comment Lines: 123 (35.55%)
+    '    - Xml Docs: 96.75%
+    ' 
+    '   Blank Lines: 32 (9.25%)
     '     File Size: 15.33 KB
 
 

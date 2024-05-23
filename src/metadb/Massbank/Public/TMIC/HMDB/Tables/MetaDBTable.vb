@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::15b84934f149ae970ee4af18284be046, E:/mzkit/src/metadb/Massbank//Public/TMIC/HMDB/Tables/MetaDBTable.vb"
+﻿#Region "Microsoft.VisualBasic::15b84934f149ae970ee4af18284be046, metadb\Massbank\Public\TMIC\HMDB\Tables\MetaDBTable.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 279
-    '    Code Lines: 244
-    ' Comment Lines: 3
-    '   Blank Lines: 32
+    '    Code Lines: 244 (87.46%)
+    ' Comment Lines: 3 (1.08%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 32 (11.47%)
     '     File Size: 12.71 KB
 
 

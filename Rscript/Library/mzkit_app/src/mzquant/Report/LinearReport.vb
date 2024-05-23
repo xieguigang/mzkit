@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::45a0bb2fd811ac80a96a177ef8267912, E:/mzkit/Rscript/Library/mzkit_app/src/mzquant//Report/LinearReport.vb"
+﻿#Region "Microsoft.VisualBasic::45a0bb2fd811ac80a96a177ef8267912, Rscript\Library\mzkit_app\src\mzquant\Report\LinearReport.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 229
-    '    Code Lines: 177
-    ' Comment Lines: 22
-    '   Blank Lines: 30
+    '    Code Lines: 177 (77.29%)
+    ' Comment Lines: 22 (9.61%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 30 (13.10%)
     '     File Size: 10.01 KB
 
 

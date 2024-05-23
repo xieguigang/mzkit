@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2798c4722f09748f4ec401712b7b8c76, E:/mzkit/src/mzmath/TargetedMetabolomics//GCMS/CDFReader/Vendors/aiaTemplate.vb"
+﻿#Region "Microsoft.VisualBasic::2798c4722f09748f4ec401712b7b8c76, mzmath\TargetedMetabolomics\GCMS\CDFReader\Vendors\aiaTemplate.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 6
-    '    Code Lines: 4
-    ' Comment Lines: 0
-    '   Blank Lines: 2
+    '    Code Lines: 4 (66.67%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 2 (33.33%)
     '     File Size: 86 B
 
 

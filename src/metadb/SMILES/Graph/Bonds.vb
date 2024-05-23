@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5a7274f68cba00297a5be650226dfab2, E:/mzkit/src/metadb/SMILES//Graph/Bonds.vb"
+﻿#Region "Microsoft.VisualBasic::5a7274f68cba00297a5be650226dfab2, metadb\SMILES\Graph\Bonds.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 18
-    '    Code Lines: 8
-    ' Comment Lines: 8
-    '   Blank Lines: 2
+    '    Code Lines: 8 (44.44%)
+    ' Comment Lines: 8 (44.44%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 2 (11.11%)
     '     File Size: 547 B
 
 

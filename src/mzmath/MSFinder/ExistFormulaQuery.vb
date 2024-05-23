@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5766dbe21639c15a068d93ec6afec438, E:/mzkit/src/mzmath/MSFinder//ExistFormulaQuery.vb"
+﻿#Region "Microsoft.VisualBasic::79dc8209179d11483b6f7fd807c5accf, mzmath\MSFinder\ExistFormulaQuery.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 33
-    '    Code Lines: 19
-    ' Comment Lines: 5
-    '   Blank Lines: 9
+    '    Code Lines: 19 (57.58%)
+    ' Comment Lines: 5 (15.15%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 9 (27.27%)
     '     File Size: 1.07 KB
 
 
@@ -63,6 +65,16 @@ Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 ''' </summary>
 Public Class ExistFormulaQuery
 
+    Public Property Formula As Formula
+
+    Public Property PubchemCidList As List(Of Integer)
+
+    Public Property FormulaRecords As Integer
+
+    Public Property ResourceNumber As Integer
+
+    Public Property ResourceNames As String
+
     Public Sub New()
         PubchemCidList = New List(Of Integer)()
         Formula = New Formula()
@@ -75,15 +87,5 @@ Public Class ExistFormulaQuery
         ResourceNumber = dbRecords
         ResourceNames = dbNames
     End Sub
-
-    Public Property Formula As Formula
-
-    Public Property PubchemCidList As List(Of Integer)
-
-    Public Property FormulaRecords As Integer
-
-    Public Property ResourceNumber As Integer
-
-    Public Property ResourceNames As String
 
 End Class

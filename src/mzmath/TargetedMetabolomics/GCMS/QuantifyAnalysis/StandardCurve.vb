@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::495fbce311539f8f32685cd7e0ecc0ab, E:/mzkit/src/mzmath/TargetedMetabolomics//GCMS/QuantifyAnalysis/StandardCurve.vb"
+﻿#Region "Microsoft.VisualBasic::495fbce311539f8f32685cd7e0ecc0ab, mzmath\TargetedMetabolomics\GCMS\QuantifyAnalysis\StandardCurve.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 139
-    '    Code Lines: 96
-    ' Comment Lines: 29
-    '   Blank Lines: 14
+    '    Code Lines: 96 (69.06%)
+    ' Comment Lines: 29 (20.86%)
+    '    - Xml Docs: 68.97%
+    ' 
+    '   Blank Lines: 14 (10.07%)
     '     File Size: 6.66 KB
 
 

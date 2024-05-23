@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9a3b0dc6c96cc69929d1e4ed2c218aa9, E:/mzkit/src/metadb/KNApSAcK//Data/InformationTable.vb"
+﻿#Region "Microsoft.VisualBasic::9a3b0dc6c96cc69929d1e4ed2c218aa9, metadb\KNApSAcK\Data\InformationTable.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 71
-    '    Code Lines: 58
-    ' Comment Lines: 4
-    '   Blank Lines: 9
+    '    Code Lines: 58 (81.69%)
+    ' Comment Lines: 4 (5.63%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 9 (12.68%)
     '     File Size: 2.79 KB
 
 

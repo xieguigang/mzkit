@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6c2cb4922fa75f89ed5e618197c887d7, E:/mzkit/src/visualize/TissueMorphology//Scatter/Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::6c2cb4922fa75f89ed5e618197c887d7, visualize\TissueMorphology\Scatter\Extensions.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 89
-    '    Code Lines: 69
-    ' Comment Lines: 9
-    '   Blank Lines: 11
+    '    Code Lines: 69 (77.53%)
+    ' Comment Lines: 9 (10.11%)
+    '    - Xml Docs: 88.89%
+    ' 
+    '   Blank Lines: 11 (12.36%)
     '     File Size: 3.20 KB
 
 

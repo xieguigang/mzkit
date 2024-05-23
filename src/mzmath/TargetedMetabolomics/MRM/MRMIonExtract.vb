@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f73598c70a033b3832ee77ef2f3b7e79, E:/mzkit/src/mzmath/TargetedMetabolomics//MRM/MRMIonExtract.vb"
+﻿#Region "Microsoft.VisualBasic::f73598c70a033b3832ee77ef2f3b7e79, mzmath\TargetedMetabolomics\MRM\MRMIonExtract.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 234
-    '    Code Lines: 181
-    ' Comment Lines: 21
-    '   Blank Lines: 32
+    '    Code Lines: 181 (77.35%)
+    ' Comment Lines: 21 (8.97%)
+    '    - Xml Docs: 80.95%
+    ' 
+    '   Blank Lines: 32 (13.68%)
     '     File Size: 9.66 KB
 
 

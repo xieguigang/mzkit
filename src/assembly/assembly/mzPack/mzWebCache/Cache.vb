@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::faba8430c9585a626cf67d1b28930e5f, E:/mzkit/src/assembly/assembly//mzPack/mzWebCache/Cache.vb"
+﻿#Region "Microsoft.VisualBasic::faba8430c9585a626cf67d1b28930e5f, assembly\assembly\mzPack\mzWebCache\Cache.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 84
-    '    Code Lines: 51
-    ' Comment Lines: 20
-    '   Blank Lines: 13
+    '    Code Lines: 51 (60.71%)
+    ' Comment Lines: 20 (23.81%)
+    '    - Xml Docs: 85.00%
+    ' 
+    '   Blank Lines: 13 (15.48%)
     '     File Size: 3.30 KB
 
 

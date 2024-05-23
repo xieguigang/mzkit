@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ec152d44d954d469218875126b806062, E:/mzkit/src/mzmath/Oligonucleotide_MS//VBA/VB6DimensionVector.vb"
+﻿#Region "Microsoft.VisualBasic::ec152d44d954d469218875126b806062, mzmath\Oligonucleotide_MS\VBA\VB6DimensionVector.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 23
-    '    Code Lines: 18
-    ' Comment Lines: 0
-    '   Blank Lines: 5
+    '    Code Lines: 18 (78.26%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 5 (21.74%)
     '     File Size: 492 B
 
 

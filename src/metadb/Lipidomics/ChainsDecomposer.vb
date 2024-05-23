@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::16c7ea230869dde0070285aed7f04714, E:/mzkit/src/metadb/Lipidomics//ChainsDecomposer.vb"
+﻿#Region "Microsoft.VisualBasic::16c7ea230869dde0070285aed7f04714, metadb\Lipidomics\ChainsDecomposer.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 16
-    '    Code Lines: 14
-    ' Comment Lines: 0
-    '   Blank Lines: 2
+    '    Code Lines: 14 (87.50%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 2 (12.50%)
     '     File Size: 1.27 KB
 
 

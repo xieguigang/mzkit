@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f74cc5cebc2d6ad567a38729ffc5f8a4, E:/mzkit/src/mzmath/Oligonucleotide_MS//MS2_Spectrum_Matcher/Oligonucleotide_MS2_Spectrum_Matcher_v11.vb"
+﻿#Region "Microsoft.VisualBasic::f74cc5cebc2d6ad567a38729ffc5f8a4, mzmath\Oligonucleotide_MS\MS2_Spectrum_Matcher\Oligonucleotide_MS2_Spectrum_Matcher_v11.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 1639
-    '    Code Lines: 1499
-    ' Comment Lines: 73
-    '   Blank Lines: 67
+    '    Code Lines: 1499 (91.46%)
+    ' Comment Lines: 73 (4.45%)
+    '    - Xml Docs: 4.11%
+    ' 
+    '   Blank Lines: 67 (4.09%)
     '     File Size: 71.70 KB
 
 

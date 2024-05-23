@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f3980edf94a2c2cdbbeb396a44557299, E:/mzkit/src/visualize/MsImaging//IndexedCache/MatrixReader.vb"
+﻿#Region "Microsoft.VisualBasic::f3980edf94a2c2cdbbeb396a44557299, visualize\MsImaging\IndexedCache\MatrixReader.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 56
-    '    Code Lines: 40
-    ' Comment Lines: 7
-    '   Blank Lines: 9
+    '    Code Lines: 40 (71.43%)
+    ' Comment Lines: 7 (12.50%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 9 (16.07%)
     '     File Size: 1.90 KB
 
 

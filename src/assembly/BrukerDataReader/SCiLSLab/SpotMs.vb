@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::324ac7c0a84df388fd8934eb63d933f0, E:/mzkit/src/assembly/BrukerDataReader//SCiLSLab/SpotMs.vb"
+﻿#Region "Microsoft.VisualBasic::324ac7c0a84df388fd8934eb63d933f0, assembly\BrukerDataReader\SCiLSLab\SpotMs.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 53
-    '    Code Lines: 39
-    ' Comment Lines: 1
-    '   Blank Lines: 13
+    '    Code Lines: 39 (73.58%)
+    ' Comment Lines: 1 (1.89%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 13 (24.53%)
     '     File Size: 1.65 KB
 
 

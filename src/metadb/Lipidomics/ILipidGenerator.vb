@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9326f4356587219b01e932fcda406536, E:/mzkit/src/metadb/Lipidomics//ILipidGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::9326f4356587219b01e932fcda406536, metadb\Lipidomics\ILipidGenerator.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 30
-    '    Code Lines: 22
-    ' Comment Lines: 0
-    '   Blank Lines: 8
+    '    Code Lines: 22 (73.33%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 8 (26.67%)
     '     File Size: 1.16 KB
 
 

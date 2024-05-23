@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d31f06319f4357aaa069a827e6c83e98, E:/mzkit/src/metadna/metaDNA//Infer/InferLink.vb"
+﻿#Region "Microsoft.VisualBasic::d31f06319f4357aaa069a827e6c83e98, metadna\metaDNA\Infer\InferLink.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 39
-    '    Code Lines: 15
-    ' Comment Lines: 16
-    '   Blank Lines: 8
+    '    Code Lines: 15 (38.46%)
+    ' Comment Lines: 16 (41.03%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 8 (20.51%)
     '     File Size: 1.20 KB
 
 

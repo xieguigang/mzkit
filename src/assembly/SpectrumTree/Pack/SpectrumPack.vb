@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::583345305f44a732797b56028eef59b2, E:/mzkit/src/assembly/SpectrumTree//Pack/SpectrumPack.vb"
+﻿#Region "Microsoft.VisualBasic::583345305f44a732797b56028eef59b2, assembly\SpectrumTree\Pack\SpectrumPack.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 126
-    '    Code Lines: 78
-    ' Comment Lines: 26
-    '   Blank Lines: 22
+    '    Code Lines: 78 (61.90%)
+    ' Comment Lines: 26 (20.63%)
+    '    - Xml Docs: 50.00%
+    ' 
+    '   Blank Lines: 22 (17.46%)
     '     File Size: 4.95 KB
 
 

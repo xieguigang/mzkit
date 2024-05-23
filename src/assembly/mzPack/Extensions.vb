@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f282babb84b614891174471c9bb63222, E:/mzkit/src/assembly/mzPack//Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::f282babb84b614891174471c9bb63222, assembly\mzPack\Extensions.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 163
-    '    Code Lines: 110
-    ' Comment Lines: 31
-    '   Blank Lines: 22
+    '    Code Lines: 110 (67.48%)
+    ' Comment Lines: 31 (19.02%)
+    '    - Xml Docs: 83.87%
+    ' 
+    '   Blank Lines: 22 (13.50%)
     '     File Size: 5.86 KB
 
 

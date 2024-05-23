@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0f77e8a93e3c203d9fc59fa5ece5b328, E:/mzkit/src/mzmath/TargetedMetabolomics//MRM/Data/RTAlignment.vb"
+﻿#Region "Microsoft.VisualBasic::0f77e8a93e3c203d9fc59fa5ece5b328, mzmath\TargetedMetabolomics\MRM\Data\RTAlignment.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 38
-    '    Code Lines: 30
-    ' Comment Lines: 0
-    '   Blank Lines: 8
+    '    Code Lines: 30 (78.95%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 8 (21.05%)
     '     File Size: 1.26 KB
 
 

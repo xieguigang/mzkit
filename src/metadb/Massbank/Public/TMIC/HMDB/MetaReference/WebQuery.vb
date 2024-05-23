@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c49307bda843618b1b00767446106f1e, E:/mzkit/src/metadb/Massbank//Public/TMIC/HMDB/MetaReference/WebQuery.vb"
+﻿#Region "Microsoft.VisualBasic::c49307bda843618b1b00767446106f1e, metadb\Massbank\Public\TMIC\HMDB\MetaReference\WebQuery.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 29
-    '    Code Lines: 24
-    ' Comment Lines: 0
-    '   Blank Lines: 5
+    '    Code Lines: 24 (82.76%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 5 (17.24%)
     '     File Size: 1.17 KB
 
 

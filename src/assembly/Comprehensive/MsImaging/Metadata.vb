@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::646e38f1f11ed7c8b24bc304d455f910, E:/mzkit/src/assembly/Comprehensive//MsImaging/Metadata.vb"
+﻿#Region "Microsoft.VisualBasic::646e38f1f11ed7c8b24bc304d455f910, assembly\Comprehensive\MsImaging\Metadata.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 144
-    '    Code Lines: 65
-    ' Comment Lines: 64
-    '   Blank Lines: 15
+    '    Code Lines: 65 (45.14%)
+    ' Comment Lines: 64 (44.44%)
+    '    - Xml Docs: 98.44%
+    ' 
+    '   Blank Lines: 15 (10.42%)
     '     File Size: 5.10 KB
 
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::32153fb8f53e465c4887d22928c32a75, E:/mzkit/src/mzmath/SingleCells//Matrix/PixelData.vb"
+﻿#Region "Microsoft.VisualBasic::32153fb8f53e465c4887d22928c32a75, mzmath\SingleCells\Matrix\PixelData.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 48
-    '    Code Lines: 28
-    ' Comment Lines: 11
-    '   Blank Lines: 9
+    '    Code Lines: 28 (58.33%)
+    ' Comment Lines: 11 (22.92%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 9 (18.75%)
     '     File Size: 1.72 KB
 
 

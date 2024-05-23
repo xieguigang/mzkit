@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b020f9efd6aa54b410bf20ba510062e7, E:/mzkit/src/assembly/assembly//MarkupData/nmrML/FIDByteFormats.vb"
+﻿#Region "Microsoft.VisualBasic::b020f9efd6aa54b410bf20ba510062e7, assembly\assembly\MarkupData\nmrML\FIDByteFormats.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 64
-    '    Code Lines: 48
-    ' Comment Lines: 10
-    '   Blank Lines: 6
+    '    Code Lines: 48 (75.00%)
+    ' Comment Lines: 10 (15.62%)
+    '    - Xml Docs: 30.00%
+    ' 
+    '   Blank Lines: 6 (9.38%)
     '     File Size: 2.58 KB
 
 

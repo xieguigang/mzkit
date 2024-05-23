@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0171f5d8ac463052720273f533683b82, E:/mzkit/src/metadb/Massbank//MetaLib/Models/CrossReference/Validation.vb"
+﻿#Region "Microsoft.VisualBasic::0171f5d8ac463052720273f533683b82, metadb\Massbank\MetaLib\Models\CrossReference\Validation.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 90
-    '    Code Lines: 60
-    ' Comment Lines: 18
-    '   Blank Lines: 12
+    '    Code Lines: 60 (66.67%)
+    ' Comment Lines: 18 (20.00%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 12 (13.33%)
     '     File Size: 3.36 KB
 
 

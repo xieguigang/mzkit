@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cadc4166d8edc8942f1feabaa3910233, E:/mzkit/src/mzmath/MSEngine//ModificationContainer.vb"
+﻿#Region "Microsoft.VisualBasic::cadc4166d8edc8942f1feabaa3910233, mzmath\MSEngine\ModificationContainer.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 491
-    '    Code Lines: 370
-    ' Comment Lines: 11
-    '   Blank Lines: 110
+    '    Code Lines: 370 (75.36%)
+    ' Comment Lines: 11 (2.24%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 110 (22.40%)
     '     File Size: 22.48 KB
 
 

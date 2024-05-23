@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6af0ae85b7b44d9708f24c4cac4cd858, E:/mzkit/src/metadb/Massbank/test//inchiTest.vb"
+﻿#Region "Microsoft.VisualBasic::6af0ae85b7b44d9708f24c4cac4cd858, metadb\Massbank\test\inchiTest.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 28
-    '    Code Lines: 11
-    ' Comment Lines: 8
-    '   Blank Lines: 9
+    '    Code Lines: 11 (39.29%)
+    ' Comment Lines: 8 (28.57%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 9 (32.14%)
     '     File Size: 671 B
 
 

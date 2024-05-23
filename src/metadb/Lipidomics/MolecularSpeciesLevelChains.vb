@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::af28b83f56ffde37916405be8b41f257, E:/mzkit/src/metadb/Lipidomics//MolecularSpeciesLevelChains.vb"
+﻿#Region "Microsoft.VisualBasic::af28b83f56ffde37916405be8b41f257, metadb\Lipidomics\MolecularSpeciesLevelChains.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 90
-    '    Code Lines: 73
-    ' Comment Lines: 0
-    '   Blank Lines: 17
+    '    Code Lines: 73 (81.11%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 17 (18.89%)
     '     File Size: 4.03 KB
 
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::445663b595e6ba36dd74d3a3d5bfdf01, E:/mzkit/src/assembly/BrukerDataReader//Raw/Exceptions/PreconditionException.vb"
+﻿#Region "Microsoft.VisualBasic::445663b595e6ba36dd74d3a3d5bfdf01, assembly\BrukerDataReader\Raw\Exceptions\PreconditionException.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 33
-    '    Code Lines: 16
-    ' Comment Lines: 12
-    '   Blank Lines: 5
+    '    Code Lines: 16 (48.48%)
+    ' Comment Lines: 12 (36.36%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 5 (15.15%)
     '     File Size: 796 B
 
 

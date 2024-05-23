@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a5dcc5c609d886fb94064c7e05ecb1e9, E:/mzkit/src/metadb/Massbank//Public/NCBI/PubChem/Web/Models/InformationSection.vb"
+﻿#Region "Microsoft.VisualBasic::a5dcc5c609d886fb94064c7e05ecb1e9, metadb\Massbank\Public\NCBI\PubChem\Web\Models\InformationSection.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 84
-    '    Code Lines: 54
-    ' Comment Lines: 19
-    '   Blank Lines: 11
+    '    Code Lines: 54 (64.29%)
+    ' Comment Lines: 19 (22.62%)
+    '    - Xml Docs: 94.74%
+    ' 
+    '   Blank Lines: 11 (13.10%)
     '     File Size: 2.90 KB
 
 

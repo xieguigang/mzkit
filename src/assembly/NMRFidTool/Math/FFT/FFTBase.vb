@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c4fbdcff68bc4eb5baba686fc5dbfacb, E:/mzkit/src/assembly/NMRFidTool//Math/FFT/FFTBase.vb"
+﻿#Region "Microsoft.VisualBasic::c4fbdcff68bc4eb5baba686fc5dbfacb, assembly\NMRFidTool\Math\FFT\FFTBase.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 138
-    '    Code Lines: 85
-    ' Comment Lines: 41
-    '   Blank Lines: 12
+    '    Code Lines: 85 (61.59%)
+    ' Comment Lines: 41 (29.71%)
+    '    - Xml Docs: 48.78%
+    ' 
+    '   Blank Lines: 12 (8.70%)
     '     File Size: 5.17 KB
 
 

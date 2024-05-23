@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7f194cb3ea2bc1fc5165040974179394, E:/mzkit/src/metadb/Chemoinformatics//Formula/ElementSearchCandiate.vb"
+﻿#Region "Microsoft.VisualBasic::7f194cb3ea2bc1fc5165040974179394, metadb\Chemoinformatics\Formula\ElementSearchCandiate.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 14
-    '    Code Lines: 10
-    ' Comment Lines: 0
-    '   Blank Lines: 4
+    '    Code Lines: 10 (71.43%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 4 (28.57%)
     '     File Size: 374 B
 
 

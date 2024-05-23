@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9a7d7e79f3b7584f3af0e519c65d919e, E:/mzkit/src/visualize/MsImaging//Layer/LayerHelpers.vb"
+﻿#Region "Microsoft.VisualBasic::9a7d7e79f3b7584f3af0e519c65d919e, visualize\MsImaging\Layer\LayerHelpers.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 116
-    '    Code Lines: 98
-    ' Comment Lines: 8
-    '   Blank Lines: 10
+    '    Code Lines: 98 (84.48%)
+    ' Comment Lines: 8 (6.90%)
+    '    - Xml Docs: 87.50%
+    ' 
+    '   Blank Lines: 10 (8.62%)
     '     File Size: 4.86 KB
 
 

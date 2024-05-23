@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::525eb3e306497faed5ac3af8fbff11a9, E:/mzkit/src/metadb/Lipidomics//My Project/Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::525eb3e306497faed5ac3af8fbff11a9, metadb\Lipidomics\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 122
-    '    Code Lines: 42
-    ' Comment Lines: 70
-    '   Blank Lines: 10
+    '    Code Lines: 42 (34.43%)
+    ' Comment Lines: 70 (57.38%)
+    '    - Xml Docs: 8.57%
+    ' 
+    '   Blank Lines: 10 (8.20%)
     '     File Size: 5.08 KB
 
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a8448f2818e308a7b29f9bea0fa894ae, E:/mzkit/src/mzmath/TargetedMetabolomics//LinearQuantitative/Models/IonPeakTableRow.vb"
+﻿#Region "Microsoft.VisualBasic::a8448f2818e308a7b29f9bea0fa894ae, mzmath\TargetedMetabolomics\LinearQuantitative\Models\IonPeakTableRow.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 77
-    '    Code Lines: 23
-    ' Comment Lines: 48
-    '   Blank Lines: 6
+    '    Code Lines: 23 (29.87%)
+    ' Comment Lines: 48 (62.34%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 6 (7.79%)
     '     File Size: 2.37 KB
 
 

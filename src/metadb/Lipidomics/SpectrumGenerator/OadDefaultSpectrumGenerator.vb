@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5e496d010e79ce0545819bacc77a7776, E:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/OadDefaultSpectrumGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::3f0a06bb98683ce3ffae2fcc28852911, metadb\Lipidomics\SpectrumGenerator\OadDefaultSpectrumGenerator.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 88
-    '    Code Lines: 75
-    ' Comment Lines: 0
-    '   Blank Lines: 13
-    '     File Size: 4.79 KB
+    '   Total Lines: 86
+    '    Code Lines: 74 (86.05%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 12 (13.95%)
+    '     File Size: 4.68 KB
 
 
     ' Class OadDefaultSpectrumGenerator
@@ -131,8 +133,6 @@ Public Class OadDefaultSpectrumGenerator
     .Charge = adduct.ChargeNumber
 }
     End Function
-
-    Private Shared ReadOnly comparer As IEqualityComparer(Of SpectrumPeak) = New SpectrumEqualityComparer()
 
     Private ReadOnly map As Dictionary(Of LbmClass, List(Of ILipidSpectrumGenerator)) = New Dictionary(Of LbmClass, List(Of ILipidSpectrumGenerator))()
     Public Sub Add(lipidClass As LbmClass, generator As ILipidSpectrumGenerator)

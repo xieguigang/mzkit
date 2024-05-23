@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6e70adad4a28762bb54bd6f4da81ca50, E:/mzkit/src/mzmath/Oligonucleotide_MS//MS2_Spectrum_Matcher/Fragmentation.vb"
+﻿#Region "Microsoft.VisualBasic::6e70adad4a28762bb54bd6f4da81ca50, mzmath\Oligonucleotide_MS\MS2_Spectrum_Matcher\Fragmentation.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 48
-    '    Code Lines: 40
-    ' Comment Lines: 3
-    '   Blank Lines: 5
+    '    Code Lines: 40 (83.33%)
+    ' Comment Lines: 3 (6.25%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 5 (10.42%)
     '     File Size: 1.79 KB
 
 

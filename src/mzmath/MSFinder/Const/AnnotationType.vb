@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a2ca02a8eae8938e7053a5fff317e902, E:/mzkit/src/mzmath/ms2_math-core//Ms1/IROI.vb"
+﻿#Region "Microsoft.VisualBasic::251934fb098d5a008385e666e187d3f2, mzmath\MSFinder\Const\AnnotationType.vb"
 
     ' Author:
     ' 
@@ -37,42 +37,30 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 23
-    '    Code Lines: 6
-    ' Comment Lines: 13
-    '   Blank Lines: 4
-    '     File Size: 620 B
-
-
-    '     Interface IROI
+    '   Total Lines: 6
+    '    Code Lines: 6 (100.00%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
     ' 
-    '         Properties: rtmax, rtmin
+    '   Blank Lines: 0 (0.00%)
+    '     File Size: 89 B
+
+
+    ' Enum AnnotationType
+    ' 
+    '     Adduct, Isotope, Precursor, Product
+    ' 
+    '  
+    ' 
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
-Namespace Chromatogram
-
-    ''' <summary>
-    ''' [rtmin, rtmax] a ROI region within a specific RT range
-    ''' 
-    ''' 一个ROI区域就是色谱图上面的一个时间范围内的色谱峰数据
-    ''' </summary>
-    Public Interface IROI
-
-        ''' <summary>
-        ''' 色谱图区域范围的时间下限
-        ''' </summary>
-        ''' <returns></returns>
-        Property rtmin As Double
-
-        ''' <summary>
-        ''' 色谱图区域范围的时间上限
-        ''' </summary>
-        ''' <returns></returns>
-        Property rtmax As Double
-
-    End Interface
-End Namespace
+Public Enum AnnotationType
+    Precursor
+    Product
+    Isotope
+    Adduct
+End Enum

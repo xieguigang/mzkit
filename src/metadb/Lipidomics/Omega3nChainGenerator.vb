@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4a6ff212abfffe7695ee073b90ac720b, E:/mzkit/src/metadb/Lipidomics//Omega3nChainGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::4a6ff212abfffe7695ee073b90ac720b, metadb\Lipidomics\Omega3nChainGenerator.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 233
-    '    Code Lines: 212
-    ' Comment Lines: 0
-    '   Blank Lines: 21
+    '    Code Lines: 212 (90.99%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 21 (9.01%)
     '     File Size: 11.89 KB
 
 

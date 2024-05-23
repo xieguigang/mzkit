@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::735b2d3f20a2c6ee489fd6a360e0732b, E:/mzkit/src/mzmath/TargetedMetabolomics//MRM/IsomerismIonPairs.vb"
+﻿#Region "Microsoft.VisualBasic::735b2d3f20a2c6ee489fd6a360e0732b, mzmath\TargetedMetabolomics\MRM\IsomerismIonPairs.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 64
-    '    Code Lines: 45
-    ' Comment Lines: 8
-    '   Blank Lines: 11
+    '    Code Lines: 45 (70.31%)
+    ' Comment Lines: 8 (12.50%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 11 (17.19%)
     '     File Size: 2.10 KB
 
 

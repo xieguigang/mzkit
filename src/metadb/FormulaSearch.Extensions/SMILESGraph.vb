@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8e5fe5089de0cda9d0f335493588680a, E:/mzkit/src/metadb/FormulaSearch.Extensions//SMILESGraph.vb"
+﻿#Region "Microsoft.VisualBasic::8e5fe5089de0cda9d0f335493588680a, metadb\FormulaSearch.Extensions\SMILESGraph.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 37
-    '    Code Lines: 26
-    ' Comment Lines: 5
-    '   Blank Lines: 6
+    '    Code Lines: 26 (70.27%)
+    ' Comment Lines: 5 (13.51%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 6 (16.22%)
     '     File Size: 1.28 KB
 
 

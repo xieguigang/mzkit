@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7f4791419fc86091299cf295a716fc31, E:/mzkit/src/assembly/mzPackExtensions//MZWork/Raw.vb"
+﻿#Region "Microsoft.VisualBasic::7f4791419fc86091299cf295a716fc31, assembly\mzPackExtensions\MZWork\Raw.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 235
-    '    Code Lines: 164
-    ' Comment Lines: 31
-    '   Blank Lines: 40
+    '    Code Lines: 164 (69.79%)
+    ' Comment Lines: 31 (13.19%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 40 (17.02%)
     '     File Size: 8.07 KB
 
 

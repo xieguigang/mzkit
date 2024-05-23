@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d964571334d960cf98e598afc1e7deac, E:/mzkit/src/metadb/Massbank//Public/TMIC/HMDB/Tables/NameValue.vb"
+﻿#Region "Microsoft.VisualBasic::d964571334d960cf98e598afc1e7deac, metadb\Massbank\Public\TMIC\HMDB\Tables\NameValue.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 29
-    '    Code Lines: 23
-    ' Comment Lines: 0
-    '   Blank Lines: 6
+    '    Code Lines: 23 (79.31%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 6 (20.69%)
     '     File Size: 1.02 KB
 
 

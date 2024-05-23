@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cb45025a24491fdab0799a86a618a2f8, E:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/EtherPESpectrumGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::857b7b84f3a714de955b29a8055240f1, metadb\Lipidomics\SpectrumGenerator\EtherPESpectrumGenerator.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 175
-    '    Code Lines: 149
-    ' Comment Lines: 3
-    '   Blank Lines: 23
-    '     File Size: 10.16 KB
+    '   Total Lines: 174
+    '    Code Lines: 148 (85.06%)
+    ' Comment Lines: 3 (1.72%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 23 (13.22%)
+    '     File Size: 10.05 KB
 
 
     ' Class EtherPESpectrumGenerator
@@ -226,6 +228,5 @@ New SpectrumPeak(adduct.ConvertToMz(lipid.Mass - acylChain.Mass - H2O), 30.0R, $
 }}
     End Function
 
-    Private Shared ReadOnly comparer As IEqualityComparer(Of SpectrumPeak) = New SpectrumEqualityComparer()
 
 End Class

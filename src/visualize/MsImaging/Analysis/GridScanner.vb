@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::80b5b84b724bc33e682f7c1b3816cd14, E:/mzkit/src/visualize/MsImaging//Analysis/GridScanner.vb"
+﻿#Region "Microsoft.VisualBasic::80b5b84b724bc33e682f7c1b3816cd14, visualize\MsImaging\Analysis\GridScanner.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 270
-    '    Code Lines: 183
-    ' Comment Lines: 45
-    '   Blank Lines: 42
+    '    Code Lines: 183 (67.78%)
+    ' Comment Lines: 45 (16.67%)
+    '    - Xml Docs: 46.67%
+    ' 
+    '   Blank Lines: 42 (15.56%)
     '     File Size: 10.99 KB
 
 

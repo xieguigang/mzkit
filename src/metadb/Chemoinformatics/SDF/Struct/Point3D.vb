@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4a0b7efde7b00a0ffa7eb35475e957c4, E:/mzkit/src/metadb/Chemoinformatics//SDF/Struct/Point3D.vb"
+﻿#Region "Microsoft.VisualBasic::4a0b7efde7b00a0ffa7eb35475e957c4, metadb\Chemoinformatics\SDF\Struct\Point3D.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 10
-    '    Code Lines: 7
-    ' Comment Lines: 0
-    '   Blank Lines: 3
+    '    Code Lines: 7 (70.00%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 3 (30.00%)
     '     File Size: 193 B
 
 

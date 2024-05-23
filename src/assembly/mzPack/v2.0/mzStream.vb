@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2e04355e4db6919de0595402395642db, E:/mzkit/src/assembly/mzPack//v2.0/mzStream.vb"
+﻿#Region "Microsoft.VisualBasic::2e04355e4db6919de0595402395642db, assembly\mzPack\v2.0\mzStream.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 394
-    '    Code Lines: 282
-    ' Comment Lines: 47
-    '   Blank Lines: 65
+    '    Code Lines: 282 (71.57%)
+    ' Comment Lines: 47 (11.93%)
+    '    - Xml Docs: 68.09%
+    ' 
+    '   Blank Lines: 65 (16.50%)
     '     File Size: 14.12 KB
 
 

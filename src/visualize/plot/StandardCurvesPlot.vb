@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2b6be0fd7cf8ea1475beba2d56b2a111, E:/mzkit/src/visualize/plot//StandardCurvesPlot.vb"
+﻿#Region "Microsoft.VisualBasic::2b6be0fd7cf8ea1475beba2d56b2a111, visualize\plot\StandardCurvesPlot.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 68
-    '    Code Lines: 63
-    ' Comment Lines: 2
-    '   Blank Lines: 3
+    '    Code Lines: 63 (92.65%)
+    ' Comment Lines: 2 (2.94%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 3 (4.41%)
     '     File Size: 3.32 KB
 
 

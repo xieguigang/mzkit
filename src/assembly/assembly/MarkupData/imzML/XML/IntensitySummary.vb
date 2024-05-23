@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2117cc4889ff24af58cf93b86cda8e49, E:/mzkit/src/assembly/assembly//MarkupData/imzML/XML/IntensitySummary.vb"
+﻿#Region "Microsoft.VisualBasic::2117cc4889ff24af58cf93b86cda8e49, assembly\assembly\MarkupData\imzML\XML\IntensitySummary.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 21
-    '    Code Lines: 8
-    ' Comment Lines: 12
-    '   Blank Lines: 1
+    '    Code Lines: 8 (38.10%)
+    ' Comment Lines: 12 (57.14%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 1 (4.76%)
     '     File Size: 548 B
 
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f3eb8947ee1c704aef090c347faf996d, E:/mzkit/src/metadb/Lipidomics//MsCharacterization/GM3EadMsCharacterization.vb"
+﻿#Region "Microsoft.VisualBasic::f3eb8947ee1c704aef090c347faf996d, metadb\Lipidomics\MsCharacterization\GM3EadMsCharacterization.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 9
-    '    Code Lines: 8
-    ' Comment Lines: 0
-    '   Blank Lines: 1
+    '    Code Lines: 8 (88.89%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 1 (11.11%)
     '     File Size: 582 B
 
 

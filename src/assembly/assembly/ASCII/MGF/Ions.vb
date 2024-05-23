@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c3ff3864fc011e72f6abde22bec0caf3, E:/mzkit/src/assembly/assembly//ASCII/MGF/Ions.vb"
+﻿#Region "Microsoft.VisualBasic::c3ff3864fc011e72f6abde22bec0caf3, assembly\assembly\ASCII\MGF\Ions.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 109
-    '    Code Lines: 55
-    ' Comment Lines: 42
-    '   Blank Lines: 12
+    '    Code Lines: 55 (50.46%)
+    ' Comment Lines: 42 (38.53%)
+    '    - Xml Docs: 95.24%
+    ' 
+    '   Blank Lines: 12 (11.01%)
     '     File Size: 3.50 KB
 
 

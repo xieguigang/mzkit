@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::95c446f8ad64ee51af6404632243ca37, E:/mzkit/src/mzmath/SingleCells//File/MatrixWriter/MatrixWriter.vb"
+﻿#Region "Microsoft.VisualBasic::95c446f8ad64ee51af6404632243ca37, mzmath\SingleCells\File\MatrixWriter\MatrixWriter.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 112
-    '    Code Lines: 58
-    ' Comment Lines: 34
-    '   Blank Lines: 20
+    '    Code Lines: 58 (51.79%)
+    ' Comment Lines: 34 (30.36%)
+    '    - Xml Docs: 82.35%
+    ' 
+    '   Blank Lines: 20 (17.86%)
     '     File Size: 3.48 KB
 
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::606e862455f2ec47fa03ee08be3e0ecf, E:/mzkit/src/mzmath/ms2_math-core//Chromatogram/ChromXType.vb"
+﻿#Region "Microsoft.VisualBasic::606e862455f2ec47fa03ee08be3e0ecf, mzmath\ms2_math-core\Chromatogram\ChromXType.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 261
-    '    Code Lines: 201
-    ' Comment Lines: 24
-    '   Blank Lines: 36
+    '    Code Lines: 201 (77.01%)
+    ' Comment Lines: 24 (9.20%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 36 (13.79%)
     '     File Size: 9.33 KB
 
 

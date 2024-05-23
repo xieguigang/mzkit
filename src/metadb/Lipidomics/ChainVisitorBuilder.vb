@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::59ed6756cb09da450204681ce41930b3, E:/mzkit/src/metadb/Lipidomics//ChainVisitorBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::59ed6756cb09da450204681ce41930b3, metadb\Lipidomics\ChainVisitorBuilder.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 37
-    '    Code Lines: 31
-    ' Comment Lines: 0
-    '   Blank Lines: 6
+    '    Code Lines: 31 (83.78%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 6 (16.22%)
     '     File Size: 2.05 KB
 
 

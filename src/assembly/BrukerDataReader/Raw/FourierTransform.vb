@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2cfcd702ed87b0d6e37e29ebe1f97dbe, E:/mzkit/src/assembly/BrukerDataReader//Raw/FourierTransform.vb"
+﻿#Region "Microsoft.VisualBasic::2cfcd702ed87b0d6e37e29ebe1f97dbe, assembly\BrukerDataReader\Raw\FourierTransform.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 127
-    '    Code Lines: 92
-    ' Comment Lines: 13
-    '   Blank Lines: 22
+    '    Code Lines: 92 (72.44%)
+    ' Comment Lines: 13 (10.24%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 22 (17.32%)
     '     File Size: 3.94 KB
 
 

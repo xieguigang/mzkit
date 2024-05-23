@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6fb02a313751062fc2fd279d2ca5de9b, E:/mzkit/src/assembly/SignalReader//ChromatogramReader.vb"
+﻿#Region "Microsoft.VisualBasic::6fb02a313751062fc2fd279d2ca5de9b, assembly\SignalReader\ChromatogramReader.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 151
-    '    Code Lines: 111
-    ' Comment Lines: 22
-    '   Blank Lines: 18
+    '    Code Lines: 111 (73.51%)
+    ' Comment Lines: 22 (14.57%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 18 (11.92%)
     '     File Size: 6.65 KB
 
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0caccca3f6ba573b8cf350085bf4d96e, E:/mzkit/src/metadna/metaDNA//Models/UnknownSet.vb"
+﻿#Region "Microsoft.VisualBasic::0caccca3f6ba573b8cf350085bf4d96e, metadna\metaDNA\Models\UnknownSet.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 196
-    '    Code Lines: 136
-    ' Comment Lines: 33
-    '   Blank Lines: 27
+    '    Code Lines: 136 (69.39%)
+    ' Comment Lines: 33 (16.84%)
+    '    - Xml Docs: 93.94%
+    ' 
+    '   Blank Lines: 27 (13.78%)
     '     File Size: 7.12 KB
 
 

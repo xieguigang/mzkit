@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2aa85d3ef3b34560586d89c88097401a, E:/mzkit/src/assembly/assembly//ASCII/MSL/MSLIon.vb"
+﻿#Region "Microsoft.VisualBasic::2aa85d3ef3b34560586d89c88097401a, assembly\assembly\ASCII\MSL\MSLIon.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 30
-    '    Code Lines: 21
-    ' Comment Lines: 4
-    '   Blank Lines: 5
+    '    Code Lines: 21 (70.00%)
+    ' Comment Lines: 4 (13.33%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 5 (16.67%)
     '     File Size: 1.22 KB
 
 

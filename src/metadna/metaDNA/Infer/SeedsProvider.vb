@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2bc444ad872aa452758bbc63d4347d27, E:/mzkit/src/metadna/metaDNA//Infer/SeedsProvider.vb"
+﻿#Region "Microsoft.VisualBasic::2bc444ad872aa452758bbc63d4347d27, metadna\metaDNA\Infer\SeedsProvider.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 151
-    '    Code Lines: 128
-    ' Comment Lines: 1
-    '   Blank Lines: 22
+    '    Code Lines: 128 (84.77%)
+    ' Comment Lines: 1 (0.66%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 22 (14.57%)
     '     File Size: 6.42 KB
 
 

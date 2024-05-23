@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8e3193edb715bfb4da8962ac8ee75d4f, E:/mzkit/src/assembly/Comprehensive//MsImaging/MergeSliders/MergeLinear.vb"
+﻿#Region "Microsoft.VisualBasic::8e3193edb715bfb4da8962ac8ee75d4f, assembly\Comprehensive\MsImaging\MergeSliders\MergeLinear.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 138
-    '    Code Lines: 93
-    ' Comment Lines: 18
-    '   Blank Lines: 27
+    '    Code Lines: 93 (67.39%)
+    ' Comment Lines: 18 (13.04%)
+    '    - Xml Docs: 16.67%
+    ' 
+    '   Blank Lines: 27 (19.57%)
     '     File Size: 5.42 KB
 
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f427165eb1a764394544a9662052b54b, E:/mzkit/src/assembly/assembly//MarkupData/imzML/XML/ScanData/iPixelIntensity.vb"
+﻿#Region "Microsoft.VisualBasic::f427165eb1a764394544a9662052b54b, assembly\assembly\MarkupData\imzML\XML\ScanData\iPixelIntensity.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 45
-    '    Code Lines: 13
-    ' Comment Lines: 27
-    '   Blank Lines: 5
+    '    Code Lines: 13 (28.89%)
+    ' Comment Lines: 27 (60.00%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 5 (11.11%)
     '     File Size: 1.44 KB
 
 

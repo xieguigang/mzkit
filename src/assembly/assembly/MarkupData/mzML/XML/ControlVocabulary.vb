@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2a08ef3143cea20fed1f9c43632f23dc, E:/mzkit/src/assembly/assembly//MarkupData/mzML/XML/ControlVocabulary.vb"
+﻿#Region "Microsoft.VisualBasic::2a08ef3143cea20fed1f9c43632f23dc, assembly\assembly\MarkupData\mzML\XML\ControlVocabulary.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 114
-    '    Code Lines: 65
-    ' Comment Lines: 28
-    '   Blank Lines: 21
+    '    Code Lines: 65 (57.02%)
+    ' Comment Lines: 28 (24.56%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 21 (18.42%)
     '     File Size: 4.61 KB
 
 

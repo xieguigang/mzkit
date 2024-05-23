@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fd6bef9cff99171f7c8733b67d266e9a, E:/mzkit/src/mzmath/SingleCells//Deconvolute/PeakMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::fd6bef9cff99171f7c8733b67d266e9a, mzmath\SingleCells\Deconvolute\PeakMatrix.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 102
-    '    Code Lines: 72
-    ' Comment Lines: 16
-    '   Blank Lines: 14
+    '    Code Lines: 72 (70.59%)
+    ' Comment Lines: 16 (15.69%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 14 (13.73%)
     '     File Size: 3.90 KB
 
 

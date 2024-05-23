@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b720cf515f8c80dfb067b78dbcabc96d, E:/mzkit/src/assembly/SignalReader//UVSpectroscopyReader.vb"
+﻿#Region "Microsoft.VisualBasic::b720cf515f8c80dfb067b78dbcabc96d, assembly\SignalReader\UVSpectroscopyReader.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 140
-    '    Code Lines: 99
-    ' Comment Lines: 29
-    '   Blank Lines: 12
+    '    Code Lines: 99 (70.71%)
+    ' Comment Lines: 29 (20.71%)
+    '    - Xml Docs: 89.66%
+    ' 
+    '   Blank Lines: 12 (8.57%)
     '     File Size: 5.99 KB
 
 

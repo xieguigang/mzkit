@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::86bcd7e299768096b27c19ad63fb50c1, E:/mzkit/src/visualize/MsImaging//Plot/MSIPlot.vb"
+﻿#Region "Microsoft.VisualBasic::86bcd7e299768096b27c19ad63fb50c1, visualize\MsImaging\Plot\MSIPlot.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 111
-    '    Code Lines: 94
-    ' Comment Lines: 1
-    '   Blank Lines: 16
+    '    Code Lines: 94 (84.68%)
+    ' Comment Lines: 1 (0.90%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 16 (14.41%)
     '     File Size: 4.91 KB
 
 

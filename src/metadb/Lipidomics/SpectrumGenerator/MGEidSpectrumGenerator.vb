@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3b8f0173d091a820b4100cecd66982a4, E:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/MGEidSpectrumGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::828dade20b36da6507f559f3c86d3213, metadb\Lipidomics\SpectrumGenerator\MGEidSpectrumGenerator.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 143
-    '    Code Lines: 119
-    ' Comment Lines: 6
-    '   Blank Lines: 18
-    '     File Size: 7.74 KB
+    '   Total Lines: 141
+    '    Code Lines: 118 (83.69%)
+    ' Comment Lines: 6 (4.26%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 17 (12.06%)
+    '     File Size: 7.63 KB
 
 
     ' Class MGEidSpectrumGenerator
@@ -193,7 +195,5 @@ New SpectrumPeak(adduct.ConvertToMz(lipid.Mass), 999.0R, "Precursor") With {
         End If
         Return spectrum.ToArray()
     End Function
-
-    Private Shared ReadOnly comparer As IEqualityComparer(Of SpectrumPeak) = New SpectrumEqualityComparer()
 
 End Class

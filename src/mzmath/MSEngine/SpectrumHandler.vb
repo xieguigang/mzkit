@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::03d3b29bc455ff2320d7bad16e3583a9, E:/mzkit/src/mzmath/MSEngine//SpectrumHandler.vb"
+﻿#Region "Microsoft.VisualBasic::03d3b29bc455ff2320d7bad16e3583a9, mzmath\MSEngine\SpectrumHandler.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 404
-    '    Code Lines: 346
-    ' Comment Lines: 9
-    '   Blank Lines: 49
+    '    Code Lines: 346 (85.64%)
+    ' Comment Lines: 9 (2.23%)
+    '    - Xml Docs: 44.44%
+    ' 
+    '   Blank Lines: 49 (12.13%)
     '     File Size: 19.66 KB
 
 

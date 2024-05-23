@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::75e718791d342bca63bd94313bf07cd5, E:/mzkit/src/assembly/assembly//MarkupData/XmlSeek.vb"
+﻿#Region "Microsoft.VisualBasic::75e718791d342bca63bd94313bf07cd5, assembly\assembly\MarkupData\XmlSeek.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 176
-    '    Code Lines: 134
-    ' Comment Lines: 13
-    '   Blank Lines: 29
+    '    Code Lines: 134 (76.14%)
+    ' Comment Lines: 13 (7.39%)
+    '    - Xml Docs: 23.08%
+    ' 
+    '   Blank Lines: 29 (16.48%)
     '     File Size: 7.28 KB
 
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9f93a8ed12ae3c7febbafe5a60e69ee6, E:/mzkit/src/mzmath/ms2_math-core//Ms1/PolarityData.vb"
+﻿#Region "Microsoft.VisualBasic::86fab24cf6a0e479de044f741bee9923, mzmath\ms2_math-core\Ms1\PolarityData.vb"
 
     ' Author:
     ' 
@@ -37,17 +37,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 35
-    '    Code Lines: 30
-    ' Comment Lines: 0
-    '   Blank Lines: 5
-    '     File Size: 1015 B
+    '   Total Lines: 56
+    '    Code Lines: 44 (78.57%)
+    ' Comment Lines: 4 (7.14%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 8 (14.29%)
+    '     File Size: 1.50 KB
 
 
     ' Class PolarityData
     ' 
     '     Properties: negative, positive
     ' 
+    '     Constructor: (+2 Overloads) Sub New
     '     Function: ToString
     ' 
     ' /********************************************************************************/
@@ -56,6 +59,10 @@
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 
+''' <summary>
+''' tuple data model of the polarity data
+''' </summary>
+''' <typeparam name="T"></typeparam>
 Public Class PolarityData(Of T)
 
     Public Property positive As T
@@ -63,20 +70,37 @@ Public Class PolarityData(Of T)
 
     Default Public Property Item(ionMode As String) As T
         Get
-            If Provider.ParseIonMode(ionMode) = 1 Then
+            Return Me(Provider.ParseIonMode(ionMode))
+        End Get
+        Set
+            Me(Provider.ParseIonMode(ionMode)) = Value
+        End Set
+    End Property
+
+    Default Public Property Item(ionMode As IonModes) As T
+        Get
+            If ionMode = IonModes.Positive Then
                 Return positive
             Else
                 Return negative
             End If
         End Get
-        Set
-            If Provider.ParseIonMode(ionMode) = 1 Then
-                positive = Value
+        Set(value As T)
+            If ionMode = IonModes.Positive Then
+                positive = value
             Else
-                negative = Value
+                negative = value
             End If
         End Set
     End Property
+
+    Sub New()
+    End Sub
+
+    Sub New(pos As T, neg As T)
+        positive = pos
+        negative = neg
+    End Sub
 
     Public Overrides Function ToString() As String
         Return $"(+) {positive} / (-) {negative}"

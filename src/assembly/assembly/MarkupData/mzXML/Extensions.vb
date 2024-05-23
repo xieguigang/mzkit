@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::13a18201da2499df908437f048e41d9f, E:/mzkit/src/assembly/assembly//MarkupData/mzXML/Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::13a18201da2499df908437f048e41d9f, assembly\assembly\MarkupData\mzXML\Extensions.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 105
-    '    Code Lines: 59
-    ' Comment Lines: 32
-    '   Blank Lines: 14
+    '    Code Lines: 59 (56.19%)
+    ' Comment Lines: 32 (30.48%)
+    '    - Xml Docs: 90.62%
+    ' 
+    '   Blank Lines: 14 (13.33%)
     '     File Size: 4.00 KB
 
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8ba6802d344c68a6b8cfa81576d44e2a, E:/mzkit/src/mzmath/ms2_math-core//Ms1/ms1.vb"
+﻿#Region "Microsoft.VisualBasic::ca3e790e080502e5c8e908ecfa38f813, mzmath\ms2_math-core\Ms1\ms1.vb"
 
     ' Author:
     ' 
@@ -38,10 +38,12 @@
     ' Code Statistics:
 
     '   Total Lines: 34
-    '    Code Lines: 17
-    ' Comment Lines: 10
-    '   Blank Lines: 7
-    '     File Size: 1.08 KB
+    '    Code Lines: 17 (50.00%)
+    ' Comment Lines: 10 (29.41%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 7 (20.59%)
+    '     File Size: 1.07 KB
 
 
     ' Class Ms1Feature
@@ -61,7 +63,7 @@
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
-Imports stdNum = System.Math
+Imports std = System.Math
 
 ''' <summary>
 ''' The ms1 peak
@@ -74,7 +76,7 @@ Public Class Ms1Feature : Implements INamedValue, IMs1, IRetentionTime
     Public Property rt As Double Implements IMs1.rt
 
     Public Overrides Function ToString() As String
-        Return $"{stdNum.Round(mz, 4)}@{rt}"
+        Return $"{std.Round(mz, 4)}@{rt}"
     End Function
 End Class
 

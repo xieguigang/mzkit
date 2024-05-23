@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::56a7295749470c474f2a8abce7b1fa6d, E:/mzkit/src/mzmath/MSFinder//FormulaGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::c0e8a22407098085b3ff239313ba0842, mzmath\MSFinder\FormulaGenerator.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 981
-    '    Code Lines: 600
-    ' Comment Lines: 197
-    '   Blank Lines: 184
-    '     File Size: 58.77 KB
+    '   Total Lines: 985
+    '    Code Lines: 603 (61.22%)
+    ' Comment Lines: 197 (20.00%)
+    '    - Xml Docs: 17.26%
+    ' 
+    '   Blank Lines: 185 (18.78%)
+    '     File Size: 58.90 KB
 
 
     ' Class FormulaGenerator
@@ -180,6 +182,7 @@ Public Class FormulaGenerator
         End Select
 
         Me.maxMassFoldChange = Me.hMaxFold * hMass
+
         If fCheck Then Me.maxMassFoldChange += Me.fMaxFold * fMass
         If clCheck Then Me.maxMassFoldChange += Me.clMaxFold * clMass
         If brCheck Then Me.maxMassFoldChange += Me.brMaxFold * brMass
@@ -200,7 +203,10 @@ Public Class FormulaGenerator
     ''' <param name="rawData"></param>
     ''' <param name="adductIon"></param>
     ''' <returns></returns>
-    Public Function GetFormulaCandidateList(productIonDB As List(Of ProductIon), neutralLossDB As List(Of NeutralLoss), existFormulaDB As List(Of ExistFormulaQuery), param As AnalysisParamOfMsfinder, mass As Double, m1Intensity As Double, m2Intensity As Double, rawData As RawData, adductIon As AdductIon, isotopeCheck As Boolean) As List(Of FormulaResult)
+    Public Function GetFormulaCandidateList(productIonDB As List(Of ProductIon), neutralLossDB As List(Of NeutralLoss), existFormulaDB As List(Of ExistFormulaQuery),
+                                            param As AnalysisParamOfMsfinder,
+                                            mass As Double, m1Intensity As Double, m2Intensity As Double,
+                                            rawData As RawData, adductIon As AdductIon, isotopeCheck As Boolean) As List(Of FormulaResult)
 
         'param set
         Dim ms1Tol = param.Mass1Tolerance

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::de9cb0c2cfb2c3dd45037d58fe9d2621, E:/mzkit/src/mzmath/ms2_math-core//CollisionType.vb"
+﻿#Region "Microsoft.VisualBasic::8df98d85659269d403e443ca420630f6, mzmath\ms2_math-core\Spectra\ISpectrumScanData.vb"
 
     ' Author:
     ' 
@@ -37,32 +37,39 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 9
-    '    Code Lines: 9
-    ' Comment Lines: 0
-    '   Blank Lines: 0
-    '     File Size: 103 B
+    '   Total Lines: 18
+    '    Code Lines: 10 (55.56%)
+    ' Comment Lines: 4 (22.22%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 4 (22.22%)
+    '     File Size: 665 B
 
 
-    ' Enum CollisionType
+    '     Interface ISpectrumScanData
     ' 
-    '     CID, ECD, EID, EIEIO, HCD
-    '     HotECD, OAD
-    ' 
-    '  
-    ' 
+    '         Properties: ActivationMethod, Charge, CollisionEnergy, Polarity
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
-Public Enum CollisionType
-    CID
-    HCD
-    EIEIO
-    ECD
-    HotECD
-    EID
-    OAD
-End Enum
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+
+Namespace Spectra
+
+    ''' <summary>
+    ''' an abstract spectrum source data model which is describ the source data model 
+    ''' from the assembly rawdata file.
+    ''' </summary>
+    Public Interface ISpectrumScanData : Inherits IMs1Scan, IReadOnlyId, ISpectrumVector
+
+        ReadOnly Property ActivationMethod As ActivationMethods
+        ReadOnly Property CollisionEnergy As Double
+        ReadOnly Property Charge As Integer
+        ReadOnly Property Polarity As IonModes
+
+    End Interface
+End Namespace

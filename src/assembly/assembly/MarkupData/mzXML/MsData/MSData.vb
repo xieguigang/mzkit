@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::210565aa034a4f531af861f1ce5cf44e, E:/mzkit/src/assembly/assembly//MarkupData/mzXML/MsData/MSData.vb"
+﻿#Region "Microsoft.VisualBasic::210565aa034a4f531af861f1ce5cf44e, assembly\assembly\MarkupData\mzXML\MsData\MSData.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 29
-    '    Code Lines: 22
-    ' Comment Lines: 0
-    '   Blank Lines: 7
+    '    Code Lines: 22 (75.86%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 7 (24.14%)
     '     File Size: 997 B
 
 

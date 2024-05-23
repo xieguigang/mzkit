@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::594c055a47562804db879c15ddcaa438, E:/mzkit/src/assembly/assembly//UnifyReader/IDataReader.vb"
+﻿#Region "Microsoft.VisualBasic::a711379c33299d77e7b582ccd43bf12e, assembly\assembly\UnifyReader\IDataReader.vb"
 
     ' Author:
     ' 
@@ -38,10 +38,12 @@
     ' Code Statistics:
 
     '   Total Lines: 24
-    '    Code Lines: 19
-    ' Comment Lines: 0
-    '   Blank Lines: 5
-    '     File Size: 961 B
+    '    Code Lines: 19 (79.17%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 5 (20.83%)
+    '     File Size: 950 B
 
 
     '     Interface IDataReader
@@ -55,7 +57,7 @@
 
 #End Region
 
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData
+Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 
 Namespace DataReader

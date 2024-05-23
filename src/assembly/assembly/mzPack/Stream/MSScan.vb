@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5efc70b009f7fcb7367a7ca63e83d6cb, E:/mzkit/src/assembly/assembly//mzPack/Stream/MSScan.vb"
+﻿#Region "Microsoft.VisualBasic::50a3373014ff1e9a9695441ece7ac136, assembly\assembly\mzPack\Stream\MSScan.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 74
-    '    Code Lines: 53
-    ' Comment Lines: 10
-    '   Blank Lines: 11
-    '     File Size: 2.66 KB
+    '   Total Lines: 88
+    '    Code Lines: 54 (61.36%)
+    ' Comment Lines: 22 (25.00%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 12 (13.64%)
+    '     File Size: 3.17 KB
 
 
     '     Class MSScan
@@ -65,14 +67,28 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 
 Namespace mzData.mzWebCache
 
+    ''' <summary>
+    ''' an abstract spectrum scan data model with unique reference id,
+    ''' scan time and its spectrum data.
+    ''' </summary>
     Public Class MSScan : Inherits PeakList
         Implements IRetentionTime
         Implements INamedValue
         Implements IMsScan
         Implements ISpectrum
+        Implements IReadOnlyId
 
+        ''' <summary>
+        ''' the scan time of current spectrum scan data object.
+        ''' </summary>
+        ''' <returns></returns>
         Public Overridable Property rt As Double Implements IRetentionTime.rt
-        Public Property scan_id As String Implements INamedValue.Key
+
+        ''' <summary>
+        ''' the unique reference id of current spectrum scan data object
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property scan_id As String Implements INamedValue.Key, IReadOnlyId.Identity
 
         Private Sub SetIons(ions As IEnumerable(Of ms2)) Implements ISpectrum.SetIons
             With ions.ToArray

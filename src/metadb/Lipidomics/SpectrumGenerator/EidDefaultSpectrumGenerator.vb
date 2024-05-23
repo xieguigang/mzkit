@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::248d34b95533ea0bd932dc2b8f93ef77, E:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/EidDefaultSpectrumGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::a58566a17ba34f9c29e1dc86ed624678, metadb\Lipidomics\SpectrumGenerator\EidDefaultSpectrumGenerator.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 50
-    '    Code Lines: 42
-    ' Comment Lines: 0
-    '   Blank Lines: 8
-    '     File Size: 2.57 KB
+    '   Total Lines: 47
+    '    Code Lines: 41 (87.23%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 6 (12.77%)
+    '     File Size: 2.46 KB
 
 
     ' Class EidDefaultSpectrumGenerator
@@ -98,8 +100,5 @@ Public Class EidDefaultSpectrumGenerator
 .Charge = adduct.ChargeNumber
 }
     End Function
-
-    Private Shared ReadOnly comparer As IEqualityComparer(Of SpectrumPeak) = New SpectrumEqualityComparer()
-
 
 End Class

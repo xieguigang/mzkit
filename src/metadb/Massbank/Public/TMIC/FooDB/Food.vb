@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a9f1b6867acad5c315f8947a8827ef28, E:/mzkit/src/metadb/Massbank//Public/TMIC/FooDB/Food.vb"
+﻿#Region "Microsoft.VisualBasic::a9f1b6867acad5c315f8947a8827ef28, metadb\Massbank\Public\TMIC\FooDB\Food.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 37
-    '    Code Lines: 30
-    ' Comment Lines: 0
-    '   Blank Lines: 7
+    '    Code Lines: 30 (81.08%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 7 (18.92%)
     '     File Size: 1.25 KB
 
 

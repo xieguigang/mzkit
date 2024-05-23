@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::84ef33ed67610207823e2b4984b2fafe, E:/mzkit/Rscript/Library/mzkit_app/src/mzkit//math/TestFormulaSymbolLang.vb"
+﻿#Region "Microsoft.VisualBasic::84ef33ed67610207823e2b4984b2fafe, Rscript\Library\mzkit_app\src\mzkit\math\TestFormulaSymbolLang.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 19
-    '    Code Lines: 15
-    ' Comment Lines: 0
-    '   Blank Lines: 4
+    '    Code Lines: 15 (78.95%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 4 (21.05%)
     '     File Size: 571 B
 
 

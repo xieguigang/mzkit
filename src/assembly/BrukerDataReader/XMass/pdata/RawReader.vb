@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::65088d934fe21097805ea4627c177790, E:/mzkit/src/assembly/BrukerDataReader//XMass/pdata/RawReader.vb"
+﻿#Region "Microsoft.VisualBasic::65088d934fe21097805ea4627c177790, assembly\BrukerDataReader\XMass\pdata\RawReader.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 6
-    '    Code Lines: 4
-    ' Comment Lines: 0
-    '   Blank Lines: 2
+    '    Code Lines: 4 (66.67%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 2 (33.33%)
     '     File Size: 77 B
 
 

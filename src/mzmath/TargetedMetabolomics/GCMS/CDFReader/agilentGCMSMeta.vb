@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2d24c07a115535c5f96d1f9809877d3b, E:/mzkit/src/mzmath/TargetedMetabolomics//GCMS/CDFReader/agilentGCMSMeta.vb"
+﻿#Region "Microsoft.VisualBasic::2d24c07a115535c5f96d1f9809877d3b, mzmath\TargetedMetabolomics\GCMS\CDFReader\agilentGCMSMeta.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 52
-    '    Code Lines: 46
-    ' Comment Lines: 0
-    '   Blank Lines: 6
+    '    Code Lines: 46 (88.46%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 6 (11.54%)
     '     File Size: 2.23 KB
 
 

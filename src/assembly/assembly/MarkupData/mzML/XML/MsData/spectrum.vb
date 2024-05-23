@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cf35688cef8e3ac627735db40c2dc348, E:/mzkit/src/assembly/assembly//MarkupData/mzML/XML/MsData/spectrum.vb"
+﻿#Region "Microsoft.VisualBasic::cf35688cef8e3ac627735db40c2dc348, assembly\assembly\MarkupData\mzML\XML\MsData\spectrum.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 186
-    '    Code Lines: 139
-    ' Comment Lines: 21
-    '   Blank Lines: 26
+    '    Code Lines: 139 (74.73%)
+    ' Comment Lines: 21 (11.29%)
+    '    - Xml Docs: 85.71%
+    ' 
+    '   Blank Lines: 26 (13.98%)
     '     File Size: 7.05 KB
 
 
@@ -126,7 +128,14 @@ Namespace MarkupData.mzML
         ''' <returns></returns>
         Public ReadOnly Property scan_time As Double
             Get
-                With scanList.scans(0).cvParams.KeyItem("scan start time")
+                Dim rtParams = scanList.scans(0).cvParams
+
+                ' rt parameter maybe missing in lidms or maldi-ms
+                If rtParams Is Nothing Then
+                    Return 0
+                End If
+
+                With rtParams.KeyItem("scan start time")
                     Dim time# = Val(.value)
 
                     If .unitName = "second" Then

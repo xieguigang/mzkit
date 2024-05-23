@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7d25d6a1458abbd3627606f9c38f1542, E:/mzkit/src/metadb/KNApSAcK//Web/InformationQuery.vb"
+﻿#Region "Microsoft.VisualBasic::7d25d6a1458abbd3627606f9c38f1542, metadb\KNApSAcK\Web\InformationQuery.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 85
-    '    Code Lines: 73
-    ' Comment Lines: 0
-    '   Blank Lines: 12
+    '    Code Lines: 73 (85.88%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 12 (14.12%)
     '     File Size: 3.41 KB
 
 

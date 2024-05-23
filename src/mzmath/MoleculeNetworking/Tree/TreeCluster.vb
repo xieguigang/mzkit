@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f0329227b7f9809af8f3bdeab5eb60ec, E:/mzkit/src/mzmath/MoleculeNetworking//Tree/TreeCluster.vb"
+﻿#Region "Microsoft.VisualBasic::f0329227b7f9809af8f3bdeab5eb60ec, mzmath\MoleculeNetworking\Tree\TreeCluster.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 112
-    '    Code Lines: 81
-    ' Comment Lines: 13
-    '   Blank Lines: 18
+    '    Code Lines: 81 (72.32%)
+    ' Comment Lines: 13 (11.61%)
+    '    - Xml Docs: 76.92%
+    ' 
+    '   Blank Lines: 18 (16.07%)
     '     File Size: 3.93 KB
 
 

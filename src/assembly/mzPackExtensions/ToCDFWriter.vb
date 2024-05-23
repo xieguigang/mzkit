@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1b9144d438a659e09de7e7fcf2cbb940, E:/mzkit/src/assembly/mzPackExtensions//ToCDFWriter.vb"
+﻿#Region "Microsoft.VisualBasic::1b9144d438a659e09de7e7fcf2cbb940, assembly\mzPackExtensions\ToCDFWriter.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 74
-    '    Code Lines: 60
-    ' Comment Lines: 5
-    '   Blank Lines: 9
+    '    Code Lines: 60 (81.08%)
+    ' Comment Lines: 5 (6.76%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 9 (12.16%)
     '     File Size: 4.11 KB
 
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::54843a48703c0e5c57e2c2b87d16029b, E:/mzkit/src/metadb/Lipidomics//MsCharacterization/MsmsCharacterization.vb"
+﻿#Region "Microsoft.VisualBasic::54843a48703c0e5c57e2c2b87d16029b, metadb\Lipidomics\MsCharacterization\MsmsCharacterization.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 16792
-    '    Code Lines: 12569
-    ' Comment Lines: 1881
-    '   Blank Lines: 2342
+    '    Code Lines: 12569 (74.85%)
+    ' Comment Lines: 1881 (11.20%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 2342 (13.95%)
     '     File Size: 1.04 MB
 
 

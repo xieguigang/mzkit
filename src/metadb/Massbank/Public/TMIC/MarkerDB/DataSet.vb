@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::41a0fdf0c9d9877a4595893129b6a4f8, E:/mzkit/src/metadb/Massbank//Public/TMIC/MarkerDB/DataSet.vb"
+﻿#Region "Microsoft.VisualBasic::41a0fdf0c9d9877a4595893129b6a4f8, metadb\Massbank\Public\TMIC\MarkerDB\DataSet.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 124
-    '    Code Lines: 73
-    ' Comment Lines: 33
-    '   Blank Lines: 18
+    '    Code Lines: 73 (58.87%)
+    ' Comment Lines: 33 (26.61%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 18 (14.52%)
     '     File Size: 4.08 KB
 
 

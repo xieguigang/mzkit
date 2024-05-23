@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4e2ad78d1d8030447fc601b8adee0ef5, E:/mzkit/src/mzmath/mz_deco//ChromatogramModels/MzGroup.vb"
+﻿#Region "Microsoft.VisualBasic::4e2ad78d1d8030447fc601b8adee0ef5, mzmath\mz_deco\ChromatogramModels\MzGroup.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 101
-    '    Code Lines: 70
-    ' Comment Lines: 19
-    '   Blank Lines: 12
+    '    Code Lines: 70 (69.31%)
+    ' Comment Lines: 19 (18.81%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 12 (11.88%)
     '     File Size: 3.17 KB
 
 

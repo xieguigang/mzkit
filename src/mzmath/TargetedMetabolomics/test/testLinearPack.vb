@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1a339a049410b15b33ccd89eb572ef7f, E:/mzkit/src/mzmath/TargetedMetabolomics/test//testLinearPack.vb"
+﻿#Region "Microsoft.VisualBasic::1a339a049410b15b33ccd89eb572ef7f, mzmath\TargetedMetabolomics\test\testLinearPack.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 10
-    '    Code Lines: 7
-    ' Comment Lines: 0
-    '   Blank Lines: 3
+    '    Code Lines: 7 (70.00%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 3 (30.00%)
     '     File Size: 275 B
 
 

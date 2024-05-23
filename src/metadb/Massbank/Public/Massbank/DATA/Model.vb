@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::383a616be156354e38d3f46855d127f3, E:/mzkit/src/metadb/Massbank//Public/Massbank/DATA/Model.vb"
+﻿#Region "Microsoft.VisualBasic::383a616be156354e38d3f46855d127f3, metadb\Massbank\Public\Massbank\DATA\Model.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 54
-    '    Code Lines: 42
-    ' Comment Lines: 0
-    '   Blank Lines: 12
+    '    Code Lines: 42 (77.78%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 12 (22.22%)
     '     File Size: 1.77 KB
 
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::01878e6f33a73cf63896da4c6ee40d21, E:/mzkit/src/mzmath/mz_deco//ChromatogramModels/PeakFeature.vb"
+﻿#Region "Microsoft.VisualBasic::01878e6f33a73cf63896da4c6ee40d21, mzmath\mz_deco\ChromatogramModels\PeakFeature.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 119
-    '    Code Lines: 49
-    ' Comment Lines: 55
-    '   Blank Lines: 15
+    '    Code Lines: 49 (41.18%)
+    ' Comment Lines: 55 (46.22%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 15 (12.61%)
     '     File Size: 3.62 KB
 
 

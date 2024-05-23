@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d46c75ce75450ef8fa5cfcb31cd50cb8, E:/mzkit/src/metadb/Lipidomics//ShorthandNotationDirector.vb"
+﻿#Region "Microsoft.VisualBasic::d46c75ce75450ef8fa5cfcb31cd50cb8, metadb\Lipidomics\ShorthandNotationDirector.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 64
-    '    Code Lines: 51
-    ' Comment Lines: 4
-    '   Blank Lines: 9
+    '    Code Lines: 51 (79.69%)
+    ' Comment Lines: 4 (6.25%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 9 (14.06%)
     '     File Size: 3.02 KB
 
 

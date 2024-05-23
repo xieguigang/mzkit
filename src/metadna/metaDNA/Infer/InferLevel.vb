@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::371076265ac1d687eb7337aec2bdb3c0, E:/mzkit/src/metadna/metaDNA//Infer/InferLevel.vb"
+﻿#Region "Microsoft.VisualBasic::371076265ac1d687eb7337aec2bdb3c0, metadna\metaDNA\Infer\InferLevel.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 7
-    '    Code Lines: 6
-    ' Comment Lines: 0
-    '   Blank Lines: 1
+    '    Code Lines: 6 (85.71%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 1 (14.29%)
     '     File Size: 100 B
 
 

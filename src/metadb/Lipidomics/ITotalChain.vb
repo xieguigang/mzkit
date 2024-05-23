@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::173b28b10d4c00117909efae37947f91, E:/mzkit/src/metadb/Lipidomics//ITotalChain.vb"
+﻿#Region "Microsoft.VisualBasic::173b28b10d4c00117909efae37947f91, metadb\Lipidomics\ITotalChain.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 106
-    '    Code Lines: 84
-    ' Comment Lines: 13
-    '   Blank Lines: 9
+    '    Code Lines: 84 (79.25%)
+    ' Comment Lines: 13 (12.26%)
+    '    - Xml Docs: 92.31%
+    ' 
+    '   Blank Lines: 9 (8.49%)
     '     File Size: 5.04 KB
 
 

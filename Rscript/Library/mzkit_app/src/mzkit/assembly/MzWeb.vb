@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dae7e4433469256fe7f14a700ded02c1, E:/mzkit/Rscript/Library/mzkit_app/src/mzkit//assembly/MzWeb.vb"
+﻿#Region "Microsoft.VisualBasic::b04f479a07a3caf15bbc95cd1c5a0790, Rscript\Library\mzkit_app\src\mzkit\assembly\MzWeb.vb"
 
     ' Author:
     ' 
@@ -37,21 +37,24 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 793
-    '    Code Lines: 479
-    ' Comment Lines: 219
-    '   Blank Lines: 95
-    '     File Size: 31.78 KB
+    '   Total Lines: 839
+    '    Code Lines: 508 (60.55%)
+    ' Comment Lines: 228 (27.18%)
+    '    - Xml Docs: 95.18%
+    ' 
+    '   Blank Lines: 103 (12.28%)
+    '     File Size: 33.49 KB
 
 
     ' Module MzWeb
     ' 
-    '     Function: GetChromatogram, loadStream, loadXcmsRData, MassCalibration, Ms1Peaks
-    '               Ms1ScanPoints, Ms2ScanPeaks, Open, openFile, openFromFile
-    '               parseScanMsBuffer, readCache, setMzpackThumbnail, TIC, ToMzPack
-    '               uniqueReference, writeCache, writeMzpack, writeStream, writeToCDF
+    '     Function: GetChromatogram, getMs1PointTable, loadStream, loadXcmsRData, MassCalibration
+    '               Ms1Peaks, Ms1ScanPoints, Ms2ScanPeaks, Open, openFile
+    '               openFromFile, parseScanMsBuffer, readCache, setMzpackThumbnail, TIC
+    '               ToMzPack, uniqueReference, writeCache, writeMzpack, writeStream
+    '               writeToCDF
     ' 
-    '     Sub: WriteCache
+    '     Sub: Main, WriteCache
     ' 
     ' /********************************************************************************/
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::839ac4054a02e7189bca0eea1fc31dce, E:/mzkit/src/mzmath/MSFinder//DatabaseQuery.vb"
+﻿#Region "Microsoft.VisualBasic::cc2eca65627c824449d8b7f56ea38c03, mzmath\MSFinder\DatabaseQuery.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 23
-    '    Code Lines: 22
-    ' Comment Lines: 0
-    '   Blank Lines: 1
-    '     File Size: 765 B
+    '   Total Lines: 22
+    '    Code Lines: 20 (90.91%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 2 (9.09%)
+    '     File Size: 732 B
 
 
     ' Class DatabaseQuery
@@ -51,15 +53,11 @@
     '                 Npa, Plantcyc, Pubchem, Smpdb, Stoff
     '                 T3db, Unpd, Ymdb
     ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
     ' /********************************************************************************/
 
 #End Region
 
 Public Class DatabaseQuery
-    Public Sub New()
-    End Sub
 
     Public Property Chebi As Boolean
     Public Property Ymdb As Boolean
@@ -79,4 +77,5 @@ Public Class DatabaseQuery
     Public Property Blexp As Boolean
     Public Property Npa As Boolean
     Public Property Coconut As Boolean
+
 End Class

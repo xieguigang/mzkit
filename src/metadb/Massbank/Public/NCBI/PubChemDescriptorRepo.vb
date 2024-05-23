@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::298a037ae8b397b8e6f556f229ec7f6b, E:/mzkit/src/metadb/Massbank//Public/NCBI/PubChemDescriptorRepo.vb"
+﻿#Region "Microsoft.VisualBasic::298a037ae8b397b8e6f556f229ec7f6b, metadb\Massbank\Public\NCBI\PubChemDescriptorRepo.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 228
-    '    Code Lines: 144
-    ' Comment Lines: 34
-    '   Blank Lines: 50
+    '    Code Lines: 144 (63.16%)
+    ' Comment Lines: 34 (14.91%)
+    '    - Xml Docs: 20.59%
+    ' 
+    '   Blank Lines: 50 (21.93%)
     '     File Size: 10.88 KB
 
 

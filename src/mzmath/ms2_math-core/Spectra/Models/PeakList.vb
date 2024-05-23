@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::74e81b1e551d770814964182cda86093, E:/mzkit/src/mzmath/ms2_math-core//Spectra/Models/PeakList.vb"
+﻿#Region "Microsoft.VisualBasic::5ed32260cb1551c848315125c6f79e50, mzmath\ms2_math-core\Spectra\Models\PeakList.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 94
-    '    Code Lines: 45
-    ' Comment Lines: 32
-    '   Blank Lines: 17
-    '     File Size: 2.67 KB
+    '   Total Lines: 105
+    '    Code Lines: 49 (46.67%)
+    ' Comment Lines: 36 (34.29%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 20 (19.05%)
+    '     File Size: 3.08 KB
 
 
     '     Class PeakList
@@ -60,6 +62,10 @@
     ' 
     '         Function: GetMs, GetMzIonIntensity
     ' 
+    '     Interface ISpectrumVector
+    ' 
+    '         Properties: Peaks, PeaksIntensity
+    ' 
     ' 
     ' /********************************************************************************/
 
@@ -77,20 +83,20 @@ Namespace Spectra
     ''' if the <see cref="MRM"/> data is not empty, then it means current spectrum
     ''' peaks data is the data for MRM targetted analysis
     ''' </remarks>
-    Public Class PeakList
+    Public Class PeakList : Implements ISpectrumVector
 
         ''' <summary>
         ''' the ion fragment mass list
         ''' </summary>
         ''' <returns></returns>
-        Public Property mz As Double()
+        Public Property mz As Double() Implements ISpectrumVector.Peaks
         ''' <summary>
         ''' the signal intensity strength 
         ''' value of the corresponding ion 
         ''' fragment mass data.
         ''' </summary>
         ''' <returns></returns>
-        Public Property into As Double()
+        Public Property into As Double() Implements ISpectrumVector.PeaksIntensity
 
         Public Property MRM As MRM()
 
@@ -123,6 +129,10 @@ Namespace Spectra
         Sub New()
         End Sub
 
+        ''' <summary>
+        ''' get spectrum data from current scan data object.
+        ''' </summary>
+        ''' <returns></returns>
         Public Iterator Function GetPeaks() As IEnumerable(Of ms2)
             For i As Integer = 0 To mz.Length - 1
                 Yield New ms2(_mz(i), _into(i))
@@ -156,6 +166,13 @@ Namespace Spectra
 
         Function GetMs() As IEnumerable(Of ms2)
         Function GetMzIonIntensity(mz As Double, mzdiff As Tolerance) As Double
+
+    End Interface
+
+    Public Interface ISpectrumVector
+
+        ReadOnly Property Peaks As Double()
+        ReadOnly Property PeaksIntensity As Double()
 
     End Interface
 End Namespace

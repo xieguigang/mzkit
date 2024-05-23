@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9c3cf3efc36c116153f01fcaa4c3b110, E:/mzkit/src/metadb/Massbank//Public/NCBI/PubChem/Web/Query/ExtensionModels/TaxonomyGraph.vb"
+﻿#Region "Microsoft.VisualBasic::9c3cf3efc36c116153f01fcaa4c3b110, metadb\Massbank\Public\NCBI\PubChem\Web\Query\ExtensionModels\TaxonomyGraph.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 25
-    '    Code Lines: 20
-    ' Comment Lines: 0
-    '   Blank Lines: 5
+    '    Code Lines: 20 (80.00%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 5 (20.00%)
     '     File Size: 887 B
 
 

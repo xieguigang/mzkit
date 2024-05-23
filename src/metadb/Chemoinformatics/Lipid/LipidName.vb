@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::721585ec2a7d0fb623ae2dea47f34945, E:/mzkit/src/metadb/Chemoinformatics//Lipid/LipidName.vb"
+﻿#Region "Microsoft.VisualBasic::721585ec2a7d0fb623ae2dea47f34945, metadb\Chemoinformatics\Lipid\LipidName.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 95
-    '    Code Lines: 55
-    ' Comment Lines: 25
-    '   Blank Lines: 15
+    '    Code Lines: 55 (57.89%)
+    ' Comment Lines: 25 (26.32%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 15 (15.79%)
     '     File Size: 3.17 KB
 
 

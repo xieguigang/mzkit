@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::761eebaff03386d6180691a1d1d177ad, E:/mzkit/src/metadb/Massbank/test//HMDBqueryTest.vb"
+﻿#Region "Microsoft.VisualBasic::761eebaff03386d6180691a1d1d177ad, metadb\Massbank\test\HMDBqueryTest.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 10
-    '    Code Lines: 7
-    ' Comment Lines: 0
-    '   Blank Lines: 3
+    '    Code Lines: 7 (70.00%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 3 (30.00%)
     '     File Size: 199 B
 
 

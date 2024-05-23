@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f858319ddfd4c6cfce1d4b1beff6859d, E:/mzkit/src/metadb/Chemoinformatics//MetaboliteAnnotation.vb"
+﻿#Region "Microsoft.VisualBasic::f858319ddfd4c6cfce1d4b1beff6859d, metadb\Chemoinformatics\MetaboliteAnnotation.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 58
-    '    Code Lines: 20
-    ' Comment Lines: 29
-    '   Blank Lines: 9
+    '    Code Lines: 20 (34.48%)
+    ' Comment Lines: 29 (50.00%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 9 (15.52%)
     '     File Size: 1.99 KB
 
 

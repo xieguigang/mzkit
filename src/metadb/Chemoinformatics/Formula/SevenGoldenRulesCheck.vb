@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::507d64108a249c4e02655174ccdf03f4, E:/mzkit/src/metadb/Chemoinformatics//Formula/SevenGoldenRulesCheck.vb"
+﻿#Region "Microsoft.VisualBasic::507d64108a249c4e02655174ccdf03f4, metadb\Chemoinformatics\Formula\SevenGoldenRulesCheck.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 404
-    '    Code Lines: 329
-    ' Comment Lines: 36
-    '   Blank Lines: 39
+    '    Code Lines: 329 (81.44%)
+    ' Comment Lines: 36 (8.91%)
+    '    - Xml Docs: 61.11%
+    ' 
+    '   Blank Lines: 39 (9.65%)
     '     File Size: 21.88 KB
 
 

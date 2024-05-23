@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1a61679df5ee7eb87b8e5fb5f08629a6, E:/mzkit/src/mzmath/Mummichog//Annealing/AnnotationSet.vb"
+﻿#Region "Microsoft.VisualBasic::1a61679df5ee7eb87b8e5fb5f08629a6, mzmath\Mummichog\Annealing\AnnotationSet.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 98
-    '    Code Lines: 61
-    ' Comment Lines: 22
-    '   Blank Lines: 15
+    '    Code Lines: 61 (62.24%)
+    ' Comment Lines: 22 (22.45%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 15 (15.31%)
     '     File Size: 3.56 KB
 
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::48db0019795420f5acbcd76974e67f3f, E:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/HexCerSpectrumGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::755c22214bbb19cd179d077200e78ba1, metadb\Lipidomics\SpectrumGenerator\HexCerSpectrumGenerator.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 159
-    '    Code Lines: 149
-    ' Comment Lines: 0
-    '   Blank Lines: 10
-    '     File Size: 9.10 KB
+    '   Total Lines: 156
+    '    Code Lines: 148 (94.87%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 8 (5.13%)
+    '     File Size: 8.99 KB
 
 
     ' Class HexCerSpectrumGenerator
@@ -209,7 +211,4 @@ Public Class HexCerSpectrumGenerator
         End If
         Return spectrum.ToArray()
     End Function
-
-    Private Shared ReadOnly comparer As IEqualityComparer(Of SpectrumPeak) = New SpectrumEqualityComparer()
-
 End Class

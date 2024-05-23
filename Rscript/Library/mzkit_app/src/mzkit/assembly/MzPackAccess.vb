@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ec20fb3f3ed88080c0481b0eefcb96af, E:/mzkit/Rscript/Library/mzkit_app/src/mzkit//assembly/MzPackAccess.vb"
+﻿#Region "Microsoft.VisualBasic::da3f13b72cf7f04aea1f2dbe11c8e5e9, Rscript\Library\mzkit_app\src\mzkit\assembly\MzPackAccess.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 515
-    '    Code Lines: 320
-    ' Comment Lines: 141
-    '   Blank Lines: 54
+    '    Code Lines: 320 (62.14%)
+    ' Comment Lines: 141 (27.38%)
+    '    - Xml Docs: 95.04%
+    ' 
+    '   Blank Lines: 54 (10.49%)
     '     File Size: 19.95 KB
 
 
@@ -75,7 +77,7 @@ Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
-Imports stdNum = System.Math
+Imports std = System.Math
 
 ''' <summary>
 ''' raw data accessor for the mzpack data object
@@ -428,7 +430,7 @@ Module MzPackAccess
             .populates(Of PeakMs2)(env) _
             .GroupBy(Function(t) t.rt,
                      Function(t1, t2)
-                         Return stdNum.Abs(t1 - t2) <= timeWindow
+                         Return std.Abs(t1 - t2) <= timeWindow
                      End Function) _
             .ToArray
         Dim groupMs1 = (From list As NamedCollection(Of PeakMs2)

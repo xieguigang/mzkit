@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3f9e0478ae41d7ab40ebe0284d01bb14, E:/mzkit/src/metadb/Lipidomics//LipidParser/CLLipidParser.vb"
+﻿#Region "Microsoft.VisualBasic::3f9e0478ae41d7ab40ebe0284d01bb14, metadb\Lipidomics\LipidParser\CLLipidParser.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 50
-    '    Code Lines: 34
-    ' Comment Lines: 8
-    '   Blank Lines: 8
+    '    Code Lines: 34 (68.00%)
+    ' Comment Lines: 8 (16.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 8 (16.00%)
     '     File Size: 2.85 KB
 
 

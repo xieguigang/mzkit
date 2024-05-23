@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::442058d771d5c3baea54ddd772c62b09, E:/mzkit/src/assembly/assembly//ASCII/MSN/MsnList.vb"
+﻿#Region "Microsoft.VisualBasic::442058d771d5c3baea54ddd772c62b09, assembly\assembly\ASCII\MSN\MsnList.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 71
-    '    Code Lines: 61
-    ' Comment Lines: 0
-    '   Blank Lines: 10
+    '    Code Lines: 61 (85.92%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 10 (14.08%)
     '     File Size: 2.51 KB
 
 

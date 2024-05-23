@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::54e81e6cfae8e4868ea42dbe0bb89b03, E:/mzkit/src/mzmath/mz_deco//ChromatogramModels/RIRefer.vb"
+﻿#Region "Microsoft.VisualBasic::54e81e6cfae8e4868ea42dbe0bb89b03, mzmath\mz_deco\ChromatogramModels\RIRefer.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 24
-    '    Code Lines: 10
-    ' Comment Lines: 7
-    '   Blank Lines: 7
+    '    Code Lines: 10 (41.67%)
+    ' Comment Lines: 7 (29.17%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 7 (29.17%)
     '     File Size: 738 B
 
 

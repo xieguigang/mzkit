@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8c953470903bb3a3e9f01bac8349b385, E:/mzkit/src/mzmath/MoleculeNetworking//Tree/GraphTree.vb"
+﻿#Region "Microsoft.VisualBasic::8c953470903bb3a3e9f01bac8349b385, mzmath\MoleculeNetworking\Tree\GraphTree.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 83
-    '    Code Lines: 64
-    ' Comment Lines: 10
-    '   Blank Lines: 9
+    '    Code Lines: 64 (77.11%)
+    ' Comment Lines: 10 (12.05%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 9 (10.84%)
     '     File Size: 2.99 KB
 
 

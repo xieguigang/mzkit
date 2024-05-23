@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5b05356a6da8a837c29d151978b43d9e, E:/mzkit/src/assembly/NMRFidTool//Math/phasing/SimplePhaseCorrector.vb"
+﻿#Region "Microsoft.VisualBasic::5b05356a6da8a837c29d151978b43d9e, assembly\NMRFidTool\Math\phasing\SimplePhaseCorrector.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 71
-    '    Code Lines: 29
-    ' Comment Lines: 34
-    '   Blank Lines: 8
+    '    Code Lines: 29 (40.85%)
+    ' Comment Lines: 34 (47.89%)
+    '    - Xml Docs: 44.12%
+    ' 
+    '   Blank Lines: 8 (11.27%)
     '     File Size: 3.20 KB
 
 

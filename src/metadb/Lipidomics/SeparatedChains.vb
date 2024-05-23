@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8fd9649d59b2d304c63510c3f53f44a1, E:/mzkit/src/metadb/Lipidomics//SeparatedChains.vb"
+﻿#Region "Microsoft.VisualBasic::8fd9649d59b2d304c63510c3f53f44a1, metadb\Lipidomics\SeparatedChains.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 237
-    '    Code Lines: 198
-    ' Comment Lines: 16
-    '   Blank Lines: 23
+    '    Code Lines: 198 (83.54%)
+    ' Comment Lines: 16 (6.75%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 23 (9.70%)
     '     File Size: 9.68 KB
 
 

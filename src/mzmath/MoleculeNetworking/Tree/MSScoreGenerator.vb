@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::42881ea20d0f404e90bd3417e28d0108, E:/mzkit/src/mzmath/MoleculeNetworking//Tree/MSScoreGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::42881ea20d0f404e90bd3417e28d0108, mzmath\MoleculeNetworking\Tree\MSScoreGenerator.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 128
-    '    Code Lines: 64
-    ' Comment Lines: 46
-    '   Blank Lines: 18
+    '    Code Lines: 64 (50.00%)
+    ' Comment Lines: 46 (35.94%)
+    '    - Xml Docs: 93.48%
+    ' 
+    '   Blank Lines: 18 (14.06%)
     '     File Size: 4.43 KB
 
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5ca3b6fcdba080ea12632c0d8f274145, E:/mzkit/src/assembly/assembly//MarkupData/mzXML/MsData/MSScan.vb"
+﻿#Region "Microsoft.VisualBasic::5ca3b6fcdba080ea12632c0d8f274145, assembly\assembly\MarkupData\mzXML\MsData\MSScan.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 131
-    '    Code Lines: 82
-    ' Comment Lines: 32
-    '   Blank Lines: 17
+    '    Code Lines: 82 (62.60%)
+    ' Comment Lines: 32 (24.43%)
+    '    - Xml Docs: 87.50%
+    ' 
+    '   Blank Lines: 17 (12.98%)
     '     File Size: 5.29 KB
 
 

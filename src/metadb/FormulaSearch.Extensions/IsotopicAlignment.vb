@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5790b8a1545a4cc8145ec068d6e1f976, E:/mzkit/src/metadb/FormulaSearch.Extensions//IsotopicAlignment.vb"
+﻿#Region "Microsoft.VisualBasic::5790b8a1545a4cc8145ec068d6e1f976, metadb\FormulaSearch.Extensions\IsotopicAlignment.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 56
-    '    Code Lines: 45
-    ' Comment Lines: 5
-    '   Blank Lines: 6
+    '    Code Lines: 45 (80.36%)
+    ' Comment Lines: 5 (8.93%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 6 (10.71%)
     '     File Size: 2.20 KB
 
 

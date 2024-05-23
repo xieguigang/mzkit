@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9072a4167165801067d207e89a423b9b, E:/mzkit/src/metadb/Chemoinformatics//Formula/MS/Default/Glycosides.vb"
+﻿#Region "Microsoft.VisualBasic::9072a4167165801067d207e89a423b9b, metadb\Chemoinformatics\Formula\MS\Default\Glycosides.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 6
-    '    Code Lines: 4
-    ' Comment Lines: 0
-    '   Blank Lines: 2
+    '    Code Lines: 4 (66.67%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 2 (33.33%)
     '     File Size: 94 B
 
 

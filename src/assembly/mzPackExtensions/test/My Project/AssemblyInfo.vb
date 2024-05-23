@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::815260a0d16f6d5fd99468baa5e7691f, E:/mzkit/src/assembly/mzPackExtensions//test/My Project/AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::815260a0d16f6d5fd99468baa5e7691f, assembly\mzPackExtensions\test\My Project\AssemblyInfo.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 35
-    '    Code Lines: 13
-    ' Comment Lines: 15
-    '   Blank Lines: 7
+    '    Code Lines: 13 (37.14%)
+    ' Comment Lines: 15 (42.86%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 7 (20.00%)
     '     File Size: 1.14 KB
 
 

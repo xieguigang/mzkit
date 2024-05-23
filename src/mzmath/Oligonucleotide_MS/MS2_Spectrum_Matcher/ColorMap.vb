@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::877df2a72dac86699a57fc2a28eb7286, E:/mzkit/src/mzmath/Oligonucleotide_MS//MS2_Spectrum_Matcher/ColorMap.vb"
+﻿#Region "Microsoft.VisualBasic::877df2a72dac86699a57fc2a28eb7286, mzmath\Oligonucleotide_MS\MS2_Spectrum_Matcher\ColorMap.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 11
-    '    Code Lines: 8
-    ' Comment Lines: 0
-    '   Blank Lines: 3
+    '    Code Lines: 8 (72.73%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 3 (27.27%)
     '     File Size: 225 B
 
 

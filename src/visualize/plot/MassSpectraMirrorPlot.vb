@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a5fe3a003cf00381c6468017cce585c7, E:/mzkit/src/visualize/plot//MassSpectraMirrorPlot.vb"
+﻿#Region "Microsoft.VisualBasic::a5fe3a003cf00381c6468017cce585c7, visualize\plot\MassSpectraMirrorPlot.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 115
-    '    Code Lines: 98
-    ' Comment Lines: 9
-    '   Blank Lines: 8
+    '    Code Lines: 98 (85.22%)
+    ' Comment Lines: 9 (7.83%)
+    '    - Xml Docs: 88.89%
+    ' 
+    '   Blank Lines: 8 (6.96%)
     '     File Size: 5.18 KB
 
 

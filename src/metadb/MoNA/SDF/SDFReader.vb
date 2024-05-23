@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::61b6f009359bf218c6d15ed8e5639bee, E:/mzkit/src/metadb/MoNA//SDF/SDFReader.vb"
+﻿#Region "Microsoft.VisualBasic::61b6f009359bf218c6d15ed8e5639bee, metadb\MoNA\SDF\SDFReader.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 321
-    '    Code Lines: 238
-    ' Comment Lines: 45
-    '   Blank Lines: 38
+    '    Code Lines: 238 (74.14%)
+    ' Comment Lines: 45 (14.02%)
+    '    - Xml Docs: 71.11%
+    ' 
+    '   Blank Lines: 38 (11.84%)
     '     File Size: 12.85 KB
 
 

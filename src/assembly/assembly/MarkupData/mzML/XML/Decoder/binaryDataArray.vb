@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7035a7d82405a86e11e336a8f24d9799, E:/mzkit/src/assembly/assembly//MarkupData/mzML/XML/Decoder/binaryDataArray.vb"
+﻿#Region "Microsoft.VisualBasic::7035a7d82405a86e11e336a8f24d9799, assembly\assembly\MarkupData\mzML\XML\Decoder\binaryDataArray.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 43
-    '    Code Lines: 36
-    ' Comment Lines: 0
-    '   Blank Lines: 7
+    '    Code Lines: 36 (83.72%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 7 (16.28%)
     '     File Size: 1.72 KB
 
 

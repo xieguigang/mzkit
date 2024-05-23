@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0658cfd0adb506f6c1f15a3fd082c586, E:/mzkit/src/metadb/Chemoinformatics//Formula/DNPOrWileyType.vb"
+﻿#Region "Microsoft.VisualBasic::0658cfd0adb506f6c1f15a3fd082c586, metadb\Chemoinformatics\Formula\DNPOrWileyType.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 7
-    '    Code Lines: 6
-    ' Comment Lines: 0
-    '   Blank Lines: 1
+    '    Code Lines: 6 (85.71%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 1 (14.29%)
     '     File Size: 108 B
 
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1a3cbfd09687cdaa62bc72a65c8f2a2d, E:/mzkit/src/metadb/XrefEngine//ChemOntClassify.vb"
+﻿#Region "Microsoft.VisualBasic::1a3cbfd09687cdaa62bc72a65c8f2a2d, metadb\XrefEngine\ChemOntClassify.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 117
-    '    Code Lines: 73
-    ' Comment Lines: 31
-    '   Blank Lines: 13
+    '    Code Lines: 73 (62.39%)
+    ' Comment Lines: 31 (26.50%)
+    '    - Xml Docs: 96.77%
+    ' 
+    '   Blank Lines: 13 (11.11%)
     '     File Size: 3.52 KB
 
 

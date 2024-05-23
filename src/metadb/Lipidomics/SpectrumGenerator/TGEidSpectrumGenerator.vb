@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9f9a6907bb0b78aec8cb721c5cb31d89, E:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/TGEidSpectrumGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::b98aa6e9fe5f4e8c7d4e9d243fe6d51b, metadb\Lipidomics\SpectrumGenerator\TGEidSpectrumGenerator.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 196
-    '    Code Lines: 176
-    ' Comment Lines: 0
-    '   Blank Lines: 20
-    '     File Size: 10.86 KB
+    '   Total Lines: 195
+    '    Code Lines: 176 (90.26%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 19 (9.74%)
+    '     File Size: 10.80 KB
 
 
     ' Class TGEidSpectrumGenerator
@@ -58,6 +60,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.BioDeep.MSEngine
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.ElementsExactMass
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 
 Public Class TGEidSpectrumGenerator : Implements ILipidSpectrumGenerator
 
@@ -105,7 +108,7 @@ Public Class TGEidSpectrumGenerator : Implements ILipidSpectrumGenerator
             spectrum.AddRange(EidSpecificSpectrum(lipid, adduct, 0R, 200.0R))
             spectrum.AddRange(GetAcylDoubleBondSpectrum(lipid, lipid.Chains.GetTypedChains(Of AcylChain)(), adduct))
         End If
-        spectrum = spectrum.GroupBy(Function(spec) spec, comparer).[Select](Function(specs) New SpectrumPeak(Enumerable.First(specs).mz, specs.Sum(Function(n) n.Intensity), String.Join(", ", specs.[Select](Function(spec) spec.Annotation)), specs.Aggregate(SpectrumComment.none, Function(a, b) a Or b.SpectrumComment))).OrderBy(Function(peak) peak.mz).ToList()
+        spectrum = spectrum.GroupBy(Function(spec) spec, comparer).[Select](Function(specs) New SpectrumPeak(Enumerable.First(specs).mz, specs.Sum(Function(n) n.intensity), String.Join(", ", specs.[Select](Function(spec) spec.Annotation)), specs.Aggregate(SpectrumComment.none, Function(a, b) a Or b.SpectrumComment))).OrderBy(Function(peak) peak.mz).ToList()
         Return CreateReference(lipid, adduct, spectrum, molecule)
     End Function
 
@@ -247,6 +250,4 @@ New SpectrumPeak(adduct.ConvertToMz(lipid.Mass) / 2, 150.0R, "[Precursor]2+") Wi
         End If
         Return spectrum.ToArray()
     End Function
-
-    Private Shared ReadOnly comparer As IEqualityComparer(Of SpectrumPeak) = New SpectrumEqualityComparer()
 End Class

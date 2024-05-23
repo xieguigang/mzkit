@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::64b02e30593c675f4c2179532aa491f7, E:/mzkit/src/metadb/FormulaSearch.Extensions//PrecursorIonSearch.vb"
+﻿#Region "Microsoft.VisualBasic::64b02e30593c675f4c2179532aa491f7, metadb\FormulaSearch.Extensions\PrecursorIonSearch.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 82
-    '    Code Lines: 59
-    ' Comment Lines: 9
-    '   Blank Lines: 14
+    '    Code Lines: 59 (71.95%)
+    ' Comment Lines: 9 (10.98%)
+    '    - Xml Docs: 66.67%
+    ' 
+    '   Blank Lines: 14 (17.07%)
     '     File Size: 3.26 KB
 
 

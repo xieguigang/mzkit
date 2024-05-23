@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e6112c255eaec50c90bfff9ae42d673e, E:/mzkit/src/assembly/assembly//MarkupData/mzML/XML/Decoder/BinaryData.vb"
+﻿#Region "Microsoft.VisualBasic::e6112c255eaec50c90bfff9ae42d673e, assembly\assembly\MarkupData\mzML\XML\Decoder\BinaryData.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 17
-    '    Code Lines: 12
-    ' Comment Lines: 0
-    '   Blank Lines: 5
+    '    Code Lines: 12 (70.59%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 5 (29.41%)
     '     File Size: 617 B
 
 

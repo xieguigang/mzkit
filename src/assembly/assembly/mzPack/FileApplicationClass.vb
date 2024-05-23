@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f6d81f36a41ffbf1e67ca95ee41ad468, E:/mzkit/src/assembly/assembly//mzPack/FileApplicationClass.vb"
+﻿#Region "Microsoft.VisualBasic::f6d81f36a41ffbf1e67ca95ee41ad468, assembly\assembly\mzPack\FileApplicationClass.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 50
-    '    Code Lines: 15
-    ' Comment Lines: 27
-    '   Blank Lines: 8
+    '    Code Lines: 15 (30.00%)
+    ' Comment Lines: 27 (54.00%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 8 (16.00%)
     '     File Size: 1.56 KB
 
 

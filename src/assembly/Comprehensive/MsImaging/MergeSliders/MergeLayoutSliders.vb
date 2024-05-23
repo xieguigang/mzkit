@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::00156c4d6fe8af3f726a60fa1578be49, E:/mzkit/src/assembly/Comprehensive//MsImaging/MergeSliders/MergeLayoutSliders.vb"
+﻿#Region "Microsoft.VisualBasic::00156c4d6fe8af3f726a60fa1578be49, assembly\Comprehensive\MsImaging\MergeSliders\MergeLayoutSliders.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 127
-    '    Code Lines: 96
-    ' Comment Lines: 12
-    '   Blank Lines: 19
+    '    Code Lines: 96 (75.59%)
+    ' Comment Lines: 12 (9.45%)
+    '    - Xml Docs: 58.33%
+    ' 
+    '   Blank Lines: 19 (14.96%)
     '     File Size: 4.92 KB
 
 

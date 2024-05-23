@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::48d3f5653ed3177f0ace253d68db5b2e, E:/mzkit/src/visualize/MsImaging//Reader/PixelScan/PixelScan.vb"
+﻿#Region "Microsoft.VisualBasic::48d3f5653ed3177f0ace253d68db5b2e, visualize\MsImaging\Reader\PixelScan\PixelScan.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 86
-    '    Code Lines: 50
-    ' Comment Lines: 20
-    '   Blank Lines: 16
+    '    Code Lines: 50 (58.14%)
+    ' Comment Lines: 20 (23.26%)
+    '    - Xml Docs: 50.00%
+    ' 
+    '   Blank Lines: 16 (18.60%)
     '     File Size: 3.54 KB
 
 

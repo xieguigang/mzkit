@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::621cb9ffd07f5a553958d807fadff17e, E:/mzkit/src/metadb/Lipidomics//IDoubleBond.vb"
+﻿#Region "Microsoft.VisualBasic::621cb9ffd07f5a553958d807fadff17e, metadb\Lipidomics\IDoubleBond.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 101
-    '    Code Lines: 75
-    ' Comment Lines: 0
-    '   Blank Lines: 26
+    '    Code Lines: 75 (74.26%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 26 (25.74%)
     '     File Size: 4.29 KB
 
 

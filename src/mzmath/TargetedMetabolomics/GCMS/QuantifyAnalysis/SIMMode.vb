@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7947d0e0846388753d691c44299222f9, E:/mzkit/src/mzmath/TargetedMetabolomics//GCMS/QuantifyAnalysis/SIMMode.vb"
+﻿#Region "Microsoft.VisualBasic::7947d0e0846388753d691c44299222f9, mzmath\TargetedMetabolomics\GCMS\QuantifyAnalysis\SIMMode.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 130
-    '    Code Lines: 99
-    ' Comment Lines: 17
-    '   Blank Lines: 14
+    '    Code Lines: 99 (76.15%)
+    ' Comment Lines: 17 (13.08%)
+    '    - Xml Docs: 70.59%
+    ' 
+    '   Blank Lines: 14 (10.77%)
     '     File Size: 6.14 KB
 
 

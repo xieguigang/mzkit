@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4afaca31c11e2e54c47676b33a2896c8, E:/mzkit/src/mzmath/Mummichog//Models/GSEA.vb"
+﻿#Region "Microsoft.VisualBasic::4afaca31c11e2e54c47676b33a2896c8, mzmath\Mummichog\Models\GSEA.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 39
-    '    Code Lines: 21
-    ' Comment Lines: 14
-    '   Blank Lines: 4
+    '    Code Lines: 21 (53.85%)
+    ' Comment Lines: 14 (35.90%)
+    '    - Xml Docs: 92.86%
+    ' 
+    '   Blank Lines: 4 (10.26%)
     '     File Size: 1.32 KB
 
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::75c6f2f857932fae1b9e34a647d00504, E:/mzkit/Rscript/Library/mzkit_app/src/mzquant//MRM/MRMQCReport.vb"
+﻿#Region "Microsoft.VisualBasic::75c6f2f857932fae1b9e34a647d00504, Rscript\Library\mzkit_app\src\mzquant\MRM\MRMQCReport.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 186
-    '    Code Lines: 158
-    ' Comment Lines: 12
-    '   Blank Lines: 16
+    '    Code Lines: 158 (84.95%)
+    ' Comment Lines: 12 (6.45%)
+    '    - Xml Docs: 75.00%
+    ' 
+    '   Blank Lines: 16 (8.60%)
     '     File Size: 8.09 KB
 
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2a2a8c6b1f14cb83e67ad40b4b97cb71, E:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/CeramideNsD7SpectrumGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::655aced3ef61cf26f9e682482915c207, metadb\Lipidomics\SpectrumGenerator\CeramideNsD7SpectrumGenerator.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 222
-    '    Code Lines: 194
-    ' Comment Lines: 9
-    '   Blank Lines: 19
-    '     File Size: 11.82 KB
+    '   Total Lines: 220
+    '    Code Lines: 193 (87.73%)
+    ' Comment Lines: 9 (4.09%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 18 (8.18%)
+    '     File Size: 11.71 KB
 
 
     ' Class CerNSd7SpectrumGenerator
@@ -272,7 +274,5 @@ Public Class CerNSd7SpectrumGenerator
         End If
         Return spectrum.ToArray()
     End Function
-
-    Private Shared ReadOnly comparer As IEqualityComparer(Of SpectrumPeak) = New SpectrumEqualityComparer()
 
 End Class

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2ed7fd62990b089d935a58d20dbe523d, E:/mzkit/src/mzmath/MoleculeNetworking//SpectrumPool/MetadataPool/HttpRESTMetadataPool.vb"
+﻿#Region "Microsoft.VisualBasic::2ed7fd62990b089d935a58d20dbe523d, mzmath\MoleculeNetworking\SpectrumPool\MetadataPool\HttpRESTMetadataPool.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 300
-    '    Code Lines: 203
-    ' Comment Lines: 50
-    '   Blank Lines: 47
+    '    Code Lines: 203 (67.67%)
+    ' Comment Lines: 50 (16.67%)
+    '    - Xml Docs: 88.00%
+    ' 
+    '   Blank Lines: 47 (15.67%)
     '     File Size: 11.31 KB
 
 

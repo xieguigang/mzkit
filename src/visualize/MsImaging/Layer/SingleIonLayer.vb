@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1a3ff9e966dd8a06def929c886bc5528, E:/mzkit/src/visualize/MsImaging//Layer/SingleIonLayer.vb"
+﻿#Region "Microsoft.VisualBasic::1a3ff9e966dd8a06def929c886bc5528, visualize\MsImaging\Layer\SingleIonLayer.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 253
-    '    Code Lines: 155
-    ' Comment Lines: 69
-    '   Blank Lines: 29
+    '    Code Lines: 155 (61.26%)
+    ' Comment Lines: 69 (27.27%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 29 (11.46%)
     '     File Size: 8.65 KB
 
 

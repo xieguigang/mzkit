@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::25be272405b8121a8bc4e12b9fe6452b, E:/mzkit/src/metadb/Lipidomics//IChain.vb"
+﻿#Region "Microsoft.VisualBasic::25be272405b8121a8bc4e12b9fe6452b, metadb\Lipidomics\IChain.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 12
-    '    Code Lines: 11
-    ' Comment Lines: 0
-    '   Blank Lines: 1
+    '    Code Lines: 11 (91.67%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 1 (8.33%)
     '     File Size: 506 B
 
 

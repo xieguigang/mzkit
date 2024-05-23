@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c5e7e5c946bafe709ea88bfac708bd10, E:/mzkit/src/visualize/plot//NMR/FrequencyPlot.vb"
+﻿#Region "Microsoft.VisualBasic::c5e7e5c946bafe709ea88bfac708bd10, visualize\plot\NMR\FrequencyPlot.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 41
-    '    Code Lines: 35
-    ' Comment Lines: 0
-    '   Blank Lines: 6
+    '    Code Lines: 35 (85.37%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 6 (14.63%)
     '     File Size: 1.38 KB
 
 

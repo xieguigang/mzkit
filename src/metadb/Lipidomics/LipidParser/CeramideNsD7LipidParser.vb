@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e2b02fb9312eb8420edbb8eb0fe09f75, E:/mzkit/src/metadb/Lipidomics//LipidParser/CeramideNsD7LipidParser.vb"
+﻿#Region "Microsoft.VisualBasic::e2b02fb9312eb8420edbb8eb0fe09f75, metadb\Lipidomics\LipidParser\CeramideNsD7LipidParser.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 24
-    '    Code Lines: 19
-    ' Comment Lines: 0
-    '   Blank Lines: 5
+    '    Code Lines: 19 (79.17%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 5 (20.83%)
     '     File Size: 1.19 KB
 
 

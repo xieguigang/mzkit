@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8c25da2b1e2582c47c52b92168e9a7dd, E:/mzkit/src/metadb/Lipidomics//NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::8c25da2b1e2582c47c52b92168e9a7dd, metadb\Lipidomics\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 3
-    '    Code Lines: 2
-    ' Comment Lines: 0
-    '   Blank Lines: 1
+    '    Code Lines: 2 (66.67%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 1 (33.33%)
     '     File Size: 38 B
 
 

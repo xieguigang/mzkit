@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::75691394c62cf75c18a9daec79277d48, E:/mzkit/src/metadb/Lipidomics//PositionLevelChains.vb"
+﻿#Region "Microsoft.VisualBasic::75691394c62cf75c18a9daec79277d48, metadb\Lipidomics\PositionLevelChains.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 53
-    '    Code Lines: 43
-    ' Comment Lines: 0
-    '   Blank Lines: 10
+    '    Code Lines: 43 (81.13%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 10 (18.87%)
     '     File Size: 2.60 KB
 
 

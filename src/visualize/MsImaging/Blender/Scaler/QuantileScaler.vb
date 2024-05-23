@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4174d0919e3bbc85b1ae30b5bfd9c757, E:/mzkit/src/visualize/MsImaging//Blender/Scaler/QuantileScaler.vb"
+﻿#Region "Microsoft.VisualBasic::4174d0919e3bbc85b1ae30b5bfd9c757, visualize\MsImaging\Blender\Scaler\QuantileScaler.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 56
-    '    Code Lines: 34
-    ' Comment Lines: 11
-    '   Blank Lines: 11
+    '    Code Lines: 34 (60.71%)
+    ' Comment Lines: 11 (19.64%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 11 (19.64%)
     '     File Size: 2.02 KB
 
 

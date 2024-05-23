@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e7df0ee7ee8c9f6e769b5010d11d8696, E:/mzkit/src/mzmath/MSEngine//PeptideCalc.vb"
+﻿#Region "Microsoft.VisualBasic::698fddbcbb3e5c06191c04ee26f7ea97, mzmath\MSEngine\PeptideCalc.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 410
-    '    Code Lines: 330
-    ' Comment Lines: 13
-    '   Blank Lines: 67
-    '     File Size: 20.59 KB
+    '   Total Lines: 415
+    '    Code Lines: 333 (80.24%)
+    ' Comment Lines: 13 (3.13%)
+    '    - Xml Docs: 53.85%
+    ' 
+    '   Blank Lines: 69 (16.63%)
+    '     File Size: 20.74 KB
 
 
     ' Class PeptideCalc
@@ -64,6 +66,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports SMRUCC.genomics.SequenceModel.Polypeptides
 
 Public NotInheritable Class PeptideCalc
+
     Private Sub New()
     End Sub
 
@@ -117,7 +120,11 @@ Public NotInheritable Class PeptideCalc
         Return Sequence2PeptidesByVariableModifications(peptide, container, maxNumberOfModificationsPerPeptide, minPeptideMass, maxPeptideMass)
     End Function
 
-    Public Shared Function Sequence2FastPeptides(peptide As Peptide, container As ModificationContainer, Optional maxNumberOfModificationsPerPeptide As Integer = 2, Optional minPeptideMass As Double = 300, Optional maxPeptideMass As Double = 4600) As List(Of Peptide)
+    Public Shared Function Sequence2FastPeptides(peptide As Peptide, container As ModificationContainer,
+                                                 Optional maxNumberOfModificationsPerPeptide As Integer = 2,
+                                                 Optional minPeptideMass As Double = 300,
+                                                 Optional maxPeptideMass As Double = 4600) As List(Of Peptide)
+
         Dim fmPeptide = Sequence2PeptideByFixedModifications(peptide, container, maxPeptideMass)
         If fmPeptide Is Nothing Then Return Nothing
         If fmPeptide.CountModifiedAminoAcids() > maxNumberOfModificationsPerPeptide Then Return Nothing

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::64cec1de180d95b2287c2a2348d36c2c, E:/mzkit/src/visualize/MsImaging//Blender/Renderer/PixelRender.vb"
+﻿#Region "Microsoft.VisualBasic::64cec1de180d95b2287c2a2348d36c2c, visualize\MsImaging\Blender\Renderer\PixelRender.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 192
-    '    Code Lines: 117
-    ' Comment Lines: 45
-    '   Blank Lines: 30
+    '    Code Lines: 117 (60.94%)
+    ' Comment Lines: 45 (23.44%)
+    '    - Xml Docs: 73.33%
+    ' 
+    '   Blank Lines: 30 (15.62%)
     '     File Size: 8.44 KB
 
 

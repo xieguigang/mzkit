@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::383dd638d47a76a4050733141b89322d, E:/mzkit/src/metadb/Massbank/test//metaLibLoaderTest.vb"
+﻿#Region "Microsoft.VisualBasic::383dd638d47a76a4050733141b89322d, metadb\Massbank\test\metaLibLoaderTest.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 44
-    '    Code Lines: 30
-    ' Comment Lines: 0
-    '   Blank Lines: 14
+    '    Code Lines: 30 (68.18%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 14 (31.82%)
     '     File Size: 1.39 KB
 
 

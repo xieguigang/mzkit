@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::820270bc1428861aa475011d3f09ad5c, E:/mzkit/src/metadb/Chemoinformatics//Formula/Isotopic/Calculator.vb"
+﻿#Region "Microsoft.VisualBasic::820270bc1428861aa475011d3f09ad5c, metadb\Chemoinformatics\Formula\Isotopic\Calculator.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 110
-    '    Code Lines: 63
-    ' Comment Lines: 32
-    '   Blank Lines: 15
+    '    Code Lines: 63 (57.27%)
+    ' Comment Lines: 32 (29.09%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 15 (13.64%)
     '     File Size: 4.34 KB
 
 

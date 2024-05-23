@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::37c8dcf6e3777cb7b511d1b68186b933, E:/mzkit/src/assembly/mzPack//Converter.vb"
+﻿#Region "Microsoft.VisualBasic::37c8dcf6e3777cb7b511d1b68186b933, assembly\mzPack\Converter.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 292
-    '    Code Lines: 238
-    ' Comment Lines: 20
-    '   Blank Lines: 34
+    '    Code Lines: 238 (81.51%)
+    ' Comment Lines: 20 (6.85%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 34 (11.64%)
     '     File Size: 12.50 KB
 
 

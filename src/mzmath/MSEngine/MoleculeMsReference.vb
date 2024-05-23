@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b78154a4e0742279855dca46b21b4298, E:/mzkit/src/mzmath/MSEngine//MoleculeMsReference.vb"
+﻿#Region "Microsoft.VisualBasic::b78154a4e0742279855dca46b21b4298, mzmath\MSEngine\MoleculeMsReference.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 128
-    '    Code Lines: 79
-    ' Comment Lines: 5
-    '   Blank Lines: 44
+    '    Code Lines: 79 (61.72%)
+    ' Comment Lines: 5 (3.91%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 44 (34.38%)
     '     File Size: 4.80 KB
 
 

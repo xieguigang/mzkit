@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::974ed6a206fa25d29fc18bf99ded7531, E:/mzkit/src/mzmath/mz_deco//Signals/UV/PDAPoint.vb"
+﻿#Region "Microsoft.VisualBasic::974ed6a206fa25d29fc18bf99ded7531, mzmath\mz_deco\Signals\UV\PDAPoint.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 23
-    '    Code Lines: 18
-    ' Comment Lines: 0
-    '   Blank Lines: 5
+    '    Code Lines: 18 (78.26%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 5 (21.74%)
     '     File Size: 798 B
 
 

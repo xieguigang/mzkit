@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::84e1403d2f7ee43f7ad3a11af77b7765, E:/mzkit/src/assembly/NMRFidTool//Reader/Simple1DFidReader.vb"
+﻿#Region "Microsoft.VisualBasic::84e1403d2f7ee43f7ad3a11af77b7765, assembly\NMRFidTool\Reader\Simple1DFidReader.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 83
-    '    Code Lines: 41
-    ' Comment Lines: 30
-    '   Blank Lines: 12
+    '    Code Lines: 41 (49.40%)
+    ' Comment Lines: 30 (36.14%)
+    '    - Xml Docs: 13.33%
+    ' 
+    '   Blank Lines: 12 (14.46%)
     '     File Size: 3.23 KB
 
 

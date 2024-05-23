@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5159dddf6314b4164fca87f656cb863c, E:/mzkit/src/assembly/NMRFidTool//Math/FFT/FastFourierTransform1D.vb"
+﻿#Region "Microsoft.VisualBasic::5159dddf6314b4164fca87f656cb863c, assembly\NMRFidTool\Math\FFT\FastFourierTransform1D.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 80
-    '    Code Lines: 40
-    ' Comment Lines: 28
-    '   Blank Lines: 12
+    '    Code Lines: 40 (50.00%)
+    ' Comment Lines: 28 (35.00%)
+    '    - Xml Docs: 25.00%
+    ' 
+    '   Blank Lines: 12 (15.00%)
     '     File Size: 3.27 KB
 
 

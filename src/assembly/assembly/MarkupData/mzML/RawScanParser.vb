@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5393fef44a77bd7e365449836dd49256, E:/mzkit/src/assembly/assembly//MarkupData/mzML/RawScanParser.vb"
+﻿#Region "Microsoft.VisualBasic::5393fef44a77bd7e365449836dd49256, assembly\assembly\MarkupData\mzML\RawScanParser.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 48
-    '    Code Lines: 28
-    ' Comment Lines: 13
-    '   Blank Lines: 7
+    '    Code Lines: 28 (58.33%)
+    ' Comment Lines: 13 (27.08%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 7 (14.58%)
     '     File Size: 1.81 KB
 
 

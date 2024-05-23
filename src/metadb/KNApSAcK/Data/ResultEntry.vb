@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e23a20a0ccc80055967bac52093efd94, E:/mzkit/src/metadb/KNApSAcK//Data/ResultEntry.vb"
+﻿#Region "Microsoft.VisualBasic::e23a20a0ccc80055967bac52093efd94, metadb\KNApSAcK\Data\ResultEntry.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 12
-    '    Code Lines: 9
-    ' Comment Lines: 0
-    '   Blank Lines: 3
+    '    Code Lines: 9 (75.00%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 3 (25.00%)
     '     File Size: 291 B
 
 

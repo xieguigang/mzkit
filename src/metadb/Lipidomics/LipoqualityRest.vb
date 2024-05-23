@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d83cc099f8135b3c18afbf97cb8eaaf0, E:/mzkit/src/metadb/Lipidomics//LipoqualityRest.vb"
+﻿#Region "Microsoft.VisualBasic::d83cc099f8135b3c18afbf97cb8eaaf0, metadb\Lipidomics\LipoqualityRest.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 497
-    '    Code Lines: 464
-    ' Comment Lines: 13
-    '   Blank Lines: 20
+    '    Code Lines: 464 (93.36%)
+    ' Comment Lines: 13 (2.62%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 20 (4.02%)
     '     File Size: 37.90 KB
 
 

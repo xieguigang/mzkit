@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c4d95e3ab5bd13fcc94901bfd792dab5, E:/mzkit/src/assembly/SpectrumTree//Pack/Compression.vb"
+﻿#Region "Microsoft.VisualBasic::c4d95e3ab5bd13fcc94901bfd792dab5, assembly\SpectrumTree\Pack\Compression.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 93
-    '    Code Lines: 72
-    ' Comment Lines: 1
-    '   Blank Lines: 20
+    '    Code Lines: 72 (77.42%)
+    ' Comment Lines: 1 (1.08%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 20 (21.51%)
     '     File Size: 3.22 KB
 
 

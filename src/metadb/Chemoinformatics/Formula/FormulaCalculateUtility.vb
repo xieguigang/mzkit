@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9befff8e3fd91d093138e5dc77178bb9, E:/mzkit/src/metadb/Chemoinformatics//Formula/FormulaCalculateUtility.vb"
+﻿#Region "Microsoft.VisualBasic::9befff8e3fd91d093138e5dc77178bb9, metadb\Chemoinformatics\Formula\FormulaCalculateUtility.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 305
-    '    Code Lines: 272
-    ' Comment Lines: 0
-    '   Blank Lines: 33
+    '    Code Lines: 272 (89.18%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 33 (10.82%)
     '     File Size: 17.57 KB
 
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d0ada6fdef3178d6b2be9b08d8a6c662, E:/mzkit/src/metadb/MoNA//SpectraInfo.vb"
+﻿#Region "Microsoft.VisualBasic::d0ada6fdef3178d6b2be9b08d8a6c662, metadb\MoNA\SpectraInfo.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 66
-    '    Code Lines: 51
-    ' Comment Lines: 6
-    '   Blank Lines: 9
+    '    Code Lines: 51 (77.27%)
+    ' Comment Lines: 6 (9.09%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 9 (13.64%)
     '     File Size: 2.63 KB
 
 

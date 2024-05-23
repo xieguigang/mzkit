@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9be37d3081aff51a31ab7a3c0d5f849c, E:/mzkit/src/assembly/Comprehensive//GCxGC/Data.vb"
+﻿#Region "Microsoft.VisualBasic::9be37d3081aff51a31ab7a3c0d5f849c, assembly\Comprehensive\GCxGC\Data.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 47
-    '    Code Lines: 43
-    ' Comment Lines: 0
-    '   Blank Lines: 4
+    '    Code Lines: 43 (91.49%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 4 (8.51%)
     '     File Size: 1.89 KB
 
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::625fab0572f190babdf1508200a34fdb, E:/mzkit/Rscript/Library/mzkit_app/src/mzkit//comprehensive/TissueMorphology.vb"
+﻿#Region "Microsoft.VisualBasic::625fab0572f190babdf1508200a34fdb, Rscript\Library\mzkit_app\src\mzkit\comprehensive\TissueMorphology.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 706
-    '    Code Lines: 515
-    ' Comment Lines: 104
-    '   Blank Lines: 87
+    '    Code Lines: 515 (72.95%)
+    ' Comment Lines: 104 (14.73%)
+    '    - Xml Docs: 97.12%
+    ' 
+    '   Blank Lines: 87 (12.32%)
     '     File Size: 27.79 KB
 
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f48b7a5dd6264f4a5c3b60815e6b67cb, E:/mzkit/src/assembly/BrukerDataReader//XMass/pdata/pdata.vb"
+﻿#Region "Microsoft.VisualBasic::f48b7a5dd6264f4a5c3b60815e6b67cb, assembly\BrukerDataReader\XMass\pdata\pdata.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 30
-    '    Code Lines: 24
-    ' Comment Lines: 0
-    '   Blank Lines: 6
+    '    Code Lines: 24 (80.00%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 6 (20.00%)
     '     File Size: 999 B
 
 

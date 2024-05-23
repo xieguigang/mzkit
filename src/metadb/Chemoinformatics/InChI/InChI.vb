@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d04133506ca8980be7e02324aaa5bfd4, E:/mzkit/src/metadb/Chemoinformatics//InChI/InChI.vb"
+﻿#Region "Microsoft.VisualBasic::d04133506ca8980be7e02324aaa5bfd4, metadb\Chemoinformatics\InChI\InChI.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 64
-    '    Code Lines: 42
-    ' Comment Lines: 12
-    '   Blank Lines: 10
+    '    Code Lines: 42 (65.62%)
+    ' Comment Lines: 12 (18.75%)
+    '    - Xml Docs: 83.33%
+    ' 
+    '   Blank Lines: 10 (15.62%)
     '     File Size: 2.52 KB
 
 

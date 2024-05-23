@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0df44ca16a3a9fdc7683b9c6b49fa835, E:/mzkit/src/assembly/BrukerDataReader//XMass/Xml/AnalysisParameter.vb"
+﻿#Region "Microsoft.VisualBasic::0df44ca16a3a9fdc7683b9c6b49fa835, assembly\BrukerDataReader\XMass\Xml\AnalysisParameter.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 25
-    '    Code Lines: 16
-    ' Comment Lines: 4
-    '   Blank Lines: 5
+    '    Code Lines: 16 (64.00%)
+    ' Comment Lines: 4 (16.00%)
+    '    - Xml Docs: 75.00%
+    ' 
+    '   Blank Lines: 5 (20.00%)
     '     File Size: 730 B
 
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dfba23d3a55bac34ed5402665dc241a4, E:/mzkit/src/metadb/Lipidomics//ILipidomicsVisitorBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::dfba23d3a55bac34ed5402665dc241a4, metadb\Lipidomics\ILipidomicsVisitorBuilder.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 9
-    '    Code Lines: 9
-    ' Comment Lines: 0
-    '   Blank Lines: 0
+    '    Code Lines: 9 (100.00%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 0 (0.00%)
     '     File Size: 540 B
 
 

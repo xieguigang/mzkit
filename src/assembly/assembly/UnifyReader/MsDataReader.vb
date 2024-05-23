@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::95e7154044ce02cec4ec7de2c1bb6406, E:/mzkit/src/assembly/assembly//UnifyReader/MsDataReader.vb"
+﻿#Region "Microsoft.VisualBasic::ab638a3fd7444f57cc4ebb5352224416, assembly\assembly\UnifyReader\MsDataReader.vb"
 
     ' Author:
     ' 
@@ -38,10 +38,12 @@
     ' Code Statistics:
 
     '   Total Lines: 111
-    '    Code Lines: 80
-    ' Comment Lines: 11
-    '   Blank Lines: 20
-    '     File Size: 5.01 KB
+    '    Code Lines: 80 (72.07%)
+    ' Comment Lines: 11 (9.91%)
+    '    - Xml Docs: 90.91%
+    ' 
+    '   Blank Lines: 20 (18.02%)
+    '     File Size: 5.00 KB
 
 
     '     Class MsDataReader
@@ -57,7 +59,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData
+Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 
 Namespace DataReader

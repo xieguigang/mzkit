@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f40ce460ce93846ae42906ad81d84ba0, E:/mzkit/src/mzmath/ms2_math-core//Ms1/Peaktable.vb"
+﻿#Region "Microsoft.VisualBasic::e069f4f4f1758538548cb04569fc46e3, mzmath\ms2_math-core\Ms1\Peaktable.vb"
 
     ' Author:
     ' 
@@ -37,19 +37,21 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 69
-    '    Code Lines: 41
-    ' Comment Lines: 22
-    '   Blank Lines: 6
-    '     File Size: 2.21 KB
+    '   Total Lines: 80
+    '    Code Lines: 43 (53.75%)
+    ' Comment Lines: 30 (37.50%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 7 (8.75%)
+    '     File Size: 2.49 KB
 
 
     ' Class Peaktable
     ' 
-    '     Properties: annotation, energy, index, intb, into
-    '                 ionization, maxo, mz, mzmax, mzmin
-    '                 name, rt, rtmax, rtmin, rtMinute
-    '                 sample, scan, sn
+    '     Properties: annotation, energy, formula, id, index
+    '                 intb, into, ionization, mass, maxo
+    '                 mzmax, mzmin, name, rt, rtmax
+    '                 rtmin, rtMinute, sample, scan, sn
     ' 
     '     Function: ToString
     ' 
@@ -78,8 +80,13 @@ Public Class Peaktable
     ''' <remarks>
     ''' xcms_id
     ''' </remarks>
-    Public Property name As String Implements IMS1Annotation.Key
-    Public Property mz As Double Implements IMs1.mz, IMassBin.mass
+    Public Property id As String Implements IMS1Annotation.Key
+    Public Property name As String
+    ''' <summary>
+    ''' the ion m/z(mass value).
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property mass As Double Implements IMs1.mz, IMassBin.mass
     Public Property mzmin As Double Implements IMassBin.min
     Public Property mzmax As Double Implements IMassBin.max
     Public Property rt As Double Implements IMs1.rt
@@ -114,10 +121,16 @@ Public Class Peaktable
     ''' <returns></returns>
     Public Property ionization As String
     Public Property energy As String
+
+    ''' <summary>
+    ''' the precursor adducts
+    ''' </summary>
+    ''' <returns></returns>
     Public Property annotation As String Implements IMS1Annotation.precursor_type
+    Public Property formula As String
 
     Public Overrides Function ToString() As String
-        Dim display As String = $"#{scan} {mz}@{rt}_{ionization}_{energy}V"
+        Dim display As String = $"#{scan} {mass}@{rt}_{ionization}_{energy}V"
 
         If annotation.StringEmpty Then
             Return display

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b2ccbd399a1be2c0904fbe24f5a134f9, E:/mzkit/src/metadb/MoNA//test/Module1.vb"
+﻿#Region "Microsoft.VisualBasic::b2ccbd399a1be2c0904fbe24f5a134f9, metadb\MoNA\test\Module1.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 15
-    '    Code Lines: 11
-    ' Comment Lines: 0
-    '   Blank Lines: 4
+    '    Code Lines: 11 (73.33%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 4 (26.67%)
     '     File Size: 462 B
 
 

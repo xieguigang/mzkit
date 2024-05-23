@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::42e2031b46cad555ab884e166ff73d9f, E:/mzkit/src/mzmath/SingleCells//File/MatrixReader.vb"
+﻿#Region "Microsoft.VisualBasic::42e2031b46cad555ab884e166ff73d9f, mzmath\SingleCells\File\MatrixReader.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 283
-    '    Code Lines: 173
-    ' Comment Lines: 63
-    '   Blank Lines: 47
+    '    Code Lines: 173 (61.13%)
+    ' Comment Lines: 63 (22.26%)
+    '    - Xml Docs: 77.78%
+    ' 
+    '   Blank Lines: 47 (16.61%)
     '     File Size: 9.54 KB
 
 

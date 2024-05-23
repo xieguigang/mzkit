@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f6bce9ccd9a7451d51c14b337f5d5995, E:/mzkit/src/metadb/Chemoinformatics//Formula/Models/ElementsExactMass.vb"
+﻿#Region "Microsoft.VisualBasic::f6bce9ccd9a7451d51c14b337f5d5995, metadb\Chemoinformatics\Formula\Models\ElementsExactMass.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 68
-    '    Code Lines: 57
-    ' Comment Lines: 4
-    '   Blank Lines: 7
+    '    Code Lines: 57 (83.82%)
+    ' Comment Lines: 4 (5.88%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 7 (10.29%)
     '     File Size: 3.48 KB
 
 

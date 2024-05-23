@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::38da0be5f847096acaa869889c1ac5d6, E:/mzkit/src/assembly/assembly//MarkupData/imzML/XML/MSISummary.vb"
+﻿#Region "Microsoft.VisualBasic::38da0be5f847096acaa869889c1ac5d6, assembly\assembly\MarkupData\imzML\XML\MSISummary.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 146
-    '    Code Lines: 100
-    ' Comment Lines: 26
-    '   Blank Lines: 20
+    '    Code Lines: 100 (68.49%)
+    ' Comment Lines: 26 (17.81%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 20 (13.70%)
     '     File Size: 5.38 KB
 
 

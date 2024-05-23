@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3844d7b4b65fef9a617d4bba25b0c955, E:/mzkit/src/metadna/metaDNA//Infer/Candidate.vb"
+﻿#Region "Microsoft.VisualBasic::3844d7b4b65fef9a617d4bba25b0c955, metadna\metaDNA\Infer\Candidate.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 29
-    '    Code Lines: 15
-    ' Comment Lines: 8
-    '   Blank Lines: 6
+    '    Code Lines: 15 (51.72%)
+    ' Comment Lines: 8 (27.59%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 6 (20.69%)
     '     File Size: 838 B
 
 

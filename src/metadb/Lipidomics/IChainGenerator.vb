@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5c42de56b9d449fabb8da8390183ebbb, E:/mzkit/src/metadb/Lipidomics//IChainGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::5c42de56b9d449fabb8da8390183ebbb, metadb\Lipidomics\IChainGenerator.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 11
-    '    Code Lines: 7
-    ' Comment Lines: 0
-    '   Blank Lines: 4
+    '    Code Lines: 7 (63.64%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 4 (36.36%)
     '     File Size: 409 B
 
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a7d73a99e921345412c4d75a0d2ffa37, E:/mzkit/src/metadb/Lipidomics//Annotation/LipidAnnotationLevelConverter.vb"
+﻿#Region "Microsoft.VisualBasic::a7d73a99e921345412c4d75a0d2ffa37, metadb\Lipidomics\Annotation\LipidAnnotationLevelConverter.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 41
-    '    Code Lines: 34
-    ' Comment Lines: 0
-    '   Blank Lines: 7
+    '    Code Lines: 34 (82.93%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 7 (17.07%)
     '     File Size: 1.76 KB
 
 

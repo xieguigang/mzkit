@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aaac8c1ccea0017d5165871ba5e67d65, E:/mzkit/src/visualize/MsImaging//Blender/MzLayerColorSet.vb"
+﻿#Region "Microsoft.VisualBasic::aaac8c1ccea0017d5165871ba5e67d65, visualize\MsImaging\Blender\MzLayerColorSet.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 36
-    '    Code Lines: 28
-    ' Comment Lines: 0
-    '   Blank Lines: 8
+    '    Code Lines: 28 (77.78%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 8 (22.22%)
     '     File Size: 1.14 KB
 
 

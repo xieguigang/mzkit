@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::62da30af087ea4898d61b2bcead9edf0, E:/mzkit/src/mzmath/ms2_math-core//test/My Project/Settings.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::62da30af087ea4898d61b2bcead9edf0, mzmath\ms2_math-core\test\My Project\Settings.Designer.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 73
-    '    Code Lines: 51
-    ' Comment Lines: 9
-    '   Blank Lines: 13
+    '    Code Lines: 51 (69.86%)
+    ' Comment Lines: 9 (12.33%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 13 (17.81%)
     '     File Size: 2.97 KB
 
 

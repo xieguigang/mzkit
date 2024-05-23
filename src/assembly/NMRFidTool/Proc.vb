@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bca6d5413637dd8cfeaced06463e0444, E:/mzkit/src/assembly/NMRFidTool//Proc.vb"
+﻿#Region "Microsoft.VisualBasic::bca6d5413637dd8cfeaced06463e0444, assembly\NMRFidTool\Proc.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 330
-    '    Code Lines: 241
-    ' Comment Lines: 38
-    '   Blank Lines: 51
+    '    Code Lines: 241 (73.03%)
+    ' Comment Lines: 38 (11.52%)
+    '    - Xml Docs: 18.42%
+    ' 
+    '   Blank Lines: 51 (15.45%)
     '     File Size: 11.36 KB
 
 

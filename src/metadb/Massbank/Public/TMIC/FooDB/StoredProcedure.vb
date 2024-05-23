@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7e18a519d65e3ee93284d4c5f1309b17, E:/mzkit/src/metadb/Massbank//Public/TMIC/FooDB/StoredProcedure.vb"
+﻿#Region "Microsoft.VisualBasic::7e18a519d65e3ee93284d4c5f1309b17, metadb\Massbank\Public\TMIC\FooDB\StoredProcedure.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 113
-    '    Code Lines: 25
-    ' Comment Lines: 72
-    '   Blank Lines: 16
+    '    Code Lines: 25 (22.12%)
+    ' Comment Lines: 72 (63.72%)
+    '    - Xml Docs: 13.89%
+    ' 
+    '   Blank Lines: 16 (14.16%)
     '     File Size: 4.35 KB
 
 

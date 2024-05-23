@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3e22e56d7269c265a684fe7722b3d961, E:/mzkit/src/assembly/NMRFidTool//Math/apodization/Apodizator.vb"
+﻿#Region "Microsoft.VisualBasic::3e22e56d7269c265a684fe7722b3d961, assembly\NMRFidTool\Math\apodization\Apodizator.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 36
-    '    Code Lines: 6
-    ' Comment Lines: 26
-    '   Blank Lines: 4
+    '    Code Lines: 6 (16.67%)
+    ' Comment Lines: 26 (72.22%)
+    '    - Xml Docs: 30.77%
+    ' 
+    '   Blank Lines: 4 (11.11%)
     '     File Size: 1.25 KB
 
 

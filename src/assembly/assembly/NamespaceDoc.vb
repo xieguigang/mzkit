@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0a4535512e4e252f9dcf32435399cd08, E:/mzkit/src/assembly/assembly//NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::0a4535512e4e252f9dcf32435399cd08, assembly\assembly\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 7
-    '    Code Lines: 4
-    ' Comment Lines: 3
-    '   Blank Lines: 0
+    '    Code Lines: 4 (57.14%)
+    ' Comment Lines: 3 (42.86%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 0 (0.00%)
     '     File Size: 252 B
 
 

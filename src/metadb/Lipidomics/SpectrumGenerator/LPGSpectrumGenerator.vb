@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e1c6e97bcd928f58e435a1dd15fd36fc, E:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/LPGSpectrumGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::a43ae55d1e8d36553c02fabac494f49a, metadb\Lipidomics\SpectrumGenerator\LPGSpectrumGenerator.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 163
-    '    Code Lines: 141
-    ' Comment Lines: 1
-    '   Blank Lines: 21
-    '     File Size: 8.95 KB
+    '   Total Lines: 162
+    '    Code Lines: 141 (87.04%)
+    ' Comment Lines: 1 (0.62%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 20 (12.35%)
+    '     File Size: 8.89 KB
 
 
     ' Class LPGSpectrumGenerator
@@ -54,6 +56,7 @@
 
 #End Region
 
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.ElementsExactMass
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
@@ -100,7 +103,7 @@ Public Class LPGSpectrumGenerator
             lipid.Chains.ApplyToChain(1, Sub(chain) spectrum.AddRange(GetAcylPositionSpectrum(lipid, chain, adduct)))
             spectrum.AddRange(GetAcylDoubleBondSpectrum(lipid, lipid.Chains.GetTypedChains(Of AcylChain)(), adduct))
         End If
-        spectrum = spectrum.GroupBy(Function(spec) spec, comparer).[Select](Function(specs) New SpectrumPeak(Enumerable.First(specs).mz, specs.Sum(Function(n) n.Intensity), String.Join(", ", specs.[Select](Function(spec) spec.Annotation)), specs.Aggregate(SpectrumComment.none, Function(a, b) a Or b.SpectrumComment))).OrderBy(Function(peak) peak.mz).ToList()
+        spectrum = spectrum.GroupBy(Function(spec) spec, comparer).[Select](Function(specs) New SpectrumPeak(Enumerable.First(specs).mz, specs.Sum(Function(n) n.intensity), String.Join(", ", specs.[Select](Function(spec) spec.Annotation)), specs.Aggregate(SpectrumComment.none, Function(a, b) a Or b.SpectrumComment))).OrderBy(Function(peak) peak.mz).ToList()
         Return CreateReference(lipid, adduct, spectrum, molecule)
     End Function
 
@@ -212,8 +215,6 @@ Public Class LPGSpectrumGenerator
 }}
     End Function
 
-
-    Private Shared ReadOnly comparer As IEqualityComparer(Of SpectrumPeak) = New SpectrumEqualityComparer()
     Private ReadOnly spectrumGenerator As ISpectrumPeakGenerator
 
 End Class

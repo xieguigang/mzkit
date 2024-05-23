@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ee32ecf2839f26aaa335ab1614c466e7, E:/mzkit/src/assembly/assembly//ASCII/Raman/Spectroscopy.vb"
+﻿#Region "Microsoft.VisualBasic::ee32ecf2839f26aaa335ab1614c466e7, assembly\assembly\ASCII\Raman\Spectroscopy.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 32
-    '    Code Lines: 28
-    ' Comment Lines: 0
-    '   Blank Lines: 4
+    '    Code Lines: 28 (87.50%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 4 (12.50%)
     '     File Size: 1.56 KB
 
 

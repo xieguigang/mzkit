@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cfea037119446cb8e68a07c643b64a9d, E:/mzkit/src/metadb/FormulaSearch.Extensions//test/My Project/AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::cfea037119446cb8e68a07c643b64a9d, metadb\FormulaSearch.Extensions\test\My Project\AssemblyInfo.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 35
-    '    Code Lines: 13
-    ' Comment Lines: 15
-    '   Blank Lines: 7
+    '    Code Lines: 13 (37.14%)
+    ' Comment Lines: 15 (42.86%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 7 (20.00%)
     '     File Size: 1019 B
 
 

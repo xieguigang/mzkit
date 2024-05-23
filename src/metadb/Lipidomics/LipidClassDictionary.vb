@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::076c3b270f78b15554c88d09c13a92a7, E:/mzkit/src/metadb/Lipidomics//LipidClassDictionary.vb"
+﻿#Region "Microsoft.VisualBasic::076c3b270f78b15554c88d09c13a92a7, metadb\Lipidomics\LipidClassDictionary.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 76
-    '    Code Lines: 61
-    ' Comment Lines: 1
-    '   Blank Lines: 14
+    '    Code Lines: 61 (80.26%)
+    ' Comment Lines: 1 (1.32%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 14 (18.42%)
     '     File Size: 2.76 KB
 
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::398d8e450357bc050c2fce7b3493b1f9, E:/mzkit/src/assembly/BrukerDataReader//Raw/Exceptions/PostconditionException.vb"
+﻿#Region "Microsoft.VisualBasic::398d8e450357bc050c2fce7b3493b1f9, assembly\BrukerDataReader\Raw\Exceptions\PostconditionException.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 32
-    '    Code Lines: 16
-    ' Comment Lines: 12
-    '   Blank Lines: 4
+    '    Code Lines: 16 (50.00%)
+    ' Comment Lines: 12 (37.50%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 4 (12.50%)
     '     File Size: 799 B
 
 

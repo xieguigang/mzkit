@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1c0e9e9f1a7cd9d11c17dfcef7d6950f, E:/mzkit/src/mzmath/TargetedMetabolomics//GCMS/QuantifyAnalysis/ScanIonExtract.vb"
+﻿#Region "Microsoft.VisualBasic::1c0e9e9f1a7cd9d11c17dfcef7d6950f, mzmath\TargetedMetabolomics\GCMS\QuantifyAnalysis\ScanIonExtract.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 54
-    '    Code Lines: 43
-    ' Comment Lines: 5
-    '   Blank Lines: 6
+    '    Code Lines: 43 (79.63%)
+    ' Comment Lines: 5 (9.26%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 6 (11.11%)
     '     File Size: 2.50 KB
 
 

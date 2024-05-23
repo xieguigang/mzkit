@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::40e86f6848b0e66f09a2924984f935f8, E:/mzkit/src/metadb/Massbank//Public/TMIC/HMDB/Assembly/disease.vb"
+﻿#Region "Microsoft.VisualBasic::40e86f6848b0e66f09a2924984f935f8, metadb\Massbank\Public\TMIC\HMDB\Assembly\disease.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 31
-    '    Code Lines: 22
-    ' Comment Lines: 0
-    '   Blank Lines: 9
+    '    Code Lines: 22 (70.97%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 9 (29.03%)
     '     File Size: 1.05 KB
 
 

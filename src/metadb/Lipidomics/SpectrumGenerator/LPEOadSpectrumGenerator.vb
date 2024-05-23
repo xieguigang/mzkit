@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8c3e8d4909419bc61713cde617dd3405, E:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/LPEOadSpectrumGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::c89d8fb158a5cfdba240dcb7279a4788, metadb\Lipidomics\SpectrumGenerator\LPEOadSpectrumGenerator.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 115
-    '    Code Lines: 87
-    ' Comment Lines: 11
-    '   Blank Lines: 17
-    '     File Size: 5.27 KB
+    '   Total Lines: 113
+    '    Code Lines: 86 (76.11%)
+    ' Comment Lines: 11 (9.73%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 16 (14.16%)
+    '     File Size: 5.16 KB
 
 
     ' Class LPEOadSpectrumGenerator
@@ -164,7 +166,5 @@ Public Class LPEOadSpectrumGenerator
 .Charge = adduct.ChargeNumber
 }
     End Function
-
-    Private Shared ReadOnly comparer As IEqualityComparer(Of SpectrumPeak) = New SpectrumEqualityComparer()
 
 End Class

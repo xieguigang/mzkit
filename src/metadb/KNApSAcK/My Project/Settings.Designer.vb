@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d071d7c302fe17ef7b5ee2aa5b30e279, E:/mzkit/src/metadb/KNApSAcK//My Project/Settings.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::d071d7c302fe17ef7b5ee2aa5b30e279, metadb\KNApSAcK\My Project\Settings.Designer.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 75
-    '    Code Lines: 53
-    ' Comment Lines: 9
-    '   Blank Lines: 13
+    '    Code Lines: 53 (70.67%)
+    ' Comment Lines: 9 (12.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 13 (17.33%)
     '     File Size: 3.07 KB
 
 

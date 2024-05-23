@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::50ae7f080bb34d28612681c6c5d32d7c, E:/mzkit/src/assembly/ProteoWizard.Interop//PWConvertProcessor.vb"
+﻿#Region "Microsoft.VisualBasic::50ae7f080bb34d28612681c6c5d32d7c, assembly\ProteoWizard.Interop\PWConvertProcessor.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 26
-    '    Code Lines: 20
-    ' Comment Lines: 0
-    '   Blank Lines: 6
+    '    Code Lines: 20 (76.92%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 6 (23.08%)
     '     File Size: 860 B
 
 

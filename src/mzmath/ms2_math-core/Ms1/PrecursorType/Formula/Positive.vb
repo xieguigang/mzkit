@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1cc4eeeefff98e53e6d751f71c5cb4a8, E:/mzkit/src/mzmath/ms2_math-core//Ms1/PrecursorType/Formula/Positive.vb"
+﻿#Region "Microsoft.VisualBasic::1cc4eeeefff98e53e6d751f71c5cb4a8, mzmath\ms2_math-core\Ms1\PrecursorType\Formula\Positive.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 90
-    '    Code Lines: 83
-    ' Comment Lines: 0
-    '   Blank Lines: 7
+    '    Code Lines: 83 (92.22%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 7 (7.78%)
     '     File Size: 10.94 KB
 
 

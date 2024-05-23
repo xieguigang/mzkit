@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2c2919dd2b3156a377fc772033a31fb2, E:/mzkit/src/metadb/Massbank//Public/Massbank/RecordIO.vb"
+﻿#Region "Microsoft.VisualBasic::2c2919dd2b3156a377fc772033a31fb2, metadb\Massbank\Public\Massbank\RecordIO.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 199
-    '    Code Lines: 161
-    ' Comment Lines: 1
-    '   Blank Lines: 37
+    '    Code Lines: 161 (80.90%)
+    ' Comment Lines: 1 (0.50%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 37 (18.59%)
     '     File Size: 7.42 KB
 
 

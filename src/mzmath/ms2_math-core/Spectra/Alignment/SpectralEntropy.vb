@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9e2a3806f02c5b053ead222c4637563a, E:/mzkit/src/mzmath/ms2_math-core//Spectra/Alignment/SpectralEntropy.vb"
+﻿#Region "Microsoft.VisualBasic::f171fda0fd35ea3027494bb795029d68, mzmath\ms2_math-core\Spectra\Alignment\SpectralEntropy.vb"
 
     ' Author:
     ' 
@@ -38,10 +38,12 @@
     ' Code Statistics:
 
     '   Total Lines: 156
-    '    Code Lines: 100
-    ' Comment Lines: 30
-    '   Blank Lines: 26
-    '     File Size: 6.46 KB
+    '    Code Lines: 100 (64.10%)
+    ' Comment Lines: 30 (19.23%)
+    '    - Xml Docs: 90.00%
+    ' 
+    '   Blank Lines: 26 (16.67%)
+    '     File Size: 6.45 KB
 
 
     '     Module SpectralEntropy
@@ -60,7 +62,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
 Imports Microsoft.VisualBasic.Math.Information
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Spectra
 
@@ -182,7 +184,7 @@ Namespace Spectra
             Dim merged As Vector = ia.intensity + ib.intensity
             Dim entropy_merged = (merged / merged.Sum).ShannonEntropy
 
-            Static log4 As Double = stdNum.Log(4)
+            Static log4 As Double = std.Log(4)
 
             Dim similarity As Double = 1 - (2 * entropy_merged - ia.spectral_entropy - ib.spectral_entropy) / log4
 

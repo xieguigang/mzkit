@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::86757e157c6e7f02bfb16fe3302a7df0, E:/mzkit/src/mzmath/ms2_math-core//Spectra/Alignment/ScoreAggregates.vb"
+﻿#Region "Microsoft.VisualBasic::86757e157c6e7f02bfb16fe3302a7df0, mzmath\ms2_math-core\Spectra\Alignment\ScoreAggregates.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 8
-    '    Code Lines: 7
-    ' Comment Lines: 0
-    '   Blank Lines: 1
+    '    Code Lines: 7 (87.50%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 1 (12.50%)
     '     File Size: 120 B
 
 

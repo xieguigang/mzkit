@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9ed1ff4706aec9df3712af0422c26566, E:/mzkit/src/visualize/MsImaging//Layer/LayerFile.vb"
+﻿#Region "Microsoft.VisualBasic::9ed1ff4706aec9df3712af0422c26566, visualize\MsImaging\Layer\LayerFile.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 91
-    '    Code Lines: 74
-    ' Comment Lines: 3
-    '   Blank Lines: 14
+    '    Code Lines: 74 (81.32%)
+    ' Comment Lines: 3 (3.30%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 14 (15.38%)
     '     File Size: 3.10 KB
 
 

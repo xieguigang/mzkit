@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2f9d18a1256d746c78a1c96def306f30, E:/mzkit/src/mzmath/ms2_math-core//test/Module1.vb"
+﻿#Region "Microsoft.VisualBasic::2f9d18a1256d746c78a1c96def306f30, mzmath\ms2_math-core\test\Module1.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 39
-    '    Code Lines: 26
-    ' Comment Lines: 0
-    '   Blank Lines: 13
+    '    Code Lines: 26 (66.67%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 13 (33.33%)
     '     File Size: 965 B
 
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d9bc63ae64e69b224ceebd26a7df29cb, E:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/SMOadSpectrumGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::5acae3d02598cf768456535a824f12ab, metadb\Lipidomics\SpectrumGenerator\SMOadSpectrumGenerator.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 139
-    '    Code Lines: 82
-    ' Comment Lines: 40
-    '   Blank Lines: 17
-    '     File Size: 6.88 KB
+    '   Total Lines: 138
+    '    Code Lines: 82 (59.42%)
+    ' Comment Lines: 40 (28.99%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 16 (11.59%)
+    '     File Size: 6.83 KB
 
 
     ' Class SMOadSpectrumGenerator
@@ -53,6 +55,7 @@
 
 #End Region
 
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.ElementsExactMass
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
@@ -188,7 +191,5 @@ Public Class SMOadSpectrumGenerator
     .Charge = adduct.ChargeNumber
 }
     End Function
-
-    Private Shared ReadOnly comparer As IEqualityComparer(Of SpectrumPeak) = New SpectrumEqualityComparer()
 
 End Class

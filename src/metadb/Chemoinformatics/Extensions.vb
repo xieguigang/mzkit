@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aca06a371533b558cf87ca568a50f68c, E:/mzkit/src/metadb/Chemoinformatics//Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::aca06a371533b558cf87ca568a50f68c, metadb\Chemoinformatics\Extensions.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 17
-    '    Code Lines: 14
-    ' Comment Lines: 0
-    '   Blank Lines: 3
+    '    Code Lines: 14 (82.35%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 3 (17.65%)
     '     File Size: 456 B
 
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6f9b57d2ff0dccdce174b6c761c4bd22, E:/mzkit/src/metadb/SMILES//test/Module1.vb"
+﻿#Region "Microsoft.VisualBasic::6f9b57d2ff0dccdce174b6c761c4bd22, metadb\SMILES\test\Module1.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 47
-    '    Code Lines: 31
-    ' Comment Lines: 4
-    '   Blank Lines: 12
+    '    Code Lines: 31 (65.96%)
+    ' Comment Lines: 4 (8.51%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 12 (25.53%)
     '     File Size: 1.70 KB
 
 

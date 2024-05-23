@@ -1,58 +1,60 @@
-﻿#Region "Microsoft.VisualBasic::32a65a7d28e55b4ab2efd472570381ec, E:/mzkit/Rscript/Library/mzkit_app/src/mzkit//comprehensive/SingleCells.vb"
+﻿#Region "Microsoft.VisualBasic::798383c22c6c8ff5369b402ce3b3387f, Rscript\Library\mzkit_app\src\mzkit\comprehensive\SingleCells.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
-
-
-
-    ' /********************************************************************************/
-
-    ' Summaries:
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
-    ' Code Statistics:
 
-    '   Total Lines: 684
-    '    Code Lines: 404
-    ' Comment Lines: 208
-    '   Blank Lines: 72
-    '     File Size: 26.59 KB
+' /********************************************************************************/
+
+' Summaries:
 
 
-    ' Module SingleCells
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: asHTSExpression, cell_clusters, cell_embedding, cellMatrix, cellStatsTable
-    '               dfMzMatrix, embedding_sample, getCellLabels, getSpatialLabels, mzMatrixDf
-    '               openMatrix, readMzmatrix, rowApplyScale, singleCellsIons, spatialLabels
-    '               spot_vector, writeMatrix
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 683
+'    Code Lines: 403 (59.00%)
+' Comment Lines: 208 (30.45%)
+'    - Xml Docs: 94.23%
+' 
+'   Blank Lines: 72 (10.54%)
+'     File Size: 26.53 KB
+
+
+' Module SingleCells
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Function: asHTSExpression, cell_clusters, cell_embedding, cellMatrix, cellStatsTable
+'               dfMzMatrix, embedding_sample, getCellLabels, getSpatialLabels, mzMatrixDf
+'               openMatrix, readMzmatrix, rowApplyScale, singleCellsIons, spatialLabels
+'               spot_vector, writeMatrix
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -68,7 +70,6 @@ Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
 Imports BioNovoGene.BioDeep.MassSpectrometry.MoleculeNetworking
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Data.NLP.Word2Vec
-Imports Microsoft.VisualBasic.DataMining.BinaryTree
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.ComponentModel.Activations

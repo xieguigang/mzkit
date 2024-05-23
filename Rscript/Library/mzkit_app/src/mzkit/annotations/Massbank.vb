@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::84d5e80f9bf46bc58e75fdd25c5afc10, E:/mzkit/Rscript/Library/mzkit_app/src/mzkit//annotations/Massbank.vb"
+﻿#Region "Microsoft.VisualBasic::84d5e80f9bf46bc58e75fdd25c5afc10, Rscript\Library\mzkit_app\src\mzkit\annotations\Massbank.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 822
-    '    Code Lines: 535
-    ' Comment Lines: 184
-    '   Blank Lines: 103
+    '    Code Lines: 535 (65.09%)
+    ' Comment Lines: 184 (22.38%)
+    '    - Xml Docs: 91.85%
+    ' 
+    '   Blank Lines: 103 (12.53%)
     '     File Size: 32.48 KB
 
 

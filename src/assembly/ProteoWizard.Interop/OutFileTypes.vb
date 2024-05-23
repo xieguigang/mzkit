@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ef814ebbf2a8b5e19861fcd3571abb26, E:/mzkit/src/assembly/ProteoWizard.Interop//OutFileTypes.vb"
+﻿#Region "Microsoft.VisualBasic::ef814ebbf2a8b5e19861fcd3571abb26, assembly\ProteoWizard.Interop\OutFileTypes.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 40
-    '    Code Lines: 12
-    ' Comment Lines: 27
-    '   Blank Lines: 1
+    '    Code Lines: 12 (30.00%)
+    ' Comment Lines: 27 (67.50%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 1 (2.50%)
     '     File Size: 1001 B
 
 

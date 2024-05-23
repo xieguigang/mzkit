@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fc735c717e3d2b15806f4aff2aab170a, E:/mzkit/src/visualize/MsImaging//Drawer.vb"
+﻿#Region "Microsoft.VisualBasic::fc735c717e3d2b15806f4aff2aab170a, visualize\MsImaging\Drawer.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 315
-    '    Code Lines: 199
-    ' Comment Lines: 68
-    '   Blank Lines: 48
+    '    Code Lines: 199 (63.17%)
+    ' Comment Lines: 68 (21.59%)
+    '    - Xml Docs: 82.35%
+    ' 
+    '   Blank Lines: 48 (15.24%)
     '     File Size: 12.82 KB
 
 

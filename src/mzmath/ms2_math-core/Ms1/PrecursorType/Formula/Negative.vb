@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::167ae7e6928ed8851515e3a90f53d739, E:/mzkit/src/mzmath/ms2_math-core//Ms1/PrecursorType/Formula/Negative.vb"
+﻿#Region "Microsoft.VisualBasic::167ae7e6928ed8851515e3a90f53d739, mzmath\ms2_math-core\Ms1\PrecursorType\Formula\Negative.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 33
-    '    Code Lines: 30
-    ' Comment Lines: 0
-    '   Blank Lines: 3
+    '    Code Lines: 30 (90.91%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 3 (9.09%)
     '     File Size: 3.61 KB
 
 

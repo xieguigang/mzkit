@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::10bb8b5197528aad08ae67d3eb298483, E:/mzkit/src/assembly/SpectrumTree//Cleanup.vb"
+﻿#Region "Microsoft.VisualBasic::10bb8b5197528aad08ae67d3eb298483, assembly\SpectrumTree\Cleanup.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 111
-    '    Code Lines: 95
-    ' Comment Lines: 6
-    '   Blank Lines: 10
+    '    Code Lines: 95 (85.59%)
+    ' Comment Lines: 6 (5.41%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 10 (9.01%)
     '     File Size: 4.47 KB
 
 

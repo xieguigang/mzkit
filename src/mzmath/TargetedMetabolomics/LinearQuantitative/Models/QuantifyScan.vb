@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8e923a8f5b43461fa59f96fe0ac35a63, E:/mzkit/src/mzmath/TargetedMetabolomics//LinearQuantitative/Models/QuantifyScan.vb"
+﻿#Region "Microsoft.VisualBasic::8e923a8f5b43461fa59f96fe0ac35a63, mzmath\TargetedMetabolomics\LinearQuantitative\Models\QuantifyScan.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 25
-    '    Code Lines: 11
-    ' Comment Lines: 8
-    '   Blank Lines: 6
+    '    Code Lines: 11 (44.00%)
+    ' Comment Lines: 8 (32.00%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 6 (24.00%)
     '     File Size: 658 B
 
 

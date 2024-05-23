@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::86f01581a9b6bb15ce0762e2888b225a, E:/mzkit/src/mzmath/mz_deco//Save/SaveXcms.vb"
+﻿#Region "Microsoft.VisualBasic::86f01581a9b6bb15ce0762e2888b225a, mzmath\mz_deco\Save\SaveXcms.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 161
-    '    Code Lines: 118
-    ' Comment Lines: 19
-    '   Blank Lines: 24
+    '    Code Lines: 118 (73.29%)
+    ' Comment Lines: 19 (11.80%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 24 (14.91%)
     '     File Size: 5.70 KB
 
 

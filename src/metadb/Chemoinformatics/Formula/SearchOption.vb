@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cad47bc633958fcf75f1b48392c48fc5, E:/mzkit/src/metadb/Chemoinformatics//Formula/SearchOption.vb"
+﻿#Region "Microsoft.VisualBasic::cad47bc633958fcf75f1b48392c48fc5, metadb\Chemoinformatics\Formula\SearchOption.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 167
-    '    Code Lines: 128
-    ' Comment Lines: 14
-    '   Blank Lines: 25
+    '    Code Lines: 128 (76.65%)
+    ' Comment Lines: 14 (8.38%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 25 (14.97%)
     '     File Size: 6.30 KB
 
 

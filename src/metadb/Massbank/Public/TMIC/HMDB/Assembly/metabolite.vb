@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::22d3014de5c11438660d72f3040653e8, E:/mzkit/src/metadb/Massbank//Public/TMIC/HMDB/Assembly/metabolite.vb"
+﻿#Region "Microsoft.VisualBasic::22d3014de5c11438660d72f3040653e8, metadb\Massbank\Public\TMIC\HMDB\Assembly\metabolite.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 246
-    '    Code Lines: 145
-    ' Comment Lines: 68
-    '   Blank Lines: 33
+    '    Code Lines: 145 (58.94%)
+    ' Comment Lines: 68 (27.64%)
+    '    - Xml Docs: 91.18%
+    ' 
+    '   Blank Lines: 33 (13.41%)
     '     File Size: 10.94 KB
 
 

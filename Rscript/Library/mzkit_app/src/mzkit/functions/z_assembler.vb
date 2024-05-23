@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::07a398e614469170d81d85f142037fab, E:/mzkit/Rscript/Library/mzkit_app/src/mzkit//functions/z_assembler.vb"
+﻿#Region "Microsoft.VisualBasic::07a398e614469170d81d85f142037fab, Rscript\Library\mzkit_app\src\mzkit\functions\z_assembler.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 44
-    '    Code Lines: 26
-    ' Comment Lines: 10
-    '   Blank Lines: 8
+    '    Code Lines: 26 (59.09%)
+    ' Comment Lines: 10 (22.73%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 8 (18.18%)
     '     File Size: 1.66 KB
 
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a6400a4614e00fc2d4690b5c9f9eb646, E:/mzkit/src/metadb/Chemoinformatics//CASNumber.vb"
+﻿#Region "Microsoft.VisualBasic::a6400a4614e00fc2d4690b5c9f9eb646, metadb\Chemoinformatics\CASNumber.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 43
-    '    Code Lines: 20
-    ' Comment Lines: 15
-    '   Blank Lines: 8
+    '    Code Lines: 20 (46.51%)
+    ' Comment Lines: 15 (34.88%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 8 (18.60%)
     '     File Size: 1.48 KB
 
 

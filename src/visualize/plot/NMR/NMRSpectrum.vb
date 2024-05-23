@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ac9082cd1993297757b208dfdecdd56b, E:/mzkit/src/visualize/plot//NMR/NMRSpectrum.vb"
+﻿#Region "Microsoft.VisualBasic::ac9082cd1993297757b208dfdecdd56b, visualize\plot\NMR\NMRSpectrum.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 74
-    '    Code Lines: 59
-    ' Comment Lines: 9
-    '   Blank Lines: 6
+    '    Code Lines: 59 (79.73%)
+    ' Comment Lines: 9 (12.16%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 6 (8.11%)
     '     File Size: 2.49 KB
 
 

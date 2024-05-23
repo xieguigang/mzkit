@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::16d9fd3dcf5ce6e5dc851b7d4b862551, E:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/SMd9SpectrumGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::f78183159cec80931664e9dd7bbd0dcb, metadb\Lipidomics\SpectrumGenerator\SMd9SpectrumGenerator.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 127
-    '    Code Lines: 116
-    ' Comment Lines: 0
-    '   Blank Lines: 11
-    '     File Size: 6.77 KB
+    '   Total Lines: 124
+    '    Code Lines: 115 (92.74%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 9 (7.26%)
+    '     File Size: 6.66 KB
 
 
     ' Class SMd9SpectrumGenerator
@@ -177,7 +179,4 @@ Public Class SMd9SpectrumGenerator
 }
         Return spectrum.ToArray()
     End Function
-
-    Private Shared ReadOnly comparer As IEqualityComparer(Of SpectrumPeak) = New SpectrumEqualityComparer()
-
 End Class

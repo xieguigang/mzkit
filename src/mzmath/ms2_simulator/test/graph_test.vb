@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::72021dcdce7e04b987a9850ffd5fa05e, E:/mzkit/src/mzmath/ms2_simulator//test/graph_test.vb"
+﻿#Region "Microsoft.VisualBasic::72021dcdce7e04b987a9850ffd5fa05e, mzmath\ms2_simulator\test\graph_test.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 33
-    '    Code Lines: 26
-    ' Comment Lines: 0
-    '   Blank Lines: 7
+    '    Code Lines: 26 (78.79%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 7 (21.21%)
     '     File Size: 1.60 KB
 
 

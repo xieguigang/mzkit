@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6454335a199e0f59ec1f01518e4e12b9, E:/mzkit/src/mzmath/ms2_math-core//Spectra/MoleculeNetworking/Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::6454335a199e0f59ec1f01518e4e12b9, mzmath\ms2_math-core\Spectra\MoleculeNetworking\Extensions.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 41
-    '    Code Lines: 27
-    ' Comment Lines: 7
-    '   Blank Lines: 7
+    '    Code Lines: 27 (65.85%)
+    ' Comment Lines: 7 (17.07%)
+    '    - Xml Docs: 85.71%
+    ' 
+    '   Blank Lines: 7 (17.07%)
     '     File Size: 1.70 KB
 
 

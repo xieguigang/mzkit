@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5945c96bbbdda86aea65ab8ebb3248b9, E:/mzkit/src/mzmath/mz_deco//GCMS/GCMSDeconv.vb"
+﻿#Region "Microsoft.VisualBasic::5945c96bbbdda86aea65ab8ebb3248b9, mzmath\mz_deco\GCMS\GCMSDeconv.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 56
-    '    Code Lines: 37
-    ' Comment Lines: 9
-    '   Blank Lines: 10
+    '    Code Lines: 37 (66.07%)
+    ' Comment Lines: 9 (16.07%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 10 (17.86%)
     '     File Size: 2.28 KB
 
 

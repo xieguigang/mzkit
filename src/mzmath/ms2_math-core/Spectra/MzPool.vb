@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a548231a6cf635cdcdc8797b633f235a, E:/mzkit/src/mzmath/ms2_math-core//Spectra/MzPool.vb"
+﻿#Region "Microsoft.VisualBasic::55e2740bc93ed35ca0622a0fb4745bff, mzmath\ms2_math-core\Spectra\MzPool.vb"
 
     ' Author:
     ' 
@@ -37,21 +37,15 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 146
-    '    Code Lines: 72
-    ' Comment Lines: 52
-    '   Blank Lines: 22
-    '     File Size: 5.09 KB
+    '   Total Lines: 95
+    '    Code Lines: 48 (50.53%)
+    ' Comment Lines: 35 (36.84%)
+    '    - Xml Docs: 97.14%
+    ' 
+    '   Blank Lines: 12 (12.63%)
+    '     File Size: 3.57 KB
 
 
-    '     Class MzIndex
-    ' 
-    '         Properties: index, mz
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: ToString, Tuple
-    '         Operators: *
-    ' 
     '     Class MzPool
     ' 
     '         Properties: raw, size
@@ -70,57 +64,6 @@ Imports Microsoft.VisualBasic.Linq
 Imports std = System.Math
 
 Namespace Spectra
-
-    ''' <summary>
-    ''' represents the ion m/z as a index
-    ''' </summary>
-    Public Class MzIndex
-
-        Public Property mz As Double
-
-        ''' <summary>
-        ''' the index value
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property index As Integer
-
-        Sub New()
-        End Sub
-
-        Sub New(mz As Double, Optional index As Integer = 0)
-            Me.mz = mz
-            Me.index = index
-        End Sub
-
-        ''' <summary>
-        ''' get the fallback tuple data
-        ''' </summary>
-        ''' <returns></returns>
-        Public Function Tuple() As (mz As Double, Integer)
-            Return (mz, index)
-        End Function
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overrides Function ToString() As String
-            Return $"[{index}] {mz.ToString}"
-        End Function
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Widening Operator CType(mzVal As (mz As Double, index As Integer)) As MzIndex
-            Return New MzIndex(mzVal.mz, mzVal.index)
-        End Operator
-
-        ''' <summary>
-        ''' calculate the binary data file offset
-        ''' </summary>
-        ''' <param name="sizeof"></param>
-        ''' <param name="index"></param>
-        ''' <returns></returns>
-        Public Shared Operator *(sizeof As Integer, index As MzIndex) As Integer
-            Return sizeof * index.index
-        End Operator
-
-    End Class
 
     ''' <summary>
     ''' a wrapper of the binary search function for do mz search 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f9f1660140c4ec3b3577a74ed8969950, E:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/PSEidSpectrumGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::377e5afd63efedb0af4b24ca601aa9c0, metadb\Lipidomics\SpectrumGenerator\PSEidSpectrumGenerator.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 148
-    '    Code Lines: 124
-    ' Comment Lines: 0
-    '   Blank Lines: 24
-    '     File Size: 8.05 KB
+    '   Total Lines: 146
+    '    Code Lines: 124 (84.93%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 22 (15.07%)
+    '     File Size: 8.00 KB
 
 
     ' Class PSEidSpectrumGenerator
@@ -54,6 +56,7 @@
 
 #End Region
 
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.ElementsExactMass
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
@@ -197,8 +200,5 @@ New SpectrumPeak(adduct.ConvertToMz(Gly_O), 100.0R, "Gly-O") With {
         End If
         Return spectrum.ToArray()
     End Function
-
-
-    Private Shared ReadOnly comparer As IEqualityComparer(Of SpectrumPeak) = New SpectrumEqualityComparer()
 
 End Class

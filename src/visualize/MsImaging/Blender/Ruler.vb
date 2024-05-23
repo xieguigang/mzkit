@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::09771544be37abc74220f87908b64c78, E:/mzkit/src/visualize/MsImaging//Blender/Ruler.vb"
+﻿#Region "Microsoft.VisualBasic::09771544be37abc74220f87908b64c78, visualize\MsImaging\Blender\Ruler.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 94
-    '    Code Lines: 72
-    ' Comment Lines: 2
-    '   Blank Lines: 20
+    '    Code Lines: 72 (76.60%)
+    ' Comment Lines: 2 (2.13%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 20 (21.28%)
     '     File Size: 3.58 KB
 
 

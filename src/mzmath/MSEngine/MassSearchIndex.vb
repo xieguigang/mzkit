@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9437612d0e427638f8ff55b40d826cfc, E:/mzkit/src/mzmath/MSEngine//MassSearchIndex.vb"
+﻿#Region "Microsoft.VisualBasic::9437612d0e427638f8ff55b40d826cfc, mzmath\MSEngine\MassSearchIndex.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 82
-    '    Code Lines: 38
-    ' Comment Lines: 34
-    '   Blank Lines: 10
+    '    Code Lines: 38 (46.34%)
+    ' Comment Lines: 34 (41.46%)
+    '    - Xml Docs: 61.76%
+    ' 
+    '   Blank Lines: 10 (12.20%)
     '     File Size: 2.81 KB
 
 

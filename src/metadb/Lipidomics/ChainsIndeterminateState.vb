@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c0418aff9e111d4ab888d3ffd84ca816, E:/mzkit/src/metadb/Lipidomics//ChainsIndeterminateState.vb"
+﻿#Region "Microsoft.VisualBasic::c0418aff9e111d4ab888d3ffd84ca816, metadb\Lipidomics\ChainsIndeterminateState.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 81
-    '    Code Lines: 65
-    ' Comment Lines: 0
-    '   Blank Lines: 16
+    '    Code Lines: 65 (80.25%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 16 (19.75%)
     '     File Size: 3.31 KB
 
 

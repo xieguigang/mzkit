@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5bd8c3449d34507fd3f87567e2b97930, E:/mzkit/src/metadb/Massbank//Public/NCBI/PubChem/Web/Query/CIDExport.vb"
+﻿#Region "Microsoft.VisualBasic::5bd8c3449d34507fd3f87567e2b97930, metadb\Massbank\Public\NCBI\PubChem\Web\Query\CIDExport.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 41
-    '    Code Lines: 33
-    ' Comment Lines: 0
-    '   Blank Lines: 8
+    '    Code Lines: 33 (80.49%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 8 (19.51%)
     '     File Size: 1.54 KB
 
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::afa8d69266a4b7138399668236f81d3c, E:/mzkit/src/mzmath/MSEngine//Search/MsScanMatchResult.vb"
+﻿#Region "Microsoft.VisualBasic::afa8d69266a4b7138399668236f81d3c, mzmath\MSEngine\Search\MsScanMatchResult.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 127
-    '    Code Lines: 75
-    ' Comment Lines: 6
-    '   Blank Lines: 46
+    '    Code Lines: 75 (59.06%)
+    ' Comment Lines: 6 (4.72%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 46 (36.22%)
     '     File Size: 3.00 KB
 
 

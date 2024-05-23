@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::45ebd450ebebf486860fc0c5a59eb921, E:/mzkit/src/mzmath/Oligonucleotide_MS//MS_Peak/Oligonucleotide_MS_Peak_ID_Given_Sequence_v8.vb"
+﻿#Region "Microsoft.VisualBasic::45ebd450ebebf486860fc0c5a59eb921, mzmath\Oligonucleotide_MS\MS_Peak\Oligonucleotide_MS_Peak_ID_Given_Sequence_v8.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 529
-    '    Code Lines: 414
-    ' Comment Lines: 50
-    '   Blank Lines: 65
+    '    Code Lines: 414 (78.26%)
+    ' Comment Lines: 50 (9.45%)
+    '    - Xml Docs: 42.00%
+    ' 
+    '   Blank Lines: 65 (12.29%)
     '     File Size: 19.43 KB
 
 

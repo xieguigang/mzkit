@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dbd9ed206bee3df53b0b6a04e956c262, E:/mzkit/src/assembly/assembly//MarkupData/imzML/Writer/mzPackWriter.vb"
+﻿#Region "Microsoft.VisualBasic::dbd9ed206bee3df53b0b6a04e956c262, assembly\assembly\MarkupData\imzML\Writer\mzPackWriter.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 340
-    '    Code Lines: 286
-    ' Comment Lines: 21
-    '   Blank Lines: 33
+    '    Code Lines: 286 (84.12%)
+    ' Comment Lines: 21 (6.18%)
+    '    - Xml Docs: 42.86%
+    ' 
+    '   Blank Lines: 33 (9.71%)
     '     File Size: 19.64 KB
 
 

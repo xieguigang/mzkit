@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7dd65482c7a593dd7eee6e945a2d910a, E:/mzkit/src/metadb/Massbank//Public/NCBI/PubChem/PCXml/Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::7dd65482c7a593dd7eee6e945a2d910a, metadb\Massbank\Public\NCBI\PubChem\PCXml\Extensions.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 31
-    '    Code Lines: 26
-    ' Comment Lines: 0
-    '   Blank Lines: 5
+    '    Code Lines: 26 (83.87%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 5 (16.13%)
     '     File Size: 1.08 KB
 
 

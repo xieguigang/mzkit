@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4b4e482f135b1483943e8739349a4643, E:/mzkit/src/metadb/Lipidomics//SmilesInchikeyGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::4b4e482f135b1483943e8739349a4643, metadb\Lipidomics\SmilesInchikeyGenerator.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 243
-    '    Code Lines: 191
-    ' Comment Lines: 36
-    '   Blank Lines: 16
+    '    Code Lines: 191 (78.60%)
+    ' Comment Lines: 36 (14.81%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 16 (6.58%)
     '     File Size: 17.42 KB
 
 

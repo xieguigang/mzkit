@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::826b877700c4cd2d51c8186440c4fd70, E:/mzkit/src/assembly/ThermoRawFileReader//DataObjects/ParentIonInfoType.vb"
+﻿#Region "Microsoft.VisualBasic::8f30782b815e60b1dca614ab6547a838, assembly\ThermoRawFileReader\DataObjects\ParentIonInfoType.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 83
-    '    Code Lines: 28
-    ' Comment Lines: 43
-    '   Blank Lines: 12
-    '     File Size: 2.67 KB
+    '   Total Lines: 84
+    '    Code Lines: 28 (33.33%)
+    ' Comment Lines: 43 (51.19%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 13 (15.48%)
+    '     File Size: 2.66 KB
 
 
     '     Structure ParentIonInfoType
@@ -55,7 +57,7 @@
 
 #End Region
 
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData
+Imports BioNovoGene.Analytical.MassSpectrometry.Math
 
 Namespace DataObjects
 
@@ -64,6 +66,7 @@ Namespace DataObjects
     ''' </summary>
     <CLSCompliant(True)>
     Public Structure ParentIonInfoType
+
         ''' <summary>
         ''' MS Level of the spectrum
         ''' </summary>

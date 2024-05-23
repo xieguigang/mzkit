@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cb8d6194800e3a3bd20213fda16a8812, E:/mzkit/src/metadb/SMILES//Graph/ChemicalElement.vb"
+﻿#Region "Microsoft.VisualBasic::cb8d6194800e3a3bd20213fda16a8812, metadb\SMILES\Graph\ChemicalElement.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 172
-    '    Code Lines: 108
-    ' Comment Lines: 47
-    '   Blank Lines: 17
+    '    Code Lines: 108 (62.79%)
+    ' Comment Lines: 47 (27.33%)
+    '    - Xml Docs: 89.36%
+    ' 
+    '   Blank Lines: 17 (9.88%)
     '     File Size: 5.81 KB
 
 

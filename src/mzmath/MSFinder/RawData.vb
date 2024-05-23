@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3cb5a9da84c9aec0b441cc922039c6e7, E:/mzkit/src/mzmath/MSFinder//RawData.vb"
+﻿#Region "Microsoft.VisualBasic::30b83d3bacdd2e403e4d76bd726464dc, mzmath\MSFinder\RawData.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 13
-    '    Code Lines: 11
-    ' Comment Lines: 0
-    '   Blank Lines: 2
-    '     File Size: 682 B
+    '   Total Lines: 17
+    '    Code Lines: 11 (64.71%)
+    ' Comment Lines: 3 (17.65%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 3 (17.65%)
+    '     File Size: 777 B
 
 
     ' Class RawData
@@ -55,6 +57,9 @@
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 
+''' <summary>
+''' a spectrum data which is extract from the raw data file.
+''' </summary>
 Public Class RawData : Inherits PeakMs2
 
     Public Property CarbonNumberFromLabeledExperiment As Integer
@@ -65,4 +70,5 @@ Public Class RawData : Inherits PeakMs2
     Public Property CarbonSulfurNumberFromLabeledExperiment As Integer
     Public Property NitrogenSulfurNumberFromLabeledExperiment As Integer
     Public Property CarbonNitrogenSulfurNumberFromLabeledExperiment As Integer
+
 End Class

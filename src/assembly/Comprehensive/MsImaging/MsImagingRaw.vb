@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::90e3aefb6a2959a367362ba5f48c7e91, E:/mzkit/src/assembly/Comprehensive//MsImaging/MsImagingRaw.vb"
+﻿#Region "Microsoft.VisualBasic::90e3aefb6a2959a367362ba5f48c7e91, assembly\Comprehensive\MsImaging\MsImagingRaw.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 206
-    '    Code Lines: 157
-    ' Comment Lines: 25
-    '   Blank Lines: 24
+    '    Code Lines: 157 (76.21%)
+    ' Comment Lines: 25 (12.14%)
+    '    - Xml Docs: 84.00%
+    ' 
+    '   Blank Lines: 24 (11.65%)
     '     File Size: 8.85 KB
 
 

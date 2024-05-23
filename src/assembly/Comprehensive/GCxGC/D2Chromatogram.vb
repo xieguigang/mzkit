@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::73e6bb086fb8fcba659b578a485bb121, E:/mzkit/src/assembly/Comprehensive//GCxGC/D2Chromatogram.vb"
+﻿#Region "Microsoft.VisualBasic::73e6bb086fb8fcba659b578a485bb121, assembly\Comprehensive\GCxGC\D2Chromatogram.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 138
-    '    Code Lines: 99
-    ' Comment Lines: 21
-    '   Blank Lines: 18
+    '    Code Lines: 99 (71.74%)
+    ' Comment Lines: 21 (15.22%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 18 (13.04%)
     '     File Size: 5.50 KB
 
 

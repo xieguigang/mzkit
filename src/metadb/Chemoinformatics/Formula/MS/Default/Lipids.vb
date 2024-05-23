@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::087e5a0b94063a1a9e262df94879c746, E:/mzkit/src/metadb/Chemoinformatics//Formula/MS/Default/Lipids.vb"
+﻿#Region "Microsoft.VisualBasic::087e5a0b94063a1a9e262df94879c746, metadb\Chemoinformatics\Formula\MS\Default\Lipids.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 6
-    '    Code Lines: 4
-    ' Comment Lines: 0
-    '   Blank Lines: 2
+    '    Code Lines: 4 (66.67%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 2 (33.33%)
     '     File Size: 90 B
 
 

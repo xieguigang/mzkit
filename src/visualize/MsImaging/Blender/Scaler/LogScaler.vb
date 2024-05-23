@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a880e4879943a57f0f369f39139a29ff, E:/mzkit/src/visualize/MsImaging//Blender/Scaler/LogScaler.vb"
+﻿#Region "Microsoft.VisualBasic::a880e4879943a57f0f369f39139a29ff, visualize\MsImaging\Blender\Scaler\LogScaler.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 31
-    '    Code Lines: 22
-    ' Comment Lines: 3
-    '   Blank Lines: 6
+    '    Code Lines: 22 (70.97%)
+    ' Comment Lines: 3 (9.68%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 6 (19.35%)
     '     File Size: 901 B
 
 

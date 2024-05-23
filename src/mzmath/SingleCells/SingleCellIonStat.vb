@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::51ddb66d0e0a6bfb7a2d853a282ceffa, E:/mzkit/src/mzmath/SingleCells//SingleCellIonStat.vb"
+﻿#Region "Microsoft.VisualBasic::51ddb66d0e0a6bfb7a2d853a282ceffa, mzmath\SingleCells\SingleCellIonStat.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 109
-    '    Code Lines: 74
-    ' Comment Lines: 24
-    '   Blank Lines: 11
+    '    Code Lines: 74 (67.89%)
+    ' Comment Lines: 24 (22.02%)
+    '    - Xml Docs: 95.83%
+    ' 
+    '   Blank Lines: 11 (10.09%)
     '     File Size: 4.09 KB
 
 

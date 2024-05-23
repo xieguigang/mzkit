@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5648683cf739ff453f1781f53dcfd504, E:/mzkit/src/metadna/metaDNA//Models/AnnotatedSeed.vb"
+﻿#Region "Microsoft.VisualBasic::5648683cf739ff453f1781f53dcfd504, metadna\metaDNA\Models\AnnotatedSeed.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 34
-    '    Code Lines: 14
-    ' Comment Lines: 14
-    '   Blank Lines: 6
+    '    Code Lines: 14 (41.18%)
+    ' Comment Lines: 14 (41.18%)
+    '    - Xml Docs: 92.86%
+    ' 
+    '   Blank Lines: 6 (17.65%)
     '     File Size: 1022 B
 
 

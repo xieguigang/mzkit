@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::77e3645060badd25abdb5bd98b6a837f, E:/mzkit/src/assembly/assembly//mzPack/Binary/BinaryStreamReader.vb"
+﻿#Region "Microsoft.VisualBasic::77e3645060badd25abdb5bd98b6a837f, assembly\assembly\mzPack\Binary\BinaryStreamReader.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 311
-    '    Code Lines: 186
-    ' Comment Lines: 74
-    '   Blank Lines: 51
+    '    Code Lines: 186 (59.81%)
+    ' Comment Lines: 74 (23.79%)
+    '    - Xml Docs: 64.86%
+    ' 
+    '   Blank Lines: 51 (16.40%)
     '     File Size: 11.33 KB
 
 

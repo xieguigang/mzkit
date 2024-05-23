@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d93ab057661a2c6db64f5403bd8d2e12, E:/mzkit/src/mzmath/ms2_math-core//Spectra/Alignment/EntropyAlignment.vb"
+﻿#Region "Microsoft.VisualBasic::d93ab057661a2c6db64f5403bd8d2e12, mzmath\ms2_math-core\Spectra\Alignment\EntropyAlignment.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 21
-    '    Code Lines: 16
-    ' Comment Lines: 0
-    '   Blank Lines: 5
+    '    Code Lines: 16 (76.19%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 5 (23.81%)
     '     File Size: 838 B
 
 

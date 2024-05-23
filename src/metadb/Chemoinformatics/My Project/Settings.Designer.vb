@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b2a448d940302d499324c683aaa9c2ab, E:/mzkit/src/metadb/Chemoinformatics//My Project/Settings.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::b2a448d940302d499324c683aaa9c2ab, metadb\Chemoinformatics\My Project\Settings.Designer.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 76
-    '    Code Lines: 53
-    ' Comment Lines: 9
-    '   Blank Lines: 14
+    '    Code Lines: 53 (69.74%)
+    ' Comment Lines: 9 (11.84%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 14 (18.42%)
     '     File Size: 3.05 KB
 
 

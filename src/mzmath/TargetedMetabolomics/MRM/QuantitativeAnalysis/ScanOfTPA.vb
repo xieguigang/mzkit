@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bd718b29d7fb5b29679b75c88e6f5852, E:/mzkit/src/mzmath/TargetedMetabolomics//MRM/QuantitativeAnalysis/ScanOfTPA.vb"
+﻿#Region "Microsoft.VisualBasic::bd718b29d7fb5b29679b75c88e6f5852, mzmath\TargetedMetabolomics\MRM\QuantitativeAnalysis\ScanOfTPA.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 73
-    '    Code Lines: 48
-    ' Comment Lines: 12
-    '   Blank Lines: 13
+    '    Code Lines: 48 (65.75%)
+    ' Comment Lines: 12 (16.44%)
+    '    - Xml Docs: 50.00%
+    ' 
+    '   Blank Lines: 13 (17.81%)
     '     File Size: 3.02 KB
 
 

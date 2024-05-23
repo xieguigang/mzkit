@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4698e4079e2090830530e3ccbaacc7dc, E:/mzkit/src/metadb/Lipidomics//OxidizedIndeterminateState.vb"
+﻿#Region "Microsoft.VisualBasic::4698e4079e2090830530e3ccbaacc7dc, metadb\Lipidomics\OxidizedIndeterminateState.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 96
-    '    Code Lines: 83
-    ' Comment Lines: 0
-    '   Blank Lines: 13
+    '    Code Lines: 83 (86.46%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 13 (13.54%)
     '     File Size: 4.25 KB
 
 

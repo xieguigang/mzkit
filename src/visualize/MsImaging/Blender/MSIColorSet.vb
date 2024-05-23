@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b82b1b9677f0f0f4829f3c43288a1ffe, E:/mzkit/src/visualize/MsImaging//Blender/MSIColorSet.vb"
+﻿#Region "Microsoft.VisualBasic::b82b1b9677f0f0f4829f3c43288a1ffe, visualize\MsImaging\Blender\MSIColorSet.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 46
-    '    Code Lines: 40
-    ' Comment Lines: 0
-    '   Blank Lines: 6
+    '    Code Lines: 40 (86.96%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 6 (13.04%)
     '     File Size: 1.28 KB
 
 

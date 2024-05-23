@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2e034050c18daf7ef900b0e7ab4617b0, E:/mzkit/src/assembly/LoadR.NET5//ChromatogramOverlap.vb"
+﻿#Region "Microsoft.VisualBasic::2e034050c18daf7ef900b0e7ab4617b0, assembly\LoadR.NET5\ChromatogramOverlap.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 113
-    '    Code Lines: 84
-    ' Comment Lines: 8
-    '   Blank Lines: 21
+    '    Code Lines: 84 (74.34%)
+    ' Comment Lines: 8 (7.08%)
+    '    - Xml Docs: 75.00%
+    ' 
+    '   Blank Lines: 21 (18.58%)
     '     File Size: 3.76 KB
 
 

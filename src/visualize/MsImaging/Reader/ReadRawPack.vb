@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cc2ef3d83a90c678b2e0aea385575bc5, E:/mzkit/src/visualize/MsImaging//Reader/ReadRawPack.vb"
+﻿#Region "Microsoft.VisualBasic::cc2ef3d83a90c678b2e0aea385575bc5, visualize\MsImaging\Reader\ReadRawPack.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 157
-    '    Code Lines: 118
-    ' Comment Lines: 14
-    '   Blank Lines: 25
+    '    Code Lines: 118 (75.16%)
+    ' Comment Lines: 14 (8.92%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 25 (15.92%)
     '     File Size: 6.07 KB
 
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6600b12fc5ff5d820e82660198b13a94, E:/mzkit/src/mzmath/ms2_math-core//Spectra/SpectrumTree/IMSScanProperty.vb"
+﻿#Region "Microsoft.VisualBasic::6600b12fc5ff5d820e82660198b13a94, mzmath\ms2_math-core\Spectra\SpectrumTree\IMSScanProperty.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 21
-    '    Code Lines: 15
-    ' Comment Lines: 3
-    '   Blank Lines: 3
+    '    Code Lines: 15 (71.43%)
+    ' Comment Lines: 3 (14.29%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 3 (14.29%)
     '     File Size: 682 B
 
 

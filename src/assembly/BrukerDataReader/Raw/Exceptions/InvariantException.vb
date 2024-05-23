@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e65d4b3b28eb7af6c103b7517cb4b769, E:/mzkit/src/assembly/BrukerDataReader//Raw/Exceptions/InvariantException.vb"
+﻿#Region "Microsoft.VisualBasic::e65d4b3b28eb7af6c103b7517cb4b769, assembly\BrukerDataReader\Raw\Exceptions\InvariantException.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 30
-    '    Code Lines: 16
-    ' Comment Lines: 12
-    '   Blank Lines: 2
+    '    Code Lines: 16 (53.33%)
+    ' Comment Lines: 12 (40.00%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 2 (6.67%)
     '     File Size: 776 B
 
 

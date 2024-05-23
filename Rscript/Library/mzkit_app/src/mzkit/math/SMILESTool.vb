@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f82a0ff0a31e32bf83125e1464831c17, E:/mzkit/Rscript/Library/mzkit_app/src/mzkit//math/SMILESTool.vb"
+﻿#Region "Microsoft.VisualBasic::f82a0ff0a31e32bf83125e1464831c17, Rscript\Library\mzkit_app\src\mzkit\math\SMILESTool.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 131
-    '    Code Lines: 86
-    ' Comment Lines: 33
-    '   Blank Lines: 12
+    '    Code Lines: 86 (65.65%)
+    ' Comment Lines: 33 (25.19%)
+    '    - Xml Docs: 90.91%
+    ' 
+    '   Blank Lines: 12 (9.16%)
     '     File Size: 5.77 KB
 
 

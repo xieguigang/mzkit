@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::17539c6beb9396de7eae0b55beb83697, E:/mzkit/src/assembly/mzPackExtensions//test/Module1.vb"
+﻿#Region "Microsoft.VisualBasic::17539c6beb9396de7eae0b55beb83697, assembly\mzPackExtensions\test\Module1.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 17
-    '    Code Lines: 13
-    ' Comment Lines: 0
-    '   Blank Lines: 4
+    '    Code Lines: 13 (76.47%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 4 (23.53%)
     '     File Size: 491 B
 
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::986303da82bbfd379fea4893065c43e7, E:/mzkit/src/visualize/plot//PlotMassWindow.vb"
+﻿#Region "Microsoft.VisualBasic::986303da82bbfd379fea4893065c43e7, visualize\plot\PlotMassWindow.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 99
-    '    Code Lines: 82
-    ' Comment Lines: 4
-    '   Blank Lines: 13
+    '    Code Lines: 82 (82.83%)
+    ' Comment Lines: 4 (4.04%)
+    '    - Xml Docs: 75.00%
+    ' 
+    '   Blank Lines: 13 (13.13%)
     '     File Size: 3.74 KB
 
 

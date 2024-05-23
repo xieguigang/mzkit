@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f989eb444b114f512dd8e250e44098a1, E:/mzkit/src/metadb/Lipidomics//MsCharacterization/EtherPCEadMsCharacterization.vb"
+﻿#Region "Microsoft.VisualBasic::f989eb444b114f512dd8e250e44098a1, metadb\Lipidomics\MsCharacterization\EtherPCEadMsCharacterization.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 11
-    '    Code Lines: 8
-    ' Comment Lines: 0
-    '   Blank Lines: 3
+    '    Code Lines: 8 (72.73%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 3 (27.27%)
     '     File Size: 619 B
 
 

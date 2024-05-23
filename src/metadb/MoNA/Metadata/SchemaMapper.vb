@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3b8e054c1179110fb2645e361ce9e24d, E:/mzkit/src/metadb/MoNA//Metadata/SchemaMapper.vb"
+﻿#Region "Microsoft.VisualBasic::3b8e054c1179110fb2645e361ce9e24d, metadb\MoNA\Metadata\SchemaMapper.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 100
-    '    Code Lines: 73
-    ' Comment Lines: 12
-    '   Blank Lines: 15
+    '    Code Lines: 73 (73.00%)
+    ' Comment Lines: 12 (12.00%)
+    '    - Xml Docs: 75.00%
+    ' 
+    '   Blank Lines: 15 (15.00%)
     '     File Size: 3.67 KB
 
 

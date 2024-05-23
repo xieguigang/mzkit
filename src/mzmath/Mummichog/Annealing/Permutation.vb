@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6d0043c276ddd7865c0ad219cc533889, E:/mzkit/src/mzmath/Mummichog//Annealing/Permutation.vb"
+﻿#Region "Microsoft.VisualBasic::6d0043c276ddd7865c0ad219cc533889, mzmath\Mummichog\Annealing\Permutation.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 67
-    '    Code Lines: 47
-    ' Comment Lines: 9
-    '   Blank Lines: 11
+    '    Code Lines: 47 (70.15%)
+    ' Comment Lines: 9 (13.43%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 11 (16.42%)
     '     File Size: 2.30 KB
 
 

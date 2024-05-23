@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2a0e923b688e91a7d9bc9acce3e7bb4d, E:/mzkit/src/mzmath/MSFinder//FormulaResult.vb"
+﻿#Region "Microsoft.VisualBasic::feb4e43e7daaa87f4c7bf0522b15f6c3, mzmath\MSFinder\FormulaResult.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 41
-    '    Code Lines: 36
-    ' Comment Lines: 0
-    '   Blank Lines: 5
-    '     File Size: 1.90 KB
+    '   Total Lines: 34
+    '    Code Lines: 32 (94.12%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 2 (5.88%)
+    '     File Size: 1.81 KB
 
 
     ' Class FormulaResult
@@ -53,8 +55,6 @@
     '                 ProductIonNum, ProductIonResult, ProductIonScore, PubchemResources, ResourceNames
     '                 ResourceRecords, ResourceScore, TotalScore
     ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
     ' /********************************************************************************/
 
 #End Region
@@ -63,13 +63,7 @@ Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 
 Public Class FormulaResult
-    Public Sub New()
-
-    End Sub
-
-#Region "properties"
-    Public Property Formula As Formula = New Formula()
-
+    Public Property Formula As New Formula()
     Public Property MatchedMass As Double
     Public Property MassDiff As Double
     Public Property M1IsotopicDiff As Double
@@ -98,5 +92,4 @@ Public Class FormulaResult
     Public Property ChemicalOntologyScores As List(Of Double) = New List(Of Double)()
     Public Property ChemicalOntologyRepresentativeInChIKeys As List(Of String) = New List(Of String)()
 
-#End Region
 End Class

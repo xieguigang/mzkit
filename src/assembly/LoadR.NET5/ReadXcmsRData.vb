@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::573e1f9790a5a6904e20041d23a3e65b, E:/mzkit/src/assembly/LoadR.NET5//ReadXcmsRData.vb"
+﻿#Region "Microsoft.VisualBasic::573e1f9790a5a6904e20041d23a3e65b, assembly\LoadR.NET5\ReadXcmsRData.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 88
-    '    Code Lines: 72
-    ' Comment Lines: 1
-    '   Blank Lines: 15
+    '    Code Lines: 72 (81.82%)
+    ' Comment Lines: 1 (1.14%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 15 (17.05%)
     '     File Size: 2.98 KB
 
 

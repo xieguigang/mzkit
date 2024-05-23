@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b0a4559dc2befb5b0fe8622d843b7c20, E:/mzkit/src/metadb/Lipidomics//MsCharacterization/LipidEieioMsmsCharacterization.vb"
+﻿#Region "Microsoft.VisualBasic::b0a4559dc2befb5b0fe8622d843b7c20, metadb\Lipidomics\MsCharacterization\LipidEieioMsmsCharacterization.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 3570
-    '    Code Lines: 2945
-    ' Comment Lines: 244
-    '   Blank Lines: 381
+    '    Code Lines: 2945 (82.49%)
+    ' Comment Lines: 244 (6.83%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 381 (10.67%)
     '     File Size: 227.38 KB
 
 

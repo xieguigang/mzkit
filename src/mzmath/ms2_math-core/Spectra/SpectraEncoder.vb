@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::61d7e5c9279ec680837911dabd56c2b4, E:/mzkit/src/mzmath/ms2_math-core//Spectra/SpectraEncoder.vb"
+﻿#Region "Microsoft.VisualBasic::61d7e5c9279ec680837911dabd56c2b4, mzmath\ms2_math-core\Spectra\SpectraEncoder.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 69
-    '    Code Lines: 46
-    ' Comment Lines: 15
-    '   Blank Lines: 8
+    '    Code Lines: 46 (66.67%)
+    ' Comment Lines: 15 (21.74%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 8 (11.59%)
     '     File Size: 2.66 KB
 
 

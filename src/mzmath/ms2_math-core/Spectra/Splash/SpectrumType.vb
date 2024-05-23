@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::63341745336c75f57fdb9de0aea340c3, E:/mzkit/src/mzmath/ms2_math-core//Spectra/Splash/SpectrumType.vb"
+﻿#Region "Microsoft.VisualBasic::63341745336c75f57fdb9de0aea340c3, mzmath\ms2_math-core\Spectra\Splash\SpectrumType.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 33
-    '    Code Lines: 9
-    ' Comment Lines: 21
-    '   Blank Lines: 3
+    '    Code Lines: 9 (27.27%)
+    ' Comment Lines: 21 (63.64%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 3 (9.09%)
     '     File Size: 1.06 KB
 
 

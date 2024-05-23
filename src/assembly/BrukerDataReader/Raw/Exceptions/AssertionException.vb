@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c9ea8550e24291fe74a9c34facd81e81, E:/mzkit/src/assembly/BrukerDataReader//Raw/Exceptions/AssertionException.vb"
+﻿#Region "Microsoft.VisualBasic::c9ea8550e24291fe74a9c34facd81e81, assembly\BrukerDataReader\Raw\Exceptions\AssertionException.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 33
-    '    Code Lines: 17
-    ' Comment Lines: 12
-    '   Blank Lines: 4
+    '    Code Lines: 17 (51.52%)
+    ' Comment Lines: 12 (36.36%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 4 (12.12%)
     '     File Size: 808 B
 
 

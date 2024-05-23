@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b046d25acdd424f4d1e2d6e6f04e9849, E:/mzkit/src/mzmath/MoleculeNetworking//SpectrumPool/DIAInfer.vb"
+﻿#Region "Microsoft.VisualBasic::b046d25acdd424f4d1e2d6e6f04e9849, mzmath\MoleculeNetworking\SpectrumPool\DIAInfer.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 236
-    '    Code Lines: 154
-    ' Comment Lines: 56
-    '   Blank Lines: 26
+    '    Code Lines: 154 (65.25%)
+    ' Comment Lines: 56 (23.73%)
+    '    - Xml Docs: 83.93%
+    ' 
+    '   Blank Lines: 26 (11.02%)
     '     File Size: 10.77 KB
 
 

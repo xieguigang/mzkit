@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3221fb971af0b27aafeb40fd338590a9, E:/mzkit/src/mzmath/ms2_math-core//Spectra/Models/ms2.vb"
+﻿#Region "Microsoft.VisualBasic::3221fb971af0b27aafeb40fd338590a9, mzmath\ms2_math-core\Spectra\Models\ms2.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 131
-    '    Code Lines: 74
-    ' Comment Lines: 40
-    '   Blank Lines: 17
+    '    Code Lines: 74 (56.49%)
+    ' Comment Lines: 40 (30.53%)
+    '    - Xml Docs: 92.50%
+    ' 
+    '   Blank Lines: 17 (12.98%)
     '     File Size: 5.06 KB
 
 
@@ -107,6 +109,11 @@ Namespace Spectra
         Sub New(mz As Double, intensity As Double)
             Me.mz = mz
             Me.intensity = intensity
+        End Sub
+
+        Sub New(peak As IMs1Scan)
+            Me.mz = peak.mz
+            Me.intensity = peak.intensity
         End Sub
 
         Public Overrides Function ToString() As String

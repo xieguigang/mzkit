@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9bf5496e818ffbf0f1de58fef1b61128, E:/mzkit/src/visualize/MsImaging//Blender/Renderer/RGBConfigs.vb"
+﻿#Region "Microsoft.VisualBasic::9bf5496e818ffbf0f1de58fef1b61128, visualize\MsImaging\Blender\Renderer\RGBConfigs.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 37
-    '    Code Lines: 28
-    ' Comment Lines: 0
-    '   Blank Lines: 9
+    '    Code Lines: 28 (75.68%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 9 (24.32%)
     '     File Size: 1.47 KB
 
 

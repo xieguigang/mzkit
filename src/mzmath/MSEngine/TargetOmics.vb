@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cae690390c71d3a19c18cd01714ce4c6, E:/mzkit/src/mzmath/MSEngine//TargetOmics.vb"
+﻿#Region "Microsoft.VisualBasic::cae690390c71d3a19c18cd01714ce4c6, mzmath\MSEngine\TargetOmics.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 5
-    '    Code Lines: 5
-    ' Comment Lines: 0
-    '   Blank Lines: 0
+    '    Code Lines: 5 (100.00%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 0 (0.00%)
     '     File Size: 83 B
 
 

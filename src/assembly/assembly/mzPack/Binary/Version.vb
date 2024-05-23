@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4c366d1a47feece02a6b7bfb5281783b, E:/mzkit/src/assembly/assembly//mzPack/Binary/Version.vb"
+﻿#Region "Microsoft.VisualBasic::4c366d1a47feece02a6b7bfb5281783b, assembly\assembly\mzPack\Binary\Version.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 40
-    '    Code Lines: 22
-    ' Comment Lines: 10
-    '   Blank Lines: 8
+    '    Code Lines: 22 (55.00%)
+    ' Comment Lines: 10 (25.00%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 8 (20.00%)
     '     File Size: 1.28 KB
 
 

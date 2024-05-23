@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::59315bd2de952eb3a65fcae6ee3463e5, E:/mzkit/src/metadb/Massbank//MetaLib/Models/CrossReference/XrefSchema.vb"
+﻿#Region "Microsoft.VisualBasic::59315bd2de952eb3a65fcae6ee3463e5, metadb\Massbank\MetaLib\Models\CrossReference\XrefSchema.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 121
-    '    Code Lines: 90
-    ' Comment Lines: 16
-    '   Blank Lines: 15
+    '    Code Lines: 90 (74.38%)
+    ' Comment Lines: 16 (13.22%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 15 (12.40%)
     '     File Size: 5.30 KB
 
 

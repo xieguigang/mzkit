@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fd0b7985cca300af860753f347830e74, E:/mzkit/src/metadb/Lipidomics//LipidParser/HexCerLipidParser.vb"
+﻿#Region "Microsoft.VisualBasic::fd0b7985cca300af860753f347830e74, metadb\Lipidomics\LipidParser\HexCerLipidParser.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 69
-    '    Code Lines: 64
-    ' Comment Lines: 0
-    '   Blank Lines: 5
+    '    Code Lines: 64 (92.75%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 5 (7.25%)
     '     File Size: 3.25 KB
 
 

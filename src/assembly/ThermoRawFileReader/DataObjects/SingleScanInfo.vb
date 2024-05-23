@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b01fb0c3d1b3f237dd8be28e33d5200c, E:/mzkit/src/assembly/ThermoRawFileReader//DataObjects/SingleScanInfo.vb"
+﻿#Region "Microsoft.VisualBasic::d5e563651c1f5709cf4a315c3ba537cb, assembly\ThermoRawFileReader\DataObjects\SingleScanInfo.vb"
 
     ' Author:
     ' 
@@ -38,10 +38,12 @@
     ' Code Statistics:
 
     '   Total Lines: 301
-    '    Code Lines: 107
-    ' Comment Lines: 141
-    '   Blank Lines: 53
-    '     File Size: 11.24 KB
+    '    Code Lines: 107 (35.55%)
+    ' Comment Lines: 141 (46.84%)
+    '    - Xml Docs: 99.29%
+    ' 
+    '   Blank Lines: 53 (17.61%)
+    '     File Size: 11.23 KB
 
 
     '     Class SingleScanInfo
@@ -67,7 +69,7 @@
 
 Imports System.Runtime.InteropServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData
+Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 
 Namespace DataObjects

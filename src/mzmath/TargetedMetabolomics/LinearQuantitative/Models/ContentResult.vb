@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dd97c246cb530967145b2f59e3ff2674, E:/mzkit/src/mzmath/TargetedMetabolomics//LinearQuantitative/Models/ContentResult.vb"
+﻿#Region "Microsoft.VisualBasic::dd97c246cb530967145b2f59e3ff2674, mzmath\TargetedMetabolomics\LinearQuantitative\Models\ContentResult.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 32
-    '    Code Lines: 14
-    ' Comment Lines: 12
-    '   Blank Lines: 6
+    '    Code Lines: 14 (43.75%)
+    ' Comment Lines: 12 (37.50%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 6 (18.75%)
     '     File Size: 1.14 KB
 
 

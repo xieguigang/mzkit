@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::77c960a6144e57d433147c97d823a890, E:/mzkit/src/metadb/Lipidomics//IOadSpectrumPeakGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::77c960a6144e57d433147c97d823a890, metadb\Lipidomics\IOadSpectrumPeakGenerator.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 9
-    '    Code Lines: 7
-    ' Comment Lines: 0
-    '   Blank Lines: 2
+    '    Code Lines: 7 (77.78%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 2 (22.22%)
     '     File Size: 764 B
 
 

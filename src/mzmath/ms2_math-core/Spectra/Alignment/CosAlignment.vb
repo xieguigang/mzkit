@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::775f1b916072534e029ab022b7cca7ef, E:/mzkit/src/mzmath/ms2_math-core//Spectra/Alignment/CosAlignment.vb"
+﻿#Region "Microsoft.VisualBasic::775f1b916072534e029ab022b7cca7ef, mzmath\ms2_math-core\Spectra\Alignment\CosAlignment.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 77
-    '    Code Lines: 53
-    ' Comment Lines: 7
-    '   Blank Lines: 17
+    '    Code Lines: 53 (68.83%)
+    ' Comment Lines: 7 (9.09%)
+    '    - Xml Docs: 71.43%
+    ' 
+    '   Blank Lines: 17 (22.08%)
     '     File Size: 2.94 KB
 
 

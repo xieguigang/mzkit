@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b4f2f86ddb030b61f2926ec9ed9c8a29, E:/mzkit/src/metadb/Chemoinformatics//Formula/Isotopic/Isotope.vb"
+﻿#Region "Microsoft.VisualBasic::b4f2f86ddb030b61f2926ec9ed9c8a29, metadb\Chemoinformatics\Formula\Isotopic\Isotope.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 26
-    '    Code Lines: 10
-    ' Comment Lines: 12
-    '   Blank Lines: 4
+    '    Code Lines: 10 (38.46%)
+    ' Comment Lines: 12 (46.15%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 4 (15.38%)
     '     File Size: 680 B
 
 

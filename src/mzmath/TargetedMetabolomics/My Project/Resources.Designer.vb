@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::90db131ea60dde9178f2e6533ea75f4c, E:/mzkit/src/mzmath/TargetedMetabolomics//My Project/Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::90db131ea60dde9178f2e6533ea75f4c, mzmath\TargetedMetabolomics\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 63
-    '    Code Lines: 32
-    ' Comment Lines: 23
-    '   Blank Lines: 8
+    '    Code Lines: 32 (50.79%)
+    ' Comment Lines: 23 (36.51%)
+    '    - Xml Docs: 17.39%
+    ' 
+    '   Blank Lines: 8 (12.70%)
     '     File Size: 2.81 KB
 
 

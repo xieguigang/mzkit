@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cd80dfb15ffb5a080b5203d8c027c1fb, E:/mzkit/src/mzmath/ms2_math-core//Ms1/ms1Abstract.vb"
+﻿#Region "Microsoft.VisualBasic::513c4bfe298730f9578de27b31024aca, mzmath\ms2_math-core\Ms1\ms1Abstract.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 60
-    '    Code Lines: 16
-    ' Comment Lines: 29
-    '   Blank Lines: 15
-    '     File Size: 1.39 KB
+    '   Total Lines: 63
+    '    Code Lines: 16 (25.40%)
+    ' Comment Lines: 32 (50.79%)
+    '    - Xml Docs: 96.88%
+    ' 
+    '   Blank Lines: 15 (23.81%)
+    '     File Size: 1.46 KB
 
 
     ' Interface IMs1

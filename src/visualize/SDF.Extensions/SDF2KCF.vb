@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4155c34611181d0b375b903f84d7cccb, E:/mzkit/src/visualize/SDF.Extensions//SDF2KCF.vb"
+﻿#Region "Microsoft.VisualBasic::4155c34611181d0b375b903f84d7cccb, visualize\SDF.Extensions\SDF2KCF.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 62
-    '    Code Lines: 52
-    ' Comment Lines: 5
-    '   Blank Lines: 5
+    '    Code Lines: 52 (83.87%)
+    ' Comment Lines: 5 (8.06%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 5 (8.06%)
     '     File Size: 2.07 KB
 
 

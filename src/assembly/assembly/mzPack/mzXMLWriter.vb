@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f8007484bdf61359444ad1f93bca602e, E:/mzkit/src/assembly/assembly//mzPack/mzXMLWriter.vb"
+﻿#Region "Microsoft.VisualBasic::befbb202290de10805449d239953304f, assembly\assembly\mzPack\mzXMLWriter.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 270
-    '    Code Lines: 212
-    ' Comment Lines: 14
-    '   Blank Lines: 44
-    '     File Size: 11.06 KB
+    '   Total Lines: 285
+    '    Code Lines: 221 (77.54%)
+    ' Comment Lines: 18 (6.32%)
+    '    - Xml Docs: 16.67%
+    ' 
+    '   Blank Lines: 46 (16.14%)
+    '     File Size: 11.58 KB
 
 
     '     Class mzXMLWriter
@@ -65,11 +67,13 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Text
 
 Namespace MarkupData.mzXML
 
+    ''' <summary>
+    ''' module for export mass spectrum to mzXML file
+    ''' </summary>
     Public Class mzXMLWriter : Implements IDisposable
 
         ReadOnly mzXML As BinaryDataWriter
@@ -95,11 +99,11 @@ Namespace MarkupData.mzXML
 
             ' ISO-8859-1
             Call println("
-<?xml version=""1.0"" encoding=""utf8""?>
+<?xml version=""1.0"" encoding=""ISO-8859-1""?>
 <mzXML xmlns=""http://sashimi.sourceforge.net/schema_revision/mzXML_3.2""
        xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance""
        xsi:schemaLocation=""http://sashimi.sourceforge.net/schema_revision/mzXML_3.2 http://sashimi.sourceforge.net/schema_revision/mzXML_3.2/mzXML_idx_3.2.xsd"">
-")
+".Trim(" "c, vbCr, vbLf))
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -159,7 +163,16 @@ Namespace MarkupData.mzXML
         End Sub
 
         Public Sub WriteData(mzData As ScanMS1(), Optional print As Action(Of String) = Nothing)
-            Dim scanCount As Integer = mzData.Select(Function(si) si.products.Length + 1).Sum
+            Dim scanCount As Integer = Aggregate s1 As ScanMS1
+                                       In mzData
+                                       Let m2 = s1.products.Where(Function(m2) m2.mz.Any).Count + 1
+                                       Into Sum(m2)
+
+            If print Is Nothing Then
+                print = Sub(any)
+                            ' do nothing
+                        End Sub
+            End If
 
             mzData = mzData _
                 .OrderBy(Function(si) si.rt) _
@@ -238,6 +251,10 @@ Namespace MarkupData.mzXML
             Dim size As Integer = 0
             Dim mzint As String = encode(scan, len:=size)
             Dim i As String = ++scanNum
+
+            If scan.mz.IsNullOrEmpty Then
+                Return
+            End If
 
             Call scanOffsets.Add(i, mzXML.Position)
             Call println($"<scan num=""{i}""

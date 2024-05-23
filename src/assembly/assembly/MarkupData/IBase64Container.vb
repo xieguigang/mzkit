@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f4002c7c28c14750dcb8baf43ec5d974, E:/mzkit/src/assembly/assembly//MarkupData/IBase64Container.vb"
+﻿#Region "Microsoft.VisualBasic::f4002c7c28c14750dcb8baf43ec5d974, assembly\assembly\MarkupData\IBase64Container.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 18
-    '    Code Lines: 7
-    ' Comment Lines: 6
-    '   Blank Lines: 5
+    '    Code Lines: 7 (38.89%)
+    ' Comment Lines: 6 (33.33%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 5 (27.78%)
     '     File Size: 388 B
 
 

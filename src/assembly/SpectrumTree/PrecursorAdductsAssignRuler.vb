@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1320d084f92a345c52e0f3c4cc47f11a, E:/mzkit/src/assembly/SpectrumTree//PrecursorAdductsAssignRuler.vb"
+﻿#Region "Microsoft.VisualBasic::1320d084f92a345c52e0f3c4cc47f11a, assembly\SpectrumTree\PrecursorAdductsAssignRuler.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 83
-    '    Code Lines: 66
-    ' Comment Lines: 0
-    '   Blank Lines: 17
+    '    Code Lines: 66 (79.52%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 17 (20.48%)
     '     File Size: 3.06 KB
 
 

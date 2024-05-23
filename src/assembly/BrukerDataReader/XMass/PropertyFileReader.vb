@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3f0e3db03d073e20c1ec6d6e0c428aea, E:/mzkit/src/assembly/BrukerDataReader//XMass/PropertyFileReader.vb"
+﻿#Region "Microsoft.VisualBasic::3f0e3db03d073e20c1ec6d6e0c428aea, assembly\BrukerDataReader\XMass\PropertyFileReader.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 45
-    '    Code Lines: 32
-    ' Comment Lines: 5
-    '   Blank Lines: 8
+    '    Code Lines: 32 (71.11%)
+    ' Comment Lines: 5 (11.11%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 8 (17.78%)
     '     File Size: 1.46 KB
 
 

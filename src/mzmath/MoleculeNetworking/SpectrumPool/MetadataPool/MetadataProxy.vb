@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::944b12375a4f3f48465a7a66c4c21d51, E:/mzkit/src/mzmath/MoleculeNetworking//SpectrumPool/MetadataPool/MetadataProxy.vb"
+﻿#Region "Microsoft.VisualBasic::944b12375a4f3f48465a7a66c4c21d51, mzmath\MoleculeNetworking\SpectrumPool\MetadataPool\MetadataProxy.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 39
-    '    Code Lines: 13
-    ' Comment Lines: 17
-    '   Blank Lines: 9
+    '    Code Lines: 13 (33.33%)
+    ' Comment Lines: 17 (43.59%)
+    '    - Xml Docs: 94.12%
+    ' 
+    '   Blank Lines: 9 (23.08%)
     '     File Size: 1.40 KB
 
 

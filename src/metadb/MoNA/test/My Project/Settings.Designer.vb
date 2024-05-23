@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6655ba666928ff86ccd13cf6913d8af6, E:/mzkit/src/metadb/MoNA//test/My Project/Settings.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::6655ba666928ff86ccd13cf6913d8af6, metadb\MoNA\test\My Project\Settings.Designer.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 73
-    '    Code Lines: 51
-    ' Comment Lines: 9
-    '   Blank Lines: 13
+    '    Code Lines: 51 (69.86%)
+    ' Comment Lines: 9 (12.33%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 13 (17.81%)
     '     File Size: 2.97 KB
 
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::25a64716a7f5fe1965d12d7e0553c16b, E:/mzkit/src/assembly/SpectrumTree//Pack/MassIndex.vb"
+﻿#Region "Microsoft.VisualBasic::25a64716a7f5fe1965d12d7e0553c16b, assembly\SpectrumTree\Pack\MassIndex.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 44
-    '    Code Lines: 19
-    ' Comment Lines: 19
-    '   Blank Lines: 6
+    '    Code Lines: 19 (43.18%)
+    ' Comment Lines: 19 (43.18%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 6 (13.64%)
     '     File Size: 1.52 KB
 
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f03731d20f0ac995d7c060dafa42363e, E:/mzkit/src/assembly/BrukerDataReader//flexImaging/mcf/mcfParser.vb"
+﻿#Region "Microsoft.VisualBasic::f03731d20f0ac995d7c060dafa42363e, assembly\BrukerDataReader\flexImaging\mcf\mcfParser.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 46
-    '    Code Lines: 26
-    ' Comment Lines: 10
-    '   Blank Lines: 10
+    '    Code Lines: 26 (56.52%)
+    ' Comment Lines: 10 (21.74%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 10 (21.74%)
     '     File Size: 1.58 KB
 
 

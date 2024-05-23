@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::09873354fb3b4a342b2fc0f8238ae263, E:/mzkit/src/assembly/mzPackExtensions//MSImaging/Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::09873354fb3b4a342b2fc0f8238ae263, assembly\mzPackExtensions\MSImaging\Extensions.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 40
-    '    Code Lines: 33
-    ' Comment Lines: 0
-    '   Blank Lines: 7
+    '    Code Lines: 33 (82.50%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 7 (17.50%)
     '     File Size: 1.50 KB
 
 

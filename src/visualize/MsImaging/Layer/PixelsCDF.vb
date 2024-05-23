@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1d75fc1921301017ea396f507d769026, E:/mzkit/src/visualize/MsImaging//Layer/PixelsCDF.vb"
+﻿#Region "Microsoft.VisualBasic::1d75fc1921301017ea396f507d769026, visualize\MsImaging\Layer\PixelsCDF.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 220
-    '    Code Lines: 163
-    ' Comment Lines: 27
-    '   Blank Lines: 30
+    '    Code Lines: 163 (74.09%)
+    ' Comment Lines: 27 (12.27%)
+    '    - Xml Docs: 92.59%
+    ' 
+    '   Blank Lines: 30 (13.64%)
     '     File Size: 8.51 KB
 
 

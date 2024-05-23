@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4eff9f04e506667e7a6bbb1e2b675089, E:/mzkit/src/assembly/BrukerDataReader//XMass/Xml/AnalysisMethod.vb"
+﻿#Region "Microsoft.VisualBasic::4eff9f04e506667e7a6bbb1e2b675089, assembly\BrukerDataReader\XMass\Xml\AnalysisMethod.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 76
-    '    Code Lines: 60
-    ' Comment Lines: 3
-    '   Blank Lines: 13
+    '    Code Lines: 60 (78.95%)
+    ' Comment Lines: 3 (3.95%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 13 (17.11%)
     '     File Size: 2.87 KB
 
 

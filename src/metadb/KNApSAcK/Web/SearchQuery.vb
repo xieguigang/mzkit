@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::afdaa7decf09a53352b879f6038a6401, E:/mzkit/src/metadb/KNApSAcK//Web/SearchQuery.vb"
+﻿#Region "Microsoft.VisualBasic::afdaa7decf09a53352b879f6038a6401, metadb\KNApSAcK\Web\SearchQuery.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 60
-    '    Code Lines: 51
-    ' Comment Lines: 0
-    '   Blank Lines: 9
+    '    Code Lines: 51 (85.00%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 9 (15.00%)
     '     File Size: 2.11 KB
 
 

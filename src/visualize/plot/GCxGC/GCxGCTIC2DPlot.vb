@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d8f4df0cf1a9aac1b7c821edadf2c4d1, E:/mzkit/src/visualize/plot//GCxGC/GCxGCTIC2DPlot.vb"
+﻿#Region "Microsoft.VisualBasic::d8f4df0cf1a9aac1b7c821edadf2c4d1, visualize\plot\GCxGC\GCxGCTIC2DPlot.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 200
-    '    Code Lines: 170
-    ' Comment Lines: 5
-    '   Blank Lines: 25
+    '    Code Lines: 170 (85.00%)
+    ' Comment Lines: 5 (2.50%)
+    '    - Xml Docs: 60.00%
+    ' 
+    '   Blank Lines: 25 (12.50%)
     '     File Size: 8.78 KB
 
 

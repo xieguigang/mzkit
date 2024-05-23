@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2c76f6084776b79f26a21e812270b8cd, E:/mzkit/src/visualize/plot//ChromatogramPlot/ScanContour.vb"
+﻿#Region "Microsoft.VisualBasic::2c76f6084776b79f26a21e812270b8cd, visualize\plot\ChromatogramPlot\ScanContour.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 106
-    '    Code Lines: 86
-    ' Comment Lines: 4
-    '   Blank Lines: 16
+    '    Code Lines: 86 (81.13%)
+    ' Comment Lines: 4 (3.77%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 16 (15.09%)
     '     File Size: 3.88 KB
 
 

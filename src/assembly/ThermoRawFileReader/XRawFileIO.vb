@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2ace10cac463f0e1e197b1d2b2948a6d, E:/mzkit/src/assembly/ThermoRawFileReader//XRawFileIO.vb"
+﻿#Region "Microsoft.VisualBasic::f8e005e2e39b963ea3edb1164f0ba78f, assembly\ThermoRawFileReader\XRawFileIO.vb"
 
     ' Author:
     ' 
@@ -38,10 +38,12 @@
     ' Code Statistics:
 
     '   Total Lines: 2531
-    '    Code Lines: 1499
-    ' Comment Lines: 591
-    '   Blank Lines: 441
-    '     File Size: 109.28 KB
+    '    Code Lines: 1499 (59.23%)
+    ' Comment Lines: 591 (23.35%)
+    '    - Xml Docs: 55.50%
+    ' 
+    '   Blank Lines: 441 (17.42%)
+    '     File Size: 109.27 KB
 
 
     ' Class XRawFileIO
@@ -72,8 +74,8 @@ Imports System.Globalization
 Imports System.IO
 Imports System.Runtime.InteropServices
 Imports System.Text.RegularExpressions
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader.DataObjects
+Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports ThermoFisher.CommonCore.BackgroundSubtraction
 Imports ThermoFisher.CommonCore.Data

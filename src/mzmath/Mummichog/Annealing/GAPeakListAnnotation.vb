@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1d6903880dc6fd69b673ba941fc059f7, E:/mzkit/src/mzmath/Mummichog//Annealing/GAPeakListAnnotation.vb"
+﻿#Region "Microsoft.VisualBasic::1d6903880dc6fd69b673ba941fc059f7, mzmath\Mummichog\Annealing\GAPeakListAnnotation.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 54
-    '    Code Lines: 35
-    ' Comment Lines: 13
-    '   Blank Lines: 6
+    '    Code Lines: 35 (64.81%)
+    ' Comment Lines: 13 (24.07%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 6 (11.11%)
     '     File Size: 2.60 KB
 
 

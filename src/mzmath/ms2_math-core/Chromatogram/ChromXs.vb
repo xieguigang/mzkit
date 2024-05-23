@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d0d70c5c30b48756bfcc88b9a47bf167, E:/mzkit/src/mzmath/ms2_math-core//Chromatogram/ChromXs.vb"
+﻿#Region "Microsoft.VisualBasic::d0d70c5c30b48756bfcc88b9a47bf167, mzmath\ms2_math-core\Chromatogram\ChromXs.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 257
-    '    Code Lines: 214
-    ' Comment Lines: 1
-    '   Blank Lines: 42
+    '    Code Lines: 214 (83.27%)
+    ' Comment Lines: 1 (0.39%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 42 (16.34%)
     '     File Size: 8.84 KB
 
 

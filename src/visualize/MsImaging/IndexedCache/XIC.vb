@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b51bf44b0e1550efe58ee391929ff937, E:/mzkit/src/visualize/MsImaging//IndexedCache/XIC.vb"
+﻿#Region "Microsoft.VisualBasic::b51bf44b0e1550efe58ee391929ff937, visualize\MsImaging\IndexedCache\XIC.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 133
-    '    Code Lines: 92
-    ' Comment Lines: 22
-    '   Blank Lines: 19
+    '    Code Lines: 92 (69.17%)
+    ' Comment Lines: 22 (16.54%)
+    '    - Xml Docs: 81.82%
+    ' 
+    '   Blank Lines: 19 (14.29%)
     '     File Size: 4.43 KB
 
 

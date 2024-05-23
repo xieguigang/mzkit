@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4599997c21495ae0c6237e013e48bccc, E:/mzkit/src/assembly/BrukerDataReader//XMass/FidReader.vb"
+﻿#Region "Microsoft.VisualBasic::4599997c21495ae0c6237e013e48bccc, assembly\BrukerDataReader\XMass\FidReader.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 310
-    '    Code Lines: 72
-    ' Comment Lines: 223
-    '   Blank Lines: 15
+    '    Code Lines: 72 (23.23%)
+    ' Comment Lines: 223 (71.94%)
+    '    - Xml Docs: 91.48%
+    ' 
+    '   Blank Lines: 15 (4.84%)
     '     File Size: 10.29 KB
 
 

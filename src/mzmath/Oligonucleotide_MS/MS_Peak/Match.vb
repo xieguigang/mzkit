@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fa10dd665bd00f8c96dee3de3f79e5d3, E:/mzkit/src/mzmath/Oligonucleotide_MS//MS_Peak/Match.vb"
+﻿#Region "Microsoft.VisualBasic::fa10dd665bd00f8c96dee3de3f79e5d3, mzmath\Oligonucleotide_MS\MS_Peak\Match.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 99
-    '    Code Lines: 48
-    ' Comment Lines: 44
-    '   Blank Lines: 7
+    '    Code Lines: 48 (48.48%)
+    ' Comment Lines: 44 (44.44%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 7 (7.07%)
     '     File Size: 3.15 KB
 
 

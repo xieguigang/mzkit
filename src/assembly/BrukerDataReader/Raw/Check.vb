@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f00f0f31ddb332fe034d3056e50cac48, E:/mzkit/src/assembly/BrukerDataReader//Raw/Check.vb"
+﻿#Region "Microsoft.VisualBasic::f00f0f31ddb332fe034d3056e50cac48, assembly\BrukerDataReader\Raw\Check.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 157
-    '    Code Lines: 97
-    ' Comment Lines: 44
-    '   Blank Lines: 16
+    '    Code Lines: 97 (61.78%)
+    ' Comment Lines: 44 (28.03%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 16 (10.19%)
     '     File Size: 5.54 KB
 
 

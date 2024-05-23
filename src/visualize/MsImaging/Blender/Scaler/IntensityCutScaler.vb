@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c0bd94cb39feaa6162f46a16c69c9176, E:/mzkit/src/visualize/MsImaging//Blender/Scaler/IntensityCutScaler.vb"
+﻿#Region "Microsoft.VisualBasic::c0bd94cb39feaa6162f46a16c69c9176, visualize\MsImaging\Blender\Scaler\IntensityCutScaler.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 38
-    '    Code Lines: 25
-    ' Comment Lines: 4
-    '   Blank Lines: 9
+    '    Code Lines: 25 (65.79%)
+    ' Comment Lines: 4 (10.53%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 9 (23.68%)
     '     File Size: 1.23 KB
 
 

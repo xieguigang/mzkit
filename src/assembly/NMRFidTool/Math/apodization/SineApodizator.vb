@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cb7def922fbf8fc64f427e150663b5e5, E:/mzkit/src/assembly/NMRFidTool//Math/apodization/SineApodizator.vb"
+﻿#Region "Microsoft.VisualBasic::cb7def922fbf8fc64f427e150663b5e5, assembly\NMRFidTool\Math\apodization\SineApodizator.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 68
-    '    Code Lines: 28
-    ' Comment Lines: 30
-    '   Blank Lines: 10
+    '    Code Lines: 28 (41.18%)
+    ' Comment Lines: 30 (44.12%)
+    '    - Xml Docs: 23.33%
+    ' 
+    '   Blank Lines: 10 (14.71%)
     '     File Size: 2.77 KB
 
 

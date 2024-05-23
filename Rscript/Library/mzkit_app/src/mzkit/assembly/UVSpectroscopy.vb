@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4b4663a9d3470e884c743c4db847a7b6, E:/mzkit/Rscript/Library/mzkit_app/src/mzkit//assembly/UVSpectroscopy.vb"
+﻿#Region "Microsoft.VisualBasic::4b4663a9d3470e884c743c4db847a7b6, Rscript\Library\mzkit_app\src\mzkit\assembly\UVSpectroscopy.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 131
-    '    Code Lines: 84
-    ' Comment Lines: 27
-    '   Blank Lines: 20
+    '    Code Lines: 84 (64.12%)
+    ' Comment Lines: 27 (20.61%)
+    '    - Xml Docs: 88.89%
+    ' 
+    '   Blank Lines: 20 (15.27%)
     '     File Size: 5.31 KB
 
 

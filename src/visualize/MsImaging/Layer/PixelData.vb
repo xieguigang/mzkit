@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::74d929c3a46b7d7f7fcb319c6f14fd21, E:/mzkit/src/visualize/MsImaging//Layer/PixelData.vb"
+﻿#Region "Microsoft.VisualBasic::74d929c3a46b7d7f7fcb319c6f14fd21, visualize\MsImaging\Layer\PixelData.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 192
-    '    Code Lines: 128
-    ' Comment Lines: 37
-    '   Blank Lines: 27
+    '    Code Lines: 128 (66.67%)
+    ' Comment Lines: 37 (19.27%)
+    '    - Xml Docs: 94.59%
+    ' 
+    '   Blank Lines: 27 (14.06%)
     '     File Size: 6.86 KB
 
 

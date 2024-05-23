@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4ed716ede260d825ce327c32405496ae, E:/mzkit/src/metadb/Chemoinformatics//Formula/MS/Default/Amines.vb"
+﻿#Region "Microsoft.VisualBasic::4ed716ede260d825ce327c32405496ae, metadb\Chemoinformatics\Formula\MS\Default\Amines.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 10
-    '    Code Lines: 6
-    ' Comment Lines: 0
-    '   Blank Lines: 4
+    '    Code Lines: 6 (60.00%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 4 (40.00%)
     '     File Size: 251 B
 
 

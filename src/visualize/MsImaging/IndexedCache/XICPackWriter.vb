@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::375070b5936b6e194acd2fee6f537e91, E:/mzkit/src/visualize/MsImaging//IndexedCache/XICPackWriter.vb"
+﻿#Region "Microsoft.VisualBasic::375070b5936b6e194acd2fee6f537e91, visualize\MsImaging\IndexedCache\XICPackWriter.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 212
-    '    Code Lines: 155
-    ' Comment Lines: 23
-    '   Blank Lines: 34
+    '    Code Lines: 155 (73.11%)
+    ' Comment Lines: 23 (10.85%)
+    '    - Xml Docs: 30.43%
+    ' 
+    '   Blank Lines: 34 (16.04%)
     '     File Size: 8.43 KB
 
 

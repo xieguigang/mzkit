@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dc428b06bbaafdd711cf9f86510d494f, E:/mzkit/src/metadb/Chemoinformatics//Formula/MS/Default/Others.vb"
+﻿#Region "Microsoft.VisualBasic::dc428b06bbaafdd711cf9f86510d494f, metadb\Chemoinformatics\Formula\MS\Default\Others.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 14
-    '    Code Lines: 10
-    ' Comment Lines: 0
-    '   Blank Lines: 4
+    '    Code Lines: 10 (71.43%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 4 (28.57%)
     '     File Size: 622 B
 
 

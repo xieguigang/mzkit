@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cf6cd2e829e8abd3c60c7a3b6b342054, E:/mzkit/src/visualize/MsImaging//Blender/Scaler/DenoiseScaler.vb"
+﻿#Region "Microsoft.VisualBasic::cf6cd2e829e8abd3c60c7a3b6b342054, visualize\MsImaging\Blender\Scaler\DenoiseScaler.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 43
-    '    Code Lines: 28
-    ' Comment Lines: 7
-    '   Blank Lines: 8
+    '    Code Lines: 28 (65.12%)
+    ' Comment Lines: 7 (16.28%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 8 (18.60%)
     '     File Size: 1.27 KB
 
 

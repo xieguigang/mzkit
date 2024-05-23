@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a5f34845706efd769d49a6a17acc7d8f, E:/mzkit/src/metadb/Massbank//Public/NCBI/PubChem/SIDMap.vb"
+﻿#Region "Microsoft.VisualBasic::a5f34845706efd769d49a6a17acc7d8f, metadb\Massbank\Public\NCBI\PubChem\SIDMap.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 77
-    '    Code Lines: 43
-    ' Comment Lines: 24
-    '   Blank Lines: 10
+    '    Code Lines: 43 (55.84%)
+    ' Comment Lines: 24 (31.17%)
+    '    - Xml Docs: 95.83%
+    ' 
+    '   Blank Lines: 10 (12.99%)
     '     File Size: 2.75 KB
 
 

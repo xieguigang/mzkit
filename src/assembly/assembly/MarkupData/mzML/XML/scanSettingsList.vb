@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ec8302ecd0632c37ab6a1e09ae0bcfcb, E:/mzkit/src/assembly/assembly//MarkupData/mzML/XML/scanSettingsList.vb"
+﻿#Region "Microsoft.VisualBasic::ec8302ecd0632c37ab6a1e09ae0bcfcb, assembly\assembly\MarkupData\mzML\XML\scanSettingsList.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 17
-    '    Code Lines: 10
-    ' Comment Lines: 0
-    '   Blank Lines: 7
+    '    Code Lines: 10 (58.82%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 7 (41.18%)
     '     File Size: 448 B
 
 

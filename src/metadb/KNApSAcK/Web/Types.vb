@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fe9b3bf44df311953e568bd640901672, E:/mzkit/src/metadb/KNApSAcK//Web/Types.vb"
+﻿#Region "Microsoft.VisualBasic::fe9b3bf44df311953e568bd640901672, metadb\KNApSAcK\Web\Types.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 11
-    '    Code Lines: 11
-    ' Comment Lines: 0
-    '   Blank Lines: 0
+    '    Code Lines: 11 (100.00%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 0 (0.00%)
     '     File Size: 141 B
 
 

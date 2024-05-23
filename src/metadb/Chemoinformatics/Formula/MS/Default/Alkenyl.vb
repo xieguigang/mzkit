@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f60d5f4a401b22016047ed4fb1ed289b, E:/mzkit/src/metadb/Chemoinformatics//Formula/MS/Default/Alkenyl.vb"
+﻿#Region "Microsoft.VisualBasic::f60d5f4a401b22016047ed4fb1ed289b, metadb\Chemoinformatics\Formula\MS\Default\Alkenyl.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 10
-    '    Code Lines: 6
-    ' Comment Lines: 0
-    '   Blank Lines: 4
+    '    Code Lines: 6 (60.00%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 4 (40.00%)
     '     File Size: 245 B
 
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::84f55f675a27cc1588a459e713be5b35, E:/mzkit/src/metadb/Chemoinformatics//SDF/Struct/Elements.vb"
+﻿#Region "Microsoft.VisualBasic::84f55f675a27cc1588a459e713be5b35, metadb\Chemoinformatics\SDF\Struct\Elements.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 153
-    '    Code Lines: 115
-    ' Comment Lines: 12
-    '   Blank Lines: 26
+    '    Code Lines: 115 (75.16%)
+    ' Comment Lines: 12 (7.84%)
+    '    - Xml Docs: 66.67%
+    ' 
+    '   Blank Lines: 26 (16.99%)
     '     File Size: 4.97 KB
 
 

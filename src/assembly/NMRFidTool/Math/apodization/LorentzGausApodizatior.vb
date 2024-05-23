@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::78b350bcd176dfefee43c55f2a5b41dd, E:/mzkit/src/assembly/NMRFidTool//Math/apodization/LorentzGausApodizatior.vb"
+﻿#Region "Microsoft.VisualBasic::78b350bcd176dfefee43c55f2a5b41dd, assembly\NMRFidTool\Math\apodization\LorentzGausApodizatior.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 98
-    '    Code Lines: 25
-    ' Comment Lines: 63
-    '   Blank Lines: 10
+    '    Code Lines: 25 (25.51%)
+    ' Comment Lines: 63 (64.29%)
+    '    - Xml Docs: 47.62%
+    ' 
+    '   Blank Lines: 10 (10.20%)
     '     File Size: 4.57 KB
 
 

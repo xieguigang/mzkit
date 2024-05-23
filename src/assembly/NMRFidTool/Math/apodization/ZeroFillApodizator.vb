@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::69ae7ba984d9d23a4026073a01c2f5f7, E:/mzkit/src/assembly/NMRFidTool//Math/apodization/ZeroFillApodizator.vb"
+﻿#Region "Microsoft.VisualBasic::69ae7ba984d9d23a4026073a01c2f5f7, assembly\NMRFidTool\Math\apodization\ZeroFillApodizator.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 39
-    '    Code Lines: 8
-    ' Comment Lines: 26
-    '   Blank Lines: 5
+    '    Code Lines: 8 (20.51%)
+    ' Comment Lines: 26 (66.67%)
+    '    - Xml Docs: 26.92%
+    ' 
+    '   Blank Lines: 5 (12.82%)
     '     File Size: 1.25 KB
 
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8964a9f6903bd8b9dbe92ffd5e958f67, E:/mzkit/src/mzmath/TargetedMetabolomics//Contents/ContentTable.vb"
+﻿#Region "Microsoft.VisualBasic::8964a9f6903bd8b9dbe92ffd5e958f67, mzmath\TargetedMetabolomics\Contents\ContentTable.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 126
-    '    Code Lines: 74
-    ' Comment Lines: 37
-    '   Blank Lines: 15
+    '    Code Lines: 74 (58.73%)
+    ' Comment Lines: 37 (29.37%)
+    '    - Xml Docs: 89.19%
+    ' 
+    '   Blank Lines: 15 (11.90%)
     '     File Size: 4.86 KB
 
 

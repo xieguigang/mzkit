@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9f86148100a1a8a387312f942de73c52, E:/mzkit/src/metadb/MoNA//UnionReader.vb"
+﻿#Region "Microsoft.VisualBasic::9f86148100a1a8a387312f942de73c52, metadb\MoNA\UnionReader.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 176
-    '    Code Lines: 140
-    ' Comment Lines: 8
-    '   Blank Lines: 28
+    '    Code Lines: 140 (79.55%)
+    ' Comment Lines: 8 (4.55%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 28 (15.91%)
     '     File Size: 4.95 KB
 
 

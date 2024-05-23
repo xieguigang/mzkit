@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9624b1af122078fa3f61d437451b4328, E:/mzkit/src/visualize/MsImaging//Blender/Scaler/Scaler.vb"
+﻿#Region "Microsoft.VisualBasic::9624b1af122078fa3f61d437451b4328, visualize\MsImaging\Blender\Scaler\Scaler.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 131
-    '    Code Lines: 106
-    ' Comment Lines: 0
-    '   Blank Lines: 25
+    '    Code Lines: 106 (80.92%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 25 (19.08%)
     '     File Size: 5.43 KB
 
 

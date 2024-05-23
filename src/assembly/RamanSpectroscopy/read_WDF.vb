@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2b4be9c6d7422a34c1718d2b5194b90f, E:/mzkit/src/assembly/RamanSpectroscopy//read_WDF.vb"
+﻿#Region "Microsoft.VisualBasic::2b4be9c6d7422a34c1718d2b5194b90f, assembly\RamanSpectroscopy\read_WDF.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 170
-    '    Code Lines: 114
-    ' Comment Lines: 44
-    '   Blank Lines: 12
+    '    Code Lines: 114 (67.06%)
+    ' Comment Lines: 44 (25.88%)
+    '    - Xml Docs: 90.91%
+    ' 
+    '   Blank Lines: 12 (7.06%)
     '     File Size: 4.67 KB
 
 

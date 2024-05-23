@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4d264ae5531906802b4e0d0c9300ac5a, E:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/LPISpectrumGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::8ebe914b34493d577f44d5e235c833a1, metadb\Lipidomics\SpectrumGenerator\LPISpectrumGenerator.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 163
-    '    Code Lines: 134
-    ' Comment Lines: 6
-    '   Blank Lines: 23
-    '     File Size: 8.26 KB
+    '   Total Lines: 160
+    '    Code Lines: 133 (83.12%)
+    ' Comment Lines: 6 (3.75%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 21 (13.12%)
+    '     File Size: 8.15 KB
 
 
     ' Class LPISpectrumGenerator
@@ -212,8 +214,5 @@ New SpectrumPeak(lipidMass - H2O, 800, "[M+H]+ -H2O")
 .SpectrumComment = SpectrumComment.snposition
 }}
     End Function
-
-
-    Private Shared ReadOnly comparer As IEqualityComparer(Of SpectrumPeak) = New SpectrumEqualityComparer()
 
 End Class

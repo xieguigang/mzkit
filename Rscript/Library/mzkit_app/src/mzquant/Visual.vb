@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e63cc19761770ec5a3917d2aa30293b2, E:/mzkit/Rscript/Library/mzkit_app/src/mzquant//Visual.vb"
+﻿#Region "Microsoft.VisualBasic::e63cc19761770ec5a3917d2aa30293b2, Rscript\Library\mzkit_app\src\mzquant\Visual.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 144
-    '    Code Lines: 104
-    ' Comment Lines: 32
-    '   Blank Lines: 8
+    '    Code Lines: 104 (72.22%)
+    ' Comment Lines: 32 (22.22%)
+    '    - Xml Docs: 96.88%
+    ' 
+    '   Blank Lines: 8 (5.56%)
     '     File Size: 7.12 KB
 
 

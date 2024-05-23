@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f4e0645bdbd847d677350edc4ce21497, E:/mzkit/src/visualize/MsImaging//Blender/Renderer/RenderingModes.vb"
+﻿#Region "Microsoft.VisualBasic::f4e0645bdbd847d677350edc4ce21497, visualize\MsImaging\Blender\Renderer\RenderingModes.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 10
-    '    Code Lines: 7
-    ' Comment Lines: 0
-    '   Blank Lines: 3
+    '    Code Lines: 7 (70.00%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 3 (30.00%)
     '     File Size: 148 B
 
 

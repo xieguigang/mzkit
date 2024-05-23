@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0e4b826474d5004120d195d2e8ec1695, E:/mzkit/src/mzmath/ms2_simulator//MolecularGraph.vb"
+﻿#Region "Microsoft.VisualBasic::0e4b826474d5004120d195d2e8ec1695, mzmath\ms2_simulator\MolecularGraph.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 42
-    '    Code Lines: 34
-    ' Comment Lines: 0
-    '   Blank Lines: 8
+    '    Code Lines: 34 (80.95%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 8 (19.05%)
     '     File Size: 1.20 KB
 
 

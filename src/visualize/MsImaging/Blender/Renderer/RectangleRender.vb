@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1bc4d5ad34062b66064f9324eaa58bd7, E:/mzkit/src/visualize/MsImaging//Blender/Renderer/RectangleRender.vb"
+﻿#Region "Microsoft.VisualBasic::1bc4d5ad34062b66064f9324eaa58bd7, visualize\MsImaging\Blender\Renderer\RectangleRender.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 212
-    '    Code Lines: 166
-    ' Comment Lines: 16
-    '   Blank Lines: 30
+    '    Code Lines: 166 (78.30%)
+    ' Comment Lines: 16 (7.55%)
+    '    - Xml Docs: 81.25%
+    ' 
+    '   Blank Lines: 30 (14.15%)
     '     File Size: 9.98 KB
 
 

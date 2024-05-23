@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::15a72e37c6fadeb5767d6e91c15aa53c, E:/mzkit/src/assembly/mzPackExtensions//VendorStream/XRawStream.vb"
+﻿#Region "Microsoft.VisualBasic::15a72e37c6fadeb5767d6e91c15aa53c, assembly\mzPackExtensions\VendorStream\XRawStream.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 98
-    '    Code Lines: 80
-    ' Comment Lines: 3
-    '   Blank Lines: 15
+    '    Code Lines: 80 (81.63%)
+    ' Comment Lines: 3 (3.06%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 15 (15.31%)
     '     File Size: 3.50 KB
 
 

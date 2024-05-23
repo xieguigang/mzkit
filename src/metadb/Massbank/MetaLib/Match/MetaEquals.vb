@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::17ca1c7f2b16dd2447da604abfebad39, E:/mzkit/src/metadb/Massbank//MetaLib/Match/MetaEquals.vb"
+﻿#Region "Microsoft.VisualBasic::17ca1c7f2b16dd2447da604abfebad39, metadb\Massbank\MetaLib\Match\MetaEquals.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 81
-    '    Code Lines: 61
-    ' Comment Lines: 3
-    '   Blank Lines: 17
+    '    Code Lines: 61 (75.31%)
+    ' Comment Lines: 3 (3.70%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 17 (20.99%)
     '     File Size: 2.83 KB
 
 

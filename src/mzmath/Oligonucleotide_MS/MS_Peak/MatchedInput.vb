@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8c61d1b1bb15a4c9b301a3475a39f169, E:/mzkit/src/mzmath/Oligonucleotide_MS//MS_Peak/MatchedInput.vb"
+﻿#Region "Microsoft.VisualBasic::8c61d1b1bb15a4c9b301a3475a39f169, mzmath\Oligonucleotide_MS\MS_Peak\MatchedInput.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 12
-    '    Code Lines: 8
-    ' Comment Lines: 0
-    '   Blank Lines: 4
+    '    Code Lines: 8 (66.67%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 4 (33.33%)
     '     File Size: 298 B
 
 

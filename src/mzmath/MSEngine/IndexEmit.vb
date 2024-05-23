@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b91ccfda25e1e80ac4475e8c95e6b16a, E:/mzkit/src/mzmath/MSEngine//IndexEmit.vb"
+﻿#Region "Microsoft.VisualBasic::b91ccfda25e1e80ac4475e8c95e6b16a, mzmath\MSEngine\IndexEmit.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 76
-    '    Code Lines: 62
-    ' Comment Lines: 1
-    '   Blank Lines: 13
+    '    Code Lines: 62 (81.58%)
+    ' Comment Lines: 1 (1.32%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 13 (17.11%)
     '     File Size: 2.62 KB
 
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2e209dbcfebc4ed238ad4f4a4eee0fe1, E:/mzkit/src/metadb/Lipidomics//SpectrumGenerator/CARSpectrumGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::da124a9636dec702cb4c488c7b50c685, metadb\Lipidomics\SpectrumGenerator\CARSpectrumGenerator.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 95
-    '    Code Lines: 80
-    ' Comment Lines: 0
-    '   Blank Lines: 15
-    '     File Size: 4.77 KB
+    '   Total Lines: 93
+    '    Code Lines: 79 (84.95%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 14 (15.05%)
+    '     File Size: 4.66 KB
 
 
     ' Class CARSpectrumGenerator
@@ -145,7 +147,5 @@ Public Class CARSpectrumGenerator
     Private Function GetAcylDoubleBondSpectrum(lipid As ILipid, acylChains As IEnumerable(Of AcylChain), adduct As AdductIon, Optional nlMass As Double = 0.0) As IEnumerable(Of SpectrumPeak)
         Return acylChains.SelectMany(Function(acylChain) spectrumGenerator.GetAcylDoubleBondSpectrum(lipid, acylChain, adduct, nlMass, 25.0R))
     End Function
-
-    Private Shared ReadOnly comparer As IEqualityComparer(Of SpectrumPeak) = New SpectrumEqualityComparer()
 
 End Class

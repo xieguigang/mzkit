@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4271aab9c216c7d81ccc6940b1c66e53, E:/mzkit/Rscript/Library/mzkit_app/src/mzkit//comprehensive/MSI.vb"
+﻿#Region "Microsoft.VisualBasic::819241e24483616e381b9fa3285121e0, Rscript\Library\mzkit_app\src\mzkit\comprehensive\MSI.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 1842
-    '    Code Lines: 1114
-    ' Comment Lines: 536
-    '   Blank Lines: 192
-    '     File Size: 75.17 KB
+    '   Total Lines: 1843
+    '    Code Lines: 1115 (60.50%)
+    ' Comment Lines: 536 (29.08%)
+    '    - Xml Docs: 91.98%
+    ' 
+    '   Blank Lines: 192 (10.42%)
+    '     File Size: 75.28 KB
 
 
     ' Module MSI

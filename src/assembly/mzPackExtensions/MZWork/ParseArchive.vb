@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4f4a1bf4d1226c7ab11cf25a8e1bf2b9, E:/mzkit/src/assembly/mzPackExtensions//MZWork/ParseArchive.vb"
+﻿#Region "Microsoft.VisualBasic::4f4a1bf4d1226c7ab11cf25a8e1bf2b9, assembly\mzPackExtensions\MZWork\ParseArchive.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 40
-    '    Code Lines: 26
-    ' Comment Lines: 8
-    '   Blank Lines: 6
+    '    Code Lines: 26 (65.00%)
+    ' Comment Lines: 8 (20.00%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 6 (15.00%)
     '     File Size: 1.48 KB
 
 

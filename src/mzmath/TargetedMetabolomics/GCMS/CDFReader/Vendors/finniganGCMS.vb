@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c7fe785eeb2330f73898eae0261a27f1, E:/mzkit/src/mzmath/TargetedMetabolomics//GCMS/CDFReader/Vendors/finniganGCMS.vb"
+﻿#Region "Microsoft.VisualBasic::c7fe785eeb2330f73898eae0261a27f1, mzmath\TargetedMetabolomics\GCMS\CDFReader\Vendors\finniganGCMS.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 6
-    '    Code Lines: 4
-    ' Comment Lines: 0
-    '   Blank Lines: 2
+    '    Code Lines: 4 (66.67%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 2 (33.33%)
     '     File Size: 87 B
 
 

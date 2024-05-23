@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6e51c796322bdb6d567054cfc0cdd9a3, E:/mzkit/src/assembly/mzPackExtensions//MZWork/WorkspaceAccess.vb"
+﻿#Region "Microsoft.VisualBasic::6e51c796322bdb6d567054cfc0cdd9a3, assembly\mzPackExtensions\MZWork\WorkspaceAccess.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,11 @@
     ' Code Statistics:
 
     '   Total Lines: 146
-    '    Code Lines: 108
-    ' Comment Lines: 11
-    '   Blank Lines: 27
+    '    Code Lines: 108 (73.97%)
+    ' Comment Lines: 11 (7.53%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 27 (18.49%)
     '     File Size: 5.89 KB
 
 
