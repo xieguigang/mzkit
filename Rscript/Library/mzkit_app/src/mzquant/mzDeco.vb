@@ -1,69 +1,69 @@
 ﻿#Region "Microsoft.VisualBasic::c5eb4b5acf2497c098b390f6586b330a, Rscript\Library\mzkit_app\src\mzquant\mzDeco.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 1020
-    '    Code Lines: 679 (66.57%)
-    ' Comment Lines: 219 (21.47%)
-    '    - Xml Docs: 84.02%
-    ' 
-    '   Blank Lines: 122 (11.96%)
-    '     File Size: 41.94 KB
+' Summaries:
 
 
-    ' Module mzDeco
-    ' 
-    '     Function: adjust_to_seconds, dumpPeaks, extractAlignedPeaks, get_ionPeak, ms1Scans
-    '               mz_deco, mz_groups, peakAlignment, peaksetMatrix, peakSubset
-    '               peaktable, pull_xic, readPeakData, readPeaktable, readSamples
-    '               readXcmsFeaturePeaks, readXcmsPeaks, readXIC, RI_calc, RI_reference
-    '               writePeaktable, writeSamples, writeXIC, writeXIC1, xic_deco
-    '               xic_dtw_list, xic_matrix_list, XICpool_func
-    ' 
-    '     Sub: Main
-    '     Class xic_deco_task
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Sub: Solve
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 1020
+'    Code Lines: 679 (66.57%)
+' Comment Lines: 219 (21.47%)
+'    - Xml Docs: 84.02%
+' 
+'   Blank Lines: 122 (11.96%)
+'     File Size: 41.94 KB
+
+
+' Module mzDeco
+' 
+'     Function: adjust_to_seconds, dumpPeaks, extractAlignedPeaks, get_ionPeak, ms1Scans
+'               mz_deco, mz_groups, peakAlignment, peaksetMatrix, peakSubset
+'               peaktable, pull_xic, readPeakData, readPeaktable, readSamples
+'               readXcmsFeaturePeaks, readXcmsPeaks, readXIC, RI_calc, RI_reference
+'               writePeaktable, writeSamples, writeXIC, writeXIC1, xic_deco
+'               xic_dtw_list, xic_matrix_list, XICpool_func
+' 
+'     Sub: Main
+'     Class xic_deco_task
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Sub: Solve
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -76,6 +76,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Language

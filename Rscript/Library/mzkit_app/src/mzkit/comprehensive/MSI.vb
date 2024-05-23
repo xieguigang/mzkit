@@ -1,67 +1,67 @@
 ﻿#Region "Microsoft.VisualBasic::819241e24483616e381b9fa3285121e0, Rscript\Library\mzkit_app\src\mzkit\comprehensive\MSI.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 1843
-    '    Code Lines: 1115 (60.50%)
-    ' Comment Lines: 536 (29.08%)
-    '    - Xml Docs: 91.98%
-    ' 
-    '   Blank Lines: 192 (10.42%)
-    '     File Size: 75.28 KB
+' Summaries:
 
 
-    ' Module MSI
-    ' 
-    '     Function: asMSILayer, asRaster, basePeakMz, castSpatialLayers, Correction
-    '               dimension_size, getimzmlMetadata, GetIonsJointMatrix, GetMatrixIons, GetMSIMetadata
-    '               getmzpackFileMetadata, getmzPackMetadata, GetPeakMatrix, getStatTable, GetXySpatialFilter
-    '               IonStats, level_convolution, loadRowSummary, LoadSpotVectorDataFrame, moran_index
-    '               MSI_summary, MSIScanMatrix, open_imzML, packDf, packFile
-    '               packMatrix, PeakMatrix, peakSamples, pixelId, PixelIons
-    '               PixelMatrix, pixels, pixels2D, readPeaklayer, readSummarylayer
-    '               rowScans, SampleBootstraping, scale, scan, spatialConvolution
-    '               splice, write_imzML, writePeaklayer, writeSummarylayer, z_assembler
-    '               z_header, z_volume
-    ' 
-    '     Sub: Main
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 1843
+'    Code Lines: 1115 (60.50%)
+' Comment Lines: 536 (29.08%)
+'    - Xml Docs: 91.98%
+' 
+'   Blank Lines: 192 (10.42%)
+'     File Size: 75.28 KB
+
+
+' Module MSI
+' 
+'     Function: asMSILayer, asRaster, basePeakMz, castSpatialLayers, Correction
+'               dimension_size, getimzmlMetadata, GetIonsJointMatrix, GetMatrixIons, GetMSIMetadata
+'               getmzpackFileMetadata, getmzPackMetadata, GetPeakMatrix, getStatTable, GetXySpatialFilter
+'               IonStats, level_convolution, loadRowSummary, LoadSpotVectorDataFrame, moran_index
+'               MSI_summary, MSIScanMatrix, open_imzML, packDf, packFile
+'               packMatrix, PeakMatrix, peakSamples, pixelId, PixelIons
+'               PixelMatrix, pixels, pixels2D, readPeaklayer, readSummarylayer
+'               rowScans, SampleBootstraping, scale, scan, spatialConvolution
+'               splice, write_imzML, writePeaklayer, writeSummarylayer, z_assembler
+'               z_header, z_volume
+' 
+'     Sub: Main
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -87,6 +87,7 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.csv.IO
@@ -1203,7 +1204,7 @@ Module MSI
             Dim mz As Double() = CLRVector.asNumeric(ionSet)
             Dim keys As String() = mz _
                 .Select(Function(m) m.ToString) _
-                .uniqueNames
+                .UniqueNames
 
             ions = keys.Zip(mz) _
                 .ToDictionary(Function(m) m.First,
