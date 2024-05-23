@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fa8521446159a72c4c855ef89f8d4b0e, metadb\Lipidomics\Global.vb"
+﻿#Region "Microsoft.VisualBasic::7ea6dfda43dd0efac33163901872d444, metadb\Lipidomics\Global.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 3 (27.27%)
-    '     File Size: 299 B
+    '     File Size: 297 B
 
 
     ' Module [Global]
@@ -65,4 +65,3 @@ Module [Global]
     Public ReadOnly comparer As IEqualityComparer(Of ISpectrumPeak) = Tolerance.PPM(20)
 
 End Module
-
