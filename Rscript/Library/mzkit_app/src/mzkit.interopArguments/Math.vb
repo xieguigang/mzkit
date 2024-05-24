@@ -182,7 +182,8 @@ Module Math
                             .into = area.ElementAtOrDefault(i),
                             .maxo = maxinto.ElementAtOrDefault(i),
                             .mzmin = mzmin.ElementAtOrDefault(i, .mass),
-                            .mzmax = mzmax.ElementAtOrDefault(i, .mass)
+                            .mzmax = mzmax.ElementAtOrDefault(i, .mass),
+                            .name = .id
                         }
                     End Function) _
             .ToArray
