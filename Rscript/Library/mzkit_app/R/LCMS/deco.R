@@ -66,14 +66,12 @@ const run.Deconvolution = function(rawdata, outputdir = "./", mzdiff = 0.005,
     write.csv(rt_shifts, file = `${outputdir}/rt_shifts.csv`, 
         row.names = TRUE);
 
-    let peakmeta = data.frame(peaktable);
-
-    peakmeta = data.frame(
-        mz = peakmeta$mz, mzmin = peakmeta$mzmin, mzmax = peakmeta$mzmax,
-        rt = peakmeta$rt, rtmin = peakmeta$rtmin, rtmax = peakmeta$rtmax,
-        RI = peakmeta$RI,
-        npeaks = peakmeta$npeaks,
-        row.names = peakmeta$ID
+    let peakmeta = data.frame(
+        mz = [peaktable]::mz, mzmin = [peaktable]::mzmin, mzmax = [peaktable]::mzmax,
+        rt = [peaktable]::rt, rtmin = [peaktable]::rtmin, rtmax = [peaktable]::rtmax,
+        RI = [peaktable]::RI,
+        npeaks = [peaktable]::npeaks,
+        row.names = [peaktable]::ID
     );
 
     write.csv(peakmeta, file = `${outputdir}/peakmeta.csv`, 
