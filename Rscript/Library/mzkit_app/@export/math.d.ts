@@ -40,13 +40,14 @@ declare namespace math {
      * + default value Is ``0.05``.
      * @param parallel 
      * + default value Is ``false``.
-     * @param aggregate_sum 
-     * + default value Is ``false``.
+     * @param aggregate default is get the max intensity value.
+     * 
+     * + default value Is ``null``.
      * @param env 
      * + default value Is ``null``.
      * @return Peaks data in centroid mode or a new m/z vector in centroid.
    */
-   function centroid(ions: any, tolerance?: any, intoCutoff?: number, parallel?: boolean, aggregate_sum?: boolean, env?: object): object|object|number;
+   function centroid(ions: any, tolerance?: any, intoCutoff?: number, parallel?: boolean, aggregate?: object, env?: object): object|object|number;
    /**
     * Create a chromatogram data from a dataframe object
     * 

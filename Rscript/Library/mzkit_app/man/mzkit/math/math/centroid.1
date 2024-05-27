@@ -7,7 +7,7 @@ centroid \- Converts profiles peak data to peak data in centroid mode.
 \fBtolerance\fR as any = "da:0.1", 
 \fBintoCutoff\fR as double = 0.05, 
 \fBparallel\fR as boolean = FALSE, 
-\fBaggregate_sum\fR as boolean = FALSE, 
+\fBaggregate\fR as <generic> AggregateFunction = \fB<NULL>\fR, 
 [\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
@@ -25,6 +25,11 @@ Converts profiles peak data to peak data in centroid mode.
    + height of the bar Is area of the profile peak.
 .PP
 .SH OPTIONS
+.PP
+\fBaggregate\fB \fR\- 
+ default is get the max intensity value.
+. 
+.PP
 .PP
 \fBions\fB \fR\- 
  value of this parameter could be 

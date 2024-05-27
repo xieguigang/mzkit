@@ -5,7 +5,7 @@
     <title>Converts profiles peak data to peak data in centroid mode.</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-    <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
+    <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
 </head>
 
 <body>
@@ -31,13 +31,17 @@
     <i>tolerance</i> = <span style='color: brown;'><strong>"da:0.1"</strong></span>,
     <i>intoCutoff</i> = <span style='color: green;'>0.05</span>,
     <i>parallel</i> = <span style='color: blue !important;'>FALSE</span>,
-    <i>aggregate.sum</i> = <span style='color: blue !important;'>FALSE</span>);</code></pre>
+    <i>aggregate</i> = <span style='color: blue !important;'>NULL</span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
 
         <table>
             
+<dt>aggregate</dt>
+<dd><p>default is get the max intensity value. [as <a href="/vignettes/clr/SMRUCC/Rsharp/Development/Components/AggregateFunction.html">AggregateFunction</a>]</p></dd>
+
+
 <dt>ions</dt>
 <dd><p>value of this parameter could be 
  
@@ -87,8 +91,8 @@
     </div>
 </body>
 
-<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
-<script type="text/javascript" src="../../_assets/highlights.js"></script>
+<script type="text/javascript" src="https://mzkit.org/assets/js/R_syntax.js"></script>
+<script type="text/javascript" src="https://mzkit.org/assets/js/highlights.js"></script>
 <script type="text/javascript">r_highlights("example_r");</script>
 
 </html>
