@@ -1,13 +1,33 @@
 .\" man page create by R# package system.
 .TH MSIMAGING 1 2000-Jan "MSI_summary.scaleMax" "MSI_summary.scaleMax"
 .SH NAME
-MSI_summary.scaleMax \- 
+MSI_summary.scaleMax \- Get the max intensity value via TrIQ or quantile cutoff
 .SH SYNOPSIS
 \fIMSI_summary.scaleMax(\fBdata\fR as <generic> MSISummary, 
 \fBintensity\fR as <integer> IntensitySummary, 
 \fBqcut\fR as double = 0.75, 
 \fBTrIQ\fR as boolean = TRUE, 
 [\fB<Environment>\fR]);\fR
+.SH DESCRIPTION
+.PP
+Get the max intensity value via TrIQ or quantile cutoff
+.PP
+.SH OPTIONS
+.PP
+\fBdata\fB \fR\- the MSI plot data. 
+.PP
+.PP
+\fBintensity\fB \fR\- the intensity source which describ how to extract the intensity data from the given MSI plot data.. 
+.PP
+.PP
+\fBqcut\fB \fR\- the threshold cutoff value for the cutoff algorithm. 
+.PP
+.PP
+\fBTrIQ\fB \fR\- used the TrIQ cutoff algorithm or quantile cutoff? default parameter value TRUE means use the TrIQ method by default.. 
+.PP
+.PP
+\fBenv\fB \fR\- -. 
+.PP
 .SH SEE ALSO
 MsImaging
 .SH FILES

@@ -224,9 +224,20 @@ declare namespace MsImaging {
    function MSI_coverage(layer: object, xy: object, samplingRegion?: boolean): number;
    module MSI_summary {
       /**
-        * @param qcut default value Is ``0.75``.
-        * @param TrIQ default value Is ``true``.
-        * @param env default value Is ``null``.
+       * Get the max intensity value via TrIQ or quantile cutoff
+       * 
+       * 
+        * @param data the MSI plot data
+        * @param intensity the intensity source which describ how to extract the intensity data from the given MSI plot data.
+        * @param qcut the threshold cutoff value for the cutoff algorithm
+        * 
+        * + default value Is ``0.75``.
+        * @param TrIQ used the TrIQ cutoff algorithm or quantile cutoff? default parameter value TRUE means use the TrIQ method by default.
+        * 
+        * + default value Is ``true``.
+        * @param env -
+        * 
+        * + default value Is ``null``.
       */
       function scaleMax(data: object, intensity: object, qcut?: number, TrIQ?: boolean, env?: object): number;
    }
