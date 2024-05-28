@@ -100,14 +100,19 @@
 export class dataframe extends <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/RsharpDataObject.html">RsharpDataObject</a> {
    # get all keys names of <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Internal/Object/dataframe.html">dataframe</a>.<a href="#">columns</a> data
    colnames: string;
-   # 长度为1或者长度为n
+   # the field vectors inside current data frame object, the vector 
+   #  dimension size of the fields could be a scalar value with just
+   #  one element or vector dimension should equals to the dimension
+   #  size of <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Internal/Object/dataframe.html">dataframe</a>.<a href="#">rownames</a>.
    columns: list;
    elementType: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Interop/RType.html">RType</a>;
    # current dataframe object contains any data or not?
    empty: boolean;
+   # the number of the features in current dataframe object
    ncols: integer;
    # column <a href="/vignettes/clr/System/Array.html">Array</a>.<a href="#">Length</a>
    nrows: integer;
+   # the dataframe rownames
    rownames: string;
 }
 </code>
