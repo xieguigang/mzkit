@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>MSI_summary.scaleMax</title>
+    <title>Get the max intensity value via TrIQ or quantile cutoff</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
@@ -18,11 +18,11 @@
             </tr>
         </table>
 
-        <h2>MSI_summary.scaleMax</h2>
+        <h2>Get the max intensity value via TrIQ or quantile cutoff</h2>
 
         <h3>Description</h3>
 
-        MSI_summary.scaleMax
+        
 
         <h3>Usage</h3>
 
@@ -36,6 +36,25 @@
 
         <table>
             
+<dt>data</dt>
+<dd><p>the MSI plot data. [as <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/MarkupData/imzML/MSISummary.html">MSISummary</a>]</p></dd>
+
+
+<dt>intensity</dt>
+<dd><p>the intensity source which describ how to extract the intensity data from the given MSI plot data. [as <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/MarkupData/imzML/IntensitySummary.html">IntensitySummary</a>]</p></dd>
+
+
+<dt>qcut</dt>
+<dd><p>the threshold cutoff value for the cutoff algorithm. [as double]</p></dd>
+
+
+<dt>TrIQ</dt>
+<dd><p>used the TrIQ cutoff algorithm or quantile cutoff? default parameter value TRUE means use the TrIQ method by default. [as boolean]</p></dd>
+
+
+<dt>env</dt>
+<dd><p>[as <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Environment.html">Environment</a>]</p></dd>
+
         </table>
 
 

@@ -29,7 +29,7 @@
 + [MSI_coverage](MsImaging/MSI_coverage.1) 
 + [assert](MsImaging/assert.1) test of a given MSI layer is target?
 + [layer](MsImaging/layer.1) render a ms-imaging layer by a specific ``m/z`` scan.
-+ [MSI_summary.scaleMax](MsImaging/MSI_summary.scaleMax.1) 
++ [MSI_summary.scaleMax](MsImaging/MSI_summary.scaleMax.1) Get the max intensity value via TrIQ or quantile cutoff
 + [defaultFilter](MsImaging/defaultFilter.1) get the default ms-imaging filter pipeline
 + [parseFilters](MsImaging/parseFilters.1) 
 + [intensityFilter](MsImaging/intensityFilter.1) 

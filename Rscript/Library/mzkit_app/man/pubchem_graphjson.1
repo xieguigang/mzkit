@@ -2,11 +2,11 @@
 .SH NAME
 pubchem_graphjson \- pubchem_graphjson(dataXml,
     <i>process</i> = <span style='color: blue !important;'>NULL</span>,
-    <i>extensionCache</i> = ./.cache/extdata/)
+    <i>extensionCache</i> = <span style='color: brown;'><strong>'./.cache/extdata/'</strong></span>)
 .SH SYNOPSIS
 \fIpubchem_graphjson(dataXml,
     <i>process</i> = <span style='color: blue !important;'>NULL</span>,
-    <i>extensionCache</i> = ./.cache/extdata/)\fR
+    <i>extensionCache</i> = <span style='color: brown;'><strong>'./.cache/extdata/'</strong></span>)\fR
 .SH OPTIONS
 .PP
 \fBdataXml\fB \fR\- . the xml content of the pugview data object
@@ -15,7 +15,7 @@ pubchem_graphjson \- pubchem_graphjson(dataXml,
 \fBprocess\fB \fR\- NULL. a callable function that used for additional object processing, example like attach a additional database cross reference id to the xrefs of the generated pugview metabolite data object
 .PP
 .PP
-\fBextensionCache\fB \fR\- ./.cache/extdata/. a cache dir for save the extension data of the current metabolite object, example as pathway query, reaction query, and reaction query. This parameter value also could be a filesystem wrapper object.
+\fBextensionCache\fB \fR\- './.cache/extdata/'. a cache dir for save the extension data of the current metabolite object, example as pathway query, reaction query, and reaction query. This parameter value also could be a filesystem wrapper object.
 .PP
 .SH VALUE
 .PP

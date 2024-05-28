@@ -929,6 +929,15 @@ Module MsImaging
         Return deltas.Average
     End Function
 
+    ''' <summary>
+    ''' Get the max intensity value via TrIQ or quantile cutoff
+    ''' </summary>
+    ''' <param name="data">the MSI plot data</param>
+    ''' <param name="intensity">the intensity source which describ how to extract the intensity data from the given MSI plot data.</param>
+    ''' <param name="qcut">the threshold cutoff value for the cutoff algorithm</param>
+    ''' <param name="TrIQ">used the TrIQ cutoff algorithm or quantile cutoff? default parameter value TRUE means use the TrIQ method by default.</param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("MSI_summary.scaleMax")>
     Public Function AutoScaleMax(data As MSISummary,
                                  intensity As IntensitySummary,
