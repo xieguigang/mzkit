@@ -186,25 +186,26 @@ Namespace Deconvolute
         ''' <returns>
         ''' the column features is the ion feature set and the object id is the spatial spot id
         ''' </returns>
-        Public Iterator Function ExportSpatial(Of T As {New, INamedValue, DynamicPropertyBase(Of Double)})() As IEnumerable(Of T)
+        Public Function ExportSpatial(Of T As {New, INamedValue, DynamicPropertyBase(Of Double)})() As IEnumerable(Of T)
             Dim mzId As String() = mz _
                 .Select(Function(mzi) mzi.ToString("F4")) _
                 .ToArray
+            Dim converts As IEnumerable(Of T) = matrix _
+                .AsParallel _
+                .Select(Function(spot)
+                            Dim ds As New T With {.Key = $"{spot.X},{spot.Y}"}
+                            Dim ms As Dictionary(Of String, Double) = ds.Properties
 
-            For Each spot As PixelData In matrix
-                Dim ds As New T With {
-                   .Key = $"{spot.X},{spot.Y}"
-                }
-                Dim ms As Dictionary(Of String, Double) = ds.Properties
+                            For i As Integer = 0 To mzId.Length - 1
+                                Call ms.Add(mzId(i), spot.intensity(i))
+                            Next
 
-                For i As Integer = 0 To mzId.Length - 1
-                    Call ms.Add(mzId(i), spot.intensity(i))
-                Next
+                            ds.Properties = ms
 
-                ds.Properties = ms
+                            Return ds
+                        End Function)
 
-                Yield ds
-            Next
+            Return converts
         End Function
 
         ''' <summary>
