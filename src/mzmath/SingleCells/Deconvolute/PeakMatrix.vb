@@ -94,7 +94,7 @@ Namespace Deconvolute
 
             Dim mzIndex As New MzPool(mzSet)
             Dim matrix As PixelData() = raw _
-                .deconvoluteMatrix(mzSet.Length, mzIndex) _
+                .deconvoluteMatrixParallel(mzSet.Length, mzIndex) _
                 .ToArray
 
             Return New MzMatrix With {
@@ -143,17 +143,24 @@ Namespace Deconvolute
         End Function
 
         <Extension>
-        Private Iterator Function deconvoluteMatrix(raw As IMZPack, len As Integer, mzIndex As MzPool) As IEnumerable(Of PixelData)
-            For Each scan As ScanMS1 In raw.MS
-                Dim xy As Point = scan.GetMSIPixel
-                Dim v As Double() = Math.DeconvoluteScan(scan.mz, scan.into, len, mzIndex)
+        Private Function deconvoluteMatrixParallel(raw As IMZPack, len As Integer, mzIndex As MzPool) As IEnumerable(Of PixelData)
+            Return raw.MS _
+                .AsParallel _
+                .Select(Function(scan)
+                            Return scan.deconvoluteMatrix(len, mzIndex)
+                        End Function)
+        End Function
 
-                Yield New PixelData With {
-                    .X = xy.X,
-                    .Y = xy.Y,
-                    .intensity = v
-                }
-            Next
+        <Extension>
+        Private Function deconvoluteMatrix(scan As ScanMS1, len As Integer, mzIndex As MzPool) As PixelData
+            Dim xy As Point = scan.GetMSIPixel
+            Dim v As Double() = Math.DeconvoluteScan(scan.mz, scan.into, len, mzIndex)
+
+            Return New PixelData With {
+               .X = xy.X,
+               .Y = xy.Y,
+               .intensity = v
+            }
         End Function
     End Module
 End Namespace
