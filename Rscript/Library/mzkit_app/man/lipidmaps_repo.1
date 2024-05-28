@@ -1,17 +1,17 @@
 ﻿.TH LIPIDMAPS_REPO 1 2024-May "" "Load lipidmaps data repository from internal data pack"
 .SH NAME
 lipidmaps_repo \- lipidmaps_repo(
-    <i>repofile</i> = system.file(data/LIPIDMAPS.msgpack, package = mzkit),
+    <i>repofile</i> = 'system.file'('data/LIPIDMAPS.msgpack', 'package' = 'mzkit'),
     <i>gsea</i> = <span style='color: blue !important;'>FALSE</span>,
     <i>category</i> = <span style='color: blue !important;'>FALSE</span>)
 .SH SYNOPSIS
 \fIlipidmaps_repo(
-    <i>repofile</i> = system.file(data/LIPIDMAPS.msgpack, package = mzkit),
+    <i>repofile</i> = 'system.file'('data/LIPIDMAPS.msgpack', 'package' = 'mzkit'),
     <i>gsea</i> = <span style='color: blue !important;'>FALSE</span>,
     <i>category</i> = <span style='color: blue !important;'>FALSE</span>)\fR
 .SH OPTIONS
 .PP
-\fBrepofile\fB \fR\- system.file(data/LIPIDMAPS.msgpack, package = mzkit). the file path of the messagepack repository data file. default file path is the internal data file in mzkit package.
+\fBrepofile\fB \fR\- 'system.file'('data/LIPIDMAPS.msgpack', 'package' = 'mzkit'). the file path of the messagepack repository data file. default file path is the internal data file in mzkit package.
 .PP
 .PP
 \fBgsea\fB \fR\- FALSE. the lipidmaps database should be cast to a gsea background?
