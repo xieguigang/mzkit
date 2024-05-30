@@ -68,6 +68,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Microsoft.VisualBasic.MIME.Html.Render
 
 Public Class RGBMSIPlot : Inherits Plot
 
@@ -110,6 +111,7 @@ Public Class RGBMSIPlot : Inherits Plot
         Dim iR = Me.R.MSILayer
         Dim iG = Me.G?.MSILayer
         Dim iB = Me.B?.MSILayer
+        Dim css As CSSEnvirnment = g.LoadEnvironment
 
         MSI = engine.ChannelCompositions(Me.R.MSILayer, Me.G?.MSILayer, Me.B?.MSILayer, dimensionSize, background:=theme.background).AsGDIImage
         MSI = Drawer.ScaleLayer(MSI, rect.Width, rect.Height, InterpolationMode.Bilinear)
@@ -118,7 +120,7 @@ Public Class RGBMSIPlot : Inherits Plot
         Call g.DrawImageUnscaled(MSI, rect)
 
         ' draw ion m/z
-        Dim labelFont As Font = CSSFont.TryParse(theme.legendLabelCSS).GDIObject(g.Dpi)
+        Dim labelFont As Font = css.GetFont(CSSFont.TryParse(theme.legendLabelCSS))
         Dim label As String = SingleIonLayer.ToString(Me.R)
         Dim labelSize As SizeF = g.MeasureString(label, labelFont)
         Dim pos As New Point(rect.Right + canvas.Padding.Right * 0.05, rect.Top + labelSize.Height)

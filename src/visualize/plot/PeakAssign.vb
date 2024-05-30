@@ -74,6 +74,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Microsoft.VisualBasic.MIME.Html.Render
 
 ''' <summary>
 ''' 通过KCF图模型为ms2二级质谱碎片鉴定分子碎片的具体的结构式
@@ -181,9 +182,10 @@ Public Class PeakAssign : Inherits Plot
             .X = xscale,
             .Y = yscale
         }
+        Dim css As CSSEnvirnment = g.LoadEnvironment
         Dim bottomY As Double = rect.Bottom
-        Dim labelFont As Font = CSSFont.TryParse(theme.tagCSS).GDIObject(g.Dpi)
-        Dim titleFont As Font = CSSFont.TryParse(theme.mainCSS).GDIObject(g.Dpi)
+        Dim labelFont As Font = css.GetFont(CSSFont.TryParse(theme.tagCSS))
+        Dim titleFont As Font = css.GetFont(CSSFont.TryParse(theme.mainCSS))
 
         Call Axis.DrawAxis(
             g, canvas, scaler,
@@ -213,10 +215,10 @@ Public Class PeakAssign : Inherits Plot
         Dim label As String
 
         label = xlabel
-        labelSize = g.MeasureString(label, CSSFont.TryParse(theme.axisLabelCSS).GDIObject(g.Dpi))
+        labelSize = g.MeasureString(label, css.GetFont(theme.axisLabelCSS))
         RIGHT = New PointF(rect.Right - labelSize.Width, rect.Bottom + 5)
 
-        g.DrawString(label, CSSFont.TryParse(theme.axisLabelCSS).GDIObject(g.Dpi), Brushes.Black, RIGHT)
+        g.DrawString(label, css.GetFont(theme.axisLabelCSS), Brushes.Black, RIGHT)
 
         Dim labels As New List(Of Label)
         Dim anchors As New List(Of Anchor)

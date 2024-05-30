@@ -68,10 +68,10 @@ Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
-Imports Microsoft.VisualBasic.Imaging.Drawing2D.Text
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Html.CSS
-Imports stdNum = System.Math
+Imports Microsoft.VisualBasic.MIME.Html.Render
+Imports std = System.Math
 
 Public Class GCxGCHeatMap : Inherits Plot
 
@@ -139,7 +139,8 @@ Public Class GCxGCHeatMap : Inherits Plot
         Dim scaleY As d3js.scale.LinearScale
         Dim scale As DataScaler
         Dim n As Double
-        Dim rowLabelFont As Font = CSSFont.TryParse(theme.axisLabelCSS).GDIObject(g.Dpi)
+        Dim css As CSSEnvirnment = g.LoadEnvironment
+        Dim rowLabelFont As Font = css.GetFont(CSSFont.TryParse(theme.axisLabelCSS))
         Dim fontHeight As Double = g.MeasureString("H", rowLabelFont).Height
 
         For i As Integer = 0 To matrix.Length - 1
@@ -192,7 +193,7 @@ Public Class GCxGCHeatMap : Inherits Plot
             Dim text As New GraphicsText(g)
             Dim xRotate As Double = 45
 
-            Call text.DrawString(labelText, tickFont, tickColor, New Point(pos.X, pos.Y + fontSize.Height * stdNum.Sin(xRotate * 180 / stdNum.PI)), angle:=xRotate)
+            Call text.DrawString(labelText, tickFont, tickColor, New Point(pos.X, pos.Y + fontSize.Height * std.Sin(xRotate * 180 / std.PI)), angle:=xRotate)
         Next
     End Sub
 End Class

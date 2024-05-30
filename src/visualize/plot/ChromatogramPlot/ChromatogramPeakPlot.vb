@@ -74,6 +74,7 @@ Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Microsoft.VisualBasic.MIME.Html.Render
 
 ''' <summary>
 ''' time -> into
@@ -124,8 +125,9 @@ Public Class ChromatogramPeakPlot : Inherits Plot
                 accumulate += If(into < 0, 0, into)
                 Return (accumulate / sumAll) * maxInto
             End Function
+        Dim css As CSSEnvirnment = g.LoadEnvironment
         Dim curvePen As Pen = Stroke.TryParse(theme.lineStroke).GDIObject
-        Dim titleFont As Font = CSSFont.TryParse(theme.mainCSS).GDIObject(ppi)
+        Dim titleFont As Font = css.GetFont(CSSFont.TryParse(theme.mainCSS))
         Dim ROIpen As Pen = Stroke.TryParse(ROI_styleCSS).GDIObject
         Dim baselinePen As Pen = Stroke.TryParse(baseLine_styleCSS).GDIObject
         Dim accumulateLine As Pen = Stroke.TryParse(accumulateLineStyleCss).GDIObject
@@ -206,7 +208,8 @@ Public Class ChromatogramPeakPlot : Inherits Plot
     End Sub
 
     Private Overloads Sub DrawLegends(legends As List(Of NamedValue(Of Pen)), g As IGraphics, rect As Rectangle)
-        Dim legendFont As Font = CSSFont.TryParse(theme.legendLabelCSS).GDIObject(g.Dpi)
+        Dim css As CSSEnvirnment = g.LoadEnvironment
+        Dim legendFont As Font = css.GetFont(CSSFont.TryParse(theme.legendLabelCSS))
         Dim lineWidth% = 100
         Dim maxLegend As SizeF = g.MeasureString(legends.Keys.MaxLengthString, legendFont)
         Dim offset = maxLegend.Height / 2
