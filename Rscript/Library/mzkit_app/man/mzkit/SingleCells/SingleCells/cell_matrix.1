@@ -24,6 +24,11 @@ export single cell expression matrix from the raw data scans
 .PP
 \fBenv\fB \fR\- -. 
 .PP
+.SH EXAMPLES
+.PP
+let rawdata = open.mzpack("/file.mzpack");
+ let matrix = cell_matrix(rawdata, mz_matrix = TRUE);
+.PP
 .SH SEE ALSO
 SingleCells
 .SH FILES

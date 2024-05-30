@@ -68,6 +68,7 @@ Imports System.Runtime.InteropServices
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Microsoft.VisualBasic.MIME.Html.Render
 
 Namespace Blender
 
@@ -134,7 +135,8 @@ Namespace Blender
             ' width drawing on the canvas
             Dim rulerWidth As Double = 0
             Dim pen As Pen = Stroke.TryParse(theme.lineStroke).GDIObject
-            Dim font As Font = CSSFont.TryParse(theme.tagCSS).GDIObject(g.Dpi)
+            Dim css As CSSEnvirnment = g.LoadEnvironment
+            Dim font As Font = css.GetFont(CSSFont.TryParse(theme.tagCSS))
             ' width of the ruler standards for
             Dim physical As String = eval(rect, dimsize, resolution, rulerWidth).ToString("F2") & " um"
             Dim fontsize As SizeF = g.MeasureString(physical, font)

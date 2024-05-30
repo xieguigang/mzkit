@@ -12,6 +12,23 @@ cast matrix object to the R liked dataframe object
 .PP
 \fBx\fB \fR\- the matrix object that going to do the type casting. 
 .PP
+.SH EXAMPLES
+.PP
+let matrix = read.mz_matrix("/file.dat");
+ # cast object to dataframe liked object
+ let df = df.mz_matrix(matrix);
+ 
+ # get m/z features inside this expression matrix
+ print(colnames(df));
+ # get single cell labels inside this expression matrix
+ print(colnames(df));
+ 
+ # get expression of specific ion by m/z value
+ print(df[, 336.8995]);
+ 
+ # get expression of a specific singlecell by its label
+ print(df["cell_label1", ]);
+.PP
 .SH SEE ALSO
 SingleCells
 .SH FILES

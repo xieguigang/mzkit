@@ -30,6 +30,12 @@ A x axis correction function wrapper, the clr object type of this
  2. for has no ms2 data, a @\fBT:BioNovoGene.Analytical.MassSpectrometry.Assembly.Comprehensive.MsImaging.ScanTimeCorrection\fR object is used 
     for run x axis correction based on the average rt diff.
 .PP
+.SH EXAMPLES
+.PP
+# create x-axis correction object based on the row scans data
+ let cor = MSI::correction(totalTime = 120, pixels = 300, 
+      hasMs2 = FALSE);
+.PP
 .SH SEE ALSO
 MSI
 .SH FILES

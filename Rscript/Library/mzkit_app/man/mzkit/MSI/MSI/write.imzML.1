@@ -35,6 +35,14 @@ Save and write the given ms-imaging mzpack object as imzML file
  an integer vector for set the size of the ms-imaging canvas dimension
 . 
 .PP
+.SH EXAMPLES
+.PP
+let msi_rawdata = open.mzpack(file = "/path/to/msi_rawdata.mzPack");
+ 
+ # convert the mzpack object into imzML format
+ msi_rawdata
+ |> write.imzML(file = "/path/to/msi_rawdata.imzML", dims = [500, 450]);
+.PP
 .SH SEE ALSO
 MSI
 .SH FILES

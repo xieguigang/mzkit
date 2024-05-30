@@ -33,6 +33,17 @@ scale the spatial matrix by column
 .PP
 A new dataframe data after scaled
 .PP
+.SH EXAMPLES
+.PP
+let factor = get_factors();
+ let mat = get_matrix();
+ 
+ if (length(factor) != ncol(mat)) {
+     stop("the length of the factor vector should be equals to the column feature size of the given dataframe!");
+ } else {
+     mat <- MSI::scale(mat, factor);
+ }
+.PP
 .SH SEE ALSO
 MSI
 .SH FILES

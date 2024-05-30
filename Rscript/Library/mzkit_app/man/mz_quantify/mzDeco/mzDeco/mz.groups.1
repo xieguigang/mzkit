@@ -36,6 +36,14 @@ the ion mz value is generated via the max intensity point in each ion
  feature group, and the xic data has already been re-order via the 
  time asc.
 .PP
+.SH EXAMPLES
+.PP
+let rawdata = open.mzpack(file = "/path/to/rawdata.mzpack");
+ let xic = mz.groups(ms1 = rawdata, mzdiff = "ppm:20");
+ 
+ # export the XIC data as binary data file.
+ writeBin(xic, con = "/path/to/xic_data.dat");
+.PP
 .SH SEE ALSO
 mzDeco
 .SH FILES

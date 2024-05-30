@@ -12,6 +12,13 @@ Get TIC from the mzpack layer reader
 .PP
 \fBmzpack\fB \fR\- -. 
 .PP
+.SH EXAMPLES
+.PP
+let rawdata = mzweb::open(file = "./LCMS-rawdata.mzPack");
+ let tic = mzweb::TIC(rawdata);
+ 
+ plot(tic);
+.PP
 .SH SEE ALSO
 mzweb
 .SH FILES

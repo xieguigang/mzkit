@@ -79,6 +79,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Interpolation
 Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Microsoft.VisualBasic.MIME.Html.Render
 
 Public Class TICplot : Inherits Plot
 
@@ -308,7 +309,8 @@ Public Class TICplot : Inherits Plot
     End Sub
 
     Private Iterator Function GetLabels(g As IGraphics, scaler As DataScaler, peakTimes As IEnumerable(Of NamedValue(Of ChromatogramTick))) As IEnumerable(Of Label)
-        Dim labelFont As Font = CSSFont.TryParse(theme.tagCSS).GDIObject(g.Dpi)
+        Dim css As CSSEnvirnment = g.LoadEnvironment
+        Dim labelFont As Font = css.GetFont(CSSFont.TryParse(theme.tagCSS))
 
         For Each ion As NamedValue(Of ChromatogramTick) In peakTimes
             Dim labelSize As SizeF = g.MeasureString(ion.Name, labelFont)
@@ -330,7 +332,8 @@ Public Class TICplot : Inherits Plot
     End Function
 
     Friend Shared Sub DrawLabels(g As IGraphics, rect As Rectangle, labels As Label(), theme As Theme, labelLayoutTicks As Integer)
-        Dim labelFont As Font = CSSFont.TryParse(theme.tagCSS).GDIObject(g.Dpi)
+        Dim css As CSSEnvirnment = g.LoadEnvironment
+        Dim labelFont As Font = css.GetFont(CSSFont.TryParse(theme.tagCSS))
         Dim labelConnector As Pen = Stroke.TryParse(theme.tagLinkStroke)
         Dim anchors As Anchor() = labels.GetLabelAnchors(r:=3)
 
@@ -371,9 +374,10 @@ Public Class TICplot : Inherits Plot
         Dim maxLen = maxSize.Width
         Dim legendShapeWidth% = 70
         Dim left As Double
+        Dim css As CSSEnvirnment = g.LoadEnvironment
 
         If outside Then
-            left = canvas.PlotRegion.Right + g.MeasureString("A", legends(Scan0).GetFont(g.Dpi)).Width
+            left = canvas.PlotRegion.Right + g.MeasureString("A", legends(Scan0).GetFont(css)).Width
         Else
             left = canvas.PlotRegion.Right - (maxLen + legendShapeWidth) * cols
         End If
