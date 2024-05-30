@@ -77,7 +77,12 @@ Public Module SaveXcms
         Dim deli As Char = If(tsv, vbTab, ","c)
         Dim buf As Stream = file.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
         Dim s As New StreamReader(buf)
-        Dim headers As Index(Of String) = s.ReadLine.Split(deli)
+        ' 20240530 all of the data header title maybe wrapped with quote
+        ' so we needs to trims the data at first!
+        Dim headers As Index(Of String) = Strings.Trim(s.ReadLine) _
+            .Split(deli) _
+            .Select(Function(si) si.Trim(""""c, " "c)) _
+            .Indexing
         Dim ID As Integer = headers.GetSynonymOrdinal("xcms_id", "id", "ID", "")
         Dim mz As Integer = headers.GetSynonymOrdinal("mz", "m/z")
         Dim mzmin As Integer = headers("mzmin")
