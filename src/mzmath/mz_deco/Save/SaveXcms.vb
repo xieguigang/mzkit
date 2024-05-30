@@ -1,64 +1,65 @@
 ﻿#Region "Microsoft.VisualBasic::86f01581a9b6bb15ce0762e2888b225a, mzmath\mz_deco\Save\SaveXcms.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 161
-    '    Code Lines: 118 (73.29%)
-    ' Comment Lines: 19 (11.80%)
-    '    - Xml Docs: 100.00%
-    ' 
-    '   Blank Lines: 24 (14.91%)
-    '     File Size: 5.70 KB
+' Summaries:
 
 
-    ' Module SaveXcms
-    ' 
-    '     Function: GetPeaks, ReadSample, ReadTextTable
-    ' 
-    '     Sub: DumpSample
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 161
+'    Code Lines: 118 (73.29%)
+' Comment Lines: 19 (11.80%)
+'    - Xml Docs: 100.00%
+' 
+'   Blank Lines: 24 (14.91%)
+'     File Size: 5.70 KB
+
+
+' Module SaveXcms
+' 
+'     Function: GetPeaks, ReadSample, ReadTextTable
+' 
+'     Sub: DumpSample
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.Data.Trinity
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 
@@ -83,21 +84,39 @@ Public Module SaveXcms
             .Split(deli) _
             .Select(Function(si) si.Trim(""""c, " "c)) _
             .Indexing
-        Dim ID As Integer = headers.GetSynonymOrdinal("xcms_id", "id", "ID", "")
-        Dim mz As Integer = headers.GetSynonymOrdinal("mz", "m/z")
+
+        Static required_id As String() = {"xcms_id", "id", "ID", ""}
+        Static required_mz As String() = {"mz", "m/z", "MZ", "M/Z", "mass to charge"}
+        Static required_rt As String() = {"rt", "RT", "retention_time"}
+
+        Dim ID As Integer = headers.GetSynonymOrdinal(required_id)
+        Dim mz As Integer = headers.GetSynonymOrdinal(required_mz)
+        Dim rt As Integer = headers.GetSynonymOrdinal(required_rt)
         Dim mzmin As Integer = headers("mzmin")
         Dim mzmax As Integer = headers("mzmax")
-        Dim rt As Integer = headers("rt")
         Dim rtmin As Integer = headers("rtmin")
         Dim rtmax As Integer = headers("rtmax")
         Dim npeaks As Integer = headers.GetSynonymOrdinal("npeaks", ".")
+        Dim ri As Integer = headers.GetSynonymOrdinal("ri", "RI", "retention_index")
 
-        Call headers.Delete("xcms_id", "id", "ID", "")
-        Call headers.Delete("mz", "m/z")
+        Call headers.Delete(required_id)
+        Call headers.Delete(required_mz)
+        Call headers.Delete(required_rt)
         Call headers.Delete("mzmin", "mzmax")
-        Call headers.Delete("rt", "rtmin", "rtmax")
+        Call headers.Delete("rtmin", "rtmax")
         Call headers.Delete("npeaks", ".")
         Call headers.Delete("maxinto")
+        Call headers.Delete("ri", "RI")
+
+        If ID < 0 Then
+            Throw New InvalidDataException($"the required of the unique id in peaktable could not be found! You should check is there any fields named {required_id.Concatenate()} existed in your data table?")
+        End If
+        If mz < 0 Then
+            Throw New InvalidDataException($"the required of the ion m/z field in peaktable could not be found! You should check is there any fields named {required_mz.Concatenate()} existed in your data table?")
+        End If
+        If rt < 0 Then
+            Throw New InvalidDataException($"the required of the ion peak rt field in peaktable could not be found! You should check is there any fields named {required_rt.Concatenate()} existed in your data table?")
+        End If
 
         Dim offsets = headers.ToArray
         Dim peaks As xcms2() = s _
@@ -119,16 +138,6 @@ Public Module SaveXcms
         Dim str As Value(Of String) = ""
         Dim t As String()
         Dim pk As xcms2
-
-        If ID < 0 Then
-            Throw New InvalidDataException($"the required of the unique id in peaktable could not be found!")
-        End If
-        If mz < 0 Then
-            Throw New InvalidDataException($"the required of the ion m/z field in peaktable could not be found!")
-        End If
-        If rt < 0 Then
-            Throw New InvalidDataException($"the required of the ion peak rt field in peaktable could not be found!")
-        End If
 
         Do While (str = s.ReadLine) IsNot Nothing
             t = str.Split(deli)
