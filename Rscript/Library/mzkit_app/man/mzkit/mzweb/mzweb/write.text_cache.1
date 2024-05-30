@@ -25,6 +25,13 @@ write ASCII text format of mzweb stream
 this method used for create ascii text package data for the biodeep
  web application js code to read the ms rawdata.
 .PP
+.SH EXAMPLES
+.PP
+let rawdata = open.mzpack(file = "./rawdata.mzPack");
+ let ms1 = [rawdata]::MS;
+ 
+ write.text_cache(ms1, file = "./msdata.txt");
+.PP
 .SH SEE ALSO
 mzweb
 .SH FILES

@@ -47,6 +47,19 @@ a vector of the peak deconvolution data,
  the result data vector may contains the rt shift data result, where you can get this shift
  value via the \fBrt.shift\fR attribute name, rt shift data model is clr type: @\fBT:BioNovoGene.Analytical.MassSpectrometry.Math.RtShift\fR.
 .PP
+.SH EXAMPLES
+.PP
+require(mzkit);
+ 
+ imports "mzDeco" from "mz_quantify";
+ 
+ let rawdata = open.mzpack("/path/to/rawdata.mzXML");
+ let ms1 = rawdata |> ms1_scans();
+ let peaks = mz_deco(ms1, tolerance = "da:0.01", peak.width = [3,30], 
+    dtw = TRUE);
+ 
+ write.peaks(peaks, file = "/data/save_debug.dat");
+.PP
 .SH SEE ALSO
 mzDeco
 .SH FILES

@@ -30,6 +30,14 @@ Create a library matrix object
 .PP
 A simple mzkit spectrum peak list object
 .PP
+.SH EXAMPLES
+.PP
+libraryMatrix(mz = [100 101], intensity = [100 35]);
+ 
+ # or construct from a dataframe
+ let data = data.frame(mz = [100 101], into = [100 35]);
+ let msPeaks = libraryMatrix(data);
+.PP
 .SH SEE ALSO
 data
 .SH FILES

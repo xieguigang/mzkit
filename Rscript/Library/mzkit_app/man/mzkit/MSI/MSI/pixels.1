@@ -27,6 +27,19 @@ this function will returns the pixels in dimension size(a tuple list data with s
  if the count is set to FALSE, by default; otherwise this function will return an integer value for
  indicates the real pixel counts number if the count parameter is set to TRUE.
 .PP
+.SH EXAMPLES
+.PP
+let layer = MSI::as.layer(x, context = 100.0013);
+ let counts = MSI::pixels(layer, count = TRUE);
+ let canvas_size = MSI::pixels(layer, count = FALSE);
+ 
+ print("the data pixels of current ion layer:");
+ print(counts);
+ print("the canvas dimension size of the ms-imaging:");
+ str(canvas_size);
+ print("the pixel number of the ms-imaging canvas:");
+ print(canvas_size$w * canvas_size$h);
+.PP
 .SH SEE ALSO
 MSI
 .SH FILES

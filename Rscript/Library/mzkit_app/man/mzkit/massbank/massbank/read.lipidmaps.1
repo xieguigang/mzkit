@@ -23,6 +23,15 @@ read lipidmaps messagepack repository file
  and also cast the lipidmaps metabolite metadata to the gsea background model?
 . 
 .PP
+.SH EXAMPLES
+.PP
+# gsea background model
+ let background = read.lipidmaps(
+     file = "./lipidmaps.msgpack", 
+     gsea.background = TRUE, 
+     category.model = FALSE
+ );
+.PP
 .SH SEE ALSO
 massbank
 .SH FILES

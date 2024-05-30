@@ -16,6 +16,15 @@ Create lipid name helper for annotation
 .PP
 \fBenv\fB \fR\- -. 
 .PP
+.SH EXAMPLES
+.PP
+# cast sdf dataset to lipidmaps data object
+ let dataset = read.SDF(file = "./example.sdf", lazy = FALSE);
+ let lipids = dataset |> as.lipidmaps();
+ 
+ # create annotation helper
+ let lipidnames = lipid.names(lipids);
+.PP
 .SH SEE ALSO
 massbank
 .SH FILES

@@ -12,6 +12,19 @@ get the labels based on the spatial information of each spot
 .PP
 \fBx\fB \fR\- -. 
 .PP
+.SH EXAMPLES
+.PP
+let matrix = read.mz_matrix("/file.dat");
+ let xyz = spatial_labels(matrix);
+ let spatial = strsplit(xyz, ",");
+ 
+ # x
+ print(spatial@{1});
+ # y
+ print(spatial@{2});
+ # z
+ print(spatial@{3});
+.PP
 .SH SEE ALSO
 SingleCells
 .SH FILES

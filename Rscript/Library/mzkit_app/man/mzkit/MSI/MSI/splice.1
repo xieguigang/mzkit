@@ -23,6 +23,11 @@ split the raw 2D MSI data into multiple parts with given parts
 A collection of the ms-imaging mzpack object that split from multiple 
  parts based on the input **`raw`** data mzpack inputs.
 .PP
+.SH EXAMPLES
+.PP
+let rawdata = open.mzpack("/path/to/msi_rawdata.mzPack");
+ let parts = MSI::splice(rawdata, partition = 6);
+.PP
 .SH SEE ALSO
 MSI
 .SH FILES

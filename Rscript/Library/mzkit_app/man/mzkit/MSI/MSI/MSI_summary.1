@@ -31,6 +31,18 @@ Fetch MSI summary data
  of the MSI data(width and height)
 . 
 .PP
+.SH EXAMPLES
+.PP
+let rawdata = open.mzpack("/path/to/rawdata.mzPack");
+ let spots = read.csv("/path/to/region.csv");
+ let into = MSI_summary(rawdata, x = as.integer(spots$x), 
+       y = as.integer(spots$y), 
+       as.vector = TRUE);
+ 
+ print(as.data.frame(into));
+ print("view of the intensity vector:");
+ print([into]::totalIon);
+.PP
 .SH SEE ALSO
 MSI
 .SH FILES
