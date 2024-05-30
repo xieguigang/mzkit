@@ -144,7 +144,7 @@ Public Module SaveXcms
         Do While (str = s.ReadLine) IsNot Nothing
             t = str.Split(deli)
             pk = New xcms2 With {
-                .ID = t(ID),
+                .ID = t(ID).Trim(""""c, " "c),
                 .mz = Double.Parse(t(mz)),
                 .mzmax = If(mzmax > -1, Val(t(mzmax)), .mz),
                 .mzmin = If(mzmin > -1, Val(t(mzmin)), .mz),
