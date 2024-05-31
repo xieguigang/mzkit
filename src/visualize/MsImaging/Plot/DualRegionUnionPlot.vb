@@ -192,8 +192,8 @@ Public Class DualRegionUnionPlot : Inherits Plot
             height:=rect.Height * 0.5
         )
         Dim tickFont As Font = css.GetFont(CSSFont.TryParse(theme.legendTickCSS))
-        Dim tickPen As Pen = Stroke.TryParse(theme.legendTickAxisStroke)
-        Dim axisPen As Pen = Stroke.TryParse(theme.axisStroke)
+        Dim tickPen As Pen = css.GetPen(Stroke.TryParse(theme.legendTickAxisStroke))
+        Dim axisPen As Pen = css.GetPen(Stroke.TryParse(theme.axisStroke))
 
         Call g.DrawDualColorBar(colorSet1, colorSet2, layout, intensityTicks, axisPen, tickPen, "Intensity", labelFont, tickFont, "G3")
     End Sub

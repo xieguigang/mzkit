@@ -165,7 +165,7 @@ Public Class MSIPlot : Inherits Plot
             height:=rect.Height * 0.5
         )
         Dim tickFont As Font = css.GetFont(CSSFont.TryParse(theme.legendTickCSS))
-        Dim tickPen As Pen = Stroke.TryParse(theme.legendTickAxisStroke)
+        Dim tickPen As Pen = css.GetPen(Stroke.TryParse(theme.legendTickAxisStroke))
 
         Call g.ColorMapLegend(layout, colors, intensityTicks, labelFont, "Intensity", tickFont, tickPen, format:="G3")
     End Sub
