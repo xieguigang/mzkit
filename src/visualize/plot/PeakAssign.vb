@@ -206,7 +206,7 @@ Public Class PeakAssign : Inherits Plot
         Dim ZERO As New PointF(rect.Left, rect.Bottom)
         Dim RIGHT As New PointF(rect.Right, rect.Bottom)
 
-        Call g.DrawLine(Stroke.TryParse(theme.axisStroke), ZERO, RIGHT)
+        Call g.DrawLine(css.GetPen(Stroke.TryParse(theme.axisStroke)), ZERO, RIGHT)
 
         Dim labelSize As SizeF
         Dim barStyle As Stroke = Stroke.TryParse(theme.lineStroke)
@@ -328,8 +328,8 @@ Public Class PeakAssign : Inherits Plot
 
         If theme.drawLabels Then
             Dim labelBrush As Brush = theme.tagColor.GetBrush
-            Dim labelConnector As Pen = Stroke.TryParse(theme.tagLinkStroke)
-            Dim connectorLead As Pen = Stroke.TryParse(theme.tagLinkStroke)
+            Dim labelConnector As Pen = css.GetPen(Stroke.TryParse(theme.tagLinkStroke))
+            Dim connectorLead As Pen = css.GetPen(Stroke.TryParse(theme.tagLinkStroke))
 
             Call d3js.forcedirectedLabeler(
                     ejectFactor:=2,

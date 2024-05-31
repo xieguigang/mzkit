@@ -126,11 +126,11 @@ Public Class ChromatogramPeakPlot : Inherits Plot
                 Return (accumulate / sumAll) * maxInto
             End Function
         Dim css As CSSEnvirnment = g.LoadEnvironment
-        Dim curvePen As Pen = Stroke.TryParse(theme.lineStroke).GDIObject
+        Dim curvePen As Pen = css.GetPen(Stroke.TryParse(theme.lineStroke))
         Dim titleFont As Font = css.GetFont(CSSFont.TryParse(theme.mainCSS))
-        Dim ROIpen As Pen = Stroke.TryParse(ROI_styleCSS).GDIObject
-        Dim baselinePen As Pen = Stroke.TryParse(baseLine_styleCSS).GDIObject
-        Dim accumulateLine As Pen = Stroke.TryParse(accumulateLineStyleCss).GDIObject
+        Dim ROIpen As Pen = css.GetPen(Stroke.TryParse(ROI_styleCSS))
+        Dim baselinePen As Pen = css.GetPen(Stroke.TryParse(baseLine_styleCSS))
+        Dim accumulateLine As Pen = css.GetPen(Stroke.TryParse(accumulateLineStyleCss))
         Dim legends As New List(Of NamedValue(Of Pen))
         Dim rect As Rectangle = canvas.PlotRegion
         Dim X = d3js.scale.linear.domain(values:=timeTicks).range(integers:={rect.Left, rect.Right})
@@ -169,7 +169,7 @@ Public Class ChromatogramPeakPlot : Inherits Plot
         End If
 
         If Not MRM_ROIs.IsNullOrEmpty Then
-            legends += New NamedValue(Of Pen) With {.Name = "Chromatography ROI", .Value = Stroke.TryParse(ROI_styleCSS).GDIObject}
+            legends += New NamedValue(Of Pen) With {.Name = "Chromatography ROI", .Value = css.GetPen(Stroke.TryParse(ROI_styleCSS))}
             legends += New NamedValue(Of Pen) With {.Name = "Baseline", .Value = baselinePen}
         End If
 

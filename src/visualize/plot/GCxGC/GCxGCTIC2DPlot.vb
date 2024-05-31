@@ -197,7 +197,7 @@ Public Class GCxGCTIC2DPlot : Inherits Plot
             titleFont:=css.GetFont(theme.legendTitleCSS),
             title:="Intensity Scale",
             tickFont:=css.GetFont(theme.legendTickCSS),
-            tickAxisStroke:=Stroke.TryParse(theme.axisTickStroke).GDIObject,
+            tickAxisStroke:=css.GetPen(Stroke.TryParse(theme.axisTickStroke)),
             format:="G3"
         )
     End Sub
