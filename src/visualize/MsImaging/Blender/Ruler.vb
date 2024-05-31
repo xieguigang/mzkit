@@ -134,9 +134,9 @@ Namespace Blender
         Public Sub DrawOnCanvas(g As IGraphics, dimsize As Size, rect As Rectangle, color As Color, resolution As Double)
             ' width drawing on the canvas
             Dim rulerWidth As Double = 0
-            Dim pen As Pen = Stroke.TryParse(theme.lineStroke).GDIObject
             Dim css As CSSEnvirnment = g.LoadEnvironment
-            Dim font As Font = css.GetFont(CSSFont.TryParse(theme.tagCSS))
+            Dim pen As Pen = css.GetPen(Stroke.TryParse(theme.lineStroke))
+            Dim font As Font = CSS.GetFont(CSSFont.TryParse(theme.tagCSS))
             ' width of the ruler standards for
             Dim physical As String = eval(rect, dimsize, resolution, rulerWidth).ToString("F2") & " um"
             Dim fontsize As SizeF = g.MeasureString(physical, font)

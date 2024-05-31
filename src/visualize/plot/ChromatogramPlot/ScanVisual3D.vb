@@ -75,7 +75,8 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.MIME.Html.CSS
-Imports stdNum = System.Math
+Imports Microsoft.VisualBasic.MIME.Html.Render
+Imports std = System.Math
 
 ' intensity
 '  ^ y   z
@@ -136,7 +137,7 @@ Public Class ScanVisual3D : Inherits Plot
         ' cos(a) = dx / dc
         ' dx = cos(a) * dc
         Dim dc As Double = evalDc(canvas)
-        Dim dx As Double = stdNum.Cos(angle.ToRadians) * dc
+        Dim dx As Double = std.Cos(angle.ToRadians) * dc
 
         Return dx / (scans.Length + 1)
     End Function
@@ -156,7 +157,7 @@ Public Class ScanVisual3D : Inherits Plot
         ' tan(a) = dh / dw
         ' dw = dh / tan(a)
 
-        Dim dw As Double = dh / stdNum.Tan(a:=angle.ToRadians)
+        Dim dw As Double = dh / std.Tan(a:=angle.ToRadians)
 
         ' c/|
         ' /a|
@@ -166,7 +167,7 @@ Public Class ScanVisual3D : Inherits Plot
         ' cos(a) = dw / c
         ' c = dw / cos(a)
 
-        Dim c As Double = dw / stdNum.Cos(d:=angle.ToRadians)
+        Dim c As Double = dw / std.Cos(d:=angle.ToRadians)
 
         Return c
     End Function
@@ -175,7 +176,7 @@ Public Class ScanVisual3D : Inherits Plot
         ' sin(a) = dy / dc
         ' dy = sin(a) * dc
         Dim dc As Double = evalDc(canvas)
-        Dim dy As Double = stdNum.Sin(angle.ToRadians) * dc
+        Dim dy As Double = std.Sin(angle.ToRadians) * dc
 
         Return dy / (scans.Length + 1)
     End Function
@@ -209,9 +210,10 @@ Public Class ScanVisual3D : Inherits Plot
 
         parallelCanvas = parallelCanvas.Offset2D(dx, -dy)
 
+        Dim css As CSSEnvirnment = g.LoadEnvironment
         Dim firstFrame As GraphicsRegion
         Dim lastFrame As GraphicsRegion
-        Dim parallelXAxisPen As Pen = Stroke.TryParse(theme.gridStrokeX)
+        Dim parallelXAxisPen As Pen = css.GetPen(Stroke.TryParse(theme.gridStrokeX))
         Dim maxinto As Double = Aggregate scan As NamedCollection(Of ChromatogramTick)
                                 In scans
                                 Let into As Double = scan _
@@ -299,7 +301,7 @@ Public Class ScanVisual3D : Inherits Plot
         Dim e As New PointF(canvas.Width - firstFrame.Padding.Right, canvas.Height - firstFrame.Padding.Bottom)
         Dim f As New PointF(canvas.Width - lastFrame.Padding.Right, canvas.Height - lastFrame.Padding.Bottom)
 
-        Dim axisPen As Pen = Stroke.TryParse(theme.axisStroke)
+        Dim axisPen As Pen = css.GetPen(Stroke.TryParse(theme.axisStroke))
 
         Call g.DrawLine(axisPen, a, d)
         Call g.DrawLine(axisPen, a, b)

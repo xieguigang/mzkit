@@ -125,7 +125,7 @@ Public Class RawScatterPlot : Inherits Plot
         Dim css As CSSEnvirnment = g.LoadEnvironment
         Dim tickStyle As Font = css.GetFont(CSSFont.TryParse(theme.axisTickCSS))
         Dim legendTitleStyle As Font = css.GetFont(CSSFont.TryParse(theme.legendTitleCSS))
-        Dim tickAxisStroke As Pen = Stroke.TryParse(theme.axisStroke).GDIObject
+        Dim tickAxisStroke As Pen = css.GetPen(Stroke.TryParse(theme.axisStroke))
         Dim scatter As New Scatter2D({serials}, theme, scatterReorder:=True, fillPie:=True) With {
             .xlabel = "scan_time in seconds",
             .ylabel = "m/z ratio"

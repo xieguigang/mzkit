@@ -124,19 +124,19 @@ Public Class TICplot : Inherits Plot
         End If
     End Sub
 
-    Private Function newPen(c As Color) As Pen
+    Private Function newPen(css As CSSEnvirnment, c As Color) As Pen
         Dim style As Stroke = Stroke.TryParse(theme.lineStroke)
         style.fill = c.ARGBExpression
-        Return style.GDIObject
+        Return css.GetPen(style)
     End Function
 
-    Private Function colorProvider() As LoopArray(Of Pen)
+    Private Function colorProvider(css As CSSEnvirnment) As LoopArray(Of Pen)
         If ionData.Length = 1 Then
-            Return {newPen(theme.colorSet.TranslateColor(False) Or Color.DeepSkyBlue.AsDefault)}
+            Return {newPen(css, theme.colorSet.TranslateColor(False) Or Color.DeepSkyBlue.AsDefault)}
         Else
             Return Designer _
                 .GetColors(theme.colorSet) _
-                .Select(AddressOf newPen) _
+                .Select(Function(c) newPen(css, c)) _
                 .ToArray
         End If
     End Function
@@ -147,7 +147,7 @@ Public Class TICplot : Inherits Plot
     End Sub
 
     Friend Sub RunPlot(ByRef g As IGraphics, canvas As GraphicsRegion, ByRef labels As Label(), ByRef legends As LegendObject())
-        Dim colors As LoopArray(Of Pen) = colorProvider()
+        Dim colors As LoopArray(Of Pen) = colorProvider(g.LoadEnvironment)
         Dim XTicks As Double() = ionData _
             .Select(Function(ion)
                         Return ion.value.TimeArray
@@ -334,7 +334,7 @@ Public Class TICplot : Inherits Plot
     Friend Shared Sub DrawLabels(g As IGraphics, rect As Rectangle, labels As Label(), theme As Theme, labelLayoutTicks As Integer)
         Dim css As CSSEnvirnment = g.LoadEnvironment
         Dim labelFont As Font = css.GetFont(CSSFont.TryParse(theme.tagCSS))
-        Dim labelConnector As Pen = Stroke.TryParse(theme.tagLinkStroke)
+        Dim labelConnector As Pen = css.GetPen(Stroke.TryParse(theme.tagLinkStroke))
         Dim anchors As Anchor() = labels.GetLabelAnchors(r:=3)
 
         If labelLayoutTicks > 0 Then

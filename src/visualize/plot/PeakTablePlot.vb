@@ -100,7 +100,7 @@ Public Class PeakTablePlot : Inherits Plot
         Dim qcut As Double = TrIQ.FindThreshold(allIntensity, Me.cut, N:=mapLevels)
         Dim valueRange As DoubleRange = New Double() {allIntensity.Min, qcut}
         Dim color As Integer
-        Dim strokePen As Pen = Stroke.TryParse(theme.axisStroke).GDIObject
+        Dim strokePen As Pen = css.GetPen(Stroke.TryParse(theme.axisStroke))
         Dim scaler As New DataScaler With {
             .region = rect,
             .X = scaleX,
