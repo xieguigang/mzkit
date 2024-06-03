@@ -24,7 +24,7 @@ Public Class LipidSearchMapper(Of T As {IExactMassProvider, IReadOnlyId, ICompou
     End Sub
 
     Private Shared Function emptyTree() As AVLClusterTree(Of LipidName)
-        Return New AVLClusterTree(Of LipidName)(AddressOf compares)
+        Return New AVLClusterTree(Of LipidName)(AddressOf compares, Function(n) n.ToString)
     End Function
 
     Private Shared Function compares(a As LipidName, b As LipidName) As Integer
