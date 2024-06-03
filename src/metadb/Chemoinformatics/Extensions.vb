@@ -56,7 +56,10 @@
 
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports FormulaVal = BioNovoGene.BioDeep.Chemoinformatics.Formula.Formula
+Imports std = System.Math
 
 <HideModuleName>
 Public Module Extensions
@@ -77,7 +80,22 @@ Public Module Extensions
 
     <Extension>
     Public Function IonFormulaCalibration(formula As FormulaVal, adduct As MzCalculator) As FormulaVal
+        Dim adducts = Parser.GetAdductParts(adduct.ToString)
+        Dim f As FormulaVal
 
+        For Each part As NamedValue(Of Integer) In adducts
+            f = FormulaScanner.ScanFormula(part.Name)
+            f = f * std.Abs(part.Value)
+
+            ' reverse of the formula adducts
+            If part.Value > 0 Then
+                formula -= f
+            Else
+                formula += f
+            End If
+        Next
+
+        Return formula
     End Function
 
 End Module

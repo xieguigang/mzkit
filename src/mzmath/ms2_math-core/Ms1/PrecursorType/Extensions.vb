@@ -238,13 +238,17 @@ Namespace Ms1.PrecursorType
         ''' </summary>
         ''' <param name="precursor_type"></param>
         ''' <returns></returns>
-        Public Function GetAdductParts(precursor_type As String) As NamedValue(Of Double)()
-            Static cache As New Dictionary(Of String, ICollection(Of NamedValue(Of Double)))
+        Public Function GetAdductParts(precursor_type As String) As NamedValue(Of Integer)()
+            Static cache As New Dictionary(Of String, ICollection(Of NamedValue(Of Integer)))
 
             Return cache _
                 .ComputeIfAbsent(Strings.Trim(precursor_type),
                                  lazyValue:=Function(str)
-                                                Return AdductFormulaParts(precursor_type)
+                                                Return AdductFormulaParts(precursor_type) _
+                                                    .Select(Function(t)
+                                                                Return New NamedValue(Of Integer)(t.expression, t.sign)
+                                                            End Function) _
+                                                    .ToArray
                                             End Function) _
                 .ToArray
         End Function
