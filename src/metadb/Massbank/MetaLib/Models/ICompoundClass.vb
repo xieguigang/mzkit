@@ -74,6 +74,9 @@ Namespace MetaLib.Models
 
     End Interface
 
+    ''' <summary>
+    ''' a helper for get <see cref="ICompoundClass"/> data
+    ''' </summary>
     Public MustInherit Class ClassReader
 
         Public MustOverride Function GetClass(id As String) As CompoundClass
