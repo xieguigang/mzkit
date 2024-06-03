@@ -23,11 +23,13 @@ Public Class LipidSearchMapper(Of T As {IExactMassProvider, IReadOnlyId, ICompou
                 name.id = lipid.Identity
             End If
 
-            If Not classes.ContainsKey(name.className) Then
-                classes.Add(name.className, emptyTree)
+            Dim class$ = name.className.ToLower
+
+            If Not classes.ContainsKey([class]) Then
+                classes.Add([class], emptyTree)
             End If
 
-            Call classes(name.className).Add(name)
+            Call classes([class]).Add(name)
         Next
     End Sub
 
@@ -61,6 +63,28 @@ Public Class LipidSearchMapper(Of T As {IExactMassProvider, IReadOnlyId, ICompou
         End If
 
         Return 0
+    End Function
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="class">the lipidsearch class name</param>
+    ''' <param name="fattyAcid"></param>
+    ''' <returns></returns>
+    Public Iterator Function FindLipidReference(class$, fattyAcid As String) As IEnumerable(Of String)
+        Dim name As LipidName = LipidName.ParseLipidName([class] & fattyAcid)
+
+        [class] = [class].ToLower
+
+        If Not classes.ContainsKey([class]) Then
+            Return
+        End If
+
+        Dim query = classes([class]).Search(name).ToArray
+
+        For Each lipid As LipidName In query
+            Yield lipid.id
+        Next
     End Function
 
 End Class
