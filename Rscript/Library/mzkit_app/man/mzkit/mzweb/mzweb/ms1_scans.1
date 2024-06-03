@@ -15,6 +15,21 @@ get all ms1 scan data points
 .PP
 \fBmzpack\fB \fR\- -. 
 .PP
+.SH EXAMPLES
+.PP
+let rawdata = open.mzpack(file = "./rawdata.mzPack");
+ let ms1 = rawdata |> ms1_scans();
+ 
+ # get xic liked data
+ let xic = rawdata |> ms1_scans(mz = 999.0911, tolerance = "da:0.01");
+ let mz_vec = [xic]::mz;
+ 
+ print(as.data.frame(xic));
+ 
+ bitmap(file = "./mz_histogram.png") {
+     plot(hist(mz_vec));
+ }
+.PP
 .SH SEE ALSO
 mzweb
 .SH FILES

@@ -20,6 +20,30 @@ construct a new metabolite annotation information data
  the database cross reference links of current metabolite.
 . 
 .PP
+.SH EXAMPLES
+.PP
+imports ["massbank", "annotation"] from "mzkit";
+ 
+ # an example of create metabolite annotation data
+ # for 'ATP'.
+ 
+ let xrefs = annotation::xref(
+     KEGG = 'C00002',
+     CAS = '56-65-5',
+     pubchem = '3304',
+     chebi = '15422',
+     KNApSAcK = 'C00001491'
+ );
+ let metabo = metabo_anno(
+     id = "ATP",
+     formula = "C10H16N5O13P3",
+     name = "ATP",
+     xref = xrefs,
+     synonym = ['ATP' 'Adenosine 5'-triphosphate']
+ );
+ 
+ print(JSON::json_encode(metabo));
+.PP
 .SH SEE ALSO
 massbank
 .SH FILES

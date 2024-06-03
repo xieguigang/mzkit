@@ -44,6 +44,18 @@ cast the pixel collection to a ion imaging layer data
 .PP
 A ms-imaging layer object that could be used for run ms-imaging rendering.
 .PP
+.SH EXAMPLES
+.PP
+imports "SingleCells" from "mzkit";
+ imports "MsImaging" from "mzplot";
+ 
+ let msi = SingleCells::read.mz_matrix("/path/to/msi_matrix.mat");
+ let layer = MSI::as.layer(x, context = 100.0013);
+ 
+ bitmap(file = "/path/to/save.png") {
+     plot(layer);
+ }
+.PP
 .SH SEE ALSO
 MSI
 .SH FILES

@@ -32,6 +32,13 @@ Extract the ion features inside a MSI raw data slide sample file
 .PP
 count pixels/density/etc for each ions m/z data
 .PP
+.SH EXAMPLES
+.PP
+let rawdata = open.mzpack("/file.mzpack");
+ let ion_features = MSI::ionStat(rawdata);
+ 
+ print(as.data.frame(ion_features));
+.PP
 .SH SEE ALSO
 MSI
 .SH FILES

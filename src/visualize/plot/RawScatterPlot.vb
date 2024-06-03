@@ -71,6 +71,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Microsoft.VisualBasic.MIME.Html.Render
 Imports std = System.Math
 
 ''' <summary>
@@ -121,9 +122,10 @@ Public Class RawScatterPlot : Inherits Plot
 
         Dim brushes = colors.Select(Function(colorStr) New SolidBrush(colorStr.TranslateColor)).ToArray
         Dim ticks = points.Select(Function(a) a.value ^ std.E).CreateAxisTicks
-        Dim tickStyle As Font = CSSFont.TryParse(theme.axisTickCSS).GDIObject(g.Dpi)
-        Dim legendTitleStyle As Font = CSSFont.TryParse(theme.legendTitleCSS).GDIObject(g.Dpi)
-        Dim tickAxisStroke As Pen = Stroke.TryParse(theme.axisStroke).GDIObject
+        Dim css As CSSEnvirnment = g.LoadEnvironment
+        Dim tickStyle As Font = css.GetFont(CSSFont.TryParse(theme.axisTickCSS))
+        Dim legendTitleStyle As Font = css.GetFont(CSSFont.TryParse(theme.legendTitleCSS))
+        Dim tickAxisStroke As Pen = css.GetPen(Stroke.TryParse(theme.axisStroke))
         Dim scatter As New Scatter2D({serials}, theme, scatterReorder:=True, fillPie:=True) With {
             .xlabel = "scan_time in seconds",
             .ylabel = "m/z ratio"

@@ -30,6 +30,17 @@ Do COW peak alignment and export peaktable
 .PP
 \fBenv\fB \fR\- -. 
 .PP
+.SH EXAMPLES
+.PP
+let peaksdata = lapply(files, function(ms1) {
+     mz_deco(ms1, tolerance = "da:0.01", peak.width = [3,30]);
+ });
+ let peaktable = peak_alignment(samples = peaksdata);
+ 
+ write.csv(peaktable, 
+     file = "/path/to/peaktable.csv", 
+     row.names = TRUE);
+.PP
 .SH SEE ALSO
 mzDeco
 .SH FILES

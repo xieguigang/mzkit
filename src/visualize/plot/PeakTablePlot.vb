@@ -68,6 +68,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors.Scaler
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Microsoft.VisualBasic.MIME.Html.Render
 
 Public Class PeakTablePlot : Inherits Plot
 
@@ -87,7 +88,8 @@ Public Class PeakTablePlot : Inherits Plot
         Dim scaleX = d3js.scale.linear.domain(values:=xTicks).range(integers:={rect.Left, rect.Right})
         Dim sampleNames As String() = peakSet.sampleNames
         Dim dy As Double = rect.Height / sampleNames.Length
-        Dim idFont As Font = CSSFont.TryParse(theme.axisLabelCSS).GDIObject(g.Dpi)
+        Dim css As CSSEnvirnment = g.LoadEnvironment
+        Dim idFont As Font = css.GetFont(CSSFont.TryParse(theme.axisLabelCSS))
         Dim lbSize As SizeF
         Dim y As Double = rect.Top
         Dim x As Double
@@ -98,14 +100,14 @@ Public Class PeakTablePlot : Inherits Plot
         Dim qcut As Double = TrIQ.FindThreshold(allIntensity, Me.cut, N:=mapLevels)
         Dim valueRange As DoubleRange = New Double() {allIntensity.Min, qcut}
         Dim color As Integer
-        Dim strokePen As Pen = Stroke.TryParse(theme.axisStroke).GDIObject
+        Dim strokePen As Pen = css.GetPen(Stroke.TryParse(theme.axisStroke))
         Dim scaler As New DataScaler With {
             .region = rect,
             .X = scaleX,
             .Y = d3js.scale.linear.domain(values:={0.0, 1.0}).range(integers:={rect.Top, rect.Bottom}),
             .AxisTicks = (xTicks.AsVector, Nothing)
         }
-        Dim tickFont As Font = CSSFont.TryParse(theme.axisTickCSS).GDIObject(g.Dpi)
+        Dim tickFont As Font = css.GetFont(CSSFont.TryParse(theme.axisTickCSS))
         Dim pos As PointF
 
         Call Axis.DrawX(g, strokePen, "Retention Time(s)", scaler, XAxisLayoutStyles.Bottom, 0, Nothing, theme.axisLabelCSS, Brushes.Black, tickFont, Brushes.Black, htmlLabel:=False)

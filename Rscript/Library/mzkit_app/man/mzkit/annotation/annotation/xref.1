@@ -330,6 +330,19 @@ Create the database cross reference links
  therapeutic targets, drug metabolism, and other molecular interaction network 
  information.. 
 .PP
+.SH EXAMPLES
+.PP
+# an example of create metabolite annotation data
+ # for 'ATP'.
+ 
+ let xrefs = annotation::xref(
+     KEGG = 'C00002',
+     CAS = '56-65-5',
+     pubchem = '3304',
+     chebi = '15422',
+     KNApSAcK = 'C00001491'
+ );
+.PP
 .SH SEE ALSO
 annotation
 .SH FILES

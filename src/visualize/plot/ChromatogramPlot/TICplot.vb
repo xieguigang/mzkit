@@ -79,6 +79,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Interpolation
 Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Microsoft.VisualBasic.MIME.Html.Render
 
 Public Class TICplot : Inherits Plot
 
@@ -123,19 +124,19 @@ Public Class TICplot : Inherits Plot
         End If
     End Sub
 
-    Private Function newPen(c As Color) As Pen
+    Private Function newPen(css As CSSEnvirnment, c As Color) As Pen
         Dim style As Stroke = Stroke.TryParse(theme.lineStroke)
         style.fill = c.ARGBExpression
-        Return style.GDIObject
+        Return css.GetPen(style)
     End Function
 
-    Private Function colorProvider() As LoopArray(Of Pen)
+    Private Function colorProvider(css As CSSEnvirnment) As LoopArray(Of Pen)
         If ionData.Length = 1 Then
-            Return {newPen(theme.colorSet.TranslateColor(False) Or Color.DeepSkyBlue.AsDefault)}
+            Return {newPen(css, theme.colorSet.TranslateColor(False) Or Color.DeepSkyBlue.AsDefault)}
         Else
             Return Designer _
                 .GetColors(theme.colorSet) _
-                .Select(AddressOf newPen) _
+                .Select(Function(c) newPen(css, c)) _
                 .ToArray
         End If
     End Function
@@ -146,7 +147,7 @@ Public Class TICplot : Inherits Plot
     End Sub
 
     Friend Sub RunPlot(ByRef g As IGraphics, canvas As GraphicsRegion, ByRef labels As Label(), ByRef legends As LegendObject())
-        Dim colors As LoopArray(Of Pen) = colorProvider()
+        Dim colors As LoopArray(Of Pen) = colorProvider(g.LoadEnvironment)
         Dim XTicks As Double() = ionData _
             .Select(Function(ion)
                         Return ion.value.TimeArray
@@ -308,7 +309,8 @@ Public Class TICplot : Inherits Plot
     End Sub
 
     Private Iterator Function GetLabels(g As IGraphics, scaler As DataScaler, peakTimes As IEnumerable(Of NamedValue(Of ChromatogramTick))) As IEnumerable(Of Label)
-        Dim labelFont As Font = CSSFont.TryParse(theme.tagCSS).GDIObject(g.Dpi)
+        Dim css As CSSEnvirnment = g.LoadEnvironment
+        Dim labelFont As Font = css.GetFont(CSSFont.TryParse(theme.tagCSS))
 
         For Each ion As NamedValue(Of ChromatogramTick) In peakTimes
             Dim labelSize As SizeF = g.MeasureString(ion.Name, labelFont)
@@ -330,8 +332,9 @@ Public Class TICplot : Inherits Plot
     End Function
 
     Friend Shared Sub DrawLabels(g As IGraphics, rect As Rectangle, labels As Label(), theme As Theme, labelLayoutTicks As Integer)
-        Dim labelFont As Font = CSSFont.TryParse(theme.tagCSS).GDIObject(g.Dpi)
-        Dim labelConnector As Pen = Stroke.TryParse(theme.tagLinkStroke)
+        Dim css As CSSEnvirnment = g.LoadEnvironment
+        Dim labelFont As Font = css.GetFont(CSSFont.TryParse(theme.tagCSS))
+        Dim labelConnector As Pen = css.GetPen(Stroke.TryParse(theme.tagLinkStroke))
         Dim anchors As Anchor() = labels.GetLabelAnchors(r:=3)
 
         If labelLayoutTicks > 0 Then
@@ -371,9 +374,10 @@ Public Class TICplot : Inherits Plot
         Dim maxLen = maxSize.Width
         Dim legendShapeWidth% = 70
         Dim left As Double
+        Dim css As CSSEnvirnment = g.LoadEnvironment
 
         If outside Then
-            left = canvas.PlotRegion.Right + g.MeasureString("A", legends(Scan0).GetFont(g.Dpi)).Width
+            left = canvas.PlotRegion.Right + g.MeasureString("A", legends(Scan0).GetFont(css)).Width
         Else
             left = canvas.PlotRegion.Right - (maxLen + legendShapeWidth) * cols
         End If

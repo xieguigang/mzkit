@@ -20,6 +20,16 @@ scale matrix for each spot/cell sample
 .PP
 \fBenv\fB \fR\- -. 
 .PP
+.SH EXAMPLES
+.PP
+# use the internal function
+ x <- apply.scale(x, scaler = max);
+ # use the lambda function
+ # the symbol x of the parameter in f function is a different thing 
+ # with the variable x
+ let f(x) = x ^ 2;
+ x <- apply.scale(x, scaler = f);
+.PP
 .SH SEE ALSO
 SingleCells
 .SH FILES

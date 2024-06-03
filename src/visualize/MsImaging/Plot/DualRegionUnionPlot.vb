@@ -71,6 +71,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Microsoft.VisualBasic.MIME.Html.Render
 
 Public Class DualRegionUnionPlot : Inherits Plot
 
@@ -154,6 +155,7 @@ Public Class DualRegionUnionPlot : Inherits Plot
         }
         Dim MSI1 As Image, MSI2 As Image
         Dim engine As New PixelRender(heatmapRender:=False)
+        Dim css As CSSEnvirnment = g.LoadEnvironment
 
         MSI1 = engine.RenderPixels(region1.MSILayer, MSIsize, colorSet:=colorSet1).AsGDIImage
         MSI1 = Drawer.ScaleLayer(MSI1, rect.Width, rect.Height, InterpolationMode.Bilinear)
@@ -174,7 +176,7 @@ Public Class DualRegionUnionPlot : Inherits Plot
         Call g.DrawImage(MSI2, rect)
 
         ' draw ion m/z
-        Dim labelFont As Font = CSSFont.TryParse(theme.legendLabelCSS).GDIObject(g.Dpi)
+        Dim labelFont As Font = css.GetFont(CSSFont.TryParse(theme.legendLabelCSS))
         Dim label As String = Double.Parse(region1.IonMz).ToString("F4")
         Dim labelSize As SizeF = g.MeasureString(label, labelFont)
         Dim pos As New Point(rect.Right + canvas.Padding.Right * 0.05, rect.Top)
@@ -189,9 +191,9 @@ Public Class DualRegionUnionPlot : Inherits Plot
             width:=canvas.Padding.Right * 0.5,
             height:=rect.Height * 0.5
         )
-        Dim tickFont As Font = CSSFont.TryParse(theme.legendTickCSS).GDIObject(g.Dpi)
-        Dim tickPen As Pen = Stroke.TryParse(theme.legendTickAxisStroke)
-        Dim axisPen As Pen = Stroke.TryParse(theme.axisStroke)
+        Dim tickFont As Font = css.GetFont(CSSFont.TryParse(theme.legendTickCSS))
+        Dim tickPen As Pen = css.GetPen(Stroke.TryParse(theme.legendTickAxisStroke))
+        Dim axisPen As Pen = css.GetPen(Stroke.TryParse(theme.axisStroke))
 
         Call g.DrawDualColorBar(colorSet1, colorSet2, layout, intensityTicks, axisPen, tickPen, "Intensity", labelFont, tickFont, "G3")
     End Sub

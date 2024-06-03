@@ -19,6 +19,13 @@ the input raw data object could be also a file path to the ms-imaging mzpack
  rawdata, but only version 2 mzPack data file will be supported for load 
  metadata.
 .PP
+.SH EXAMPLES
+.PP
+let rawdata = open.mzpack(file = "./rawdata.mzPack");
+ let msi_data = msi_metadata(rawdata);
+ 
+ str(as.list(as.object(msi_data)$GetMetadata()));
+.PP
 .SH SEE ALSO
 MSI
 .SH FILES

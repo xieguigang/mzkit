@@ -13,6 +13,13 @@ get all of the sample file data tags from target mzpack file
 .PP
 \fBmzpack\fB \fR\- -. 
 .PP
+.SH EXAMPLES
+.PP
+let rawdata = open.mzpack(file = "./rawdata.mzPack");
+ let tags = mzPack::getSampleTags(rawdata);
+ 
+ print(tags);
+.PP
 .SH SEE ALSO
 mzPack
 .SH FILES

@@ -22,6 +22,11 @@ load chromatogram data from the raw file data
 .PP
 the chromatogram data wrapper of TIC/BPC
 .PP
+.SH EXAMPLES
+.PP
+let rawdata = mzweb::open.mzpack(file = "./lcms-rawdata.mzPack");
+ let chromatogram = rawdata |> load.chromatogram();
+.PP
 .SH SEE ALSO
 mzweb
 .SH FILES

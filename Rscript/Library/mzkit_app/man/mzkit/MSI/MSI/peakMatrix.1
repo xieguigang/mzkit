@@ -45,6 +45,13 @@ the data format of the two kind of the output data result is keeps the same:
  + for a dataset collection vector, the column is also the ion features and the 
    rows is the spatial spots.
 .PP
+.SH EXAMPLES
+.PP
+let raw = open.mzpack("/path/to/rawdata.mzPack");
+ let ionsSet = list(ion1 = 100.0321, ion2 = 563.2254, ion3 = 336.9588);
+ 
+ MSI::peakMatrix(raw, ionSet = ionsSet, mzError = "da:0.05");
+.PP
 .SH SEE ALSO
 MSI
 .SH FILES

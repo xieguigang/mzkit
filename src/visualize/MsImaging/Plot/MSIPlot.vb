@@ -59,7 +59,6 @@
 #End Region
 
 Imports System.Drawing
-Imports System.Drawing.Drawing2D
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Blender
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
@@ -73,6 +72,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Microsoft.VisualBasic.MIME.Html.Render
 
 Public Class MSIPlot : Inherits Plot
 
@@ -122,6 +122,7 @@ Public Class MSIPlot : Inherits Plot
             .X = scaleX,
             .Y = scaleY
         }
+        Dim css As CSSEnvirnment = g.LoadEnvironment
         Dim engine As New RectangleRender(Drivers.Default, heatmapRender:=False)
         Dim colorScale = Designer.GetColors(theme.colorSet, 25).Select(Function(c) New SolidBrush(c)).ToArray
         Dim scaleSize As New Size With {
@@ -142,7 +143,7 @@ Public Class MSIPlot : Inherits Plot
         Call engine.RenderPixels(g, rect.Location, ion.MSILayer, colorScale)
 
         ' draw ion m/z
-        Dim labelFont As Font = CSSFont.TryParse(theme.legendLabelCSS).GDIObject(g.Dpi)
+        Dim labelFont As Font = css.GetFont(CSSFont.TryParse(theme.legendLabelCSS))
         Dim label As String = ion.IonMz
         Dim labelSize As SizeF = g.MeasureString(label, labelFont)
         Dim pos As New Point(rect.Right + canvas.Padding.Right * 0.05, rect.Top + labelSize.Height)
@@ -163,8 +164,8 @@ Public Class MSIPlot : Inherits Plot
             width:=canvas.Padding.Right * 0.8,
             height:=rect.Height * 0.5
         )
-        Dim tickFont As Font = CSSFont.TryParse(theme.legendTickCSS).GDIObject(g.Dpi)
-        Dim tickPen As Pen = Stroke.TryParse(theme.legendTickAxisStroke)
+        Dim tickFont As Font = css.GetFont(CSSFont.TryParse(theme.legendTickCSS))
+        Dim tickPen As Pen = css.GetPen(Stroke.TryParse(theme.legendTickAxisStroke))
 
         Call g.ColorMapLegend(layout, colors, intensityTicks, labelFont, "Intensity", tickFont, tickPen, format:="G3")
     End Sub

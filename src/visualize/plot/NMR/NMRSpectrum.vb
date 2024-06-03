@@ -68,6 +68,7 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Math.Interpolation
 Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Microsoft.VisualBasic.MIME.Html.Render
 
 Public Class NMRSpectrum : Inherits Plot
 
@@ -102,7 +103,8 @@ Public Class NMRSpectrum : Inherits Plot
         Dim points As PointData() = ppm _
             .Select(Function(ppmi, i) New PointData(ppmi, intensity(i))) _
             .ToArray
-        Dim lineStyle As Pen = Stroke.TryParse(theme.lineStroke).GDIObject
+        Dim css As CSSEnvirnment = g.LoadEnvironment
+        Dim lineStyle As Pen = css.GetPen(Stroke.TryParse(theme.lineStroke))
         Dim line As New SerialData With {
             .color = lineStyle.Color,
             .lineType = DashStyle.Solid,
