@@ -41,4 +41,13 @@ declare namespace lipidomics {
      * + default value Is ``null``.
    */
    function lipidmaps(lipidmaps: any, env?: object): object;
+   /**
+    * get mapping of the lipidmaps reference id via lipid name
+    * 
+    * 
+     * @param lipidmaps -
+     * @param class the lipidsearch class name
+     * @param fatty_acid the lipidsearch fatty acid data
+   */
+   function mapping(lipidmaps: object, class: string, fatty_acid: string): string;
 }
