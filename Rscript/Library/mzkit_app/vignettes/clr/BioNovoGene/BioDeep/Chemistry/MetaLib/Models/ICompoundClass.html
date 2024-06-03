@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>BioNovoGene.BioDeep.Chemistry.MetaLib.Models.ClassReader</title>
+    <title>BioNovoGene.BioDeep.Chemistry.MetaLib.Models.ICompoundClass</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
@@ -13,23 +13,28 @@
 
         <table style="width: 100%;">
             <tr>
-                <td>ClassReader {BioNovoGene.BioDeep.Chemistry.MetaLib.Models}</td>
+                <td>ICompoundClass {BioNovoGene.BioDeep.Chemistry.MetaLib.Models}</td>
                 <td style="text-align: right;">.NET clr documentation</td>
             </tr>
         </table>
 
-        <h2>ClassReader</h2>
+        <h2>ICompoundClass</h2>
 
         <h3>Description</h3>
 
-        <p>a helper for get <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/MetaLib/Models/ICompoundClass.html">ICompoundClass</a> data</p>
+        <p>主要是取自HMDB数据库之中的代谢物分类信息</p>
 
         <h3>Declare</h3>        
 
         <pre>
             <code id="clr_ts">
 # namespace BioNovoGene.BioDeep.Chemistry.MetaLib.Models
-export class ClassReader {
+export class ICompoundClass {
+   class: string;
+   kingdom: string;
+   molecular_framework: string;
+   sub_class: string;
+   super_class: string;
 }
 </code>
         </pre>
