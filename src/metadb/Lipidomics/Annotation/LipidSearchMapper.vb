@@ -83,14 +83,12 @@ Public Class LipidSearchMapper(Of T As {IExactMassProvider, IReadOnlyId, ICompou
     ''' <summary>
     ''' 
     ''' </summary>
-    ''' <param name="class">the lipidsearch class name</param>
-    ''' <param name="fattyAcid"></param>
     ''' <returns>
     ''' 1 for search by exact structure matches
     ''' 0 for lipid abbreviation name matches
     ''' </returns>
-    Public Iterator Function FindLipidReference(class$, fattyAcid As String) As IEnumerable(Of IntegerTagged(Of String))
-        Dim name As LipidName = LipidName.ParseLipidName([class] & fattyAcid)
+    Public Iterator Function FindLipidReference(name As LipidName) As IEnumerable(Of IntegerTagged(Of String))
+        Dim class$ = name.className.ToLower
 
         [class] = [class].ToLower
 
@@ -113,6 +111,19 @@ Public Class LipidSearchMapper(Of T As {IExactMassProvider, IReadOnlyId, ICompou
                 Yield (0, lipid.Identity)
             Next
         End If
+    End Function
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="class">the lipidsearch class name</param>
+    ''' <param name="fattyAcid"></param>
+    ''' <returns>
+    ''' 1 for search by exact structure matches
+    ''' 0 for lipid abbreviation name matches
+    ''' </returns>
+    Public Function FindLipidReference(class$, fattyAcid As String) As IEnumerable(Of IntegerTagged(Of String))
+        Return FindLipidReference(LipidName.ParseLipidName([class] & fattyAcid))
     End Function
 
 End Class
