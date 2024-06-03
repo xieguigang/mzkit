@@ -127,17 +127,17 @@ Namespace Lipidomics
             Dim bonds As BondPosition() = BondPosition.ParseStructure(components).ToArray
 
             Return New Chain With {
-            .carbons = carbons,
-            .tag = tag,
-            .doubleBonds = DBes,
-            .groups = (From b As BondPosition
-                       In bonds
-                       Where TypeOf b Is Group
-                       Select DirectCast(b, Group)).ToArray,
-            .position = bonds _
-                .Where(Function(b) Not TypeOf b Is Group) _
-                .ToArray
-        }
+                .carbons = carbons,
+                .tag = tag,
+                .doubleBonds = DBes,
+                .groups = (From b As BondPosition
+                           In bonds
+                           Where TypeOf b Is Group
+                           Select DirectCast(b, Group)).ToArray,
+                .position = bonds _
+                    .Where(Function(b) Not TypeOf b Is Group) _
+                    .ToArray
+            }
         End Function
     End Class
 

@@ -1,62 +1,62 @@
 ﻿#Region "Microsoft.VisualBasic::d222fecb5fb1629de7dd361f45304fe4, Rscript\Library\mzkit_app\src\mzkit\annotations\MetaDbXref.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 996
-    '    Code Lines: 722 (72.49%)
-    ' Comment Lines: 152 (15.26%)
-    '    - Xml Docs: 88.82%
-    ' 
-    '   Blank Lines: 122 (12.25%)
-    '     File Size: 43.69 KB
+' Summaries:
 
 
-    ' Module MetaDbXref
-    ' 
-    '     Function: (+2 Overloads) AnnotationStream, (+2 Overloads) boundList, cbindMeta, CreateMassSearchIndex, CreateMs1Handler
-    '               createTable, excludeFeatures, getMetadata, getVector, loadQueryHits
-    '               makeUniqueQuery, ms1Search, ParseLipidName, ParseLipidNameList, ParsePrecursorIon
-    '               QueryByMass, search1, searchMz, searchMzList, searchMzVector
-    '               searchTable, TestMetaIon, VerifyCASNumber
-    ' 
-    '     Sub: Main
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 996
+'    Code Lines: 722 (72.49%)
+' Comment Lines: 152 (15.26%)
+'    - Xml Docs: 88.82%
+' 
+'   Blank Lines: 122 (12.25%)
+'     File Size: 43.69 KB
+
+
+' Module MetaDbXref
+' 
+'     Function: (+2 Overloads) AnnotationStream, (+2 Overloads) boundList, cbindMeta, CreateMassSearchIndex, CreateMs1Handler
+'               createTable, excludeFeatures, getMetadata, getVector, loadQueryHits
+'               makeUniqueQuery, ms1Search, ParseLipidName, ParseLipidNameList, ParsePrecursorIon
+'               QueryByMass, search1, searchMz, searchMzList, searchMzVector
+'               searchTable, TestMetaIon, VerifyCASNumber
+' 
+'     Sub: Main
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -67,6 +67,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.BioDeep.Chemistry
 Imports BioNovoGene.BioDeep.Chemoinformatics
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
+Imports BioNovoGene.BioDeep.Chemoinformatics.Lipidomics
 Imports BioNovoGene.BioDeep.MetaDNA
 Imports BioNovoGene.BioDeep.MSEngine
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
@@ -189,6 +190,13 @@ Module MetaDbXref
         Return SMRUCC.Rsharp.EvaluateFramework(Of String, Boolean)(env, num, AddressOf CASNumber.Verify)
     End Function
 
+    ''' <summary>
+    ''' Parse the lipid names
+    ''' </summary>
+    ''' <param name="name">a character vector of the lipid names</param>
+    ''' <param name="keepsRaw">keeps the mzkit clr object instead of convert the clr object as R# runtime tuple list value.</param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("parseLipidName")>
     <RApiReturn(GetType(LipidName))>
     Public Function ParseLipidName(<RRawVectorArgument>
