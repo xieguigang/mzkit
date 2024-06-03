@@ -10,8 +10,13 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Public Class LipidSearchMapper(Of T As {IExactMassProvider, IReadOnlyId, ICompoundNameProvider, IFormulaProvider})
 
     ReadOnly classes As New Dictionary(Of String, AVLClusterTree(Of LipidName))
-    ReadOnly formula As New Dictionary(Of String, Dictionary(Of String, T))
+    ReadOnly formula As New Dictionary(Of String, Dictionary(Of String, List(Of T)))
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="lipidmaps"></param>
+    ''' <param name="getLipidName">ABBREVIATION</param>
     Sub New(lipidmaps As IEnumerable(Of T), getLipidName As Func(Of T, String))
         For Each lipid As T In lipidmaps
             Dim name_str As String = getLipidName(lipid)
@@ -24,12 +29,21 @@ Public Class LipidSearchMapper(Of T As {IExactMassProvider, IReadOnlyId, ICompou
             End If
 
             Dim class$ = name.className.ToLower
+            Dim abbreviation As String = name.ToOverviewName
 
             If Not classes.ContainsKey([class]) Then
                 classes.Add([class], emptyTree)
             End If
+            If Not formula.ContainsKey([class]) Then
+                formula.Add([class], New Dictionary(Of String, List(Of T)))
+            End If
+
+            If Not formula([class]).ContainsKey(abbreviation) Then
+                formula([class]).Add(abbreviation, New List(Of T))
+            End If
 
             Call classes([class]).Add(name)
+            Call formula([class])(abbreviation).Add(lipid)
         Next
     End Sub
 
@@ -80,11 +94,21 @@ Public Class LipidSearchMapper(Of T As {IExactMassProvider, IReadOnlyId, ICompou
             Return
         End If
 
+        ' search by exact structure matches
         Dim query = classes([class]).Search(name).ToArray
+        Dim abbreviation As String = name.ToOverviewName
 
         For Each lipid As LipidName In query
             Yield lipid.id
         Next
+
+        Dim classNames = formula([class])
+
+        If classNames.ContainsKey(abbreviation) Then
+            For Each lipid As T In classNames(abbreviation)
+                Yield lipid.Identity
+            Next
+        End If
     End Function
 
 End Class

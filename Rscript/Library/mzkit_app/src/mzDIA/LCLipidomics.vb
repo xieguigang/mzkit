@@ -131,8 +131,8 @@ Module LCLipidomics
     ''' get mapping of the lipidmaps reference id via lipid name
     ''' </summary>
     ''' <param name="lipidmaps"></param>
-    ''' <param name="class$"></param>
-    ''' <param name="fatty_acid"></param>
+    ''' <param name="class">the lipidsearch class name</param>
+    ''' <param name="fatty_acid">the lipidsearch fatty acid data</param>
     ''' <returns></returns>
     <ExportAPI("mapping")>
     <RApiReturn(TypeCodes.string)>

@@ -119,7 +119,7 @@ Namespace Lipidomics
         End Function
 
         ''' <summary>
-        ''' $"{className}({totalCarbons}:{totalDBes})"
+        ''' get ABBREVIATION name of this lipid, $"{className}({totalCarbons}:{totalDBes})"
         ''' </summary>
         ''' <returns></returns>
         Public Function ToOverviewName() As String
