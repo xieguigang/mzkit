@@ -60,6 +60,7 @@ Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
+Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.[Object]
 Imports SMRUCC.Rsharp.Runtime.Interop
 
@@ -124,5 +125,18 @@ Module LCLipidomics
 
         Dim index As New LipidSearchMapper(Of LipidMaps.MetaData)(pull.populates(Of LipidMaps.MetaData)(env), Function(a) a.ABBREVIATION)
         Return index
+    End Function
+
+    ''' <summary>
+    ''' get mapping of the lipidmaps reference id via lipid name
+    ''' </summary>
+    ''' <param name="lipidmaps"></param>
+    ''' <param name="class$"></param>
+    ''' <param name="fatty_acid"></param>
+    ''' <returns></returns>
+    <ExportAPI("mapping")>
+    <RApiReturn(TypeCodes.string)>
+    Public Function find_lipidmaps(lipidmaps As LipidSearchMapper(Of LipidMaps.MetaData), class$, fatty_acid As String) As Object
+        Return lipidmaps.FindLipidReference(class$, fatty_acid).ToArray
     End Function
 End Module
