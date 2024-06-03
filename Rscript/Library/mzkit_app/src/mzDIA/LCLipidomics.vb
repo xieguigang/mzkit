@@ -1,65 +1,67 @@
 ﻿#Region "Microsoft.VisualBasic::c73d0511a8a72cd04b9218cc604197be, Rscript\Library\mzkit_app\src\mzDIA\LCLipidomics.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 50
-    '    Code Lines: 27 (54.00%)
-    ' Comment Lines: 18 (36.00%)
-    '    - Xml Docs: 100.00%
-    ' 
-    '   Blank Lines: 5 (10.00%)
-    '     File Size: 2.10 KB
+' Summaries:
 
 
-    ' Module LCLipidomics
-    ' 
-    '     Function: adductIon, GetLipidIons
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 50
+'    Code Lines: 27 (54.00%)
+' Comment Lines: 18 (36.00%)
+'    - Xml Docs: 100.00%
+' 
+'   Blank Lines: 5 (10.00%)
+'     File Size: 2.10 KB
+
+
+' Module LCLipidomics
+' 
+'     Function: adductIon, GetLipidIons
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Lipidomics
+Imports BioNovoGene.BioDeep.Chemistry
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports SMRUCC.Rsharp.Runtime
+Imports SMRUCC.Rsharp.Runtime.Internal.[Object]
 Imports SMRUCC.Rsharp.Runtime.Interop
-
 ''' <summary>
 ''' Lipidomics annotation based on MS-DIAL
 ''' </summary>
@@ -102,5 +104,23 @@ Module LCLipidomics
     <RApiReturn(GetType(AdductIon))>
     Public Function adductIon(<RRawVectorArgument> adduct As Object, Optional env As Environment = Nothing) As Object
         Throw New NotImplementedException
+    End Function
+
+    ''' <summary>
+    ''' create a lipidmaps metabolite data indexer
+    ''' </summary>
+    ''' <param name="lipidmaps"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("lipidmaps")>
+    Public Function lipidmaps_indexer(<RRawVectorArgument> lipidmaps As Object, Optional env As Environment = Nothing) As Object
+        Dim pull As pipeline = pipeline.TryCreatePipeline(Of LipidMaps.MetaData)(lipidmaps, env)
+
+        If pull.isError Then
+            Return pull.getError
+        End If
+
+        Dim index As New LipidSearchMapper(Of LipidMaps.MetaData)(pull.populates(Of LipidMaps.MetaData)(env), Function(a) a.ABBREVIATION)
+        Return index
     End Function
 End Module
