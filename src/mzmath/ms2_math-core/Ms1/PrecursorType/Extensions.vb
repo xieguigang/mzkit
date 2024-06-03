@@ -61,6 +61,8 @@
 
 Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Text.Parser
@@ -183,7 +185,25 @@ Namespace Ms1.PrecursorType
             Return $"[{main}{adducts}]{chargeMode}"
         End Function
 
+        ''' <summary>
+        ''' parse the formula adducts parts
+        ''' </summary>
+        ''' <param name="precursor_type">the precursor type expression, example as: [M+H]+</param>
+        ''' <param name="raw"></param>
+        ''' <returns></returns>
         Public Function Formula(precursor_type$, Optional raw As Boolean = True) As [Variant](Of String, IEnumerable(Of (sign%, expression As String)))
+            Dim formulas = AdductFormulaParts(precursor_type)
+
+            If raw Then
+                ' 20190510
+                ' 运行时不允许隐式转换  
+                Return New [Variant](Of String, IEnumerable(Of (sign As Integer, expression As String)))(formulas.AsEnumerable)
+            Else
+                Throw New NotImplementedException
+            End If
+        End Function
+
+        Private Function AdductFormulaParts(precursor_type As String) As ICollection(Of (sign%, expression As String))
             Dim formulas As New List(Of (sign%, expression As String))
             Dim parser As CharPtr = precursor_type.GetStackValue("[", "]").StringReplace("\d*M", "")
             Dim buffer As New List(Of Char)
@@ -210,13 +230,23 @@ Namespace Ms1.PrecursorType
                 formulas += (sign, buffer.CharString)
             End If
 
-            If raw Then
-                ' 20190510
-                ' 运行时不允许隐式转换  
-                Return New [Variant](Of String, IEnumerable(Of (sign As Integer, expression As String)))(formulas.AsEnumerable)
-            Else
-                Throw New NotImplementedException
-            End If
+            Return formulas
+        End Function
+
+        ''' <summary>
+        ''' <see cref="Formula(String, Boolean)"/>
+        ''' </summary>
+        ''' <param name="precursor_type"></param>
+        ''' <returns></returns>
+        Public Function GetAdductParts(precursor_type As String) As NamedValue(Of Double)()
+            Static cache As New Dictionary(Of String, ICollection(Of NamedValue(Of Double)))
+
+            Return cache _
+                .ComputeIfAbsent(Strings.Trim(precursor_type),
+                                 lazyValue:=Function(str)
+                                                Return AdductFormulaParts(precursor_type)
+                                            End Function) _
+                .ToArray
         End Function
     End Module
 
