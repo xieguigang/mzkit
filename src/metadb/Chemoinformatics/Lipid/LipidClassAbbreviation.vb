@@ -1,4 +1,5 @@
 ﻿Imports System.ComponentModel
+Imports System.Runtime.CompilerServices
 
 Namespace Lipidomics
 
@@ -10,12 +11,18 @@ Namespace Lipidomics
 
     Public Module AbbreviationNameMapper
 
+        ReadOnly mapping As Dictionary(Of String, String) = Enums(Of LipidClassAbbreviation) _
+            .ToDictionary(Function(f) f.ToString.ToLower,
+                            Function(f)
+                                Return f.Description
+                            End Function)
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function CheckFullName(abbr As String) As Boolean
+            Return mapping.ContainsKey(abbr.ToLower)
+        End Function
+
         Public Function ToFullName(abbr As String) As String
-            Static mapping As Dictionary(Of String, String) = Enums(Of LipidClassAbbreviation) _
-                .ToDictionary(Function(f) f.ToString.ToLower,
-                              Function(f)
-                                  Return f.Description
-                              End Function)
             Dim lcase As String = abbr.ToLower
 
             If mapping.ContainsKey(lcase) Then
