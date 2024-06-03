@@ -23,6 +23,8 @@ Namespace Lipidomics
         ''' </summary>
         ''' <param name="lipidsearch"></param>
         ''' <returns></returns>
+        ''' 
+        <Extension>
         Public Function LipidSearchToLipidMaps(lipidsearch As LipidName) As LipidName
             Static aliasMap As Dictionary(Of String, String) = Enums(Of LipidMAPSAlias)() _
                 .ToDictionary(Function(f) f.ToString.ToLower,
