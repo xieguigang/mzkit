@@ -10,10 +10,16 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Public Class LipidSearchMapper(Of T As {IExactMassProvider, IReadOnlyId, ICompoundNameProvider, IFormulaProvider})
 
     ReadOnly classes As New Dictionary(Of String, AVLClusterTree(Of LipidName))
+    ReadOnly formula As New Dictionary(Of String, Dictionary(Of String, T))
 
     Sub New(lipidmaps As IEnumerable(Of T), getLipidName As Func(Of T, String))
         For Each lipid As T In lipidmaps
-            Dim name As LipidName = LipidName.ParseLipidName(getLipidName(lipid))
+            Dim name_str As String = getLipidName(lipid)
+            Dim name As LipidName = If(name_str.StringEmpty, Nothing, LipidName.ParseLipidName(name_str))
+
+            If name Is Nothing Then
+                Continue For
+            End If
 
             If Not classes.ContainsKey(name.className) Then
                 classes.Add(name.className, emptyTree)
