@@ -96,6 +96,10 @@ declare namespace formula {
    */
    function eval(formula: any, env?: object): number;
    /**
+     * @param env default value Is ``null``.
+   */
+   function formula_calibration(formula: object, adducts: any, env?: object): any;
+   /**
    */
    function getElementCount(formula: object, element: string): object;
    /**
