@@ -1,62 +1,63 @@
 ﻿#Region "Microsoft.VisualBasic::721585ec2a7d0fb623ae2dea47f34945, metadb\Chemoinformatics\Lipid\LipidName.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 95
-    '    Code Lines: 55 (57.89%)
-    ' Comment Lines: 25 (26.32%)
-    '    - Xml Docs: 100.00%
-    ' 
-    '   Blank Lines: 15 (15.79%)
-    '     File Size: 3.17 KB
+' Summaries:
 
 
-    ' Class LipidName
-    ' 
-    '     Properties: chains, className, hasStructureInfo
-    ' 
-    '     Function: ChainParser, ParseLipidName, ToOverviewName, ToString, ToSystematicName
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 95
+'    Code Lines: 55 (57.89%)
+' Comment Lines: 25 (26.32%)
+'    - Xml Docs: 100.00%
+' 
+'   Blank Lines: 15 (15.79%)
+'     File Size: 3.17 KB
+
+
+' Class LipidName
+' 
+'     Properties: chains, className, hasStructureInfo
+' 
+'     Function: ChainParser, ParseLipidName, ToOverviewName, ToString, ToSystematicName
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Text.RegularExpressions
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Linq
 
 Namespace Lipidomics
@@ -69,7 +70,7 @@ Namespace Lipidomics
     ''' the class name with the multiple <see cref="Chain"/> information. the lipid name that we parsed
     ''' should not be a common name.
     ''' </remarks>
-    Public Class LipidName
+    Public Class LipidName : Implements IReadOnlyId
 
         ''' <summary>
         ''' the main class of current lipid metabolite
@@ -82,6 +83,12 @@ Namespace Lipidomics
         ''' <returns></returns>
         Public Property chains As Chain()
 
+        ''' <summary>
+        ''' the database reference id of current lipid name
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property id As String Implements IReadOnlyId.Identity
+
         Public ReadOnly Property hasStructureInfo As Boolean
             Get
                 Return chains.All(Function(c) c.hasStructureInfo)
@@ -89,10 +96,18 @@ Namespace Lipidomics
         End Property
 
         Public Overrides Function ToString() As String
+            Dim name_str As String
+
             If chains.Length = 1 AndAlso Not chains(Scan0).hasStructureInfo Then
-                Return ToOverviewName()
+                name_str = ToOverviewName()
             Else
-                Return ToSystematicName()
+                name_str = ToSystematicName()
+            End If
+
+            If id.StringEmpty Then
+                Return name_str
+            Else
+                Return id & ": " & name_str
             End If
         End Function
 

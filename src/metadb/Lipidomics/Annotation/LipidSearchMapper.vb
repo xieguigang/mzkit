@@ -19,6 +19,8 @@ Public Class LipidSearchMapper(Of T As {IExactMassProvider, IReadOnlyId, ICompou
 
             If name Is Nothing Then
                 Continue For
+            Else
+                name.id = lipid.Identity
             End If
 
             If Not classes.ContainsKey(name.className) Then
