@@ -188,6 +188,10 @@ Namespace Formula
             CountsByElement = New Dictionary(Of String, Integer)
         End Sub
 
+        Public Function CanonicalFormula() As String
+            Return Canonical.BuildCanonicalFormula(CountsByElement)
+        End Function
+
         Private Function TryEvaluateExactMass() As Double
             Try
                 Return Aggregate element
