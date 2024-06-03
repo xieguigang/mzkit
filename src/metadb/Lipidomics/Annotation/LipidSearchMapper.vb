@@ -3,6 +3,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.Annotations
 Imports BioNovoGene.BioDeep.Chemoinformatics.Lipidomics
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.BinaryTree
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.ComponentModel.TagData
 
 ''' <summary>
 ''' a helper module for mapping the lipidsearch name to lipidmaps id 
@@ -84,8 +85,11 @@ Public Class LipidSearchMapper(Of T As {IExactMassProvider, IReadOnlyId, ICompou
     ''' </summary>
     ''' <param name="class">the lipidsearch class name</param>
     ''' <param name="fattyAcid"></param>
-    ''' <returns></returns>
-    Public Iterator Function FindLipidReference(class$, fattyAcid As String) As IEnumerable(Of String)
+    ''' <returns>
+    ''' 1 for search by exact structure matches
+    ''' 0 for lipid abbreviation name matches
+    ''' </returns>
+    Public Iterator Function FindLipidReference(class$, fattyAcid As String) As IEnumerable(Of IntegerTagged(Of String))
         Dim name As LipidName = LipidName.ParseLipidName([class] & fattyAcid)
 
         [class] = [class].ToLower
@@ -99,14 +103,14 @@ Public Class LipidSearchMapper(Of T As {IExactMassProvider, IReadOnlyId, ICompou
         Dim abbreviation As String = name.ToOverviewName
 
         For Each lipid As LipidName In query
-            Yield lipid.id
+            Yield (1, lipid.id)
         Next
 
         Dim classNames = formula([class])
 
         If classNames.ContainsKey(abbreviation) Then
             For Each lipid As T In classNames(abbreviation)
-                Yield lipid.Identity
+                Yield (0, lipid.Identity)
             Next
         End If
     End Function

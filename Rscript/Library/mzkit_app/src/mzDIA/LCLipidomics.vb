@@ -137,6 +137,17 @@ Module LCLipidomics
     <ExportAPI("mapping")>
     <RApiReturn(TypeCodes.string)>
     Public Function find_lipidmaps(lipidmaps As LipidSearchMapper(Of LipidMaps.MetaData), class$, fatty_acid As String) As Object
-        Return lipidmaps.FindLipidReference(class$, fatty_acid).ToArray
+        Dim match_groups = lipidmaps.FindLipidReference(class$, fatty_acid).GroupBy(Function(t) t.Tag).ToArray
+        Dim list As list = list.empty
+
+        For Each group In match_groups
+            If group.Key = 0 Then
+                list.add("abbreviation", group.Values.ToArray)
+            Else
+                list.add("golden", group.Values.ToArray)
+            End If
+        Next
+
+        Return list
     End Function
 End Module
