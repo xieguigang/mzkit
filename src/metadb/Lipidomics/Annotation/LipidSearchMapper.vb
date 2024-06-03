@@ -34,7 +34,31 @@ Public Class LipidSearchMapper(Of T As {IExactMassProvider, IReadOnlyId, ICompou
     End Function
 
     Private Shared Function compares(a As LipidName, b As LipidName) As Integer
+        If a.chains.Length > b.chains.Length Then
+            Return 1
+        ElseIf a.chains.Length < b.chains.Length Then
+            Return -1
+        End If
 
+        Dim total1 = Aggregate c In a.chains Into Sum(c.carbons)
+        Dim total2 = Aggregate c In b.chains Into Sum(c.carbons)
+
+        If total1 > total2 Then
+            Return 1
+        ElseIf total1 < total2 Then
+            Return -1
+        End If
+
+        Dim dbd1 = Aggregate c In a.chains Into Sum(c.doubleBonds)
+        Dim dbd2 = Aggregate c In b.chains Into Sum(c.doubleBonds)
+
+        If dbd1 > dbd2 Then
+            Return 1
+        ElseIf dbd1 < dbd2 Then
+            Return -1
+        End If
+
+        Return 0
     End Function
 
 End Class
