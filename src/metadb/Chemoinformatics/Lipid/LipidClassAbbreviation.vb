@@ -9,6 +9,38 @@ Namespace Lipidomics
 
     End Enum
 
+    Public Enum LipidMAPSAlias
+
+        <Description("CAR")> AcCa
+
+    End Enum
+
+    Public Module AliasNameMapper
+
+        ''' <summary>
+        ''' this function will make a value copy of the given <paramref name="lipidsearch"/> and
+        ''' then try to alias mapping of the lipid class name.
+        ''' </summary>
+        ''' <param name="lipidsearch"></param>
+        ''' <returns></returns>
+        Public Function LipidSearchToLipidMaps(lipidsearch As LipidName) As LipidName
+            Static aliasMap As Dictionary(Of String, String) = Enums(Of LipidMAPSAlias)() _
+                .ToDictionary(Function(f) f.ToString.ToLower,
+                              Function(f)
+                                  Return f.Description
+                              End Function)
+
+            lipidsearch = New LipidName(lipidsearch)
+
+            If aliasMap.ContainsKey(lipidsearch.className.ToLower) Then
+                lipidsearch.className = aliasMap(lipidsearch.className.ToLower)
+            End If
+
+            Return lipidsearch
+        End Function
+
+    End Module
+
     Public Module AbbreviationNameMapper
 
         ReadOnly mapping As Dictionary(Of String, String) = Enums(Of LipidClassAbbreviation) _

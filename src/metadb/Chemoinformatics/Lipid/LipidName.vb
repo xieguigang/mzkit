@@ -95,6 +95,19 @@ Namespace Lipidomics
             End Get
         End Property
 
+        Sub New()
+        End Sub
+
+        ''' <summary>
+        ''' make value copy
+        ''' </summary>
+        ''' <param name="value"></param>
+        Sub New(value As LipidName)
+            className = value.className
+            chains = value.chains.ToArray
+            id = value.id
+        End Sub
+
         Public Overrides Function ToString() As String
             Dim name_str As String
 
