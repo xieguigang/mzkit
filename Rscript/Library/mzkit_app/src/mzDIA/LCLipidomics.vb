@@ -62,6 +62,7 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Internal.[Object]
 Imports SMRUCC.Rsharp.Runtime.Interop
+
 ''' <summary>
 ''' Lipidomics annotation based on MS-DIAL
 ''' </summary>
@@ -113,6 +114,7 @@ Module LCLipidomics
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("lipidmaps")>
+    <RApiReturn(GetType(LipidSearchMapper(Of LipidMaps.MetaData)))>
     Public Function lipidmaps_indexer(<RRawVectorArgument> lipidmaps As Object, Optional env As Environment = Nothing) As Object
         Dim pull As pipeline = pipeline.TryCreatePipeline(Of LipidMaps.MetaData)(lipidmaps, env)
 
