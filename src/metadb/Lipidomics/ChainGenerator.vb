@@ -69,9 +69,21 @@ Public Class ChainGenerator
         Me.Skip = skip
     End Sub
 
-    Public ReadOnly Property Begin As Integer ' if begin is 3, first double bond is 3-4 at the earliest counting from ketone carbon.
-    Public ReadOnly Property [End] As Integer ' if end is 3 and number of carbon is 18, last double bond is 15-16 at latest.
-    Public ReadOnly Property Skip As Integer ' if skip is 3 and 6-7 is double bond, next one is 9-10 at the earliest.
+    ''' <summary>
+    ''' if begin is 3, first double bond is 3-4 at the earliest counting from ketone carbon.
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property Begin As Integer
+    ''' <summary>
+    ''' if end is 3 and number of carbon is 18, last double bond is 15-16 at latest.
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property [End] As Integer
+    ''' <summary>
+    ''' if skip is 3 and 6-7 is double bond, next one is 9-10 at the earliest.
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property Skip As Integer
 
     Public Function Generate(chain As AcylChain) As IEnumerable(Of IChain) Implements IChainGenerator.Generate
         Dim bs = EnumerateBonds(chain.CarbonCount, chain.DoubleBond).ToArray()
