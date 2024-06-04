@@ -125,13 +125,14 @@ Module Math
         data = pipeline.TryCreatePipeline(Of String)(adducts, env, suppress:=True)
 
         If Not data.isError Then
-            Return data.populates(Of String)(env) _
+            Dim adduct_strs As String() = data.populates(Of String)(env) _
                 .Where(Function(si) Not si.StringEmpty) _
                 .Select(Function(si) si.Split("|"c)) _
                 .IteratesALL _
                 .Distinct _
-                .ToArray _
-                .DoCall(AddressOf Provider.Calculators)
+                .ToArray
+
+            Return Provider.Calculators(adduct_strs)
         End If
 
         Throw New NotImplementedException

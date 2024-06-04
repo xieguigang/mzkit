@@ -126,8 +126,16 @@ declare namespace metadb {
    */
    function ms1_search(engine: any, mz: any, unique?: boolean, uniqueByScore?: boolean, env?: object): object;
    /**
-     * @param keepsRaw default value Is ``false``.
-     * @param env default value Is ``null``.
+    * Parse the lipid names
+    * 
+    * 
+     * @param name a character vector of the lipid names
+     * @param keepsRaw keeps the mzkit clr object instead of convert the clr object as R# runtime tuple list value.
+     * 
+     * + default value Is ``false``.
+     * @param env -
+     * 
+     * + default value Is ``null``.
    */
    function parseLipidName(name: any, keepsRaw?: boolean, env?: object): object;
    /**

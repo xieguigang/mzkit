@@ -209,6 +209,11 @@ Namespace Ms1.PrecursorType
         ''' </summary>
         ''' <param name="precursor_types"></param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' this function has an internal cache hash table for the given input adducts string.
+        ''' and the new precursor adducts object will be parsed if it not found inside 
+        ''' the internal cache.
+        ''' </remarks>
         Public Function Calculators(ParamArray precursor_types As String()) As MzCalculator()
             Return (Iterator Function() As IEnumerable(Of MzCalculator)
                         For Each type As String In precursor_types

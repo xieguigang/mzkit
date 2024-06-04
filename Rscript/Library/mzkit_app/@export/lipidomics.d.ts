@@ -31,4 +31,23 @@ declare namespace lipidomics {
      * @return a collection of the @``T:BioNovoGene.Analytical.MassSpectrometry.Lipidomics.LipidIon`` data
    */
    function lipid_ions(lipidclass: object, adduct: object, minCarbonCount: object, maxCarbonCount: object, minDoubleBond: object, maxDoubleBond: object, maxOxygen: object): object;
+   /**
+    * create a lipidmaps metabolite data indexer
+    * 
+    * 
+     * @param lipidmaps -
+     * @param env -
+     * 
+     * + default value Is ``null``.
+   */
+   function lipidmaps(lipidmaps: any, env?: object): object;
+   /**
+    * get mapping of the lipidmaps reference id via lipid name
+    * 
+    * 
+     * @param lipidmaps -
+     * @param class the lipidsearch class name
+     * @param fatty_acid the lipidsearch fatty acid data
+   */
+   function mapping(lipidmaps: object, class: string, fatty_acid: string): string;
 }

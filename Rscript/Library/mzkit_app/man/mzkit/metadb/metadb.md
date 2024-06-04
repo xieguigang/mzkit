@@ -6,7 +6,7 @@ Metabolite annotation database search engine
 + [mass_search.index](metadb/mass_search.index.1) 
 + [queryByMass](metadb/queryByMass.1) 
 + [verify_cas_number](metadb/verify_cas_number.1) verify that the given cas registry number is correct or not
-+ [parseLipidName](metadb/parseLipidName.1) 
++ [parseLipidName](metadb/parseLipidName.1) Parse the lipid names
 + [annotationStream](metadb/annotationStream.1) Construct a basic metabolite annotation data collection
 + [annotationStream.compounds](metadb/annotationStream.compounds.1) Construct a basic metabolite annotation data collection
 + [precursorIon](metadb/precursorIon.1) parse the precursor type calculator
