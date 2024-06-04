@@ -73,9 +73,9 @@ Imports Microsoft.VisualBasic.Data.IO.MessagePack.Serialization
 Namespace LipidMaps
 
     ''' <summary>
-    ''' 物质的注释信息
+    ''' lipidmaps annotation data model, which is original extract from the SDF data objects.
     ''' </summary>
-    Public Class MetaData : Implements IExactMassProvider, IReadOnlyId, ICompoundNameProvider, IFormulaProvider ', ICompoundClass
+    Public Class MetaData : Implements IExactMassProvider, IReadOnlyId, ICompoundNameProvider, IFormulaProvider ' , ICompoundClass
 
         ''' <summary>
         ''' The lipidmaps unique reference id
@@ -118,7 +118,11 @@ Namespace LipidMaps
         <MessagePackMember(26, NilImplication:=NilImplication.MemberDefault)> Public Property CLASS_LEVEL4 As String 'Implements ICompoundClass.sub_class
         <MessagePackMember(27, NilImplication:=NilImplication.MemberDefault)> Public Property METABOLOMICS_ID As String
 
-
+        ''' <summary>
+        ''' extract annotation information from the SDF metadata object
+        ''' </summary>
+        ''' <param name="sdf"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function Data(sdf As SDF) As MetaData
             Dim obj As MetaData = sdf.Data(Of MetaData)(properties)

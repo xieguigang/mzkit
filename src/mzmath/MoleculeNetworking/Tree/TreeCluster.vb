@@ -86,9 +86,17 @@ Public Class TreeCluster
     ''' <param name="rank">
     ''' the score ranking function, higher score is better
     ''' </param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' this function may returns empty collection if the tree
+    ''' data is nothing or empty tree data.
+    ''' </returns>
     Public Function GetTopCluster(rank As Func(Of PeakMs2(), Double)) As IEnumerable(Of PeakMs2)
         Dim tree = GetTree()
+
+        If tree.IsNullOrEmpty Then
+            Return New PeakMs2() {}
+        End If
+
         Dim specIndex = spectrum.ToDictionary(Function(s) s.lib_guid)
         Dim rank_desc = tree _
             .OrderByDescending(Function(c)
@@ -103,7 +111,13 @@ Public Class TreeCluster
 
     Public Function GetTree() As Dictionary(Of String, String())
         Dim pull As New Dictionary(Of String, String())
-        Call GetTree(tree, pull)
+
+        If tree.Data Is Nothing Then
+            Call "empty tree data!".Warning
+        Else
+            Call GetTree(tree, pull)
+        End If
+
         Return pull
     End Function
 

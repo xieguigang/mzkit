@@ -47,6 +47,7 @@ The chemical formulae toolkit
 + [eval](formula/eval.1) ### Evaluate formula exact mass
 + [scan](formula/scan.1) Get atom composition from a formula string
 + [canonical_formula](formula/canonical_formula.1) Make the given formula string into canonical format
++ [formula_calibration](formula/formula_calibration.1) 
 + [getElementCount](formula/getElementCount.1) 
 + [removeElement](formula/removeElement.1) 
 + [read.KCF](formula/read.KCF.1) Read KCF model data

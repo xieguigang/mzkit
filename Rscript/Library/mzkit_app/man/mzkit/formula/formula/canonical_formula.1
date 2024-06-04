@@ -12,6 +12,14 @@ Make the given formula string into canonical format
 .PP
 \fBformula\fB \fR\- -. 
 .PP
+.SH EXAMPLES
+.PP
+let formula = formula::scan("O3C9H6");
+ let canonical = canonical_formula(formula);
+ 
+ print(canonical);
+ # [1] "C9H6O3"
+.PP
 .SH SEE ALSO
 formula
 .SH FILES

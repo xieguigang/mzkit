@@ -1,68 +1,71 @@
 ﻿#Region "Microsoft.VisualBasic::360d0e1e89ec2140e817e247e33e436d, metadb\Lipidomics\Annotation\Search\MsScanMatching.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 1630
-    '    Code Lines: 1229 (75.40%)
-    ' Comment Lines: 82 (5.03%)
-    '    - Xml Docs: 21.95%
-    ' 
-    '   Blank Lines: 319 (19.57%)
-    '     File Size: 114.46 KB
+' Summaries:
 
 
-    ' Class MsScanMatching
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: CompareMS2LipidomicsScanProperties, GetEidBasedLipidMoleculeAnnotationResult, GetEidBasedLipidomicsMatchedPeaksScores, GetEieioBasedLipidMoleculeAnnotationResult, GetEieioBasedLipidomicsMatchedPeaksScores
-    '               GetLipidMoleculeAnnotationResult, GetLipidMoleculerSpeciesLevelAnnotationResultForEIEIO, GetLipidNameFromReference, GetLipidomicsMatchedPeaksScores, GetLipidomicsMoleculerSpeciesLevelAnnotationPeaksScoresForEIEIO
-    '               GetOadBasedLipidMoleculeAnnotationResult, GetOadBasedLipidomicsMatchedPeaksScores, GetRefinedLipidAnnotationLevel, GetRefinedLipidAnnotationLevelForEIEIO
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 1630
+'    Code Lines: 1229 (75.40%)
+' Comment Lines: 82 (5.03%)
+'    - Xml Docs: 21.95%
+' 
+'   Blank Lines: 319 (19.57%)
+'     File Size: 114.46 KB
+
+
+' Class MsScanMatching
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Function: CompareMS2LipidomicsScanProperties, GetEidBasedLipidMoleculeAnnotationResult, GetEidBasedLipidomicsMatchedPeaksScores, GetEieioBasedLipidMoleculeAnnotationResult, GetEieioBasedLipidomicsMatchedPeaksScores
+'               GetLipidMoleculeAnnotationResult, GetLipidMoleculerSpeciesLevelAnnotationResultForEIEIO, GetLipidNameFromReference, GetLipidomicsMatchedPeaksScores, GetLipidomicsMoleculerSpeciesLevelAnnotationPeaksScoresForEIEIO
+'               GetOadBasedLipidMoleculeAnnotationResult, GetOadBasedLipidomicsMatchedPeaksScores, GetRefinedLipidAnnotationLevel, GetRefinedLipidAnnotationLevelForEIEIO
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.InteropServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
-Imports BioNovoGene.BioDeep.MSEngine
 Imports BioNovoGene.BioDeep
+Imports BioNovoGene.BioDeep.MSEngine
 
+''' <summary>
+''' get lipid annotation start from here
+''' </summary>
 Public NotInheritable Class MsScanMatching
 
     Private Sub New()
@@ -104,7 +107,10 @@ Public NotInheritable Class MsScanMatching
         Return returnedObj.Item2
     End Function
 
-    Public Shared Function GetOadBasedLipidMoleculeAnnotationResult(scan As IMSScanProperty, reference As MoleculeMsReference, tolerance As Single, mzBegin As Single, mzEnd As Single) As (ILipid, Double())
+    Public Shared Function GetOadBasedLipidMoleculeAnnotationResult(scan As IMSScanProperty, reference As MoleculeMsReference,
+                                                                    tolerance As Single,
+                                                                    mzBegin As Single, mzEnd As Single) As (ILipid, Double())
+
         Dim lipid = FacadeLipidParser.Default.Parse(reference.Name)
         Select Case lipid.LipidClass
             Case LbmClass.PC, LbmClass.PE, LbmClass.PS, LbmClass.PG, LbmClass.PI, LbmClass.PA, LbmClass.DG, LbmClass.BMP, LbmClass.LPC, LbmClass.LPS, LbmClass.LPE, LbmClass.LPG, LbmClass.LPI, LbmClass.DGTA, LbmClass.DGTS, LbmClass.LDGTA, LbmClass.LDGTS, LbmClass.DMEDFAHFA

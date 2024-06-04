@@ -373,9 +373,39 @@ Module FormulaTools
     ''' </summary>
     ''' <param name="formula"></param>
     ''' <returns></returns>
+    ''' <example>
+    ''' let formula = formula::scan("O3C9H6");
+    ''' let canonical = canonical_formula(formula);
+    ''' 
+    ''' print(canonical);
+    ''' # [1] "C9H6O3"
+    ''' </example>
     <ExportAPI("canonical_formula")>
     Public Function canonicalFormula(formula As Formula) As String
         Return Canonical.BuildCanonicalFormula(formula.CountsByElement)
+    End Function
+
+    <ExportAPI("formula_calibration")>
+    Public Function IonFormulaCalibration(formula As Formula, <RRawVectorArgument> adducts As Object,
+                                          Optional env As Environment = Nothing) As Object
+
+        Dim precursors = Math.GetPrecursorTypes(adducts, env)
+
+        If precursors.IsNullOrEmpty Then
+            Return Internal.debug.stop("no adducts value was given!", env)
+        End If
+
+        If precursors.Length = 1 Then
+            Return formula.IonFormulaCalibration(precursors(0))
+        Else
+            Dim list As list = list.empty
+
+            For Each type As MzCalculator In precursors
+                Call list.add(type.ToString, formula.IonFormulaCalibration(type))
+            Next
+
+            Return list
+        End If
     End Function
 
 #Region "formula operators"
