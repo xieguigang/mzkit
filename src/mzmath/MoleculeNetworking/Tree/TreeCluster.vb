@@ -103,7 +103,13 @@ Public Class TreeCluster
 
     Public Function GetTree() As Dictionary(Of String, String())
         Dim pull As New Dictionary(Of String, String())
-        Call GetTree(tree, pull)
+
+        If tree.Data Is Nothing Then
+            Call "empty tree data!".Warning
+        Else
+            Call GetTree(tree, pull)
+        End If
+
         Return pull
     End Function
 
