@@ -100,6 +100,8 @@ Namespace Spectra
         ''' <returns></returns>
         Public Shared ReadOnly Property [Default] As New [Default](Of LowAbundanceTrimming)(intoCutff)
 
+        Public Shared ReadOnly Property Zero As New RelativeIntensityCutoff(0)
+
         ''' <summary>
         ''' Removes the fragment peaks which its intensity value which is lower than the specific threshold
         ''' </summary>
