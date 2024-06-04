@@ -1,65 +1,72 @@
 ﻿#Region "Microsoft.VisualBasic::59207ceb92f54062e1c536883c13289e, metadb\Lipidomics\LipidParser\FacadeLipidParser.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 102
-    '    Code Lines: 93 (91.18%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
-    ' 
-    '   Blank Lines: 9 (8.82%)
-    '     File Size: 4.17 KB
+' Summaries:
 
 
-    ' Class FacadeLipidParser
-    ' 
-    '     Properties: [Default], Target
-    ' 
-    '     Function: Parse
-    ' 
-    '     Sub: Add, Remove
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 102
+'    Code Lines: 93 (91.18%)
+' Comment Lines: 0 (0.00%)
+'    - Xml Docs: 0.00%
+' 
+'   Blank Lines: 9 (8.82%)
+'     File Size: 4.17 KB
+
+
+' Class FacadeLipidParser
+' 
+'     Properties: [Default], Target
+' 
+'     Function: Parse
+' 
+'     Sub: Add, Remove
+' 
+' /********************************************************************************/
 
 #End Region
 
+''' <summary>
+''' all kinds of the lipid parser wrapper
+''' </summary>
+''' <remarks>
+''' is a collection of the various kind of the lipid parser
+''' </remarks>
 Public Class FacadeLipidParser
     Implements ILipidParser
+
     Private ReadOnly map As New Dictionary(Of String, List(Of ILipidParser))()
 
     Public ReadOnly Property Target As String = String.Empty Implements ILipidParser.Target
@@ -96,7 +103,7 @@ Public Class FacadeLipidParser
 
     Public Shared ReadOnly Property [Default] As ILipidParser
         Get
-            If defaultField Is Nothing Then
+            If defaultList Is Nothing Then
                 Dim parser = New FacadeLipidParser()
                 Call New ILipidParser() {
                         New BMPLipidParser(),
@@ -152,11 +159,11 @@ Public Class FacadeLipidParser
                         New TGd5LipidParser(),
                         New CEd7LipidParser()
                     }.ForEach(Sub(par, nil) parser.Add(par))
-                defaultField = parser
+                defaultList = parser
             End If
-            Return defaultField
+            Return defaultList
         End Get
     End Property
-    Private Shared defaultField As ILipidParser
+    Private Shared defaultList As ILipidParser
 
 End Class

@@ -63,6 +63,9 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.BioDeep
 Imports BioNovoGene.BioDeep.MSEngine
 
+''' <summary>
+''' get lipid annotation start from here
+''' </summary>
 Public NotInheritable Class MsScanMatching
 
     Private Sub New()
@@ -104,7 +107,10 @@ Public NotInheritable Class MsScanMatching
         Return returnedObj.Item2
     End Function
 
-    Public Shared Function GetOadBasedLipidMoleculeAnnotationResult(scan As IMSScanProperty, reference As MoleculeMsReference, tolerance As Single, mzBegin As Single, mzEnd As Single) As (ILipid, Double())
+    Public Shared Function GetOadBasedLipidMoleculeAnnotationResult(scan As IMSScanProperty, reference As MoleculeMsReference,
+                                                                    tolerance As Single,
+                                                                    mzBegin As Single, mzEnd As Single) As (ILipid, Double())
+
         Dim lipid = FacadeLipidParser.Default.Parse(reference.Name)
         Select Case lipid.LipidClass
             Case LbmClass.PC, LbmClass.PE, LbmClass.PS, LbmClass.PG, LbmClass.PI, LbmClass.PA, LbmClass.DG, LbmClass.BMP, LbmClass.LPC, LbmClass.LPS, LbmClass.LPE, LbmClass.LPG, LbmClass.LPI, LbmClass.DGTA, LbmClass.DGTS, LbmClass.LDGTA, LbmClass.LDGTS, LbmClass.DMEDFAHFA
