@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::62452009c45301cf387ce9171db48a2a, visualize\plot\PeakTablePlot.vb"
+﻿#Region "Microsoft.VisualBasic::88e47c78784f03dc8f18784d90690ae8, visualize\plot\PeakTablePlot.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 87
-    '    Code Lines: 74 (85.06%)
-    ' Comment Lines: 1 (1.15%)
+    '   Total Lines: 89
+    '    Code Lines: 76 (85.39%)
+    ' Comment Lines: 1 (1.12%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 12 (13.79%)
-    '     File Size: 3.88 KB
+    '   Blank Lines: 12 (13.48%)
+    '     File Size: 3.97 KB
 
 
     ' Class PeakTablePlot
