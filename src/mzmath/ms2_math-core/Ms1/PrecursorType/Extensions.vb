@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::abf6f9c93bfc649e0fe47c321383fc5e, mzmath\ms2_math-core\Ms1\PrecursorType\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::e43a90177e52f9e72344428d86100860, mzmath\ms2_math-core\Ms1\PrecursorType\Extensions.vb"
 
     ' Author:
     ' 
@@ -37,18 +37,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 201
-    '    Code Lines: 147 (73.13%)
-    ' Comment Lines: 21 (10.45%)
-    '    - Xml Docs: 66.67%
+    '   Total Lines: 235
+    '    Code Lines: 166 (70.64%)
+    ' Comment Lines: 32 (13.62%)
+    '    - Xml Docs: 78.12%
     ' 
-    '   Blank Lines: 33 (16.42%)
-    '     File Size: 7.75 KB
+    '   Blank Lines: 37 (15.74%)
+    '     File Size: 9.44 KB
 
 
     '     Module Parser
     ' 
-    '         Function: Formula, ParseCharge, ParseMzCalculator, ParseMzCalculatorInternal, ToString
+    '         Function: AdductFormulaParts, Formula, GetAdductParts, ParseCharge, ParseMzCalculator
+    '                   ParseMzCalculatorInternal, ToString
     ' 
     '     Module Extensions
     ' 

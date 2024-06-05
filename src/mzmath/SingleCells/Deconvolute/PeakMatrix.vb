@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fd6bef9cff99171f7c8733b67d266e9a, mzmath\SingleCells\Deconvolute\PeakMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::ea7a487c91c8973c1999d2ea6988f342, mzmath\SingleCells\Deconvolute\PeakMatrix.vb"
 
     ' Author:
     ' 
@@ -37,18 +37,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 102
-    '    Code Lines: 72 (70.59%)
-    ' Comment Lines: 16 (15.69%)
+    '   Total Lines: 109
+    '    Code Lines: 78 (71.56%)
+    ' Comment Lines: 16 (14.68%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 14 (13.73%)
-    '     File Size: 3.90 KB
+    '   Blank Lines: 15 (13.76%)
+    '     File Size: 4.18 KB
 
 
     '     Module PeakMatrix
     ' 
-    '         Function: CreateMatrix, deconvoluteMatrix, (+2 Overloads) ExportScans
+    '         Function: CreateMatrix, deconvoluteMatrix, deconvoluteMatrixParallel, (+2 Overloads) ExportScans
     ' 
     ' 
     ' /********************************************************************************/
