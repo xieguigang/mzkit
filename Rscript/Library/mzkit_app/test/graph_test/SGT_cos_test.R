@@ -14,14 +14,14 @@ print(SMILES::links(d_leucine, normalize.size = TRUE));
 print(SMILES::links(salicylic_acid, normalize.size = TRUE));
 print(SMILES::links(rotenone, normalize.size = TRUE));
 
-print(SMILES::score(valine, l_leucine, normalize.size = TRUE));
-print(SMILES::score(valine, d_leucine, normalize.size = TRUE));
+str(SMILES::score(valine, l_leucine, normalize.size = TRUE));
+str(SMILES::score(valine, d_leucine, normalize.size = TRUE));
 
-print(SMILES::score(d_leucine, l_leucine, normalize.size = TRUE));
+str(SMILES::score(d_leucine, l_leucine, normalize.size = TRUE));
 
-print(SMILES::score(salicylic_acid, l_leucine, normalize.size = TRUE));
-print(SMILES::score(salicylic_acid, d_leucine, normalize.size = TRUE));
-print(SMILES::score(salicylic_acid, valine, normalize.size = TRUE));
+str(SMILES::score(salicylic_acid, l_leucine, normalize.size = TRUE));
+str(SMILES::score(salicylic_acid, d_leucine, normalize.size = TRUE));
+str(SMILES::score(salicylic_acid, valine, normalize.size = TRUE));
 
-print(SMILES::score(salicylic_acid, salicylic_acid, normalize.size = TRUE));
-print(SMILES::score(salicylic_acid, rotenone, normalize.size = TRUE));
+str(SMILES::score(salicylic_acid, salicylic_acid, normalize.size = TRUE));
+str(SMILES::score(salicylic_acid, rotenone, normalize.size = TRUE));

@@ -97,7 +97,7 @@ Namespace Embedding
         End Function
 
         Public Function Jaccard() As Double
-            Return key1.jaccard_coeff(key2)
+            Return key1.jaccard_coeff(key2) * 2
         End Function
 
     End Class
