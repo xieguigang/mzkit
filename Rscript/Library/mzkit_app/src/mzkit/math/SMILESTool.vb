@@ -68,6 +68,7 @@ Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Serialization.Bencoding
+Imports SMRUCC.Rsharp
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Interop
@@ -174,13 +175,17 @@ Module SMILESTool
     <RApiReturn(TypeCodes.double)>
     Public Function score(x As ChemicalFormula, y As ChemicalFormula,
                           Optional kappa As Double = 2,
-                          Optional normalize_size As Boolean = False) As Double
+                          Optional normalize_size As Boolean = False) As list
 
         Dim a As AtomLink() = x.GraphEmbedding(kappa, normalize_size).ToArray
         Dim b As AtomLink() = y.GraphEmbedding(kappa, normalize_size).ToArray
-        Dim cos As Double = a.Cosine(b)
+        Dim vec As New VectorEmbedding(a, b)
 
-        Return cos
+        Return New list(
+            slot("cos") = vec.Cosine,
+            slot("euclidean") = vec.Euclidean,
+            slot("jaccard") = vec.Jaccard
+        )
     End Function
 
     ''' <summary>
