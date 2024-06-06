@@ -66,6 +66,17 @@ Namespace Embedding
     Public Module Embedding
 
         <Extension>
+        Public Function Cosine(v1 As AtomLink(), v2 As AtomLink()) As Double
+            Dim w1 = v1.Select(Function(vi) (vi.GetSortUniqueId, vi.score)).GroupBy(Function(a) a.GetSortUniqueId).ToDictionary(Function(a) a.Key, Function(a) a.Sum(Function(vi) vi.score))
+            Dim w2 = v2.Select(Function(vi) (vi.GetSortUniqueId, vi.score)).GroupBy(Function(a) a.GetSortUniqueId).ToDictionary(Function(a) a.Key, Function(a) a.Sum(Function(vi) vi.score))
+            Dim unique_labels As String() = w1.JoinIterates(w2).Select(Function(vi) vi.Key).Distinct.ToArray
+            Dim u As Double() = (From link As String In unique_labels Select w1.TryGetValue(link, [default]:=0.0)).ToArray
+            Dim v As Double() = (From link As String In unique_labels Select w2.TryGetValue(link, [default]:=0.0)).ToArray
+
+            Return SSM_SIMD(u, v)
+        End Function
+
+        <Extension>
         Public Iterator Function GetAtomTable(g As ChemicalFormula) As IEnumerable(Of SmilesAtom)
             Dim elements As ChemicalElement() = g.AllElements _
                 .OrderBy(Function(a) a.label.Match("\d+").ParseInteger) _

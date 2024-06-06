@@ -69,6 +69,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Serialization.Bencoding
 Imports SMRUCC.Rsharp.Runtime
+Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports list = SMRUCC.Rsharp.Runtime.Internal.Object.list
 Imports RDataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
@@ -162,6 +163,27 @@ Module SMILESTool
     End Function
 
     ''' <summary>
+    ''' evaluate the similarity score between two molecular strcuture 
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <param name="y"></param>
+    ''' <param name="kappa"></param>
+    ''' <param name="normalize_size"></param>
+    ''' <returns></returns>
+    <ExportAPI("score")>
+    <RApiReturn(TypeCodes.double)>
+    Public Function score(x As ChemicalFormula, y As ChemicalFormula,
+                          Optional kappa As Double = 2,
+                          Optional normalize_size As Boolean = False) As Double
+
+        Dim a As AtomLink() = x.GraphEmbedding(kappa, normalize_size).ToArray
+        Dim b As AtomLink() = y.GraphEmbedding(kappa, normalize_size).ToArray
+        Dim cos As Double = a.Cosine(b)
+
+        Return cos
+    End Function
+
+    ''' <summary>
     ''' create graph embedding result for a specific molecular strucutre data
     ''' </summary>
     ''' <param name="SMILES">the molecular structure data which is parsed from a given smiles string</param>
@@ -179,11 +201,20 @@ Module SMILESTool
     ''' 6. vertex a set of the vertex data for generates current graph embedding score data
     ''' </returns>
     <ExportAPI("links")>
+    <RApiReturn(GetType(AtomLink))>
     Public Function atomLinks(SMILES As ChemicalFormula,
                               Optional kappa As Double = 2,
-                              Optional normalize_size As Boolean = False) As RDataframe
+                              Optional normalize_size As Boolean = False,
+                              Optional tabular As Boolean = True) As Object
 
-        Dim links As AtomLink() = SMILES.GraphEmbedding(kappa, normalize_size).ToArray
+        Dim links As AtomLink() = SMILES _
+            .GraphEmbedding(kappa, normalize_size) _
+            .ToArray
+
+        If Not tabular Then
+            Return links
+        End If
+
         Dim atom1 As String() = links.Select(Function(l) l.atom1).ToArray
         Dim atom2 As String() = links.Select(Function(l) l.atom2).ToArray
         Dim weight As Double() = links.Select(Function(l) l.score).ToArray

@@ -160,8 +160,8 @@ Public Class Atom
         Yield New Atom("MnO4", -1)
         Yield New Atom("HCO3", -1)
         Yield New Atom("PO4", -3)
-        Yield New Atom("CH", -1)
-        Yield New Atom("CH2", -1)
+        Yield New Atom("CH", -1, -2, -3)
+        Yield New Atom("CH2", -1, -2)
         Yield New Atom("CH3", -1)
         Yield New Atom("CH4", -1)
         Yield New Atom("CH5", -1) ' 氢化甲基阴离子（hydridomethyl anion）

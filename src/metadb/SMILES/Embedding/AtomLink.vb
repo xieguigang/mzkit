@@ -67,5 +67,13 @@ Namespace Embedding
         Public Property v0 As Double
         Public Property vertex As Dictionary(Of String, String())
 
+        Friend Function GetSortUniqueId() As String
+            If atom1 >= atom2 Then
+                Return atom1 & "|" & atom2
+            Else
+                Return atom2 & "|" & atom1
+            End If
+        End Function
+
     End Class
 End Namespace
