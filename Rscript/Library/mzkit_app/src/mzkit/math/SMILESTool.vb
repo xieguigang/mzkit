@@ -170,7 +170,15 @@ Module SMILESTool
     ''' <param name="y"></param>
     ''' <param name="kappa"></param>
     ''' <param name="normalize_size"></param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' a tuple list that contains the score metrics between to given
+    ''' molecular strucutre data:
+    ''' 
+    ''' 1. cos
+    ''' 2. euclidean
+    ''' 3. jaccard
+    ''' 
+    ''' </returns>
     <ExportAPI("score")>
     <RApiReturn(TypeCodes.double)>
     Public Function score(x As ChemicalFormula, y As ChemicalFormula,
