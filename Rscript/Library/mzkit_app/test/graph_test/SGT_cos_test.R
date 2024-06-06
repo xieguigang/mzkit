@@ -25,3 +25,9 @@ str(SMILES::score(salicylic_acid, valine, normalize.size = TRUE));
 
 str(SMILES::score(salicylic_acid, salicylic_acid, normalize.size = TRUE));
 str(SMILES::score(salicylic_acid, rotenone, normalize.size = TRUE));
+
+
+str(SMILES::score(
+    SMILES::parse("C(/C=C(\C)/C=O)=C\C(\C)=C\C=C\C(\C)=C\C=C\C=C(/C)\C=C\C=C(\C=C\C=C(/C)\C=O)/C", strict = FALSE), 
+    SMILES::parse("CC(=CC=CC=C(C)C=CC=C(C)C=CC=C(C)C(=O)O)C=CC=C(C)C=CC=C(C)C(=O)O", strict = FALSE), 
+    normalize.size = TRUE));
