@@ -86,6 +86,12 @@ declare namespace SMILES {
      * @param normalize_size -
      * 
      * + default value Is ``false``.
+     * @return a tuple list that contains the score metrics between to given
+     *  molecular strucutre data:
+     *  
+     *  1. cos
+     *  2. euclidean
+     *  3. jaccard
    */
-   function score(x: object, y: object, kappa?: number, normalize_size?: boolean): number;
+   function score(x: object, y: object, kappa?: number, normalize_size?: boolean): object;
 }
