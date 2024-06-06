@@ -78,11 +78,7 @@ Public Class Atom
     Public ReadOnly Property maxKeys As Integer
     Public ReadOnly Property isAtomGroup As Boolean
 
-    Public Shared ReadOnly Property AtomGroups As Dictionary(Of String, Atom) = Atom _
-        .DefaultAtomGroups _
-        .ToDictionary(Function(a)
-                          Return a.GetIonLabel
-                      End Function)
+    Public Shared ReadOnly Property AtomGroups As Dictionary(Of String, Atom) = LoadAtoms()
 
     Sub New(label As String, ParamArray valence As Integer())
         Me.isAtomGroup = EvaluateIsAtomGroup(label)
@@ -90,6 +86,21 @@ Public Class Atom
         Me.valence = valence
         Me.maxKeys = GetMaxKeys()
     End Sub
+
+    Private Shared Function LoadAtoms() As Dictionary(Of String, Atom)
+        Dim atoms = Atom.DefaultAtomGroups.ToArray
+        Dim groups As New Dictionary(Of String, Atom)
+
+        For Each atom As Atom In atoms
+            Call groups.Add(atom.GetIonLabel, atom)
+
+            If Not groups.ContainsKey(atom.label) Then
+                Call groups.Add(atom.label, atom)
+            End If
+        Next
+
+        Return groups
+    End Function
 
     Private Function GetMaxKeys() As Integer
         If valence.IsNullOrEmpty Then
@@ -149,6 +160,13 @@ Public Class Atom
         Yield New Atom("MnO4", -1)
         Yield New Atom("HCO3", -1)
         Yield New Atom("PO4", -3)
+        Yield New Atom("CH", -1)
+        Yield New Atom("CH2", -1)
+        Yield New Atom("CH3", -1)
+        Yield New Atom("CH4", -1)
+        Yield New Atom("CH5", -1) ' 氢化甲基阴离子（hydridomethyl anion）
+        Yield New Atom("COOH", -1)
+        Yield New Atom("COO", -2)
     End Function
 
     Public Shared Iterator Function DefaultElements() As IEnumerable(Of Atom)
