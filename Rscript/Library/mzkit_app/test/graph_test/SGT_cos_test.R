@@ -10,3 +10,7 @@ print(SMILES::links(valine));
 print(SMILES::links(l_leucine));
 print(SMILES::links(d_leucine));
 
+print(SMILES::score(valine, l_leucine));
+print(SMILES::score(valine, d_leucine));
+
+print(SMILES::score(d_leucine, l_leucine));
