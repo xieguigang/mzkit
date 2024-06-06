@@ -161,6 +161,23 @@ Module SMILESTool
         }
     End Function
 
+    ''' <summary>
+    ''' create graph embedding result for a specific molecular strucutre data
+    ''' </summary>
+    ''' <param name="SMILES">the molecular structure data which is parsed from a given smiles string</param>
+    ''' <param name="kappa">kappa parameter for SGT embedding algorithm</param>
+    ''' <param name="normalize_size"></param>
+    ''' <returns>
+    ''' a dataframe object that contains the SGT embedding result of a molecular 
+    ''' strcutre data, contains the data fields:
+    ''' 
+    ''' 1. atom1 the label of the atom group
+    ''' 2. atom2 the label of the another atom group
+    ''' 3. weight the embedding score result of current link
+    ''' 4. vk SGT vk score
+    ''' 5. v0 SGT v0 score
+    ''' 6. vertex a set of the vertex data for generates current graph embedding score data
+    ''' </returns>
     <ExportAPI("links")>
     Public Function atomLinks(SMILES As ChemicalFormula,
                               Optional kappa As Double = 2,
