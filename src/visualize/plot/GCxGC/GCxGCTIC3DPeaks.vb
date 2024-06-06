@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eddab7c3de3d962c8816046b5a25a9ca, visualize\plot\GCxGC\GCxGCTIC3DPeaks.vb"
+﻿#Region "Microsoft.VisualBasic::08460b7ed361823b9d2ab2ba791a7224, visualize\plot\GCxGC\GCxGCTIC3DPeaks.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 129
-    '    Code Lines: 106 (82.17%)
-    ' Comment Lines: 6 (4.65%)
+    '   Total Lines: 132
+    '    Code Lines: 109 (82.58%)
+    ' Comment Lines: 6 (4.55%)
     '    - Xml Docs: 50.00%
     ' 
-    '   Blank Lines: 17 (13.18%)
-    '     File Size: 6.34 KB
+    '   Blank Lines: 17 (12.88%)
+    '     File Size: 6.48 KB
 
 
     ' Class GCxGCTIC3DPeaks

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::18e623ae8520f40da9aba24bc2e5ac29, visualize\plot\PeakAssign.vb"
+﻿#Region "Microsoft.VisualBasic::e6986a8775cf6a1a0345b24223885805, visualize\plot\PeakAssign.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 361
-    '    Code Lines: 294 (81.44%)
-    ' Comment Lines: 14 (3.88%)
+    '   Total Lines: 363
+    '    Code Lines: 296 (81.54%)
+    ' Comment Lines: 14 (3.86%)
     '    - Xml Docs: 71.43%
     ' 
-    '   Blank Lines: 53 (14.68%)
-    '     File Size: 15.83 KB
+    '   Blank Lines: 53 (14.60%)
+    '     File Size: 15.92 KB
 
 
     ' Class PeakAssign

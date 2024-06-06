@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f0329227b7f9809af8f3bdeab5eb60ec, mzmath\MoleculeNetworking\Tree\TreeCluster.vb"
+﻿#Region "Microsoft.VisualBasic::9c06001ba4625fcc6d4a835f71c00a69, mzmath\MoleculeNetworking\Tree\TreeCluster.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 112
-    '    Code Lines: 81 (72.32%)
-    ' Comment Lines: 13 (11.61%)
-    '    - Xml Docs: 76.92%
+    '   Total Lines: 126
+    '    Code Lines: 88 (69.84%)
+    ' Comment Lines: 16 (12.70%)
+    '    - Xml Docs: 81.25%
     ' 
-    '   Blank Lines: 18 (16.07%)
-    '     File Size: 3.93 KB
+    '   Blank Lines: 22 (17.46%)
+    '     File Size: 4.27 KB
 
 
     ' Class TreeCluster

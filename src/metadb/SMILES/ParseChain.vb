@@ -90,7 +90,14 @@ Public Class ParseChain
     End Sub
 
     Public Shared Function ParseGraph(SMILES As String, Optional strict As Boolean = True) As ChemicalFormula
-        Dim tokens As Token() = New Scanner(SMILES).GetTokens().ToArray
+        Dim tokens As Token()
+
+        Try
+            tokens = New Scanner(SMILES).GetTokens().ToArray
+        Catch ex As Exception
+            Throw New Exception("SMILES string for parse:" & SMILES, ex)
+        End Try
+
         Dim graph As ChemicalFormula = New ParseChain(tokens).CreateGraph(strict)
         Dim degree = graph _
             .AllBonds _

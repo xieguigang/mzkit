@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7ba8f11bf29e29dbaec10f393dcaf04e, mzmath\ms2_math-core\Spectra\Models\Trimming\LowAbundanceTrimming.vb"
+﻿#Region "Microsoft.VisualBasic::d1e7de263645558a861ac543cdfe1c19, mzmath\ms2_math-core\Spectra\Models\Trimming\LowAbundanceTrimming.vb"
 
     ' Author:
     ' 
@@ -37,18 +37,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 92
-    '    Code Lines: 56 (60.87%)
-    ' Comment Lines: 21 (22.83%)
+    '   Total Lines: 94
+    '    Code Lines: 57 (60.64%)
+    ' Comment Lines: 21 (22.34%)
     '    - Xml Docs: 95.24%
     ' 
-    '   Blank Lines: 15 (16.30%)
-    '     File Size: 3.37 KB
+    '   Blank Lines: 16 (17.02%)
+    '     File Size: 3.45 KB
 
 
     '     Class LowAbundanceTrimming
     ' 
-    '         Properties: [Default], intoCutff, quantCutoff, threshold
+    '         Properties: [Default], intoCutff, quantCutoff, threshold, Zero
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: ParseScript, (+2 Overloads) Trim

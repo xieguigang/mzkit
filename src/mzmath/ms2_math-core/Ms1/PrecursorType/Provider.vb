@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::524d3f926325a02fa3e1f255aae87ecb, mzmath\ms2_math-core\Ms1\PrecursorType\Provider.vb"
+﻿#Region "Microsoft.VisualBasic::b952c36727e2c9655e14e4b532762308, mzmath\ms2_math-core\Ms1\PrecursorType\Provider.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 242
-    '    Code Lines: 107 (44.21%)
-    ' Comment Lines: 109 (45.04%)
-    '    - Xml Docs: 41.28%
+    '   Total Lines: 247
+    '    Code Lines: 107 (43.32%)
+    ' Comment Lines: 114 (46.15%)
+    '    - Xml Docs: 43.86%
     ' 
-    '   Blank Lines: 26 (10.74%)
-    '     File Size: 11.68 KB
+    '   Blank Lines: 26 (10.53%)
+    '     File Size: 11.95 KB
 
 
     '     Module Provider

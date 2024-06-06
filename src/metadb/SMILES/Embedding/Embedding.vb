@@ -58,9 +58,49 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.Correlations
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Namespace Embedding
+
+    Public Class VectorEmbedding
+
+        ReadOnly v1 As AtomLink(), v2 As AtomLink()
+        ReadOnly unique_keys As String()
+        ReadOnly key1 As String()
+        ReadOnly key2 As String()
+        ReadOnly u As Double()
+        ReadOnly v As Double()
+
+        Sub New(v1 As AtomLink(), v2 As AtomLink())
+            Dim w1 = v1.Select(Function(vi) (vi.GetSortUniqueId, vi.score)).GroupBy(Function(a) a.GetSortUniqueId).ToDictionary(Function(a) a.Key, Function(a) a.Sum(Function(vi) vi.score))
+            Dim w2 = v2.Select(Function(vi) (vi.GetSortUniqueId, vi.score)).GroupBy(Function(a) a.GetSortUniqueId).ToDictionary(Function(a) a.Key, Function(a) a.Sum(Function(vi) vi.score))
+            Dim unique_labels As String() = w1.JoinIterates(w2).Select(Function(vi) vi.Key).Distinct.ToArray
+            Dim u As Double() = (From link As String In unique_labels Select w1.TryGetValue(link, [default]:=0.0)).ToArray
+            Dim v As Double() = (From link As String In unique_labels Select w2.TryGetValue(link, [default]:=0.0)).ToArray
+
+            Me.key1 = w1.Keys.ToArray
+            Me.key2 = w2.Keys.ToArray
+            Me.v1 = v1
+            Me.v2 = v2
+            Me.unique_keys = unique_labels
+            Me.u = u
+            Me.v = v
+        End Sub
+
+        Public Function Cosine() As Double
+            Return SSM_SIMD(u, v)
+        End Function
+
+        Public Function Euclidean() As Double
+            Return u.EuclideanDistance(v)
+        End Function
+
+        Public Function Jaccard() As Double
+            Return key1.jaccard_coeff(key2) * 2
+        End Function
+
+    End Class
 
     <HideModuleName>
     Public Module Embedding
