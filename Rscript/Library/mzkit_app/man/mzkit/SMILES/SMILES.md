@@ -15,4 +15,4 @@
 + [as.formula](SMILES/as.formula.1) 
 + [as.graph](SMILES/as.graph.1) 
 + [atoms](SMILES/atoms.1) get atoms table from the SMILES structure data
-+ [links](SMILES/links.1) 
++ [links](SMILES/links.1) create graph embedding result for a specific molecular strucutre data

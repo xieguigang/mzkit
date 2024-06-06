@@ -35,8 +35,25 @@ declare namespace SMILES {
    */
    function atoms(SMILES: object): object;
    /**
-     * @param kappa default value Is ``2``.
-     * @param normalize_size default value Is ``false``.
+    * create graph embedding result for a specific molecular strucutre data
+    * 
+    * 
+     * @param SMILES the molecular structure data which is parsed from a given smiles string
+     * @param kappa kappa parameter for SGT embedding algorithm
+     * 
+     * + default value Is ``2``.
+     * @param normalize_size -
+     * 
+     * + default value Is ``false``.
+     * @return a dataframe object that contains the SGT embedding result of a molecular 
+     *  strcutre data, contains the data fields:
+     *  
+     *  1. atom1 the label of the atom group
+     *  2. atom2 the label of the another atom group
+     *  3. weight the embedding score result of current link
+     *  4. vk SGT vk score
+     *  5. v0 SGT v0 score
+     *  6. vertex a set of the vertex data for generates current graph embedding score data
    */
    function links(SMILES: object, kappa?: number, normalize_size?: boolean): object;
    /**

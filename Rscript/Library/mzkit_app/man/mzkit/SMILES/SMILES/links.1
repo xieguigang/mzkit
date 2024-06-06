@@ -1,11 +1,37 @@
 .\" man page create by R# package system.
 .TH SMILES 4 2000-Jan "links" "links"
 .SH NAME
-links \- 
+links \- create graph embedding result for a specific molecular strucutre data
 .SH SYNOPSIS
 \fIlinks(\fBSMILES\fR as <generic> ChemicalFormula, 
 \fBkappa\fR as double = 2, 
 \fBnormalize_size\fR as boolean = FALSE);\fR
+.SH DESCRIPTION
+.PP
+create graph embedding result for a specific molecular strucutre data
+.PP
+.SH OPTIONS
+.PP
+\fBSMILES\fB \fR\- the molecular structure data which is parsed from a given smiles string. 
+.PP
+.PP
+\fBkappa\fB \fR\- kappa parameter for SGT embedding algorithm. 
+.PP
+.PP
+\fBnormalize_size\fB \fR\- -. 
+.PP
+.SH VALUE
+.PP
+a dataframe object that contains the SGT embedding result of a molecular 
+ strcutre data, contains the data fields:
+ 
+ 1. atom1 the label of the atom group
+ 2. atom2 the label of the another atom group
+ 3. weight the embedding score result of current link
+ 4. vk SGT vk score
+ 5. v0 SGT v0 score
+ 6. vertex a set of the vertex data for generates current graph embedding score data
+.PP
 .SH SEE ALSO
 SMILES
 .SH FILES
