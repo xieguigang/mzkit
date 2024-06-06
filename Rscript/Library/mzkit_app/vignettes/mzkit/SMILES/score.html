@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>create graph embedding result for a specific molecular strucutre data</title>
+    <title>evaluate the similarity score between two molecular strcuture</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
@@ -13,12 +13,12 @@
 
         <table style="width: 100%;">
             <tr>
-                <td>links {SMILES}</td>
+                <td>score {SMILES}</td>
                 <td style="text-align: right;">R Documentation</td>
             </tr>
         </table>
 
-        <h2>create graph embedding result for a specific molecular strucutre data</h2>
+        <h2>evaluate the similarity score between two molecular strcuture</h2>
 
         <h3>Description</h3>
 
@@ -27,22 +27,25 @@
         <h3>Usage</h3>
 
         <div style="width: 100%; padding-left: 3%; color: black;">
-            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>links</strong>(<i>SMILES</i>,
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>score</strong>(<i>x</i>, <i>y</i>,
     <i>kappa</i> = <span style='color: green;'>2</span>,
-    <i>normalize.size</i> = <span style='color: blue !important;'>FALSE</span>,
-    <i>tabular</i> = <span style='color: blue !important;'>TRUE</span>);</code></pre>
+    <i>normalize.size</i> = <span style='color: blue !important;'>FALSE</span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
 
         <table>
             
-<dt>SMILES</dt>
-<dd><p>the molecular structure data which is parsed from a given smiles string. [as <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemoinformatics/SMILES/ChemicalFormula.html">ChemicalFormula</a>]</p></dd>
+<dt>x</dt>
+<dd><p>[as <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemoinformatics/SMILES/ChemicalFormula.html">ChemicalFormula</a>]</p></dd>
+
+
+<dt>y</dt>
+<dd><p>[as <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemoinformatics/SMILES/ChemicalFormula.html">ChemicalFormula</a>]</p></dd>
 
 
 <dt>kappa</dt>
-<dd><p>kappa parameter for SGT embedding algorithm. [as double]</p></dd>
+<dd><p>[as double]</p></dd>
 
 
 <dt>normalize.size</dt>
@@ -61,15 +64,7 @@
 
         <h3>Value</h3>
 
-        <p>a dataframe object that contains the SGT embedding result of a molecular 
- strcutre data, contains the data fields:
- 
- 1. atom1 the label of the atom group
- 2. atom2 the label of the another atom group
- 3. weight the embedding score result of current link
- 4. vk SGT vk score
- 5. v0 SGT v0 score
- 6. vertex a set of the vertex data for generates current graph embedding score data</p><h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/BioDeep/Chemoinformatics/SMILES/Embedding/AtomLink.html">AtomLink</a></li></ul>
+        this function returns data object of type double.<h4>clr value class</h4><ul><li>double</li></ul>
 
         <h3 style="display: none;">Examples</h3>
 

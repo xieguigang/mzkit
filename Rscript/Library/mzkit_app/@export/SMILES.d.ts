@@ -45,6 +45,8 @@ declare namespace SMILES {
      * @param normalize_size -
      * 
      * + default value Is ``false``.
+     * @param tabular 
+     * + default value Is ``true``.
      * @return a dataframe object that contains the SGT embedding result of a molecular 
      *  strcutre data, contains the data fields:
      *  
@@ -55,7 +57,7 @@ declare namespace SMILES {
      *  5. v0 SGT v0 score
      *  6. vertex a set of the vertex data for generates current graph embedding score data
    */
-   function links(SMILES: object, kappa?: number, normalize_size?: boolean): object;
+   function links(SMILES: object, kappa?: number, normalize_size?: boolean, tabular?: boolean): object;
    /**
     * Parse the SMILES molecule structre string
     * 
@@ -72,4 +74,18 @@ declare namespace SMILES {
      * @return A chemical graph object that could be used for build formula or structure analysis
    */
    function parse(SMILES: string, strict?: boolean): object;
+   /**
+    * evaluate the similarity score between two molecular strcuture
+    * 
+    * 
+     * @param x -
+     * @param y -
+     * @param kappa -
+     * 
+     * + default value Is ``2``.
+     * @param normalize_size -
+     * 
+     * + default value Is ``false``.
+   */
+   function score(x: object, y: object, kappa?: number, normalize_size?: boolean): number;
 }
