@@ -68,7 +68,9 @@ Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Serialization.Bencoding
+Imports SMRUCC.Rsharp
 Imports SMRUCC.Rsharp.Runtime
+Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports list = SMRUCC.Rsharp.Runtime.Internal.Object.list
 Imports RDataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
@@ -161,12 +163,71 @@ Module SMILESTool
         }
     End Function
 
+    ''' <summary>
+    ''' evaluate the similarity score between two molecular strcuture 
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <param name="y"></param>
+    ''' <param name="kappa"></param>
+    ''' <param name="normalize_size"></param>
+    ''' <returns>
+    ''' a tuple list that contains the score metrics between to given
+    ''' molecular strucutre data:
+    ''' 
+    ''' 1. cos
+    ''' 2. euclidean
+    ''' 3. jaccard
+    ''' 
+    ''' </returns>
+    <ExportAPI("score")>
+    <RApiReturn(TypeCodes.double)>
+    Public Function score(x As ChemicalFormula, y As ChemicalFormula,
+                          Optional kappa As Double = 2,
+                          Optional normalize_size As Boolean = False) As list
+
+        Dim a As AtomLink() = x.GraphEmbedding(kappa, normalize_size).ToArray
+        Dim b As AtomLink() = y.GraphEmbedding(kappa, normalize_size).ToArray
+        Dim vec As New VectorEmbedding(a, b)
+
+        Return New list(
+            slot("cos") = vec.Cosine,
+            slot("euclidean") = vec.Euclidean,
+            slot("jaccard") = vec.Jaccard
+        )
+    End Function
+
+    ''' <summary>
+    ''' create graph embedding result for a specific molecular strucutre data
+    ''' </summary>
+    ''' <param name="SMILES">the molecular structure data which is parsed from a given smiles string</param>
+    ''' <param name="kappa">kappa parameter for SGT embedding algorithm</param>
+    ''' <param name="normalize_size"></param>
+    ''' <returns>
+    ''' a dataframe object that contains the SGT embedding result of a molecular 
+    ''' strcutre data, contains the data fields:
+    ''' 
+    ''' 1. atom1 the label of the atom group
+    ''' 2. atom2 the label of the another atom group
+    ''' 3. weight the embedding score result of current link
+    ''' 4. vk SGT vk score
+    ''' 5. v0 SGT v0 score
+    ''' 6. vertex a set of the vertex data for generates current graph embedding score data
+    ''' </returns>
     <ExportAPI("links")>
+    <RApiReturn(GetType(AtomLink))>
     Public Function atomLinks(SMILES As ChemicalFormula,
                               Optional kappa As Double = 2,
-                              Optional normalize_size As Boolean = False) As RDataframe
+                              Optional normalize_size As Boolean = False,
+                              Optional tabular As Boolean = True) As Object
 
-        Dim links As AtomLink() = SMILES.GraphEmbedding(kappa, normalize_size).ToArray
+        Dim links As AtomLink() = SMILES _
+            .GraphEmbedding(kappa, normalize_size) _
+            .ToArray
+
+        If Not tabular Then
+            Return links
+        End If
+
         Dim atom1 As String() = links.Select(Function(l) l.atom1).ToArray
         Dim atom2 As String() = links.Select(Function(l) l.atom2).ToArray
         Dim weight As Double() = links.Select(Function(l) l.score).ToArray

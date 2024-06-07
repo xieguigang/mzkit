@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::659702cdb9e2bbf8edf6ae6e4cb68cf4, mzmath\SingleCells\Matrix\MzMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::435f77a8a29e13354bd60e65fe3655d5, mzmath\SingleCells\Matrix\MzMatrix.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 203
-    '    Code Lines: 103 (50.74%)
-    ' Comment Lines: 71 (34.98%)
+    '   Total Lines: 204
+    '    Code Lines: 104 (50.98%)
+    ' Comment Lines: 71 (34.80%)
     '    - Xml Docs: 95.77%
     ' 
-    '   Blank Lines: 29 (14.29%)
-    '     File Size: 8.26 KB
+    '   Blank Lines: 29 (14.22%)
+    '     File Size: 8.42 KB
 
 
     '     Class MzMatrix

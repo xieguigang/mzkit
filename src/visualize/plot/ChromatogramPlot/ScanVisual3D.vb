@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ce9848e498222e9fefdec09ad770d26f, visualize\plot\ChromatogramPlot\ScanVisual3D.vb"
+﻿#Region "Microsoft.VisualBasic::84d9a557d97af370da0ed500caac7cd1, visualize\plot\ChromatogramPlot\ScanVisual3D.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 252
-    '    Code Lines: 182 (72.22%)
-    ' Comment Lines: 32 (12.70%)
+    '   Total Lines: 254
+    '    Code Lines: 184 (72.44%)
+    ' Comment Lines: 32 (12.60%)
     '    - Xml Docs: 15.62%
     ' 
-    '   Blank Lines: 38 (15.08%)
-    '     File Size: 9.77 KB
+    '   Blank Lines: 38 (14.96%)
+    '     File Size: 9.88 KB
 
 
     ' Class ScanVisual3D
