@@ -14,7 +14,7 @@ declare namespace mzPack {
     * 
     * 
      * @param mzpack -
-     * @param file -
+     * @param file the file stream to the target mzXML file to write the data
      * @param env -
      * 
      * + default value Is ``null``.
@@ -128,12 +128,14 @@ declare namespace mzPack {
    */
    function packStream(data: object, file: any, env?: object): any;
    /**
-    * read mzpack data from the mzwork package by a 
+    * ### get mzpack object from mzwork archive
+    *  
+    *  read mzpack data from the mzwork package by a 
     *  given raw data file name as reference id
     * 
     * 
-     * @param mzwork -
-     * @param fileName -
+     * @param mzwork a zip archive liked data package, contains multiple mzpack object
+     * @param fileName the reference key for extract the mzpack data
      * @param single 
      * + default value Is ``false``.
      * @param env -
