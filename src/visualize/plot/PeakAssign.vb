@@ -211,6 +211,7 @@ Public Class PeakAssign : Inherits Plot
         Dim labelSize As SizeF
         Dim barStyle As Stroke = Stroke.TryParse(theme.lineStroke)
         Dim barColor As Brush = barStyle.fill.GetBrush
+        Dim barWidth As Single = css.GetLineWidth(barStyle)
         Dim barHighlight As Brush = Me.barHighlight.GetBrush
         Dim label As String
 
@@ -228,10 +229,10 @@ Public Class PeakAssign : Inherits Plot
         For Each product As ms2 In matrix
             Dim pt As PointF = scaler.Translate(product.mz, product.intensity / maxinto * 100)
             Dim bar As New RectangleF With {
-                .X = pt.X - barStyle.width / 2,
+                .X = pt.X - barWidth / 2,
                 .Y = pt.Y,
                 .Height = bottomY - pt.Y,
-                .Width = barStyle.width
+                .Width = barWidth
             }
             Dim drawMzLabel As Boolean = product.intensity / maxinto >= labelIntensity
 

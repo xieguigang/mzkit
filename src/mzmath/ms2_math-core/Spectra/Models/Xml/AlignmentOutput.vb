@@ -113,6 +113,10 @@ Namespace Spectra.Xml
 
         Public ReadOnly Property nhits As Integer
             Get
+                If alignments Is Nothing OrElse alignments.Length = 0 Then
+                    Return 0
+                End If
+
                 Return alignments _
                     .Where(Function(a)
                                If a.da = "NA" Then
