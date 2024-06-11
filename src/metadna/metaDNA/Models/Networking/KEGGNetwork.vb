@@ -107,9 +107,15 @@ Public Class KEGGNetwork : Inherits Networking
     Public Shared Function CreateNetwork(network As IEnumerable(Of Reaction)) As KEGGNetwork
         Dim index As New Dictionary(Of String, List(Of String))
         Dim reactions As New Dictionary(Of String, List(Of NamedValue(Of String)))
+        Dim eq As Equation = Nothing
 
         For Each reaction As Reaction In network
-            Dim eq As Equation = reaction.ReactionModel
+            If reaction.Equation.StringEmpty Then
+                Call $"{reaction.ID}: {reaction.Definition} (equation is empty!)".Warning
+                Continue For
+            Else
+                eq = reaction.ReactionModel
+            End If
 
             For Each cid1 As String In eq.Reactants.Keys
                 For Each cid2 As String In eq.Products.Keys
