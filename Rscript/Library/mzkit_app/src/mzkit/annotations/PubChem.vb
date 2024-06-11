@@ -154,7 +154,7 @@ Module PubChemToolKit
     <RApiReturn(GetType(PubMed))>
     Public Function readPubmed(file As String(), Optional lazy As Boolean = True, Optional env As Environment = Nothing) As Object
         If lazy Then
-            Return file.Select(Function(path) DataStream.OpenHandle(path) _
+            Return file.Select(Function(path) DataStream.OpenHandle(path, trim:=True) _
                 .AsLinq(Of PubMed)(silent:=True)).IteratesALL _
                 .DoCall(AddressOf pipeline.CreateFromPopulator)
         Else
