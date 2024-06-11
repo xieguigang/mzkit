@@ -95,6 +95,7 @@ Imports SMRUCC.Rsharp.Runtime.Internal.Object.Converts
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports KeggCompound = SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject.Compound
+Imports kegReaction = SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject.Reaction
 Imports kegReactionClass = SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject.ReactionClass
 Imports metadata = BioNovoGene.BioDeep.Chemistry.MetaLib.Models.MetaInfo
 Imports MetaDNAAlgorithm = BioNovoGene.BioDeep.MetaDNA.Algorithm
@@ -342,6 +343,12 @@ Module metaDNAInfer
         Dim network As pipeline = pipeline.TryCreatePipeline(Of ReactionClass)(links, env)
 
         If network.isError Then
+            network = pipeline.TryCreatePipeline(Of kegReaction)(links, env)
+
+            If Not network.isError Then
+                Return metadna.SetNetwork(network.populates(Of kegReaction)(env))
+            End If
+
             Return network.getError
         End If
 
