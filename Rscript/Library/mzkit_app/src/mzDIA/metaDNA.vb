@@ -253,7 +253,9 @@ Module metaDNAInfer
     ''' Configs the precursor adducts range for the metaDNA algorithm
     ''' </summary>
     ''' <param name="metadna"></param>
-    ''' <param name="precursorTypes"></param>
+    ''' <param name="precursorTypes">a collection of the ms1 precursor adducts type data,
+    ''' could be a character vector of the adducts type string.
+    ''' </param>
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("range")>
@@ -278,7 +280,8 @@ Module metaDNAInfer
     ''' </summary>
     ''' <param name="metadna"></param>
     ''' <param name="kegg">
-    ''' should be a collection of the <see cref="KeggCompound"/> data.
+    ''' should be a collection of the <see cref="KeggCompound"/> data,
+    ''' or a general <see cref="CompoundSolver"/>.
     ''' </param>
     ''' <param name="env"></param>
     ''' <returns></returns>
@@ -295,6 +298,8 @@ Module metaDNAInfer
             Return metadna.SetKeggLibrary(library.populates(Of KeggCompound)(env))
         ElseIf TypeOf kegg Is CompoundSolver Then
             Return metadna.SetLibrary(DirectCast(kegg, CompoundSolver))
+        Else
+
         End If
 
         Return library.getError
@@ -740,7 +745,9 @@ Module metaDNAInfer
     ''' <param name="repo">
     ''' the file path to the messagepack data repository
     ''' </param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' a collection of the kegg compound data model
+    ''' </returns>
     <ExportAPI("kegg.library")>
     <RApiReturn(GetType(KeggCompound))>
     Public Function loadCompoundLibrary(repo As String) As Object

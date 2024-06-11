@@ -1,4 +1,6 @@
-imports "metadna" from "mzkit.insilicons";
+require(mzkit);
+
+imports "metadna" from "mzDIA";
 imports "mzweb" from "mzkit";
 imports ["assembly", "data", "math"] from "mzkit";
 
@@ -7,25 +9,15 @@ options(verbose = TRUE);
 const input as string    = ?"--mzpack"  || stop("A mzpack ions file must be provided!");
 const output as string   = ?"--output"  || dirname(input);
 const ionMode as integer = ?"--ionMode" || 1;
-
-const KEGGlibbase = "D:\biodeep\biodeepdb_v3\KEGG";
-const KEGGlib = list(
-	KEGG_cpd = `${KEGGlibbase}/KEGG_cpd.repo`,
-	KEGG_rxn = `${KEGGlibbase}/reaction_class.repo`
-);
-
-print("using kegg libraries:");
-str(KEGGlib);
-
-const seeds = (function() {
+const seeds = {
 	if (file.exists(?"--seeds")) {
 		read.csv(?"--seeds");
 	} else {
 		NULL;
 	}
-})();
+};
 
-let getIonRange as function() {
+let getIonRange = function() {
 	if (ionMode == 1) {
 		["[M]+", "[M+H]+"];
 	} else {
