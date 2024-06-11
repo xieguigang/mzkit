@@ -6,7 +6,7 @@ raw data accessor for the mzpack data object
 + [split_samples](mzPack/split_samples.1) try to split target mzpack file into multiple parts based on the sample tags
 + [open.mzwork](mzPack/open.mzwork.1) open mzwork file and then populate all of the mzpack raw data file
 + [mzwork](mzPack/mzwork.1) open a mzwork package file
-+ [readFileCache](mzPack/readFileCache.1) read mzpack data from the mzwork package by a 
++ [readFileCache](mzPack/readFileCache.1) ### get mzpack object from mzwork archive
 + [mzpack](mzPack/mzpack.1) open a mzpack data object reader, not read all data into memory in one time.
 + [ls](mzPack/ls.1) Get object list inside the MS packdata
 + [metadata](mzPack/metadata.1) get metadata list from a specific ms1 scan

@@ -70,6 +70,7 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
 Imports Microsoft.VisualBasic.Emit.Delegates
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp
@@ -200,11 +201,13 @@ Module MzPackAccess
     End Function
 
     ''' <summary>
+    ''' ### get mzpack object from mzwork archive
+    ''' 
     ''' read mzpack data from the mzwork package by a 
     ''' given raw data file name as reference id
     ''' </summary>
-    ''' <param name="mzwork"></param>
-    ''' <param name="fileName"></param>
+    ''' <param name="mzwork">a zip archive liked data package, contains multiple mzpack object</param>
+    ''' <param name="fileName">the reference key for extract the mzpack data</param>
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("readFileCache")>
@@ -361,7 +364,7 @@ Module MzPackAccess
     ''' method for write mzpack data object as a mzML file
     ''' </summary>
     ''' <param name="mzpack"></param>
-    ''' <param name="file"></param>
+    ''' <param name="file">the file stream to the target mzXML file to write the data</param>
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("convertTo_mzXML")>
@@ -570,6 +573,36 @@ Module MzPackAccess
             .rt = scan2.Average(Function(a) a.rt),
             .TIC = scan2.Sum(Function(a) a.intensity),
             .meta = New Dictionary(Of String, String)
+        }
+    End Function
+
+    ''' <summary>
+    ''' union merge two rawdata.
+    ''' </summary>
+    ''' <param name="a"></param>
+    ''' <param name="b"></param>
+    ''' <returns></returns>
+    <ROperator("+")>
+    Public Function appendMzPack(a As mzPack, b As mzPack) As Object
+        If a Is Nothing Then
+            Return b
+        ElseIf b Is Nothing Then
+            Return a
+        ElseIf a Is Nothing AndAlso b Is Nothing Then
+            Return Nothing
+        End If
+
+        Return New mzPack With {
+            .Annotations = a.Annotations _
+                .JoinIterates(b.Annotations) _
+                .GroupBy(Function(ai) ai.Key) _
+                .ToDictionary(Function(ai) ai.Key,
+                              Function(ai)
+                                  Return ai.First.Value
+                              End Function),
+            .Application = a.Application,
+            .MS = a.MS.JoinIterates(b.MS).ToArray,
+            .source = $"{a.source}+{b.source}"
         }
     End Function
 End Module
