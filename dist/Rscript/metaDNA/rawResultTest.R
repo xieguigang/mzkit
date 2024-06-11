@@ -32,7 +32,7 @@ const metadna = metadna(
 	allowMs1  = FALSE
 )
 :> range(getIonRange())
-:> load.kegg(kegg.library(repo = KEGGlib$KEGG_cpd))
+:> load.kegg(GCModeller::kegg_compounds(rawList = TRUE, reference_set = FALSE))
 :> load.kegg_network(kegg.network(repo = KEGGlib$KEGG_rxn))
 # :> load.raw(
 	# sample = assembly::mzxml.mgf("E:\biodeep\biodeepDB\lxy-CID30.mzML")

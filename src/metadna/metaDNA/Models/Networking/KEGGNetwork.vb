@@ -56,11 +56,20 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
 Imports SMRUCC.genomics.Assembly.KEGG.WebServices.XML
+Imports SMRUCC.genomics.ComponentModel.EquaionModel.DefaultTypes
 
+''' <summary>
+''' the metabolite network resolver
+''' </summary>
+''' <remarks>
+''' provides the compound connection and partner relationship 
+''' inside the metadna inference.
+''' </remarks>
 Public Class KEGGNetwork : Inherits Networking
 
     ''' <summary>
@@ -95,6 +104,62 @@ Public Class KEGGNetwork : Inherits Networking
             .DoCall(AddressOf reactionList.TryGetValue)
     End Function
 
+    Public Shared Function CreateNetwork(network As IEnumerable(Of Reaction)) As KEGGNetwork
+        Dim index As New Dictionary(Of String, List(Of String))
+        Dim reactions As New Dictionary(Of String, List(Of NamedValue(Of String)))
+
+        For Each reaction As Reaction In network
+            Dim eq As Equation = reaction.ReactionModel
+
+            For Each cid1 As String In eq.Reactants.Keys
+                For Each cid2 As String In eq.Products.Keys
+                    If Not index.ContainsKey(cid1) Then
+                        index(cid1) = New List(Of String)
+                    End If
+                    If Not index.ContainsKey(cid2) Then
+                        index(cid2) = New List(Of String)
+                    End If
+
+                    index(cid1).Add(cid2)
+                    index(cid2).Add(cid1)
+
+                    Dim key As String = {cid1, cid2} _
+                        .OrderBy(Function(str) str) _
+                        .JoinBy("+")
+
+                    If Not reactions.ContainsKey(key) Then
+                        reactions(key) = New List(Of NamedValue(Of String))
+                    End If
+
+                    Call New NamedValue(Of String) With {
+                        .Name = reaction.ID,
+                        .Value = reaction.Definition
+                    }.DoCall(AddressOf reactions(key).Add)
+                Next
+            Next
+        Next
+
+        Return networkResolver(index, reactions)
+    End Function
+
+    Private Shared Function networkResolver(index As Dictionary(Of String, List(Of String)), reactions As Dictionary(Of String, List(Of NamedValue(Of String)))) As KEGGNetwork
+        Return New KEGGNetwork With {
+            .kegg_id = index _
+                .ToDictionary(Function(a) a.Key,
+                              Function(a)
+                                  Return a.Value.Distinct.ToArray
+                              End Function),
+            .reactionList = reactions _
+                .ToDictionary(Function(a) a.Key,
+                              Function(a)
+                                  Return a.Value _
+                                      .GroupBy(Function(t) t.Name) _
+                                      .Select(Function(t) t.First) _
+                                      .ToArray
+                              End Function)
+        }
+    End Function
+
     Public Shared Function CreateNetwork(network As IEnumerable(Of ReactionClass)) As KEGGNetwork
         Dim index As New Dictionary(Of String, List(Of String))
         Dim reactions As New Dictionary(Of String, List(Of NamedValue(Of String)))
@@ -111,7 +176,9 @@ Public Class KEGGNetwork : Inherits Networking
                 index(link.from).Add(link.to)
                 index(link.to).Add(link.from)
 
-                Dim key As String = {link.from, link.to}.OrderBy(Function(str) str).JoinBy("+")
+                Dim key As String = {link.from, link.to} _
+                    .OrderBy(Function(str) str) _
+                    .JoinBy("+")
 
                 If Not reactions.ContainsKey(key) Then
                     reactions(key) = New List(Of NamedValue(Of String))
@@ -124,21 +191,7 @@ Public Class KEGGNetwork : Inherits Networking
             Next
         Next
 
-        Return New KEGGNetwork With {
-            .kegg_id = index _
-                .ToDictionary(Function(a) a.Key,
-                              Function(a)
-                                  Return a.Value.Distinct.ToArray
-                              End Function),
-            .reactionList = reactions _
-                .ToDictionary(Function(a) a.Key,
-                              Function(a)
-                                  Return a.Value _
-                                      .GroupBy(Function(t) t.Name) _
-                                      .Select(Function(t) t.First) _
-                                      .ToArray
-                              End Function)
-        }
+        Return networkResolver(index, reactions)
     End Function
 
     Public Shared Iterator Function MapReduce(maps As IEnumerable(Of Map), KO As String(), network As IEnumerable(Of ReactionClass)) As IEnumerable(Of ReactionClass)
