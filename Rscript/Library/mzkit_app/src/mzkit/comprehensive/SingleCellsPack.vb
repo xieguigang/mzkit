@@ -56,6 +56,7 @@
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.Comprehensive.SingleCells
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Linq
@@ -133,7 +134,9 @@ Module SingleCellsPack
                         raw.source = $"{tag}-{raw.source}"
                         cellpacks.Add(raw)
                     Else
-                        For Each file As String In ls - l - r - {"*.mzXML", "*.mzML", "*.mzPack"} <= path
+                        Dim rawfiles As String() = (ls - l - r - {"*.mzXML", "*.mzML", "*.mzPack"} <= path).ToArray
+
+                        For Each file As String In Tqdm.Wrap(rawfiles)
                             raw = MzWeb.openFromFile(file)
                             raw.source = $"{tag}-{raw.source}"
                             cellpacks.Add(raw)
@@ -144,8 +147,9 @@ Module SingleCellsPack
         Else
             For Each path As String In CLRVector.asCharacter(groups)
                 Dim tag As String = path.BaseName
+                Dim rawfiles As String() = (ls - l - r - {"*.mzXML", "*.mzML", "*.mzPack"} <= path).ToArray
 
-                For Each file As String In ls - l - r - {"*.mzXML", "*.mzML", "*.mzPack"} <= path
+                For Each file As String In Tqdm.Wrap(rawfiles)
                     raw = MzWeb.openFromFile(file)
                     raw.source = $"{tag}-{raw.source}"
                     cellpacks.Add(raw)
