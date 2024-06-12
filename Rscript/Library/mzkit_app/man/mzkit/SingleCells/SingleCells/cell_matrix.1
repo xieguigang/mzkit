@@ -28,6 +28,8 @@ export single cell expression matrix from the raw data scans
 .PP
 let rawdata = open.mzpack("/file.mzpack");
  let matrix = cell_matrix(rawdata, mz_matrix = TRUE);
+ 
+ write.matrix(matrix, file = "/save.dat");
 .PP
 .SH SEE ALSO
 SingleCells
