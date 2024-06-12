@@ -62,9 +62,19 @@ Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Internal.[Object]
 Imports SMRUCC.Rsharp.Runtime.Interop
 
+''' <summary>
+''' package tools for the single cells metabolomics rawdata processing
+''' </summary>
 <Package("cellsPack")>
 Module SingleCellsPack
 
+    ''' <summary>
+    ''' pack of the multiple raw data files into one data pack
+    ''' </summary>
+    ''' <param name="rawdata">a character vector of the raw data file path.</param>
+    ''' <param name="source_tag">usually be the organism source name</param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("pack_cells")>
     Public Function PackSingleCells(<RRawVectorArgument>
                                     rawdata As Object,
@@ -80,6 +90,25 @@ Module SingleCellsPack
         Return cell_packs _
             .populates(Of mzPack)(env) _
             .PackRawData(source_tag)
+    End Function
+
+    ''' <summary>
+    ''' pack of the single cells metabolomics data in multiple sample groups
+    ''' </summary>
+    ''' <param name="groups">
+    ''' could be a character vector of the folder path of the raw data files, 
+    ''' it is recommended that using a tuple list for set this sample group value, 
+    ''' the key name in the tuple list is the sample group name and the corresponding
+    ''' value is the folder path of the single cells rawdata files.
+    ''' </param>
+    ''' <param name="source_tag">usually be the organism source name</param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("pack_cells.group")>
+    Public Function PackSingleCellsInSampleGroup(<RRawVectorArgument> groups As Object,
+                                                 Optional source_tag As String = Nothing,
+                                                 Optional env As Environment = Nothing) As Object
+
     End Function
 
 End Module
