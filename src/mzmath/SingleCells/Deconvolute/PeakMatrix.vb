@@ -76,6 +76,31 @@ Namespace Deconvolute
         ''' </summary>
         ''' <param name="raw"></param>
         ''' <param name="mzdiff"></param>
+        ''' <returns></returns>
+        ''' 
+        <Extension>
+        Public Function CreateMatrix(raw As IMZPack, massVals As MassWindow(), Optional mzdiff As Double = 0.001) As MzMatrix
+            Dim mzSet As Double() = massVals.Mass
+            Dim mzIndex As New MzPool(mzSet)
+            Dim matrix As PixelData() = raw _
+                .deconvoluteMatrixParallel(mzSet.Length, mzIndex) _
+                .ToArray
+
+            Return New MzMatrix With {
+                .matrix = matrix,
+                .mz = mzSet,
+                .tolerance = mzdiff,
+                .matrixType = FileApplicationClass.SingleCellsMetabolomics,
+                .mzmin = massVals.Select(Function(mzi) mzi.mzmin).ToArray,
+                .mzmax = massVals.Select(Function(mzi) mzi.mzmax).ToArray
+            }
+        End Function
+
+        ''' <summary>
+        ''' ms-imaging raw data matrix deconvolution
+        ''' </summary>
+        ''' <param name="raw"></param>
+        ''' <param name="mzdiff"></param>
         ''' <param name="freq"></param>
         ''' <returns></returns>
         Public Function CreateMatrix(raw As IMZPack,
@@ -94,28 +119,13 @@ Namespace Deconvolute
                     fast:=fastBin,
                     verbose:=verbose
                 )
-                mzSet = massVals _
-                    .Select(Function(mzi) mzi.mass) _
-                    .ToArray
             Else
                 massVals = mzSet _
                     .Select(Function(mzi) New MassWindow(mzi)) _
                     .ToArray
             End If
 
-            Dim mzIndex As New MzPool(mzSet)
-            Dim matrix As PixelData() = raw _
-                .deconvoluteMatrixParallel(mzSet.Length, mzIndex) _
-                .ToArray
-
-            Return New MzMatrix With {
-                .matrix = matrix,
-                .mz = mzSet,
-                .tolerance = mzdiff,
-                .matrixType = FileApplicationClass.SingleCellsMetabolomics,
-                .mzmin = massVals.Select(Function(mzi) mzi.mzmin).ToArray,
-                .mzmax = massVals.Select(Function(mzi) mzi.mzmax).ToArray
-            }
+            Return raw.CreateMatrix(massVals, mzdiff)
         End Function
 
         ''' <summary>

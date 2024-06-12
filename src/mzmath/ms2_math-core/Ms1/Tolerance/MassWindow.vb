@@ -64,6 +64,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.Linq
 Imports std = System.Math
 
 Namespace Ms1
@@ -90,6 +91,11 @@ Namespace Ms1
         <Extension>
         Public Function Mass(masslist As IEnumerable(Of MassWindow)) As Double()
             Return masslist.Select(Function(mzi) mzi.mass).ToArray
+        End Function
+
+        <Extension>
+        Public Function AverageMzDiff(masslist As IEnumerable(Of MassWindow)) As Double
+            Return masslist.Select(Function(mzi) mzi.GetMzDiff).IteratesALL.Average
         End Function
 
     End Module
@@ -169,6 +175,19 @@ Namespace Ms1
                 Return $"{mass.ToString("F4")} [{std.Abs(mzmax - mzmin).ToString("F3")}da]{annotation}"
             Else
                 Return $"{mass.ToString("F4")} [{CInt(ppm)}ppm]{annotation}"
+            End If
+        End Function
+
+        Public Iterator Function GetMzDiff() As IEnumerable(Of Double)
+            If mzmin = 0.0 Then
+                Yield 0
+            Else
+                Yield mass - mzmin
+            End If
+            If mzmax = 0.0 Then
+                Yield 0
+            Else
+                Yield mzmax - mass
             End If
         End Function
 
