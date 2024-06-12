@@ -74,6 +74,9 @@ Namespace SingleCells
         ''' the single cell raw data sample files, one sample file may bundle multiple cell scan data.
         ''' </param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' all scan id for each ms1 scan data must be the single cell unique reference id
+        ''' </remarks>
         <Extension>
         Public Function PackRawData(single_samples As IEnumerable(Of mzPack),
                                     Optional tag As String = Nothing,
@@ -85,13 +88,22 @@ Namespace SingleCells
             Dim metadata As New Dictionary(Of String, String)
             Dim sample_index As i32 = 1
             Dim source_tag As String
+            Dim bar As Tqdm.ProgressBar = Nothing
 
-            For Each sample As mzPack In Tqdm.Wrap(single_samples.ToArray)
-                source_tag = If(clean_source_tag, sample.source, sample.source.BaseName)
+            For Each sample As mzPack In Tqdm.Wrap(single_samples.ToArray, bar:=bar)
+                If sample.metadata IsNot Nothing AndAlso sample.metadata.ContainsKey("sample") Then
+                    source_tag = sample.metadata!sample
+                Else
+                    source_tag = If(
+                        clean_source_tag,
+                        sample.source,
+                        sample.source.BaseName
+                    )
+                End If
 
                 Call sample_names.Add(source_tag)
                 Call metadata.Add($"sample_{++sample_index}", source_tag)
-                Call VBDebugger.EchoLine($" processing { source_tag}...")
+                Call bar.SetLabel($" processing { source_tag}...")
 
                 For Each cell As ScanMS1 In sample.MS
                     If cell.meta Is Nothing Then
@@ -107,6 +119,8 @@ Namespace SingleCells
                     Call single_cells.Add(cell)
                 Next
             Next
+
+            sample_names = sample_names.Distinct.AsList
 
             Call metadata.Add("num_single_sources", sample_names.Count)
             Call metadata.Add("total_cells", single_cells.Count)

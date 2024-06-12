@@ -79,6 +79,11 @@ Module SingleCellsPack
     ''' <param name="source_tag">usually be the organism source name</param>
     ''' <param name="env"></param>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' this function is different with the function ``pack_cells.group``, the rawdata file 
+    ''' used at here is already been a sample pack, each scan inside the sample pack is a
+    ''' single cell.
+    ''' </remarks>
     <ExportAPI("pack_cells")>
     Public Function PackSingleCells(<RRawVectorArgument>
                                     rawdata As Object,
@@ -115,6 +120,10 @@ Module SingleCellsPack
     ''' <param name="source_tag">usually be the organism source name</param>
     ''' <param name="env"></param>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' this function required of each single rawdata file just contains only 
+    ''' one single cell data.
+    ''' </remarks>
     <ExportAPI("pack_cells.group")>
     Public Function PackSingleCellsInSampleGroup(<RRawVectorArgument> groups As Object,
                                                  Optional source_tag As String = Nothing,
@@ -123,7 +132,7 @@ Module SingleCellsPack
         Dim cellpacks As New List(Of mzPack)
         Dim raw As mzPack
 
-        Call VBDebugger.EchoLine("read raw data files...")
+        Call VBDebugger.EchoLine("read single cells raw data files...")
 
         If TypeOf groups Is list Then
             Dim dirlist As list = groups
@@ -135,6 +144,8 @@ Module SingleCellsPack
                     If path.FileExists Then
                         raw = MzWeb.openFromFile(path, verbose:=verbose)
                         raw.source = $"{tag}-{raw.source}"
+                        raw.metadata = New Dictionary(Of String, String) From {{"sample", tag}}
+                        raw.MS(0).scan_id = raw.source
                         cellpacks.Add(raw)
                     Else
                         Dim rawfiles As String() = (ls - l - r - {"*.mzXML", "*.mzML", "*.mzPack"} <= path).ToArray
@@ -142,6 +153,8 @@ Module SingleCellsPack
                         For Each file As String In Tqdm.Wrap(rawfiles)
                             raw = MzWeb.openFromFile(file, verbose:=verbose)
                             raw.source = $"{tag}-{raw.source}"
+                            raw.metadata = New Dictionary(Of String, String) From {{"sample", tag}}
+                            raw.MS(0).scan_id = raw.source
                             cellpacks.Add(raw)
                         Next
                     End If
@@ -155,6 +168,8 @@ Module SingleCellsPack
                 For Each file As String In Tqdm.Wrap(rawfiles)
                     raw = MzWeb.openFromFile(file, verbose:=verbose)
                     raw.source = $"{tag}-{raw.source}"
+                    raw.metadata = New Dictionary(Of String, String) From {{"sample", tag}}
+                    raw.MS(0).scan_id = raw.source
                     cellpacks.Add(raw)
                 Next
             Next
