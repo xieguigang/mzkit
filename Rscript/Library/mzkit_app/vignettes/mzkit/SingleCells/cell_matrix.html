@@ -68,7 +68,9 @@
         <h3 style="display: block;">Examples</h3>
 
         <pre><code id="example_r"> let rawdata = open.mzpack("/file.mzpack");
- let matrix = cell_matrix(rawdata, mz_matrix = TRUE);</code></pre>
+ let matrix = cell_matrix(rawdata, mz_matrix = TRUE);
+ 
+ write.matrix(matrix, file = "/save.dat");</code></pre>
 
         <hr />
         <div style="text-align: center;">[Package <em>SingleCells</em> version 1.0.0.0 <a

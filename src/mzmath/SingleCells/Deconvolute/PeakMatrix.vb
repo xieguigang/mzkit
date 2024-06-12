@@ -58,7 +58,9 @@
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Math
 
@@ -74,6 +76,31 @@ Namespace Deconvolute
         ''' </summary>
         ''' <param name="raw"></param>
         ''' <param name="mzdiff"></param>
+        ''' <returns></returns>
+        ''' 
+        <Extension>
+        Public Function CreateMatrix(raw As IMZPack, massVals As MassWindow(), Optional mzdiff As Double = 0.001) As MzMatrix
+            Dim mzSet As Double() = massVals.Mass
+            Dim mzIndex As New MzPool(mzSet)
+            Dim matrix As PixelData() = raw _
+                .deconvoluteMatrixParallel(mzSet.Length, mzIndex) _
+                .ToArray
+
+            Return New MzMatrix With {
+                .matrix = matrix,
+                .mz = mzSet,
+                .tolerance = mzdiff,
+                .matrixType = FileApplicationClass.SingleCellsMetabolomics,
+                .mzmin = massVals.Select(Function(mzi) mzi.mzmin).ToArray,
+                .mzmax = massVals.Select(Function(mzi) mzi.mzmax).ToArray
+            }
+        End Function
+
+        ''' <summary>
+        ''' ms-imaging raw data matrix deconvolution
+        ''' </summary>
+        ''' <param name="raw"></param>
+        ''' <param name="mzdiff"></param>
         ''' <param name="freq"></param>
         ''' <returns></returns>
         Public Function CreateMatrix(raw As IMZPack,
@@ -83,25 +110,22 @@ Namespace Deconvolute
                                      Optional fastBin As Boolean = True,
                                      Optional verbose As Boolean = False) As MzMatrix
 
+            Dim massVals As MassWindow()
+
             If mzSet.IsNullOrEmpty Then
-                mzSet = GetMzIndex(
+                massVals = GetMzIndex(
                     raw:=raw,
                     mzdiff:=mzdiff, freq:=freq,
                     fast:=fastBin,
                     verbose:=verbose
                 )
+            Else
+                massVals = mzSet _
+                    .Select(Function(mzi) New MassWindow(mzi)) _
+                    .ToArray
             End If
 
-            Dim mzIndex As New MzPool(mzSet)
-            Dim matrix As PixelData() = raw _
-                .deconvoluteMatrixParallel(mzSet.Length, mzIndex) _
-                .ToArray
-
-            Return New MzMatrix With {
-                .matrix = matrix,
-                .mz = mzSet,
-                .tolerance = mzdiff
-            }
+            Return raw.CreateMatrix(massVals, mzdiff)
         End Function
 
         ''' <summary>
@@ -114,7 +138,7 @@ Namespace Deconvolute
             Dim mzIndex As New MzPool(mzSet)
             Dim len As Integer = mzSet.Length
 
-            For Each scan As ScanMS1 In raw.MS
+            For Each scan As ScanMS1 In Tqdm.Wrap(raw.MS)
                 Dim cellId As String = scan.scan_id
                 Dim v As Double() = Math.DeconvoluteScan(scan.mz, scan.into, len, mzIndex)
                 Dim cell_scan As New T With {

@@ -239,6 +239,11 @@ Public Class Algorithm
         Return Me
     End Function
 
+    Public Function SetNetwork(metabolism As IEnumerable(Of Reaction)) As Algorithm
+        network = KEGGNetwork.CreateNetwork(metabolism)
+        Return Me
+    End Function
+
     Public Function SetNetwork(networking As Networking) As Algorithm
         network = networking
         Return Me

@@ -77,7 +77,7 @@ Public Class MatrixWriter
     ''' <summary>
     ''' the binary file magic header string
     ''' </summary>
-    Public Const magic As String = "single_cell"
+    Public Const magic As String = "mzkit/single_cells"
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <DebuggerStepThrough>
@@ -130,6 +130,14 @@ Public Class MatrixWriter
         Call bin.Write(header.matrixType)  ' int32
 
         For Each mzi As Double In header.mz.SafeQuery
+            Call bin.Write(mzi)
+        Next
+
+        For Each mzi As Double In header.mzmin.SafeQuery
+            Call bin.Write(mzi)
+        Next
+
+        For Each mzi As Double In header.mzmax.SafeQuery
             Call bin.Write(mzi)
         Next
 

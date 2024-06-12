@@ -108,6 +108,7 @@ Module MzMath
         Call REnv.Internal.Object.Converts.addHandler(GetType(MzGroup), AddressOf XICTable)
         Call REnv.Internal.Object.Converts.addHandler(GetType(AlignmentOutput), AddressOf getAlignmentTable)
         Call REnv.Internal.Object.Converts.addHandler(GetType(PrecursorInfo()), AddressOf getPrecursorTable)
+        Call REnv.Internal.Object.Converts.addHandler(GetType(MassWindow()), AddressOf mass_tabular)
 
         Call REnv.Internal.add("as.list", GetType(Tolerance), AddressOf summaryTolerance)
         Call REnv.Internal.add("as.list", GetType(PPMmethod), AddressOf summaryTolerance)
@@ -115,6 +116,18 @@ Module MzMath
 
         Call ExactMass.SetExactMassParser(Function(f) FormulaScanner.EvaluateExactMass(f))
     End Sub
+
+    <RGenericOverloads("as.data.frame")>
+    Private Function mass_tabular(masslist As MassWindow(), args As list, env As Environment) As Object
+        Dim df As New dataframe With {.columns = New Dictionary(Of String, Array)}
+
+        Call df.add("mass", From mzi As MassWindow In masslist Select mzi.mass)
+        Call df.add("mzmin", From mzi As MassWindow In masslist Select mzi.mzmin)
+        Call df.add("mzmax", From mzi As MassWindow In masslist Select mzi.mzmax)
+        Call df.add("annotation", From mzi As MassWindow In masslist Select mzi.annotation)
+
+        Return df
+    End Function
 
     Private Function summaryTolerance(mzdiff As Tolerance, args As list, env As Environment) As Object
         Dim summary As New list With {.slots = New Dictionary(Of String, Object)}

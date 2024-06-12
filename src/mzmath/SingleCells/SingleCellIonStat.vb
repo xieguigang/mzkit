@@ -60,6 +60,7 @@
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
@@ -67,7 +68,7 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Quantile
 
 ''' <summary>
-''' A ion stat information from a single cell data
+''' A ion feature statistics information from a single cell data
 ''' </summary>
 Public Class SingleCellIonStat
 
@@ -111,6 +112,50 @@ Public Class SingleCellIonStat
                     End Function)
     End Function
 
+    ''' <summary>
+    ''' do single cell ion feature statistics analysis
+    ''' </summary>
+    ''' <param name="mat"></param>
+    ''' <param name="parallel"></param>
+    ''' <returns></returns>
+    Public Shared Iterator Function DoIonStats(mat As MzMatrix, Optional parallel As Boolean = True) As IEnumerable(Of SingleCellIonStat)
+        If parallel Then
+            For Each stat In mat.mz _
+                .SeqIterator _
+                .AsParallel _
+                .Select(Function(i)
+                            Dim offset As Integer = i
+                            Dim cells = mat.matrix _
+                                .Select(Function(cell) (cell.label, cell(i))) _
+                                .ToArray
+
+                            Return DoStatSingleIon(i.value, cells)
+                        End Function)
+
+                Yield stat
+            Next
+        Else
+            Dim offset As Integer
+            Dim cells As (String, Double)()
+
+            For i As Integer = 0 To mat.featureSize - 1
+                offset = i
+                cells = mat.matrix _
+                    .Select(Function(cell) (cell.label, cell(offset))) _
+                    .ToArray
+
+                Yield DoStatSingleIon(mat.mz(i), cells)
+            Next
+        End If
+    End Function
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="allIons">a tuple of the cell id and ion data</param>
+    ''' <param name="da"></param>
+    ''' <param name="parallel"></param>
+    ''' <returns></returns>
     Private Shared Iterator Function DoStatInternal(allIons As IEnumerable(Of (scan_id As String, ms1 As ms2)), da As Double, parallel As Boolean) As IEnumerable(Of SingleCellIonStat)
         Dim ions = allIons _
             .GroupBy(Function(d) d.ms1.mz, Tolerance.DeltaMass(da)) _
@@ -120,19 +165,39 @@ Public Class SingleCellIonStat
             For Each stat In ions _
                 .AsParallel _
                 .Select(Function(ion)
-                            Return DoStatSingleIon(ion)
+                            Return DoStatSingleIon(Val(ion.name), ion.value)
                         End Function)
 
                 Yield stat
             Next
         Else
             For Each ion As NamedCollection(Of (cell_id As String, ms As ms2)) In ions
-                Yield DoStatSingleIon(ion)
+                Yield DoStatSingleIon(Val(ion.name), ion.value)
             Next
         End If
     End Function
 
-    Private Shared Function DoStatSingleIon(ion As NamedCollection(Of (scan_id As String, ms1 As ms2))) As SingleCellIonStat
+    Private Shared Function DoStatSingleIon(mz_val As Double, ion As (scan_id As String, intensity As Double)()) As SingleCellIonStat
+        Dim baseCell = ion.OrderByDescending(Function(i) i.intensity).First
+        Dim intensity As Double() = ion _
+            .Select(Function(i) i.intensity) _
+            .ToArray
+        Dim cells = ion.Select(Function(c) c.scan_id).Distinct.Count
+        Dim Q As DataQuartile = intensity.Quartile
+
+        Return New SingleCellIonStat With {
+            .mz = mz_val,
+            .cells = cells,
+            .maxIntensity = baseCell.intensity,
+            .baseCell = baseCell.scan_id,
+            .Q1Intensity = Q.Q1,
+            .Q2Intensity = Q.Q2,
+            .Q3Intensity = Q.Q3,
+            .RSD = fillVector(intensity).RSD * 100
+        }
+    End Function
+
+    Private Shared Function DoStatSingleIon(mz_val As Double, ion As (scan_id As String, ms1 As ms2)()) As SingleCellIonStat
         Dim baseCell = ion.OrderByDescending(Function(i) i.ms1.intensity).First
         Dim intensity As Double() = ion _
             .Select(Function(i) i.ms1.intensity) _
@@ -141,7 +206,7 @@ Public Class SingleCellIonStat
         Dim Q As DataQuartile = intensity.Quartile
 
         Return New SingleCellIonStat With {
-            .mz = Val(ion.name),
+            .mz = mz_val,
             .cells = cells,
             .maxIntensity = baseCell.ms1.intensity,
             .baseCell = baseCell.scan_id,

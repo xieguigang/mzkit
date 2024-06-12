@@ -1,11 +1,31 @@
 .\" man page create by R# package system.
 .TH CELLSPACK 1 2000-Jan "pack_cells" "pack_cells"
 .SH NAME
-pack_cells \- 
+pack_cells \- pack of the multiple raw data files into one data pack
 .SH SYNOPSIS
 \fIpack_cells(\fBrawdata\fR as any, 
 \fBsource_tag\fR as string = \fB<NULL>\fR, 
 [\fB<Environment>\fR]);\fR
+.SH DESCRIPTION
+.PP
+pack of the multiple raw data files into one data pack
+.PP
+.SH OPTIONS
+.PP
+\fBrawdata\fB \fR\- a character vector of the raw data file path.. 
+.PP
+.PP
+\fBsource_tag\fB \fR\- usually be the organism source name. 
+.PP
+.PP
+\fBenv\fB \fR\- -. 
+.PP
+.SH DETAILS
+.PP
+this function is different with the function \fBpack_cells.group\fR, the rawdata file 
+ used at here is already been a sample pack, each scan inside the sample pack is a
+ single cell.
+.PP
 .SH SEE ALSO
 cellsPack
 .SH FILES

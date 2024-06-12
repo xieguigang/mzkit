@@ -66,6 +66,9 @@ Namespace Spectra
     ''' <summary>
     ''' represents the ion m/z as a index
     ''' </summary>
+    ''' <remarks>
+    ''' a tuple value of ion m/z feature couple with its offset index
+    ''' </remarks>
     Public Class MzIndex
 
         Public Property mz As Double

@@ -95,6 +95,7 @@ declare namespace metadna {
        * 
        * 
         * @param repo the file path to the messagepack data repository
+        * @return a collection of the kegg compound data model
       */
       function library(repo: string): object;
       /**
@@ -111,7 +112,8 @@ declare namespace metadna {
        * 
        * 
         * @param metadna -
-        * @param kegg should be a collection of the @``T:SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject.Compound`` data.
+        * @param kegg should be a collection of the @``T:SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject.Compound`` data,
+        *  or a general @``T:BioNovoGene.BioDeep.MetaDNA.CompoundSolver``.
         * @param env -
         * 
         * + default value Is ``null``.
@@ -189,7 +191,8 @@ declare namespace metadna {
     * 
     * 
      * @param metadna -
-     * @param precursorTypes -
+     * @param precursorTypes a collection of the ms1 precursor adducts type data,
+     *  could be a character vector of the adducts type string.
      * @param env -
      * 
      * + default value Is ``null``.

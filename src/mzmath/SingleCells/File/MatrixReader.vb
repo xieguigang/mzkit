@@ -65,6 +65,7 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
@@ -104,6 +105,11 @@ Public Class MatrixReader : Implements IDisposable
     ''' </summary>
     ''' <returns></returns>
     Public ReadOnly Property ionSet As Double()
+        Get
+            Return mzwindows.Mass
+        End Get
+    End Property
+
     ''' <summary>
     ''' the number of the single cells or spatial spot data
     ''' </summary>
@@ -121,6 +127,7 @@ Public Class MatrixReader : Implements IDisposable
     Dim label_index As Dictionary(Of String, Long())
     Dim mzIndex As MzPool
     Dim mzdiff As Double
+    Dim mzwindows As MassWindow()
 
     Sub New(s As Stream)
         Me.bin = New BinaryReader(s, Encoding.ASCII)
@@ -148,8 +155,19 @@ Public Class MatrixReader : Implements IDisposable
             mz(i) = bin.ReadDouble
         Next
 
+        Dim mzmin As Double() = New Double(featureSize - 1) {}
+
+        For i As Integer = 0 To mz.Length - 1
+            mzmin(i) = bin.ReadDouble
+        Next
+
+        Dim mzmax As Double() = New Double(featureSize - 1) {}
+
+        For i As Integer = 0 To mz.Length - 1
+            mzmax(i) = bin.ReadDouble
+        Next
+
         _spots = bin.ReadInt32
-        _ionSet = mz
 
         Dim offset1 As Long = bin.ReadInt64
         Dim offset2 As Long = bin.ReadInt64
@@ -178,6 +196,14 @@ Public Class MatrixReader : Implements IDisposable
             Call label_index.Add((label, p))
         Next
 
+        Me.mzwindows = mz _
+            .Select(Function(mzi, i)
+                        Return New MassWindow(mzi) With {
+                            .mzmin = mzmin(i),
+                            .mzmax = mzmax(i)
+                        }
+                    End Function) _
+            .ToArray
         Me.spot_index = Spatial3D(Of SpatialIndex).CreateSpatial3D(Of SpatialIndex)(spot_index)
         Me.label_index = label_index _
             .GroupBy(Function(d) d.Item1) _
@@ -314,7 +340,9 @@ Public Class MatrixReader : Implements IDisposable
             .mz = ionSet,
             .tolerance = tolerance,
             .matrix = LoadSpots.ToArray,
-            .matrixType = matrixType
+            .matrixType = matrixType,
+            .mzmin = mzwindows.Select(Function(a) a.mzmin).ToArray,
+            .mzmax = mzwindows.Select(Function(a) a.mzmax).ToArray
         }
     End Function
 

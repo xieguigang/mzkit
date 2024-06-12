@@ -5,7 +5,7 @@
     <title>get matrix ions feature m/z vector</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-    <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
+    <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
 </head>
 
 <body>
@@ -47,7 +47,9 @@
 
 
 <dt>q</dt>
-<dd><p>[as double]</p></dd>
+<dd><p>sparsity cutoff, the higher q cutoff value
+ the less ions we keeps As more sparse ion was 
+ removed. [as double]</p></dd>
 
 
 <dt>fast.bins</dt>
@@ -66,15 +68,18 @@
 
         <h3>Value</h3>
 
-        this function returns data object of type double.<h4>clr value class</h4><ul><li>double</li></ul>
+        this function returns data object of type <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Ms1/MassWindow.html">MassWindow</a>.<h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Ms1/MassWindow.html">MassWindow</a></li></ul>
 
         <h3 style="display: block;">Examples</h3>
 
         <pre><code id="example_r"> # thread number for fast bins could be set via the 
  # n_thread options, example as:
- options(n_thread = 8);
+ options(n_threads = 8);
  
- getMatrixIons(mzpack, mzdiff = 0.001, fast.bins = TRUE);</code></pre>
+ let ion_features = getMatrixIons(mzpack, mzdiff = 0.001, fast.bins = TRUE);
+ let mz_vec = [ion_features]::mass;
+ let mz_min = [ion_features]::mzmin;
+ let mz_max = [ion_features]::mzmax;</code></pre>
 
         <hr />
         <div style="text-align: center;">[Package <em>MSI</em> version 1.0.0.0 <a
@@ -83,8 +88,8 @@
     </div>
 </body>
 
-<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
-<script type="text/javascript" src="../../_assets/highlights.js"></script>
+<script type="text/javascript" src="https://mzkit.org/assets/js/R_syntax.js"></script>
+<script type="text/javascript" src="https://mzkit.org/assets/js/highlights.js"></script>
 <script type="text/javascript">r_highlights("example_r");</script>
 
 </html>

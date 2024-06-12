@@ -165,7 +165,9 @@ Public Module Converter
 
         If xml.ExtensionSuffix("mzXML") Then
 mzXML:      Return New mzPack With {
-                .MS = New mzXMLScans(mzErr:=tolerance, intocutoff:=intocutoff) _
+                .MS = New mzXMLScans(mzErr:=tolerance, intocutoff:=intocutoff) With {
+                    .verbose = Not progress Is Nothing
+                } _
                     .Load(xml, progress) _
                     .ToArray,
                 .source = SolveTagSource(xml)
