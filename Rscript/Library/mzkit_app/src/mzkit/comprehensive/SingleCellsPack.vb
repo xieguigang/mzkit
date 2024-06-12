@@ -57,10 +57,13 @@
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.Comprehensive.SingleCells
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Language.UnixBash
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Internal.[Object]
 Imports SMRUCC.Rsharp.Runtime.Interop
+Imports SMRUCC.Rsharp.Runtime.Vectorization
 
 ''' <summary>
 ''' package tools for the single cells metabolomics rawdata processing
@@ -84,6 +87,13 @@ Module SingleCellsPack
         Dim cell_packs As pipeline = pipeline.TryCreatePipeline(Of mzPack)(rawdata, env)
 
         If cell_packs.isError Then
+            cell_packs = CLRVector.asCharacter(rawdata) _
+                .SafeQuery _
+                .Select(Function(filepath)
+                            Return MzWeb.openFromFile(filepath)
+                        End Function) _
+                .DoCall(AddressOf pipeline.CreateFromPopulator)
+
             Return cell_packs.getError
         End If
 
@@ -108,7 +118,42 @@ Module SingleCellsPack
     Public Function PackSingleCellsInSampleGroup(<RRawVectorArgument> groups As Object,
                                                  Optional source_tag As String = Nothing,
                                                  Optional env As Environment = Nothing) As Object
+        Dim cellpacks As New List(Of mzPack)
+        Dim raw As mzPack
 
+        If TypeOf groups Is list Then
+            Dim dirlist As list = groups
+
+            For Each tag As String In dirlist.getNames
+                Dim pathSet As String() = CLRVector.asCharacter(dirlist.getByName(tag))
+
+                For Each path As String In pathSet
+                    If path.FileExists Then
+                        raw = MzWeb.openFromFile(path)
+                        raw.source = $"{tag}-{raw.source}"
+                        cellpacks.Add(raw)
+                    Else
+                        For Each file As String In ls - l - r - {"*.mzXML", "*.mzML", "*.mzPack"} <= path
+                            raw = MzWeb.openFromFile(file)
+                            raw.source = $"{tag}-{raw.source}"
+                            cellpacks.Add(raw)
+                        Next
+                    End If
+                Next
+            Next
+        Else
+            For Each path As String In CLRVector.asCharacter(groups)
+                Dim tag As String = path.BaseName
+
+                For Each file As String In ls - l - r - {"*.mzXML", "*.mzML", "*.mzPack"} <= path
+                    raw = MzWeb.openFromFile(file)
+                    raw.source = $"{tag}-{raw.source}"
+                    cellpacks.Add(raw)
+                Next
+            Next
+        End If
+
+        Return cellpacks.PackRawData(source_tag, clean_source_tag:=True)
     End Function
 
 End Module

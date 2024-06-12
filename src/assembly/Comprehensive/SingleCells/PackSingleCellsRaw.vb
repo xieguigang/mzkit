@@ -57,6 +57,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
 Imports Microsoft.VisualBasic.Language
 
 Namespace SingleCells
@@ -74,15 +75,19 @@ Namespace SingleCells
         ''' </param>
         ''' <returns></returns>
         <Extension>
-        Public Function PackRawData(single_samples As IEnumerable(Of mzPack), Optional tag As String = Nothing, Optional ignore_ms2 As Boolean = True) As mzPack
+        Public Function PackRawData(single_samples As IEnumerable(Of mzPack),
+                                    Optional tag As String = Nothing,
+                                    Optional ignore_ms2 As Boolean = True,
+                                    Optional clean_source_tag As Boolean = False) As mzPack
+
             Dim single_cells As New List(Of ScanMS1)
             Dim sample_names As New List(Of String)
             Dim metadata As New Dictionary(Of String, String)
             Dim sample_index As i32 = 1
             Dim source_tag As String
 
-            For Each sample As mzPack In single_samples
-                source_tag = sample.source.BaseName
+            For Each sample As mzPack In Tqdm.Wrap(single_samples.ToArray)
+                source_tag = If(clean_source_tag, sample.source, sample.source.BaseName)
 
                 Call sample_names.Add(source_tag)
                 Call metadata.Add($"sample_{++sample_index}", source_tag)
