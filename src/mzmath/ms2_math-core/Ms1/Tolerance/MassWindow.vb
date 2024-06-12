@@ -64,6 +64,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports std = System.Math
 
@@ -103,14 +104,14 @@ Namespace Ms1
     ''' <summary>
     ''' the m/z bin data
     ''' </summary>
-    Public Class MassWindow : Implements IMassBin
+    Public Class MassWindow : Implements IMassBin, Value(Of Double).IValueOf
 
         ''' <summary>
         ''' the real mass value
         ''' </summary>
         ''' <returns></returns>
         <XmlText>
-        Public Property mass As Double Implements IMassBin.mass
+        Public Property mass As Double Implements IMassBin.mass, Value(Of Double).IValueOf.Value
 
         ''' <summary>
         ''' the left of current mass window
