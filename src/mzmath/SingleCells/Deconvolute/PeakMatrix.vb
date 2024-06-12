@@ -94,6 +94,9 @@ Namespace Deconvolute
                     fast:=fastBin,
                     verbose:=verbose
                 )
+                mzSet = massVals _
+                    .Select(Function(mzi) mzi.mass) _
+                    .ToArray
             Else
                 massVals = mzSet _
                     .Select(Function(mzi) New MassWindow(mzi)) _
@@ -108,7 +111,10 @@ Namespace Deconvolute
             Return New MzMatrix With {
                 .matrix = matrix,
                 .mz = mzSet,
-                .tolerance = mzdiff
+                .tolerance = mzdiff,
+                .matrixType = FileApplicationClass.SingleCellsMetabolomics,
+                .mzmin = massVals.Select(Function(mzi) mzi.mzmin).ToArray,
+                .mzmax = massVals.Select(Function(mzi) mzi.mzmax).ToArray
             }
         End Function
 

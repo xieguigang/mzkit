@@ -100,6 +100,9 @@ Namespace Deconvolute
         ''' <returns></returns>
         Public Property mz As Double()
 
+        Public Property mzmin As Double()
+        Public Property mzmax As Double()
+
         ''' <summary>
         ''' the script string of the mz diff tolerance for <see cref="mz"/>
         ''' </summary>
