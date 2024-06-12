@@ -1,5 +1,7 @@
 require(mzkit);
 
+options(memory.load = "max");
+
 let single_cell_source = ["F:\datafiles\bulk_group_1"
 "F:\datafiles\bulk_group_2"
 "F:\datafiles\bulk_group_3"];
