@@ -7,6 +7,7 @@
 /**
  * package tools for the single cells metabolomics rawdata processing
  * 
+ * > works for the single-cell flow cytometry rawdata
 */
 declare namespace cellsPack {
    module pack_cells {

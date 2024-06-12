@@ -106,7 +106,9 @@ declare namespace MSI {
      * @param mzdiff -
      * 
      * + default value Is ``0.001``.
-     * @param q -
+     * @param q sparsity cutoff, the higher q cutoff value
+     *  the less ions we keeps As more sparse ion was 
+     *  removed.
      * 
      * + default value Is ``0.001``.
      * @param fast_bins -
@@ -117,7 +119,7 @@ declare namespace MSI {
      * @param env 
      * + default value Is ``null``.
    */
-   function getMatrixIons(raw: any, mzdiff?: number, q?: number, fast_bins?: boolean, verbose?: boolean, env?: object): number;
+   function getMatrixIons(raw: any, mzdiff?: number, q?: number, fast_bins?: boolean, verbose?: boolean, env?: object): object;
    /**
      * @param env default value Is ``null``.
    */

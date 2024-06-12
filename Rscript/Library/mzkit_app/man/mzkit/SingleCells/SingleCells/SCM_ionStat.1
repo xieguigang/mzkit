@@ -1,18 +1,19 @@
 .\" man page create by R# package system.
 .TH SINGLECELLS 1 2000-Jan "SCM_ionStat" "SCM_ionStat"
 .SH NAME
-SCM_ionStat \- do stats of the single cell metabolomics ions
+SCM_ionStat \- do statistics of the single cell metabolomics ions features
 .SH SYNOPSIS
-\fISCM_ionStat(\fBraw\fR as <generic> mzPack, 
+\fISCM_ionStat(\fBraw\fR as any, 
 \fBda\fR as double = 0.01, 
-\fBparallel\fR as boolean = TRUE);\fR
+\fBparallel\fR as boolean = TRUE, 
+[\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
-do stats of the single cell metabolomics ions
+do statistics of the single cell metabolomics ions features
 .PP
 .SH OPTIONS
 .PP
-\fBraw\fB \fR\- the @\fBT:BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack\fR rawdata object. 
+\fBraw\fB \fR\- the @\fBT:BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack\fR rawdata object, or a single cells matrix object. 
 .PP
 .PP
 \fBda\fB \fR\- -. 

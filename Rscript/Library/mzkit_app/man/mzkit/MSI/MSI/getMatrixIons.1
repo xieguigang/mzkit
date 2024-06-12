@@ -21,7 +21,11 @@ get matrix ions feature m/z vector
 \fBmzdiff\fB \fR\- -. 
 .PP
 .PP
-\fBq\fB \fR\- -. 
+\fBq\fB \fR\- 
+ sparsity cutoff, the higher q cutoff value
+ the less ions we keeps As more sparse ion was 
+ removed.
+. 
 .PP
 .PP
 \fBfast_bins\fB \fR\- -. 
@@ -30,9 +34,12 @@ get matrix ions feature m/z vector
 .PP
 # thread number for fast bins could be set via the 
  # n_thread options, example as:
- options(n_thread = 8);
+ options(n_threads = 8);
  
- getMatrixIons(mzpack, mzdiff = 0.001, fast.bins = TRUE);
+ let ion_features = getMatrixIons(mzpack, mzdiff = 0.001, fast.bins = TRUE);
+ let mz_vec = [ion_features]::mass;
+ let mz_min = [ion_features]::mzmin;
+ let mz_max = [ion_features]::mzmax;
 .PP
 .SH SEE ALSO
 MSI
