@@ -63,6 +63,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
@@ -82,7 +83,7 @@ Namespace Deconvolute
         ''' <returns></returns>
         ''' 
         <Extension>
-        Public Function GetMzIndex(raw As IMZPack, mzdiff As Double, topN As Integer) As Double()
+        Public Function GetMzIndex(raw As IMZPack, mzdiff As Double, topN As Integer) As MassWindow()
             Dim scanMz As New List(Of Double)
             Dim top As IEnumerable(Of ms2)
 
@@ -109,7 +110,7 @@ Namespace Deconvolute
         ''' </returns>
         Public Function GetMzIndex(raw As IMZPack, mzdiff As Double, freq As Double,
                                    Optional fast As Boolean = True,
-                                   Optional verbose As Boolean = False) As Double()
+                                   Optional verbose As Boolean = False) As MassWindow()
             If fast Then
                 Dim scanMz As New List(Of Double())
 
@@ -135,7 +136,7 @@ Namespace Deconvolute
             End If
         End Function
 
-        Public Function GetMzIndexFastBin(scanMz As List(Of Double()), mzdiff As Double, freq As Double, Optional verbose As Boolean = False) As Double()
+        Public Function GetMzIndexFastBin(scanMz As List(Of Double()), mzdiff As Double, freq As Double, Optional verbose As Boolean = False) As MassWindow()
             Dim par As New IndexTask(scanMz, mzdiff, verbose)
             Dim subgroups = DirectCast(par.Run(), IndexTask).groups
             Dim merge = subgroups.IteratesALL _
@@ -183,7 +184,7 @@ Namespace Deconvolute
         End Class
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function GetMzIndex(raw As IEnumerable(Of ms2), mzdiff As Double, freq As Double) As Double()
+        Public Function GetMzIndex(raw As IEnumerable(Of ms2), mzdiff As Double, freq As Double) As MassWindow()
             Return GetMzIndex(raw.Select(Function(r) r.mz), mzdiff, freq)
         End Function
 
@@ -195,15 +196,15 @@ Namespace Deconvolute
         ''' </param>
         ''' <param name="freq"></param>
         ''' <returns></returns>
-        Private Function GetMzIndex(mzBins As NamedCollection(Of Double)(), freq As Double) As Double()
+        Private Function GetMzIndex(mzBins As NamedCollection(Of Double)(), freq As Double) As MassWindow()
             Dim counts As Vector = mzBins.Select(Function(a) a.Length).AsVector
             ' normalize to [0,1]
             Dim norm As Vector = counts / counts.Max
             Dim n As Integer = (norm > freq).Sum
-            Dim mzUnique As Double() = mzBins _
+            Dim mzUnique As MassWindow() = mzBins _
                 .Take(n) _
-                .Select(Function(v) v.Average) _
-                .OrderBy(Function(mzi) mzi) _
+                .Select(Function(v) New MassWindow(v)) _
+                .OrderBy(Function(mzi) mzi.mass) _
                 .ToArray
 
             Return mzUnique
@@ -216,7 +217,7 @@ Namespace Deconvolute
         ''' <param name="mzdiff"></param>
         ''' <param name="freq">[0,1] percentage</param>
         ''' <returns></returns>
-        Public Function GetMzIndex(scanMz As IEnumerable(Of Double), mzdiff As Double, freq As Double) As Double()
+        Public Function GetMzIndex(scanMz As IEnumerable(Of Double), mzdiff As Double, freq As Double) As MassWindow()
             Dim mzBins As NamedCollection(Of Double)() = scanMz _
                 .GroupBy(offset:=mzdiff) _
                 .Where(Function(v) v.Length > 0) _

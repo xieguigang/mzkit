@@ -58,6 +58,7 @@
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
@@ -84,13 +85,19 @@ Namespace Deconvolute
                                      Optional fastBin As Boolean = True,
                                      Optional verbose As Boolean = False) As MzMatrix
 
+            Dim massVals As MassWindow()
+
             If mzSet.IsNullOrEmpty Then
-                mzSet = GetMzIndex(
+                massVals = GetMzIndex(
                     raw:=raw,
                     mzdiff:=mzdiff, freq:=freq,
                     fast:=fastBin,
                     verbose:=verbose
                 )
+            Else
+                massVals = mzSet _
+                    .Select(Function(mzi) New MassWindow(mzi)) _
+                    .ToArray
             End If
 
             Dim mzIndex As New MzPool(mzSet)

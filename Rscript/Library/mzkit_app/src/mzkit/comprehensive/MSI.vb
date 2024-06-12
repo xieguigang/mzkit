@@ -1286,9 +1286,9 @@ Module MSI
     ''' <example>
     ''' # thread number for fast bins could be set via the 
     ''' # n_thread options, example as:
-    ''' options(n_thread = 8);
+    ''' options(n_threads = 8);
     ''' 
-    ''' getMatrixIons(mzpack, mzdiff = 0.001, fast.bins = TRUE);
+    ''' let ion_features = getMatrixIons(mzpack, mzdiff = 0.001, fast.bins = TRUE);
     ''' </example>
     <ExportAPI("getMatrixIons")>
     <RApiReturn(TypeCodes.double)>

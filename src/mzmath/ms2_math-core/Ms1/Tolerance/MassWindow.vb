@@ -106,6 +106,14 @@ Namespace Ms1
         Sub New()
         End Sub
 
+        ''' <summary>
+        ''' create from a single mass value
+        ''' </summary>
+        ''' <param name="mass"></param>
+        Sub New(mass As Double)
+            Me.mass = mass
+        End Sub
+
         Sub New(mass As Double, ppm As Double)
             Me.mass = mass
 
@@ -127,6 +135,15 @@ Namespace Ms1
                     mzmax = .upperMz
                 End With
             End If
+        End Sub
+
+        Sub New(massdata As IEnumerable(Of Double), Optional anno As String = Nothing)
+            Dim allmass As Double() = massdata.ToArray
+
+            mass = allmass.Average
+            mzmin = allmass.Min
+            mzmax = allmass.Max
+            annotation = If(anno, $"based on {allmass.Length} ions")
         End Sub
 
         Public Overrides Function ToString() As String
