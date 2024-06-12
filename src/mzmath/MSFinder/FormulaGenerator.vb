@@ -705,8 +705,9 @@ Public Class FormulaGenerator
     End Function
 
     Private Function getUniqueNeutralLossCountByMass(neutralLosses As List(Of NeutralLoss), ms2Tol As Double, massTolType As MassToleranceType) As Integer
-
-        If neutralLosses.Count = 0 Then Return 0
+        If neutralLosses.Count = 0 Then
+            Return 0
+        End If
 
         Dim masses = New List(Of Double)() From {
                 neutralLosses(CInt((0))).MassLoss
@@ -719,7 +720,7 @@ Public Class FormulaGenerator
 
             If massTolType = MassToleranceType.Ppm Then massTol = PPMmethod.ConvertPpmToMassAccuracy(neutralLosses(CInt((i))).PrecursorMz, ms2Tol)
             Dim flg = False
-            For Each mass In masses
+            For Each mass As Double In masses
                 If std.Abs(mass - lossMass) < massTol Then
                     flg = True
                     Exit For
