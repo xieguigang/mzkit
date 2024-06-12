@@ -118,6 +118,7 @@ Module SingleCellsPack
     <ExportAPI("pack_cells.group")>
     Public Function PackSingleCellsInSampleGroup(<RRawVectorArgument> groups As Object,
                                                  Optional source_tag As String = Nothing,
+                                                 Optional verbose As Boolean = False,
                                                  Optional env As Environment = Nothing) As Object
         Dim cellpacks As New List(Of mzPack)
         Dim raw As mzPack
@@ -132,14 +133,14 @@ Module SingleCellsPack
 
                 For Each path As String In pathSet
                     If path.FileExists Then
-                        raw = MzWeb.openFromFile(path)
+                        raw = MzWeb.openFromFile(path, verbose:=verbose)
                         raw.source = $"{tag}-{raw.source}"
                         cellpacks.Add(raw)
                     Else
                         Dim rawfiles As String() = (ls - l - r - {"*.mzXML", "*.mzML", "*.mzPack"} <= path).ToArray
 
                         For Each file As String In Tqdm.Wrap(rawfiles)
-                            raw = MzWeb.openFromFile(file)
+                            raw = MzWeb.openFromFile(file, verbose:=verbose)
                             raw.source = $"{tag}-{raw.source}"
                             cellpacks.Add(raw)
                         Next
@@ -152,7 +153,7 @@ Module SingleCellsPack
                 Dim rawfiles As String() = (ls - l - r - {"*.mzXML", "*.mzML", "*.mzPack"} <= path).ToArray
 
                 For Each file As String In Tqdm.Wrap(rawfiles)
-                    raw = MzWeb.openFromFile(file)
+                    raw = MzWeb.openFromFile(file, verbose:=verbose)
                     raw.source = $"{tag}-{raw.source}"
                     cellpacks.Add(raw)
                 Next
