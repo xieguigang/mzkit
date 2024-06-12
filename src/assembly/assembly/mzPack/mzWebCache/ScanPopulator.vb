@@ -91,6 +91,8 @@ Namespace mzData.mzWebCache
         Protected ReadOnly reader As MsDataReader(Of Scan)
         Protected ReadOnly invalidScans As New List(Of Scan)
 
+        Public Property verbose As Boolean = False
+
         Sub New(mzErr As String, intocutoff As Double)
             ms1Err = Tolerance.ParseScript(mzErr)
             reader = dataReader()
