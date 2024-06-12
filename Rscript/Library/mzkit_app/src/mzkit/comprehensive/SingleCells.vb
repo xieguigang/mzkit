@@ -429,7 +429,7 @@ Module SingleCells
     End Function
 
     ''' <summary>
-    ''' do stats of the single cell metabolomics ions
+    ''' do statistics of the single cell metabolomics ions features
     ''' </summary>
     ''' <param name="raw">the <see cref="mzPack"/> rawdata object, or a single cells matrix object</param>
     ''' <param name="da"></param>

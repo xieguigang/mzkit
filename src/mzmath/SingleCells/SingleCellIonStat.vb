@@ -68,7 +68,7 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Quantile
 
 ''' <summary>
-''' A ion stat information from a single cell data
+''' A ion feature statistics information from a single cell data
 ''' </summary>
 Public Class SingleCellIonStat
 
@@ -112,6 +112,12 @@ Public Class SingleCellIonStat
                     End Function)
     End Function
 
+    ''' <summary>
+    ''' do single cell ion feature statistics analysis
+    ''' </summary>
+    ''' <param name="mat"></param>
+    ''' <param name="parallel"></param>
+    ''' <returns></returns>
     Public Shared Iterator Function DoIonStats(mat As MzMatrix, Optional parallel As Boolean = True) As IEnumerable(Of SingleCellIonStat)
         If parallel Then
             For Each stat In mat.mz _
