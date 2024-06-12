@@ -122,6 +122,8 @@ Module SingleCellsPack
         Dim cellpacks As New List(Of mzPack)
         Dim raw As mzPack
 
+        Call VBDebugger.EchoLine("read raw data files...")
+
         If TypeOf groups Is list Then
             Dim dirlist As list = groups
 
@@ -156,6 +158,8 @@ Module SingleCellsPack
                 Next
             Next
         End If
+
+        Call VBDebugger.EchoLine($"get {cellpacks.Count} single cells!")
 
         Return cellpacks.PackRawData(source_tag, clean_source_tag:=True)
     End Function
