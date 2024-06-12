@@ -431,17 +431,26 @@ Module SingleCells
     ''' <summary>
     ''' do stats of the single cell metabolomics ions
     ''' </summary>
-    ''' <param name="raw">the <see cref="mzPack"/> rawdata object</param>
+    ''' <param name="raw">the <see cref="mzPack"/> rawdata object, or a single cells matrix object</param>
     ''' <param name="da"></param>
     ''' <param name="parallel"></param>
     ''' <returns></returns>
     <ExportAPI("SCM_ionStat")>
     <RApiReturn(GetType(SingleCellIonStat))>
-    Public Function singleCellsIons(raw As mzPack,
+    Public Function singleCellsIons(raw As Object,
                                     Optional da As Double = 0.01,
-                                    Optional parallel As Boolean = True) As Object
+                                    Optional parallel As Boolean = True,
+                                    Optional env As Environment = Nothing) As Object
 
-        Return SingleCellIonStat.DoIonStats(raw, da, parallel).ToArray
+        If TypeOf raw Is mzPack Then
+            ' needs extract the ion features
+            ' and then do cell counts analysis
+            Return SingleCellIonStat.DoIonStats(DirectCast(raw, mzPack), da, parallel).ToArray
+        ElseIf TypeOf raw Is MzMatrix Then
+            Return SingleCellIonStat.DoIonStats(DirectCast(raw, MzMatrix), parallel).ToArray
+        Else
+            Return Message.InCompatibleType(GetType(MzMatrix), raw.GetType, env)
+        End If
     End Function
 
     ''' <summary>
