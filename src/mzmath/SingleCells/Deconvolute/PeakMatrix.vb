@@ -59,6 +59,7 @@ Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Math
 
@@ -114,7 +115,7 @@ Namespace Deconvolute
             Dim mzIndex As New MzPool(mzSet)
             Dim len As Integer = mzSet.Length
 
-            For Each scan As ScanMS1 In raw.MS
+            For Each scan As ScanMS1 In Tqdm.Wrap(raw.MS)
                 Dim cellId As String = scan.scan_id
                 Dim v As Double() = Math.DeconvoluteScan(scan.mz, scan.into, len, mzIndex)
                 Dim cell_scan As New T With {
