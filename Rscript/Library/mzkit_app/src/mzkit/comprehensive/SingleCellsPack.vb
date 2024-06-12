@@ -69,6 +69,9 @@ Imports SMRUCC.Rsharp.Runtime.Vectorization
 ''' <summary>
 ''' package tools for the single cells metabolomics rawdata processing
 ''' </summary>
+''' <remarks>
+''' works for the single-cell flow cytometry rawdata
+''' </remarks>
 <Package("cellsPack")>
 Module SingleCellsPack
 
