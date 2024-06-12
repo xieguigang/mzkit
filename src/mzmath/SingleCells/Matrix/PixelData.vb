@@ -84,7 +84,23 @@ Namespace Deconvolute
         ''' </summary>
         ''' <returns></returns>
         Public Property label As String
+
+        ''' <summary>
+        ''' the ion features expression data in current spot/single_cell
+        ''' </summary>
+        ''' <returns></returns>
         Public Property intensity As Double() Implements IVector.Data
+
+        ''' <summary>
+        ''' get nth ion feature expression value
+        ''' </summary>
+        ''' <param name="offset"></param>
+        ''' <returns></returns>
+        Default Public ReadOnly Property feature(offset As Integer) As Double
+            Get
+                Return intensity(offset)
+            End Get
+        End Property
 
         Sub New()
         End Sub
