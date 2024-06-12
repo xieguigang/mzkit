@@ -56,15 +56,37 @@
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.Comprehensive.SingleCells
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Language.UnixBash
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Internal.[Object]
 Imports SMRUCC.Rsharp.Runtime.Interop
+Imports SMRUCC.Rsharp.Runtime.Vectorization
 
+''' <summary>
+''' package tools for the single cells metabolomics rawdata processing
+''' </summary>
+''' <remarks>
+''' works for the single-cell flow cytometry rawdata
+''' </remarks>
 <Package("cellsPack")>
 Module SingleCellsPack
 
+    ''' <summary>
+    ''' pack of the multiple raw data files into one data pack
+    ''' </summary>
+    ''' <param name="rawdata">a character vector of the raw data file path.</param>
+    ''' <param name="source_tag">usually be the organism source name</param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' this function is different with the function ``pack_cells.group``, the rawdata file 
+    ''' used at here is already been a sample pack, each scan inside the sample pack is a
+    ''' single cell.
+    ''' </remarks>
     <ExportAPI("pack_cells")>
     Public Function PackSingleCells(<RRawVectorArgument>
                                     rawdata As Object,
@@ -74,12 +96,106 @@ Module SingleCellsPack
         Dim cell_packs As pipeline = pipeline.TryCreatePipeline(Of mzPack)(rawdata, env)
 
         If cell_packs.isError Then
+            cell_packs = CLRVector.asCharacter(rawdata) _
+                .SafeQuery _
+                .Select(Function(filepath)
+                            Return MzWeb.openFromFile(filepath)
+                        End Function) _
+                .DoCall(AddressOf pipeline.CreateFromPopulator)
+
             Return cell_packs.getError
         End If
 
         Return cell_packs _
             .populates(Of mzPack)(env) _
             .PackRawData(source_tag)
+    End Function
+
+    ''' <summary>
+    ''' pack of the single cells metabolomics data in multiple sample groups
+    ''' </summary>
+    ''' <param name="groups">
+    ''' could be a character vector of the folder path of the raw data files, 
+    ''' it is recommended that using a tuple list for set this sample group value, 
+    ''' the key name in the tuple list is the sample group name and the corresponding
+    ''' value is the folder path of the single cells rawdata files.
+    ''' </param>
+    ''' <param name="source_tag">usually be the organism source name</param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' this function required of each single rawdata file just contains only 
+    ''' one single cell data.
+    ''' </remarks>
+    ''' <example>
+    ''' require(mzkit);
+    '''
+    ''' # set single cells sample data folders
+    ''' # each folder is one sample
+    ''' let single_cell_source = ["/datafiles/bulk_group_1"
+    ''' "/datafiles/bulk_group_2"
+    ''' "/datafiles/bulk_group_3"];
+    '''
+    ''' # create single cells rawdata pack
+    ''' single_cell_source 
+    ''' |> pack_cells.group(tag = "Saccharomyces_cerevisiae")
+    ''' |> write.mzPack(file = "/datafiles/Saccharomyces_cerevisiae.mzPack")
+    ''' ;
+    ''' </example>
+    <ExportAPI("pack_cells.group")>
+    Public Function PackSingleCellsInSampleGroup(<RRawVectorArgument> groups As Object,
+                                                 Optional source_tag As String = Nothing,
+                                                 Optional verbose As Boolean = False,
+                                                 Optional env As Environment = Nothing) As Object
+        Dim cellpacks As New List(Of mzPack)
+        Dim raw As mzPack
+
+        Call VBDebugger.EchoLine("read single cells raw data files...")
+
+        If TypeOf groups Is list Then
+            Dim dirlist As list = groups
+
+            For Each tag As String In dirlist.getNames
+                Dim pathSet As String() = CLRVector.asCharacter(dirlist.getByName(tag))
+
+                For Each path As String In pathSet
+                    If path.FileExists Then
+                        raw = MzWeb.openFromFile(path, verbose:=verbose)
+                        raw.source = $"{tag}-{raw.source}"
+                        raw.metadata = New Dictionary(Of String, String) From {{"sample", tag}}
+                        raw.MS(0).scan_id = raw.source
+                        cellpacks.Add(raw)
+                    Else
+                        Dim rawfiles As String() = (ls - l - r - {"*.mzXML", "*.mzML", "*.mzPack"} <= path).ToArray
+
+                        For Each file As String In Tqdm.Wrap(rawfiles)
+                            raw = MzWeb.openFromFile(file, verbose:=verbose)
+                            raw.source = $"{tag}-{raw.source}"
+                            raw.metadata = New Dictionary(Of String, String) From {{"sample", tag}}
+                            raw.MS(0).scan_id = raw.source
+                            cellpacks.Add(raw)
+                        Next
+                    End If
+                Next
+            Next
+        Else
+            For Each path As String In CLRVector.asCharacter(groups)
+                Dim tag As String = path.BaseName
+                Dim rawfiles As String() = (ls - l - r - {"*.mzXML", "*.mzML", "*.mzPack"} <= path).ToArray
+
+                For Each file As String In Tqdm.Wrap(rawfiles)
+                    raw = MzWeb.openFromFile(file, verbose:=verbose)
+                    raw.source = $"{tag}-{raw.source}"
+                    raw.metadata = New Dictionary(Of String, String) From {{"sample", tag}}
+                    raw.MS(0).scan_id = raw.source
+                    cellpacks.Add(raw)
+                Next
+            Next
+        End If
+
+        Call VBDebugger.EchoLine($"get {cellpacks.Count} single cells!")
+
+        Return cellpacks.PackRawData(source_tag, clean_source_tag:=True)
     End Function
 
 End Module

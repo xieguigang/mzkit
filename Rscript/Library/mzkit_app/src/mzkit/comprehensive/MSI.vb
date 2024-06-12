@@ -297,9 +297,12 @@ Module MSI
     Public Function GetMSIMetadata(<RRawVectorArgument> raw As Object, Optional env As Environment = Nothing) As Object
         If TypeOf raw Is mzPack Then
             Return DirectCast(raw, mzPack).GetMSIMetadata
+        ElseIf TypeOf raw Is MzMatrix Then
+            Return DirectCast(raw, MzMatrix).GetMSIMetadata
         End If
 
-        Dim file = SMRUCC.Rsharp.GetFileStream(raw, FileAccess.Read, env)
+        Dim is_path As Boolean = False
+        Dim file = SMRUCC.Rsharp.GetFileStream(raw, FileAccess.Read, env, is_filepath:=is_path)
         Dim metadata As Metadata
 
         If file Like GetType(Message) Then
@@ -319,7 +322,7 @@ Module MSI
             End If
         End If
 
-        If TypeOf raw Is String Then
+        If is_path Then
             Call file.TryCast(Of Stream).Dispose()
         End If
 
@@ -1161,12 +1164,11 @@ Module MSI
         If Not ionSet Is Nothing Then
             Return raw.GetPeakMatrix(ionSet, err.TryCast(Of Tolerance), raw_matrix, env)
         ElseIf raw_matrix Then
-            Dim topIons As Double() = raw.GetMzIndex(mzdiff:=err.TryCast(Of Tolerance).GetErrorDalton, topN:=topN)
+            Dim topIons As MassWindow() = raw.GetMzIndex(mzdiff:=err.TryCast(Of Tolerance).GetErrorDalton, topN:=topN)
             Dim m = Deconvolute.PeakMatrix.CreateMatrix(
                 raw:=raw,
                 mzdiff:=err.TryCast(Of Tolerance).GetErrorDalton,
-                freq:=0,
-                mzSet:=topIons
+                massVals:=topIons
             )
 
             Return m
@@ -1280,18 +1282,26 @@ Module MSI
     ''' </summary>
     ''' <param name="raw"></param>
     ''' <param name="mzdiff"></param>
-    ''' <param name="q"></param>
+    ''' <param name="q">
+    ''' sparsity cutoff, the higher q cutoff value
+    ''' the less ions we keeps As more sparse ion was 
+    ''' removed.
+    ''' </param>
     ''' <param name="fast_bins"></param>
     ''' <returns></returns>
     ''' <example>
     ''' # thread number for fast bins could be set via the 
     ''' # n_thread options, example as:
-    ''' options(n_thread = 8);
+    ''' options(n_threads = 8);
     ''' 
-    ''' getMatrixIons(mzpack, mzdiff = 0.001, fast.bins = TRUE);
+    ''' let ion_features = getMatrixIons(mzpack, mzdiff = 0.001, fast.bins = TRUE);
+    ''' let mz_vec = [ion_features]::mass;
+    ''' let mz_min = [ion_features]::mzmin;
+    ''' let mz_max = [ion_features]::mzmax;
+    ''' 
     ''' </example>
     <ExportAPI("getMatrixIons")>
-    <RApiReturn(TypeCodes.double)>
+    <RApiReturn(GetType(MassWindow))>
     Public Function GetMatrixIons(<RRawVectorArgument> raw As Object,
                                   Optional mzdiff As Double = 0.001,
                                   Optional q As Double = 0.001,
@@ -1303,6 +1313,10 @@ Module MSI
         Dim pool As mzPack()
 
         If pull.isError Then
+            If TypeOf raw Is MzMatrix Then
+                Return DirectCast(raw, MzMatrix).MassList.ToArray
+            End If
+
             Return pull.getError
         Else
             pool = pull _
@@ -1315,19 +1329,13 @@ Module MSI
         End If
 
         ' get all mz ions from the rawdata
-        Return pool.AsParallel _
-            .Select(Function(rawdata)
-                        Return GetMzIndex(
-                            raw:=rawdata,
-                            mzdiff:=mzdiff, freq:=q,
-                            fast:=True,
-                            verbose:=verbose
-                        )
-                    End Function) _
-            .AsList() _
-            .DoCall(Function(mzBins)
-                        Return GetMzIndexFastBin(mzBins, mzdiff, q, verbose:=verbose)
-                    End Function)
+        Dim mzpool As New List(Of Double())
+
+        For Each file As mzPack In pool
+            Call mzpool.AddRange(From scan As ScanMS1 In file.MS Select scan.mz)
+        Next
+
+        Return GetMzIndexFastBin(mzpool, mzdiff, q, verbose:=verbose)
     End Function
 
     ''' <summary>

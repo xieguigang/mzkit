@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>BioNovoGene.BioDeep.Chemoinformatics.Group</title>
+    <title>BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.MassWindow</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
@@ -13,35 +13,37 @@
 
         <table style="width: 100%;">
             <tr>
-                <td>Group {BioNovoGene.BioDeep.Chemoinformatics}</td>
+                <td>MassWindow {BioNovoGene.Analytical.MassSpectrometry.Math.Ms1}</td>
                 <td style="text-align: right;">.NET clr documentation</td>
             </tr>
         </table>
 
-        <h2>Group</h2>
+        <h2>MassWindow</h2>
 
         <h3>Description</h3>
 
-        
+        <p>the m/z bin data</p>
 
         <h3>Declare</h3>        
 
         <pre>
             <code id="clr_ts">
-# namespace BioNovoGene.BioDeep.Chemoinformatics
-export class Group extends <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemoinformatics/BondPosition.html">BondPosition</a> {
-   groupName: string;
-   index: integer;
-   structure: string;
+# namespace BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+export class MassWindow {
+   annotation: string;
+   # the real mass value
+   mass: double;
+   # the right of current mass window
+   mzmax: double;
+   # the left of current mass window
+   mzmin: double;
 }
 </code>
         </pre>
 
         <h3>.NET clr type reference tree</h3>
 
-        <ol>
-<li>this class extends from <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemoinformatics/BondPosition.html">BondPosition</a> class: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemoinformatics/BondPosition.html">BondPosition</a></li>
-</ol>
+        this clr type has no other .net clr type reference.
 
 
         <hr />
@@ -55,4 +57,4 @@ export class Group extends <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemoinfo
 <script type="text/javascript" src="https://mzkit.org/assets/js/highlights.js"></script>
 <script type="text/javascript">r_highlights("clr_ts");</script>
 
-</html>
+</html>

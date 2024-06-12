@@ -513,7 +513,7 @@ Module MzWeb
             Return Converter.LoadRawFileAuto(
                 xml:=file,
                 prefer:=prefer,
-                progress:=println,
+                progress:=If(verbose, println, Nothing),
                 tolerance:=$"da:{da}",
                 intocutoff:=noise_cutoff
             )

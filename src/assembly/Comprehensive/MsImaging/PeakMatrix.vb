@@ -143,8 +143,8 @@ Namespace MsImaging
         ''' </remarks>
         <Extension>
         Public Function TopIonsPeakMatrix(raw As mzPack, topN As Integer, mzErr As Tolerance) As IEnumerable(Of DataSet)
-            Dim topIons As Double() = raw.GetMzIndex(mzdiff:=mzErr.DeltaTolerance, topN:=topN)
-            Dim m = PeakMatrix.CreateMatrix(raw, mzErr.DeltaTolerance, 0, mzSet:=topIons)
+            Dim topIons As MassWindow() = raw.GetMzIndex(mzdiff:=mzErr.DeltaTolerance, topN:=topN)
+            Dim m = PeakMatrix.CreateMatrix(raw, topIons, mzErr.DeltaTolerance)
             Dim ds As IEnumerable(Of DataSet) = m.ExportSpatial(Of DataSet)
             Return ds
         End Function

@@ -1,0 +1,55 @@
+.\" man page create by R# package system.
+.TH CELLSPACK 1 2000-Jan "pack_cells.group" "pack_cells.group"
+.SH NAME
+pack_cells.group \- pack of the single cells metabolomics data in multiple sample groups
+.SH SYNOPSIS
+\fIpack_cells.group(\fBgroups\fR as any, 
+\fBsource_tag\fR as string = \fB<NULL>\fR, 
+\fBverbose\fR as boolean = FALSE, 
+[\fB<Environment>\fR]);\fR
+.SH DESCRIPTION
+.PP
+pack of the single cells metabolomics data in multiple sample groups
+.PP
+.SH OPTIONS
+.PP
+\fBgroups\fB \fR\- 
+ could be a character vector of the folder path of the raw data files, 
+ it is recommended that using a tuple list for set this sample group value, 
+ the key name in the tuple list is the sample group name and the corresponding
+ value is the folder path of the single cells rawdata files.
+. 
+.PP
+.PP
+\fBsource_tag\fB \fR\- usually be the organism source name. 
+.PP
+.PP
+\fBenv\fB \fR\- -. 
+.PP
+.SH DETAILS
+.PP
+this function required of each single rawdata file just contains only 
+ one single cell data.
+.PP
+.SH EXAMPLES
+.PP
+require(mzkit);
+
+ # set single cells sample data folders
+ # each folder is one sample
+ let single_cell_source = ["/datafiles/bulk_group_1"
+ "/datafiles/bulk_group_2"
+ "/datafiles/bulk_group_3"];
+
+ # create single cells rawdata pack
+ single_cell_source 
+ |> pack_cells.group(tag = "Saccharomyces_cerevisiae")
+ |> write.mzPack(file = "/datafiles/Saccharomyces_cerevisiae.mzPack")
+ ;
+.PP
+.SH SEE ALSO
+cellsPack
+.SH FILES
+.PP
+mzkit.dll
+.PP
