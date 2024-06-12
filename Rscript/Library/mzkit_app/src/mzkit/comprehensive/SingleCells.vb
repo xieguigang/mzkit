@@ -333,6 +333,7 @@ Module SingleCells
     ''' let rawdata = open.mzpack("/file.mzpack");
     ''' let matrix = cell_matrix(rawdata, mz_matrix = TRUE);
     ''' 
+    ''' write.matrix(matrix, file = "/save.dat");
     ''' </example>
     <ExportAPI("cell_matrix")>
     <RApiReturn(GetType(HTSMatrix), GetType(MzMatrix))>
