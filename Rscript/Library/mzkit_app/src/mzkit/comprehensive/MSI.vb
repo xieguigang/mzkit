@@ -1279,7 +1279,11 @@ Module MSI
     ''' </summary>
     ''' <param name="raw"></param>
     ''' <param name="mzdiff"></param>
-    ''' <param name="q"></param>
+    ''' <param name="q">
+    ''' sparsity cutoff, the higher q cutoff value
+    ''' the less ions we keeps As more sparse ion was 
+    ''' removed.
+    ''' </param>
     ''' <param name="fast_bins"></param>
     ''' <returns></returns>
     ''' <example>
