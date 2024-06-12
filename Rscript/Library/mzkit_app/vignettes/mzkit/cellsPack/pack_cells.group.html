@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>pack of the multiple raw data files into one data pack</title>
+    <title>pack of the single cells metabolomics data in multiple sample groups</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
@@ -13,12 +13,12 @@
 
         <table style="width: 100%;">
             <tr>
-                <td>pack_cells {cellsPack}</td>
+                <td>pack_cells.group {cellsPack}</td>
                 <td style="text-align: right;">R Documentation</td>
             </tr>
         </table>
 
-        <h2>pack of the multiple raw data files into one data pack</h2>
+        <h2>pack of the single cells metabolomics data in multiple sample groups</h2>
 
         <h3>Description</h3>
 
@@ -27,16 +27,20 @@
         <h3>Usage</h3>
 
         <div style="width: 100%; padding-left: 3%; color: black;">
-            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>pack_cells</strong>(<i>rawdata</i>,
-    <i>source.tag</i> = <span style='color: blue !important;'>NULL</span>);</code></pre>
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>pack_cells.group</strong>(<i>groups</i>,
+    <i>source.tag</i> = <span style='color: blue !important;'>NULL</span>,
+    <i>verbose</i> = <span style='color: blue !important;'>FALSE</span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
 
         <table>
             
-<dt>rawdata</dt>
-<dd><p>a character vector of the raw data file path.</p></dd>
+<dt>groups</dt>
+<dd><p>could be a character vector of the folder path of the raw data files, 
+ it is recommended that using a tuple list for set this sample group value, 
+ the key name in the tuple list is the sample group name and the corresponding
+ value is the folder path of the single cells rawdata files.</p></dd>
 
 
 <dt>source.tag</dt>
@@ -51,9 +55,8 @@
 
         <h3 style="display: block;">Details</h3>
 
-        <p>this function is different with the function <code>pack_cells.group</code>, the rawdata file 
- used at here is already been a sample pack, each scan inside the sample pack is a
- single cell.</p>
+        <p>this function required of each single rawdata file just contains only 
+ one single cell data.</p>
 
         <h3 style="display: block">Authors</h3>
 
@@ -63,9 +66,21 @@
 
         this function returns data object of type <i>any</i> kind.<h4>clr value class</h4><ul><li><i>any</i> kind</li></ul>
 
-        <h3 style="display: none;">Examples</h3>
+        <h3 style="display: block;">Examples</h3>
 
-        
+        <pre><code id="example_r"> require(mzkit);
+
+ # set single cells sample data folders
+ # each folder is one sample
+ let single_cell_source = ["/datafiles/bulk_group_1"
+ "/datafiles/bulk_group_2"
+ "/datafiles/bulk_group_3"];
+
+ # create single cells rawdata pack
+ single_cell_source 
+ |> pack_cells.group(tag = "Saccharomyces_cerevisiae")
+ |> write.mzPack(file = "/datafiles/Saccharomyces_cerevisiae.mzPack")
+ ;</code></pre>
 
         <hr />
         <div style="text-align: center;">[Package <em>cellsPack</em> version 1.0.0.0 <a
