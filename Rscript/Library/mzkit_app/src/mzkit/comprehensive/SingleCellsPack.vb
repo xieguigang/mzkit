@@ -124,6 +124,21 @@ Module SingleCellsPack
     ''' this function required of each single rawdata file just contains only 
     ''' one single cell data.
     ''' </remarks>
+    ''' <example>
+    ''' require(mzkit);
+    '''
+    ''' # set single cells sample data folders
+    ''' # each folder is one sample
+    ''' let single_cell_source = ["/datafiles/bulk_group_1"
+    ''' "/datafiles/bulk_group_2"
+    ''' "/datafiles/bulk_group_3"];
+    '''
+    ''' # create single cells rawdata pack
+    ''' single_cell_source 
+    ''' |> pack_cells.group(tag = "Saccharomyces_cerevisiae")
+    ''' |> write.mzPack(file = "/datafiles/Saccharomyces_cerevisiae.mzPack")
+    ''' ;
+    ''' </example>
     <ExportAPI("pack_cells.group")>
     Public Function PackSingleCellsInSampleGroup(<RRawVectorArgument> groups As Object,
                                                  Optional source_tag As String = Nothing,
