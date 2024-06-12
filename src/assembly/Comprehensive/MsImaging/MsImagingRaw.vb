@@ -60,6 +60,7 @@ Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
 Imports Microsoft.VisualBasic.CommandLine.InteropService.Pipeline
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Imaging.Math2D
@@ -99,6 +100,22 @@ Namespace MsImaging
                        .min = p.into.Min,
                        .median = p.into.Median
                    }
+        End Function
+
+        <Extension>
+        Public Function GetMSIMetadata(raw As MzMatrix) As Metadata
+            Dim dims As New Size With {
+               .Width = raw.matrix.Select(Function(i) i.X).Max,
+               .Height = raw.matrix.Select(Function(i) i.Y).Max
+            }
+
+            Return New Metadata With {
+                .[class] = raw.matrixType.ToString,
+                .mass_range = New DoubleRange(raw.mz),
+                .resolution = 13,
+                .scan_x = dims.Width,
+                .scan_y = dims.Height
+            }
         End Function
 
         ''' <summary>

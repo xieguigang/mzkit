@@ -297,9 +297,12 @@ Module MSI
     Public Function GetMSIMetadata(<RRawVectorArgument> raw As Object, Optional env As Environment = Nothing) As Object
         If TypeOf raw Is mzPack Then
             Return DirectCast(raw, mzPack).GetMSIMetadata
+        ElseIf TypeOf raw Is MzMatrix Then
+            Return DirectCast(raw, MzMatrix).GetMSIMetadata
         End If
 
-        Dim file = SMRUCC.Rsharp.GetFileStream(raw, FileAccess.Read, env)
+        Dim is_path As Boolean = False
+        Dim file = SMRUCC.Rsharp.GetFileStream(raw, FileAccess.Read, env, is_filepath:=is_path)
         Dim metadata As Metadata
 
         If file Like GetType(Message) Then
@@ -319,7 +322,7 @@ Module MSI
             End If
         End If
 
-        If TypeOf raw Is String Then
+        If is_path Then
             Call file.TryCast(Of Stream).Dispose()
         End If
 
