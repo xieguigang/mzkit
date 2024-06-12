@@ -81,6 +81,17 @@ Namespace Ms1
 
     End Interface
 
+    ''' <summary>
+    ''' an abstract model of the mass collection
+    ''' </summary>
+    Public Interface IMassSet
+
+        Property mass As Double()
+        Property min As Double()
+        Property max As Double()
+
+    End Interface
+
     <HideModuleName>
     Public Module MassExtensions
 
@@ -97,6 +108,17 @@ Namespace Ms1
         <Extension>
         Public Function AverageMzDiff(masslist As IEnumerable(Of MassWindow)) As Double
             Return masslist.Select(Function(mzi) mzi.GetMzDiff).IteratesALL.Average
+        End Function
+
+        <Extension>
+        Public Iterator Function MassList(massSet As IMassSet) As IEnumerable(Of MassWindow)
+            For i As Integer = 0 To massSet.mass.Length - 1
+                Yield New MassWindow With {
+                    .mass = massSet.mass(i),
+                    .mzmin = massSet.min(i),
+                    .mzmax = massSet.max(i)
+                }
+            Next
         End Function
 
     End Module

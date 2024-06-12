@@ -102,6 +102,11 @@ Namespace MsImaging
                    }
         End Function
 
+        ''' <summary>
+        ''' measure the ms-imaging metadata from an aligned processed matrix object
+        ''' </summary>
+        ''' <param name="raw"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function GetMSIMetadata(raw As MzMatrix) As Metadata
             Dim dims As New Size With {

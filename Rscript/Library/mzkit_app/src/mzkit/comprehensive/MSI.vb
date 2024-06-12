@@ -1313,6 +1313,10 @@ Module MSI
         Dim pool As mzPack()
 
         If pull.isError Then
+            If TypeOf raw Is MzMatrix Then
+                Return DirectCast(raw, MzMatrix).MassList.ToArray
+            End If
+
             Return pull.getError
         Else
             pool = pull _
