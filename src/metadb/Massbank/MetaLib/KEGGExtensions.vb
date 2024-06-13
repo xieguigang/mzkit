@@ -73,8 +73,23 @@ Namespace MetaLib
         ''' <returns></returns>
         <Extension>
         Public Function Xref(kegg As Compound) As xref
+            Dim xl As New xref
 
+            For Each link In kegg.DbLinks.GroupBy(Function(xr) xr.DBName)
+                Select Case link.Key.ToLower
+                    Case "cas" : xl.CAS = link.Select(Function(l) l.entry).Distinct.ToArray
+                    Case "pubchem" : xl.pubchem = link.OrderBy(Function(l) CLng(Val(l.entry))).FirstOrDefault?.entry
+                    Case "chebi" : xl.chebi = link.FirstOrDefault?.entry
+                    Case "knapsack" : xl.KNApSAcK = link.FirstOrDefault?.entry
+                    Case "lipidmaps" : xl.lipidmaps = link.FirstOrDefault?.entry
+                    Case Else
+                        xl.extras(link.Key) = link _
+                            .Select(Function(l) l.entry) _
+                            .ToArray
+                End Select
+            Next
 
+            Return xl
         End Function
 
         ''' <summary>
