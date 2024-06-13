@@ -58,9 +58,11 @@
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.BioDeep.Chemistry.MetaLib.CrossReference
 Imports Microsoft.VisualBasic.Language.UnixBash
+Imports Microsoft.VisualBasic.Linq
 Imports SMRUCC.genomics.Assembly.KEGG
 Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
 Imports SMRUCC.genomics.Assembly.KEGG.Medical
+Imports SMRUCC.genomics.ComponentModel.DBLinkBuilder
 
 Namespace MetaLib
 
@@ -75,7 +77,7 @@ Namespace MetaLib
         Public Function Xref(kegg As Compound) As xref
             Dim xl As New xref With {.extras = New Dictionary(Of String, String())}
 
-            For Each link In kegg.DbLinks.GroupBy(Function(xr) xr.DBName)
+            For Each link As IGrouping(Of String, DBLink) In kegg.DbLinks.SafeQuery.GroupBy(Function(xr) xr.DBName)
                 Select Case link.Key.ToLower
                     Case "cas" : xl.CAS = link.Select(Function(l) l.entry).Distinct.ToArray
                     Case "pubchem" : xl.pubchem = link.OrderBy(Function(l) CLng(Val(l.entry))).FirstOrDefault?.entry.Match("\d+")
