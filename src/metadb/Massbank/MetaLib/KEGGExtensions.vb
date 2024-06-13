@@ -73,7 +73,7 @@ Namespace MetaLib
         ''' <returns></returns>
         <Extension>
         Public Function Xref(kegg As Compound) As xref
-            Dim xl As New xref
+            Dim xl As New xref With {.extras = New Dictionary(Of String, String())}
 
             For Each link In kegg.DbLinks.GroupBy(Function(xr) xr.DBName)
                 Select Case link.Key.ToLower
