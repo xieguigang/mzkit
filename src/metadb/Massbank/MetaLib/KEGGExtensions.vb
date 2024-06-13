@@ -56,6 +56,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.BioDeep.Chemistry.MetaLib.CrossReference
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports SMRUCC.genomics.Assembly.KEGG
 Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
@@ -64,6 +65,17 @@ Imports SMRUCC.genomics.Assembly.KEGG.Medical
 Namespace MetaLib
 
     Public Module KEGGExtensions
+
+        ''' <summary>
+        ''' extract the cross reference link data from kegg compound annotation data model
+        ''' </summary>
+        ''' <param name="kegg"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function Xref(kegg As Compound) As xref
+
+
+        End Function
 
         ''' <summary>
         ''' 将KEGG数据库之中的药物编号以及Glyan物质的编号转换为Compound编号
