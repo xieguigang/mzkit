@@ -78,8 +78,13 @@ Namespace MetaLib
             For Each link In kegg.DbLinks.GroupBy(Function(xr) xr.DBName)
                 Select Case link.Key.ToLower
                     Case "cas" : xl.CAS = link.Select(Function(l) l.entry).Distinct.ToArray
-                    Case "pubchem" : xl.pubchem = link.OrderBy(Function(l) CLng(Val(l.entry))).FirstOrDefault?.entry
-                    Case "chebi" : xl.chebi = link.FirstOrDefault?.entry
+                    Case "pubchem" : xl.pubchem = link.OrderBy(Function(l) CLng(Val(l.entry))).FirstOrDefault?.entry.Match("\d+")
+                    Case "chebi"
+                        Dim id = link.FirstOrDefault?.entry
+
+                        If Not id.StringEmpty(, True) Then
+                            xl.chebi = "CHEBI:" & id.Match("\d+")
+                        End If
                     Case "knapsack" : xl.KNApSAcK = link.FirstOrDefault?.entry
                     Case "lipidmaps" : xl.lipidmaps = link.FirstOrDefault?.entry
                     Case Else
