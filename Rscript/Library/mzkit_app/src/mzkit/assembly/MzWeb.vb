@@ -77,6 +77,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
+Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.Data.IO
@@ -647,7 +648,7 @@ Module MzWeb
     ''' <summary>
     ''' get a overview ms1 spectrum data from the mzpack raw data
     ''' </summary>
-    ''' <param name="mzpack">The mzpack rawdata object</param>
+    ''' <param name="mzpack">The <see cref="mzPack"/> rawdata object</param>
     ''' <param name="tolerance">The mass tolerance error</param>
     ''' <param name="cutoff">intensity cutoff percentage value for removes the noised liked peaks.</param>
     ''' <param name="ionset">
@@ -665,7 +666,7 @@ Module MzWeb
     ''' </example>
     <ExportAPI("ms1_peaks")>
     <RApiReturn(GetType(LibraryMatrix))>
-    Public Function Ms1Peaks(mzpack As mzPack,
+    Public Function Ms1Peaks(mzpack As Object,
                              Optional tolerance As Object = "da:0.001",
                              Optional cutoff As Double = 0.05,
                              <RRawVectorArgument>
@@ -679,10 +680,25 @@ Module MzWeb
             Return mzdiff.TryCast(Of Message)
         End If
 
-        Dim allMassPeaks As ms2() = mzpack.MS _
-            .Select(Function(scan) scan.GetMs) _
-            .IteratesALL _
-            .ToArray
+        Dim source_label As String
+        Dim allMassPeaks As ms2()
+
+        If TypeOf mzpack Is mzPack Then
+            source_label = DirectCast(mzpack, mzPack).source
+            allMassPeaks = mzpack.MS _
+                .Select(Function(scan) scan.GetMs) _
+                .IteratesALL _
+                .ToArray
+        ElseIf TypeOf mzpack Is MzMatrix Then
+            source_label = "mzImage matrix"
+            allMassPeaks = DirectCast(mzpack, MzMatrix) _
+                .GetSpectrum _
+                .IteratesALL _
+                .ToArray
+        Else
+            Return Message.InCompatibleType(GetType(mzPack), mzpack.GetType, env)
+        End If
+
         Dim ms As ms2()
 
         If Not mzsubset.IsNullOrEmpty Then
@@ -704,7 +720,7 @@ Module MzWeb
         Return New LibraryMatrix With {
             .centroid = True,
             .ms2 = ms,
-            .name = mzpack.source & " MS1"
+            .name = source_label & " MS1"
         }
     End Function
 
