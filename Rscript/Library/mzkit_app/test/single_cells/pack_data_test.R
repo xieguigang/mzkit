@@ -12,7 +12,7 @@ options(memory.load = "max");
 # "E:\biodeep\biodeepdb_v3\datafiles\bulk_group_2"
 # "E:\biodeep\biodeepdb_v3\datafiles\bulk_group_3"];
 
-let single_cell_source = "E:\biodeep\biodeepdb_v3\datafiles\bulk_group_1";
+let single_cell_source = "E:\biodeep\biodeepdb_v3\datafiles\bulk_group_4";
 
 single_cell_source 
 |> pack_cells.group(tag = "Saccharomyces_cerevisiae")
