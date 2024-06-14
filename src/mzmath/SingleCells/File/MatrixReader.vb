@@ -189,8 +189,9 @@ Public Class MatrixReader : Implements IDisposable
             Call spot_index.Add(New SpatialIndex(x, y, z, p))
         Next
 
-        Me.dimX = New IntRange(spot_index.Select(Function(a) a.X)).minmax
-
+        Me.dimX = IntRange.MinMax(spot_index.Select(Function(a) a.X))
+        Me.dimY = IntRange.MinMax(spot_index.Select(Function(a) a.Y))
+        Me.dimZ = IntRange.MinMax(spot_index.Select(Function(a) a.Z))
 
         Call bin.BaseStream.Seek(offset2, SeekOrigin.Begin)
 
