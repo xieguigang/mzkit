@@ -187,6 +187,9 @@ declare namespace SingleCells {
    */
    function SCM_ionStat(raw: any, da?: number, parallel?: boolean, env?: object): object;
    /**
+   */
+   function singleCell_labels(x: object): string;
+   /**
     * get the labels based on the spatial information of each spot
     * 
     * 
