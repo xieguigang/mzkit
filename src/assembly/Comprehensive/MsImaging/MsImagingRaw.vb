@@ -123,6 +123,22 @@ Namespace MsImaging
             }
         End Function
 
+        <Extension>
+        Public Function GetMSIMetadata(raw As MassSpectrometry.SingleCells.MatrixReader) As Metadata
+            If raw.matrixType <> FileApplicationClass.MSImaging Then
+                Return New Metadata With {.[class] = raw.matrixType.ToString}
+            Else
+                Dim dims = raw.
+
+                Return New Metadata With {
+                    .[class] = raw.matrixType.ToString,
+                    .mass_range = New DoubleRange(raw.ionSet),
+                    .resolution = 13,
+                    .scan_x =
+                }
+            End If
+        End Function
+
         ''' <summary>
         ''' 
         ''' </summary>

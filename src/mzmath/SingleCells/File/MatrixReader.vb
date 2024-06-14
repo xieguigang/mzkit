@@ -70,6 +70,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.GraphTheory.GridGraph
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -128,6 +129,7 @@ Public Class MatrixReader : Implements IDisposable
     Dim mzIndex As MzPool
     Dim mzdiff As Double
     Dim mzwindows As MassWindow()
+    Dim dimX, dimY, dimZ As Integer()
 
     Sub New(s As Stream)
         Me.bin = New BinaryReader(s, Encoding.ASCII)
@@ -186,6 +188,9 @@ Public Class MatrixReader : Implements IDisposable
 
             Call spot_index.Add(New SpatialIndex(x, y, z, p))
         Next
+
+        Me.dimX = New IntRange(spot_index.Select(Function(a) a.X)).minmax
+
 
         Call bin.BaseStream.Seek(offset2, SeekOrigin.Begin)
 
