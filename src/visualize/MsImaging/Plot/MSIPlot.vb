@@ -74,6 +74,9 @@ Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.MIME.Html.Render
 
+''' <summary>
+''' do ms-imaging plot with axis [x,y]
+''' </summary>
 Public Class MSIPlot : Inherits Plot
 
     ReadOnly ion As SingleIonLayer

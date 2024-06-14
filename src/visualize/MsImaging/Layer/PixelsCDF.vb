@@ -70,7 +70,7 @@ Imports Microsoft.VisualBasic.DataStorage.netCDF.Components
 Imports Microsoft.VisualBasic.DataStorage.netCDF.Data
 Imports Microsoft.VisualBasic.DataStorage.netCDF.DataVector
 Imports Microsoft.VisualBasic.Language
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Public Module PixelsCDF
 
@@ -202,7 +202,7 @@ Public Module PixelsCDF
         If Not excludesMz.IsNullOrEmpty Then
             matrix = matrix _
                 .Where(Function(mzi)
-                           Return Not excludesMz.Any(Function(d) stdNum.Abs(d - mzi.mz) <= mzdiff)
+                           Return Not excludesMz.Any(Function(d) std.Abs(d - mzi.mz) <= mzdiff)
                        End Function) _
                 .ToArray
         End If
