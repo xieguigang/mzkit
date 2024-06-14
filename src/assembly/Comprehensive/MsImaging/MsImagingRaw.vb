@@ -128,13 +128,14 @@ Namespace MsImaging
             If raw.matrixType <> FileApplicationClass.MSImaging Then
                 Return New Metadata With {.[class] = raw.matrixType.ToString}
             Else
-                Dim dims = raw.
+                Dim dims = raw.dim_size
 
                 Return New Metadata With {
                     .[class] = raw.matrixType.ToString,
                     .mass_range = New DoubleRange(raw.ionSet),
                     .resolution = 13,
-                    .scan_x =
+                    .scan_x = dims.Width,
+                    .scan_y = dims.Height
                 }
             End If
         End Function
