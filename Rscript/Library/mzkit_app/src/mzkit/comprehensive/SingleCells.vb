@@ -748,4 +748,9 @@ Module SingleCells
     Public Function spatialLabels(x As MzMatrix) As String()
         Return x.matrix.Select(Function(s) $"{s.X},{s.Y},{s.Z}").ToArray
     End Function
+
+    <ExportAPI("singleCell_labels")>
+    Public Function cellLabels(x As MzMatrix) As String()
+        Return x.matrix.Select(Function(s) s.label).ToArray
+    End Function
 End Module
