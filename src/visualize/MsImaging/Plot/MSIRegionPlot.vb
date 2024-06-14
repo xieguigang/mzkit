@@ -74,11 +74,11 @@ Public Class MSIRegionPlot : Inherits Plot
         Throw New NotImplementedException()
     End Sub
 
-    Public Function MeasureRegionPolygon(x As Double(), y As Double(),
-                                         Optional scale As Integer = 5,
-                                         Optional degree As Double = 20,
-                                         Optional resolution As Integer = 100,
-                                         Optional q As Double = 0.1) As GeneralPath
+    Public Shared Function MeasureRegionPolygon(x As Integer(), y As Integer(),
+                                                Optional scale As Integer = 5,
+                                                Optional degree As Double = 20,
+                                                Optional resolution As Integer = 100,
+                                                Optional q As Double = 0.1) As GeneralPath
 
         Dim shape As GeneralPath = ContourLayer.GetOutline(x, y, scale)
 
