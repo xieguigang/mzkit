@@ -1,6 +1,10 @@
-﻿Imports System.Runtime.CompilerServices
-Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.Information
+Imports Microsoft.VisualBasic.Math.Quantile
+Imports Microsoft.VisualBasic.Math.SIMD
 Imports Microsoft.VisualBasic.Parallel
 
 Namespace MatrixMath
@@ -9,6 +13,7 @@ Namespace MatrixMath
 
         ReadOnly matrix As PixelData()
         ReadOnly feature_size As Integer
+        ReadOnly total_cells As Integer
 
         ReadOnly rsd As Double()
         ReadOnly entropy As Double()
@@ -23,11 +28,32 @@ Namespace MatrixMath
 
             matrix = m.matrix
             feature_size = m.featureSize
+            total_cells = matrix.Length
+
 
         End Sub
 
         Protected Overrides Sub Solve(start As Integer, ends As Integer, cpu_id As Integer)
+            For i As Integer = start To ends
+                Dim offset As Integer = i
+                Dim intensity_vec As Double() = (From cell As PixelData In matrix Select cell(offset)).ToArray
+                Dim max_i As Integer = which.Max(intensity_vec)
+                Dim counts As Integer = Aggregate xi As Double In intensity_vec Where xi > 0 Into Count
+                Dim quartile As DataQuartile = intensity_vec.Quartile
 
+                base_cell(offset) = matrix(max_i).label
+                cells(offset) = counts
+                max_into(offset) = intensity_vec(max_i)
+                q1(offset) = quartile.Q1
+                q2(offset) = quartile.Q2
+                q3(offset) = quartile.Q3
+
+                intensity_vec = Divide.f64_op_divide_f64_scalar(intensity_vec, intensity_vec.Sum)
+
+                rsd(offset) = intensity_vec.RSD
+                entropy(offset) = intensity_vec.ShannonEntropy
+                sparsity(offset) = 1 - counts / total_cells
+            Next
         End Sub
 
         ''' <summary>
