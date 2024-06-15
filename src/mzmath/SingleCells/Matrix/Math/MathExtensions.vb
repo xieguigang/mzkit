@@ -71,5 +71,21 @@ Namespace MatrixMath
 
             Return ent_vec
         End Function
+
+        <Extension>
+        Public Function Sparsity(m As MzMatrix) As Double()
+            Dim sparsity_vec As Double() = New Double(m.featureSize - 1) {}
+
+            For i As Integer = 0 To sparsity_vec.Length - 1
+                Dim offset As Integer = i
+                Dim data_n As Integer = (From cell As PixelData In m.matrix Where cell(offset) > 0).Count
+                Dim spar As Double = 1 - data_n / m.matrix.Length
+
+                sparsity_vec(i) = spar
+            Next
+
+            Return sparsity_vec
+        End Function
+
     End Module
 End Namespace
