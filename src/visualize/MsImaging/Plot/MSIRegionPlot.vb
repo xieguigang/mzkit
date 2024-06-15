@@ -59,7 +59,11 @@ Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Math2D.MarchingSquares
 
+''' <summary>
+''' plot a specific spatial cluster region
+''' </summary>
 Public Class MSIRegionPlot : Inherits Plot
 
     Public Sub New(theme As Theme)
@@ -69,4 +73,20 @@ Public Class MSIRegionPlot : Inherits Plot
     Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
         Throw New NotImplementedException()
     End Sub
+
+    Public Shared Function MeasureRegionPolygon(x As Integer(), y As Integer(),
+                                                Optional scale As Integer = 5,
+                                                Optional degree As Double = 20,
+                                                Optional resolution As Integer = 100,
+                                                Optional q As Double = 0.1) As GeneralPath
+
+        Dim shape As GeneralPath = ContourLayer.GetOutline(x, y, scale)
+
+        If degree > 0 AndAlso resolution > 0 Then
+            shape = shape.Bspline(degree, resolution)
+            shape = shape.FilterSmallPolygon(q)
+        End If
+
+        Return shape
+    End Function
 End Class

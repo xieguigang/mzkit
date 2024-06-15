@@ -85,7 +85,7 @@ declare namespace mzweb {
     * get a overview ms1 spectrum data from the mzpack raw data
     * 
     * 
-     * @param mzpack The mzpack rawdata object
+     * @param mzpack The @``T:BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack`` rawdata object
      * @param tolerance The mass tolerance error
      * 
      * + default value Is ``'da:0.001'``.
@@ -102,7 +102,7 @@ declare namespace mzweb {
      * + default value Is ``null``.
      * @return A ms peaks object
    */
-   function ms1_peaks(mzpack: object, tolerance?: any, cutoff?: number, ionset?: any, env?: object): object;
+   function ms1_peaks(mzpack: any, tolerance?: any, cutoff?: number, ionset?: any, env?: object): object;
    /**
     * get all ms1 scan data points
     * 

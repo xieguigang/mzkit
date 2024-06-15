@@ -101,7 +101,7 @@ Imports stdVector = Microsoft.VisualBasic.Math.LinearAlgebra.Vector
 <RTypeExport("spectrum_alignment", GetType(AlignmentOutput))>
 Module MzMath
 
-    Sub New()
+    Friend Sub Main()
         Call REnv.Internal.ConsolePrinter.AttachConsoleFormatter(Of PrecursorInfo())(AddressOf printMzTable)
         Call REnv.Internal.ConsolePrinter.AttachConsoleFormatter(Of MzCalculator)(AddressOf printCalculator)
 

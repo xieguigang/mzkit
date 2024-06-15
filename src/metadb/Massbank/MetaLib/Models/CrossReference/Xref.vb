@@ -122,6 +122,28 @@ Namespace MetaLib.CrossReference
         ''' <returns></returns>
         <MessagePackMember(20)> Public Property extras As Dictionary(Of String, String())
 
+        ''' <summary>
+        ''' get xref id from <see cref="extras"/> dictionary
+        ''' </summary>
+        ''' <param name="dbname"></param>
+        ''' <returns>this property getter returns nothing if not found</returns>
+        Default Public ReadOnly Property Extra(dbname As String) As String
+            Get
+                If extras.ContainsKey(dbname) Then
+                    Return extras(dbname).FirstOrDefault
+                End If
+
+                For Each item In extras
+                    ' case maybe mis-matched, case in-sensitive
+                    If item.Key.TextEquals(dbname) Then
+                        Return item.Value.FirstOrDefault
+                    End If
+                Next
+
+                Return Nothing
+            End Get
+        End Property
+
         Sub New()
         End Sub
 

@@ -1,67 +1,67 @@
 ﻿#Region "Microsoft.VisualBasic::3f1d2941224f5f706ce8b29c4c52e3ee, Rscript\Library\mzkit_app\src\mzkit\comprehensive\MSI.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 1844
-    '    Code Lines: 1116 (60.52%)
-    ' Comment Lines: 536 (29.07%)
-    '    - Xml Docs: 91.98%
-    ' 
-    '   Blank Lines: 192 (10.41%)
-    '     File Size: 75.35 KB
+' Summaries:
 
 
-    ' Module MSI
-    ' 
-    '     Function: asMSILayer, asRaster, basePeakMz, castSpatialLayers, Correction
-    '               dimension_size, getimzmlMetadata, GetIonsJointMatrix, GetMatrixIons, GetMSIMetadata
-    '               getmzpackFileMetadata, getmzPackMetadata, GetPeakMatrix, getStatTable, GetXySpatialFilter
-    '               IonStats, level_convolution, loadRowSummary, LoadSpotVectorDataFrame, moran_index
-    '               MSI_summary, MSIScanMatrix, open_imzML, packDf, packFile
-    '               packMatrix, PeakMatrix, peakSamples, pixelId, PixelIons
-    '               PixelMatrix, pixels, pixels2D, readPeaklayer, readSummarylayer
-    '               rowScans, SampleBootstraping, scale, scan, spatialConvolution
-    '               splice, write_imzML, writePeaklayer, writeSummarylayer, z_assembler
-    '               z_header, z_volume
-    ' 
-    '     Sub: Main
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 1844
+'    Code Lines: 1116 (60.52%)
+' Comment Lines: 536 (29.07%)
+'    - Xml Docs: 91.98%
+' 
+'   Blank Lines: 192 (10.41%)
+'     File Size: 75.35 KB
+
+
+' Module MSI
+' 
+'     Function: asMSILayer, asRaster, basePeakMz, castSpatialLayers, Correction
+'               dimension_size, getimzmlMetadata, GetIonsJointMatrix, GetMatrixIons, GetMSIMetadata
+'               getmzpackFileMetadata, getmzPackMetadata, GetPeakMatrix, getStatTable, GetXySpatialFilter
+'               IonStats, level_convolution, loadRowSummary, LoadSpotVectorDataFrame, moran_index
+'               MSI_summary, MSIScanMatrix, open_imzML, packDf, packFile
+'               packMatrix, PeakMatrix, peakSamples, pixelId, PixelIons
+'               PixelMatrix, pixels, pixels2D, readPeaklayer, readSummarylayer
+'               rowScans, SampleBootstraping, scale, scan, spatialConvolution
+'               splice, write_imzML, writePeaklayer, writeSummarylayer, z_assembler
+'               z_header, z_volume
+' 
+'     Sub: Main
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -307,19 +307,24 @@ Module MSI
 
         If file Like GetType(Message) Then
             Return file.TryCast(Of Message)
+        Else
+            Dim ver As Integer = file.TryCast(Of Stream).GetFormatVersion
+
+            If ver = 1 Then
+                ' version 1 format not supports metadata
+                Return Internal.debug.stop(New NotSupportedException("version 1 mzPack file can not supports the metadata!"), env)
+            ElseIf ver < 0 Then
+                ' is mzImage?
+                Return New BioNovoGene.Analytical.MassSpectrometry.SingleCells.MatrixReader(file.TryCast(Of Stream)).GetMSIMetadata
+            End If
         End If
 
-        If file.TryCast(Of Stream).GetFormatVersion = 1 Then
-            ' version 1 format not supports metadata
-            Return Internal.debug.stop(New NotSupportedException("version 1 mzPack file can not supports the metadata!"), env)
-        Else
-            Dim pack As New mzStream(file.TryCast(Of Stream))
+        Dim pack As New mzStream(file.TryCast(Of Stream))
 
-            If pack.metadata.IsNullOrEmpty Then
-                metadata = mzPack.FromStream(stream:=pack).GetMSIMetadata
-            Else
-                metadata = New Metadata(pack.metadata)
-            End If
+        If pack.metadata.IsNullOrEmpty Then
+            metadata = mzPack.FromStream(stream:=pack).GetMSIMetadata
+        Else
+            metadata = New Metadata(pack.metadata)
         End If
 
         If is_path Then
