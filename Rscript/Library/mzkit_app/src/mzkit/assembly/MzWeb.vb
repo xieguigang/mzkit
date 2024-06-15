@@ -1,62 +1,62 @@
 ﻿#Region "Microsoft.VisualBasic::0362eb4a601a2c8fbd1ba0512f36bb0b, Rscript\Library\mzkit_app\src\mzkit\assembly\MzWeb.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 840
-    '    Code Lines: 509 (60.60%)
-    ' Comment Lines: 228 (27.14%)
-    '    - Xml Docs: 95.18%
-    ' 
-    '   Blank Lines: 103 (12.26%)
-    '     File Size: 33.57 KB
+' Summaries:
 
 
-    ' Module MzWeb
-    ' 
-    '     Function: GetChromatogram, getMs1PointTable, loadStream, loadXcmsRData, MassCalibration
-    '               Ms1Peaks, Ms1ScanPoints, Ms2ScanPeaks, Open, openFile
-    '               openFromFile, parseScanMsBuffer, readCache, setMzpackThumbnail, TIC
-    '               ToMzPack, uniqueReference, writeCache, writeMzpack, writeStream
-    '               writeToCDF
-    ' 
-    '     Sub: Main, WriteCache
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 840
+'    Code Lines: 509 (60.60%)
+' Comment Lines: 228 (27.14%)
+'    - Xml Docs: 95.18%
+' 
+'   Blank Lines: 103 (12.26%)
+'     File Size: 33.57 KB
+
+
+' Module MzWeb
+' 
+'     Function: GetChromatogram, getMs1PointTable, loadStream, loadXcmsRData, MassCalibration
+'               Ms1Peaks, Ms1ScanPoints, Ms2ScanPeaks, Open, openFile
+'               openFromFile, parseScanMsBuffer, readCache, setMzpackThumbnail, TIC
+'               ToMzPack, uniqueReference, writeCache, writeMzpack, writeStream
+'               writeToCDF
+' 
+'     Sub: Main, WriteCache
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -78,6 +78,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
 Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.Data.IO
@@ -87,6 +88,7 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports SIMDAdd = Microsoft.VisualBasic.Math.SIMD.Add
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
@@ -690,11 +692,18 @@ Module MzWeb
                 .IteratesALL _
                 .ToArray
         ElseIf TypeOf mzpack Is MzMatrix Then
+            Dim mat As MzMatrix = DirectCast(mzpack, MzMatrix)
+            Dim intensity_vec As Double() = New Double(mat.featureSize - 1) {}
+
             source_label = "mzImage matrix"
-            allMassPeaks = DirectCast(mzpack, MzMatrix) _
-                .GetSpectrum _
-                .IteratesALL _
-                .ToArray
+
+            For Each spot In Tqdm.Wrap(mat.matrix)
+                intensity_vec = SIMDAdd.f64_op_add_f64(intensity_vec, spot.intensity)
+            Next
+
+            Return New LibraryMatrix(mat.mz, intensity_vec) With {
+                .name = source_label
+            }
         Else
             Return Message.InCompatibleType(GetType(mzPack), mzpack.GetType, env)
         End If

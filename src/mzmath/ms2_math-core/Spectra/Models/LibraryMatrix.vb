@@ -186,6 +186,11 @@ Namespace Spectra
             Me.name = name
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Sub New(mz As Double(), into As Double())
+            Call MyBase.New(mz.Select(Function(mzi, i) New ms2(mzi, into(i))))
+        End Sub
+
         <DebuggerStepThrough>
         Sub New(data As IEnumerable(Of ms2))
             Call MyBase.New(data)
