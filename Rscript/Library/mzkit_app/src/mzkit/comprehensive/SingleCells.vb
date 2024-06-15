@@ -168,7 +168,7 @@ Module SingleCells
         Dim singleCell As Boolean = args.getValue("singlecell", env, [default]:=False)
         Dim df As New Rdataframe With {
             .columns = New Dictionary(Of String, Array),
-            .rownames = If(singleCell, rawdata.getCellLabels, rawdata.getSpatialLabels)
+            .rownames = If(singleCell, rawdata.cellLabels, rawdata.spatialLabels)
         }
         Dim mz As Double() = rawdata.mz
         Dim offset As Integer
@@ -227,18 +227,6 @@ Module SingleCells
                         End Function) _
                 .ToArray
         }
-    End Function
-
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension>
-    Private Function getCellLabels(x As MzMatrix) As String()
-        Return x.matrix.Select(Function(r) r.label).ToArray
-    End Function
-
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension>
-    Private Function getSpatialLabels(x As MzMatrix) As String()
-        Return x.matrix.Select(Function(r) $"{r.X},{r.Y}").ToArray
     End Function
 
     ''' <summary>
@@ -745,11 +733,13 @@ Module SingleCells
     ''' print(spatial@{3});
     ''' </example>
     <ExportAPI("spatial_labels")>
+    <Extension>
     Public Function spatialLabels(x As MzMatrix) As String()
         Return x.matrix.Select(Function(s) $"{s.X},{s.Y},{s.Z}").ToArray
     End Function
 
     <ExportAPI("singleCell_labels")>
+    <Extension>
     Public Function cellLabels(x As MzMatrix) As String()
         Return x.matrix.Select(Function(s) s.label).ToArray
     End Function
