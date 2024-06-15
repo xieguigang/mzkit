@@ -1,4 +1,5 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
 Imports Microsoft.VisualBasic.Parallel
 
@@ -54,7 +55,12 @@ Namespace MatrixMath
                     .mz = mat.mz(i),
                     .mzmax = mat.mzmax(i),
                     .mzmin = mat.mzmin(i),
-                    .mz_error = .mzmax - .mzmin
+                    .mz_error = MassWindow.ToString(.mzmax, .mzmin),
+                    .Q1Intensity = task.q1(i),
+                    .Q2Intensity = task.q2(i),
+                    .Q3Intensity = task.q3(i),
+                    .RSD = task.rsd(i),
+                    .sparsity = task.sparsity(i)
                 }
             Next
         End Function

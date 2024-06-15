@@ -219,5 +219,10 @@ Namespace Ms1
             End If
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overloads Shared Function ToString(mzmax As Double, mzmin As Double, Optional ppm As Double = 30) As String
+            Return MzWindowDescription(mzmax, mzmin, ppm)
+        End Function
+
     End Class
 End Namespace
