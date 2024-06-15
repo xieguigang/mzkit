@@ -1,6 +1,7 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.Information
 Imports Microsoft.VisualBasic.Math.SIMD
 
 Namespace MatrixMath
@@ -52,6 +53,23 @@ Namespace MatrixMath
             Next
 
             Return rsd_vec
+        End Function
+
+        <Extension>
+        Public Function Entropy(m As MzMatrix) As Double()
+            Dim ent_vec As Double() = New Double(m.featureSize - 1) {}
+
+            For i As Integer = 0 To ent_vec.Length - 1
+                Dim offset As Integer = i
+                Dim col As Double() = (From cell As PixelData In m.matrix Select cell(offset)).ToArray
+                Dim sum_val As Double = col.Sum
+                Dim norm As Double() = Divide.f64_op_divide_f64_scalar(col, sum_val)
+                Dim ent As Double = norm.ShannonEntropy
+
+                ent_vec(offset) = ent
+            Next
+
+            Return ent_vec
         End Function
     End Module
 End Namespace
