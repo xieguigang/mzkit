@@ -154,11 +154,17 @@ Public Class MatrixReader : Implements IDisposable
             Throw New InvalidProgramException("invalid magic header!")
         End If
 
+        Call VBDebugger.EchoLine("start to parse the matrix file header: load matrix metadata")
+
         _tolerance = bin.ReadString
         _featureSize = bin.ReadInt32
         _matrixType = CType(bin.ReadInt32, FileApplicationClass)
 
+        Call VBDebugger.EchoLine("read ion feature set")
+
         Dim mz As Double() = New Double(featureSize - 1) {}
+
+        Call VBDebugger.EchoLine($" - ({featureSize}) ions...")
 
         For i As Integer = 0 To mz.Length - 1
             mz(i) = bin.ReadDouble
@@ -166,17 +172,23 @@ Public Class MatrixReader : Implements IDisposable
 
         Dim mzmin As Double() = New Double(featureSize - 1) {}
 
+        Call VBDebugger.EchoLine(" - min ion value...")
+
         For i As Integer = 0 To mz.Length - 1
             mzmin(i) = bin.ReadDouble
         Next
 
         Dim mzmax As Double() = New Double(featureSize - 1) {}
 
+        Call VBDebugger.EchoLine(" - max ion value...")
+
         For i As Integer = 0 To mz.Length - 1
             mzmax(i) = bin.ReadDouble
         Next
 
         _spots = bin.ReadInt32
+
+        Call VBDebugger.EchoLine($"start to read {spots} spots file data offsets...")
 
         Dim offset1 As Long = bin.ReadInt64
         Dim offset2 As Long = bin.ReadInt64
@@ -209,6 +221,8 @@ Public Class MatrixReader : Implements IDisposable
             Call label_index.Add((label, p))
         Next
 
+        Call VBDebugger.EchoLine("create data indexing!")
+
         Me.mzwindows = mz _
             .Select(Function(mzi, i)
                         Return New MassWindow(mzi) With {
@@ -226,6 +240,8 @@ Public Class MatrixReader : Implements IDisposable
                                   .Select(Function(o) o.Item2) _
                                   .ToArray
                           End Function)
+
+        Call VBDebugger.EchoLine("done!")
 
         Return offset_spots
     End Function
