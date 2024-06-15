@@ -340,15 +340,9 @@ Public Class IonStat
             Call counts.Add(density)
         Next
 
-        Dim mzwidth_desc As String
         Dim mzmin As Double = mzlist.Min
         Dim mzmax As Double = mzlist.Max
-
-        If PPMmethod.PPM(mzmin, mzmax) > 30 Then
-            mzwidth_desc = $"da:{ (mzmax - mzmin).ToString("F3")}"
-        Else
-            mzwidth_desc = $"ppm:{PPMmethod.PPM(mzmin, mzmax).ToString("F1")}"
-        End If
+        Dim mzwidth_desc As String = MzWindowDescription(mzmax, mzmin, ppm:=30)
 
         Return New IonStat With {
             .mz = Val(ion.name),

@@ -59,6 +59,7 @@
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
+Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.MatrixMath
 Imports Microsoft.VisualBasic.Linq
 
 ''' <summary>
@@ -108,7 +109,7 @@ Public Class SingleCellIonStat
                     End Function) _
             .IteratesALL _
             .DoCall(Function(allIons)
-                        Return DoStatInternal(allIons, da, parallel)
+                        Return DoStatPack.DoStatInternal(allIons, da, parallel)
                     End Function)
     End Function
 
@@ -118,36 +119,8 @@ Public Class SingleCellIonStat
     ''' <param name="mat"></param>
     ''' <param name="parallel"></param>
     ''' <returns></returns>
-    Public Shared Iterator Function DoIonStats(mat As MzMatrix, Optional parallel As Boolean = True) As IEnumerable(Of SingleCellIonStat)
-        If parallel Then
-            For Each stat In mat.mz _
-                .SeqIterator _
-                .AsParallel _
-                .Select(Function(i)
-                            Dim offset As Integer = i
-                            Dim cells = mat.matrix _
-                                .Select(Function(cell) (cell.label, cell(i))) _
-                                .ToArray
-
-                            Return DoStatSingleIon(i.value, cells)
-                        End Function)
-
-                Yield stat
-            Next
-        Else
-            Dim offset As Integer
-            Dim cells As (String, Double)()
-
-            For i As Integer = 0 To mat.featureSize - 1
-                offset = i
-                cells = mat.matrix _
-                    .Select(Function(cell) (cell.label, cell(offset))) _
-                    .ToArray
-
-                Yield DoStatSingleIon(mat.mz(i), cells)
-            Next
-        End If
+    Public Shared Function DoIonStats(mat As MzMatrix, Optional parallel As Boolean = True) As IEnumerable(Of SingleCellIonStat)
+        Return DoStatMatrix.DoIonStats(mat, parallel)
     End Function
-
 
 End Class
