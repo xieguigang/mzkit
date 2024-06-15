@@ -67,6 +67,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells
 Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
+Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.MatrixMath
 Imports BioNovoGene.BioDeep.MassSpectrometry.MoleculeNetworking
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Data.NLP.Word2Vec
@@ -742,5 +743,16 @@ Module SingleCells
     <Extension>
     Public Function cellLabels(x As MzMatrix) As String()
         Return x.matrix.Select(Function(s) s.label).ToArray
+    End Function
+
+    ''' <summary>
+    ''' do matrix data normalization via total peak sum
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <param name="scale"></param>
+    ''' <returns></returns>
+    <ExportAPI("total_peaksum")>
+    Public Function TotalPeakSumNormalize(x As MzMatrix, Optional scale As Double = 1000000.0) As MzMatrix
+        Return x.TotalPeakSumNormalization(scale)
     End Function
 End Module
