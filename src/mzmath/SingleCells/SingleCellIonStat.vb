@@ -77,6 +77,10 @@ Public Class SingleCellIonStat
     ''' </summary>
     ''' <returns></returns>
     Public Property mz As Double
+    Public Property mzmin As Double
+    Public Property mzmax As Double
+    Public Property mz_error As String
+
     ''' <summary>
     ''' the cell numbers that contains this ion feature.
     ''' </summary>
@@ -100,6 +104,8 @@ Public Class SingleCellIonStat
     ''' </summary>
     ''' <returns></returns>
     Public Property RSD As Double
+    Public Property entropy As Double
+    Public Property sparsity As Double
 
     Public Shared Function DoIonStats(raw As IMZPack, Optional da As Double = 0.01, Optional parallel As Boolean = True) As IEnumerable(Of SingleCellIonStat)
         Return raw.MS _
