@@ -30,7 +30,15 @@ Namespace MatrixMath
             feature_size = m.featureSize
             total_cells = matrix.Length
 
-
+            rsd = Allocate(Of Double)(all:=True)
+            entropy = Allocate(Of Double)(all:=True)
+            sparsity = Allocate(Of Double)(all:=True)
+            cells = Allocate(Of Integer)(all:=True)
+            max_into = Allocate(Of Double)(all:=True)
+            base_cell = Allocate(Of String)(all:=True)
+            q1 = Allocate(Of Double)(all:=True)
+            q2 = Allocate(Of Double)(all:=True)
+            q3 = Allocate(Of Double)(all:=True)
         End Sub
 
         Protected Overrides Sub Solve(start As Integer, ends As Integer, cpu_id As Integer)
