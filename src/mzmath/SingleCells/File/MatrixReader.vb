@@ -69,6 +69,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
@@ -319,10 +320,15 @@ Public Class MatrixReader : Implements IDisposable
         Next
     End Function
 
+    ''' <summary>
+    ''' load all spots data from file into memory
+    ''' </summary>
+    ''' <returns></returns>
     Public Iterator Function LoadSpots() As IEnumerable(Of PixelData)
         Call bin.BaseStream.Seek(scan0, SeekOrigin.Begin)
+        Call VBDebugger.EchoLine("load all spots data from file into memory...")
 
-        For i As Integer = 0 To spots - 1
+        For Each i As Integer In Tqdm.Range(0, spots)
             Yield LoadCurrentSpot()
         Next
     End Function
