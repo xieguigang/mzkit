@@ -46,7 +46,10 @@ Namespace MatrixMath
                 Dim offset As Integer = i
                 Dim intensity_vec As Double() = (From cell As PixelData In matrix Select cell(offset)).ToArray
                 Dim max_i As Integer = which.Max(intensity_vec)
-                Dim counts As Integer = Aggregate xi As Double In intensity_vec Where xi > 0 Into Count
+                Dim counts As Integer = Aggregate xi As Double
+                                        In intensity_vec
+                                        Where xi > 0
+                                        Into Count
                 Dim quartile As DataQuartile = intensity_vec.Quartile
 
                 base_cell(offset) = matrix(max_i).label
