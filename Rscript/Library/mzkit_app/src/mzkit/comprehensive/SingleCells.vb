@@ -121,6 +121,9 @@ Module SingleCells
         }
 
         Call table.add(NameOf(SingleCellIonStat.mz), ions.Select(Function(i) i.mz))
+        Call table.add(NameOf(SingleCellIonStat.mzmin), ions.Select(Function(i) i.mzmin))
+        Call table.add(NameOf(SingleCellIonStat.mzmax), ions.Select(Function(i) i.mzmax))
+        Call table.add(NameOf(SingleCellIonStat.mz_error), ions.Select(Function(i) i.mz_error))
         Call table.add(NameOf(SingleCellIonStat.cells), ions.Select(Function(i) i.cells))
         Call table.add(NameOf(SingleCellIonStat.maxIntensity), ions.Select(Function(i) i.maxIntensity))
         Call table.add(NameOf(SingleCellIonStat.baseCell), ions.Select(Function(i) i.baseCell))
@@ -128,6 +131,8 @@ Module SingleCells
         Call table.add(NameOf(SingleCellIonStat.Q2Intensity), ions.Select(Function(i) i.Q2Intensity))
         Call table.add(NameOf(SingleCellIonStat.Q3Intensity), ions.Select(Function(i) i.Q3Intensity))
         Call table.add(NameOf(SingleCellIonStat.RSD), ions.Select(Function(i) i.RSD))
+        Call table.add(NameOf(SingleCellIonStat.entropy), ions.Select(Function(i) i.entropy))
+        Call table.add(NameOf(SingleCellIonStat.sparsity), ions.Select(Function(i) i.sparsity))
 
         Return table
     End Function
