@@ -63,11 +63,14 @@ Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components.Interface
 Imports SMRUCC.Rsharp.Runtime.Internal.[Object]
 Imports SMRUCC.Rsharp.Runtime.Vectorization
+Imports std = System.Math
 
 ''' <summary>
 ''' The wrapper of the spatial matrix to R# language
@@ -97,12 +100,25 @@ Public Class SpatialMatrixReader : Implements IdataframeReader, IReflector
                           End Function)
     End Sub
 
+    ''' <summary>
+    ''' get matrix column projection via m/z or index vector
+    ''' </summary>
+    ''' <param name="index"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     Public Function getColumn(index As Object, env As Environment) As Object Implements IdataframeReader.getColumn
         Dim mz As Double() = CLRVector.asNumeric(index)
 
         If mz.IsNullOrEmpty Then
             Return Nothing
-        ElseIf mz.Length = 1 Then
+        End If
+
+        ' the input index is integer offsets?
+        If mz.All(Function(value) value = std.Round(value)) Then
+            Return matrixProjection(mz.AsInteger)
+        End If
+
+        If mz.Length = 1 Then
             Return loadLayer(mz(0))
         End If
 
@@ -115,6 +131,37 @@ Public Class SpatialMatrixReader : Implements IdataframeReader, IReflector
         Next
 
         Return out
+    End Function
+
+    Private Function matrixProjection(offsets As Integer()) As MzMatrix
+        Dim m As New MzMatrix With {
+            .matrixType = Me.m.matrixType,
+            .tolerance = Me.m.tolerance
+        }
+        Dim mz As Double() = Me.m.mz.CopyOf(offsets)
+        Dim mzmin As Double() = Me.m.mzmin.CopyOf(offsets)
+        Dim mzmax As Double() = Me.m.mzmax.CopyOf(offsets)
+        Dim rawdata = Me.m.matrix
+        Dim project As PixelData() = New PixelData(rawdata.Length - 1) {}
+        Dim source As PixelData
+
+        For Each i As Integer In Tqdm.Range(0, Me.m.matrix.Length)
+            source = rawdata(i)
+            project(i) = New PixelData With {
+                .label = source.label,
+                .X = source.X,
+                .Y = source.Y,
+                .Z = source.Z,
+                .intensity = source.intensity.CopyOf(offsets)
+            }
+        Next
+
+        m.mz = mz
+        m.mzmin = mzmin
+        m.mzmax = mzmax
+        m.matrix = project
+
+        Return m
     End Function
 
     Private Function loadLayer(mzi As Double) As dataframe

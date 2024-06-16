@@ -62,6 +62,9 @@ Imports Microsoft.VisualBasic.Linq
 Imports SMRUCC.Rsharp.RDataSet.Convertor
 Imports SMRUCC.Rsharp.RDataSet.Struct.LinkedList
 
+''' <summary>
+''' load xcms data as spectrum
+''' </summary>
 Public Module LoadR
 
     <Extension>
