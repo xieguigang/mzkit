@@ -1,6 +1,7 @@
 ﻿Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Parallel
 
 Namespace StatsMath
 
@@ -28,5 +29,26 @@ Namespace StatsMath
 
             Return par.result
         End Function
+
+        Private Class IonFeatureTask : Inherits VectorTask
+
+            ReadOnly matrix As MzMatrix
+            ReadOnly grid_size As Integer
+
+            Friend ReadOnly rsd As Double()
+            Friend ReadOnly sparsity As Double()
+            Friend ReadOnly entropy As Double()
+
+            Public Sub New(m As MzMatrix, grid_size As Integer)
+                MyBase.New(m.featureSize)
+
+                Me.matrix = m
+                Me.grid_size = grid_size
+            End Sub
+
+            Protected Overrides Sub Solve(start As Integer, ends As Integer, cpu_id As Integer)
+
+            End Sub
+        End Class
     End Module
 End Namespace
