@@ -69,6 +69,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.StatsMath
+Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
 Imports Microsoft.VisualBasic.ApplicationServices.Plugin
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
@@ -281,5 +282,9 @@ Public Class IonStat
         Dim stats As IonStat = ion.DoStatSingleIon(nsize, parallel:=True)
 
         Return stats
+    End Function
+
+    Public Shared Function DoStat(rawdata As MzMatrix, Optional grid_size As Integer = 5, Optional parallel As Boolean = True) As IEnumerable(Of IonStat)
+        Return rawdata.DoStat(grid_size, parallel)
     End Function
 End Class

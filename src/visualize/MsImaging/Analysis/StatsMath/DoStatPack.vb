@@ -5,6 +5,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.GraphTheory.GridGraph
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.Information
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Quantile
 Imports Microsoft.VisualBasic.Math.Statistics.Hypothesis
@@ -28,7 +29,7 @@ Namespace StatsMath
         ''' <returns></returns>
         ''' 
         <Extension>
-        Friend Function DoStatSingleIon(ion As NamedCollection(Of PixelData), nsize As Integer, parallel As Boolean) As IonStat
+        Friend Function DoStatSingleIon(ion As NamedCollection(Of PixelData), nsize As Integer, total_spots As Integer, parallel As Boolean) As IonStat
             Dim pixels = Grid(Of PixelData).Create(ion, Function(x) New Point(x.x, x.y))
             Dim basePixel = ion.OrderByDescending(Function(i) i.intensity).First
             Dim intensity As Double() = ion _
@@ -84,6 +85,8 @@ Namespace StatsMath
                 mzwidth_desc = $"ppm:{PPMmethod.PPM(mzmin, mzmax).ToString("F1")}"
             End If
 
+            intensity = SIMD.Divide.f64_op_divide_f64_scalar(intensity, intensity.Sum)
+
             Return New IonStat With {
                 .mz = Val(ion.name),
                 .basePixelX = basePixel.x,
@@ -99,7 +102,10 @@ Namespace StatsMath
                 .mzmin = mzmin,
                 .mzmax = mzmax,
                 .mzwidth = mzwidth_desc,
-                .averageIntensity = intensity.Average
+                .averageIntensity = intensity.Average,
+                .sparsity = 1 - intensity.Length / total_spots,
+                .entropy = intensity.ShannonEntropy,
+                .rsd = intensity.RSD
             }
         End Function
 
@@ -107,6 +113,7 @@ Namespace StatsMath
         Friend Function DoStatInternal(allIons As IEnumerable(Of PixelData()),
                                        nsize As Integer,
                                        da As Double,
+                                       total_spots As Integer,
                                        parallel As Boolean) As IEnumerable(Of IonStat)
 
             ' convert the spatial spot pack as multiple imaging layers
@@ -114,7 +121,7 @@ Namespace StatsMath
             Dim ions = allIons _
                 .GroupByTree(Function(d) d.mz, Tolerance.DeltaMass(da)) _
                 .ToArray
-            Dim par As New IonFeatureTask(ions, nsize)
+            Dim par As New IonFeatureTask(ions, nsize, total_spots)
 
             Call VBDebugger.EchoLine($"get {ions.Length} ion features from the raw data pack!")
 
@@ -133,8 +140,9 @@ Namespace StatsMath
 
             Dim layers As NamedCollection(Of PixelData)()
             Dim nsize As Integer
+            Dim total_spots As Integer
 
-            Sub New(layers As NamedCollection(Of PixelData)(), nsize As Integer)
+            Sub New(layers As NamedCollection(Of PixelData)(), nsize As Integer, total_spots As Integer)
                 Call MyBase.New(layers.Length)
 
                 Me.layers = layers
@@ -146,7 +154,7 @@ Namespace StatsMath
                 For i As Integer = start To ends
                     ' moran parallel if in sequenceMode
                     ' moran sequence if not in sequenceMode
-                    result(i) = DoStatSingleIon(layers(i), nsize, parallel:=sequenceMode)
+                    result(i) = DoStatSingleIon(layers(i), nsize, total_spots, parallel:=sequenceMode)
                 Next
             End Sub
         End Class
