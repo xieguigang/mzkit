@@ -59,6 +59,7 @@
 #End Region
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.Annotations
+Imports BioNovoGene.BioDeep.Chemistry.MetaLib.CrossReference
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 
 Namespace MetaLib
@@ -111,6 +112,13 @@ Namespace MetaLib
 
         Public Overrides Function ToString() As String
             Return refmet_name
+        End Function
+
+        Public Function CreateReference() As xref
+            Return New xref With {
+                .pubchem = pubchem_cid,
+                .SMILES = smiles
+            }
         End Function
 
     End Class
