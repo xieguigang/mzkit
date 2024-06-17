@@ -81,7 +81,7 @@ Public Class SpatialMatrixReader : Implements IdataframeReader, IReflector
     ReadOnly m As MzMatrix
     ReadOnly index As MzPool
     ReadOnly mzdiff As Tolerance
-    ReadOnly spatialIndex As Dictionary(Of String, Integer)
+    ReadOnly spotIndex As Dictionary(Of String, Integer)
 
     Sub New(m As MzMatrix)
         Me.m = m
@@ -89,7 +89,16 @@ Public Class SpatialMatrixReader : Implements IdataframeReader, IReflector
         Me.index = New MzPool(m.mz)
 
         If m.matrixType <> FileApplicationClass.SingleCellsMetabolomics Then
-            Call CreateIndex(m, spatialIndex)
+            Call CreateIndex(m, spotIndex)
+        Else
+            ' index via the cell labels
+            spotIndex = m.matrix _
+                .Select(Function(s, i) (s, i)) _
+                .GroupBy(Function(s) s.s.label) _
+                .ToDictionary(Function(s) s.Key,
+                              Function(s)
+                                  Return s.First.i
+                              End Function)
         End If
     End Sub
 
@@ -139,11 +148,19 @@ Public Class SpatialMatrixReader : Implements IdataframeReader, IReflector
         ' SMRUCC/R#.call_function."RunAnalysis"("rawdata" <- "./Saccharomyces_ce...) at test.R:line 5
         ' SMRUCC/R#.n/a.InitializeEnvironment at test.R:line 0
         ' SMRUCC/R#.global.<globalEnvironment> at <globalEnvironment>:line n/a
-        spatial = offsets _
-            .ToDictionary(Function(s) $"{s.s.X},{s.s.Y}",
-                          Function(a)
-                              Return a.i
-                          End Function)
+        If m.matrixType = FileApplicationClass.MSImaging3D Then
+            spatial = offsets _
+                .ToDictionary(Function(s) $"{s.s.X},{s.s.Y},{s.s.Z}",
+                              Function(a)
+                                  Return a.i
+                              End Function)
+        Else
+            spatial = offsets _
+                .ToDictionary(Function(s) $"{s.s.X},{s.s.Y}",
+                              Function(a)
+                                  Return a.i
+                              End Function)
+        End If
     End Sub
 
     ''' <summary>
@@ -179,6 +196,11 @@ Public Class SpatialMatrixReader : Implements IdataframeReader, IReflector
         Return out
     End Function
 
+    ''' <summary>
+    ''' create matrix projection via the integer index offsets
+    ''' </summary>
+    ''' <param name="offsets"></param>
+    ''' <returns></returns>
     Private Function matrixProjection(offsets As Integer()) As MzMatrix
         Dim m As New MzMatrix With {
             .matrixType = Me.m.matrixType,
@@ -210,6 +232,11 @@ Public Class SpatialMatrixReader : Implements IdataframeReader, IReflector
         Return m
     End Function
 
+    ''' <summary>
+    ''' load layer data via a given ion m/z value
+    ''' </summary>
+    ''' <param name="mzi"></param>
+    ''' <returns></returns>
     Private Function loadLayer(mzi As Double) As dataframe
         Dim offsets As Integer() = Me.index _
             .Search(mzi) _
@@ -267,28 +294,43 @@ Public Class SpatialMatrixReader : Implements IdataframeReader, IReflector
         If xy.IsNullOrEmpty Then
             Return Nothing
         ElseIf xy.Length = 1 Then
-            Return m.matrix(spatialIndex(xy(Scan0))).intensity
+            Return m.matrix(spotIndex(xy(Scan0))).intensity
         End If
 
         Dim vec As New list With {.slots = New Dictionary(Of String, Object)}
 
         For Each spatial As String In xy
-            If spatialIndex.ContainsKey(spatial) Then
-                Call vec.add(spatial, m.matrix(spatialIndex(spatial)).intensity)
+            If spotIndex.ContainsKey(spatial) Then
+                Call vec.add(spatial, m.matrix(spotIndex(spatial)).intensity)
             End If
         Next
 
         Return vec
     End Function
 
+    ''' <summary>
+    ''' get column m/z ion feature labels
+    ''' </summary>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function getNames() As String() Implements IReflector.getNames
         Return m.mz.Select(Function(mzi) mzi.ToString).ToArray
     End Function
 
+    ''' <summary>
+    ''' get row labels of this matrix value:
+    ''' 
+    ''' 1. ms-imaging data get x,y,z
+    ''' 2. single cells get cell labels
+    ''' </summary>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function getRowNames() As String() Implements IdataframeReader.getRowNames
-        Return spatialIndex.Keys.ToArray
+        If m.matrixType = FileApplicationClass.SingleCellsMetabolomics Then
+            Return m.matrix.Select(Function(i) i.label).ToArray
+        Else
+            Return spotIndex.Keys.ToArray
+        End If
     End Function
 
     Public Function getMatrix() As MzMatrix
