@@ -67,6 +67,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells
 Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
+Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.MatrixMath
 Imports BioNovoGene.BioDeep.MassSpectrometry.MoleculeNetworking
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Data.NLP.Word2Vec
@@ -120,6 +121,9 @@ Module SingleCells
         }
 
         Call table.add(NameOf(SingleCellIonStat.mz), ions.Select(Function(i) i.mz))
+        Call table.add(NameOf(SingleCellIonStat.mzmin), ions.Select(Function(i) i.mzmin))
+        Call table.add(NameOf(SingleCellIonStat.mzmax), ions.Select(Function(i) i.mzmax))
+        Call table.add(NameOf(SingleCellIonStat.mz_error), ions.Select(Function(i) i.mz_error))
         Call table.add(NameOf(SingleCellIonStat.cells), ions.Select(Function(i) i.cells))
         Call table.add(NameOf(SingleCellIonStat.maxIntensity), ions.Select(Function(i) i.maxIntensity))
         Call table.add(NameOf(SingleCellIonStat.baseCell), ions.Select(Function(i) i.baseCell))
@@ -127,6 +131,8 @@ Module SingleCells
         Call table.add(NameOf(SingleCellIonStat.Q2Intensity), ions.Select(Function(i) i.Q2Intensity))
         Call table.add(NameOf(SingleCellIonStat.Q3Intensity), ions.Select(Function(i) i.Q3Intensity))
         Call table.add(NameOf(SingleCellIonStat.RSD), ions.Select(Function(i) i.RSD))
+        Call table.add(NameOf(SingleCellIonStat.entropy), ions.Select(Function(i) i.entropy))
+        Call table.add(NameOf(SingleCellIonStat.sparsity), ions.Select(Function(i) i.sparsity))
 
         Return table
     End Function
@@ -168,7 +174,7 @@ Module SingleCells
         Dim singleCell As Boolean = args.getValue("singlecell", env, [default]:=False)
         Dim df As New Rdataframe With {
             .columns = New Dictionary(Of String, Array),
-            .rownames = If(singleCell, rawdata.getCellLabels, rawdata.getSpatialLabels)
+            .rownames = If(singleCell, rawdata.cellLabels, rawdata.spatialLabels)
         }
         Dim mz As Double() = rawdata.mz
         Dim offset As Integer
@@ -227,18 +233,6 @@ Module SingleCells
                         End Function) _
                 .ToArray
         }
-    End Function
-
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension>
-    Private Function getCellLabels(x As MzMatrix) As String()
-        Return x.matrix.Select(Function(r) r.label).ToArray
-    End Function
-
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension>
-    Private Function getSpatialLabels(x As MzMatrix) As String()
-        Return x.matrix.Select(Function(r) $"{r.X},{r.Y}").ToArray
     End Function
 
     ''' <summary>
@@ -745,7 +739,25 @@ Module SingleCells
     ''' print(spatial@{3});
     ''' </example>
     <ExportAPI("spatial_labels")>
+    <Extension>
     Public Function spatialLabels(x As MzMatrix) As String()
         Return x.matrix.Select(Function(s) $"{s.X},{s.Y},{s.Z}").ToArray
+    End Function
+
+    <ExportAPI("singleCell_labels")>
+    <Extension>
+    Public Function cellLabels(x As MzMatrix) As String()
+        Return x.matrix.Select(Function(s) s.label).ToArray
+    End Function
+
+    ''' <summary>
+    ''' do matrix data normalization via total peak sum
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <param name="scale"></param>
+    ''' <returns></returns>
+    <ExportAPI("total_peaksum")>
+    Public Function TotalPeakSumNormalize(x As MzMatrix, Optional scale As Double = 1000000.0) As MzMatrix
+        Return x.TotalPeakSumNormalization(scale)
     End Function
 End Module

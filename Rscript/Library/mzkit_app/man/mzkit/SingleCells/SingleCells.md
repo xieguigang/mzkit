@@ -26,3 +26,5 @@ Single cells metabolomics data processor
 + [embedding_sample](SingleCells/embedding_sample.1) push a sample data into the embedding session
 + [spot_vector](SingleCells/spot_vector.1) get the cell spot embedding result
 + [spatial_labels](SingleCells/spatial_labels.1) get the labels based on the spatial information of each spot
++ [singleCell_labels](SingleCells/singleCell_labels.1) 
++ [total_peaksum](SingleCells/total_peaksum.1) do matrix data normalization via total peak sum

@@ -12,6 +12,8 @@
     <PackageIcon>Flask.png</PackageIcon>
     <PackageIconUrl />
     <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
+    <Title>Interop between R/R# and mzkit</Title>
+    <Description>Interop between R/R# and mzkit</Description>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

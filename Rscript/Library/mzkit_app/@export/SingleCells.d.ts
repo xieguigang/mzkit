@@ -187,6 +187,9 @@ declare namespace SingleCells {
    */
    function SCM_ionStat(raw: any, da?: number, parallel?: boolean, env?: object): object;
    /**
+   */
+   function singleCell_labels(x: object): string;
+   /**
     * get the labels based on the spatial information of each spot
     * 
     * 
@@ -201,6 +204,16 @@ declare namespace SingleCells {
      * @return vector data could be converts the dataframe object via ``as.data.frame``
    */
    function spot_vector(pool: object): object;
+   /**
+    * do matrix data normalization via total peak sum
+    * 
+    * 
+     * @param x -
+     * @param scale -
+     * 
+     * + default value Is ``1000000``.
+   */
+   function total_peaksum(x: object, scale?: number): object;
    module write {
       /**
        * write the single cell ion feature data matrix

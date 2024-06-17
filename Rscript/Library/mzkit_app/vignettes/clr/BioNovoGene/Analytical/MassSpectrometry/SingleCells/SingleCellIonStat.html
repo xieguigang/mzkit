@@ -34,15 +34,20 @@ export class SingleCellIonStat {
    baseCell: string;
    # the cell numbers that contains this ion feature.
    cells: integer;
+   entropy: double;
    # the max intensity value of current ion feature.
    maxIntensity: double;
    # the ion feature m/z value
    mz: double;
+   mz_error: string;
+   mzmax: double;
+   mzmin: double;
    Q1Intensity: double;
    Q2Intensity: double;
    Q3Intensity: double;
    # RSD value of the intensity value of current ion feature across multiple cells
    RSD: double;
+   sparsity: double;
 }
 </code>
         </pre>

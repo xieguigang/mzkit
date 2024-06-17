@@ -1,66 +1,67 @@
 ﻿#Region "Microsoft.VisualBasic::42e2031b46cad555ab884e166ff73d9f, mzmath\SingleCells\File\MatrixReader.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 283
-    '    Code Lines: 173 (61.13%)
-    ' Comment Lines: 63 (22.26%)
-    '    - Xml Docs: 77.78%
-    ' 
-    '   Blank Lines: 47 (16.61%)
-    '     File Size: 9.54 KB
+' Summaries:
 
 
-    ' Class MatrixReader
-    ' 
-    '     Properties: featureSize, ionSet, matrixType, spots, tolerance
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: GetIntensity, GetRaster, (+2 Overloads) GetSpot, LoadCurrentSpot, loadHeaders
-    '               LoadMemory, LoadSpots
-    ' 
-    '     Sub: (+2 Overloads) Dispose
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 283
+'    Code Lines: 173 (61.13%)
+' Comment Lines: 63 (22.26%)
+'    - Xml Docs: 77.78%
+' 
+'   Blank Lines: 47 (16.61%)
+'     File Size: 9.54 KB
+
+
+' Class MatrixReader
+' 
+'     Properties: featureSize, ionSet, matrixType, spots, tolerance
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: GetIntensity, GetRaster, (+2 Overloads) GetSpot, LoadCurrentSpot, loadHeaders
+'               LoadMemory, LoadSpots
+' 
+'     Sub: (+2 Overloads) Dispose
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Drawing
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
@@ -68,8 +69,10 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.GraphTheory.GridGraph
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -128,6 +131,13 @@ Public Class MatrixReader : Implements IDisposable
     Dim mzIndex As MzPool
     Dim mzdiff As Double
     Dim mzwindows As MassWindow()
+    Dim dimX, dimY, dimZ As Integer()
+
+    Public ReadOnly Property dim_size As Size
+        Get
+            Return New Size(dimX(1), dimY(1))
+        End Get
+    End Property
 
     Sub New(s As Stream)
         Me.bin = New BinaryReader(s, Encoding.ASCII)
@@ -145,11 +155,17 @@ Public Class MatrixReader : Implements IDisposable
             Throw New InvalidProgramException("invalid magic header!")
         End If
 
+        Call VBDebugger.EchoLine("start to parse the matrix file header: load matrix metadata")
+
         _tolerance = bin.ReadString
         _featureSize = bin.ReadInt32
         _matrixType = CType(bin.ReadInt32, FileApplicationClass)
 
+        Call VBDebugger.EchoLine("read ion feature set")
+
         Dim mz As Double() = New Double(featureSize - 1) {}
+
+        Call VBDebugger.EchoLine($" - ({featureSize}) ions...")
 
         For i As Integer = 0 To mz.Length - 1
             mz(i) = bin.ReadDouble
@@ -157,17 +173,23 @@ Public Class MatrixReader : Implements IDisposable
 
         Dim mzmin As Double() = New Double(featureSize - 1) {}
 
+        Call VBDebugger.EchoLine(" - min ion value...")
+
         For i As Integer = 0 To mz.Length - 1
             mzmin(i) = bin.ReadDouble
         Next
 
         Dim mzmax As Double() = New Double(featureSize - 1) {}
 
+        Call VBDebugger.EchoLine(" - max ion value...")
+
         For i As Integer = 0 To mz.Length - 1
             mzmax(i) = bin.ReadDouble
         Next
 
         _spots = bin.ReadInt32
+
+        Call VBDebugger.EchoLine($"start to read {spots} spots file data offsets...")
 
         Dim offset1 As Long = bin.ReadInt64
         Dim offset2 As Long = bin.ReadInt64
@@ -187,6 +209,10 @@ Public Class MatrixReader : Implements IDisposable
             Call spot_index.Add(New SpatialIndex(x, y, z, p))
         Next
 
+        Me.dimX = IntRange.MinMax(spot_index.Select(Function(a) a.X))
+        Me.dimY = IntRange.MinMax(spot_index.Select(Function(a) a.Y))
+        Me.dimZ = IntRange.MinMax(spot_index.Select(Function(a) a.Z))
+
         Call bin.BaseStream.Seek(offset2, SeekOrigin.Begin)
 
         For i As Integer = 0 To _spots - 1
@@ -195,6 +221,8 @@ Public Class MatrixReader : Implements IDisposable
 
             Call label_index.Add((label, p))
         Next
+
+        Call VBDebugger.EchoLine("create data indexing!")
 
         Me.mzwindows = mz _
             .Select(Function(mzi, i)
@@ -213,6 +241,8 @@ Public Class MatrixReader : Implements IDisposable
                                   .Select(Function(o) o.Item2) _
                                   .ToArray
                           End Function)
+
+        Call VBDebugger.EchoLine("done!")
 
         Return offset_spots
     End Function
@@ -290,10 +320,15 @@ Public Class MatrixReader : Implements IDisposable
         Next
     End Function
 
+    ''' <summary>
+    ''' load all spots data from file into memory
+    ''' </summary>
+    ''' <returns></returns>
     Public Iterator Function LoadSpots() As IEnumerable(Of PixelData)
         Call bin.BaseStream.Seek(scan0, SeekOrigin.Begin)
+        Call VBDebugger.EchoLine("load all spots data from file into memory...")
 
-        For i As Integer = 0 To spots - 1
+        For Each i As Integer In Tqdm.Range(0, spots)
             Yield LoadCurrentSpot()
         Next
     End Function

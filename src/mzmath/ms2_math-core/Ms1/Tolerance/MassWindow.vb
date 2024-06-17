@@ -121,6 +121,14 @@ Namespace Ms1
             Next
         End Function
 
+        Public Function MzWindowDescription(mzmax As Double, mzmin As Double, Optional ppm As Double = 30) As String
+            If PPMmethod.PPM(mzmin, mzmax) > 30 Then
+                Return $"da:{(mzmax - mzmin).ToString("F3")}"
+            Else
+                Return $"ppm:{PPMmethod.PPM(mzmin, mzmax).ToString("F1")}"
+            End If
+        End Function
+
     End Module
 
     ''' <summary>
@@ -192,13 +200,10 @@ Namespace Ms1
         End Sub
 
         Public Overrides Function ToString() As String
-            Dim ppm As Double = PPMmethod.PPM(mzmin, mzmax)
+            Dim ppm_desc As String = MzWindowDescription(mzmax, mzmin, ppm:=100)
+            Dim str As String = $"{mass.ToString("F4")} [{ppm_desc}]{annotation}"
 
-            If ppm > 100 Then
-                Return $"{mass.ToString("F4")} [{std.Abs(mzmax - mzmin).ToString("F3")}da]{annotation}"
-            Else
-                Return $"{mass.ToString("F4")} [{CInt(ppm)}ppm]{annotation}"
-            End If
+            Return str
         End Function
 
         Public Iterator Function GetMzDiff() As IEnumerable(Of Double)
@@ -212,6 +217,11 @@ Namespace Ms1
             Else
                 Yield mzmax - mass
             End If
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overloads Shared Function ToString(mzmax As Double, mzmin As Double, Optional ppm As Double = 30) As String
+            Return MzWindowDescription(mzmax, mzmin, ppm)
         End Function
 
     End Class
