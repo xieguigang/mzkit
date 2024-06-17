@@ -650,7 +650,9 @@ Module MzWeb
     ''' <summary>
     ''' get a overview ms1 spectrum data from the mzpack raw data
     ''' </summary>
-    ''' <param name="mzpack">The <see cref="mzPack"/> rawdata object</param>
+    ''' <param name="mzpack">
+    ''' usually be the <see cref="mzPack"/> rawdata object, or a general <see cref="MzMatrix"/> object.
+    ''' </param>
     ''' <param name="tolerance">The mass tolerance error</param>
     ''' <param name="cutoff">intensity cutoff percentage value for removes the noised liked peaks.</param>
     ''' <param name="ionset">
@@ -685,9 +687,14 @@ Module MzWeb
         Dim source_label As String
         Dim allMassPeaks As ms2()
 
+        If mzpack Is Nothing Then
+            Call env.AddMessage("the given rawdata object is nothing.")
+            Return Nothing
+        End If
+
         If TypeOf mzpack Is mzPack Then
             source_label = DirectCast(mzpack, mzPack).source
-            allMassPeaks = mzpack.MS _
+            allMassPeaks = DirectCast(mzpack, mzPack).MS _
                 .Select(Function(scan) scan.GetMs) _
                 .IteratesALL _
                 .ToArray
