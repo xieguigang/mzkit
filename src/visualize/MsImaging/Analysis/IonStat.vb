@@ -173,6 +173,10 @@ Public Class IonStat
     <TypeConverter(GetType(FormattedDoubleConverter)), FormattedDoubleFormatString("G5")>
     Public Property Q3Intensity As Double
 
+    Public Property rsd As Double
+    Public Property entropy As Double
+    Public Property sparsity As Double
+
     ''' <summary>
     ''' Moran-I index value of current ion layer geometry data
     ''' 
