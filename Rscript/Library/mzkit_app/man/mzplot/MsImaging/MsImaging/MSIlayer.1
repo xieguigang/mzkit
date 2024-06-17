@@ -33,6 +33,15 @@ get MSI pixels layer via given \fBm/z\fR value.
 .PP
 \fBenv\fB \fR\- -. 
 .PP
+.SH EXAMPLES
+.PP
+let viewer = MsImaging::viewer(open.mzpack("/data.mzpack"));
+ let ion_mz = 100.001;
+ let single_ion_layer = viewer |> MsImaging::MSIlayer(mz = ion_mz, tolerance = "ppm:20");
+ let data = as.data.frame(single_ion_layer);
+ 
+ print(data);
+.PP
 .SH SEE ALSO
 MsImaging
 .SH FILES

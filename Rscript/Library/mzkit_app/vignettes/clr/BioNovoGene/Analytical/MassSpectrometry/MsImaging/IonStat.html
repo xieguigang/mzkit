@@ -38,6 +38,7 @@ export class IonStat {
    basePixelY: integer;
    # the average spatial density
    density: double;
+   entropy: double;
    # the max intensity value of current ion across all pixels
    maxIntensity: double;
    # Moran-I index value of current ion layer geometry data
@@ -65,6 +66,8 @@ export class IonStat {
    Q2Intensity: double;
    # the intensity value of quartile Q3 level(75% quantile)
    Q3Intensity: double;
+   rsd: double;
+   sparsity: double;
 }
 </code>
         </pre>
