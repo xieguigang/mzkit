@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::455171ea5d924a6810ed09abd1b2f1ad, metadna\metaDNA\Models\Networking\KEGGNetwork.vb"
+﻿#Region "Microsoft.VisualBasic::0227696f9d79c9edf8294f882857c0f6, metadna\metaDNA\Models\Networking\KEGGNetwork.vb"
 
     ' Author:
     ' 
@@ -37,19 +37,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 92
-    '    Code Lines: 69 (75.00%)
-    ' Comment Lines: 9 (9.78%)
+    '   Total Lines: 151
+    '    Code Lines: 112 (74.17%)
+    ' Comment Lines: 16 (10.60%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 14 (15.22%)
-    '     File Size: 3.67 KB
+    '   Blank Lines: 23 (15.23%)
+    '     File Size: 6.04 KB
 
 
     ' Class KEGGNetwork
     ' 
     '     Constructor: (+1 Overloads) Sub New
-    '     Function: CreateNetwork, FindPartners, FindReactions, MapReduce
+    '     Function: (+2 Overloads) CreateNetwork, FindPartners, FindReactions, MapReduce, networkResolver
     ' 
     ' /********************************************************************************/
 

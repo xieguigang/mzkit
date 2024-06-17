@@ -50,7 +50,7 @@ E:\mzkit\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj,ms2_math-core\Ms1\Precu
 E:\mzkit\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj,ms2_math-core\Ms1\PrecursorType\Formula\Negative.vb,33,0,3,30,1,0,0,1,0,3610,3.61 KB
 E:\mzkit\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj,ms2_math-core\Ms1\PrecursorType\Formula\Positive.vb,90,0,7,83,1,0,0,2,0,10944,10.94 KB
 E:\mzkit\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj,ms2_math-core\Ms1\Tolerance\DeltaMass.vb,69,9,13,47,1,1,1,8,0,2444,2.44 KB
-E:\mzkit\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj,ms2_math-core\Ms1\Tolerance\MassWindow.vb,79,18,16,45,2,7,3,1,0,2247,2.25 KB
+E:\mzkit\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj,ms2_math-core\Ms1\Tolerance\MassWindow.vb,164,30,30,104,4,10,5,7,0,5190,5.19 KB
 E:\mzkit\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj,ms2_math-core\Ms1\Tolerance\PPM.vb,88,14,17,57,1,1,2,10,0,3013,3.01 KB
 E:\mzkit\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj,ms2_math-core\Ms1\Tolerance\Tolerance.vb,306,123,36,147,2,2,1,12,4,11168,11.17 KB
 E:\mzkit\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj,ms2_math-core\Spectra\CheckInSourceFragments.vb,71,28,8,35,1,0,1,2,0,2951,2.95 KB
@@ -58,7 +58,7 @@ E:\mzkit\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj,ms2_math-core\Spectra\G
 E:\mzkit\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj,ms2_math-core\Spectra\ISpectrumScanData.vb,18,4,4,10,1,4,0,0,0,665,665 B
 E:\mzkit\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj,ms2_math-core\Spectra\LibraryMatrixExtensions.vb,257,68,29,160,1,0,0,10,0,10351,10.35 KB
 E:\mzkit\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj,ms2_math-core\Spectra\MzGrouping.vb,115,13,13,89,1,0,0,3,0,5209,5.21 KB
-E:\mzkit\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj,ms2_math-core\Spectra\MzIndex.vb,56,17,12,27,1,2,2,2,1,1597,1.60 KB
+E:\mzkit\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj,ms2_math-core\Spectra\MzIndex.vb,59,20,12,27,1,2,2,2,1,1707,1.71 KB
 E:\mzkit\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj,ms2_math-core\Spectra\MzPool.vb,95,35,12,48,1,2,2,3,0,3569,3.57 KB
 E:\mzkit\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj,ms2_math-core\Spectra\SpectraEncoder.vb,69,15,8,46,3,0,0,3,0,2656,2.66 KB
 E:\mzkit\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj,ms2_math-core\Spectra\Alignment\AlignmentProvider.vb,88,3,18,67,1,1,1,6,0,3176,3.18 KB
@@ -68,7 +68,7 @@ E:\mzkit\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj,ms2_math-core\Spectra\A
 E:\mzkit\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj,ms2_math-core\Spectra\Alignment\ScoreAggregates.vb,8,0,1,7,1,0,0,0,0,120,120 B
 E:\mzkit\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj,ms2_math-core\Spectra\Alignment\SpectralEntropy.vb,156,30,26,100,1,0,0,10,0,6452,6.45 KB
 E:\mzkit\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj,ms2_math-core\Spectra\Models\Fragments.vb,38,23,3,12,1,5,0,1,0,1170,1.17 KB
-E:\mzkit\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj,ms2_math-core\Spectra\Models\LibraryMatrix.vb,259,75,31,153,1,8,6,5,2,9244,9.24 KB
+E:\mzkit\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj,ms2_math-core\Spectra\Models\LibraryMatrix.vb,264,75,32,157,1,8,7,5,2,9454,9.45 KB
 E:\mzkit\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj,ms2_math-core\Spectra\Models\ms2.vb,136,40,18,78,1,3,3,4,1,5187,5.19 KB
 E:\mzkit\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj,ms2_math-core\Spectra\Models\MzAnnotation.vb,37,9,9,19,2,4,0,1,1,1172,1.17 KB
 E:\mzkit\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj,ms2_math-core\Spectra\Models\PeakList.vb,105,36,20,49,4,6,3,4,0,3081,3.08 KB
@@ -77,7 +77,7 @@ E:\mzkit\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj,ms2_math-core\Spectra\M
 E:\mzkit\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj,ms2_math-core\Spectra\Models\Trimming\LowAbundanceTrimming.vb,94,21,16,57,1,5,1,3,0,3452,3.45 KB
 E:\mzkit\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj,ms2_math-core\Spectra\Models\Trimming\QuantileIntensityCutoff.vb,42,0,10,32,1,0,2,2,0,1473,1.47 KB
 E:\mzkit\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj,ms2_math-core\Spectra\Models\Trimming\RelativeIntensityCutoff.vb,61,10,12,39,1,0,2,2,0,2009,2.01 KB
-E:\mzkit\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj,ms2_math-core\Spectra\Models\Xml\AlignmentOutput.vb,87,8,15,64,1,11,0,3,0,3072,3.07 KB
+E:\mzkit\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj,ms2_math-core\Spectra\Models\Xml\AlignmentOutput.vb,91,8,16,67,1,11,0,3,0,3204,3.20 KB
 E:\mzkit\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj,ms2_math-core\Spectra\Models\Xml\Meta.vb,41,3,7,31,1,1,2,2,0,1272,1.27 KB
 E:\mzkit\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj,ms2_math-core\Spectra\Models\Xml\Ms2AlignMatrix.vb,60,7,6,47,1,1,1,2,0,2108,2.11 KB
 E:\mzkit\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj,ms2_math-core\Spectra\Models\Xml\SSM2MatrixFragment.vb,61,11,10,40,1,4,0,3,0,1860,1.86 KB
@@ -99,7 +99,7 @@ E:\mzkit\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj,ms2_math-core\test\My P
 E:\mzkit\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj,ms2_math-core\test\My Project\AssemblyInfo.vb,35,15,7,13,0,0,0,0,0,1143,1.14 KB
 E:\mzkit\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj,ms2_math-core\test\My Project\Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2775,2.77 KB
 E:\mzkit\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj,ms2_math-core\test\My Project\Settings.Designer.vb,73,9,13,51,2,2,1,0,0,2966,2.97 KB
-E:\mzkit\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj,<project>,8213,2180,1179,4854,107,228,92,259,9,323505,323.50 KB
+E:\mzkit\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj,<project>,8310,2195,1195,4920,109,231,95,265,9,326900,326.90 KB
 E:\mzkit\src\mzmath\ms2_simulator\ms2_simulator.NET5.vbproj,ms2_simulator\MolecularGraph.vb,42,0,8,34,1,0,1,2,0,1202,1.20 KB
 E:\mzkit\src\mzmath\ms2_simulator\ms2_simulator.NET5.vbproj,ms2_simulator\My Project\Resources.Designer.vb,101,55,9,37,1,3,0,0,0,4020,4.02 KB
 E:\mzkit\src\mzmath\ms2_simulator\ms2_simulator.NET5.vbproj,ms2_simulator\test\graph_test.vb,33,0,7,26,1,0,1,1,0,1600,1.60 KB
@@ -134,7 +134,7 @@ E:\mzkit\src\mzmath\MSFinder\MSFinder.vbproj,MSFinder\AnnotatedIon.vb,45,4,6,35,
 E:\mzkit\src\mzmath\MSFinder\MSFinder.vbproj,MSFinder\DatabaseQuery.vb,22,0,2,20,1,18,0,0,0,732,732 B
 E:\mzkit\src\mzmath\MSFinder\MSFinder.vbproj,MSFinder\DerivatizationFormula.vb,75,4,17,54,1,5,4,0,0,2670,2.67 KB
 E:\mzkit\src\mzmath\MSFinder\MSFinder.vbproj,MSFinder\ExistFormulaQuery.vb,33,5,9,19,1,5,2,0,0,1075,1.07 KB
-E:\mzkit\src\mzmath\MSFinder\MSFinder.vbproj,MSFinder\FormulaGenerator.vb,985,197,185,603,1,0,5,16,0,58903,58.90 KB
+E:\mzkit\src\mzmath\MSFinder\MSFinder.vbproj,MSFinder\FormulaGenerator.vb,986,197,184,605,1,0,5,16,0,58940,58.94 KB
 E:\mzkit\src\mzmath\MSFinder\MSFinder.vbproj,MSFinder\FormulaResult.vb,34,0,2,32,1,28,0,0,0,1813,1.81 KB
 E:\mzkit\src\mzmath\MSFinder\MSFinder.vbproj,MSFinder\FormulaStringParcer.vb,561,3,73,485,1,0,2,9,0,21515,21.52 KB
 E:\mzkit\src\mzmath\MSFinder\MSFinder.vbproj,MSFinder\FragmentAssigner.vb,718,74,116,528,1,1,3,14,0,36192,36.19 KB
@@ -144,7 +144,7 @@ E:\mzkit\src\mzmath\MSFinder\MSFinder.vbproj,MSFinder\Const\AnnotationType.vb,6,
 E:\mzkit\src\mzmath\MSFinder\MSFinder.vbproj,MSFinder\Const\FseaNonsignificantDef.vb,5,0,0,5,1,0,0,0,0,104,104 B
 E:\mzkit\src\mzmath\MSFinder\MSFinder.vbproj,MSFinder\PrecursorAnnotation\FeatureSearchHandler.vb,104,21,10,73,1,0,0,4,0,4572,4.57 KB
 E:\mzkit\src\mzmath\MSFinder\MSFinder.vbproj,MSFinder\PrecursorAnnotation\ParentMatch.vb,41,3,4,34,1,10,0,1,0,1327,1.33 KB
-E:\mzkit\src\mzmath\MSFinder\MSFinder.vbproj,<project>,3036,341,482,2213,15,188,22,51,0,147359,147.36 KB
+E:\mzkit\src\mzmath\MSFinder\MSFinder.vbproj,<project>,3037,341,481,2215,15,188,22,51,0,147396,147.40 KB
 E:\mzkit\src\mzmath\Mummichog\Mummichog.vbproj,Mummichog\ActivityEnrichment.vb,160,52,17,91,1,8,0,3,0,5570,5.57 KB
 E:\mzkit\src\mzmath\Mummichog\Mummichog.vbproj,Mummichog\Annotation.vb,164,33,21,110,3,0,2,4,0,6439,6.44 KB
 E:\mzkit\src\mzmath\Mummichog\Mummichog.vbproj,Mummichog\PeakCorrelation.vb,236,44,30,162,3,0,3,7,0,11758,11.76 KB
@@ -219,17 +219,20 @@ E:\mzkit\src\mzmath\Oligonucleotide_MS\Oligonucleotide_MS.vbproj,Oligonucleotide
 E:\mzkit\src\mzmath\Oligonucleotide_MS\Oligonucleotide_MS.vbproj,<project>,4887,424,378,4085,20,44,22,29,0,217312,217.31 KB
 E:\mzkit\src\mzmath\Oligonucleotide_MS\test\test.vbproj,test\Program.vb,54,10,14,30,1,0,3,0,0,15051,15.05 KB
 E:\mzkit\src\mzmath\Oligonucleotide_MS\test\test.vbproj,<project>,54,10,14,30,1,0,3,0,0,15051,15.05 KB
-E:\mzkit\src\mzmath\SingleCells\SingleCells.vbproj,SingleCells\SingleCellIonStat.vb,109,24,11,74,1,8,0,4,0,4088,4.09 KB
-E:\mzkit\src\mzmath\SingleCells\SingleCells.vbproj,SingleCells\Deconvolute\Math.vb,211,51,33,127,3,0,2,8,0,8384,8.38 KB
-E:\mzkit\src\mzmath\SingleCells\SingleCells.vbproj,SingleCells\Deconvolute\PeakMatrix.vb,109,16,15,78,1,0,0,5,0,4182,4.18 KB
-E:\mzkit\src\mzmath\SingleCells\SingleCells.vbproj,SingleCells\File\MatrixReader.vb,283,63,47,173,1,5,3,8,0,9542,9.54 KB
+E:\mzkit\src\mzmath\SingleCells\SingleCells.vbproj,SingleCells\SingleCellIonStat.vb,67,29,6,32,1,13,0,2,0,2523,2.52 KB
+E:\mzkit\src\mzmath\SingleCells\SingleCells.vbproj,SingleCells\Deconvolute\Math.vb,212,51,33,128,3,0,2,8,0,8483,8.48 KB
+E:\mzkit\src\mzmath\SingleCells\SingleCells.vbproj,SingleCells\Deconvolute\PeakMatrix.vb,133,23,17,93,1,0,0,6,0,5258,5.26 KB
+E:\mzkit\src\mzmath\SingleCells\SingleCells.vbproj,SingleCells\File\MatrixReader.vb,346,67,62,217,1,6,3,8,0,11784,11.78 KB
 E:\mzkit\src\mzmath\SingleCells\SingleCells.vbproj,SingleCells\File\SpatialIndex.vb,50,24,7,19,1,3,1,1,1,1413,1.41 KB
-E:\mzkit\src\mzmath\SingleCells\SingleCells.vbproj,SingleCells\File\MatrixWriter\MatrixHeader.vb,49,29,7,13,1,5,0,0,0,1657,1.66 KB
-E:\mzkit\src\mzmath\SingleCells\SingleCells.vbproj,SingleCells\File\MatrixWriter\MatrixWriter.vb,112,34,20,58,1,0,3,1,0,3482,3.48 KB
+E:\mzkit\src\mzmath\SingleCells\SingleCells.vbproj,SingleCells\File\MatrixWriter\MatrixHeader.vb,52,29,7,16,1,7,0,0,0,1888,1.89 KB
+E:\mzkit\src\mzmath\SingleCells\SingleCells.vbproj,SingleCells\File\MatrixWriter\MatrixWriter.vb,120,34,22,64,1,0,3,1,0,3703,3.70 KB
 E:\mzkit\src\mzmath\SingleCells\SingleCells.vbproj,SingleCells\File\MatrixWriter\SpotWriter.vb,69,19,12,38,1,1,2,2,0,2031,2.03 KB
-E:\mzkit\src\mzmath\SingleCells\SingleCells.vbproj,SingleCells\Matrix\MzMatrix.vb,204,71,29,104,1,5,0,7,0,8421,8.42 KB
-E:\mzkit\src\mzmath\SingleCells\SingleCells.vbproj,SingleCells\Matrix\PixelData.vb,48,11,9,28,1,5,2,2,0,1720,1.72 KB
-E:\mzkit\src\mzmath\SingleCells\SingleCells.vbproj,<project>,1244,342,190,712,12,32,13,38,1,44920,44.92 KB
+E:\mzkit\src\mzmath\SingleCells\SingleCells.vbproj,SingleCells\Matrix\MzMatrix.vb,209,71,30,108,1,7,0,7,0,8674,8.67 KB
+E:\mzkit\src\mzmath\SingleCells\SingleCells.vbproj,SingleCells\Matrix\PixelData.vb,64,20,11,33,1,5,2,2,0,2232,2.23 KB
+E:\mzkit\src\mzmath\SingleCells\SingleCells.vbproj,SingleCells\Matrix\Math\DoStatMatrix.vb,114,13,14,87,1,0,2,1,0,4676,4.68 KB
+E:\mzkit\src\mzmath\SingleCells\SingleCells.vbproj,SingleCells\Matrix\Math\DoStatPack.vb,95,8,12,75,1,0,0,4,0,3802,3.80 KB
+E:\mzkit\src\mzmath\SingleCells\SingleCells.vbproj,SingleCells\Matrix\Math\MathExtensions.vb,91,5,19,67,1,0,0,4,0,3309,3.31 KB
+E:\mzkit\src\mzmath\SingleCells\SingleCells.vbproj,<project>,1622,393,252,977,15,42,15,46,1,59776,59.78 KB
 E:\mzkit\src\mzmath\TargetedMetabolomics\Targetted.NET5.vbproj,TargetedMetabolomics\RawFile.vb,170,25,20,125,1,7,1,8,0,6040,6.04 KB
 E:\mzkit\src\mzmath\TargetedMetabolomics\Targetted.NET5.vbproj,TargetedMetabolomics\TPAExtensions.vb,313,66,28,219,1,0,0,7,0,12463,12.46 KB
 E:\mzkit\src\mzmath\TargetedMetabolomics\Targetted.NET5.vbproj,TargetedMetabolomics\Contents\ContentTable.vb,126,37,15,74,1,0,1,5,0,4860,4.86 KB
@@ -317,4 +320,4 @@ E:\mzkit\src\mzmath\TargetedMetabolomics\test\test5.vbproj,test\My Project\Assem
 E:\mzkit\src\mzmath\TargetedMetabolomics\test\test5.vbproj,test\My Project\Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2796,2.80 KB
 E:\mzkit\src\mzmath\TargetedMetabolomics\test\test5.vbproj,test\My Project\Settings.Designer.vb,74,9,12,53,2,2,1,0,0,2994,2.99 KB
 E:\mzkit\src\mzmath\TargetedMetabolomics\test\test5.vbproj,<project>,401,150,74,177,6,4,6,0,0,15970,15.97 KB
-../src/mzmath,<root>,71590,13338,9974,48278,706,2030,644,1692,20,2993598,2.99 MB
+../src/mzmath,<root>,72542,13470,10128,48944,716,2056,654,1720,20,3030174,3.03 MB

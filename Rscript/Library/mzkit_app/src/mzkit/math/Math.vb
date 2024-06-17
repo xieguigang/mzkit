@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::876cdf107b4b3844b4f8cec64fa6d532, Rscript\Library\mzkit_app\src\mzkit\math\Math.vb"
+﻿#Region "Microsoft.VisualBasic::72023ff346ce70c9e37b442c4880fc94, Rscript\Library\mzkit_app\src\mzkit\math\Math.vb"
 
     ' Author:
     ' 
@@ -37,24 +37,26 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 1139
-    '    Code Lines: 714 (62.69%)
-    ' Comment Lines: 280 (24.58%)
+    '   Total Lines: 1152
+    '    Code Lines: 724 (62.85%)
+    ' Comment Lines: 280 (24.31%)
     '    - Xml Docs: 90.71%
     ' 
-    '   Blank Lines: 145 (12.73%)
-    '     File Size: 48.37 KB
+    '   Blank Lines: 148 (12.85%)
+    '     File Size: 49.09 KB
 
 
     ' Module MzMath
     ' 
-    '     Constructor: (+1 Overloads) Sub New
     '     Function: alignIntensity, centroid, centroidDataframe, (+2 Overloads) cosine, cosine_pairwise
     '               CreateMSMatrix, CreateMzIndex, createTolerance, defaultPrecursors, exact_mass
     '               getAlignmentTable, GetClusters, getPrecursorTable, jaccard, jaccardSet
-    '               mz, MzUnique, normMs2, ppm, precursorTypes
-    '               printCalculator, printMzTable, sequenceOrder, spectrumEntropy, SpectrumTreeCluster
-    '               SSMCompares, summaryTolerance, union, xcms_id, XICTable
+    '               mass_tabular, mz, MzUnique, normMs2, ppm
+    '               precursorTypes, printCalculator, printMzTable, sequenceOrder, spectrumEntropy
+    '               SpectrumTreeCluster, SSMCompares, summaryTolerance, union, xcms_id
+    '               XICTable
+    ' 
+    '     Sub: Main
     ' 
     ' /********************************************************************************/
 

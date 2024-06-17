@@ -1,66 +1,61 @@
-﻿#Region "Microsoft.VisualBasic::acb455ae94dac6e8d01d93e94bcadf70, visualize\MsImaging\Analysis\IonStat.vb"
+﻿#Region "Microsoft.VisualBasic::8424885cb49620da3963836ff10e11f4, visualize\MsImaging\Analysis\IonStat.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 375
-'    Code Lines: 227 (60.53%)
-' Comment Lines: 107 (28.53%)
-'    - Xml Docs: 91.59%
-' 
-'   Blank Lines: 41 (10.93%)
-'     File Size: 15.35 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Class IonStat
-' 
-'     Properties: averageIntensity, basePixelX, basePixelY, density, maxIntensity
-'                 moran, mz, mzmax, mzmin, mzwidth
-'                 pixels, pvalue, Q1Intensity, Q2Intensity, Q3Intensity
-' 
-'     Function: (+4 Overloads) DoStat, DoStatInternal, DoStatSingleIon
-'     Class IonFeatureTask
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Sub: Solve
-' 
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 233
+    '    Code Lines: 120 (51.50%)
+    ' Comment Lines: 95 (40.77%)
+    '    - Xml Docs: 94.74%
+    ' 
+    '   Blank Lines: 18 (7.73%)
+    '     File Size: 10.20 KB
+
+
+    ' Class IonStat
+    ' 
+    '     Properties: averageIntensity, basePixelX, basePixelY, density, entropy
+    '                 maxIntensity, moran, mz, mzmax, mzmin
+    '                 mzwidth, pixels, pvalue, Q1Intensity, Q2Intensity
+    '                 Q3Intensity, rsd, sparsity
+    ' 
+    '     Function: (+4 Overloads) DoStat
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

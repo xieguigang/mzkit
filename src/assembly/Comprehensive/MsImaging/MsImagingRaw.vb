@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::90e3aefb6a2959a367362ba5f48c7e91, assembly\Comprehensive\MsImaging\MsImagingRaw.vb"
+﻿#Region "Microsoft.VisualBasic::3f59c2efd2c64b9264a8a52a4beecf13, assembly\Comprehensive\MsImaging\MsImagingRaw.vb"
 
     ' Author:
     ' 
@@ -37,18 +37,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 206
-    '    Code Lines: 157 (76.21%)
-    ' Comment Lines: 25 (12.14%)
-    '    - Xml Docs: 84.00%
+    '   Total Lines: 245
+    '    Code Lines: 187 (76.33%)
+    ' Comment Lines: 30 (12.24%)
+    '    - Xml Docs: 86.67%
     ' 
-    '   Blank Lines: 24 (11.65%)
-    '     File Size: 8.85 KB
+    '   Blank Lines: 28 (11.43%)
+    '     File Size: 10.39 KB
 
 
     '     Module MsImagingRaw
     ' 
-    '         Function: GetMSIMetadata, MeasureRow, MSICombineRowScans, ParseRowNumber, Summary
+    '         Function: (+3 Overloads) GetMSIMetadata, MeasureRow, MSICombineRowScans, ParseRowNumber, Summary
     ' 
     ' 
     ' /********************************************************************************/

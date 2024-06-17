@@ -1,58 +1,60 @@
-﻿#Region "Microsoft.VisualBasic::721585ec2a7d0fb623ae2dea47f34945, metadb\Chemoinformatics\Lipid\LipidName.vb"
+﻿#Region "Microsoft.VisualBasic::af46a9520932b7c7f60b4c5062c11ec1, metadb\Chemoinformatics\Lipid\LipidName.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 95
-'    Code Lines: 55 (57.89%)
-' Comment Lines: 25 (26.32%)
-'    - Xml Docs: 100.00%
-' 
-'   Blank Lines: 15 (15.79%)
-'     File Size: 3.17 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Class LipidName
-' 
-'     Properties: chains, className, hasStructureInfo
-' 
-'     Function: ChainParser, ParseLipidName, ToOverviewName, ToString, ToSystematicName
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 126
+    '    Code Lines: 72 (57.14%)
+    ' Comment Lines: 33 (26.19%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 21 (16.67%)
+    '     File Size: 4.39 KB
+
+
+    '     Class LipidName
+    ' 
+    '         Properties: chains, className, hasStructureInfo, id
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: ChainParser, ParseLipidName, ToOverviewName, ToString, ToSystematicName
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

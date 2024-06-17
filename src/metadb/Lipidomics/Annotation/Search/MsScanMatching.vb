@@ -1,59 +1,59 @@
-﻿#Region "Microsoft.VisualBasic::360d0e1e89ec2140e817e247e33e436d, metadb\Lipidomics\Annotation\Search\MsScanMatching.vb"
+﻿#Region "Microsoft.VisualBasic::b79a0a7ae688f76945123f60a0890980, metadb\Lipidomics\Annotation\Search\MsScanMatching.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 1630
-'    Code Lines: 1229 (75.40%)
-' Comment Lines: 82 (5.03%)
-'    - Xml Docs: 21.95%
-' 
-'   Blank Lines: 319 (19.57%)
-'     File Size: 114.46 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Class MsScanMatching
-' 
-'     Constructor: (+1 Overloads) Sub New
-'     Function: CompareMS2LipidomicsScanProperties, GetEidBasedLipidMoleculeAnnotationResult, GetEidBasedLipidomicsMatchedPeaksScores, GetEieioBasedLipidMoleculeAnnotationResult, GetEieioBasedLipidomicsMatchedPeaksScores
-'               GetLipidMoleculeAnnotationResult, GetLipidMoleculerSpeciesLevelAnnotationResultForEIEIO, GetLipidNameFromReference, GetLipidomicsMatchedPeaksScores, GetLipidomicsMoleculerSpeciesLevelAnnotationPeaksScoresForEIEIO
-'               GetOadBasedLipidMoleculeAnnotationResult, GetOadBasedLipidomicsMatchedPeaksScores, GetRefinedLipidAnnotationLevel, GetRefinedLipidAnnotationLevelForEIEIO
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 1636
+    '    Code Lines: 1231 (75.24%)
+    ' Comment Lines: 85 (5.20%)
+    '    - Xml Docs: 24.71%
+    ' 
+    '   Blank Lines: 320 (19.56%)
+    '     File Size: 114.68 KB
+
+
+    ' Class MsScanMatching
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: CompareMS2LipidomicsScanProperties, GetEidBasedLipidMoleculeAnnotationResult, GetEidBasedLipidomicsMatchedPeaksScores, GetEieioBasedLipidMoleculeAnnotationResult, GetEieioBasedLipidomicsMatchedPeaksScores
+    '               GetLipidMoleculeAnnotationResult, GetLipidMoleculerSpeciesLevelAnnotationResultForEIEIO, GetLipidNameFromReference, GetLipidomicsMatchedPeaksScores, GetLipidomicsMoleculerSpeciesLevelAnnotationPeaksScoresForEIEIO
+    '               GetOadBasedLipidMoleculeAnnotationResult, GetOadBasedLipidomicsMatchedPeaksScores, GetRefinedLipidAnnotationLevel, GetRefinedLipidAnnotationLevelForEIEIO
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

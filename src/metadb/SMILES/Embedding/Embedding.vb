@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4bb2bf4f62f9bdb410b0535a49a7741f, metadb\SMILES\Embedding\Embedding.vb"
+﻿#Region "Microsoft.VisualBasic::c9f3dc6994777ad96a71116fab6473a7, metadb\SMILES\Embedding\Embedding.vb"
 
     ' Author:
     ' 
@@ -37,15 +37,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 94
-    '    Code Lines: 80 (85.11%)
+    '   Total Lines: 134
+    '    Code Lines: 112 (83.58%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 14 (14.89%)
-    '     File Size: 3.62 KB
+    '   Blank Lines: 22 (16.42%)
+    '     File Size: 5.31 KB
 
 
+    '     Class VectorEmbedding
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: Cosine, Euclidean, Jaccard
+    ' 
     '     Module Embedding
     ' 
     '         Function: GetAtomTable, GraphEmbedding

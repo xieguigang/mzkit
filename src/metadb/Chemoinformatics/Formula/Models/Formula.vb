@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::293653ce8fa42b75ffbc7d5f7b9ef283, metadb\Chemoinformatics\Formula\Models\Formula.vb"
+﻿#Region "Microsoft.VisualBasic::06bc7045b5ac1f6126c3180509dd1935, metadb\Chemoinformatics\Formula\Models\Formula.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 335
-    '    Code Lines: 201 (60.00%)
-    ' Comment Lines: 90 (26.87%)
+    '   Total Lines: 339
+    '    Code Lines: 204 (60.18%)
+    ' Comment Lines: 90 (26.55%)
     '    - Xml Docs: 97.78%
     ' 
-    '   Blank Lines: 44 (13.13%)
-    '     File Size: 12.85 KB
+    '   Blank Lines: 45 (13.27%)
+    '     File Size: 12.99 KB
 
 
     '     Class Formula
@@ -52,7 +52,7 @@
     '                     Empty, ExactMass
     ' 
     '         Constructor: (+2 Overloads) Sub New
-    '         Function: EqualsTo, ToString, TryEvaluateExactMass
+    '         Function: CanonicalFormula, EqualsTo, ToString, TryEvaluateExactMass
     '         Operators: (+4 Overloads) -, (+2 Overloads) *, /, (+4 Overloads) +, <>
     '                    =
     ' 

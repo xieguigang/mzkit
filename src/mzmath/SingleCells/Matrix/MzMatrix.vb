@@ -1,60 +1,61 @@
-﻿#Region "Microsoft.VisualBasic::435f77a8a29e13354bd60e65fe3655d5, mzmath\SingleCells\Matrix\MzMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::1ebc799078a5f578e718bb25a275b20d, mzmath\SingleCells\Matrix\MzMatrix.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 204
-'    Code Lines: 104 (50.98%)
-' Comment Lines: 71 (34.80%)
-'    - Xml Docs: 95.77%
-' 
-'   Blank Lines: 29 (14.22%)
-'     File Size: 8.42 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class MzMatrix
-' 
-'         Properties: featureSize, matrix, matrixType, mz, tolerance
-' 
-'         Function: ArrayPack, ExportCsvSheet, ExportSpatial, GetHeader, GetLayer
-'                   GetPeaks, GetSpectrum
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 209
+    '    Code Lines: 108 (51.67%)
+    ' Comment Lines: 71 (33.97%)
+    '    - Xml Docs: 95.77%
+    ' 
+    '   Blank Lines: 30 (14.35%)
+    '     File Size: 8.67 KB
+
+
+    '     Class MzMatrix
+    ' 
+    '         Properties: featureSize, matrix, matrixType, mz, mzmax
+    '                     mzmin, tolerance
+    ' 
+    '         Function: ArrayPack, ExportCsvSheet, ExportSpatial, GetHeader, GetLayer
+    '                   GetPeaks, GetSpectrum
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

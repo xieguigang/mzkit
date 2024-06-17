@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2bfc36933a2648dd04d693a369462144, metadb\Massbank\Public\lipidMAPS\MapsHelper.vb"
+﻿#Region "Microsoft.VisualBasic::f7f473c9808c0343c40aa975993c8571, metadb\Massbank\Public\lipidMAPS\MapsHelper.vb"
 
     ' Author:
     ' 
@@ -37,27 +37,15 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 193
-    '    Code Lines: 141 (73.06%)
-    ' Comment Lines: 27 (13.99%)
+    '   Total Lines: 106
+    '    Code Lines: 87 (82.08%)
+    ' Comment Lines: 5 (4.72%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 25 (12.95%)
-    '     File Size: 7.64 KB
+    '   Blank Lines: 14 (13.21%)
+    '     File Size: 4.40 KB
 
 
-    '     Class LipidClassReader
-    ' 
-    '         Properties: lipids
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: EnumerateId, GetClass
-    ' 
-    '     Class LipidNameReader
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: GetName
-    ' 
     '     Module MapsHelper
     ' 
     '         Function: AssertMap, CreateMaps, CreateMeta, Tuple
