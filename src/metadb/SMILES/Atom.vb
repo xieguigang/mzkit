@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::58ad4d2cbb16775f09a142d6af0384f3, metadb\SMILES\Atom.vb"
+﻿#Region "Microsoft.VisualBasic::9bf6d6a6bf70e480d479ece67ee5b76f, metadb\SMILES\Atom.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 202
-    '    Code Lines: 148 (73.27%)
-    ' Comment Lines: 9 (4.46%)
+    '   Total Lines: 220
+    '    Code Lines: 162 (73.64%)
+    ' Comment Lines: 9 (4.09%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 45 (22.28%)
-    '     File Size: 5.96 KB
+    '   Blank Lines: 49 (22.27%)
+    '     File Size: 6.59 KB
 
 
     ' Class Atom
@@ -52,7 +52,7 @@
     ' 
     '     Constructor: (+1 Overloads) Sub New
     '     Function: ChargeLabel, DefaultAtomGroups, DefaultElements, EvaluateIsAtomGroup, GetIonLabel
-    '               GetMaxKeys, ToString
+    '               GetMaxKeys, LoadAtoms, ToString
     ' 
     ' /********************************************************************************/
 

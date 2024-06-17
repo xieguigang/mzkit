@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bb6f8fd21b8b2fcf61c0d146694ca1e9, metadb\Lipidomics\ChainGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::fa759ed529a21260e613829e8dd4f689, metadb\Lipidomics\ChainGenerator.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 100
-    '    Code Lines: 84 (84.00%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 112
+    '    Code Lines: 84 (75.00%)
+    ' Comment Lines: 12 (10.71%)
+    '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 16 (16.00%)
-    '     File Size: 4.83 KB
+    '   Blank Lines: 16 (14.29%)
+    '     File Size: 5.06 KB
 
 
     ' Class ChainGenerator

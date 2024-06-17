@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ea426c1ce20f59f2d540a5a1831cc9fe, metadb\SMILES\ParseChain.vb"
+﻿#Region "Microsoft.VisualBasic::bd5866f51fe8c1dc9f207567fcdddb20, metadb\SMILES\ParseChain.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 132
-    '    Code Lines: 107 (81.06%)
-    ' Comment Lines: 3 (2.27%)
+    '   Total Lines: 139
+    '    Code Lines: 112 (80.58%)
+    ' Comment Lines: 3 (2.16%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 22 (16.67%)
-    '     File Size: 4.49 KB
+    '   Blank Lines: 24 (17.27%)
+    '     File Size: 4.65 KB
 
 
     ' Class ParseChain
