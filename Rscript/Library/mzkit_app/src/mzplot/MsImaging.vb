@@ -1,62 +1,62 @@
-﻿#Region "Microsoft.VisualBasic::74f6c56b49611323056c20045f339393, Rscript\Library\mzkit_app\src\mzplot\MsImaging.vb"
+﻿#Region "Microsoft.VisualBasic::97ed41299e987216a018f8707b4ea305, Rscript\Library\mzkit_app\src\mzplot\MsImaging.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 1168
-'    Code Lines: 758 (64.90%)
-' Comment Lines: 278 (23.80%)
-'    - Xml Docs: 94.24%
-' 
-'   Blank Lines: 132 (11.30%)
-'     File Size: 49.64 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module MsImaging
-' 
-'     Constructor: (+1 Overloads) Sub New
-'     Function: (+2 Overloads) asPixels, AutoScaleMax, averageStep, defaultFilter, FilterMz
-'               GetIntensityData, GetIonLayer, getMSIIons, GetMsMatrx, GetPixel
-'               intensityFilter, KnnFill, layer, LimitIntensityRange, LoadPixels
-'               MSICoverage, openIndexedCacheFile, parseFilters, plotMSI, printLayer
-'               renderRowScans, RGB, splitLayer, sumLayer, tagLayers
-'               testLayer, TrIQRange, viewer, WriteXICCache
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 1194
+    '    Code Lines: 773 (64.74%)
+    ' Comment Lines: 286 (23.95%)
+    '    - Xml Docs: 94.06%
+    ' 
+    '   Blank Lines: 135 (11.31%)
+    '     File Size: 50.84 KB
+
+
+    ' Module MsImaging
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: (+2 Overloads) asPixels, AutoScaleMax, averageStep, defaultFilter, FilterMz
+    '               GetIntensityData, GetIonLayer, getMSIIons, GetMsMatrx, GetPixel
+    '               intensityFilter, KnnFill, layer, layerTable, LimitIntensityRange
+    '               LoadPixels, MSICoverage, openIndexedCacheFile, parseFilters, plotMSI
+    '               printLayer, renderRowScans, RGB, splitLayer, sumLayer
+    '               tagLayers, testLayer, TrIQRange, viewer, WriteXICCache
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

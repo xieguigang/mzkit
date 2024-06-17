@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::da3f13b72cf7f04aea1f2dbe11c8e5e9, Rscript\Library\mzkit_app\src\mzkit\assembly\MzPackAccess.vb"
+﻿#Region "Microsoft.VisualBasic::575033c8845e8d152e2884083bf904db, Rscript\Library\mzkit_app\src\mzkit\assembly\MzPackAccess.vb"
 
     ' Author:
     ' 
@@ -37,21 +37,21 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 515
-    '    Code Lines: 320 (62.14%)
-    ' Comment Lines: 141 (27.38%)
-    '    - Xml Docs: 95.04%
+    '   Total Lines: 548
+    '    Code Lines: 343 (62.59%)
+    ' Comment Lines: 149 (27.19%)
+    '    - Xml Docs: 94.63%
     ' 
-    '   Blank Lines: 54 (10.49%)
-    '     File Size: 19.95 KB
+    '   Blank Lines: 56 (10.22%)
+    '     File Size: 21.23 KB
 
 
     ' Module MzPackAccess
     ' 
-    '     Function: convertTo_mzXML, denoiseMsMs, denoiseMzpack, GetMetaData, getSampleTags
-    '               handlingMs2products, index, open_mzpack, open_mzwork, packData
-    '               packMs1, populateMzPacks, readFileCache, removeSciexNoise, scanInfo
-    '               SplitSamples, writeStream
+    '     Function: appendMzPack, convertTo_mzXML, denoiseMsMs, denoiseMzpack, GetMetaData
+    '               getSampleTags, handlingMs2products, index, open_mzpack, open_mzwork
+    '               packData, packMs1, populateMzPacks, readFileCache, removeSciexNoise
+    '               scanInfo, SplitSamples, writeStream
     ' 
     ' 
     ' /********************************************************************************/
