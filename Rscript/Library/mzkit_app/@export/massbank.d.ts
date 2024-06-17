@@ -190,6 +190,17 @@ declare namespace massbank {
       */
       function MoNA(rawfile: string, skipSpectraInfo?: boolean, is_gcms?: boolean, verbose?: boolean, env?: object): object;
       /**
+       * read the csv table of refmet
+       * 
+       * > the sheet table could be download from page:
+       * >  
+       * >  > https://www.metabolomicsworkbench.org/databases/refmet/browse.php
+       * >  > Reference: RefMet: a reference nomenclature for metabolomics (Nature Methods, 2020)
+       * 
+        * @param file -
+      */
+      function RefMet(file: string): object;
+      /**
        * read metabolite data in a given sdf data file.
        * 
        * 
