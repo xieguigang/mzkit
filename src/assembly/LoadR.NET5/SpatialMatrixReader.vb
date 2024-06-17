@@ -1,65 +1,66 @@
 ﻿#Region "Microsoft.VisualBasic::ecfa7152d41786887de40b4f3fa70e4f, assembly\LoadR.NET5\SpatialMatrixReader.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 143
-    '    Code Lines: 108 (75.52%)
-    ' Comment Lines: 9 (6.29%)
-    '    - Xml Docs: 100.00%
-    ' 
-    '   Blank Lines: 26 (18.18%)
-    '     File Size: 4.75 KB
+' Summaries:
 
 
-    ' Class SpatialMatrixReader
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: getColumn, getMatrix, getNames, getRow, getRowNames
-    '               loadLayer
-    ' 
-    '     Sub: CreateIndex
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 143
+'    Code Lines: 108 (75.52%)
+' Comment Lines: 9 (6.29%)
+'    - Xml Docs: 100.00%
+' 
+'   Blank Lines: 26 (18.18%)
+'     File Size: 4.75 KB
+
+
+' Class SpatialMatrixReader
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: getColumn, getMatrix, getNames, getRow, getRowNames
+'               loadLayer
+' 
+'     Sub: CreateIndex
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
@@ -87,12 +88,57 @@ Public Class SpatialMatrixReader : Implements IdataframeReader, IReflector
         Me.mzdiff = Tolerance.ParseScript(m.tolerance)
         Me.index = New MzPool(m.mz)
 
-        Call CreateIndex(m, spatialIndex)
+        If m.matrixType <> FileApplicationClass.SingleCellsMetabolomics Then
+            Call CreateIndex(m, spatialIndex)
+        End If
     End Sub
 
     Private Shared Sub CreateIndex(m As MzMatrix, ByRef spatial As Dictionary(Of String, Integer))
         Dim offsets = m.matrix.Select(Function(s, i) (s, i)).ToArray
 
+        ' 20240617
+        '
+        ' single cells data x,y always 0,0
+        ' 
+        '  Error in <globalEnvironment> -> InitializeEnvironment -> "RunAnalysis"("rawdata" <- "./Saccharomyces_ce...) -> R_invoke$RunAnalysis -> "run"(...)(...) -> R_invoke$run -> "__runImpl"("context" <- Call ".get_context"...)("context" <- Call ".get_context"...) -> R_invoke$__runImpl -> for_loop_[[1]: "exportMzMatrix"] -> if_closure -> R_invoke$if_closure_internal -> ".internal_call"(&app, &context...)(&app, &context...) -> R_invoke$.internal_call -> if_closure -> R_invoke$if_closure_internal -> "do.call"(&app["call"], "args" <- &argv...)(&app["call"], "args" <- &argv...) -> do.call -> R_invoke$exportMzMatrix -> "write.matrix"(Call "filter_spot_features"(&raw...)(Call "filter_spot_features"(&raw...) -> write.matrix -> "filter_spot_features"(&rawdata, Call "as.data.frame"(&...)(&rawdata, Call "as.data.frame"(&...) -> R_invoke$filter_spot_features -> if_closure -> R_invoke$if_closure_internal -> "df.mz_matrix"(&m...)(&m...) -> df.mz_matrix
+        '   1. ArgumentException: An item with the same key has already been added. Key: 0,0
+        '   2. stackFrames: 
+        '    at System.Collections.Generic.Dictionary`2.TryInsert(TKey key, TValue value, InsertionBehavior behavior)
+        '    at System.Linq.Enumerable.ToDictionary[TSource,TKey,TElement](TSource[] source, Func`2 keySelector, Func`2 elementSelector, IEqualityComparer`1 comparer)
+        '    at System.Linq.Enumerable.ToDictionary[TSource,TKey,TElement](IEnumerable`1 source, Func`2 keySelector, Func`2 elementSelector)
+        '    at BioNovoGene.Analytical.MassSpectrometry.SpatialMatrixReader.CreateIndex(MzMatrix m, Dictionary`2& spatial)
+        '    at BioNovoGene.Analytical.MassSpectrometry.SpatialMatrixReader..ctor(MzMatrix m)
+        '    at mzkit.SingleCells.dfMzMatrix(MzMatrix x)
+        '
+        '    "m" <- Call SingleCells::"df.mz_matrix"(&m)
+        '    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        '
+        ' SingleCells.R#_clr_interop::.df.mz_matrix at [mzkit, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]:line &Hx045cb9d00
+        ' MSI.call_function."df.mz_matrix"(&m...)(&m...) at filter_spot_features.R:line 13
+        ' unknown.unknown.R_invoke$if_closure_internal at n/a:line n/a
+        ' MSI.n/a.if_closure at filter_spot_features.R:line 6
+        ' MSI.declare_function.R_invoke$filter_spot_features at filter_spot_features.R:line 5
+        ' MSI.call_function."filter_spot_features"(&rawdata, Call "as.data.frame"(&...)(&rawdata, Call "as.data.frame"(&...) at exportMzMatrix.R:line 61
+        ' SingleCells.R#_clr_interop::.write.matrix at [mzkit, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]:line &Hx0e3908600
+        ' MSI.call_function."write.matrix"(Call "filter_spot_features"(&raw...)(Call "filter_spot_features"(&raw...) at exportMzMatrix.R:line 61
+        ' MSI.declare_function.R_invoke$exportMzMatrix at exportMzMatrix.R:line 7
+        ' env.R#_clr_interop::.do.call at [REnv, Version=2.33.856.6961, Culture=neutral, PublicKeyToken=null]:line &Hx02b13a100
+        ' WorkflowRender.call_function."do.call"(&app["call"], "args" <- &argv...)(&app["call"], "args" <- &argv...) at runner.R:line 20
+        ' unknown.unknown.R_invoke$if_closure_internal at n/a:line n/a
+        ' WorkflowRender.n/a.if_closure at runner.R:line 13
+        ' WorkflowRender.declare_function.R_invoke$.internal_call at runner.R:line 3
+        ' WorkflowRender.call_function.".internal_call"(&app, &context...)(&app, &context...) at workflowRender.R:line 69
+        ' unknown.unknown.R_invoke$if_closure_internal at n/a:line n/a
+        ' WorkflowRender.n/a.if_closure at workflowRender.R:line 68
+        ' WorkflowRender.forloop.for_loop_[[1]: "exportMzMatrix"] at workflowRender.R:line 52
+        ' WorkflowRender.declare_function.R_invoke$__runImpl at workflowRender.R:line 37
+        ' WorkflowRender.call_function."__runImpl"("context" <- Call ".get_context"...)("context" <- Call ".get_context"...) at workflowRender.R:line 32
+        ' WorkflowRender.declare_function.R_invoke$run at workflowRender.R:line 18
+        ' MSI.call_function."run"(...)(...) at RunAnalysis.R:line 73
+        ' MSI.declare_function.R_invoke$RunAnalysis at RunAnalysis.R:line 19
+        ' SMRUCC/R#.call_function."RunAnalysis"("rawdata" <- "./Saccharomyces_ce...) at test.R:line 5
+        ' SMRUCC/R#.n/a.InitializeEnvironment at test.R:line 0
+        ' SMRUCC/R#.global.<globalEnvironment> at <globalEnvironment>:line n/a
         spatial = offsets _
             .ToDictionary(Function(s) $"{s.s.X},{s.s.Y}",
                           Function(a)
