@@ -103,7 +103,7 @@ Namespace StatsMath
 
                     For Each top As Deconvolute.PixelData In (From cell As Deconvolute.PixelData
                                                               In points
-                                                              Order By cell.intensity Descending
+                                                              Order By cell(offset) Descending
                                                               Take 30)
 
                         Call counts.Add(Aggregate cell As Point
