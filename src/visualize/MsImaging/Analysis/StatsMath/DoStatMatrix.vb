@@ -103,7 +103,7 @@ Namespace StatsMath
                             x:=sampling.Select(Function(a) a(offset)).ToArray,
                             c1:=sampling.Select(Function(p) CDbl(p.X)).ToArray,
                             c2:=sampling.Select(Function(p) CDbl(p.Y)).ToArray,
-                            parallel:=parallel,
+                            parallel:=Not parallel,
                             throwMaxIterError:=False
                         )
                     End If
@@ -125,7 +125,8 @@ Namespace StatsMath
                         density(offset) = SIMD.Divide.f64_op_divide_f64_scalar(counts.ToArray, A).Average
                     End If
 
-                    moran(offset) = moran_test.
+                    moran(offset) = moran_test.Observed
+                    pvalue(offset) = moran_test.pvalue
                 Next
             End Sub
         End Class
