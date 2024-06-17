@@ -68,6 +68,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MSP
 Imports BioNovoGene.BioDeep.Chemistry
 Imports BioNovoGene.BioDeep.Chemistry.ChEBI
 Imports BioNovoGene.BioDeep.Chemistry.LipidMaps
+Imports BioNovoGene.BioDeep.Chemistry.MetaLib
 Imports BioNovoGene.BioDeep.Chemistry.MetaLib.CommonNames
 Imports BioNovoGene.BioDeep.Chemistry.MetaLib.CrossReference
 Imports BioNovoGene.BioDeep.Chemistry.MetaLib.Models
@@ -81,6 +82,7 @@ Imports BioNovoGene.BioDeep.Chemoinformatics.SDF
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
+Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Data.IO.MessagePack
 Imports Microsoft.VisualBasic.Linq
@@ -109,6 +111,7 @@ Imports REnv = SMRUCC.Rsharp.Runtime.Internal.Invokes.base
 <Package("massbank")>
 <RTypeExport("lipidmaps", GetType(LipidMaps.MetaData))>
 <RTypeExport("metalib", GetType(MetaLib))>
+<RTypeExport("refmet", GetType(RefMet))>
 Module Massbank
 
     Sub Main()
@@ -180,6 +183,23 @@ Module Massbank
     <RApiReturn(GetType(BioNovoGene.BioDeep.Chemistry.MetaData))>
     Public Function monaMSP(msp As MspData) As Object
         Return msp.GetMetadata
+    End Function
+
+    ''' <summary>
+    ''' read the csv table of refmet
+    ''' </summary>
+    ''' <param name="file"></param>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' the sheet table could be download from page:
+    ''' 
+    ''' > https://www.metabolomicsworkbench.org/databases/refmet/browse.php
+    ''' > Reference: RefMet: a reference nomenclature for metabolomics (Nature Methods, 2020)
+    ''' </remarks>
+    <ExportAPI("read.RefMet")>
+    <RApiReturn(GetType(RefMet))>
+    Public Function readRefMet(file As String) As Object
+        Return file.LoadCsv(Of RefMet)(mute:=True).ToArray
     End Function
 
     ''' <summary>
@@ -284,7 +304,7 @@ Module Massbank
                                        Optional env As Environment = Nothing) As Object
 
         Dim lipidstream As pipeline = pipeline.TryCreatePipeline(Of LipidMaps.MetaData)(lipidmaps, env)
-        Dim output = GetFileStream(file, IO.FileAccess.Write, env)
+        Dim output = GetFileStream(file, FileAccess.Write, env)
 
         If output Like GetType(Message) Then
             Return output.TryCast(Of Message)
