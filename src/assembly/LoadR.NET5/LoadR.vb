@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5ec2fa3f9c89dcb71ef53025fdb481b3, assembly\LoadR.NET5\LoadR.vb"
+﻿#Region "Microsoft.VisualBasic::840926ef5466c5db28c3c6f0311e0de5, assembly\LoadR.NET5\LoadR.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 72
-    '    Code Lines: 58 (80.56%)
-    ' Comment Lines: 2 (2.78%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 75
+    '    Code Lines: 58 (77.33%)
+    ' Comment Lines: 5 (6.67%)
+    '    - Xml Docs: 60.00%
     ' 
-    '   Blank Lines: 12 (16.67%)
-    '     File Size: 2.66 KB
+    '   Blank Lines: 12 (16.00%)
+    '     File Size: 2.72 KB
 
 
     ' Module LoadR
@@ -62,6 +62,9 @@ Imports Microsoft.VisualBasic.Linq
 Imports SMRUCC.Rsharp.RDataSet.Convertor
 Imports SMRUCC.Rsharp.RDataSet.Struct.LinkedList
 
+''' <summary>
+''' load xcms data as spectrum
+''' </summary>
 Public Module LoadR
 
     <Extension>

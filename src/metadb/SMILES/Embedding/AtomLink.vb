@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5c183015165687318a03e06eb5974ea8, metadb\SMILES\Embedding\AtomLink.vb"
+﻿#Region "Microsoft.VisualBasic::870ac24ced65fb2363573dcc292f8afc, metadb\SMILES\Embedding\AtomLink.vb"
 
     ' Author:
     ' 
@@ -37,19 +37,21 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 13
-    '    Code Lines: 10 (76.92%)
+    '   Total Lines: 21
+    '    Code Lines: 17 (80.95%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 3 (23.08%)
-    '     File Size: 348 B
+    '   Blank Lines: 4 (19.05%)
+    '     File Size: 587 B
 
 
     '     Class AtomLink
     ' 
     '         Properties: atom1, atom2, score, v0, vertex
     '                     vk
+    ' 
+    '         Function: GetSortUniqueId
     ' 
     ' 
     ' /********************************************************************************/

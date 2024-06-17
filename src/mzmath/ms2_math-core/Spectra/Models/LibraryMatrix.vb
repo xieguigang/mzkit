@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::839b763f6d16f6e0e975e6a3dd6297e3, mzmath\ms2_math-core\Spectra\Models\LibraryMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::d933905bff6e4397ed8f4516931504c7, mzmath\ms2_math-core\Spectra\Models\LibraryMatrix.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 259
-    '    Code Lines: 153 (59.07%)
-    ' Comment Lines: 75 (28.96%)
+    '   Total Lines: 264
+    '    Code Lines: 157 (59.47%)
+    ' Comment Lines: 75 (28.41%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 31 (11.97%)
-    '     File Size: 9.24 KB
+    '   Blank Lines: 32 (12.12%)
+    '     File Size: 9.45 KB
 
 
     '     Class LibraryMatrix
@@ -51,7 +51,7 @@
     '         Properties: centroid, entropy, intensity, ms2, mz
     '                     name, parentMz, totalIon
     ' 
-    '         Constructor: (+5 Overloads) Sub New
+    '         Constructor: (+6 Overloads) Sub New
     ' 
     '         Function: AlignMatrix, GetIons, GetMaxInto, ParseStream, ToString
     ' 
@@ -184,6 +184,11 @@ Namespace Spectra
         Sub New(name As String, spectrum As IEnumerable(Of ms2))
             Call MyBase.New(spectrum)
             Me.name = name
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Sub New(mz As Double(), into As Double())
+            Call MyBase.New(mz.Select(Function(mzi, i) New ms2(mzi, into(i))))
         End Sub
 
         <DebuggerStepThrough>

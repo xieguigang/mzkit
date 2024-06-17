@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d45bc976323645d096500bcc1e74dabf, visualize\MsImaging\Plot\MSIRegionPlot.vb"
+﻿#Region "Microsoft.VisualBasic::5baddbbae79774bf2dc3dbe5334f89fd, visualize\MsImaging\Plot\MSIRegionPlot.vb"
 
     ' Author:
     ' 
@@ -37,18 +37,21 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 15
-    '    Code Lines: 12 (80.00%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 35
+    '    Code Lines: 25 (71.43%)
+    ' Comment Lines: 3 (8.57%)
+    '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 3 (20.00%)
-    '     File Size: 488 B
+    '   Blank Lines: 7 (20.00%)
+    '     File Size: 1.35 KB
 
 
     ' Class MSIRegionPlot
     ' 
     '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: MeasureRegionPolygon
+    ' 
     '     Sub: PlotInternal
     ' 
     ' /********************************************************************************/

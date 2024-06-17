@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0362eb4a601a2c8fbd1ba0512f36bb0b, Rscript\Library\mzkit_app\src\mzkit\assembly\MzWeb.vb"
+﻿#Region "Microsoft.VisualBasic::667e4a2bf2f5526cc87969f9c37afd70, Rscript\Library\mzkit_app\src\mzkit\assembly\MzWeb.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 840
-    '    Code Lines: 509 (60.60%)
-    ' Comment Lines: 228 (27.14%)
-    '    - Xml Docs: 95.18%
+    '   Total Lines: 872
+    '    Code Lines: 533 (61.12%)
+    ' Comment Lines: 230 (26.38%)
+    '    - Xml Docs: 95.22%
     ' 
-    '   Blank Lines: 103 (12.26%)
-    '     File Size: 33.57 KB
+    '   Blank Lines: 109 (12.50%)
+    '     File Size: 34.87 KB
 
 
     ' Module MzWeb
@@ -78,6 +78,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
 Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.Data.IO
@@ -87,6 +88,7 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports SIMDAdd = Microsoft.VisualBasic.Math.SIMD.Add
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
@@ -648,7 +650,9 @@ Module MzWeb
     ''' <summary>
     ''' get a overview ms1 spectrum data from the mzpack raw data
     ''' </summary>
-    ''' <param name="mzpack">The <see cref="mzPack"/> rawdata object</param>
+    ''' <param name="mzpack">
+    ''' usually be the <see cref="mzPack"/> rawdata object, or a general <see cref="MzMatrix"/> object.
+    ''' </param>
     ''' <param name="tolerance">The mass tolerance error</param>
     ''' <param name="cutoff">intensity cutoff percentage value for removes the noised liked peaks.</param>
     ''' <param name="ionset">
@@ -683,18 +687,30 @@ Module MzWeb
         Dim source_label As String
         Dim allMassPeaks As ms2()
 
+        If mzpack Is Nothing Then
+            Call env.AddMessage("the given rawdata object is nothing.")
+            Return Nothing
+        End If
+
         If TypeOf mzpack Is mzPack Then
             source_label = DirectCast(mzpack, mzPack).source
-            allMassPeaks = mzpack.MS _
+            allMassPeaks = DirectCast(mzpack, mzPack).MS _
                 .Select(Function(scan) scan.GetMs) _
                 .IteratesALL _
                 .ToArray
         ElseIf TypeOf mzpack Is MzMatrix Then
+            Dim mat As MzMatrix = DirectCast(mzpack, MzMatrix)
+            Dim intensity_vec As Double() = New Double(mat.featureSize - 1) {}
+
             source_label = "mzImage matrix"
-            allMassPeaks = DirectCast(mzpack, MzMatrix) _
-                .GetSpectrum _
-                .IteratesALL _
-                .ToArray
+
+            For Each spot In Tqdm.Wrap(mat.matrix)
+                intensity_vec = SIMDAdd.f64_op_add_f64(intensity_vec, spot.intensity)
+            Next
+
+            Return New LibraryMatrix(mat.mz, intensity_vec) With {
+                .name = source_label
+            }
         Else
             Return Message.InCompatibleType(GetType(mzPack), mzpack.GetType, env)
         End If

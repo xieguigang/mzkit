@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1f34aa1f2c5836a758615c4004c72cf9, metadb\Massbank\MetaLib\KEGGExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::68b3348ed668e3f2b76f5a722276fbb7, metadb\Massbank\MetaLib\KEGGExtensions.vb"
 
     ' Author:
     ' 
@@ -37,18 +37,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 53
-    '    Code Lines: 32 (60.38%)
-    ' Comment Lines: 10 (18.87%)
-    '    - Xml Docs: 90.00%
+    '   Total Lines: 87
+    '    Code Lines: 57 (65.52%)
+    ' Comment Lines: 15 (17.24%)
+    '    - Xml Docs: 93.33%
     ' 
-    '   Blank Lines: 11 (20.75%)
-    '     File Size: 1.96 KB
+    '   Blank Lines: 15 (17.24%)
+    '     File Size: 3.57 KB
 
 
     '     Module KEGGExtensions
     ' 
-    '         Function: KEGGDrugGlyan2Compound
+    '         Function: KEGGDrugGlyan2Compound, Xref
     ' 
     ' 
     ' /********************************************************************************/

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f239af8e4d75f9276f98343d57957076, mzmath\ms2_math-core\Spectra\MzIndex.vb"
+﻿#Region "Microsoft.VisualBasic::70cb2f194275ed37cd960bf073f0082d, mzmath\ms2_math-core\Spectra\MzIndex.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 56
-    '    Code Lines: 27 (48.21%)
-    ' Comment Lines: 17 (30.36%)
+    '   Total Lines: 59
+    '    Code Lines: 27 (45.76%)
+    ' Comment Lines: 20 (33.90%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 12 (21.43%)
-    '     File Size: 1.60 KB
+    '   Blank Lines: 12 (20.34%)
+    '     File Size: 1.71 KB
 
 
     '     Class MzIndex

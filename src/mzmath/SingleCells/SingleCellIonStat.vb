@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::51ddb66d0e0a6bfb7a2d853a282ceffa, mzmath\SingleCells\SingleCellIonStat.vb"
+﻿#Region "Microsoft.VisualBasic::0a922eca38283b3729ee20166f0a5742, mzmath\SingleCells\SingleCellIonStat.vb"
 
     ' Author:
     ' 
@@ -37,21 +37,22 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 109
-    '    Code Lines: 74 (67.89%)
-    ' Comment Lines: 24 (22.02%)
-    '    - Xml Docs: 95.83%
+    '   Total Lines: 67
+    '    Code Lines: 32 (47.76%)
+    ' Comment Lines: 29 (43.28%)
+    '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 11 (10.09%)
-    '     File Size: 4.09 KB
+    '   Blank Lines: 6 (8.96%)
+    '     File Size: 2.52 KB
 
 
     ' Class SingleCellIonStat
     ' 
-    '     Properties: baseCell, cells, maxIntensity, mz, Q1Intensity
-    '                 Q2Intensity, Q3Intensity, RSD
+    '     Properties: baseCell, cells, entropy, maxIntensity, mz
+    '                 mz_error, mzmax, mzmin, Q1Intensity, Q2Intensity
+    '                 Q3Intensity, RSD, sparsity
     ' 
-    '     Function: DoIonStats, DoStatInternal, DoStatSingleIon, fillVector
+    '     Function: (+2 Overloads) DoIonStats
     ' 
     ' /********************************************************************************/
 

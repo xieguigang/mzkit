@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1cdf82aab90617aef8346539f2498c57, metadb\Massbank\Public\lipidMAPS\SDF.vb"
+﻿#Region "Microsoft.VisualBasic::d59cce3eb263dfbb0d9100bff8513ab5, metadb\Massbank\Public\lipidMAPS\SDF.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 131
-    '    Code Lines: 90 (68.70%)
-    ' Comment Lines: 31 (23.66%)
+    '   Total Lines: 135
+    '    Code Lines: 90 (66.67%)
+    ' Comment Lines: 36 (26.67%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 10 (7.63%)
-    '     File Size: 7.70 KB
+    '   Blank Lines: 9 (6.67%)
+    '     File Size: 7.95 KB
 
 
     '     Class MetaData

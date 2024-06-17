@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::74f6c56b49611323056c20045f339393, Rscript\Library\mzkit_app\src\mzplot\MsImaging.vb"
+﻿#Region "Microsoft.VisualBasic::97ed41299e987216a018f8707b4ea305, Rscript\Library\mzkit_app\src\mzplot\MsImaging.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 1168
-    '    Code Lines: 758 (64.90%)
-    ' Comment Lines: 278 (23.80%)
-    '    - Xml Docs: 94.24%
+    '   Total Lines: 1194
+    '    Code Lines: 773 (64.74%)
+    ' Comment Lines: 286 (23.95%)
+    '    - Xml Docs: 94.06%
     ' 
-    '   Blank Lines: 132 (11.30%)
-    '     File Size: 49.64 KB
+    '   Blank Lines: 135 (11.31%)
+    '     File Size: 50.84 KB
 
 
     ' Module MsImaging
@@ -51,10 +51,10 @@
     '     Constructor: (+1 Overloads) Sub New
     '     Function: (+2 Overloads) asPixels, AutoScaleMax, averageStep, defaultFilter, FilterMz
     '               GetIntensityData, GetIonLayer, getMSIIons, GetMsMatrx, GetPixel
-    '               intensityFilter, KnnFill, layer, LimitIntensityRange, LoadPixels
-    '               MSICoverage, openIndexedCacheFile, parseFilters, plotMSI, printLayer
-    '               renderRowScans, RGB, splitLayer, sumLayer, tagLayers
-    '               testLayer, TrIQRange, viewer, WriteXICCache
+    '               intensityFilter, KnnFill, layer, layerTable, LimitIntensityRange
+    '               LoadPixels, MSICoverage, openIndexedCacheFile, parseFilters, plotMSI
+    '               printLayer, renderRowScans, RGB, splitLayer, sumLayer
+    '               tagLayers, testLayer, TrIQRange, viewer, WriteXICCache
     ' 
     ' /********************************************************************************/
 
@@ -101,6 +101,7 @@ Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports PixelData = BioNovoGene.Analytical.MassSpectrometry.MsImaging.PixelData
 Imports Point2D = System.Drawing.Point
+Imports std = System.Math
 
 ''' <summary>
 ''' ### Visual MS imaging data(*.imzML)
@@ -121,7 +122,24 @@ Module MsImaging
         Call Internal.generic.add("split", GetType(SingleIonLayer), AddressOf splitLayer)
 
         Call Internal.ConsolePrinter.AttachConsoleFormatter(Of SingleIonLayer)(AddressOf printLayer)
+        Call Internal.Object.Converts.makeDataframe.addHandler(GetType(SingleIonLayer), AddressOf layerTable)
     End Sub
+
+    <RGenericOverloads("as.data.frame")>
+    Public Function layerTable(layer As SingleIonLayer, args As list, env As Environment) As Object
+        Dim df As New dataframe With {
+            .columns = New Dictionary(Of String, Array)
+        }
+        Dim mz_ref As Double = Val(layer.IonMz)
+
+        Call df.add("mz", From spot In layer.MSILayer Select spot.mz)
+        Call df.add("mz_diff", From spot In layer.MSILayer Select std.Abs(spot.mz - mz_ref))
+        Call df.add("x", From spot In layer.MSILayer Select spot.x)
+        Call df.add("y", From spot In layer.MSILayer Select spot.y)
+        Call df.add("intensity", From spot In layer.MSILayer Select spot.intensity)
+
+        Return df
+    End Function
 
     ''' <summary>
     ''' split the ms-imaging layer into multiple parts
@@ -721,6 +739,14 @@ Module MsImaging
     ''' <param name="tolerance"></param>
     ''' <param name="env"></param>
     ''' <returns></returns>
+    ''' <example>
+    ''' let viewer = MsImaging::viewer(open.mzpack("/data.mzpack"));
+    ''' let ion_mz = 100.001;
+    ''' let single_ion_layer = viewer |> MsImaging::MSIlayer(mz = ion_mz, tolerance = "ppm:20");
+    ''' let data = as.data.frame(single_ion_layer);
+    ''' 
+    ''' print(data);
+    ''' </example>
     <ExportAPI("MSIlayer")>
     <RApiReturn(GetType(SingleIonLayer))>
     Public Function GetIonLayer(viewer As Drawer, mz As Double(),

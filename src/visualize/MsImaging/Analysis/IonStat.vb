@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::acb455ae94dac6e8d01d93e94bcadf70, visualize\MsImaging\Analysis\IonStat.vb"
+﻿#Region "Microsoft.VisualBasic::8424885cb49620da3963836ff10e11f4, visualize\MsImaging\Analysis\IonStat.vb"
 
     ' Author:
     ' 
@@ -37,28 +37,23 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 375
-    '    Code Lines: 227 (60.53%)
-    ' Comment Lines: 107 (28.53%)
-    '    - Xml Docs: 91.59%
+    '   Total Lines: 233
+    '    Code Lines: 120 (51.50%)
+    ' Comment Lines: 95 (40.77%)
+    '    - Xml Docs: 94.74%
     ' 
-    '   Blank Lines: 41 (10.93%)
-    '     File Size: 15.35 KB
+    '   Blank Lines: 18 (7.73%)
+    '     File Size: 10.20 KB
 
 
     ' Class IonStat
     ' 
-    '     Properties: averageIntensity, basePixelX, basePixelY, density, maxIntensity
-    '                 moran, mz, mzmax, mzmin, mzwidth
-    '                 pixels, pvalue, Q1Intensity, Q2Intensity, Q3Intensity
+    '     Properties: averageIntensity, basePixelX, basePixelY, density, entropy
+    '                 maxIntensity, moran, mz, mzmax, mzmin
+    '                 mzwidth, pixels, pvalue, Q1Intensity, Q2Intensity
+    '                 Q3Intensity, rsd, sparsity
     ' 
-    '     Function: (+4 Overloads) DoStat, DoStatInternal, DoStatSingleIon
-    '     Class IonFeatureTask
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Sub: Solve
-    ' 
-    ' 
+    '     Function: (+4 Overloads) DoStat
     ' 
     ' /********************************************************************************/
 
@@ -66,19 +61,14 @@
 
 Imports System.ComponentModel
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
-Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
+Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.StatsMath
 Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
 Imports Microsoft.VisualBasic.ApplicationServices.Plugin
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Data.GraphTheory.GridGraph
+Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Math
-Imports Microsoft.VisualBasic.Math.LinearAlgebra
-Imports Microsoft.VisualBasic.Math.Quantile
-Imports Microsoft.VisualBasic.Math.Statistics.Hypothesis
-Imports Microsoft.VisualBasic.Parallel
 Imports Point = System.Drawing.Point
 Imports std = System.Math
 
@@ -173,6 +163,10 @@ Public Class IonStat
     <TypeConverter(GetType(FormattedDoubleConverter)), FormattedDoubleFormatString("G5")>
     Public Property Q3Intensity As Double
 
+    Public Property rsd As Double
+    Public Property entropy As Double
+    Public Property sparsity As Double
+
     ''' <summary>
     ''' Moran-I index value of current ion layer geometry data
     ''' 
@@ -215,6 +209,7 @@ Public Class IonStat
                         Return ions.ToArray
                     End Function) _
             .ToArray
+        Dim total_spots As Integer = allPixels.Length
 
         If Not mz.IsNullOrEmpty Then
             Dim allHits = ionList _
@@ -226,20 +221,24 @@ Public Class IonStat
                                        End Function) _
                                 .ToArray
                         End Function) _
-                .DoCall(Function(allIons) DoStatInternal(allIons, nsize, da, parallel)) _
+                .DoCall(Function(allIons) allIons.DoStatInternal(nsize, da,
+                                                                 total_spots:=total_spots,
+                                                                 parallel:=parallel)) _
                 .ToList
 
             For Each mzi As Double In mz
                 If allHits.Count = 0 OrElse Not allHits.All(Function(m) std.Abs(m.mz - mzi) <= da) Then
                     ' missing current ion
                     ' fill empty
-                    allHits.Add(New IonStat With {.mz = mzi})
+                    Call allHits.Add(New IonStat With {.mz = mzi})
                 End If
             Next
 
             Return allHits
         Else
-            Return DoStatInternal(ionList, nsize, da, parallel)
+            Return ionList.DoStatInternal(nsize, da,
+                                          total_spots:=total_spots,
+                                          parallel:=parallel)
         End If
     End Function
 
@@ -267,7 +266,9 @@ Public Class IonStat
             .Select(Function(p) p.ToArray) _
             .DoCall(Function(allIons)
                         Call VBDebugger.EchoLine("start to pull all pixel data from the raw data pack...")
-                        Return DoStatInternal(allIons, nsize, da, parallel)
+                        Return allIons.DoStatInternal(nsize, da,
+                                                      total_spots:=raw.MS.Length,
+                                                      parallel:=parallel)
                     End Function)
     End Function
 
@@ -281,155 +282,13 @@ Public Class IonStat
     ''' <returns></returns>
     Public Shared Function DoStat(layer As SingleIonLayer, Optional nsize As Integer = 5) As IonStat
         Dim ion As New NamedCollection(Of PixelData)(layer.IonMz, layer.MSILayer)
-        Dim stats As IonStat = DoStatSingleIon(ion, nsize, parallel:=True)
-
+        Dim stats As IonStat = ion.DoStatSingleIon(nsize,
+                                                   total_spots:=layer.DimensionSize.Area,
+                                                   parallel:=True)
         Return stats
     End Function
 
-    ''' <summary>
-    ''' Run analysis for a single ion layer data
-    ''' </summary>
-    ''' <param name="ion">An ion layer data, consist with a collection of the spatial spot data</param>
-    ''' <param name="nsize">
-    ''' the grid cell size for evaluate the pixel density
-    ''' </param>
-    ''' <returns></returns>
-    Private Shared Function DoStatSingleIon(ion As NamedCollection(Of PixelData), nsize As Integer, parallel As Boolean) As IonStat
-        Dim pixels = Grid(Of PixelData).Create(ion, Function(x) New Point(x.x, x.y))
-        Dim basePixel = ion.OrderByDescending(Function(i) i.intensity).First
-        Dim intensity As Double() = ion _
-            .Select(Function(i) i.intensity) _
-            .ToArray
-        Dim sampling = ion.Where(Function(p) p.x Mod 5 = 0 AndAlso p.y Mod 5 = 0).ToArray
-        Dim moran As MoranTest
-
-        If sampling.Length < 3 Then
-            moran = New MoranTest With {
-                .df = 0, .Expected = 0, .Observed = 0,
-                .prob2 = 1, .pvalue = 1, .SD = 0,
-                .t = 0, .z = 0
-            }
-        Else
-            moran = MoranTest.moran_test(
-                x:=sampling.Select(Function(i) i.intensity).ToArray,
-                c1:=sampling.Select(Function(p) CDbl(p.x)).ToArray,
-                c2:=sampling.Select(Function(p) CDbl(p.y)).ToArray,
-                parallel:=parallel,
-                throwMaxIterError:=False
-            )
-        End If
-
-        Dim Q As DataQuartile = intensity.Quartile
-        Dim counts As New List(Of Double)
-        Dim A As Double = nsize ^ 2
-        Dim mzlist As Double() = ion.Select(Function(p) p.mz).ToArray
-
-        For Each top As PixelData In From i As PixelData
-                                     In ion
-                                     Order By i.intensity Descending
-                                     Take 30
-
-            Dim count As Integer = pixels _
-                .Query(top.x, top.y, nsize) _
-                .Where(Function(i)
-                           Return Not i Is Nothing AndAlso i.intensity > 0
-                       End Function) _
-                .Count
-            Dim density As Double = count / A
-
-            Call counts.Add(density)
-        Next
-
-        Dim mzmin As Double = mzlist.Min
-        Dim mzmax As Double = mzlist.Max
-        Dim mzwidth_desc As String = MzWindowDescription(mzmax, mzmin, ppm:=30)
-
-        Return New IonStat With {
-            .mz = Val(ion.name),
-            .basePixelX = basePixel.x,
-            .basePixelY = basePixel.y,
-            .maxIntensity = intensity.Max,
-            .pixels = pixels.size,
-            .Q1Intensity = Q.Q1,
-            .Q2Intensity = Q.Q2,
-            .Q3Intensity = Q.Q3,
-            .density = counts.Average,
-            .moran = If(ion.Length <= 3, -1, moran.Observed),
-            .pvalue = If(ion.Length <= 3, 1, moran.pvalue),
-            .mzmin = mzmin,
-            .mzmax = mzmax,
-            .mzwidth = mzwidth_desc,
-            .averageIntensity = intensity.Average
-        }
+    Public Shared Function DoStat(rawdata As MzMatrix, Optional grid_size As Integer = 5, Optional parallel As Boolean = True) As IEnumerable(Of IonStat)
+        Return rawdata.DoStat(grid_size, parallel)
     End Function
-
-    Private Shared Function DoStatInternal(allIons As IEnumerable(Of PixelData()),
-                                           nsize As Integer,
-                                           da As Double,
-                                           parallel As Boolean) As IEnumerable(Of IonStat)
-
-        ' convert the spatial spot pack as multiple imaging layers
-        ' based on the ion feature tag data
-        Dim ions = allIons _
-            .GroupByTree(Function(d) d.mz, Tolerance.DeltaMass(da)) _
-            .ToArray
-        Dim par As New IonFeatureTask(ions, nsize)
-
-        Call VBDebugger.EchoLine($"get {ions.Length} ion features from the raw data pack!")
-
-        If parallel Then
-            Call par.Run()
-        Else
-            Call par.Solve()
-        End If
-
-        Return par.result
-    End Function
-
-    Public Shared Function DoStat(rawdata As MzMatrix, Optional nsize As Integer = 5, Optional parallel As Boolean = True) As IEnumerable(Of IonStat)
-        Dim ions As NamedCollection(Of PixelData)() = rawdata.mz _
-            .AsParallel _
-            .Select(Function(mzi, i)
-                        Dim pixels As PixelData() = rawdata.matrix _
-                            .Where(Function(s) s.intensity(i) > 0) _
-                            .Select(Function(s) New PixelData(s.X, s.Y, s.intensity(i))) _
-                            .ToArray
-
-                        Return New NamedCollection(Of PixelData)(mzi.ToString, pixels)
-                    End Function) _
-            .ToArray
-        Dim par As New IonFeatureTask(ions, nsize)
-
-        If parallel Then
-            Call par.Run()
-        Else
-            Call par.Solve()
-        End If
-
-        Return par.result
-    End Function
-
-    Private Class IonFeatureTask : Inherits VectorTask
-
-        Public result As IonStat()
-
-        Dim layers As NamedCollection(Of PixelData)()
-        Dim nsize As Integer
-
-        Sub New(layers As NamedCollection(Of PixelData)(), nsize As Integer)
-            Call MyBase.New(layers.Length)
-
-            Me.layers = layers
-            Me.result = New IonStat(layers.Length - 1) {}
-            Me.nsize = nsize
-        End Sub
-
-        Protected Overrides Sub Solve(start As Integer, ends As Integer, cpu_id As Integer)
-            For i As Integer = start To ends
-                ' moran parallel if in sequenceMode
-                ' moran sequence if not in sequenceMode
-                result(i) = DoStatSingleIon(layers(i), nsize, parallel:=sequenceMode)
-            Next
-        End Sub
-    End Class
 End Class

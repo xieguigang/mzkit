@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dd42b48f02529f4a13b72c7f24f6c316, Rscript\Library\mzkit_app\src\mzkit\comprehensive\SingleCellsPack.vb"
+﻿#Region "Microsoft.VisualBasic::0c266c54e0912f2fa4c9c61fdf9fef56, Rscript\Library\mzkit_app\src\mzkit\comprehensive\SingleCellsPack.vb"
 
     ' Author:
     ' 
@@ -37,18 +37,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 29
-    '    Code Lines: 23 (79.31%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 145
+    '    Code Lines: 80 (55.17%)
+    ' Comment Lines: 49 (33.79%)
+    '    - Xml Docs: 95.92%
     ' 
-    '   Blank Lines: 6 (20.69%)
-    '     File Size: 1.05 KB
+    '   Blank Lines: 16 (11.03%)
+    '     File Size: 6.36 KB
 
 
     ' Module SingleCellsPack
     ' 
-    '     Function: PackSingleCells
+    '     Function: PackSingleCells, PackSingleCellsInSampleGroup
     ' 
     ' /********************************************************************************/
 

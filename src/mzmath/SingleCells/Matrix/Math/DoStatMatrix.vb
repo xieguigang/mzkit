@@ -1,4 +1,65 @@
-﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+﻿#Region "Microsoft.VisualBasic::e3185c62bb07b93fd6892c07ba158fa0, mzmath\SingleCells\Matrix\Math\DoStatMatrix.vb"
+
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 114
+    '    Code Lines: 87 (76.32%)
+    ' Comment Lines: 13 (11.40%)
+    '    - Xml Docs: 92.31%
+    ' 
+    '   Blank Lines: 14 (12.28%)
+    '     File Size: 4.68 KB
+
+
+    '     Class DoStatMatrix
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: DoIonStats
+    ' 
+    '         Sub: Solve
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
@@ -9,19 +70,26 @@ Imports Microsoft.VisualBasic.Parallel
 
 Namespace MatrixMath
 
-    Friend Class DoStatMatrix : Inherits VectorTask
+    ''' <summary>
+    ''' analysis the ion features inside a single cells matrix
+    ''' </summary>
+    Public Class DoStatMatrix : Inherits VectorTask
 
-        ReadOnly matrix As PixelData()
-        ReadOnly feature_size As Integer
-        ReadOnly total_cells As Integer
+        Protected ReadOnly matrix As PixelData()
+        Protected ReadOnly feature_size As Integer
+        Protected ReadOnly total_cells As Integer
 
-        ReadOnly rsd As Double()
-        ReadOnly entropy As Double()
-        ReadOnly sparsity As Double()
-        ReadOnly cells As Integer()
-        ReadOnly max_into As Double()
-        ReadOnly base_cell As String()
-        ReadOnly q1, q2, q3 As Double()
+        Protected ReadOnly rsd As Double()
+        Protected ReadOnly entropy As Double()
+        Protected ReadOnly sparsity As Double()
+        Protected ReadOnly cells As Integer()
+        Protected ReadOnly max_into As Double()
+        Protected ReadOnly base_cell As String()
+        Protected ReadOnly q1, q2, q3 As Double()
+        ''' <summary>
+        ''' row index of the spot which its intensity value is max of current ion feature
+        ''' </summary>
+        Protected ReadOnly max_spot As Integer()
 
         Sub New(m As MzMatrix)
             Call MyBase.New(m.featureSize)
@@ -39,6 +107,7 @@ Namespace MatrixMath
             q1 = Allocate(Of Double)(all:=True)
             q2 = Allocate(Of Double)(all:=True)
             q3 = Allocate(Of Double)(all:=True)
+            max_spot = Allocate(Of Integer)(all:=True)
         End Sub
 
         Protected Overrides Sub Solve(start As Integer, ends As Integer, cpu_id As Integer)
@@ -46,11 +115,15 @@ Namespace MatrixMath
                 Dim offset As Integer = i
                 Dim intensity_vec As Double() = (From cell As PixelData In matrix Select cell(offset)).ToArray
                 Dim max_i As Integer = which.Max(intensity_vec)
-                Dim counts As Integer = Aggregate xi As Double In intensity_vec Where xi > 0 Into Count
+                Dim counts As Integer = Aggregate xi As Double
+                                        In intensity_vec
+                                        Where xi > 0
+                                        Into Count
                 Dim quartile As DataQuartile = intensity_vec.Quartile
 
                 base_cell(offset) = matrix(max_i).label
                 cells(offset) = counts
+                max_spot(offset) = max_i
                 max_into(offset) = intensity_vec(max_i)
                 q1(offset) = quartile.Q1
                 q2(offset) = quartile.Q2

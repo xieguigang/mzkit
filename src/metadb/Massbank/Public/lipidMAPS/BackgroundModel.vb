@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dbbce4cfbe435adc81fdba6a6eef7be0, metadb\Massbank\Public\lipidMAPS\BackgroundModel.vb"
+﻿#Region "Microsoft.VisualBasic::bc7996bb74c2b3508ceb02f0053b3cb7, metadb\Massbank\Public\lipidMAPS\BackgroundModel.vb"
 
     ' Author:
     ' 
@@ -37,24 +37,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 165
-    '    Code Lines: 137 (83.03%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 88
+    '    Code Lines: 71 (80.68%)
+    ' Comment Lines: 5 (5.68%)
+    '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 28 (16.97%)
-    '     File Size: 6.70 KB
+    '   Blank Lines: 12 (13.64%)
+    '     File Size: 3.66 KB
 
 
     '     Module BackgroundModel
     ' 
     '         Function: CreateCategoryBackground, CreateCategoryModel
-    ' 
-    '     Class LipidMapsCategory
-    ' 
-    '         Properties: [Class]
-    ' 
-    '         Function: CreateEnrichmentProfiles, CreateProfile, CreateProfiles, EnumerateAllCatalogList, FindClass
     ' 
     ' 
     ' /********************************************************************************/
