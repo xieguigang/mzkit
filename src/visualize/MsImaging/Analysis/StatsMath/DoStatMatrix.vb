@@ -39,6 +39,8 @@ Namespace StatsMath
             Friend ReadOnly sparsity As Double()
             Friend ReadOnly entropy As Double()
 
+
+
             Public Sub New(m As MzMatrix, grid_size As Integer)
                 MyBase.New(m.featureSize)
 
