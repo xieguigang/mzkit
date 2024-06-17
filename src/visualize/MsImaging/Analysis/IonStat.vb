@@ -72,6 +72,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.StatsMath
 Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
 Imports Microsoft.VisualBasic.ApplicationServices.Plugin
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Linq
 Imports Point = System.Drawing.Point
 Imports std = System.Math
@@ -213,6 +214,7 @@ Public Class IonStat
                         Return ions.ToArray
                     End Function) _
             .ToArray
+        Dim total_spots As Integer = allPixels.Length
 
         If Not mz.IsNullOrEmpty Then
             Dim allHits = ionList _
@@ -224,20 +226,24 @@ Public Class IonStat
                                        End Function) _
                                 .ToArray
                         End Function) _
-                .DoCall(Function(allIons) allIons.DoStatInternal(nsize, da, parallel)) _
+                .DoCall(Function(allIons) allIons.DoStatInternal(nsize, da,
+                                                                 total_spots:=total_spots,
+                                                                 parallel:=parallel)) _
                 .ToList
 
             For Each mzi As Double In mz
                 If allHits.Count = 0 OrElse Not allHits.All(Function(m) std.Abs(m.mz - mzi) <= da) Then
                     ' missing current ion
                     ' fill empty
-                    allHits.Add(New IonStat With {.mz = mzi})
+                    Call allHits.Add(New IonStat With {.mz = mzi})
                 End If
             Next
 
             Return allHits
         Else
-            Return ionList.DoStatInternal(nsize, da, parallel)
+            Return ionList.DoStatInternal(nsize, da,
+                                          total_spots:=total_spots,
+                                          parallel:=parallel)
         End If
     End Function
 
@@ -265,7 +271,9 @@ Public Class IonStat
             .Select(Function(p) p.ToArray) _
             .DoCall(Function(allIons)
                         Call VBDebugger.EchoLine("start to pull all pixel data from the raw data pack...")
-                        Return allIons.DoStatInternal(nsize, da, parallel)
+                        Return allIons.DoStatInternal(nsize, da,
+                                                      total_spots:=raw.MS.Length,
+                                                      parallel:=parallel)
                     End Function)
     End Function
 
@@ -279,8 +287,9 @@ Public Class IonStat
     ''' <returns></returns>
     Public Shared Function DoStat(layer As SingleIonLayer, Optional nsize As Integer = 5) As IonStat
         Dim ion As New NamedCollection(Of PixelData)(layer.IonMz, layer.MSILayer)
-        Dim stats As IonStat = ion.DoStatSingleIon(nsize, parallel:=True)
-
+        Dim stats As IonStat = ion.DoStatSingleIon(nsize,
+                                                   total_spots:=layer.DimensionSize.Area,
+                                                   parallel:=True)
         Return stats
     End Function
 
