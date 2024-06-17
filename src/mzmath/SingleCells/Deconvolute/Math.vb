@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::def5da58aa5a3dd24d1e20219278a240, mzmath\SingleCells\Deconvolute\Math.vb"
+﻿#Region "Microsoft.VisualBasic::d1de7bd7b0a488c93dc614968a1e9300, mzmath\SingleCells\Deconvolute\Math.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 211
-    '    Code Lines: 127 (60.19%)
-    ' Comment Lines: 51 (24.17%)
+    '   Total Lines: 212
+    '    Code Lines: 128 (60.38%)
+    ' Comment Lines: 51 (24.06%)
     '    - Xml Docs: 80.39%
     ' 
-    '   Blank Lines: 33 (15.64%)
-    '     File Size: 8.38 KB
+    '   Blank Lines: 33 (15.57%)
+    '     File Size: 8.48 KB
 
 
     '     Module Math
