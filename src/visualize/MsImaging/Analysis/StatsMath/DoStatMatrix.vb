@@ -1,37 +1,21 @@
-﻿Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells
-Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Linq
-Imports System.Runtime.CompilerServices
+﻿Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
-Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells
+Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
 Imports Microsoft.VisualBasic.Data.GraphTheory.GridGraph
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
-Imports Microsoft.VisualBasic.Math.Quantile
 Imports Microsoft.VisualBasic.Math.Statistics.Hypothesis
-Imports Microsoft.VisualBasic.Parallel
 Imports Point = System.Drawing.Point
 
 Namespace StatsMath
 
     Module DoStatMatrix
 
-        Public Function DoStat(rawdata As MzMatrix, Optional nsize As Integer = 5, Optional parallel As Boolean = True) As IEnumerable(Of IonStat)
-            Dim ions As NamedCollection(Of PixelData)() = rawdata.mz _
-                .AsParallel _
-                .Select(Function(mzi, i)
-                            Dim pixels As PixelData() = rawdata.matrix _
-                                .Where(Function(s) s.intensity(i) > 0) _
-                                .Select(Function(s) New PixelData(s.X, s.Y, s.intensity(i))) _
-                                .ToArray
-
-                            Return New NamedCollection(Of PixelData)(mzi.ToString, pixels)
-                        End Function) _
-                .ToArray
-            Dim par As New IonFeatureTask(rawdata, nsize, parallel)
+        <Extension>
+        Public Function DoStat(rawdata As MzMatrix, Optional grid_size As Integer = 5, Optional parallel As Boolean = True) As IEnumerable(Of IonStat)
+            Dim par As New IonFeatureTask(rawdata, grid_size, parallel)
 
             If parallel Then
                 Call par.Run()
@@ -39,7 +23,7 @@ Namespace StatsMath
                 Call par.Solve()
             End If
 
-            Return par.result
+            Return par.Result
         End Function
 
         ''' <summary>
@@ -58,12 +42,19 @@ Namespace StatsMath
             ReadOnly x, y As Integer()
             ReadOnly parallel As Boolean
 
+            ReadOnly mz As Double()
+            ReadOnly mzmin As Double()
+            ReadOnly mzmax As Double()
+
             Public Sub New(m As MzMatrix, grid_size As Integer, parallel As Boolean)
                 MyBase.New(m)
 
                 Me.A = grid_size ^ 2
                 Me.grid_size = grid_size
                 Me.parallel = parallel
+                Me.mz = m.mz
+                Me.mzmin = m.mzmin
+                Me.mzmax = m.mzmax
 
                 Me.density = Allocate(Of Double)(all:=True)
                 Me.average = Allocate(Of Double)(all:=True)
@@ -129,6 +120,31 @@ Namespace StatsMath
                     pvalue(offset) = moran_test.pvalue
                 Next
             End Sub
+
+            Public Iterator Function Result() As IEnumerable(Of IonStat)
+                For i As Integer = 0 To feature_size - 1
+                    Yield New IonStat With {
+                        .averageIntensity = average(i),
+                        .basePixelX = x(i),
+                        .basePixelY = y(i),
+                        .density = density(i),
+                        .entropy = entropy(i),
+                        .maxIntensity = max_into(i),
+                        .moran = moran(i),
+                        .mz = mz(i),
+                        .mzmax = mzmax(i),
+                        .mzmin = mzmin(i),
+                        .mzwidth = MassWindow.ToString(.mzmax, .mzmin),
+                        .pixels = cells(i),
+                        .pvalue = pvalue(i),
+                        .Q1Intensity = q1(i),
+                        .Q2Intensity = q2(i),
+                        .Q3Intensity = q3(i),
+                        .rsd = rsd(i),
+                        .sparsity = sparsity(i)
+                    }
+                Next
+            End Function
         End Class
     End Module
 End Namespace
