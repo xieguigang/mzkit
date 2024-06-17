@@ -116,9 +116,27 @@ Module Massbank
 
     Sub Main()
         Call Internal.Object.Converts.makeDataframe.addHandler(GetType(LipidMaps.MetaData()), AddressOf createLipidMapTable)
+        Call Internal.Object.Converts.makeDataframe.addHandler(GetType(RefMet()), AddressOf refMetTable)
 
         Call generic.add("readBin.metalib", GetType(Stream), AddressOf readMetalibMsgPack)
     End Sub
+
+    <RGenericOverloads("as.data.frame")>
+    Private Function refMetTable(refmet As RefMet(), args As list, env As Environment) As Object
+        Dim df As New Rdataframe With {.columns = New Dictionary(Of String, Array)}
+
+        Call df.add("name", From m As RefMet In refmet Select m.refmet_name)
+        Call df.add("formula", From m As RefMet In refmet Select m.formula)
+        Call df.add("exact_mass", From m As RefMet In refmet Select m.exactmass)
+        Call df.add("pubchem_cid", From m As RefMet In refmet Select m.pubchem_cid)
+        Call df.add("inchi_key", From m As RefMet In refmet Select m.inchi_key)
+        Call df.add("smiles", From m As RefMet In refmet Select m.smiles)
+        Call df.add("super_class", From m As RefMet In refmet Select m.super_class)
+        Call df.add("class", From m As RefMet In refmet Select m.main_class)
+        Call df.add("sub_class", From m As RefMet In refmet Select m.sub_class)
+
+        Return df
+    End Function
 
     Private Function readMetalibMsgPack(file As Stream, args As list, env As Environment) As Object
         Return MsgPackSerializer.Deserialize(Of MetaLib())(file)
