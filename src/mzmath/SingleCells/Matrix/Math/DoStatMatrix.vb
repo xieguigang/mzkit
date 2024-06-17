@@ -9,19 +9,26 @@ Imports Microsoft.VisualBasic.Parallel
 
 Namespace MatrixMath
 
-    Friend Class DoStatMatrix : Inherits VectorTask
+    ''' <summary>
+    ''' analysis the ion features inside a single cells matrix
+    ''' </summary>
+    Public Class DoStatMatrix : Inherits VectorTask
 
-        ReadOnly matrix As PixelData()
-        ReadOnly feature_size As Integer
-        ReadOnly total_cells As Integer
+        Protected ReadOnly matrix As PixelData()
+        Protected ReadOnly feature_size As Integer
+        Protected ReadOnly total_cells As Integer
 
-        ReadOnly rsd As Double()
-        ReadOnly entropy As Double()
-        ReadOnly sparsity As Double()
-        ReadOnly cells As Integer()
-        ReadOnly max_into As Double()
-        ReadOnly base_cell As String()
-        ReadOnly q1, q2, q3 As Double()
+        Protected ReadOnly rsd As Double()
+        Protected ReadOnly entropy As Double()
+        Protected ReadOnly sparsity As Double()
+        Protected ReadOnly cells As Integer()
+        Protected ReadOnly max_into As Double()
+        Protected ReadOnly base_cell As String()
+        Protected ReadOnly q1, q2, q3 As Double()
+        ''' <summary>
+        ''' row index of the spot which its intensity value is max of current ion feature
+        ''' </summary>
+        Protected ReadOnly max_spot As Integer()
 
         Sub New(m As MzMatrix)
             Call MyBase.New(m.featureSize)
@@ -39,6 +46,7 @@ Namespace MatrixMath
             q1 = Allocate(Of Double)(all:=True)
             q2 = Allocate(Of Double)(all:=True)
             q3 = Allocate(Of Double)(all:=True)
+            max_spot = Allocate(Of Integer)(all:=True)
         End Sub
 
         Protected Overrides Sub Solve(start As Integer, ends As Integer, cpu_id As Integer)
@@ -54,6 +62,7 @@ Namespace MatrixMath
 
                 base_cell(offset) = matrix(max_i).label
                 cells(offset) = counts
+                max_spot(offset) = max_i
                 max_into(offset) = intensity_vec(max_i)
                 q1(offset) = quartile.Q1
                 q2(offset) = quartile.Q2

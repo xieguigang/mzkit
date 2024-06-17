@@ -1,62 +1,62 @@
 ﻿#Region "Microsoft.VisualBasic::74f6c56b49611323056c20045f339393, Rscript\Library\mzkit_app\src\mzplot\MsImaging.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 1168
-    '    Code Lines: 758 (64.90%)
-    ' Comment Lines: 278 (23.80%)
-    '    - Xml Docs: 94.24%
-    ' 
-    '   Blank Lines: 132 (11.30%)
-    '     File Size: 49.64 KB
+' Summaries:
 
 
-    ' Module MsImaging
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: (+2 Overloads) asPixels, AutoScaleMax, averageStep, defaultFilter, FilterMz
-    '               GetIntensityData, GetIonLayer, getMSIIons, GetMsMatrx, GetPixel
-    '               intensityFilter, KnnFill, layer, LimitIntensityRange, LoadPixels
-    '               MSICoverage, openIndexedCacheFile, parseFilters, plotMSI, printLayer
-    '               renderRowScans, RGB, splitLayer, sumLayer, tagLayers
-    '               testLayer, TrIQRange, viewer, WriteXICCache
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 1168
+'    Code Lines: 758 (64.90%)
+' Comment Lines: 278 (23.80%)
+'    - Xml Docs: 94.24%
+' 
+'   Blank Lines: 132 (11.30%)
+'     File Size: 49.64 KB
+
+
+' Module MsImaging
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Function: (+2 Overloads) asPixels, AutoScaleMax, averageStep, defaultFilter, FilterMz
+'               GetIntensityData, GetIonLayer, getMSIIons, GetMsMatrx, GetPixel
+'               intensityFilter, KnnFill, layer, LimitIntensityRange, LoadPixels
+'               MSICoverage, openIndexedCacheFile, parseFilters, plotMSI, printLayer
+'               renderRowScans, RGB, splitLayer, sumLayer, tagLayers
+'               testLayer, TrIQRange, viewer, WriteXICCache
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -101,6 +101,7 @@ Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports PixelData = BioNovoGene.Analytical.MassSpectrometry.MsImaging.PixelData
 Imports Point2D = System.Drawing.Point
+Imports std = System.Math
 
 ''' <summary>
 ''' ### Visual MS imaging data(*.imzML)
@@ -121,7 +122,24 @@ Module MsImaging
         Call Internal.generic.add("split", GetType(SingleIonLayer), AddressOf splitLayer)
 
         Call Internal.ConsolePrinter.AttachConsoleFormatter(Of SingleIonLayer)(AddressOf printLayer)
+        Call Internal.Object.Converts.makeDataframe.addHandler(GetType(SingleIonLayer), AddressOf layerTable)
     End Sub
+
+    <RGenericOverloads("as.data.frame")>
+    Public Function layerTable(layer As SingleIonLayer, args As list, env As Environment) As Object
+        Dim df As New dataframe With {
+            .columns = New Dictionary(Of String, Array)
+        }
+        Dim mz_ref As Double = Val(layer.IonMz)
+
+        Call df.add("mz", From spot In layer.MSILayer Select spot.mz)
+        Call df.add("mz_diff", From spot In layer.MSILayer Select std.Abs(spot.mz - mz_ref))
+        Call df.add("x", From spot In layer.MSILayer Select spot.x)
+        Call df.add("y", From spot In layer.MSILayer Select spot.y)
+        Call df.add("intensity", From spot In layer.MSILayer Select spot.intensity)
+
+        Return df
+    End Function
 
     ''' <summary>
     ''' split the ms-imaging layer into multiple parts
@@ -721,6 +739,14 @@ Module MsImaging
     ''' <param name="tolerance"></param>
     ''' <param name="env"></param>
     ''' <returns></returns>
+    ''' <example>
+    ''' let viewer = MsImaging::viewer(open.mzpack("/data.mzpack"));
+    ''' let ion_mz = 100.001;
+    ''' let single_ion_layer = viewer |> MsImaging::MSIlayer(mz = ion_mz, tolerance = "ppm:20");
+    ''' let data = as.data.frame(single_ion_layer);
+    ''' 
+    ''' print(data);
+    ''' </example>
     <ExportAPI("MSIlayer")>
     <RApiReturn(GetType(SingleIonLayer))>
     Public Function GetIonLayer(viewer As Drawer, mz As Double(),
