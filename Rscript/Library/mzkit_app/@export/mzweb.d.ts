@@ -85,7 +85,7 @@ declare namespace mzweb {
     * get a overview ms1 spectrum data from the mzpack raw data
     * 
     * 
-     * @param mzpack The @``T:BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack`` rawdata object
+     * @param mzpack usually be the @``T:BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack`` rawdata object, or a general @``T:BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute.MzMatrix`` object.
      * @param tolerance The mass tolerance error
      * 
      * + default value Is ``'da:0.001'``.
