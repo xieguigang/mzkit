@@ -1,66 +1,66 @@
 ﻿#Region "Microsoft.VisualBasic::700eb052c44b0f944465ff25c03e12e1, visualize\MsImaging\Analysis\StatsMath\DoStatMatrix.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 150
-    '    Code Lines: 122 (81.33%)
-    ' Comment Lines: 3 (2.00%)
-    '    - Xml Docs: 100.00%
-    ' 
-    '   Blank Lines: 25 (16.67%)
-    '     File Size: 6.41 KB
+' Summaries:
 
 
-    '     Module DoStatMatrix
-    ' 
-    '         Function: DoStat
-    '         Class IonFeatureTask
-    ' 
-    '             Constructor: (+1 Overloads) Sub New
-    ' 
-    '             Function: Result
-    ' 
-    '             Sub: Solve
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 150
+'    Code Lines: 122 (81.33%)
+' Comment Lines: 3 (2.00%)
+'    - Xml Docs: 100.00%
+' 
+'   Blank Lines: 25 (16.67%)
+'     File Size: 6.41 KB
+
+
+'     Module DoStatMatrix
+' 
+'         Function: DoStat
+'         Class IonFeatureTask
+' 
+'             Constructor: (+1 Overloads) Sub New
+' 
+'             Function: Result
+' 
+'             Sub: Solve
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -169,7 +169,7 @@ Namespace StatsMath
 
                     For Each top As Deconvolute.PixelData In (From cell As Deconvolute.PixelData
                                                               In points
-                                                              Order By cell.intensity Descending
+                                                              Order By cell(offset) Descending
                                                               Take 30)
 
                         Call counts.Add(Aggregate cell As Point
