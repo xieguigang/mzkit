@@ -161,6 +161,8 @@ Public Class PeakAssign : Inherits Plot
         If matrix.Length = 0 Then
             Call "MS matrix is empty in peak assign plot!".Warning
             Return
+        Else
+            g.Stroke = Nothing
         End If
 
         Dim maxinto As Double = matrix.Select(Function(p) p.intensity).Max
