@@ -151,6 +151,7 @@ Namespace ASCII.MGF
             Call out.WriteLine("RTINSECONDS=" & ion.RtInSeconds)
             Call out.WriteLine($"PEPMASS={ion.PepMass.name} {ion.PepMass.text}")
             Call out.WriteLine("CHARGE=" & ion.Charge)
+            Call out.WriteLine("MSLEVEL=2")
 
             ' Optional
             Call out.writeIf("ACCESSION", ion.Accession)

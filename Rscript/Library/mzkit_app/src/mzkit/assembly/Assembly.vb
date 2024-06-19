@@ -346,6 +346,15 @@ Module Assembly
             Return True
         End If
 
+        If TypeOf ions Is vector Then
+            ions = DirectCast(ions, vector).data
+            ions = TryCastGenericArray(ions, env)
+
+            If TypeOf ions Is Message Then
+                Return ions
+            End If
+        End If
+
         If ions.GetType() Is GetType(pipeline) Then
             Using mgfWriter As StreamWriter = file.OpenWriter(Encodings.ASCII, append:=False)
                 Dim pipeStream As pipeline = DirectCast(ions, pipeline)

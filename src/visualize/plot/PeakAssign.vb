@@ -90,8 +90,8 @@ Public Class PeakAssign : Inherits Plot
     ''' <summary>
     ''' 
     ''' </summary>
-    ''' <param name="title$"></param>
-    ''' <param name="matrix"></param>
+    ''' <param name="title">the title display on the plot</param>
+    ''' <param name="matrix">the spectrum matrix data</param>
     ''' <param name="barHighlight"></param>
     ''' <param name="theme"></param>
     ''' <param name="images">the annotated molecular parts image</param>
@@ -161,6 +161,8 @@ Public Class PeakAssign : Inherits Plot
         If matrix.Length = 0 Then
             Call "MS matrix is empty in peak assign plot!".Warning
             Return
+        Else
+            g.Stroke = Nothing
         End If
 
         Dim maxinto As Double = matrix.Select(Function(p) p.intensity).Max
@@ -189,7 +191,7 @@ Public Class PeakAssign : Inherits Plot
 
         Call Axis.DrawAxis(
             g, canvas, scaler,
-            showGrid:=True,
+            showGrid:=theme.drawGrid,
             xlabel:=xlabel,
             ylabel:=ylabel,
             XtickFormat:="F0",
