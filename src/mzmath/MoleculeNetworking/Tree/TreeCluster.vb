@@ -65,6 +65,8 @@ Imports Microsoft.VisualBasic.Data.GraphTheory
 Imports Microsoft.VisualBasic.DataMining.BinaryTree
 Imports Microsoft.VisualBasic.Linq
 
+Public Delegate Function IRankCluster(cluster As PeakMs2()) As Double
+
 ''' <summary>
 ''' A tuple object that wrap the <see cref="ClusterTree"/> and
 ''' spectrum data <see cref="PeakMs2"/>.
@@ -83,30 +85,57 @@ Public Class TreeCluster
     ''' <summary>
     ''' 
     ''' </summary>
-    ''' <param name="rank">
+    ''' <param name="ranking"></param>
+    ''' <param name="n">get top n clusters</param>
+    ''' <returns></returns>
+    Public Iterator Function GetTopCluster(ranking As IRankCluster, n As Integer) As IEnumerable(Of SeqValue(Of PeakMs2()))
+        Dim tree = GetTree()
+
+        If tree.IsNullOrEmpty Then
+            Return
+        End If
+
+        Dim specIndex = spectrum.ToDictionary(Function(s) s.lib_guid)
+        Dim rank_desc = tree _
+            .OrderByDescending(Function(c)
+                                   Return ranking(c.Value.Select(Function(a) specIndex(a)).ToArray)
+                               End Function)
+        Dim i As Integer = 1
+
+        For Each top As KeyValuePair(Of String, String()) In rank_desc
+            Yield New SeqValue(Of PeakMs2()) With {
+                .i = i,
+                .value = top.Value _
+                    .Select(Function(id) specIndex(id)) _
+                    .ToArray
+            }
+
+            i += 1
+
+            If i = n Then
+                Exit For
+            End If
+        Next
+    End Function
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="ranking">
     ''' the score ranking function, higher score is better
     ''' </param>
     ''' <returns>
     ''' this function may returns empty collection if the tree
     ''' data is nothing or empty tree data.
     ''' </returns>
-    Public Function GetTopCluster(rank As Func(Of PeakMs2(), Double)) As IEnumerable(Of PeakMs2)
-        Dim tree = GetTree()
+    Public Function GetTopCluster(ranking As IRankCluster) As PeakMs2()
+        Dim top = GetTopCluster(ranking, n:=1).FirstOrDefault
 
-        If tree.IsNullOrEmpty Then
-            Return New PeakMs2() {}
+        If top.value.IsNullOrEmpty Then
+            Return {}
+        Else
+            Return top.value
         End If
-
-        Dim specIndex = spectrum.ToDictionary(Function(s) s.lib_guid)
-        Dim rank_desc = tree _
-            .OrderByDescending(Function(c)
-                                   Return rank(c.Value.Select(Function(a) specIndex(a)).ToArray)
-                               End Function) _
-            .First
-
-        Return rank_desc _
-            .Value _
-            .Select(Function(id) specIndex(id))
     End Function
 
     Public Function GetTree() As Dictionary(Of String, String())
