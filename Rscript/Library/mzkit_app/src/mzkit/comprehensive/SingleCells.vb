@@ -1,60 +1,60 @@
 ﻿#Region "Microsoft.VisualBasic::6e85e3da2730f3e26236db8c37b06b45, Rscript\Library\mzkit_app\src\mzkit\comprehensive\SingleCells.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 703
-    '    Code Lines: 414 (58.89%)
-    ' Comment Lines: 217 (30.87%)
-    '    - Xml Docs: 93.55%
-    ' 
-    '   Blank Lines: 72 (10.24%)
-    '     File Size: 27.89 KB
+' Summaries:
 
 
-    ' Module SingleCells
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: asHTSExpression, cell_clusters, cell_embedding, cellLabels, cellMatrix
-    '               cellStatsTable, dfMzMatrix, embedding_sample, mzMatrixDf, openMatrix
-    '               readMzmatrix, rowApplyScale, singleCellsIons, spatialLabels, spot_vector
-    '               TotalPeakSumNormalize, writeMatrix
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 703
+'    Code Lines: 414 (58.89%)
+' Comment Lines: 217 (30.87%)
+'    - Xml Docs: 93.55%
+' 
+'   Blank Lines: 72 (10.24%)
+'     File Size: 27.89 KB
+
+
+' Module SingleCells
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Function: asHTSExpression, cell_clusters, cell_embedding, cellLabels, cellMatrix
+'               cellStatsTable, dfMzMatrix, embedding_sample, mzMatrixDf, openMatrix
+'               readMzmatrix, rowApplyScale, singleCellsIons, spatialLabels, spot_vector
+'               TotalPeakSumNormalize, writeMatrix
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -130,7 +130,7 @@ Module SingleCells
         Call table.add(NameOf(SingleCellIonStat.Q1Intensity), ions.Select(Function(i) i.Q1Intensity))
         Call table.add(NameOf(SingleCellIonStat.Q2Intensity), ions.Select(Function(i) i.Q2Intensity))
         Call table.add(NameOf(SingleCellIonStat.Q3Intensity), ions.Select(Function(i) i.Q3Intensity))
-        Call table.add(NameOf(SingleCellIonStat.RSD), ions.Select(Function(i) i.RSD))
+        Call table.add(NameOf(SingleCellIonStat.rsd), ions.Select(Function(i) i.rsd))
         Call table.add(NameOf(SingleCellIonStat.entropy), ions.Select(Function(i) i.entropy))
         Call table.add(NameOf(SingleCellIonStat.sparsity), ions.Select(Function(i) i.sparsity))
 
