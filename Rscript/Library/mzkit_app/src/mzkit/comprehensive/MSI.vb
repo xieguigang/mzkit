@@ -1208,16 +1208,39 @@ Module MSI
         ElseIf ionSet.GetType.ImplementInterface(Of IDictionary) Then
             ions = RConversion.asList(ionSet, New list, env)
         Else
-            Dim mz As Double() = CLRVector.asNumeric(ionSet)
-            Dim keys As String() = mz _
-                .Select(Function(m) m.ToString) _
-                .UniqueNames
+            Dim pull As pipeline = pipeline.TryCreatePipeline(Of MassWindow)(ionSet, env, suppress:=True)
 
-            ions = keys.Zip(mz) _
-                .ToDictionary(Function(m) m.First,
-                              Function(m)
-                                  Return m.Second
-                              End Function)
+            If pull.isError Then
+                Dim mz As Double() = CLRVector.asNumeric(ionSet)
+                Dim keys As String() = mz _
+                    .Select(Function(m) m.ToString) _
+                    .UniqueNames
+
+                ions = keys.Zip(mz) _
+                    .ToDictionary(Function(m) m.First,
+                                  Function(m)
+                                      Return m.Second
+                                  End Function)
+            Else
+                Dim massSet As MassWindow() = pull _
+                    .populates(Of MassWindow)(env) _
+                    .ToArray
+
+                If rawMatrix Then
+                    Return Deconvolute.PeakMatrix.CreateMatrix(raw, massSet, err.GetErrorDalton)
+                Else
+                    Dim mz As Double() = massSet.Mass
+                    Dim keys As String() = mz _
+                        .Select(Function(m) m.ToString) _
+                        .UniqueNames
+
+                    ions = keys.Zip(mz) _
+                        .ToDictionary(Function(m) m.First,
+                                      Function(m)
+                                          Return m.Second
+                                      End Function)
+                End If
+            End If
         End If
 
         If rawMatrix Then
