@@ -70,7 +70,6 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.GraphTheory.GridGraph
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Imaging
-Imports Microsoft.VisualBasic.Imaging.Drawing2D.HeatMap
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports HeatMapPixel = Microsoft.VisualBasic.Imaging.Pixel
 
@@ -205,7 +204,6 @@ Public Class PixelData : Implements IMSIPixel, IPoint2D, HeatMapPixel, RasterPix
     ''' <param name="pixels"></param>
     ''' <returns></returns>
     ''' <remarks>
-    ''' <see cref="HeatMapRaster(Of PixelData)"/>
     ''' </remarks>
     Public Shared Iterator Function ScalePixels(pixels As PixelData()) As IEnumerable(Of PixelData)
         Dim level As Double
