@@ -981,7 +981,7 @@ Module MSI
                              Optional env As Environment = Nothing) As Object
 
         If TypeOf raw Is mzPack Then
-            Return IonStat.DoStat(
+            Return SpatialIonStats.DoStat(
                 raw:=DirectCast(raw, mzPack),
                 nsize:=grid_size,
                 da:=da,
@@ -1004,7 +1004,7 @@ Module MSI
             Return env.EvaluateFramework(Of SingleIonLayer, IonStat)(
                 x:=layers.populates(Of SingleIonLayer)(env),
                 eval:=Function(layer)
-                          Return IonStat.DoStat(layer, nsize:=grid_size)
+                          Return SpatialIonStats.DoStat(layer, nsize:=grid_size)
                       End Function,
                 parallel:=parallel
             )
