@@ -13,6 +13,7 @@
 	  <PackageLicenseFile>LICENSE</PackageLicenseFile>
 	  <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
 	  <GenerateDocumentationFile>True</GenerateDocumentationFile>
+	  <UseApplicationFramework>True</UseApplicationFramework>
 
   </PropertyGroup>
 
