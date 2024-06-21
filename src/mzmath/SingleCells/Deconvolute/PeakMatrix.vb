@@ -1,57 +1,57 @@
 ﻿#Region "Microsoft.VisualBasic::92f00db5521b9fe8c857a6937319c32b, mzmath\SingleCells\Deconvolute\PeakMatrix.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 133
-    '    Code Lines: 93 (69.92%)
-    ' Comment Lines: 23 (17.29%)
-    '    - Xml Docs: 95.65%
-    ' 
-    '   Blank Lines: 17 (12.78%)
-    '     File Size: 5.26 KB
+' Summaries:
 
 
-    '     Module PeakMatrix
-    ' 
-    '         Function: (+2 Overloads) CreateMatrix, deconvoluteMatrix, deconvoluteMatrixParallel, (+2 Overloads) ExportScans
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 133
+'    Code Lines: 93 (69.92%)
+' Comment Lines: 23 (17.29%)
+'    - Xml Docs: 95.65%
+' 
+'   Blank Lines: 17 (12.78%)
+'     File Size: 5.26 KB
+
+
+'     Module PeakMatrix
+' 
+'         Function: (+2 Overloads) CreateMatrix, deconvoluteMatrix, deconvoluteMatrixParallel, (+2 Overloads) ExportScans
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -85,6 +85,8 @@ Namespace Deconvolute
             Dim matrix As PixelData() = raw _
                 .deconvoluteMatrixParallel(mzSet.Length, mzIndex) _
                 .ToArray
+            ' the matrix type flag will affects the matrix index behaviours
+            ' keeps the matrix type as the source data it is
             Dim type As FileApplicationClass = raw.Application
 
             Return New MzMatrix With {
@@ -178,13 +180,16 @@ Namespace Deconvolute
 
         <Extension>
         Private Function deconvoluteMatrix(scan As ScanMS1, len As Integer, mzIndex As MzPool) As PixelData
+            ' try get the ms-imaging spatial information
+            ' xy maybe nothing for single cells rawdata
             Dim xy As Point = scan.GetMSIPixel
             Dim v As Double() = Math.DeconvoluteScan(scan.mz, scan.into, len, mzIndex)
 
             Return New PixelData With {
                .X = xy.X,
                .Y = xy.Y,
-               .intensity = v
+               .intensity = v,
+               .label = scan.scan_id
             }
         End Function
     End Module
