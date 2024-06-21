@@ -85,12 +85,13 @@ Namespace Deconvolute
             Dim matrix As PixelData() = raw _
                 .deconvoluteMatrixParallel(mzSet.Length, mzIndex) _
                 .ToArray
+            Dim type As FileApplicationClass = raw.Application
 
             Return New MzMatrix With {
                 .matrix = matrix,
                 .mz = mzSet,
                 .tolerance = mzdiff,
-                .matrixType = FileApplicationClass.SingleCellsMetabolomics,
+                .matrixType = type,
                 .mzmin = massVals.Select(Function(mzi) mzi.mzmin).ToArray,
                 .mzmax = massVals.Select(Function(mzi) mzi.mzmax).ToArray
             }
