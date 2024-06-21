@@ -80,7 +80,7 @@ Namespace StatsMath
     ''' <summary>
     ''' create stats analysis result for ms-imaging
     ''' </summary>
-    Module DoStatPack
+    Public Module DoStatPack
 
         ''' <summary>
         ''' Run analysis for a single ion layer data
@@ -92,7 +92,7 @@ Namespace StatsMath
         ''' <returns></returns>
         ''' 
         <Extension>
-        Friend Function DoStatSingleIon(ion As NamedCollection(Of PixelData), nsize As Integer, total_spots As Integer, parallel As Boolean) As IonStat
+        Public Function DoStatSingleIon(ion As NamedCollection(Of PixelData), nsize As Integer, total_spots As Integer, parallel As Boolean) As IonStat
             Dim pixels = Grid(Of PixelData).Create(ion, Function(x) New Point(x.x, x.y))
             Dim basePixel = ion.OrderByDescending(Function(i) i.intensity).First
             Dim intensity As Double() = ion _
@@ -173,7 +173,7 @@ Namespace StatsMath
         End Function
 
         <Extension>
-        Friend Function DoStatInternal(allIons As IEnumerable(Of PixelData()),
+        Public Function DoStatInternal(allIons As IEnumerable(Of PixelData()),
                                        nsize As Integer,
                                        da As Double,
                                        total_spots As Integer,

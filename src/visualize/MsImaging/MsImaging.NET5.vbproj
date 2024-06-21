@@ -317,6 +317,7 @@
     <ProjectReference Include="..\..\assembly\mzPack\mzpack.NET5.vbproj" />
     <ProjectReference Include="..\..\mzmath\ms2_math-core\mzmath-netcore5.vbproj" />
     <ProjectReference Include="..\..\mzmath\SingleCells\SingleCells.vbproj" />
+    <ProjectReference Include="..\..\mzmath\SpatialMath\SpatialMath.vbproj" />
   </ItemGroup>
 
   <ItemGroup>
