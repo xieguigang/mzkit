@@ -37,7 +37,7 @@ Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "deconv.NET5", "..\..\src\mz
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "assembly", "assembly", "{15071E4A-7D3A-4289-8117-2CC438A191A2}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "network", "network", "{E96F8193-C347-4561-8B2E-269487C455D5}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "network_graph", "network_graph", "{E96F8193-C347-4561-8B2E-269487C455D5}"
 EndProject
 Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "physics-netcore5", "..\..\..\GCModeller\src\runtime\sciBASIC#\gr\physics\physics-netcore5.vbproj", "{41BC5BEF-6537-43A6-8AD6-B534034AD5E0}"
 EndProject
