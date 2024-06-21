@@ -124,7 +124,7 @@ Namespace MsImaging
         End Function
 
         <Extension>
-        Public Function GetMSIMetadata(raw As MassSpectrometry.SingleCells.MatrixReader) As Metadata
+        Public Function GetMSIMetadata(raw As MassSpectrometry.SingleCells.File.MatrixReader) As Metadata
             If raw.matrixType <> FileApplicationClass.MSImaging Then
                 Return New Metadata With {.[class] = raw.matrixType.ToString}
             Else
