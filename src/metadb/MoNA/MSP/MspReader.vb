@@ -61,12 +61,7 @@ Public Module MspReader
 
     Public Iterator Function ParseFile(path$, Optional parseMs2 As Boolean = True) As IEnumerable(Of SpectraSection)
         For Each spectrum As MspData In MspData.Load(path, ms2:=parseMs2)
-            Dim metadata As MetaData = MspReader.GetMetadata(spectrum)
-            Dim ms2 As SpectraInfo = ParseSpectrumData(spectrum, metadata)
-
-            Yield New SpectraSection(metadata) With {
-                .SpectraInfo = ms2
-            }
+            Yield spectrum.GetSpectra
         Next
     End Function
 
@@ -81,6 +76,16 @@ Public Module MspReader
             .mz = Val(spectrum.PrecursorMZ),
             .precursor_type = spectrum.Precursor_type,
             .ion_mode = spectrum.Ion_mode
+        }
+    End Function
+
+    <Extension>
+    Public Function GetSpectra(spectrum As MspData) As SpectraSection
+        Dim metadata As MetaData = MspReader.GetMetadata(spectrum)
+        Dim ms2 As SpectraInfo = ParseSpectrumData(spectrum, metadata)
+
+        Return New SpectraSection(metadata) With {
+            .SpectraInfo = ms2
         }
     End Function
 

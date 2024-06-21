@@ -59,51 +59,58 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
 
-Public Class MatrixHeader : Implements IMassSet
+Namespace File
 
-    ''' <summary>
-    ''' m/z vector in numeric format of round to digit 4, this ion m/z 
-    ''' feature list is generated under the current mass 
-    ''' <see cref="tolerance"/>.
-    ''' </summary>
-    ''' <returns></returns>
-    Public Property mz As Double() Implements IMassSet.mass
-    Public Property mzmin As Double() Implements IMassSet.min
-    Public Property mzmax As Double() Implements IMassSet.max
+    Public Class MatrixHeader : Implements IMassSet
 
-    ''' <summary>
-    ''' the script string of the mz diff tolerance for <see cref="mz"/>
-    ''' </summary>
-    ''' <returns></returns>
-    Public Property tolerance As String
+        ''' <summary>
+        ''' m/z vector in numeric format of round to digit 4, this ion m/z 
+        ''' feature list is generated under the current mass 
+        ''' <see cref="tolerance"/>.
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property mz As Double() Implements IMassSet.mass
+        Public Property mzmin As Double() Implements IMassSet.min
+        Public Property mzmax As Double() Implements IMassSet.max
 
-    ''' <summary>
-    ''' get count of the ion feature size under current mass <see cref="tolerance"/>
-    ''' </summary>
-    ''' <returns></returns>
-    Public ReadOnly Property featureSize As Integer
-        Get
-            Return mz.TryCount
-        End Get
-    End Property
+        ''' <summary>
+        ''' the script string of the mz diff tolerance for <see cref="mz"/>
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property tolerance As String
 
-    ''' <summary>
-    ''' number of the spots
-    ''' </summary>
-    ''' <returns></returns>
-    ''' <remarks>
-    ''' number of the rows in <see cref="MzMatrix.matrix"/>
-    ''' </remarks>
-    Public Property numSpots As Integer
+        ''' <summary>
+        ''' get count of the ion feature size under current mass <see cref="tolerance"/>
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property featureSize As Integer
+            Get
+                Return mz.TryCount
+            End Get
+        End Property
 
-    ''' <summary>
-    ''' the matrix data type of current object, value of this property could be one of the flag value:
-    ''' 
-    ''' 1. <see cref="FileApplicationClass.MSImaging"/> 2d spatial data
-    ''' 2. <see cref="FileApplicationClass.MSImaging3D"/> 3d spatial data
-    ''' 3. <see cref="FileApplicationClass.SingleCellsMetabolomics"/> single cell matrix data
-    ''' </summary>
-    ''' <returns></returns>
-    Public Property matrixType As FileApplicationClass
+        ''' <summary>
+        ''' number of the spots
+        ''' </summary>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' number of the rows in <see cref="MzMatrix.matrix"/>
+        ''' </remarks>
+        Public Property numSpots As Integer
 
-End Class
+        ''' <summary>
+        ''' the matrix data type of current object, value of this property could be one of the flag value:
+        ''' 
+        ''' 1. <see cref="FileApplicationClass.MSImaging"/> 2d spatial data
+        ''' 2. <see cref="FileApplicationClass.MSImaging3D"/> 3d spatial data
+        ''' 3. <see cref="FileApplicationClass.SingleCellsMetabolomics"/> single cell matrix data
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property matrixType As FileApplicationClass
+
+        Public Overrides Function ToString() As String
+            Return matrixType.ToString
+        End Function
+
+    End Class
+End Namespace

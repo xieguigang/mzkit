@@ -312,6 +312,7 @@
 	  <ProjectReference Include="..\..\..\..\..\src\mzmath\MSFinder\MSFinder.vbproj" />
 	  <ProjectReference Include="..\..\..\..\..\src\mzmath\Mummichog\Mummichog.vbproj" />
 	  <ProjectReference Include="..\..\..\..\..\src\mzmath\SingleCells\SingleCells.vbproj" />
+	  <ProjectReference Include="..\..\..\..\..\src\mzmath\SpatialMath\SpatialMath.vbproj" />
 	  <ProjectReference Include="..\..\..\..\..\src\visualize\MsImaging\MsImaging.NET5.vbproj" />
 	  <ProjectReference Include="..\..\..\..\..\src\visualize\SDF.Extensions\SDF.Extensions.NET5.vbproj" />
 	  <ProjectReference Include="..\..\..\..\..\src\visualize\TissueMorphology\TissueMorphology.vbproj" />

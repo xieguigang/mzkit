@@ -83,6 +83,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.TissueMorphology
 Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells
 Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
+Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.File
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.ComponentModel.Collection
@@ -318,7 +319,7 @@ Module MSI
                 Return Internal.debug.stop(New NotSupportedException("version 1 mzPack file can not supports the metadata!"), env)
             ElseIf ver < 0 Then
                 ' is mzImage?
-                Return New BioNovoGene.Analytical.MassSpectrometry.SingleCells.MatrixReader(file.TryCast(Of Stream)).GetMSIMetadata
+                Return New BioNovoGene.Analytical.MassSpectrometry.SingleCells.File.MatrixReader(file.TryCast(Of Stream)).GetMSIMetadata
             End If
         End If
 
@@ -986,7 +987,7 @@ Module MSI
                              Optional env As Environment = Nothing) As Object
 
         If TypeOf raw Is mzPack Then
-            Return IonStat.DoStat(
+            Return SpatialIonStats.DoStat(
                 raw:=DirectCast(raw, mzPack),
                 nsize:=grid_size,
                 da:=da,
@@ -1009,7 +1010,7 @@ Module MSI
             Return env.EvaluateFramework(Of SingleIonLayer, IonStat)(
                 x:=layers.populates(Of SingleIonLayer)(env),
                 eval:=Function(layer)
-                          Return IonStat.DoStat(layer, nsize:=grid_size)
+                          Return SpatialIonStats.DoStat(layer, nsize:=grid_size)
                       End Function,
                 parallel:=parallel
             )

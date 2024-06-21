@@ -13,6 +13,7 @@
 	  <PackageLicenseFile>LICENSE</PackageLicenseFile>
 	  <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
 	  <GenerateDocumentationFile>True</GenerateDocumentationFile>
+	  <UseApplicationFramework>True</UseApplicationFramework>
 
   </PropertyGroup>
 
@@ -24,6 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\BinaryData\binarydata-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Graph\graph-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\Math\Math.NET5.vbproj" />
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj" />
