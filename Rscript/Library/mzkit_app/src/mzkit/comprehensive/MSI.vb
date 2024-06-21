@@ -325,7 +325,10 @@ Module MSI
         Dim pack As New mzStream(file.TryCast(Of Stream))
 
         If pack.metadata.IsNullOrEmpty Then
-            metadata = mzPack.FromStream(stream:=pack).GetMSIMetadata
+            metadata = mzPack.FromStream(
+                stream:=pack,
+                skipMsn:=True,
+                ignoreThumbnail:=True).GetMSIMetadata
         Else
             metadata = New Metadata(pack.metadata)
         End If

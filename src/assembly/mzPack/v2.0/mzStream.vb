@@ -82,7 +82,7 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text.Xml.Models
 Imports any = Microsoft.VisualBasic.Scripting
 Imports asciiA = Microsoft.VisualBasic.Text.ASCII
-Imports stdNum = System.Math
+Imports std = System.Math
 
 ''' <summary>
 ''' v2 mzPack format in HDS stream file
@@ -371,7 +371,7 @@ Public Class mzStream : Implements IMzPackReader
 
             If ++i = d Then
                 If verbose Then
-                    RunSlavePipeline.SendProgress(stdNum.Round(j / allIndex.Length, 2), id & $" ({(j / allIndex.Length * 100).ToString("F2")}%)")
+                    RunSlavePipeline.SendProgress(std.Round(j / allIndex.Length, 2), id & $" ({(j / allIndex.Length * 100).ToString("F2")}%)")
                 End If
 
                 i = 0
