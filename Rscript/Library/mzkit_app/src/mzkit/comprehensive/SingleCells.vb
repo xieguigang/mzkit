@@ -131,7 +131,7 @@ Module SingleCells
         Call table.add(NameOf(SingleCellIonStat.Q1Intensity), ions.Select(Function(i) i.Q1Intensity))
         Call table.add(NameOf(SingleCellIonStat.Q2Intensity), ions.Select(Function(i) i.Q2Intensity))
         Call table.add(NameOf(SingleCellIonStat.Q3Intensity), ions.Select(Function(i) i.Q3Intensity))
-        Call table.add(NameOf(SingleCellIonStat.RSD), ions.Select(Function(i) i.RSD))
+        Call table.add(NameOf(SingleCellIonStat.rsd), ions.Select(Function(i) i.rsd))
         Call table.add(NameOf(SingleCellIonStat.entropy), ions.Select(Function(i) i.entropy))
         Call table.add(NameOf(SingleCellIonStat.sparsity), ions.Select(Function(i) i.sparsity))
 

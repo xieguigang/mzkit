@@ -204,6 +204,9 @@ Module MSI
         Call table.add(NameOf(IonStat.Q1Intensity), ions.Select(Function(i) i.Q1Intensity))
         Call table.add(NameOf(IonStat.Q2Intensity), ions.Select(Function(i) i.Q2Intensity))
         Call table.add(NameOf(IonStat.Q3Intensity), ions.Select(Function(i) i.Q3Intensity))
+        Call table.add(NameOf(IonStat.sparsity), ions.Select(Function(i) i.sparsity))
+        Call table.add(NameOf(IonStat.entropy), ions.Select(Function(i) i.entropy))
+        Call table.add(NameOf(IonStat.rsd), ions.Select(Function(i) i.rsd))
         Call table.add(NameOf(IonStat.moran), ions.Select(Function(i) i.moran))
         Call table.add(NameOf(IonStat.pvalue), ions.Select(Function(i) i.pvalue))
 
@@ -323,7 +326,10 @@ Module MSI
         Dim pack As New mzStream(file.TryCast(Of Stream))
 
         If pack.metadata.IsNullOrEmpty Then
-            metadata = mzPack.FromStream(stream:=pack).GetMSIMetadata
+            metadata = mzPack.FromStream(
+                stream:=pack,
+                skipMsn:=True,
+                ignoreThumbnail:=True).GetMSIMetadata
         Else
             metadata = New Metadata(pack.metadata)
         End If
@@ -1209,16 +1215,39 @@ Module MSI
         ElseIf ionSet.GetType.ImplementInterface(Of IDictionary) Then
             ions = RConversion.asList(ionSet, New list, env)
         Else
-            Dim mz As Double() = CLRVector.asNumeric(ionSet)
-            Dim keys As String() = mz _
-                .Select(Function(m) m.ToString) _
-                .UniqueNames
+            Dim pull As pipeline = pipeline.TryCreatePipeline(Of MassWindow)(ionSet, env, suppress:=True)
 
-            ions = keys.Zip(mz) _
-                .ToDictionary(Function(m) m.First,
-                              Function(m)
-                                  Return m.Second
-                              End Function)
+            If pull.isError Then
+                Dim mz As Double() = CLRVector.asNumeric(ionSet)
+                Dim keys As String() = mz _
+                    .Select(Function(m) m.ToString) _
+                    .UniqueNames
+
+                ions = keys.Zip(mz) _
+                    .ToDictionary(Function(m) m.First,
+                                  Function(m)
+                                      Return m.Second
+                                  End Function)
+            Else
+                Dim massSet As MassWindow() = pull _
+                    .populates(Of MassWindow)(env) _
+                    .ToArray
+
+                If rawMatrix Then
+                    Return Deconvolute.PeakMatrix.CreateMatrix(raw, massSet, err.GetErrorDalton)
+                Else
+                    Dim mz As Double() = massSet.Mass
+                    Dim keys As String() = mz _
+                        .Select(Function(m) m.ToString) _
+                        .UniqueNames
+
+                    ions = keys.Zip(mz) _
+                        .ToDictionary(Function(m) m.First,
+                                      Function(m)
+                                          Return m.Second
+                                      End Function)
+                End If
+            End If
         End If
 
         If rawMatrix Then

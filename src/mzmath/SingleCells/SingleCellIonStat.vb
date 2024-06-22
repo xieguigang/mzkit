@@ -1,60 +1,60 @@
 ﻿#Region "Microsoft.VisualBasic::0a922eca38283b3729ee20166f0a5742, mzmath\SingleCells\SingleCellIonStat.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 67
-    '    Code Lines: 32 (47.76%)
-    ' Comment Lines: 29 (43.28%)
-    '    - Xml Docs: 100.00%
-    ' 
-    '   Blank Lines: 6 (8.96%)
-    '     File Size: 2.52 KB
+' Summaries:
 
 
-    ' Class SingleCellIonStat
-    ' 
-    '     Properties: baseCell, cells, entropy, maxIntensity, mz
-    '                 mz_error, mzmax, mzmin, Q1Intensity, Q2Intensity
-    '                 Q3Intensity, RSD, sparsity
-    ' 
-    '     Function: (+2 Overloads) DoIonStats
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 67
+'    Code Lines: 32 (47.76%)
+' Comment Lines: 29 (43.28%)
+'    - Xml Docs: 100.00%
+' 
+'   Blank Lines: 6 (8.96%)
+'     File Size: 2.52 KB
+
+
+' Class SingleCellIonStat
+' 
+'     Properties: baseCell, cells, entropy, maxIntensity, mz
+'                 mz_error, mzmax, mzmin, Q1Intensity, Q2Intensity
+'                 Q3Intensity, RSD, sparsity
+' 
+'     Function: (+2 Overloads) DoIonStats
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -95,11 +95,12 @@ Public Class SingleCellIonStat
     Public Property Q1Intensity As Double
     Public Property Q2Intensity As Double
     Public Property Q3Intensity As Double
+
     ''' <summary>
     ''' RSD value of the intensity value of current ion feature across multiple cells
     ''' </summary>
     ''' <returns></returns>
-    Public Property RSD As Double
+    Public Property rsd As Double
     Public Property entropy As Double
     Public Property sparsity As Double
 

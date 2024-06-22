@@ -101,6 +101,7 @@ Imports stdVector = Microsoft.VisualBasic.Math.LinearAlgebra.Vector
 ''' </summary>
 <Package("math", Category:=APICategories.UtilityTools, Publisher:="gg.xie@bionovogene.com")>
 <RTypeExport("spectrum_alignment", GetType(AlignmentOutput))>
+<RTypeExport("mass_window", GetType(MassWindow))>
 Module MzMath
 
     Friend Sub Main()

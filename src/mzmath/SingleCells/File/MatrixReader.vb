@@ -142,6 +142,10 @@ Namespace File
             End Get
         End Property
 
+    ''' <summary>
+    ''' parse the file header of this matrix file
+    ''' </summary>
+    ''' <param name="s"></param>
         Sub New(s As Stream)
             Me.bin = New BinaryReader(s, Encoding.ASCII)
             Me.bin.BaseStream.Seek(0, SeekOrigin.Begin)

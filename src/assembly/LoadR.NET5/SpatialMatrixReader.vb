@@ -166,7 +166,10 @@ Public Class SpatialMatrixReader : Implements IdataframeReader, IReflector
     ''' <summary>
     ''' get matrix column projection via m/z or index vector
     ''' </summary>
-    ''' <param name="index"></param>
+    ''' <param name="index">
+    ''' 1. mz value
+    ''' 2. integer index offset value, should be 1-based
+    ''' </param>
     ''' <param name="env"></param>
     ''' <returns></returns>
     Public Function getColumn(index As Object, env As Environment) As Object Implements IdataframeReader.getColumn
@@ -199,16 +202,16 @@ Public Class SpatialMatrixReader : Implements IdataframeReader, IReflector
     ''' <summary>
     ''' create matrix projection via the integer index offsets
     ''' </summary>
-    ''' <param name="offsets"></param>
+    ''' <param name="offsets">should be 1-based</param>
     ''' <returns></returns>
     Private Function matrixProjection(offsets As Integer()) As MzMatrix
         Dim m As New MzMatrix With {
             .matrixType = Me.m.matrixType,
             .tolerance = Me.m.tolerance
         }
-        Dim mz As Double() = Me.m.mz.CopyOf(offsets)
-        Dim mzmin As Double() = Me.m.mzmin.CopyOf(offsets)
-        Dim mzmax As Double() = Me.m.mzmax.CopyOf(offsets)
+        Dim mz As Double() = Me.m.mz.CopyOf(offsets, base1:=True)
+        Dim mzmin As Double() = Me.m.mzmin.CopyOf(offsets, base1:=True)
+        Dim mzmax As Double() = Me.m.mzmax.CopyOf(offsets, base1:=True)
         Dim rawdata = Me.m.matrix
         Dim project As PixelData() = New PixelData(rawdata.Length - 1) {}
         Dim source As PixelData
@@ -220,7 +223,7 @@ Public Class SpatialMatrixReader : Implements IdataframeReader, IReflector
                 .X = source.X,
                 .Y = source.Y,
                 .Z = source.Z,
-                .intensity = source.intensity.CopyOf(offsets)
+                .intensity = source.intensity.CopyOf(offsets, base1:=True)
             }
         Next
 
