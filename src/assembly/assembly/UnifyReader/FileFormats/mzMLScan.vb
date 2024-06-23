@@ -152,10 +152,14 @@ Namespace DataReader
         End Function
 
         Public Overrides Function GetActivationMethod(scan As spectrum) As ActivationMethods
-            Dim active = scan.precursorList.precursor(Scan0).GetActivationMethod
-            Dim method As ActivationMethods = [Enum].Parse(GetType(ActivationMethods), active)
+            If scan.precursorList Is Nothing Then
+                Return ActivationMethods.AnyType
+            Else
+                Dim active = scan.precursorList.precursor(Scan0).GetActivationMethod
+                Dim method As ActivationMethods = [Enum].Parse(GetType(ActivationMethods), active)
 
-            Return method
+                Return method
+            End If
         End Function
 
         Public Overrides Function GetCollisionEnergy(scan As spectrum) As Double
