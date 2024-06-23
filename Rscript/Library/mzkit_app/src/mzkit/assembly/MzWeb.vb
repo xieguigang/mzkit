@@ -390,25 +390,35 @@ Module MzWeb
     ''' <summary>
     ''' Write the ms2 spectrum collection into binary cache file
     ''' </summary>
-    ''' <param name="ions">Should be a collection of the mzkit peakms2 object</param>
+    ''' <param name="ions">Should be a collection of the mzkit <see cref="PeakMs2"/> object.</param>
     ''' <param name="file">The file path to save the spectrum data collection as cache file.</param>
     ''' <returns>
     ''' this function returns a logical value for indicate operation is success or not.
     ''' </returns>
     <ExportAPI("write.cache")>
     <RApiReturn(TypeCodes.boolean)>
-    Public Function writeCache(ions As PeakMs2(), file As Object, Optional env As Environment = Nothing) As Object
+    Public Function writeCache(<RRawVectorArgument> ions As Object, file As Object, Optional env As Environment = Nothing) As Object
         Dim buf = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Write, env)
+        Dim pool As pipeline = pipeline.TryCreatePipeline(Of PeakMs2)(ions, env)
 
         If buf Like GetType(Message) Then
             Return buf.TryCast(Of Message)
         End If
+        If pool.isError Then
+            Return pool.getError
+        End If
 
         Using buffer As New BinaryDataWriter(buf.TryCast(Of Stream)) With {.ByteOrder = ByteOrder.BigEndian}
-            Call buffer.Write(mzcacheMagic, BinaryStringFormat.ZeroTerminated)
-            Call buffer.Write(ions.Length)
+            Dim all_spec As PeakMs2() = pool _
+                .populates(Of PeakMs2)(env) _
+                .ToArray
+            Dim bar As Tqdm.ProgressBar = Nothing
 
-            For Each ion As PeakMs2 In ions
+            Call buffer.Write(mzcacheMagic, BinaryStringFormat.ZeroTerminated)
+            Call buffer.Write(all_spec.Length)
+
+            For Each ion As PeakMs2 In Tqdm.Wrap(all_spec, bar:=bar)
+                Call bar.SetLabel(ion.lib_guid)
                 Call Serialization.WriteBuffer(ion.Scan2, file:=buffer)
             Next
         End Using
