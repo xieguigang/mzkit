@@ -191,6 +191,12 @@ Public Class UnionReader
             Return meta.compound_class
         End Get
     End Property
+
+    Public ReadOnly Property name As String
+        Get
+            Return meta.name
+        End Get
+    End Property
 #End Region
 
     Sub New(meta As MetaData, Optional msp As MspData = Nothing)
