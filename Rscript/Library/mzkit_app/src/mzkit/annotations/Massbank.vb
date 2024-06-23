@@ -238,8 +238,9 @@ Module Massbank
     Public Function readMoNA(rawfile As String(),
                              Optional skipSpectraInfo As Boolean = False,
                              Optional is_gcms As Boolean = False,
+                             Optional lazy As Boolean = True,
                              Optional verbose As Boolean = True,
-                             Optional env As Environment = Nothing) As pipeline
+                             Optional env As Environment = Nothing) As Object
 
         If rawfile.IsNullOrEmpty Then
             Return Nothing
@@ -260,7 +261,11 @@ Module Massbank
                     End Function) _
             .IteratesALL
 
-        Return pipeline.CreateFromPopulator(pullAll)
+        If lazy Then
+            Return pipeline.CreateFromPopulator(pullAll)
+        Else
+            Return pullAll.ToArray
+        End If
     End Function
 
     <Extension>
