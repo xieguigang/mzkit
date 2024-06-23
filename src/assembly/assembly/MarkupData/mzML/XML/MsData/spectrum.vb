@@ -140,7 +140,7 @@ Namespace MarkupData.mzML
                 With rt_val
                     Dim time# = Val(.value)
 
-                    If .unitName = "second" Then
+                    If .unitName = "second" OrElse .unitName.StringEmpty Then
                         Return time
                     ElseIf .unitName = "minute" Then
                         Return time * 60
