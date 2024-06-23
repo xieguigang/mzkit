@@ -136,9 +136,14 @@ Namespace DataReader
         End Function
 
         Public Overrides Function GetCharge(scan As spectrum) As Integer
-            Dim charge As cvParam = scan _
-                .precursorList _
-                .precursor(Scan0) _
+            Dim precursorList = scan.precursorList
+
+            If precursorList Is Nothing OrElse precursorList.precursor.IsNullOrEmpty Then
+                Return 1
+            End If
+
+            Dim precursor = precursorList.precursor(Scan0)
+            Dim charge As cvParam = precursor _
                 .selectedIonList _
                 .selectedIon(Scan0) _
                 .cvParams _
@@ -163,7 +168,11 @@ Namespace DataReader
         End Function
 
         Public Overrides Function GetCollisionEnergy(scan As spectrum) As Double
-            Return scan.precursorList.precursor(Scan0).GetCollisionEnergy
+            If scan.precursorList Is Nothing Then
+                Return 0
+            Else
+                Return scan.precursorList.precursor(Scan0).GetCollisionEnergy
+            End If
         End Function
 
         Public Overrides Function GetCentroided(scan As spectrum) As Boolean
