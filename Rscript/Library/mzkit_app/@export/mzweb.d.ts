@@ -250,7 +250,7 @@ declare namespace mzweb {
         * @param env 
         * + default value Is ``null``.
       */
-      function cache(ions: object, file: any, env?: object): boolean;
+      function cache(ions: any, file: any, env?: object): boolean;
       /**
         * @param Ms2Only default value Is ``false``.
         * @param env default value Is ``null``.
