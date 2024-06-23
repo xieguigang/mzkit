@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>BioNovoGene.BioDeep.Chemistry.SpectraSection</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <table style="width: 100%;">
+            <tr>
+                <td>SpectraSection {BioNovoGene.BioDeep.Chemistry}</td>
+                <td style="text-align: right;">.NET clr documentation</td>
+            </tr>
+        </table>
+
+        <h2>SpectraSection</h2>
+
+        <h3>Description</h3>
+
+        <p>Union of the spectrum data and the metabolite annotation metadata</p>
+
+<p>this data object used for union the metabolite annotation <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/MetaData.html">MetaData</a> and 
+ the spectrum data(<a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/SpectraSection.html">SpectraSection</a>.<a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/SpectraInfo.html">SpectraInfo</a>).</p>
+
+        <h3>Declare</h3>        
+
+        <pre>
+            <code id="clr_ts">
+# namespace BioNovoGene.BioDeep.Chemistry
+export class SpectraSection extends <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/MetaLib/Models/MetaInfo.html">MetaInfo</a> {
+   # should contains the necessary header data for @<code>M:BioNovoGene.BioDeep.Chemistry.SchemaMapper.FillData(System.Collections.Specialized.NameValueCollection)</code>
+   Comment: <a href="/vignettes/clr/System/Collections/Specialized/NameValueCollection.html">NameValueCollection</a>;
+   description: string;
+   exact_mass: double;
+   formula: string;
+   GetSpectrumPeaks: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/PeakMs2.html">PeakMs2</a>;
+   ID: string;
+   IUPACName: string;
+   libtype: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Ms1/PrecursorType/IonModes.html">IonModes</a>;
+   # MoNA里面都主要是将注释的信息放在<a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/SpectraSection.html">SpectraSection</a>.<a href="/vignettes/clr/System/Collections/Specialized/NameValueCollection.html">Comment</a>字段里面的。
+   #  物质的注释信息主要是放在这个结构体之中，这个属性是对<a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/SpectraSection.html">SpectraSection</a>.<a href="/vignettes/clr/System/Collections/Specialized/NameValueCollection.html">Comment</a>
+   #  属性的解析结果
+   MetaDB: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/MetaData.html">MetaData</a>;
+   MetaReader: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/UnionReader.html">UnionReader</a>;
+   ms_level: integer;
+   name: string;
+   # The reference spectrum data
+   SpectraInfo: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/SpectraInfo.html">SpectraInfo</a>;
+   synonym: string;
+   xref: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/MetaLib/CrossReference/xref.html">xref</a>;
+}
+</code>
+        </pre>
+
+        <h3>.NET clr type reference tree</h3>
+
+        <ol>
+<li>this class extends from <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/MetaLib/Models/MetaInfo.html">MetaInfo</a> class: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/MetaLib/Models/MetaInfo.html">MetaInfo</a></li>
+<li>use by <i>property</i> member <code>Comment</code>: <a href="/vignettes/clr/System/Collections/Specialized/NameValueCollection.html">NameValueCollection</a></li>
+<li>use by <i>property</i> member <code>GetSpectrumPeaks</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/PeakMs2.html">PeakMs2</a></li>
+<li>use by <i>property</i> member <code>libtype</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Ms1/PrecursorType/IonModes.html">IonModes</a></li>
+<li>use by <i>property</i> member <code>MetaDB</code>: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/MetaData.html">MetaData</a></li>
+<li>use by <i>property</i> member <code>MetaReader</code>: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/UnionReader.html">UnionReader</a></li>
+<li>use by <i>property</i> member <code>SpectraInfo</code>: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/SpectraInfo.html">SpectraInfo</a></li>
+<li>use by <i>property</i> member <code>xref</code>: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemistry/MetaLib/CrossReference/xref.html">xref</a></li>
+</ol>
+
+
+        <hr />
+        <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a
+                href="../{$package}.html">Index</a>]
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="https://mzkit.org/assets/js/R_syntax.js"></script>
+<script type="text/javascript" src="https://mzkit.org/assets/js/highlights.js"></script>
+<script type="text/javascript">r_highlights("clr_ts");</script>
+
+</html>

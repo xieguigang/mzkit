@@ -180,6 +180,8 @@ declare namespace massbank {
         * + default value Is ``false``.
         * @param is_gcms 
         * + default value Is ``false``.
+        * @param lazy 
+        * + default value Is ``true``.
         * @param verbose 
         * + default value Is ``true``.
         * @param env -
@@ -188,7 +190,7 @@ declare namespace massbank {
         * @return a linq pipeline for populate the spectrum data 
         *  from the MoNA database.
       */
-      function MoNA(rawfile: string, skipSpectraInfo?: boolean, is_gcms?: boolean, verbose?: boolean, env?: object): object;
+      function MoNA(rawfile: string, skipSpectraInfo?: boolean, is_gcms?: boolean, lazy?: boolean, verbose?: boolean, env?: object): object;
       /**
        * read the csv table of refmet
        * 

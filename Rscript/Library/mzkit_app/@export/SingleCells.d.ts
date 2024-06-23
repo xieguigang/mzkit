@@ -152,7 +152,7 @@ declare namespace SingleCells {
         *  2. featureSize: the number of the ion features in the raw data file
         *  3. ionSet: a numeric vector of the ion features m/z value.
         *  4. spots: the number of the spots that read from the rawdata matrix file
-        *  5. reader: the rawdata @``T:BioNovoGene.Analytical.MassSpectrometry.SingleCells.MatrixReader``
+        *  5. reader: the rawdata @``T:BioNovoGene.Analytical.MassSpectrometry.SingleCells.File.MatrixReader``
       */
       function matrix(file: any, env?: object): object;
    }
