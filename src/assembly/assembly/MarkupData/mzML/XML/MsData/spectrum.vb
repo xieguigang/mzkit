@@ -131,14 +131,16 @@ Namespace MarkupData.mzML
                 Dim rtParams = scanList.scans(0).cvParams
 
                 ' rt parameter maybe missing in lidms or maldi-ms
-                If rtParams Is Nothing Then
+                If rtParams.IsNullOrEmpty Then
                     Return 0
                 End If
 
-                With rtParams.KeyItem("scan start time")
+                Dim rt_val = If(rtParams.KeyItem("scan start time"), rtParams.KeyItem("scan time"))
+
+                With rt_val
                     Dim time# = Val(.value)
 
-                    If .unitName = "second" Then
+                    If .unitName = "second" OrElse .unitName.StringEmpty Then
                         Return time
                     ElseIf .unitName = "minute" Then
                         Return time * 60
