@@ -287,7 +287,7 @@ Module mzDeco
             Return SaveXcms.ReadTextTable(file, tsv)
         Else
             Return New PeakSet With {
-                .peaks = file.LoadCsv(Of xcms2)().ToArray
+                .peaks = file.LoadCsv(Of xcms2)(mute:=True).ToArray
             }
         End If
     End Function
