@@ -1,6 +1,6 @@
 ﻿Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
 Imports Microsoft.VisualBasic.Math
-Imports Microsoft.VisualBasic.Math.Drawing2D.Colors.Scaler
+Imports Microsoft.VisualBasic.Math.Distributions
 Imports Microsoft.VisualBasic.Parallel
 
 Namespace MatrixMath
