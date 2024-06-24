@@ -761,4 +761,21 @@ Module SingleCells
     Public Function TotalPeakSumNormalize(x As MzMatrix, Optional scale As Double = 1000000.0) As MzMatrix
         Return x.TotalPeakSumNormalization(scale)
     End Function
+
+    ''' <summary>
+    ''' processing of the intensity value clip via TrIQ algorithm for the feature matrix
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <param name="q"></param>
+    ''' <param name="levels"></param>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' run processing for the feature clustering matrix, not apply for the expression matrix
+    ''' </remarks>
+    <ExportAPI("TrIQ_clip")>
+    Public Function TrIQ_normalized(x As MzMatrix, Optional q As Double = 0.6, Optional levels As Integer = 100) As MzMatrix
+        Dim clip_algorithm As New FeatureTrIQClips(x, q, levels)
+        clip_algorithm.Run()
+        Return clip_algorithm.GetClipMatrix
+    End Function
 End Module
