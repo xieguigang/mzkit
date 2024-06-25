@@ -110,8 +110,18 @@ Module QuantifyMath
         Return outVal
     End Function
 
-    Public Function impute(x As PeakSet)
+    ''' <summary>
+    ''' data matrix pre-processing before run data analysis
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <returns></returns>
+    <ExportAPI("preprocessing")>
+    Public Function impute(x As PeakSet, Optional scale As Double = 10 ^ 8) As PeakSet
+        Dim imputes As xcms2() = x.peaks.Select(Function(k) k.Impute).ToArray
+        Dim norm As xcms2() = xcms2.TotalPeakSum(imputes, scale).ToArray
+        Dim peaktable As New PeakSet With {.peaks = norm}
 
+        Return peaktable
     End Function
 
     ''' <summary>
