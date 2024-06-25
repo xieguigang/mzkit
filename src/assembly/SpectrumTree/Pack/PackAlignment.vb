@@ -67,6 +67,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
 Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.Query
 Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.Tree
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
 Imports std = System.Math
 
 Namespace PackLib
@@ -161,6 +162,20 @@ Namespace PackLib
                     Yield reportClusterHit(centroid, hit_group:=metabolite)
                 Next
             End If
+        End Function
+
+        ''' <summary>
+        ''' pull all reference spectrum inside current library object
+        ''' </summary>
+        ''' <returns></returns>
+        Public Iterator Function GetReferenceSpectrum() As IEnumerable(Of PeakMs2)
+            ' load mass returns mass set which already been filter 
+            ' by the given target reference id set
+            For Each meta As MassIndex In Tqdm.Wrap(spectrum.LoadMass().ToArray)
+                For Each spec As PeakMs2 In spectrum.GetSpectrum(meta)
+                    Yield spec
+                Next
+            Next
         End Function
 
         ''' <summary>

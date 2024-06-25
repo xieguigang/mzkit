@@ -61,7 +61,6 @@ Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
-Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.SplashID
 Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree
 Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.PackLib
 Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.Query
@@ -70,7 +69,6 @@ Imports BioNovoGene.BioDeep.MassSpectrometry.MoleculeNetworking
 Imports BioNovoGene.BioDeep.MSEngine
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
 Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Data.NLP.Word2Vec
 Imports Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
 Imports Microsoft.VisualBasic.Language
@@ -232,6 +230,16 @@ Module ReferenceTreePkg
         Else
             Return New TreeSearch(buffer.TryCast(Of Stream)).SetCutoff(dotcutoff)
         End If
+    End Function
+
+    ''' <summary>
+    ''' export all reference spectrum from the given library object
+    ''' </summary>
+    ''' <param name="pack"></param>
+    ''' <returns></returns>
+    <ExportAPI("export_spectrum")>
+    Public Function export_reference(pack As PackAlignment) As PeakMs2()
+        Return pack.GetReferenceSpectrum.ToArray
     End Function
 
     ''' <summary>
