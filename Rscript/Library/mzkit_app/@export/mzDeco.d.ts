@@ -228,6 +228,9 @@ declare namespace mzDeco {
         * + default value Is ``null``.
       */
       function peaks(peaks: any, file: any, env?: object): any;
+      /**
+      */
+      function xcms_peaks(x: object, file: string): boolean;
    }
    /**
     * Load xic sample data files
