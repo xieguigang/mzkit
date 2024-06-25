@@ -12,6 +12,8 @@ Extract peak and signal data from rawdata
  mass-to-charge ratio, retention time and chromatographic peak area.
 
 + [read.xcms_peaks](mzDeco/read.xcms_peaks.1) read the peaktable file that in xcms2 output format
++ [to_expression](mzDeco/to_expression.1) cast peaktable to expression matrix object
++ [to_matrix](mzDeco/to_matrix.1) cast peaktable to mzkit expression matrix
 + [write.xcms_peaks](mzDeco/write.xcms_peaks.1) 
 + [read.xcms_features](mzDeco/read.xcms_features.1) 
 + [peak_subset](mzDeco/peak_subset.1) make sample column projection
