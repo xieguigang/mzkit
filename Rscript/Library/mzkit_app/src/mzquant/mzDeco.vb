@@ -1,69 +1,69 @@
 ﻿#Region "Microsoft.VisualBasic::59a0f011b71b9720bce41f32807b7746, Rscript\Library\mzkit_app\src\mzquant\mzDeco.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 1021
-    '    Code Lines: 680 (66.60%)
-    ' Comment Lines: 219 (21.45%)
-    '    - Xml Docs: 84.02%
-    ' 
-    '   Blank Lines: 122 (11.95%)
-    '     File Size: 42.02 KB
+' Summaries:
 
 
-    ' Module mzDeco
-    ' 
-    '     Function: adjust_to_seconds, dumpPeaks, extractAlignedPeaks, get_ionPeak, ms1Scans
-    '               mz_deco, mz_groups, peakAlignment, peaksetMatrix, peakSubset
-    '               peaktable, pull_xic, readPeakData, readPeaktable, readSamples
-    '               readXcmsFeaturePeaks, readXcmsPeaks, readXIC, RI_calc, RI_reference
-    '               writePeaktable, writeSamples, writeXIC, writeXIC1, xic_deco
-    '               xic_dtw_list, xic_matrix_list, XICpool_func
-    ' 
-    '     Sub: Main
-    '     Class xic_deco_task
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Sub: Solve
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 1021
+'    Code Lines: 680 (66.60%)
+' Comment Lines: 219 (21.45%)
+'    - Xml Docs: 84.02%
+' 
+'   Blank Lines: 122 (11.95%)
+'     File Size: 42.02 KB
+
+
+' Module mzDeco
+' 
+'     Function: adjust_to_seconds, dumpPeaks, extractAlignedPeaks, get_ionPeak, ms1Scans
+'               mz_deco, mz_groups, peakAlignment, peaksetMatrix, peakSubset
+'               peaktable, pull_xic, readPeakData, readPeaktable, readSamples
+'               readXcmsFeaturePeaks, readXcmsPeaks, readXIC, RI_calc, RI_reference
+'               writePeaktable, writeSamples, writeXIC, writeXIC1, xic_deco
+'               xic_dtw_list, xic_matrix_list, XICpool_func
+' 
+'     Sub: Main
+'     Class xic_deco_task
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Sub: Solve
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -95,6 +95,8 @@ Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports deco_math = BioNovoGene.Analytical.MassSpectrometry.Math.Extensions
 Imports std = System.Math
 Imports vec = SMRUCC.Rsharp.Runtime.Internal.Object.vector
+Imports Matrix = SMRUCC.genomics.Analysis.HTS.DataFrame.Matrix
+Imports SMRUCC.genomics.Analysis.HTS.DataFrame
 
 ''' <summary>
 ''' Extract peak and signal data from rawdata
@@ -292,6 +294,30 @@ Module mzDeco
         End If
     End Function
 
+    ''' <summary>
+    ''' cast peaktable to expression matrix object
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <returns></returns>
+    <ExportAPI("to_expression")>
+    Public Function expression(x As PeakSet) As Matrix
+        Dim sampleNames As String() = x.sampleNames
+        Dim features As New List(Of DataFrameRow)
+
+        For Each ion As xcms2 In x.peaks
+            Call features.Add(New DataFrameRow With {
+                .geneID = ion.ID,
+                .experiments = ion(sampleNames)
+            })
+        Next
+
+        Return New Matrix With {
+            .sampleID = sampleNames,
+            .tag = "peaktable",
+            .expression = features.ToArray
+        }
+    End Function
+
     <ExportAPI("write.xcms_peaks")>
     Public Function writeXcmsPeaktable(x As PeakSet, file As String) As Boolean
         Return x.peaks.SaveTo(file, silent:=True)
@@ -308,7 +334,7 @@ Module mzDeco
         Dim into As Double() = CLRVector.asNumeric(file.getVector("into", True))
         Dim maxo As Double() = CLRVector.asNumeric(file.getVector("maxo", True))
         Dim sn As Double() = CLRVector.asNumeric(file.getVector("sn", True))
-        Dim xcms_id As String() = mz.Select(Function(mzi, i) $"M{CInt(mzi)}T{CInt(rt(i))}").uniqueNames
+        Dim xcms_id As String() = mz.Select(Function(mzi, i) $"M{CInt(mzi)}T{CInt(rt(i))}").UniqueNames
 
         Return xcms_id _
             .Select(Function(id, i)
@@ -906,7 +932,7 @@ extract_ms1:
                 .ToArray
         End If
 
-        Dim id As String() = peaktable.Select(Function(i) i.ID).uniqueNames
+        Dim id As String() = peaktable.Select(Function(i) i.ID).UniqueNames
         Dim sampleNames As String() = sampleData.Keys.ToArray
 
         For i As Integer = 0 To id.Length - 1
