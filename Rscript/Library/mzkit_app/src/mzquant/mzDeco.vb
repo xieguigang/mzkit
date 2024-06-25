@@ -97,6 +97,8 @@ Imports std = System.Math
 Imports vec = SMRUCC.Rsharp.Runtime.Internal.Object.vector
 Imports Matrix = SMRUCC.genomics.Analysis.HTS.DataFrame.Matrix
 Imports SMRUCC.genomics.Analysis.HTS.DataFrame
+Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 
 ''' <summary>
 ''' Extract peak and signal data from rawdata
@@ -315,6 +317,38 @@ Module mzDeco
             .sampleID = sampleNames,
             .tag = "peaktable",
             .expression = features.ToArray
+        }
+    End Function
+
+    ''' <summary>
+    ''' cast peaktable to mzkit expression matrix
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <returns></returns>
+    <ExportAPI("to_matrix")>
+    Public Function to_matrix(x As PeakSet) As MzMatrix
+        Dim mz As Double() = x.peaks.Select(Function(a) a.mz).ToArray
+        Dim mzmin As Double() = x.peaks.Select(Function(a) a.mzmin).ToArray
+        Dim mzmax As Double() = x.peaks.Select(Function(a) a.mzmax).ToArray
+        Dim samples As New List(Of PixelData)
+        Dim table As xcms2() = x.peaks
+
+        For Each name As String In x.sampleNames
+            Call samples.Add(New PixelData With {
+                .label = name,
+                .intensity = table _
+                    .Select(Function(a) a(name)) _
+                    .ToArray
+            })
+        Next
+
+        Return New MzMatrix With {
+            .matrixType = FileApplicationClass.LCMS,
+            .mz = mz,
+            .mzmin = mzmin,
+            .mzmax = mzmax,
+            .tolerance = 0,
+            .matrix = samples.ToArray
         }
     End Function
 
