@@ -62,6 +62,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.SignalProcessing
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports SMRUCC.genomics.GCModeller.Workbench.ExperimentDesigner
 Imports SMRUCC.Rsharp
 Imports SMRUCC.Rsharp.Interpreter
 Imports SMRUCC.Rsharp.Runtime
@@ -122,6 +123,54 @@ Module QuantifyMath
         Dim peaktable As New PeakSet With {.peaks = norm}
 
         Return peaktable
+    End Function
+
+    <ExportAPI("removes_missing")>
+    Public Function removes_missing(x As PeakSet, Optional sampleinfo As SampleInfo() = Nothing, Optional percent As Double = 0.5) As PeakSet
+        If sampleinfo.IsNullOrEmpty Then
+            ' check missing based on all samples
+            Dim peaks As New List(Of xcms2)
+            Dim sampleNames As String() = x.peaks.Select(Function(k) k.Properties.Keys).IteratesALL.Distinct.ToArray
+
+            For Each peak As xcms2 In x.peaks
+                Dim missing As Integer = Aggregate xi In peak.Properties Where xi.Value <= 0 Into Count()
+
+                If (missing / sampleNames.Length) < percent Then
+                    Call peaks.Add(peak)
+                End If
+            Next
+
+            Return New PeakSet With {.peaks = peaks.ToArray}
+        Else
+            ' check missing based on sample groups
+            Dim peaks As New List(Of xcms2)
+            Dim groups = sampleinfo _
+                .GroupBy(Function(k) k.sample_info) _
+                .ToDictionary(Function(k) k.Key,
+                              Function(k)
+                                  Return k.Select(Function(s) s.ID).ToArray
+                              End Function)
+
+            For Each peak As xcms2 In x.peaks
+                Dim missing As Integer() = groups _
+                    .Select(Function(group)
+                                Return Aggregate xi As Double
+                                       In peak(group.Value)
+                                       Where xi <= 0
+                                       Into Count()
+                            End Function) _
+                    .ToArray
+
+                ' has one group contains value more than
+                ' the given missing percentage cutoff
+                ' then we keeps this feature
+                If missing.Any(Function(m) m / sampleinfo.Length < percent) Then
+                    Call peaks.Add(peak)
+                End If
+            Next
+
+            Return New PeakSet With {.peaks = peaks.ToArray}
+        End If
     End Function
 
     ''' <summary>
