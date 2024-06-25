@@ -294,6 +294,11 @@ declare namespace math {
    */
    function preprocessing(x: object, scale?: number): object;
    /**
+     * @param sampleinfo default value Is ``null``.
+     * @param percent default value Is ``0.5``.
+   */
+   function removes_missing(x: object, sampleinfo?: object, percent?: number): object;
+   /**
     * Do resample of the chromatogram data
     * 
     * 
