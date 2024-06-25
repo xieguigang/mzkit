@@ -57,6 +57,7 @@
 
 Imports System.Drawing
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
@@ -109,11 +110,12 @@ Public Class PeakTablePlot : Inherits Plot
         }
         Dim tickFont As Font = css.GetFont(CSSFont.TryParse(theme.axisTickCSS))
         Dim pos As PointF
+        Dim bar As Tqdm.ProgressBar = Nothing
 
         Call Axis.DrawX(g, strokePen, "Retention Time(s)", scaler, XAxisLayoutStyles.Bottom, 0, Nothing, theme.axisLabelCSS, Brushes.Black, tickFont, Brushes.Black, htmlLabel:=False)
 
         ' for each sample as matrix row
-        For Each sampleId As String In sampleNames
+        For Each sampleId As String In Tqdm.Wrap(sampleNames, bar:=bar)
             lbSize = g.MeasureString(sampleId, idFont)
             pos = New PointF(rect.Left - lbSize.Width / 2, y + (dy - lbSize.Height) / 2)
             g.DrawString(sampleId, idFont, Brushes.Black, pos)
@@ -140,7 +142,7 @@ Public Class PeakTablePlot : Inherits Plot
 
             y += dy
 
-            Call Console.WriteLine(sampleId)
+            Call bar.SetLabel(sampleId)
         Next
     End Sub
 End Class
