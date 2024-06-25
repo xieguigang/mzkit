@@ -216,6 +216,20 @@ declare namespace mzDeco {
     * 
    */
    function RI_reference(xcms_id: string, mz: number, rt: number, ri: number): object;
+   /**
+    * cast peaktable to expression matrix object
+    * 
+    * 
+     * @param x -
+   */
+   function to_expression(x: object): object;
+   /**
+    * cast peaktable to mzkit expression matrix
+    * 
+    * 
+     * @param x -
+   */
+   function to_matrix(x: object): object;
    module write {
       /**
        * write peak debug data
@@ -228,6 +242,9 @@ declare namespace mzDeco {
         * + default value Is ``null``.
       */
       function peaks(peaks: any, file: any, env?: object): any;
+      /**
+      */
+      function xcms_peaks(x: object, file: string): boolean;
    }
    /**
     * Load xic sample data files

@@ -74,6 +74,13 @@ declare namespace spectrumTree {
    */
    function embedding(x: any, mslevel?: object, env?: object): object;
    /**
+    * export all reference spectrum from the given library object
+    * 
+    * 
+     * @param pack -
+   */
+   function export_spectrum(pack: object): object;
+   /**
     * Extract the test sample data for run evaluation of the annotation workflow
     * 
     * 

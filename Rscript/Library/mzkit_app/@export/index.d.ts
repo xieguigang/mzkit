@@ -14,9 +14,6 @@ declare namespace mzkit {
       function graph_table(nodes: any, type?: any): object;
       /**
       */
-      function minPos(mat: any): object;
-      /**
-      */
       function onLoad(): object;
       /**
         * @param type default value Is ``["genes", "disease", "compounds"]``.
@@ -118,10 +115,6 @@ declare namespace mzkit {
    */
    function ms1_xic_bins(files: any, mzdiff?: any, outputdir?: any, n_threads?: any): object;
    /**
-     * @param factor default value Is ``null``.
-   */
-   function normData(mat: any, factor?: any): object;
-   /**
      * @param output_dir default value Is ``./``.
    */
    function output_datatables(quantify: any, linears: any, output_dir?: any): object;
@@ -146,6 +139,12 @@ declare namespace mzkit {
      * @param output_dir default value Is ``./linears``.
    */
    function plotLinears(linears: any, mslIons?: any, output_dir?: any): object;
+   /**
+     * @param sampleinfo default value Is ``null``.
+     * @param factor default value Is ``100000000``.
+     * @param missing default value Is ``0.5``.
+   */
+   function preprocessing_expression(x: any, sampleinfo?: any, factor?: any, missing?: any): object;
    /**
      * @param process default value Is ``null``.
      * @param extensionCache default value Is ``./.cache/extdata/``.

@@ -1,60 +1,60 @@
 ﻿#Region "Microsoft.VisualBasic::fe49be1025b6ffca413a836830e4e07b, mzmath\mz_deco\xcms2.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 155
-    '    Code Lines: 95 (61.29%)
-    ' Comment Lines: 42 (27.10%)
-    '    - Xml Docs: 85.71%
-    ' 
-    '   Blank Lines: 18 (11.61%)
-    '     File Size: 4.92 KB
+' Summaries:
 
 
-    ' Class xcms2
-    ' 
-    '     Properties: ID, mz, mzmax, mzmin, npeaks
-    '                 Properties, RI, rt, rtmax, rtmin
-    ' 
-    '     Constructor: (+3 Overloads) Sub New
-    '     Function: MakeUniqueId, ToString, totalPeakSum
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 155
+'    Code Lines: 95 (61.29%)
+' Comment Lines: 42 (27.10%)
+'    - Xml Docs: 85.71%
+' 
+'   Blank Lines: 18 (11.61%)
+'     File Size: 4.92 KB
+
+
+' Class xcms2
+' 
+'     Properties: ID, mz, mzmax, mzmin, npeaks
+'                 Properties, RI, rt, rtmax, rtmin
+' 
+'     Constructor: (+3 Overloads) Sub New
+'     Function: MakeUniqueId, ToString, totalPeakSum
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -64,6 +64,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Serialization.JSON
 
@@ -194,8 +195,41 @@ Public Class xcms2 : Inherits DynamicPropertyBase(Of Double)
         Return $"{ID}  {mz.ToString("F4")}@{rt.ToString("F4")}  {npeaks}peaks: {Properties.Keys.GetJson}"
     End Function
 
-    Friend Function totalPeakSum() As xcms2
-        Dim totalSum As Double = Properties.Values.Sum
+    Public Shared Function TotalPeakSum(matrix As IEnumerable(Of xcms2), Optional scale As Double = 10 ^ 8) As IEnumerable(Of xcms2)
+        Dim pool As xcms2() = matrix.ToArray
+        Dim sampleNames As String() = pool _
+            .Select(Function(k) k.Properties.Keys) _
+            .IteratesALL _
+            .Distinct _
+            .ToArray
+
+        For Each name As String In sampleNames
+            Dim v As Double() = pool.Select(Function(k) k(name)).ToArray
+            Dim sum As Double = v.Sum
+
+            ' (v / sum) * scale
+            v = SIMD.Divide.f64_op_divide_f64_scalar(v, sum)
+            v = SIMD.Multiply.f64_scalar_op_multiply_f64(scale, v)
+
+            For i As Integer = 0 To pool.Length - 1
+                pool(i)(name) = v(i)
+            Next
+        Next
+
+        Return pool
+    End Function
+
+    ''' <summary>
+    ''' impute missing data with half of the min positive value
+    ''' </summary>
+    ''' <returns></returns>
+    Public Function Impute() As xcms2
+        Dim pos_min As Double = (Aggregate xi As Double In Properties.Values Where xi > 0 Into Min(xi)) / 2
+        Dim fill_missing = Properties _
+            .ToDictionary(Function(k) k.Key,
+                          Function(k)
+                              Return If(k.Value <= 0, pos_min, k.Value)
+                          End Function)
 
         Return New xcms2 With {
             .ID = ID,
@@ -205,11 +239,8 @@ Public Class xcms2 : Inherits DynamicPropertyBase(Of Double)
             .rt = rt,
             .rtmax = rtmax,
             .rtmin = rtmin,
-            .Properties = Properties.Keys _
-                .ToDictionary(Function(name) name,
-                              Function(name)
-                                  Return Me(name) / totalSum * 10 ^ 8
-                              End Function)
+            .RI = RI,
+            .Properties = fill_missing
         }
     End Function
 End Class
