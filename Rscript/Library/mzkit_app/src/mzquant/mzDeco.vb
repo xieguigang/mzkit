@@ -292,6 +292,11 @@ Module mzDeco
         End If
     End Function
 
+    <ExportAPI("write.xcms_peaks")>
+    Public Function writeXcmsPeaktable(x As PeakSet, file As String) As Boolean
+        Return x.peaks.SaveTo(file, silent:=True)
+    End Function
+
     <ExportAPI("read.xcms_features")>
     Public Function readXcmsFeaturePeaks(file As dataframe) As Object
         Dim mz As Double() = CLRVector.asNumeric(file.getVector("mz", True))
