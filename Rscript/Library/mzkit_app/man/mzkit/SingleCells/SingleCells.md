@@ -28,3 +28,4 @@ Single cells metabolomics data processor
 + [spatial_labels](SingleCells/spatial_labels.1) get the labels based on the spatial information of each spot
 + [singleCell_labels](SingleCells/singleCell_labels.1) 
 + [total_peaksum](SingleCells/total_peaksum.1) do matrix data normalization via total peak sum
++ [TrIQ_clip](SingleCells/TrIQ_clip.1) processing of the intensity value clip via TrIQ algorithm for the feature matrix

@@ -214,6 +214,20 @@ declare namespace SingleCells {
      * + default value Is ``1000000``.
    */
    function total_peaksum(x: object, scale?: number): object;
+   /**
+    * processing of the intensity value clip via TrIQ algorithm for the feature matrix
+    * 
+    * > run processing for the feature clustering matrix, not apply for the expression matrix
+    * 
+     * @param x -
+     * @param q -
+     * 
+     * + default value Is ``0.6``.
+     * @param levels -
+     * 
+     * + default value Is ``100``.
+   */
+   function TrIQ_clip(x: object, q?: number, levels?: object): object;
    module write {
       /**
        * write the single cell ion feature data matrix

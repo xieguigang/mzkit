@@ -1,62 +1,63 @@
 ﻿#Region "Microsoft.VisualBasic::88e47c78784f03dc8f18784d90690ae8, visualize\plot\PeakTablePlot.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 89
-    '    Code Lines: 76 (85.39%)
-    ' Comment Lines: 1 (1.12%)
-    '    - Xml Docs: 0.00%
-    ' 
-    '   Blank Lines: 12 (13.48%)
-    '     File Size: 3.97 KB
+' Summaries:
 
 
-    ' Class PeakTablePlot
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Sub: PlotInternal
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 89
+'    Code Lines: 76 (85.39%)
+' Comment Lines: 1 (1.12%)
+'    - Xml Docs: 0.00%
+' 
+'   Blank Lines: 12 (13.48%)
+'     File Size: 3.97 KB
+
+
+' Class PeakTablePlot
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Sub: PlotInternal
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
@@ -64,8 +65,8 @@ Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
-Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors.Scaler
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math.Distributions
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.MIME.Html.Render
@@ -109,11 +110,12 @@ Public Class PeakTablePlot : Inherits Plot
         }
         Dim tickFont As Font = css.GetFont(CSSFont.TryParse(theme.axisTickCSS))
         Dim pos As PointF
+        Dim bar As Tqdm.ProgressBar = Nothing
 
         Call Axis.DrawX(g, strokePen, "Retention Time(s)", scaler, XAxisLayoutStyles.Bottom, 0, Nothing, theme.axisLabelCSS, Brushes.Black, tickFont, Brushes.Black, htmlLabel:=False)
 
         ' for each sample as matrix row
-        For Each sampleId As String In sampleNames
+        For Each sampleId As String In Tqdm.Wrap(sampleNames, bar:=bar)
             lbSize = g.MeasureString(sampleId, idFont)
             pos = New PointF(rect.Left - lbSize.Width / 2, y + (dy - lbSize.Height) / 2)
             g.DrawString(sampleId, idFont, Brushes.Black, pos)
@@ -140,7 +142,7 @@ Public Class PeakTablePlot : Inherits Plot
 
             y += dy
 
-            Call Console.WriteLine(sampleId)
+            Call bar.SetLabel(sampleId)
         Next
     End Sub
 End Class

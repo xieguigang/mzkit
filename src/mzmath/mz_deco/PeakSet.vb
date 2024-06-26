@@ -196,12 +196,8 @@ Public Class PeakSet
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Function Norm() As PeakSet
-        Return New PeakSet With {
-            .peaks = peaks _
-                .Select(Function(pk) pk.totalPeakSum) _
-                .ToArray
-        }
+    Public Function Norm(Optional scale As Double = 10 ^ 8) As PeakSet
+        Return New PeakSet With {.peaks = xcms2.TotalPeakSum(peaks, scale).ToArray}
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>

@@ -285,6 +285,20 @@ declare namespace math {
    */
    function precursor_types(types: any, unsafe?: boolean, env?: object): object;
    /**
+    * data matrix pre-processing before run data analysis
+    * 
+    * 
+     * @param x -
+     * @param scale 
+     * + default value Is ``100000000``.
+   */
+   function preprocessing(x: object, scale?: number): object;
+   /**
+     * @param sampleinfo default value Is ``null``.
+     * @param percent default value Is ``0.5``.
+   */
+   function removes_missing(x: object, sampleinfo?: object, percent?: number): object;
+   /**
     * Do resample of the chromatogram data
     * 
     * 

@@ -92,7 +92,7 @@ Namespace Deconvolute
     '''    
     ''' the <see cref="matrix"/> is consist with a collection of the <see cref="PixelData"/>.
     ''' </remarks>
-    Public Class MzMatrix : Implements INumericMatrix, IMassSet
+    Public Class MzMatrix : Implements INumericMatrix, IMassSet, ILabeledMatrix
 
         ''' <summary>
         ''' m/z vector in numeric format of round to digit 4, this ion m/z 
@@ -266,6 +266,19 @@ Namespace Deconvolute
             Next
 
             Return m
+        End Function
+
+        Public Iterator Function GetLabels() As IEnumerable(Of String) Implements ILabeledMatrix.GetLabels
+            Select Case matrixType
+                Case FileApplicationClass.STImaging, FileApplicationClass.MSImaging3D, FileApplicationClass.MSImaging
+                    For Each spot As PixelData In matrix
+                        Yield $"{spot.X},{spot.Y},{spot.Z}"
+                    Next
+                Case Else
+                    For Each sample As PixelData In matrix
+                        Yield sample.label
+                    Next
+            End Select
         End Function
     End Class
 End Namespace

@@ -1,59 +1,60 @@
 ﻿#Region "Microsoft.VisualBasic::5084739fa90910e578f8662741fe457c, Rscript\Library\mzkit_app\src\mzquant\Math.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 155
-    '    Code Lines: 109 (70.32%)
-    ' Comment Lines: 28 (18.06%)
-    '    - Xml Docs: 96.43%
-    ' 
-    '   Blank Lines: 18 (11.61%)
-    '     File Size: 6.33 KB
+' Summaries:
 
 
-    ' Module QuantifyMath
-    ' 
-    '     Function: asChromatogram, combineVector, GetPeakROIList, resample
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 155
+'    Code Lines: 109 (70.32%)
+' Comment Lines: 28 (18.06%)
+'    - Xml Docs: 96.43%
+' 
+'   Blank Lines: 18 (11.61%)
+'     File Size: 6.33 KB
+
+
+' Module QuantifyMath
+' 
+'     Function: asChromatogram, combineVector, GetPeakROIList, resample
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Data.csv.IO
@@ -61,6 +62,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.SignalProcessing
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports SMRUCC.genomics.GCModeller.Workbench.ExperimentDesigner
 Imports SMRUCC.Rsharp
 Imports SMRUCC.Rsharp.Interpreter
 Imports SMRUCC.Rsharp.Runtime
@@ -107,6 +109,68 @@ Module QuantifyMath
             .ToArray
 
         Return outVal
+    End Function
+
+    ''' <summary>
+    ''' data matrix pre-processing before run data analysis
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <returns></returns>
+    <ExportAPI("preprocessing")>
+    Public Function impute(x As PeakSet, Optional scale As Double = 10 ^ 8) As PeakSet
+        Dim imputes As xcms2() = x.peaks.Select(Function(k) k.Impute).ToArray
+        Dim norm As xcms2() = xcms2.TotalPeakSum(imputes, scale).ToArray
+        Dim peaktable As New PeakSet With {.peaks = norm}
+
+        Return peaktable
+    End Function
+
+    <ExportAPI("removes_missing")>
+    Public Function removes_missing(x As PeakSet, Optional sampleinfo As SampleInfo() = Nothing, Optional percent As Double = 0.5) As PeakSet
+        If sampleinfo.IsNullOrEmpty Then
+            ' check missing based on all samples
+            Dim peaks As New List(Of xcms2)
+            Dim sampleNames As String() = x.peaks.Select(Function(k) k.Properties.Keys).IteratesALL.Distinct.ToArray
+
+            For Each peak As xcms2 In x.peaks
+                Dim missing As Integer = Aggregate xi In peak.Properties Where xi.Value <= 0 Into Count()
+
+                If (missing / sampleNames.Length) < percent Then
+                    Call peaks.Add(peak)
+                End If
+            Next
+
+            Return New PeakSet With {.peaks = peaks.ToArray}
+        Else
+            ' check missing based on sample groups
+            Dim peaks As New List(Of xcms2)
+            Dim groups = sampleinfo _
+                .GroupBy(Function(k) k.sample_info) _
+                .ToDictionary(Function(k) k.Key,
+                              Function(k)
+                                  Return k.Select(Function(s) s.ID).ToArray
+                              End Function)
+
+            For Each peak As xcms2 In x.peaks
+                Dim missing As Integer() = groups _
+                    .Select(Function(group)
+                                Return Aggregate xi As Double
+                                       In peak(group.Value)
+                                       Where xi <= 0
+                                       Into Count()
+                            End Function) _
+                    .ToArray
+
+                ' has one group contains value more than
+                ' the given missing percentage cutoff
+                ' then we keeps this feature
+                If missing.Any(Function(m) m / sampleinfo.Length < percent) Then
+                    Call peaks.Add(peak)
+                End If
+            Next
+
+            Return New PeakSet With {.peaks = peaks.ToArray}
+        End If
     End Function
 
     ''' <summary>

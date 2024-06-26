@@ -1,4 +1,5 @@
 imports "math" from "mzkit";
+imports "math" from "mz_quantify";
 
 #' Create mzdiff tolerance value
 #' 
@@ -14,55 +15,40 @@ const tolerance = function(kind as string, mzdiff as double) {
 #' @return a result data matrix has been normalized 
 #'     via total sum of the peak area.
 #'
-const normData = function(mat, factor = NULL) {
-	const dat = as.data.frame(mat);
-	const min as double = mzkit::.minPos(dat) / 2;	
-	
-	if (!is.null(factor)) {
-		factor = as.numeric(factor);
-	} else {
-		factor = colnames(dat) 
-		|> lapply(function(i) dat[, i]) 
-		|> unlist() 
-		|> unlist() 
-		|> as.numeric() 
-		|> sum()
-		;
-	}
+const preprocessing_expression = function(x, sampleinfo = NULL, factor = 1e8, missing = 0.5) {
+	if (!is.empty(sampleinfo)) {
+		# use gcmodeller package module
+		imports "sampleInfo" from "phenotype_kit";
 
-	for(name in colnames(dat)) {
-		v = as.numeric(dat[, name]);
-		v[v <= 0.0] = min;
-		v = v / sum(v) * factor;
-		
-		dat[, name] = v;
-	}
-	
-	dat;
-}
+		if (is.character(sampleinfo)) {
+			sampleinfo <- read.sampleinfo(sampleinfo, 
+				tsv = file.ext(sampleinfo) == "txt");
+		} else {
+			# may be cast from dataframe
+			if (is.data.frame(sampleinfo)) {
+				let id = {
+					if ("id" in sampleinfo) {
+						sampleinfo$id;
+					} else {
+						rownames(sampleinfo);
+					}
+				}
 
-#' Find the min positive value in the given dataset
-#' 
-#' @param mat a dataset object that could be a 
-#'     dataframe or a list data object.
-#' 
-#' @return a numeric value that is the min positive
-#'     value in the mat data input.
-#' 
-const .minPos = function(mat) {
-	let v = [];
-	
-	if (typeof(mat) == "list") {
-		v = unlist(mat);
-	} else {
-		for(name in colnames(mat)) {
-			v = append(v, mat[, name]);
+				# just needs the sample id and sample group information
+				# for check of the missing value
+				sampleinfo <- sampleInfo(id,
+					sample_name = sampleinfo$name,
+					sample_info = sampleinfo$group);
+			} else {
+				# already clr vector of sampleinfo object?
+				# just do nothing at here
+			}
 		}
 	}
-	
-	v = as.numeric(v);
-	v = min(v[v > 0]);
-	v;
+
+	x <- removes_missing(x, sampleinfo, percent = missing);
+	x <- preprocessing(x, scale = factor);
+	x;
 }
 
 #' Create a dataset for evaluate ANOVA p-value 
