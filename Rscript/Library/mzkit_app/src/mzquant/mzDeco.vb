@@ -277,6 +277,7 @@ Module mzDeco
     ''' </summary>
     ''' <param name="file"></param>
     ''' <returns>A collection set of the <see cref="xcms2"/> peak features data object</returns>
+    ''' <keywords>read data</keywords>
     <ExportAPI("read.xcms_peaks")>
     <RApiReturn(GetType(PeakSet))>
     Public Function readXcmsPeaks(file As String,
@@ -292,6 +293,12 @@ Module mzDeco
         End If
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="file"></param>
+    ''' <returns></returns>
+    ''' <keywords>read data</keywords>
     <ExportAPI("read.xcms_features")>
     Public Function readXcmsFeaturePeaks(file As dataframe) As Object
         Dim mz As Double() = CLRVector.asNumeric(file.getVector("mz", True))
@@ -781,6 +788,7 @@ extract_ms1:
     ''' <param name="file"></param>
     ''' <param name="env"></param>
     ''' <returns></returns>
+    ''' <keywords>save data</keywords>
     <ExportAPI("write.peaks")>
     Public Function dumpPeaks(<RRawVectorArgument> peaks As Object, file As Object, Optional env As Environment = Nothing) As Object
         Dim peakSet = pipeline.TryCreatePipeline(Of PeakFeature)(peaks, env)
@@ -810,6 +818,7 @@ extract_ms1:
     ''' and this function should be parsed as a binary data file?
     ''' </param>
     ''' <returns></returns>
+    ''' <keywords>read data</keywords>
     <ExportAPI("read.peakFeatures")>
     <RApiReturn(GetType(PeakFeature))>
     Public Function readPeakData(file As String, Optional readBin As Boolean = False) As Object
