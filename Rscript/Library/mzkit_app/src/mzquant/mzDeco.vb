@@ -70,9 +70,11 @@
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
@@ -85,6 +87,7 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports SMRUCC.genomics.Analysis.HTS.DataFrame
 Imports SMRUCC.Rsharp
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
@@ -93,12 +96,9 @@ Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports deco_math = BioNovoGene.Analytical.MassSpectrometry.Math.Extensions
+Imports Matrix = SMRUCC.genomics.Analysis.HTS.DataFrame.Matrix
 Imports std = System.Math
 Imports vec = SMRUCC.Rsharp.Runtime.Internal.Object.vector
-Imports Matrix = SMRUCC.genomics.Analysis.HTS.DataFrame.Matrix
-Imports SMRUCC.genomics.Analysis.HTS.DataFrame
-Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 
 ''' <summary>
 ''' Extract peak and signal data from rawdata

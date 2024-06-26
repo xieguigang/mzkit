@@ -171,6 +171,9 @@ declare namespace mzDeco {
       */
       function peakFeatures(file: string, readBin?: boolean): object;
       /**
+       * 
+       * 
+        * @param file -
       */
       function xcms_features(file: object): any;
       /**
