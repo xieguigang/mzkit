@@ -146,12 +146,14 @@ declare namespace MsImaging {
      * @param pixelSize -
      * 
      * + default value Is ``'5,5'``.
-     * @param tolerance -
+     * @param tolerance the mass tolerance error for get ion intensity value from spatial spots.
      * 
      * + default value Is ``'da:0.1'``.
-     * @param color 
+     * @param color the color palette name
+     * 
      * + default value Is ``'viridis:turbo'``.
-     * @param levels 
+     * @param levels -
+     * 
      * + default value Is ``30``.
      * @param cutoff 
      * + default value Is ``[0.1,0.75]``.
@@ -219,7 +221,13 @@ declare namespace MsImaging {
    */
    function MS1(viewer: object, x: object, y: object, tolerance?: any, threshold?: number, composed?: boolean, env?: object): object;
    /**
-     * @param samplingRegion default value Is ``true``.
+    * 
+    * 
+     * @param layer -
+     * @param xy -
+     * @param samplingRegion -
+     * 
+     * + default value Is ``true``.
    */
    function MSI_coverage(layer: object, xy: object, samplingRegion?: boolean): number;
    module MSI_summary {
@@ -262,6 +270,9 @@ declare namespace MsImaging {
    */
    function MSIlayer(viewer: object, mz: number, tolerance?: any, split?: boolean, env?: object): object;
    /**
+    * 
+    * 
+     * @param filters -
    */
    function parseFilters(filters: any): object;
    /**
