@@ -243,6 +243,7 @@ Module MsImaging
     ''' <remarks>
     ''' this function works based on the <see cref="TrIQThreshold"/> clr module
     ''' </remarks>
+    ''' <keywords>algorithm</keywords>
     <ExportAPI("TrIQ")>
     <RApiReturn(GetType(Double))>
     Public Function TrIQRange(<RRawVectorArgument>
@@ -303,6 +304,7 @@ Module MsImaging
     ''' <param name="file"></param>
     ''' <param name="env"></param>
     ''' <returns></returns>
+    ''' <keywords>save data</keywords>
     <ExportAPI("write.mzImage")>
     <RApiReturn(GetType(Boolean))>
     Public Function WriteXICCache(<RRawVectorArgument>
@@ -360,6 +362,7 @@ Module MsImaging
     ''' <param name="file"></param>
     ''' <param name="env"></param>
     ''' <returns>A spatial ion xic reader object for MSI visual</returns>
+    ''' <keywords>read data</keywords>
     <ExportAPI("read.mzImage")>
     <RApiReturn(GetType(XICReader))>
     Public Function openIndexedCacheFile(<RRawVectorArgument> file As Object, Optional env As Environment = Nothing) As Object
@@ -426,6 +429,7 @@ Module MsImaging
     ''' </param>
     ''' <param name="env"></param>
     ''' <returns></returns>
+    ''' <keywords>read data</keywords>
     <ExportAPI("MS1")>
     <RApiReturn(GetType(LibraryMatrix))>
     Public Function GetMsMatrx(viewer As Drawer, x As Integer(), y As Integer(),
@@ -485,6 +489,7 @@ Module MsImaging
     ''' <remarks>
     ''' this function will load entire MSI matrix raw data into memory.
     ''' </remarks>
+    ''' <keywords>read data</keywords>
     <ExportAPI("viewer")>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <RApiReturn(GetType(Drawer))>
@@ -694,6 +699,7 @@ Module MsImaging
     ''' <param name="tolerance">the ion m/z mass tolerance error</param>
     ''' <param name="env"></param>
     ''' <returns></returns>
+    ''' <keywords>read data</keywords>
     <ExportAPI("rgb")>
     <RApiReturn(GetType(Bitmap))>
     Public Function RGB(viewer As Drawer, r As Double, g As Double, b As Double,
@@ -841,6 +847,14 @@ Module MsImaging
         End If
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="layer"></param>
+    ''' <param name="xy"></param>
+    ''' <param name="samplingRegion"></param>
+    ''' <returns></returns>
+    ''' <keywords>spatial</keywords>
     <ExportAPI("MSI_coverage")>
     <Extension>
     Public Function MSICoverage(layer As SingleIonLayer, xy As Index(Of String), Optional samplingRegion As Boolean = True) As Double
@@ -873,10 +887,11 @@ Module MsImaging
     ''' <param name="viewer"></param>
     ''' <param name="mz"></param>
     ''' <param name="pixelSize"></param>
-    ''' <param name="tolerance"></param>
-    ''' <param name="color$"></param>
-    ''' <param name="levels%"></param>
+    ''' <param name="tolerance">the mass tolerance error for get ion intensity value from spatial spots.</param>
+    ''' <param name="color">the color palette name</param>
+    ''' <param name="levels"></param>
     ''' <returns></returns>
+    ''' <keywords>data visual</keywords>
     <ExportAPI("layer")>
     <RApiReturn(GetType(Bitmap))>
     Public Function layer(viewer As Drawer, mz As Double(),
@@ -997,6 +1012,7 @@ Module MsImaging
     ''' <remarks>
     ''' denoise_scale() &gt; TrIQ_scale(0.8) &gt; knn_scale() &gt; soften_scale()
     ''' </remarks>
+    ''' <keywords>data visual</keywords>
     <ExportAPI("defaultFilter")>
     <RApiReturn(GetType(RasterPipeline))>
     Public Function defaultFilter() As RasterPipeline
@@ -1007,6 +1023,11 @@ Module MsImaging
             .Then(New SoftenScaler)
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="filters"></param>
+    ''' <returns></returns>
     <ExportAPI("parseFilters")>
     Public Function parseFilters(<RRawVectorArgument> filters As Object) As RasterPipeline
         Dim filters_str As String() = CLRVector.asCharacter(filters)
@@ -1050,6 +1071,7 @@ Module MsImaging
     ''' </param>
     ''' <param name="env"></param>
     ''' <returns></returns>
+    ''' <keywords>data visual</keywords>
     <ExportAPI("render")>
     <RApiReturn(GetType(Bitmap))>
     Public Function renderRowScans(data As Object,
