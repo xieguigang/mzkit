@@ -17,6 +17,14 @@
  * 
 */
 declare namespace MsImaging {
+   /**
+    * apply a single filter or a filter pipeline
+    * 
+    * 
+     * @param filter -
+     * @param layer -
+   */
+   function apply_raster_filter(filter: object, layer: object): object;
    module as {
       /**
        * extract the pixel [x,y] information for all of
