@@ -72,6 +72,9 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Blender.Scaler
 
+    ''' <summary>
+    ''' the ms-imaging raster rendering filter
+    ''' </summary>
     Public MustInherit Class Scaler : Implements LayerScaler
 
         Public Interface LayerScaler
