@@ -348,6 +348,8 @@ Module Assembly
 
         If TypeOf ions Is vector Then
             ions = DirectCast(ions, vector).data
+        End If
+        If ions.GetType.IsArray Then
             ions = TryCastGenericArray(ions, env)
 
             If TypeOf ions Is Message Then
