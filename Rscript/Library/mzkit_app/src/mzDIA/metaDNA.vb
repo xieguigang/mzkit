@@ -164,6 +164,7 @@ Module metaDNAInfer
     ''' <param name="debugOutput"></param>
     ''' <param name="env"></param>
     ''' <returns></returns>
+    ''' <keywords>read data;metadna</keywords>
     <ExportAPI("read.metadna.infer")>
     <RApiReturn(GetType(NetworkGraph))>
     Public Function loadMetaDNAInferNetwork(debugOutput As Object, Optional env As Environment = Nothing) As Object
@@ -187,6 +188,7 @@ Module metaDNAInfer
     ''' <param name="env"></param>
     ''' <returns>A collection of the reaction class table for provides 
     ''' the data links between the compounds.</returns>
+    ''' <keywords>read data;kegg</keywords>
     <ExportAPI("reaction_class.table")>
     <RApiReturn(GetType(ReactionClassTbl))>
     Public Function readReactionClassTable(file As String, Optional env As Environment = Nothing) As Object
@@ -226,6 +228,7 @@ Module metaDNAInfer
     ''' <param name="maxIterations"></param>
     ''' <param name="env"></param>
     ''' <returns></returns>
+    ''' <keywords>metadna</keywords>
     <ExportAPI("metadna")>
     <RApiReturn(GetType(MetaDNAAlgorithm))>
     Public Function MetaDNAAlgorithm(Optional ms1ppm As Object = "ppm:20",
@@ -259,6 +262,7 @@ Module metaDNAInfer
     ''' </param>
     ''' <param name="env"></param>
     ''' <returns></returns>
+    ''' <keywords>adducts</keywords>
     <ExportAPI("range")>
     <RApiReturn(GetType(MetaDNAAlgorithm))>
     Public Function SetSearchRange(metadna As Algorithm,
@@ -286,6 +290,7 @@ Module metaDNAInfer
     ''' </param>
     ''' <param name="env"></param>
     ''' <returns></returns>
+    ''' <keywords>kegg;metabolite</keywords>
     <ExportAPI("load.kegg")>
     <RApiReturn(GetType(MetaDNAAlgorithm))>
     Public Function SetKeggLibrary(metadna As Algorithm,
@@ -306,6 +311,14 @@ Module metaDNAInfer
         Return library.getError
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="metadna"></param>
+    ''' <param name="[library]"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    ''' <keywords>kegg;metabolite;pubchem;biodeep</keywords>
     <ExportAPI("setLibrary")>
     Public Function setLibrary(metadna As Algorithm, [library] As Object, Optional env As Environment = Nothing) As Object
         If library Is Nothing Then
@@ -320,6 +333,13 @@ Module metaDNAInfer
         End If
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="metadna"></param>
+    ''' <param name="networking"></param>
+    ''' <returns></returns>
+    ''' <keywords>kegg;reaction;metacyc;reactome;biodeep</keywords>
     <ExportAPI("setNetworking")>
     Public Function setNetworking(metadna As Algorithm, networking As Networking) As Object
         Return metadna.SetNetwork(networking)
@@ -334,6 +354,7 @@ Module metaDNAInfer
     ''' </param>
     ''' <param name="env"></param>
     ''' <returns></returns>
+    ''' <keywords>kegg;reaction</keywords>
     <ExportAPI("load.kegg_network")>
     <RApiReturn(GetType(MetaDNAAlgorithm))>
     Public Function SetInferNetwork(metadna As Algorithm,
@@ -362,6 +383,7 @@ Module metaDNAInfer
     ''' <param name="obo">raw data for build <see cref="OntologyTree"/>.</param>
     ''' <param name="env"></param>
     ''' <returns></returns>
+    ''' <keywords>networking</keywords>
     <ExportAPI("load.ontology")>
     Public Function loadOntologyTree(metadna As Algorithm, obo As OBOFile, Optional env As Environment = Nothing) As Object
         Return metadna.SetNetwork(New OntologyTree(obo))
@@ -379,6 +401,7 @@ Module metaDNAInfer
     ''' </param>
     ''' <param name="env"></param>
     ''' <returns></returns>
+    ''' <keywords>spectrum;lc-ms</keywords>
     <ExportAPI("load.raw")>
     <RApiReturn(GetType(MetaDNAAlgorithm))>
     Public Function handleSample(metadna As Algorithm, <RRawVectorArgument> sample As Object,
@@ -481,6 +504,7 @@ Module metaDNAInfer
     ''' <param name="seeds"></param>
     ''' <param name="env"></param>
     ''' <returns></returns>
+    ''' <keywords>metadna;lc-ms</keywords>
     <ExportAPI("DIA.infer")>
     <RApiReturn(GetType(CandidateInfer))>
     Public Function DIAInfer(metaDNA As Algorithm,
@@ -558,6 +582,7 @@ Module metaDNAInfer
     ''' be used for the seeds for run the metadna annotation.</param>
     ''' <param name="env"></param>
     ''' <returns></returns>
+    ''' <keywords>spectrum</keywords>
     <ExportAPI("as.seeds")>
     <RApiReturn(GetType(AnnotatedSeed))>
     Public Function MgfSeeds(<RRawVectorArgument> seeds As Object, Optional env As Environment = Nothing) As Object
@@ -690,6 +715,7 @@ Module metaDNAInfer
     ''' a data query engine model to run ms1 data search 
     ''' for the kegg metaolite compounds.
     ''' </returns>
+    ''' <keywords>kegg;metabolites</keywords>
     <ExportAPI("annotationSet")>
     <RApiReturn(GetType(CompoundSolver))>
     Public Function CreateKEGGSearch(<RRawVectorArgument> kegg As Object,
@@ -755,6 +781,7 @@ Module metaDNAInfer
     ''' <returns>
     ''' a collection of the kegg compound data model
     ''' </returns>
+    ''' <keywords>kegg;metabolites</keywords>
     <ExportAPI("kegg.library")>
     <RApiReturn(GetType(KeggCompound))>
     Public Function loadCompoundLibrary(repo As String) As Object
@@ -774,6 +801,7 @@ Module metaDNAInfer
     ''' </summary>
     ''' <param name="repo"></param>
     ''' <returns></returns>
+    ''' <keywords>kegg;networking</keywords>
     <ExportAPI("kegg.network")>
     <RApiReturn(GetType(ReactionClass))>
     Public Function loadKeggNetwork(repo As String) As Object

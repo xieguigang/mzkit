@@ -1,62 +1,62 @@
 ﻿#Region "Microsoft.VisualBasic::97ed41299e987216a018f8707b4ea305, Rscript\Library\mzkit_app\src\mzplot\MsImaging.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 1194
-    '    Code Lines: 773 (64.74%)
-    ' Comment Lines: 286 (23.95%)
-    '    - Xml Docs: 94.06%
-    ' 
-    '   Blank Lines: 135 (11.31%)
-    '     File Size: 50.84 KB
+' Summaries:
 
 
-    ' Module MsImaging
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: (+2 Overloads) asPixels, AutoScaleMax, averageStep, defaultFilter, FilterMz
-    '               GetIntensityData, GetIonLayer, getMSIIons, GetMsMatrx, GetPixel
-    '               intensityFilter, KnnFill, layer, layerTable, LimitIntensityRange
-    '               LoadPixels, MSICoverage, openIndexedCacheFile, parseFilters, plotMSI
-    '               printLayer, renderRowScans, RGB, splitLayer, sumLayer
-    '               tagLayers, testLayer, TrIQRange, viewer, WriteXICCache
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 1194
+'    Code Lines: 773 (64.74%)
+' Comment Lines: 286 (23.95%)
+'    - Xml Docs: 94.06%
+' 
+'   Blank Lines: 135 (11.31%)
+'     File Size: 50.84 KB
+
+
+' Module MsImaging
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Function: (+2 Overloads) asPixels, AutoScaleMax, averageStep, defaultFilter, FilterMz
+'               GetIntensityData, GetIonLayer, getMSIIons, GetMsMatrx, GetPixel
+'               intensityFilter, KnnFill, layer, layerTable, LimitIntensityRange
+'               LoadPixels, MSICoverage, openIndexedCacheFile, parseFilters, plotMSI
+'               printLayer, renderRowScans, RGB, splitLayer, sumLayer
+'               tagLayers, testLayer, TrIQRange, viewer, WriteXICCache
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -71,6 +71,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Blender
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Blender.Scaler
+Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Blender.Scaler.Scaler
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.IndexedCache
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Pixel
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader
@@ -243,6 +244,7 @@ Module MsImaging
     ''' <remarks>
     ''' this function works based on the <see cref="TrIQThreshold"/> clr module
     ''' </remarks>
+    ''' <keywords>algorithm</keywords>
     <ExportAPI("TrIQ")>
     <RApiReturn(GetType(Double))>
     Public Function TrIQRange(<RRawVectorArgument>
@@ -278,6 +280,7 @@ Module MsImaging
     ''' <param name="max"></param>
     ''' <param name="min"></param>
     ''' <returns></returns>
+    ''' <keywords>filter</keywords>
     <ExportAPI("intensityLimits")>
     <RApiReturn(GetType(SingleIonLayer))>
     Public Function LimitIntensityRange(data As SingleIonLayer, max As Double, Optional min As Double = 0) As Object
@@ -297,12 +300,25 @@ Module MsImaging
     End Function
 
     ''' <summary>
+    ''' apply a single filter or a filter pipeline
+    ''' </summary>
+    ''' <param name="filter"></param>
+    ''' <param name="layer"></param>
+    ''' <returns></returns>
+    ''' <keywords>filter</keywords>
+    <ExportAPI("apply_raster_filter")>
+    Public Function apply_raster_filter(filter As LayerScaler, layer As SingleIonLayer) As SingleIonLayer
+        Return filter.DoIntensityScale(layer)
+    End Function
+
+    ''' <summary>
     ''' write mzImage data file
     ''' </summary>
     ''' <param name="pixels"></param>
     ''' <param name="file"></param>
     ''' <param name="env"></param>
     ''' <returns></returns>
+    ''' <keywords>save data</keywords>
     <ExportAPI("write.mzImage")>
     <RApiReturn(GetType(Boolean))>
     Public Function WriteXICCache(<RRawVectorArgument>
@@ -360,6 +376,7 @@ Module MsImaging
     ''' <param name="file"></param>
     ''' <param name="env"></param>
     ''' <returns>A spatial ion xic reader object for MSI visual</returns>
+    ''' <keywords>read data</keywords>
     <ExportAPI("read.mzImage")>
     <RApiReturn(GetType(XICReader))>
     Public Function openIndexedCacheFile(<RRawVectorArgument> file As Object, Optional env As Environment = Nothing) As Object
@@ -426,6 +443,7 @@ Module MsImaging
     ''' </param>
     ''' <param name="env"></param>
     ''' <returns></returns>
+    ''' <keywords>read data</keywords>
     <ExportAPI("MS1")>
     <RApiReturn(GetType(LibraryMatrix))>
     Public Function GetMsMatrx(viewer As Drawer, x As Integer(), y As Integer(),
@@ -485,6 +503,7 @@ Module MsImaging
     ''' <remarks>
     ''' this function will load entire MSI matrix raw data into memory.
     ''' </remarks>
+    ''' <keywords>read data</keywords>
     <ExportAPI("viewer")>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <RApiReturn(GetType(Drawer))>
@@ -694,6 +713,7 @@ Module MsImaging
     ''' <param name="tolerance">the ion m/z mass tolerance error</param>
     ''' <param name="env"></param>
     ''' <returns></returns>
+    ''' <keywords>read data</keywords>
     <ExportAPI("rgb")>
     <RApiReturn(GetType(Bitmap))>
     Public Function RGB(viewer As Drawer, r As Double, g As Double, b As Double,
@@ -841,6 +861,14 @@ Module MsImaging
         End If
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="layer"></param>
+    ''' <param name="xy"></param>
+    ''' <param name="samplingRegion"></param>
+    ''' <returns></returns>
+    ''' <keywords>spatial</keywords>
     <ExportAPI("MSI_coverage")>
     <Extension>
     Public Function MSICoverage(layer As SingleIonLayer, xy As Index(Of String), Optional samplingRegion As Boolean = True) As Double
@@ -873,10 +901,11 @@ Module MsImaging
     ''' <param name="viewer"></param>
     ''' <param name="mz"></param>
     ''' <param name="pixelSize"></param>
-    ''' <param name="tolerance"></param>
-    ''' <param name="color$"></param>
-    ''' <param name="levels%"></param>
+    ''' <param name="tolerance">the mass tolerance error for get ion intensity value from spatial spots.</param>
+    ''' <param name="color">the color palette name</param>
+    ''' <param name="levels"></param>
     ''' <returns></returns>
+    ''' <keywords>data visual</keywords>
     <ExportAPI("layer")>
     <RApiReturn(GetType(Bitmap))>
     Public Function layer(viewer As Drawer, mz As Double(),
@@ -997,6 +1026,7 @@ Module MsImaging
     ''' <remarks>
     ''' denoise_scale() &gt; TrIQ_scale(0.8) &gt; knn_scale() &gt; soften_scale()
     ''' </remarks>
+    ''' <keywords>data visual</keywords>
     <ExportAPI("defaultFilter")>
     <RApiReturn(GetType(RasterPipeline))>
     Public Function defaultFilter() As RasterPipeline
@@ -1007,6 +1037,11 @@ Module MsImaging
             .Then(New SoftenScaler)
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="filters"></param>
+    ''' <returns></returns>
     <ExportAPI("parseFilters")>
     Public Function parseFilters(<RRawVectorArgument> filters As Object) As RasterPipeline
         Dim filters_str As String() = CLRVector.asCharacter(filters)
@@ -1050,6 +1085,7 @@ Module MsImaging
     ''' </param>
     ''' <param name="env"></param>
     ''' <returns></returns>
+    ''' <keywords>data visual</keywords>
     <ExportAPI("render")>
     <RApiReturn(GetType(Bitmap))>
     Public Function renderRowScans(data As Object,
