@@ -167,6 +167,8 @@ Public Module SaveXcms
     ''' </summary>
     ''' <param name="sample"></param>
     ''' <param name="file"></param>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Sub DumpSample(sample As PeakSet, file As Stream)
         Call sample.peaks.DumpSample(sample.ROIs, sample.sampleNames, file)
@@ -200,12 +202,7 @@ Public Module SaveXcms
         Call bin.Flush()
     End Sub
 
-    ''' <summary>
-    ''' load binary file
-    ''' </summary>
-    ''' <param name="file"></param>
-    ''' <returns></returns>
-    Public Function ReadSample(file As Stream) As PeakSet
+    Public Function ReadSamplePeaks(file As Stream) As xcms2()
         Dim rd As New BinaryReader(file)
         Dim ROIs As Integer = rd.ReadInt32
         Dim samples As Integer = rd.ReadInt32
@@ -235,6 +232,17 @@ Public Module SaveXcms
             peaks(i) = pk
         Next
 
-        Return New PeakSet With {.peaks = peaks}
+        Return peaks
+    End Function
+
+    ''' <summary>
+    ''' load binary file
+    ''' </summary>
+    ''' <param name="file"></param>
+    ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function ReadSample(file As Stream) As PeakSet
+        Return New PeakSet With {.peaks = ReadSamplePeaks(file)}
     End Function
 End Module
