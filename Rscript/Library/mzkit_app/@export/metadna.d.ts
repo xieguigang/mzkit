@@ -213,6 +213,9 @@ declare namespace metadna {
       function table(file: string, env?: object): object;
    }
    module read {
+      /**
+      */
+      function infer_details(file: string): object;
       module metadna {
          /**
           * Load network graph model from the kegg metaDNA infer network data.
