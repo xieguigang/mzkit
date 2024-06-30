@@ -144,6 +144,9 @@ Namespace Blender
         ''' <summary>
         ''' draw background
         ''' </summary>
+        ''' <remarks>
+        ''' <paramref name="dimension"/> defines the image size directly
+        ''' </remarks>
         Private Function DrawBackground(dimension As Size, defaultBackground As Color) As Bitmap
             Dim raw As New Bitmap(dimension.Width, dimension.Height, PixelFormat.Format32bppArgb)
 
@@ -188,7 +191,8 @@ Namespace Blender
         ''' <param name="pixels"></param>
         ''' <param name="dimension">the scan size</param>
         ''' <param name="colorSet"></param>
-        ''' <returns></returns>
+        ''' <returns>a gdi+ image obejct with size which is specified by
+        ''' <paramref name="dimension"/> parameter.</returns>
         Public Overrides Function RenderPixels(pixels As PixelData(), dimension As Size, colorSet As SolidBrush(),
                                                Optional scale As InterpolationMode = InterpolationMode.Bilinear,
                                                Optional defaultFill As String = "Transparent") As GraphicsData
