@@ -169,17 +169,21 @@ Public Module SaveXcms
     ''' <param name="file"></param>
     <Extension>
     Public Sub DumpSample(sample As PeakSet, file As Stream)
-        Dim bin As New BinaryWriter(file)
-        Dim sampleNames As String() = sample.sampleNames
+        Call sample.peaks.DumpSample(sample.ROIs, sample.sampleNames, file)
+    End Sub
 
-        Call bin.Write(sample.ROIs)
+    <Extension>
+    Public Sub DumpSample(sample As IEnumerable(Of xcms2), npeaks As Integer, sampleNames As String(), file As Stream)
+        Dim bin As New BinaryWriter(file)
+
+        Call bin.Write(npeaks)
         Call bin.Write(sampleNames.Length)
 
         For Each name As String In sampleNames
             Call bin.Write(name)
         Next
 
-        For Each pk As xcms2 In sample.peaks
+        For Each pk As xcms2 In sample
             Call bin.Write(pk.ID)
             Call bin.Write(pk.mz)
             Call bin.Write(pk.rt)
