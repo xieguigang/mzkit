@@ -14,12 +14,17 @@ imports "mzDeco" from "mz_quantify";
 const ms1_mz_bins = function(files) {
     let xic_data = lapply(files, path -> readBin(path, what = "mz_group"));
     let mz = lapply(xic_data, function(pack, i) {
-        data.frame(
-            mz = [pack]::mz,
-            TIC = [pack]::TIC,
-            maxinto = [pack]::MaxInto,
-            row.names = `#${i}-${1:length(pack)}`
-        );
+        # some rawdata file may contains ms2 spectrum only
+        if (length(pack) == 0) {
+            NULL;
+        } else {
+            data.frame(
+                mz        = [pack]::mz,
+                TIC       = [pack]::TIC,
+                maxinto   = [pack]::MaxInto,
+                row.names = `#${i}-${1:length(pack)}`
+            );
+        }
     });
 
     let mzraw = NULL;
