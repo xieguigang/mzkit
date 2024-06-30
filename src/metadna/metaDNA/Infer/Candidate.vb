@@ -58,13 +58,11 @@
 
 #End Region
 
-Imports System.Runtime.Serialization
 Imports System.Xml.Serialization
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
 
 Namespace Infer
 
-    <DataContract>
     Public Class Candidate
 
         ''' <summary>
@@ -81,7 +79,6 @@ Namespace Infer
         ''' <see cref="AlignmentOutput"/>
         ''' </summary>
         ''' <returns></returns>
-        <DataMember>
         Public Property infer As InferLink
 
         Public Overrides Function ToString() As String

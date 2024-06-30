@@ -64,10 +64,8 @@ Imports BioNovoGene.BioDeep.MSEngine
 
 Namespace Infer
 
-    <DataContract>
     Public Class InferLink : Inherits AlignmentOutput
 
-        <DataMember>
         <XmlElement> Public Property level As InferLevel
 
         ''' <summary>

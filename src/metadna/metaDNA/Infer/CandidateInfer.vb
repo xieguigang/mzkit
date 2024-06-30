@@ -57,13 +57,11 @@
 
 #End Region
 
-Imports System.Runtime.Serialization
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 
 Namespace Infer
 
-    <DataContract>
     Public Class CandidateInfer : Implements INamedValue
 
         <XmlAttribute> Public Property kegg_id As String Implements INamedValue.Key
