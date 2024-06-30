@@ -59,13 +59,14 @@
 
 Imports System.Runtime.Serialization
 Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 
 Namespace Infer
 
     <DataContract>
-    Public Class CandidateInfer
+    Public Class CandidateInfer : Implements INamedValue
 
-        <XmlAttribute> Public Property kegg_id As String
+        <XmlAttribute> Public Property kegg_id As String Implements INamedValue.Key
         <XmlElement> Public Property infers As Candidate()
 
         Public Overrides Function ToString() As String
