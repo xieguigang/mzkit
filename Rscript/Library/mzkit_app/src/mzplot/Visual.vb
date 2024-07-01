@@ -660,6 +660,9 @@ Module Visual
     ''' <param name="bar_width">
     ''' the column width of the bar plot
     ''' </param>
+    ''' <param name="intoCutoff">
+    ''' the intensity cutoff value for display the m/z label on the bar
+    ''' </param>
     ''' <param name="legend_layout">
     ''' the layout of the legend plot, this parameter value could affects the plot style
     ''' </param>
