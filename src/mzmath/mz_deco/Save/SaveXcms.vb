@@ -167,19 +167,25 @@ Public Module SaveXcms
     ''' </summary>
     ''' <param name="sample"></param>
     ''' <param name="file"></param>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Sub DumpSample(sample As PeakSet, file As Stream)
-        Dim bin As New BinaryWriter(file)
-        Dim sampleNames As String() = sample.sampleNames
+        Call sample.peaks.DumpSample(sample.ROIs, sample.sampleNames, file)
+    End Sub
 
-        Call bin.Write(sample.ROIs)
+    <Extension>
+    Public Sub DumpSample(sample As IEnumerable(Of xcms2), npeaks As Integer, sampleNames As String(), file As Stream)
+        Dim bin As New BinaryWriter(file)
+
+        Call bin.Write(npeaks)
         Call bin.Write(sampleNames.Length)
 
         For Each name As String In sampleNames
             Call bin.Write(name)
         Next
 
-        For Each pk As xcms2 In sample.peaks
+        For Each pk As xcms2 In sample
             Call bin.Write(pk.ID)
             Call bin.Write(pk.mz)
             Call bin.Write(pk.rt)
@@ -196,12 +202,7 @@ Public Module SaveXcms
         Call bin.Flush()
     End Sub
 
-    ''' <summary>
-    ''' load binary file
-    ''' </summary>
-    ''' <param name="file"></param>
-    ''' <returns></returns>
-    Public Function ReadSample(file As Stream) As PeakSet
+    Public Function ReadSamplePeaks(file As Stream) As xcms2()
         Dim rd As New BinaryReader(file)
         Dim ROIs As Integer = rd.ReadInt32
         Dim samples As Integer = rd.ReadInt32
@@ -231,6 +232,17 @@ Public Module SaveXcms
             peaks(i) = pk
         Next
 
-        Return New PeakSet With {.peaks = peaks}
+        Return peaks
+    End Function
+
+    ''' <summary>
+    ''' load binary file
+    ''' </summary>
+    ''' <param name="file"></param>
+    ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function ReadSample(file As Stream) As PeakSet
+        Return New PeakSet With {.peaks = ReadSamplePeaks(file)}
     End Function
 End Module

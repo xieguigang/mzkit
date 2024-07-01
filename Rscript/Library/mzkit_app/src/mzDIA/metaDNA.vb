@@ -83,6 +83,7 @@ Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports SMRUCC.genomics.Data
 Imports SMRUCC.genomics.Data.KEGG.Metabolism
 Imports SMRUCC.genomics.foundation.OBO_Foundry.IO.Models
@@ -115,6 +116,7 @@ Imports std = System.Math
          2019, 10: 1516.")>
 <RTypeExport("metadna", GetType(MetaDNAAlgorithm))>
 <RTypeExport("obo_ontology", GetType(OBOFile))>
+<RTypeExport("metadna_infer", GetType(CandidateInfer))>
 Module metaDNAInfer
 
     Sub Main()
@@ -691,6 +693,11 @@ Module metaDNAInfer
         }
     End Function
 #End Region
+
+    <ExportAPI("read.infer_details")>
+    Public Function readInferDetails(file As String) As CandidateInfer()
+        Return file.LoadJsonFile(Of CandidateInfer())
+    End Function
 
 #Region "kegg"
 
