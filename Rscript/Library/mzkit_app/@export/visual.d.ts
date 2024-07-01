@@ -53,7 +53,8 @@ declare namespace visual {
         * + default value Is ``true``.
         * @param tagXFormat 
         * + default value Is ``'F2'``.
-        * @param intoCutoff 
+        * @param intoCutoff the intensity cutoff value for display the m/z label on the bar
+        * 
         * + default value Is ``0.3``.
         * @param bar_width the column width of the bar plot
         * 
