@@ -1,5 +1,3 @@
-require(mzkit);
-
 imports "mzDeco" from "mz_quantify";
 
 #' Export peakstable data from the XIC rawdata files
