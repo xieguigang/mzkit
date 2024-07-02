@@ -128,6 +128,11 @@ Namespace Pixel
             End If
         End Sub
 
+        ''' <summary>
+        ''' a spatial spectrum join with the peak annotation results
+        ''' </summary>
+        ''' <param name="pixel"></param>
+        ''' <param name="annos"></param>
         Sub New(pixel As PixelScan, Optional annos As String() = Nothing)
             annotations = annos
             X = pixel.X
