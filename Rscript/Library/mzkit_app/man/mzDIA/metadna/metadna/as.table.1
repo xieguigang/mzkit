@@ -6,6 +6,7 @@ as.table \- Extract the annotation result from metaDNA algorithm module as data 
 \fIas.table(\fBmetaDNA\fR as <generic> Algorithm, 
 \fBresult\fR as any, 
 \fBunique\fR as boolean = FALSE, 
+\fBcutoff\fR as double = 0.75, 
 [\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
@@ -20,6 +21,11 @@ Extract the annotation result from metaDNA algorithm module as data table
 .PP
 .PP
 \fBunique\fB \fR\- -. 
+.PP
+.PP
+\fBcutoff\fB \fR\- 
+ the score cutoff for filter the result list
+. 
 .PP
 .PP
 \fBenv\fB \fR\- -. 
