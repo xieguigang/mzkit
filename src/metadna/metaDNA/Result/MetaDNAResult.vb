@@ -64,6 +64,7 @@
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
 Imports BioNovoGene.BioDeep.MetaDNA.Infer
 Imports Microsoft.VisualBasic.Linq
+Imports std = System.Math
 
 ''' <summary>
 ''' table output of the metaDNA infer annotation result
@@ -87,23 +88,51 @@ Public Class MetaDNAResult
     Public Property exactMass As Double
     Public Property formula As String
     Public Property name As String
+    ''' <summary>
+    ''' precursor adducts type
+    ''' </summary>
+    ''' <returns></returns>
     Public Property precursorType As String
     ''' <summary>
-    ''' calculated m/z value based on <see cref="mz"/> and <see cref="precursorType"/>
+    ''' Theoretical calculated m/z value based on <see cref="mz"/> And <see cref="precursorType"/>
     ''' </summary>
     ''' <returns></returns>
     Public Property mzCalc As Double
+    ''' <summary>
+    ''' ppm error between the Theoretical <see cref="mzCalc"/> and <see cref="mz"/>
+    ''' </summary>
+    ''' <returns></returns>
     Public Property ppm As Double
     ''' <summary>
     ''' the score match of ms1 <see cref="rt"/> and rt value of the KEGG compound reference
     ''' </summary>
     ''' <returns></returns>
     Public Property rt_adjust As Double
+    ''' <summary>
+    ''' MS1 or MS2
+    ''' </summary>
+    ''' <returns></returns>
     Public Property inferLevel As String
+    ''' <summary>
+    ''' forward cosine score
+    ''' </summary>
+    ''' <returns></returns>
     Public Property forward As Double
+    ''' <summary>
+    ''' reverse cosine score
+    ''' </summary>
+    ''' <returns></returns>
     Public Property reverse As Double
+    ''' <summary>
+    ''' ranked jaccard score
+    ''' </summary>
+    ''' <returns></returns>
     Public Property jaccard As Double
     Public Property mirror As Double
+    ''' <summary>
+    ''' entropy score
+    ''' </summary>
+    ''' <returns></returns>
     Public Property entropy As Double
     Public Property parentTrace As Double
     Public Property inferSize As Integer
@@ -135,6 +164,19 @@ Public Class MetaDNAResult
 
         For Each match As SSM2MatrixFragment In infer.alignments.SafeQuery
             Yield $"{match.mz.ToString("F4")}_{match.query}_{match.ref}"
+        Next
+    End Function
+
+    Public Shared Iterator Function FilterInferenceHits(result As IEnumerable(Of MetaDNAResult), cutoff As Double) As IEnumerable(Of MetaDNAResult)
+        For Each hit As MetaDNAResult In result.SafeQuery
+            Dim score As Double = std.Min(hit.forward, hit.reverse)
+
+            score = std.Max(score, hit.jaccard)
+            score = std.Max(score, hit.entropy)
+
+            If score > cutoff Then
+                Yield hit
+            End If
         Next
     End Function
 
