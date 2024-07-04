@@ -287,6 +287,13 @@ Module mzDeco
                                   Optional tsv As Boolean = False,
                                   Optional general_method As Boolean = False) As Object
 
+        If file.ExtensionSuffix("dat", "xcms") Then
+            ' read binary file
+            Using buf As Stream = file.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
+                Return SaveXcms.ReadSample(buf)
+            End Using
+        End If
+
         If Not general_method Then
             Return SaveXcms.ReadTextTable(file, tsv)
         Else
