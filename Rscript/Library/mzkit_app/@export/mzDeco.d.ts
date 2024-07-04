@@ -171,6 +171,9 @@ declare namespace mzDeco {
       */
       function peakFeatures(file: string, readBin?: boolean): object;
       /**
+      */
+      function rt_shifts(file: string): object;
+      /**
        * 
        * 
         * @param file -

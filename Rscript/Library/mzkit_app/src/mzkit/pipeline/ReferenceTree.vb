@@ -187,7 +187,14 @@ Module ReferenceTreePkg
     ''' spectrum data from the database file is this parameter value is not 
     ''' NULL.
     ''' </param>
-    ''' <returns></returns>
+    ''' <param name="adducts">
+    ''' the precursor types for build the mass index for the reference library, this 
+    ''' parameter is required for reference library model in stream pack object type.
+    ''' </param>
+    ''' <returns>
+    ''' the reference library object in different search mode, all library object 
+    ''' is inherits based on the <see cref="Ms2Search"/> object.
+    ''' </returns>
     ''' <remarks>
     ''' the data format is test via the magic header
     ''' </remarks>
