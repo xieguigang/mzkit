@@ -752,6 +752,11 @@ extract_ms1:
         End If
     End Function
 
+    <ExportAPI("read.rt_shifts")>
+    Public Function read_rtshifts(file As String) As RtShift()
+        Return file.LoadCsv(Of RtShift)(mute:=True).ToArray
+    End Function
+
     ''' <summary>
     ''' write peak debug data
     ''' </summary>
