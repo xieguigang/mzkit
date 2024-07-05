@@ -29,15 +29,16 @@ declare namespace mzDeco {
    */
    function adjust_to_seconds(rt_data: any, env?: object): any;
    /**
+    * helper function for find ms1 peaks based on the given mz/rt tuple data
     * 
     * 
      * @param peaktable the peaktable object, is a collection of the @``T:BioNovoGene.Analytical.MassSpectrometry.Math.xcms2`` object.
-     * @param mz -
-     * @param rt -
-     * @param mzdiff -
+     * @param mz target ion m/z
+     * @param rt target ion rt in seconds.
+     * @param mzdiff the mass tolerance error in data unit delta dalton, apply for matches between the peaktable precursor m/z and the given ion mz value.
      * 
      * + default value Is ``0.01``.
-     * @param rt_win -
+     * @param rt_win the rt window size for matches the rt. should be in data unit seconds.
      * 
      * + default value Is ``90``.
    */
@@ -170,6 +171,9 @@ declare namespace mzDeco {
         * + default value Is ``false``.
       */
       function peakFeatures(file: string, readBin?: boolean): object;
+      /**
+      */
+      function rt_shifts(file: string): object;
       /**
        * 
        * 

@@ -287,6 +287,13 @@ Module mzDeco
                                   Optional tsv As Boolean = False,
                                   Optional general_method As Boolean = False) As Object
 
+        If file.ExtensionSuffix("dat", "xcms") Then
+            ' read binary file
+            Using buf As Stream = file.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
+                Return SaveXcms.ReadSample(buf)
+            End Using
+        End If
+
         If Not general_method Then
             Return SaveXcms.ReadTextTable(file, tsv)
         Else
@@ -409,13 +416,13 @@ Module mzDeco
     End Function
 
     ''' <summary>
-    ''' 
+    ''' helper function for find ms1 peaks based on the given mz/rt tuple data
     ''' </summary>
     ''' <param name="peaktable">the peaktable object, is a collection of the <see cref="xcms2"/> object.</param>
-    ''' <param name="mz"></param>
-    ''' <param name="rt"></param>
-    ''' <param name="mzdiff"></param>
-    ''' <param name="rt_win"></param>
+    ''' <param name="mz">target ion m/z</param>
+    ''' <param name="rt">target ion rt in seconds.</param>
+    ''' <param name="mzdiff">the mass tolerance error in data unit delta dalton, apply for matches between the peaktable precursor m/z and the given ion mz value.</param>
+    ''' <param name="rt_win">the rt window size for matches the rt. should be in data unit seconds.</param>
     ''' <returns></returns>
     <ExportAPI("find_xcms_ionPeaks")>
     <RApiReturn(GetType(xcms2))>
@@ -743,6 +750,11 @@ extract_ms1:
                 ) _
                 .ToArray
         End If
+    End Function
+
+    <ExportAPI("read.rt_shifts")>
+    Public Function read_rtshifts(file As String) As RtShift()
+        Return file.LoadCsv(Of RtShift)(mute:=True).ToArray
     End Function
 
     ''' <summary>

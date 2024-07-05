@@ -60,13 +60,16 @@ declare namespace metadna {
         * @param unique -
         * 
         * + default value Is ``false``.
+        * @param cutoff the score cutoff for filter the result list
+        * 
+        * + default value Is ``0.75``.
         * @param env -
         * 
         * + default value Is ``null``.
         * @return A collection of the @``T:BioNovoGene.BioDeep.MetaDNA.MetaDNAResult`` data objects that could be
         *  used for represented as the result table.
       */
-      function table(metaDNA: object, result: any, unique?: boolean, env?: object): object;
+      function table(metaDNA: object, result: any, unique?: boolean, cutoff?: number, env?: object): object;
       /**
       */
       function ticks(metaDNA: object): object;
@@ -170,7 +173,7 @@ declare namespace metadna {
      * @param mzwidth -
      * 
      * + default value Is ``'da:0.3'``.
-     * @param dotcutoff -
+     * @param dotcutoff network propagation score cutoff, could be lower to 0.4 ~ 0.5.
      * 
      * + default value Is ``0.5``.
      * @param allowMs1 -

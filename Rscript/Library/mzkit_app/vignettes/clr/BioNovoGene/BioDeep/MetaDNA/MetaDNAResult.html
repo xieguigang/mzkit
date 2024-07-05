@@ -32,30 +32,37 @@
 export class MetaDNAResult {
    # mz<em>into(query)</em>into(reference)[]
    alignment: string;
+   # entropy score
    entropy: double;
    exactMass: double;
    fileName: string;
    formula: string;
+   # forward cosine score
    forward: double;
+   # MS1 or MS2
    inferLevel: string;
    inferSize: integer;
    intensity: double;
+   # ranked jaccard score
    jaccard: double;
    KEGG_reaction: string;
    KEGGId: string;
    mirror: double;
    mz: double;
-   # calculated m/z value based on <a href="/vignettes/clr/BioNovoGene/BioDeep/MetaDNA/MetaDNAResult.html">MetaDNAResult</a>.<a href="#">mz</a> and <a href="/vignettes/clr/BioNovoGene/BioDeep/MetaDNA/MetaDNAResult.html">MetaDNAResult</a>.<a href="#">precursorType</a>
+   # Theoretical calculated m/z value based on <a href="/vignettes/clr/BioNovoGene/BioDeep/MetaDNA/MetaDNAResult.html">MetaDNAResult</a>.<a href="#">mz</a> And <a href="/vignettes/clr/BioNovoGene/BioDeep/MetaDNA/MetaDNAResult.html">MetaDNAResult</a>.<a href="#">precursorType</a>
    mzCalc: double;
    name: string;
    parentTrace: double;
    partnerKEGGId: string;
+   # ppm error between the Theoretical <a href="/vignettes/clr/BioNovoGene/BioDeep/MetaDNA/MetaDNAResult.html">MetaDNAResult</a>.<a href="#">mzCalc</a> and <a href="/vignettes/clr/BioNovoGene/BioDeep/MetaDNA/MetaDNAResult.html">MetaDNAResult</a>.<a href="#">mz</a>
    ppm: double;
+   # precursor adducts type
    precursorType: string;
    pvalue: double;
    # the unique id of ms2 spectrum peaks
    query_id: string;
    reaction: string;
+   # reverse cosine score
    reverse: double;
    # the unique id of ms1 parent ion
    ROI_id: string;

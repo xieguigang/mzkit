@@ -92,6 +92,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Quantile
 Imports Microsoft.VisualBasic.Math.SignalProcessing
+Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports SMRUCC.Rsharp.Runtime
@@ -135,13 +136,14 @@ Module Visual
         Dim x_axis As Double() = seq(rt_range.Min, rt_range.Max, by:=dt).ToArray
         Dim lines As New List(Of SerialData)
         Dim size As String = InteropArgumentHelper.getSize(args.getByName("size"), env, "3800,3000")
-        Dim padding As String = InteropArgumentHelper.getPadding(args.getByName("padding"), "padding: 100px 200px 200px 200px;")
+        Dim padding As String = InteropArgumentHelper.getPadding(args.getByName("padding"), "padding: 100px 600px 200px 200px;")
         Dim colorSet = args.getValue({"colorSet", "colors"}, env, "paper")
         Dim colors As Color() = Designer.GetColors(colorSet, n:=samples.Length + 1)
         Dim fill_color As String = RColorPalette.getColor(args.getBySynonyms("fill", "grid.fill"), "lightgray")
         Dim idx As i32 = 0
         Dim plot_ri As Boolean = args.getValue({"x_axis.ri"}, env, False)
         Dim points As NamedCollection(Of RtShift)()
+        Dim legend_split As Integer = args.getValue({"legend_split", "legend.split"}, env, 20)
 
         For Each sample As NamedCollection(Of RtShift) In samples
             If plot_ri Then
@@ -178,6 +180,9 @@ Module Visual
                             Ylabel:="RT shift(s)",
                             XtickFormat:="F0", YtickFormat:="G4",
                             gridFill:=fill_color,
+                            tickFontStyle:=CSSFont.Win7Small,
+                            legendFontCSS:=CSSFont.Win10Normal,
+                            legendSplit:=legend_split,
                             driver:=env.getDriver,
                             dpi:=300)
     End Function

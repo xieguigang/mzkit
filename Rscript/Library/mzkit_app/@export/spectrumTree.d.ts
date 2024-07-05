@@ -139,7 +139,9 @@ declare namespace spectrumTree {
      * @param file -
      * @param dotcutoff 
      * + default value Is ``0.6``.
-     * @param adducts 
+     * @param adducts the precursor types for build the mass index for the reference library, this 
+     *  parameter is required for reference library model in stream pack object type.
+     * 
      * + default value Is ``["[M]+","[M+H]+"]``.
      * @param target_uuid a character vector of the target metabolite biodeep_id, default value
      *  is NULL means load all reference spectrum from the required reference 
@@ -151,6 +153,8 @@ declare namespace spectrumTree {
      * @param env -
      * 
      * + default value Is ``null``.
+     * @return the reference library object in different search mode, all library object 
+     *  is inherits based on the @``T:BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.Query.Ms2Search`` object.
    */
    function open(file: any, dotcutoff?: number, adducts?: any, target_uuid?: any, env?: object): object|object;
    /**

@@ -225,7 +225,9 @@ Module metaDNAInfer
     ''' </summary>
     ''' <param name="ms1ppm">the mass tolerance error for matches the ms1 ion</param>
     ''' <param name="mzwidth"></param>
-    ''' <param name="dotcutoff"></param>
+    ''' <param name="dotcutoff">
+    ''' network propagation score cutoff, could be lower to 0.4 ~ 0.5.
+    ''' </param>
     ''' <param name="allowMs1"></param>
     ''' <param name="maxIterations"></param>
     ''' <param name="env"></param>
@@ -639,6 +641,9 @@ Module metaDNAInfer
     ''' <param name="metaDNA"></param>
     ''' <param name="result">a collection of the <see cref="CandidateInfer"/>.</param>
     ''' <param name="unique"></param>
+    ''' <param name="cutoff">
+    ''' the score cutoff for filter the result list
+    ''' </param>
     ''' <param name="env"></param>
     ''' <returns>A collection of the <see cref="MetaDNAResult"/> data objects that could be
     ''' used for represented as the result table.</returns>
@@ -648,6 +653,7 @@ Module metaDNAInfer
                                 <RRawVectorArgument>
                                 result As Object,
                                 Optional unique As Boolean = False,
+                                Optional cutoff As Double = 0.75,
                                 Optional env As Environment = Nothing) As Object
 
         Dim data As pipeline = pipeline.TryCreatePipeline(Of CandidateInfer)(result, env)
@@ -658,6 +664,9 @@ Module metaDNAInfer
 
         Return metaDNA _
             .ExportTable(data.populates(Of CandidateInfer)(env), unique) _
+            .DoCall(Function(a)
+                        Return MetaDNAResult.FilterInferenceHits(a, cutoff)
+                    End Function) _
             .ToArray
     End Function
 
