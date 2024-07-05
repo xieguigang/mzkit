@@ -17,7 +17,7 @@ Extract peak and signal data from rawdata
 + [write.xcms_peaks](mzDeco/write.xcms_peaks.1) 
 + [read.xcms_features](mzDeco/read.xcms_features.1) 
 + [peak_subset](mzDeco/peak_subset.1) make sample column projection
-+ [find_xcms_ionPeaks](mzDeco/find_xcms_ionPeaks.1) 
++ [find_xcms_ionPeaks](mzDeco/find_xcms_ionPeaks.1) helper function for find ms1 peaks based on the given mz/rt tuple data
 + [adjust_to_seconds](mzDeco/adjust_to_seconds.1) adjust the reteintion time data to unit seconds
 + [RI_reference](mzDeco/RI_reference.1) Create RI reference dataset.
 + [RI_cal](mzDeco/RI_cal.1) RI calculation of a speicifc sample data

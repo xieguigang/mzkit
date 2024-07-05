@@ -1,28 +1,32 @@
 .\" man page create by R# package system.
 .TH MZDECO 1 2000-Jan "find_xcms_ionPeaks" "find_xcms_ionPeaks"
 .SH NAME
-find_xcms_ionPeaks \- 
+find_xcms_ionPeaks \- helper function for find ms1 peaks based on the given mz/rt tuple data
 .SH SYNOPSIS
 \fIfind_xcms_ionPeaks(\fBpeaktable\fR as <generic> PeakSet, 
 \fBmz\fR as double, 
 \fBrt\fR as double, 
 \fBmzdiff\fR as double = 0.01, 
 \fBrt_win\fR as double = 90);\fR
+.SH DESCRIPTION
+.PP
+helper function for find ms1 peaks based on the given mz/rt tuple data
+.PP
 .SH OPTIONS
 .PP
 \fBpeaktable\fB \fR\- the peaktable object, is a collection of the @\fBT:BioNovoGene.Analytical.MassSpectrometry.Math.xcms2\fR object.. 
 .PP
 .PP
-\fBmz\fB \fR\- -. 
+\fBmz\fB \fR\- target ion m/z. 
 .PP
 .PP
-\fBrt\fB \fR\- -. 
+\fBrt\fB \fR\- target ion rt in seconds.. 
 .PP
 .PP
-\fBmzdiff\fB \fR\- -. 
+\fBmzdiff\fB \fR\- the mass tolerance error in data unit delta dalton, apply for matches between the peaktable precursor m/z and the given ion mz value.. 
 .PP
 .PP
-\fBrt_win\fB \fR\- -. 
+\fBrt_win\fB \fR\- the rt window size for matches the rt. should be in data unit seconds.. 
 .PP
 .SH SEE ALSO
 mzDeco
