@@ -56,6 +56,7 @@
 #End Region
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 ''' <summary>
 ''' a spectrum data which is extract from the raw data file.
@@ -70,5 +71,9 @@ Public Class RawData : Inherits PeakMs2
     Public Property CarbonSulfurNumberFromLabeledExperiment As Integer
     Public Property NitrogenSulfurNumberFromLabeledExperiment As Integer
     Public Property CarbonNitrogenSulfurNumberFromLabeledExperiment As Integer
+
+    Public Overrides Function ToString() As String
+        Return Me.GetJson
+    End Function
 
 End Class
