@@ -1,64 +1,64 @@
 ﻿#Region "Microsoft.VisualBasic::72023ff346ce70c9e37b442c4880fc94, Rscript\Library\mzkit_app\src\mzkit\math\Math.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 1152
-    '    Code Lines: 724 (62.85%)
-    ' Comment Lines: 280 (24.31%)
-    '    - Xml Docs: 90.71%
-    ' 
-    '   Blank Lines: 148 (12.85%)
-    '     File Size: 49.09 KB
+' Summaries:
 
 
-    ' Module MzMath
-    ' 
-    '     Function: alignIntensity, centroid, centroidDataframe, (+2 Overloads) cosine, cosine_pairwise
-    '               CreateMSMatrix, CreateMzIndex, createTolerance, defaultPrecursors, exact_mass
-    '               getAlignmentTable, GetClusters, getPrecursorTable, jaccard, jaccardSet
-    '               mass_tabular, mz, MzUnique, normMs2, ppm
-    '               precursorTypes, printCalculator, printMzTable, sequenceOrder, spectrumEntropy
-    '               SpectrumTreeCluster, SSMCompares, summaryTolerance, union, xcms_id
-    '               XICTable
-    ' 
-    '     Sub: Main
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 1152
+'    Code Lines: 724 (62.85%)
+' Comment Lines: 280 (24.31%)
+'    - Xml Docs: 90.71%
+' 
+'   Blank Lines: 148 (12.85%)
+'     File Size: 49.09 KB
+
+
+' Module MzMath
+' 
+'     Function: alignIntensity, centroid, centroidDataframe, (+2 Overloads) cosine, cosine_pairwise
+'               CreateMSMatrix, CreateMzIndex, createTolerance, defaultPrecursors, exact_mass
+'               getAlignmentTable, GetClusters, getPrecursorTable, jaccard, jaccardSet
+'               mass_tabular, mz, MzUnique, normMs2, ppm
+'               precursorTypes, printCalculator, printMzTable, sequenceOrder, spectrumEntropy
+'               SpectrumTreeCluster, SSMCompares, summaryTolerance, union, xcms_id
+'               XICTable
+' 
+'     Sub: Main
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -1028,6 +1028,22 @@ Module MzMath
 
         Const empty_string = "the given string is empty which is not valid for parse the precursor adducts object!"
 
+        Dim adducts = CLRVector.asCharacter(types)
+
+        If adducts.TryCount = 1 Then
+            Dim adduct_str = adducts(0)
+            Dim adduct_type = Provider.ParseIonMode(adduct_str, allowsUnknown:=True)
+
+            If adduct_type <> IonModes.Unknown Then
+                ' returns all
+                If adduct_type = IonModes.Positive Then
+                    Return Provider.Positives
+                Else
+                    Return Provider.Negatives
+                End If
+            End If
+        End If
+
         Return env.EvaluateFramework(Of String, MzCalculator)(
             types, Function(type)
                        If type.StringEmpty Then
@@ -1136,9 +1152,9 @@ Module MzMath
     <RApiReturn(TypeCodes.double)>
     <ExportAPI("intensity_vec")>
     Public Function alignIntensity(<RRawVectorArgument>
-                                   ms As Object,
-                                   mzSet As MzPool,
-                                   Optional env As Environment = Nothing) As Object
+ms As Object,
+mzSet As MzPool,
+Optional env As Environment = Nothing) As Object
 
         If TypeOf ms Is LibraryMatrix Then
             Return DirectCast(ms, LibraryMatrix).DeconvoluteMS(mzSet.size, mzSet)
@@ -1200,9 +1216,9 @@ Module MzMath
     <ExportAPI("norm_msdata")>
     <RApiReturn(GetType(LibraryMatrix))>
     Public Function normMs2(<RRawVectorArgument>
-                            msdata As Object,
-                            Optional sum As Boolean = False,
-                            Optional env As Environment = Nothing) As Object
+msdata As Object,
+Optional sum As Boolean = False,
+Optional env As Environment = Nothing) As Object
 
         Dim norm As Func(Of LibraryMatrix, LibraryMatrix)
 
