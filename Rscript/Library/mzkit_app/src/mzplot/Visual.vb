@@ -191,6 +191,7 @@ Module Visual
     Private Function plotAlignments(aligns As AlignmentOutput, args As list, env As Environment) As Object
         Dim pairwise = aligns.GetAlignmentMirror
         Dim title As String = args.getValue("title", env, [default]:=$"{aligns.query.id} vs {aligns.reference.id}")
+        Dim legend_layout As String = args.getValue("legend_layout", env, "none")
 
         Return MassSpectra.AlignMirrorPlot(
             query:=pairwise.query,
@@ -199,7 +200,8 @@ Module Visual
             drawGrid:=True,
             tagXFormat:="F2",
             labelDisplayIntensity:=0.5,
-            driver:=env.getDriver
+            driver:=env.getDriver,
+            legendLayout:=legend_layout
         )
     End Function
 
@@ -688,7 +690,7 @@ Module Visual
                                  Optional intoCutoff# = 0.3,
                                  Optional bar_width As Single = 8,
                                  <RRawVectorArgument(GetType(String))>
-                                 Optional legend_layout As Object = "top-right|title|bottom",
+                                 Optional legend_layout As Object = "top-right|title|bottom|none",
                                  Optional env As Environment = Nothing) As Object
 
         Dim ms As [Variant](Of Message, LibraryMatrix) = getSpectrum(spectrum, env)
