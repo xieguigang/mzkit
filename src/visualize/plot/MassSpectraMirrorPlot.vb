@@ -127,6 +127,7 @@ Public Module MassSpectra
                                     Optional ylab$ = "Relative Intensity(%)",
                                     Optional tagXFormat$ = "F2",
                                     Optional drawGrid As Boolean = True,
+                                    Optional drawGridX As Boolean = False,
                                     Optional bw As Single = 8,
                                     Optional legendLayout As String = "top-right",
                                     Optional color1 As String = DefaultColor1,
@@ -169,7 +170,8 @@ Public Module MassSpectra
             bw:=bw,
             legendLayout:=legendLayout,
             cla:=color1,
-            clb:=color2
+            clb:=color2,
+            drawGridX:=drawGridX
         )
     End Function
 End Module

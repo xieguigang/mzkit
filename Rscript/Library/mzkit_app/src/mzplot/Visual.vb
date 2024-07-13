@@ -196,19 +196,23 @@ Module Visual
         Dim bar_width As Single = args.getValue("bar_width", env, 8.0)
         Dim color1 As String = args.getValue("color1", env, AlignmentPlot.DefaultColor1)
         Dim color2 As String = args.getValue("color2", env, AlignmentPlot.DefaultColor2)
+        Dim label_intensity As Double = args.getValue("label_into", env, 0.2)
+        Dim label_mz As String = args.getValue("label_mz", env, "F4")
+        Dim grid_x As Boolean = args.getValue("grid_x", env, False)
 
         Return MassSpectra.AlignMirrorPlot(
             query:=pairwise.query,
             ref:=pairwise.ref,
             title:=title,
             drawGrid:=True,
-            tagXFormat:="F2",
-            labelDisplayIntensity:=0.5,
+            tagXFormat:=label_mz,
+            labelDisplayIntensity:=label_intensity,
             driver:=env.getDriver,
             legendLayout:=legend_layout,
             bw:=bar_width,
             color1:=color1,
-            color2:=color2
+            color2:=color2,
+            drawGridX:=grid_x
         )
     End Function
 
