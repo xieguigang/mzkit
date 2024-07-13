@@ -129,6 +129,8 @@ Public Module MassSpectra
                                     Optional drawGrid As Boolean = True,
                                     Optional bw As Single = 8,
                                     Optional legendLayout As String = "top-right",
+                                    Optional color1 As String = DefaultColor1,
+                                    Optional color2 As String = DefaultColor2,
                                     Optional driver As Drivers = Drivers.Default) As GraphicsData
 
         Dim mz As Double() = query _
@@ -165,7 +167,9 @@ Public Module MassSpectra
             tagXFormat:=tagXFormat,
             driver:=driver,
             bw:=bw,
-            legendLayout:=legendLayout
+            legendLayout:=legendLayout,
+            cla:=color1,
+            clb:=color2
         )
     End Function
 End Module

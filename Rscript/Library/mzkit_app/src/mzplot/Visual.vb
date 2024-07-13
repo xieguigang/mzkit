@@ -79,6 +79,7 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.ChartPlots
+Imports Microsoft.VisualBasic.Data.ChartPlots.BarPlot
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
@@ -192,6 +193,9 @@ Module Visual
         Dim pairwise = aligns.GetAlignmentMirror
         Dim title As String = args.getValue("title", env, [default]:=$"{aligns.query.id} vs {aligns.reference.id}")
         Dim legend_layout As String = args.getValue("legend_layout", env, "none")
+        Dim bar_width As Single = args.getValue("bar_width", env, 8.0)
+        Dim color1 As String = args.getValue("color1", env, AlignmentPlot.DefaultColor1)
+        Dim color2 As String = args.getValue("color2", env, AlignmentPlot.DefaultColor2)
 
         Return MassSpectra.AlignMirrorPlot(
             query:=pairwise.query,
@@ -201,7 +205,10 @@ Module Visual
             tagXFormat:="F2",
             labelDisplayIntensity:=0.5,
             driver:=env.getDriver,
-            legendLayout:=legend_layout
+            legendLayout:=legend_layout,
+            bw:=bar_width,
+            color1:=color1,
+            color2:=color2
         )
     End Function
 
