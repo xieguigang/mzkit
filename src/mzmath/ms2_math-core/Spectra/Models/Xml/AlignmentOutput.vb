@@ -144,8 +144,24 @@ Namespace Spectra.Xml
 
         Public Shared Iterator Function CreateLinearMatrix(matrix As IEnumerable(Of SSM2MatrixFragment)) As IEnumerable(Of String)
             For Each line As SSM2MatrixFragment In matrix
-                Yield $"{line.mz.ToString("F4")}:{line.query.ToString("G4")},{line.ref.ToString("G4")}"
+                Yield $"{line.mz.ToString("F4")}_{line.query.ToString("G4")}_{line.ref.ToString("G4")}"
             Next
+        End Function
+
+        Public Shared Function ParseAlignment(str As String) As AlignmentOutput
+            Dim peaks = str.Split
+            Dim hits = peaks _
+                .Select(Function(ti)
+                            Dim tokens = ti.Split("_"c)
+                            Dim mz = Val(tokens(0))
+                            Dim query = Val(tokens(1))
+                            Dim refer = Val(tokens(2))
+
+                            Return New SSM2MatrixFragment With {.mz = mz, .query = query, .ref = refer}
+                        End Function) _
+                .ToArray
+
+            Return New AlignmentOutput With {.alignments = hits}
         End Function
 
     End Class

@@ -88,7 +88,6 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports SIMDAdd = Microsoft.VisualBasic.Math.SIMD.Add
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
@@ -97,6 +96,7 @@ Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports ChromatogramTick = BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram.ChromatogramTick
+Imports SIMDAdd = Microsoft.VisualBasic.Math.SIMD.Add
 
 #If NET48 Then
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader
