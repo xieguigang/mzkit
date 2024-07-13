@@ -157,7 +157,11 @@ Namespace Spectra.Xml
                             Dim query = Val(tokens(1))
                             Dim refer = Val(tokens(2))
 
-                            Return New SSM2MatrixFragment With {.mz = mz, .query = query, .ref = refer}
+                            Return New SSM2MatrixFragment With {
+                                .mz = mz,
+                                .query = query,
+                                .ref = refer
+                            }
                         End Function) _
                 .ToArray
 

@@ -23,10 +23,15 @@ helper function for find ms1 peaks based on the given mz/rt tuple data
 \fBrt\fB \fR\- target ion rt in seconds.. 
 .PP
 .PP
-\fBmzdiff\fB \fR\- the mass tolerance error in data unit delta dalton, apply for matches between the peaktable precursor m/z and the given ion mz value.. 
+\fBmzdiff\fB \fR\- the mass tolerance error in data unit delta dalton, 
+ apply for matches between the peaktable precursor m/z and the given ion mz value.. 
 .PP
 .PP
 \fBrt_win\fB \fR\- the rt window size for matches the rt. should be in data unit seconds.. 
+.PP
+.SH VALUE
+.PP
+data is re-ordered via the tolerance error
 .PP
 .SH SEE ALSO
 mzDeco
