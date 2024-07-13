@@ -191,7 +191,7 @@ Module Visual
     <RGenericOverloads("plot")>
     Private Function plotAlignments(aligns As AlignmentOutput, args As list, env As Environment) As Object
         Dim pairwise = aligns.GetAlignmentMirror
-        Dim title As String = args.getValue("title", env, [default]:=$"{aligns.query.id} vs {aligns.reference.id}")
+        Dim title As String = args.getValue("title", env, [default]:=$"{aligns.query?.id} vs {aligns.reference?.id}")
         Dim legend_layout As String = args.getValue("legend_layout", env, "none")
         Dim bar_width As Single = args.getValue("bar_width", env, 8.0)
         Dim color1 As String = args.getValue("color1", env, AlignmentPlot.DefaultColor1)
