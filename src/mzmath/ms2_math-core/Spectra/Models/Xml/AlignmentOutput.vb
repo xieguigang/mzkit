@@ -131,8 +131,8 @@ Namespace Spectra.Xml
 
         Public Function GetAlignmentMirror() As (query As LibraryMatrix, ref As LibraryMatrix)
             With New Ms2AlignMatrix(alignments)
-                Dim q = .GetQueryMatrix.With(Sub(a) a.name = query.id)
-                Dim r = .GetReferenceMatrix.With(Sub(a) a.name = reference.id)
+                Dim q = .GetQueryMatrix.With(Sub(a) a.name = query?.id)
+                Dim r = .GetReferenceMatrix.With(Sub(a) a.name = reference?.id)
 
                 Return (q, r)
             End With
