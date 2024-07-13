@@ -651,6 +651,11 @@ Module Visual
         Return XIC.plotOverlaps(args, env)
     End Function
 
+    <ExportAPI("parse.spectrum_alignment")>
+    Public Function ParseSpectrumAlignment(s As String) As AlignmentOutput
+        Return AlignmentOutput.ParseAlignment(s)
+    End Function
+
     ''' <summary>
     ''' Plot of the mass spectrum
     ''' </summary>
