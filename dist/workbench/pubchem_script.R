@@ -6,6 +6,8 @@ let refmet = read.csv("G:\Daisy\build\refmet.csv", row.names = 1, check.names = 
 
 print(refmet, max.print = 6);
 
+pugView(402,cacheFolder = "Z:\test");
+
 for(let m in tqdm(as.list(refmet, byrow = TRUE))) {
     pugView(m$pubchem_cid,cacheFolder = "Z:\test");
 }
