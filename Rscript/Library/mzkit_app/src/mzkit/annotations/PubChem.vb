@@ -420,7 +420,7 @@ Module PubChemToolKit
 
         Dim api As WebQuery = $"{cacheFolder}/pugViews/".GetQueryHandler(Of WebQuery)(offline)
         Dim result = env.EvaluateFramework(Of String, PugViewRecord)(
-            x:=cid,
+            x:=CLRVector.asCharacter(cid),
             eval:=Function(id)
                       Return api.Query(Of PugViewRecord)(id)
                   End Function)
