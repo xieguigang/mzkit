@@ -700,6 +700,9 @@ Module Visual
                                  Optional tagXFormat$ = "F2",
                                  Optional intoCutoff# = 0.3,
                                  Optional bar_width As Single = 8,
+                                 Optional color1 As String = AlignmentPlot.DefaultColor1,
+                                 Optional color2 As String = AlignmentPlot.DefaultColor2,
+                                 Optional grid_x As Boolean = False,
                                  <RRawVectorArgument(GetType(String))>
                                  Optional legend_layout As Object = "top-right|title|bottom|none",
                                  Optional env As Environment = Nothing) As Object
@@ -725,7 +728,9 @@ Module Visual
                     },
                     driver:=env.getDriver,
                     bw:=bar_width,
-                    legendLayout:=layouts.ElementAtOrDefault(0, "top-right")
+                    legendLayout:=layouts.ElementAtOrDefault(0, "top-right"),
+                    color1:=color1, color2:=color2,
+                    DrawGridX:=grid_x
                 )
         Else
             Dim ref As [Variant](Of Message, LibraryMatrix) = getSpectrum(alignment, env)
