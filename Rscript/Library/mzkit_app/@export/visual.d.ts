@@ -59,13 +59,19 @@ declare namespace visual {
         * @param bar_width the column width of the bar plot
         * 
         * + default value Is ``8``.
+        * @param color1 
+        * + default value Is ``'steelblue'``.
+        * @param color2 
+        * + default value Is ``'brown'``.
+        * @param grid_x 
+        * + default value Is ``false``.
         * @param legend_layout the layout of the legend plot, this parameter value could affects the plot style
         * 
         * + default value Is ``["top-right","title","bottom","none"]``.
         * @param env 
         * + default value Is ``null``.
       */
-      function plot(spectrum: any, alignment?: any, title?: string, showLegend?: boolean, showGrid?: boolean, tagXFormat?: string, intoCutoff?: number, bar_width?: number, legend_layout?: any, env?: object): object;
+      function plot(spectrum: any, alignment?: any, title?: string, showLegend?: boolean, showGrid?: boolean, tagXFormat?: string, intoCutoff?: number, bar_width?: number, color1?: string, color2?: string, grid_x?: boolean, legend_layout?: any, env?: object): object;
    }
    module parse {
       /**
