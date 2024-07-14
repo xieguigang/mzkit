@@ -57,7 +57,6 @@
 
 #End Region
 
-Imports System.Runtime.Serialization
 Imports System.Xml.Serialization
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
 Imports BioNovoGene.BioDeep.MSEngine

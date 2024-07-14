@@ -102,7 +102,11 @@ Public NotInheritable Class CompoundSolver : Inherits MSSearch(Of GenericCompoun
     ''' <param name="tolerance"></param>
     ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Overloads Shared Function CreateIndex(Of T As GenericCompound)(compounds As IEnumerable(Of T), types As MzCalculator(), tolerance As Tolerance, Optional mass_range As DoubleRange = Nothing) As MSSearch(Of GenericCompound)
+    Public Overloads Shared Function CreateIndex(Of T As GenericCompound)(compounds As IEnumerable(Of T),
+                                                                          types As MzCalculator(),
+                                                                          tolerance As Tolerance,
+                                                                          Optional mass_range As DoubleRange = Nothing) As MSSearch(Of GenericCompound)
+
         Return New CompoundSolver(compounds.Select(Function(c) DirectCast(c, GenericCompound)), types, tolerance, mass_range)
     End Function
 
@@ -113,12 +117,20 @@ Public NotInheritable Class CompoundSolver : Inherits MSSearch(Of GenericCompoun
     ''' <param name="types"></param>
     ''' <param name="tolerance"></param>
     ''' <returns></returns>
-    Public Overloads Shared Function CreateIndex(compounds As IEnumerable(Of KEGGCompound), types As MzCalculator(), tolerance As Tolerance, Optional mass_range As DoubleRange = Nothing) As MSSearch(Of GenericCompound)
+    Public Overloads Shared Function CreateIndex(compounds As IEnumerable(Of KEGGCompound),
+                                                 types As MzCalculator(),
+                                                 tolerance As Tolerance,
+                                                 Optional mass_range As DoubleRange = Nothing) As MSSearch(Of GenericCompound)
+
         Return New CompoundSolver(compounds.Select(Function(c) DirectCast(c, GenericCompound)), types, tolerance, mass_range)
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Overloads Shared Function CreateIndex(compounds As IEnumerable(Of Compound), types As MzCalculator(), tolerance As Tolerance, Optional mass_range As DoubleRange = Nothing) As MSSearch(Of GenericCompound)
+    Public Overloads Shared Function CreateIndex(compounds As IEnumerable(Of Compound),
+                                                 types As MzCalculator(),
+                                                 tolerance As Tolerance,
+                                                 Optional mass_range As DoubleRange = Nothing) As MSSearch(Of GenericCompound)
+
         Return CreateIndex(Wraps(compounds), types, tolerance, mass_range)
     End Function
 End Class

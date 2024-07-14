@@ -89,6 +89,12 @@ Namespace Spectra
         End Function
 
         Public MustOverride Function GetScore(a As ms2(), b As ms2()) As Double
+
+        ''' <summary>
+        ''' evaluate the [forward,reverse] cosine score
+        ''' </summary>
+        ''' <param name="alignment"></param>
+        ''' <returns></returns>
         Public MustOverride Function GetScore(alignment As SSM2MatrixFragment()) As (forward#, reverse#)
 
         Public Overrides Function ToString() As String
