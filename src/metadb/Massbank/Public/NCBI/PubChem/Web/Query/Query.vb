@@ -74,14 +74,14 @@ Namespace NCBI.PubChem
         ''' <param name="handle"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function GetQueryHandler(Of T)(handle As String, offline As Boolean, Optional internal As Integer = -1) As T
+        Public Function GetQueryHandler(Of T)(handle As String, offline As Boolean, Optional interval As Integer = -1) As T
             If GetType(T) Is GetType(CIDQuery) Then
                 If Not cache.ContainsKey(handle) Then
-                    cache(handle) = New CIDQuery(cache:=handle, offline:=offline, interval:=internal)
+                    cache(handle) = New CIDQuery(cache:=handle, offline:=offline, interval:=interval)
                 End If
             Else
                 If Not cache.ContainsKey(handle) Then
-                    cache(handle) = New WebQuery(cache:=handle, offline:=offline, interval:=internal)
+                    cache(handle) = New WebQuery(cache:=handle, offline:=offline, interval:=interval)
                 End If
             End If
 
@@ -106,7 +106,7 @@ Namespace NCBI.PubChem
                                  Optional interval As Integer = -1) As String()
 
             Return ($"{cacheFolder}/cid/") _
-                .GetQueryHandler(Of CIDQuery)(offline:=offlineMode, internal:=interval) _
+                .GetQueryHandler(Of CIDQuery)(offline:=offlineMode, interval:=interval) _
                 .QueryCID(name, hitCache)
         End Function
 
