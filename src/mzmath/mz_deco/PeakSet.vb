@@ -70,7 +70,7 @@ Imports std = System.Math
 ''' <summary>
 ''' A collection of the <see cref="xcms2"/> peak features data
 ''' </summary>
-Public Class PeakSet
+Public Class PeakSet : Implements Enumeration(Of xcms2)
 
     Dim m_peaksdata As xcms2()
     Dim m_peakindex As Dictionary(Of String, xcms2)
@@ -230,4 +230,9 @@ Public Class PeakSet
         }
     End Function
 
+    Private Iterator Function GenericEnumerator() As IEnumerator(Of xcms2) Implements Enumeration(Of xcms2).GenericEnumerator
+        For Each peak As xcms2 In m_peaksdata.SafeQuery
+            Yield peak
+        Next
+    End Function
 End Class
