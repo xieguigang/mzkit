@@ -62,6 +62,7 @@ Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports System.Drawing.Imaging
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Unit
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Linq
 
@@ -93,6 +94,24 @@ Public Class LayerRender
             Next
         Next
     End Sub
+
+    Const gdi2GB As Long = 2 * ByteSize.GB
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="layerSize"></param>
+    ''' <param name="dotSize"></param>
+    ''' <returns>
+    ''' true means the gdi+ data is less than 2GB, false means invalid gdi+ parameter due to the reason of
+    ''' byte size of the image is greater than 2GB.
+    ''' </returns>
+    Public Shared Function CheckGdiSizeParameter(layerSize As Size, dotSize As Single) As Boolean
+        Dim w = layerSize.Width * dotSize
+        Dim h = layerSize.Height * dotSize
+
+        Return (w * h * 4) < gdi2GB
+    End Function
 
     Public Shared Function Draw(regions As IEnumerable(Of TissueRegion),
                                 layerSize As Size,
