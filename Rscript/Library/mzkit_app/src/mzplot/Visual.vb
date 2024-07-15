@@ -748,7 +748,10 @@ Module Visual
                 tagXFormat:=tagXFormat,
                 labelDisplayIntensity:=intoCutoff,
                 bw:=bar_width,
-                legendLayout:=layouts.ElementAtOrDefault(0, "top-right")
+                legendLayout:=layouts.ElementAtOrDefault(0, "top-right"),
+                drawGridX:=grid_x,
+                color1:=color1,
+                color2:=color2
             )
         End If
     End Function
