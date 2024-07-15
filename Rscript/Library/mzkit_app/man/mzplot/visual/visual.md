@@ -1,6 +1,6 @@
 ﻿# visual
 
-
+Mass spectrum data visualization
 
 + [gcxgc_heatmap](visual/gcxgc_heatmap.1) 
 + [raw_scatter](visual/raw_scatter.1) plot raw scatter matrix based on a given sequence of ms1 scans data
