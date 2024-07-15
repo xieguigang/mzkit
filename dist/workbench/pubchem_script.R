@@ -10,6 +10,10 @@ print(refmet, max.print = 6);
 pugView(402,cacheFolder = save_repo);
 
 for(let m in tqdm(as.list(refmet, byrow = TRUE))) {
-    pugView(m$pubchem_cid,cacheFolder = save_repo);
-    sleep(3);
+    if (m$pubchem_cid > 0) {
+        pugView(m$pubchem_cid,cacheFolder = save_repo, sleep = 3);
+        # sleep(3);
+    }
+
+    NULL;
 }
