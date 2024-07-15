@@ -79,6 +79,7 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.ChartPlots
+Imports Microsoft.VisualBasic.Data.ChartPlots.BarPlot
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
@@ -190,16 +191,28 @@ Module Visual
     <RGenericOverloads("plot")>
     Private Function plotAlignments(aligns As AlignmentOutput, args As list, env As Environment) As Object
         Dim pairwise = aligns.GetAlignmentMirror
-        Dim title As String = args.getValue("title", env, [default]:=$"{aligns.query.id} vs {aligns.reference.id}")
+        Dim title As String = args.getValue("title", env, [default]:=$"{aligns.query?.id} vs {aligns.reference?.id}")
+        Dim legend_layout As String = args.getValue("legend_layout", env, "none")
+        Dim bar_width As Single = args.getValue("bar_width", env, 8.0)
+        Dim color1 As String = args.getValue("color1", env, AlignmentPlot.DefaultColor1)
+        Dim color2 As String = args.getValue("color2", env, AlignmentPlot.DefaultColor2)
+        Dim label_intensity As Double = args.getValue("label_into", env, 0.2)
+        Dim label_mz As String = args.getValue("label_mz", env, "F4")
+        Dim grid_x As Boolean = args.getValue("grid_x", env, False)
 
         Return MassSpectra.AlignMirrorPlot(
             query:=pairwise.query,
             ref:=pairwise.ref,
             title:=title,
             drawGrid:=True,
-            tagXFormat:="F2",
-            labelDisplayIntensity:=0.5,
-            driver:=env.getDriver
+            tagXFormat:=label_mz,
+            labelDisplayIntensity:=label_intensity,
+            driver:=env.getDriver,
+            legendLayout:=legend_layout,
+            bw:=bar_width,
+            color1:=color1,
+            color2:=color2,
+            drawGridX:=grid_x
         )
     End Function
 
@@ -651,6 +664,11 @@ Module Visual
         Return XIC.plotOverlaps(args, env)
     End Function
 
+    <ExportAPI("parse.spectrum_alignment")>
+    Public Function ParseSpectrumAlignment(s As String) As AlignmentOutput
+        Return AlignmentOutput.ParseAlignment(s)
+    End Function
+
     ''' <summary>
     ''' Plot of the mass spectrum
     ''' </summary>
@@ -682,8 +700,11 @@ Module Visual
                                  Optional tagXFormat$ = "F2",
                                  Optional intoCutoff# = 0.3,
                                  Optional bar_width As Single = 8,
+                                 Optional color1 As String = AlignmentPlot.DefaultColor1,
+                                 Optional color2 As String = AlignmentPlot.DefaultColor2,
+                                 Optional grid_x As Boolean = False,
                                  <RRawVectorArgument(GetType(String))>
-                                 Optional legend_layout As Object = "top-right|title|bottom",
+                                 Optional legend_layout As Object = "top-right|title|bottom|none",
                                  Optional env As Environment = Nothing) As Object
 
         Dim ms As [Variant](Of Message, LibraryMatrix) = getSpectrum(spectrum, env)
@@ -707,7 +728,9 @@ Module Visual
                     },
                     driver:=env.getDriver,
                     bw:=bar_width,
-                    legendLayout:=layouts.ElementAtOrDefault(0, "top-right")
+                    legendLayout:=layouts.ElementAtOrDefault(0, "top-right"),
+                    color1:=color1, color2:=color2,
+                    DrawGridX:=grid_x
                 )
         Else
             Dim ref As [Variant](Of Message, LibraryMatrix) = getSpectrum(alignment, env)

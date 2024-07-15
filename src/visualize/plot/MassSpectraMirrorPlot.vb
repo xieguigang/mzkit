@@ -91,6 +91,9 @@ Public Module MassSpectra
                                Optional tagXFormat$ = "F2",
                                Optional bw As Single = 8,
                                Optional legendLayout As String = "top-right",
+                               Optional color1 As String = AlignmentPlot.DefaultColor1,
+                               Optional color2 As String = AlignmentPlot.DefaultColor2,
+                               Optional DrawGridX As Boolean = False,
                                Optional driver As Drivers = Drivers.Default) As GraphicsData
 
         Dim a As New LibraryMatrix With {.ms2 = library.ms2, .name = titles.ElementAtOrDefault(0, library.name)}
@@ -111,7 +114,10 @@ Public Module MassSpectra
             tagXFormat:=tagXFormat,
             driver:=driver,
             bw:=bw,
-            legendLayout:=legendLayout
+            legendLayout:=legendLayout,
+            color1:=color1,
+            color2:=color2,
+            drawGridX:=DrawGridX
         )
     End Function
 
@@ -127,8 +133,11 @@ Public Module MassSpectra
                                     Optional ylab$ = "Relative Intensity(%)",
                                     Optional tagXFormat$ = "F2",
                                     Optional drawGrid As Boolean = True,
+                                    Optional drawGridX As Boolean = False,
                                     Optional bw As Single = 8,
                                     Optional legendLayout As String = "top-right",
+                                    Optional color1 As String = DefaultColor1,
+                                    Optional color2 As String = DefaultColor2,
                                     Optional driver As Drivers = Drivers.Default) As GraphicsData
 
         Dim mz As Double() = query _
@@ -165,7 +174,10 @@ Public Module MassSpectra
             tagXFormat:=tagXFormat,
             driver:=driver,
             bw:=bw,
-            legendLayout:=legendLayout
+            legendLayout:=legendLayout,
+            cla:=color1,
+            clb:=color2,
+            drawGridX:=drawGridX
         )
     End Function
 End Module

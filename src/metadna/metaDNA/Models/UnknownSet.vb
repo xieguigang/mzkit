@@ -213,7 +213,7 @@ Public Class UnknownSet
 
     Public Iterator Function EnumerateAllUnknownFeatures() As IEnumerable(Of PeakMs2)
         For Each node As BinaryTree(Of Double, PeakMs2) In features.GetAllNodes
-            For Each peak In node.Members
+            For Each peak As PeakMs2 In node.Members
                 Yield peak
             Next
         Next

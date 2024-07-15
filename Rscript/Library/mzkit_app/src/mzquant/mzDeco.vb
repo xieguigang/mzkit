@@ -364,10 +364,14 @@ Module mzDeco
         Return x.peaks.SaveTo(file, silent:=True)
     End Function
 
+    ''' <summary>
+    ''' Try to cast the dataframe to th peak feature object collection
+    ''' </summary>
     ''' <param name="file"></param>
     ''' <returns></returns>
     ''' <keywords>read data</keywords>
     <ExportAPI("read.xcms_features")>
+    <RApiReturn(GetType(PeakFeature))>
     Public Function readXcmsFeaturePeaks(file As dataframe) As Object
         Dim mz As Double() = CLRVector.asNumeric(file.getVector("mz", True))
         Dim mzmin As Double() = CLRVector.asNumeric(file.getVector("mzmin", True))
@@ -421,16 +425,22 @@ Module mzDeco
     ''' <param name="peaktable">the peaktable object, is a collection of the <see cref="xcms2"/> object.</param>
     ''' <param name="mz">target ion m/z</param>
     ''' <param name="rt">target ion rt in seconds.</param>
-    ''' <param name="mzdiff">the mass tolerance error in data unit delta dalton, apply for matches between the peaktable precursor m/z and the given ion mz value.</param>
+    ''' <param name="mzdiff">the mass tolerance error in data unit delta dalton, 
+    ''' apply for matches between the peaktable precursor m/z and the given ion mz value.</param>
     ''' <param name="rt_win">the rt window size for matches the rt. should be in data unit seconds.</param>
-    ''' <returns></returns>
+    ''' <returns>data is re-ordered via the tolerance error</returns>
     <ExportAPI("find_xcms_ionPeaks")>
     <RApiReturn(GetType(xcms2))>
     Public Function get_ionPeak(peaktable As PeakSet, mz As Double, rt As Double,
                                 Optional mzdiff As Double = 0.01,
                                 Optional rt_win As Double = 90) As Object
 
-        Return peaktable.FindIonSet(mz, rt, mzdiff, rt_win).ToArray
+        Return peaktable.FindIonSet(mz, rt, mzdiff, rt_win) _
+            .OrderBy(Function(a)
+                         Return std.Abs(a.mz - mz + 0.0001) *
+                             std.Abs(a.rt - rt + 0.0001)
+                     End Function) _
+            .ToArray
     End Function
 
     ''' <summary>

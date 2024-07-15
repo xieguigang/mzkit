@@ -35,12 +35,14 @@ declare namespace mzDeco {
      * @param peaktable the peaktable object, is a collection of the @``T:BioNovoGene.Analytical.MassSpectrometry.Math.xcms2`` object.
      * @param mz target ion m/z
      * @param rt target ion rt in seconds.
-     * @param mzdiff the mass tolerance error in data unit delta dalton, apply for matches between the peaktable precursor m/z and the given ion mz value.
+     * @param mzdiff the mass tolerance error in data unit delta dalton, 
+     *  apply for matches between the peaktable precursor m/z and the given ion mz value.
      * 
      * + default value Is ``0.01``.
      * @param rt_win the rt window size for matches the rt. should be in data unit seconds.
      * 
      * + default value Is ``90``.
+     * @return data is re-ordered via the tolerance error
    */
    function find_xcms_ionPeaks(peaktable: object, mz: number, rt: number, mzdiff?: number, rt_win?: number): object;
    module mz {
@@ -175,11 +177,12 @@ declare namespace mzDeco {
       */
       function rt_shifts(file: string): object;
       /**
+       * Try to cast the dataframe to th peak feature object collection
        * 
        * 
         * @param file -
       */
-      function xcms_features(file: object): any;
+      function xcms_features(file: object): object;
       /**
        * read the peaktable file that in xcms2 output format
        * 

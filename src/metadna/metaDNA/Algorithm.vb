@@ -432,7 +432,8 @@ Public Class Algorithm
                     },
                     .parentTrace = seed.parentTrace,
                     .inferSize = seed.inferSize + 1,
-                    .rawFile = hit.file
+                    .rawFile = hit.file,
+                    .entropy = align.entropy
                 }
             End If
         Next
