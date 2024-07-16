@@ -10,5 +10,6 @@ setwd(@dir);
 svg(filename = "./plot_msms.svg") {
     plot(align, legend_layout = "title",
     bar_width = 2,
-    grid_x = TRUE);
+    grid_x = TRUE,
+    show_hits = TRUE);
 }
