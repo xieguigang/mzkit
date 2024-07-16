@@ -103,6 +103,9 @@ Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports Chromatogram = BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram.Chromatogram
 
+''' <summary>
+''' Mass spectrum data visualization
+''' </summary>
 <Package("visual")>
 Module Visual
 
@@ -523,7 +526,7 @@ Module Visual
     ''' plot raw scatter matrix based on a given sequence of ms1 scans data
     ''' </summary>
     ''' <param name="ms1_scans">
-    ''' a sequence of ms1 scan data or a mzpack data object.
+    ''' a sequence of ms1 scan data, mzkit peakset object or a mzpack data object.
     ''' </param>
     ''' <param name="env"></param>
     ''' <returns></returns>
@@ -541,6 +544,11 @@ Module Visual
         If TypeOf ms1_scans Is mzPack Then
             matrix = DirectCast(ms1_scans, mzPack) _
                 .GetAllScanMs1 _
+                .ToArray
+        ElseIf TypeOf ms1_scans Is PeakSet Then
+            matrix = DirectCast(ms1_scans, PeakSet) _
+                .AsEnumerable _
+                .Select(Function(a) New ms1_scan(a)) _
                 .ToArray
         Else
             Dim points As pipeline = pipeline.TryCreatePipeline(Of ms1_scan)(ms1_scans, env)

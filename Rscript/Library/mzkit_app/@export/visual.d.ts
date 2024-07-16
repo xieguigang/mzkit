@@ -5,6 +5,7 @@
 // ref=mzkit.Visual@mzplot, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 
 /**
+ * Mass spectrum data visualization
  * 
 */
 declare namespace visual {
@@ -131,7 +132,7 @@ declare namespace visual {
     * plot raw scatter matrix based on a given sequence of ms1 scans data
     * 
     * 
-     * @param ms1_scans a sequence of ms1 scan data or a mzpack data object.
+     * @param ms1_scans a sequence of ms1 scan data, mzkit peakset object or a mzpack data object.
      * @param colorSet 
      * + default value Is ``'darkblue,blue,skyblue,green,orange,red,darkred'``.
      * @param contour 

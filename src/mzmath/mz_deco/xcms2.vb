@@ -71,11 +71,15 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 ''' <summary>
 ''' the peak table format table file model of xcms version 2
 ''' </summary>
+''' <remarks>
+''' a <see cref="IMs1Scan"/> peak object
+''' </remarks>
 Public Class xcms2 : Inherits DynamicPropertyBase(Of Double)
     Implements INamedValue
     Implements IRetentionIndex
     Implements IRetentionTime
     Implements IMassBin
+    Implements IMs1Scan
 
     ''' <summary>
     ''' the feature unique id
@@ -88,7 +92,7 @@ Public Class xcms2 : Inherits DynamicPropertyBase(Of Double)
     ''' the ion m/z
     ''' </summary>
     ''' <returns></returns>
-    <Category("MS1")> Public Property mz As Double Implements IMassBin.mass
+    <Category("MS1")> Public Property mz As Double Implements IMassBin.mass, IMs1Scan.mz
     ''' <summary>
     ''' the min of ion m/z value
     ''' </summary>
@@ -136,6 +140,15 @@ Public Class xcms2 : Inherits DynamicPropertyBase(Of Double)
         End Get
         Set(value As Dictionary(Of String, Double))
             MyBase.Properties = value
+        End Set
+    End Property
+
+    Private Property intensity As Double Implements IMs1Scan.intensity
+        Get
+            Return Properties.Values.Sum
+        End Get
+        Set(value As Double)
+            ' do nothing
         End Set
     End Property
 

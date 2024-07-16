@@ -82,6 +82,10 @@ Public Class ms1_scan : Implements IMs1, IMs1Scan, INumericKey, ITimeSignal
         _intensity = intensity
     End Sub
 
+    ''' <summary>
+    ''' make value copy from an general abstract ms1 scatter peak model.
+    ''' </summary>
+    ''' <param name="scan"></param>
     Sub New(scan As IMs1Scan)
         Call Me.New(scan.mz, scan.rt, scan.intensity)
     End Sub

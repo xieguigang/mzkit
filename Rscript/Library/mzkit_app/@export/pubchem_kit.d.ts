@@ -119,12 +119,15 @@ declare namespace pubchem_kit {
      * @param offline -
      * 
      * + default value Is ``false``.
+     * @param sleep sleep task in time interval seconds if no cache hit
+     * 
+     * + default value Is ``2``.
      * @param env -
      * 
      * + default value Is ``null``.
      * @return A collection of the pubchem pug view object that contains the metabolite annotation information.
    */
-   function pugView(cid: any, cacheFolder?: string, offline?: boolean, env?: object): object;
+   function pugView(cid: any, cacheFolder?: string, offline?: boolean, sleep?: number, env?: object): object;
    module query {
       /**
        * query of the pathways, taxonomy and reaction 
