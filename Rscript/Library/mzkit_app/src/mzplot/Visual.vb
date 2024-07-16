@@ -713,6 +713,8 @@ Module Visual
                                  Optional grid_x As Boolean = False,
                                  <RRawVectorArgument(GetType(String))>
                                  Optional legend_layout As Object = "top-right|title|bottom|none",
+                                 Optional gridStrokeX As String = PlotAlignmentGroup.DefaultGridXStroke,
+                                 Optional gridStrokeY As String = PlotAlignmentGroup.DefaultGridYStroke,
                                  Optional env As Environment = Nothing) As Object
 
         Dim ms As [Variant](Of Message, LibraryMatrix) = getSpectrum(spectrum, env)
@@ -738,7 +740,9 @@ Module Visual
                     bw:=bar_width,
                     legendLayout:=layouts.ElementAtOrDefault(0, "top-right"),
                     color1:=color1, color2:=color2,
-                    DrawGridX:=grid_x
+                    DrawGridX:=grid_x,
+                    gridStrokeX:=gridStrokeX,
+                    gridStrokeY:=gridStrokeY
                 )
         Else
             Dim ref As [Variant](Of Message, LibraryMatrix) = getSpectrum(alignment, env)
@@ -759,7 +763,9 @@ Module Visual
                 legendLayout:=layouts.ElementAtOrDefault(0, "top-right"),
                 drawGridX:=grid_x,
                 color1:=color1,
-                color2:=color2
+                color2:=color2,
+                gridStrokeX:=gridStrokeX,
+                gridStrokeY:=gridStrokeY
             )
         End If
     End Function
