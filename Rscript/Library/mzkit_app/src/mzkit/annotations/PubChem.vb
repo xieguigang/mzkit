@@ -407,6 +407,7 @@ Module PubChemToolKit
     ''' <param name="cacheFolder">
     ''' A cache directory path to the pubchem xml files
     ''' </param>
+    ''' <param name="sleep">sleep task in time interval seconds if no cache hit</param>
     ''' <param name="offline"></param>
     ''' <param name="env"></param>
     ''' <returns>A collection of the pubchem pug view object that contains the metabolite annotation information.</returns>
@@ -416,9 +417,11 @@ Module PubChemToolKit
     Public Function pugView(<RRawVectorArgument> cid As Object,
                             Optional cacheFolder$ = "./pubchem_cache",
                             Optional offline As Boolean = False,
+                            Optional sleep As Double = 2,
                             Optional env As Environment = Nothing) As Object
 
-        Dim api As WebQuery = $"{cacheFolder}/pugViews/".GetQueryHandler(Of WebQuery)(offline)
+        Dim api As WebQuery = $"{cacheFolder}/pugViews/".GetQueryHandler(Of WebQuery)(offline, interval:=sleep * 1000)
+        Dim hitCache As Boolean = False
         Dim result = env.EvaluateFramework(Of String, PugViewRecord)(
             x:=CLRVector.asCharacter(cid),
             eval:=Function(id)

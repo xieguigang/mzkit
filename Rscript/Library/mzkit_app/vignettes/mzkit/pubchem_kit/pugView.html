@@ -29,7 +29,8 @@
         <div style="width: 100%; padding-left: 3%; color: black;">
             <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>pugView</strong>(<i>cid</i>,
     <i>cacheFolder</i> = <span style='color: brown;'><strong>"./pubchem_cache"</strong></span>,
-    <i>offline</i> = <span style='color: blue !important;'>FALSE</span>);</code></pre>
+    <i>offline</i> = <span style='color: blue !important;'>FALSE</span>,
+    <i>sleep</i> = <span style='color: green;'>2</span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
@@ -42,6 +43,10 @@
 
 <dt>cacheFolder</dt>
 <dd><p>A cache directory path to the pubchem xml files. [as string]</p></dd>
+
+
+<dt>sleep</dt>
+<dd><p>sleep task in time interval seconds if no cache hit. [as double]</p></dd>
 
 
 <dt>offline</dt>

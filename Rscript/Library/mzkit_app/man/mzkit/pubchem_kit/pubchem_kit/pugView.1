@@ -6,6 +6,7 @@ pugView \- query pubchem data via a given cid value
 \fIpugView(\fBcid\fR as any, 
 \fBcacheFolder\fR as string = "./pubchem_cache", 
 \fBoffline\fR as boolean = FALSE, 
+\fBsleep\fR as double = 2, 
 [\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
@@ -19,6 +20,9 @@ query pubchem data via a given cid value
 \fBcacheFolder\fB \fR\- 
  A cache directory path to the pubchem xml files
 . 
+.PP
+.PP
+\fBsleep\fB \fR\- sleep task in time interval seconds if no cache hit. 
 .PP
 .PP
 \fBoffline\fB \fR\- -. 
