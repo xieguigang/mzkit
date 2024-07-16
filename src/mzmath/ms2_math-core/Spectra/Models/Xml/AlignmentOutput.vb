@@ -129,6 +129,14 @@ Namespace Spectra.Xml
             End Get
         End Property
 
+        Public Iterator Function GetHitsMzPeaks() As IEnumerable(Of Double)
+            For Each hit As SSM2MatrixFragment In alignments
+                If hit.query > 0 AndAlso hit.ref > 0 Then
+                    Yield hit.mz
+                End If
+            Next
+        End Function
+
         Public Function GetAlignmentMirror() As (query As LibraryMatrix, ref As LibraryMatrix)
             With New Ms2AlignMatrix(alignments)
                 Dim q = .GetQueryMatrix.With(Sub(a) a.name = query?.id)

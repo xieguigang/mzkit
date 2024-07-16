@@ -202,6 +202,7 @@ Module Visual
         Dim label_intensity As Double = args.getValue("label_into", env, 0.2)
         Dim label_mz As String = args.getValue("label_mz", env, "F4")
         Dim grid_x As Boolean = args.getValue("grid_x", env, False)
+        Dim show_hit_highlights As Boolean = args.getValue("show_hits", env, False)
 
         Return MassSpectra.AlignMirrorPlot(
             query:=pairwise.query,
@@ -215,7 +216,8 @@ Module Visual
             bw:=bar_width,
             color1:=color1,
             color2:=color2,
-            drawGridX:=grid_x
+            drawGridX:=grid_x,
+            highlights:=If(show_hit_highlights, aligns.GetHitsMzPeaks.ToArray, Nothing)
         )
     End Function
 
