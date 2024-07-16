@@ -2,14 +2,23 @@ require(mzkit);
 
 imports "visual" from "mzplot";
 
-let msms = "50.2744_4282.51416015625_4282.51416015625 69.0349_5501.7294921875_5501.7294921875 75.7988_4777.44775390625_4777.44775390625 99.9255_7475.55615234375_7475.55615234375 109.9350_5800.2470703125_5800.2470703125 119.3520_4245.65771484375_4245.65771484375 140.0248_27745.376953125_27745.376953125 141.0923_64317.07421875_64317.07421875 141.9237_4829.46728515625_4829.46728515625";
+let msms = "53.0397_0_7.41 65.0397_0_15.23 67.0553_0_21.52 81.0347_92.5371_12.28 95.0502_0_25.02 105.0346_0_8.06 123.0454_100_100 123.9021_24.5309_0";
 let align = parse.spectrum_alignment(msms);
 
 setwd(@dir);
 
-svg(filename = "./plot_msms.svg") {
-    plot(align, legend_layout = "title",
+svg(file = "./plot_msms.svg") {
+    plot(align, legend_layout = "none",
+    title = "blablabla",
     bar_width = 2,
     grid_x = TRUE,
     show_hits = TRUE);
+}
+
+bitmap(file = "./plot_msms.png") {
+    plot(align, legend_layout = "none",
+    title = "blablabla",
+    bar_width = 2,
+    grid_x = TRUE,
+    show_hits = FALSE);
 }
