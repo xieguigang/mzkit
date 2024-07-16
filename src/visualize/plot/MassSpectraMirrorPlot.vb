@@ -94,6 +94,8 @@ Public Module MassSpectra
                                Optional color1 As String = AlignmentPlot.DefaultColor1,
                                Optional color2 As String = AlignmentPlot.DefaultColor2,
                                Optional DrawGridX As Boolean = False,
+                               Optional gridStrokeX As String = PlotAlignmentGroup.DefaultGridXStroke,
+                               Optional gridStrokeY As String = PlotAlignmentGroup.DefaultGridYStroke,
                                Optional driver As Drivers = Drivers.Default) As GraphicsData
 
         Dim a As New LibraryMatrix With {.ms2 = library.ms2, .name = titles.ElementAtOrDefault(0, library.name)}
@@ -117,7 +119,9 @@ Public Module MassSpectra
             legendLayout:=legendLayout,
             color1:=color1,
             color2:=color2,
-            drawGridX:=DrawGridX
+            drawGridX:=DrawGridX,
+            gridStrokeX:=gridStrokeX,
+            gridStrokeY:=gridStrokeY
         )
     End Function
 
@@ -138,6 +142,8 @@ Public Module MassSpectra
                                     Optional legendLayout As String = "top-right",
                                     Optional color1 As String = DefaultColor1,
                                     Optional color2 As String = DefaultColor2,
+                                    Optional gridStrokeX As String = PlotAlignmentGroup.DefaultGridXStroke,
+                                    Optional gridStrokeY As String = PlotAlignmentGroup.DefaultGridYStroke,
                                     Optional driver As Drivers = Drivers.Default) As GraphicsData
 
         Dim mz As Double() = query _
@@ -177,7 +183,9 @@ Public Module MassSpectra
             legendLayout:=legendLayout,
             cla:=color1,
             clb:=color2,
-            drawGridX:=drawGridX
+            drawGridX:=drawGridX,
+            gridStrokeX:=gridStrokeX,
+            gridStrokeY:=gridStrokeY
         )
     End Function
 End Module
