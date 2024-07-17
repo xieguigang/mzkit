@@ -130,7 +130,7 @@ declare namespace mzDeco {
      * 
      * + default value Is ``0.01``.
      * @param ri_win 
-     * + default value Is ``1``.
+     * + default value Is ``10``.
      * @param norm do total ion sum normalization after peak alignment and the peaktable object has been exported?
      * 
      * + default value Is ``false``.
