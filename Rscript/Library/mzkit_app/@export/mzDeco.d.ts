@@ -30,7 +30,13 @@ declare namespace mzDeco {
    function adjust_to_seconds(rt_data: any, env?: object): any;
    module as {
       /**
-        * @param env default value Is ``null``.
+       * cast dataset to mzkit peaktable object
+       * 
+       * 
+        * @param x -
+        * @param env -
+        * 
+        * + default value Is ``null``.
       */
       function peak_set(x: any, env?: object): any;
    }
@@ -183,7 +189,7 @@ declare namespace mzDeco {
       */
       function rt_shifts(file: string): object;
       /**
-       * Try to cast the dataframe to th peak feature object collection
+       * Try to cast the dataframe to the mzkit peak feature object set
        * 
        * 
         * @param file -
@@ -259,6 +265,11 @@ declare namespace mzDeco {
       */
       function peaks(peaks: any, file: any, env?: object): any;
       /**
+       * save mzkit peaktable object to csv table file
+       * 
+       * 
+        * @param x -
+        * @param file the file path to the target csv table file
       */
       function xcms_peaks(x: object, file: string): boolean;
    }
