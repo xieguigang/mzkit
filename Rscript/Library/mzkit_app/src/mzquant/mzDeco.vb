@@ -648,7 +648,7 @@ Module mzDeco
             c_atoms = C.AsGeneric(Of Integer)(env)
 
             If Not c_atoms.ContainsKey(peakdata(0).xcms_id) Then
-                c_atoms.Add(peakdata(0).xcms_id, c_atoms.Values.Min - 1)
+                c_atoms.Add(peakdata(0).xcms_id, 0)
             End If
             If Not c_atoms.ContainsKey(peakdata.Last.xcms_id) Then
                 c_atoms.Add(peakdata.Last.xcms_id, c_atoms.Values.Max + 1)
