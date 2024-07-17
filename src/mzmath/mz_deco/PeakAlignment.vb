@@ -106,9 +106,12 @@ Public Module PeakAlignment
     ''' <param name="samples"></param>
     ''' <returns></returns>
     <Extension>
-    Public Iterator Function RIAlignment(samples As IEnumerable(Of NamedCollection(Of PeakFeature)), Optional rt_shift As List(Of RtShift) = Nothing) As IEnumerable(Of xcms2)
+    Public Iterator Function RIAlignment(samples As IEnumerable(Of NamedCollection(Of PeakFeature)),
+                                         Optional rt_shift As List(Of RtShift) = Nothing,
+                                         Optional mzdiff As Double = 0.005,
+                                         Optional ri_offset As Double = 1) As IEnumerable(Of xcms2)
         Dim allData = samples.ToArray
-        Dim RI_rawdata = allData.IteratesAll.GroupBy(Function(i) i.RI, offsets:=0.5).ToArray
+        Dim RI_rawdata = allData.IteratesAll.GroupBy(Function(i) i.RI, offsets:=ri_offset).ToArray
         Dim unique_id As New Dictionary(Of String, Counter)
         Dim refer As String = allData.PickReferenceSampleMaxIntensity.name
 
@@ -117,9 +120,11 @@ Public Module PeakAlignment
         End If
 
         For Each ri_point As NamedCollection(Of PeakFeature) In RI_rawdata
-            Dim mz_group = ri_point.GroupBy(Function(i) i.mz, offsets:=0.01).ToArray
+            Dim mz_group = ri_point _
+                .GroupBy(Function(i) i.mz, offsets:=mzdiff) _
+                .ToArray
 
-            For Each peak In mz_group
+            For Each peak As NamedCollection(Of PeakFeature) In mz_group
                 Dim ri As Double = peak.Average(Function(a) a.RI)
                 Dim mzri As String = $"M{CInt(Val(peak.name))}RI{CInt(ri)}"
                 Dim refer_rt As PeakFeature = peak.Where(Function(p) p.rawfile = refer).FirstOrDefault

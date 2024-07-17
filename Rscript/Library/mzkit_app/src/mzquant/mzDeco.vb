@@ -930,17 +930,13 @@ extract_ms1:
     <RApiReturn(GetType(xcms2))>
     Public Function peakAlignment(<RRawVectorArgument>
                                   samples As Object,
-                                  Optional mzdiff As Object = "da:0.001",
+                                  Optional mzdiff As Double = 0.005,
+                                  Optional ri_win As Double = 1,
                                   Optional norm As Boolean = False,
                                   Optional ri_alignment As Boolean = False,
                                   Optional env As Environment = Nothing) As Object
 
-        Dim mzErr = Math.getTolerance(mzdiff, env, [default]:="da:0.001")
         Dim sampleData As NamedCollection(Of PeakFeature)() = Nothing
-
-        If mzErr Like GetType(Message) Then
-            Return mzErr.TryCast(Of Message)
-        End If
 
         If TypeOf samples Is list Then
             Dim ls = DirectCast(samples, list).AsGeneric(Of PeakFeature())(env)
@@ -974,7 +970,7 @@ extract_ms1:
 
         If ri_alignment Then
             peaktable = sampleData _
-                .RIAlignment(rt_shifts) _
+                .RIAlignment(rt_shifts, mzdiff:=mzdiff, ri_offset:=ri_win) _
                 .ToArray
         Else
             peaktable = sampleData _
