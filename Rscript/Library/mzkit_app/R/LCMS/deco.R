@@ -81,7 +81,8 @@ const run.Deconvolution = function(rawdata, outputdir = "./", mzdiff = 0.005,
         plot(rt_shifts, res = 1000);
     }
     svg(file = file.path(outputdir, "peakset.svg")) {
-        plot(as.peak_set(peakmeta));
+        plot(as.peak_set(peakmeta), scatter = TRUE, 
+            dimension = "npeaks");
     }
 
     invisible(NULL);
