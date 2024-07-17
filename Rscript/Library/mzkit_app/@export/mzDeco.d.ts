@@ -236,6 +236,8 @@ declare namespace mzDeco {
     * Create RI reference dataset.
     * 
     * 
+     * @return a collection of the mzkit ri reference object model 
+     *  which is matched via the xcms peaktable.
    */
    function RI_reference(xcms_id: string, mz: number, rt: number, ri: number): object;
    /**

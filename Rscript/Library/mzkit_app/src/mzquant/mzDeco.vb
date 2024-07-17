@@ -533,10 +533,14 @@ Module mzDeco
     ''' <summary>
     ''' Create RI reference dataset.
     ''' </summary>
-    ''' <returns></returns>
+    ''' <returns>a collection of the mzkit ri reference object model 
+    ''' which is matched via the xcms peaktable.</returns>
     <ExportAPI("RI_reference")>
     <RApiReturn(GetType(RIRefer))>
-    Public Function RI_reference(xcms_id As String(), mz As Double(), rt As Double(), ri As Double()) As Object
+    Public Function RI_reference(xcms_id As String(),
+                                 mz As Double(),
+                                 rt As Double(),
+                                 ri As Double()) As Object
         Return xcms_id _
             .Select(Function(id, i)
                         Return New RIRefer() With {
