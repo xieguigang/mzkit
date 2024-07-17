@@ -28,6 +28,12 @@ declare namespace mzDeco {
      * + default value Is ``null``.
    */
    function adjust_to_seconds(rt_data: any, env?: object): any;
+   module as {
+      /**
+        * @param env default value Is ``null``.
+      */
+      function peak_set(x: any, env?: object): any;
+   }
    /**
     * helper function for find ms1 peaks based on the given mz/rt tuple data
     * 

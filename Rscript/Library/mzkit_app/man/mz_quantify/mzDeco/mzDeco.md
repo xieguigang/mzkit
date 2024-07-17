@@ -15,6 +15,7 @@ Extract peak and signal data from rawdata
 + [to_expression](mzDeco/to_expression.1) cast peaktable to expression matrix object
 + [to_matrix](mzDeco/to_matrix.1) cast peaktable to mzkit expression matrix
 + [write.xcms_peaks](mzDeco/write.xcms_peaks.1) 
++ [as.peak_set](mzDeco/as.peak_set.1) 
 + [read.xcms_features](mzDeco/read.xcms_features.1) Try to cast the dataframe to th peak feature object collection
 + [peak_subset](mzDeco/peak_subset.1) make sample column projection
 + [find_xcms_ionPeaks](mzDeco/find_xcms_ionPeaks.1) helper function for find ms1 peaks based on the given mz/rt tuple data
