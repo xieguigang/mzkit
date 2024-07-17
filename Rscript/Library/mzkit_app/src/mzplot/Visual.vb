@@ -148,6 +148,7 @@ Module Visual
         Dim plot_ri As Boolean = args.getValue({"x_axis.ri"}, env, False)
         Dim points As NamedCollection(Of RtShift)()
         Dim legend_split As Integer = args.getValue({"legend_split", "legend.split"}, env, 20)
+        Dim ppi As Integer = If(env.getDriver = Drivers.SVG, 120, 300)
 
         For Each sample As NamedCollection(Of RtShift) In samples
             If plot_ri Then
@@ -188,7 +189,7 @@ Module Visual
                             legendFontCSS:=CSSFont.Win10Normal,
                             legendSplit:=legend_split,
                             driver:=env.getDriver,
-                            dpi:=300)
+                            dpi:=ppi)
     End Function
 
     <RGenericOverloads("plot")>
