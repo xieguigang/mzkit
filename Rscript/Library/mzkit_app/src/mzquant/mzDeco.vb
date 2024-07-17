@@ -540,14 +540,16 @@ Module mzDeco
     Public Function RI_reference(xcms_id As String(),
                                  mz As Double(),
                                  rt As Double(),
-                                 ri As Double()) As Object
+                                 ri As Double(),
+                                 Optional names As String() = Nothing) As Object
         Return xcms_id _
             .Select(Function(id, i)
                         Return New RIRefer() With {
-                            .name = id,
+                            .xcms_id = id,
                             .mz = mz(i),
                             .rt = rt(i),
-                            .RI = ri(i)
+                            .RI = ri(i),
+                            .name = names.ElementAtOrNull(i)
                         }
                     End Function) _
             .ToArray
@@ -599,7 +601,7 @@ Module mzDeco
                 Dim peak1Index = peakdata.ToDictionary(Function(p1) p1.xcms_id)
 
                 For Each refer As RIRefer In ri_refers
-                    Dim target As PeakFeature = peak1Index(refer.name)
+                    Dim target As PeakFeature = peak1Index(refer.xcms_id)
 
                     target.RI = refer.RI
                     refer_points.Add(target)

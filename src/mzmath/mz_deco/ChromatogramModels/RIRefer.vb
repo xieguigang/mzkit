@@ -63,7 +63,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 ''' </summary>
 Public Class RIRefer : Implements INamedValue, IReadOnlyId, IRetentionIndex, IRetentionTime, IMs1
 
-    Public Property name As String Implements INamedValue.Key, IReadOnlyId.Identity
+    Public Property xcms_id As String Implements INamedValue.Key, IReadOnlyId.Identity
     Public Property mz As Double Implements IMs1.mz
     Public Property rt As Double Implements IMs1.rt
 
@@ -72,11 +72,10 @@ Public Class RIRefer : Implements INamedValue, IReadOnlyId, IRetentionIndex, IRe
     ''' </summary>
     ''' <returns></returns>
     Public Property RI As Double Implements IRetentionIndex.RI
+    Public Property name As String
 
     Public Overrides Function ToString() As String
-        Return $"m/z {mz}, {rt} sec, " & name
+        Return $"m/z {mz}, {rt} sec, " & xcms_id
     End Function
-
-
 
 End Class
