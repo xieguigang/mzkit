@@ -4,7 +4,8 @@
 peak_alignment \- Do COW peak alignment and export peaktable
 .SH SYNOPSIS
 \fIpeak_alignment(\fBsamples\fR as any, 
-\fBmzdiff\fR as any = "da:0.001", 
+\fBmzdiff\fR as double = 0.01, 
+\fBri_win\fR as double = 1, 
 \fBnorm\fR as boolean = FALSE, 
 \fBri_alignment\fR as boolean = FALSE, 
 [\fB<Environment>\fR]);\fR

@@ -128,7 +128,9 @@ declare namespace mzDeco {
      * @param samples should be a set of sample file data, which could be extract from the ``mz_deco`` function.
      * @param mzdiff -
      * 
-     * + default value Is ``'da:0.001'``.
+     * + default value Is ``0.01``.
+     * @param ri_win 
+     * + default value Is ``1``.
      * @param norm do total ion sum normalization after peak alignment and the peaktable object has been exported?
      * 
      * + default value Is ``false``.
@@ -138,7 +140,7 @@ declare namespace mzDeco {
      * 
      * + default value Is ``null``.
    */
-   function peak_alignment(samples: any, mzdiff?: any, norm?: boolean, ri_alignment?: boolean, env?: object): object;
+   function peak_alignment(samples: any, mzdiff?: number, ri_win?: number, norm?: boolean, ri_alignment?: boolean, env?: object): object;
    /**
     * make sample column projection
     * 

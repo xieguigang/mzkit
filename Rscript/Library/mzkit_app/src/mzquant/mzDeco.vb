@@ -931,7 +931,7 @@ extract_ms1:
     Public Function peakAlignment(<RRawVectorArgument>
                                   samples As Object,
                                   Optional mzdiff As Double = 0.01,
-                                  Optional ri_win As Double = 1,
+                                  Optional ri_win As Double = 10,
                                   Optional norm As Boolean = False,
                                   Optional ri_alignment As Boolean = False,
                                   Optional env As Environment = Nothing) As Object
