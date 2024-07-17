@@ -577,6 +577,7 @@ Module mzDeco
                             Optional env As Environment = Nothing) As Object
 
         Dim refer_points As New List(Of PeakFeature)
+        Dim map_RI_id As Dictionary(Of String, String) = Nothing
 
         If RI Is Nothing Then
             ' ri reference from the peakdata which has RI value assigned
@@ -586,14 +587,20 @@ Module mzDeco
 
             If RIrefers.isError Then
                 Return RIrefers.getError
+            Else
+                map_RI_id = New Dictionary(Of String, String)
             End If
 
-            Dim ri_refers As RIRefer() = RIrefers.populates(Of RIRefer)(env).OrderBy(Function(i) i.rt).ToArray
+            Dim ri_refers As RIRefer() = RIrefers.populates(Of RIRefer)(env) _
+                .OrderBy(Function(i) i.rt) _
+                .ToArray
             Dim ppmErr As Tolerance = Tolerance.PPM(ppm)
 
-            'For i As Integer = 0 To ri_refers.Length - 1
-            '    ri_refers(i).rt *= 60
-            'Next
+            For i As Integer = 0 To ri_refers.Length - 1
+                If Not ri_refers(i).name.StringEmpty(, True) Then
+                    map_RI_id(ri_refers(i).name) = ri_refers(i).xcms_id
+                End If
+            Next
 
             If by_id Then
                 ' the RI is already has been assigned the peak id
@@ -649,11 +656,19 @@ Module mzDeco
         If Not C Is Nothing Then
             c_atoms = C.AsGeneric(Of Integer)(env)
 
+            If Not map_RI_id.IsNullOrEmpty Then
+                c_atoms = c_atoms _
+                    .ToDictionary(Function(t) map_RI_id(t.Key),
+                                  Function(t)
+                                      Return t.Value
+                                  End Function)
+            End If
+
             If Not c_atoms.ContainsKey(peakdata(0).xcms_id) Then
-                c_atoms.Add(peakdata(0).xcms_id, 0)
+                Call c_atoms.Add(peakdata(0).xcms_id, 0)
             End If
             If Not c_atoms.ContainsKey(peakdata.Last.xcms_id) Then
-                c_atoms.Add(peakdata.Last.xcms_id, c_atoms.Values.Max + 1)
+                Call c_atoms.Add(peakdata.Last.xcms_id, c_atoms.Values.Max + 1)
             End If
         End If
 
