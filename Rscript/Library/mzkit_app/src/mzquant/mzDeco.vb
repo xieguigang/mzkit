@@ -657,7 +657,9 @@ Module mzDeco
             c_atoms = C.AsGeneric(Of Integer)(env)
 
             If Not map_RI_id.IsNullOrEmpty Then
+                ' some reference data peak maybe missing from the lcms experiment data.
                 c_atoms = c_atoms _
+                    .Where(Function(t) map_RI_id.ContainsKey(t.Key)) _
                     .ToDictionary(Function(t) map_RI_id(t.Key),
                                   Function(t)
                                       Return t.Value
