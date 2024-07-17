@@ -74,7 +74,15 @@ Namespace Spectra.Xml
         <XmlAttribute> Public Property mz As Double
 
 #Region "Fragment intensity"
+        ''' <summary>
+        ''' intensity in the query spectrum data
+        ''' </summary>
+        ''' <returns></returns>
         <XmlAttribute> Public Property query As Double
+        ''' <summary>
+        ''' intensity in the reference spectrum data
+        ''' </summary>
+        ''' <returns></returns>
         <XmlAttribute> Public Property ref As Double
 #End Region
 

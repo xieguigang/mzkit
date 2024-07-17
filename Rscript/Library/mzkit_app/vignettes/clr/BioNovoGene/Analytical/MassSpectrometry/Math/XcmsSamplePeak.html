@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>BioNovoGene.Analytical.MassSpectrometry.Math.RIRefer</title>
+    <title>BioNovoGene.Analytical.MassSpectrometry.Math.XcmsSamplePeak</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
@@ -13,29 +13,35 @@
 
         <table style="width: 100%;">
             <tr>
-                <td>RIRefer {BioNovoGene.Analytical.MassSpectrometry.Math}</td>
+                <td>XcmsSamplePeak {BioNovoGene.Analytical.MassSpectrometry.Math}</td>
                 <td style="text-align: right;">.NET clr documentation</td>
             </tr>
         </table>
 
-        <h2>RIRefer</h2>
+        <h2>XcmsSamplePeak</h2>
 
         <h3>Description</h3>
 
-        <p>the retention index reference</p>
+        
 
         <h3>Declare</h3>        
 
         <pre>
             <code id="clr_ts">
 # namespace BioNovoGene.Analytical.MassSpectrometry.Math
-export class RIRefer {
+export class XcmsSamplePeak {
+   ID: string;
+   intb: double;
+   into: double;
+   maxo: double;
    mz: double;
-   name: string;
-   # the reference retention index value
-   RI: double;
+   mzmax: double;
+   mzmin: double;
    rt: double;
-   xcms_id: string;
+   rtmax: double;
+   rtmin: double;
+   sample: string;
+   sn: double;
 }
 </code>
         </pre>

@@ -148,6 +148,7 @@ Module Visual
         Dim plot_ri As Boolean = args.getValue({"x_axis.ri"}, env, False)
         Dim points As NamedCollection(Of RtShift)()
         Dim legend_split As Integer = args.getValue({"legend_split", "legend.split"}, env, 20)
+        Dim ppi As Integer = If(env.getDriver = Drivers.SVG, 120, 300)
 
         For Each sample As NamedCollection(Of RtShift) In samples
             If plot_ri Then
@@ -188,7 +189,7 @@ Module Visual
                             legendFontCSS:=CSSFont.Win10Normal,
                             legendSplit:=legend_split,
                             driver:=env.getDriver,
-                            dpi:=300)
+                            dpi:=ppi)
     End Function
 
     <RGenericOverloads("plot")>
@@ -202,6 +203,7 @@ Module Visual
         Dim label_intensity As Double = args.getValue("label_into", env, 0.2)
         Dim label_mz As String = args.getValue("label_mz", env, "F4")
         Dim grid_x As Boolean = args.getValue("grid_x", env, False)
+        Dim show_hit_highlights As Boolean = args.getValue("show_hits", env, False)
 
         Return MassSpectra.AlignMirrorPlot(
             query:=pairwise.query,
@@ -215,17 +217,39 @@ Module Visual
             bw:=bar_width,
             color1:=color1,
             color2:=color2,
-            drawGridX:=grid_x
+            drawGridX:=grid_x,
+            highlights:=If(show_hit_highlights, aligns.GetHitsMzPeaks.ToArray, Nothing)
         )
     End Function
 
+    ''' <summary>
+    ''' draw peaktable as heatmap/scatter
+    ''' </summary>
+    ''' <param name="peakSet"></param>
+    ''' <param name="args"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <RGenericOverloads("plot")>
     Private Function plotPeaktable(peakSet As PeakSet, args As list, env As Environment) As Object
         Dim theme As New Theme With {
             .axisLabelCSS = "font-style: normal; font-size: 12; font-family: " & FontFace.CambriaMath & ";",
             .colorSet = "Jet"
         }
-        Dim app As New PeakTablePlot(peakSet, theme)
+        Dim scatter As Boolean = args.getValue({"scatter"}, env, False)
+        Dim app As Plot
+        Dim nlevels As Integer = args.getValue({"levels", "nlevel"}, env, 30)
+
+        If scatter Then
+            Dim dimension As String = args.getValue({"dimension", "dim_name"}, env, "default")
+            Dim scatter_data As ms1_scan() = peakSet.Ms1Scatter(dimension).ToArray
+
+            app = New RawScatterPlot(scatter_data, nlevels, "peaktable", theme)
+        Else
+            app = New PeakTablePlot(peakSet, theme) With {
+                .mapLevels = nlevels
+            }
+        End If
+
         Return app.Plot()
     End Function
 
@@ -536,6 +560,8 @@ Module Visual
                                    <RRawVectorArgument>
                                    Optional colorSet As Object = "darkblue,blue,skyblue,green,orange,red,darkred",
                                    Optional contour As Boolean = False,
+                                   <RRawVectorArgument(GetType(String))>
+                                   Optional dimension As Object = "default|sum|mean|max|npeaks|<sample_name>",
                                    Optional env As Environment = Nothing) As Object
 
         Dim schema As String = RColorPalette.getColorSet(colorSet)
@@ -547,8 +573,7 @@ Module Visual
                 .ToArray
         ElseIf TypeOf ms1_scans Is PeakSet Then
             matrix = DirectCast(ms1_scans, PeakSet) _
-                .AsEnumerable _
-                .Select(Function(a) New ms1_scan(a)) _
+                .Ms1Scatter(CLRVector.asCharacter(dimension).DefaultFirst) _
                 .ToArray
         Else
             Dim points As pipeline = pipeline.TryCreatePipeline(Of ms1_scan)(ms1_scans, env)
@@ -713,6 +738,8 @@ Module Visual
                                  Optional grid_x As Boolean = False,
                                  <RRawVectorArgument(GetType(String))>
                                  Optional legend_layout As Object = "top-right|title|bottom|none",
+                                 Optional gridStrokeX As String = PlotAlignmentGroup.DefaultGridXStroke,
+                                 Optional gridStrokeY As String = PlotAlignmentGroup.DefaultGridYStroke,
                                  Optional env As Environment = Nothing) As Object
 
         Dim ms As [Variant](Of Message, LibraryMatrix) = getSpectrum(spectrum, env)
@@ -738,7 +765,9 @@ Module Visual
                     bw:=bar_width,
                     legendLayout:=layouts.ElementAtOrDefault(0, "top-right"),
                     color1:=color1, color2:=color2,
-                    DrawGridX:=grid_x
+                    DrawGridX:=grid_x,
+                    gridStrokeX:=gridStrokeX,
+                    gridStrokeY:=gridStrokeY
                 )
         Else
             Dim ref As [Variant](Of Message, LibraryMatrix) = getSpectrum(alignment, env)
@@ -759,7 +788,9 @@ Module Visual
                 legendLayout:=layouts.ElementAtOrDefault(0, "top-right"),
                 drawGridX:=grid_x,
                 color1:=color1,
-                color2:=color2
+                color2:=color2,
+                gridStrokeX:=gridStrokeX,
+                gridStrokeY:=gridStrokeY
             )
         End If
     End Function

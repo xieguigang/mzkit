@@ -142,9 +142,9 @@ Module LCLipidomics
 
         For Each group In match_groups
             If group.Key = 0 Then
-                list.add("abbreviation", group.Values.ToArray)
+                list.add("abbreviation", group.Values)
             Else
-                list.add("golden", group.Values.ToArray)
+                list.add("golden", group.Values)
             End If
         Next
 

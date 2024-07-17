@@ -173,6 +173,24 @@ Public Class PeakFeature
         Me.noise = peakdata.noise
     End Sub
 
+    ''' <summary>
+    ''' make object data copy
+    ''' </summary>
+    ''' <param name="peakdata"></param>
+    Sub New(peakdata As XcmsSamplePeak)
+        Me.area = peakdata.into
+        Me.rawfile = peakdata.sample
+        Me.xcms_id = peakdata.ID
+        Me.mz = peakdata.mz
+        Me.rt = peakdata.rt
+        Me.rtmin = peakdata.rtmin
+        Me.rtmax = peakdata.rtmax
+        Me.maxInto = peakdata.maxo
+        Me.noise = 1
+        Me.baseline = 1
+        Me.integration = 1
+    End Sub
+
     Public Overrides Function ToString() As String
         Return $"[{xcms_id}] {mz.ToString("F4")}@[{rtmin.ToString("F1")}, {rtmax.ToString("F1")}] = {area.ToString("G3")}"
     End Function

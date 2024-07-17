@@ -60,6 +60,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.Distributions
 Imports Microsoft.VisualBasic.Math.SignalProcessing.COW
 
 ''' <summary>
@@ -106,9 +107,13 @@ Public Module PeakAlignment
     ''' <param name="samples"></param>
     ''' <returns></returns>
     <Extension>
-    Public Iterator Function RIAlignment(samples As IEnumerable(Of NamedCollection(Of PeakFeature)), Optional rt_shift As List(Of RtShift) = Nothing) As IEnumerable(Of xcms2)
+    Public Iterator Function RIAlignment(samples As IEnumerable(Of NamedCollection(Of PeakFeature)),
+                                         Optional rt_shift As List(Of RtShift) = Nothing,
+                                         Optional mzdiff As Double = 0.005,
+                                         Optional ri_offset As Double = 1) As IEnumerable(Of xcms2)
         Dim allData = samples.ToArray
-        Dim RI_rawdata = allData.IteratesAll.GroupBy(Function(i) i.RI, offsets:=0.5).ToArray
+        ' make data bins by RI
+        Dim RI_rawdata = allData.IteratesAll.GroupBy(Function(i) i.RI, offsets:=ri_offset).ToArray
         Dim unique_id As New Dictionary(Of String, Counter)
         Dim refer As String = allData.PickReferenceSampleMaxIntensity.name
 
@@ -117,15 +122,20 @@ Public Module PeakAlignment
         End If
 
         For Each ri_point As NamedCollection(Of PeakFeature) In RI_rawdata
-            Dim mz_group = ri_point.GroupBy(Function(i) i.mz, offsets:=0.01).ToArray
+            ' make data bins by mz
+            ' where the given data all has the same RI value
+            Dim mz_group = ri_point _
+                .GroupBy(Function(i) i.mz, offsets:=mzdiff) _
+                .ToArray
 
-            For Each peak In mz_group
+            For Each peak As NamedCollection(Of PeakFeature) In mz_group
                 Dim ri As Double = peak.Average(Function(a) a.RI)
                 Dim mzri As String = $"M{CInt(Val(peak.name))}RI{CInt(ri)}"
                 Dim refer_rt As PeakFeature = peak.Where(Function(p) p.rawfile = refer).FirstOrDefault
+                Dim mz_set = peak.Select(Function(a) a.mz).ToArray
                 Dim peak1 As New xcms2 With {
                    .ID = mzri,
-                   .mz = Val(peak.name),
+                   .mz = mz_set.TabulateMode(topBin:=True),
                    .RI = ri,
                    .rt = peak.OrderByDescending(Function(pi) pi.maxInto).First.rt,
                    .mzmin = peak.Select(Function(pi) pi.mz).Min,

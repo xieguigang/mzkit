@@ -28,6 +28,18 @@ declare namespace mzDeco {
      * + default value Is ``null``.
    */
    function adjust_to_seconds(rt_data: any, env?: object): any;
+   module as {
+      /**
+       * cast dataset to mzkit peaktable object
+       * 
+       * 
+        * @param x -
+        * @param env -
+        * 
+        * + default value Is ``null``.
+      */
+      function peak_set(x: any, env?: object): any;
+   }
    /**
     * helper function for find ms1 peaks based on the given mz/rt tuple data
     * 
@@ -116,7 +128,9 @@ declare namespace mzDeco {
      * @param samples should be a set of sample file data, which could be extract from the ``mz_deco`` function.
      * @param mzdiff -
      * 
-     * + default value Is ``'da:0.001'``.
+     * + default value Is ``0.01``.
+     * @param ri_win 
+     * + default value Is ``10``.
      * @param norm do total ion sum normalization after peak alignment and the peaktable object has been exported?
      * 
      * + default value Is ``false``.
@@ -126,7 +140,7 @@ declare namespace mzDeco {
      * 
      * + default value Is ``null``.
    */
-   function peak_alignment(samples: any, mzdiff?: any, norm?: boolean, ri_alignment?: boolean, env?: object): object;
+   function peak_alignment(samples: any, mzdiff?: number, ri_win?: number, norm?: boolean, ri_alignment?: boolean, env?: object): object;
    /**
     * make sample column projection
     * 
@@ -177,7 +191,7 @@ declare namespace mzDeco {
       */
       function rt_shifts(file: string): object;
       /**
-       * Try to cast the dataframe to th peak feature object collection
+       * Try to cast the dataframe to the mzkit peak feature object set
        * 
        * 
         * @param file -
@@ -224,8 +238,12 @@ declare namespace mzDeco {
     * Create RI reference dataset.
     * 
     * 
+     * @param names 
+     * + default value Is ``null``.
+     * @return a collection of the mzkit ri reference object model 
+     *  which is matched via the xcms peaktable.
    */
-   function RI_reference(xcms_id: string, mz: number, rt: number, ri: number): object;
+   function RI_reference(xcms_id: string, mz: number, rt: number, ri: number, names?: string): object;
    /**
     * cast peaktable to expression matrix object
     * 
@@ -253,6 +271,11 @@ declare namespace mzDeco {
       */
       function peaks(peaks: any, file: any, env?: object): any;
       /**
+       * save mzkit peaktable object to csv table file
+       * 
+       * 
+        * @param x -
+        * @param file the file path to the target csv table file
       */
       function xcms_peaks(x: object, file: string): boolean;
    }

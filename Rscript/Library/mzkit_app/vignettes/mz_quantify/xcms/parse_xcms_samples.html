@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Create RI reference dataset.</title>
+    <title>parse_xcms_samples</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
@@ -13,22 +13,22 @@
 
         <table style="width: 100%;">
             <tr>
-                <td>RI_reference {mzDeco}</td>
+                <td>parse_xcms_samples {xcms}</td>
                 <td style="text-align: right;">R Documentation</td>
             </tr>
         </table>
 
-        <h2>Create RI reference dataset.</h2>
+        <h2>parse_xcms_samples</h2>
 
         <h3>Description</h3>
 
-        
+        parse_xcms_samples
 
         <h3>Usage</h3>
 
         <div style="width: 100%; padding-left: 3%; color: black;">
-            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>RI_reference</strong>(<i>xcms.id</i>, <i>mz</i>, <i>rt</i>, <i>ri</i>,
-    <i>names</i> = <span style='color: blue !important;'>NULL</span>);</code></pre>
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>parse_xcms_samples</strong>(<i>file</i>,
+    <i>group.features</i> = <span style='color: blue !important;'>FALSE</span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
@@ -48,16 +48,15 @@
 
         <h3>Value</h3>
 
-        <p>a collection of the mzkit ri reference object model 
- which is matched via the xcms peaktable.</p><h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/RIRefer.html">RIRefer</a></li></ul>
+        this function returns data object in these one of the listed data types: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/XcmsSamplePeak.html">XcmsSamplePeak</a>, <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/PeakFeature.html">PeakFeature</a>.<h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/XcmsSamplePeak.html">XcmsSamplePeak</a></li><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/PeakFeature.html">PeakFeature</a></li></ul>
 
         <h3 style="display: none;">Examples</h3>
 
         
 
         <hr />
-        <div style="text-align: center;">[Package <em>mzDeco</em> version 1.0.0.0 <a
-                href="../mzDeco.html">Index</a>]
+        <div style="text-align: center;">[Package <em>xcms</em> version 1.0.0.0 <a
+                href="../xcms.html">Index</a>]
         </div>
     </div>
 </body>

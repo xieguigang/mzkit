@@ -169,11 +169,9 @@ Public Class xcms2 : Inherits DynamicPropertyBase(Of Double)
         Me.rtmax = rt
     End Sub
 
-    'Public Shared Function Load(file As String) As xcms2()
-    '    Return DataSet _
-    '        .LoadDataSet(Of xcms2)(file, uidMap:=NameOf(ID)) _
-    '        .ToArray
-    'End Function
+    Sub New(expression As Dictionary(Of String, Double))
+        Me.Properties = expression
+    End Sub
 
     ''' <summary>
     ''' just make the <see cref="xcms2.ID"/> unique

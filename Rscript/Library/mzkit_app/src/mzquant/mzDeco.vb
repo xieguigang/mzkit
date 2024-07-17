@@ -359,13 +359,76 @@ Module mzDeco
         }
     End Function
 
+    ''' <summary>
+    ''' save mzkit peaktable object to csv table file
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <param name="file">the file path to the target csv table file</param>
+    ''' <returns></returns>
     <ExportAPI("write.xcms_peaks")>
     Public Function writeXcmsPeaktable(x As PeakSet, file As String) As Boolean
         Return x.peaks.SaveTo(file, silent:=True)
     End Function
 
     ''' <summary>
-    ''' Try to cast the dataframe to th peak feature object collection
+    ''' cast dataset to mzkit peaktable object
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("as.peak_set")>
+    Public Function create_peakset(<RRawVectorArgument> x As Object, Optional env As Environment = Nothing) As Object
+        Dim pull = pipeline.TryCreatePipeline(Of xcms2)(x, env)
+        Dim peaks As New List(Of xcms2)
+
+        If pull.isError Then
+            ' deal with dataframe?
+            If TypeOf x Is dataframe Then
+                Dim df As dataframe = x
+                Dim mz As Double() = CLRVector.asNumeric(df!mz)
+                Dim mzmin As Double() = CLRVector.asNumeric(df!mzmin)
+                Dim mzmax As Double() = CLRVector.asNumeric(df!mzmax)
+                Dim rt As Double() = CLRVector.asNumeric(df!rt)
+                Dim rtmin As Double() = CLRVector.asNumeric(df!rtmin)
+                Dim rtmax As Double() = CLRVector.asNumeric(df!rtmax)
+                Dim RI As Double() = CLRVector.asNumeric(df!RI)
+                Dim ID As String() = df.getRowNames.UniqueNames
+
+                Call df.delete("ID", "mz", "mzmin", "mzmax", "rt", "rtmin", "rtmax", "RI", "npeaks")
+
+                Dim offset As Integer
+                Dim v As Dictionary(Of String, Double)
+                Dim matrix As NamedCollection(Of Double)() = df.columns _
+                    .Select(Function(i)
+                                Return New NamedCollection(Of Double)(i.Key, CLRVector.asNumeric(i.Value))
+                            End Function) _
+                    .ToArray
+
+                For i As Integer = 0 To mz.Length - 1
+                    offset = i
+                    v = matrix.ToDictionary(Function(a) a.name, Function(a) a(offset))
+
+                    Call peaks.Add(New xcms2(v) With {
+                        .ID = ID(i),
+                        .mz = mz(i),
+                        .mzmax = mzmax(i),
+                        .mzmin = mzmin(i),
+                        .RI = RI(i),
+                        .rt = rt(i),
+                        .rtmax = rtmax(i),
+                        .rtmin = rtmin(i)
+                    })
+                Next
+            Else
+                Return pull.getError
+            End If
+        End If
+
+        Return New PeakSet(peaks)
+    End Function
+
+    ''' <summary>
+    ''' Try to cast the dataframe to the mzkit peak feature object set
     ''' </summary>
     ''' <param name="file"></param>
     ''' <returns></returns>
@@ -470,17 +533,23 @@ Module mzDeco
     ''' <summary>
     ''' Create RI reference dataset.
     ''' </summary>
-    ''' <returns></returns>
+    ''' <returns>a collection of the mzkit ri reference object model 
+    ''' which is matched via the xcms peaktable.</returns>
     <ExportAPI("RI_reference")>
     <RApiReturn(GetType(RIRefer))>
-    Public Function RI_reference(xcms_id As String(), mz As Double(), rt As Double(), ri As Double()) As Object
+    Public Function RI_reference(xcms_id As String(),
+                                 mz As Double(),
+                                 rt As Double(),
+                                 ri As Double(),
+                                 Optional names As String() = Nothing) As Object
         Return xcms_id _
             .Select(Function(id, i)
                         Return New RIRefer() With {
-                            .name = id,
+                            .xcms_id = id,
                             .mz = mz(i),
                             .rt = rt(i),
-                            .RI = ri(i)
+                            .RI = ri(i),
+                            .name = names.ElementAtOrNull(i)
                         }
                     End Function) _
             .ToArray
@@ -508,6 +577,7 @@ Module mzDeco
                             Optional env As Environment = Nothing) As Object
 
         Dim refer_points As New List(Of PeakFeature)
+        Dim map_RI_id As Dictionary(Of String, String) = Nothing
 
         If RI Is Nothing Then
             ' ri reference from the peakdata which has RI value assigned
@@ -517,14 +587,20 @@ Module mzDeco
 
             If RIrefers.isError Then
                 Return RIrefers.getError
+            Else
+                map_RI_id = New Dictionary(Of String, String)
             End If
 
-            Dim ri_refers As RIRefer() = RIrefers.populates(Of RIRefer)(env).OrderBy(Function(i) i.rt).ToArray
+            Dim ri_refers As RIRefer() = RIrefers.populates(Of RIRefer)(env) _
+                .OrderBy(Function(i) i.rt) _
+                .ToArray
             Dim ppmErr As Tolerance = Tolerance.PPM(ppm)
 
-            'For i As Integer = 0 To ri_refers.Length - 1
-            '    ri_refers(i).rt *= 60
-            'Next
+            For i As Integer = 0 To ri_refers.Length - 1
+                If Not ri_refers(i).name.StringEmpty(, True) Then
+                    map_RI_id(ri_refers(i).name) = ri_refers(i).xcms_id
+                End If
+            Next
 
             If by_id Then
                 ' the RI is already has been assigned the peak id
@@ -532,7 +608,7 @@ Module mzDeco
                 Dim peak1Index = peakdata.ToDictionary(Function(p1) p1.xcms_id)
 
                 For Each refer As RIRefer In ri_refers
-                    Dim target As PeakFeature = peak1Index(refer.name)
+                    Dim target As PeakFeature = peak1Index(refer.xcms_id)
 
                     target.RI = refer.RI
                     refer_points.Add(target)
@@ -580,11 +656,21 @@ Module mzDeco
         If Not C Is Nothing Then
             c_atoms = C.AsGeneric(Of Integer)(env)
 
+            If Not map_RI_id.IsNullOrEmpty Then
+                ' some reference data peak maybe missing from the lcms experiment data.
+                c_atoms = c_atoms _
+                    .Where(Function(t) map_RI_id.ContainsKey(t.Key)) _
+                    .ToDictionary(Function(t) map_RI_id(t.Key),
+                                  Function(t)
+                                      Return t.Value
+                                  End Function)
+            End If
+
             If Not c_atoms.ContainsKey(peakdata(0).xcms_id) Then
-                c_atoms.Add(peakdata(0).xcms_id, c_atoms.Values.Min - 1)
+                Call c_atoms.Add(peakdata(0).xcms_id, 0)
             End If
             If Not c_atoms.ContainsKey(peakdata.Last.xcms_id) Then
-                c_atoms.Add(peakdata.Last.xcms_id, c_atoms.Values.Max + 1)
+                Call c_atoms.Add(peakdata.Last.xcms_id, c_atoms.Values.Max + 1)
             End If
         End If
 
@@ -844,17 +930,13 @@ extract_ms1:
     <RApiReturn(GetType(xcms2))>
     Public Function peakAlignment(<RRawVectorArgument>
                                   samples As Object,
-                                  Optional mzdiff As Object = "da:0.001",
+                                  Optional mzdiff As Double = 0.01,
+                                  Optional ri_win As Double = 10,
                                   Optional norm As Boolean = False,
                                   Optional ri_alignment As Boolean = False,
                                   Optional env As Environment = Nothing) As Object
 
-        Dim mzErr = Math.getTolerance(mzdiff, env, [default]:="da:0.001")
         Dim sampleData As NamedCollection(Of PeakFeature)() = Nothing
-
-        If mzErr Like GetType(Message) Then
-            Return mzErr.TryCast(Of Message)
-        End If
 
         If TypeOf samples Is list Then
             Dim ls = DirectCast(samples, list).AsGeneric(Of PeakFeature())(env)
@@ -888,7 +970,7 @@ extract_ms1:
 
         If ri_alignment Then
             peaktable = sampleData _
-                .RIAlignment(rt_shifts) _
+                .RIAlignment(rt_shifts, mzdiff:=mzdiff, ri_offset:=ri_win) _
                 .ToArray
         Else
             peaktable = sampleData _
