@@ -364,6 +364,57 @@ Module mzDeco
         Return x.peaks.SaveTo(file, silent:=True)
     End Function
 
+    <ExportAPI("as.peak_set")>
+    Public Function create_peakset(<RRawVectorArgument> x As Object, Optional env As Environment = Nothing) As Object
+        Dim pull = pipeline.TryCreatePipeline(Of xcms2)(x, env)
+        Dim peaks As New List(Of xcms2)
+
+        If pull.isError Then
+            ' deal with dataframe?
+            If TypeOf x Is dataframe Then
+                Dim df As dataframe = x
+                Dim mz As Double() = CLRVector.asNumeric(df!mz)
+                Dim mzmin As Double() = CLRVector.asNumeric(df!mzmin)
+                Dim mzmax As Double() = CLRVector.asNumeric(df!mzmax)
+                Dim rt As Double() = CLRVector.asNumeric(df!rt)
+                Dim rtmin As Double() = CLRVector.asNumeric(df!rtmin)
+                Dim rtmax As Double() = CLRVector.asNumeric(df!rtmax)
+                Dim RI As Double() = CLRVector.asNumeric(df!RI)
+                Dim ID As String() = df.getRowNames.UniqueNames
+
+                Call df.delete("ID", "mz", "mzmin", "mzmax", "rt", "rtmin", "rtmax", "RI", "npeaks")
+
+                Dim offset As Integer
+                Dim v As Dictionary(Of String, Double)
+                Dim matrix As NamedCollection(Of Double)() = df.columns _
+                    .Select(Function(i)
+                                Return New NamedCollection(Of Double)(i.Key, CLRVector.asNumeric(i.Value))
+                            End Function) _
+                    .ToArray
+
+                For i As Integer = 0 To mz.Length - 1
+                    offset = i
+                    v = matrix.ToDictionary(Function(a) a.name, Function(a) a(offset))
+
+                    Call peaks.Add(New xcms2(v) With {
+                        .ID = ID(i),
+                        .mz = mz(i),
+                        .mzmax = mzmax(i),
+                        .mzmin = mzmin(i),
+                        .RI = RI(i),
+                        .rt = rt(i),
+                        .rtmax = rtmax(i),
+                        .rtmin = rtmin(i)
+                    })
+                Next
+            Else
+                Return pull.getError
+            End If
+        End If
+
+        Return New PeakSet(peaks)
+    End Function
+
     ''' <summary>
     ''' Try to cast the dataframe to th peak feature object collection
     ''' </summary>
