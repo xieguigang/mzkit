@@ -221,13 +221,34 @@ Module Visual
         )
     End Function
 
+    ''' <summary>
+    ''' draw peaktable as heatmap/scatter
+    ''' </summary>
+    ''' <param name="peakSet"></param>
+    ''' <param name="args"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <RGenericOverloads("plot")>
     Private Function plotPeaktable(peakSet As PeakSet, args As list, env As Environment) As Object
         Dim theme As New Theme With {
             .axisLabelCSS = "font-style: normal; font-size: 12; font-family: " & FontFace.CambriaMath & ";",
             .colorSet = "Jet"
         }
-        Dim app As New PeakTablePlot(peakSet, theme)
+        Dim scatter As Boolean = args.getValue({"scatter"}, env, False)
+        Dim app As Plot
+        Dim nlevels As Integer = args.getValue({"levels", "nlevel"}, env, 30)
+
+        If scatter Then
+            Dim dimension As String = args.getValue({"dimension", "dim_name"}, env, "default")
+            Dim scatter_data As ms1_scan() = peakSet.Ms1Scatter(dimension).ToArray
+
+            app = New RawScatterPlot(scatter_data, nlevels, "peaktable", theme)
+        Else
+            app = New PeakTablePlot(peakSet, theme) With {
+                .mapLevels = nlevels
+            }
+        End If
+
         Return app.Plot()
     End Function
 
@@ -538,6 +559,8 @@ Module Visual
                                    <RRawVectorArgument>
                                    Optional colorSet As Object = "darkblue,blue,skyblue,green,orange,red,darkred",
                                    Optional contour As Boolean = False,
+                                   <RRawVectorArgument(GetType(String))>
+                                   Optional dimension As Object = "default|sum|mean|max|npeaks|<sample_name>",
                                    Optional env As Environment = Nothing) As Object
 
         Dim schema As String = RColorPalette.getColorSet(colorSet)
@@ -549,8 +572,7 @@ Module Visual
                 .ToArray
         ElseIf TypeOf ms1_scans Is PeakSet Then
             matrix = DirectCast(ms1_scans, PeakSet) _
-                .AsEnumerable _
-                .Select(Function(a) New ms1_scan(a)) _
+                .Ms1Scatter(CLRVector.asCharacter(dimension).DefaultFirst) _
                 .ToArray
         Else
             Dim points As pipeline = pipeline.TryCreatePipeline(Of ms1_scan)(ms1_scans, env)

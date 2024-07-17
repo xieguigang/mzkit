@@ -71,11 +71,15 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.MIME.Html.Render
 
+''' <summary>
+''' draw heatmap based on the given peaktable data
+''' </summary>
 Public Class PeakTablePlot : Inherits Plot
 
     ReadOnly peakSet As PeakSet
-    ReadOnly mapLevels As Integer = 64
     ReadOnly cut As Double = 0.65
+
+    Public Property mapLevels As Integer = 64
 
     Public Sub New(peakSet As PeakSet, theme As Theme)
         MyBase.New(theme)

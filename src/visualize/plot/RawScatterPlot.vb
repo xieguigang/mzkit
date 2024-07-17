@@ -83,6 +83,13 @@ Public Class RawScatterPlot : Inherits Plot
     ReadOnly mapLevels As Integer
     ReadOnly rawfile$
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="samples"></param>
+    ''' <param name="mapLevels"></param>
+    ''' <param name="rawfile">the serial data legend name</param>
+    ''' <param name="theme"></param>
     Public Sub New(samples As IEnumerable(Of ms1_scan), mapLevels As Integer, rawfile$, theme As Theme)
         MyBase.New(theme)
 

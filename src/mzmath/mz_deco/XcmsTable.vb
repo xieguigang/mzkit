@@ -163,4 +163,25 @@ Public Module XcmsTable
             Yield xcms
         Next
     End Function
+
+    <Extension>
+    Public Iterator Function Ms1Scatter(peakset As PeakSet, Optional dimension As String = "default|sum|mean|max|npeaks|<sample_name>") As IEnumerable(Of ms1_scan)
+        Dim getter As Func(Of xcms2, Double) = Nothing
+        Dim dimName As String = Strings.Trim(dimension).Split("|"c).FirstOrDefault
+
+        Select Case dimName
+            Case "sum", "default", "" : getter = Function(a) a.Properties.Values.Sum
+            Case "mean" : getter = Function(a) If(a.npeaks = 0, 0, a.Properties.Values.Average)
+            Case "max" : getter = Function(a) If(a.npeaks = 0, 0, a.Properties.Values.Max)
+            Case "npeaks" : getter = Function(a) a.npeaks
+
+            Case Else
+                ' get from sample name
+                getter = Function(a) a(dimName)
+        End Select
+
+        For Each peak As xcms2 In peakset.AsEnumerable
+            Yield New ms1_scan(peak.mz, peak.rt, getter(peak))
+        Next
+    End Function
 End Module
