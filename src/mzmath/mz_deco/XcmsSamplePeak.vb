@@ -38,9 +38,9 @@ Public Class XcmsSamplePeak
             Dim t As String() = line.Split(","c)
             Dim peak As New XcmsSamplePeak With {
                 .ID = t(id),
-                .intb = Double.Parse(t(intb)),
+                .intb = If(intb = -1, 0, Double.Parse(t(intb))),
                 .into = Double.Parse(t(into)),
-                .maxo = Double.Parse(t(maxo)),
+                .maxo = If(maxo = -1, 0, Double.Parse(t(maxo))),
                 .mz = Double.Parse(t(mz)),
                 .mzmax = Double.Parse(t(mzmax)),
                 .mzmin = Double.Parse(t(mzmin)),
@@ -48,7 +48,7 @@ Public Class XcmsSamplePeak
                 .rtmax = Double.Parse(t(rtmax)),
                 .rtmin = Double.Parse(t(rtmin)),
                 .sample = t(sample),
-                .sn = Double.Parse(t(sn))
+                .sn = If(sn = -1, 0, Double.Parse(t(sn)))
             }
 
             Yield peak

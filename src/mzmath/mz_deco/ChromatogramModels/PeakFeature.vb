@@ -186,6 +186,8 @@ Public Class PeakFeature
         Me.rtmin = peakdata.rtmin
         Me.rtmax = peakdata.rtmax
         Me.maxInto = peakdata.maxo
+        Me.noise = 1
+        Me.baseline = 1
         Me.integration = 1
     End Sub
 
