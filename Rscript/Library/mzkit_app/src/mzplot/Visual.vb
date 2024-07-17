@@ -221,13 +221,28 @@ Module Visual
         )
     End Function
 
+    ''' <summary>
+    ''' draw peaktable as heatmap/scatter
+    ''' </summary>
+    ''' <param name="peakSet"></param>
+    ''' <param name="args"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <RGenericOverloads("plot")>
     Private Function plotPeaktable(peakSet As PeakSet, args As list, env As Environment) As Object
         Dim theme As New Theme With {
             .axisLabelCSS = "font-style: normal; font-size: 12; font-family: " & FontFace.CambriaMath & ";",
             .colorSet = "Jet"
         }
-        Dim app As New PeakTablePlot(peakSet, theme)
+        Dim scatter As Boolean = args.getValue({"scatter"}, env, False)
+        Dim app As Plot
+
+        If scatter Then
+
+        Else
+            app = New PeakTablePlot(peakSet, theme)
+        End If
+
         Return app.Plot()
     End Function
 
@@ -548,10 +563,7 @@ Module Visual
                 .GetAllScanMs1 _
                 .ToArray
         ElseIf TypeOf ms1_scans Is PeakSet Then
-            matrix = DirectCast(ms1_scans, PeakSet) _
-                .AsEnumerable _
-                .Select(Function(a) New ms1_scan(a)) _
-                .ToArray
+            matrix = DirectCast(ms1_scans, PeakSet).Ms1Scatter().ToArray
         Else
             Dim points As pipeline = pipeline.TryCreatePipeline(Of ms1_scan)(ms1_scans, env)
 
