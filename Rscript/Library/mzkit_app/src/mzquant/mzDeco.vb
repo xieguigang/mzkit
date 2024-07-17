@@ -930,7 +930,7 @@ extract_ms1:
     <RApiReturn(GetType(xcms2))>
     Public Function peakAlignment(<RRawVectorArgument>
                                   samples As Object,
-                                  Optional mzdiff As Double = 0.005,
+                                  Optional mzdiff As Double = 0.01,
                                   Optional ri_win As Double = 1,
                                   Optional norm As Boolean = False,
                                   Optional ri_alignment As Boolean = False,
