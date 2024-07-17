@@ -359,11 +359,23 @@ Module mzDeco
         }
     End Function
 
+    ''' <summary>
+    ''' save mzkit peaktable object to csv table file
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <param name="file">the file path to the target csv table file</param>
+    ''' <returns></returns>
     <ExportAPI("write.xcms_peaks")>
     Public Function writeXcmsPeaktable(x As PeakSet, file As String) As Boolean
         Return x.peaks.SaveTo(file, silent:=True)
     End Function
 
+    ''' <summary>
+    ''' cast dataset to mzkit peaktable object
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("as.peak_set")>
     Public Function create_peakset(<RRawVectorArgument> x As Object, Optional env As Environment = Nothing) As Object
         Dim pull = pipeline.TryCreatePipeline(Of xcms2)(x, env)
@@ -416,7 +428,7 @@ Module mzDeco
     End Function
 
     ''' <summary>
-    ''' Try to cast the dataframe to th peak feature object collection
+    ''' Try to cast the dataframe to the mzkit peak feature object set
     ''' </summary>
     ''' <param name="file"></param>
     ''' <returns></returns>
