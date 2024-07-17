@@ -236,11 +236,17 @@ Module Visual
         }
         Dim scatter As Boolean = args.getValue({"scatter"}, env, False)
         Dim app As Plot
+        Dim nlevels As Integer = args.getValue({"levels", "nlevel"}, env, 30)
 
         If scatter Then
+            Dim dimension As String = args.getValue({"dimension", "dim_name"}, env, "default")
+            Dim scatter_data As ms1_scan() = peakSet.Ms1Scatter(dimension).ToArray
 
+            app = New RawScatterPlot(scatter_data, nlevels, "peaktable", theme)
         Else
-            app = New PeakTablePlot(peakSet, theme)
+            app = New PeakTablePlot(peakSet, theme) With {
+                .mapLevels = nlevels
+            }
         End If
 
         Return app.Plot()
@@ -553,6 +559,8 @@ Module Visual
                                    <RRawVectorArgument>
                                    Optional colorSet As Object = "darkblue,blue,skyblue,green,orange,red,darkred",
                                    Optional contour As Boolean = False,
+                                   <RRawVectorArgument(GetType(String))>
+                                   Optional dimension As Object = "default|sum|mean|max|npeaks|<sample_name>",
                                    Optional env As Environment = Nothing) As Object
 
         Dim schema As String = RColorPalette.getColorSet(colorSet)
@@ -563,7 +571,9 @@ Module Visual
                 .GetAllScanMs1 _
                 .ToArray
         ElseIf TypeOf ms1_scans Is PeakSet Then
-            matrix = DirectCast(ms1_scans, PeakSet).Ms1Scatter().ToArray
+            matrix = DirectCast(ms1_scans, PeakSet) _
+                .Ms1Scatter(CLRVector.asCharacter(dimension).DefaultFirst) _
+                .ToArray
         Else
             Dim points As pipeline = pipeline.TryCreatePipeline(Of ms1_scan)(ms1_scans, env)
 

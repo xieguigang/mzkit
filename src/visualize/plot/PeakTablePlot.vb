@@ -77,8 +77,9 @@ Imports Microsoft.VisualBasic.MIME.Html.Render
 Public Class PeakTablePlot : Inherits Plot
 
     ReadOnly peakSet As PeakSet
-    ReadOnly mapLevels As Integer = 64
     ReadOnly cut As Double = 0.65
+
+    Public Property mapLevels As Integer = 64
 
     Public Sub New(peakSet As PeakSet, theme As Theme)
         MyBase.New(theme)
