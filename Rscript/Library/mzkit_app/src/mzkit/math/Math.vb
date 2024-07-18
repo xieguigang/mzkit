@@ -263,13 +263,24 @@ Module MzMath
     <RApiReturn("precursor_type", "error", "theoretical", "ppm", "message")>
     Public Function find_precursor(mass As Double, mz As Double,
                                    Optional libtype As Integer = 1,
-                                   Optional da As Double = 0.3) As Object
+                                   Optional da As Double = 0.3,
+                                   Optional env As Environment = Nothing) As Object
 
         Dim match As TypeMatch = PrecursorType.FindPrecursorType(
             mass, mz, libtype,
             chargeMode:=If(libtype > 0, "+", "-"),
             tolerance:=DAmethod.DeltaMass(da)
         )
+
+        If match.adducts Is Nothing Then
+            Return Internal.debug.stop({
+                "invalid precursor adducts type data matches input:",
+                "mass: " & mass,
+                "mz: " & mz,
+                "libtype: " & libtype,
+                "da_error: " & da
+            }, env)
+        End If
 
         Return New list(
             slot("precursor_type") = match.precursorType,

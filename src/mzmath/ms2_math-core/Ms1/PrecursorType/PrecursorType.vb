@@ -101,7 +101,7 @@ Namespace Ms1.PrecursorType
         ''' </summary>
         ''' <param name="mass">分子质量</param>
         ''' <param name="precursor_mz">前体的m/z</param>
-        ''' <param name="charge">电荷量</param>
+        ''' <param name="charge">the signed charge value.</param>
         ''' <param name="chargeMode">极性</param>
         ''' <param name="tolerance">所能够容忍的质量误差</param>
         ''' <returns></returns>
