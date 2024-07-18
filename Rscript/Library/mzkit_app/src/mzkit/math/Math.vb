@@ -80,6 +80,7 @@ Imports Microsoft.VisualBasic.ApplicationServices.Terminal
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
@@ -251,6 +252,35 @@ Module MzMath
     End Function
 
     ''' <summary>
+    ''' find precursor adducts type for a given mass and the corresponding precursor mz
+    ''' </summary>
+    ''' <param name="mass">the exact mass value</param>
+    ''' <param name="mz"></param>
+    ''' <param name="libtype"></param>
+    ''' <param name="da"></param>
+    ''' <returns></returns>
+    <ExportAPI("find_precursor")>
+    <RApiReturn("precursor_type", "error", "theoretical", "ppm", "message")>
+    Public Function find_precursor(mass As Double, mz As Double,
+                                   Optional libtype As Integer = 1,
+                                   Optional da As Double = 0.3) As Object
+
+        Dim match As TypeMatch = PrecursorType.FindPrecursorType(
+            mass, mz, 1,
+            chargeMode:=If(libtype > 0, "+", "-"),
+            tolerance:=DAmethod.DeltaMass(da)
+        )
+
+        Return New list(
+            slot("precursor_type") = match.precursorType,
+            slot("error") = match.errors,
+            slot("theoretical") = match.adducts.CalcMZ(mass),
+            slot("ppm") = PPMmethod.PPM(match.adducts.CalcMZ(mass), mz),
+            slot("message") = match.message
+        )
+    End Function
+
+    ''' <summary>
     ''' evaluate all m/z for all known precursor type.
     ''' </summary>
     ''' <param name="mass">the target exact mass value</param>
@@ -282,6 +312,10 @@ Module MzMath
             Else
                 Return 0
             End If
+        End If
+
+        If TypeOf mode Is vector Then
+            mode = DirectCast(mode, vector).data
         End If
 
         If TypeOf mode Is MzCalculator Then
