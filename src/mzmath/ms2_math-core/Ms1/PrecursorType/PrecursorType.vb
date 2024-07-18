@@ -130,12 +130,15 @@ Namespace Ms1.PrecursorType
                 If (std.Abs(charge) = 1) Then
                     Return New TypeMatch With {
                         .errors = ppm,
-                        .precursorType = "[M]" & chargeMode
+                        .precursorType = "[M]" & chargeMode,
+                        .message = "mass equals to the precursor_mz within the given tolerance error.",
+                        .adducts = Provider.ParseAdductModel(.precursorType)
                     }
                 Else
                     Return New TypeMatch With {
                         .errors = ppm,
-                        .precursorType = sprintf("[M]%s%s", charge, chargeMode)
+                        .precursorType = sprintf("[M]%s%s", charge, chargeMode),
+                        .message = "invalid adducts type?"
                     }
                 End If
             Else
