@@ -73,6 +73,7 @@ Namespace Ms1.PrecursorType
                 {"M-H2O-H", New MzCalculator("[M-H2O-H]-", charge:=-1, M:=1, adducts:=-19.01839, mode:="-")},   ' M - 19.01839	    1-	1.00	-19.01839	 834.312500	 895.338390
                 {"M-H2O", New MzCalculator("[M-H2O]-", charge:=-1, M:=1, adducts:=-19.01839 + H, mode:="-")},
                 {"M-H", New MzCalculator("[M-H]-", charge:=-1, M:=1, adducts:=-H, mode:="-")},           ' M - 1.007276	    1-	1.00	 -1.007276	 852.323614	 877.327276
+                {"M+H", New MzCalculator("[M+H]-", charge:=-1, M:=1, adducts:=H, mode:="-")},
                 {"M+Na-2H", New MzCalculator("[M+Na-2H]-", charge:=-1, M:=1, adducts:=20.974666, mode:="-")},   ' M + 20.974666	    1-	1.00	 20.974666	 874.305556	 855.345334
                 {"M+Cl", New MzCalculator("[M+Cl]-", charge:=-1, M:=1, adducts:=34.969402, mode:="-")},         ' M + 34.969402	    1-	1.00	 34.969402	 888.300292	 841.350598
                 {"M+K-2H", New MzCalculator("[M+K-2H]-", charge:=-1, M:=1, adducts:=36.948606, mode:="-")},     ' M + 36.948606	    1-	1.00	 36.948606	 890.279496	 839.371394
@@ -88,7 +89,7 @@ Namespace Ms1.PrecursorType
                 {"3M-H", New MzCalculator("[3M-H]-", charge:=-1, M:=3, adducts:=-H, mode:="-")},         ' 3M - 1.007276	    1-	3.00	  1.007276	2560.999946	2627.952724
                 {"M+CH3COO", New MzCalculator("[M+CH3COO]-", charge:=-1, M:=1, adducts:=ExactMass.Weight("CH3COO"), mode:="-")},
                 {"M+CH3COOH+H", New MzCalculator("[M+CH3COOH+H]-", charge:=-1, M:=1, adducts:=ExactMass.Weight("CH3COOH") + H, mode:="-")},
-                {"M-CH3", New MzCalculator("[M-CH3]-", charge:=-1, M:=1, adducts:=ExactMass.Weight("CH3"), mode:="-")},
+                {"M-CH3", New MzCalculator("[M-CH3]-", charge:=-1, M:=1, adducts:=-ExactMass.Weight("CH3"), mode:="-")},
                 {"M+HCOO", New MzCalculator("[M+HCOO]-", charge:=-1, M:=1, adducts:=ExactMass.Weight("HCOO"), mode:="-")}   ' 甲酸根
             }
         End Function
