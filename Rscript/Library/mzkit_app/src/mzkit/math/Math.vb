@@ -266,7 +266,7 @@ Module MzMath
                                    Optional da As Double = 0.3) As Object
 
         Dim match As TypeMatch = PrecursorType.FindPrecursorType(
-            mass, mz, 1,
+            mass, mz, libtype,
             chargeMode:=If(libtype > 0, "+", "-"),
             tolerance:=DAmethod.DeltaMass(da)
         )
