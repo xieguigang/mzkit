@@ -168,6 +168,8 @@ Public Class ChemicalDescriptor
     Public Property LogP As Value()
     Public Property CCS As CCS()
     Public Property Odor As UnitValue()
+    Public Property Taste As UnitValue()
+    Public Property Color As UnitValue()
 
     ''' <summary>
     ''' All of the property reflection info of <see cref="ChemicalDescriptor"/> object.

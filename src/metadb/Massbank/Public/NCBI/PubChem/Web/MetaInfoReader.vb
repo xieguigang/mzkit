@@ -431,6 +431,8 @@ Namespace NCBI.PubChem
                 desc.Density = experiments.safeProject(key:="Density", AddressOf getValues)
                 desc.VaporPressure = experiments.safeProject(key:="Vapor Pressure", AddressOf getValues)
                 desc.Odor = experiments.safeProject(key:="Odor", AddressOf getValues)
+                desc.Taste = experiments.safeProject(key:="Taste", AddressOf getValues)
+                desc.Color = experiments.safeProject(key:="Color/Form", AddressOf getValues)
             End If
 
             Return desc
