@@ -63,7 +63,6 @@ Namespace Ms1.PrecursorType
 
         Const H As Double = 1.007276
         Const FA_H As Double = 44.998201
-        Const AceticAcid As Double =
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetFormulas() As Dictionary(Of String, MzCalculator)
@@ -88,7 +87,7 @@ Namespace Ms1.PrecursorType
                 {"2M+Hac-H", New MzCalculator("[2M+Hac-H]-", charge:=-1, M:=2, adducts:=59.013851, mode:="-")}, ' 2M + 59.013851	    1-	2.00	 59.013851	1765.675631	1693.626149
                 {"3M-H", New MzCalculator("[3M-H]-", charge:=-1, M:=3, adducts:=-H, mode:="-")},         ' 3M - 1.007276	    1-	3.00	  1.007276	2560.999946	2627.952724
                 {"M+CH3COO", New MzCalculator("[M+CH3COO]-", charge:=-1, M:=1, adducts:=ExactMass.Weight("CH3COO"), mode:="-")},
-                {"M+CH3COOH", New MzCalculator("[M+CH3COOH]-", charge:=-1, M:=1, adducts:=ExactMass.Weight("CH3COO") + H, mode:="-")},
+                {"M+CH3COOH+H", New MzCalculator("[M+CH3COOH+H]-", charge:=-1, M:=1, adducts:=ExactMass.Weight("CH3COOH") + H, mode:="-")},
                 {"M-CH3", New MzCalculator("[M-CH3]-", charge:=-1, M:=1, adducts:=ExactMass.Weight("CH3"), mode:="-")},
                 {"M+HCOO", New MzCalculator("[M+HCOO]-", charge:=-1, M:=1, adducts:=ExactMass.Weight("HCOO"), mode:="-")}   ' 甲酸根
             }

@@ -264,6 +264,7 @@ Module MzMath
     Public Function find_precursor(mass As Double, mz As Double,
                                    Optional libtype As Integer = 1,
                                    Optional da As Double = 0.3,
+                                   Optional safe As Boolean = False,
                                    Optional env As Environment = Nothing) As Object
 
         Dim match As TypeMatch = PrecursorType.FindPrecursorType(
@@ -273,13 +274,19 @@ Module MzMath
         )
 
         If match.adducts Is Nothing Then
-            Return Internal.debug.stop({
+            Dim msgs = {
                 "invalid precursor adducts type data matches input:",
                 "mass: " & mass,
                 "mz: " & mz,
                 "libtype: " & libtype,
                 "da_error: " & da
-            }, env)
+            }
+
+            If safe Then
+                Return New list(slot("message") = msgs)
+            Else
+                Return Internal.debug.stop(msgs, env)
+            End If
         End If
 
         Return New list(
