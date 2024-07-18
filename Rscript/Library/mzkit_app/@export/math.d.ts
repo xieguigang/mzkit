@@ -132,10 +132,12 @@ declare namespace math {
      * @param da -
      * 
      * + default value Is ``0.3``.
+     * @param safe 
+     * + default value Is ``false``.
      * @param env 
      * + default value Is ``null``.
    */
-   function find_precursor(mass: number, mz: number, libtype?: object, da?: number, env?: object): object;
+   function find_precursor(mass: number, mz: number, libtype?: object, da?: number, safe?: boolean, env?: object): object;
    /**
     * Extract an intensity vector based on a given peak index
     * 
