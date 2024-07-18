@@ -121,6 +121,20 @@ declare namespace math {
    */
    function exact_mass(mz: number, mode?: any, env?: object): object;
    /**
+    * find precursor adducts type for a given mass and the corresponding precursor mz
+    * 
+    * 
+     * @param mass the exact mass value
+     * @param mz -
+     * @param libtype -
+     * 
+     * + default value Is ``1``.
+     * @param da -
+     * 
+     * + default value Is ``0.3``.
+   */
+   function find_precursor(mass: number, mz: number, libtype?: object, da?: number): object;
+   /**
     * Extract an intensity vector based on a given peak index
     * 
     * 
