@@ -2,6 +2,7 @@
 
 mass spectrometry data math toolkit
 
++ [find_precursor](math/find_precursor.1) find precursor adducts type for a given mass and the corresponding precursor mz
 + [mz](math/mz.1) evaluate all m/z for all known precursor type.
 + [exact_mass](math/exact_mass.1) evaluate all exact mass for all known precursor type.
 + [ppm](math/ppm.1) calculate ppm value between two mass vector

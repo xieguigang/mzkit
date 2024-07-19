@@ -94,6 +94,7 @@ Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports REnv = SMRUCC.Rsharp.Runtime
+Imports std = System.Math
 Imports stdVector = Microsoft.VisualBasic.Math.LinearAlgebra.Vector
 
 ''' <summary>
@@ -251,6 +252,56 @@ Module MzMath
     End Function
 
     ''' <summary>
+    ''' find precursor adducts type for a given mass and the corresponding precursor mz
+    ''' </summary>
+    ''' <param name="mass">the exact mass value</param>
+    ''' <param name="mz"></param>
+    ''' <param name="libtype"></param>
+    ''' <param name="da"></param>
+    ''' <returns></returns>
+    <ExportAPI("find_precursor")>
+    <RApiReturn("precursor_type", "error", "theoretical", "ppm", "message")>
+    Public Function find_precursor(mass As Double, mz As Double,
+                                   Optional libtype As Integer = 1,
+                                   Optional da As Double = 0.3,
+                                   Optional safe As Boolean = False,
+                                   Optional env As Environment = Nothing) As Object
+
+        Dim match As TypeMatch = PrecursorType.FindPrecursorType(
+            mass, mz, libtype,
+            chargeMode:=If(libtype > 0, "+", "-"),
+            tolerance:=DAmethod.DeltaMass(da)
+        )
+
+        If match.adducts Is Nothing Then
+            Dim msgs = {
+                "invalid precursor adducts type data matches input:",
+                "mass: " & mass,
+                "mz: " & mz,
+                "libtype: " & libtype,
+                "da_error: " & da
+            }
+
+            If safe Then
+                Return New list(
+                    slot("message") = msgs,
+                    slot("error") = std.Abs(mass - mz)
+                )
+            Else
+                Return Internal.debug.stop(msgs, env)
+            End If
+        End If
+
+        Return New list(
+            slot("precursor_type") = match.precursorType,
+            slot("error") = match.errors,
+            slot("theoretical") = match.adducts.CalcMZ(mass),
+            slot("ppm") = PPMmethod.PPM(match.adducts.CalcMZ(mass), mz),
+            slot("message") = match.message
+        )
+    End Function
+
+    ''' <summary>
     ''' evaluate all m/z for all known precursor type.
     ''' </summary>
     ''' <param name="mass">the target exact mass value</param>
@@ -282,6 +333,10 @@ Module MzMath
             Else
                 Return 0
             End If
+        End If
+
+        If TypeOf mode Is vector Then
+            mode = DirectCast(mode, vector).data
         End If
 
         If TypeOf mode Is MzCalculator Then
