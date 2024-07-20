@@ -78,6 +78,12 @@ Namespace Query
         ''' this property value usually be the metabolite id from the metabolite annotation database
         ''' </remarks>
         Public Property Id As String
+
+        ''' <summary>
+        ''' the representive alignment result with the max
+        ''' score of current cluster alignment.
+        ''' </summary>
+        ''' <returns></returns>
         Public Property representive As SSM2MatrixFragment()
         Public Property forward As Double
         Public Property reverse As Double
@@ -133,6 +139,16 @@ Namespace Query
         Public ReadOnly Property totalScore As Double
             Get
                 Return (forward + reverse + jaccard + entropy) * size
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' converts the spectrum peaks <see cref="representive"/> alignment result as linear string
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property alignment_str As String
+            Get
+                Return AlignmentOutput.CreateLinearMatrix(representive).JoinBy(" ")
             End Get
         End Property
 
