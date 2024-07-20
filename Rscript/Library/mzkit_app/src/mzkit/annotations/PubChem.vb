@@ -410,8 +410,13 @@ Module PubChemToolKit
     ''' <param name="sleep">sleep task in time interval seconds if no cache hit</param>
     ''' <param name="offline"></param>
     ''' <param name="env"></param>
-    ''' <returns>A collection of the pubchem pug view object that contains the metabolite annotation information.</returns>
-    '''
+    ''' <returns>A collection of the pubchem pug view object that contains
+    ''' the metabolite annotation information.</returns>
+    ''' <remarks>
+    ''' an attribute data which its named ``hit_cache`` is attached into the
+    ''' result object. which indicates that the current query is hit the cache
+    ''' or not.
+    ''' </remarks>
     <ExportAPI("pugView")>
     <RApiReturn(GetType(PugViewRecord))>
     Public Function pugView(<RRawVectorArgument> cid As Object,
