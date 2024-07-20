@@ -421,11 +421,15 @@ Module PubChemToolKit
                             Optional env As Environment = Nothing) As Object
 
         Dim api As WebQuery = $"{cacheFolder}/pugViews/".GetQueryHandler(Of WebQuery)(offline, interval:=sleep * 1000)
-        Dim hitCache As Boolean = False
+        Dim hitCache As list = list.empty
         Dim result = env.EvaluateFramework(Of String, PugViewRecord)(
             x:=CLRVector.asCharacter(cid),
             eval:=Function(id)
-                      Return api.Query(Of PugViewRecord)(id)
+                      Dim key As String = $"PubChem:{id}"
+                      Dim cahced As Boolean = False
+                      Dim xml = api.Query(Of PugViewRecord)(id, hitCache:=cahced)
+                      hitCache.add(key, cahced)
+                      Return xml
                   End Function)
 
         Return result
