@@ -432,7 +432,23 @@ Module PubChemToolKit
                       Return xml
                   End Function)
 
-        Return result
+        Dim robj As RsharpDataObject
+
+        If result Is Nothing Then
+            Return Nothing
+        ElseIf TypeOf result Is PugViewRecord Then
+            robj = vector.fromScalar(result)
+        ElseIf TypeOf result Is vector Then
+            robj = DirectCast(result, vector)
+        ElseIf TypeOf result Is list Then
+            robj = DirectCast(result, list)
+        Else
+            Return Message.InCompatibleType(GetType(RsharpDataObject), result.GetType, env)
+        End If
+
+        Call robj.setAttribute("hit_cache", hitCache)
+
+        Return robj
     End Function
 
     ''' <summary>
