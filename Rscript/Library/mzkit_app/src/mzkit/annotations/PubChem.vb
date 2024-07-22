@@ -410,8 +410,13 @@ Module PubChemToolKit
     ''' <param name="sleep">sleep task in time interval seconds if no cache hit</param>
     ''' <param name="offline"></param>
     ''' <param name="env"></param>
-    ''' <returns>A collection of the pubchem pug view object that contains the metabolite annotation information.</returns>
-    '''
+    ''' <returns>A collection of the pubchem pug view object that contains
+    ''' the metabolite annotation information.</returns>
+    ''' <remarks>
+    ''' an attribute data which its named ``hit_cache`` is attached into the
+    ''' result object. which indicates that the current query is hit the cache
+    ''' or not.
+    ''' </remarks>
     <ExportAPI("pugView")>
     <RApiReturn(GetType(PugViewRecord))>
     Public Function pugView(<RRawVectorArgument> cid As Object,
@@ -421,14 +426,34 @@ Module PubChemToolKit
                             Optional env As Environment = Nothing) As Object
 
         Dim api As WebQuery = $"{cacheFolder}/pugViews/".GetQueryHandler(Of WebQuery)(offline, interval:=sleep * 1000)
-        Dim hitCache As Boolean = False
+        Dim hitCache As list = list.empty
         Dim result = env.EvaluateFramework(Of String, PugViewRecord)(
             x:=CLRVector.asCharacter(cid),
             eval:=Function(id)
-                      Return api.Query(Of PugViewRecord)(id)
+                      Dim key As String = $"PubChem:{id}"
+                      Dim cahced As Boolean = False
+                      Dim xml = api.Query(Of PugViewRecord)(id, hitCache:=cahced)
+                      hitCache.add(key, cahced)
+                      Return xml
                   End Function)
 
-        Return result
+        Dim robj As RsharpDataObject
+
+        If result Is Nothing Then
+            Return Nothing
+        ElseIf TypeOf result Is PugViewRecord Then
+            robj = vector.fromScalar(result)
+        ElseIf TypeOf result Is vector Then
+            robj = DirectCast(result, vector)
+        ElseIf TypeOf result Is list Then
+            robj = DirectCast(result, list)
+        Else
+            Return Message.InCompatibleType(GetType(RsharpDataObject), result.GetType, env)
+        End If
+
+        Call robj.setAttribute("hit_cache", hitCache)
+
+        Return robj
     End Function
 
     ''' <summary>

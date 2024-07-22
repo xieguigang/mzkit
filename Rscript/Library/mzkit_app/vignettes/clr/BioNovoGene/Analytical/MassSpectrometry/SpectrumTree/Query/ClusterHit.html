@@ -30,6 +30,8 @@
             <code id="clr_ts">
 # namespace BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.Query
 export class ClusterHit {
+   # converts the spectrum peaks <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/SpectrumTree/Query/ClusterHit.html">ClusterHit</a>.<a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/Xml/SSM2MatrixFragment.html">representive</a> alignment result as linear string
+   alignment_str: string;
    # the basepeak m/z of the sample spectrum
    basePeak: double;
    ClusterEntropy: double;
@@ -51,6 +53,8 @@ export class ClusterHit {
    queryMz: double;
    # the query ms1 rt
    queryRt: double;
+   # the representive alignment result with the max
+   #  score of current cluster alignment.
    representive: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/Xml/SSM2MatrixFragment.html">SSM2MatrixFragment[]</a>;
    reverse: double;
    # hit size

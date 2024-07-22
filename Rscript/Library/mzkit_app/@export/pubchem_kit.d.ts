@@ -111,6 +111,9 @@ declare namespace pubchem_kit {
    /**
     * query pubchem data via a given cid value
     * 
+    * > an attribute data which its named ``hit_cache`` is attached into the
+    * >  result object. which indicates that the current query is hit the cache
+    * >  or not.
     * 
      * @param cid -
      * @param cacheFolder A cache directory path to the pubchem xml files
@@ -125,7 +128,8 @@ declare namespace pubchem_kit {
      * @param env -
      * 
      * + default value Is ``null``.
-     * @return A collection of the pubchem pug view object that contains the metabolite annotation information.
+     * @return A collection of the pubchem pug view object that contains
+     *  the metabolite annotation information.
    */
    function pugView(cid: any, cacheFolder?: string, offline?: boolean, sleep?: number, env?: object): object;
    module query {
