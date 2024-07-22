@@ -268,6 +268,21 @@ Module ReferenceTreePkg
     End Function
 
     ''' <summary>
+    ''' enable internal parallel for the spectrum alignment search?
+    ''' </summary>
+    ''' <param name="search"></param>
+    ''' <param name="enable"></param>
+    ''' <returns></returns>
+    <ExportAPI("parallel")>
+    Public Function set_parallel(search As Object, enable As Boolean) As Object
+        If TypeOf search Is PackAlignment Then
+            DirectCast(search, PackAlignment).parallel = enable
+        End If
+
+        Return search
+    End Function
+
+    ''' <summary>
     ''' construct a fragment set library for run spectrum search in jaccard index matches method
     ''' </summary>
     ''' <param name="libname"></param>
