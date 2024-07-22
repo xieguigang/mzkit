@@ -110,6 +110,12 @@ Namespace PackLib
             End Get
         End Property
 
+        ''' <summary>
+        ''' make the spectrum alignment of <see cref="Search"/> parallel?
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property parallel As Boolean = True
+
         Sub New(pack As SpectrumReader, Optional dotcutoff As Double = 0.6)
             Call MyBase.New
 
@@ -134,6 +140,58 @@ Namespace PackLib
             Dim candidates As BlockNode() = spectrum.QueryByMz(mz1).ToArray
             Dim hits As New List(Of ___tmp)
 
+            If parallel Then
+                Call hits.AddRange(SearchParallel(centroid, candidates))
+            Else
+                Call hits.AddRange(SearchSequential(centroid, candidates))
+            End If
+
+            ' hits may contains multiple metabolite reference data
+            ' multiple cluster object should be populates from
+            ' this function?
+            If hits.Count > 0 Then
+                For Each metabolite In hits.GroupBy(Function(i) i.id)
+                    Yield reportClusterHit(centroid, hit_group:=metabolite)
+                Next
+            End If
+        End Function
+
+        ''' <summary>
+        ''' force run parallel alignment with 4 threads
+        ''' </summary>
+        ''' <param name="centroid"></param>
+        ''' <param name="candidates"></param>
+        ''' <returns></returns>
+        Private Function SearchParallel(centroid() As ms2, candidates As BlockNode(), Optional n_threads As Integer = 8) As IEnumerable(Of ___tmp)
+            Return candidates _
+                .Where(Function(c) spectrum.HasMapName(c.Id)) _
+                .AsParallel _
+                .WithDegreeOfParallelism(n_threads) _
+                .Select(Function(hit)
+                            Dim align = GlobalAlignment.CreateAlignment(centroid, hit.centroid, da).ToArray
+                            Dim score = CosAlignment.GetCosScore(align)
+                            Dim min = std.Min(score.forward, score.reverse)
+
+                            ' if the spectrum cos dotcutoff
+                            ' matches the cutoff threshold then we have a candidate hit
+                            If min > dotcutoff Then
+                                Return New ___tmp With {
+                                    .id = spectrum(libname:=hit.Id),
+                                    .hit = hit,
+                                    .align = align,
+                                    .forward = score.forward,
+                                    .reverse = score.reverse
+                                }
+                            Else
+                                Return Nothing
+                            End If
+                        End Function) _
+                .Where(Function(c)
+                           Return Not c.hit Is Nothing
+                       End Function)
+        End Function
+
+        Private Iterator Function SearchSequential(centroid() As ms2, candidates As BlockNode()) As IEnumerable(Of ___tmp)
             ' do spectrum alignment for all matched
             ' spectrum candidates
             For Each hit As BlockNode In candidates
@@ -149,24 +207,15 @@ Namespace PackLib
                 ' if the spectrum cos dotcutoff
                 ' matches the cutoff threshold then we have a candidate hit
                 If min > dotcutoff Then
-                    Call hits.Add(New ___tmp With {
-                       .id = spectrum(libname:=hit.Id),
-                       .hit = hit,
-                       .align = align,
-                       .forward = score.forward,
-                       .reverse = score.reverse
-                    })
+                    Yield New ___tmp With {
+                        .id = spectrum(libname:=hit.Id),
+                        .hit = hit,
+                        .align = align,
+                        .forward = score.forward,
+                        .reverse = score.reverse
+                    }
                 End If
             Next
-
-            ' hits may contains multiple metabolite reference data
-            ' multiple cluster object should be populates from
-            ' this function?
-            If hits.Count > 0 Then
-                For Each metabolite In hits.GroupBy(Function(i) i.id)
-                    Yield reportClusterHit(centroid, hit_group:=metabolite)
-                Next
-            End If
         End Function
 
         ''' <summary>
