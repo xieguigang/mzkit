@@ -321,6 +321,10 @@ Namespace PackLib
                 Call println(mz.Select(Function(i) i.ToString).ToArray)
             End If
 
+            ' 20240722 due to the reason of matched with ms2 precursor ion m/z
+            ' so that the delta mass tolerance error may be greater than 0.1da
+            ' ms2 precursor ion tolerance error usually be greater than 0.1da
+            ' set 0.5 at here
             mzIndex = New MzIonSearch(mz, da:=Tolerance.DeltaMass(0.5))
 
             Return Me

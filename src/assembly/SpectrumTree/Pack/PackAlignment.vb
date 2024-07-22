@@ -122,7 +122,7 @@ Namespace PackLib
         ''' 
         ''' </summary>
         ''' <param name="centroid"></param>
-        ''' <param name="mz1"></param>
+        ''' <param name="mz1">the reference spectrum will be filtered via the precursor ion.</param>
         ''' <returns>
         ''' populate output all of the possible candidates hits via the
         ''' spectrum alignment operation. All of the hit result that 
@@ -130,20 +130,25 @@ Namespace PackLib
         ''' threshold condition.
         ''' </returns>
         Public Overrides Iterator Function Search(centroid() As ms2, mz1 As Double) As IEnumerable(Of ClusterHit)
+            ' get spectrum reference via matches the precursor ions
             Dim candidates As BlockNode() = spectrum.QueryByMz(mz1).ToArray
             Dim hits As New List(Of ___tmp)
 
             ' do spectrum alignment for all matched
             ' spectrum candidates
             For Each hit As BlockNode In candidates
+                If Not spectrum.HasMapName(hit.Id) Then
+                    ' skip data for reduce the alignment math time
+                    Continue For
+                End If
+
                 Dim align = GlobalAlignment.CreateAlignment(centroid, hit.centroid, da).ToArray
                 Dim score = CosAlignment.GetCosScore(align)
                 Dim min = std.Min(score.forward, score.reverse)
 
                 ' if the spectrum cos dotcutoff
-                ' matches the cutoff threshold
-                ' then we have a candidate hit
-                If min > dotcutoff AndAlso spectrum.HasMapName(hit.Id) Then
+                ' matches the cutoff threshold then we have a candidate hit
+                If min > dotcutoff Then
                     Call hits.Add(New ___tmp With {
                        .id = spectrum(libname:=hit.Id),
                        .hit = hit,

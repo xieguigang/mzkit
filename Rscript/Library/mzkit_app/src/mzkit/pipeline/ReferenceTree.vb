@@ -378,6 +378,8 @@ Module ReferenceTreePkg
         If treeSearch Then
             result = {DirectCast(tree, TreeSearch).Search(centroid, maxdepth:=maxdepth)}
         Else
+            ' 20240722 the reference spectrum will be filtered
+            ' by the precursor ion
             result = tree.Search(centroid, mz1:=x.parentMz).ToArray
         End If
 
