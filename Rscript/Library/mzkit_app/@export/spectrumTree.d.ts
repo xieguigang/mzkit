@@ -158,6 +158,14 @@ declare namespace spectrumTree {
    */
    function open(file: any, dotcutoff?: number, adducts?: any, target_uuid?: any, env?: object): object|object;
    /**
+    * enable internal parallel for the spectrum alignment search?
+    * 
+    * 
+     * @param search -
+     * @param enable -
+   */
+   function parallel(search: any, enable: boolean): any;
+   /**
     * do spectrum family alignment via cos similarity
     * 
     * 
