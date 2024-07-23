@@ -159,7 +159,8 @@ Public Module ChromatogramPlot
                             Optional gridFill As String = "rgb(245,245,245)",
                             Optional showGird As Boolean = False,
                             Optional xlabel$ = "Time (s)",
-                            Optional ylabel$ = "Intensity") As GraphicsData
+                            Optional ylabel$ = "Intensity",
+                            Optional driver As Drivers = Drivers.Default) As GraphicsData
 
         Return {ionData}.TICplot(
             size:=size,
@@ -181,7 +182,8 @@ Public Module ChromatogramPlot
             fillAlpha:=fillAlpha,
             showGrid:=showGird,
             xlabel:=xlabel,
-            ylabel:=ylabel
+            ylabel:=ylabel,
+            driver:=driver
         )
     End Function
 
@@ -236,7 +238,8 @@ Public Module ChromatogramPlot
                             Optional drawParallelAxis As Boolean = False,
                             Optional intensityMax As Double = 0,
                             Optional spline As Single = 0,
-                            Optional ppi As Double = 100) As GraphicsData
+                            Optional ppi As Double = 100,
+                            Optional driver As Drivers = Drivers.Default) As GraphicsData
 
         Dim theme As New Theme With {
             .lineStroke = penStyle,
@@ -287,6 +290,6 @@ Public Module ChromatogramPlot
             }
         End If
 
-        Return TIC.Plot(size, ppi)
+        Return TIC.Plot(size, ppi, driver:=driver)
     End Function
 End Module

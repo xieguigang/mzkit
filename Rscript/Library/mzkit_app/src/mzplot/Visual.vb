@@ -415,7 +415,8 @@ Module Visual
             fillAlpha:=alpha,
             showGird:=True,
             xlabel:=xlab,
-            ylabel:=ylab
+            ylabel:=ylab,
+            driver:=env.getDriver
         )
     End Function
 
