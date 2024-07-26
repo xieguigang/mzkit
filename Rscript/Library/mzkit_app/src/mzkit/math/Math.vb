@@ -255,10 +255,23 @@ Module MzMath
     ''' find precursor adducts type for a given mass and the corresponding precursor mz
     ''' </summary>
     ''' <param name="mass">the exact mass value</param>
-    ''' <param name="mz"></param>
-    ''' <param name="libtype"></param>
+    ''' <param name="mz">the m/z value from the ion, usually be the mz value from the xcms peaktable.</param>
+    ''' <param name="libtype">
+    ''' the ion mode polarity value of the adducts for matches, value could be an integer value [1,-1].
+    ''' and also this parameter value could be a set of the precursor adducts type character vector 
+    ''' for do the data matches job.
+    ''' </param>
     ''' <param name="da"></param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' a matched adducts result, for no matched data, a details error message will be returns.
+    ''' generally, the result tuple list contains the slot data:
+    ''' 
+    ''' 1. precursor_type: the result adducts type that could be used for matches the given mass and mz value
+    ''' 2. error: the mass error in unit delta dalton between the given mz and the theoretical m/z value that evaluated from the given mass and the matched adducts type.
+    ''' 3. theoretical: the theoretical m/z value that evaluated from the given mass and the matched adducts type.
+    ''' 4. ppm: the mass ppm error between the given mz and the theoretical m/z value that evaluated from the given mass and the matched adducts type.
+    ''' 5. message: usually be the error message.
+    ''' </returns>
     <ExportAPI("find_precursor")>
     <RApiReturn("precursor_type", "error", "theoretical", "ppm", "message")>
     Public Function find_precursor(mass As Double, mz As Double,
