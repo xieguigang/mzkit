@@ -300,6 +300,7 @@ Module MzMath
                 chargeMode:=polarity,
                 tolerance:=DAmethod.DeltaMass(da)
             )
+            libtype = adducts_source(0)
         Else
             ' make matches from given multiple adducts type
             match = PrecursorType.FindPrecursorType(
@@ -307,6 +308,7 @@ Module MzMath
                 adducts:=adducts_source,
                 tolerance:=DAmethod.DeltaMass(da)
             )
+            libtype = adducts_source.JoinBy(", ")
         End If
 
         If match.adducts Is Nothing Then
@@ -314,7 +316,7 @@ Module MzMath
                 "invalid precursor adducts type data matches input:",
                 "mass: " & mass,
                 "mz: " & mz,
-                "libtype: " & libtype,
+                "libtype: " & CStr(libtype),
                 "da_error: " & da
             }
 
