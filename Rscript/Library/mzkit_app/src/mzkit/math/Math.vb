@@ -247,6 +247,7 @@ Module MzMath
         Return table
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Private Function printMzTable(obj As Object) As String
         Return DirectCast(obj, PrecursorInfo()).Print(addBorder:=False)
     End Function
@@ -275,16 +276,38 @@ Module MzMath
     <ExportAPI("find_precursor")>
     <RApiReturn("precursor_type", "error", "theoretical", "ppm", "message")>
     Public Function find_precursor(mass As Double, mz As Double,
-                                   Optional libtype As Integer = 1,
+                                   <RRawVectorArgument>
+                                   Optional libtype As Object = 1,
                                    Optional da As Double = 0.3,
                                    Optional safe As Boolean = False,
                                    Optional env As Environment = Nothing) As Object
 
-        Dim match As TypeMatch = PrecursorType.FindPrecursorType(
-            mass, mz, libtype,
-            chargeMode:=If(libtype > 0, "+", "-"),
-            tolerance:=DAmethod.DeltaMass(da)
-        )
+        Dim adducts_source As String() = CLRVector.asCharacter(libtype)
+        Dim match As TypeMatch
+
+        If adducts_source.IsNullOrEmpty Then
+            Return Internal.debug.stop("the required of the adducts source(libtype) should not be empty!", env)
+        End If
+        If adducts_source.Length = 1 AndAlso Provider.ParseIonMode(adducts_source(0), allowsUnknown:=True) <> IonModes.Unknown Then
+            ' is polarity ion mode value
+            ' 1 or -1
+            Dim charge As Integer = Provider.ParseIonMode(adducts_source(0))
+            ' +/-
+            Dim polarity As String = If(charge = 1, "+", "-")
+
+            match = PrecursorType.FindPrecursorType(
+                mass, mz, charge,
+                chargeMode:=polarity,
+                tolerance:=DAmethod.DeltaMass(da)
+            )
+        Else
+            ' make matches from given multiple adducts type
+            match = PrecursorType.FindPrecursorType(
+                mass, mz,
+                adducts:=adducts_source,
+                tolerance:=DAmethod.DeltaMass(da)
+            )
+        End If
 
         If match.adducts Is Nothing Then
             Dim msgs = {

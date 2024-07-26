@@ -1,60 +1,61 @@
 ﻿#Region "Microsoft.VisualBasic::3f1554392d1acb5ad4bc090f4dbbff2b, mzmath\ms2_math-core\Ms1\PrecursorType\PrecursorType.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 124
-    '    Code Lines: 78 (62.90%)
-    ' Comment Lines: 32 (25.81%)
-    '    - Xml Docs: 81.25%
-    ' 
-    '   Blank Lines: 14 (11.29%)
-    '     File Size: 5.05 KB
+' Summaries:
 
 
-    '     Module PrecursorType
-    ' 
-    '         Function: CalcMass, (+2 Overloads) FindPrecursorType
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 124
+'    Code Lines: 78 (62.90%)
+' Comment Lines: 32 (25.81%)
+'    - Xml Docs: 81.25%
+' 
+'   Blank Lines: 14 (11.29%)
+'     File Size: 5.05 KB
+
+
+'     Module PrecursorType
+' 
+'         Function: CalcMass, (+2 Overloads) FindPrecursorType
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language.C
 Imports std = System.Math
 
@@ -142,27 +143,42 @@ Namespace Ms1.PrecursorType
                     }
                 End If
             Else
-                Return FindPrecursorType(mass, precursor_mz, charge, Provider.Calculator(chargeMode), tolerance)
+                Return Provider _
+                    .Calculator(chargeMode).Values _
+                    .Where(Function(cal)
+                               Return cal.charge = charge
+                           End Function) _
+                    .FindPrecursorType(mass, precursor_mz, tolerance:=tolerance)
             End If
+        End Function
+
+        Public Function FindPrecursorType(mass#, precursor_mz#, adducts As String(), Optional tolerance As Tolerance = Nothing) As TypeMatch
+            Dim listSet As IEnumerable(Of MzCalculator) = adducts _
+                .Select(Function(type)
+                            Return Provider.ParseAdductModel(type)
+                        End Function)
+
+            Return listSet.FindPrecursorType(mass, precursor_mz, tolerance:=tolerance Or Tolerance.DefaultTolerance)
         End Function
 
         ''' <summary>
         ''' 
         ''' </summary>
         ''' <param name="mass"></param>
-        ''' <param name="precursorMZ#"></param>
-        ''' <param name="charge%"></param>
+        ''' <param name="precursorMZ"></param>
         ''' <param name="calculator">得到某一个离子模式下的计算程序</param>
         ''' <param name="tolerance"></param>
         ''' <returns></returns>
-        Private Function FindPrecursorType(mass#, precursorMZ#, charge%, calculator As Dictionary(Of String, MzCalculator), tolerance As Tolerance) As TypeMatch
+        ''' 
+        <Extension>
+        Private Function FindPrecursorType(calculator As IEnumerable(Of MzCalculator), mass#, precursorMZ#, tolerance As Tolerance) As TypeMatch
             ' 每一个模式都计算一遍，然后返回最小的ppm差值结果
             Dim min = 999999
             Dim minType$ = Nothing
 
             ' 然后遍历这个模式下的所有离子前体计算
             ' 跳过电荷数不匹配的离子模式计算表达式
-            For Each calc As MzCalculator In calculator.Values.Where(Function(cal) cal.charge = charge)
+            For Each calc As MzCalculator In calculator
                 Dim mz As Double = calc.CalcMZ(mass)
 
                 If tolerance(mz, precursorMZ) Then
