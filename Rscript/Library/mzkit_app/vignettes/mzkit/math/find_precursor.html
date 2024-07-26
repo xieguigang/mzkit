@@ -42,11 +42,13 @@
 
 
 <dt>mz</dt>
-<dd><p>[as double]</p></dd>
+<dd><p>the m/z value from the ion, usually be the mz value from the xcms peaktable. [as double]</p></dd>
 
 
 <dt>libtype</dt>
-<dd><p>[as integer]</p></dd>
+<dd><p>the ion mode polarity value of the adducts for matches, value could be an integer value [1,-1].
+ and also this parameter value could be a set of the precursor adducts type character vector 
+ for do the data matches job.</p></dd>
 
 
 <dt>da</dt>
@@ -65,7 +67,14 @@
 
         <h3>Value</h3>
 
-        this function returns data object of type list. the list data also has some specificied data fields: <code>list(precursor_type, error, theoretical, ppm, message)</code>.<h4>clr value class</h4><ul><li>list</li></ul>
+        <p>a matched adducts result, for no matched data, a details error message will be returns.
+ generally, the result tuple list contains the slot data:
+ 
+ 1. precursor_type: the result adducts type that could be used for matches the given mass and mz value
+ 2. error: the mass error in unit delta dalton between the given mz and the theoretical m/z value that evaluated from the given mass and the matched adducts type.
+ 3. theoretical: the theoretical m/z value that evaluated from the given mass and the matched adducts type.
+ 4. ppm: the mass ppm error between the given mz and the theoretical m/z value that evaluated from the given mass and the matched adducts type.
+ 5. message: usually be the error message.</p> the list data also has some specificied data fields: <code>list(precursor_type, error, theoretical, ppm, message)</code>.<h4>clr value class</h4><ul><li>list</li></ul>
 
         <h3 style="display: none;">Examples</h3>
 
