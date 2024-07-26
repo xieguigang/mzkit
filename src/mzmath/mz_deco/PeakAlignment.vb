@@ -62,6 +62,8 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Distributions
 Imports Microsoft.VisualBasic.Math.SignalProcessing.COW
+Imports Microsoft.VisualBasic.Math.Statistics
+Imports std = System.Math
 
 ''' <summary>
 ''' 峰对齐操作主要是针对保留时间漂移进行矫正
@@ -116,6 +118,7 @@ Public Module PeakAlignment
         Dim RI_rawdata = allData.IteratesAll.GroupBy(Function(i) i.RI, offsets:=ri_offset).ToArray
         Dim unique_id As New Dictionary(Of String, Counter)
         Dim refer As String = allData.PickReferenceSampleMaxIntensity.name
+        Dim mz_bin As New GroupBins(Of PeakFeature)(Function(i) i.mz, Function(a, b) std.abs(a - b) < mzdiff, left_margin_bin:=True)
 
         If rt_shift Is Nothing Then
             rt_shift = New List(Of RtShift)
@@ -124,8 +127,8 @@ Public Module PeakAlignment
         For Each ri_point As NamedCollection(Of PeakFeature) In RI_rawdata
             ' make data bins by mz
             ' where the given data all has the same RI value
-            Dim mz_group = ri_point _
-                .GroupBy(Function(i) i.mz, offsets:=mzdiff) _
+            Dim mz_group As NamedCollection(Of PeakFeature)() = mz_bin _
+                .GroupBy(ri_point) _
                 .ToArray
 
             For Each peak As NamedCollection(Of PeakFeature) In mz_group
