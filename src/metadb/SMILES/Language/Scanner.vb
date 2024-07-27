@@ -322,7 +322,7 @@ Namespace Language
                 Case ""
                     Return New Token(ElementTypes.None, str)
                 Case Else
-                    Static aromatic As Index(Of String) = {"c", "o", "n"}
+                    Static aromatic As Index(Of String) = {"c", "o", "n", "s"}
 
                     If Layout2D.atomMaxCharges.ContainsKey(str) Then
                         Return New Token(ElementTypes.Element, str) With {
