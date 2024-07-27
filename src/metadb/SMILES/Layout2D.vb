@@ -59,7 +59,7 @@
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Linq
-Imports stdNum = System.Math
+Imports std = System.Math
 
 ''' <summary>
 ''' methods for evaluate 2D layout of the molecule atoms
@@ -119,9 +119,9 @@ Module Layout2D
             If strict Then
                 Throw New InvalidConstraintException(msg)
             Else
-                Call VBDebugger.EchoLine(msg)
+                Call msg.Warning
 
-                Return 2 * stdNum.PI / n
+                Return 2 * std.PI / n
             End If
         End If
 
@@ -130,7 +130,7 @@ Module Layout2D
         n = maxN - n
         n += bonds.Length
 
-        Return 2 * stdNum.PI / n
+        Return 2 * std.PI / n
     End Function
 
     <Extension>
@@ -151,7 +151,7 @@ Module Layout2D
 
         If alpha = 0 Then
             If atom.elementName = "C" AndAlso bonds.Length = 1 Then
-                alpha = 2 * stdNum.PI * 2 / 3
+                alpha = 2 * std.PI * 2 / 3
             Else
                 alpha = angleDelta
             End If
@@ -166,8 +166,8 @@ Module Layout2D
         For Each bond As ChemicalKey In From b In bonds Where b.U Is atom
             Dim [next] As ChemicalElement = bond.V
             Dim layout As New PointF With {
-                .X = center.X + (radius * stdNum.Cos(alpha)),
-                .Y = center.Y + (radius * stdNum.Sin(alpha))
+                .X = center.X + (radius * std.Cos(alpha)),
+                .Y = center.Y + (radius * std.Sin(alpha))
             }
 
             [next].coordinate = {layout.X, layout.Y}
