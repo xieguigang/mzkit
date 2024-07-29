@@ -123,6 +123,7 @@ Public Module PeakAlignment
         Dim unique_id As New Dictionary(Of String, Counter)
         Dim refer As String = allData.PickReferenceSampleMaxIntensity.name
         Dim mz_bin As New GroupBins(Of PeakFeature)(Function(i) i.mz, Function(a, b) std.Abs(a - b) < mzdiff, left_margin_bin:=True)
+        Dim ion_mz As Double
 
         If rt_shift Is Nothing Then
             rt_shift = New List(Of RtShift)
@@ -140,11 +141,18 @@ Public Module PeakAlignment
                 Dim mzri As String = $"M{CInt(Val(peak.name))}RI{CInt(ri)}"
                 Dim refer_rt As PeakFeature = peak.Where(Function(p) p.rawfile = refer).FirstOrDefault
                 Dim mz_set = peak.Select(Function(a) a.mz).ToArray
+
+                If top_ion Then
+                    ion_mz = peak _
+                       .OrderByDescending(Function(i) i.area) _
+                       .First.mz
+                Else
+                    ion_mz = mz_set.TabulateMode(topBin:=True, bags:=10)
+                End If
+
                 Dim peak1 As New xcms2 With {
                    .ID = mzri,
-                   .mz = peak _
-                       .OrderByDescending(Function(i) i.area) _
-                       .First.mz, ' mz_set.TabulateMode(topBin:=True, bags:=10),
+                   .mz = ion_mz,
                    .RI = ri,
                    .rt = peak.OrderByDescending(Function(pi) pi.maxInto).First.rt,
                    .mzmin = peak.Select(Function(pi) pi.mz).Min,
