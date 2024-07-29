@@ -107,18 +107,22 @@ Public Module PeakAlignment
     ''' create peaktable matrix by retention index alignment.
     ''' </summary>
     ''' <param name="samples"></param>
+    ''' <param name="top_ion">
+    ''' use the top intensity/area ion its m/z value as peak ion m/z.
+    ''' </param>
     ''' <returns></returns>
     <Extension>
     Public Iterator Function RIAlignment(samples As IEnumerable(Of NamedCollection(Of PeakFeature)),
                                          Optional rt_shift As List(Of RtShift) = Nothing,
                                          Optional mzdiff As Double = 0.005,
-                                         Optional ri_offset As Double = 1) As IEnumerable(Of xcms2)
+                                         Optional ri_offset As Double = 1,
+                                         Optional top_ion As Boolean = True) As IEnumerable(Of xcms2)
         Dim allData = samples.ToArray
         ' make data bins by RI
         Dim RI_rawdata = allData.IteratesAll.GroupBy(Function(i) i.RI, offsets:=ri_offset).ToArray
         Dim unique_id As New Dictionary(Of String, Counter)
         Dim refer As String = allData.PickReferenceSampleMaxIntensity.name
-        Dim mz_bin As New GroupBins(Of PeakFeature)(Function(i) i.mz, Function(a, b) std.abs(a - b) < mzdiff, left_margin_bin:=True)
+        Dim mz_bin As New GroupBins(Of PeakFeature)(Function(i) i.mz, Function(a, b) std.Abs(a - b) < mzdiff, left_margin_bin:=True)
 
         If rt_shift Is Nothing Then
             rt_shift = New List(Of RtShift)
