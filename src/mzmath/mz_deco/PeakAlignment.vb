@@ -138,7 +138,9 @@ Public Module PeakAlignment
                 Dim mz_set = peak.Select(Function(a) a.mz).ToArray
                 Dim peak1 As New xcms2 With {
                    .ID = mzri,
-                   .mz = mz_set.TabulateMode(topBin:=True),
+                   .mz = peak _
+                       .OrderByDescending(Function(i) i.area) _
+                       .First.mz, ' mz_set.TabulateMode(topBin:=True, bags:=10),
                    .RI = ri,
                    .rt = peak.OrderByDescending(Function(pi) pi.maxInto).First.rt,
                    .mzmin = peak.Select(Function(pi) pi.mz).Min,
