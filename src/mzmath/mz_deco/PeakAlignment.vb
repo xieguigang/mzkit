@@ -116,7 +116,7 @@ Public Module PeakAlignment
                                          Optional rt_shift As List(Of RtShift) = Nothing,
                                          Optional mzdiff As Double = 0.005,
                                          Optional ri_offset As Double = 1,
-                                         Optional top_ion As Boolean = True) As IEnumerable(Of xcms2)
+                                         Optional top_ion As Boolean = False) As IEnumerable(Of xcms2)
         Dim allData = samples.ToArray
         ' make data bins by RI
         Dim RI_rawdata = allData.IteratesAll.GroupBy(Function(i) i.RI, offsets:=ri_offset).ToArray
