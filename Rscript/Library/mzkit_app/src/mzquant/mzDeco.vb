@@ -934,6 +934,7 @@ extract_ms1:
                                   Optional ri_win As Double = 10,
                                   Optional norm As Boolean = False,
                                   Optional ri_alignment As Boolean = False,
+                                  Optional max_intensity_ion As Boolean = False,
                                   Optional env As Environment = Nothing) As Object
 
         Dim sampleData As NamedCollection(Of PeakFeature)() = Nothing
@@ -970,7 +971,10 @@ extract_ms1:
 
         If ri_alignment Then
             peaktable = sampleData _
-                .RIAlignment(rt_shifts, mzdiff:=mzdiff, ri_offset:=ri_win) _
+                .RIAlignment(rt_shifts,
+                             mzdiff:=mzdiff,
+                             ri_offset:=ri_win,
+                             top_ion:=max_intensity_ion) _
                 .ToArray
         Else
             peaktable = sampleData _
