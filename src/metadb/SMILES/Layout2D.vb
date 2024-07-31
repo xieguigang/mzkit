@@ -71,9 +71,13 @@ Module Layout2D
                                Optional radius As Double = 10,
                                Optional strict As Boolean = True) As ChemicalFormula
 
-        Dim atom As ChemicalElement = chemical.AllElements.First
+        Dim atom As ChemicalElement = chemical.AllElements.FirstOrDefault
 
-        atom.coordinate = New Double() {0, 0}
+        If Not chemical.AllElements.Any Then
+            Return chemical
+        Else
+            atom.coordinate = New Double() {0, 0}
+        End If
 
         Do While True
             chemical.LayoutTarget(atom, radius, 0, strict)
