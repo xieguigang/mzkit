@@ -128,7 +128,7 @@ Public Class MSJointConnection : Implements IMzQuery
         Dim mzSet As IGrouping(Of String, MzQuery)() = enrichment _
             .Select(Function(list)
                         Dim score As Double = -Math.Log10(list.pvalue)
-                        Dim result = list.geneIDs _
+                        Dim result = list.IDs _
                             .Select(Function(id) allId(id)) _
                             .IteratesALL _
                             .ToArray
