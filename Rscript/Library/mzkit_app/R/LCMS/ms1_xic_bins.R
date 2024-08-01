@@ -54,6 +54,9 @@ const ms1_xic_bins = function(files, mzdiff = 0.005,
                 path = unlist(path), mzdiff = unlist(mzdiff), 
                 outputdir = unlist(outputdir));
         }
+    } else {
+        print("all xic rawdata file is cached!");
+        print("skip of extract data.");
     }
 
     invisible(NULL);
