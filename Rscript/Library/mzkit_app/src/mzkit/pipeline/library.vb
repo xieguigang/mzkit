@@ -595,6 +595,12 @@ Module library
         Dim xcmsPeaks As xcms2()
         Dim println = env.WriteLineHandler
 
+        If ms1 Is Nothing Then
+            Return Internal.debug.stop("the ms1 peakdata should not be nothing!", env)
+        ElseIf ms2 Is Nothing Then
+            Return Internal.debug.stop("the ms2 spectrum data should not be nothing!", env)
+        End If
+
         If TypeOf ms1 Is dataframe Then
             Dim pull = DirectCast(ms1, dataframe).ionsFromPeaktable(env)
 

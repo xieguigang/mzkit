@@ -101,8 +101,9 @@ declare namespace mzkit {
    */
    function mesh_model(topics?: any): object;
    /**
+     * @param mzdiff default value Is ``0.001``.
    */
-   function ms1_mz_bins(files: any): object;
+   function ms1_mz_bins(files: any, mzdiff?: any): object;
    /**
      * @param mzdiff default value Is ``0.005``.
      * @param peak.width default value Is ``[3, 90]``.
@@ -156,10 +157,11 @@ declare namespace mzkit {
    module run {
       /**
         * @param outputdir default value Is ``./``.
-        * @param mzdiff default value Is ``0.005``.
-        * @param peak.width default value Is ``[3, 90]``.
+        * @param mzdiff default value Is ``0.001``.
+        * @param xic_mzdiff default value Is ``0.005``.
+        * @param peak.width default value Is ``[2, 30]``.
       */
-      function Deconvolution(rawdata: any, outputdir?: any, mzdiff?: any, peak.width?: any): object;
+      function Deconvolution(rawdata: any, outputdir?: any, mzdiff?: any, xic_mzdiff?: any, peak.width?: any): object;
    }
    /**
    */

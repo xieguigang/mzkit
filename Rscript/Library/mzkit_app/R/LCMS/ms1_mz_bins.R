@@ -11,7 +11,7 @@ imports "mzDeco" from "mz_quantify";
 #'    1. mz: the ion m/z feature numeric vector
 #'    2. into: the max intensity value of current ion feature
 #' 
-const ms1_mz_bins = function(files) {
+const ms1_mz_bins = function(files, mzdiff = 0.001) {
     let xic_data = lapply(files, path -> readBin(path, what = "mz_group"));
     let mz = lapply(xic_data, function(pack, i) {
         # some rawdata file may contains ms2 spectrum only
@@ -38,7 +38,7 @@ const ms1_mz_bins = function(files) {
     mzraw <- libraryMatrix(data.frame(
         mz   = mzraw$mz, 
         into = mzraw$TIC));
-    mzraw <- centroid(mzraw, tolerance = "da:0.005", intoCutoff = 0);
+    mzraw <- centroid(mzraw, tolerance = `da:${mzdiff}`, intoCutoff = 0);
     mzraw <- as.data.frame(mzraw);
 
     print("get ion features:");
