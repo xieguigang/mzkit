@@ -57,6 +57,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Text.Parser
 
@@ -312,6 +313,8 @@ Namespace Language
                 str = str.Match("[a-zA-Z]+")
             End If
 
+            Static atoms As Dictionary(Of String, Element) = Element.MemoryLoadElements
+
             Select Case str
                 Case "("
                     Return New Token(ElementTypes.Open, str)
@@ -333,6 +336,9 @@ Namespace Language
                     ElseIf str Like aromatic Then
                         ' aromatic carbon by lower case c.
                         Return New Token(ElementTypes.Element, str.ToUpper)
+                    ElseIf atoms.ContainsKey(str) Then
+                        ' Au/Cu/Na/Cl elements
+                        Return New Token(ElementTypes.Element, str)
                     ElseIf str.Last Like aromatic Then
                         Dim xxx As New MultipleTokens
 
