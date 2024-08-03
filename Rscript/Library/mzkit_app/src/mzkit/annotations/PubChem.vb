@@ -69,6 +69,7 @@ Imports BioNovoGene.BioDeep.Chemistry.NCBI.PubChem
 Imports BioNovoGene.BioDeep.Chemistry.NCBI.PubChem.Graph
 Imports BioNovoGene.BioDeep.Chemistry.NCBI.PubChem.Web
 Imports Microsoft.VisualBasic.ApplicationServices
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
@@ -503,6 +504,20 @@ Module PubChemToolKit
         Else
             Return file.LoadFromXml(Of PugViewRecord)
         End If
+    End Function
+
+    <ExportAPI("resolve_repository")>
+    Public Function readPugViewRepository(repo As String) As Object
+        Dim pull As Func(Of IEnumerable(Of PugViewRecord)) =
+            Iterator Function() As IEnumerable(Of PugViewRecord)
+                For Each dir As String In repo.ListDirectory
+                    For Each file As String In Tqdm.Wrap(dir.ListFiles("*.xml").ToArray)
+                        Yield file.LoadXml(Of PugViewRecord)
+                    Next
+                Next
+            End Function
+
+        Return pipeline.CreateFromPopulator(pull())
     End Function
 
     ''' <summary>
