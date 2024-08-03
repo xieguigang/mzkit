@@ -506,6 +506,11 @@ Module PubChemToolKit
         End If
     End Function
 
+    ''' <summary>
+    ''' load pubchem repository
+    ''' </summary>
+    ''' <param name="repo"></param>
+    ''' <returns></returns>
     <ExportAPI("resolve_repository")>
     Public Function readPugViewRepository(repo As String) As Object
         Dim pull As Func(Of IEnumerable(Of PugViewRecord)) =
