@@ -517,7 +517,11 @@ Module PubChemToolKit
             Iterator Function() As IEnumerable(Of PugViewRecord)
                 For Each dir As String In repo.ListDirectory
                     For Each file As String In Tqdm.Wrap(dir.ListFiles("*.xml").ToArray)
-                        Yield file.LoadXml(Of PugViewRecord)
+                        Try
+                            Yield file.LoadXml(Of PugViewRecord)
+                        Catch ex As Exception
+                            Call $"invalid file content: {file}".Warning
+                        End Try
                     Next
                 Next
             End Function
