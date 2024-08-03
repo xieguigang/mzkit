@@ -275,6 +275,7 @@ Public Class Atom
         Yield New Atom("Os", 2, 3, 4, 5, 6, 8)
 
         Yield New Atom("Ge", -4, 2, 4)
+        Yield New Atom("Sm", 2, 3)
     End Function
 
 End Class

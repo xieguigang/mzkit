@@ -346,7 +346,7 @@ Namespace Language
 
                         Return xxx
                     Else
-                        Throw New NotImplementedException(str)
+                        Throw New NotImplementedException("Unknown token text for measure element type: " & str)
                     End If
             End Select
         End Function

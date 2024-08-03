@@ -137,7 +137,7 @@ Public Class ParseChain
             Case ElementTypes.Disconnected, ElementTypes.None
                 ' unsure how to break the graph, do nothing?
             Case Else
-                Throw New NotImplementedException(t.ToString)
+                Throw New NotImplementedException($"Unknown element type for build structure graph: ({t.name.ToString})" & t.ToString)
         End Select
     End Sub
 
