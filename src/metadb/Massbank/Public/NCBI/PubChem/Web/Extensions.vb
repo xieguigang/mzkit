@@ -82,19 +82,32 @@ Namespace NCBI.PubChem
             ElseIf Not info.Value.Number Is Nothing Then
                 Return info.Value.Number
             ElseIf Not info.Value.StringWithMarkup Is Nothing Then
-                Dim str As String = CStr(info.InfoValue)
+                Dim vals = info.InfoValue
+                Dim strs As String()
 
-                If str.IsSimpleNumber Then
-                    Return Double.Parse(str)
+                If vals Is Nothing Then
+                    Return 0.0
+                ElseIf vals.GetType.IsArray Then
+                    strs = DirectCast(vals, String())
                 Else
-                    str = str.Match(SimpleNumberPattern)
+                    strs = {CStr(vals)}
+                End If
 
-                    If Not str.StringEmpty Then
+                For Each str As String In strs
+                    If str.IsSimpleNumber Then
                         Return Double.Parse(str)
                     Else
-                        Return 0.0
+                        str = str.Match(SimpleNumberPattern)
+
+                        If Not str.StringEmpty Then
+                            Return Double.Parse(str)
+                        Else
+                            Return 0.0
+                        End If
                     End If
-                End If
+                Next
+
+                Return 0
             Else
                 Return 0
             End If
@@ -153,6 +166,11 @@ Namespace NCBI.PubChem
             End If
         End Function
 
+        ''' <summary>
+        ''' cast a given object value as string array
+        ''' </summary>
+        ''' <param name="part"></param>
+        ''' <returns></returns>
         Private Function castStrings(part As Object) As String()
             If part.GetType Is GetType(String) Then
                 Return {DirectCast(part, String)}
