@@ -47,6 +47,11 @@ Public Module ReadPack
             .rt = bin.ReadDouble,
             .intensity = bin.ReadDouble,
             .score = bin.ReadDouble,
+            .forward = bin.ReadDouble,
+            .reverse = bin.ReadDouble,
+            .jaccard = bin.ReadDouble,
+            .entropy = bin.ReadDouble,
+            .pvalue = bin.ReadDouble,
             .libname = bin.ReadString,
             .source = bin.ReadString
         }
