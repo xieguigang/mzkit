@@ -1,6 +1,5 @@
 ﻿Imports System.Collections.Generic
 
-''' <summary>
 ''' JNA-InChI - Library for calling InChI from Java
 ''' Copyright © 2018 Daniel Lowe
 ''' 
@@ -16,7 +15,7 @@
 ''' 
 ''' You should have received a copy of the GNU Lesser General Public License
 ''' along with this program.  If not, see </>.
-''' </summary>
+
 Namespace IUPAC.InChI
 
     Public NotInheritable Class InchiStereoType
@@ -62,8 +61,8 @@ Namespace IUPAC.InChI
         Private Shared ReadOnly map As IDictionary(Of SByte, InchiStereoType) = New Dictionary(Of SByte, InchiStereoType)()
 
         Shared Sub New()
-            For Each Val In values()
-                map.Add(Val.codeField, Val)
+            For Each val As InchiStereoType In values()
+                map.Add(val.codeField, val)
             Next
 
             valueList.Add(None)

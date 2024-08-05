@@ -1,4 +1,4 @@
-﻿''' <summary>
+﻿
 ''' JNA-InChI - Library for calling InChI from Java
 ''' Copyright © 2018 Daniel Lowe
 ''' 
@@ -14,7 +14,7 @@
 ''' 
 ''' You should have received a copy of the GNU Lesser General Public License
 ''' along with this program.  If not, see </>.
-''' </summary>
+
 Namespace IUPAC.InChI
     Public Class InchiOutput
 
