@@ -68,7 +68,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Text
 
-Namespace IUPAC.InChILayers
+Namespace IUPAC.InChI
 
     ''' <summary>
     ''' ### Layers of the identifier
