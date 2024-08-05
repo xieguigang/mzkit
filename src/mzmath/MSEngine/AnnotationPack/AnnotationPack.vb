@@ -13,7 +13,7 @@ Public Class AnnotationPack
     ''' the ms2 spectrum alignment search hits
     ''' </summary>
     ''' <returns></returns>
-    Public Property libraries As Dictionary(Of String, AlignmentHit)
+    Public Property libraries As Dictionary(Of String, AlignmentHit())
 
     ''' <summary>
     ''' the ms1 peaktable
