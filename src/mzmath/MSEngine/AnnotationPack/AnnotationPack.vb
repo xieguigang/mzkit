@@ -7,7 +7,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math
 ''' <remarks>
 ''' data export for internal annotation workflow, handling to customer report and view on mzkit workbench.
 ''' </remarks>
-Public Class AnnotationPack
+Public Class AnnotationPack : Implements IWorkspaceReader
 
     ''' <summary>
     ''' the ms2 spectrum alignment search hits
@@ -33,4 +33,18 @@ Public Class AnnotationPack
         End If
     End Function
 
+    ''' <summary>
+    ''' Make a copy of current in-memory data pack
+    ''' </summary>
+    ''' <returns></returns>
+    Private Function LoadMemory() As AnnotationPack Implements IWorkspaceReader.LoadMemory
+        Return New AnnotationPack With {
+            .libraries = libraries _
+                .ToDictionary(Function(li) li.Key,
+                              Function(li)
+                                  Return li.Value.ToArray
+                              End Function),
+            .peaks = peaks.ToArray
+        }
+    End Function
 End Class

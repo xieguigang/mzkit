@@ -9,7 +9,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Public Class AnnotationWorkspace : Implements IDisposable
+Public Class AnnotationWorkspace : Implements IDisposable, IWorkspaceReader
 
     ReadOnly pack As StreamPack
     ReadOnly libraries As New Dictionary(Of String, Integer)
@@ -28,7 +28,7 @@ Public Class AnnotationWorkspace : Implements IDisposable
         End If
     End Sub
 
-    Public Function LoadMemory() As AnnotationPack
+    Public Function LoadMemory() As AnnotationPack Implements IWorkspaceReader.LoadMemory
         Dim libraries As New Dictionary(Of String, AlignmentHit())
 
         For Each name As String In libraries.Keys

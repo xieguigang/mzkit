@@ -37,4 +37,8 @@ Public Class AlignmentHit
         End Set
     End Property
 
+    Public Overrides Function ToString() As String
+        Return name & "_" & adducts
+    End Function
+
 End Class
