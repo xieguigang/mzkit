@@ -25,4 +25,12 @@ Public Class AnnotationPack
         Return New PeakSet(peaks)
     End Function
 
+    Public Function GetLibraryResult(libraryName As String) As AlignmentHit()
+        If libraries.ContainsKey(libraryName) Then
+            Return _libraries(libraryName)
+        Else
+            Return {}
+        End If
+    End Function
+
 End Class
