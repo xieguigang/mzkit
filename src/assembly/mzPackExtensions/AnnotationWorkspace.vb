@@ -19,6 +19,13 @@ Public Class AnnotationWorkspace : Implements IDisposable
 
     Sub New(file As Stream)
         pack = New StreamPack(file)
+
+        If pack.FileExists("/libraries.json", ZERO_Nonexists:=True) Then
+            libraries = pack.ReadText("/libraries.json").LoadJSON(Of Dictionary(Of String, Integer))
+        End If
+        If pack.FileExists("/samplefiles.json", ZERO_Nonexists:=True) Then
+            samplefiles.AddRange(pack.ReadText("/samplefiles.json").LoadJSON(Of String()))
+        End If
     End Sub
 
     Public Function LoadPeakTable() As IEnumerable(Of xcms2)
@@ -30,6 +37,10 @@ Public Class AnnotationWorkspace : Implements IDisposable
         Dim peaks As xcms2() = SaveXcms.ReadSamplePeaks(file)
 
         Return peaks
+    End Function
+
+    Public Iterator Function GetLibraryHits(library As String) As IEnumerable(Of AlignmentHit)
+
     End Function
 
     Const peaktablefile As String = "/peaktable.dat"
