@@ -28,4 +28,13 @@ Public Class AlignmentHit
     ''' </remarks>
     Public Property samplefiles As Dictionary(Of String, Ms2Score)
 
+    Default Public Property SampleAlignment(sampleName As String) As Ms2Score
+        Get
+            Return samplefiles.TryGetValue(sampleName)
+        End Get
+        Set
+            samplefiles(sampleName) = Value
+        End Set
+    End Property
+
 End Class
