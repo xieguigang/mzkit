@@ -96,7 +96,9 @@ Imports System.Xml.Serialization
 Imports BioNovoGene.BioDeep.Chemoinformatics
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports any = Microsoft.VisualBasic.Scripting
 
 Namespace NCBI.PubChem
 
@@ -148,11 +150,24 @@ Namespace NCBI.PubChem
         Public ReadOnly Property UnitValue As UnitValue
             Get
                 If Value.Unit.StringEmpty Then
+                    Dim str As String
+
+                    If InfoValue Is Nothing Then
+                        str = ""
+                    ElseIf InfoValue.GetType.IsArray Then
+                        str = DirectCast(InfoValue, Array) _
+                            .AsObjectEnumerator _
+                            .Select(Function(o) any.ToString(o)) _
+                            .JoinBy("; ")
+                    Else
+                        str = CStr(InfoValue)
+                    End If
+
                     Return New UnitValue With {
                         .value = Me.GetInformationNumber,
                         .unit = Value.Unit,
                         .reference = Reference,
-                        .condition = CStr(InfoValue)
+                        .condition = str
                     }
                 Else
                     Return New UnitValue With {

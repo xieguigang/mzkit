@@ -109,8 +109,10 @@ Module Layout2D
 
         If atomMaxCharges.ContainsKey(atom.elementName) Then
             maxN = atomMaxCharges(atom.elementName).maxKeys
-        Else
+        ElseIf SMILES.Atom.AtomGroups.ContainsKey(atom.elementName) Then
             maxN = SMILES.Atom.AtomGroups(atom.elementName).maxKeys
+        Else
+            maxN = 1
         End If
 
         n = Aggregate b As ChemicalKey

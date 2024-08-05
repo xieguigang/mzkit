@@ -220,6 +220,13 @@ declare namespace pubchem_kit {
       function webquery(file: string, convert_std?: boolean): object;
    }
    /**
+    * load pubchem repository
+    * 
+    * 
+     * @param repo -
+   */
+   function resolve_repository(repo: string): any;
+   /**
     * parse the pubchem sid map data file
     * 
     * 

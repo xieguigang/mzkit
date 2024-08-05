@@ -116,7 +116,7 @@ Public Class FormulaBuilder
                 ElseIf atomGroups.ContainsKey(element.elementName) Then
                     Call Push(atomGroups(element.elementName), element)
                 Else
-                    Throw New NotImplementedException(element.elementName)
+                    Throw New NotImplementedException("Unknown element name for build formula: " & element.elementName)
                 End If
         End Select
     End Sub
