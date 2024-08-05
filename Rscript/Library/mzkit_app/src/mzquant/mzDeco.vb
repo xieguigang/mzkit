@@ -278,15 +278,30 @@ Module mzDeco
     ''' <summary>
     ''' read the peaktable file that in xcms2 output format
     ''' </summary>
-    ''' <param name="file"></param>
+    ''' <param name="file">should be the file path to the peaktable csv/txt file.</param>
     ''' <returns>A collection set of the <see cref="xcms2"/> peak features data object</returns>
     ''' <keywords>read data</keywords>
     <ExportAPI("read.xcms_peaks")>
     <RApiReturn(GetType(PeakSet))>
-    Public Function readXcmsPeaks(file As String,
+    Public Function readXcmsPeaks(file As Object,
                                   Optional tsv As Boolean = False,
-                                  Optional general_method As Boolean = False) As Object
+                                  Optional general_method As Boolean = False,
+                                  Optional env As Environment = Nothing) As Object
 
+        If file Is Nothing Then
+            Return Internal.debug.stop("the required file connection for read the xcms peaktable file should not be nothing!", env)
+        End If
+
+        If TypeOf file Is String Then
+            Return readXcmsTableFile(file, general_method, tsv)
+        ElseIf TypeOf file Is AnnotationWorkspace Then
+            Return New PeakSet(DirectCast(file, AnnotationWorkspace).LoadPeakTable)
+        Else
+            Return Message.InCompatibleType(GetType(String), file.GetType, env)
+        End If
+    End Function
+
+    Private Function readXcmsTableFile(file As String, general_method As Boolean, tsv As Boolean) As Object
         If file.ExtensionSuffix("dat", "xcms") Then
             ' read binary file
             Using buf As Stream = file.Open(FileMode.Open, doClear:=False, [readOnly]:=True)

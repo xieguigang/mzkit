@@ -66,6 +66,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree
 Imports BioNovoGene.BioDeep.Chemistry.MetaLib.CrossReference
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
+Imports BioNovoGene.BioDeep.MSEngine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -661,5 +662,10 @@ Module library
         End If
 
         Return New AnnotationWorkspace(buf.TryCast(Of Stream))
+    End Function
+
+    <ExportAPI("get_annotations")>
+    Public Function loadAll(workspace As AnnotationWorkspace) As AnnotationPack
+        Return workspace.LoadMemory
     End Function
 End Module
