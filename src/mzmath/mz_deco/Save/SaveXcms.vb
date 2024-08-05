@@ -170,9 +170,10 @@ Public Module SaveXcms
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Sub DumpSample(sample As PeakSet, file As Stream)
+    Public Function DumpSample(sample As PeakSet, file As Stream) As Boolean
         Call sample.peaks.DumpSample(sample.ROIs, sample.sampleNames, file)
-    End Sub
+        Return True
+    End Function
 
     ''' <summary>
     ''' 

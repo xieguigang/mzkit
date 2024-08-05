@@ -366,8 +366,22 @@ Module mzDeco
     ''' <param name="file">the file path to the target csv table file</param>
     ''' <returns></returns>
     <ExportAPI("write.xcms_peaks")>
-    Public Function writeXcmsPeaktable(x As PeakSet, file As String) As Boolean
-        Return x.peaks.SaveTo(file, silent:=True)
+    <RApiReturn(TypeCodes.boolean)>
+    Public Function writeXcmsPeaktable(x As PeakSet, file As Object, Optional env As Environment = Nothing) As Object
+        If file Is Nothing Then
+            Return Internal.debug.stop("the required file connection for save the xcms peaktable data should not be nothing!", env)
+        End If
+
+        If TypeOf file Is String Then
+            Return x.peaks.SaveTo(CStr(file), silent:=True)
+        ElseIf TypeOf file Is Stream Then
+            Return SaveXcms.DumpSample(x, DirectCast(file, Stream))
+        ElseIf TypeOf file Is AnnotationWorkspace Then
+            Call DirectCast(file, AnnotationWorkspace).SetPeakTable(x.peaks)
+            Return True
+        Else
+            Return Message.InCompatibleType(GetType(String), file.GetType, env)
+        End If
     End Function
 
     ''' <summary>
