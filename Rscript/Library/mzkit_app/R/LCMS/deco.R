@@ -15,8 +15,8 @@ imports "visual" from "mzplot";
 #' 
 #' @return this function returns nothing 
 #' 
-const run.Deconvolution = function(rawdata, outputdir = "./", mzdiff = 0.005, 
-                                   peak.width = [3, 90]) {
+const run.Deconvolution = function(rawdata, outputdir = "./", mzdiff = 0.001, xic_mzdiff = 0.005,
+                                   peak.width = [2, 30]) {
                                     
     const xic_cache = `${outputdir}/XIC_data`;
     const files = list.files(rawdata, pattern = ["*.mzML", "*.mzXML", "*.mzPack"]);
@@ -25,9 +25,9 @@ const run.Deconvolution = function(rawdata, outputdir = "./", mzdiff = 0.005,
     print(basename(files));
 
     # create temp data of ms1 XIC
-    ms1_xic_bins(files, mzdiff = mzdiff, 
+    ms1_xic_bins(files, mzdiff = xic_mzdiff, 
         outputdir = xic_cache, 
-        n_threads = 32);
+        n_threads = 16);
     
     # get xic file path list
     const xic_files = list.files(xic_cache, pattern = "*.xic");
@@ -77,10 +77,10 @@ const run.Deconvolution = function(rawdata, outputdir = "./", mzdiff = 0.005,
     write.csv(peakmeta, file = `${outputdir}/peakmeta.csv`, 
         row.names = TRUE);
 
-    svg(file = file.path(outputdir, "rt_shifts.svg")) {
+    bitmap(file = file.path(outputdir, "rt_shifts.png")) {
         plot(rt_shifts, res = 1000);
     }
-    svg(file = file.path(outputdir, "peakset.svg")) {
+    bitmap(file = file.path(outputdir, "peakset.png")) {
         plot(as.peak_set(peakmeta), scatter = TRUE, 
             dimension = "npeaks");
     }
