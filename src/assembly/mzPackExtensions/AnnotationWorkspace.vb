@@ -17,6 +17,19 @@ Public Class AnnotationWorkspace : Implements IDisposable, IWorkspaceReader
 
     Private disposedValue As Boolean
 
+    ''' <summary>
+    ''' try to get the file path of the pack file
+    ''' </summary>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' file path value could be nothing when the data pack is in readonly mode.
+    ''' </remarks>
+    Public ReadOnly Property file As String
+        Get
+            Return pack.filepath
+        End Get
+    End Property
+
     Sub New(file As Stream)
         pack = New StreamPack(file)
 
