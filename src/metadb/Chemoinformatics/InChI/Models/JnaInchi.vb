@@ -1,24 +1,5 @@
-﻿Imports System
-Imports System.Collections.Generic
-Imports System.IO
+﻿Imports System.IO
 Imports System.Text
-
-Imports NativeLong = com.sun.jna.NativeLong
-Imports Platform = com.sun.jna.Platform
-
-Imports InchiLibrary = io.github.dan2097.jnainchi.inchi.InchiLibrary
-Imports IxaFunctions = io.github.dan2097.jnainchi.inchi.IxaFunctions
-Imports IXA_ATOMID = io.github.dan2097.jnainchi.inchi.IxaFunctions.IXA_ATOMID
-Imports IXA_MOL_HANDLE = io.github.dan2097.jnainchi.inchi.IxaFunctions.IXA_MOL_HANDLE
-Imports IXA_STATUS_HANDLE = io.github.dan2097.jnainchi.inchi.IxaFunctions.IXA_STATUS_HANDLE
-Imports IXA_STEREOID = io.github.dan2097.jnainchi.inchi.IxaFunctions.IXA_STEREOID
-Imports tagINCHIStereo0D = io.github.dan2097.jnainchi.inchi.tagINCHIStereo0D
-Imports tagINCHI_Input = io.github.dan2097.jnainchi.inchi.tagINCHI_Input
-Imports tagINCHI_InputINCHI = io.github.dan2097.jnainchi.inchi.tagINCHI_InputINCHI
-Imports tagINCHI_Output = io.github.dan2097.jnainchi.inchi.tagINCHI_Output
-Imports tagINCHI_OutputStruct = io.github.dan2097.jnainchi.inchi.tagINCHI_OutputStruct
-Imports tagInchiAtom = io.github.dan2097.jnainchi.inchi.tagInchiAtom
-Imports tagInchiInpData = io.github.dan2097.jnainchi.inchi.tagInchiInpData
 
 ''' <summary>
 ''' JNA-InChI - Library for calling InChI from Java
@@ -37,7 +18,7 @@ Imports tagInchiInpData = io.github.dan2097.jnainchi.inchi.tagInchiInpData
 ''' You should have received a copy of the GNU Lesser General Public License
 ''' along with this program.  If not, see </>.
 ''' </summary>
-Namespace io.github.dan2097.jnainchi
+Namespace IUPAC.InChI
 
     Public Class JnaInchi
 

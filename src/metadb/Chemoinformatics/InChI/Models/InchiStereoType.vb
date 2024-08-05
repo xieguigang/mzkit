@@ -17,17 +17,17 @@
 ''' You should have received a copy of the GNU Lesser General Public License
 ''' along with this program.  If not, see </>.
 ''' </summary>
-Namespace io.github.dan2097.jnainchi
+Namespace IUPAC.InChI
 
     Public NotInheritable Class InchiStereoType
 
-        Public Shared ReadOnly None As InchiStereoType = New InchiStereoType("None", InnerEnum.None, inchi.InchiLibrary.tagINCHIStereoType0D_Fields.INCHI_StereoType_None)
+        Public Shared ReadOnly None As InchiStereoType = New InchiStereoType("None", InnerEnum.None, InChI.InchiLibrary.tagINCHIStereoType0D_Fields.INCHI_StereoType_None)
 
-        Public Shared ReadOnly DoubleBond As InchiStereoType = New InchiStereoType("DoubleBond", InnerEnum.DoubleBond, inchi.InchiLibrary.tagINCHIStereoType0D_Fields.INCHI_StereoType_DoubleBond)
+        Public Shared ReadOnly DoubleBond As InchiStereoType = New InchiStereoType("DoubleBond", InnerEnum.DoubleBond, InChI.InchiLibrary.tagINCHIStereoType0D_Fields.INCHI_StereoType_DoubleBond)
 
-        Public Shared ReadOnly Tetrahedral As InchiStereoType = New InchiStereoType("Tetrahedral", InnerEnum.Tetrahedral, inchi.InchiLibrary.tagINCHIStereoType0D_Fields.INCHI_StereoType_Tetrahedral)
+        Public Shared ReadOnly Tetrahedral As InchiStereoType = New InchiStereoType("Tetrahedral", InnerEnum.Tetrahedral, InChI.InchiLibrary.tagINCHIStereoType0D_Fields.INCHI_StereoType_Tetrahedral)
 
-        Public Shared ReadOnly Allene As InchiStereoType = New InchiStereoType("Allene", InnerEnum.Allene, inchi.InchiLibrary.tagINCHIStereoType0D_Fields.INCHI_StereoType_Allene)
+        Public Shared ReadOnly Allene As InchiStereoType = New InchiStereoType("Allene", InnerEnum.Allene, InChI.InchiLibrary.tagINCHIStereoType0D_Fields.INCHI_StereoType_Allene)
 
         Private Shared ReadOnly valueList As IList(Of InchiStereoType) = New List(Of InchiStereoType)()
 
@@ -62,8 +62,8 @@ Namespace io.github.dan2097.jnainchi
         Private Shared ReadOnly map As IDictionary(Of SByte, InchiStereoType) = New Dictionary(Of SByte, InchiStereoType)()
 
         Shared Sub New()
-            For Each val In values()
-                map.Add(val.codeField, val)
+            For Each Val In values()
+                map.Add(Val.codeField, Val)
             Next
 
             valueList.Add(None)

@@ -15,7 +15,7 @@
 ''' You should have received a copy of the GNU Lesser General Public License
 ''' along with this program.  If not, see </>.
 ''' </summary>
-Namespace io.github.dan2097.jnainchi
+Namespace IUPAC.InChI
     Public Class InchiAtom
 
         Private elNameField As String

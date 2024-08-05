@@ -17,17 +17,17 @@
 ''' You should have received a copy of the GNU Lesser General Public License
 ''' along with this program.  If not, see </>.
 ''' </summary>
-Namespace io.github.dan2097.jnainchi
+Namespace IUPAC.InChI
 
     Public NotInheritable Class InchiCheckStatus
 
-        Public Shared ReadOnly VALID_STANDARD As InchiCheckStatus = New InchiCheckStatus("VALID_STANDARD", InnerEnum.VALID_STANDARD, inchi.InchiLibrary.tagRetValCheckINCHI_Fields.INCHI_VALID_STANDARD)
-        Public Shared ReadOnly VALID_NON_STANDARD As InchiCheckStatus = New InchiCheckStatus("VALID_NON_STANDARD", InnerEnum.VALID_NON_STANDARD, inchi.InchiLibrary.tagRetValCheckINCHI_Fields.INCHI_VALID_NON_STANDARD)
-        Public Shared ReadOnly VALID_BETA As InchiCheckStatus = New InchiCheckStatus("VALID_BETA", InnerEnum.VALID_BETA, inchi.InchiLibrary.tagRetValCheckINCHI_Fields.INCHI_VALID_BETA)
-        Public Shared ReadOnly INVALID_PREFIX As InchiCheckStatus = New InchiCheckStatus("INVALID_PREFIX", InnerEnum.INVALID_PREFIX, inchi.InchiLibrary.tagRetValCheckINCHI_Fields.INCHI_INVALID_PREFIX)
-        Public Shared ReadOnly INVALID_VERSION As InchiCheckStatus = New InchiCheckStatus("INVALID_VERSION", InnerEnum.INVALID_VERSION, inchi.InchiLibrary.tagRetValCheckINCHI_Fields.INCHI_INVALID_VERSION)
-        Public Shared ReadOnly INVALID_LAYOUT As InchiCheckStatus = New InchiCheckStatus("INVALID_LAYOUT", InnerEnum.INVALID_LAYOUT, inchi.InchiLibrary.tagRetValCheckINCHI_Fields.INCHI_INVALID_LAYOUT)
-        Public Shared ReadOnly FAIL_I2I As InchiCheckStatus = New InchiCheckStatus("FAIL_I2I", InnerEnum.FAIL_I2I, inchi.InchiLibrary.tagRetValCheckINCHI_Fields.INCHI_FAIL_I2I)
+        Public Shared ReadOnly VALID_STANDARD As InchiCheckStatus = New InchiCheckStatus("VALID_STANDARD", InnerEnum.VALID_STANDARD, InChI.InchiLibrary.tagRetValCheckINCHI_Fields.INCHI_VALID_STANDARD)
+        Public Shared ReadOnly VALID_NON_STANDARD As InchiCheckStatus = New InchiCheckStatus("VALID_NON_STANDARD", InnerEnum.VALID_NON_STANDARD, InChI.InchiLibrary.tagRetValCheckINCHI_Fields.INCHI_VALID_NON_STANDARD)
+        Public Shared ReadOnly VALID_BETA As InchiCheckStatus = New InchiCheckStatus("VALID_BETA", InnerEnum.VALID_BETA, InChI.InchiLibrary.tagRetValCheckINCHI_Fields.INCHI_VALID_BETA)
+        Public Shared ReadOnly INVALID_PREFIX As InchiCheckStatus = New InchiCheckStatus("INVALID_PREFIX", InnerEnum.INVALID_PREFIX, InChI.InchiLibrary.tagRetValCheckINCHI_Fields.INCHI_INVALID_PREFIX)
+        Public Shared ReadOnly INVALID_VERSION As InchiCheckStatus = New InchiCheckStatus("INVALID_VERSION", InnerEnum.INVALID_VERSION, InChI.InchiLibrary.tagRetValCheckINCHI_Fields.INCHI_INVALID_VERSION)
+        Public Shared ReadOnly INVALID_LAYOUT As InchiCheckStatus = New InchiCheckStatus("INVALID_LAYOUT", InnerEnum.INVALID_LAYOUT, InChI.InchiLibrary.tagRetValCheckINCHI_Fields.INCHI_INVALID_LAYOUT)
+        Public Shared ReadOnly FAIL_I2I As InchiCheckStatus = New InchiCheckStatus("FAIL_I2I", InnerEnum.FAIL_I2I, InChI.InchiLibrary.tagRetValCheckINCHI_Fields.INCHI_FAIL_I2I)
 
         Private Shared ReadOnly valueList As IList(Of InchiCheckStatus) = New List(Of InchiCheckStatus)()
 
@@ -59,8 +59,8 @@ Namespace io.github.dan2097.jnainchi
         Private Shared ReadOnly map As IDictionary(Of Integer, InchiCheckStatus) = New Dictionary(Of Integer, InchiCheckStatus)()
 
         Shared Sub New()
-            For Each val In values()
-                map.Add(val.code, val)
+            For Each Val In values()
+                map.Add(Val.code, Val)
             Next
 
             valueList.Add(VALID_STANDARD)

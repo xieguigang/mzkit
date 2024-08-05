@@ -17,19 +17,19 @@
 ''' You should have received a copy of the GNU Lesser General Public License
 ''' along with this program.  If not, see </>.
 ''' </summary>
-Namespace io.github.dan2097.jnainchi
+Namespace IUPAC.InChI
 
     Public NotInheritable Class InchiStereoParity
 
-        Public Shared ReadOnly NONE As InchiStereoParity = New InchiStereoParity("NONE", InnerEnum.NONE, inchi.InchiLibrary.tagINCHIStereoParity0D_Fields.INCHI_PARITY_NONE)
+        Public Shared ReadOnly NONE As InchiStereoParity = New InchiStereoParity("NONE", InnerEnum.NONE, InChI.InchiLibrary.tagINCHIStereoParity0D_Fields.INCHI_PARITY_NONE)
 
-        Public Shared ReadOnly ODD As InchiStereoParity = New InchiStereoParity("ODD", InnerEnum.ODD, inchi.InchiLibrary.tagINCHIStereoParity0D_Fields.INCHI_PARITY_ODD)
+        Public Shared ReadOnly ODD As InchiStereoParity = New InchiStereoParity("ODD", InnerEnum.ODD, InChI.InchiLibrary.tagINCHIStereoParity0D_Fields.INCHI_PARITY_ODD)
 
-        Public Shared ReadOnly EVEN As InchiStereoParity = New InchiStereoParity("EVEN", InnerEnum.EVEN, inchi.InchiLibrary.tagINCHIStereoParity0D_Fields.INCHI_PARITY_EVEN)
+        Public Shared ReadOnly EVEN As InchiStereoParity = New InchiStereoParity("EVEN", InnerEnum.EVEN, InChI.InchiLibrary.tagINCHIStereoParity0D_Fields.INCHI_PARITY_EVEN)
 
-        Public Shared ReadOnly UNKNOWN As InchiStereoParity = New InchiStereoParity("UNKNOWN", InnerEnum.UNKNOWN, inchi.InchiLibrary.tagINCHIStereoParity0D_Fields.INCHI_PARITY_UNKNOWN)
+        Public Shared ReadOnly UNKNOWN As InchiStereoParity = New InchiStereoParity("UNKNOWN", InnerEnum.UNKNOWN, InChI.InchiLibrary.tagINCHIStereoParity0D_Fields.INCHI_PARITY_UNKNOWN)
 
-        Public Shared ReadOnly UNDEFINED As InchiStereoParity = New InchiStereoParity("UNDEFINED", InnerEnum.UNDEFINED, inchi.InchiLibrary.tagINCHIStereoParity0D_Fields.INCHI_PARITY_UNDEFINED)
+        Public Shared ReadOnly UNDEFINED As InchiStereoParity = New InchiStereoParity("UNDEFINED", InnerEnum.UNDEFINED, InChI.InchiLibrary.tagINCHIStereoParity0D_Fields.INCHI_PARITY_UNDEFINED)
 
         Private Shared ReadOnly valueList As IList(Of InchiStereoParity) = New List(Of InchiStereoParity)()
 
@@ -65,8 +65,8 @@ Namespace io.github.dan2097.jnainchi
         Private Shared ReadOnly map As IDictionary(Of SByte, InchiStereoParity) = New Dictionary(Of SByte, InchiStereoParity)()
 
         Shared Sub New()
-            For Each val In values()
-                map.Add(val.codeField, val)
+            For Each Val In values()
+                map.Add(Val.codeField, Val)
             Next
 
             valueList.Add(NONE)

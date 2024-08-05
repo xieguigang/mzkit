@@ -19,7 +19,7 @@ Imports InchiLibrary = io.github.dan2097.jnainchi.inchi.InchiLibrary
 ''' You should have received a copy of the GNU Lesser General Public License
 ''' along with this program.  If not, see </>.
 ''' </summary>
-Namespace io.github.dan2097.jnainchi
+Namespace IUPAC.InChI
 
     Public NotInheritable Class InchiKeyStatus
 
@@ -81,8 +81,8 @@ Namespace io.github.dan2097.jnainchi
         Private Shared ReadOnly map As IDictionary(Of Integer, InchiKeyStatus) = New Dictionary(Of Integer, InchiKeyStatus)()
 
         Shared Sub New()
-            For Each val In values()
-                map.Add(val.code, val)
+            For Each Val In values()
+                map.Add(Val.code, Val)
             Next
 
             valueList.Add(OK)

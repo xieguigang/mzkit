@@ -17,17 +17,17 @@
 ''' You should have received a copy of the GNU Lesser General Public License
 ''' along with this program.  If not, see </>.
 ''' </summary>
-Namespace io.github.dan2097.jnainchi
+Namespace IUPAC.InChI
 
     Public NotInheritable Class InchiRadical
 
-        Public Shared ReadOnly NONE As InchiRadical = New InchiRadical("NONE", InnerEnum.NONE, inchi.InchiLibrary.tagINCHIRadical_Fields.INCHI_RADICAL_NONE)
+        Public Shared ReadOnly NONE As InchiRadical = New InchiRadical("NONE", InnerEnum.NONE, InChI.InchiLibrary.tagINCHIRadical_Fields.INCHI_RADICAL_NONE)
 
-        Public Shared ReadOnly SINGLET As InchiRadical = New InchiRadical("SINGLET", InnerEnum.SINGLET, inchi.InchiLibrary.tagINCHIRadical_Fields.INCHI_RADICAL_SINGLET)
+        Public Shared ReadOnly SINGLET As InchiRadical = New InchiRadical("SINGLET", InnerEnum.SINGLET, InChI.InchiLibrary.tagINCHIRadical_Fields.INCHI_RADICAL_SINGLET)
 
-        Public Shared ReadOnly DOUBLET As InchiRadical = New InchiRadical("DOUBLET", InnerEnum.DOUBLET, inchi.InchiLibrary.tagINCHIRadical_Fields.INCHI_RADICAL_DOUBLET)
+        Public Shared ReadOnly DOUBLET As InchiRadical = New InchiRadical("DOUBLET", InnerEnum.DOUBLET, InChI.InchiLibrary.tagINCHIRadical_Fields.INCHI_RADICAL_DOUBLET)
 
-        Public Shared ReadOnly TRIPLET As InchiRadical = New InchiRadical("TRIPLET", InnerEnum.TRIPLET, inchi.InchiLibrary.tagINCHIRadical_Fields.INCHI_RADICAL_TRIPLET)
+        Public Shared ReadOnly TRIPLET As InchiRadical = New InchiRadical("TRIPLET", InnerEnum.TRIPLET, InChI.InchiLibrary.tagINCHIRadical_Fields.INCHI_RADICAL_TRIPLET)
 
         Private Shared ReadOnly valueList As IList(Of InchiRadical) = New List(Of InchiRadical)()
 
@@ -62,8 +62,8 @@ Namespace io.github.dan2097.jnainchi
         Private Shared ReadOnly map As IDictionary(Of SByte, InchiRadical) = New Dictionary(Of SByte, InchiRadical)()
 
         Shared Sub New()
-            For Each val In values()
-                map.Add(val.codeField, val)
+            For Each Val In values()
+                map.Add(Val.codeField, Val)
             Next
 
             valueList.Add(NONE)

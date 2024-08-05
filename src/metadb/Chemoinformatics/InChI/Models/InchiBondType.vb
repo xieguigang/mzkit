@@ -17,21 +17,21 @@
 ''' You should have received a copy of the GNU Lesser General Public License
 ''' along with this program.  If not, see </>.
 ''' </summary>
-Namespace io.github.dan2097.jnainchi
+Namespace IUPAC.InChI
 
     Public NotInheritable Class InchiBondType
 
-        Public Shared ReadOnly NONE As InchiBondType = New InchiBondType("NONE", InnerEnum.NONE, inchi.InchiLibrary.tagINCHIBondType_Fields.INCHI_BOND_TYPE_NONE)
+        Public Shared ReadOnly NONE As InchiBondType = New InchiBondType("NONE", InnerEnum.NONE, InChI.InchiLibrary.tagINCHIBondType_Fields.INCHI_BOND_TYPE_NONE)
 
-        Public Shared ReadOnly [SINGLE] As InchiBondType = New InchiBondType("SINGLE", InnerEnum.SINGLE, inchi.InchiLibrary.tagINCHIBondType_Fields.INCHI_BOND_TYPE_SINGLE)
+        Public Shared ReadOnly [SINGLE] As InchiBondType = New InchiBondType("SINGLE", InnerEnum.SINGLE, InChI.InchiLibrary.tagINCHIBondType_Fields.INCHI_BOND_TYPE_SINGLE)
 
-        Public Shared ReadOnly [DOUBLE] As InchiBondType = New InchiBondType("DOUBLE", InnerEnum.DOUBLE, inchi.InchiLibrary.tagINCHIBondType_Fields.INCHI_BOND_TYPE_DOUBLE)
+        Public Shared ReadOnly [DOUBLE] As InchiBondType = New InchiBondType("DOUBLE", InnerEnum.DOUBLE, InChI.InchiLibrary.tagINCHIBondType_Fields.INCHI_BOND_TYPE_DOUBLE)
 
-        Public Shared ReadOnly TRIPLE As InchiBondType = New InchiBondType("TRIPLE", InnerEnum.TRIPLE, inchi.InchiLibrary.tagINCHIBondType_Fields.INCHI_BOND_TYPE_TRIPLE)
+        Public Shared ReadOnly TRIPLE As InchiBondType = New InchiBondType("TRIPLE", InnerEnum.TRIPLE, InChI.InchiLibrary.tagINCHIBondType_Fields.INCHI_BOND_TYPE_TRIPLE)
 
         ''' <summary>
         ''' avoid by all means </summary>
-        Public Shared ReadOnly ALTERN As InchiBondType = New InchiBondType("ALTERN", InnerEnum.ALTERN, inchi.InchiLibrary.tagINCHIBondType_Fields.INCHI_BOND_TYPE_ALTERN)
+        Public Shared ReadOnly ALTERN As InchiBondType = New InchiBondType("ALTERN", InnerEnum.ALTERN, InChI.InchiLibrary.tagINCHIBondType_Fields.INCHI_BOND_TYPE_ALTERN)
 
         Private Shared ReadOnly valueList As IList(Of InchiBondType) = New List(Of InchiBondType)()
 
@@ -67,8 +67,8 @@ Namespace io.github.dan2097.jnainchi
         Private Shared ReadOnly map As IDictionary(Of SByte, InchiBondType) = New Dictionary(Of SByte, InchiBondType)()
 
         Shared Sub New()
-            For Each val In values()
-                map.Add(val.codeField, val)
+            For Each Val In values()
+                map.Add(Val.codeField, Val)
             Next
 
             valueList.Add(NONE)
