@@ -28,6 +28,19 @@ Public Class AnnotationWorkspace : Implements IDisposable
         End If
     End Sub
 
+    Public Function LoadMemory() As AnnotationPack
+        Dim libraries As New Dictionary(Of String, AlignmentHit())
+
+        For Each name As String In libraries.Keys
+            Call libraries.Add(name, GetLibraryHits(name).ToArray)
+        Next
+
+        Return New AnnotationPack With {
+            .libraries = libraries,
+            .peaks = LoadPeakTable.ToArray
+        }
+    End Function
+
     Public Function LoadPeakTable() As IEnumerable(Of xcms2)
         If Not pack.FileExists(peaktablefile, ZERO_Nonexists:=True) Then
             Return New xcms2() {}

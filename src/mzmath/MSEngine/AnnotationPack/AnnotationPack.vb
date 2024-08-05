@@ -21,4 +21,8 @@ Public Class AnnotationPack
     ''' <returns></returns>
     Public Property peaks As xcms2()
 
+    Public Function CreatePeakSet() As PeakSet
+        Return New PeakSet(peaks)
+    End Function
+
 End Class
