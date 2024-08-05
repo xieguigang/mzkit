@@ -21,12 +21,25 @@ Public Class AnnotationWorkspace : Implements IDisposable
         pack = New StreamPack(file)
     End Sub
 
+    Public Function LoadPeakTable() As IEnumerable(Of xcms2)
+        If Not pack.FileExists(peaktablefile, ZERO_Nonexists:=True) Then
+            Return New xcms2() {}
+        End If
+
+        Dim file As Stream = pack.OpenFile(peaktablefile, FileMode.Open, FileAccess.Read)
+        Dim peaks As xcms2() = SaveXcms.ReadSamplePeaks(file)
+
+        Return peaks
+    End Function
+
+    Const peaktablefile As String = "/peaktable.dat"
+
     ''' <summary>
     ''' save xcms peaktable to pack file
     ''' </summary>
     ''' <param name="peaks"></param>
     Public Sub SetPeakTable(peaks As IEnumerable(Of xcms2))
-        Using file As Stream = pack.OpenFile("/peaktable.dat",, FileAccess.Write)
+        Using file As Stream = pack.OpenFile(peaktablefile,, FileAccess.Write)
             Dim pool As xcms2() = peaks.ToArray
             Dim ROIs As Integer = pool.Length
             Dim sampleNames As String() = pool.PropertyNames
