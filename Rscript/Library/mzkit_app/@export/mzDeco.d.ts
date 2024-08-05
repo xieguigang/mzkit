@@ -203,14 +203,16 @@ declare namespace mzDeco {
        * read the peaktable file that in xcms2 output format
        * 
        * 
-        * @param file -
+        * @param file should be the file path to the peaktable csv/txt file.
         * @param tsv 
         * + default value Is ``false``.
         * @param general_method 
         * + default value Is ``false``.
+        * @param env 
+        * + default value Is ``null``.
         * @return A collection set of the @``T:BioNovoGene.Analytical.MassSpectrometry.Math.xcms2`` peak features data object
       */
-      function xcms_peaks(file: string, tsv?: boolean, general_method?: boolean): object;
+      function xcms_peaks(file: any, tsv?: boolean, general_method?: boolean, env?: object): object;
    }
    /**
     * RI calculation of a speicifc sample data
@@ -278,8 +280,10 @@ declare namespace mzDeco {
        * 
         * @param x -
         * @param file the file path to the target csv table file
+        * @param env 
+        * + default value Is ``null``.
       */
-      function xcms_peaks(x: object, file: string): boolean;
+      function xcms_peaks(x: object, file: any, env?: object): boolean;
    }
    /**
     * Load xic sample data files
