@@ -31,6 +31,13 @@ Public Class Ms2Score
     ''' </summary>
     ''' <returns></returns>
     Public Property score As Double
+
+    Public Property forward As Double
+    Public Property reverse As Double
+    Public Property jaccard As Double
+    Public Property entropy As Double
+    Public Property pvalue As Double
+
     ''' <summary>
     ''' the ms2 spectrum of current alignment hit result
     ''' </summary>
