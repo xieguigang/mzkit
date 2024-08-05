@@ -16,31 +16,14 @@
 ''' along with this program.  If not, see </>.
 
 Namespace IUPAC.InChI
+
     Public Class InchiKeyOutput
 
-        Private ReadOnly inchiKeyField As String
-        Private ReadOnly statusField As InchiKeyStatus
         Private ReadOnly szXtra1 As String
         Private ReadOnly szXtra2 As String
 
-        Friend Sub New(inchiKey As String, status As InchiKeyStatus, szXtra1 As String, szXtra2 As String)
-            inchiKeyField = inchiKey
-            statusField = status
-            Me.szXtra1 = szXtra1
-            Me.szXtra2 = szXtra2
-        End Sub
-
         Public Overridable ReadOnly Property InchiKey As String
-            Get
-                Return inchiKeyField
-            End Get
-        End Property
-
         Public Overridable ReadOnly Property Status As InchiKeyStatus
-            Get
-                Return statusField
-            End Get
-        End Property
 
         ''' <summary>
         ''' Returns the rest of the 256-bit SHA-2 signature for the first block
@@ -61,6 +44,13 @@ Namespace IUPAC.InChI
                 Return szXtra2
             End Get
         End Property
+
+        Friend Sub New(inchiKey As String, status As InchiKeyStatus, szXtra1 As String, szXtra2 As String)
+            _InchiKey = inchiKey
+            _Status = status
+            Me.szXtra1 = szXtra1
+            Me.szXtra2 = szXtra2
+        End Sub
 
     End Class
 

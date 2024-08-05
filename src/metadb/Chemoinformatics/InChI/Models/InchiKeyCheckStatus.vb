@@ -20,11 +20,17 @@ Namespace IUPAC.InChI
 
     Public NotInheritable Class InchiKeyCheckStatus
 
-        Public Shared ReadOnly VALID_STANDARD As InchiKeyCheckStatus = New InchiKeyCheckStatus("VALID_STANDARD", InnerEnum.VALID_STANDARD, InChI.InchiLibrary.tagRetValGetINCHIKey_Fields.INCHIKEY_VALID_STANDARD)
-        Public Shared ReadOnly VALID_NON_STANDARD As InchiKeyCheckStatus = New InchiKeyCheckStatus("VALID_NON_STANDARD", InnerEnum.VALID_NON_STANDARD, InChI.InchiLibrary.tagRetValGetINCHIKey_Fields.INCHIKEY_VALID_NON_STANDARD)
-        Public Shared ReadOnly INVALID_LENGTH As InchiKeyCheckStatus = New InchiKeyCheckStatus("INVALID_LENGTH", InnerEnum.INVALID_LENGTH, InChI.InchiLibrary.tagRetValGetINCHIKey_Fields.INCHIKEY_INVALID_LENGTH)
-        Public Shared ReadOnly INVALID_LAYOUT As InchiKeyCheckStatus = New InchiKeyCheckStatus("INVALID_LAYOUT", InnerEnum.INVALID_LAYOUT, InChI.InchiLibrary.tagRetValGetINCHIKey_Fields.INCHIKEY_INVALID_LAYOUT)
-        Public Shared ReadOnly INVALID_VERSION As InchiKeyCheckStatus = New InchiKeyCheckStatus("INVALID_VERSION", InnerEnum.INVALID_VERSION, InChI.InchiLibrary.tagRetValGetINCHIKey_Fields.INCHIKEY_INVALID_VERSION)
+        Public Const INCHIKEY_VALID_STANDARD As Integer = 0
+        Public Const INCHIKEY_VALID_NON_STANDARD As Integer = -1
+        Public Const INCHIKEY_INVALID_LENGTH As Integer = 1
+        Public Const INCHIKEY_INVALID_LAYOUT As Integer = 2
+        Public Const INCHIKEY_INVALID_VERSION As Integer = 3
+
+        Public Shared ReadOnly VALID_STANDARD As InchiKeyCheckStatus = New InchiKeyCheckStatus("VALID_STANDARD", InnerEnum.VALID_STANDARD, INCHIKEY_VALID_STANDARD)
+        Public Shared ReadOnly VALID_NON_STANDARD As InchiKeyCheckStatus = New InchiKeyCheckStatus("VALID_NON_STANDARD", InnerEnum.VALID_NON_STANDARD, INCHIKEY_VALID_NON_STANDARD)
+        Public Shared ReadOnly INVALID_LENGTH As InchiKeyCheckStatus = New InchiKeyCheckStatus("INVALID_LENGTH", InnerEnum.INVALID_LENGTH, INCHIKEY_INVALID_LENGTH)
+        Public Shared ReadOnly INVALID_LAYOUT As InchiKeyCheckStatus = New InchiKeyCheckStatus("INVALID_LAYOUT", InnerEnum.INVALID_LAYOUT, INCHIKEY_INVALID_LAYOUT)
+        Public Shared ReadOnly INVALID_VERSION As InchiKeyCheckStatus = New InchiKeyCheckStatus("INVALID_VERSION", InnerEnum.INVALID_VERSION, INCHIKEY_INVALID_VERSION)
 
         Private Shared ReadOnly valueList As IList(Of InchiKeyCheckStatus) = New List(Of InchiKeyCheckStatus)()
 
@@ -54,8 +60,8 @@ Namespace IUPAC.InChI
         Private Shared ReadOnly map As IDictionary(Of Integer, InchiKeyCheckStatus) = New Dictionary(Of Integer, InchiKeyCheckStatus)()
 
         Shared Sub New()
-            For Each Val In values()
-                map.Add(Val.code, Val)
+            For Each val As InchiKeyCheckStatus In values()
+                map.Add(val.code, val)
             Next
 
             valueList.Add(VALID_STANDARD)

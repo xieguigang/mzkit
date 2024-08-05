@@ -16,6 +16,8 @@
 ''' along with this program.  If not, see </>.
 
 Namespace IUPAC.InChI
+
+
     Public Enum InchiStatus
         ''' <summary>
         ''' Success; no errors or warnings </summary>

@@ -1,5 +1,6 @@
 ﻿Imports System.Collections.Generic
 Imports System.Text
+Imports Microsoft.VisualBasic.ComponentModel.DataStructures
 
 
 ''' JNA-InChI - Library for calling InChI from Java
@@ -36,7 +37,7 @@ Namespace IUPAC.InChI
 
         Public Class InchiOptionsBuilder
 
-            Friend ReadOnly flags As EnumSet(Of InchiFlag) = EnumSet.noneOf(GetType(InchiFlag))
+            Friend ReadOnly flags As New List(Of InchiFlag)
             Friend timeoutMilliSecs As Long = 0
 
             Public Overridable Function withFlag(ParamArray flags As InchiFlag()) As InchiOptionsBuilder
@@ -48,7 +49,7 @@ Namespace IUPAC.InChI
 
             ''' <summary>
             ''' Timeout in seconds (0 = infinite timeout) </summary>
-            ''' <paramname="timeoutSecs">
+            ''' <param name="timeoutSecs">
             ''' @return </param>
             Public Overridable Function withTimeout(timeoutSecs As Integer) As InchiOptionsBuilder
                 If timeoutSecs < 0 Then
@@ -60,7 +61,7 @@ Namespace IUPAC.InChI
 
             ''' <summary>
             ''' Timeout in milliseconds (0 = infinite timeout) </summary>
-            ''' <paramname="timeoutMilliSecs">
+            ''' <param name="timeoutMilliSecs">
             ''' @return </param>
             Public Overridable Function withTimeoutMilliSeconds(timeoutMilliSecs As Long) As InchiOptionsBuilder
                 If timeoutMilliSecs < 0 Then

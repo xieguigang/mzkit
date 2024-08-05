@@ -20,13 +20,21 @@ Namespace IUPAC.InChI
 
     Public NotInheritable Class InchiCheckStatus
 
-        Public Shared ReadOnly VALID_STANDARD As InchiCheckStatus = New InchiCheckStatus("VALID_STANDARD", InnerEnum.VALID_STANDARD, InChI.InchiLibrary.tagRetValCheckINCHI_Fields.INCHI_VALID_STANDARD)
-        Public Shared ReadOnly VALID_NON_STANDARD As InchiCheckStatus = New InchiCheckStatus("VALID_NON_STANDARD", InnerEnum.VALID_NON_STANDARD, InChI.InchiLibrary.tagRetValCheckINCHI_Fields.INCHI_VALID_NON_STANDARD)
-        Public Shared ReadOnly VALID_BETA As InchiCheckStatus = New InchiCheckStatus("VALID_BETA", InnerEnum.VALID_BETA, InChI.InchiLibrary.tagRetValCheckINCHI_Fields.INCHI_VALID_BETA)
-        Public Shared ReadOnly INVALID_PREFIX As InchiCheckStatus = New InchiCheckStatus("INVALID_PREFIX", InnerEnum.INVALID_PREFIX, InChI.InchiLibrary.tagRetValCheckINCHI_Fields.INCHI_INVALID_PREFIX)
-        Public Shared ReadOnly INVALID_VERSION As InchiCheckStatus = New InchiCheckStatus("INVALID_VERSION", InnerEnum.INVALID_VERSION, InChI.InchiLibrary.tagRetValCheckINCHI_Fields.INCHI_INVALID_VERSION)
-        Public Shared ReadOnly INVALID_LAYOUT As InchiCheckStatus = New InchiCheckStatus("INVALID_LAYOUT", InnerEnum.INVALID_LAYOUT, InChI.InchiLibrary.tagRetValCheckINCHI_Fields.INCHI_INVALID_LAYOUT)
-        Public Shared ReadOnly FAIL_I2I As InchiCheckStatus = New InchiCheckStatus("FAIL_I2I", InnerEnum.FAIL_I2I, InChI.InchiLibrary.tagRetValCheckINCHI_Fields.INCHI_FAIL_I2I)
+        Public Const INCHI_VALID_STANDARD As Integer = 0
+        Public Const INCHI_VALID_NON_STANDARD As Integer = 1
+        Public Const INCHI_VALID_BETA As Integer = 2
+        Public Const INCHI_INVALID_PREFIX As Integer = 3
+        Public Const INCHI_INVALID_VERSION As Integer = 4
+        Public Const INCHI_INVALID_LAYOUT As Integer = 5
+        Public Const INCHI_FAIL_I2I As Integer = 6
+
+        Public Shared ReadOnly VALID_STANDARD As InchiCheckStatus = New InchiCheckStatus("VALID_STANDARD", InnerEnum.VALID_STANDARD, INCHI_VALID_STANDARD)
+        Public Shared ReadOnly VALID_NON_STANDARD As InchiCheckStatus = New InchiCheckStatus("VALID_NON_STANDARD", InnerEnum.VALID_NON_STANDARD, INCHI_VALID_NON_STANDARD)
+        Public Shared ReadOnly VALID_BETA As InchiCheckStatus = New InchiCheckStatus("VALID_BETA", InnerEnum.VALID_BETA, INCHI_VALID_BETA)
+        Public Shared ReadOnly INVALID_PREFIX As InchiCheckStatus = New InchiCheckStatus("INVALID_PREFIX", InnerEnum.INVALID_PREFIX, INCHI_INVALID_PREFIX)
+        Public Shared ReadOnly INVALID_VERSION As InchiCheckStatus = New InchiCheckStatus("INVALID_VERSION", InnerEnum.INVALID_VERSION, INCHI_INVALID_VERSION)
+        Public Shared ReadOnly INVALID_LAYOUT As InchiCheckStatus = New InchiCheckStatus("INVALID_LAYOUT", InnerEnum.INVALID_LAYOUT, INCHI_INVALID_LAYOUT)
+        Public Shared ReadOnly FAIL_I2I As InchiCheckStatus = New InchiCheckStatus("FAIL_I2I", InnerEnum.FAIL_I2I, INCHI_FAIL_I2I)
 
         Private Shared ReadOnly valueList As IList(Of InchiCheckStatus) = New List(Of InchiCheckStatus)()
 
@@ -58,8 +66,8 @@ Namespace IUPAC.InChI
         Private Shared ReadOnly map As IDictionary(Of Integer, InchiCheckStatus) = New Dictionary(Of Integer, InchiCheckStatus)()
 
         Shared Sub New()
-            For Each Val In values()
-                map.Add(Val.code, Val)
+            For Each val As InchiCheckStatus In values()
+                map.Add(val.code, val)
             Next
 
             valueList.Add(VALID_STANDARD)

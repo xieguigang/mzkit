@@ -459,8 +459,8 @@ Namespace IUPAC.InChI
         ''' It may also be used to filter out specific layers.
         ''' For instance, SNon would remove the stereochemical layer.
         ''' Omitting FixedH and/or RecMet would remove Fixed-H or Reconnected layers. </summary>
-        ''' <paramname="inchi"> </param>
-        ''' <paramname="options">
+        ''' <param name="inchi"> </param>
+        ''' <param name="options">
         ''' @return </param>
         Public Shared Function inchiToInchi(inchi As String, options As InchiOptions) As InchiOutput
             Call checkLibrary()
@@ -491,8 +491,8 @@ Namespace IUPAC.InChI
         ''' Check if the string represents a valid InChI/StdInChI
         ''' If strict is true, try to perform InChI2InChI conversion; returns success if a resulting InChI string exactly matches source.
         ''' Be cautious: the result may be too strict, i.e. a 'false alarm', due to imperfection of conversion. </summary>
-        ''' <paramname="inchi"> </param>
-        ''' <paramname="strict"> if false, just briefly check for proper layout (prefix, version, etc.) </param>
+        ''' <param name="inchi"> </param>
+        ''' <param name="strict"> if false, just briefly check for proper layout (prefix, version, etc.) </param>
         ''' <returns> InchiCheckStatus </returns>
         Public Shared Function checkInchi(inchi As String, strict As Boolean) As InchiCheckStatus
             Call checkLibrary()
@@ -501,7 +501,7 @@ Namespace IUPAC.InChI
 
         ''' <summary>
         ''' Check if the string represents valid InChIKey </summary>
-        ''' <paramname="inchiKey"> </param>
+        ''' <param name="inchiKey"> </param>
         ''' <returns> InchiKeyCheckStatus </returns>
         Public Shared Function checkInchiKey(inchiKey As String) As InchiKeyCheckStatus
             Call checkLibrary()
@@ -511,9 +511,9 @@ Namespace IUPAC.InChI
         ''' <summary>
         ''' Creates the input data structure for InChI generation out of the auxiliary information (AuxInfo) 
         ''' string produced by previous InChI generator calls </summary>
-        ''' <paramname="auxInfo"> contains ASCIIZ string of InChI output for a single structure or only the AuxInfo line </param>
-        ''' <paramname="doNotAddH"> if true then InChI will not be allowed to add implicit H </param>
-        ''' <paramname="diffUnkUndfStereo"> if true, use different labels for unknown and undefined stereo
+        ''' <param name="auxInfo"> contains ASCIIZ string of InChI output for a single structure or only the AuxInfo line </param>
+        ''' <param name="doNotAddH"> if true then InChI will not be allowed to add implicit H </param>
+        ''' <param name="diffUnkUndfStereo"> if true, use different labels for unknown and undefined stereo
         ''' @return </param>
         Public Shared Function getInchiInputFromAuxInfo(auxInfo As String, doNotAddH As Boolean, diffUnkUndfStereo As Boolean) As InchiInputFromAuxinfoOutput
             Call checkLibrary()
@@ -685,7 +685,7 @@ Namespace IUPAC.InChI
             End Select
         End Function
 
-        Private Shared Function toString([cstr] As SByte()) As String
+        Private Overloads Shared Function toString([cstr] As SByte()) As String
             Dim sb As StringBuilder = New StringBuilder([cstr].Length)
             For i = 0 To [cstr].Length - 1
                 Dim ch = Microsoft.VisualBasic.ChrW([cstr](i))
@@ -696,47 +696,6 @@ Namespace IUPAC.InChI
             Next
             Return sb.ToString()
         End Function
-
-
-        ''' <summary>
-        ''' Returns the version of the wrapped InChI C library </summary>
-        ''' <returns> Version number String </returns>
-        Public Shared ReadOnly Property InchiLibraryVersion As String
-            Get
-                Try
-                    Using [is] As Stream = GetType(JnaInchi).getResourceAsStream("jnainchi_build.props")
-                        Dim props As Properties = New Properties()
-                        props.load([is])
-                        Return props.getProperty("inchi_version")
-                    End Using
-                Catch __unusedException1__ As Exception
-                    Return Nothing
-                End Try
-            End Get
-        End Property
-
-        ''' <summary>
-        ''' Returns the version of the JNA-InChI Java library </summary>
-        ''' <returns> Version number String </returns>
-        Public Shared ReadOnly Property JnaInchiVersion As String
-            Get
-                Try
-                    Using [is] As Stream = GetType(JnaInchi).getResourceAsStream("jnainchi_build.props")
-                        Dim props As Properties = New Properties()
-                        props.load([is])
-                        Return props.getProperty("jnainchi_version")
-                    End Using
-                Catch __unusedException1__ As Exception
-                    Return Nothing
-                End Try
-            End Get
-        End Property
-
-        Private Shared Sub checkLibrary()
-            If libraryLoadingError IsNot Nothing Then
-                Throw New Exception("Error loading InChI native code. Please check that the binaries for your platform (" & platform & ") have been included on the classpath.", libraryLoadingError)
-            End If
-        End Sub
 
     End Class
 

@@ -20,37 +20,46 @@ Namespace IUPAC.InChI
 
     Public NotInheritable Class InchiBondStereo
 
+        Public Const INCHI_BOND_STEREO_NONE As Integer = 0
+        Public Const INCHI_BOND_STEREO_SINGLE_1UP As Integer = 1
+        Public Const INCHI_BOND_STEREO_SINGLE_1EITHER As Integer = 4
+        Public Const INCHI_BOND_STEREO_SINGLE_1DOWN As Integer = 6
+        Public Const INCHI_BOND_STEREO_SINGLE_2UP As Integer = -1
+        Public Const INCHI_BOND_STEREO_SINGLE_2EITHER As Integer = -4
+        Public Const INCHI_BOND_STEREO_SINGLE_2DOWN As Integer = -6
+        Public Const INCHI_BOND_STEREO_DOUBLE_EITHER As Integer = 3
+
         ''' <summary>
         ''' No stereo information recorded for this bond </summary>
-        Public Shared ReadOnly NONE As InchiBondStereo = New InchiBondStereo("NONE", InnerEnum.NONE, InChI.InchiLibrary.tagINCHIBondStereo2D_Fields.INCHI_BOND_STEREO_NONE)
+        Public Shared ReadOnly NONE As InchiBondStereo = New InchiBondStereo("NONE", InnerEnum.NONE, INCHI_BOND_STEREO_NONE)
 
         ''' <summary>
         ''' sharp end points to this atom i.e. reference atom is <seealsocref="InchiBond.getStart()"/> </summary>
-        Public Shared ReadOnly SINGLE_1UP As InchiBondStereo = New InchiBondStereo("SINGLE_1UP", InnerEnum.SINGLE_1UP, InChI.InchiLibrary.tagINCHIBondStereo2D_Fields.INCHI_BOND_STEREO_SINGLE_1UP)
+        Public Shared ReadOnly SINGLE_1UP As InchiBondStereo = New InchiBondStereo("SINGLE_1UP", InnerEnum.SINGLE_1UP, INCHI_BOND_STEREO_SINGLE_1UP)
 
         ''' <summary>
         ''' sharp end points to this atom i.e. reference atom is <seealsocref="InchiBond.getStart()"/> </summary>
-        Public Shared ReadOnly SINGLE_1EITHER As InchiBondStereo = New InchiBondStereo("SINGLE_1EITHER", InnerEnum.SINGLE_1EITHER, InChI.InchiLibrary.tagINCHIBondStereo2D_Fields.INCHI_BOND_STEREO_SINGLE_1EITHER)
+        Public Shared ReadOnly SINGLE_1EITHER As InchiBondStereo = New InchiBondStereo("SINGLE_1EITHER", InnerEnum.SINGLE_1EITHER, INCHI_BOND_STEREO_SINGLE_1EITHER)
 
         ''' <summary>
         ''' sharp end points to this atom i.e. reference atom is <seealsocref="InchiBond.getStart()"/> </summary>
-        Public Shared ReadOnly SINGLE_1DOWN As InchiBondStereo = New InchiBondStereo("SINGLE_1DOWN", InnerEnum.SINGLE_1DOWN, InChI.InchiLibrary.tagINCHIBondStereo2D_Fields.INCHI_BOND_STEREO_SINGLE_1DOWN)
+        Public Shared ReadOnly SINGLE_1DOWN As InchiBondStereo = New InchiBondStereo("SINGLE_1DOWN", InnerEnum.SINGLE_1DOWN, INCHI_BOND_STEREO_SINGLE_1DOWN)
 
         ''' <summary>
         ''' sharp end points to the opposite atom i.e. reference atom is <seealsocref="InchiBond.getEnd()"/> </summary>
-        Public Shared ReadOnly SINGLE_2UP As InchiBondStereo = New InchiBondStereo("SINGLE_2UP", InnerEnum.SINGLE_2UP, InChI.InchiLibrary.tagINCHIBondStereo2D_Fields.INCHI_BOND_STEREO_SINGLE_2UP)
+        Public Shared ReadOnly SINGLE_2UP As InchiBondStereo = New InchiBondStereo("SINGLE_2UP", InnerEnum.SINGLE_2UP, INCHI_BOND_STEREO_SINGLE_2UP)
 
         ''' <summary>
         ''' sharp end points to the opposite atom i.e. reference atom is <seealsocref="InchiBond.getEnd()"/> </summary>
-        Public Shared ReadOnly SINGLE_2EITHER As InchiBondStereo = New InchiBondStereo("SINGLE_2EITHER", InnerEnum.SINGLE_2EITHER, InChI.InchiLibrary.tagINCHIBondStereo2D_Fields.INCHI_BOND_STEREO_SINGLE_2EITHER)
+        Public Shared ReadOnly SINGLE_2EITHER As InchiBondStereo = New InchiBondStereo("SINGLE_2EITHER", InnerEnum.SINGLE_2EITHER, INCHI_BOND_STEREO_SINGLE_2EITHER)
 
         ''' <summary>
         ''' sharp end points to the opposite atom i.e. reference atom is <seealsocref="InchiBond.getEnd()"/> </summary>
-        Public Shared ReadOnly SINGLE_2DOWN As InchiBondStereo = New InchiBondStereo("SINGLE_2DOWN", InnerEnum.SINGLE_2DOWN, InChI.InchiLibrary.tagINCHIBondStereo2D_Fields.INCHI_BOND_STEREO_SINGLE_2DOWN)
+        Public Shared ReadOnly SINGLE_2DOWN As InchiBondStereo = New InchiBondStereo("SINGLE_2DOWN", InnerEnum.SINGLE_2DOWN, INCHI_BOND_STEREO_SINGLE_2DOWN)
 
         ''' <summary>
         ''' unknown stereobond geometry </summary>
-        Public Shared ReadOnly DOUBLE_EITHER As InchiBondStereo = New InchiBondStereo("DOUBLE_EITHER", InnerEnum.DOUBLE_EITHER, InChI.InchiLibrary.tagINCHIBondStereo2D_Fields.INCHI_BOND_STEREO_DOUBLE_EITHER)
+        Public Shared ReadOnly DOUBLE_EITHER As InchiBondStereo = New InchiBondStereo("DOUBLE_EITHER", InnerEnum.DOUBLE_EITHER, INCHI_BOND_STEREO_DOUBLE_EITHER)
 
         Private Shared ReadOnly valueList As IList(Of InchiBondStereo) = New List(Of InchiBondStereo)()
 
@@ -89,8 +98,8 @@ Namespace IUPAC.InChI
         Private Shared ReadOnly map As IDictionary(Of SByte, InchiBondStereo) = New Dictionary(Of SByte, InchiBondStereo)()
 
         Shared Sub New()
-            For Each Val In values()
-                map.Add(Val.codeField, Val)
+            For Each val As InchiBondStereo In values()
+                map.Add(val.codeField, val)
             Next
 
             valueList.Add(NONE)

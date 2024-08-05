@@ -20,13 +20,19 @@ Namespace IUPAC.InChI
 
     Public NotInheritable Class InchiRadical
 
-        Public Shared ReadOnly NONE As InchiRadical = New InchiRadical("NONE", InnerEnum.NONE, InChI.InchiLibrary.tagINCHIRadical_Fields.INCHI_RADICAL_NONE)
+        Public Const INCHI_RADICAL_NONE = 0
+        Public Const INCHI_RADICAL_SINGLET = 1
+        Public Const INCHI_RADICAL_DOUBLET = 2
+        Public Const INCHI_RADICAL_TRIPLET = 3
 
-        Public Shared ReadOnly SINGLET As InchiRadical = New InchiRadical("SINGLET", InnerEnum.SINGLET, InChI.InchiLibrary.tagINCHIRadical_Fields.INCHI_RADICAL_SINGLET)
 
-        Public Shared ReadOnly DOUBLET As InchiRadical = New InchiRadical("DOUBLET", InnerEnum.DOUBLET, InChI.InchiLibrary.tagINCHIRadical_Fields.INCHI_RADICAL_DOUBLET)
+        Public Shared ReadOnly NONE As InchiRadical = New InchiRadical("NONE", InnerEnum.NONE, INCHI_RADICAL_NONE)
 
-        Public Shared ReadOnly TRIPLET As InchiRadical = New InchiRadical("TRIPLET", InnerEnum.TRIPLET, InChI.InchiLibrary.tagINCHIRadical_Fields.INCHI_RADICAL_TRIPLET)
+        Public Shared ReadOnly SINGLET As InchiRadical = New InchiRadical("SINGLET", InnerEnum.SINGLET, INCHI_RADICAL_SINGLET)
+
+        Public Shared ReadOnly DOUBLET As InchiRadical = New InchiRadical("DOUBLET", InnerEnum.DOUBLET, INCHI_RADICAL_DOUBLET)
+
+        Public Shared ReadOnly TRIPLET As InchiRadical = New InchiRadical("TRIPLET", InnerEnum.TRIPLET, INCHI_RADICAL_TRIPLET)
 
         Private Shared ReadOnly valueList As IList(Of InchiRadical) = New List(Of InchiRadical)()
 
@@ -61,8 +67,8 @@ Namespace IUPAC.InChI
         Private Shared ReadOnly map As IDictionary(Of SByte, InchiRadical) = New Dictionary(Of SByte, InchiRadical)()
 
         Shared Sub New()
-            For Each Val In values()
-                map.Add(Val.codeField, Val)
+            For Each val As InchiRadical In values()
+                map.Add(val.codeField, val)
             Next
 
             valueList.Add(NONE)

@@ -20,13 +20,19 @@ Namespace IUPAC.InChI
 
     Public NotInheritable Class InchiStereoType
 
-        Public Shared ReadOnly None As InchiStereoType = New InchiStereoType("None", InnerEnum.None, InChI.InchiLibrary.tagINCHIStereoType0D_Fields.INCHI_StereoType_None)
+        Public Const INCHI_StereoType_None = 0
+        Public Const INCHI_StereoType_DoubleBond = 1
+        Public Const INCHI_StereoType_Tetrahedral = 2
+        Public Const INCHI_StereoType_Allene = 3
 
-        Public Shared ReadOnly DoubleBond As InchiStereoType = New InchiStereoType("DoubleBond", InnerEnum.DoubleBond, InChI.InchiLibrary.tagINCHIStereoType0D_Fields.INCHI_StereoType_DoubleBond)
 
-        Public Shared ReadOnly Tetrahedral As InchiStereoType = New InchiStereoType("Tetrahedral", InnerEnum.Tetrahedral, InChI.InchiLibrary.tagINCHIStereoType0D_Fields.INCHI_StereoType_Tetrahedral)
+        Public Shared ReadOnly None As InchiStereoType = New InchiStereoType("None", InnerEnum.None, INCHI_StereoType_None)
 
-        Public Shared ReadOnly Allene As InchiStereoType = New InchiStereoType("Allene", InnerEnum.Allene, InChI.InchiLibrary.tagINCHIStereoType0D_Fields.INCHI_StereoType_Allene)
+        Public Shared ReadOnly DoubleBond As InchiStereoType = New InchiStereoType("DoubleBond", InnerEnum.DoubleBond, INCHI_StereoType_DoubleBond)
+
+        Public Shared ReadOnly Tetrahedral As InchiStereoType = New InchiStereoType("Tetrahedral", InnerEnum.Tetrahedral, INCHI_StereoType_Tetrahedral)
+
+        Public Shared ReadOnly Allene As InchiStereoType = New InchiStereoType("Allene", InnerEnum.Allene, INCHI_StereoType_Allene)
 
         Private Shared ReadOnly valueList As IList(Of InchiStereoType) = New List(Of InchiStereoType)()
 
@@ -42,27 +48,21 @@ Namespace IUPAC.InChI
         Private ReadOnly ordinalValue As Integer
         Private Shared nextOrdinal As Integer = 0
 
-        Private ReadOnly codeField As SByte
-
         Private Sub New(name As String, innerEnum As InnerEnum, code As Integer)
-            codeField = CSByte(code)
+            _Code = CSByte(code)
 
             nameValue = name
             ordinalValue = Math.Min(Threading.Interlocked.Increment(nextOrdinal), nextOrdinal - 1)
             innerEnumValue = innerEnum
         End Sub
 
-        Friend ReadOnly Property Code As SByte
-            Get
-                Return codeField
-            End Get
-        End Property
+        Public ReadOnly Property Code As SByte
 
         Private Shared ReadOnly map As IDictionary(Of SByte, InchiStereoType) = New Dictionary(Of SByte, InchiStereoType)()
 
         Shared Sub New()
             For Each val As InchiStereoType In values()
-                map.Add(val.codeField, val)
+                map.Add(val.Code, val)
             Next
 
             valueList.Add(None)

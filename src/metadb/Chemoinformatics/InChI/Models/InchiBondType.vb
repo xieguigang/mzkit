@@ -20,17 +20,23 @@ Namespace IUPAC.InChI
 
     Public NotInheritable Class InchiBondType
 
-        Public Shared ReadOnly NONE As InchiBondType = New InchiBondType("NONE", InnerEnum.NONE, InChI.InchiLibrary.tagINCHIBondType_Fields.INCHI_BOND_TYPE_NONE)
+        Public Const INCHI_BOND_TYPE_NONE As Integer = 0
+        Public Const INCHI_BOND_TYPE_SINGLE As Integer = 1
+        Public Const INCHI_BOND_TYPE_DOUBLE As Integer = 2
+        Public Const INCHI_BOND_TYPE_TRIPLE As Integer = 3
+        Public Const INCHI_BOND_TYPE_ALTERN As Integer = 4
 
-        Public Shared ReadOnly [SINGLE] As InchiBondType = New InchiBondType("SINGLE", InnerEnum.SINGLE, InChI.InchiLibrary.tagINCHIBondType_Fields.INCHI_BOND_TYPE_SINGLE)
+        Public Shared ReadOnly NONE As InchiBondType = New InchiBondType("NONE", InnerEnum.NONE, INCHI_BOND_TYPE_NONE)
 
-        Public Shared ReadOnly [DOUBLE] As InchiBondType = New InchiBondType("DOUBLE", InnerEnum.DOUBLE, InChI.InchiLibrary.tagINCHIBondType_Fields.INCHI_BOND_TYPE_DOUBLE)
+        Public Shared ReadOnly [SINGLE] As InchiBondType = New InchiBondType("SINGLE", InnerEnum.SINGLE, INCHI_BOND_TYPE_SINGLE)
 
-        Public Shared ReadOnly TRIPLE As InchiBondType = New InchiBondType("TRIPLE", InnerEnum.TRIPLE, InChI.InchiLibrary.tagINCHIBondType_Fields.INCHI_BOND_TYPE_TRIPLE)
+        Public Shared ReadOnly [DOUBLE] As InchiBondType = New InchiBondType("DOUBLE", InnerEnum.DOUBLE, INCHI_BOND_TYPE_DOUBLE)
+
+        Public Shared ReadOnly TRIPLE As InchiBondType = New InchiBondType("TRIPLE", InnerEnum.TRIPLE, INCHI_BOND_TYPE_TRIPLE)
 
         ''' <summary>
         ''' avoid by all means </summary>
-        Public Shared ReadOnly ALTERN As InchiBondType = New InchiBondType("ALTERN", InnerEnum.ALTERN, InChI.InchiLibrary.tagINCHIBondType_Fields.INCHI_BOND_TYPE_ALTERN)
+        Public Shared ReadOnly ALTERN As InchiBondType = New InchiBondType("ALTERN", InnerEnum.ALTERN, INCHI_BOND_TYPE_ALTERN)
 
         Private Shared ReadOnly valueList As IList(Of InchiBondType) = New List(Of InchiBondType)()
 
@@ -66,8 +72,8 @@ Namespace IUPAC.InChI
         Private Shared ReadOnly map As IDictionary(Of SByte, InchiBondType) = New Dictionary(Of SByte, InchiBondType)()
 
         Shared Sub New()
-            For Each Val In values()
-                map.Add(Val.codeField, Val)
+            For Each val As InchiBondType In values()
+                map.Add(val.codeField, val)
             Next
 
             valueList.Add(NONE)

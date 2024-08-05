@@ -59,12 +59,12 @@ Namespace IUPAC.InChI
         ''' <summary>
         ''' Defines the stereo configuration around the give centralAtom. The four vertexes of the tetrahedral centre should be given along with the parity.
         ''' If one of the vertexes is an implicit hydrogen use <seealsocref="STEREO_IMPLICIT_H"/>. If one is a lone pair, use the centralAtom for this vertex </summary>
-        ''' <paramname="centralAtom"> </param>
-        ''' <paramname="atom1"> </param>
-        ''' <paramname="atom2"> </param>
-        ''' <paramname="atom3"> </param>
-        ''' <paramname="atom4"> </param>
-        ''' <paramname="parity">
+        ''' <param name="centralAtom"> </param>
+        ''' <param name="atom1"> </param>
+        ''' <param name="atom2"> </param>
+        ''' <param name="atom3"> </param>
+        ''' <param name="atom4"> </param>
+        ''' <param name="parity">
         ''' @return </param>
         Public Shared Function createTetrahedralStereo(centralAtom As InchiAtom, atom1 As InchiAtom, atom2 As InchiAtom, atom3 As InchiAtom, atom4 As InchiAtom, parity As InchiStereoParity) As InchiStereo
             Return New InchiStereo(New InchiAtom() {atom1, atom2, atom3, atom4}, centralAtom, InchiStereoType.Tetrahedral, parity)
@@ -103,11 +103,11 @@ Namespace IUPAC.InChI
         ''' 
         ''' For the 2 adjacent double-bond case use <seealsocref="InchiStereo.createAllenalStereo(InchiAtom,InchiAtom,InchiAtom,InchiAtom,InchiAtom,InchiStereoParity)"/>
         ''' </pre> </summary>
-        ''' <paramname="atom1"> </param>
-        ''' <paramname="atom2"> </param>
-        ''' <paramname="atom3"> </param>
-        ''' <paramname="atom4"> </param>
-        ''' <paramname="parity">
+        ''' <param name="atom1"> </param>
+        ''' <param name="atom2"> </param>
+        ''' <param name="atom3"> </param>
+        ''' <param name="atom4"> </param>
+        ''' <param name="parity">
         ''' @return </param>
         Public Shared Function createDoubleBondStereo(atom1 As InchiAtom, atom2 As InchiAtom, atom3 As InchiAtom, atom4 As InchiAtom, parity As InchiStereoParity) As InchiStereo
             If STEREO_IMPLICIT_H Is atom1 OrElse STEREO_IMPLICIT_H Is atom2 OrElse STEREO_IMPLICIT_H Is atom3 OrElse STEREO_IMPLICIT_H Is atom4 Then
@@ -137,12 +137,12 @@ Namespace IUPAC.InChI
         ''' 
         ''' (NOTE allenal centers with more than 2 double bonds are unsupported by InChI)
         ''' </pre> </summary>
-        ''' <paramname="centralAtom"> </param>
-        ''' <paramname="atom1"> </param>
-        ''' <paramname="atom2"> </param>
-        ''' <paramname="atom3"> </param>
-        ''' <paramname="atom4"> </param>
-        ''' <paramname="parity">
+        ''' <param name="centralAtom"> </param>
+        ''' <param name="atom1"> </param>
+        ''' <param name="atom2"> </param>
+        ''' <param name="atom3"> </param>
+        ''' <param name="atom4"> </param>
+        ''' <param name="parity">
         ''' @return </param>
         Public Shared Function createAllenalStereo(centralAtom As InchiAtom, atom1 As InchiAtom, atom2 As InchiAtom, atom3 As InchiAtom, atom4 As InchiAtom, parity As InchiStereoParity) As InchiStereo
             Return New InchiStereo(New InchiAtom() {atom1, atom2, atom3, atom4}, centralAtom, InchiStereoType.Allene, parity)

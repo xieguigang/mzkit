@@ -1,4 +1,7 @@
 ﻿
+
+Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
+
 ''' JNA-InChI - Library for calling InChI from Java
 ''' Copyright © 2018 Daniel Lowe
 ''' 
@@ -18,52 +21,22 @@
 Namespace IUPAC.InChI
     Public Class InchiOutput
 
-        Private ReadOnly inchiField As String
-        Private ReadOnly auxInfoField As String
-        Private ReadOnly messageField As String
-        Private ReadOnly logField As String
-        Private ReadOnly statusField As InchiStatus
+        Public Overridable ReadOnly Property Inchi As String
+        Public Overridable ReadOnly Property AuxInfo As String
+        Public Overridable ReadOnly Property Message As String
+        Public Overridable ReadOnly Property Log As String
+        Public Overridable ReadOnly Property Status As InchiStatus
 
-        Friend Sub New(inchi As String, auxInfo As String, message As String, log As String, status As InchiStatus)
-            inchiField = inchi
-            auxInfoField = auxInfo
-            messageField = message
-            logField = log
-            statusField = status
+        Sub New(inchi As String, auxInfo As String, message As String, log As String, status As InchiStatus)
+            _Inchi = inchi
+            _AuxInfo = auxInfo
+            _Message = message
+            _Log = log
+            _Status = status
         End Sub
 
-        Public Overridable ReadOnly Property Inchi As String
-            Get
-                Return inchiField
-            End Get
-        End Property
-
-        Public Overridable ReadOnly Property AuxInfo As String
-            Get
-                Return auxInfoField
-            End Get
-        End Property
-
-        Public Overridable ReadOnly Property Message As String
-            Get
-                Return messageField
-            End Get
-        End Property
-
-        Public Overridable ReadOnly Property Log As String
-            Get
-                Return logField
-            End Get
-        End Property
-
-        Public Overridable ReadOnly Property Status As InchiStatus
-            Get
-                Return statusField
-            End Get
-        End Property
-
         Public Overrides Function ToString() As String
-            Return inchiField
+            Return Inchi
         End Function
     End Class
 

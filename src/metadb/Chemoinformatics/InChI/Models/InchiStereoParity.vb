@@ -20,15 +20,22 @@ Namespace IUPAC.InChI
 
     Public NotInheritable Class InchiStereoParity
 
-        Public Shared ReadOnly NONE As InchiStereoParity = New InchiStereoParity("NONE", InnerEnum.NONE, InChI.InchiLibrary.tagINCHIStereoParity0D_Fields.INCHI_PARITY_NONE)
+        Public Const INCHI_PARITY_NONE = 0
+        Public Const INCHI_PARITY_ODD = 1
+        Public Const INCHI_PARITY_EVEN = 2
+        Public Const INCHI_PARITY_UNKNOWN = 3
+        Public Const INCHI_PARITY_UNDEFINED = 4
 
-        Public Shared ReadOnly ODD As InchiStereoParity = New InchiStereoParity("ODD", InnerEnum.ODD, InChI.InchiLibrary.tagINCHIStereoParity0D_Fields.INCHI_PARITY_ODD)
 
-        Public Shared ReadOnly EVEN As InchiStereoParity = New InchiStereoParity("EVEN", InnerEnum.EVEN, InChI.InchiLibrary.tagINCHIStereoParity0D_Fields.INCHI_PARITY_EVEN)
+        Public Shared ReadOnly NONE As InchiStereoParity = New InchiStereoParity("NONE", InnerEnum.NONE, INCHI_PARITY_NONE)
 
-        Public Shared ReadOnly UNKNOWN As InchiStereoParity = New InchiStereoParity("UNKNOWN", InnerEnum.UNKNOWN, InChI.InchiLibrary.tagINCHIStereoParity0D_Fields.INCHI_PARITY_UNKNOWN)
+        Public Shared ReadOnly ODD As InchiStereoParity = New InchiStereoParity("ODD", InnerEnum.ODD, INCHI_PARITY_ODD)
 
-        Public Shared ReadOnly UNDEFINED As InchiStereoParity = New InchiStereoParity("UNDEFINED", InnerEnum.UNDEFINED, InChI.InchiLibrary.tagINCHIStereoParity0D_Fields.INCHI_PARITY_UNDEFINED)
+        Public Shared ReadOnly EVEN As InchiStereoParity = New InchiStereoParity("EVEN", InnerEnum.EVEN, INCHI_PARITY_EVEN)
+
+        Public Shared ReadOnly UNKNOWN As InchiStereoParity = New InchiStereoParity("UNKNOWN", InnerEnum.UNKNOWN, INCHI_PARITY_UNKNOWN)
+
+        Public Shared ReadOnly UNDEFINED As InchiStereoParity = New InchiStereoParity("UNDEFINED", InnerEnum.UNDEFINED, INCHI_PARITY_UNDEFINED)
 
         Private Shared ReadOnly valueList As IList(Of InchiStereoParity) = New List(Of InchiStereoParity)()
 
@@ -64,8 +71,8 @@ Namespace IUPAC.InChI
         Private Shared ReadOnly map As IDictionary(Of SByte, InchiStereoParity) = New Dictionary(Of SByte, InchiStereoParity)()
 
         Shared Sub New()
-            For Each Val In values()
-                map.Add(Val.codeField, Val)
+            For Each val As InchiStereoParity In values()
+                map.Add(val.codeField, val)
             Next
 
             valueList.Add(NONE)
