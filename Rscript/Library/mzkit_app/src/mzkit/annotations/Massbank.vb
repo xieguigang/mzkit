@@ -75,7 +75,7 @@ Imports BioNovoGene.BioDeep.Chemistry.MetaLib.Models
 Imports BioNovoGene.BioDeep.Chemistry.TMIC
 Imports BioNovoGene.BioDeep.Chemoinformatics
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
-Imports BioNovoGene.BioDeep.Chemoinformatics.IUPAC.InChILayers
+Imports BioNovoGene.BioDeep.Chemoinformatics.IUPAC.InChI
 Imports BioNovoGene.BioDeep.Chemoinformatics.Lipidomics
 Imports BioNovoGene.BioDeep.Chemoinformatics.NaturalProduct
 Imports BioNovoGene.BioDeep.Chemoinformatics.SDF
@@ -924,6 +924,6 @@ Module Massbank
     <ExportAPI("inchikey")>
     <RApiReturn(GetType(InChIKey))>
     Public Function inchikey(<RRawVectorArgument> inchi As Object, Optional env As Environment = Nothing) As Object
-        Return env.EvaluateFramework(Of String, InChIKey)(inchi, eval:=AddressOf IUPAC.MakeHashCode)
+        Return env.EvaluateFramework(Of String, InChIKey)(inchi, eval:=AddressOf IUPAC.InChI.MakeHashCode)
     End Function
 End Module

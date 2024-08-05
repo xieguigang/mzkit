@@ -35,6 +35,9 @@ declare namespace annotation {
      *  fragment ion data, otherwise slot value FALSE means not.
    */
    function checkInSourceFragments(ms1: any, ms2: any, da?: number, rt_win?: number, env?: object): boolean;
+   /**
+   */
+   function get_annotations(workspace: object): object;
    module make {
       /**
        * create a new metabolite annotation information
@@ -51,6 +54,20 @@ declare namespace annotation {
         * + default value Is ``null``.
       */
       function annotation(id: string, formula: string, name: string, synonym?: string, xref?: object): object;
+   }
+   module open {
+      /**
+       * 
+       * 
+        * @param file -
+        * @param io Read or Write
+        * 
+        * + default value Is ``null``.
+        * @param env -
+        * 
+        * + default value Is ``null``.
+      */
+      function annotation_workspace(file: any, io?: object, env?: object): object;
    }
    /**
     * a shortcut method for populate the peak ms2 data from a mzpack raw data file

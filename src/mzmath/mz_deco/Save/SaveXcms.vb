@@ -170,10 +170,18 @@ Public Module SaveXcms
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Sub DumpSample(sample As PeakSet, file As Stream)
+    Public Function DumpSample(sample As PeakSet, file As Stream) As Boolean
         Call sample.peaks.DumpSample(sample.ROIs, sample.sampleNames, file)
-    End Sub
+        Return True
+    End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="sample"></param>
+    ''' <param name="npeaks">number of ROI peaks in current table, not the number of sample files.</param>
+    ''' <param name="sampleNames"></param>
+    ''' <param name="file"></param>
     <Extension>
     Public Sub DumpSample(sample As IEnumerable(Of xcms2), npeaks As Integer, sampleNames As String(), file As Stream)
         Dim bin As New BinaryWriter(file)

@@ -60,7 +60,7 @@ Imports System.Text
 Imports BioNovoGene.BioDeep.Chemoinformatics.IUPAC.InChILayers
 Imports Microsoft.VisualBasic.Linq
 
-Namespace IUPAC
+Namespace IUPAC.InChI
 
     ''' <summary>
     ''' 

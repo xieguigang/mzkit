@@ -1,0 +1,50 @@
+﻿
+Imports BioNovoGene.Analytical.MassSpectrometry.Math
+
+''' <summary>
+''' Result data pack for save the annotation result data
+''' </summary>
+''' <remarks>
+''' data export for internal annotation workflow, handling to customer report and view on mzkit workbench.
+''' </remarks>
+Public Class AnnotationPack : Implements IWorkspaceReader
+
+    ''' <summary>
+    ''' the ms2 spectrum alignment search hits
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property libraries As Dictionary(Of String, AlignmentHit())
+
+    ''' <summary>
+    ''' the ms1 peaktable
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property peaks As xcms2()
+
+    Public Function CreatePeakSet() As PeakSet
+        Return New PeakSet(peaks)
+    End Function
+
+    Public Function GetLibraryResult(libraryName As String) As AlignmentHit()
+        If libraries.ContainsKey(libraryName) Then
+            Return _libraries(libraryName)
+        Else
+            Return {}
+        End If
+    End Function
+
+    ''' <summary>
+    ''' Make a copy of current in-memory data pack
+    ''' </summary>
+    ''' <returns></returns>
+    Private Function LoadMemory() As AnnotationPack Implements IWorkspaceReader.LoadMemory
+        Return New AnnotationPack With {
+            .libraries = libraries _
+                .ToDictionary(Function(li) li.Key,
+                              Function(li)
+                                  Return li.Value.ToArray
+                              End Function),
+            .peaks = peaks.ToArray
+        }
+    End Function
+End Class

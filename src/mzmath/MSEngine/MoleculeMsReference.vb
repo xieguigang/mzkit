@@ -97,7 +97,13 @@ End Interface
 Public Interface IMSIonProperty : Inherits IMSProperty, IIonProperty
 End Interface
 
-Public Interface IMoleculeMsProperty : Inherits IMSScanProperty, IMoleculeProperty, IMSIonProperty ' especially used for library record
+''' <summary>
+''' 
+''' </summary>
+''' <remarks>
+''' especially used for library record
+''' </remarks>
+Public Interface IMoleculeMsProperty : Inherits IMSScanProperty, IMoleculeProperty, IMSIonProperty
 End Interface
 
 ''' <summary>

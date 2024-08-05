@@ -60,7 +60,7 @@
 
 Imports Microsoft.VisualBasic.Text
 
-Namespace IUPAC.InChILayers
+Namespace IUPAC.InChI
 
     ''' <summary>
     ''' ``AAAAAAAAAAAAAA-BBBBBBBBFV-P``

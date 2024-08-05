@@ -82,7 +82,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Text.Parser
 
-Namespace IUPAC.InChILayers
+Namespace IUPAC.InChI
 
     ''' <summary>
     ''' 主层（main layer）：以``1``表示

@@ -1,60 +1,61 @@
 ﻿#Region "Microsoft.VisualBasic::57ad005db37fa93be032fbe8ec57a69d, Rscript\Library\mzkit_app\src\mzkit\pipeline\library.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 579
-    '    Code Lines: 233 (40.24%)
-    ' Comment Lines: 312 (53.89%)
-    '    - Xml Docs: 93.59%
-    ' 
-    '   Blank Lines: 34 (5.87%)
-    '     File Size: 34.62 KB
+' Summaries:
 
 
-    ' Module library
-    ' 
-    '     Function: assertAdducts, checkInSourceFragments, createAnnotation, ionsFromPeaktable, PopulateIonData
-    '               xref
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 579
+'    Code Lines: 233 (40.24%)
+' Comment Lines: 312 (53.89%)
+'    - Xml Docs: 93.59%
+' 
+'   Blank Lines: 34 (5.87%)
+'     File Size: 34.62 KB
+
+
+' Module library
+' 
+'     Function: assertAdducts, checkInSourceFragments, createAnnotation, ionsFromPeaktable, PopulateIonData
+'               xref
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
@@ -65,6 +66,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree
 Imports BioNovoGene.BioDeep.Chemistry.MetaLib.CrossReference
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
+Imports BioNovoGene.BioDeep.MSEngine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -638,5 +640,32 @@ Module library
         Next
 
         Return flags
+    End Function
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="file"></param>
+    ''' <param name="io">Read or Write</param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("open.annotation_workspace")>
+    <RApiReturn(GetType(AnnotationWorkspace))>
+    Public Function OpenResultPack(<RRawVectorArgument> file As Object,
+                                   Optional io As FileAccess = FileAccess.Read,
+                                   Optional env As Environment = Nothing) As Object
+
+        Dim buf = SMRUCC.Rsharp.GetFileStream(file, io, env)
+
+        If buf Like GetType(Message) Then
+            Return buf.TryCast(Of Message)
+        End If
+
+        Return New AnnotationWorkspace(buf.TryCast(Of Stream))
+    End Function
+
+    <ExportAPI("get_annotations")>
+    Public Function loadAll(workspace As AnnotationWorkspace) As AnnotationPack
+        Return workspace.LoadMemory
     End Function
 End Module
