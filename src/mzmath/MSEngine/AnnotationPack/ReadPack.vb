@@ -34,7 +34,7 @@ Public Module ReadPack
     End Function
 
     Private Function ReadScore(bin As BinaryReader) As Ms2Score
-        Dim size As Integer = bin.ReadInt32
+        Dim size As Long = bin.ReadInt64
         Dim s As Stream = bin.BaseStream
         Dim buf As Stream = New SubStream(s, s.Position, size)
         Dim result As Ms2Score = ReadMs2Alignment(file:=buf)
