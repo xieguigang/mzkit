@@ -10,19 +10,19 @@ Public Module SavePack
         Dim ms As New MemoryStream
         Dim bin As New BinaryWriter(ms)
 
-        bin.Write(align.xcms_id)
-        bin.Write(align.libname)
+        bin.Write(If(align.xcms_id, ""))
+        bin.Write(If(align.libname, ""))
         bin.Write(align.mz)
         bin.Write(align.rt)
         bin.Write(align.RI)
         bin.Write(align.theoretical_mz)
         bin.Write(align.exact_mass)
-        bin.Write(align.adducts)
+        bin.Write(If(align.adducts, ""))
         bin.Write(align.ppm)
         bin.Write(align.occurrences)
-        bin.Write(align.biodeep_id)
-        bin.Write(align.name)
-        bin.Write(align.formula)
+        bin.Write(If(align.biodeep_id, ""))
+        bin.Write(If(align.name, ""))
+        bin.Write(If(align.formula, ""))
         bin.Write(align.npeaks)
         bin.Write(align.pvalue)
         bin.Write(align.samplefiles.TryCount)
@@ -51,14 +51,14 @@ Public Module SavePack
         bin.Write(align.reverse)
         bin.Write(align.jaccard)
         bin.Write(align.entropy)
-        bin.Write(align.libname)
-        bin.Write(align.source)
-        bin.Write(align.ms2.Length)
+        bin.Write(If(align.libname, ""))
+        bin.Write(If(align.source, ""))
+        bin.Write(align.ms2.TryCount)
 
-        For Each peak As ms2 In align.ms2
+        For Each peak As ms2 In align.ms2.SafeQuery
             bin.Write(peak.mz)
             bin.Write(peak.intensity)
-            bin.Write(peak.Annotation)
+            bin.Write(If(peak.Annotation, ""))
         Next
 
         bin.Flush()
