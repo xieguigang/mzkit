@@ -712,7 +712,22 @@ Module library
     ''' <param name="workspace"></param>
     ''' <param name="xref_id"></param>
     <ExportAPI("commit")>
-    Public Sub commit(workspace As LibraryWorkspace, xref_id As String)
-        Call workspace.commit(xref_id)
+    Public Sub commit(workspace As LibraryWorkspace, xref_id As String,
+                      mz As Double, rt As Double,
+                      adducts As String,
+                      biodeep_id As String, name As String, formula As String)
+
+        Call workspace.commit(xref_id, New AlignmentHit With {
+            .theoretical_mz = mz,
+            .mz = mz,
+            .rt = rt,
+            .RI = 0,
+            .adducts = adducts,
+            .biodeep_id = biodeep_id,
+            .formula = formula,
+            .name = name,
+            .exact_mass = FormulaScanner.EvaluateExactMass(.formula),
+            .libname = xref_id.Split("|"c).First
+        })
     End Sub
 End Module

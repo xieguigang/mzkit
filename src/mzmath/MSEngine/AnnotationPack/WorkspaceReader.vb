@@ -29,7 +29,15 @@ Public Class LibraryWorkspace
         Call tmp.Add(score)
     End Sub
 
-    Public Sub commit(xref_id As String)
+    ''' <summary>
+    ''' commit the annotation and ms2 alignment details
+    ''' </summary>
+    ''' <param name="xref_id"></param>
+    ''' <param name="annotation"></param>
+    ''' <remarks>
+    ''' thread unsafe
+    ''' </remarks>
+    Public Sub commit(xref_id As String, annotation As AlignmentHit)
         Dim samples As Dictionary(Of String, Ms2Score) = tmp _
             .GroupBy(Function(a) a.source) _
             .ToDictionary(Function(a) a.Key,
@@ -37,7 +45,11 @@ Public Class LibraryWorkspace
                               Return a.OrderByDescending(Function(i) i.score).First
                           End Function)
 
-        Call annotations.Add(xref_id, New AlignmentHit With {.samplefiles = samples})
+        Call tmp.Clear()
+
+        annotation.occurrences = samples.Count
+        annotation.samplefiles = samples
+        annotations.Add(xref_id, annotation)
     End Sub
 
 End Class
