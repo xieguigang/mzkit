@@ -730,4 +730,9 @@ Module library
             .libname = xref_id.Split("|"c).First
         })
     End Sub
+
+    <ExportAPI("workspace")>
+    Public Function create_workspace() As LibraryWorkspace
+        Return New LibraryWorkspace
+    End Function
 End Module
