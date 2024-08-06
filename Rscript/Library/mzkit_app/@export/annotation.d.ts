@@ -36,6 +36,14 @@ declare namespace annotation {
    */
    function checkInSourceFragments(ms1: any, ms2: any, da?: number, rt_win?: number, env?: object): boolean;
    /**
+    * Commit library annotation
+    * 
+    * 
+     * @param workspace -
+     * @param xref_id -
+   */
+   function commit(workspace: object, xref_id: string, mz: number, rt: number, adducts: string, biodeep_id: string, name: string, formula: string): ;
+   /**
    */
    function get_annotations(workspace: object): object;
    module make {
@@ -70,6 +78,9 @@ declare namespace annotation {
       function annotation_workspace(file: any, io?: object, env?: object): object;
    }
    /**
+   */
+   function peak_assign(works: object, libname: string, adducts: string, xcms_id: string, mz: number, rt: number, RI: number, npeaks: object): ;
+   /**
     * a shortcut method for populate the peak ms2 data from a mzpack raw data file
     * 
     * 
@@ -82,6 +93,15 @@ declare namespace annotation {
      * + default value Is ``null``.
    */
    function populateIonData(raw: object, mzdiff?: any, env?: object): object;
+   /**
+   */
+   function push_temp(workspace: object, mz: number, rt: number, intensity: number, libname: string, score: number, forward: number, reverse: number, jaccard: number, entropy: number, source: string, alignment: string): ;
+   /**
+   */
+   function save_annotations(workspace: object, library: string, annotations: object): ;
+   /**
+   */
+   function workspace(): object;
    /**
     * Create the database cross reference links
     * 
