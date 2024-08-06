@@ -44,7 +44,7 @@ Public Class AnnotationWorkspace : Implements IDisposable, IWorkspaceReader
     Public Function LoadMemory() As AnnotationPack Implements IWorkspaceReader.LoadMemory
         Dim libraries As New Dictionary(Of String, AlignmentHit())
 
-        For Each name As String In libraries.Keys
+        For Each name As String In Me.libraries.Keys
             Call libraries.Add(name, GetLibraryHits(name).ToArray)
         Next
 
