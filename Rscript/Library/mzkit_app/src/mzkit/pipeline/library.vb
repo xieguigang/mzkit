@@ -705,4 +705,14 @@ Module library
 
         Call workspace.add(align)
     End Sub
+
+    ''' <summary>
+    ''' Commit library annotation
+    ''' </summary>
+    ''' <param name="workspace"></param>
+    ''' <param name="xref_id"></param>
+    <ExportAPI("commit")>
+    Public Sub commit(workspace As LibraryWorkspace, xref_id As String)
+        Call workspace.commit(xref_id)
+    End Sub
 End Module

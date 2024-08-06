@@ -30,7 +30,14 @@ Public Class LibraryWorkspace
     End Sub
 
     Public Sub commit(xref_id As String)
+        Dim samples As Dictionary(Of String, Ms2Score) = tmp _
+            .GroupBy(Function(a) a.source) _
+            .ToDictionary(Function(a) a.Key,
+                          Function(a)
+                              Return a.OrderByDescending(Function(i) i.score).First
+                          End Function)
 
+        Call annotations.Add(xref_id, New AlignmentHit With {.samplefiles = samples})
     End Sub
 
 End Class
