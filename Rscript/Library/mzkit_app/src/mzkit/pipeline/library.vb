@@ -687,6 +687,11 @@ Module library
         Return workspace.LoadMemory
     End Function
 
+    <ExportAPI("save_annotations")>
+    Public Sub saveAnnotation(workspace As AnnotationWorkspace, library As String, annotations As LibraryWorkspace)
+        Call workspace.CreateLibraryResult(library, annotations.GetAnnotations)
+    End Sub
+
     <ExportAPI("push_temp")>
     Public Sub push_temp(workspace As LibraryWorkspace,
                          mz As Double, rt As Double, intensity As Double,

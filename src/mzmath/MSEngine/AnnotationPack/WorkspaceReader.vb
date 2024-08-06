@@ -34,6 +34,16 @@ Public Class LibraryWorkspace
         Call tmp.Add(score)
     End Sub
 
+    Public Iterator Function GetAnnotations() As IEnumerable(Of AlignmentHit)
+        For Each annotation As AlignmentHit In annotations.Values
+            If String.IsNullOrEmpty(annotation.xcms_id) Then
+                Continue For
+            End If
+
+            Yield annotation
+        Next
+    End Function
+
     ''' <summary>
     ''' commit the annotation and ms2 alignment details
     ''' </summary>
@@ -73,14 +83,14 @@ Public Class LibraryWorkspace
     Public Sub save(file As Stream, Optional commit_peaks As Boolean = False)
         Dim text As New StreamWriter(file)
 
-        For Each annotation In annotations
+        For Each annotation As AlignmentHit In annotations.Values
             If commit_peaks Then
-                If String.IsNullOrEmpty(annotation.Value.xcms_id) Then
+                If String.IsNullOrEmpty(annotation.xcms_id) Then
                     Continue For
                 End If
             End If
 
-            Call text.WriteLine(annotation.Value.GetJson)
+            Call text.WriteLine(annotation.GetJson)
         Next
 
         Call text.Flush()
