@@ -95,7 +95,6 @@ Public Class AnnotationWorkspace : Implements IDisposable, IWorkspaceReader
             Call samplefiles.Clear()
             Call samplefiles.AddRange(sampleNames)
             Call pool.DumpSample(ROIs, sampleNames, file)
-            Call file.Dispose()
         End Using
     End Sub
 
