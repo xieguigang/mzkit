@@ -18,6 +18,7 @@ Public Class AlignmentHit
     Public Property name As String
     Public Property formula As String
     Public Property npeaks As Integer
+    Public Property pvalue As Double
 
     ''' <summary>
     ''' sample hits of current library reference

@@ -24,6 +24,7 @@ Public Module SavePack
         bin.Write(align.name)
         bin.Write(align.formula)
         bin.Write(align.npeaks)
+        bin.Write(align.pvalue)
         bin.Write(align.samplefiles.TryCount)
 
         For Each sample In align.samplefiles.SafeQuery
@@ -50,7 +51,6 @@ Public Module SavePack
         bin.Write(align.reverse)
         bin.Write(align.jaccard)
         bin.Write(align.entropy)
-        bin.Write(align.pvalue)
         bin.Write(align.libname)
         bin.Write(align.source)
         bin.Write(align.ms2.Length)

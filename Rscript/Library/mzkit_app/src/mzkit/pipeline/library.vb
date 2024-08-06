@@ -668,4 +668,41 @@ Module library
     Public Function loadAll(workspace As AnnotationWorkspace) As AnnotationPack
         Return workspace.LoadMemory
     End Function
+
+    <ExportAPI("push_temp")>
+    Public Sub push_temp(workspace As LibraryWorkspace,
+                         mz As Double, rt As Double, intensity As Double,
+                         libname As String,
+                         score As Double,
+                         forward As Double, reverse As Double, jaccard As Double, entropy As Double,
+                         source As String,
+                         alignment As String)
+
+        Dim ms2 As ms2() = alignment _
+            .Split _
+            .Select(Function(t)
+                        Dim tokens As String() = t.Split("_"c)
+                        Dim mz2 As Double = Val(tokens(0))
+                        Dim into As Double = Val(tokens(1))
+                        Dim peak As New ms2(mz2, into)
+
+                        Return peak
+                    End Function) _
+            .ToArray
+        Dim align As New Ms2Score With {
+            .ms2 = ms2,
+            .entropy = entropy,
+            .forward = forward,
+            .intensity = intensity,
+            .jaccard = jaccard,
+            .libname = libname,
+            .precursor = mz,
+            .reverse = reverse,
+            .rt = rt,
+            .score = score,
+            .source = source
+        }
+
+        Call workspace.add(align)
+    End Sub
 End Module

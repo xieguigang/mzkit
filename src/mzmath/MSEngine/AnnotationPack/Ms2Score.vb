@@ -36,7 +36,6 @@ Public Class Ms2Score
     Public Property reverse As Double
     Public Property jaccard As Double
     Public Property entropy As Double
-    Public Property pvalue As Double
 
     ''' <summary>
     ''' the ms2 spectrum of current alignment hit result

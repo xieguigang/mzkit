@@ -21,7 +21,8 @@ Public Module ReadPack
             .name = bin.ReadString,
             .formula = bin.ReadString,
             .npeaks = bin.ReadInt32,
-            .samplefiles = New Dictionary(Of String, Ms2Score)
+            .samplefiles = New Dictionary(Of String, Ms2Score),
+            .pvalue = bin.ReadDouble
         }
         Dim n As Integer = bin.ReadInt32
 
@@ -51,7 +52,6 @@ Public Module ReadPack
             .reverse = bin.ReadDouble,
             .jaccard = bin.ReadDouble,
             .entropy = bin.ReadDouble,
-            .pvalue = bin.ReadDouble,
             .libname = bin.ReadString,
             .source = bin.ReadString
         }
