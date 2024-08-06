@@ -44,7 +44,7 @@ Public Class AnnotationWorkspace : Implements IDisposable, IWorkspaceReader
     Public Function LoadMemory() As AnnotationPack Implements IWorkspaceReader.LoadMemory
         Dim libraries As New Dictionary(Of String, AlignmentHit())
 
-        For Each name As String In libraries.Keys
+        For Each name As String In Me.libraries.Keys
             Call libraries.Add(name, GetLibraryHits(name).ToArray)
         Next
 
@@ -99,9 +99,11 @@ Public Class AnnotationWorkspace : Implements IDisposable, IWorkspaceReader
     End Sub
 
     Public Sub CreateLibraryResult(library$, result As IEnumerable(Of AlignmentHit))
-        Dim i As i32 = 0
+        Dim i As Integer = 0
 
         For Each peak_result As AlignmentHit In result.SafeQuery
+            i += 1
+
             Using file As Stream = pack.OpenFile($"/result/{library}/{peak_result.xcms_id}/{peak_result.libname}.dat",, FileAccess.Write)
                 Dim bin As New BinaryDataWriter(file)
                 Dim buf As MemoryStream = peak_result.PackAlignment
