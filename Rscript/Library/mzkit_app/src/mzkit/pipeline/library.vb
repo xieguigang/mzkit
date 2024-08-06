@@ -97,7 +97,8 @@ Module library
 
     Private Function writeWorkspace(table As LibraryWorkspace, args As list, env As Environment) As Object
         Dim con As Stream = args!con
-        Call table.save(con)
+        Dim commit_peaks As Boolean = args.getValue(Of Boolean)("commit_peaks", env, [default]:=False)
+        Call table.save(con, commit_peaks)
         Call con.Flush()
         Return True
     End Function
@@ -744,7 +745,8 @@ Module library
             .formula = formula,
             .name = name,
             .exact_mass = FormulaScanner.EvaluateExactMass(.formula),
-            .libname = xref_id.Split("|"c).First
+            .libname = xref_id.Split("|"c).First,
+            .xcms_id = Nothing
         })
     End Sub
 
@@ -752,4 +754,15 @@ Module library
     Public Function create_workspace() As LibraryWorkspace
         Return New LibraryWorkspace
     End Function
+
+    <ExportAPI("peak_assign")>
+    Public Sub peak_assign(works As LibraryWorkspace,
+                           libname As String, adducts As String,
+                           xcms_id As String, mz As Double, rt As Double, RI As Double, npeaks As Integer)
+
+        Dim db_xref As String = $"{libname}|{adducts}"
+        Dim peak As New xcms2 With {.ID = xcms_id, .mz = mz, .rt = rt, .RI = RI}
+
+        Call works.commit(db_xref, peak, npeaks)
+    End Sub
 End Module

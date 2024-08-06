@@ -38,6 +38,28 @@ Public Class AlignmentHit
         End Set
     End Property
 
+    Sub New()
+    End Sub
+
+    Sub New(copy As AlignmentHit)
+        xcms_id = copy.xcms_id
+        libname = copy.libname
+        mz = copy.mz
+        rt = copy.rt
+        RI = copy.RI
+        theoretical_mz = copy.theoretical_mz
+        exact_mass = copy.exact_mass
+        adducts = copy.adducts
+        ppm = copy.ppm
+        occurrences = copy.occurrences
+        biodeep_id = copy.biodeep_id
+        name = copy.name
+        formula = copy.formula
+        npeaks = copy.npeaks
+        pvalue = copy.pvalue
+        samplefiles = New Dictionary(Of String, Ms2Score)(copy.samplefiles)
+    End Sub
+
     Public Overrides Function ToString() As String
         Return name & "_" & adducts
     End Function

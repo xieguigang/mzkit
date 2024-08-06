@@ -1,4 +1,5 @@
 ﻿Imports System.IO
+Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization.JSON
 
@@ -56,10 +57,29 @@ Public Class LibraryWorkspace
         annotations.Add(xref_id, annotation)
     End Sub
 
-    Public Sub save(file As Stream)
+    Public Sub commit(xref_id As String, peak As xcms2, npeaks As Integer)
+        If annotations.ContainsKey(xref_id) Then
+            Dim annotation As New AlignmentHit(annotations(xref_id))
+            annotation.xcms_id = peak.ID
+            annotation.mz = peak.mz
+            annotation.rt = peak.rt
+            annotation.RI = peak.RI
+            annotation.npeaks = npeaks
+
+            Call annotations.Add($"{xref_id}|{peak.ID}", annotation)
+        End If
+    End Sub
+
+    Public Sub save(file As Stream, Optional commit_peaks As Boolean = False)
         Dim text As New StreamWriter(file)
 
         For Each annotation In annotations
+            If commit_peaks Then
+                If String.IsNullOrEmpty(annotation.Value.xcms_id) Then
+                    Continue For
+                End If
+            End If
+
             Call text.WriteLine(annotation.Value.GetJson)
         Next
 
