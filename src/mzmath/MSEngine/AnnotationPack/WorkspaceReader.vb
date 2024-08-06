@@ -1,11 +1,15 @@
-﻿Public Interface IWorkspaceReader
+﻿Imports System.IO
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Serialization.JSON
+
+Public Interface IWorkspaceReader
 
     Function LoadMemory() As AnnotationPack
 
 End Interface
 
 ''' <summary>
-''' A temp workspace
+''' A temp workspace of a single reference library
 ''' </summary>
 Public Class LibraryWorkspace
 
@@ -51,5 +55,30 @@ Public Class LibraryWorkspace
         annotation.samplefiles = samples
         annotations.Add(xref_id, annotation)
     End Sub
+
+    Public Sub save(file As Stream)
+        Dim text As New StreamWriter(file)
+
+        For Each annotation In annotations
+            Call text.WriteLine(annotation.Value.GetJson)
+        Next
+
+        Call text.Flush()
+    End Sub
+
+    Public Shared Function read(file As Stream) As LibraryWorkspace
+        Dim text As New StreamReader(file)
+        Dim libs As New LibraryWorkspace
+        Dim line As Value(Of String) = ""
+
+        Do While Not (line = text.ReadLine) Is Nothing
+            Dim annotation As AlignmentHit = CStr(line).LoadJSON(Of AlignmentHit)
+            Dim xref_id As String = $"{annotation.libname}|{annotation.adducts}"
+
+            Call libs.annotations.Add(xref_id, annotation)
+        Loop
+
+        Return libs
+    End Function
 
 End Class

@@ -83,7 +83,24 @@ Imports MetaData = BioNovoGene.BioDeep.Chemistry.MetaLib.Models.MetaInfo
 ''' </summary>
 <Package("annotation")>
 <RTypeExport("xref", GetType(xref))>
+<RTypeExport("library_workspace", GetType(LibraryWorkspace))>
 Module library
+
+    Sub Main()
+        Call Internal.generic.add("writeBin", GetType(LibraryWorkspace), AddressOf writeWorkspace)
+        Call Internal.generic.add("readBin.library_workspace", GetType(Stream), AddressOf loadWorkspace)
+    End Sub
+
+    Private Function loadWorkspace(file As Stream, args As list, env As Environment) As Object
+        Return LibraryWorkspace.read(file)
+    End Function
+
+    Private Function writeWorkspace(table As LibraryWorkspace, args As list, env As Environment) As Object
+        Dim con As Stream = args!con
+        Call table.save(con)
+        Call con.Flush()
+        Return True
+    End Function
 
     ''' <summary>
     ''' Create the database cross reference links
