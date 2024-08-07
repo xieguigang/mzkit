@@ -34,9 +34,18 @@ Public Class LibraryWorkspace
         Call tmp.Add(score)
     End Sub
 
-    Public Iterator Function GetAnnotations() As IEnumerable(Of AlignmentHit)
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <returns>
+    ''' Only populate the alignment result which has ms1 peak assigned by default.
+    ''' </returns>
+    Public Iterator Function GetAnnotations(Optional filterPeaks As Boolean = True) As IEnumerable(Of AlignmentHit)
         For Each annotation As AlignmentHit In annotations.Values
-            If String.IsNullOrEmpty(annotation.xcms_id) Then
+            ' if filter ms1 peak assigned information,
+            ' and also current annotation result has no ms1 peak id
+            ' then skip
+            If filterPeaks AndAlso String.IsNullOrEmpty(annotation.xcms_id) Then
                 Continue For
             End If
 

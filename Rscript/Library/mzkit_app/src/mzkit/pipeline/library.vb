@@ -689,7 +689,7 @@ Module library
 
     <ExportAPI("save_annotations")>
     Public Sub saveAnnotation(workspace As AnnotationWorkspace, library As String, annotations As LibraryWorkspace)
-        Call workspace.CreateLibraryResult(library, annotations.GetAnnotations)
+        Call workspace.CreateLibraryResult(library, annotations.GetAnnotations(filterPeaks:=True))
     End Sub
 
     <ExportAPI("push_temp")>
