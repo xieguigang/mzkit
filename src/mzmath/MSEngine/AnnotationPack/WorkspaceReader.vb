@@ -101,12 +101,32 @@ Public Class LibraryWorkspace
         Dim libs As New LibraryWorkspace
         Dim line As Value(Of String) = ""
 
-        Do While Not (line = text.ReadLine) Is Nothing
-            Dim annotation As AlignmentHit = CStr(line).LoadJSON(Of AlignmentHit)
-            Dim xref_id As String = $"{annotation.libname}|{annotation.adducts}"
+        ' the workspace has two status:
+        '
+        ' no ms1 peak assigned, missing xcms_id, unique id via: $"{annotation.libname}|{annotation.adducts}"
+        ' has ms1 peak assigned, $"{annotation.libname}|{annotation.adducts}" will be duplicated, then indexed via $"{annotation.libname}|{annotation.adducts}|{annotation.xcms_id}"
+        Dim load As New List(Of AlignmentHit)
 
-            Call libs.annotations.Add(xref_id, annotation)
+        Do While Not (line = text.ReadLine) Is Nothing
+            ' Dim annotation As AlignmentHit = CStr(line).LoadJSON(Of AlignmentHit)
+            ' Dim xref_id As String = $"{annotation.libname}|{annotation.adducts}"
+
+            ' Call libs.annotations.Add(xref_id, annotation)
+            Call load.Add(CStr(line).LoadJSON(Of AlignmentHit))
         Loop
+
+        ' check of the peak assign status
+        If load.All(Function(a) a.xcms_id.StringEmpty(, True)) Then
+            ' no ms1 peak assigned
+            For Each annotation As AlignmentHit In load
+                Call libs.annotations.Add($"{annotation.libname}|{annotation.adducts}", annotation)
+            Next
+        Else
+            ' already has ms1 peak assigned information
+            For Each annotation As AlignmentHit In load
+                Call libs.annotations.Add($"{annotation.libname}|{annotation.adducts}|{annotation.xcms_id}", annotation)
+            Next
+        End If
 
         Return libs
     End Function
