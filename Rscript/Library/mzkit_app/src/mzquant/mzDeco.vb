@@ -136,7 +136,8 @@ Module mzDeco
         Call generic.add("writeBin", GetType(PeakSet), AddressOf writePeaktable)
     End Sub
 
-    Private Function peaksSetMatrix(peaks As PeakSet, args As list, env As Environment) As Object
+    <RGenericOverloads("as.data.frame")>
+    Private Function peaksSetMatrix(peaks As PeakSet, args As list, env As Environment) As dataframe
         Return peaksetMatrix(peaks.peaks, args, env)
     End Function
 
@@ -177,6 +178,7 @@ Module mzDeco
         Return SaveXIC.ReadSample(file).ToArray
     End Function
 
+    <RGenericOverloads("as.data.frame")>
     Private Function peaksetMatrix(peakset As xcms2(), args As list, env As Environment) As dataframe
         Dim table As New dataframe With {
            .columns = New Dictionary(Of String, Array)
@@ -207,6 +209,7 @@ Module mzDeco
         Return table
     End Function
 
+    <RGenericOverloads("as.data.frame")>
     Private Function peaktable(x As PeakFeature(), args As list, env As Environment) As dataframe
         Dim table As New dataframe With {
             .columns = New Dictionary(Of String, Array)
@@ -411,10 +414,19 @@ Module mzDeco
     ''' <summary>
     ''' cast dataset to mzkit peaktable object
     ''' </summary>
-    ''' <param name="x"></param>
+    ''' <param name="x">should be a data collection of the peaks data, value could be:
+    ''' 
+    ''' 1. a collection of the <see cref="xcms2"/> ROI peaks data
+    ''' 2. an actual <see cref="PeakSet"/> object, then this function will make value copy of this object
+    ''' 3. a dataframe object that contains the peaks data for make the data conversion
+    ''' </param>
     ''' <param name="env"></param>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' 
+    ''' </remarks>
     <ExportAPI("as.peak_set")>
+    <RApiReturn(GetType(PeakSet))>
     Public Function create_peakset(<RRawVectorArgument> x As Object, Optional env As Environment = Nothing) As Object
         Dim pull = pipeline.TryCreatePipeline(Of xcms2)(x, env)
         Dim peaks As New List(Of xcms2)
