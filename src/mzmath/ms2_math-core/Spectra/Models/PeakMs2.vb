@@ -219,5 +219,9 @@ Namespace Spectra
                 Return mz.intensity
             End If
         End Function
+
+        Public Function GetMatrix() As LibraryMatrix
+            Return New LibraryMatrix(lib_guid, mzInto)
+        End Function
     End Class
 End Namespace
