@@ -451,6 +451,8 @@ Module mzDeco
             Else
                 Return pull.getError
             End If
+        Else
+            Call peaks.AddRange(pull.populates(Of xcms2)(env))
         End If
 
         Return New PeakSet(peaks)
