@@ -92,7 +92,10 @@ Module library
     End Sub
 
     Private Function loadWorkspace(file As Stream, args As list, env As Environment) As Object
-        Return LibraryWorkspace.read(file)
+        Dim mz_bin As Boolean = args.getValue("mz_bin", env, [default]:=False)
+        Dim libs = LibraryWorkspace.read(file, mz_bin)
+
+        Return libs
     End Function
 
     Private Function writeWorkspace(table As LibraryWorkspace, args As list, env As Environment) As Object

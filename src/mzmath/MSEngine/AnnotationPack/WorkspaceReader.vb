@@ -105,7 +105,7 @@ Public Class LibraryWorkspace
         Call text.Flush()
     End Sub
 
-    Public Shared Function read(file As Stream) As LibraryWorkspace
+    Public Shared Function read(file As Stream, Optional mz_bin As Boolean = False) As LibraryWorkspace
         Dim text As New StreamReader(file)
         Dim libs As New LibraryWorkspace
         Dim line As Value(Of String) = ""
@@ -128,7 +128,12 @@ Public Class LibraryWorkspace
         If load.All(Function(a) a.xcms_id.StringEmpty(, True)) Then
             ' no ms1 peak assigned
             For Each annotation As AlignmentHit In load
-                Call libs.annotations.Add($"{annotation.libname}|{annotation.adducts}", annotation)
+                If mz_bin Then
+                    ' attach mz_bin for make unique
+                    Call libs.annotations.Add($"{annotation.libname}|{annotation.adducts}|{CInt(annotation.mz)}", annotation)
+                Else
+                    Call libs.annotations.Add($"{annotation.libname}|{annotation.adducts}", annotation)
+                End If
             Next
         Else
             ' already has ms1 peak assigned information
