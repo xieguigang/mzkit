@@ -171,4 +171,14 @@ declare namespace visual {
      * + default value Is ``null``.
    */
    function raw_snapshot3D(ms1_scans: any, mzwidth?: any, noise_cutoff?: number, size?: any, padding?: any, colors?: any, show_legends?: boolean, env?: object): any;
+   /**
+    * make visualization of the XIC scatters
+    * 
+    * 
+     * @param ms1 -
+     * @param env -
+     * 
+     * + default value Is ``null``.
+   */
+   function xic_scatter_density(ms1: any, env?: object): any;
 }
