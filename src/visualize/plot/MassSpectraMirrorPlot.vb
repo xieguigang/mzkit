@@ -63,6 +63,9 @@ Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 
+''' <summary>
+''' data visualization for the mass spectrum alignment details
+''' </summary>
 Public Module MassSpectra
 
     ''' <summary>

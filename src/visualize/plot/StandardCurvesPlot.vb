@@ -62,6 +62,9 @@ Imports Microsoft.VisualBasic.Data.ChartPlots.Statistics
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 
+''' <summary>
+''' plot regression model of the MRM/SRM standard curves result
+''' </summary>
 Public Module StandardCurvesPlot
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
