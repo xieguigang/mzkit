@@ -546,6 +546,18 @@ Module mzDeco
         Return peaktable.Subset(sampleNames)
     End Function
 
+    ''' <summary>
+    ''' Create a xcms peak data object
+    ''' </summary>
+    ''' <param name="id">the unique referene id of the peak data</param>
+    ''' <param name="mz"></param>
+    ''' <param name="mz_range"></param>
+    ''' <param name="rt"></param>
+    ''' <param name="rt_range"></param>
+    ''' <param name="RI"></param>
+    ''' <param name="samples"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("xcms_peak")>
     Public Function xcms_peak(id As String, mz As Double, mz_range As Double(), rt As Double, rt_range As Double(), RI As Double,
                               <RListObjectArgument>
