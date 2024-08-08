@@ -516,6 +516,25 @@ Module mzDeco
         Return peaktable.Subset(sampleNames)
     End Function
 
+    <ExportAPI("xcms_peak")>
+    Public Function xcms_peak(id As String, mz As Double, mz_range As Double(), rt As Double, rt_range As Double(), RI As Double,
+                              <RListObjectArgument>
+                              samples As list,
+                              Optional env As Environment = Nothing) As xcms2
+
+        Return New xcms2 With {
+            .ID = id,
+            .mz = mz,
+            .mzmin = mz_range.Min,
+            .mzmax = mz_range.Max,
+            .RI = RI,
+            .rt = rt,
+            .rtmax = rt_range.Max,
+            .rtmin = rt_range.Min,
+            .Properties = samples.AsGeneric(Of Double)(env)
+        }
+    End Function
+
     ''' <summary>
     ''' helper function for find ms1 peaks based on the given mz/rt tuple data
     ''' </summary>
@@ -530,7 +549,8 @@ Module mzDeco
     <RApiReturn(GetType(xcms2))>
     Public Function get_ionPeak(peaktable As PeakSet, mz As Double, rt As Double,
                                 Optional mzdiff As Double = 0.01,
-                                Optional rt_win As Double = 90) As Object
+                                Optional rt_win As Double = 90,
+                                Optional find_RI As Boolean = False) As Object
 
         Return peaktable.FindIonSet(mz, rt, mzdiff, rt_win) _
             .OrderBy(Function(a)
