@@ -1,61 +1,61 @@
 ﻿#Region "Microsoft.VisualBasic::d0e45d5b88b5f265b808ac70aa89159d, Rscript\Library\mzkit_app\src\mzkit\assembly\Assembly.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 607
-    '    Code Lines: 439 (72.32%)
-    ' Comment Lines: 101 (16.64%)
-    '    - Xml Docs: 97.03%
-    ' 
-    '   Blank Lines: 67 (11.04%)
-    '     File Size: 26.32 KB
+' Summaries:
 
 
-    ' Module Assembly
-    ' 
-    '     Function: GetFileType, getMs1Scans, ionMode, IonPeaks, LoadIndex
-    '               MatrixDataFrame, (+2 Overloads) mzMLMs1, mzXML2Mgf, (+2 Overloads) mzXMLMs1, openXmlSeeks
-    '               PeakMs2FileIndex, printPeak, rawScans, ReadMgfIons, ReadMslIons
-    '               readMsp, ScanIds, Seek, summaryIons, writeMgfIons
-    ' 
-    '     Sub: Main
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 607
+'    Code Lines: 439 (72.32%)
+' Comment Lines: 101 (16.64%)
+'    - Xml Docs: 97.03%
+' 
+'   Blank Lines: 67 (11.04%)
+'     File Size: 26.32 KB
+
+
+' Module Assembly
+' 
+'     Function: GetFileType, getMs1Scans, ionMode, IonPeaks, LoadIndex
+'               MatrixDataFrame, (+2 Overloads) mzMLMs1, mzXML2Mgf, (+2 Overloads) mzXMLMs1, openXmlSeeks
+'               PeakMs2FileIndex, printPeak, rawScans, ReadMgfIons, ReadMslIons
+'               readMsp, ScanIds, Seek, summaryIons, writeMgfIons
+' 
+'     Sub: Main
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -133,14 +133,14 @@ Module Assembly
         Dim xcms_id As String = $"M{CInt(peak.mz)}T{CInt(peak.rt) + 1}"
         Dim top6 As Double() = peak.mzInto _
             .OrderByDescending(Function(m) m.intensity) _
-            .Take(6) _
+            .Take(5) _
             .Select(Function(m) m.mz) _
             .ToArray
         Dim top6Str As String = top6 _
-            .Select(Function(d) d.ToString("F4")) _
-            .JoinBy(vbTab)
+            .Select(Function(d) d.ToString("F3")) _
+            .JoinBy(", ")
 
-        Return $"[{xcms_id}, {peak.intensity}] {peak.activation}-{peak.collisionEnergy}eV,{vbTab}{peak.fragments} fragments: {top6Str}..."
+        Return $"[{xcms_id}, {peak.mz.ToString("F4")}@{DateTimeHelper.ReadableElapsedTime(peak.rt * 1000)} intensity:{peak.intensity.ToString("G2")}] {peak.activation}-{peak.collisionEnergy}eV; MS/MS top 5: {top6Str}..."
     End Function
 
     ''' <summary>
