@@ -54,9 +54,11 @@ declare namespace mzDeco {
      * @param rt_win the rt window size for matches the rt. should be in data unit seconds.
      * 
      * + default value Is ``90``.
+     * @param find_RI 
+     * + default value Is ``false``.
      * @return data is re-ordered via the tolerance error
    */
-   function find_xcms_ionPeaks(peaktable: object, mz: number, rt: number, mzdiff?: number, rt_win?: number): object;
+   function find_xcms_ionPeaks(peaktable: object, mz: number, rt: number, mzdiff?: number, rt_win?: number, find_RI?: boolean): object;
    module mz {
       /**
        * do ``m/z`` grouping under the given tolerance
@@ -299,6 +301,10 @@ declare namespace mzDeco {
       */
       function xcms_peaks(x: object, file: any, env?: object): boolean;
    }
+   /**
+     * @param env default value Is ``null``.
+   */
+   function xcms_peak(id: string, mz: number, mz_range: number, rt: number, rt_range: number, RI: number, samples: object, env?: object): object;
    /**
     * Load xic sample data files
     * 

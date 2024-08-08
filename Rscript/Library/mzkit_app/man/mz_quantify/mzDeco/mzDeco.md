@@ -18,6 +18,7 @@ Extract peak and signal data from rawdata
 + [as.peak_set](mzDeco/as.peak_set.1) cast dataset to mzkit peaktable object
 + [read.xcms_features](mzDeco/read.xcms_features.1) Try to cast the dataframe to the mzkit peak feature object set
 + [peak_subset](mzDeco/peak_subset.1) make sample column projection
++ [xcms_peak](mzDeco/xcms_peak.1) 
 + [find_xcms_ionPeaks](mzDeco/find_xcms_ionPeaks.1) helper function for find ms1 peaks based on the given mz/rt tuple data
 + [adjust_to_seconds](mzDeco/adjust_to_seconds.1) adjust the reteintion time data to unit seconds
 + [RI_reference](mzDeco/RI_reference.1) Create RI reference dataset.
