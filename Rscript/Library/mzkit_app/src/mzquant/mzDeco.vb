@@ -448,6 +448,9 @@ Module mzDeco
                         .rtmin = rtmin(i)
                     })
                 Next
+            ElseIf TypeOf x Is PeakSet Then
+                ' make peakset data copy
+                Return New PeakSet(DirectCast(x, PeakSet).peaks)
             Else
                 Return pull.getError
             End If
