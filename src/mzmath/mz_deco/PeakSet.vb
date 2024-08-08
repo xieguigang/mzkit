@@ -230,6 +230,28 @@ Public Class PeakSet : Implements Enumeration(Of xcms2)
         }
     End Function
 
+    Public Iterator Function ToFeatures() As IEnumerable(Of PeakFeature)
+        For Each peak As xcms2 In m_peaksdata
+            For Each sample In peak.Properties
+                Yield New PeakFeature With {
+                    .area = sample.Value,
+                    .baseline = 0,
+                    .integration = sample.Value,
+                    .maxInto = sample.Value,
+                    .mz = peak.mz,
+                    .noise = 0,
+                    .nticks = 0,
+                    .rawfile = sample.Key,
+                    .RI = peak.RI,
+                    .rt = peak.rt,
+                    .rtmax = peak.rtmax,
+                    .rtmin = peak.rtmin,
+                    .xcms_id = peak.ID
+                }
+            Next
+        Next
+    End Function
+
     Private Iterator Function GenericEnumerator() As IEnumerator(Of xcms2) Implements Enumeration(Of xcms2).GenericEnumerator
         For Each peak As xcms2 In m_peaksdata.SafeQuery
             Yield peak

@@ -1043,6 +1043,50 @@ extract_ms1:
     End Function
 
     ''' <summary>
+    ''' make peaktable join of two batch data via (mz,RI)
+    ''' </summary>
+    ''' <param name="batch1"></param>
+    ''' <param name="batch2"></param>
+    ''' <returns></returns>
+    <ExportAPI("RI_batch_join")>
+    Public Function RI_batch_join(batch1 As PeakSet, batch2 As PeakSet,
+                                  Optional mzdiff As Double = 0.01,
+                                  Optional ri_win As Double = 10,
+                                  Optional max_intensity_ion As Boolean = False) As Object
+
+        Dim allpeaks = batch1.ToFeatures _
+            .JoinIterates(batch2.ToFeatures) _
+            .GroupBy(Function(a) a.rawfile) _
+            .Select(Function(s) New NamedCollection(Of PeakFeature)(s.Key, s)) _
+            .ToArray
+        Dim rt_shifts As New List(Of RtShift)
+        Dim peaktable As xcms2() = allpeaks _
+            .RIAlignment(rt_shifts,
+                        mzdiff:=mzdiff,
+                        ri_offset:=ri_win,
+                        top_ion:=max_intensity_ion) _
+            .ToArray
+        Dim id As String() = peaktable.Select(Function(i) i.ID).UniqueNames
+        Dim sampleNames As String() = allpeaks.Keys.ToArray
+
+        For i As Integer = 0 To id.Length - 1
+            Dim peak As xcms2 = peaktable(i)
+
+            peak.ID = id(i)
+
+            For Each sample_id As String In sampleNames
+                If Not peak.Properties.ContainsKey(sample_id) Then
+                    peak(sample_id) = 0.0
+                End If
+            Next
+        Next
+
+        Dim vec As New vec(peaktable, RType.GetRSharpType(GetType(xcms2)))
+        Call vec.setAttribute("rt.shift", rt_shifts.ToArray)
+        Return vec
+    End Function
+
+    ''' <summary>
     ''' do ``m/z`` grouping under the given tolerance
     ''' </summary>
     ''' <param name="ms1">
