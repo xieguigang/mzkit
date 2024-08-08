@@ -423,7 +423,13 @@ Module mzDeco
     ''' <param name="env"></param>
     ''' <returns></returns>
     ''' <remarks>
+    ''' for make data object conversion from a R# runtime dataframe object, that these data 
+    ''' fields is required for creates the xcms peaks object:
     ''' 
+    ''' 1. mz, mzmin, mzmax: the ion m/z value of the xcms peak
+    ''' 2. rt, rtmin, rtmax: the ion retention time of the xcms peak data, should be in time unit seconds
+    ''' 3. RI: the ion retention index value that evaluated based on the RT value
+    ''' 4. all of the other data fields in the dataframe will be treated as the sample peak area data.
     ''' </remarks>
     <ExportAPI("as.peak_set")>
     <RApiReturn(GetType(PeakSet))>
@@ -434,41 +440,7 @@ Module mzDeco
         If pull.isError Then
             ' deal with dataframe?
             If TypeOf x Is dataframe Then
-                Dim df As dataframe = x
-                Dim mz As Double() = CLRVector.asNumeric(df!mz)
-                Dim mzmin As Double() = CLRVector.asNumeric(df!mzmin)
-                Dim mzmax As Double() = CLRVector.asNumeric(df!mzmax)
-                Dim rt As Double() = CLRVector.asNumeric(df!rt)
-                Dim rtmin As Double() = CLRVector.asNumeric(df!rtmin)
-                Dim rtmax As Double() = CLRVector.asNumeric(df!rtmax)
-                Dim RI As Double() = CLRVector.asNumeric(df!RI)
-                Dim ID As String() = df.getRowNames.UniqueNames
-
-                Call df.delete("ID", "mz", "mzmin", "mzmax", "rt", "rtmin", "rtmax", "RI", "npeaks")
-
-                Dim offset As Integer
-                Dim v As Dictionary(Of String, Double)
-                Dim matrix As NamedCollection(Of Double)() = df.columns _
-                    .Select(Function(i)
-                                Return New NamedCollection(Of Double)(i.Key, CLRVector.asNumeric(i.Value))
-                            End Function) _
-                    .ToArray
-
-                For i As Integer = 0 To mz.Length - 1
-                    offset = i
-                    v = matrix.ToDictionary(Function(a) a.name, Function(a) a(offset))
-
-                    Call peaks.Add(New xcms2(v) With {
-                        .ID = ID(i),
-                        .mz = mz(i),
-                        .mzmax = mzmax(i),
-                        .mzmin = mzmin(i),
-                        .RI = RI(i),
-                        .rt = rt(i),
-                        .rtmax = rtmax(i),
-                        .rtmin = rtmin(i)
-                    })
-                Next
+                Call peaks.AddRange(convertDataframeToXcmsPeaks(DirectCast(x, dataframe)))
             ElseIf TypeOf x Is PeakSet Then
                 ' make peakset data copy
                 Return New PeakSet(DirectCast(x, PeakSet).peaks)
@@ -480,6 +452,43 @@ Module mzDeco
         End If
 
         Return New PeakSet(peaks)
+    End Function
+
+    Private Iterator Function convertDataframeToXcmsPeaks(df As dataframe) As IEnumerable(Of xcms2)
+        Dim mz As Double() = CLRVector.asNumeric(df!mz)
+        Dim mzmin As Double() = CLRVector.asNumeric(df!mzmin)
+        Dim mzmax As Double() = CLRVector.asNumeric(df!mzmax)
+        Dim rt As Double() = CLRVector.asNumeric(df!rt)
+        Dim rtmin As Double() = CLRVector.asNumeric(df!rtmin)
+        Dim rtmax As Double() = CLRVector.asNumeric(df!rtmax)
+        Dim RI As Double() = CLRVector.asNumeric(df!RI)
+        Dim ID As String() = df.getRowNames.UniqueNames
+
+        Call df.delete("ID", "mz", "mzmin", "mzmax", "rt", "rtmin", "rtmax", "RI", "npeaks")
+
+        Dim offset As Integer
+        Dim v As Dictionary(Of String, Double)
+        Dim matrix As NamedCollection(Of Double)() = df.columns _
+            .Select(Function(i)
+                        Return New NamedCollection(Of Double)(i.Key, CLRVector.asNumeric(i.Value))
+                    End Function) _
+            .ToArray
+
+        For i As Integer = 0 To mz.Length - 1
+            offset = i
+            v = matrix.ToDictionary(Function(a) a.name, Function(a) a(offset))
+
+            Yield New xcms2(v) With {
+                .ID = ID(i),
+                .mz = mz(i),
+                .mzmax = mzmax(i),
+                .mzmin = mzmin(i),
+                .RI = RI(i),
+                .rt = rt(i),
+                .rtmax = rtmax(i),
+                .rtmin = rtmin(i)
+            }
+        Next
     End Function
 
     ''' <summary>
