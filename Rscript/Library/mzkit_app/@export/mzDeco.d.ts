@@ -215,6 +215,20 @@ declare namespace mzDeco {
       function xcms_peaks(file: any, tsv?: boolean, general_method?: boolean, env?: object): object;
    }
    /**
+    * make peaktable join of two batch data via (mz,RI)
+    * 
+    * 
+     * @param batch1 -
+     * @param batch2 -
+     * @param mzdiff 
+     * + default value Is ``0.01``.
+     * @param ri_win 
+     * + default value Is ``10``.
+     * @param max_intensity_ion 
+     * + default value Is ``false``.
+   */
+   function RI_batch_join(batch1: object, batch2: object, mzdiff?: number, ri_win?: number, max_intensity_ion?: boolean): any;
+   /**
     * RI calculation of a speicifc sample data
     * 
     * 
