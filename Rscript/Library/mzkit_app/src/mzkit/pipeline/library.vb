@@ -765,7 +765,7 @@ Module library
                            libname As String, adducts As String,
                            xcms_id As String, mz As Double, rt As Double, RI As Double, npeaks As Integer)
 
-        Dim db_xref As String = $"{libname}|{adducts}"
+        Dim db_xref As String = $"{libname}|{adducts}|{CInt(mz)}"
         Dim peak As New xcms2 With {.ID = xcms_id, .mz = mz, .rt = rt, .RI = RI}
 
         Call works.commit(db_xref, peak, npeaks)

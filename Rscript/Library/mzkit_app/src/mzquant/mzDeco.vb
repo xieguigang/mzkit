@@ -124,6 +124,7 @@ Module mzDeco
     Sub Main()
         Call Internal.Object.Converts.addHandler(GetType(PeakFeature()), AddressOf peaktable)
         Call Internal.Object.Converts.addHandler(GetType(xcms2()), AddressOf peaksetMatrix)
+        Call Internal.Object.Converts.addHandler(GetType(PeakSet), AddressOf peaksSetMatrix)
 
         Call generic.add("readBin.mz_group", GetType(Stream), AddressOf readXIC)
         Call generic.add("readBin.peak_feature", GetType(Stream), AddressOf readSamples)
@@ -134,6 +135,10 @@ Module mzDeco
         Call generic.add("writeBin", GetType(PeakFeature()), AddressOf writeSamples)
         Call generic.add("writeBin", GetType(PeakSet), AddressOf writePeaktable)
     End Sub
+
+    Private Function peaksSetMatrix(peaks As PeakSet, args As list, env As Environment) As Object
+        Return peaksetMatrix(peaks.peaks, args, env)
+    End Function
 
     Private Function writePeaktable(table As PeakSet, args As list, env As Environment) As Object
         Dim con As Stream = args!con
@@ -279,6 +284,9 @@ Module mzDeco
     ''' read the peaktable file that in xcms2 output format
     ''' </summary>
     ''' <param name="file">should be the file path to the peaktable csv/txt file.</param>
+    ''' <param name="make_unique">
+    ''' set this parameter to value TRUE will ensure that the xcms reference id is always unique
+    ''' </param>
     ''' <returns>A collection set of the <see cref="xcms2"/> peak features data object</returns>
     ''' <keywords>read data</keywords>
     <ExportAPI("read.xcms_peaks")>
@@ -286,6 +294,7 @@ Module mzDeco
     Public Function readXcmsPeaks(file As Object,
                                   Optional tsv As Boolean = False,
                                   Optional general_method As Boolean = False,
+                                  Optional make_unique As Boolean = False,
                                   Optional env As Environment = Nothing) As Object
 
         If file Is Nothing Then
@@ -293,7 +302,7 @@ Module mzDeco
         End If
 
         If TypeOf file Is String Then
-            Return readXcmsTableFile(file, general_method, tsv)
+            Return readXcmsTableFile(file, general_method, tsv, make_unique)
         ElseIf TypeOf file Is AnnotationWorkspace Then
             Return New PeakSet(DirectCast(file, AnnotationWorkspace).LoadPeakTable)
         Else
@@ -301,7 +310,7 @@ Module mzDeco
         End If
     End Function
 
-    Private Function readXcmsTableFile(file As String, general_method As Boolean, tsv As Boolean) As Object
+    Private Function readXcmsTableFile(file As String, general_method As Boolean, tsv As Boolean, make_unique As Boolean) As Object
         If file.ExtensionSuffix("dat", "xcms") Then
             ' read binary file
             Using buf As Stream = file.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
@@ -310,7 +319,7 @@ Module mzDeco
         End If
 
         If Not general_method Then
-            Return SaveXcms.ReadTextTable(file, tsv)
+            Return SaveXcms.ReadTextTable(file, tsv, make_unique)
         Else
             Return New PeakSet With {
                 .peaks = file.LoadCsv(Of xcms2)(mute:=True).ToArray

@@ -6,6 +6,7 @@ read.xcms_peaks \- read the peaktable file that in xcms2 output format
 \fIread.xcms_peaks(\fBfile\fR as any, 
 \fBtsv\fR as boolean = FALSE, 
 \fBgeneral_method\fR as boolean = FALSE, 
+\fBmake_unique\fR as boolean = FALSE, 
 [\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
@@ -14,6 +15,11 @@ read the peaktable file that in xcms2 output format
 .SH OPTIONS
 .PP
 \fBfile\fB \fR\- should be the file path to the peaktable csv/txt file.. 
+.PP
+.PP
+\fBmake_unique\fB \fR\- 
+ set this parameter to value TRUE will ensure that the xcms reference id is always unique
+. 
 .PP
 .SH VALUE
 .PP

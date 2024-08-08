@@ -29,7 +29,8 @@
         <div style="width: 100%; padding-left: 3%; color: black;">
             <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>read.xcms_peaks</strong>(<i>file</i>,
     <i>tsv</i> = <span style='color: blue !important;'>FALSE</span>,
-    <i>general.method</i> = <span style='color: blue !important;'>FALSE</span>);</code></pre>
+    <i>general.method</i> = <span style='color: blue !important;'>FALSE</span>,
+    <i>make.unique</i> = <span style='color: blue !important;'>FALSE</span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
@@ -38,6 +39,10 @@
             
 <dt>file</dt>
 <dd><p>should be the file path to the peaktable csv/txt file.</p></dd>
+
+
+<dt>make.unique</dt>
+<dd><p>set this parameter to value TRUE will ensure that the xcms reference id is always unique. [as boolean]</p></dd>
 
         </table>
 

@@ -210,11 +210,14 @@ declare namespace mzDeco {
         * + default value Is ``false``.
         * @param general_method 
         * + default value Is ``false``.
+        * @param make_unique set this parameter to value TRUE will ensure that the xcms reference id is always unique
+        * 
+        * + default value Is ``false``.
         * @param env 
         * + default value Is ``null``.
         * @return A collection set of the @``T:BioNovoGene.Analytical.MassSpectrometry.Math.xcms2`` peak features data object
       */
-      function xcms_peaks(file: any, tsv?: boolean, general_method?: boolean, env?: object): object;
+      function xcms_peaks(file: any, tsv?: boolean, general_method?: boolean, make_unique?: boolean, env?: object): object;
    }
    /**
     * make peaktable join of two batch data via (mz,RI)
