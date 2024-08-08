@@ -62,6 +62,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
+Imports Microsoft.VisualBasic.ValueTypes
 
 Namespace mzData.mzWebCache
 
@@ -85,6 +86,10 @@ Namespace mzData.mzWebCache
         Public Property activationMethod As ActivationMethods Implements ISpectrumScanData.ActivationMethod
         Public Property collisionEnergy As Double Implements ISpectrumScanData.CollisionEnergy
         Public Property centroided As Boolean
+
+        Public Overrides Function ToString() As String
+            Return MyBase.ToString() & " - " & DateTimeHelper.ReadableElapsedTime(rt * 1000)
+        End Function
 
         Public Function GetMatrix() As LibraryMatrix
             Return New LibraryMatrix With {
