@@ -105,7 +105,16 @@ Public Class LibraryWorkspace
         Call text.Flush()
     End Sub
 
-    Public Shared Function read(file As Stream, Optional mz_bin As Boolean = False) As LibraryWorkspace
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="file"></param>
+    ''' <param name="mz_bin"></param>
+    ''' <param name="filter_ms1">
+    ''' do not load ms1 annotation result? default is yes
+    ''' </param>
+    ''' <returns></returns>
+    Public Shared Function read(file As Stream, Optional mz_bin As Boolean = False, Optional filter_ms1 As Boolean = True) As LibraryWorkspace
         Dim text As New StreamReader(file)
         Dim libs As New LibraryWorkspace
         Dim line As Value(Of String) = ""
@@ -128,6 +137,12 @@ Public Class LibraryWorkspace
         If load.All(Function(a) a.xcms_id.StringEmpty(, True)) Then
             ' no ms1 peak assigned
             For Each annotation As AlignmentHit In load
+                If annotation.samplefiles.IsNullOrEmpty Then
+                    If filter_ms1 Then
+                        Continue For
+                    End If
+                End If
+
                 If mz_bin Then
                     ' attach mz_bin for make unique
                     Call libs.annotations.Add($"{annotation.libname}|{annotation.adducts}|{CInt(annotation.mz)}", annotation)
@@ -138,6 +153,12 @@ Public Class LibraryWorkspace
         Else
             ' already has ms1 peak assigned information
             For Each annotation As AlignmentHit In load
+                If annotation.samplefiles.IsNullOrEmpty Then
+                    If filter_ms1 Then
+                        Continue For
+                    End If
+                End If
+
                 Call libs.annotations.Add($"{annotation.libname}|{annotation.adducts}|{annotation.xcms_id}", annotation)
             Next
         End If

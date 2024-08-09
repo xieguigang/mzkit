@@ -100,7 +100,7 @@ Module library
 
     Private Function writeWorkspace(table As LibraryWorkspace, args As list, env As Environment) As Object
         Dim con As Stream = args!con
-        Dim commit_peaks As Boolean = args.getValue(Of Boolean)("commit_peaks", env, [default]:=False)
+        Dim commit_peaks As Boolean = args.getValue("commit_peaks", env, [default]:=False)
         Call table.save(con, commit_peaks)
         Call con.Flush()
         Return True
