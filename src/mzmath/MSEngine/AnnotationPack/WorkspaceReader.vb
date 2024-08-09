@@ -79,13 +79,20 @@ Public Class LibraryWorkspace
     Public Sub commit(xref_id As String, peak As xcms2, npeaks As Integer)
         If annotations.ContainsKey(xref_id) Then
             Dim annotation As New AlignmentHit(annotations(xref_id))
+            Dim key As String = $"{xref_id}|{peak.ID}"
+
             annotation.xcms_id = peak.ID
             annotation.mz = peak.mz
             annotation.rt = peak.rt
             annotation.RI = peak.RI
             annotation.npeaks = npeaks
 
-            Call annotations.Add($"{xref_id}|{peak.ID}", annotation)
+            If annotations.ContainsKey(key) Then
+                ' keeps the best ion?
+                key = key & "_" & annotations.Count + 1
+            End If
+
+            Call annotations.Add(key, annotation)
         End If
     End Sub
 
