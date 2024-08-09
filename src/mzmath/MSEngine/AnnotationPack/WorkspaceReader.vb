@@ -142,6 +142,8 @@ Public Class LibraryWorkspace
 
         ' check of the peak assign status
         If load.All(Function(a) a.xcms_id.StringEmpty(, True)) Then
+            Dim key As String
+
             ' no ms1 peak assigned
             For Each annotation As AlignmentHit In load
                 If annotation.samplefiles.IsNullOrEmpty Then
@@ -152,9 +154,35 @@ Public Class LibraryWorkspace
 
                 If mz_bin Then
                     ' attach mz_bin for make unique
-                    Call libs.annotations.Add($"{annotation.libname}|{annotation.adducts}|{CInt(annotation.mz)}", annotation)
+                    key = $"{annotation.libname}|{annotation.adducts}|{CInt(annotation.mz)}"
                 Else
-                    Call libs.annotations.Add($"{annotation.libname}|{annotation.adducts}", annotation)
+                    key = $"{annotation.libname}|{annotation.adducts}"
+                End If
+
+                If libs.annotations.ContainsKey(key) Then
+                    ' has duplicted annotation result
+                    Dim a = libs.annotations(key)
+
+                    If a.samplefiles.TryCount > annotation.samplefiles.TryCount Then
+                        ' just merge current annotation to a
+                        For Each sample In annotation.samplefiles
+                            If Not a.samplefiles.ContainsKey(sample.Key) Then
+                                Call a.samplefiles.Add(sample.Key, sample.Value)
+                            End If
+                        Next
+                    Else
+                        ' merge a to current annotation, and then replace the a
+                        For Each sample In a.samplefiles
+                            If Not annotation.samplefiles.ContainsKey(sample.Key) Then
+                                Call annotation.samplefiles.Add(sample.Key, sample.Value)
+                            End If
+                        Next
+
+                        ' make replacement
+                        libs.annotations(key) = annotation
+                    End If
+                Else
+                    Call libs.annotations.Add(key, annotation)
                 End If
             Next
         Else
