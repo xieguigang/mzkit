@@ -55,6 +55,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
@@ -129,7 +130,7 @@ Public Module PeakAlignment
             rt_shift = New List(Of RtShift)
         End If
 
-        For Each ri_point As NamedCollection(Of PeakFeature) In RI_rawdata
+        For Each ri_point As NamedCollection(Of PeakFeature) In Tqdm.Wrap(RI_rawdata)
             ' make data bins by mz
             ' where the given data all has the same RI value
             Dim mz_group As NamedCollection(Of PeakFeature)() = mz_bin _

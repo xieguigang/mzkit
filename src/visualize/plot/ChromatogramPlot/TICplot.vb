@@ -81,6 +81,9 @@ Imports Microsoft.VisualBasic.Math.Interpolation
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.MIME.Html.Render
 
+''' <summary>
+''' Chromatogram overlaps plot
+''' </summary>
 Public Class TICplot : Inherits Plot
 
     ReadOnly ionData As NamedCollection(Of ChromatogramTick)()

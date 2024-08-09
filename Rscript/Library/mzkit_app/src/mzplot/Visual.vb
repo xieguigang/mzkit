@@ -872,4 +872,19 @@ Module Visual
 
         Return app.Plot(size:=InteropArgumentHelper.getSize(size, env, [default]:="2700,2000"), ppi:=dpi)
     End Function
+
+    ''' <summary>
+    ''' make visualization of the XIC scatters
+    ''' </summary>
+    ''' <param name="ms1"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("xic_scatter_density")>
+    Public Function XicScatterDensity(<RRawVectorArgument> ms1 As Object, Optional env As Environment = Nothing) As Object
+        Dim pull As pipeline = pipeline.TryCreatePipeline(Of ms1_scan)(ms1, env)
+
+        If pull.isError Then
+
+        End If
+    End Function
 End Module

@@ -92,12 +92,15 @@ Module library
     End Sub
 
     Private Function loadWorkspace(file As Stream, args As list, env As Environment) As Object
-        Return LibraryWorkspace.read(file)
+        Dim mz_bin As Boolean = args.getValue("mz_bin", env, [default]:=False)
+        Dim libs = LibraryWorkspace.read(file, mz_bin)
+
+        Return libs
     End Function
 
     Private Function writeWorkspace(table As LibraryWorkspace, args As list, env As Environment) As Object
         Dim con As Stream = args!con
-        Dim commit_peaks As Boolean = args.getValue(Of Boolean)("commit_peaks", env, [default]:=False)
+        Dim commit_peaks As Boolean = args.getValue("commit_peaks", env, [default]:=False)
         Call table.save(con, commit_peaks)
         Call con.Flush()
         Return True
@@ -689,7 +692,7 @@ Module library
 
     <ExportAPI("save_annotations")>
     Public Sub saveAnnotation(workspace As AnnotationWorkspace, library As String, annotations As LibraryWorkspace)
-        Call workspace.CreateLibraryResult(library, annotations.GetAnnotations)
+        Call workspace.CreateLibraryResult(library, annotations.GetAnnotations(filterPeaks:=True))
     End Sub
 
     <ExportAPI("push_temp")>
@@ -765,7 +768,7 @@ Module library
                            libname As String, adducts As String,
                            xcms_id As String, mz As Double, rt As Double, RI As Double, npeaks As Integer)
 
-        Dim db_xref As String = $"{libname}|{adducts}"
+        Dim db_xref As String = $"{libname}|{adducts}|{CInt(mz)}"
         Dim peak As New xcms2 With {.ID = xcms_id, .mz = mz, .rt = rt, .RI = RI}
 
         Call works.commit(db_xref, peak, npeaks)

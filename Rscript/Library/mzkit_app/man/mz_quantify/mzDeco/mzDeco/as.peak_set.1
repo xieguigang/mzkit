@@ -11,10 +11,25 @@ cast dataset to mzkit peaktable object
 .PP
 .SH OPTIONS
 .PP
-\fBx\fB \fR\- -. 
+\fBx\fB \fR\- should be a data collection of the peaks data, value could be:
+ 
+ 1. a collection of the @\fBT:BioNovoGene.Analytical.MassSpectrometry.Math.xcms2\fR ROI peaks data
+ 2. an actual @\fBT:BioNovoGene.Analytical.MassSpectrometry.Math.PeakSet\fR object, then this function will make value copy of this object
+ 3. a dataframe object that contains the peaks data for make the data conversion
+. 
 .PP
 .PP
 \fBenv\fB \fR\- -. 
+.PP
+.SH DETAILS
+.PP
+for make data object conversion from a R# runtime dataframe object, that these data 
+ fields is required for creates the xcms peaks object:
+ 
+ 1. mz, mzmin, mzmax: the ion m/z value of the xcms peak
+ 2. rt, rtmin, rtmax: the ion retention time of the xcms peak data, should be in time unit seconds
+ 3. RI: the ion retention index value that evaluated based on the RT value
+ 4. all of the other data fields in the dataframe will be treated as the sample peak area data.
 .PP
 .SH SEE ALSO
 mzDeco

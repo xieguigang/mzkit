@@ -124,6 +124,7 @@ Module mzDeco
     Sub Main()
         Call Internal.Object.Converts.addHandler(GetType(PeakFeature()), AddressOf peaktable)
         Call Internal.Object.Converts.addHandler(GetType(xcms2()), AddressOf peaksetMatrix)
+        Call Internal.Object.Converts.addHandler(GetType(PeakSet), AddressOf peaksSetMatrix)
 
         Call generic.add("readBin.mz_group", GetType(Stream), AddressOf readXIC)
         Call generic.add("readBin.peak_feature", GetType(Stream), AddressOf readSamples)
@@ -134,6 +135,11 @@ Module mzDeco
         Call generic.add("writeBin", GetType(PeakFeature()), AddressOf writeSamples)
         Call generic.add("writeBin", GetType(PeakSet), AddressOf writePeaktable)
     End Sub
+
+    <RGenericOverloads("as.data.frame")>
+    Private Function peaksSetMatrix(peaks As PeakSet, args As list, env As Environment) As dataframe
+        Return peaksetMatrix(peaks.peaks, args, env)
+    End Function
 
     Private Function writePeaktable(table As PeakSet, args As list, env As Environment) As Object
         Dim con As Stream = args!con
@@ -172,6 +178,7 @@ Module mzDeco
         Return SaveXIC.ReadSample(file).ToArray
     End Function
 
+    <RGenericOverloads("as.data.frame")>
     Private Function peaksetMatrix(peakset As xcms2(), args As list, env As Environment) As dataframe
         Dim table As New dataframe With {
            .columns = New Dictionary(Of String, Array)
@@ -202,6 +209,7 @@ Module mzDeco
         Return table
     End Function
 
+    <RGenericOverloads("as.data.frame")>
     Private Function peaktable(x As PeakFeature(), args As list, env As Environment) As dataframe
         Dim table As New dataframe With {
             .columns = New Dictionary(Of String, Array)
@@ -279,6 +287,9 @@ Module mzDeco
     ''' read the peaktable file that in xcms2 output format
     ''' </summary>
     ''' <param name="file">should be the file path to the peaktable csv/txt file.</param>
+    ''' <param name="make_unique">
+    ''' set this parameter to value TRUE will ensure that the xcms reference id is always unique
+    ''' </param>
     ''' <returns>A collection set of the <see cref="xcms2"/> peak features data object</returns>
     ''' <keywords>read data</keywords>
     <ExportAPI("read.xcms_peaks")>
@@ -286,6 +297,7 @@ Module mzDeco
     Public Function readXcmsPeaks(file As Object,
                                   Optional tsv As Boolean = False,
                                   Optional general_method As Boolean = False,
+                                  Optional make_unique As Boolean = False,
                                   Optional env As Environment = Nothing) As Object
 
         If file Is Nothing Then
@@ -293,7 +305,7 @@ Module mzDeco
         End If
 
         If TypeOf file Is String Then
-            Return readXcmsTableFile(file, general_method, tsv)
+            Return readXcmsTableFile(file, general_method, tsv, make_unique)
         ElseIf TypeOf file Is AnnotationWorkspace Then
             Return New PeakSet(DirectCast(file, AnnotationWorkspace).LoadPeakTable)
         Else
@@ -301,7 +313,7 @@ Module mzDeco
         End If
     End Function
 
-    Private Function readXcmsTableFile(file As String, general_method As Boolean, tsv As Boolean) As Object
+    Private Function readXcmsTableFile(file As String, general_method As Boolean, tsv As Boolean, make_unique As Boolean) As Object
         If file.ExtensionSuffix("dat", "xcms") Then
             ' read binary file
             Using buf As Stream = file.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
@@ -310,7 +322,7 @@ Module mzDeco
         End If
 
         If Not general_method Then
-            Return SaveXcms.ReadTextTable(file, tsv)
+            Return SaveXcms.ReadTextTable(file, tsv, make_unique)
         Else
             Return New PeakSet With {
                 .peaks = file.LoadCsv(Of xcms2)(mute:=True).ToArray
@@ -402,10 +414,25 @@ Module mzDeco
     ''' <summary>
     ''' cast dataset to mzkit peaktable object
     ''' </summary>
-    ''' <param name="x"></param>
+    ''' <param name="x">should be a data collection of the peaks data, value could be:
+    ''' 
+    ''' 1. a collection of the <see cref="xcms2"/> ROI peaks data
+    ''' 2. an actual <see cref="PeakSet"/> object, then this function will make value copy of this object
+    ''' 3. a dataframe object that contains the peaks data for make the data conversion
+    ''' </param>
     ''' <param name="env"></param>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' for make data object conversion from a R# runtime dataframe object, that these data 
+    ''' fields is required for creates the xcms peaks object:
+    ''' 
+    ''' 1. mz, mzmin, mzmax: the ion m/z value of the xcms peak
+    ''' 2. rt, rtmin, rtmax: the ion retention time of the xcms peak data, should be in time unit seconds
+    ''' 3. RI: the ion retention index value that evaluated based on the RT value
+    ''' 4. all of the other data fields in the dataframe will be treated as the sample peak area data.
+    ''' </remarks>
     <ExportAPI("as.peak_set")>
+    <RApiReturn(GetType(PeakSet))>
     Public Function create_peakset(<RRawVectorArgument> x As Object, Optional env As Environment = Nothing) As Object
         Dim pull = pipeline.TryCreatePipeline(Of xcms2)(x, env)
         Dim peaks As New List(Of xcms2)
@@ -413,47 +440,55 @@ Module mzDeco
         If pull.isError Then
             ' deal with dataframe?
             If TypeOf x Is dataframe Then
-                Dim df As dataframe = x
-                Dim mz As Double() = CLRVector.asNumeric(df!mz)
-                Dim mzmin As Double() = CLRVector.asNumeric(df!mzmin)
-                Dim mzmax As Double() = CLRVector.asNumeric(df!mzmax)
-                Dim rt As Double() = CLRVector.asNumeric(df!rt)
-                Dim rtmin As Double() = CLRVector.asNumeric(df!rtmin)
-                Dim rtmax As Double() = CLRVector.asNumeric(df!rtmax)
-                Dim RI As Double() = CLRVector.asNumeric(df!RI)
-                Dim ID As String() = df.getRowNames.UniqueNames
-
-                Call df.delete("ID", "mz", "mzmin", "mzmax", "rt", "rtmin", "rtmax", "RI", "npeaks")
-
-                Dim offset As Integer
-                Dim v As Dictionary(Of String, Double)
-                Dim matrix As NamedCollection(Of Double)() = df.columns _
-                    .Select(Function(i)
-                                Return New NamedCollection(Of Double)(i.Key, CLRVector.asNumeric(i.Value))
-                            End Function) _
-                    .ToArray
-
-                For i As Integer = 0 To mz.Length - 1
-                    offset = i
-                    v = matrix.ToDictionary(Function(a) a.name, Function(a) a(offset))
-
-                    Call peaks.Add(New xcms2(v) With {
-                        .ID = ID(i),
-                        .mz = mz(i),
-                        .mzmax = mzmax(i),
-                        .mzmin = mzmin(i),
-                        .RI = RI(i),
-                        .rt = rt(i),
-                        .rtmax = rtmax(i),
-                        .rtmin = rtmin(i)
-                    })
-                Next
+                Call peaks.AddRange(convertDataframeToXcmsPeaks(DirectCast(x, dataframe)))
+            ElseIf TypeOf x Is PeakSet Then
+                ' make peakset data copy
+                Return New PeakSet(DirectCast(x, PeakSet).peaks)
             Else
                 Return pull.getError
             End If
+        Else
+            Call peaks.AddRange(pull.populates(Of xcms2)(env))
         End If
 
         Return New PeakSet(peaks)
+    End Function
+
+    Private Iterator Function convertDataframeToXcmsPeaks(df As dataframe) As IEnumerable(Of xcms2)
+        Dim mz As Double() = CLRVector.asNumeric(df!mz)
+        Dim mzmin As Double() = CLRVector.asNumeric(df!mzmin)
+        Dim mzmax As Double() = CLRVector.asNumeric(df!mzmax)
+        Dim rt As Double() = CLRVector.asNumeric(df!rt)
+        Dim rtmin As Double() = CLRVector.asNumeric(df!rtmin)
+        Dim rtmax As Double() = CLRVector.asNumeric(df!rtmax)
+        Dim RI As Double() = CLRVector.asNumeric(df!RI)
+        Dim ID As String() = df.getRowNames.UniqueNames
+
+        Call df.delete("ID", "mz", "mzmin", "mzmax", "rt", "rtmin", "rtmax", "RI", "npeaks")
+
+        Dim offset As Integer
+        Dim v As Dictionary(Of String, Double)
+        Dim matrix As NamedCollection(Of Double)() = df.columns _
+            .Select(Function(i)
+                        Return New NamedCollection(Of Double)(i.Key, CLRVector.asNumeric(i.Value))
+                    End Function) _
+            .ToArray
+
+        For i As Integer = 0 To mz.Length - 1
+            offset = i
+            v = matrix.ToDictionary(Function(a) a.name, Function(a) a(offset))
+
+            Yield New xcms2(v) With {
+                .ID = ID(i),
+                .mz = mz(i),
+                .mzmax = mzmax(i),
+                .mzmin = mzmin(i),
+                .RI = RI(i),
+                .rt = rt(i),
+                .rtmax = rtmax(i),
+                .rtmin = rtmin(i)
+            }
+        Next
     End Function
 
     ''' <summary>
@@ -512,6 +547,37 @@ Module mzDeco
     End Function
 
     ''' <summary>
+    ''' Create a xcms peak data object
+    ''' </summary>
+    ''' <param name="id">the unique referene id of the peak data</param>
+    ''' <param name="mz"></param>
+    ''' <param name="mz_range"></param>
+    ''' <param name="rt"></param>
+    ''' <param name="rt_range"></param>
+    ''' <param name="RI"></param>
+    ''' <param name="samples"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("xcms_peak")>
+    Public Function xcms_peak(id As String, mz As Double, mz_range As Double(), rt As Double, rt_range As Double(), RI As Double,
+                              <RListObjectArgument>
+                              samples As list,
+                              Optional env As Environment = Nothing) As xcms2
+
+        Return New xcms2 With {
+            .ID = id,
+            .mz = mz,
+            .mzmin = mz_range.Min,
+            .mzmax = mz_range.Max,
+            .RI = RI,
+            .rt = rt,
+            .rtmax = rt_range.Max,
+            .rtmin = rt_range.Min,
+            .Properties = samples.AsGeneric(Of Double)(env)
+        }
+    End Function
+
+    ''' <summary>
     ''' helper function for find ms1 peaks based on the given mz/rt tuple data
     ''' </summary>
     ''' <param name="peaktable">the peaktable object, is a collection of the <see cref="xcms2"/> object.</param>
@@ -525,7 +591,8 @@ Module mzDeco
     <RApiReturn(GetType(xcms2))>
     Public Function get_ionPeak(peaktable As PeakSet, mz As Double, rt As Double,
                                 Optional mzdiff As Double = 0.01,
-                                Optional rt_win As Double = 90) As Object
+                                Optional rt_win As Double = 90,
+                                Optional find_RI As Boolean = False) As Object
 
         Return peaktable.FindIonSet(mz, rt, mzdiff, rt_win) _
             .OrderBy(Function(a)
@@ -1036,6 +1103,50 @@ extract_ms1:
                 Next
             Next
         End If
+
+        Dim vec As New vec(peaktable, RType.GetRSharpType(GetType(xcms2)))
+        Call vec.setAttribute("rt.shift", rt_shifts.ToArray)
+        Return vec
+    End Function
+
+    ''' <summary>
+    ''' make peaktable join of two batch data via (mz,RI)
+    ''' </summary>
+    ''' <param name="batch1"></param>
+    ''' <param name="batch2"></param>
+    ''' <returns></returns>
+    <ExportAPI("RI_batch_join")>
+    Public Function RI_batch_join(batch1 As PeakSet, batch2 As PeakSet,
+                                  Optional mzdiff As Double = 0.01,
+                                  Optional ri_win As Double = 10,
+                                  Optional max_intensity_ion As Boolean = False) As Object
+
+        Dim allpeaks = batch1.ToFeatures _
+            .JoinIterates(batch2.ToFeatures) _
+            .GroupBy(Function(a) a.rawfile) _
+            .Select(Function(s) New NamedCollection(Of PeakFeature)(s.Key, s)) _
+            .ToArray
+        Dim rt_shifts As New List(Of RtShift)
+        Dim peaktable As xcms2() = allpeaks _
+            .RIAlignment(rt_shifts,
+                        mzdiff:=mzdiff,
+                        ri_offset:=ri_win,
+                        top_ion:=max_intensity_ion) _
+            .ToArray
+        Dim id As String() = peaktable.Select(Function(i) i.ID).UniqueNames
+        Dim sampleNames As String() = allpeaks.Keys.ToArray
+
+        For i As Integer = 0 To id.Length - 1
+            Dim peak As xcms2 = peaktable(i)
+
+            peak.ID = id(i)
+
+            For Each sample_id As String In sampleNames
+                If Not peak.Properties.ContainsKey(sample_id) Then
+                    peak(sample_id) = 0.0
+                End If
+            Next
+        Next
 
         Dim vec As New vec(peaktable, RType.GetRSharpType(GetType(xcms2)))
         Call vec.setAttribute("rt.shift", rt_shifts.ToArray)

@@ -59,6 +59,7 @@
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.Data.Trinity
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -74,7 +75,7 @@ Public Module SaveXcms
     ''' <param name="file"></param>
     ''' <param name="tsv"></param>
     ''' <returns></returns>
-    Public Function ReadTextTable(file As String, Optional tsv As Boolean = False) As PeakSet
+    Public Function ReadTextTable(file As String, Optional tsv As Boolean = False, Optional make_unique As Boolean = False) As PeakSet
         Dim deli As Char = If(tsv, vbTab, ","c)
         Dim buf As Stream = file.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
         Dim s As New StreamReader(buf)
@@ -123,6 +124,14 @@ Public Module SaveXcms
             .GetPeaks(deli, ID, mz, mzmin, mzmax, rt, rtmin, rtmax, ri,
                       peaks:=offsets) _
             .ToArray
+
+        If make_unique Then
+            Dim unique_id = peaks.Select(Function(i) i.ID).UniqueNames
+
+            For i As Integer = 0 To unique_id.Length - 1
+                peaks(i).ID = unique_id(i)
+            Next
+        End If
 
         Call buf.Dispose()
 

@@ -72,6 +72,9 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Chromatogram = BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML.chromatogram
 
+''' <summary>
+''' the extension helper function module for invoke the <see cref="TICplot"/>
+''' </summary>
 Public Module ChromatogramPlot
 
     ''' <summary>

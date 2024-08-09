@@ -34,9 +34,18 @@ Public Class LibraryWorkspace
         Call tmp.Add(score)
     End Sub
 
-    Public Iterator Function GetAnnotations() As IEnumerable(Of AlignmentHit)
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <returns>
+    ''' Only populate the alignment result which has ms1 peak assigned by default.
+    ''' </returns>
+    Public Iterator Function GetAnnotations(Optional filterPeaks As Boolean = True) As IEnumerable(Of AlignmentHit)
         For Each annotation As AlignmentHit In annotations.Values
-            If String.IsNullOrEmpty(annotation.xcms_id) Then
+            ' if filter ms1 peak assigned information,
+            ' and also current annotation result has no ms1 peak id
+            ' then skip
+            If filterPeaks AndAlso String.IsNullOrEmpty(annotation.xcms_id) Then
                 Continue For
             End If
 
@@ -70,13 +79,20 @@ Public Class LibraryWorkspace
     Public Sub commit(xref_id As String, peak As xcms2, npeaks As Integer)
         If annotations.ContainsKey(xref_id) Then
             Dim annotation As New AlignmentHit(annotations(xref_id))
+            Dim key As String = $"{xref_id}|{peak.ID}"
+
             annotation.xcms_id = peak.ID
             annotation.mz = peak.mz
             annotation.rt = peak.rt
             annotation.RI = peak.RI
             annotation.npeaks = npeaks
 
-            Call annotations.Add($"{xref_id}|{peak.ID}", annotation)
+            If annotations.ContainsKey(key) Then
+                ' keeps the best ion?
+                key = key & "_" & annotations.Count + 1
+            End If
+
+            Call annotations.Add(key, annotation)
         End If
     End Sub
 
@@ -96,17 +112,98 @@ Public Class LibraryWorkspace
         Call text.Flush()
     End Sub
 
-    Public Shared Function read(file As Stream) As LibraryWorkspace
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="file"></param>
+    ''' <param name="mz_bin"></param>
+    ''' <param name="filter_ms1">
+    ''' do not load ms1 annotation result? default is yes
+    ''' </param>
+    ''' <returns></returns>
+    Public Shared Function read(file As Stream, Optional mz_bin As Boolean = False, Optional filter_ms1 As Boolean = True) As LibraryWorkspace
         Dim text As New StreamReader(file)
         Dim libs As New LibraryWorkspace
         Dim line As Value(Of String) = ""
 
-        Do While Not (line = text.ReadLine) Is Nothing
-            Dim annotation As AlignmentHit = CStr(line).LoadJSON(Of AlignmentHit)
-            Dim xref_id As String = $"{annotation.libname}|{annotation.adducts}"
+        If mz_bin Then
+            Call VBDebugger.EchoLine("annotation reference id will be attached mz integer tag for make unique!")
+        End If
+        If filter_ms1 Then
+            Call VBDebugger.EchoLine("only loads the annotation result that has ms2 spectrum aligned!")
+        End If
 
-            Call libs.annotations.Add(xref_id, annotation)
+        ' the workspace has two status:
+        '
+        ' no ms1 peak assigned, missing xcms_id, unique id via: $"{annotation.libname}|{annotation.adducts}"
+        ' has ms1 peak assigned, $"{annotation.libname}|{annotation.adducts}" will be duplicated, then indexed via $"{annotation.libname}|{annotation.adducts}|{annotation.xcms_id}"
+        Dim load As New List(Of AlignmentHit)
+
+        Do While Not (line = text.ReadLine) Is Nothing
+            ' Dim annotation As AlignmentHit = CStr(line).LoadJSON(Of AlignmentHit)
+            ' Dim xref_id As String = $"{annotation.libname}|{annotation.adducts}"
+
+            ' Call libs.annotations.Add(xref_id, annotation)
+            Call load.Add(CStr(line).LoadJSON(Of AlignmentHit))
         Loop
+
+        ' check of the peak assign status
+        If load.All(Function(a) a.xcms_id.StringEmpty(, True)) Then
+            Dim key As String
+
+            ' no ms1 peak assigned
+            For Each annotation As AlignmentHit In load
+                If annotation.samplefiles.IsNullOrEmpty Then
+                    If filter_ms1 Then
+                        Continue For
+                    End If
+                End If
+
+                If mz_bin Then
+                    ' attach mz_bin for make unique
+                    key = $"{annotation.libname}|{annotation.adducts}|{CInt(annotation.mz)}"
+                Else
+                    key = $"{annotation.libname}|{annotation.adducts}"
+                End If
+
+                If libs.annotations.ContainsKey(key) Then
+                    ' has duplicted annotation result
+                    Dim a = libs.annotations(key)
+
+                    If a.samplefiles.TryCount > annotation.samplefiles.TryCount Then
+                        ' just merge current annotation to a
+                        For Each sample In annotation.samplefiles
+                            If Not a.samplefiles.ContainsKey(sample.Key) Then
+                                Call a.samplefiles.Add(sample.Key, sample.Value)
+                            End If
+                        Next
+                    Else
+                        ' merge a to current annotation, and then replace the a
+                        For Each sample In a.samplefiles
+                            If Not annotation.samplefiles.ContainsKey(sample.Key) Then
+                                Call annotation.samplefiles.Add(sample.Key, sample.Value)
+                            End If
+                        Next
+
+                        ' make replacement
+                        libs.annotations(key) = annotation
+                    End If
+                Else
+                    Call libs.annotations.Add(key, annotation)
+                End If
+            Next
+        Else
+            ' already has ms1 peak assigned information
+            For Each annotation As AlignmentHit In load
+                If annotation.samplefiles.IsNullOrEmpty Then
+                    If filter_ms1 Then
+                        Continue For
+                    End If
+                End If
+
+                Call libs.annotations.Add($"{annotation.libname}|{annotation.adducts}|{annotation.xcms_id}", annotation)
+            Next
+        End If
 
         Return libs
     End Function

@@ -77,8 +77,11 @@ Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.MIME.Html.Render
 
 ''' <summary>
-''' 通过KCF图模型为ms2二级质谱碎片鉴定分子碎片的具体的结构式
+''' the spectrum plot
 ''' </summary>
+''' <remarks>
+''' 通过KCF图模型为ms2二级质谱碎片鉴定分子碎片的具体的结构式
+''' </remarks>
 Public Class PeakAssign : Inherits Plot
 
     ReadOnly matrix As ms2()

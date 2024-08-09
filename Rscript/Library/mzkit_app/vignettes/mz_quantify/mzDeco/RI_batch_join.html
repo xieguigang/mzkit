@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>read the peaktable file that in xcms2 output format</title>
+    <title>make peaktable join of two batch data via (mz,RI)</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
@@ -13,12 +13,12 @@
 
         <table style="width: 100%;">
             <tr>
-                <td>read.xcms_peaks {mzDeco}</td>
+                <td>RI_batch_join {mzDeco}</td>
                 <td style="text-align: right;">R Documentation</td>
             </tr>
         </table>
 
-        <h2>read the peaktable file that in xcms2 output format</h2>
+        <h2>make peaktable join of two batch data via (mz,RI)</h2>
 
         <h3>Description</h3>
 
@@ -27,22 +27,22 @@
         <h3>Usage</h3>
 
         <div style="width: 100%; padding-left: 3%; color: black;">
-            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>read.xcms_peaks</strong>(<i>file</i>,
-    <i>tsv</i> = <span style='color: blue !important;'>FALSE</span>,
-    <i>general.method</i> = <span style='color: blue !important;'>FALSE</span>,
-    <i>make.unique</i> = <span style='color: blue !important;'>FALSE</span>);</code></pre>
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>RI_batch_join</strong>(<i>batch1</i>, <i>batch2</i>,
+    <i>mzdiff</i> = <span style='color: green;'>0.01</span>,
+    <i>ri.win</i> = <span style='color: green;'>10</span>,
+    <i>max.intensity.ion</i> = <span style='color: blue !important;'>FALSE</span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
 
         <table>
             
-<dt>file</dt>
-<dd><p>should be the file path to the peaktable csv/txt file.</p></dd>
+<dt>batch1</dt>
+<dd><p>[as <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/PeakSet.html">PeakSet</a>]</p></dd>
 
 
-<dt>make.unique</dt>
-<dd><p>set this parameter to value TRUE will ensure that the xcms reference id is always unique. [as boolean]</p></dd>
+<dt>batch2</dt>
+<dd><p>[as <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/PeakSet.html">PeakSet</a>]</p></dd>
 
         </table>
 
@@ -57,7 +57,7 @@
 
         <h3>Value</h3>
 
-        <p>A collection set of the <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/xcms2.html">xcms2</a> peak features data object</p><h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/PeakSet.html">PeakSet</a></li></ul>
+        this function returns data object of type <i>any</i> kind.<h4>clr value class</h4><ul><li><i>any</i> kind</li></ul>
 
         <h3 style="display: none;">Examples</h3>
 

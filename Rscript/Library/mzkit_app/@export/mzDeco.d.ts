@@ -32,13 +32,24 @@ declare namespace mzDeco {
       /**
        * cast dataset to mzkit peaktable object
        * 
+       * > for make data object conversion from a R# runtime dataframe object, that these data 
+       * >  fields is required for creates the xcms peaks object:
+       * >  
+       * >  1. mz, mzmin, mzmax: the ion m/z value of the xcms peak
+       * >  2. rt, rtmin, rtmax: the ion retention time of the xcms peak data, should be in time unit seconds
+       * >  3. RI: the ion retention index value that evaluated based on the RT value
+       * >  4. all of the other data fields in the dataframe will be treated as the sample peak area data.
        * 
-        * @param x -
+        * @param x should be a data collection of the peaks data, value could be:
+        *  
+        *  1. a collection of the @``T:BioNovoGene.Analytical.MassSpectrometry.Math.xcms2`` ROI peaks data
+        *  2. an actual @``T:BioNovoGene.Analytical.MassSpectrometry.Math.PeakSet`` object, then this function will make value copy of this object
+        *  3. a dataframe object that contains the peaks data for make the data conversion
         * @param env -
         * 
         * + default value Is ``null``.
       */
-      function peak_set(x: any, env?: object): any;
+      function peak_set(x: any, env?: object): object;
    }
    /**
     * helper function for find ms1 peaks based on the given mz/rt tuple data
@@ -54,9 +65,11 @@ declare namespace mzDeco {
      * @param rt_win the rt window size for matches the rt. should be in data unit seconds.
      * 
      * + default value Is ``90``.
+     * @param find_RI 
+     * + default value Is ``false``.
      * @return data is re-ordered via the tolerance error
    */
-   function find_xcms_ionPeaks(peaktable: object, mz: number, rt: number, mzdiff?: number, rt_win?: number): object;
+   function find_xcms_ionPeaks(peaktable: object, mz: number, rt: number, mzdiff?: number, rt_win?: number, find_RI?: boolean): object;
    module mz {
       /**
        * do ``m/z`` grouping under the given tolerance
@@ -208,12 +221,29 @@ declare namespace mzDeco {
         * + default value Is ``false``.
         * @param general_method 
         * + default value Is ``false``.
+        * @param make_unique set this parameter to value TRUE will ensure that the xcms reference id is always unique
+        * 
+        * + default value Is ``false``.
         * @param env 
         * + default value Is ``null``.
         * @return A collection set of the @``T:BioNovoGene.Analytical.MassSpectrometry.Math.xcms2`` peak features data object
       */
-      function xcms_peaks(file: any, tsv?: boolean, general_method?: boolean, env?: object): object;
+      function xcms_peaks(file: any, tsv?: boolean, general_method?: boolean, make_unique?: boolean, env?: object): object;
    }
+   /**
+    * make peaktable join of two batch data via (mz,RI)
+    * 
+    * 
+     * @param batch1 -
+     * @param batch2 -
+     * @param mzdiff 
+     * + default value Is ``0.01``.
+     * @param ri_win 
+     * + default value Is ``10``.
+     * @param max_intensity_ion 
+     * + default value Is ``false``.
+   */
+   function RI_batch_join(batch1: object, batch2: object, mzdiff?: number, ri_win?: number, max_intensity_ion?: boolean): any;
    /**
     * RI calculation of a speicifc sample data
     * 
@@ -285,6 +315,22 @@ declare namespace mzDeco {
       */
       function xcms_peaks(x: object, file: any, env?: object): boolean;
    }
+   /**
+    * Create a xcms peak data object
+    * 
+    * 
+     * @param id the unique referene id of the peak data
+     * @param mz -
+     * @param mz_range -
+     * @param rt -
+     * @param rt_range -
+     * @param RI -
+     * @param samples -
+     * @param env -
+     * 
+     * + default value Is ``null``.
+   */
+   function xcms_peak(id: string, mz: number, mz_range: number, rt: number, rt_range: number, RI: number, samples: object, env?: object): object;
    /**
     * Load xic sample data files
     * 

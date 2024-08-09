@@ -62,6 +62,9 @@ Imports Microsoft.VisualBasic.Data.ChartPlots.Statistics
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 
+''' <summary>
+''' plot regression model of the MRM/SRM standard curves result
+''' </summary>
 Public Module StandardCurvesPlot
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -81,8 +84,7 @@ Public Module StandardCurvesPlot
 
         If model.requireISCalibration Then
             ' 如果进行内标校正的话，则应该是[峰面积比, 浓度比]之间的线性关系
-            Return model.linear _
-                .Plot(xLabel:="(CIS/Cti u mol/L) ratio",
+            Return RegressionPlot.Plot(model.linear, xLabel:="(CIS/Cti u mol/L) ratio",
                       yLabel:="Peak area ratio (AIS/Ati)",
                       size:=size,
                       predictedX:=samples,
@@ -101,8 +103,7 @@ Public Module StandardCurvesPlot
                 )
         Else
             ' 如果不做内标校正的话，则是直接[峰面积, 浓度]之间的线性关系了
-            Return model.linear _
-                .Plot(xLabel:="Cti u mol/L",
+            Return RegressionPlot.Plot(model.linear, xLabel:="Cti u mol/L",
                       yLabel:="Peak area(Ati)",
                       size:=size,
                       predictedX:=samples,
