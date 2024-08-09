@@ -65,9 +65,12 @@ Imports SMRUCC.genomics.Assembly.ELIXIR.EBI.ChEBI.XML
 
 Namespace ChEBI
 
+    ''' <summary>
+    ''' mzkit data reader wrapper of the <see cref="ChEBIEntity"/> xml request result data.
+    ''' </summary>
     Public Class Wraper : Implements GenericCompound
 
-        Public ReadOnly Property Identity As String Implements IReadOnlyId.Identity
+        Public ReadOnly Property Id As String Implements IReadOnlyId.Identity
             Get
                 Return chebi.chebiId
             End Get
@@ -91,10 +94,14 @@ Namespace ChEBI
             End Get
         End Property
 
+        ''' <summary>
+        ''' the source data object
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property chebi As ChEBIEntity
 
         Public Overrides Function ToString() As String
-            Return $"({Identity}) {CommonName}"
+            Return $"({Id}) {CommonName}"
         End Function
 
     End Class

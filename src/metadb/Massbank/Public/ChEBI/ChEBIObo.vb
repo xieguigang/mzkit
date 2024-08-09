@@ -68,12 +68,22 @@ Namespace ChEBI
 
     Public Module ChEBIObo
 
+        ''' <summary>
+        ''' Extract the metabolite annotation information from the chebi ontology database file
+        ''' </summary>
+        ''' <param name="chebi"></param>
+        ''' <returns></returns>
         Public Iterator Function ImportsMetabolites(chebi As OBOFile) As IEnumerable(Of metadata)
             For Each term As RawTerm In chebi.GetRawTerms
                 Yield term.ExtractTerm
             Next
         End Function
 
+        ''' <summary>
+        ''' convert the chebi ontology term as the mzkit metabolite annotation data model
+        ''' </summary>
+        ''' <param name="term"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function ExtractTerm(term As RawTerm) As metadata
             Dim obo_data = term.GetValueSet
@@ -112,6 +122,12 @@ Namespace ChEBI
             }
         End Function
 
+        ''' <summary>
+        ''' deal with the missing value data safely
+        ''' </summary>
+        ''' <param name="properties"></param>
+        ''' <param name="key"></param>
+        ''' <returns></returns>
         <Extension>
         Private Function SafeGetString(properties As Dictionary(Of String, NamedValue()), key As String) As String
             If properties.ContainsKey(key) Then
