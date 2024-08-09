@@ -166,31 +166,7 @@ Public Class LibraryWorkspace
                     key = $"{annotation.libname}|{annotation.adducts}"
                 End If
 
-                If libs.annotations.ContainsKey(key) Then
-                    ' has duplicted annotation result
-                    Dim a = libs.annotations(key)
-
-                    If a.samplefiles.TryCount > annotation.samplefiles.TryCount Then
-                        ' just merge current annotation to a
-                        For Each sample In annotation.samplefiles
-                            If Not a.samplefiles.ContainsKey(sample.Key) Then
-                                Call a.samplefiles.Add(sample.Key, sample.Value)
-                            End If
-                        Next
-                    Else
-                        ' merge a to current annotation, and then replace the a
-                        For Each sample In a.samplefiles
-                            If Not annotation.samplefiles.ContainsKey(sample.Key) Then
-                                Call annotation.samplefiles.Add(sample.Key, sample.Value)
-                            End If
-                        Next
-
-                        ' make replacement
-                        libs.annotations(key) = annotation
-                    End If
-                Else
-                    Call libs.annotations.Add(key, annotation)
-                End If
+                Call ReadWithHandleConflicts(libs, key, annotation)
             Next
         Else
             ' already has ms1 peak assigned information
@@ -201,11 +177,41 @@ Public Class LibraryWorkspace
                     End If
                 End If
 
-                Call libs.annotations.Add($"{annotation.libname}|{annotation.adducts}|{annotation.xcms_id}", annotation)
+                Dim key As String = $"{annotation.libname}|{annotation.adducts}|{annotation.xcms_id}"
+
+                Call ReadWithHandleConflicts(libs, key, annotation)
             Next
         End If
 
         Return libs
     End Function
+
+    Private Shared Sub ReadWithHandleConflicts(libs As LibraryWorkspace, key As String, annotation As AlignmentHit)
+        If libs.annotations.ContainsKey(key) Then
+            ' has duplicted annotation result
+            Dim a = libs.annotations(key)
+
+            If a.samplefiles.TryCount > annotation.samplefiles.TryCount Then
+                ' just merge current annotation to a
+                For Each sample In annotation.samplefiles
+                    If Not a.samplefiles.ContainsKey(sample.Key) Then
+                        Call a.samplefiles.Add(sample.Key, sample.Value)
+                    End If
+                Next
+            Else
+                ' merge a to current annotation, and then replace the a
+                For Each sample In a.samplefiles
+                    If Not annotation.samplefiles.ContainsKey(sample.Key) Then
+                        Call annotation.samplefiles.Add(sample.Key, sample.Value)
+                    End If
+                Next
+
+                ' make replacement
+                libs.annotations(key) = annotation
+            End If
+        Else
+            Call libs.annotations.Add(key, annotation)
+        End If
+    End Sub
 
 End Class
