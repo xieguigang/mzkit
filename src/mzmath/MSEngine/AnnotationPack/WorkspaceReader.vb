@@ -119,6 +119,13 @@ Public Class LibraryWorkspace
         Dim libs As New LibraryWorkspace
         Dim line As Value(Of String) = ""
 
+        If mz_bin Then
+            Call VBDebugger.EchoLine("annotation reference id will be attached mz integer tag for make unique!")
+        End If
+        If filter_ms1 Then
+            Call VBDebugger.EchoLine("only loads the annotation result that has ms2 spectrum aligned!")
+        End If
+
         ' the workspace has two status:
         '
         ' no ms1 peak assigned, missing xcms_id, unique id via: $"{annotation.libname}|{annotation.adducts}"
