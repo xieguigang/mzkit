@@ -95,7 +95,14 @@ Public Class ParseChain
         Try
             tokens = New Scanner(SMILES).GetTokens().ToArray
         Catch ex As Exception
-            Throw New Exception("SMILES string for parse:" & SMILES, ex)
+            If strict Then
+                Throw New Exception("SMILES string for parse:" & SMILES, ex)
+            Else
+                Call $"SMILES string for parse: {SMILES}".Warning
+                Call App.LogException(New Exception("SMILES string for parse:" & SMILES, ex))
+
+                Return Nothing
+            End If
         End Try
 
         Dim graph As ChemicalFormula = New ParseChain(tokens).CreateGraph(strict)
