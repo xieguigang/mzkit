@@ -710,9 +710,8 @@ Module library
             Return workspace
         End If
 
-        Dim pack = DirectCast(workspace, AnnotationWorkspace).LoadMemory
-        DirectCast(workspace, AnnotationWorkspace).Dispose()
-        Return pack
+        ' no needs for dispose of the memory data
+        Return DirectCast(workspace, AnnotationWorkspace).LoadMemory
     End Function
 
     <ExportAPI("filter")>
