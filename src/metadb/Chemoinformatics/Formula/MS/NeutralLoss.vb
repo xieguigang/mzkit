@@ -67,7 +67,6 @@
 
 Imports System.Reflection
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
-Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS.AtomGroups
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 
 Namespace Formula.MS
@@ -103,30 +102,22 @@ Namespace Formula.MS
 
         Public Property CandidateOntologies As List(Of String) = New List(Of String)()
 
-        Public Shared Iterator Function GetDefault() As IEnumerable(Of ProductIon)
-            For Each container As Type In {
-                GetType(Alkenyl), GetType(Alkyl), GetType(Amines),
-                GetType(Glycosides), GetType(Ketones), GetType(Lipids),
-                GetType(Others)
-            }
-                For Each atom_group As PropertyInfo In container.GetProperties(DataFramework.PublicShared)
-                    Yield New ProductIon With {
-                       .Formula = atom_group.GetValue(Nothing),
-                       .IonMode = IonModes.Positive,
-                       .Name = atom_group.Name,
-                       .ShortName = .Name,
-                       .Mass = .Formula.ExactMass
-                    }
+        Sub New()
+        End Sub
 
-                    Yield New ProductIon With {
-                       .Formula = atom_group.GetValue(Nothing),
-                       .IonMode = IonModes.Negative,
-                       .Name = atom_group.Name,
-                       .ShortName = .Name,
-                       .Mass = .Formula.ExactMass
-                    }
-                Next
-            Next
+        Sub New(formula As String, name As String, comment As String)
+            _Formula = FormulaScanner.ScanFormula(formula)
+            _Mass = _Formula.ExactMass
+            _Intensity = 1
+            _IonMode = IonModes.Unknown
+            _Comment = comment
+            _Name = name
+            _ShortName = name
+            _Frequency = 1
+        End Sub
+
+        Public Overrides Function ToString() As String
+            Return $"{Name} ({Formula.EmpiricalFormula}); m/z: {Mass}"
         End Function
     End Class
 
