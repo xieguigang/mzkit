@@ -2,7 +2,11 @@
 
     Public NotInheritable Class MemorySheet
 
-        Public Shared Iterator Function GetDefault() As IEnumerable(Of ProductIon)
+        ''' <summary>
+        ''' https://www.acdlabs.com/blog/common-adduct-and-fragment-ions-in-mass-spectrometry/
+        ''' </summary>
+        ''' <returns></returns>
+        Public Shared Iterator Function GetDefault(Optional nmax As Integer = 3) As IEnumerable(Of ProductIon)
             Yield New ProductIon("[COH]+", "Aldehyde", "")
             Yield New ProductIon("[NO]+", "Nitro", "")
             Yield New ProductIon("[CH2OH]+", "Alcohol", "Aliphatic")
@@ -14,26 +18,22 @@
             Yield New ProductIon("[C3H3O]+", "Ketone", "Cyclic, saturated")
             Yield New ProductIon("[COOCH3]+", "Methyl ester", "")
             Yield New ProductIon("[C5H5]+", "Aromatic", "")
-            Yield New ProductIon("", "", "")
-            Yield New ProductIon("", "", "")
-            Yield New ProductIon("", "", "")
-            Yield New ProductIon("", "", "")
-            Yield New ProductIon("", "", "")
-            Yield New ProductIon("", "", "")
-            Yield New ProductIon("", "", "")
-            Yield New ProductIon("", "", "")
-            Yield New ProductIon("", "", "")
-            Yield New ProductIon("", "", "")
-            Yield New ProductIon("", "", "")
-            Yield New ProductIon("", "", "")
-            Yield New ProductIon("", "", "")
-            Yield New ProductIon("", "", "")
-            Yield New ProductIon("", "", "")
-            Yield New ProductIon("", "", "")
-            Yield New ProductIon("", "", "")
-            Yield New ProductIon("", "", "")
-            Yield New ProductIon("", "", "")
-            Yield New ProductIon("", "", "")
+            Yield New ProductIon("[C6H5]+", "Aromatic", "Substituted")
+            Yield New ProductIon("[C6H6]+", "Aromatic", "Substituted")
+            Yield New ProductIon("[C6H7]+", "Aromatic", "Substituted")
+            Yield New ProductIon("[C7H7]+", "Aromatic", "[C7H7]+ (Tropylium ion)")
+            Yield New ProductIon("[C7H8]+", "Aromatic", "McLafferty rearrangement")
+            Yield New ProductIon("[C6H5O]+", "Ether", "Aromatic")
+            Yield New ProductIon("[C7H5O]+", "Aldehyde", "Aromatic")
+            Yield New ProductIon("[C7H5O]+", "Carboxylic acid or ester", "Aromatic")
+            Yield New ProductIon("[C7H5O]+", "Ketone", "Aromatic")
+
+            For n As Integer = 1 To nmax
+                Yield New ProductIon("[CnH2n+1]+".Replace("n", n), "Alkane", "14n+1")
+                Yield New ProductIon("[CnH2n-1O2]+".Replace("n", n), "Carboxylic acid or ester", "14n+31")
+                Yield New ProductIon("[CnH2n-1]+".Replace("n", n), "Alkane", "14n-1")
+                Yield New ProductIon("[CnH2n]+".Replace("n", n), "Alkane", "16n")
+            Next
         End Function
     End Class
 End Namespace
