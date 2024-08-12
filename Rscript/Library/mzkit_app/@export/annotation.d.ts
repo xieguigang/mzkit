@@ -45,6 +45,9 @@ declare namespace annotation {
    function commit(workspace: object, xref_id: string, mz: number, rt: number, adducts: string, biodeep_id: string, name: string, formula: string): ;
    /**
    */
+   function filter(pack: object, filter: any): object;
+   /**
+   */
    function get_annotations(workspace: object): object;
    module make {
       /**
@@ -71,11 +74,13 @@ declare namespace annotation {
         * @param io Read or Write
         * 
         * + default value Is ``null``.
+        * @param lazy 
+        * + default value Is ``false``.
         * @param env -
         * 
         * + default value Is ``null``.
       */
-      function annotation_workspace(file: any, io?: object, env?: object): object;
+      function annotation_workspace(file: any, io?: object, lazy?: boolean, env?: object): object;
    }
    /**
    */
@@ -96,6 +101,12 @@ declare namespace annotation {
    /**
    */
    function push_temp(workspace: object, mz: number, rt: number, intensity: number, libname: string, score: number, forward: number, reverse: number, jaccard: number, entropy: number, source: string, alignment: string): ;
+   module read {
+      /**
+        * @param env default value Is ``null``.
+      */
+      function annotationPack(file: any, env?: object): object;
+   }
    /**
    */
    function save_annotations(workspace: object, library: string, annotations: object): ;
