@@ -29,11 +29,26 @@
             Yield New ProductIon("[C7H5O]+", "Ketone", "Aromatic")
 
             For n As Integer = 1 To nmax
-                Yield New ProductIon("[CnH2n+1]+".Replace("n", n), "Alkane", "14n+1")
-                Yield New ProductIon("[CnH2n-1O2]+".Replace("n", n), "Carboxylic acid or ester", "14n+31")
-                Yield New ProductIon("[CnH2n-1]+".Replace("n", n), "Alkane", "14n-1")
-                Yield New ProductIon("[CnH2n]+".Replace("n", n), "Alkane", "16n")
+                Yield New ProductIon(Formula(n, 2 * n + 1), "Alkane", "14n+1")
+                Yield New ProductIon(Formula(n, 2 * n - 1, 2), "Carboxylic acid or ester", "14n+31")
+                Yield New ProductIon(Formula(n, 2 * n - 1), "Alkane", "14n-1")
+                Yield New ProductIon(Formula(n, 2 * n), "Alkane", "16n")
             Next
+        End Function
+
+        Private Shared Function Formula(C As Integer, H As Integer) As Dictionary(Of String, Integer)
+            Return New Dictionary(Of String, Integer) From {
+                {NameOf(C), C},
+                {NameOf(H), H}
+            }
+        End Function
+
+        Private Shared Function Formula(C As Integer, H As Integer, O As Integer) As Dictionary(Of String, Integer)
+            Return New Dictionary(Of String, Integer) From {
+                {NameOf(C), C},
+                {NameOf(H), H},
+                {NameOf(O), O}
+            }
         End Function
 
         Public Shared Iterator Function GetDefaultNeutralLoss() As IEnumerable(Of NeutralLoss)

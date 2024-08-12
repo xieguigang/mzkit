@@ -66,6 +66,7 @@
 #End Region
 
 Imports System.Reflection
+Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 
@@ -105,8 +106,13 @@ Namespace Formula.MS
         Sub New()
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(formula As String, name As String, comment As String)
-            _Formula = FormulaScanner.ScanFormula(formula)
+            Call Me.New(FormulaScanner.ScanFormula(formula).CountsByElement, name, comment)
+        End Sub
+
+        Sub New(formula As IDictionary(Of String, Integer), name As String, comment As String)
+            _Formula = New Formula(formula)
             _Mass = _Formula.ExactMass
             _Intensity = 1
             _IonMode = IonModes.Unknown
