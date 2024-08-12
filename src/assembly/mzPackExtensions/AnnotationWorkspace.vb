@@ -14,6 +14,7 @@ Public Class AnnotationWorkspace : Implements IDisposable, IWorkspaceReader
     ReadOnly pack As StreamPack
     ReadOnly libraries As New Dictionary(Of String, Integer)
     ReadOnly samplefiles As New List(Of String)
+    ReadOnly source As String
 
     Private disposedValue As Boolean
 
@@ -26,11 +27,12 @@ Public Class AnnotationWorkspace : Implements IDisposable, IWorkspaceReader
     ''' </remarks>
     Public ReadOnly Property file As String
         Get
-            Return pack.filepath
+            Return If(source, pack.filepath)
         End Get
     End Property
 
-    Sub New(file As Stream)
+    Sub New(file As Stream, Optional source_file As String = Nothing)
+        source = source_file
         pack = New StreamPack(file)
 
         If pack.FileExists("/libraries.json", ZERO_Nonexists:=True) Then
@@ -50,6 +52,7 @@ Public Class AnnotationWorkspace : Implements IDisposable, IWorkspaceReader
 
         Return New AnnotationPack With {
             .libraries = libraries,
+            .file = file,
             .peaks = LoadPeakTable.ToArray
         }
     End Function

@@ -692,13 +692,18 @@ Module library
                                    Optional lazy As Boolean = False,
                                    Optional env As Environment = Nothing) As Object
 
-        Dim buf = SMRUCC.Rsharp.GetFileStream(file, io, env, lazy:=lazy)
+        Dim is_filepath As Boolean = False
+        Dim buf = SMRUCC.Rsharp.GetFileStream(file, io, env, lazy:=lazy, is_filepath:=is_filepath)
+        Dim path As String = Nothing
 
+        If is_filepath Then
+            path = CLRVector.asCharacter(file).First
+        End If
         If buf Like GetType(Message) Then
             Return buf.TryCast(Of Message)
         End If
 
-        Return New AnnotationWorkspace(buf.TryCast(Of Stream))
+        Return New AnnotationWorkspace(buf.TryCast(Of Stream), source_file:=path)
     End Function
 
     <ExportAPI("read.annotationPack")>
