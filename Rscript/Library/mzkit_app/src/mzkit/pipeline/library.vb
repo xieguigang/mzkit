@@ -68,6 +68,7 @@ Imports BioNovoGene.BioDeep.Chemistry.MetaLib.CrossReference
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports BioNovoGene.BioDeep.MSEngine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
@@ -88,6 +89,7 @@ Module library
 
     Sub Main()
         Call Internal.generic.add("writeBin", GetType(LibraryWorkspace), AddressOf writeWorkspace)
+        Call Internal.generic.add("writeBin", GetType(AnnotationPack), AddressOf writeResultPack)
         Call Internal.generic.add("readBin.library_workspace", GetType(Stream), AddressOf loadWorkspace)
     End Sub
 
@@ -96,6 +98,19 @@ Module library
         Dim libs = LibraryWorkspace.read(file, mz_bin)
 
         Return libs
+    End Function
+
+    Private Function writeResultPack(pack As AnnotationPack, args As list, env As Environment) As Object
+        Dim con As Stream = args!con
+        Dim file As New AnnotationWorkspace(con)
+
+        Call file.SetPeakTable(pack.peaks)
+
+        For Each libs In pack.libraries
+            Call file.CreateLibraryResult(libs.Key, libs.Value)
+        Next
+
+        Return True
     End Function
 
     Private Function writeWorkspace(table As LibraryWorkspace, args As list, env As Environment) As Object
@@ -683,6 +698,36 @@ Module library
         End If
 
         Return New AnnotationWorkspace(buf.TryCast(Of Stream))
+    End Function
+
+    <ExportAPI("read.annotationPack")>
+    <RApiReturn(GetType(AnnotationPack))>
+    Public Function readResultPack(<RRawVectorArgument> file As Object, Optional env As Environment = Nothing) As Object
+        Dim workspace As Object = OpenResultPack(file, FileAccess.Read, env)
+
+        If TypeOf workspace Is Message Then
+            Return workspace
+        End If
+
+        Dim pack = DirectCast(workspace, AnnotationWorkspace).LoadMemory
+        DirectCast(workspace, AnnotationWorkspace).Dispose()
+        Return pack
+    End Function
+
+    <ExportAPI("filter")>
+    Public Function filter_unique(pack As AnnotationPack, <RRawVectorArgument> filter As Object) As AnnotationPack
+        Dim filterIndex As Index(Of String) = CLRVector.asCharacter(filter).Indexing
+        Dim libs = pack.libraries
+
+        For Each key As String In libs.Keys.ToArray
+            libs(key) = libs(key) _
+                .Where(Function(ai) $"{ai.xcms_id}_{ai.biodeep_id}_{ai.adducts}" Like filterIndex) _
+                .ToArray
+        Next
+
+        pack.libraries = libs
+
+        Return pack
     End Function
 
     <ExportAPI("get_annotations")>
