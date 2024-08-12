@@ -47,7 +47,9 @@ Public Class AnnotationWorkspace : Implements IDisposable, IWorkspaceReader
         Dim libraries As New Dictionary(Of String, AlignmentHit())
 
         For Each name As String In Me.libraries.Keys
+            Call VBDebugger.cat($"  -> load_memory: {name} ... ")
             Call libraries.Add(name, GetLibraryHits(name).ToArray)
+            Call VBDebugger.EchoLine("ok!")
         Next
 
         Return New AnnotationPack With {
