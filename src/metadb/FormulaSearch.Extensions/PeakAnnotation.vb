@@ -120,6 +120,14 @@ Public Class PeakAnnotation
         Return formula.ToString
     End Function
 
+    ''' <summary>
+    ''' do score evaluation of the spectrum associated with the assembled formula composition 
+    ''' </summary>
+    ''' <param name="peaks"></param>
+    ''' <param name="precursorMz"></param>
+    ''' <param name="adduct"></param>
+    ''' <param name="formula"></param>
+    ''' <returns></returns>
     Public Shared Function DoPeakAnnotation(peaks As ISpectrum, precursorMz As Double, adduct As MzCalculator, formula As Formula) As PeakAnnotation
         Dim assign As New FragmentAssigner
         Dim exactMass As Double = formula.ExactMass

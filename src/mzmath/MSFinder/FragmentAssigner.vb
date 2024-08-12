@@ -84,7 +84,7 @@ Public NotInheritable Class FragmentAssigner
     ''' use default profile
     ''' </summary>
     Sub New()
-        productIonDB = New List(Of ProductIon)(ProductIon.GetDefault.OrderBy(Function(i) i.Mass))
+        productIonDB = New List(Of ProductIon)(MemorySheet.GetDefault.OrderBy(Function(i) i.Mass))
         ms2Tol = 0.3
         massTolType = MassToleranceType.Da
     End Sub
