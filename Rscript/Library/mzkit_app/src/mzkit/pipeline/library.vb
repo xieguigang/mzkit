@@ -689,9 +689,10 @@ Module library
     <RApiReturn(GetType(AnnotationWorkspace))>
     Public Function OpenResultPack(<RRawVectorArgument> file As Object,
                                    Optional io As FileAccess = FileAccess.Read,
+                                   Optional lazy As Boolean = False,
                                    Optional env As Environment = Nothing) As Object
 
-        Dim buf = SMRUCC.Rsharp.GetFileStream(file, io, env)
+        Dim buf = SMRUCC.Rsharp.GetFileStream(file, io, env, lazy:=lazy)
 
         If buf Like GetType(Message) Then
             Return buf.TryCast(Of Message)
@@ -703,7 +704,7 @@ Module library
     <ExportAPI("read.annotationPack")>
     <RApiReturn(GetType(AnnotationPack))>
     Public Function readResultPack(<RRawVectorArgument> file As Object, Optional env As Environment = Nothing) As Object
-        Dim workspace As Object = OpenResultPack(file, FileAccess.Read, env)
+        Dim workspace As Object = OpenResultPack(file, FileAccess.Read, lazy:=False, env)
 
         If TypeOf workspace Is Message Then
             Return workspace
