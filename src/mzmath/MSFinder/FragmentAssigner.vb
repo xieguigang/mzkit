@@ -111,7 +111,8 @@ Public NotInheritable Class FragmentAssigner
         End If
 
         For Each peak As SpectrumPeak In peaklist
-            If peak.Annotation = "M" Then
+            ' do not overrides the current existsed annotations
+            If Not peak.Annotation.StringEmpty(, True) Then
                 Continue For
             End If
 

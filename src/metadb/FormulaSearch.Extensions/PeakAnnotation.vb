@@ -135,6 +135,8 @@ Public Class PeakAnnotation
             .Select(Function(m)
                         If std.Abs(m.mz - exactMass) <= 0.1 Then
                             m.Annotation = "M"
+                        ElseIf std.Abs(m.mz - adduct.CalcMZ(exactMass)) <= 0.1 Then
+                            m.Annotation = adduct.ToString
                         End If
 
                         Return New SpectrumPeak(m)
