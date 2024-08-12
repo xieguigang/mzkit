@@ -156,5 +156,12 @@ Namespace Formula.MS
 
         Public Property CandidateOntologies As List(Of String) = New List(Of String)()
 
+        Sub New()
+        End Sub
+
+        Sub New(loss As String, name As String, comment As String)
+
+        End Sub
+
     End Class
 End Namespace

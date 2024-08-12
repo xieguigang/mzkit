@@ -35,5 +35,17 @@
                 Yield New ProductIon("[CnH2n]+".Replace("n", n), "Alkane", "16n")
             Next
         End Function
+
+        Public Shared Iterator Function GetDefaultNeutralLoss() As IEnumerable(Of NeutralLoss)
+            Yield New NeutralLoss("[M-OH]+", "Carboxylic acid or ester", "")
+            Yield New NeutralLoss("[M-H2O]+", "Alcohol/Aldehyde/Carboxylic acid or ester", "Straight chain/Aromatic")
+            Yield New NeutralLoss("[M-CO]+", "Alcohol", "Phenol")
+            Yield New NeutralLoss("[M-C2H4]+", "Cycloalkane/Aldehyde", "")
+            Yield New NeutralLoss("[M-COH]+", "Alcohol", "Phenol")
+            Yield New NeutralLoss("[M-CH2CH3]+", "Cycloalkane", "")
+            Yield New NeutralLoss("[M-CH2CHO]+", "Aldehyde", "Straight chain")
+            Yield New NeutralLoss("[M-CH2CHOH]+", "Aldehyde", "Straight chain")
+            Yield New NeutralLoss("[M-CO2H]+", "Carboxylic acid or ester", "")
+        End Function
     End Class
 End Namespace
