@@ -110,6 +110,8 @@ Module library
             Call file.CreateLibraryResult(libs.Key, libs.Value)
         Next
 
+        Call file.Dispose()
+
         Return True
     End Function
 

@@ -144,6 +144,9 @@ Public Class AnnotationWorkspace : Implements IDisposable, IWorkspaceReader
     '     MyBase.Finalize()
     ' End Sub
 
+    ''' <summary>
+    ''' save the annotation result workspace
+    ''' </summary>
     Public Sub Dispose() Implements IDisposable.Dispose
         ' 不要更改此代码。请将清理代码放入“Dispose(disposing As Boolean)”方法中
         Dispose(disposing:=True)
