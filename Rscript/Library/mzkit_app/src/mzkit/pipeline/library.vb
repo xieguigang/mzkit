@@ -74,6 +74,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
+Imports SMRUCC.Rsharp.Runtime.Internal
 Imports SMRUCC.Rsharp.Runtime.Internal.[Object]
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
@@ -91,6 +92,8 @@ Module library
         Call Internal.generic.add("writeBin", GetType(LibraryWorkspace), AddressOf writeWorkspace)
         Call Internal.generic.add("writeBin", GetType(AnnotationPack), AddressOf writeResultPack)
         Call Internal.generic.add("readBin.library_workspace", GetType(Stream), AddressOf loadWorkspace)
+
+        Call htmlPrinter.AttachHtmlFormatter(Of AnnotationPack)(AddressOf tohtmlString)
     End Sub
 
     Private Function loadWorkspace(file As Stream, args As list, env As Environment) As Object
@@ -121,6 +124,20 @@ Module library
         Call table.save(con, commit_peaks)
         Call con.Flush()
         Return True
+    End Function
+
+    <RGenericOverloads(htmlPrinter.toHtml_apiName)>
+    Public Function tohtmlString(pack As AnnotationPack, args As list, env As Environment) As Object
+        Dim biodeep_id As String() = Nothing
+        Dim cell_render_rt As Boolean = args.getValue(Of Boolean)("cell_render.rt", env, [default]:=False)
+
+        If args.hasName("id") Then
+            biodeep_id = CLRVector.asCharacter(args.getByName("id"))
+        Else
+            Throw New NotImplementedException
+        End If
+
+        Return New ReportRender(pack).HtmlTable(biodeep_id, cell_render_rt)
     End Function
 
     ''' <summary>
