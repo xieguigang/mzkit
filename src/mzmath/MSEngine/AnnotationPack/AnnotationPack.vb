@@ -1,5 +1,7 @@
 ﻿
+Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
+Imports Microsoft.VisualBasic.Linq
 
 ''' <summary>
 ''' Result data pack for save the annotation result data
@@ -24,6 +26,19 @@ Public Class AnnotationPack : Implements IWorkspaceReader, IDisposable
     Public Property peaks As xcms2()
 
     Public Property file As String
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function samplefiles() As IEnumerable(Of String)
+        Return peaks _
+            .Select(Function(sample)
+                        Return sample.Properties.Keys
+                    End Function) _
+            .IteratesALL _
+            .Distinct _
+            .OrderBy(Function(name)
+                         Return name
+                     End Function)
+    End Function
 
     Public Function CreatePeakSet() As PeakSet
         Return New PeakSet(peaks)
