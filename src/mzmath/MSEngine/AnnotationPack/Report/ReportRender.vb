@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.ComponentModel.Collection
+﻿Imports System.Text
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Linq
 
 Public Class ReportRender
@@ -22,6 +23,30 @@ Public Class ReportRender
                           End Function)
     End Sub
 
+    Public Function HtmlTable(biodeep_ids As IEnumerable(Of String), Optional rt_cell As Boolean = True) As String
+        Dim html As New StringBuilder
+        Dim lines = Tabular(biodeep_ids, rt_cell).ToArray
+
+        Call html.AppendLine("<table>")
+        Call html.AppendLine("<thead>")
+        Call html.AppendLine("<th>")
+        Call html.AppendLine(lines(0))
+        Call html.AppendLine("</th>")
+        Call html.AppendLine("</thead>")
+        Call html.AppendLine("<tbody>")
+
+        For Each row As String In lines.Skip(1)
+            Call html.AppendLine("<tr>")
+            Call html.AppendLine(row)
+            Call html.AppendLine("</tr>")
+        Next
+
+        Call html.AppendLine("</tbody>")
+        Call html.AppendLine("</table>")
+
+        Return html.ToString
+    End Function
+
     ''' <summary>
     ''' 
     ''' </summary>
@@ -34,7 +59,7 @@ Public Class ReportRender
         Dim ordinals = metabolites.Keys.ToArray
 
         ' generates the headers
-        Yield "<th>" & ordinals _
+        Yield ordinals _
             .Select(Function(id) metabolites(id)) _
             .Select(Function(a)
                         Dim name = a.name
@@ -42,10 +67,10 @@ Public Class ReportRender
 
                         Return $"<td>{name.Replace("<", "&lt;")}<br />{adducts}</td>"
                     End Function) _
-            .JoinBy("") & "</th>"
+            .JoinBy("")
 
         For Each sample As String In annotation.samplefiles
-            Yield "<tr>" & ordinals _
+            Yield ordinals _
                 .Select(Function(id)
                             Dim annotation = metabolites(id)
 
@@ -59,7 +84,7 @@ Public Class ReportRender
                                 Return "<td>n/a</td>"
                             End If
                         End Function) _
-                .JoinBy("") & "</tr>"
+                .JoinBy("")
         Next
     End Function
 
