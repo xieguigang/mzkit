@@ -16,11 +16,16 @@ Public Class ReportRender
 
     Sub New(pack As AnnotationPack)
         annotation = pack
-        metabolites = pack.libraries.Values _
-            .IteratesALL _
-            .ToDictionary(Function(a)
-                              Return a.biodeep_id & "_" & a.adducts
-                          End Function)
+
+        For Each libs In pack.libraries
+            For Each hit In libs.Value
+                Dim key As String = hit.biodeep_id & "_" & hit.adducts
+
+                If Not metabolites.ContainsKey(key) Then
+                    Call metabolites.Add(key, hit)
+                End If
+            Next
+        Next
     End Sub
 
     Public Function HtmlTable(biodeep_ids As IEnumerable(Of String), Optional rt_cell As Boolean = True) As String

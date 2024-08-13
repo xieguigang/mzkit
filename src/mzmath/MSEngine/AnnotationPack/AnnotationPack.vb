@@ -86,7 +86,7 @@ Public Class AnnotationPack : Implements IWorkspaceReader, IDisposable
                 .rt = result.rt,
                 .rtmax = .rt,
                 .rtmin = .rt,
-                .sample = "",
+                .sample = result.xcms_id,
                 .scan = 0,
                 .sn = 0
             }
