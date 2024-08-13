@@ -47,8 +47,15 @@ declare namespace annotation {
    */
    function filter(pack: object, filter: any): object;
    /**
+    * get annotation data from the given workspace object
+    * 
+    * 
+     * @param workspace -
+     * @param env -
+     * 
+     * + default value Is ``null``.
    */
-   function get_annotations(workspace: object): object;
+   function get_annotations(workspace: any, env?: object): object|object;
    module make {
       /**
        * create a new metabolite annotation information
