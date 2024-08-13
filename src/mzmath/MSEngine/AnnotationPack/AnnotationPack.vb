@@ -18,6 +18,11 @@ Public Class AnnotationPack : Implements IWorkspaceReader, IDisposable
     ''' </summary>
     ''' <returns></returns>
     Public Property libraries As Dictionary(Of String, AlignmentHit())
+
+    ''' <summary>
+    ''' [xcms_id => XIC across multiple sample files]
+    ''' </summary>
+    ''' <returns></returns>
     Public Property XIC As Dictionary(Of String, MzGroup())
 
     ''' <summary>
