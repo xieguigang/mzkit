@@ -70,7 +70,9 @@ Imports BioNovoGene.BioDeep.MSEngine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.Vectorization
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
@@ -100,7 +102,21 @@ Module library
 
     <RGenericOverloads("as.data.frame")>
     Public Function create_table(data As Peaktable(), args As list, env As Environment) As dataframe
+        Dim vec As New VectorShadows(Of Peaktable)(data)
+        Dim v As Object = vec
+        Dim rowId As String() = CLRVector.asCharacter(v.name & "_" & v.precursor_type)
+        Dim df As New dataframe With {
+            .columns = New Dictionary(Of String, Array),
+            .rownames = rowId
+        }
 
+        For Each name As String In vec.GetDataProperties
+            ' If name <> NameOf(ReportTable.samples) Then
+            Call df.add(If(vec.GetMapName(name), name), DirectCast(vec(name), Array))
+            ' End If
+        Next
+
+        Return df
     End Function
 
     Private Function loadWorkspace(file As Stream, args As list, env As Environment) As Object
