@@ -104,7 +104,7 @@ Module library
     Public Function create_table(data As Peaktable(), args As list, env As Environment) As dataframe
         Dim vec As New VectorShadows(Of Peaktable)(data)
         Dim v As Object = vec
-        Dim rowId As String() = CLRVector.asCharacter(v.name & "_" & v.precursor_type)
+        Dim rowId As String() = CLRVector.asCharacter(v.name & "_" & v.annotation)
         Dim df As New dataframe With {
             .columns = New Dictionary(Of String, Array),
             .rownames = rowId
