@@ -17,7 +17,6 @@ Public Class ReportRender
     ReadOnly metabolites As New Dictionary(Of String, AlignmentHit)
 
     Public Property colorSet As String() = {"#0D0887FF", "#3E049CFF", "#6300A7FF", "#8707A6FF", "#A62098FF", "#C03A83FF", "#D5546EFF", "#E76F5AFF", "#F58C46FF", "#FDAD32FF", "#FCD225FF", "#F0F921FF"}
-    Public Property levels As Integer = 30
 
     Sub New(pack As AnnotationPack)
         annotation = pack
@@ -79,6 +78,7 @@ Public Class ReportRender
                                   Return data.Select(Function(a) a.score).Range
                               End If
                           End Function)
+        Dim levels As Integer = colorSet.Length
         Dim index As New DoubleRange(0, levels)
 
         ' generates the headers
