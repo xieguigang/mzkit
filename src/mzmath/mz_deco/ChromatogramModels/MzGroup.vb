@@ -84,6 +84,11 @@ Public Class MzGroup
     ''' <returns></returns>
     <XmlElement>
     Public Property XIC As ChromatogramTick()
+    ''' <summary>
+    ''' usually be the sample data file name.
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property tag As String
 
     ''' <summary>
     ''' get point counts of <see cref="XIC"/>.

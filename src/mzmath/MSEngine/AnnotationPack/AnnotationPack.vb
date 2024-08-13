@@ -18,6 +18,7 @@ Public Class AnnotationPack : Implements IWorkspaceReader, IDisposable
     ''' </summary>
     ''' <returns></returns>
     Public Property libraries As Dictionary(Of String, AlignmentHit())
+    Public Property XIC As Dictionary(Of String, MzGroup())
 
     ''' <summary>
     ''' the ms1 peaktable
