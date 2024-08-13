@@ -93,8 +93,15 @@ Module library
         Call Internal.generic.add("writeBin", GetType(AnnotationPack), AddressOf writeResultPack)
         Call Internal.generic.add("readBin.library_workspace", GetType(Stream), AddressOf loadWorkspace)
 
+        Call Internal.Object.Converts.makeDataframe.addHandler(GetType(Peaktable()), AddressOf create_table)
+
         Call htmlPrinter.AttachHtmlFormatter(Of AnnotationPack)(AddressOf tohtmlString)
     End Sub
+
+    <RGenericOverloads("as.data.frame")>
+    Public Function create_table(data As Peaktable(), args As list, env As Environment) As dataframe
+
+    End Function
 
     Private Function loadWorkspace(file As Stream, args As list, env As Environment) As Object
         Dim mz_bin As Boolean = args.getValue("mz_bin", env, [default]:=False)
@@ -754,6 +761,12 @@ Module library
         Return pack
     End Function
 
+    ''' <summary>
+    ''' get annotation data from the given workspace object
+    ''' </summary>
+    ''' <param name="workspace"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("get_annotations")>
     <RApiReturn(GetType(AnnotationPack), GetType(Peaktable))>
     Public Function loadAll(workspace As Object, Optional env As Environment = Nothing) As Object
