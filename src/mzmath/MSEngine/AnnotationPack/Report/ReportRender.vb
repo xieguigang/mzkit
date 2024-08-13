@@ -100,7 +100,7 @@ Public Class ReportRender
                             If annotation.samplefiles.ContainsKey(sample) Then
                                 Dim score As Double = If(rt_cell,
                                     std.Round(annotation(sample).rt / 60, 2),
-                                    annotation(sample).score)
+                                    std.Round(annotation(sample).score, 2))
                                 Dim range As DoubleRange = ranges(id)
                                 Dim offset As Integer = range.ScaleMapping(score, index)
 
@@ -110,13 +110,9 @@ Public Class ReportRender
                                     offset = levels - 1
                                 End If
 
-                                If rt_cell Then
-                                    Return $"<td style='color:{colorSet(offset)}'>{score}</td>"
-                                Else
-                                    Return $"<td>{annotation(sample).score}</td>"
-                                End If
+                                Return $"<td style='background-color:{colorSet(offset)}'>{score}</td>"
                             Else
-                                Return "<td>n/a</td>"
+                                Return "<td>NA</td>"
                             End If
                         End Function) _
                 .JoinBy("")
