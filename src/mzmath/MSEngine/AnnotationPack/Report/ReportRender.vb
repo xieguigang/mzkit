@@ -29,21 +29,35 @@ Public Class ReportRender
     ''' <returns>
     ''' iterates the html table text, the first element is always the table header title row.
     ''' </returns>
-    Public Iterator Function Tabular(biodeep_ids As IEnumerable(Of String)) As IEnumerable(Of String)
+    Public Iterator Function Tabular(biodeep_ids As IEnumerable(Of String), Optional rt_cell As Boolean = True) As IEnumerable(Of String)
         Dim metabolites = makeSubset(biodeep_ids)
+        Dim ordinals = metabolites.Keys.ToArray
 
         ' generates the headers
-        Yield metabolites _
+        Yield ordinals _
+            .Select(Function(id) metabolites(id)) _
             .Select(Function(a)
-                        Dim name = a.Value.name
-                        Dim adducts = a.Value.adducts
+                        Dim name = a.name
+                        Dim adducts = a.adducts
 
                         Return $"{name.Replace("<", "&lt;")}<br />{adducts}"
                     End Function) _
             .JoinBy("")
 
         For Each sample As String In annotation.samplefiles
+            Yield ordinals.Select(Function(id)
+                                      Dim annotation = metabolites(id)
 
+                                      If annotation.samplefiles.ContainsKey(sample) Then
+                                          If rt_cell Then
+                                              Return $"<td>{(annotation(sample).rt / 60).ToString("F1")}</td>"
+                                          Else
+                                              Return $"<td>{annotation(sample).score}</td>"
+                                          End If
+                                      Else
+                                          Return "<td>n/a</td>"
+                                      End If
+                                  End Function).JoinBy("")
         Next
     End Function
 
