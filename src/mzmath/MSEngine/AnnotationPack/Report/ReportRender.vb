@@ -1,6 +1,8 @@
 ﻿Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Linq
+Imports std = System.Math
 
 Public Class ReportRender
 
@@ -13,6 +15,9 @@ Public Class ReportRender
     ''' multiple <see cref="AlignmentHit"/> value for multiple precursor type
     ''' </remarks>
     ReadOnly metabolites As New Dictionary(Of String, AlignmentHit)
+
+    Public Property colorSet As String() = {"#0D0887FF", "#3E049CFF", "#6300A7FF", "#8707A6FF", "#A62098FF", "#C03A83FF", "#D5546EFF", "#E76F5AFF", "#F58C46FF", "#FDAD32FF", "#FCD225FF", "#F0F921FF"}
+    Public Property levels As Integer = 30
 
     Sub New(pack As AnnotationPack)
         annotation = pack
@@ -62,6 +67,19 @@ Public Class ReportRender
     Public Iterator Function Tabular(biodeep_ids As IEnumerable(Of String), Optional rt_cell As Boolean = True) As IEnumerable(Of String)
         Dim metabolites = makeSubset(biodeep_ids)
         Dim ordinals = metabolites.Keys.ToArray
+        Dim ranges = ordinals _
+            .ToDictionary(Function(key) key,
+                          Function(id)
+                              Dim result = metabolites(id)
+                              Dim data = result.samplefiles.Values
+
+                              If rt_cell Then
+                                  Return data.Select(Function(a) a.rt / 60).Range
+                              Else
+                                  Return data.Select(Function(a) a.score).Range
+                              End If
+                          End Function)
+        Dim index As New DoubleRange(0, levels)
 
         ' generates the headers
         Yield "<th>Samples</th>" & ordinals _
@@ -80,8 +98,20 @@ Public Class ReportRender
                             Dim annotation = metabolites(id)
 
                             If annotation.samplefiles.ContainsKey(sample) Then
+                                Dim score As Double = If(rt_cell,
+                                    std.Round(annotation(sample).rt / 60, 2),
+                                    annotation(sample).score)
+                                Dim range As DoubleRange = ranges(id)
+                                Dim offset As Integer = range.ScaleMapping(score, index)
+
+                                If offset < 0 Then
+                                    offset = 0
+                                ElseIf offset > levels - 1 Then
+                                    offset = levels - 1
+                                End If
+
                                 If rt_cell Then
-                                    Return $"<td>{(annotation(sample).rt / 60).ToString("F1")}</td>"
+                                    Return $"<td style='color:{colorSet(offset)}'>{score}</td>"
                                 Else
                                     Return $"<td>{annotation(sample).score}</td>"
                                 End If
