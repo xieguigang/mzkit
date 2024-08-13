@@ -34,30 +34,32 @@ Public Class ReportRender
         Dim ordinals = metabolites.Keys.ToArray
 
         ' generates the headers
-        Yield ordinals _
+        Yield "<th>" & ordinals _
             .Select(Function(id) metabolites(id)) _
             .Select(Function(a)
                         Dim name = a.name
                         Dim adducts = a.adducts
 
-                        Return $"{name.Replace("<", "&lt;")}<br />{adducts}"
+                        Return $"<td>{name.Replace("<", "&lt;")}<br />{adducts}</td>"
                     End Function) _
-            .JoinBy("")
+            .JoinBy("") & "</th>"
 
         For Each sample As String In annotation.samplefiles
-            Yield ordinals.Select(Function(id)
-                                      Dim annotation = metabolites(id)
+            Yield "<tr>" & ordinals _
+                .Select(Function(id)
+                            Dim annotation = metabolites(id)
 
-                                      If annotation.samplefiles.ContainsKey(sample) Then
-                                          If rt_cell Then
-                                              Return $"<td>{(annotation(sample).rt / 60).ToString("F1")}</td>"
-                                          Else
-                                              Return $"<td>{annotation(sample).score}</td>"
-                                          End If
-                                      Else
-                                          Return "<td>n/a</td>"
-                                      End If
-                                  End Function).JoinBy("")
+                            If annotation.samplefiles.ContainsKey(sample) Then
+                                If rt_cell Then
+                                    Return $"<td>{(annotation(sample).rt / 60).ToString("F1")}</td>"
+                                Else
+                                    Return $"<td>{annotation(sample).score}</td>"
+                                End If
+                            Else
+                                Return "<td>n/a</td>"
+                            End If
+                        End Function) _
+                .JoinBy("") & "</tr>"
         Next
     End Function
 
