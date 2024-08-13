@@ -67,6 +67,32 @@ Public Class AnnotationPack : Implements IWorkspaceReader, IDisposable
         }
     End Function
 
+    Public Iterator Function GetAnnotation() As IEnumerable(Of Peaktable)
+        For Each result As AlignmentHit In libraries.Values.IteratesALL
+            Yield New Peaktable With {
+                .annotation = result.adducts,
+                .energy = 0,
+                .formula = result.formula,
+                .id = result.biodeep_id,
+                .index = result.RI,
+                .into = 0,
+                .intb = 0,
+                .ionization = "HCD",
+                .mass = result.mz,
+                .maxo = 0,
+                .mzmax = result.mz,
+                .mzmin = result.mz,
+                .name = result.name,
+                .rt = result.rt,
+                .rtmax = .rt,
+                .rtmin = .rt,
+                .sample = "",
+                .scan = 0,
+                .sn = 0
+            }
+        Next
+    End Function
+
     Protected Overridable Sub Dispose(disposing As Boolean)
         If Not disposedValue Then
             If disposing Then

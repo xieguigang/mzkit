@@ -755,8 +755,19 @@ Module library
     End Function
 
     <ExportAPI("get_annotations")>
-    Public Function loadAll(workspace As AnnotationWorkspace) As AnnotationPack
-        Return workspace.LoadMemory
+    <RApiReturn(GetType(AnnotationPack), GetType(Peaktable))>
+    Public Function loadAll(workspace As Object, Optional env As Environment = Nothing) As Object
+        If workspace Is Nothing Then
+            Return Nothing
+        End If
+
+        If TypeOf workspace Is AnnotationWorkspace Then
+            Return DirectCast(workspace, AnnotationWorkspace).LoadMemory
+        ElseIf TypeOf workspace Is AnnotationPack Then
+            Return DirectCast(workspace, AnnotationPack).GetAnnotation.ToArray
+        Else
+            Return Message.InCompatibleType(GetType(AnnotationWorkspace), workspace.GetType, env)
+        End If
     End Function
 
     <ExportAPI("save_annotations")>
