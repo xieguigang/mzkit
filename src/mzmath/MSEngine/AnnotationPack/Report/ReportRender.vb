@@ -34,9 +34,9 @@ Public Class ReportRender
 
         Call html.AppendLine("<table>")
         Call html.AppendLine("<thead>")
-        Call html.AppendLine("<th>")
+        Call html.AppendLine("<tr>")
         Call html.AppendLine(lines(0))
-        Call html.AppendLine("</th>")
+        Call html.AppendLine("</tr>")
         Call html.AppendLine("</thead>")
         Call html.AppendLine("<tbody>")
 
@@ -64,18 +64,18 @@ Public Class ReportRender
         Dim ordinals = metabolites.Keys.ToArray
 
         ' generates the headers
-        Yield ordinals _
+        Yield "<th>Samples</th>" & ordinals _
             .Select(Function(id) metabolites(id)) _
             .Select(Function(a)
                         Dim name = a.name
                         Dim adducts = a.adducts
 
-                        Return $"<td>{name.Replace("<", "&lt;")}<br />{adducts}</td>"
+                        Return $"<th>{name.Replace("<", "&lt;")}<br />{adducts}</th>"
                     End Function) _
             .JoinBy("")
 
         For Each sample As String In annotation.samplefiles
-            Yield ordinals _
+            Yield $"<td>{sample}</td>" & ordinals _
                 .Select(Function(id)
                             Dim annotation = metabolites(id)
 
