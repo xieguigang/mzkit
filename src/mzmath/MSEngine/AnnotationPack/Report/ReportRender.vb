@@ -110,7 +110,7 @@ Public Class ReportRender
                                     offset = levels - 1
                                 End If
 
-                                Return $"<td style='background-color:{colorSet(offset)}'>{score}</td>"
+                                Return $"<td data_id='{id}' data_sample='{sample}' style='background-color:{colorSet(offset)}'>{score}</td>"
                             Else
                                 Return "<td>NA</td>"
                             End If
