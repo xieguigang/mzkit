@@ -6,7 +6,7 @@ Imports std = System.Math
 
 Public Class ReportRender
 
-    ReadOnly annotation As AnnotationPack
+    Public ReadOnly Property annotation As AnnotationPack
 
     ''' <summary>
     ''' 
