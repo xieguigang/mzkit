@@ -84,7 +84,7 @@ Public NotInheritable Class FragmentAssigner
     ''' use default profile
     ''' </summary>
     Sub New()
-        productIonDB = New List(Of ProductIon)(ProductIon.GetDefault.OrderBy(Function(i) i.Mass))
+        productIonDB = New List(Of ProductIon)(MemorySheet.GetDefault.OrderBy(Function(i) i.Mass))
         ms2Tol = 0.3
         massTolType = MassToleranceType.Da
     End Sub
@@ -111,7 +111,8 @@ Public NotInheritable Class FragmentAssigner
         End If
 
         For Each peak As SpectrumPeak In peaklist
-            If peak.Annotation <> "M" Then
+            ' do not overrides the current existsed annotations
+            If Not peak.Annotation.StringEmpty(, True) Then
                 Continue For
             End If
 
@@ -141,7 +142,7 @@ Public NotInheritable Class FragmentAssigner
             'library search
             Dim fragmentFormulas = getFormulaCandidatesbyLibrarySearch(formula, AdductIon.IonMode, peak.mz, massTol, productIonDB)
 
-            If fragmentFormulas Is Nothing OrElse fragmentFormulas.Count = 0 Then
+            If fragmentFormulas.IsNullOrEmpty Then
                 fragmentFormulas = getValenceCheckedFragmentFormulaList(formula, AdductIon.IonMode, peak.mz, massTol)
             End If
 
@@ -157,7 +158,10 @@ Public NotInheritable Class FragmentAssigner
                     .Formula = fragmentFormulas(minId),
                     .Mass = peak.mz,
                     .MassDiff = fragmentFormulas(minId).ExactMass - mass,
-                    .Intensity = peak.intensity
+                    .Intensity = peak.intensity,
+                    .IonMode = AdductIon.IonMode,
+                    .Name = fragmentFormulas(minId).EmpiricalFormula,
+                    .ShortName = .Name
                 })
             End If
         Next
@@ -168,7 +172,7 @@ Public NotInheritable Class FragmentAssigner
             For i As Integer = startIndex To productIonDB.Count - 1
                 Dim ionQuery = productIonDB(i)
 
-                If ionQuery.IonMode <> AdductIon.IonMode Then Continue For
+                If ionQuery.IonMode <> IonModes.Unknown AndAlso ionQuery.IonMode <> AdductIon.IonMode Then Continue For
                 If ionQuery.Formula.ExactMass > ion.Mass + 0.1 Then Exit For
 
                 If FragmentAssigner.isFormulaComposition(ion.Formula, ionQuery.Formula) Then
@@ -186,9 +190,11 @@ Public NotInheritable Class FragmentAssigner
     Private Shared Function getFormulaCandidatesbyLibrarySearch(formula As Formula, ionMode As IonModes, mz As Double, massTol As Double, productIonDB As List(Of ProductIon)) As List(Of Formula)
         Dim candidates = New List(Of Formula)()
         Dim startIndex = getStartIndex(mz, massTol, productIonDB)
+
         For i As Integer = startIndex To productIonDB.Count - 1
-            Dim ionQuery = productIonDB(i)
-            If ionQuery.IonMode <> ionMode Then Continue For
+            Dim ionQuery As ProductIon = productIonDB(i)
+
+            If ionQuery.IonMode <> IonModes.Unknown AndAlso ionQuery.IonMode <> ionMode Then Continue For
             If ionQuery.Formula.ExactMass < mz - massTol Then Continue For
             If ionQuery.Formula.ExactMass > mz + massTol Then Exit For
 

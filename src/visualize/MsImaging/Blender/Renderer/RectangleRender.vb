@@ -135,9 +135,15 @@ Namespace Blender
                                                Optional scale As InterpolationMode = InterpolationMode.Bilinear,
                                                Optional defaultFill As String = "Transparent") As GraphicsData
 
-            Dim defaultColor As SolidBrush = defaultFill.GetBrush
+            Dim defaultColor As Brush = defaultFill.GetBrush
             Dim w = dimension.Width
             Dim h = dimension.Height
+
+            If TypeOf defaultColor Is TextureBrush Then
+                ' the background is a gdi image 
+                ' so the default fill color should be transparent
+                defaultColor = Brushes.Transparent
+            End If
 
             Return g.GraphicsPlots(
                 size:=New Size(w, h),
@@ -178,10 +184,10 @@ Namespace Blender
 
         Private Sub FillLayerInternal(gr As IGraphics,
                                       pixels() As PixelData,
-                                      defaultColor As SolidBrush,
+                                      defaultColor As Brush,
                                       colors As SolidBrush(),
                                       Offset As Point)
-            Dim color As SolidBrush
+            Dim color As Brush
             Dim index As Integer
             Dim levelRange As DoubleRange = New Double() {0, 1}
             Dim indexrange As DoubleRange = New Double() {0, colors.Length - 1}

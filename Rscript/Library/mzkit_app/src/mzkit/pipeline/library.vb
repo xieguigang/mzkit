@@ -68,11 +68,15 @@ Imports BioNovoGene.BioDeep.Chemistry.MetaLib.CrossReference
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports BioNovoGene.BioDeep.MSEngine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.Vectorization
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
+Imports SMRUCC.Rsharp.Runtime.Internal
 Imports SMRUCC.Rsharp.Runtime.Internal.[Object]
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
@@ -88,8 +92,32 @@ Module library
 
     Sub Main()
         Call Internal.generic.add("writeBin", GetType(LibraryWorkspace), AddressOf writeWorkspace)
+        Call Internal.generic.add("writeBin", GetType(AnnotationPack), AddressOf writeResultPack)
         Call Internal.generic.add("readBin.library_workspace", GetType(Stream), AddressOf loadWorkspace)
+
+        Call Internal.Object.Converts.makeDataframe.addHandler(GetType(Peaktable()), AddressOf create_table)
+
+        Call htmlPrinter.AttachHtmlFormatter(Of AnnotationPack)(AddressOf tohtmlString)
     End Sub
+
+    <RGenericOverloads("as.data.frame")>
+    Public Function create_table(data As Peaktable(), args As list, env As Environment) As dataframe
+        Dim vec As New VectorShadows(Of Peaktable)(data)
+        Dim v As Object = vec
+        Dim rowId As String() = CLRVector.asCharacter(v.name & "_" & v.annotation)
+        Dim df As New dataframe With {
+            .columns = New Dictionary(Of String, Array),
+            .rownames = rowId
+        }
+
+        For Each name As String In vec.GetDataProperties
+            ' If name <> NameOf(ReportTable.samples) Then
+            Call df.add(If(vec.GetMapName(name), name), DirectCast(vec(name), Array))
+            ' End If
+        Next
+
+        Return df
+    End Function
 
     Private Function loadWorkspace(file As Stream, args As list, env As Environment) As Object
         Dim mz_bin As Boolean = args.getValue("mz_bin", env, [default]:=False)
@@ -98,12 +126,41 @@ Module library
         Return libs
     End Function
 
+    Private Function writeResultPack(pack As AnnotationPack, args As list, env As Environment) As Object
+        Dim con As Stream = args!con
+        Dim file As New AnnotationWorkspace(con)
+
+        Call file.SetPeakTable(pack.peaks)
+
+        For Each libs In pack.libraries
+            Call file.CreateLibraryResult(libs.Key, libs.Value)
+        Next
+
+        Call file.Dispose()
+
+        Return True
+    End Function
+
     Private Function writeWorkspace(table As LibraryWorkspace, args As list, env As Environment) As Object
         Dim con As Stream = args!con
         Dim commit_peaks As Boolean = args.getValue("commit_peaks", env, [default]:=False)
         Call table.save(con, commit_peaks)
         Call con.Flush()
         Return True
+    End Function
+
+    <RGenericOverloads(htmlPrinter.toHtml_apiName)>
+    Public Function tohtmlString(pack As AnnotationPack, args As list, env As Environment) As Object
+        Dim biodeep_id As String() = Nothing
+        Dim cell_render_rt As Boolean = args.getValue(Of Boolean)("cell_render.rt", env, [default]:=False)
+
+        If args.hasName("id") Then
+            biodeep_id = CLRVector.asCharacter(args.getByName("id"))
+        Else
+            Throw New NotImplementedException
+        End If
+
+        Return New ReportRender(pack).HtmlTable(biodeep_id, cell_render_rt)
     End Function
 
     ''' <summary>
@@ -674,20 +731,72 @@ Module library
     <RApiReturn(GetType(AnnotationWorkspace))>
     Public Function OpenResultPack(<RRawVectorArgument> file As Object,
                                    Optional io As FileAccess = FileAccess.Read,
+                                   Optional lazy As Boolean = False,
                                    Optional env As Environment = Nothing) As Object
 
-        Dim buf = SMRUCC.Rsharp.GetFileStream(file, io, env)
+        Dim is_filepath As Boolean = False
+        Dim buf = SMRUCC.Rsharp.GetFileStream(file, io, env, lazy:=lazy, is_filepath:=is_filepath)
+        Dim path As String = Nothing
 
+        If is_filepath Then
+            path = CLRVector.asCharacter(file).First
+        End If
         If buf Like GetType(Message) Then
             Return buf.TryCast(Of Message)
         End If
 
-        Return New AnnotationWorkspace(buf.TryCast(Of Stream))
+        Return New AnnotationWorkspace(buf.TryCast(Of Stream), source_file:=path)
     End Function
 
+    <ExportAPI("read.annotationPack")>
+    <RApiReturn(GetType(AnnotationPack))>
+    Public Function readResultPack(<RRawVectorArgument> file As Object, Optional env As Environment = Nothing) As Object
+        Dim workspace As Object = OpenResultPack(file, FileAccess.Read, lazy:=False, env)
+
+        If TypeOf workspace Is Message Then
+            Return workspace
+        End If
+
+        ' no needs for dispose of the memory data
+        Return DirectCast(workspace, AnnotationWorkspace).LoadMemory
+    End Function
+
+    <ExportAPI("filter")>
+    Public Function filter_unique(pack As AnnotationPack, <RRawVectorArgument> filter As Object) As AnnotationPack
+        Dim filterIndex As Index(Of String) = CLRVector.asCharacter(filter).Indexing
+        Dim libs = pack.libraries
+
+        For Each key As String In libs.Keys.ToArray
+            libs(key) = libs(key) _
+                .Where(Function(ai) $"{ai.xcms_id}_{ai.biodeep_id}_{ai.adducts}" Like filterIndex) _
+                .ToArray
+        Next
+
+        pack.libraries = libs
+
+        Return pack
+    End Function
+
+    ''' <summary>
+    ''' get annotation data from the given workspace object
+    ''' </summary>
+    ''' <param name="workspace"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("get_annotations")>
-    Public Function loadAll(workspace As AnnotationWorkspace) As AnnotationPack
-        Return workspace.LoadMemory
+    <RApiReturn(GetType(AnnotationPack), GetType(Peaktable))>
+    Public Function loadAll(workspace As Object, Optional env As Environment = Nothing) As Object
+        If workspace Is Nothing Then
+            Return Nothing
+        End If
+
+        If TypeOf workspace Is AnnotationWorkspace Then
+            Return DirectCast(workspace, AnnotationWorkspace).LoadMemory
+        ElseIf TypeOf workspace Is AnnotationPack Then
+            Return DirectCast(workspace, AnnotationPack).GetAnnotation.ToArray
+        Else
+            Return Message.InCompatibleType(GetType(AnnotationWorkspace), workspace.GetType, env)
+        End If
     End Function
 
     <ExportAPI("save_annotations")>

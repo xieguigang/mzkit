@@ -1,74 +1,72 @@
 ﻿#Region "Microsoft.VisualBasic::b3dd250c21600ffc53a3ab73d1b2f98a, metadb\Chemoinformatics\Formula\MS\NeutralLoss.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 102
-    '    Code Lines: 62 (60.78%)
-    ' Comment Lines: 6 (5.88%)
-    '    - Xml Docs: 100.00%
-    ' 
-    '   Blank Lines: 34 (33.33%)
-    '     File Size: 3.28 KB
+' Summaries:
 
 
-    '     Class ProductIon
-    ' 
-    '         Properties: CandidateInChIKeys, CandidateOntologies, Comment, Formula, Frequency
-    '                     Intensity, IonMode, IsotopeDiff, Mass, MassDiff
-    '                     Name, ShortName, Smiles
-    ' 
-    '         Function: GetDefault
-    ' 
-    '     Class NeutralLoss
-    ' 
-    '         Properties: CandidateInChIKeys, CandidateOntologies, Comment, Formula, Frequency
-    '                     Iontype, MassError, MassLoss, Name, PrecursorIntensity
-    '                     PrecursorMz, ProductIntensity, ProductMz, ShortName, Smiles
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 102
+'    Code Lines: 62 (60.78%)
+' Comment Lines: 6 (5.88%)
+'    - Xml Docs: 100.00%
+' 
+'   Blank Lines: 34 (33.33%)
+'     File Size: 3.28 KB
+
+
+'     Class ProductIon
+' 
+'         Properties: CandidateInChIKeys, CandidateOntologies, Comment, Formula, Frequency
+'                     Intensity, IonMode, IsotopeDiff, Mass, MassDiff
+'                     Name, ShortName, Smiles
+' 
+'         Function: GetDefault
+' 
+'     Class NeutralLoss
+' 
+'         Properties: CandidateInChIKeys, CandidateOntologies, Comment, Formula, Frequency
+'                     Iontype, MassError, MassLoss, Name, PrecursorIntensity
+'                     PrecursorMz, ProductIntensity, ProductMz, ShortName, Smiles
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports System.Reflection
+Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
-Imports BioNovoGene.BioDeep.Chemoinformatics.Formula.MS.AtomGroups
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 
 Namespace Formula.MS
 
@@ -103,30 +101,27 @@ Namespace Formula.MS
 
         Public Property CandidateOntologies As List(Of String) = New List(Of String)()
 
-        Public Shared Iterator Function GetDefault() As IEnumerable(Of ProductIon)
-            For Each container As Type In {
-                GetType(Alkenyl), GetType(Alkyl), GetType(Amines),
-                GetType(Glycosides), GetType(Ketones), GetType(Lipids),
-                GetType(Others)
-            }
-                For Each atom_group As PropertyInfo In container.GetProperties(DataFramework.PublicShared)
-                    Yield New ProductIon With {
-                       .Formula = atom_group.GetValue(Nothing),
-                       .IonMode = IonModes.Positive,
-                       .Name = atom_group.Name,
-                       .ShortName = .Name,
-                       .Mass = .Formula.ExactMass
-                    }
+        Sub New()
+        End Sub
 
-                    Yield New ProductIon With {
-                       .Formula = atom_group.GetValue(Nothing),
-                       .IonMode = IonModes.Negative,
-                       .Name = atom_group.Name,
-                       .ShortName = .Name,
-                       .Mass = .Formula.ExactMass
-                    }
-                Next
-            Next
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Sub New(formula As String, name As String, comment As String)
+            Call Me.New(FormulaScanner.ScanFormula(formula).CountsByElement, name, comment)
+        End Sub
+
+        Sub New(formula As IDictionary(Of String, Integer), name As String, comment As String)
+            _Formula = New Formula(formula)
+            _Mass = _Formula.ExactMass
+            _Intensity = 1
+            _IonMode = IonModes.Unknown
+            _Comment = comment
+            _Name = name
+            _ShortName = name
+            _Frequency = 1
+        End Sub
+
+        Public Overrides Function ToString() As String
+            Return $"{Name} ({Formula.EmpiricalFormula}); m/z: {Mass}"
         End Function
     End Class
 
@@ -164,6 +159,20 @@ Namespace Formula.MS
         Public Property CandidateInChIKeys As List(Of String) = New List(Of String)()
 
         Public Property CandidateOntologies As List(Of String) = New List(Of String)()
+
+        Sub New()
+        End Sub
+
+        Sub New(loss As String, name As String, comment As String)
+            Dim adduct As MzCalculator = Provider.ParseAdductModel(loss)
+
+            _Name = name
+            _ShortName = name
+            _Comment = comment
+            _Frequency = 1
+            _Iontype = IonModes.Unknown
+            _MassLoss = adduct.adducts
+        End Sub
 
     End Class
 End Namespace

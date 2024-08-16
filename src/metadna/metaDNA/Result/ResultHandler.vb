@@ -87,6 +87,50 @@ Module ResultHandler
                 Dim partner As String = type.infer.reference.id.Split(":"c).Last.Trim
                 Dim links As NamedValue(Of String)() = keggNetwork.FindReactions(partner, compound.Identity)
 
+                ' 20240814
+                ' links maybe empty collection
+                ' 
+                ' Error in <globalEnvironment@NP2212020456> -> snowfall_prallel_RPC_slave_node%&H0b000000@http://172.17.0.22:43680/ -> "slaveTask"(&argv...)(&argv...)(&argv...) -> R_invoke$slaveTask -> ".summaryTaskResult"(...)(Call ".annoReport"(Call ".protoc...) -> ".annoReport"(...)(Call ".protocol_workflow"(Call "...) -> ".protocol_workflow"(...)(Call ".raw_preprocessor"(Call "....) -> R_invoke$.protocol_workflow -> "protocol"(&args...)(&args...) -> R_invoke$workflow.OTCML_annotation -> "__searchMultiple"("rdaNames" <- &rdaNames, "args" ...)(&rawdata, "rdaNames" <- &rdaName...) -> R_invoke$__searchMultiple -> if_closure -> R_invoke$if_closure_internal -> if_closure -> R_invoke$if_closure_internal -> "ontology_search"(&rawdata, &args, "biodeep_id" <-...)(&rawdata, &args, "biodeep_id" <-...) -> R_invoke$ontology_search -> "as.table"(&dia_search, &dia_infer, "unique...)(&dia_search, &dia_infer, "unique...) -> as.table
+                '   1. IndexOutOfRangeException: Index was outside the bounds of the array.
+                '   2. stackFrames: 
+                '    at BioNovoGene.BioDeep.MetaDNA.ResultHandler.ExportTable(IEnumerable`1 candidates, MSSearch`1 kegg, Networking keggNetwork)+MoveNext()
+                '    at System.Collections.Generic.EnumerableHelpers.ToArray[T](IEnumerable`1 source, Int32& length)
+                '    at System.Linq.Buffer`1..ctor(IEnumerable`1 source)
+                '    at System.Linq.OrderedEnumerable`1.GetEnumerator()+MoveNext()
+                '    at BioNovoGene.BioDeep.MetaDNA.MetaDNAResult.FilterInferenceHits(IEnumerable`1 result, Double cutoff)+MoveNext()
+                '    at System.Collections.Generic.LargeArrayBuilder`1.AddRange(IEnumerable`1 items)
+                '    at System.Collections.Generic.EnumerableHelpers.ToArray[T](IEnumerable`1 source)
+                '    at mzkit.metaDNAInfer.ResultTable(Algorithm metaDNA, Object result, Boolean unique, Double cutoff, Environment env)
+
+                '    Dim dia_table As generic = Call "as.table"(&dia_search, &dia_infer, "unique" <- False, "cutoff" <- &filter_cutoff)
+                '    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+                ' metadna.R#_clr_interop::.as.table at [mzDIA, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]:line &Hx055624e00
+                ' biodeepMSMS.call_function."as.table"(&dia_search, &dia_infer, "unique...)(&dia_search, &dia_infer, "unique...) at ontology_search.R:line 77
+                ' biodeepMSMS.declare_function.R_invoke$ontology_search at ontology_search.R:line 6
+                ' biodeepMSMS.call_function."ontology_search"(&rawdata, &args, "biodeep_id" <-...)(&rawdata, &args, "biodeep_id" <-...) at searchMultiple.R:line 114
+                ' unknown.unknown.R_invoke$if_closure_internal at n/a:line n/a
+                ' biodeepMSMS.n/a.if_closure at searchMultiple.R:line 110
+                ' unknown.unknown.R_invoke$if_closure_internal at n/a:line n/a
+                ' biodeepMSMS.n/a.if_closure at searchMultiple.R:line 108
+                ' biodeepMSMS.declare_function.R_invoke$__searchMultiple at searchMultiple.R:line 11
+                ' biodeepMSMS.call_function."__searchMultiple"("rdaNames" <- &rdaNames, "args" ...)(&rawdata, "rdaNames" <- &rdaName...) at OTCML.R:line 30
+                ' biodeepMSMS.declare_function.R_invoke$workflow.OTCML_annotation at OTCML.R:line 6
+                ' biodeepMSMS.call_function."protocol"(&args...)(&args...) at run_workflow.R:line 74
+                ' biodeepMSMS.declare_function.R_invoke$.protocol_workflow at run_workflow.R:line 71
+                ' biodeepMSMS.call_function.".protocol_workflow"(...)(Call ".raw_preprocessor"(Call "....) at slaveTask.R:line 12
+                ' biodeepMSMS.call_function.".annoReport"(...)(Call ".protocol_workflow"(Call "...) at slaveTask.R:line 13
+                ' biodeepMSMS.call_function.".summaryTaskResult"(...)(Call ".annoReport"(Call ".protoc...) at slaveTask.R:line 14
+                ' biodeepMSMS.declare_function.R_invoke$slaveTask at slaveTask.R:line 6
+                ' runSlaveNode.call_function."slaveTask"(&argv...)(&argv...)(&argv...) at slave.R:line 67
+                ' unknown.unknown.snowfall_prallel_RPC_slave_node%&H0b000000@http://172.17.0.22:43680/ at n/a:line n/a
+                ' SMRUCC/R#.global.<globalEnvironment@NP2212020456> at <globalEnvironment>:line n/a
+                Dim reaction As NamedValue(Of String) = If(
+                    links.IsNullOrEmpty,
+                    New NamedValue(Of String)("Missing", "Missing"),
+                    links(Scan0)
+                )
+
                 Yield New MetaDNAResult With {
                     .exactMass = compound.ExactMass,
                     .formula = compound.Formula,
@@ -105,8 +149,8 @@ Module ResultHandler
                     .mz = type.infer.query.mz,
                     .rt = type.infer.query.scan_time,
                     .intensity = type.infer.query.intensity,
-                    .KEGG_reaction = links(Scan0).Name,
-                    .reaction = links(Scan0).Value.LineTokens.Distinct.JoinBy("; "),
+                    .KEGG_reaction = reaction.Name,
+                    .reaction = reaction.Value.LineTokens.Distinct.JoinBy("; "),
                     .parentTrace = type.infer.parentTrace / 100,
                     .inferSize = type.infer.inferSize,
                     .fileName = type.infer.rawFile,

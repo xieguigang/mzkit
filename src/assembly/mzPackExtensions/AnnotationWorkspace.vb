@@ -14,6 +14,7 @@ Public Class AnnotationWorkspace : Implements IDisposable, IWorkspaceReader
     ReadOnly pack As StreamPack
     ReadOnly libraries As New Dictionary(Of String, Integer)
     ReadOnly samplefiles As New List(Of String)
+    ReadOnly source As String
 
     Private disposedValue As Boolean
 
@@ -26,11 +27,12 @@ Public Class AnnotationWorkspace : Implements IDisposable, IWorkspaceReader
     ''' </remarks>
     Public ReadOnly Property file As String
         Get
-            Return pack.filepath
+            Return If(source, pack.filepath)
         End Get
     End Property
 
-    Sub New(file As Stream)
+    Sub New(file As Stream, Optional source_file As String = Nothing)
+        source = source_file
         pack = New StreamPack(file)
 
         If pack.FileExists("/libraries.json", ZERO_Nonexists:=True) Then
@@ -45,11 +47,14 @@ Public Class AnnotationWorkspace : Implements IDisposable, IWorkspaceReader
         Dim libraries As New Dictionary(Of String, AlignmentHit())
 
         For Each name As String In Me.libraries.Keys
+            Call VBDebugger.cat($"  -> load_memory: {name} ... ")
             Call libraries.Add(name, GetLibraryHits(name).ToArray)
+            Call VBDebugger.EchoLine("ok!")
         Next
 
         Return New AnnotationPack With {
             .libraries = libraries,
+            .file = file,
             .peaks = LoadPeakTable.ToArray
         }
     End Function
@@ -139,6 +144,9 @@ Public Class AnnotationWorkspace : Implements IDisposable, IWorkspaceReader
     '     MyBase.Finalize()
     ' End Sub
 
+    ''' <summary>
+    ''' save the annotation result workspace
+    ''' </summary>
     Public Sub Dispose() Implements IDisposable.Dispose
         ' 不要更改此代码。请将清理代码放入“Dispose(disposing As Boolean)”方法中
         Dispose(disposing:=True)

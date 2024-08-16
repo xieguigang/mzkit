@@ -467,6 +467,10 @@ Module metaDNAInfer
 
         Dim pool As PeakMs2() = raw.populates(Of PeakMs2)(env).ToArray
 
+        If pool.Length = 0 Then
+            Return Internal.debug.stop("the required sample data collection should not be empty!", env)
+        End If
+
         If Not peakSet Is Nothing Then
             Dim peaksdata As New PeakSet(peakSet.populates(Of xcms2)(env))
             Dim println = env.WriteLineHandler

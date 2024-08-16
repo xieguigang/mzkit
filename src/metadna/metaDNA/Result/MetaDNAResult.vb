@@ -163,7 +163,9 @@ Public Class MetaDNAResult
         End If
 
         For Each match As SSM2MatrixFragment In infer.alignments.SafeQuery
-            Yield $"{match.mz.ToString("F4")}_{match.query}_{match.ref}"
+            If Not match Is Nothing Then
+                Yield $"{match.mz.ToString("F4")}_{match.query}_{match.ref}"
+            End If
         Next
     End Function
 

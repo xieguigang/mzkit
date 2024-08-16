@@ -194,6 +194,8 @@ Namespace Spectra
                                 Dim max As ms2 = fragments(maxi)
                                 Dim annos As String = fragments _
                                     .Where(Function(f) Not f.Annotation.StringEmpty) _
+                                    .Select(Function(f) f.Annotation) _
+                                    .Distinct _
                                     .JoinBy(", ")
 
                                 Return New ms2(max.mz, max.intensity) With {
