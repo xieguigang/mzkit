@@ -27,12 +27,8 @@ const ms1_mz_bins = function(files, mzdiff = 0.001) {
         }
     });
 
-    let mzraw = NULL;
-
-    for(m in mz) {
-        mzraw <- rbind(m, mzraw);
-        NULL;
-    }
+    # merge the ion dataframes from each files
+    let mzraw = bind_rows(mz);
 
     # make centroid 
     mzraw <- libraryMatrix(data.frame(
