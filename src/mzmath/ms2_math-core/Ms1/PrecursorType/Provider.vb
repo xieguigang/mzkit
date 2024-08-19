@@ -217,7 +217,7 @@ Namespace Ms1.PrecursorType
         Public Function Calculators(ParamArray precursor_types As String()) As MzCalculator()
             Return (Iterator Function() As IEnumerable(Of MzCalculator)
                         For Each type As String In precursor_types
-                            If type.StringEmpty Then
+                            If type.StringEmpty(, True) Then
                                 Call "one of the given precursor adducts type string is empty!".Warning
                             End If
 
