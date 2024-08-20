@@ -60,6 +60,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Insilicon
 Imports BioNovoGene.BioDeep.Chemistry.Model
 Imports BioNovoGene.BioDeep.Chemoinformatics.SMILES
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Language
@@ -80,6 +81,42 @@ Module ms2_simulator
     End Function
 
     ''' <summary>
+    ''' build molecule documents for do embedding
+    ''' </summary>
+    ''' <param name="mols"></param>
+    ''' <returns></returns>
+    <ExportAPI("buildDocuments")>
+    Public Function buildDocuments(<RRawVectorArgument> mols As Object,
+                                   <RRawVectorArgument>
+                                   Optional id As Object = Nothing,
+                                   Optional env As Environment = Nothing) As Object
+
+        Dim formulas As pipeline = pipeline.TryCreatePipeline(Of ChemicalFormula)(mols, env)
+
+        If formulas.isError Then
+            Return formulas.getError
+        End If
+
+        Dim idset As String() = CLRVector.asCharacter(id)
+        Dim i As i32 = 0
+        Dim stream As IEnumerable(Of NamedValue(Of ChemicalFormula)) = (
+            Iterator Function() As IEnumerable(Of NamedValue(Of ChemicalFormula))
+                For Each f As ChemicalFormula In formulas.populates(Of ChemicalFormula)(env)
+                    Yield New NamedValue(Of ChemicalFormula)(idset.ElementAtOrDefault(++i, f.id), f)
+                Next
+            End Function)()
+
+        Return New list With {
+            .slots = SMILESEmbedding _
+                .StructureDocuments(mols:=stream) _
+                .ToDictionary(Function(a) a.name,
+                              Function(a)
+                                  Return CObj(a.value)
+                              End Function)
+        }
+    End Function
+
+    ''' <summary>
     ''' parse the smiles structure string as molecular network graph
     ''' </summary>
     ''' <param name="mol"></param>
@@ -93,8 +130,8 @@ Module ms2_simulator
     <RApiReturn(GetType(NetworkGraph))>
     Public Function MolecularGraph_func(<RRawVectorArgument>
                                         mol As Object,
-                                        Optional id As Object = Nothing,
-                                        Optional name As Object = Nothing,
+                                        <RRawVectorArgument> Optional id As Object = Nothing,
+                                        <RRawVectorArgument> Optional name As Object = Nothing,
                                         Optional digest_formula As Boolean = True,
                                         Optional verbose As Boolean = False,
                                         Optional env As Environment = Nothing) As Object
