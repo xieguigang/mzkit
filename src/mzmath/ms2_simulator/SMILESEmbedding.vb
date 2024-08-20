@@ -15,12 +15,21 @@ Public Module SMILESEmbedding
         Dim documents As New Dictionary(Of String, List(Of String))
 
         For Each smiles As NamedValue(Of ChemicalFormula) In mols
-            For Each atom_group In smiles.Value.GetAtomTable
-                If Not documents.ContainsKey(atom_group.group) Then
-                    documents(atom_group.group) = New List(Of String)
-                End If
+            For Each key As ChemicalKey In smiles.Value.AsEnumerable
+                ' 20240820
+                '
+                ' the chemical key is the node link 
+                ' in a chemical graph
+                ' use the atom groups between two chemical key for embedding the graph structure
+                ' use atom group table only gets the element composition
+                ' atom group table missing the graph structure information
+                For Each v As ChemicalElement In key.AtomGroups
+                    If Not documents.ContainsKey(v.group) Then
+                        documents(v.group) = New List(Of String)
+                    End If
 
-                Call documents(atom_group.group).Add(smiles.Name)
+                    Call documents(v.group).Add(smiles.Name)
+                Next
             Next
         Next
 

@@ -69,6 +69,11 @@ Public Class ChemicalKey : Inherits Edge(Of ChemicalElement)
     ''' <returns></returns>
     Public Property bond As Bonds
 
+    Public Iterator Function AtomGroups() As IEnumerable(Of ChemicalElement)
+        Yield U
+        Yield V
+    End Function
+
     Public Overrides Function ToString() As String
         Return $"{U.elementName}{bond.Description}{V.elementName} (+{CInt(bond)})"
     End Function
