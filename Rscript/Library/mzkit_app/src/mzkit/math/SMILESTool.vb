@@ -99,7 +99,6 @@ Module SMILESTool
         Return atomGroups(smiles)
     End Function
 
-
     ''' <summary>
     ''' Parse the SMILES molecule structre string
     ''' </summary>
