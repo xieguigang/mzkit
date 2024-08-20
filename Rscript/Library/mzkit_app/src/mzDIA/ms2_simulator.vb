@@ -67,6 +67,7 @@ Imports SMRUCC.Rsharp
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Internal.[Object]
 Imports SMRUCC.Rsharp.Runtime.Interop
+Imports SMRUCC.Rsharp.Runtime.Vectorization
 
 <Package("mzkit.simulator")>
 Module ms2_simulator
@@ -95,6 +96,8 @@ Module ms2_simulator
                                         Optional verbose As Boolean = False,
                                         Optional env As Environment = Nothing) As Object
 
+        Dim idset As String() = CLRVector.asCharacter(id)
+
         Return env.EvaluateFramework(Of String, Object)(
             x:=mol,
             eval:=Function(smiles)
@@ -114,7 +117,9 @@ Module ms2_simulator
 
             If verbose Then
                 Call VBDebugger.WaitOutput()
-                Call Console.WriteLine(molecular_graph.vertex.Select(Function(v) v.data(NamesOf.REFLECTION_ID_MAPPING_NODETYPE)).GetJson)
+                Call Console.WriteLine(molecular_graph.vertex _
+                        .Select(Function(v) v.data(NamesOf.REFLECTION_ID_MAPPING_NODETYPE)) _
+                        .GetJson)
             End If
 
             Return molecular_graph
