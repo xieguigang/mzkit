@@ -63,7 +63,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Scripting.TokenIcer
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Language
 
@@ -80,7 +80,7 @@ Namespace Language
             If charge Is Nothing Then
                 Return MyBase.ToString
             Else
-                Return $"[{text}{stdNum.Abs(charge.Value)}{If(charge > 0, "+", "-")}]"
+                Return $"[{text}{std.Abs(charge.Value)}{If(charge > 0, "+", "-")}]"
             End If
         End Function
     End Class

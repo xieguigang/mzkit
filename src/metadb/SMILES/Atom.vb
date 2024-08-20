@@ -1,65 +1,68 @@
 ﻿#Region "Microsoft.VisualBasic::9bf6d6a6bf70e480d479ece67ee5b76f, metadb\SMILES\Atom.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 220
-    '    Code Lines: 162 (73.64%)
-    ' Comment Lines: 9 (4.09%)
-    '    - Xml Docs: 100.00%
-    ' 
-    '   Blank Lines: 49 (22.27%)
-    '     File Size: 6.59 KB
+' Summaries:
 
 
-    ' Class Atom
-    ' 
-    '     Properties: AtomGroups, isAtomGroup, label, maxKeys, valence
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: ChargeLabel, DefaultAtomGroups, DefaultElements, EvaluateIsAtomGroup, GetIonLabel
-    '               GetMaxKeys, LoadAtoms, ToString
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 220
+'    Code Lines: 162 (73.64%)
+' Comment Lines: 9 (4.09%)
+'    - Xml Docs: 100.00%
+' 
+'   Blank Lines: 49 (22.27%)
+'     File Size: 6.59 KB
+
+
+' Class Atom
+' 
+'     Properties: AtomGroups, isAtomGroup, label, maxKeys, valence
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Function: ChargeLabel, DefaultAtomGroups, DefaultElements, EvaluateIsAtomGroup, GetIonLabel
+'               GetMaxKeys, LoadAtoms, ToString
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports stdNum = System.Math
+Imports std = System.Math
 
+''' <summary>
+''' the atoms metadata for supports build formula and graph in SMILES parser
+''' </summary>
 Public Class Atom
 
     Public Property label As String
@@ -106,7 +109,7 @@ Public Class Atom
         If valence.IsNullOrEmpty Then
             Return 0
         Else
-            Return valence.Select(AddressOf stdNum.Abs).Max
+            Return valence.Select(AddressOf std.Abs).Max
         End If
     End Function
 
@@ -143,7 +146,7 @@ Public Class Atom
 
     Public Overrides Function ToString() As String
         If isAtomGroup Then
-            Return $"[{label}]{stdNum.Abs(valence(Scan0))}{If(valence(Scan0) > 0, "+", "-")}"
+            Return $"[{label}]{std.Abs(valence(Scan0))}{If(valence(Scan0) > 0, "+", "-")}"
         Else
             Return $"{label} ~ H{maxKeys}"
         End If
