@@ -89,12 +89,12 @@ Public Class FormulaBuilder
                 Call WalkElement(graph.AllElements.First, Bonds.NA)
             End If
         Else
-            Dim last_graph As Integer
+            Dim last_graph As Integer = -1
 
             For Each bond As ChemicalKey In graph.AllBonds.OrderBy(Function(k) k.U.graph_id)
-                If bond.U.graph_id <> last_graph Then
+                If last_graph > -1 AndAlso bond.U.graph_id <> last_graph Then
                     ' start a new independent chemical graph
-                    Me.empirical.Append(".")
+                    Call Me.empirical.Append(".")
                 End If
 
                 last_graph = bond.U.graph_id
