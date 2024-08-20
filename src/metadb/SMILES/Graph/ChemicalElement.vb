@@ -127,6 +127,7 @@ Public Class ChemicalElement : Inherits Node
         Me.group = base.group
         Me.ID = index
         Me.graph_id = base.graph_id
+        Me.aromatic = base.aromatic
     End Sub
 
     ''' <summary>
@@ -194,26 +195,34 @@ Public Class ChemicalElement : Inherits Node
     Private Shared Sub SetAtomGroups(atom As ChemicalElement, keys As Integer)
         Select Case atom.elementName
             Case "C"
-                Select Case keys
-                    Case 1 : atom.setAtomLabel("-CH3", 3)
-                    Case 2 : atom.setAtomLabel("-CH2-", 2)
-                    Case 3 : atom.setAtomLabel("-CH=", 1)
-                    Case Else
-                        atom.group = "C"
-                End Select
+                If atom.aromatic Then
+                    atom.setAtomLabel("-CH-", 1)
+                Else
+                    Select Case keys
+                        Case 1 : atom.setAtomLabel("-CH3", 3)
+                        Case 2 : atom.setAtomLabel("-CH2-", 2)
+                        Case 3 : atom.setAtomLabel("-CH=", 1)
+                        Case Else
+                            atom.group = "C"
+                    End Select
+                End If
             Case "O"
-                Select Case keys
-                    Case 1
-                        If atom.charge = 0 Then
-                            atom.setAtomLabel("-OH", 1)
-                        Else
-                            ' an ion with negative charge value
-                            ' [O-]
-                            atom.setAtomLabel("[O-]-", 0)
-                        End If
-                    Case Else
-                        atom.group = "-O-"
-                End Select
+                If atom.aromatic Then
+                    atom.setAtomLabel("-O-", 0)
+                Else
+                    Select Case keys
+                        Case 1
+                            If atom.charge = 0 Then
+                                atom.setAtomLabel("-OH", 1)
+                            Else
+                                ' an ion with negative charge value
+                                ' [O-]
+                                atom.setAtomLabel("[O-]-", 0)
+                            End If
+                        Case Else
+                            atom.group = "-O-"
+                    End Select
+                End If
             Case "N"
                 Dim n As Integer
 

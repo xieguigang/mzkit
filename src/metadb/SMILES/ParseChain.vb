@@ -192,7 +192,8 @@ Public Class ParseChain
     Private Sub WalkElement(t As Token, i As Integer)
         Dim element As New ChemicalElement(t.text, index:=i) With {
             .charge = If(t.charge Is Nothing, If(t.aromatic, 2, 1), Val(t.charge)),
-            .graph_id = gid
+            .graph_id = gid,
+            .aromatic = t.aromatic
         }
         Dim ringId As String = If(t.ring Is Nothing, Nothing, t.ring.ToString)
 
