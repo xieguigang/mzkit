@@ -47,10 +47,12 @@ declare namespace spectral_simulator {
      * @param verbose -
      * 
      * + default value Is ``false``.
+     * @param tqdm 
+     * + default value Is ``true``.
      * @param env 
      * + default value Is ``null``.
    */
-   function molecular_graph(mol: any, id?: any, name?: any, digest_formula?: boolean, verbose?: boolean, env?: object): object;
+   function molecular_graph(mol: any, id?: any, name?: any, digest_formula?: boolean, verbose?: boolean, tqdm?: boolean, env?: object): object;
    module read {
       /**
       */
