@@ -106,5 +106,9 @@ Namespace Language
         ''' For example, C1.C1 specifies the same molecule as CC(ethane)
         ''' </summary>
         Disconnected
+        ''' <summary>
+        ''' E/Z
+        ''' </summary>
+        Isomers
     End Enum
 End Namespace
