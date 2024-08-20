@@ -77,8 +77,14 @@ Public Class ParseChain
 
     Dim lastKey As Bonds?
 
-    Sub New(tokens As IEnumerable(Of Token))
+    ''' <summary>
+    ''' the chemical graph id, for deal with the SMILES contains multiple independent parts
+    ''' </summary>
+    ReadOnly gid As Integer
+
+    Sub New(tokens As IEnumerable(Of Token), gid As Integer)
         Me.tokens = tokens.ToArray
+        Me.gid = gid
         Me.SMILES = Me.tokens _
             .Select(Function(t)
                         If t.ring Is Nothing Then
@@ -115,13 +121,19 @@ Public Class ParseChain
 
         Dim graph As ChemicalFormula = Nothing
         Dim append As ChemicalFormula
+        Dim gid As i32 = 1
 
         For Each part As Token() In tokens
             If graph Is Nothing Then
-                graph = New ParseChain(part).CreateGraph(strict)
+                graph = New ParseChain(part, ++gid).CreateGraph(strict)
             Else
-                append = New ParseChain(part).CreateGraph(strict)
-                graph = graph.Join(append)
+                append = New ParseChain(part, ++gid).CreateGraph(strict)
+
+                If append Is Nothing OrElse Not append.vertex.Any Then
+                    Continue For
+                Else
+                    graph = graph.Join(append)
+                End If
             End If
         Next
 
@@ -141,6 +153,8 @@ Public Class ParseChain
 
     Public Function CreateGraph(Optional strict As Boolean = True) As ChemicalFormula
         Dim i As i32 = 1
+
+        graph.id = gid
 
         For Each t As Token In tokens
             Call WalkToken(t, ++i)
@@ -174,7 +188,8 @@ Public Class ParseChain
 
     Private Sub WalkElement(t As Token, i As Integer)
         Dim element As New ChemicalElement(t.text, index:=i) With {
-            .charge = Val(t.charge)
+            .charge = Val(t.charge),
+            .graph_id = gid
         }
         Dim ringId As String = If(t.ring Is Nothing, Nothing, t.ring.ToString)
 

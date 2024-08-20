@@ -105,6 +105,7 @@ Public Class ChemicalElement : Inherits Node
     ''' </summary>
     ''' <returns></returns>
     Public Property hydrogen As Integer = 0
+    Public Property graph_id As Integer = 1
 
     Sub New()
     End Sub
@@ -124,6 +125,7 @@ Public Class ChemicalElement : Inherits Node
         ' Me.elementName = base.elementName
         Me.group = base.group
         Me.ID = index
+        Me.graph_id = base.graph_id
     End Sub
 
     ''' <summary>
