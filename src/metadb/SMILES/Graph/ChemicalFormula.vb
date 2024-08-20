@@ -85,10 +85,6 @@ Public Class ChemicalFormula : Inherits NetworkGraph(Of ChemicalElement, Chemica
         End Get
     End Property
 
-    Public Function FindAtom(label As String) As ChemicalElement
-
-    End Function
-
     Public Iterator Function FindKeys(elementkey As String) As IEnumerable(Of ChemicalKey)
         For Each key As ChemicalKey In AllBonds
             If key.U.label = elementkey OrElse key.V.label = elementkey Then
@@ -144,18 +140,26 @@ Public Class ChemicalFormula : Inherits NetworkGraph(Of ChemicalElement, Chemica
     Public Function Join(part As ChemicalFormula) As ChemicalFormula
         Dim union As New ChemicalFormula
         Dim key As ChemicalKey
+        Dim element As ChemicalElement
+        Dim mapping As New Dictionary(Of ChemicalElement, ChemicalElement)
 
         For Each atom In vertex
-            Call union.AddVertex(New ChemicalElement(atom, union.vertex.Count))
+            element = New ChemicalElement(atom, union.vertex.Count + 1)
+
+            Call mapping.Add(atom, element)
+            Call union.AddVertex(element)
         Next
         For Each atom In part.vertex
-            Call union.AddVertex(New ChemicalElement(atom, union.vertex.Count))
+            element = New ChemicalElement(atom, union.vertex.Count + 1)
+
+            Call mapping.Add(atom, element)
+            Call union.AddVertex(element)
         Next
         For Each edge In graphEdges
             key = New ChemicalKey With {
                 .bond = edge.bond,
-                .U = union.FindAtom(edge.U.label),
-                .V = union.FindAtom(edge.V.label),
+                .U = mapping(edge.U),
+                .V = mapping(edge.V),
                 .weight = edge.weight
             }
 
@@ -164,8 +168,8 @@ Public Class ChemicalFormula : Inherits NetworkGraph(Of ChemicalElement, Chemica
         For Each edge In part.graphEdges
             key = New ChemicalKey With {
                 .bond = edge.bond,
-                .U = union.FindAtom(edge.U.label),
-                .V = union.FindAtom(edge.V.label),
+                .U = mapping(edge.U),
+                .V = mapping(edge.V),
                 .weight = edge.weight
             }
 

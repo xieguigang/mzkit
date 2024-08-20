@@ -114,12 +114,14 @@ Public Class ChemicalElement : Inherits Node
     ''' </summary>
     ''' <param name="base"></param>
     Sub New(base As ChemicalElement, index As Integer)
-        Me.label = base.label
+        Call Me.New(base.elementName, index)
+
+        ' Me.label = base.label
         Me.degree = base.degree
         Me.charge = base.charge
         Me.coordinate = base.coordinate
         Me.hydrogen = base.hydrogen
-        Me.elementName = base.elementName
+        ' Me.elementName = base.elementName
         Me.group = base.group
         Me.ID = index
     End Sub
