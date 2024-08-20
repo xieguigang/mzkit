@@ -54,6 +54,7 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Insilicon
 Imports BioNovoGene.BioDeep.Chemistry.Model
@@ -61,6 +62,7 @@ Imports BioNovoGene.BioDeep.Chemoinformatics.SMILES
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports SMRUCC.Rsharp
@@ -69,7 +71,7 @@ Imports SMRUCC.Rsharp.Runtime.Internal.[Object]
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
 
-<Package("mzkit.simulator")>
+<Package("spectral_simulator")>
 Module ms2_simulator
 
     <ExportAPI("read.kcf")>
@@ -92,25 +94,39 @@ Module ms2_simulator
     Public Function MolecularGraph_func(<RRawVectorArgument>
                                         mol As Object,
                                         Optional id As Object = Nothing,
+                                        Optional name As Object = Nothing,
                                         Optional digest_formula As Boolean = True,
                                         Optional verbose As Boolean = False,
                                         Optional env As Environment = Nothing) As Object
 
         Dim idset As String() = CLRVector.asCharacter(id)
+        Dim nameSet As String() = CLRVector.asCharacter(name)
+        Dim i As i32 = 0
 
         Return env.EvaluateFramework(Of String, Object)(
             x:=mol,
             eval:=Function(smiles)
-                      Return parseSingleSmiles(smiles, verbose, digest_formula)
-                  End Function)
+                      Return smiles.parseSingleSmiles(
+                            idset.ElementAtOrDefault(i),
+                            nameSet.ElementAtOrDefault(++i),
+                            verbose, digest_formula)
+                  End Function,
+            parallel:=False)
     End Function
 
-    Private Function parseSingleSmiles(smiles As String, verbose As Boolean, digest_formula As Boolean) As Object
+    <Extension>
+    Private Function parseSingleSmiles(smiles As String,
+                                       id As String, name As String,
+                                       verbose As Boolean,
+                                       digest_formula As Boolean) As Object
         If verbose Then
             Call VBDebugger.EchoLine(smiles)
         End If
 
         Dim chemical_struct As ChemicalFormula = ParseChain.ParseGraph(smiles, strict:=False)
+
+        chemical_struct.id = id
+        chemical_struct.name = name
 
         If digest_formula Then
             Dim molecular_graph As NetworkGraph = chemical_struct.AsGraph
