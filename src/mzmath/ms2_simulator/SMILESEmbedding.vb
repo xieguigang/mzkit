@@ -14,6 +14,11 @@ Public Module SMILESEmbedding
         Dim documents As New Dictionary(Of String, List(Of String))
 
         For Each smiles As NamedValue(Of ChemicalFormula) In mols
+            If smiles.Value Is Nothing Then
+                ' ignores of the error graph object
+                Continue For
+            End If
+
             For Each key As ChemicalKey In smiles.Value.AsEnumerable
                 ' 20240820
                 '

@@ -164,6 +164,11 @@ Module ms2_simulator
 
         Dim chemical_struct As ChemicalFormula = ParseChain.ParseGraph(smiles, strict:=False)
 
+        ' parser error
+        If chemical_struct Is Nothing Then
+            Return Nothing
+        End If
+
         chemical_struct.id = id
         chemical_struct.name = name
 
