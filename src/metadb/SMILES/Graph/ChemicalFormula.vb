@@ -132,6 +132,15 @@ Public Class ChemicalFormula : Inherits NetworkGraph(Of ChemicalElement, Chemica
         Next
     End Function
 
+    ''' <summary>
+    ''' Add new independent part of the molecule into current molecule part
+    ''' </summary>
+    ''' <param name="part"></param>
+    ''' <returns></returns>
+    Public Function Join(part As ChemicalFormula) As ChemicalFormula
+
+    End Function
+
     Public Overrides Function ToString() As String
         Return GetFormula.ToString
     End Function

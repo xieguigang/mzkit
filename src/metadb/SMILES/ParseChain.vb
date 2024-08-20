@@ -62,6 +62,7 @@ Imports System.Runtime.CompilerServices
 Imports BioNovoGene.BioDeep.Chemoinformatics.SMILES.Language
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Data.GraphTheory
+Imports Microsoft.VisualBasic.Data.GraphTheory.Network
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 
@@ -90,10 +91,17 @@ Public Class ParseChain
     End Sub
 
     Public Shared Function ParseGraph(SMILES As String, Optional strict As Boolean = True) As ChemicalFormula
-        Dim tokens As Token()
+        Dim tokens As New List(Of Token())
+
+        ' 20240820
+        ' A.B
+        ' A and B are the independent parts
+        ' the input smiles string needs split these independent parts at first
 
         Try
-            tokens = New Scanner(SMILES).GetTokens().ToArray
+            For Each part As String In SMILES.Split("."c)
+                Call tokens.Add(New Scanner(SMILES).GetTokens().ToArray)
+            Next
         Catch ex As Exception
             If strict Then
                 Throw New Exception("SMILES string for parse:" & SMILES, ex)
@@ -105,8 +113,19 @@ Public Class ParseChain
             End If
         End Try
 
-        Dim graph As ChemicalFormula = New ParseChain(tokens).CreateGraph(strict)
-        Dim degree = graph _
+        Dim graph As ChemicalFormula = Nothing
+        Dim append As ChemicalFormula
+
+        For Each part As Token() In tokens
+            If graph Is Nothing Then
+                graph = New ParseChain(part).CreateGraph(strict)
+            Else
+                append = New ParseChain(part).CreateGraph(strict)
+                graph = graph.Join(append)
+            End If
+        Next
+
+        Dim degree As DegreeData = graph _
             .AllBonds _
             .DoCall(AddressOf Network.ComputeDegreeData(Of ChemicalElement, ChemicalKey))
 
