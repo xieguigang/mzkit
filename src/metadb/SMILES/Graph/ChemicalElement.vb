@@ -106,6 +106,7 @@ Public Class ChemicalElement : Inherits Node
     ''' <returns></returns>
     Public Property hydrogen As Integer = 0
     Public Property graph_id As Integer = 1
+    Public Property aromatic As Boolean = False
 
     Sub New()
     End Sub

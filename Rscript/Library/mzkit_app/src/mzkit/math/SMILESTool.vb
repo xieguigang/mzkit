@@ -150,6 +150,7 @@ Module SMILESTool
         Dim links As Integer() = elements.Select(Function(a) a.links).ToArray
         Dim partners As String() = elements.Select(Function(a) a.connected.JoinBy("; ")).ToArray
         Dim graph_id As Integer() = elements.Select(Function(a) a.graph_id).ToArray
+        Dim aromatic As Boolean() = elements.Select(Function(a) a.aromatic).ToArray
 
         Return New RDataframe With {
             .rownames = rowKeys,
@@ -159,7 +160,8 @@ Module SMILESTool
                 {"ion_charge", ionCharge},
                 {"links", links},
                 {"connected", partners},
-                {"graph_id", graph_id}
+                {"graph_id", graph_id},
+                {"aromatic", aromatic}
             }
         }
     End Function

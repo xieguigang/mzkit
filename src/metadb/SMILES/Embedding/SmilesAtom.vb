@@ -70,6 +70,7 @@ Namespace Embedding
         Public Property links As Integer
         Public Property connected As String()
         Public Property graph_id As Integer
+        Public Property aromatic As Boolean
 
         Public Overrides Function ToString() As String
             Return group

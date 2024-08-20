@@ -87,6 +87,9 @@ Public Class ParseChain
         Me.gid = gid
         Me.SMILES = Me.tokens _
             .Select(Function(t)
+                        If t.aromatic Then
+                            Return t.text.ToLower
+                        End If
                         If t.ring Is Nothing Then
                             Return t.text
                         Else
@@ -188,7 +191,7 @@ Public Class ParseChain
 
     Private Sub WalkElement(t As Token, i As Integer)
         Dim element As New ChemicalElement(t.text, index:=i) With {
-            .charge = Val(t.charge),
+            .charge = If(t.charge Is Nothing, If(t.aromatic, 2, 1), Val(t.charge)),
             .graph_id = gid
         }
         Dim ringId As String = If(t.ring Is Nothing, Nothing, t.ring.ToString)
