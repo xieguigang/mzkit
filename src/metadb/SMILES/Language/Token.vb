@@ -71,6 +71,7 @@ Namespace Language
 
         Public Property ring As Integer?
         Public Property charge As Integer?
+        Public Property aromatic As Boolean = False
 
         Sub New(name As ElementTypes, text As String)
             Call MyBase.New(name, text)

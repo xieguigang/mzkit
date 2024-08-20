@@ -325,7 +325,10 @@ Namespace Language
                 Case ""
                     Return New Token(ElementTypes.None, str)
                 Case Else
-                    Static aromatic As Index(Of String) = {"c", "o", "n", "s"}
+                    ' 在 SMILES（简化分子输入线进入系统）表示法中，CCCCCC 和 cccccc 分别代表不同的化学结构：
+                    ' 1. CCCCCC：这代表六个连续的饱和碳原子，每个碳原子之间都是单键连接。在化学式中，这通常表示为 CH3-CH2-CH2-CH2-CH2-CH3，这是己烷的化学式。己烷是一种无色、无味的液体，在常温常压下为液态，广泛用作溶剂和燃料。
+                    ' 2. cccccc：这代表六个连续的芳香族碳原子，通常指的是苯环结构中的一部分。在化学式中，苯环由六个碳原子组成，形成一个六元环C6H6，每个碳原子之间交替有一个单键和一个双键。cccccc 表示一个完整的苯环。苯是一种无色液体，具有特殊的芳香气味，广泛用于化学工业中。
+                    Static aromatic As Index(Of String) = {"c", "o", "n", "s", "p"}
 
                     If Layout2D.atomMaxCharges.ContainsKey(str) Then
                         Return New Token(ElementTypes.Element, str) With {
@@ -335,7 +338,9 @@ Namespace Language
                         Return New Token(ElementTypes.None, str)
                     ElseIf str Like aromatic Then
                         ' aromatic carbon by lower case c.
-                        Return New Token(ElementTypes.Element, str.ToUpper)
+                        Return New Token(ElementTypes.Element, str.ToUpper) With {
+                            .aromatic = True
+                        }
                     ElseIf atoms.ContainsKey(str) Then
                         ' Au/Cu/Na/Cl elements
                         Return New Token(ElementTypes.Element, str)
