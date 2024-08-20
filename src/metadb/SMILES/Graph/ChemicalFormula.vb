@@ -85,6 +85,10 @@ Public Class ChemicalFormula : Inherits NetworkGraph(Of ChemicalElement, Chemica
         End Get
     End Property
 
+    Public Function FindAtom(label As String) As ChemicalElement
+
+    End Function
+
     Public Iterator Function FindKeys(elementkey As String) As IEnumerable(Of ChemicalKey)
         For Each key As ChemicalKey In AllBonds
             If key.U.label = elementkey OrElse key.V.label = elementkey Then
@@ -138,7 +142,37 @@ Public Class ChemicalFormula : Inherits NetworkGraph(Of ChemicalElement, Chemica
     ''' <param name="part"></param>
     ''' <returns></returns>
     Public Function Join(part As ChemicalFormula) As ChemicalFormula
+        Dim union As New ChemicalFormula
+        Dim key As ChemicalKey
 
+        For Each atom In vertex
+            Call union.AddVertex(New ChemicalElement(atom, union.vertex.Count))
+        Next
+        For Each atom In part.vertex
+            Call union.AddVertex(New ChemicalElement(atom, union.vertex.Count))
+        Next
+        For Each edge In graphEdges
+            key = New ChemicalKey With {
+                .bond = edge.bond,
+                .U = union.FindAtom(edge.U.label),
+                .V = union.FindAtom(edge.V.label),
+                .weight = edge.weight
+            }
+
+            Call union.Insert(key)
+        Next
+        For Each edge In part.graphEdges
+            key = New ChemicalKey With {
+                .bond = edge.bond,
+                .U = union.FindAtom(edge.U.label),
+                .V = union.FindAtom(edge.V.label),
+                .weight = edge.weight
+            }
+
+            Call union.Insert(key)
+        Next
+
+        Return union
     End Function
 
     Public Overrides Function ToString() As String
