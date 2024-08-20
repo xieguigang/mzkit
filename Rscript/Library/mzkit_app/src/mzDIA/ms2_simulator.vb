@@ -102,7 +102,7 @@ Module ms2_simulator
         Dim stream As IEnumerable(Of NamedValue(Of ChemicalFormula)) = (
             Iterator Function() As IEnumerable(Of NamedValue(Of ChemicalFormula))
                 For Each f As ChemicalFormula In formulas.populates(Of ChemicalFormula)(env)
-                    Yield New NamedValue(Of ChemicalFormula)(idset.ElementAtOrDefault(++i, f.id), f)
+                    Yield New NamedValue(Of ChemicalFormula)(idset.ElementAtOrDefault(++i, f?.id), f)
                 Next
             End Function)()
 
