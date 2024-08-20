@@ -1,6 +1,5 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports BioNovoGene.BioDeep.Chemoinformatics.SMILES
-Imports BioNovoGene.BioDeep.Chemoinformatics.SMILES.Embedding
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 
