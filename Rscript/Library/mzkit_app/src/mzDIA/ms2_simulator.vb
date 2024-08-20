@@ -89,7 +89,7 @@ Module ms2_simulator
     ''' </param>
     ''' <param name="verbose"></param>
     ''' <returns></returns>
-    <ExportAPI("molecular.graph")>
+    <ExportAPI("molecular_graph")>
     <RApiReturn(GetType(NetworkGraph))>
     Public Function MolecularGraph_func(<RRawVectorArgument>
                                         mol As Object,
