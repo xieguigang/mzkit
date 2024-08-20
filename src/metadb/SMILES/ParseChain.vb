@@ -100,7 +100,7 @@ Public Class ParseChain
 
         Try
             For Each part As String In SMILES.Split("."c)
-                Call tokens.Add(New Scanner(SMILES).GetTokens().ToArray)
+                Call tokens.Add(New Scanner(part).GetTokens().ToArray)
             Next
         Catch ex As Exception
             If strict Then
