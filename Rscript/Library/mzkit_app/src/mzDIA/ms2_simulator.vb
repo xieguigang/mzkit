@@ -134,6 +134,7 @@ Module ms2_simulator
                                         <RRawVectorArgument> Optional name As Object = Nothing,
                                         Optional digest_formula As Boolean = True,
                                         Optional verbose As Boolean = False,
+                                        Optional tqdm As Boolean = True,
                                         Optional env As Environment = Nothing) As Object
 
         Dim idset As String() = CLRVector.asCharacter(id)
@@ -148,7 +149,8 @@ Module ms2_simulator
                             nameSet.ElementAtOrDefault(++i),
                             verbose, digest_formula)
                   End Function,
-            parallel:=False)
+            parallel:=False,
+            tqdm:=tqdm)
     End Function
 
     <Extension>
