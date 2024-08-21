@@ -12,6 +12,7 @@ Public Module SMILESEmbedding
     ''' <returns></returns>
     Public Function StructureDocuments(mols As IEnumerable(Of NamedValue(Of ChemicalFormula))) As IEnumerable(Of NamedCollection(Of String))
         Dim documents As New Dictionary(Of String, List(Of String))
+        Dim group_label As String
 
         For Each smiles As NamedValue(Of ChemicalFormula) In mols
             If smiles.Value Is Nothing Then
@@ -28,11 +29,17 @@ Public Module SMILESEmbedding
                 ' use atom group table only gets the element composition
                 ' atom group table missing the graph structure information
                 For Each v As ChemicalElement In key.AtomGroups
-                    If Not documents.ContainsKey(v.group) Then
-                        documents(v.group) = New List(Of String)
+                    group_label = v.group
+
+                    If v.aromatic Then
+                        group_label = $"(aromatic){v.elementName}-"
                     End If
 
-                    Call documents(v.group).Add(smiles.Name)
+                    If Not documents.ContainsKey(group_label) Then
+                        documents(group_label) = New List(Of String)
+                    End If
+
+                    Call documents(group_label).Add(smiles.Name)
                 Next
             Next
         Next
@@ -46,7 +53,7 @@ Public Module SMILESEmbedding
             Dim mols = atom_group.Value _
                 .GroupBy(Function(id) id) _
                 .OrderByDescending(Function(id) id.Count) _
-                .IteratesALL _
+                .Select(Function(a) a.First) _
                 .ToArray
 
             Yield New NamedCollection(Of String)(atom_group.Key, mols)
