@@ -132,6 +132,53 @@ Public Class ChemicalFormula : Inherits NetworkGraph(Of ChemicalElement, Chemica
         Next
     End Function
 
+    ''' <summary>
+    ''' Add new independent part of the molecule into current molecule part
+    ''' </summary>
+    ''' <param name="part"></param>
+    ''' <returns></returns>
+    Public Function Join(part As ChemicalFormula) As ChemicalFormula
+        Dim union As New ChemicalFormula
+        Dim key As ChemicalKey
+        Dim element As ChemicalElement
+        Dim mapping As New Dictionary(Of ChemicalElement, ChemicalElement)
+
+        For Each atom In vertex
+            element = New ChemicalElement(atom, union.vertex.Count + 1)
+
+            Call mapping.Add(atom, element)
+            Call union.AddVertex(element)
+        Next
+        For Each atom In part.vertex
+            element = New ChemicalElement(atom, union.vertex.Count + 1)
+
+            Call mapping.Add(atom, element)
+            Call union.AddVertex(element)
+        Next
+        For Each edge In graphEdges
+            key = New ChemicalKey With {
+                .bond = edge.bond,
+                .U = mapping(edge.U),
+                .V = mapping(edge.V),
+                .weight = edge.weight
+            }
+
+            Call union.Insert(key)
+        Next
+        For Each edge In part.graphEdges
+            key = New ChemicalKey With {
+                .bond = edge.bond,
+                .U = mapping(edge.U),
+                .V = mapping(edge.V),
+                .weight = edge.weight
+            }
+
+            Call union.Insert(key)
+        Next
+
+        Return union
+    End Function
+
     Public Overrides Function ToString() As String
         Return GetFormula.ToString
     End Function

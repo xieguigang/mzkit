@@ -76,6 +76,7 @@ Public Class zzz
         Call Mummichog.Main()
         Call PubChemToolKit.Main()
         Call MzWeb.Main()
+        Call SMILESTool.Main()
 
         Call library.Main()
         Call data.Main()

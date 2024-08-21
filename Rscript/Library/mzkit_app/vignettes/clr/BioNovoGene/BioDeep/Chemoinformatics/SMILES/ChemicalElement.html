@@ -30,6 +30,7 @@
             <code id="clr_ts">
 # namespace BioNovoGene.BioDeep.Chemoinformatics.SMILES
 export class ChemicalElement extends <a href="/vignettes/clr/Microsoft/VisualBasic/Data/GraphTheory/Network/Node.html">Node</a> {
+   aromatic: boolean;
    # the ion charge value
    charge: integer;
    # 2D coordinate <code>[x,y]</code>
@@ -37,6 +38,7 @@ export class ChemicalElement extends <a href="/vignettes/clr/Microsoft/VisualBas
    degree: tuple[integer, integer];
    # the atom or atom group element label text
    elementName: string;
+   graph_id: integer;
    # the atom group name
    group: string;
    # The number of the hydrogen of current atom group it has

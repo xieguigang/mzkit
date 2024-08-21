@@ -129,7 +129,9 @@ Namespace Embedding
                         .Select(Function(a)
                                     Return $"{CInt(a.keys)}({a.Item2.group})"
                                 End Function) _
-                        .ToArray
+                        .ToArray,
+                    .graph_id = e.graph_id,
+                    .aromatic = e.aromatic
                 }
 
                 Yield atom

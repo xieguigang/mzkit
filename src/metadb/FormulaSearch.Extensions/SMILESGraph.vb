@@ -68,7 +68,10 @@ Public Module SMILESGraph
     ''' <returns></returns>
     <Extension>
     Public Function AsGraph(f As ChemicalFormula) As NetworkGraph
-        Dim g As New NetworkGraph
+        Dim g As New NetworkGraph With {
+            .id = f.id,
+            .name = f.name
+        }
 
         For Each atom As ChemicalElement In f.AllElements
             Call g.CreateNode(atom.label, New NodeData With {
