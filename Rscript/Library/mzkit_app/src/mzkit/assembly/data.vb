@@ -110,6 +110,15 @@ Module data
         Return table
     End Function
 
+    ''' <summary>
+    ''' converts the spectrum peaks as dataframe
+    ''' </summary>
+    ''' <param name="matrix"></param>
+    ''' <param name="args"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    ''' 
+    <RGenericOverloads("as.data.frame")>
     <Extension>
     Private Function getMSMSTable(matrix As ms2(), args As list, env As Environment) As rDataframe
         Dim table As New rDataframe With {.columns = New Dictionary(Of String, Array)}
