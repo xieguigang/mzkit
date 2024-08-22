@@ -195,7 +195,7 @@ Module FormulaTools
     End Function
 
     ''' <summary>
-    ''' do peak annotation for the ms2 fragments
+    ''' do peak annotation for the ms2 spectrum fragments
     ''' </summary>
     ''' <param name="library">
     ''' A ms2 matrix object
@@ -204,12 +204,13 @@ Module FormulaTools
     ''' <param name="isotopeFirst"></param>
     ''' <param name="adducts"></param>
     ''' <returns></returns>
-    <ExportAPI("peakAnnotations")>
+    <ExportAPI("peaks_annotation")>
     <RApiReturn(GetType(LibraryMatrix))>
     Public Function peakAnnotation_f(library As Object, formula As Object, <RRawVectorArgument> adducts As Object,
                                      Optional massDiff As Double = 0.1,
                                      Optional isotopeFirst As Boolean = True,
                                      Optional as_list As Boolean = True,
+                                     Optional unset_scalar As Boolean = False,
                                      Optional env As Environment = Nothing) As Object
         Dim parentMz As Double
         Dim centroid As Boolean
@@ -250,11 +251,13 @@ Module FormulaTools
             Return Message.InCompatibleType(GetType(Formula), formula.GetType, env)
         End If
 
+        Dim annoHit As list
+
         For Each adduct As MzCalculator In adductList
-            anno = PeakAnnotation.DoPeakAnnotation(spec, parentMz, adduct, f)
+            anno = PeakAnnotation.DoPeakAnnotation(spec, adduct, f)
 
             If as_list Then
-                results.slots(adduct.ToString) = New list With {
+                annoHit = New list With {
                    .slots = New Dictionary(Of String, Object) From {
                        {"products", anno.products},
                        {"formula", f},
@@ -264,16 +267,24 @@ Module FormulaTools
                        {"massdiff", anno.formula.massdiff}
                    }
                 }
+
+                If unset_scalar AndAlso adductList.Length = 1 Then
+                    Return annoHit
+                End If
+
+                results.slots(adduct.ToString) = annoHit
+            ElseIf adductList.Length = 1 Then
+                Return anno
             Else
                 results.slots(adduct.ToString) = anno
             End If
         Next
 
-        If adductList.Length = 1 Then
+        If unset_scalar AndAlso results.length = 1 Then
             Return results.data.First
-        Else
-            Return results
         End If
+
+        Return results
     End Function
 
     ''' <summary>

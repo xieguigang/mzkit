@@ -124,18 +124,18 @@ Public Class PeakAnnotation
     ''' do score evaluation of the spectrum associated with the assembled formula composition 
     ''' </summary>
     ''' <param name="peaks"></param>
-    ''' <param name="precursorMz"></param>
     ''' <param name="adduct"></param>
     ''' <param name="formula"></param>
     ''' <returns></returns>
-    Public Shared Function DoPeakAnnotation(peaks As ISpectrum, precursorMz As Double, adduct As MzCalculator, formula As Formula) As PeakAnnotation
+    Public Shared Function DoPeakAnnotation(peaks As ISpectrum, adduct As MzCalculator, formula As Formula) As PeakAnnotation
         Dim assign As New FragmentAssigner
         Dim exactMass As Double = formula.ExactMass
+        Dim precursorMz As Double = adduct.CalcMZ(exactMass)
         Dim peaksData As SpectrumPeak() = peaks.GetIons _
             .Select(Function(m)
                         If std.Abs(m.mz - exactMass) <= 0.1 Then
                             m.Annotation = "M"
-                        ElseIf std.Abs(m.mz - adduct.CalcMZ(exactMass)) <= 0.1 Then
+                        ElseIf std.Abs(m.mz - precursorMz) <= 0.1 Then
                             m.Annotation = adduct.ToString
                         End If
 
