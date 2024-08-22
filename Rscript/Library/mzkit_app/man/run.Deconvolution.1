@@ -4,13 +4,15 @@ run.Deconvolution \- run.Deconvolution(rawdata,
     <i>outputdir</i> = <span style='color: brown;'><strong>'./'</strong></span>,
     <i>mzdiff</i> = <span style='color: green;'>0.001</span>,
     <i>xic.mzdiff</i> = <span style='color: green;'>0.005</span>,
-    <i>peak.width</i> = [<span style='color: green;'>30</span>])
+    <i>peak.width</i> = [<span style='color: green;'>30</span>],
+    <i>n.threads</i> = <span style='color: green;'>16</span>)
 .SH SYNOPSIS
 \fIrun.Deconvolution(rawdata,
     <i>outputdir</i> = <span style='color: brown;'><strong>'./'</strong></span>,
     <i>mzdiff</i> = <span style='color: green;'>0.001</span>,
     <i>xic.mzdiff</i> = <span style='color: green;'>0.005</span>,
-    <i>peak.width</i> = [<span style='color: green;'>30</span>])\fR
+    <i>peak.width</i> = [<span style='color: green;'>30</span>],
+    <i>n.threads</i> = <span style='color: green;'>16</span>)\fR
 .SH OPTIONS
 .PP
 \fBrawdata\fB \fR\- . a directory path that contains the mzXML or mzML rawdata files.
@@ -26,6 +28,9 @@ run.Deconvolution \- run.Deconvolution(rawdata,
 .PP
 .PP
 \fBpeak.width\fB \fR\- [2, 30]. the rt range of the peak data
+.PP
+.PP
+\fBn.threads\fB \fR\- 16. 
 .PP
 .SH VALUE
 .PP
