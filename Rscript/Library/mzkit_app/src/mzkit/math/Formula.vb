@@ -273,7 +273,8 @@ Module FormulaTools
                        {"charge", anno.formula.charge},
                        {"ppm", anno.formula.ppm},
                        {"massdiff", anno.formula.massdiff},
-                       {"mirror", mirror}
+                       {"mirror", mirror},
+                       {"basePeak", spec.OrderByDescending(Function(i) i.intensity).First.mz}
                    }
                 }
 
