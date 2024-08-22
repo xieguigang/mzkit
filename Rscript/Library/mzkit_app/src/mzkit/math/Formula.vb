@@ -274,7 +274,8 @@ Module FormulaTools
                        {"ppm", anno.formula.ppm},
                        {"massdiff", anno.formula.massdiff},
                        {"mirror", mirror},
-                       {"basePeak", spec.OrderByDescending(Function(i) i.intensity).First.mz}
+                       {"basePeak", spec.OrderByDescending(Function(i) i.intensity).First.mz},
+                       {"precursor_hit", anno.precursor_matched}
                    }
                 }
 
