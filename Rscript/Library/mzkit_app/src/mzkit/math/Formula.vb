@@ -60,8 +60,10 @@
 #End Region
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
 Imports BioNovoGene.BioDeep.Chemistry
 Imports BioNovoGene.BioDeep.Chemistry.Model.Graph
 Imports BioNovoGene.BioDeep.Chemoinformatics
@@ -255,9 +257,12 @@ Module FormulaTools
         End If
 
         Dim annoHit As list
+        Dim mirror As AlignmentOutput
+        Dim cos As New CosAlignment(DAmethod.DeltaMass(massDiff), RelativeIntensityCutoff.Zero)
 
         For Each adduct As MzCalculator In adductList
             anno = PeakAnnotation.DoPeakAnnotation(spec, adduct, f, da:=massDiff)
+            mirror = cos.CreateAlignment(spec.ToArray, anno.GetAnnotatedPeaks)
 
             If as_list Then
                 annoHit = New list With {
@@ -267,7 +272,8 @@ Module FormulaTools
                        {"adduct", adduct.ToString},
                        {"charge", anno.formula.charge},
                        {"ppm", anno.formula.ppm},
-                       {"massdiff", anno.formula.massdiff}
+                       {"massdiff", anno.formula.massdiff},
+                       {"mirror", mirror}
                    }
                 }
 

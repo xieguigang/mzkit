@@ -115,6 +115,12 @@ Public Class PeakAnnotation
             .ToArray
     End Sub
 
+    Public Function GetAnnotatedPeaks() As ms2()
+        Return products _
+            .Where(Function(i) Not i.Annotation.StringEmpty(, True)) _
+            .ToArray
+    End Function
+
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overrides Function ToString() As String
         Return formula.ToString

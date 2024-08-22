@@ -61,7 +61,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
-Imports stdNum = System.Math
+Imports std = System.Math
 Imports vec = Microsoft.VisualBasic.Math
 
 Namespace Spectra
@@ -79,8 +79,8 @@ Namespace Spectra
             MyBase.New(mzwidth, intocutoff)
 
             Select Case aggregate
-                Case ScoreAggregates.min : scoreAggregate = AddressOf stdNum.Min
-                Case ScoreAggregates.max : scoreAggregate = AddressOf stdNum.Max
+                Case ScoreAggregates.min : scoreAggregate = AddressOf std.Min
+                Case ScoreAggregates.max : scoreAggregate = AddressOf std.Max
                 Case ScoreAggregates.sum : scoreAggregate = Function(a, b) a + b
                 Case Else
                     Throw New InvalidProgramException(aggregate)
