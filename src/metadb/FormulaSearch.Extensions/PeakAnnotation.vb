@@ -134,7 +134,8 @@ Public Class PeakAnnotation
     ''' <returns></returns>
     Public Shared Function DoPeakAnnotation(peaks As ISpectrum, adduct As MzCalculator, formula As Formula,
                                             Optional da As Double = 0.1) As PeakAnnotation
-        Dim assign As New FragmentAssigner
+
+        Dim assign As New FragmentAssigner(da)
         Dim exactMass As Double = formula.ExactMass
         Dim precursorMz As Double = adduct.CalcMZ(exactMass)
         Dim peaksData As SpectrumPeak() = peaks.GetIons _
