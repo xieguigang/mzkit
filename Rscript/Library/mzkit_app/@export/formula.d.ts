@@ -149,7 +149,8 @@ declare namespace formula {
     * 
      * @param library A ms2 matrix object
      * @param adducts -
-     * @param massDiff -
+     * @param massDiff the mass tolerance error for matches the ms2 spectrum peaks, should usually 
+     *  be the tolerance error for make spectrum centroid process.
      * 
      * + default value Is ``0.1``.
      * @param isotopeFirst -
