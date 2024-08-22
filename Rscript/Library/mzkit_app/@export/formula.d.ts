@@ -144,12 +144,13 @@ declare namespace formula {
       function SDF(data: string, parseStruct?: boolean): object;
    }
    /**
-    * do peak annotation for the ms2 fragments
+    * do peak annotation for the ms2 spectrum fragments
     * 
     * 
      * @param library A ms2 matrix object
      * @param adducts -
-     * @param massDiff -
+     * @param massDiff the mass tolerance error for matches the ms2 spectrum peaks, should usually 
+     *  be the tolerance error for make spectrum centroid process.
      * 
      * + default value Is ``0.1``.
      * @param isotopeFirst -
@@ -157,10 +158,12 @@ declare namespace formula {
      * + default value Is ``true``.
      * @param as_list 
      * + default value Is ``true``.
+     * @param unset_scalar 
+     * + default value Is ``false``.
      * @param env 
      * + default value Is ``null``.
    */
-   function peakAnnotations(library: any, formula: any, adducts: any, massDiff?: number, isotopeFirst?: boolean, as_list?: boolean, env?: object): object;
+   function peaks_annotation(library: any, formula: any, adducts: any, massDiff?: number, isotopeFirst?: boolean, as_list?: boolean, unset_scalar?: boolean, env?: object): object;
    module read {
       /**
        * Read KCF model data

@@ -16,7 +16,7 @@ imports "visual" from "mzplot";
 #' @return this function returns nothing 
 #' 
 const run.Deconvolution = function(rawdata, outputdir = "./", mzdiff = 0.001, xic_mzdiff = 0.005,
-                                   peak.width = [2, 30]) {
+                                   peak.width = [2, 30], n_threads = 16) {
                                     
     const xic_cache = `${outputdir}/XIC_data`;
     const files = list.files(rawdata, pattern = ["*.mzML", "*.mzXML", "*.mzPack"]);
@@ -24,10 +24,12 @@ const run.Deconvolution = function(rawdata, outputdir = "./", mzdiff = 0.001, xi
     print("run deconvolution for rawdata files:");
     print(basename(files));
 
+    options(n_threads = n_threads);
+
     # create temp data of ms1 XIC
     ms1_xic_bins(files, mzdiff = xic_mzdiff, 
         outputdir = xic_cache, 
-        n_threads = 16);
+        n_threads = n_threads);
     
     # get xic file path list
     const xic_files = list.files(xic_cache, pattern = "*.xic");

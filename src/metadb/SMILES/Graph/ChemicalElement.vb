@@ -105,8 +105,29 @@ Public Class ChemicalElement : Inherits Node
     ''' </summary>
     ''' <returns></returns>
     Public Property hydrogen As Integer = 0
+    Public Property graph_id As Integer = 1
+    Public Property aromatic As Boolean = False
 
     Sub New()
+    End Sub
+
+    ''' <summary>
+    ''' make value copy from the base item
+    ''' </summary>
+    ''' <param name="base"></param>
+    Sub New(base As ChemicalElement, index As Integer)
+        Call Me.New(base.elementName, index)
+
+        ' Me.label = base.label
+        Me.degree = base.degree
+        Me.charge = base.charge
+        Me.coordinate = base.coordinate
+        Me.hydrogen = base.hydrogen
+        ' Me.elementName = base.elementName
+        Me.group = base.group
+        Me.ID = index
+        Me.graph_id = base.graph_id
+        Me.aromatic = base.aromatic
     End Sub
 
     ''' <summary>
@@ -174,26 +195,34 @@ Public Class ChemicalElement : Inherits Node
     Private Shared Sub SetAtomGroups(atom As ChemicalElement, keys As Integer)
         Select Case atom.elementName
             Case "C"
-                Select Case keys
-                    Case 1 : atom.setAtomLabel("-CH3", 3)
-                    Case 2 : atom.setAtomLabel("-CH2-", 2)
-                    Case 3 : atom.setAtomLabel("-CH=", 1)
-                    Case Else
-                        atom.group = "C"
-                End Select
+                If atom.aromatic Then
+                    atom.setAtomLabel("-CH-", 1)
+                Else
+                    Select Case keys
+                        Case 1 : atom.setAtomLabel("-CH3", 3)
+                        Case 2 : atom.setAtomLabel("-CH2-", 2)
+                        Case 3 : atom.setAtomLabel("-CH=", 1)
+                        Case Else
+                            atom.group = "C"
+                    End Select
+                End If
             Case "O"
-                Select Case keys
-                    Case 1
-                        If atom.charge = 0 Then
-                            atom.setAtomLabel("-OH", 1)
-                        Else
-                            ' an ion with negative charge value
-                            ' [O-]
-                            atom.setAtomLabel("[O-]-", 0)
-                        End If
-                    Case Else
-                        atom.group = "-O-"
-                End Select
+                If atom.aromatic Then
+                    atom.setAtomLabel("-O-", 0)
+                Else
+                    Select Case keys
+                        Case 1
+                            If atom.charge = 0 Then
+                                atom.setAtomLabel("-OH", 1)
+                            Else
+                                ' an ion with negative charge value
+                                ' [O-]
+                                atom.setAtomLabel("[O-]-", 0)
+                            End If
+                        Case Else
+                            atom.group = "-O-"
+                    End Select
+                End If
             Case "N"
                 Dim n As Integer
 

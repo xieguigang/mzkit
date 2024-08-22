@@ -1,59 +1,59 @@
 ﻿#Region "Microsoft.VisualBasic::da2816f7c09393ad15b803f887ca8afa, Rscript\Library\mzkit_app\src\mzkit\math\SMILESTool.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 192
-    '    Code Lines: 109 (56.77%)
-    ' Comment Lines: 66 (34.38%)
-    '    - Xml Docs: 90.91%
-    ' 
-    '   Blank Lines: 17 (8.85%)
-    '     File Size: 8.04 KB
+' Summaries:
 
 
-    ' Module SMILESTool
-    ' 
-    '     Function: asFormula, asGraph, atomGroups, atomLinks, atoms_table
-    '               parseSMILES, score
-    ' 
-    '     Sub: Main
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 192
+'    Code Lines: 109 (56.77%)
+' Comment Lines: 66 (34.38%)
+'    - Xml Docs: 90.91%
+' 
+'   Blank Lines: 17 (8.85%)
+'     File Size: 8.04 KB
+
+
+' Module SMILESTool
+' 
+'     Function: asFormula, asGraph, atomGroups, atomLinks, atoms_table
+'               parseSMILES, score
+' 
+'     Sub: Main
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -98,7 +98,6 @@ Module SMILESTool
     Private Function atoms_table(smiles As ChemicalFormula, args As list, env As Environment) As RDataframe
         Return atomGroups(smiles)
     End Function
-
 
     ''' <summary>
     ''' Parse the SMILES molecule structre string
@@ -150,6 +149,8 @@ Module SMILESTool
         Dim ionCharge As Integer() = elements.Select(Function(a) a.ion_charge).ToArray
         Dim links As Integer() = elements.Select(Function(a) a.links).ToArray
         Dim partners As String() = elements.Select(Function(a) a.connected.JoinBy("; ")).ToArray
+        Dim graph_id As Integer() = elements.Select(Function(a) a.graph_id).ToArray
+        Dim aromatic As Boolean() = elements.Select(Function(a) a.aromatic).ToArray
 
         Return New RDataframe With {
             .rownames = rowKeys,
@@ -158,7 +159,9 @@ Module SMILESTool
                 {"group", groups},
                 {"ion_charge", ionCharge},
                 {"links", links},
-                {"connected", partners}
+                {"connected", partners},
+                {"graph_id", graph_id},
+                {"aromatic", aromatic}
             }
         }
     End Function

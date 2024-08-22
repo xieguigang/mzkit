@@ -160,8 +160,9 @@ declare namespace mzkit {
         * @param mzdiff default value Is ``0.001``.
         * @param xic_mzdiff default value Is ``0.005``.
         * @param peak.width default value Is ``[2, 30]``.
+        * @param n_threads default value Is ``16``.
       */
-      function Deconvolution(rawdata: any, outputdir?: any, mzdiff?: any, xic_mzdiff?: any, peak.width?: any): object;
+      function Deconvolution(rawdata: any, outputdir?: any, mzdiff?: any, xic_mzdiff?: any, peak.width?: any, n_threads?: any): object;
    }
    /**
    */

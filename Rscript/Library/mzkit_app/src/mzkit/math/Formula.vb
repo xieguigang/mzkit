@@ -60,8 +60,10 @@
 #End Region
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
 Imports BioNovoGene.BioDeep.Chemistry
 Imports BioNovoGene.BioDeep.Chemistry.Model.Graph
 Imports BioNovoGene.BioDeep.Chemoinformatics
@@ -195,21 +197,25 @@ Module FormulaTools
     End Function
 
     ''' <summary>
-    ''' do peak annotation for the ms2 fragments
+    ''' do peak annotation for the ms2 spectrum fragments
     ''' </summary>
     ''' <param name="library">
     ''' A ms2 matrix object
     ''' </param>
-    ''' <param name="massDiff"></param>
+    ''' <param name="massDiff">
+    ''' the mass tolerance error for matches the ms2 spectrum peaks, should usually 
+    ''' be the tolerance error for make spectrum centroid process.
+    ''' </param>
     ''' <param name="isotopeFirst"></param>
     ''' <param name="adducts"></param>
     ''' <returns></returns>
-    <ExportAPI("peakAnnotations")>
+    <ExportAPI("peaks_annotation")>
     <RApiReturn(GetType(LibraryMatrix))>
     Public Function peakAnnotation_f(library As Object, formula As Object, <RRawVectorArgument> adducts As Object,
                                      Optional massDiff As Double = 0.1,
                                      Optional isotopeFirst As Boolean = True,
                                      Optional as_list As Boolean = True,
+                                     Optional unset_scalar As Boolean = False,
                                      Optional env As Environment = Nothing) As Object
         Dim parentMz As Double
         Dim centroid As Boolean
@@ -250,30 +256,45 @@ Module FormulaTools
             Return Message.InCompatibleType(GetType(Formula), formula.GetType, env)
         End If
 
+        Dim annoHit As list
+        Dim mirror As AlignmentOutput
+        Dim cos As New CosAlignment(DAmethod.DeltaMass(massDiff), RelativeIntensityCutoff.Zero)
+
         For Each adduct As MzCalculator In adductList
-            anno = PeakAnnotation.DoPeakAnnotation(spec, parentMz, adduct, f)
+            anno = PeakAnnotation.DoPeakAnnotation(spec, adduct, f, da:=massDiff)
+            mirror = cos.CreateAlignment(spec.ToArray, anno.GetAnnotatedPeaks)
 
             If as_list Then
-                results.slots(adduct.ToString) = New list With {
+                annoHit = New list With {
                    .slots = New Dictionary(Of String, Object) From {
                        {"products", anno.products},
                        {"formula", f},
                        {"adduct", adduct.ToString},
                        {"charge", anno.formula.charge},
                        {"ppm", anno.formula.ppm},
-                       {"massdiff", anno.formula.massdiff}
+                       {"massdiff", anno.formula.massdiff},
+                       {"mirror", mirror},
+                       {"basePeak", spec.OrderByDescending(Function(i) i.intensity).First.mz}
                    }
                 }
+
+                If unset_scalar AndAlso adductList.Length = 1 Then
+                    Return annoHit
+                End If
+
+                results.slots(adduct.ToString) = annoHit
+            ElseIf adductList.Length = 1 Then
+                Return anno
             Else
                 results.slots(adduct.ToString) = anno
             End If
         Next
 
-        If adductList.Length = 1 Then
+        If unset_scalar AndAlso results.length = 1 Then
             Return results.data.First
-        Else
-            Return results
         End If
+
+        Return results
     End Function
 
     ''' <summary>
