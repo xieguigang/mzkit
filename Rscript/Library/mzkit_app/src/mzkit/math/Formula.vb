@@ -200,7 +200,10 @@ Module FormulaTools
     ''' <param name="library">
     ''' A ms2 matrix object
     ''' </param>
-    ''' <param name="massDiff"></param>
+    ''' <param name="massDiff">
+    ''' the mass tolerance error for matches the ms2 spectrum peaks, should usually 
+    ''' be the tolerance error for make spectrum centroid process.
+    ''' </param>
     ''' <param name="isotopeFirst"></param>
     ''' <param name="adducts"></param>
     ''' <returns></returns>
@@ -254,7 +257,7 @@ Module FormulaTools
         Dim annoHit As list
 
         For Each adduct As MzCalculator In adductList
-            anno = PeakAnnotation.DoPeakAnnotation(spec, adduct, f)
+            anno = PeakAnnotation.DoPeakAnnotation(spec, adduct, f, da:=massDiff)
 
             If as_list Then
                 annoHit = New list With {
