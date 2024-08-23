@@ -83,9 +83,9 @@ Public NotInheritable Class FragmentAssigner
     ''' <summary>
     ''' use default profile
     ''' </summary>
-    Sub New()
+    Sub New(Optional da As Double = 0.3)
         productIonDB = New List(Of ProductIon)(MemorySheet.GetDefault.OrderBy(Function(i) i.Mass))
-        ms2Tol = 0.3
+        ms2Tol = da
         massTolType = MassToleranceType.Da
     End Sub
 
@@ -167,13 +167,13 @@ Public NotInheritable Class FragmentAssigner
         Next
 
         For Each ion As ProductIon In productIons
-            Dim startIndex = FragmentAssigner.getStartIndex(ion.Mass, 0.1, productIonDB)
+            Dim startIndex = FragmentAssigner.getStartIndex(ion.Mass, ms2Tol, productIonDB)
 
             For i As Integer = startIndex To productIonDB.Count - 1
                 Dim ionQuery = productIonDB(i)
 
                 If ionQuery.IonMode <> IonModes.Unknown AndAlso ionQuery.IonMode <> AdductIon.IonMode Then Continue For
-                If ionQuery.Formula.ExactMass > ion.Mass + 0.1 Then Exit For
+                If ionQuery.Formula.ExactMass > ion.Mass + ms2Tol Then Exit For
 
                 If FragmentAssigner.isFormulaComposition(ion.Formula, ionQuery.Formula) Then
                     ion.CandidateInChIKeys = ionQuery.CandidateInChIKeys
@@ -251,7 +251,7 @@ Public NotInheritable Class FragmentAssigner
             If massTolType = MassToleranceType.Ppm Then massTol = PPMmethod.ConvertPpmToMassAccuracy(mass, ms2Tol)
             Dim minID = -1
 
-            Dim startIndex = getStartIndex(mass, 0.1, neutralLossDB)
+            Dim startIndex = getStartIndex(mass, ms2Tol, neutralLossDB)
 
             For i = startIndex To neutralLossDB.Count - 1
                 If mass - massTol > neutralLossDB(i).Formula.ExactMass Then Continue For

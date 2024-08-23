@@ -115,6 +115,12 @@ Public Class PeakAnnotation
             .ToArray
     End Sub
 
+    Public Function GetAnnotatedPeaks() As ms2()
+        Return products _
+            .Where(Function(i) Not i.Annotation.StringEmpty(, True)) _
+            .ToArray
+    End Function
+
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overrides Function ToString() As String
         Return formula.ToString
@@ -124,18 +130,25 @@ Public Class PeakAnnotation
     ''' do score evaluation of the spectrum associated with the assembled formula composition 
     ''' </summary>
     ''' <param name="peaks"></param>
-    ''' <param name="precursorMz"></param>
     ''' <param name="adduct"></param>
     ''' <param name="formula"></param>
+    ''' <param name="da">
+    ''' the mass tolerance error for matches the ms2 spectrum peaks, 
+    ''' usually be the tolerance error for make spectrum centroid 
+    ''' process
+    ''' </param>
     ''' <returns></returns>
-    Public Shared Function DoPeakAnnotation(peaks As ISpectrum, precursorMz As Double, adduct As MzCalculator, formula As Formula) As PeakAnnotation
-        Dim assign As New FragmentAssigner
+    Public Shared Function DoPeakAnnotation(peaks As ISpectrum, adduct As MzCalculator, formula As Formula,
+                                            Optional da As Double = 0.1) As PeakAnnotation
+
+        Dim assign As New FragmentAssigner(da)
         Dim exactMass As Double = formula.ExactMass
+        Dim precursorMz As Double = adduct.CalcMZ(exactMass)
         Dim peaksData As SpectrumPeak() = peaks.GetIons _
             .Select(Function(m)
-                        If std.Abs(m.mz - exactMass) <= 0.1 Then
+                        If std.Abs(m.mz - exactMass) <= da Then
                             m.Annotation = "M"
-                        ElseIf std.Abs(m.mz - adduct.CalcMZ(exactMass)) <= 0.1 Then
+                        ElseIf std.Abs(m.mz - precursorMz) <= da Then
                             m.Annotation = adduct.ToString
                         End If
 

@@ -133,6 +133,12 @@ Namespace Spectra
             }
         End Function
 
+        ''' <summary>
+        ''' Creates only the ms2 spectrum alignment result output, missing precursor ion and reference information metadata.
+        ''' </summary>
+        ''' <param name="a">the spectrum peaks of the query.</param>
+        ''' <param name="b">the spectrum peaks of the reference.</param>
+        ''' <returns></returns>
         Public Overloads Function CreateAlignment(a As ms2(), b As ms2()) As AlignmentOutput
             Dim align As SSM2MatrixFragment() = GlobalAlignment _
                 .CreateAlignment(a, b, mzwidth) _

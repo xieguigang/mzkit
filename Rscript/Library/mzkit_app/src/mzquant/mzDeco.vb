@@ -463,6 +463,7 @@ Module mzDeco
         Dim rtmax As Double() = CLRVector.asNumeric(df!rtmax)
         Dim RI As Double() = CLRVector.asNumeric(df!RI)
         Dim ID As String() = df.getRowNames.UniqueNames
+        Dim npeaks As Integer() = CLRVector.asInteger(df!npeaks)
 
         Call df.delete("ID", "mz", "mzmin", "mzmax", "rt", "rtmin", "rtmax", "RI", "npeaks")
 
@@ -473,21 +474,30 @@ Module mzDeco
                         Return New NamedCollection(Of Double)(i.Key, CLRVector.asNumeric(i.Value))
                     End Function) _
             .ToArray
+        Dim ion As xcms2
+        Dim no_sample As Boolean = matrix.IsNullOrEmpty AndAlso Not npeaks Is Nothing
 
         For i As Integer = 0 To mz.Length - 1
-            offset = i
-            v = matrix.ToDictionary(Function(a) a.name, Function(a) a(offset))
+            If no_sample Then
+                ion = New xcms2(npeaks(i))
+            Else
+                offset = i
+                v = matrix.ToDictionary(Function(a) a.name, Function(a) a(offset))
+                ion = New xcms2(v)
+            End If
 
-            Yield New xcms2(v) With {
-                .ID = ID(i),
-                .mz = mz(i),
-                .mzmax = mzmax(i),
-                .mzmin = mzmin(i),
-                .RI = RI(i),
-                .rt = rt(i),
-                .rtmax = rtmax(i),
+            With ion
+                .ID = ID(i)
+                .mz = mz(i)
+                .mzmax = mzmax(i)
+                .mzmin = mzmin(i)
+                .RI = RI(i)
+                .rt = rt(i)
+                .rtmax = rtmax(i)
                 .rtmin = rtmin(i)
-            }
+            End With
+
+            Yield ion
         Next
     End Function
 

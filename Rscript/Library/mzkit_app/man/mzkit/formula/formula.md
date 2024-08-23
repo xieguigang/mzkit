@@ -42,7 +42,7 @@ The chemical formulae toolkit
 >  charge.
 
 + [registerAnnotations](formula/registerAnnotations.1) 
-+ [peakAnnotations](formula/peakAnnotations.1) do peak annotation for the ms2 fragments
++ [peaks_annotation](formula/peaks_annotation.1) do peak annotation for the ms2 spectrum fragments
 + [candidates](formula/candidates.1) find all of the candidate chemical formulas by a 
 + [eval](formula/eval.1) ### Evaluate formula exact mass
 + [scan](formula/scan.1) Get atom composition from a formula string

@@ -129,6 +129,12 @@ Namespace Spectra.Xml
             End Get
         End Property
 
+        Public ReadOnly Property alignment_str As String
+            Get
+                Return CreateLinearMatrix(alignments).JoinBy(" ")
+            End Get
+        End Property
+
         Public Iterator Function GetHitsMzPeaks() As IEnumerable(Of Double)
             For Each hit As SSM2MatrixFragment In alignments
                 If hit.query > 0 AndAlso hit.ref > 0 Then
