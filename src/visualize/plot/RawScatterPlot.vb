@@ -127,6 +127,8 @@ Public Class RawScatterPlot : Inherits Plot
             points(i).color = colors(CInt(intensityRange.ScaleMapping(points(i).value, indexRange)))
         Next
 
+        theme.drawLegend = False
+
         Dim brushes = colors.Select(Function(colorStr) New SolidBrush(colorStr.TranslateColor)).ToArray
         Dim ticks = points.Select(Function(a) a.value ^ std.E).CreateAxisTicks
         Dim css As CSSEnvirnment = g.LoadEnvironment
@@ -140,8 +142,8 @@ Public Class RawScatterPlot : Inherits Plot
 
         ' 绘制标尺
         Dim canvas = region.PlotRegion
-        Dim width = canvas.Width * 0.125
-        Dim legendLayout As New Rectangle(region.Width - width - region.Padding.Right / 3, canvas.Top, width, canvas.Height * 0.3)
+        Dim width = region.Padding.Right * (3 / 4)
+        Dim legendLayout As New Rectangle(region.Width - width - (region.Padding.Right - width) / 2, canvas.Top, width, canvas.Height * (3 / 4))
 
         Call scatter.Plot(g, region)
         Call g.ColorMapLegend(
