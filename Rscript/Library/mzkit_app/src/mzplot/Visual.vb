@@ -243,6 +243,13 @@ Module Visual
             Dim dimension As String = args.getValue({"dimension", "dim_name"}, env, "default")
             Dim scatter_data As ms1_scan() = peakSet.Ms1Scatter(dimension).ToArray
 
+            If scatter_data.All(Function(i) i.intensity = 0.0) Then
+                Return Internal.debug.stop({
+                    $"missing of the data for plot the scatter on specific data dimension: {dimension}",
+                    $"dimension: {dimension}"
+                }, env)
+            End If
+
             app = New RawScatterPlot(scatter_data, nlevels, "peaktable", theme)
         Else
             app = New PeakTablePlot(peakSet, theme) With {

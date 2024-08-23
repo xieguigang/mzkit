@@ -84,11 +84,14 @@ const run.Deconvolution = function(rawdata, outputdir = "./", mzdiff = 0.001, xi
         row.names = [peaktable]::ID
     );
 
+    print("view of the lcms peaks ROI metadata:");
+    print(peakmeta, max.print = 6);
+
     write.csv(peakmeta, file = `${outputdir}/peakmeta.csv`, 
         row.names = TRUE);
 
-    bitmap(file = file.path(outputdir, "rt_shifts.png")) {
-        plot(rt_shifts, res = 1000);
+    bitmap(file = file.path(outputdir, "rt_shifts.png"), size = [4000, 2700], padding = [50 650 200 200]) {
+        plot(rt_shifts, res = 1000, grid.fill = "white");
     }
     bitmap(file = file.path(outputdir, "peakset.png")) {
         plot(as.peak_set(peakmeta), scatter = TRUE, 

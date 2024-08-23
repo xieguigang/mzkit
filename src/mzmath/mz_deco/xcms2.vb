@@ -117,6 +117,8 @@ Public Class xcms2 : Inherits DynamicPropertyBase(Of Double)
     ''' <returns></returns>
     <Category("MS1")> Public Property RI As Double Implements IRetentionIndex.RI
 
+    Dim int_npeaks As Integer?
+
     ''' <summary>
     ''' this feature has n sample data(value should be a positive number)
     ''' </summary>
@@ -126,9 +128,13 @@ Public Class xcms2 : Inherits DynamicPropertyBase(Of Double)
     Public ReadOnly Property npeaks As Integer
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
-            Return Properties _
-                .Where(Function(s) s.Value > 0) _
-                .Count
+            If int_npeaks Is Nothing Then
+                Return Properties _
+                    .Where(Function(s) s.Value > 0) _
+                    .Count
+            Else
+                Return CInt(int_npeaks)
+            End If
         End Get
     End Property
 
@@ -171,6 +177,10 @@ Public Class xcms2 : Inherits DynamicPropertyBase(Of Double)
 
     Sub New(expression As Dictionary(Of String, Double))
         Me.Properties = expression
+    End Sub
+
+    Sub New(npeaks As Integer)
+        int_npeaks = npeaks
     End Sub
 
     ''' <summary>
