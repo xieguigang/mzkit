@@ -142,8 +142,8 @@ Public Class RawScatterPlot : Inherits Plot
 
         ' 绘制标尺
         Dim canvas = region.PlotRegion
-        Dim width = region.Padding.Right * (3 / 4)
-        Dim legendLayout As New Rectangle(region.Width - width - (region.Padding.Right - width) / 2, canvas.Top, width, canvas.Height * (3 / 4))
+        Dim width = region.Padding.Right * (4 / 5)
+        Dim legendLayout As New Rectangle(canvas.Right, canvas.Top, width, canvas.Height * (5 / 6))
 
         Call scatter.Plot(g, region)
         Call g.ColorMapLegend(
@@ -151,7 +151,7 @@ Public Class RawScatterPlot : Inherits Plot
             designer:=brushes,
             ticks:=ticks,
             titleFont:=legendTitleStyle,
-            title:="Intensity Scale",
+            title:=legendTitle,
             tickFont:=tickStyle,
             tickAxisStroke:=tickAxisStroke
         )

@@ -234,7 +234,7 @@ Module Visual
         Dim theme As New Theme With {
             .axisLabelCSS = "font-style: normal; font-size: 12; font-family: " & FontFace.CambriaMath & ";",
             .colorSet = "Jet",
-            .padding = InteropArgumentHelper.getPadding(args.getBySynonyms("padding", "paddings", "margin"), "padding: 100px 600px 200px 250px;", env),
+            .padding = InteropArgumentHelper.getPadding(args.getBySynonyms("padding", "paddings", "margin"), "padding: 100px 650px 200px 250px;", env),
             .pointSize = args.getValue({"point_size", "point.size"}, env, 10.0)
         }
         Dim scatter As Boolean = args.getValue({"scatter"}, env, False)
@@ -252,7 +252,9 @@ Module Visual
                 }, env)
             End If
 
-            app = New RawScatterPlot(scatter_data, nlevels, "peaktable", theme)
+            app = New RawScatterPlot(scatter_data, nlevels, "peaktable", theme) With {
+                .legendTitle = dimension
+            }
         Else
             app = New PeakTablePlot(peakSet, theme) With {
                 .mapLevels = nlevels
