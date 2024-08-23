@@ -19,7 +19,15 @@ const run.Deconvolution = function(rawdata, outputdir = "./", mzdiff = 0.001, xi
                                    peak.width = [2, 30], n_threads = 16, filename = "peaktable.csv") {
                                     
     const xic_cache = `${outputdir}/XIC_data`;
-    const files = list.files(rawdata, pattern = ["*.mzML", "*.mzXML", "*.mzPack"]);
+    const files = 
+    {
+        if (dir.exists(rawdata)) {
+            # scan dir for files
+            list.files(rawdata, pattern = ["*.mzML", "*.mzXML", "*.mzPack"]);
+        } else {
+            rawdata;
+        }
+    }
 
     print("run deconvolution for rawdata files:");
     print(basename(files));
