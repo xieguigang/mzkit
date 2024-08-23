@@ -16,7 +16,7 @@ imports "visual" from "mzplot";
 #' @return this function returns nothing 
 #' 
 const run.Deconvolution = function(rawdata, outputdir = "./", mzdiff = 0.001, xic_mzdiff = 0.005,
-                                   peak.width = [2, 30], n_threads = 16) {
+                                   peak.width = [2, 30], n_threads = 16, filename = "peaktable.csv") {
                                     
     const xic_cache = `${outputdir}/XIC_data`;
     const files = list.files(rawdata, pattern = ["*.mzML", "*.mzXML", "*.mzPack"]);
@@ -63,7 +63,7 @@ const run.Deconvolution = function(rawdata, outputdir = "./", mzdiff = 0.001, xi
         peak.width = peak.width);
     const rt_shifts = attr(peaktable, "rt.shift");
 
-    write.csv(peaktable, file = `${outputdir}/peaktable.csv`, 
+    write.csv(peaktable, file = `${outputdir}/${filename}`, 
         row.names = TRUE);
     write.csv(rt_shifts, file = `${outputdir}/rt_shifts.csv`, 
         row.names = TRUE);
