@@ -137,7 +137,7 @@ Public Class RawScatterPlot : Inherits Plot
         Dim tickAxisStroke As Pen = css.GetPen(Stroke.TryParse(theme.axisStroke))
         Dim scatter As New Scatter2D({serials}, theme, scatterReorder:=True, fillPie:=True) With {
             .xlabel = "scan_time in seconds",
-            .ylabel = "m/z ratio"
+            .ylabel = "M/Z Ratio"
         }
 
         ' 绘制标尺
