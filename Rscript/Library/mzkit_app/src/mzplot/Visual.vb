@@ -233,7 +233,9 @@ Module Visual
     Private Function plotPeaktable(peakSet As PeakSet, args As list, env As Environment) As Object
         Dim theme As New Theme With {
             .axisLabelCSS = "font-style: normal; font-size: 12; font-family: " & FontFace.CambriaMath & ";",
-            .colorSet = "Jet"
+            .colorSet = "Jet",
+            .padding = InteropArgumentHelper.getPadding(args.getBySynonyms("padding", "paddings", "margin"), "padding: 100px 650px 200px 250px;", env),
+            .pointSize = args.getValue({"point_size", "point.size"}, env, 10.0)
         }
         Dim scatter As Boolean = args.getValue({"scatter"}, env, False)
         Dim app As Plot
@@ -243,7 +245,16 @@ Module Visual
             Dim dimension As String = args.getValue({"dimension", "dim_name"}, env, "default")
             Dim scatter_data As ms1_scan() = peakSet.Ms1Scatter(dimension).ToArray
 
-            app = New RawScatterPlot(scatter_data, nlevels, "peaktable", theme)
+            If scatter_data.All(Function(i) i.intensity = 0.0) Then
+                Return Internal.debug.stop({
+                    $"missing of the data for plot the scatter on specific data dimension: {dimension}",
+                    $"dimension: {dimension}"
+                }, env)
+            End If
+
+            app = New RawScatterPlot(scatter_data, nlevels, "peaktable", theme) With {
+                .legendTitle = dimension
+            }
         Else
             app = New PeakTablePlot(peakSet, theme) With {
                 .mapLevels = nlevels

@@ -16,10 +16,18 @@ imports "visual" from "mzplot";
 #' @return this function returns nothing 
 #' 
 const run.Deconvolution = function(rawdata, outputdir = "./", mzdiff = 0.001, xic_mzdiff = 0.005,
-                                   peak.width = [2, 30], n_threads = 16) {
+                                   peak.width = [2, 30], n_threads = 16, filename = "peaktable.csv") {
                                     
     const xic_cache = `${outputdir}/XIC_data`;
-    const files = list.files(rawdata, pattern = ["*.mzML", "*.mzXML", "*.mzPack"]);
+    const files = 
+    {
+        if (dir.exists(rawdata)) {
+            # scan dir for files
+            list.files(rawdata, pattern = ["*.mzML", "*.mzXML", "*.mzPack"]);
+        } else {
+            rawdata;
+        }
+    }
 
     print("run deconvolution for rawdata files:");
     print(basename(files));
@@ -63,7 +71,7 @@ const run.Deconvolution = function(rawdata, outputdir = "./", mzdiff = 0.001, xi
         peak.width = peak.width);
     const rt_shifts = attr(peaktable, "rt.shift");
 
-    write.csv(peaktable, file = `${outputdir}/peaktable.csv`, 
+    write.csv(peaktable, file = `${outputdir}/${filename}`, 
         row.names = TRUE);
     write.csv(rt_shifts, file = `${outputdir}/rt_shifts.csv`, 
         row.names = TRUE);
@@ -76,11 +84,14 @@ const run.Deconvolution = function(rawdata, outputdir = "./", mzdiff = 0.001, xi
         row.names = [peaktable]::ID
     );
 
+    print("view of the lcms peaks ROI metadata:");
+    print(peakmeta, max.print = 6);
+
     write.csv(peakmeta, file = `${outputdir}/peakmeta.csv`, 
         row.names = TRUE);
 
-    bitmap(file = file.path(outputdir, "rt_shifts.png")) {
-        plot(rt_shifts, res = 1000);
+    bitmap(file = file.path(outputdir, "rt_shifts.png"), size = [4000, 2700], padding = [50 650 200 200]) {
+        plot(rt_shifts, res = 1000, grid.fill = "white");
     }
     bitmap(file = file.path(outputdir, "peakset.png")) {
         plot(as.peak_set(peakmeta), scatter = TRUE, 

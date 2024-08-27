@@ -127,6 +127,8 @@ Public Class RawScatterPlot : Inherits Plot
             points(i).color = colors(CInt(intensityRange.ScaleMapping(points(i).value, indexRange)))
         Next
 
+        theme.drawLegend = False
+
         Dim brushes = colors.Select(Function(colorStr) New SolidBrush(colorStr.TranslateColor)).ToArray
         Dim ticks = points.Select(Function(a) a.value ^ std.E).CreateAxisTicks
         Dim css As CSSEnvirnment = g.LoadEnvironment
@@ -135,13 +137,13 @@ Public Class RawScatterPlot : Inherits Plot
         Dim tickAxisStroke As Pen = css.GetPen(Stroke.TryParse(theme.axisStroke))
         Dim scatter As New Scatter2D({serials}, theme, scatterReorder:=True, fillPie:=True) With {
             .xlabel = "scan_time in seconds",
-            .ylabel = "m/z ratio"
+            .ylabel = "M/Z Ratio"
         }
 
         ' 绘制标尺
         Dim canvas = region.PlotRegion
-        Dim width = canvas.Width * 0.125
-        Dim legendLayout As New Rectangle(region.Width - width - region.Padding.Right / 3, canvas.Top, width, canvas.Height * 0.3)
+        Dim width = region.Padding.Right * (4 / 5)
+        Dim legendLayout As New Rectangle(canvas.Right, canvas.Top, width, canvas.Height * (5 / 6))
 
         Call scatter.Plot(g, region)
         Call g.ColorMapLegend(
@@ -149,7 +151,7 @@ Public Class RawScatterPlot : Inherits Plot
             designer:=brushes,
             ticks:=ticks,
             titleFont:=legendTitleStyle,
-            title:="Intensity Scale",
+            title:=legendTitle,
             tickFont:=tickStyle,
             tickAxisStroke:=tickAxisStroke
         )
