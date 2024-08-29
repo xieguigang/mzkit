@@ -169,6 +169,8 @@ Public Class ReportRender
                             offset = levels - 1
                         End If
 
+                        area_data = std.Round(area_data, 1)
+
                         If annotation.samplefiles.ContainsKey(sample) Then
                             Dim score As Double = If(rt_cell,
                                 std.Round(annotation(sample).rt / 60, 2),
