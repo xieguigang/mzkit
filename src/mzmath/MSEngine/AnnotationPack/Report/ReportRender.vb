@@ -126,8 +126,8 @@ Public Class ReportRender
                                     offset = levels - 1
                                 End If
 
-                                Return $"<td>
-<a href='#' class='score' data_id='{annotation.xcms_id}' data_sample='{sample}' biodeep_id='{annotation.biodeep_id}' style='background-color:{colorSet(offset)}'>
+                                Return $"<td style='background-color:{colorSet(offset)};'>
+<a href='#' class='score' data_id='{annotation.xcms_id}' data_sample='{sample}' biodeep_id='{annotation.biodeep_id}'>
 {score}
 </a>
 </td>"
