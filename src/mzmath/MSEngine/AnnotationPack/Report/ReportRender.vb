@@ -88,7 +88,8 @@ Public Class ReportRender
                         Dim name = a.name
                         Dim adducts = a.adducts
 
-                        Return $"<th>{name.Replace("<", "&lt;")}<br />{adducts}</th>"
+                        ' metabolite name
+                        Return $"<th><a href='#' class='meta_header' xcms_id='{a.xcms_id}'>{name.Replace("<", "&lt;")}<br />{adducts}</a></th>"
                     End Function) _
             .JoinBy("")
 
