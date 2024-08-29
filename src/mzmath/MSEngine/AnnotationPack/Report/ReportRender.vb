@@ -104,9 +104,14 @@ Public Class ReportRender
                         Dim adducts = a.adducts
 
                         ' metabolite name
-                        Return $"<th><a href='#' class='meta_header' xcms_id='{a.xcms_id}'>{name.Replace("<", "&lt;")}<br />{adducts}</a></th>"
+                        Return $"<th><a href='#' class='meta_header' xcms_id='{a.xcms_id}'>{name.Replace("<", "&lt;")}</a></th>"
                     End Function) _
             .JoinBy("")
+
+        ' generates the adducts row
+        Yield "<td></td>" & ordinals.Select(Function(id) metabolites(id)).Select(Function(a) $"<td>{a.adducts}</td>").JoinBy("")
+        ' generates the mz@rt row
+        Yield "<td></td>" & ordinals.Select(Function(id) metabolites(id)).Select(Function(a) $"<td>{a.theoretical_mz.ToString("F4")}@{(a.rt / 60).ToString("F1")}min</td>").JoinBy("")
 
         For Each sample As String In annotation.samplefiles
             Yield $"<td><a href=""#"" class='sample_name' data_name='{sample}'>{sample}</a></td>" & ordinals _
