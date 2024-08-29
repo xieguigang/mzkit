@@ -127,7 +127,7 @@ Public Class ReportRender
                                 End If
 
                                 Return $"<td>
-<a href='#' data_id='{annotation.xcms_id}' data_sample='{sample}' biodeep_id='{annotation.biodeep_id}' style='background-color:{colorSet(offset)}'>
+<a href='#' class='score' data_id='{annotation.xcms_id}' data_sample='{sample}' biodeep_id='{annotation.biodeep_id}' style='background-color:{colorSet(offset)}'>
 {score}
 </a>
 </td>"
