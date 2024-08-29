@@ -9,12 +9,16 @@ Public Class ReportRender
     Public ReadOnly Property annotation As AnnotationPack
 
     ''' <summary>
-    ''' 
+    ''' metabolite indexed via the biodeep id 
     ''' </summary>
     ''' <remarks>
     ''' multiple <see cref="AlignmentHit"/> value for multiple precursor type
     ''' </remarks>
     ReadOnly metabolites As New Dictionary(Of String, AlignmentHit)
+    ''' <summary>
+    ''' metabolite indexed via the xcms ion id
+    ''' </summary>
+    ReadOnly ions As New Dictionary(Of String, AlignmentHit)
 
     Public Property colorSet As String() = {"#0D0887FF", "#3E049CFF", "#6300A7FF", "#8707A6FF", "#A62098FF", "#C03A83FF", "#D5546EFF", "#E76F5AFF", "#F58C46FF", "#FDAD32FF", "#FCD225FF", "#F0F921FF"}
 
@@ -22,15 +26,26 @@ Public Class ReportRender
         annotation = pack
 
         For Each libs In pack.libraries
-            For Each hit In libs.Value
+            For Each hit As AlignmentHit In libs.Value
                 Dim key As String = hit.biodeep_id & "_" & hit.adducts
 
                 If Not metabolites.ContainsKey(key) Then
                     Call metabolites.Add(key, hit)
                 End If
+                If Not ions.ContainsKey(hit.xcms_id) Then
+                    Call ions.Add(hit.xcms_id, hit)
+                End If
             Next
         Next
     End Sub
+
+    Public Function GetIon(xcms_id As String) As AlignmentHit
+        If ions.ContainsKey(xcms_id) Then
+            Return ions(xcms_id)
+        Else
+            Return Nothing
+        End If
+    End Function
 
     Public Function HtmlTable(biodeep_ids As IEnumerable(Of String), Optional rt_cell As Boolean = True) As String
         Dim html As New StringBuilder
