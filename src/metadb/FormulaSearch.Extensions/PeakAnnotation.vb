@@ -86,6 +86,7 @@ Public Class PeakAnnotation
     ''' </summary>
     ''' <returns></returns>
     Public Property formula As FormulaComposition
+    Public Property precursor_matched As Boolean = False
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Sub New(formula As FormulaComposition, products As IEnumerable(Of ProductIon))
@@ -144,12 +145,15 @@ Public Class PeakAnnotation
         Dim assign As New FragmentAssigner(da)
         Dim exactMass As Double = formula.ExactMass
         Dim precursorMz As Double = adduct.CalcMZ(exactMass)
+        Dim precursorHit As Boolean = False
         Dim peaksData As SpectrumPeak() = peaks.GetIons _
             .Select(Function(m)
                         If std.Abs(m.mz - exactMass) <= da Then
                             m.Annotation = "M"
+                            precursorHit = True
                         ElseIf std.Abs(m.mz - precursorMz) <= da Then
                             m.Annotation = adduct.ToString
+                            precursorHit = True
                         End If
 
                         Return New SpectrumPeak(m)
@@ -175,7 +179,9 @@ Public Class PeakAnnotation
             .Centroid(Tolerance.DeltaMass(0.1), New RelativeIntensityCutoff(0.01)) _
             .ToArray
 
-        Return New PeakAnnotation(fcom, union)
+        Return New PeakAnnotation(fcom, union) With {
+            .precursor_matched = precursorHit
+        }
     End Function
 
     ''' <summary>
