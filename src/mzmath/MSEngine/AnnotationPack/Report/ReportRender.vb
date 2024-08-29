@@ -109,7 +109,7 @@ Public Class ReportRender
             .JoinBy("")
 
         For Each sample As String In annotation.samplefiles
-            Yield $"<td><a href=""#"" class='samplename' data_name='{sample}'>{sample}</a></td>" & ordinals _
+            Yield $"<td><a href=""#"" class='sample_name' data_name='{sample}'>{sample}</a></td>" & ordinals _
                 .Select(Function(id)
                             Dim annotation = metabolites(id)
 
