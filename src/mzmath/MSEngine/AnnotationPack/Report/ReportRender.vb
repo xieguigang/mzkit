@@ -110,20 +110,15 @@ Public Class ReportRender
 
         If ms1 Then
             ' ranges of the ms1 peak area for scale color in a column
-            Dim z_areas As Dictionary(Of String, Dictionary(Of String, Double)) = ordinals _
-                .ToDictionary(Function(id) metabolites(id).xcms_id, Function(xcms_id)
-                                                                        Dim ROI = peaks(metabolites(xcms_id).xcms_id)
-                                                                        Dim samples = ROI.Properties.Keys.ToArray
-                                                                        Dim z = ROI(samples).Z
-                                                                        Dim sample As New Dictionary(Of String, Double)
-
-                                                                        For i As Integer = 0 To z.Length - 1
-                                                                            sample(samples(i)) = z(i)
-                                                                        Next
-
-                                                                        Return sample
-                                                                    End Function)
-            Dim ranges = z_areas.ToDictionary(Function(i) i.Key, Function(i) i.Value.Values.Range)
+            Dim z_areas As Dictionary(Of String, Dictionary(Of String, Double?)) = ordinals _
+                .ToDictionary(Function(id) metabolites(id).xcms_id,
+                              Function(xcms_id)
+                                  Return MakeZAreas(xcms_id)
+                              End Function)
+            Dim ranges = z_areas.ToDictionary(Function(i) i.Key,
+                                              Function(i)
+                                                  Return ZAreaRange(i.Value)
+                                              End Function)
 
             For Each sample As String In annotation.samplefiles
                 Yield Ms1ReportTable(sample, rt_cell, ordinals, z_areas, ranges, levels, index)
@@ -149,8 +144,30 @@ Public Class ReportRender
         End If
     End Function
 
+    Private Shared Function ZAreaRange(i As Dictionary(Of String, Double?)) As DoubleRange
+        Return i.Values.Where(Function(a) Not a Is Nothing).Select(Function(a) CDbl(a)).Range
+    End Function
+
+    Private Function MakeZAreas(xcms_id As String) As Dictionary(Of String, Double?)
+        Dim ROI = peaks(metabolites(xcms_id).xcms_id)
+        Dim missing = ROI.Properties.Where(Function(r) r.Value <= 0.0).ToArray
+        Dim samples = ROI.Properties.Where(Function(r) r.Value > 0).ToArray
+        Dim z = samples.Select(Function(r) r.Value).ToArray.Z
+        Dim sample As New Dictionary(Of String, Double?)
+
+        For i As Integer = 0 To z.Length - 1
+            sample(samples(i).Key) = z(i)
+        Next
+
+        For Each name In missing
+            sample(name.Key) = Nothing
+        Next
+
+        Return sample
+    End Function
+
     Private Function Ms1ReportTable(sample As String, rt_cell As Boolean, ordinals As String(),
-                                    area As Dictionary(Of String, Dictionary(Of String, Double)),
+                                    area As Dictionary(Of String, Dictionary(Of String, Double?)),
                                     ranges As Dictionary(Of String, DoubleRange),
                                     levels As Integer,
                                     index As DoubleRange) As String
@@ -159,9 +176,11 @@ Public Class ReportRender
             .Select(Function(id)
                         Dim annotation = metabolites(id)
                         Dim ROI = area(annotation.xcms_id)
-                        Dim area_data As Double = ROI(sample)
+                        Dim area_data As Double? = ROI(sample)
                         Dim range As DoubleRange = ranges(annotation.xcms_id)
-                        Dim offset As Integer = range.ScaleMapping(area_data, index)
+                        Dim offset As Integer = If(area_data Is Nothing, -1, range.ScaleMapping(area_data, index))
+                        Dim color As String
+                        Dim foreColor As String
 
                         If offset < 0 Then
                             offset = 0
@@ -169,20 +188,31 @@ Public Class ReportRender
                             offset = levels - 1
                         End If
 
-                        area_data = std.Round(area_data, 1)
+                        If area_data Is Nothing Then
+                            offset = -1
+                            color = "white"
+                            foreColor = "darkblue"
+                        Else
+                            area_data = std.Round(CDbl(area_data), 1)
+                            color = colorSet(offset)
+                            foreColor = "white"
+                        End If
 
                         If annotation.samplefiles.ContainsKey(sample) Then
                             Dim score As Double = If(rt_cell,
                                 std.Round(annotation(sample).rt / 60, 2),
                                 std.Round(annotation(sample).score, 2))
+                            Dim label As String = If(area_data Is Nothing, "NA", $"{CDbl(area_data)} ({score})")
 
-                            Return $"<td style='background-color:{colorSet(offset)};'>
+                            Return $"<td style='background-color:{color}; color:{foreColor};'>
 <a href='#' class='score' data_id='{annotation.xcms_id}' data_sample='{sample}' biodeep_id='{annotation.biodeep_id}'>
-{area_data} ({score})
+{label}
 </a>
 </td>"
                         Else
-                            Return $"<td style='background-color:{colorSet(offset)};'>{area_data} (NA)</td>"
+                            Dim label = If(area_data Is Nothing, "NA", $"{CDbl(area_data)} (NA)")
+
+                            Return $"<td style='background-color:{color}; color:{foreColor};'>{label}</td>"
                         End If
                     End Function) _
             .JoinBy("")
