@@ -176,6 +176,10 @@ Namespace MZWork
                                   Return m2.scan_id
                               End Function)
 
+            If inMemory.source.StringEmpty(, True) Then
+                inMemory.source = source.BaseName
+            End If
+
             If ms1.Count > 0 Then
                 Me.rtmin = Aggregate m1 As ScanMS1 In ms1.Values Into Min(m1.rt)
                 Me.rtmax = Aggregate m1 As ScanMS1 In ms1.Values Into Max(m1.rt)
