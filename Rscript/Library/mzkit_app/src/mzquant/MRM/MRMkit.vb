@@ -66,6 +66,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Data
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
 Imports Microsoft.VisualBasic.ApplicationServices.Development
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal
@@ -167,6 +168,41 @@ Module MRMkit
         Dim printContent = csv.Print(addBorder:=False)
 
         Return printContent
+    End Function
+
+    ''' <summary>
+    ''' MRM-Ion Pair Finder is used to automatically and systematically define MRM transitions from untargeted metabolomics data. 
+    ''' Our research group first introduced the concept of pseudotargeted metabolomics using the retention time locking 
+    ''' GC-MS-selected ions monitoring in 2012. The pseudotargeted metabolomics method was extended to LC-MS in 2013. To define
+    ''' ion pairs automatically and systematically, the in-house software “Mul-tiple Reaction Monitoring-Ion Pair Finder (MRM-Ion 
+    ''' Pair Finder)” was developed, which made defining of the MRM transitions for untargeted metabolic profiling easier and 
+    ''' less time consuming. Recently, MRM-Ion Pair Finder was updated to version 2.0. The new version is more convenient, consumes 
+    ''' less time and is also suitable for negative ion mode. And the function of MRM-Ion Pair Finder is also performed in R so 
+    ''' that users have more options when using pseudotargeted method.
+    ''' </summary>
+    ''' <param name="ms2"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' https://github.com/zhengfj1994/MRM-Ion_Pair_Finder
+    ''' </remarks>
+    <ExportAPI("find_untargeted_ionpair")>
+    <RApiReturn(GetType(IonPair))>
+    Public Function FindUntargetedIonPair(<RRawVectorArgument>
+                                          ms2 As Object,
+                                          Optional diff_MS2MS1 As Double = 0.05,
+                                          Optional ms2_intensity As Double = 0.05,
+                                          Optional env As Environment = Nothing) As Object
+
+        Dim ions As pipeline = pipeline.TryCreatePipeline(Of PeakMs2)(ms2, env)
+
+        If ions.isError Then
+            Return ions.getError
+        End If
+
+        Return ions.populates(Of PeakMs2)(env) _
+            .MRMIonPairFinder(diff_MS2MS1, ms2_intensity) _
+            .ToArray
     End Function
 
     ''' <summary>
