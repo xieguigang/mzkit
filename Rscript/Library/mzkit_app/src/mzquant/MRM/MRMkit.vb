@@ -1,60 +1,60 @@
 ﻿#Region "Microsoft.VisualBasic::7c37c9539007c4c838e659a7a087ff42, Rscript\Library\mzkit_app\src\mzquant\MRM\MRMkit.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 774
-    '    Code Lines: 528 (68.22%)
-    ' Comment Lines: 166 (21.45%)
-    '    - Xml Docs: 87.35%
-    ' 
-    '   Blank Lines: 80 (10.34%)
-    '     File Size: 33.10 KB
+' Summaries:
 
 
-    ' Module MRMkit
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: asIonPair, ExtractIonData, ExtractPeakROI, GetRTAlignments, IsomerismIonPairs
-    '               Linears, MRMarguments, printIonPairs, R2, readCompoundReference
-    '               readIonPairs, readIS, RTShiftSummary, (+2 Overloads) SampleQuantify, ScanPeakTable
-    '               ScanPeakTable2, (+2 Overloads) ScanWiffRaw, WiffRawFile
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 774
+'    Code Lines: 528 (68.22%)
+' Comment Lines: 166 (21.45%)
+'    - Xml Docs: 87.35%
+' 
+'   Blank Lines: 80 (10.34%)
+'     File Size: 33.10 KB
+
+
+' Module MRMkit
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Function: asIonPair, ExtractIonData, ExtractPeakROI, GetRTAlignments, IsomerismIonPairs
+'               Linears, MRMarguments, printIonPairs, R2, readCompoundReference
+'               readIonPairs, readIS, RTShiftSummary, (+2 Overloads) SampleQuantify, ScanPeakTable
+'               ScanPeakTable2, (+2 Overloads) ScanWiffRaw, WiffRawFile
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -84,6 +84,7 @@ Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
+Imports MRMArgumentSet = BioNovoGene.Analytical.MassSpectrometry.Math.MRM.MRMArguments
 Imports Rdataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
 Imports REnv = SMRUCC.Rsharp.Runtime
 Imports Rlist = SMRUCC.Rsharp.Runtime.Internal.Object.list
@@ -242,7 +243,7 @@ Module MRMkit
             Return mzErrors.TryCast(Of Message)
         End If
 
-        Return New MRMArguments(
+        Return New MRMArgumentSet(
             TPAFactors:=TPAFactors,
             tolerance:=mzErrors,
             timeWindowSize:=timeWindowSize,
@@ -266,7 +267,7 @@ Module MRMkit
         Dim ionPairs As IonPair() = REnv.asVector(Of IonPair)(ions)
 
         If args Is Nothing Then
-            args = MRM.MRMArguments.GetDefaultArguments
+            args = MRMArgumentSet.GetDefaultArguments
         End If
 
         Return RTAlignmentProcessor.AcquireRT(references, ionPairs, args)
