@@ -207,8 +207,7 @@ Module MRMkit
     ''' </remarks>
     <ExportAPI("find_untargeted_ionpair")>
     <RApiReturn(GetType(IonPair))>
-    Public Function FindUntargetedIonPair(<RRawVectorArgument>
-                                          ms2 As Object,
+    Public Function FindUntargetedIonPair(<RRawVectorArgument> ms2 As Object, Optional ms1 As Rdataframe = Nothing,
                                           Optional diff_MS2MS1 As Double = 0.05,
                                           Optional ms2_intensity As Double = 0.05,
                                           Optional env As Environment = Nothing) As Object
@@ -219,8 +218,27 @@ Module MRMkit
             Return ions.getError
         End If
 
+        If ms1 Is Nothing Then
+            Return ions.populates(Of PeakMs2)(env) _
+                .MRMIonPairFinder(diff_MS2MS1, ms2_intensity) _
+                .ToArray
+        End If
+
+        Dim id As String() = CLRVector.asCharacter(ms1.getBySynonym("id", "ID", "xcms_id"))
+        Dim mz As Double() = CLRVector.asNumeric(ms1.getBySynonym("mz", "MZ", "m/z"))
+        Dim rt As Double() = CLRVector.asNumeric(ms1.getBySynonym("rt", "RT", "retention_time"))
+        Dim targets As Ms1Feature() = id _
+            .Select(Function(ref, i)
+                        Return New Ms1Feature() With {
+                            .ID = ref,
+                            .mz = mz(i),
+                            .rt = rt(i)
+                        }
+                    End Function) _
+            .ToArray
+
         Return ions.populates(Of PeakMs2)(env) _
-            .MRMIonPairFinder(diff_MS2MS1, ms2_intensity) _
+            .MRMIonPairFinder(targets, diff_MS2MS1, ms2_intensity) _
             .ToArray
     End Function
 
