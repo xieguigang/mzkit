@@ -84,6 +84,8 @@ declare namespace MRMLinear {
     * > https://github.com/zhengfj1994/MRM-Ion_Pair_Finder
     * 
      * @param ms2 -
+     * @param ms1 
+     * + default value Is ``null``.
      * @param diff_MS2MS1 
      * + default value Is ``0.05``.
      * @param ms2_intensity 
@@ -92,7 +94,7 @@ declare namespace MRMLinear {
      * 
      * + default value Is ``null``.
    */
-   function find_untargeted_ionpair(ms2: any, diff_MS2MS1?: number, ms2_intensity?: number, env?: object): object;
+   function find_untargeted_ionpair(ms2: any, ms1?: object, diff_MS2MS1?: number, ms2_intensity?: number, env?: object): object;
    module isomerism {
       /**
         * @param tolerance default value Is ``'ppm:20'``.
