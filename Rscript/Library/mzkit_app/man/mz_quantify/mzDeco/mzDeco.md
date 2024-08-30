@@ -24,6 +24,7 @@ Extract peak and signal data from rawdata
 + [RI_reference](mzDeco/RI_reference.1) Create RI reference dataset.
 + [RI_cal](mzDeco/RI_cal.1) RI calculation of a speicifc sample data
 + [mz_deco](mzDeco/mz_deco.1) Chromatogram data deconvolution
++ [MS1deconv](mzDeco/MS1deconv.1) A debug function for test peak finding method
 + [read.rt_shifts](mzDeco/read.rt_shifts.1) 
 + [write.peaks](mzDeco/write.peaks.1) write peak debug data
 + [read.peakFeatures](mzDeco/read.peakFeatures.1) read the peak feature table data
