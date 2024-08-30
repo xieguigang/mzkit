@@ -121,7 +121,12 @@ Module MRMkit
 
     <RGenericOverloads("as.data.frame")>
     Private Function ion_pairs_tbl(ions As IonPair(), args As list, env As Environment) As Object
-        Dim tbl As New Rdataframe With {.rownames = ions.Select(Function(i) i.accession).ToArray}
+        Dim tbl As New Rdataframe With {
+            .rownames = ions _
+                .Select(Function(i) i.accession) _
+                .ToArray,
+            .columns = New Dictionary(Of String, Array)
+        }
 
         Call tbl.add("name", ions.Select(Function(i) i.name))
         Call tbl.add("precursor", ions.Select(Function(i) i.precursor))
