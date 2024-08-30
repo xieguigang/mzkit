@@ -71,6 +71,28 @@ declare namespace MRMLinear {
       */
       function peakROI(mzML: string, ionpairs: object, tolerance?: string, timeWindowSize?: number, baselineQuantile?: number, integratorTicks?: object, peakAreaMethod?: object, angleThreshold?: number, peakwidth?: any, rtshift?: object, bsplineDensity?: object, bsplineDegree?: object, sn_threshold?: number, TPAFactors?: object, env?: object): object;
    }
+   /**
+    * MRM-Ion Pair Finder is used to automatically and systematically define MRM transitions from untargeted metabolomics data. 
+    *  Our research group first introduced the concept of pseudotargeted metabolomics using the retention time locking 
+    *  GC-MS-selected ions monitoring in 2012. The pseudotargeted metabolomics method was extended to LC-MS in 2013. To define
+    *  ion pairs automatically and systematically, the in-house software “Mul-tiple Reaction Monitoring-Ion Pair Finder (MRM-Ion 
+    *  Pair Finder)” was developed, which made defining of the MRM transitions for untargeted metabolic profiling easier and 
+    *  less time consuming. Recently, MRM-Ion Pair Finder was updated to version 2.0. The new version is more convenient, consumes 
+    *  less time and is also suitable for negative ion mode. And the function of MRM-Ion Pair Finder is also performed in R so 
+    *  that users have more options when using pseudotargeted method.
+    * 
+    * > https://github.com/zhengfj1994/MRM-Ion_Pair_Finder
+    * 
+     * @param ms2 -
+     * @param diff_MS2MS1 
+     * + default value Is ``0.05``.
+     * @param ms2_intensity 
+     * + default value Is ``0.05``.
+     * @param env -
+     * 
+     * + default value Is ``null``.
+   */
+   function find_untargeted_ionpair(ms2: any, diff_MS2MS1?: number, ms2_intensity?: number, env?: object): object;
    module isomerism {
       /**
         * @param tolerance default value Is ``'ppm:20'``.

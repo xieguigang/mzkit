@@ -1,0 +1,39 @@
+.\" man page create by R# package system.
+.TH MRMLINEAR 2 2000-Jan "find_untargeted_ionpair" "find_untargeted_ionpair"
+.SH NAME
+find_untargeted_ionpair \- MRM-Ion Pair Finder is used to automatically and systematically define MRM transitions from untargeted metabolomics data.
+.SH SYNOPSIS
+\fIfind_untargeted_ionpair(\fBms2\fR as any, 
+\fBdiff_MS2MS1\fR as double = 0.05, 
+\fBms2_intensity\fR as double = 0.05, 
+[\fB<Environment>\fR]);\fR
+.SH DESCRIPTION
+.PP
+MRM-Ion Pair Finder is used to automatically and systematically define MRM transitions from untargeted metabolomics data. 
+ Our research group first introduced the concept of pseudotargeted metabolomics using the retention time locking 
+ GC-MS-selected ions monitoring in 2012. The pseudotargeted metabolomics method was extended to LC-MS in 2013. To define
+ ion pairs automatically and systematically, the in-house software “Mul-tiple Reaction Monitoring-Ion Pair Finder (MRM-Ion 
+ Pair Finder)” was developed, which made defining of the MRM transitions for untargeted metabolic profiling easier and 
+ less time consuming. Recently, MRM-Ion Pair Finder was updated to version 2.0. The new version is more convenient, consumes 
+ less time and is also suitable for negative ion mode. And the function of MRM-Ion Pair Finder is also performed in R so 
+ that users have more options when using pseudotargeted method.
+.PP
+.SH OPTIONS
+.PP
+\fBms2\fB \fR\- -. 
+.PP
+.PP
+\fBenv\fB \fR\- -. 
+.PP
+.SH DETAILS
+.PP
+https://github.com/zhengfj1994/MRM-Ion_Pair_Finder
+.PP
+.SH SEE ALSO
+MRMLinear
+.SH FILES
+.PP
+mz_quantify.dll
+.PP
+.SH AUTHOR
+Written by \fBBioNovoGene\fR

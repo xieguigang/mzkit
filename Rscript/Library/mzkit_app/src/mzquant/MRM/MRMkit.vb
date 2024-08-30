@@ -111,12 +111,25 @@ Module MRMkit
 
         REnv.Internal.htmlPrinter.AttachHtmlFormatter(Of QCData)(AddressOf MRMQCReport.CreateHtml)
         REnv.Internal.Object.Converts.makeDataframe.addHandler(GetType(RTAlignment()), AddressOf RTShiftSummary)
+        REnv.Internal.Object.Converts.makeDataframe.addHandler(GetType(IonPair()), AddressOf ion_pairs_tbl)
 
         Dim toolkit As AssemblyInfo = GetType(MRMkit).Assembly.FromAssembly
 
         Call VBDebugger.WaitOutput()
         Call toolkit.AppSummary(Nothing, Nothing, App.StdOut)
     End Sub
+
+    <RGenericOverloads("as.data.frame")>
+    Private Function ion_pairs_tbl(ions As IonPair(), args As list, env As Environment) As Object
+        Dim tbl As New Rdataframe With {.rownames = ions.Select(Function(i) i.accession).ToArray}
+
+        Call tbl.add("name", ions.Select(Function(i) i.name))
+        Call tbl.add("precursor", ions.Select(Function(i) i.precursor))
+        Call tbl.add("product", ions.Select(Function(i) i.product))
+        Call tbl.add("rt", ions.Select(Function(i) CDbl(i.rt)))
+
+        Return tbl
+    End Function
 
     Private Function RTShiftSummary(x As RTAlignment(), args As list, env As Environment) As Rdataframe
         Dim rownames = x.Select(Function(i) i.ion.target.accession).ToArray
