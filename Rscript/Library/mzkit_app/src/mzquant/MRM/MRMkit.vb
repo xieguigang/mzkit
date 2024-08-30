@@ -1,60 +1,60 @@
 ﻿#Region "Microsoft.VisualBasic::7c37c9539007c4c838e659a7a087ff42, Rscript\Library\mzkit_app\src\mzquant\MRM\MRMkit.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 774
-    '    Code Lines: 528 (68.22%)
-    ' Comment Lines: 166 (21.45%)
-    '    - Xml Docs: 87.35%
-    ' 
-    '   Blank Lines: 80 (10.34%)
-    '     File Size: 33.10 KB
+' Summaries:
 
 
-    ' Module MRMkit
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: asIonPair, ExtractIonData, ExtractPeakROI, GetRTAlignments, IsomerismIonPairs
-    '               Linears, MRMarguments, printIonPairs, R2, readCompoundReference
-    '               readIonPairs, readIS, RTShiftSummary, (+2 Overloads) SampleQuantify, ScanPeakTable
-    '               ScanPeakTable2, (+2 Overloads) ScanWiffRaw, WiffRawFile
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 774
+'    Code Lines: 528 (68.22%)
+' Comment Lines: 166 (21.45%)
+'    - Xml Docs: 87.35%
+' 
+'   Blank Lines: 80 (10.34%)
+'     File Size: 33.10 KB
+
+
+' Module MRMkit
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Function: asIonPair, ExtractIonData, ExtractPeakROI, GetRTAlignments, IsomerismIonPairs
+'               Linears, MRMarguments, printIonPairs, R2, readCompoundReference
+'               readIonPairs, readIS, RTShiftSummary, (+2 Overloads) SampleQuantify, ScanPeakTable
+'               ScanPeakTable2, (+2 Overloads) ScanWiffRaw, WiffRawFile
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -66,6 +66,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Data
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
 Imports Microsoft.VisualBasic.ApplicationServices.Development
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal
@@ -83,6 +84,7 @@ Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
+Imports MRMArgumentSet = BioNovoGene.Analytical.MassSpectrometry.Math.MRM.MRMArguments
 Imports Rdataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
 Imports REnv = SMRUCC.Rsharp.Runtime
 Imports Rlist = SMRUCC.Rsharp.Runtime.Internal.Object.list
@@ -109,12 +111,30 @@ Module MRMkit
 
         REnv.Internal.htmlPrinter.AttachHtmlFormatter(Of QCData)(AddressOf MRMQCReport.CreateHtml)
         REnv.Internal.Object.Converts.makeDataframe.addHandler(GetType(RTAlignment()), AddressOf RTShiftSummary)
+        REnv.Internal.Object.Converts.makeDataframe.addHandler(GetType(IonPair()), AddressOf ion_pairs_tbl)
 
         Dim toolkit As AssemblyInfo = GetType(MRMkit).Assembly.FromAssembly
 
         Call VBDebugger.WaitOutput()
         Call toolkit.AppSummary(Nothing, Nothing, App.StdOut)
     End Sub
+
+    <RGenericOverloads("as.data.frame")>
+    Private Function ion_pairs_tbl(ions As IonPair(), args As list, env As Environment) As Object
+        Dim tbl As New Rdataframe With {
+            .rownames = ions _
+                .Select(Function(i) i.accession) _
+                .ToArray,
+            .columns = New Dictionary(Of String, Array)
+        }
+
+        Call tbl.add("name", ions.Select(Function(i) i.name))
+        Call tbl.add("precursor", ions.Select(Function(i) i.precursor))
+        Call tbl.add("product", ions.Select(Function(i) i.product))
+        Call tbl.add("rt", ions.Select(Function(i) CDbl(i.rt)))
+
+        Return tbl
+    End Function
 
     Private Function RTShiftSummary(x As RTAlignment(), args As list, env As Environment) As Rdataframe
         Dim rownames = x.Select(Function(i) i.ion.target.accession).ToArray
@@ -170,6 +190,59 @@ Module MRMkit
     End Function
 
     ''' <summary>
+    ''' MRM-Ion Pair Finder is used to automatically and systematically define MRM transitions from untargeted metabolomics data. 
+    ''' Our research group first introduced the concept of pseudotargeted metabolomics using the retention time locking 
+    ''' GC-MS-selected ions monitoring in 2012. The pseudotargeted metabolomics method was extended to LC-MS in 2013. To define
+    ''' ion pairs automatically and systematically, the in-house software “Mul-tiple Reaction Monitoring-Ion Pair Finder (MRM-Ion 
+    ''' Pair Finder)” was developed, which made defining of the MRM transitions for untargeted metabolic profiling easier and 
+    ''' less time consuming. Recently, MRM-Ion Pair Finder was updated to version 2.0. The new version is more convenient, consumes 
+    ''' less time and is also suitable for negative ion mode. And the function of MRM-Ion Pair Finder is also performed in R so 
+    ''' that users have more options when using pseudotargeted method.
+    ''' </summary>
+    ''' <param name="ms2"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' https://github.com/zhengfj1994/MRM-Ion_Pair_Finder
+    ''' </remarks>
+    <ExportAPI("find_untargeted_ionpair")>
+    <RApiReturn(GetType(IonPair))>
+    Public Function FindUntargetedIonPair(<RRawVectorArgument> ms2 As Object, Optional ms1 As Rdataframe = Nothing,
+                                          Optional diff_MS2MS1 As Double = 0.05,
+                                          Optional ms2_intensity As Double = 0.05,
+                                          Optional env As Environment = Nothing) As Object
+
+        Dim ions As pipeline = pipeline.TryCreatePipeline(Of PeakMs2)(ms2, env)
+
+        If ions.isError Then
+            Return ions.getError
+        End If
+
+        If ms1 Is Nothing Then
+            Return ions.populates(Of PeakMs2)(env) _
+                .MRMIonPairFinder(diff_MS2MS1, ms2_intensity) _
+                .ToArray
+        End If
+
+        Dim id As String() = CLRVector.asCharacter(ms1.getBySynonym("id", "ID", "xcms_id"))
+        Dim mz As Double() = CLRVector.asNumeric(ms1.getBySynonym("mz", "MZ", "m/z"))
+        Dim rt As Double() = CLRVector.asNumeric(ms1.getBySynonym("rt", "RT", "retention_time"))
+        Dim targets As Ms1Feature() = id _
+            .Select(Function(ref, i)
+                        Return New Ms1Feature() With {
+                            .ID = ref,
+                            .mz = mz(i),
+                            .rt = rt(i)
+                        }
+                    End Function) _
+            .ToArray
+
+        Return ions.populates(Of PeakMs2)(env) _
+            .MRMIonPairFinder(targets, diff_MS2MS1, ms2_intensity) _
+            .ToArray
+    End Function
+
+    ''' <summary>
     ''' Create argument object for run MRM quantification.
     ''' </summary>
     ''' <param name="tolerance"></param>
@@ -206,7 +279,7 @@ Module MRMkit
             Return mzErrors.TryCast(Of Message)
         End If
 
-        Return New MRMArguments(
+        Return New MRMArgumentSet(
             TPAFactors:=TPAFactors,
             tolerance:=mzErrors,
             timeWindowSize:=timeWindowSize,
@@ -230,7 +303,7 @@ Module MRMkit
         Dim ionPairs As IonPair() = REnv.asVector(Of IonPair)(ions)
 
         If args Is Nothing Then
-            args = MRM.MRMArguments.GetDefaultArguments
+            args = MRMArgumentSet.GetDefaultArguments
         End If
 
         Return RTAlignmentProcessor.AcquireRT(references, ionPairs, args)
