@@ -954,6 +954,40 @@ extract_ms1:
         End If
     End Function
 
+    ''' <summary>
+    ''' A debug function for test peak finding method 
+    ''' </summary>
+    ''' <param name="raw">the file path of a single rawdata file.</param>
+    ''' <param name="massdiff"></param>
+    ''' <returns></returns>
+    <ExportAPI("MS1deconv")>
+    Public Function Deconv(raw As String,
+                           Optional massdiff As Double = 0.01,
+                           <RRawVectorArgument(TypeCodes.double)>
+                           Optional peak_width As Object = "3,12",
+                           Optional q As Double = 0.65,
+                           Optional sn_threshold As Double = 1,
+                           Optional nticks As Integer = 6,
+                           Optional joint As Boolean = True) As PeakFeature()
+
+        Dim pack As mzPack = mzPack.ReadAll(raw.Open, skipMsn:=True)
+        Dim scanPoints As ms1_scan() = pack.GetAllScanMs1().ToArray
+        Dim massGroups = scanPoints.GetMzGroups(mzdiff:=DAmethod.DeltaMass(massdiff)).ToArray
+        Dim peak_win As Double() = CLRVector.asNumeric(peak_width)
+        Dim source_tag As String = raw.BaseName
+        Dim features = massGroups.DecoMzGroups(
+            peakwidth:=peak_win,
+            quantile:=q,
+            sn:=sn_threshold,
+            nticks:=nticks,
+            joint:=joint,
+            source:=source_tag
+        ) _
+        .ToArray
+
+        Return features
+    End Function
+
     <ExportAPI("read.rt_shifts")>
     Public Function read_rtshifts(file As String) As RtShift()
         Return file.LoadCsv(Of RtShift)(mute:=True).ToArray
