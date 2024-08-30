@@ -41,7 +41,7 @@ Public Module MRMFinder
     Public Function MRMIonPairFinder(ms2 As PeakMs2, Optional diff_MS2MS1 As Double = 0.05, Optional ms2_intensity As Double = 0.05) As IonPair
         ' removes noise and precursors
         Dim products = ms2.mzInto _
-            .Where(Function(m) std.Abs(m.mz - ms2.mz) <= diff_MS2MS1) _
+            .Where(Function(m) std.Abs(m.mz - ms2.mz) > diff_MS2MS1) _
             .ToArray
 
         products = New RelativeIntensityCutoff(ms2_intensity).Trim(products)
@@ -50,6 +50,7 @@ Public Module MRMFinder
             Return Nothing
         End If
 
+        ' use the highest intensity fragment as MRM Q3
         Dim top = products.OrderByDescending(Function(m) m.intensity).First
         Dim ion As New IonPair With {
             .accession = ms2.lib_guid,
