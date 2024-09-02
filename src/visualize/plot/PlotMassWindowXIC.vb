@@ -181,7 +181,12 @@ Public Class PlotMassWindowXIC : Inherits Plot
             }
         Next
 
+        theme.xAxisLayout = Axis.XAxisLayoutStyles.None
+
         Call New Scatter2D({xic_dat}, theme) With {.xlabel = "Retention Time(s)", .ylabel = "Intensity"}.Plot(g, layout:=part1)
+
+        theme.xAxisLayout = Axis.XAxisLayoutStyles.Bottom
+
         Call New Scatter2D(mass_scatter, theme) With {.xlabel = "Retention Time(s)", .ylabel = "M/Z"}.Plot(g, layout:=part2)
     End Sub
 End Class
