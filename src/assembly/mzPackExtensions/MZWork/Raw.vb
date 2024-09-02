@@ -198,7 +198,9 @@ Namespace MZWork
         ''' <param name="reload"></param>
         ''' <param name="verbose"></param>
         ''' <param name="strict"></param>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' this function returns itself
+        ''' </returns>
         Public Function LoadMzpack(reload As Action(Of String, String),
                                    Optional verbose As Boolean = True,
                                    Optional strict As Boolean = True) As Raw

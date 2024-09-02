@@ -61,6 +61,7 @@
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.SignalProcessing.COW
 Imports std = System.Math
 
@@ -146,7 +147,7 @@ Public Class PeakFeature
     ''' <returns></returns>
     Public ReadOnly Property snRatio As Double
         Get
-            Return std.Log(integration / noise)
+            Return SignalProcessing.SNRatio(area, noise)
         End Get
     End Property
 

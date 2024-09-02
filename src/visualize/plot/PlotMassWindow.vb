@@ -68,6 +68,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Math.Interpolation
 Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Microsoft.VisualBasic.MIME.Html.Render
 Imports std = System.Math
 
 ''' <summary>
@@ -116,13 +117,14 @@ Public Class PlotMassWindow : Inherits Plot
             .Select(Function(mzi, i) New PointData(mzi, hist(i))) _
             .OrderBy(Function(pti) pti.pt.X) _
             .ToArray
+        Dim css As CSSEnvirnment = g.LoadEnvironment
         Dim histogram As New SerialData With {
             .color = pen.fill.TranslateColor,
             .lineType = pen.dash,
             .pointSize = theme.pointSize,
             .shape = LegendStyles.Circle,
             .title = mz.Average.ToString("F4"),
-            .width = pen.width,
+            .width = css.GetLineWidth(pen),
             .pts = xy,
             .DataAnnotations = bins _
                 .Select(Function(win, i)

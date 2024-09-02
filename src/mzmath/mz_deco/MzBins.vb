@@ -96,10 +96,12 @@ Public Module MzBins
             .ToArray
 
         For Each peak As SignalPeak In peaks
+            Dim mzwidth As Double = (peak.rtmax - peak.rtmin) * 0.25 / 2
+
             Yield New MassWindow With {
                 .mass = peak.rt,
-                .mzmin = peak.rtmin,
-                .mzmax = peak.rtmax,
+                .mzmin = peak.rtmin - mzwidth,
+                .mzmax = peak.rtmax + mzwidth,
                 .annotation = (peak.integration).ToString("F2") & "%"
             }
         Next
