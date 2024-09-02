@@ -100,6 +100,27 @@ Public Class TICplot : Inherits Plot
     ''' </summary>
     ReadOnly leapTimeWinSize As Double = 30
 
+    Sub New(tic As NamedCollection(Of ChromatogramTick),
+            timeRange As Double(),
+            intensityMax As Double,
+            isXIC As Boolean,
+            fillCurve As Boolean,
+            fillAlpha As Integer,
+            labelLayoutTicks As Integer,
+            bspline As Single,
+            theme As Theme)
+
+        Call Me.New({tic},
+                    timeRange:=timeRange,
+                    intensityMax:=intensityMax,
+                    isXIC:=isXIC,
+                    fillCurve:=fillCurve,
+                    fillAlpha:=fillAlpha,
+                    labelLayoutTicks:=labelLayoutTicks,
+                    bspline:=bspline,
+                    theme:=theme)
+    End Sub
+
     Public Sub New(ionData As NamedCollection(Of ChromatogramTick)(),
                    timeRange As Double(),
                    intensityMax As Double,
