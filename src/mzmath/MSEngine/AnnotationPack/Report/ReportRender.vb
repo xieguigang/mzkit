@@ -106,7 +106,7 @@ Public Class ReportRender
         ' generates the adducts row
         Yield "<td></td>" & ordinals.Select(Function(id) metabolites(id)).Select(Function(a) $"<td>{a.adducts}</td>").JoinBy("")
         ' generates the mz@rt row
-        Yield "<td></td>" & ordinals.Select(Function(id) metabolites(id)).Select(Function(a) $"<td>{a.theoretical_mz.ToString("F4")}@{(a.rt / 60).ToString("F1")}min</td>").JoinBy("")
+        Yield "<td></td>" & ordinals.Select(Function(id) metabolites(id)).Select(Function(a) $"<td><a href='#' class='ROI' mz='{a.theoretical_mz}' rt='{a.rt}'>{a.theoretical_mz.ToString("F4")}@{(a.rt / 60).ToString("F1")}min</a></td>").JoinBy("")
 
         If ms1 Then
             ' ranges of the ms1 peak area for scale color in a column
