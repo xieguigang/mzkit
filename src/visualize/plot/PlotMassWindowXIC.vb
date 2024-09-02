@@ -136,8 +136,17 @@ Public Class PlotMassWindowXIC : Inherits Plot
             .width = 2,
             .pts = xic _
                 .Select(Function(ti)
+                            Dim i As Integer = intensity.ScaleMapping(ti.Intensity, index)
+
+                            If i >= index.Max Then
+                                i = index.Max - 1
+                            End If
+                            If i < 0 Then
+                                i = 0
+                            End If
+
                             Return New PointData(ti.Time, ti.Intensity) With {
-                                .color = heatColors(CInt(intensity.ScaleMapping(ti.Intensity, index)))
+                                .color = heatColors(i)
                             }
                         End Function) _
                 .ToArray,
