@@ -68,7 +68,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader.DataObjects
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
-Imports stdNum = System.Math
+Imports std = System.Math
 
 ''' <summary>
 ''' thermo raw to mzpack convertor
@@ -96,17 +96,21 @@ Public Class XRawStream : Inherits VendorStreamLoader(Of SingleScanInfo)
         Me.raw.Options.MaxScan = raw.ScanMax
     End Sub
 
+    Sub New(filepath As String, Optional scanIdFunc As Func(Of SingleScanInfo, Integer, String) = Nothing)
+        Call Me.New(New MSFileReader(filepath), scanIdFunc)
+    End Sub
+
     Protected Overrides Function defaultScanId(scaninfo As SingleScanInfo, i As Integer) As String
         Dim xcms_id As String
-        Dim nT As Integer = stdNum.Round(scaninfo.RetentionTime * 60)
+        Dim nT As Integer = std.Round(scaninfo.RetentionTime * 60)
 
         If scaninfo.MSLevel = 1 Then
             xcms_id = ""
         Else
             If nT = 0 Then
-                xcms_id = $" M{stdNum.Round(scaninfo.ParentIonMZ)}"
+                xcms_id = $" M{std.Round(scaninfo.ParentIonMZ)}"
             Else
-                xcms_id = $" M{stdNum.Round(scaninfo.ParentIonMZ)}T{nT}"
+                xcms_id = $" M{std.Round(scaninfo.ParentIonMZ)}T{nT}"
             End If
         End If
 

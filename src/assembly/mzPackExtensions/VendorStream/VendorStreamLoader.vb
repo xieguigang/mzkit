@@ -60,6 +60,10 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports Microsoft.VisualBasic.Language
 
+''' <summary>
+''' A wrapper for load vendor rawdata file as mzPack
+''' </summary>
+''' <typeparam name="T"></typeparam>
 Public MustInherit Class VendorStreamLoader(Of T As IMsScanData)
 
     Protected MS1 As ScanMS1 = Nothing
