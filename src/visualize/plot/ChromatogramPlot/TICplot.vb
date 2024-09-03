@@ -140,6 +140,8 @@ Public Class TICplot : Inherits Plot
         Me.fillAlpha = fillAlpha
         Me.labelLayoutTicks = labelLayoutTicks
         Me.bspline = bspline
+        Me.xlabel = "Retention Time(sec)"
+        Me.ylabel = "Intensity"
 
         If timeRange Is Nothing Then
             Me.timeRange = {}
