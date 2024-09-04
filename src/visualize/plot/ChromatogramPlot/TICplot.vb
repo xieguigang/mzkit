@@ -278,7 +278,7 @@ Public Class TICplot : Inherits Plot
                 peakTimes += From ROI As PeakFeature
                              In peaks
                              Select New NamedValue(Of ChromatogramTick) With {
-                                 .Name = ROI.rt.ToString("F0") & $"({(ROI.rt / 60).ToString("F1")}min)",
+                                 .Name = ROI.rt.ToString("F0") & $"({(ROI.rt / 60).ToString("F1")}min) {ROI.maxInto.ToString("G4")}",
                                  .Value = New ChromatogramTick With {.Intensity = ROI.maxInto, .Time = ROI.rt}
                              }
             End If
