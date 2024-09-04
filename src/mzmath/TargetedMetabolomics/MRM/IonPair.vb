@@ -68,6 +68,9 @@ Imports chromatogramTicks = BioNovoGene.Analytical.MassSpectrometry.Assembly.Mar
 
 Namespace MRM.Models
 
+    ''' <summary>
+    ''' Data model for the MRM ion pair
+    ''' </summary>
     Public Class IonPair : Implements INamedValue
 
         ''' <summary>
@@ -81,7 +84,15 @@ Namespace MRM.Models
         ''' </summary>
         ''' <returns></returns>
         Public Property name As String Implements IKeyedEntity(Of String).Key
+        ''' <summary>
+        ''' Q1 precursor ion m/z
+        ''' </summary>
+        ''' <returns></returns>
         Public Property precursor As Double
+        ''' <summary>
+        ''' Q3 product ion m/z
+        ''' </summary>
+        ''' <returns></returns>
         Public Property product As Double
         Public Property rt As Double?
 
