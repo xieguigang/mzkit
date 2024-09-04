@@ -100,6 +100,18 @@ Public Class TICplot : Inherits Plot
     ''' </summary>
     ReadOnly leapTimeWinSize As Double = 30
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="tic"></param>
+    ''' <param name="timeRange"></param>
+    ''' <param name="intensityMax"></param>
+    ''' <param name="isXIC">affects of the x axis tick format</param>
+    ''' <param name="fillCurve"></param>
+    ''' <param name="fillAlpha"></param>
+    ''' <param name="labelLayoutTicks"></param>
+    ''' <param name="bspline"></param>
+    ''' <param name="theme"></param>
     Sub New(tic As NamedCollection(Of ChromatogramTick),
             timeRange As Double(),
             intensityMax As Double,
