@@ -62,6 +62,9 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Data.GraphTheory.GridGraph
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 
+''' <summary>
+''' graph based spatial clustering spot labels
+''' </summary>
 Public Class PhenographSpot : Implements IPoint2D, INamedValue
 
     ''' <summary>

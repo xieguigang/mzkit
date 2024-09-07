@@ -82,34 +82,52 @@ Public Module SampleData
         Dim matrix = Grid(Of T).Create(layer, Function(i) New Point(i.X, i.Y))
 
         For Each region As TissueRegion In regions
-            Dim A As Integer = region.points.Length
-            Dim Nsize As Integer = A * coverage
-            Dim samples = Bootstraping.Samples(region.points, Nsize, bags:=n).ToArray
-            Dim vec = samples _
-                .AsParallel _
-                .Select(Function(pack)
-                            Dim subset As T() = pack.value _
-                                .Select(Function(pt)
-                                            Return matrix.GetData(pt.X, pt.Y)
-                                        End Function) _
-                                .Where(Function(p) Not p Is Nothing) _
-                                .ToArray
-                            Dim d As Double() = subset _
-                                .Select(Function(i) i.Scale) _
-                                .ToArray
-
-                            If d.Length = 0 Then
-                                Return 0.0
-                            Else
-                                Return d.Sum / A
-                            End If
-                        End Function) _
-                .ToArray
-
-            data(region.label) = vec
+            data(region.label) = matrix.ExtractSample(region, n, coverage:=coverage)
         Next
 
         Return data
+    End Function
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="matrix">the sptial rawdata matrix</param>
+    ''' <param name="region"></param>
+    ''' <param name="n"></param>
+    ''' <param name="coverage"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function ExtractSample(Of T As Pixel)(matrix As Grid(Of T), region As TissueRegion,
+                                                 Optional n As Integer = 32,
+                                                 Optional coverage As Double = 0.3) As Double()
+        Dim A As Integer = region.points.Length
+        Dim Nsize As Integer = A * coverage
+        ' make bootstrapping sampling of the spatial spots
+        Dim samples = Bootstraping.Samples(region.points, Nsize, bags:=n).ToArray
+        Dim vec As Double() = samples _
+            .AsParallel _
+            .Select(Function(pack)
+                        Dim subset As T() = pack.value _
+                            .Select(Function(pt)
+                                        ' get spatial data from a sampling result
+                                        Return matrix.GetData(pt.X, pt.Y)
+                                    End Function) _
+                            .Where(Function(p) Not p Is Nothing) _
+                            .ToArray
+                        Dim d As Double() = subset _
+                            .Select(Function(i) i.Scale) _
+                            .ToArray
+
+                        If d.Length = 0 Then
+                            Return 0.0
+                        Else
+                            Return d.Sum / A
+                        End If
+                    End Function) _
+            .ToArray
+
+        Return vec
     End Function
 
     <Extension>
