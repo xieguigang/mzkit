@@ -73,9 +73,12 @@ Imports Microsoft.VisualBasic.Data.ChartPlots.Plots
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Math2D
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Microsoft.VisualBasic.MIME.Html.Render
 
 ''' <summary>
 ''' Mass window plot combine with XIC plot
@@ -125,7 +128,7 @@ Public Class PlotMassWindowXIC : Inherits Plot
     Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
         Dim rect As Rectangle = canvas.PlotRegion
         Dim part1 As New Rectangle(rect.Location, New Size(rect.Width, rect.Height / 2))
-        Dim part2 As New Rectangle(New Point(rect.Left, rect.Top + part1.Height), New Size(rect.Width, rect.Height / 2))
+        Dim part2 As New Rectangle(New Point(rect.Left, rect.Top + part1.Height + 10), New Size(rect.Width, rect.Height / 2 - 10))
         Dim heatColors As String() = Designer.GetColors("jet", 30).Select(Function(c) c.ToHtmlColor).ToArray
         Dim index As New DoubleRange(0, 30)
         Dim intensity As New DoubleRange(xic.Select(Function(ti) ti.Intensity))
@@ -135,15 +138,27 @@ Public Class PlotMassWindowXIC : Inherits Plot
             .pointSize = theme.pointSize,
             .width = 2,
             .pts = xic _
+                .Select(Function(ci) New PointF(ci.Time, ci.Intensity)) _
+                .BSpline(RESOLUTION:=15) _
                 .Select(Function(ti)
-                            Return New PointData(ti.Time, ti.Intensity) With {
-                                .color = heatColors(CInt(intensity.ScaleMapping(ti.Intensity, index)))
+                            Dim i As Integer = intensity.ScaleMapping(ti.Y, index)
+
+                            If i >= index.Max Then
+                                i = index.Max - 1
+                            End If
+                            If i < 0 Then
+                                i = 0
+                            End If
+
+                            Return New PointData(ti.X, ti.Y) With {
+                                .color = heatColors(i)
                             }
                         End Function) _
                 .ToArray,
             .shape = LegendStyles.Circle
         }
         Dim mass_scatter As New List(Of SerialData)
+        Dim axisLine As Pen = g.LoadEnvironment.GetPen(Stroke.TryParse(theme.axisStroke))
 
         intensity = New DoubleRange(mass_windows.Select(Function(m) m.Value).IteratesALL.Select(Function(m) m.intensity))
 
@@ -155,15 +170,30 @@ Public Class PlotMassWindowXIC : Inherits Plot
                 .width = 2,
                 .pts = mass.Value _
                     .Select(Function(mi)
+                                Dim i As Integer = intensity.ScaleMapping(mi.intensity, index)
+
+                                If i >= index.Max Then
+                                    i = index.Max - 1
+                                End If
+                                If i < 0 Then
+                                    i = 0
+                                End If
+
                                 Return New PointData(mi.scan_time, mi.mz) With {
-                                    .color = heatColors(CInt(intensity.ScaleMapping(mi.intensity, index)))
+                                    .color = heatColors(i)
                                 }
                             End Function) _
                     .ToArray
             }
         Next
 
-        Call New Scatter2D({xic_dat}, theme).Plot(g, layout:=part1)
-        Call New Scatter2D(mass_scatter, theme).Plot(g, layout:=part2)
+        theme.xAxisLayout = Axis.XAxisLayoutStyles.None
+
+        Call New Scatter2D({xic_dat}, theme) With {.xlabel = "Retention Time(s)", .ylabel = "Intensity"}.Plot(g, layout:=part1)
+        Call g.DrawLine(axisLine, New PointF(part1.Left, part1.Bottom), New PointF(part1.Right, part1.Bottom))
+
+        theme.xAxisLayout = Axis.XAxisLayoutStyles.Bottom
+
+        Call New Scatter2D(mass_scatter, theme) With {.xlabel = "Retention Time(s)", .ylabel = "M/Z"}.Plot(g, layout:=part2)
     End Sub
 End Class

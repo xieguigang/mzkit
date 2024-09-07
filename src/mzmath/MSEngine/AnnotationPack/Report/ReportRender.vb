@@ -106,7 +106,7 @@ Public Class ReportRender
         ' generates the adducts row
         Yield "<td></td>" & ordinals.Select(Function(id) metabolites(id)).Select(Function(a) $"<td>{a.adducts}</td>").JoinBy("")
         ' generates the mz@rt row
-        Yield "<td></td>" & ordinals.Select(Function(id) metabolites(id)).Select(Function(a) $"<td>{a.theoretical_mz.ToString("F4")}@{(a.rt / 60).ToString("F1")}min</td>").JoinBy("")
+        Yield "<td></td>" & ordinals.Select(Function(id) metabolites(id)).Select(Function(a) $"<td><a href='#' class='ROI' mz='{a.theoretical_mz}' rt='{a.rt}'>{a.theoretical_mz.ToString("F4")}@{(a.rt / 60).ToString("F1")}min</a></td>").JoinBy("")
 
         If ms1 Then
             ' ranges of the ms1 peak area for scale color in a column
@@ -176,9 +176,10 @@ Public Class ReportRender
             .Select(Function(id)
                         Dim annotation = metabolites(id)
                         Dim ROI = area(annotation.xcms_id)
-                        Dim area_data As Double? = ROI(sample)
+                        Dim z_area As Double? = ROI(sample)
+                        Dim area_data As Double? = If(peaks(annotation.xcms_id).HasProperty(sample), peaks(annotation.xcms_id)(sample), Nothing)
                         Dim range As DoubleRange = ranges(annotation.xcms_id)
-                        Dim offset As Integer = If(area_data Is Nothing, -1, range.ScaleMapping(area_data, index))
+                        Dim offset As Integer = If(z_area Is Nothing, -1, range.ScaleMapping(z_area, index))
                         Dim color As String
                         Dim foreColor As String
 
@@ -188,12 +189,12 @@ Public Class ReportRender
                             offset = levels - 1
                         End If
 
-                        If area_data Is Nothing Then
+                        If z_area Is Nothing Then
                             offset = -1
                             color = "white"
                             foreColor = "darkblue"
                         Else
-                            area_data = std.Round(CDbl(area_data), 1)
+                            z_area = std.Round(CDbl(z_area), 1)
                             color = colorSet(offset)
                             foreColor = "white"
                         End If
@@ -202,7 +203,7 @@ Public Class ReportRender
                             Dim score As Double = If(rt_cell,
                                 std.Round(annotation(sample).rt / 60, 2),
                                 std.Round(annotation(sample).score, 2))
-                            Dim label As String = If(area_data Is Nothing, "NA", $"{CDbl(area_data)} ({score})")
+                            Dim label As String = If(z_area Is Nothing, "NA", $"{CLng(area_data)} ({score})")
 
                             Return $"<td style='background-color:{color}; color:{foreColor};'>
 <a href='#' class='score' data_id='{annotation.xcms_id}' data_sample='{sample}' biodeep_id='{annotation.biodeep_id}'>
@@ -210,7 +211,7 @@ Public Class ReportRender
 </a>
 </td>"
                         Else
-                            Dim label = If(area_data Is Nothing, "NA", $"{CDbl(area_data)} (NA)")
+                            Dim label = If(z_area Is Nothing, "NA", $"{CDbl(CLng(area_data))} (NA)")
 
                             Return $"<td style='background-color:{color}; color:{foreColor};'>{label}</td>"
                         End If

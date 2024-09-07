@@ -63,7 +63,7 @@
 #End Region
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader.DataObjects
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Public Class MSFileReader : Implements IDisposable
 
@@ -177,7 +177,7 @@ Public Class MSFileReader : Implements IDisposable
             Dim maxInt As Double = data.Max(Function(x) x.Intensity)
 
             ' Check for the maximum intensity being zero
-            If skipEmptyScan AndAlso (stdNum.Abs(maxInt) < Single.Epsilon) Then
+            If skipEmptyScan AndAlso (std.Abs(maxInt) < Single.Epsilon) Then
                 Continue For
             End If
 

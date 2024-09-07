@@ -100,6 +100,39 @@ Public Class TICplot : Inherits Plot
     ''' </summary>
     ReadOnly leapTimeWinSize As Double = 30
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="tic"></param>
+    ''' <param name="timeRange"></param>
+    ''' <param name="intensityMax"></param>
+    ''' <param name="isXIC">affects of the x axis tick format</param>
+    ''' <param name="fillCurve"></param>
+    ''' <param name="fillAlpha"></param>
+    ''' <param name="labelLayoutTicks"></param>
+    ''' <param name="bspline"></param>
+    ''' <param name="theme"></param>
+    Sub New(tic As NamedCollection(Of ChromatogramTick),
+            timeRange As Double(),
+            intensityMax As Double,
+            isXIC As Boolean,
+            fillCurve As Boolean,
+            fillAlpha As Integer,
+            labelLayoutTicks As Integer,
+            bspline As Single,
+            theme As Theme)
+
+        Call Me.New({tic},
+                    timeRange:=timeRange,
+                    intensityMax:=intensityMax,
+                    isXIC:=isXIC,
+                    fillCurve:=fillCurve,
+                    fillAlpha:=fillAlpha,
+                    labelLayoutTicks:=labelLayoutTicks,
+                    bspline:=bspline,
+                    theme:=theme)
+    End Sub
+
     Public Sub New(ionData As NamedCollection(Of ChromatogramTick)(),
                    timeRange As Double(),
                    intensityMax As Double,
@@ -119,6 +152,8 @@ Public Class TICplot : Inherits Plot
         Me.fillAlpha = fillAlpha
         Me.labelLayoutTicks = labelLayoutTicks
         Me.bspline = bspline
+        Me.xlabel = "Retention Time(sec)"
+        Me.ylabel = "Intensity"
 
         If timeRange Is Nothing Then
             Me.timeRange = {}
@@ -238,12 +273,12 @@ Public Class TICplot : Inherits Plot
 
             If theme.drawLabels Then
                 Dim data As New MzGroup With {.mz = 0, .XIC = chromatogram}
-                Dim peaks = data.GetPeakGroups(New Double() {5, 60}).ToArray
+                Dim peaks = data.GetPeakGroups(New Double() {2, 60}).ToArray
 
                 peakTimes += From ROI As PeakFeature
                              In peaks
                              Select New NamedValue(Of ChromatogramTick) With {
-                                 .Name = ROI.rt.ToString("F1"),
+                                 .Name = ROI.rt.ToString("F0") & $"({(ROI.rt / 60).ToString("F1")}min) {ROI.maxInto.ToString("G4")}",
                                  .Value = New ChromatogramTick With {.Intensity = ROI.maxInto, .Time = ROI.rt}
                              }
             End If
