@@ -56,8 +56,10 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.GraphTheory.GridGraph
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Distributions
 
 Public Module SampleData
@@ -86,6 +88,20 @@ Public Module SampleData
         Next
 
         Return data
+    End Function
+
+    <Extension>
+    Public Iterator Function BootstrapSampleBags(region As TissueRegion,
+                                                 Optional n As Integer = 32,
+                                                 Optional coverage As Double = 0.3) As IEnumerable(Of NamedCollection(Of Point))
+        Dim A As Integer = region.points.Length
+        Dim Nsize As Integer = A * coverage
+        Dim regionId As Integer = 0
+
+        For Each bag As SeqValue(Of Point()) In Bootstraping.Samples(region.points, Nsize, bags:=n)
+            regionId += 1
+            Yield New NamedCollection(Of Point)($"{region.label}.{regionId}", bag.value)
+        Next
     End Function
 
     ''' <summary>
