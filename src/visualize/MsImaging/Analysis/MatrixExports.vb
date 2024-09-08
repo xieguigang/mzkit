@@ -8,6 +8,16 @@ Imports Microsoft.VisualBasic.Parallel
 
 Public Module MatrixExports
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="pixels"></param>
+    ''' <param name="ions"></param>
+    ''' <param name="mzdiff"></param>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' data matrix in parallel
+    ''' </remarks>
     Public Function CreateMatrix(pixels As IEnumerable(Of PixelScan), ions As IEnumerable(Of Double), mzdiff As Tolerance) As MzMatrix
         Dim mzIndex As New MzPool(ions)
         Dim len = mzIndex.size
