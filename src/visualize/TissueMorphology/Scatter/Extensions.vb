@@ -94,6 +94,35 @@ Public Module Extensions
         }
     End Function
 
+    <Extension>
+    Public Iterator Function RasterGeometry2D(polygons As IEnumerable(Of Polygon2D), dimension As Size) As IEnumerable(Of Point)
+        Dim regions As Polygon2D() = polygons _
+            .SafeQuery _
+            .Where(Function(p) p.length > 0) _
+            .ToArray
+
+        If regions.Length = 1 AndAlso regions(Scan0).length > 512 Then
+            ' is already a pack of density pixels
+            Dim rasterPolygon = regions(Scan0)
+            Dim x = rasterPolygon.xpoints
+            Dim y = rasterPolygon.ypoints
+
+            For i As Integer = 0 To rasterPolygon.length - 1
+                Yield New Point(CInt(x(i)), CInt(y(i)))
+            Next
+        Else
+            For i As Integer = 1 To dimension.Width
+                For j As Integer = 1 To dimension.Height
+#Disable Warning
+                    If regions.Any(Function(r) r.inside(i, j)) Then
+                        Yield New Point(i, j)
+                    End If
+#Enable Warning
+                Next
+            Next
+        End If
+    End Function
+
     ''' <summary>
     ''' make polygon shape object raster matrix
     ''' </summary>
@@ -108,38 +137,14 @@ Public Module Extensions
                                      label As String,
                                      color As Color) As TissueRegion
 
-        Dim x As New List(Of Integer)
-        Dim y As New List(Of Integer)
-        Dim regions As Polygon2D() = polygons _
-            .SafeQuery _
-            .Where(Function(p) p.length > 0) _
+        Dim raster As Point() = polygons _
+            .RasterGeometry2D(dimension) _
             .ToArray
-
-        If regions.Length = 1 AndAlso regions(Scan0).length > 512 Then
-            ' is already a pack of density pixels
-            Call x.AddRange(regions(Scan0).xpoints.Select(Function(xi) CInt(xi)))
-            Call y.AddRange(regions(Scan0).ypoints.Select(Function(yi) CInt(yi)))
-        Else
-            For i As Integer = 1 To dimension.Width
-                For j As Integer = 1 To dimension.Height
-#Disable Warning
-                    If regions.Any(Function(r) r.inside(i, j)) Then
-                        Call x.Add(i)
-                        Call y.Add(j)
-                    End If
-#Enable Warning
-                Next
-            Next
-        End If
 
         Return New TissueRegion With {
             .color = color,
             .label = label,
-            .points = x _
-                .Select(Function(xi, i)
-                            Return New Point(xi, y(i))
-                        End Function) _
-                .ToArray
+            .points = raster
         }
     End Function
 End Module

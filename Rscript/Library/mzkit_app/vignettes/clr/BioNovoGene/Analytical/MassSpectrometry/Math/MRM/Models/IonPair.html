@@ -22,7 +22,7 @@
 
         <h3>Description</h3>
 
-        
+        <p>Data model for the MRM ion pair</p>
 
         <h3>Declare</h3>        
 
@@ -34,7 +34,9 @@ export class IonPair {
    accession: string;
    # The display title name
    name: string;
+   # Q1 precursor ion m/z
    precursor: double;
+   # Q3 product ion m/z
    product: double;
    rt: <a href="/vignettes/clr/System/Nullable`1.html">Nullable`1</a>;
 }

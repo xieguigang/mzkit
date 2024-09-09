@@ -84,6 +84,10 @@ Public Class Drawer : Implements IDisposable
 
     Dim disposedValue As Boolean
 
+    ''' <summary>
+    ''' adapter to the ms-imaging rawdata file
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property pixelReader As PixelReader
 
     ''' <summary>
@@ -100,6 +104,12 @@ Public Class Drawer : Implements IDisposable
         End Get
     End Property
 
+    ''' <summary>
+    ''' construct a data render from a local spatial rawdata file.
+    ''' </summary>
+    ''' <param name="file"></param>
+    ''' <param name="memoryCache"></param>
+    ''' <param name="verbose"></param>
     Sub New(file As String, Optional memoryCache As Boolean = False, Optional verbose As Boolean = True)
         If file.ExtensionSuffix("imzML") Then
             pixelReader = New ReadIbd(imzML:=file, memoryCache:=memoryCache)
@@ -110,10 +120,20 @@ Public Class Drawer : Implements IDisposable
         End If
     End Sub
 
+    ''' <summary>
+    ''' Create render from an in-memory dataset
+    ''' </summary>
+    ''' <param name="mzpack"></param>
+    ''' <param name="verbose"></param>
     Sub New(mzpack As mzPack, Optional verbose As Boolean = True)
         pixelReader = New ReadRawPack(mzpack, verbose)
     End Sub
 
+    ''' <summary>
+    ''' Create render from an in-memory dataset
+    ''' </summary>
+    ''' <param name="matrix"></param>
+    ''' <param name="verbose"></param>
     Sub New(matrix As mzPackPixel(), Optional verbose As Boolean = True)
         pixelReader = New ReadRawPack(matrix, verbose)
     End Sub
@@ -122,6 +142,14 @@ Public Class Drawer : Implements IDisposable
         pixelReader = reader
     End Sub
 
+    ''' <summary>
+    ''' read spectrum data via a given x,y spatial spot
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <param name="y"></param>
+    ''' <returns>
+    ''' A spatial data collection, empty if the given spot is not existed.
+    ''' </returns>
     Public Function ReadXY(x As Integer, y As Integer) As IEnumerable(Of ms2)
         Dim pixel As PixelScan = pixelReader.GetPixel(x, y)
 
