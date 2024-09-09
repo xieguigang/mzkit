@@ -29,7 +29,9 @@ Public Module MatrixExports
         Call task.Run()
 
         Return New MzMatrix With {
-            .matrix = task.spots,
+            .matrix = task.spots _
+                .Where(Function(i) Not i Is Nothing) _
+                .ToArray,
             .matrixType = FileApplicationClass.MSImaging,
             .mz = mzIndex.ionSet,
             .mzmax = .mz,
@@ -42,6 +44,11 @@ Public Module MatrixExports
 
         ReadOnly pixels As PixelScan()
 
+        ''' <summary>
+        ''' 20240909
+        ''' 
+        ''' there is a bug about the paralle task, may produce the null value?
+        ''' </summary>
         Public spots As Deconvolute.PixelData()
         Public len As Integer
         Public mzIndex As MzPool
