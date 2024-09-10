@@ -1,4 +1,5 @@
-﻿Imports System.Text
+﻿Imports System.Runtime.CompilerServices
+Imports System.Text
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
@@ -94,6 +95,11 @@ Public Class ReportRender : Implements IReportRender
         Return html.ToString
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function Tabular(biodeep_ids As IEnumerable(Of String), Optional rt_cell As Boolean = False) As IEnumerable(Of String) Implements IReportRender.Tabular
+        Return Tabular(biodeep_ids, rt_cell, ms1:=True)
+    End Function
+
     ''' <summary>
     ''' 
     ''' </summary>
@@ -101,7 +107,7 @@ Public Class ReportRender : Implements IReportRender
     ''' <returns>
     ''' iterates the html table text, the first element is always the table header title row.
     ''' </returns>
-    Public Iterator Function Tabular(biodeep_ids As IEnumerable(Of String), Optional rt_cell As Boolean = True, Optional ms1 As Boolean = True) As IEnumerable(Of String)
+    Public Iterator Function Tabular(biodeep_ids As IEnumerable(Of String), rt_cell As Boolean, ms1 As Boolean) As IEnumerable(Of String)
         Dim metabolites = makeSubset(biodeep_ids)
         Dim ordinals = metabolites.Keys.ToArray
         Dim levels As Integer = colorSet.Length
