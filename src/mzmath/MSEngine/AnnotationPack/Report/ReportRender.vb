@@ -35,6 +35,12 @@ Public Class ReportRender : Implements IReportRender
         Next
     End Sub
 
+    ''' <summary>
+    ''' Create object index from the annotation result.
+    ''' </summary>
+    ''' <param name="pack"></param>
+    ''' <param name="ions">indexed via the <see cref="AlignmentHit.xcms_id"/></param>
+    ''' <param name="metabolites">indexed via the generated key via the <see cref="AlignmentHit.biodeep_id"/> and <see cref="AlignmentHit.adducts"/></param>
     Public Shared Sub SetIndex(pack As AnnotationPack, ByRef ions As Dictionary(Of String, AlignmentHit), ByRef metabolites As Dictionary(Of String, AlignmentHit))
         For Each libs In pack.libraries
             For Each hit As AlignmentHit In libs.Value
