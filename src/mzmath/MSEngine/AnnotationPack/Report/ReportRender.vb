@@ -6,9 +6,9 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Distributions.pnorm
 Imports std = System.Math
 
-Public Class ReportRender
+Public Class ReportRender : Implements IReportRender
 
-    Public ReadOnly Property annotation As AnnotationPack
+    Public ReadOnly Property annotation As AnnotationPack Implements IReportRender.annotation
 
     ''' <summary>
     ''' metabolite indexed via the biodeep id 
