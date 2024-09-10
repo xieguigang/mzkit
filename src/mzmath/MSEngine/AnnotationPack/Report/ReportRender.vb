@@ -28,6 +28,14 @@ Public Class ReportRender : Implements IReportRender
     Sub New(pack As AnnotationPack)
         annotation = pack
 
+        Call SetIndex(pack, ions, metabolites)
+
+        For Each peak As xcms2 In pack.peaks
+            peaks(peak.ID) = peak
+        Next
+    End Sub
+
+    Public Shared Sub SetIndex(pack As AnnotationPack, ByRef ions As Dictionary(Of String, AlignmentHit), ByRef metabolites As Dictionary(Of String, AlignmentHit))
         For Each libs In pack.libraries
             For Each hit As AlignmentHit In libs.Value
                 Dim key As String = hit.biodeep_id & "_" & hit.adducts
@@ -40,13 +48,9 @@ Public Class ReportRender : Implements IReportRender
                 End If
             Next
         Next
-
-        For Each peak As xcms2 In pack.peaks
-            peaks(peak.ID) = peak
-        Next
     End Sub
 
-    Public Function GetIon(xcms_id As String) As AlignmentHit
+    Public Function GetIon(xcms_id As String) As AlignmentHit Implements IReportRender.GetIon
         If ions.ContainsKey(xcms_id) Then
             Return ions(xcms_id)
         Else
