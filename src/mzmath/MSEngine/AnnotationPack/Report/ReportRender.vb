@@ -26,6 +26,12 @@ Public Class ReportRender : Implements IReportRender
 
     Public Property colorSet As String() = DefaultColortSet Implements IReportRender.colorSet
 
+    ''' <summary>
+    ''' ordinal of the sample files or the sample file display selection list
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property samplefiles As String() Implements IReportRender.samplefiles
+
     Public Shared ReadOnly Property DefaultColortSet As String()
         Get
             Return {"#0D0887FF", "#3E049CFF", "#6300A7FF", "#8707A6FF", "#A62098FF", "#C03A83FF", "#D5546EFF", "#E76F5AFF", "#F58C46FF", "#FDAD32FF", "#FCD225FF", "#F0F921FF"}
@@ -142,7 +148,7 @@ Public Class ReportRender : Implements IReportRender
                                                   Return ZAreaRange(i.Value)
                                               End Function)
 
-            For Each sample As String In annotation.samplefiles
+            For Each sample As String In Me.samplefiles
                 Yield Ms1ReportTable(sample, rt_cell, ordinals, z_areas, ranges, levels, index)
             Next
         Else
@@ -160,7 +166,7 @@ Public Class ReportRender : Implements IReportRender
                                   End If
                               End Function)
 
-            For Each sample As String In annotation.samplefiles
+            For Each sample As String In Me.samplefiles
                 Yield Ms2ReportTable(sample, rt_cell, ordinals, ranges, levels, index)
             Next
         End If

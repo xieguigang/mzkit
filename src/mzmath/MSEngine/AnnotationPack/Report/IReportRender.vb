@@ -7,6 +7,11 @@
     ''' </summary>
     ''' <returns></returns>
     Property colorSet As String()
+    ''' <summary>
+    ''' ordinal of the sample files or the sample file display selection list
+    ''' </summary>
+    ''' <returns></returns>
+    Property samplefiles As String()
 
     Function GetIon(xcms_id As String) As AlignmentHit
 
