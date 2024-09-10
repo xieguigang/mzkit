@@ -23,7 +23,13 @@ Public Class ReportRender : Implements IReportRender
     ReadOnly ions As New Dictionary(Of String, AlignmentHit)
     ReadOnly peaks As New Dictionary(Of String, xcms2)
 
-    Public Property colorSet As String() = {"#0D0887FF", "#3E049CFF", "#6300A7FF", "#8707A6FF", "#A62098FF", "#C03A83FF", "#D5546EFF", "#E76F5AFF", "#F58C46FF", "#FDAD32FF", "#FCD225FF", "#F0F921FF"}
+    Public Property colorSet As String() = DefaultColortSet Implements IReportRender.colorSet
+
+    Public Shared ReadOnly Property DefaultColortSet As String()
+        Get
+            Return {"#0D0887FF", "#3E049CFF", "#6300A7FF", "#8707A6FF", "#A62098FF", "#C03A83FF", "#D5546EFF", "#E76F5AFF", "#F58C46FF", "#FDAD32FF", "#FCD225FF", "#F0F921FF"}
+        End Get
+    End Property
 
     Sub New(pack As AnnotationPack)
         annotation = pack
