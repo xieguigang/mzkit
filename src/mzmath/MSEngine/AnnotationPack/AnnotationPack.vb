@@ -33,6 +33,12 @@ Public Class AnnotationPack : Implements IWorkspaceReader, IDisposable
 
     Public Property file As String
 
+    ''' <summary>
+    ''' get all sample file names
+    ''' </summary>
+    ''' <returns>
+    ''' this function returns the sample file name without extension names
+    ''' </returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function samplefiles() As IEnumerable(Of String)
         Return peaks _

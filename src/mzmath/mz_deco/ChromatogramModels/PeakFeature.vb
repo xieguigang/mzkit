@@ -61,6 +61,7 @@
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.SignalProcessing.COW
 Imports std = System.Math
 
@@ -146,7 +147,7 @@ Public Class PeakFeature
     ''' <returns></returns>
     Public ReadOnly Property snRatio As Double
         Get
-            Return std.Log(integration / noise)
+            Return SignalProcessing.SNRatio(area, noise)
         End Get
     End Property
 
@@ -198,7 +199,7 @@ Public Class PeakFeature
             xcms_id = $"M{std.Round(mz)}T{std.Round(rt)}"
         End If
 
-        Return $"[{xcms_id}] {mz.ToString("F4")}@[{rtmin.ToString("F1")}, {rtmax.ToString("F1")}] = {area.ToString("G3")}"
+        Return $"[{xcms_id}] {mz.ToString("F4")}@[{(rtmin / 60).ToString("F2")}min - {(rtmax / 60).ToString("F2")}min] = {area.ToString("G4")}"
     End Function
 
 End Class

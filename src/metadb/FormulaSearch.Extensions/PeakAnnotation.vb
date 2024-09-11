@@ -166,6 +166,10 @@ Public Class PeakAnnotation
             .massdiff = 0,
             .ppm = 0
         }
+
+        ' 2024-08-29
+        ' make union of the annotated products and
+        ' un-annotated fragments
         Dim union As ms2() = result _
             .Select(Function(i)
                         Return New ms2 With {

@@ -256,6 +256,11 @@ Namespace PackLib
                 Dim node As BlockNode = GetSpectrum(key:=i.ToString)
                 Dim spectrum As PeakMs2 = GetSpectrum(node, file:=mass.name)
 
+                spectrum.meta = New Dictionary(Of String, String) From {
+                    {"name", mass.name},
+                    {"formula", mass.formula}
+                }
+
                 Yield spectrum
             Next
         End Function

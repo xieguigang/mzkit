@@ -12,6 +12,7 @@ imports "visual" from "mzplot";
 #' @param mzdiff the mass tolerance error for create the mz bins from the ms1 
 #'     rawdata, the XIC data is generated based on this parameter value
 #' @param peak.width the rt range of the peak data
+#' @param n_threads the cpu thread number for apply for the peak alignments when export peaktable data.
 #' 
 #' @return this function returns nothing 
 #' 
@@ -35,9 +36,10 @@ const run.Deconvolution = function(rawdata, outputdir = "./", mzdiff = 0.001, xi
     options(n_threads = n_threads);
 
     # create temp data of ms1 XIC
+    # use fixed 8 CPU threads for extract XIC from the rawdata files.
     ms1_xic_bins(files, mzdiff = xic_mzdiff, 
         outputdir = xic_cache, 
-        n_threads = n_threads);
+        n_threads = 8);
     
     # get xic file path list
     const xic_files = list.files(xic_cache, pattern = "*.xic");

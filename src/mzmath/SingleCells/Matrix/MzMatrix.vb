@@ -119,6 +119,17 @@ Namespace Deconvolute
         Public Property matrix As PixelData()
 
         ''' <summary>
+        ''' get ion intensity vector across multiple spots inside the <see cref="matrix"/>
+        ''' </summary>
+        ''' <param name="offset"></param>
+        ''' <returns></returns>
+        Default Public ReadOnly Property Intensity(offset As Integer) As Double()
+            Get
+                Return matrix.Select(Function(i) i(offset)).ToArray
+            End Get
+        End Property
+
+        ''' <summary>
         ''' get count of the ion feature size under current mass <see cref="tolerance"/>
         ''' </summary>
         ''' <returns></returns>

@@ -70,6 +70,26 @@ declare namespace mzDeco {
      * @return data is re-ordered via the tolerance error
    */
    function find_xcms_ionPeaks(peaktable: object, mz: number, rt: number, mzdiff?: number, rt_win?: number, find_RI?: boolean): object;
+   /**
+    * A debug function for test peak finding method
+    * 
+    * 
+     * @param raw the file path of a single rawdata file.
+     * @param massdiff -
+     * 
+     * + default value Is ``0.01``.
+     * @param peak_width 
+     * + default value Is ``[3,12]``.
+     * @param q 
+     * + default value Is ``0.65``.
+     * @param sn_threshold 
+     * + default value Is ``1``.
+     * @param nticks 
+     * + default value Is ``6``.
+     * @param joint 
+     * + default value Is ``true``.
+   */
+   function MS1deconv(raw: string, massdiff?: number, peak_width?: any, q?: number, sn_threshold?: number, nticks?: object, joint?: boolean): object;
    module mz {
       /**
        * do ``m/z`` grouping under the given tolerance

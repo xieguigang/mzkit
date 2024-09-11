@@ -176,6 +176,10 @@ Namespace MZWork
                                   Return m2.scan_id
                               End Function)
 
+            If inMemory.source.StringEmpty(, True) Then
+                inMemory.source = source.BaseName
+            End If
+
             If ms1.Count > 0 Then
                 Me.rtmin = Aggregate m1 As ScanMS1 In ms1.Values Into Min(m1.rt)
                 Me.rtmax = Aggregate m1 As ScanMS1 In ms1.Values Into Max(m1.rt)
@@ -194,7 +198,9 @@ Namespace MZWork
         ''' <param name="reload"></param>
         ''' <param name="verbose"></param>
         ''' <param name="strict"></param>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' this function returns itself
+        ''' </returns>
         Public Function LoadMzpack(reload As Action(Of String, String),
                                    Optional verbose As Boolean = True,
                                    Optional strict As Boolean = True) As Raw
@@ -295,6 +301,28 @@ mzPackReader:
         Public Sub SaveAs(file As String)
             Call cache.FileCopy(file)
         End Sub
+
+        ''' <summary>
+        ''' Create a raw data file reference to a local mzpack file
+        ''' </summary>
+        ''' <param name="filepath">
+        ''' the file path to the mzpack file
+        ''' </param>
+        ''' <returns></returns>
+        Public Shared Function UseMzPack(filepath As String) As Raw
+            If Not filepath.ExtensionSuffix("mzpack") Then
+                Throw New InvalidDataException("the given file path must be a mzpack data file!")
+            End If
+
+            Return New Raw With {
+                .cache = filepath.GetFullPath,
+                .numOfScan1 = 0,
+                .numOfScan2 = 0,
+                .rtmax = 0,
+                .rtmin = 0,
+                .source = .cache
+            }
+        End Function
 
     End Class
 End Namespace

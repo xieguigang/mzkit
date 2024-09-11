@@ -83,12 +83,14 @@ Namespace Spectra
         Protected Overrides Function lowAbundanceTrimming(spectrum() As ms2) As ms2()
             Dim maxInto As Double = -999
 
+            ' get max intensity of the framgents
             For Each fragment As ms2 In spectrum
                 If fragment.intensity > maxInto Then
                     maxInto = fragment.intensity
                 End If
             Next
 
+            ' filter out the fragments that lower than the given threshold
             Return spectrum _
                 .Where(Function(a) (a.intensity / maxInto) >= m_threshold) _
                 .ToArray

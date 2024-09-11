@@ -1,63 +1,65 @@
 ﻿#Region "Microsoft.VisualBasic::f6804942c151fe61b27a27863fdc87dd, visualize\TissueMorphology\SampleData.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 84
-    '    Code Lines: 63 (75.00%)
-    ' Comment Lines: 10 (11.90%)
-    '    - Xml Docs: 100.00%
-    ' 
-    '   Blank Lines: 11 (13.10%)
-    '     File Size: 3.33 KB
+' Summaries:
 
 
-    ' Module SampleData
-    ' 
-    '     Function: ExtractSample, ExtractSpatialSpots
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 84
+'    Code Lines: 63 (75.00%)
+' Comment Lines: 10 (11.90%)
+'    - Xml Docs: 100.00%
+' 
+'   Blank Lines: 11 (13.10%)
+'     File Size: 3.33 KB
+
+
+' Module SampleData
+' 
+'     Function: ExtractSample, ExtractSpatialSpots
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.GraphTheory.GridGraph
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Distributions
 
 Public Module SampleData
@@ -82,34 +84,70 @@ Public Module SampleData
         Dim matrix = Grid(Of T).Create(layer, Function(i) New Point(i.X, i.Y))
 
         For Each region As TissueRegion In regions
-            Dim A As Integer = region.points.Length
-            Dim Nsize As Integer = A * coverage
-            Dim samples = Bootstraping.Samples(region.points, Nsize, bags:=n).ToArray
-            Dim vec = samples _
-                .AsParallel _
-                .Select(Function(pack)
-                            Dim subset As T() = pack.value _
-                                .Select(Function(pt)
-                                            Return matrix.GetData(pt.X, pt.Y)
-                                        End Function) _
-                                .Where(Function(p) Not p Is Nothing) _
-                                .ToArray
-                            Dim d As Double() = subset _
-                                .Select(Function(i) i.Scale) _
-                                .ToArray
-
-                            If d.Length = 0 Then
-                                Return 0.0
-                            Else
-                                Return d.Sum / A
-                            End If
-                        End Function) _
-                .ToArray
-
-            data(region.label) = vec
+            data(region.label) = matrix.ExtractSample(region, n, coverage:=coverage)
         Next
 
         Return data
+    End Function
+
+    <Extension>
+    Public Iterator Function BootstrapSampleBags(region As TissueRegion,
+                                                 Optional n As Integer = 32,
+                                                 Optional coverage As Double = 0.3) As IEnumerable(Of NamedCollection(Of Point))
+        Dim A As Integer = region.points.Length
+        Dim Nsize As Integer = A * coverage
+        Dim regionId As Integer = 0
+
+        If Nsize <= 0 Then
+            Nsize = 1
+        End If
+
+        For Each bag As SeqValue(Of Point()) In Bootstraping.Samples(region.points, Nsize, bags:=n)
+            regionId += 1
+            Yield New NamedCollection(Of Point)($"{region.label}.{regionId}", bag.value)
+        Next
+    End Function
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="matrix">the sptial rawdata matrix</param>
+    ''' <param name="region"></param>
+    ''' <param name="n"></param>
+    ''' <param name="coverage"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function ExtractSample(Of T As Pixel)(matrix As Grid(Of T), region As TissueRegion,
+                                                 Optional n As Integer = 32,
+                                                 Optional coverage As Double = 0.3) As Double()
+        Dim A As Integer = region.points.Length
+        Dim Nsize As Integer = A * coverage
+        ' make bootstrapping sampling of the spatial spots
+        Dim samples = Bootstraping.Samples(region.points, Nsize, bags:=n).ToArray
+        Dim vec As Double() = samples _
+            .AsParallel _
+            .Select(Function(pack)
+                        Dim subset As T() = pack.value _
+                            .Select(Function(pt)
+                                        ' get spatial data from a sampling result
+                                        Return matrix.GetData(pt.X, pt.Y)
+                                    End Function) _
+                            .Where(Function(p) Not p Is Nothing) _
+                            .ToArray
+                        Dim d As Double() = subset _
+                            .Select(Function(i) i.Scale) _
+                            .ToArray
+
+                        If d.Length = 0 Then
+                            Return 0.0
+                        Else
+                            Return d.Sum / A
+                        End If
+                    End Function) _
+            .ToArray
+
+        Return vec
     End Function
 
     <Extension>
