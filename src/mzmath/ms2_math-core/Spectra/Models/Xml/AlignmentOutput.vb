@@ -162,24 +162,29 @@ Namespace Spectra.Xml
             Next
         End Function
 
+        Public Shared Iterator Function ParseAlignmentLinearMatrix(str As String) As IEnumerable(Of SSM2MatrixFragment)
+            If Not str Is Nothing Then
+                Dim peaks As String() = str.Split
+
+                For Each ti As String In peaks
+                    Dim tokens = ti.Split("_"c)
+                    Dim mz = Val(tokens(0))
+                    Dim query = Val(tokens(1))
+                    Dim refer = Val(tokens(2))
+
+                    Yield New SSM2MatrixFragment With {
+                        .mz = mz,
+                        .query = query,
+                        .ref = refer
+                    }
+                Next
+            End If
+        End Function
+
         Public Shared Function ParseAlignment(str As String) As AlignmentOutput
-            Dim peaks = str.Split
-            Dim hits = peaks _
-                .Select(Function(ti)
-                            Dim tokens = ti.Split("_"c)
-                            Dim mz = Val(tokens(0))
-                            Dim query = Val(tokens(1))
-                            Dim refer = Val(tokens(2))
-
-                            Return New SSM2MatrixFragment With {
-                                .mz = mz,
-                                .query = query,
-                                .ref = refer
-                            }
-                        End Function) _
-                .ToArray
-
-            Return New AlignmentOutput With {.alignments = hits}
+            Return New AlignmentOutput With {
+                .alignments = ParseAlignmentLinearMatrix(str).ToArray
+            }
         End Function
 
     End Class

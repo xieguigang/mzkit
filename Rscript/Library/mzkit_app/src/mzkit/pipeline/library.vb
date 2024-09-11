@@ -63,6 +63,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
 Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree
 Imports BioNovoGene.BioDeep.Chemistry.MetaLib.CrossReference
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
@@ -804,6 +805,23 @@ Module library
         Call workspace.CreateLibraryResult(library, annotations.GetAnnotations(filterPeaks:=True))
     End Sub
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="workspace"></param>
+    ''' <param name="mz"></param>
+    ''' <param name="rt"></param>
+    ''' <param name="intensity"></param>
+    ''' <param name="libname"></param>
+    ''' <param name="score"></param>
+    ''' <param name="forward"></param>
+    ''' <param name="reverse"></param>
+    ''' <param name="jaccard"></param>
+    ''' <param name="entropy"></param>
+    ''' <param name="source"></param>
+    ''' <param name="alignment">
+    ''' the ms2 spectrum alignment matrix in linear string format
+    ''' </param>
     <ExportAPI("push_temp")>
     Public Sub push_temp(workspace As LibraryWorkspace,
                          mz As Double, rt As Double, intensity As Double,
@@ -813,17 +831,7 @@ Module library
                          source As String,
                          alignment As String)
 
-        Dim ms2 As ms2() = alignment _
-            .Split _
-            .Select(Function(t)
-                        Dim tokens As String() = t.Split("_"c)
-                        Dim mz2 As Double = Val(tokens(0))
-                        Dim into As Double = Val(tokens(1))
-                        Dim peak As New ms2(mz2, into)
-
-                        Return peak
-                    End Function) _
-            .ToArray
+        Dim ms2 As SSM2MatrixFragment() = AlignmentOutput.ParseAlignmentLinearMatrix(alignment).ToArray
         Dim align As New Ms2Score With {
             .ms2 = ms2,
             .entropy = entropy,
