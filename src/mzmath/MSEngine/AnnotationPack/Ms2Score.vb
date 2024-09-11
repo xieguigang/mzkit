@@ -1,5 +1,6 @@
-﻿
+﻿Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
 
 ''' <summary>
 ''' the ms2 alignment result
@@ -41,11 +42,20 @@ Public Class Ms2Score
     ''' the ms2 spectrum of current alignment hit result
     ''' </summary>
     ''' <returns></returns>
-    Public Property ms2 As ms2()
+    Public Property ms2 As SSM2MatrixFragment()
     ''' <summary>
     ''' the source file name
     ''' </summary>
     ''' <returns></returns>
     Public Property source As String
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function GetSampleSpectrum() As IEnumerable(Of ms2)
+        Return ms2 _
+            .Where(Function(a) a.query > 0) _
+            .Select(Function(a)
+                        Return New ms2(a.mz, a.query)
+                    End Function)
+    End Function
 
 End Class
