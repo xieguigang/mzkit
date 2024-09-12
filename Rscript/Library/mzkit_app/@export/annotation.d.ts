@@ -106,6 +106,20 @@ declare namespace annotation {
    */
    function populateIonData(raw: object, mzdiff?: any, env?: object): object;
    /**
+    * 
+    * 
+     * @param workspace -
+     * @param mz -
+     * @param rt -
+     * @param intensity -
+     * @param libname -
+     * @param score -
+     * @param forward -
+     * @param reverse -
+     * @param jaccard -
+     * @param entropy -
+     * @param source -
+     * @param alignment the ms2 spectrum alignment matrix in linear string format
    */
    function push_temp(workspace: object, mz: number, rt: number, intensity: number, libname: string, score: number, forward: number, reverse: number, jaccard: number, entropy: number, source: string, alignment: string): ;
    module read {
