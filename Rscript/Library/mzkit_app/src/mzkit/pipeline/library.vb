@@ -769,7 +769,9 @@ Module library
 
         For Each key As String In libs.Keys.ToArray
             libs(key) = libs(key) _
-                .Where(Function(ai) $"{ai.xcms_id}_{ai.biodeep_id}_{ai.adducts}" Like filterIndex) _
+                .Where(Function(ai)
+                           Return $"{ai.xcms_id}_{ai.biodeep_id}_{ai.adducts}" Like filterIndex
+                       End Function) _
                 .ToArray
         Next
 
@@ -800,13 +802,19 @@ Module library
         End If
     End Function
 
+    ''' <summary>
+    ''' Save the reference library annotation result.
+    ''' </summary>
+    ''' <param name="workspace"></param>
+    ''' <param name="library"></param>
+    ''' <param name="annotations"></param>
     <ExportAPI("save_annotations")>
     Public Sub saveAnnotation(workspace As AnnotationWorkspace, library As String, annotations As LibraryWorkspace)
         Call workspace.CreateLibraryResult(library, annotations.GetAnnotations(filterPeaks:=True))
     End Sub
 
     ''' <summary>
-    ''' 
+    ''' Save the ms2 alignment hits result into current temp workspace.
     ''' </summary>
     ''' <param name="workspace"></param>
     ''' <param name="mz"></param>
@@ -875,18 +883,38 @@ Module library
         })
     End Sub
 
+    ''' <summary>
+    ''' create an empty workspace object
+    ''' </summary>
+    ''' <returns></returns>
     <ExportAPI("workspace")>
     Public Function create_workspace() As LibraryWorkspace
         Return New LibraryWorkspace
     End Function
 
+    ''' <summary>
+    ''' Associates the ms1 peaks with the ms2 spectrum alignment result hits.
+    ''' </summary>
+    ''' <param name="works">the workspace object, which could be constructed via the ``workspace`` function.</param>
+    ''' <param name="libname"></param>
+    ''' <param name="adducts"></param>
+    ''' <param name="xcms_id"></param>
+    ''' <param name="mz"></param>
+    ''' <param name="rt"></param>
+    ''' <param name="RI"></param>
+    ''' <param name="npeaks"></param>
     <ExportAPI("peak_assign")>
     Public Sub peak_assign(works As LibraryWorkspace,
                            libname As String, adducts As String,
                            xcms_id As String, mz As Double, rt As Double, RI As Double, npeaks As Integer)
 
         Dim db_xref As String = $"{libname}|{adducts}|{CInt(mz)}"
-        Dim peak As New xcms2 With {.ID = xcms_id, .mz = mz, .rt = rt, .RI = RI}
+        Dim peak As New xcms2 With {
+            .ID = xcms_id,
+            .mz = mz,
+            .rt = rt,
+            .RI = RI
+        }
 
         Call works.commit(db_xref, peak, npeaks)
     End Sub

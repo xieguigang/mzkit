@@ -58,4 +58,8 @@ Public Class Ms2Score
                     End Function)
     End Function
 
+    Public Overrides Function ToString() As String
+        Return $"{libname}@{source}"
+    End Function
+
 End Class

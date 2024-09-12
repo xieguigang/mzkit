@@ -41,6 +41,10 @@ Public Class AlignmentHit
     Sub New()
     End Sub
 
+    ''' <summary>
+    ''' make a copy of the alignment hit result data
+    ''' </summary>
+    ''' <param name="copy"></param>
     Sub New(copy As AlignmentHit)
         xcms_id = copy.xcms_id
         libname = copy.libname
