@@ -896,13 +896,16 @@ Module library
     ''' Associates the ms1 peaks with the ms2 spectrum alignment result hits.
     ''' </summary>
     ''' <param name="works">the workspace object, which could be constructed via the ``workspace`` function.</param>
-    ''' <param name="libname"></param>
+    ''' <param name="libname">the reference key to the ms2 spectrum alignment result.</param>
     ''' <param name="adducts"></param>
     ''' <param name="xcms_id"></param>
     ''' <param name="mz"></param>
     ''' <param name="rt"></param>
     ''' <param name="RI"></param>
     ''' <param name="npeaks"></param>
+    ''' <remarks>
+    ''' a ms2 spectrum alignment result should be existed inside the workspace before assign the ms1 peaks to the result.
+    ''' </remarks>
     <ExportAPI("peak_assign")>
     Public Sub peak_assign(works As LibraryWorkspace,
                            libname As String, adducts As String,
