@@ -143,6 +143,13 @@ Namespace Spectra.Xml
             Next
         End Function
 
+        ''' <summary>
+        ''' construct a tuple of the spectrum data as the mirror alignment
+        ''' </summary>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' the name of the generated <see cref="LibraryMatrix"/> object is generates from the metadata of query and reference.
+        ''' </remarks>
         Public Function GetAlignmentMirror() As (query As LibraryMatrix, ref As LibraryMatrix)
             With New Ms2AlignMatrix(alignments)
                 Dim q = .GetQueryMatrix.With(Sub(a) a.name = query?.id)

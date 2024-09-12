@@ -11,8 +11,8 @@ the metabolite annotation toolkit
 + [read.annotationPack](annotation/read.annotationPack.1) 
 + [filter](annotation/filter.1) 
 + [get_annotations](annotation/get_annotations.1) get annotation data from the given workspace object
-+ [save_annotations](annotation/save_annotations.1) 
-+ [push_temp](annotation/push_temp.1) 
++ [save_annotations](annotation/save_annotations.1) Save the reference library annotation result.
++ [push_temp](annotation/push_temp.1) Save the ms2 alignment hits result into current temp workspace.
 + [commit](annotation/commit.1) Commit library annotation
-+ [workspace](annotation/workspace.1) 
-+ [peak_assign](annotation/peak_assign.1) 
++ [workspace](annotation/workspace.1) create an empty workspace object
++ [peak_assign](annotation/peak_assign.1) Associates the ms1 peaks with the ms2 spectrum alignment result hits.
