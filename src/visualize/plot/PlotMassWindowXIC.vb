@@ -114,7 +114,8 @@ Public Class PlotMassWindowXIC : Inherits Plot
 
     Private Iterator Function loadXIC(pool As ms1_scan()) As IEnumerable(Of ChromatogramTick)
         Dim rt_ticks = pool _
-            .OrderBy(Function(a) a.scan_time).GroupBy(Function(t) t.scan_time, offsets:=0.5) _
+            .OrderBy(Function(a) a.scan_time) _
+            .GroupBy(Function(t) t.scan_time, offsets:=0.25) _
             .ToArray
 
         For Each scatter As NamedCollection(Of ms1_scan) In rt_ticks
@@ -129,8 +130,8 @@ Public Class PlotMassWindowXIC : Inherits Plot
         Dim rect As Rectangle = canvas.PlotRegion
         Dim part1 As New Rectangle(rect.Location, New Size(rect.Width, rect.Height / 2))
         Dim part2 As New Rectangle(New Point(rect.Left, rect.Top + part1.Height + 10), New Size(rect.Width, rect.Height / 2 - 10))
-        Dim heatColors As String() = Designer.GetColors("jet", 30).Select(Function(c) c.ToHtmlColor).ToArray
-        Dim index As New DoubleRange(0, 30)
+        Dim heatColors As String() = Designer.GetColors(theme.colorSet, 100).Select(Function(c) c.ToHtmlColor).ToArray
+        Dim index As New DoubleRange(0, heatColors.Length - 1)
         Dim intensity As New DoubleRange(xic.Select(Function(ti) ti.Intensity))
         Dim xic_dat As New SerialData With {
             .color = Color.Blue,
@@ -139,7 +140,7 @@ Public Class PlotMassWindowXIC : Inherits Plot
             .width = 2,
             .pts = xic _
                 .Select(Function(ci) New PointF(ci.Time, ci.Intensity)) _
-                .BSpline(RESOLUTION:=15) _
+                .BSpline(RESOLUTION:=2) _
                 .Select(Function(ti)
                             Dim i As Integer = intensity.ScaleMapping(ti.Y, index)
 
