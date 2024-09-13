@@ -87,6 +87,12 @@ Namespace Spectra.SplashID
 
         ReadOnly splashMs As New Splash(SpectrumType.MS)
 
+        ''' <summary>
+        ''' calculate the splash-id hashcode via the spectrum matrix data.
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="spec"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function MsSplashId(Of T As {New, ISpectrum})(spec As T) As String
             Return splashMs.CalcSplashID(spec)
