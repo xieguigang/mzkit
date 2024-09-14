@@ -346,7 +346,8 @@ Public Class mzPack : Implements IMZPack
                                    Optional ignoreThumbnail As Boolean = False,
                                    Optional skipMsn As Boolean = False,
                                    Optional verbose As Boolean = True,
-                                   Optional checkVer1DuplicatedId As Boolean = False) As mzPack
+                                   Optional checkVer1DuplicatedId As Boolean = False,
+                                   Optional leaveOpen As Boolean = False) As mzPack
 
         Dim ver As Integer = file.GetFormatVersion
         Dim pack As mzPack
@@ -377,6 +378,14 @@ Public Class mzPack : Implements IMZPack
             If TypeOf file Is FileStream Then
                 pack.source = DirectCast(file, FileStream).Name.FileName
             End If
+        End If
+
+        If Not leaveOpen Then
+            Try
+                Call file.Dispose()
+            Catch ex As Exception
+                Call App.LogException(ex)
+            End Try
         End If
 
         Return pack
