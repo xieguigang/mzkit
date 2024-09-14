@@ -22,6 +22,9 @@ Public Class ReportRender : Implements IReportRender
     ''' metabolite indexed via the xcms ion id
     ''' </summary>
     ReadOnly ions As New Dictionary(Of String, AlignmentHit)
+    ''' <summary>
+    ''' indexed via the xcms id
+    ''' </summary>
     ReadOnly peaks As New Dictionary(Of String, xcms2)
 
     Public Property colorSet As String() = DefaultColortSet Implements IReportRender.colorSet
@@ -285,5 +288,13 @@ Public Class ReportRender : Implements IReportRender
         Next
 
         Return subset
+    End Function
+
+    Public Function GetPeak(xcms_id As String) As xcms2 Implements IReportRender.GetPeak
+        If peaks.ContainsKey(xcms_id) Then
+            Return peaks(xcms_id)
+        Else
+            Return Nothing
+        End If
     End Function
 End Class

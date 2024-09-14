@@ -1,4 +1,6 @@
-﻿Public Interface IReportRender
+﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math
+
+Public Interface IReportRender
 
     ReadOnly Property annotation As AnnotationPack
 
@@ -14,6 +16,7 @@
     Property samplefiles As String()
 
     Function GetIon(xcms_id As String) As AlignmentHit
+    Function GetPeak(xcms_id As String) As xcms2
 
     ''' <summary>
     ''' implements of the html table report
