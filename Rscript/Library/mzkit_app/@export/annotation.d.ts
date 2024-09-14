@@ -90,6 +90,18 @@ declare namespace annotation {
       function annotation_workspace(file: any, io?: object, lazy?: boolean, env?: object): object;
    }
    /**
+    * Associates the ms1 peaks with the ms2 spectrum alignment result hits.
+    * 
+    * > a ms2 spectrum alignment result should be existed inside the workspace before assign the ms1 peaks to the result.
+    * 
+     * @param works the workspace object, which could be constructed via the ``workspace`` function.
+     * @param libname the reference key to the ms2 spectrum alignment result.
+     * @param adducts -
+     * @param xcms_id -
+     * @param mz -
+     * @param rt -
+     * @param RI -
+     * @param npeaks -
    */
    function peak_assign(works: object, libname: string, adducts: string, xcms_id: string, mz: number, rt: number, RI: number, npeaks: object): ;
    /**
@@ -106,6 +118,21 @@ declare namespace annotation {
    */
    function populateIonData(raw: object, mzdiff?: any, env?: object): object;
    /**
+    * Save the ms2 alignment hits result into current temp workspace.
+    * 
+    * 
+     * @param workspace -
+     * @param mz -
+     * @param rt -
+     * @param intensity -
+     * @param libname -
+     * @param score -
+     * @param forward -
+     * @param reverse -
+     * @param jaccard -
+     * @param entropy -
+     * @param source -
+     * @param alignment the ms2 spectrum alignment matrix in linear string format
    */
    function push_temp(workspace: object, mz: number, rt: number, intensity: number, libname: string, score: number, forward: number, reverse: number, jaccard: number, entropy: number, source: string, alignment: string): ;
    module read {
@@ -115,9 +142,18 @@ declare namespace annotation {
       function annotationPack(file: any, env?: object): object;
    }
    /**
+    * Save the reference library annotation result.
+    * 
+    * 
+     * @param workspace -
+     * @param library -
+     * @param annotations -
    */
    function save_annotations(workspace: object, library: string, annotations: object): ;
    /**
+    * create an empty workspace object
+    * 
+    * 
    */
    function workspace(): object;
    /**

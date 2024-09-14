@@ -1,5 +1,6 @@
 ﻿Imports System.IO
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
 Imports Microsoft.VisualBasic.ApplicationServices
 
 Public Module ReadPack
@@ -56,13 +57,14 @@ Public Module ReadPack
             .source = bin.ReadString
         }
         Dim n As Integer = bin.ReadInt32
-        Dim peaks As ms2() = New ms2(n - 1) {}
+        Dim peaks As SSM2MatrixFragment() = New SSM2MatrixFragment(n - 1) {}
 
         For i As Integer = 0 To n - 1
-            peaks(i) = New ms2 With {
+            peaks(i) = New SSM2MatrixFragment With {
                 .mz = bin.ReadDouble,
-                .intensity = bin.ReadDouble,
-                .Annotation = bin.ReadString
+                .query = bin.ReadDouble,
+                .ref = bin.ReadDouble,
+                .da = bin.ReadString
             }
         Next
 

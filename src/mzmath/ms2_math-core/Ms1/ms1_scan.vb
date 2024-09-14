@@ -67,6 +67,9 @@ Imports std = System.Math
 ''' <summary>
 ''' A TICPoint [mz, rt, intensity]
 ''' </summary>
+''' <remarks>
+''' a <see cref="ITimeSignal"/> data point
+''' </remarks>
 Public Class ms1_scan : Implements IMs1, IMs1Scan, INumericKey, ITimeSignal
 
     <XmlAttribute> Public Property mz As Double Implements IMs1.mz, INumericKey.key

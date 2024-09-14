@@ -172,8 +172,15 @@ Public Class TICplot : Inherits Plot
         If ionData.Length = 1 Then
             Return {newPen(css, theme.colorSet.TranslateColor(False) Or Color.DeepSkyBlue.AsDefault)}
         Else
+            Dim palette As String = theme.colorSet
+
+            If palette.StringEmpty(, True) Then
+                palette = "paper"
+                Call $"the color set for TIC overlaps plot is empty, use the default color set 'paper' for the plot rendering.".Warning
+            End If
+
             Return Designer _
-                .GetColors(theme.colorSet) _
+                .GetColors(exp:=palette) _
                 .Select(Function(c) newPen(css, c)) _
                 .ToArray
         End If

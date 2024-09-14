@@ -69,12 +69,12 @@ Imports Microsoft.VisualBasic.MIME.Html.CSS
 Public Module MassSpectra
 
     ''' <summary>
-    ''' 
+    ''' Make the single spectrum input mirror and plot
     ''' </summary>
-    ''' <param name="library"></param>
-    ''' <param name="size$"></param>
-    ''' <param name="margin$"></param>
-    ''' <param name="intoCutoff#"></param>
+    ''' <param name="library">A single spectrum object, this function will make a mirror plot of this spectrum object.</param>
+    ''' <param name="size"></param>
+    ''' <param name="margin"></param>
+    ''' <param name="intoCutoff"></param>
     ''' <param name="titles">[query, reference]</param>
     ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -128,6 +128,32 @@ Public Module MassSpectra
         )
     End Function
 
+    ''' <summary>
+    ''' Make mirror plot of two spectrum object
+    ''' </summary>
+    ''' <param name="query">usually be the sample data as query input</param>
+    ''' <param name="ref">usually be the reference library spectrum data as the mirror reference</param>
+    ''' <param name="size"></param>
+    ''' <param name="margin"></param>
+    ''' <param name="bg$"></param>
+    ''' <param name="intoCutoff"></param>
+    ''' <param name="title"></param>
+    ''' <param name="labelDisplayIntensity"></param>
+    ''' <param name="drawLegend"></param>
+    ''' <param name="xlab$"></param>
+    ''' <param name="ylab$"></param>
+    ''' <param name="tagXFormat$"></param>
+    ''' <param name="drawGrid"></param>
+    ''' <param name="drawGridX"></param>
+    ''' <param name="bw"></param>
+    ''' <param name="legendLayout"></param>
+    ''' <param name="color1"></param>
+    ''' <param name="color2"></param>
+    ''' <param name="gridStrokeX"></param>
+    ''' <param name="gridStrokeY"></param>
+    ''' <param name="highlights"></param>
+    ''' <param name="driver"></param>
+    ''' <returns></returns>
     Public Function AlignMirrorPlot(query As LibraryMatrix, ref As LibraryMatrix,
                                     Optional size$ = "1200,800",
                                     Optional margin$ = "padding: 100px 30px 50px 100px;",

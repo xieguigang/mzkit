@@ -1,4 +1,5 @@
-﻿Imports System.Text
+﻿Imports System.Runtime.CompilerServices
+Imports System.Text
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
@@ -6,9 +7,9 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Distributions.pnorm
 Imports std = System.Math
 
-Public Class ReportRender
+Public Class ReportRender : Implements IReportRender
 
-    Public ReadOnly Property annotation As AnnotationPack
+    Public ReadOnly Property annotation As AnnotationPack Implements IReportRender.annotation
 
     ''' <summary>
     ''' metabolite indexed via the biodeep id 
@@ -21,13 +22,42 @@ Public Class ReportRender
     ''' metabolite indexed via the xcms ion id
     ''' </summary>
     ReadOnly ions As New Dictionary(Of String, AlignmentHit)
+    ''' <summary>
+    ''' indexed via the xcms id
+    ''' </summary>
     ReadOnly peaks As New Dictionary(Of String, xcms2)
 
-    Public Property colorSet As String() = {"#0D0887FF", "#3E049CFF", "#6300A7FF", "#8707A6FF", "#A62098FF", "#C03A83FF", "#D5546EFF", "#E76F5AFF", "#F58C46FF", "#FDAD32FF", "#FCD225FF", "#F0F921FF"}
+    Public Property colorSet As String() = DefaultColortSet Implements IReportRender.colorSet
+
+    ''' <summary>
+    ''' ordinal of the sample files or the sample file display selection list
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property samplefiles As String() Implements IReportRender.samplefiles
+
+    Public Shared ReadOnly Property DefaultColortSet As String()
+        Get
+            Return {"#0D0887FF", "#3E049CFF", "#6300A7FF", "#8707A6FF", "#A62098FF", "#C03A83FF", "#D5546EFF", "#E76F5AFF", "#F58C46FF", "#FDAD32FF", "#FCD225FF", "#F0F921FF"}
+        End Get
+    End Property
 
     Sub New(pack As AnnotationPack)
         annotation = pack
 
+        Call SetIndex(pack, ions, metabolites)
+
+        For Each peak As xcms2 In pack.peaks
+            peaks(peak.ID) = peak
+        Next
+    End Sub
+
+    ''' <summary>
+    ''' Create object index from the annotation result.
+    ''' </summary>
+    ''' <param name="pack"></param>
+    ''' <param name="ions">indexed via the <see cref="AlignmentHit.xcms_id"/></param>
+    ''' <param name="metabolites">indexed via the generated key via the <see cref="AlignmentHit.biodeep_id"/> and <see cref="AlignmentHit.adducts"/></param>
+    Public Shared Sub SetIndex(pack As AnnotationPack, ByRef ions As Dictionary(Of String, AlignmentHit), ByRef metabolites As Dictionary(Of String, AlignmentHit))
         For Each libs In pack.libraries
             For Each hit As AlignmentHit In libs.Value
                 Dim key As String = hit.biodeep_id & "_" & hit.adducts
@@ -40,13 +70,9 @@ Public Class ReportRender
                 End If
             Next
         Next
-
-        For Each peak As xcms2 In pack.peaks
-            peaks(peak.ID) = peak
-        Next
     End Sub
 
-    Public Function GetIon(xcms_id As String) As AlignmentHit
+    Public Function GetIon(xcms_id As String) As AlignmentHit Implements IReportRender.GetIon
         If ions.ContainsKey(xcms_id) Then
             Return ions(xcms_id)
         Else
@@ -78,6 +104,11 @@ Public Class ReportRender
         Return html.ToString
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function Tabular(biodeep_ids As IEnumerable(Of String), Optional rt_cell As Boolean = False) As IEnumerable(Of String) Implements IReportRender.Tabular
+        Return Tabular(biodeep_ids, rt_cell, ms1:=True)
+    End Function
+
     ''' <summary>
     ''' 
     ''' </summary>
@@ -85,7 +116,7 @@ Public Class ReportRender
     ''' <returns>
     ''' iterates the html table text, the first element is always the table header title row.
     ''' </returns>
-    Public Iterator Function Tabular(biodeep_ids As IEnumerable(Of String), Optional rt_cell As Boolean = True, Optional ms1 As Boolean = True) As IEnumerable(Of String)
+    Public Iterator Function Tabular(biodeep_ids As IEnumerable(Of String), rt_cell As Boolean, ms1 As Boolean) As IEnumerable(Of String)
         Dim metabolites = makeSubset(biodeep_ids)
         Dim ordinals = metabolites.Keys.ToArray
         Dim levels As Integer = colorSet.Length
@@ -120,7 +151,7 @@ Public Class ReportRender
                                                   Return ZAreaRange(i.Value)
                                               End Function)
 
-            For Each sample As String In annotation.samplefiles
+            For Each sample As String In Me.samplefiles
                 Yield Ms1ReportTable(sample, rt_cell, ordinals, z_areas, ranges, levels, index)
             Next
         Else
@@ -138,7 +169,7 @@ Public Class ReportRender
                                   End If
                               End Function)
 
-            For Each sample As String In annotation.samplefiles
+            For Each sample As String In Me.samplefiles
                 Yield Ms2ReportTable(sample, rt_cell, ordinals, ranges, levels, index)
             Next
         End If
@@ -257,5 +288,13 @@ Public Class ReportRender
         Next
 
         Return subset
+    End Function
+
+    Public Function GetPeak(xcms_id As String) As xcms2 Implements IReportRender.GetPeak
+        If peaks.ContainsKey(xcms_id) Then
+            Return peaks(xcms_id)
+        Else
+            Return Nothing
+        End If
     End Function
 End Class

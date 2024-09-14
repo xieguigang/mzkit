@@ -1,7 +1,7 @@
 .\" man page create by R# package system.
 .TH ANNOTATION 1 2000-Jan "peak_assign" "peak_assign"
 .SH NAME
-peak_assign \- 
+peak_assign \- Associates the ms1 peaks with the ms2 spectrum alignment result hits.
 .SH SYNOPSIS
 \fIpeak_assign(\fBworks\fR as <generic> LibraryWorkspace, 
 \fBlibname\fR as string, 
@@ -11,6 +11,39 @@ peak_assign \-
 \fBrt\fR as double, 
 \fBRI\fR as double, 
 \fBnpeaks\fR as integer);\fR
+.SH DESCRIPTION
+.PP
+Associates the ms1 peaks with the ms2 spectrum alignment result hits.
+.PP
+.SH OPTIONS
+.PP
+\fBworks\fB \fR\- the workspace object, which could be constructed via the \fBworkspace\fR function.. 
+.PP
+.PP
+\fBlibname\fB \fR\- the reference key to the ms2 spectrum alignment result.. 
+.PP
+.PP
+\fBadducts\fB \fR\- -. 
+.PP
+.PP
+\fBxcms_id\fB \fR\- -. 
+.PP
+.PP
+\fBmz\fB \fR\- -. 
+.PP
+.PP
+\fBrt\fB \fR\- -. 
+.PP
+.PP
+\fBRI\fB \fR\- -. 
+.PP
+.PP
+\fBnpeaks\fB \fR\- -. 
+.PP
+.SH DETAILS
+.PP
+a ms2 spectrum alignment result should be existed inside the workspace before assign the ms1 peaks to the result.
+.PP
 .SH SEE ALSO
 annotation
 .SH FILES

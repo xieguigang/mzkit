@@ -1,6 +1,6 @@
 ﻿Imports System.IO
 Imports System.Runtime.CompilerServices
-Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
 Imports Microsoft.VisualBasic.Linq
 
 Public Module SavePack
@@ -55,10 +55,11 @@ Public Module SavePack
         bin.Write(If(align.source, ""))
         bin.Write(align.ms2.TryCount)
 
-        For Each peak As ms2 In align.ms2.SafeQuery
+        For Each peak As SSM2MatrixFragment In align.ms2.SafeQuery
             bin.Write(peak.mz)
-            bin.Write(peak.intensity)
-            bin.Write(If(peak.Annotation, ""))
+            bin.Write(peak.query)
+            bin.Write(peak.ref)
+            bin.Write(If(peak.da, ""))
         Next
 
         bin.Flush()

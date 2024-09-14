@@ -143,6 +143,13 @@ Namespace Spectra.Xml
             Next
         End Function
 
+        ''' <summary>
+        ''' construct a tuple of the spectrum data as the mirror alignment
+        ''' </summary>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' the name of the generated <see cref="LibraryMatrix"/> object is generates from the metadata of query and reference.
+        ''' </remarks>
         Public Function GetAlignmentMirror() As (query As LibraryMatrix, ref As LibraryMatrix)
             With New Ms2AlignMatrix(alignments)
                 Dim q = .GetQueryMatrix.With(Sub(a) a.name = query?.id)
@@ -162,24 +169,29 @@ Namespace Spectra.Xml
             Next
         End Function
 
+        Public Shared Iterator Function ParseAlignmentLinearMatrix(str As String) As IEnumerable(Of SSM2MatrixFragment)
+            If Not str Is Nothing Then
+                Dim peaks As String() = str.Split
+
+                For Each ti As String In peaks
+                    Dim tokens = ti.Split("_"c)
+                    Dim mz = Val(tokens(0))
+                    Dim query = Val(tokens(1))
+                    Dim refer = Val(tokens(2))
+
+                    Yield New SSM2MatrixFragment With {
+                        .mz = mz,
+                        .query = query,
+                        .ref = refer
+                    }
+                Next
+            End If
+        End Function
+
         Public Shared Function ParseAlignment(str As String) As AlignmentOutput
-            Dim peaks = str.Split
-            Dim hits = peaks _
-                .Select(Function(ti)
-                            Dim tokens = ti.Split("_"c)
-                            Dim mz = Val(tokens(0))
-                            Dim query = Val(tokens(1))
-                            Dim refer = Val(tokens(2))
-
-                            Return New SSM2MatrixFragment With {
-                                .mz = mz,
-                                .query = query,
-                                .ref = refer
-                            }
-                        End Function) _
-                .ToArray
-
-            Return New AlignmentOutput With {.alignments = hits}
+            Return New AlignmentOutput With {
+                .alignments = ParseAlignmentLinearMatrix(str).ToArray
+            }
         End Function
 
     End Class
