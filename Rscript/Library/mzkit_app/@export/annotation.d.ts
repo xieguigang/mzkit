@@ -92,9 +92,10 @@ declare namespace annotation {
    /**
     * Associates the ms1 peaks with the ms2 spectrum alignment result hits.
     * 
+    * > a ms2 spectrum alignment result should be existed inside the workspace before assign the ms1 peaks to the result.
     * 
      * @param works the workspace object, which could be constructed via the ``workspace`` function.
-     * @param libname -
+     * @param libname the reference key to the ms2 spectrum alignment result.
      * @param adducts -
      * @param xcms_id -
      * @param mz -
