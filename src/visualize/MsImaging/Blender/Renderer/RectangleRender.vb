@@ -100,6 +100,20 @@ Namespace Blender
             Call rgb.Render(gr, region)
         End Sub
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="R"></param>
+        ''' <param name="G"></param>
+        ''' <param name="B"></param>
+        ''' <param name="dimension">
+        ''' the dimension size of the ms-imaging rawdata
+        ''' </param>
+        ''' <param name="scale"></param>
+        ''' <param name="background"></param>
+        ''' <returns>
+        ''' the size of the generated raster image is specificed by the <paramref name="dimension"/> parameter.
+        ''' </returns>
         Public Overrides Function ChannelCompositions(R() As PixelData, G() As PixelData, B() As PixelData,
                                                       dimension As Size,
                                                       Optional scale As InterpolationMode = InterpolationMode.Bilinear,
