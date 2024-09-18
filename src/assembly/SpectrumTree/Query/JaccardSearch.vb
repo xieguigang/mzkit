@@ -96,12 +96,18 @@ Namespace Query
                 ' 20230801
                 ' current precursor has very complex adducts?
                 ' skip of current result
-                If query.Max - mz1 > 0.3 Then
-                    Return
-                End If
+                'If query.Max - mz1 > 0.3 Then
+                '    Return
+                'End If
             End If
 
-            Dim subset = mzSet.Where(Function(i) da(mz1, i.mz1)).ToArray
+            Dim subset = mzSet _
+                .Where(Function(i)
+                           ' matches of the input precursor mz1 with
+                           ' the reference mz1
+                           Return da(mz1, i.mz1)
+                       End Function) _
+                .ToArray
             Dim jaccard = subset _
                 .Select(Function(i)
                             Dim itr = GlobalAlignment.MzIntersect(i.ms2, query, da)
