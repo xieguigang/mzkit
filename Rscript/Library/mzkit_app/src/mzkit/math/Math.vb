@@ -1125,7 +1125,7 @@ Module MzMath
 
         If adducts.TryCount = 1 Then
             Dim adduct_str = adducts(0)
-            Dim adduct_type = Provider.ParseIonMode(adduct_str, allowsUnknown:=True)
+            Dim adduct_type = Provider.ParseIonMode(adduct_str, allowsUnknown:=True, verbose:=False)
 
             If adduct_type <> IonModes.Unknown Then
                 ' returns all
