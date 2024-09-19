@@ -62,6 +62,7 @@ Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.ComponentModel.TagData
@@ -97,12 +98,29 @@ Public Class PlotMassWindowXIC : Inherits Plot
     ReadOnly mass_windows As DoubleTagged(Of ms1_scan())()
     ReadOnly xic As ChromatogramTick()
 
-    Sub New(xic As IEnumerable(Of ms1_scan), theme As Theme, Optional mzdiff As Double = 0.001)
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="xic"></param>
+    ''' <param name="theme"></param>
+    ''' <param name="mz">
+    ''' the target ion m/z value for extract the XIC data
+    ''' </param>
+    ''' <param name="mzerr">
+    ''' the mass tolerance error for extract the XIC data
+    ''' </param>
+    ''' <param name="mzdiff">
+    ''' the mass window size for plot the density scatters
+    ''' </param>
+    Sub New(xic As IEnumerable(Of ms1_scan), mz As Double, mzerr As Tolerance,
+            theme As Theme,
+            Optional mzdiff As Double = 0.001)
+
         Call MyBase.New(theme)
 
         Dim pool As ms1_scan() = xic.ToArray
 
-        Me.xic = loadXIC(pool).ToArray
+        Me.xic = loadXIC(pool, mz, mzerr).ToArray
         Me.mass_windows = pool _
             .GroupBy(Function(m) m.mz, offsets:=mzdiff) _
             .Select(Function(m)
@@ -112,8 +130,10 @@ Public Class PlotMassWindowXIC : Inherits Plot
             .ToArray
     End Sub
 
-    Private Iterator Function loadXIC(pool As ms1_scan()) As IEnumerable(Of ChromatogramTick)
+    Private Iterator Function loadXIC(pool As ms1_scan(), mz As Double, mzdiff As Tolerance) As IEnumerable(Of ChromatogramTick)
         Dim rt_ticks = pool _
+            .AsParallel _
+            .Where(Function(a) mzdiff(a.mz, mz)) _
             .OrderBy(Function(a) a.scan_time) _
             .GroupBy(Function(t) t.scan_time, offsets:=0.25) _
             .ToArray
