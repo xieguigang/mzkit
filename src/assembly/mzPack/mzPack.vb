@@ -269,7 +269,7 @@ Public Class mzPack : Implements IMZPack
     End Function
 
     ''' <summary>
-    ''' a wrapper of <see cref="ReadAll(Stream, Boolean, Boolean, Boolean, Boolean)"/>
+    ''' a wrapper of <see cref="ReadAll"/>
     ''' </summary>
     ''' <param name="filepath"></param>
     ''' <param name="ignoreThumbnail"></param>
