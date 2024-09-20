@@ -323,6 +323,23 @@ Namespace Ms1
             End If
         End Function
 
+        ''' <summary>
+        ''' check of the input script text is in valid format or not
+        ''' </summary>
+        ''' <param name="script"></param>
+        ''' <returns></returns>
+        Public Shared Function CheckScriptText(script As String) As Boolean
+            Dim tokens = script.GetTagValue(":", trim:=True)
+            Dim method = tokens.Name.ToLower
+            Dim tolerance# = tokens.Value.ParseDouble
+
+            If (method = "da" OrElse method = "ppm") AndAlso tolerance > 0 Then
+                Return True
+            Else
+                Return False
+            End If
+        End Function
+
         Public Overloads Shared Function ToScript(err As Tolerance) As String
             If TypeOf err Is DAmethod Then
                 Return $"da:{err.DeltaTolerance}"
