@@ -613,6 +613,39 @@ Module mzDeco
     End Function
 
     ''' <summary>
+    ''' get ion peaks via the unique reference id
+    ''' </summary>
+    ''' <param name="peaktable"></param>
+    ''' <param name="id">a character vector of the unique reference id of the ion peaks</param>
+    ''' <param name="drop">
+    ''' if the given id set contains a single id value, just returns the single xcms ion peak clr object,
+    ''' instead of a tuple list with single element? Default is not, which means this function 
+    ''' always returns the tuple list data by default.
+    ''' </param>
+    ''' <param name="env"></param>
+    ''' <returns>a tuple list of the xcms peaks object</returns>
+    <ExportAPI("get_xcms_ionPeaks")>
+    <RApiReturn(GetType(xcms2))>
+    Public Function getIonPeak(peaktable As PeakSet, <RRawVectorArgument> id As Object,
+                               Optional drop As Boolean = False,
+                               Optional env As Environment = Nothing) As Object
+
+        Dim idset As String() = CLRVector.asCharacter(id)
+
+        If idset.Length = 1 And drop Then
+            Return peaktable.GetById(idset(0))
+        End If
+
+        Dim pull As list = list.empty
+
+        For Each id_str As String In idset
+            Call pull.add(id_str, peaktable.GetById(id_str))
+        Next
+
+        Return pull
+    End Function
+
+    ''' <summary>
     ''' adjust the reteintion time data to unit seconds
     ''' </summary>
     ''' <param name="rt_data"></param>
