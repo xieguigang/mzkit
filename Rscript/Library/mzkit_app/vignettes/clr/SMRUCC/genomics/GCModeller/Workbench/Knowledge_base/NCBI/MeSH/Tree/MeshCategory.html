@@ -22,7 +22,48 @@
 
         <h3>Description</h3>
 
-        
+        <h1>MeSH Tree Structures</h1>
+
+<p>MeSH descriptors are organized in 16 categories: category A for anatomic 
+ terms, category B for organisms, C for diseases, D for drugs and chemicals, 
+ etc. Each category is further divided into subcategories. Within each 
+ subcategory, descriptors are arrayed hierarchically from most general 
+ to most specific in up to thirteen hierarchical levels. Because of the
+ branching structure of the hierarchies, these lists are sometimes referred 
+ to as "trees". Each MeSH descriptor appears in at least one place in the 
+ trees, and may appear in as many additional places as may be appropriate.
+ Those who use MeSH should find the most specific MeSH descriptor that 
+ is available to represent each concept of interest.
+ 
+ For example, articles concerning Streptococcus pneumoniae will be found 
+ under the descriptor Streptococcus Pneumoniae rather than the broader 
+ term Streptococcus, while an article referring to a new streptococcal 
+ bacterium which is not yet in the vocabulary will be listed directly under 
+ Streptococcus. Accordingly, the user may consult the trees to find additional
+ subject headings which are more specific than a given heading, and broader 
+ headings as well. For example, under Abnormalities, there are specific 
+ abnormalities:
+
+<pre><code class=""> Congenital Abnormalities C16.131
+     Abnormalities, Drug Induced C16.131.042
+     Abnormalities, Multiple C16.131.077
+         22q11 Deletion Syndrome C16.131.077.019
+             DiGeorge Syndrome C16.131.077.019.500
+</code></pre>
+
+
+ 
+ In the MeSH Browser, each descriptor is followed by the number that indicates
+ its tree location. It may also be followed by one or more additional numbers,
+ in smaller type, and truncated at the third level, indicating other tree
+ locations of the same term. The numbers serve only to locate the descriptors 
+ in each tree and to alphabetize those at a given tree level. They have no 
+ intrinsic significance; e.g., the fact that D12.776.641 and D12.644.641 both 
+ have the three digit group 641 does not imply any common characteristic. The
+ numbers are subject to change when new descriptors are added or the hierarchical 
+ arrangement is revised to reflect vocabulary changes.</p>
+
+<p>ABCDEFGHIJKLMNVZ</p>
 
         <h3>Declare</h3>        
 
@@ -30,51 +71,67 @@
             <code id="clr_ts">
 # namespace SMRUCC.genomics.GCModeller.Workbench.Knowledge_base.NCBI.MeSH.Tree
 export class MeshCategory extends <a href="/vignettes/clr/System/Enum.html">Enum</a> {
+   # Anatomy [A]
    [@desc "Anatomy"]
    A: <a href="/vignettes/clr/SMRUCC/genomics/GCModeller/Workbench/Knowledge_base/NCBI/MeSH/Tree/MeshCategory.html">MeshCategory</a> = 0;
 
+   # Organisms [B]
    [@desc "Organisms"]
    B: <a href="/vignettes/clr/SMRUCC/genomics/GCModeller/Workbench/Knowledge_base/NCBI/MeSH/Tree/MeshCategory.html">MeshCategory</a> = 1;
 
+   # Diseases [C]
    [@desc "Diseases"]
    C: <a href="/vignettes/clr/SMRUCC/genomics/GCModeller/Workbench/Knowledge_base/NCBI/MeSH/Tree/MeshCategory.html">MeshCategory</a> = 2;
 
+   # Chemicals and Drugs [D]
    [@desc "Chemicals and Drugs"]
    D: <a href="/vignettes/clr/SMRUCC/genomics/GCModeller/Workbench/Knowledge_base/NCBI/MeSH/Tree/MeshCategory.html">MeshCategory</a> = 3;
 
+   # Analytical, Diagnostic and Therapeutic Techniques, and Equipment [E]
    [@desc "Analytical, Diagnostic and Therapeutic Techniques, and Equipment"]
    E: <a href="/vignettes/clr/SMRUCC/genomics/GCModeller/Workbench/Knowledge_base/NCBI/MeSH/Tree/MeshCategory.html">MeshCategory</a> = 4;
 
+   # Psychiatry and Psychology [F]
    [@desc "Psychiatry and Psychology"]
    F: <a href="/vignettes/clr/SMRUCC/genomics/GCModeller/Workbench/Knowledge_base/NCBI/MeSH/Tree/MeshCategory.html">MeshCategory</a> = 5;
 
+   # Phenomena and Processes [G]
    [@desc "Phenomena and Processes"]
    G: <a href="/vignettes/clr/SMRUCC/genomics/GCModeller/Workbench/Knowledge_base/NCBI/MeSH/Tree/MeshCategory.html">MeshCategory</a> = 6;
 
+   # Disciplines and Occupations [H]
    [@desc "Disciplines and Occupations"]
    H: <a href="/vignettes/clr/SMRUCC/genomics/GCModeller/Workbench/Knowledge_base/NCBI/MeSH/Tree/MeshCategory.html">MeshCategory</a> = 7;
 
+   # Anthropology, Education, Sociology, and Social Phenomena [I]
    [@desc "Anthropology, Education, Sociology, and Social Phenomena"]
    I: <a href="/vignettes/clr/SMRUCC/genomics/GCModeller/Workbench/Knowledge_base/NCBI/MeSH/Tree/MeshCategory.html">MeshCategory</a> = 8;
 
+   # Technology, Industry, and Agriculture [J]
    [@desc "Technology, Industry, and Agriculture"]
    J: <a href="/vignettes/clr/SMRUCC/genomics/GCModeller/Workbench/Knowledge_base/NCBI/MeSH/Tree/MeshCategory.html">MeshCategory</a> = 9;
 
+   # Humanities [K]
    [@desc "Humanities"]
    K: <a href="/vignettes/clr/SMRUCC/genomics/GCModeller/Workbench/Knowledge_base/NCBI/MeSH/Tree/MeshCategory.html">MeshCategory</a> = 10;
 
+   # Information Science [L]
    [@desc "Information Science"]
    L: <a href="/vignettes/clr/SMRUCC/genomics/GCModeller/Workbench/Knowledge_base/NCBI/MeSH/Tree/MeshCategory.html">MeshCategory</a> = 11;
 
+   # Named Groups [M]
    [@desc "Named Groups"]
    M: <a href="/vignettes/clr/SMRUCC/genomics/GCModeller/Workbench/Knowledge_base/NCBI/MeSH/Tree/MeshCategory.html">MeshCategory</a> = 12;
 
+   # Health Care [N]
    [@desc "Health Care"]
    N: <a href="/vignettes/clr/SMRUCC/genomics/GCModeller/Workbench/Knowledge_base/NCBI/MeSH/Tree/MeshCategory.html">MeshCategory</a> = 13;
 
+   # Publication Characteristics [V]
    [@desc "Publication Characteristics"]
    V: <a href="/vignettes/clr/SMRUCC/genomics/GCModeller/Workbench/Knowledge_base/NCBI/MeSH/Tree/MeshCategory.html">MeshCategory</a> = 14;
 
+   # Geographicals [Z]
    [@desc "Geographicals"]
    Z: <a href="/vignettes/clr/SMRUCC/genomics/GCModeller/Workbench/Knowledge_base/NCBI/MeSH/Tree/MeshCategory.html">MeshCategory</a> = 15;
 
