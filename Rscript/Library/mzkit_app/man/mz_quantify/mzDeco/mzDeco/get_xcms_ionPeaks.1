@@ -1,0 +1,40 @@
+.\" man page create by R# package system.
+.TH MZDECO 1 2000-Jan "get_xcms_ionPeaks" "get_xcms_ionPeaks"
+.SH NAME
+get_xcms_ionPeaks \- get ion peaks via the unique reference id
+.SH SYNOPSIS
+\fIget_xcms_ionPeaks(\fBpeaktable\fR as <generic> PeakSet, 
+\fBid\fR as any, 
+\fBdrop\fR as boolean = FALSE, 
+[\fB<Environment>\fR]);\fR
+.SH DESCRIPTION
+.PP
+get ion peaks via the unique reference id
+.PP
+.SH OPTIONS
+.PP
+\fBpeaktable\fB \fR\- -. 
+.PP
+.PP
+\fBid\fB \fR\- a character vector of the unique reference id of the ion peaks. 
+.PP
+.PP
+\fBdrop\fB \fR\- 
+ if the given id set contains a single id value, just returns the single xcms ion peak clr object,
+ instead of a tuple list with single element? Default is not, which means this function 
+ always returns the tuple list data by default.
+. 
+.PP
+.PP
+\fBenv\fB \fR\- -. 
+.PP
+.SH VALUE
+.PP
+a tuple list of the xcms peaks object
+.PP
+.SH SEE ALSO
+mzDeco
+.SH FILES
+.PP
+mz_quantify.dll
+.PP

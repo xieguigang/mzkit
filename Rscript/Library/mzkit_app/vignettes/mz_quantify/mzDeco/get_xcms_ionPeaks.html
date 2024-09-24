@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>get ion peaks via the unique reference id</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <table style="width: 100%;">
+            <tr>
+                <td>get_xcms_ionPeaks {mzDeco}</td>
+                <td style="text-align: right;">R Documentation</td>
+            </tr>
+        </table>
+
+        <h2>get ion peaks via the unique reference id</h2>
+
+        <h3>Description</h3>
+
+        
+
+        <h3>Usage</h3>
+
+        <div style="width: 100%; padding-left: 3%; color: black;">
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>get_xcms_ionPeaks</strong>(<i>peaktable</i>, <i>id</i>,
+    <i>drop</i> = <span style='color: blue !important;'>FALSE</span>);</code></pre>
+        </div>
+
+        <h3>Arguments</h3>
+
+        <table>
+            
+<dt>peaktable</dt>
+<dd><p>[as <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/PeakSet.html">PeakSet</a>]</p></dd>
+
+
+<dt>id</dt>
+<dd><p>a character vector of the unique reference id of the ion peaks</p></dd>
+
+
+<dt>drop</dt>
+<dd><p>if the given id set contains a single id value, just returns the single xcms ion peak clr object,
+ instead of a tuple list with single element? Default is not, which means this function 
+ always returns the tuple list data by default. [as boolean]</p></dd>
+
+
+<dt>env</dt>
+<dd><p>[as <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Environment.html">Environment</a>]</p></dd>
+
+        </table>
+
+
+        <h3 style="display: none;">Details</h3>
+
+        
+
+        <h3 style="display: block">Authors</h3>
+
+        BioNovoGene
+
+        <h3>Value</h3>
+
+        <p>a tuple list of the xcms peaks object</p><h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/xcms2.html">xcms2</a></li></ul>
+
+        <h3 style="display: none;">Examples</h3>
+
+        
+
+        <hr />
+        <div style="text-align: center;">[Package <em>mzDeco</em> version 1.0.0.0 <a
+                href="../mzDeco.html">Index</a>]
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="https://mzkit.org/assets/js/R_syntax.js"></script>
+<script type="text/javascript" src="https://mzkit.org/assets/js/highlights.js"></script>
+<script type="text/javascript">r_highlights("example_r");</script>
+
+</html>

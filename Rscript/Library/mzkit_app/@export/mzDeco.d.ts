@@ -71,6 +71,23 @@ declare namespace mzDeco {
    */
    function find_xcms_ionPeaks(peaktable: object, mz: number, rt: number, mzdiff?: number, rt_win?: number, find_RI?: boolean): object;
    /**
+    * get ion peaks via the unique reference id
+    * 
+    * 
+     * @param peaktable -
+     * @param id a character vector of the unique reference id of the ion peaks
+     * @param drop if the given id set contains a single id value, just returns the single xcms ion peak clr object,
+     *  instead of a tuple list with single element? Default is not, which means this function 
+     *  always returns the tuple list data by default.
+     * 
+     * + default value Is ``false``.
+     * @param env -
+     * 
+     * + default value Is ``null``.
+     * @return a tuple list of the xcms peaks object
+   */
+   function get_xcms_ionPeaks(peaktable: object, id: any, drop?: boolean, env?: object): object;
+   /**
     * A debug function for test peak finding method
     * 
     * 
