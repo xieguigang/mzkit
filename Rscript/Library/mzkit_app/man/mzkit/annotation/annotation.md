@@ -10,6 +10,7 @@ the metabolite annotation toolkit
 + [open.annotation_workspace](annotation/open.annotation_workspace.1) 
 + [read.annotationPack](annotation/read.annotationPack.1) 
 + [filter](annotation/filter.1) 
++ [get_peaktable](annotation/get_peaktable.1) get annotated ms1 peak features from the result data pack
 + [get_annotations](annotation/get_annotations.1) get annotation data from the given workspace object
 + [save_annotations](annotation/save_annotations.1) Save the reference library annotation result.
 + [push_temp](annotation/push_temp.1) Save the ms2 alignment hits result into current temp workspace.
