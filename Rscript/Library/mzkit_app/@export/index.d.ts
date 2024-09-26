@@ -166,6 +166,8 @@ declare namespace mzkit {
       function Deconvolution(rawdata: any, outputdir?: any, mzdiff?: any, xic_mzdiff?: any, peak.width?: any, n_threads?: any, filename?: any): object;
    }
    /**
+     * @param kind default value Is ``ppm``.
+     * @param mzdiff default value Is ``20``.
    */
-   function tolerance(kind: string, mzdiff: number): object;
+   function tolerance(kind?: any, mzdiff?: any): object;
 }
