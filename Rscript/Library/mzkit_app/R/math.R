@@ -6,7 +6,7 @@ imports "math" from "mz_quantify";
 #' @param kind da method or ppm method.
 #' @param mzdiff the m/z tolerance error value.
 #' 
-const tolerance = function(kind as string, mzdiff as double) {
+const tolerance = function(kind = "ppm", mzdiff = 20) {
     math::tolerance(mzdiff, kind);
 }
 
