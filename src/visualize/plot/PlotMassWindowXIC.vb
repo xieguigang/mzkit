@@ -215,6 +215,8 @@ Public Class PlotMassWindowXIC : Inherits Plot
                 .xlabel = "Retention Time(s)",
                 .ylabel = "Intensity"
             }.Plot(g, layout:=part1)
+        Else
+            Call "No Xic data points!".Warning
         End If
 
         Call g.DrawLine(axisLine, New PointF(part1.Left, part1.Bottom), New PointF(part1.Right, part1.Bottom))
@@ -226,6 +228,8 @@ Public Class PlotMassWindowXIC : Inherits Plot
                 .xlabel = "Retention Time(s)",
                 .ylabel = "M/Z"
             }.Plot(g, layout:=part2)
+        Else
+            Call "No mass trace scatter points!".Warning
         End If
     End Sub
 End Class
