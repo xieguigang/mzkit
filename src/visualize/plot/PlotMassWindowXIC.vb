@@ -223,7 +223,7 @@ Public Class PlotMassWindowXIC : Inherits Plot
 
         theme.xAxisLayout = Axis.XAxisLayoutStyles.Bottom
 
-        If Not mass_scatter.Select(Function(s) s.pts).IteratesALL.Any Then
+        If mass_scatter.Select(Function(s) s.pts).IteratesALL.Any Then
             Call New Scatter2D(mass_scatter, theme) With {
                 .xlabel = "Retention Time(s)",
                 .ylabel = "M/Z"
