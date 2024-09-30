@@ -1,3 +1,6 @@
+
+#' Make expression peak table deconvolution of the GCMS rawdata
+#' 
 let deconv_gcms = function(rawdata, export_dir = "./", peak.width = [3, 90], n_threads = 16) {
     let files = list.files(rawdata, pattern = "*.mzPack");
     let peaks_export = file.path(export_dir, "peaksdata");

@@ -6,12 +6,21 @@ imports "math" from "mz_quantify";
 #' @param kind da method or ppm method.
 #' @param mzdiff the m/z tolerance error value.
 #' 
-const tolerance = function(kind as string, mzdiff as double) {
+const tolerance = function(kind = "ppm", mzdiff = 20) {
     math::tolerance(mzdiff, kind);
 }
 
 #' Normalize matrix sample data
 #'
+#' @param sampleinfo the sample information for the missing impute. this parameter 
+#'     value could be a file path to the sampleinfo dataframe file, or a dataframe 
+#'     object that contains the required fields for the sample info: 
+#'     
+#'     + ``id`` is the sample id and used for the sample file name association; 
+#'     + ``name`` is the sample name and used for the sample name display; 
+#'     + ``group`` is the sample group information and used for the missing row data 
+#'                 impute and data filter in the processing.
+#' 
 #' @return a result data matrix has been normalized 
 #'     via total sum of the peak area.
 #'

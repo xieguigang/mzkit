@@ -38,6 +38,21 @@
 
         <table>
             
+<dt>precursors</dt>
+<dd><p><p>a character vector of the precursor adducts type, apply for the precursor m/z evaluation.</p></p></dd>
+
+
+<dt>mzdiff</dt>
+<dd><p><p>a tolerance error value for make ms1 matches</p></p></dd>
+
+
+<dt>repofile</dt>
+<dd><p><p>the local database file for the kegg compounds. should be a messagepack data file of a collection of the GCModeller compound object.</p></p></dd>
+
+
+<dt>strict</dt>
+<dd><p><p>option strict for check of the file exists or not of the repo file. an error was throw if the given repo file is missing from the local filesystem, or use the kegg compound data repo file from GCModeller internal resource file if not strict and also the given repo file is invalid</p></p></dd>
+
         </table>
 
 
@@ -51,7 +66,7 @@
 
         <h3>Value</h3>
 
-        This function has no value returns.
+        <p>a wrapper of the mass search engine which have kegg compound library loaded.</p>
 
         <h3 style="display: none;">Examples</h3>
 
