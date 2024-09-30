@@ -56,6 +56,16 @@ declare namespace annotation {
      * + default value Is ``null``.
    */
    function get_annotations(workspace: any, env?: object): object|object;
+   /**
+    * get annotated ms1 peak features from the result data pack
+    * 
+    * 
+     * @param workspace -
+     * @param env -
+     * 
+     * + default value Is ``null``.
+   */
+   function get_peaktable(workspace: any, env?: object): object;
    module make {
       /**
        * create a new metabolite annotation information

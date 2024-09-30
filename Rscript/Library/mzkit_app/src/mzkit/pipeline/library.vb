@@ -781,6 +781,28 @@ Module library
     End Function
 
     ''' <summary>
+    ''' get annotated ms1 peak features from the result data pack
+    ''' </summary>
+    ''' <param name="workspace"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("get_peaktable")>
+    <RApiReturn(GetType(PeakSet))>
+    Public Function loadPeaktable(workspace As Object, Optional env As Environment = Nothing) As Object
+        If workspace Is Nothing Then
+            Return Nothing
+        End If
+
+        If TypeOf workspace Is AnnotationWorkspace Then
+            Return DirectCast(workspace, AnnotationWorkspace).LoadMemory.CreatePeakSet
+        ElseIf TypeOf workspace Is AnnotationPack Then
+            Return DirectCast(workspace, AnnotationPack).CreatePeakSet
+        Else
+            Return Message.InCompatibleType(GetType(AnnotationWorkspace), workspace.GetType, env)
+        End If
+    End Function
+
+    ''' <summary>
     ''' get annotation data from the given workspace object
     ''' </summary>
     ''' <param name="workspace"></param>
