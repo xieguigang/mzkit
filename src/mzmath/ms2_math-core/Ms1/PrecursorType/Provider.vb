@@ -253,24 +253,50 @@ Namespace Ms1.PrecursorType
                 Case "-", "-1", "n", "neg", "negative"
                     Return IonModes.Negative
                 Case Else
-                    Dim msg As String
+                    Static unknown As New Dictionary(Of String, IonModes)
 
-                    If mode.StringEmpty Then
-                        msg = "the given ion mode string is empty!"
-                    Else
-                        msg = $"unsure how to parse the given string '{mode}' as ion mode!"
+                    If Not unknown.ContainsKey(mode) Then
+                        Dim pol As IonModes = TryAdductPolarityParserInternal(mode, allowsUnknown, verbose)
+
+                        SyncLock unknown
+                            unknown(mode) = pol
+                        End SyncLock
                     End If
 
-                    If verbose Then
-                        Call VBDebugger.WriteLine("InvalidExpressionException: " & msg)
-                    End If
-
-                    If allowsUnknown Then
-                        Return IonModes.Unknown
-                    Else
-                        Throw New InvalidExpressionException(msg)
-                    End If
+                    Return unknown(mode)
             End Select
+        End Function
+
+        Private Function TryAdductPolarityParserInternal(mode As String, allowsUnknown As Boolean, verbose As Boolean) As IonModes
+            Dim msg As String
+
+            If mode.StringEmpty Then
+                msg = "the given ion mode string is empty!"
+            ElseIf mode.IsPattern("\[.+\].*[+-]") Then
+                msg = $"parse the ion polarity mode from the precursor adducts: {mode}!"
+
+                If verbose Then
+                    Call VBDebugger.EchoLine(msg)
+                End If
+
+                If mode.Last = "+"c Then
+                    Return IonModes.Positive
+                Else
+                    Return IonModes.Negative
+                End If
+            Else
+                msg = $"unsure how to parse the given string '{mode}' as ion mode!"
+            End If
+
+            If verbose Then
+                Call VBDebugger.WriteLine("InvalidExpressionException: " & msg)
+            End If
+
+            If allowsUnknown Then
+                Return IonModes.Unknown
+            Else
+                Throw New InvalidExpressionException(msg)
+            End If
         End Function
 
         ''' <summary>
