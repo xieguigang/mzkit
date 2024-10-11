@@ -227,7 +227,7 @@ Namespace Ms1.PrecursorType
         ''' <param name="mode"><see cref="ParseIonMode"/></param>
         ''' <returns></returns>
         Public Shared Function EvaluateAll(mass#, mode As String, Optional exact_mass As Boolean = False) As IEnumerable(Of PrecursorInfo)
-            Return EvaluateAll(mass, Provider.Calculator(mode).Values, exact_mass)
+            Return EvaluateAll(mass, Provider.GetCalculator(mode).Values, exact_mass)
         End Function
 
         Public Shared Iterator Function EvaluateAll(mass As Double,

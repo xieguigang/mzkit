@@ -320,7 +320,7 @@ Namespace Ms1.PrecursorType
         End Function
 
         ''' <summary>
-        ''' Get the internal default adducts data set
+        ''' Get the internal default adducts data set via parse the ion polarity value from a given string
         ''' </summary>
         ''' <param name="ion_mode">any character string that could 
         ''' be parse a <see cref="IonModes"/> value via the 
