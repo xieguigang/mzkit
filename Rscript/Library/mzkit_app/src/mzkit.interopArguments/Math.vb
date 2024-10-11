@@ -54,6 +54,9 @@ Imports SMRUCC.Rsharp.Runtime.Internal
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports PeakMs1 = BioNovoGene.Analytical.MassSpectrometry.Math.Peaktable
 
+''' <summary>
+''' Common shared math module
+''' </summary>
 Module Math
 
     Public Function GetIonMode(x As Object, env As Environment) As IonModes

@@ -233,6 +233,16 @@ Namespace Ms1.PrecursorType
                     End Function)().ToArray
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function ParseIonMode(mode$, ByRef ionMode As IonModes,
+                                     Optional allowsUnknown As Boolean = False,
+                                     Optional allowAdductParser As Boolean = False,
+                                     Optional verbose As Boolean = True) As IonModes
+
+            ionMode = ParseIonMode(mode, allowsUnknown, allowAdductParser, verbose:=verbose)
+            Return ionMode
+        End Function
+
         ''' <summary>
         ''' 这个函数返回1或者-1,用来分别对应于阳离子和阴离子
         ''' </summary>
@@ -241,11 +251,15 @@ Namespace Ms1.PrecursorType
         ''' zero will be returns if this parameter value is set to TRUE, otherwise this
         ''' parser function will throw an exception
         ''' </param>
+        ''' <param name="allowAdductParser">
+        ''' allow parse the ion polarity mode value from the adducts model string
+        ''' </param>
         ''' <returns>
         ''' function returns 1(positive) or -1(negative)
         ''' </returns>
         Public Function ParseIonMode(mode$,
                                      Optional allowsUnknown As Boolean = False,
+                                     Optional allowAdductParser As Boolean = False,
                                      Optional verbose As Boolean = True) As IonModes
             Select Case LCase(mode)
                 Case "+", "1", "p", "pos", "positive"
@@ -253,37 +267,57 @@ Namespace Ms1.PrecursorType
                 Case "-", "-1", "n", "neg", "negative"
                     Return IonModes.Negative
                 Case Else
-                    Dim msg As String
+                    Static unknown As New Dictionary(Of String, IonModes)
 
-                    If mode.StringEmpty Then
-                        msg = "the given ion mode string is empty!"
-                    Else
-                        msg = $"unsure how to parse the given string '{mode}' as ion mode!"
+                    If Not unknown.ContainsKey(mode) Then
+                        Dim pol As IonModes = mode.TryAdductPolarityParserInternal(
+                            allowsUnknown,
+                            allowAdductParser,
+                            verbose
+                        )
+
+                        SyncLock unknown
+                            unknown(mode) = pol
+                        End SyncLock
                     End If
 
-                    If verbose Then
-                        Call VBDebugger.WriteLine("InvalidExpressionException: " & msg)
-                    End If
-
-                    If allowsUnknown Then
-                        Return IonModes.Unknown
-                    Else
-                        Throw New InvalidExpressionException(msg)
-                    End If
+                    Return unknown(mode)
             End Select
         End Function
 
-        ''' <summary>
-        ''' 采用Friend访问控制是为了避免被不必要的意外修改出现
-        ''' </summary>
-        ''' <param name="ion_mode"></param>
-        ''' <returns></returns>
-        Friend Function Calculator(ion_mode As String) As Dictionary(Of String, MzCalculator)
-            ' using cache for internal modules
-            If ParseIonMode(ion_mode) = 1 Then
-                Return pos
+        <Extension>
+        Private Function TryAdductPolarityParserInternal(mode As String,
+                                                         allowsUnknown As Boolean,
+                                                         allow_adduct_parser As Boolean,
+                                                         verbose As Boolean) As IonModes
+            Dim msg As String
+
+            If mode.StringEmpty Then
+                msg = "the given ion mode string is empty!"
+            ElseIf allow_adduct_parser AndAlso mode.IsPattern("\[.+\].*[+-]") Then
+                msg = $"parse the ion polarity mode from the precursor adducts: {mode}!"
+
+                If verbose Then
+                    Call VBDebugger.EchoLine(msg)
+                End If
+
+                If mode.Last = "+"c Then
+                    Return IonModes.Positive
+                Else
+                    Return IonModes.Negative
+                End If
             Else
-                Return neg
+                msg = $"unsure how to parse the given string '{mode}' as ion mode!"
+            End If
+
+            If verbose Then
+                Call VBDebugger.WriteLine("InvalidExpressionException: " & msg)
+            End If
+
+            If allowsUnknown Then
+                Return IonModes.Unknown
+            Else
+                Throw New InvalidExpressionException(msg)
             End If
         End Function
 
@@ -296,15 +330,15 @@ Namespace Ms1.PrecursorType
         End Function
 
         ''' <summary>
-        ''' Get the internal default adducts data set
+        ''' Get the internal default adducts data set via parse the ion polarity value from a given string
         ''' </summary>
         ''' <param name="ion_mode">any character string that could 
         ''' be parse a <see cref="IonModes"/> value via the 
-        ''' <see cref="ParseIonMode(String, Boolean)"/> function.
+        ''' <see cref="ParseIonMode"/> function.
         ''' </param>
         ''' <returns></returns>
-        Public Function GetCalculator(ion_mode As String) As Dictionary(Of String, MzCalculator)
-            If ParseIonMode(ion_mode) = 1 Then
+        Public Function GetCalculator(ion_mode As String, Optional verbose As Boolean = False) As Dictionary(Of String, MzCalculator)
+            If ParseIonMode(ion_mode, verbose:=verbose) = 1 Then
                 Return pos
             Else
                 Return neg
