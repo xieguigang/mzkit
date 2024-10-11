@@ -85,7 +85,7 @@ Namespace ASCII.MGF
         Public Function ReadIons(ParamArray files As String()) As IEnumerable(Of Ions)
             Return files _
                 .Select(Function(filepath)
-                            Call filepath.__INFO_ECHO
+                            ' Call filepath.__INFO_ECHO
                             Return StreamParser(filepath)
                         End Function) _
                 .IteratesALL

@@ -1,4 +1,4 @@
-﻿.TH GET_REPRESENTIVES 1 2024-Sep "" "Get n representive spectrums via molecular networking"
+﻿.TH GET_REPRESENTIVES 1 2024-Oct "" "Get n representive spectrums via molecular networking"
 .SH NAME
 get_representives \- get_representives(ions,
     <i>top.n</i> = <span style='color: green;'>5</span>,
@@ -19,13 +19,13 @@ get_representives \- get_representives(ions,
 \fBtop.n\fB \fR\- 5. 
 .PP
 .PP
-\fBmzdiff\fB \fR\- 0.3. 
+\fBmzdiff\fB \fR\- 0.3. the mass tolerance error for make spectrum centroid and matched of the ms2 spectrum fragments.
 .PP
 .PP
-\fBintocutoff\fB \fR\- 0.05. 
+\fBintocutoff\fB \fR\- 0.05. the relative intensity percentage value for removes the noise fragments.
 .PP
 .PP
-\fBequals\fB \fR\- 0.85. 
+\fBequals\fB \fR\- 0.85. the spectrum similarity cutoff value for check of the two spectrum is equals or not.
 .PP
 .SH VALUE
 .PP
@@ -33,7 +33,7 @@ a collection of peakms2 data object, number of the spectrum is specificed via th
 .PP
 .SH FILES
 .PP
-SMRUCC/R#.declare_function.get_representives at spectrum_cluster.R:line 11
+SMRUCC/R#.declare_function.get_representives at spectrum_cluster.R:line 15
 .PP
 .SH COPYRIGHT
 Copyright © xieguigang, MIT Licensed 2024

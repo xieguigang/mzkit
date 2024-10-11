@@ -82,7 +82,7 @@ Public Class ReportRender : Implements IReportRender
 
     Public Function HtmlTable(biodeep_ids As IEnumerable(Of String), Optional rt_cell As Boolean = True) As String
         Dim html As New StringBuilder
-        Dim lines = Tabular(biodeep_ids, rt_cell).ToArray
+        Dim lines = Tabular(biodeep_ids, AddressOf VBDebugger.EchoLine, rt_cell).ToArray
 
         Call html.AppendLine("<table>")
         Call html.AppendLine("<thead>")
@@ -105,7 +105,7 @@ Public Class ReportRender : Implements IReportRender
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Function Tabular(biodeep_ids As IEnumerable(Of String), Optional rt_cell As Boolean = False) As IEnumerable(Of String) Implements IReportRender.Tabular
+    Public Function Tabular(biodeep_ids As IEnumerable(Of String), println As Action(Of String), Optional rt_cell As Boolean = False) As IEnumerable(Of String) Implements IReportRender.Tabular
         Return Tabular(biodeep_ids, rt_cell, ms1:=True)
     End Function
 

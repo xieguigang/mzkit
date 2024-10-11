@@ -52,6 +52,10 @@ Public Class AnnotationPack : Implements IWorkspaceReader, IDisposable
                      End Function)
     End Function
 
+    ''' <summary>
+    ''' get peaktable
+    ''' </summary>
+    ''' <returns></returns>
     Public Function CreatePeakSet() As PeakSet
         Return New PeakSet(peaks)
     End Function

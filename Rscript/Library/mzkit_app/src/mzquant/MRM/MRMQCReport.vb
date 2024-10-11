@@ -74,7 +74,7 @@ Imports Microsoft.VisualBasic.Scripting.SymbolBuilder
 Imports Microsoft.VisualBasic.Text.Xml
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Module MRMQCReport
 
@@ -128,7 +128,7 @@ Module MRMQCReport
         For Each metabolite As DataSet In QCResult
             RSD = metabolite.Vector.RSD
             linear = ref(metabolite.ID)
-            title = $"QC scatter of {metabolite.ID}(RSD: {stdNum.Round(RSD, 3)})"
+            title = $"QC scatter of {metabolite.ID}(RSD: {std.Round(RSD, 3)})"
             samples = metabolite.Properties.NamedValues
             image = Visual.DrawStandardCurve(linear, title, samples, labelerIterations:=2000).AsGDIImage
             mean = metabolite.Vector.Average
@@ -149,11 +149,11 @@ Module MRMQCReport
             rows *= 0
 
             For Each sample As KeyValuePair(Of String, Double) In metabolite.Properties
-                QC_variants += (stdNum.Abs(sample.Value - tabulateMean) / tabulateMean)
+                QC_variants += (std.Abs(sample.Value - tabulateMean) / tabulateMean)
                 rows += (<tr>
                              <td><%= sample.Key %></td>
                              <td><%= sample.Value %></td>
-                             <td><%= stdNum.Abs(sample.Value - tabulateMean) / tabulateMean %></td>
+                             <td><%= std.Abs(sample.Value - tabulateMean) / tabulateMean %></td>
                          </tr>).ToString
             Next
 
@@ -163,7 +163,7 @@ Module MRMQCReport
                                     <ul>
                                         <li>Mean: <%= mean %></li>
                                         <li>SD: <%= metabolite.Vector.SD %></li>
-                                        <li>RSD : <strong><%= stdNum.Round(RSD * 100, 2) %></strong></li>
+                                        <li>RSD : <strong><%= std.Round(RSD * 100, 2) %></strong></li>
                                     </ul>
                                     <img src=<%= New DataURI(image).ToString %> style="width: 70%"/>
                                     <h3>QC samples</h3>
@@ -213,7 +213,7 @@ Module MRMQCReport
                                 <td><a href="#%s"><%= compound.ID %></a></td>
                                 <td><%= compound!Mean %></td>
                                 <td><%= compound!SD %></td>
-                                <td><%= stdNum.Round(compound!RSD * 100, 2) %></td>
+                                <td><%= std.Round(compound!RSD * 100, 2) %></td>
                             </tr>, compound.ID)
         Next
 

@@ -138,7 +138,12 @@ Namespace DataReader
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function GetActivationMethod(scan As scan) As ActivationMethods
-            Return [Enum].Parse(GetType(ActivationMethods), scan.precursorMz.activationMethod)
+            Dim method As String = scan.precursorMz.activationMethod
+
+            If String.IsNullOrWhiteSpace(method) OrElse method = "" Then
+                Return ActivationMethods.Unknown
+            End If
+            Return [Enum].Parse(GetType(ActivationMethods), method)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

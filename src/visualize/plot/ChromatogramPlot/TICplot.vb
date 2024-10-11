@@ -100,6 +100,8 @@ Public Class TICplot : Inherits Plot
     ''' </summary>
     ReadOnly leapTimeWinSize As Double = 30
 
+    Public Property sampleColors As Dictionary(Of String, Pen)
+
     ''' <summary>
     ''' 
     ''' </summary>
@@ -193,6 +195,7 @@ Public Class TICplot : Inherits Plot
 
     Friend Sub RunPlot(ByRef g As IGraphics, canvas As GraphicsRegion, ByRef labels As Label(), ByRef legends As LegendObject())
         Dim colors As LoopArray(Of Pen) = colorProvider(g.LoadEnvironment)
+        Dim defaultPen As Pen = newPen(g.LoadEnvironment, theme.colorSet.TranslateColor(False) Or Color.DeepSkyBlue.AsDefault)
         Dim XTicks As Double() = ionData _
             .Select(Function(ion)
                         Return ion.value.TimeArray
@@ -248,11 +251,22 @@ Public Class TICplot : Inherits Plot
         Dim peakTimes As New List(Of NamedValue(Of ChromatogramTick))
         Dim fillColor As Brush
         Dim legendList As New List(Of LegendObject)
+        Dim curvePen As Pen
 
         For i As Integer = 0 To ionData.Length - 1
-            Dim curvePen As Pen = colors.Next
-            Dim line = ionData(i)
+            Dim line As NamedCollection(Of ChromatogramTick) = ionData(i)
             Dim chromatogram = line.value
+
+            If sampleColors IsNot Nothing Then
+                ' rendering color by sample group or manual config
+                If sampleColors.ContainsKey(line.name) Then
+                    curvePen = sampleColors(line.name)
+                Else
+                    curvePen = defaultPen
+                End If
+            Else
+                curvePen = colors.Next
+            End If
 
             If chromatogram.IsNullOrEmpty Then
                 Call $"ion not found in raw file: '{line.name}'".Warning

@@ -1,4 +1,4 @@
-﻿.TH KEGG_COMPOUNDS 1 2024-Sep "" "Load the kegg database for the annotation"
+﻿.TH KEGG_COMPOUNDS 1 2024-Oct "" "Load the kegg database for the annotation"
 .SH NAME
 kegg_compounds \- kegg_compounds(
     <i>precursors</i> = [<span style='color: brown;'><strong>'[M+H]+'</strong></span>,<span style='color: brown;'><strong>'[M+H-H2O]+'</strong></span>],
@@ -13,20 +13,24 @@ kegg_compounds \- kegg_compounds(
     <i>strict</i> = <span style='color: blue !important;'>FALSE</span>)\fR
 .SH OPTIONS
 .PP
-\fBprecursors\fB \fR\- ['[M]+', '[M+H]+', '[M+H-H2O]+']. 
+\fBprecursors\fB \fR\- ['[M]+', '[M+H]+', '[M+H-H2O]+']. a character vector of the precursor adducts type, apply for the precursor m/z evaluation.
 .PP
 .PP
-\fBmzdiff\fB \fR\- 'ppm:20'. 
+\fBmzdiff\fB \fR\- 'ppm:20'. a tolerance error value for make ms1 matches
 .PP
 .PP
-\fBrepofile\fB \fR\- 'KEGG_compounds.msgpack'. 
+\fBrepofile\fB \fR\- 'KEGG_compounds.msgpack'. the local database file for the kegg compounds. should be a messagepack data file of a collection of the GCModeller compound object.
 .PP
 .PP
-\fBstrict\fB \fR\- FALSE. 
+\fBstrict\fB \fR\- FALSE. option strict for check of the file exists or not of the repo file. an error was throw if the given repo file is missing from the local filesystem, or use the kegg compound data repo file from GCModeller internal resource file if not strict and also the given repo file is invalid
+.PP
+.SH VALUE
+.PP
+a wrapper of the mass search engine which have kegg compound library loaded.
 .PP
 .SH FILES
 .PP
-SMRUCC/R#.declare_function.kegg_compounds at annotation.R:line 6
+SMRUCC/R#.declare_function.kegg_compounds at annotation.R:line 18
 .PP
 .SH COPYRIGHT
 Copyright © xieguigang, MIT Licensed 2024

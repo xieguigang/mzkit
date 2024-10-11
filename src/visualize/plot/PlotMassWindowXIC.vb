@@ -210,11 +210,26 @@ Public Class PlotMassWindowXIC : Inherits Plot
 
         theme.xAxisLayout = Axis.XAxisLayoutStyles.None
 
-        Call New Scatter2D({xic_dat}, theme) With {.xlabel = "Retention Time(s)", .ylabel = "Intensity"}.Plot(g, layout:=part1)
+        If Not xic_dat.pts.IsNullOrEmpty Then
+            Call New Scatter2D({xic_dat}, theme) With {
+                .xlabel = "Retention Time(s)",
+                .ylabel = "Intensity"
+            }.Plot(g, layout:=part1)
+        Else
+            Call "No Xic data points!".Warning
+        End If
+
         Call g.DrawLine(axisLine, New PointF(part1.Left, part1.Bottom), New PointF(part1.Right, part1.Bottom))
 
         theme.xAxisLayout = Axis.XAxisLayoutStyles.Bottom
 
-        Call New Scatter2D(mass_scatter, theme) With {.xlabel = "Retention Time(s)", .ylabel = "M/Z"}.Plot(g, layout:=part2)
+        If mass_scatter.Select(Function(s) s.pts).IteratesALL.Any Then
+            Call New Scatter2D(mass_scatter, theme) With {
+                .xlabel = "Retention Time(s)",
+                .ylabel = "M/Z"
+            }.Plot(g, layout:=part2)
+        Else
+            Call "No mass trace scatter points!".Warning
+        End If
     End Sub
 End Class

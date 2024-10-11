@@ -71,16 +71,16 @@ Namespace Ms1.PrecursorType
         ''' <summary>
         ''' 
         ''' </summary>
-        ''' <param name="chargeMode$">+/-</param>
-        ''' <param name="charge%"></param>
-        ''' <param name="precursor_type$"></param>
+        ''' <param name="chargeMode">+/-</param>
+        ''' <param name="charge"></param>
+        ''' <param name="precursor_type"></param>
         ''' <returns></returns>
         Public Function CalcMass(chargeMode$, charge%, precursor_type$) As Func(Of Double, Double)
             If (precursor_type = "[M]+" OrElse precursor_type = "[M]-") Then
                 Return (Function(x) x)
             End If
 
-            Dim mode As Dictionary(Of String, MzCalculator) = Calculator(chargeMode)
+            Dim mode As Dictionary(Of String, MzCalculator) = Provider.GetCalculator(chargeMode)
             Dim found As MzCalculator = Nothing
 
             For Each cacl In mode.Values
@@ -144,7 +144,7 @@ Namespace Ms1.PrecursorType
                 End If
             Else
                 Return Provider _
-                    .Calculator(chargeMode).Values _
+                    .GetCalculator(chargeMode).Values _
                     .Where(Function(cal)
                                Return cal.charge = charge
                            End Function) _

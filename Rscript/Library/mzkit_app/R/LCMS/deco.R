@@ -13,11 +13,16 @@ imports "visual" from "mzplot";
 #'     rawdata, the XIC data is generated based on this parameter value
 #' @param peak.width the rt range of the peak data
 #' @param n_threads the cpu thread number for apply for the peak alignments when export peaktable data.
+#' @param xic_mzdiff the mass tolerance error for make extract of the xic data 
+#'     from all of the ms1 rawdata scatters. 
+#' 
+#' @param filename the save file name of the exports generated peaktable file.
 #' 
 #' @return this function returns nothing 
 #' 
 const run.Deconvolution = function(rawdata, outputdir = "./", mzdiff = 0.001, xic_mzdiff = 0.005,
-                                   peak.width = [2, 30], n_threads = 16, filename = "peaktable.csv") {
+                                   peak.width = [2, 30], n_threads = 16, 
+                                   filename = "peaktable.csv") {
                                     
     const xic_cache = `${outputdir}/XIC_data`;
     const files = 
