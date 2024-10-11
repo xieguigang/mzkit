@@ -288,10 +288,13 @@ Module MzMath
         If adducts_source.IsNullOrEmpty Then
             Return Internal.debug.stop("the required of the adducts source(libtype) should not be empty!", env)
         End If
-        If adducts_source.Length = 1 AndAlso Provider.ParseIonMode(adducts_source(0), allowsUnknown:=True) <> IonModes.Unknown Then
+
+        Dim ionMode As IonModes = IonModes.Unknown
+
+        If adducts_source.Length = 1 AndAlso Provider.ParseIonMode(adducts_source(0), ionMode, allowsUnknown:=True, verbose:=env.verboseOption) <> IonModes.Unknown Then
             ' is polarity ion mode value
             ' 1 or -1
-            Dim charge As Integer = Provider.ParseIonMode(adducts_source(0))
+            Dim charge As Integer = CInt(ionMode)
             ' +/-
             Dim polarity As String = If(charge = 1, "+", "-")
 
@@ -439,11 +442,14 @@ Module MzMath
 
         If sym.IsNullOrEmpty Then
             Return Internal.debug.stop("the required ion mode value should not be nothing!", env)
-        ElseIf sym.Length = 1 AndAlso ParseIonMode(sym(0), allowsUnknown:=True) <> IonModes.Unknown Then
+        ElseIf sym.Length = 1 AndAlso ParseIonMode(sym(0),
+                                                   allowsUnknown:=True,
+                                                   verbose:=env.verboseOption) <> IonModes.Unknown Then
+
             Return MzCalculator.EvaluateAll(mz, sym(0), True).ToArray
         Else
             Dim ions As MzCalculator() = Math.GetPrecursorTypes(mode, env)
-            Dim mass = MzCalculator.EvaluateAll(mz, ions, exact_mass:=True).ToArray
+            Dim mass As PrecursorInfo() = MzCalculator.EvaluateAll(mz, ions, exact_mass:=True).ToArray
             Return mass
         End If
     End Function
@@ -1128,7 +1134,7 @@ Module MzMath
             Dim adduct_type = Provider.ParseIonMode(adduct_str,
                                                     allowsUnknown:=True,
                                                     allowAdductParser:=False,
-                                                    verbose:=False)
+                                                    verbose:=env.verboseOption)
 
             If adduct_type <> IonModes.Unknown Then
                 ' returns all

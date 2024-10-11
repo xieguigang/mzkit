@@ -233,6 +233,16 @@ Namespace Ms1.PrecursorType
                     End Function)().ToArray
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function ParseIonMode(mode$, ByRef ionMode As IonModes,
+                                     Optional allowsUnknown As Boolean = False,
+                                     Optional allowAdductParser As Boolean = False,
+                                     Optional verbose As Boolean = True) As IonModes
+
+            ionMode = ParseIonMode(mode, allowsUnknown, allowAdductParser, verbose:=verbose)
+            Return ionMode
+        End Function
+
         ''' <summary>
         ''' 这个函数返回1或者-1,用来分别对应于阳离子和阴离子
         ''' </summary>

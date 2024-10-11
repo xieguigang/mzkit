@@ -503,6 +503,7 @@ Module Assembly
     <RApiReturn(GetType(Integer))>
     Public Function ionMode(scans As Object, Optional env As Environment = Nothing) As Object
         Dim polar As New List(Of Integer)
+        Dim verbose As Boolean = env.verboseOption
 
         If TypeOf scans Is BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack Then
             Dim ms = DirectCast(scans, BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack).MS
@@ -520,13 +521,13 @@ Module Assembly
                 Dim reader As mzXMLScan = MsDataReader(Of mzXMLAssembly.scan).ScanProvider()
 
                 For Each scanVal As mzXMLAssembly.scan In scanPip.populates(Of mzXMLAssembly.scan)(env).Where(Function(s) reader.GetMsLevel(s) = 2)
-                    Call polar.Add(PrecursorType.ParseIonMode(reader.GetPolarity(scanVal)))
+                    Call polar.Add(PrecursorType.ParseIonMode(reader.GetPolarity(scanVal), verbose:=verbose))
                 Next
             ElseIf scanPip.elementType Like GetType(spectrum) Then
                 Dim reader As mzMLScan = MsDataReader(Of spectrum).ScanProvider()
 
                 For Each scanVal As spectrum In scanPip.populates(Of spectrum)(env).Where(Function(s) reader.GetMsLevel(s) = 2)
-                    Call polar.Add(PrecursorType.ParseIonMode(reader.GetPolarity(scanVal)))
+                    Call polar.Add(PrecursorType.ParseIonMode(reader.GetPolarity(scanVal), verbose:=verbose))
                 Next
             Else
                 Return Message.InCompatibleType(GetType(mzXMLAssembly.scan), scanPip.elementType, env)
