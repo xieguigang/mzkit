@@ -241,11 +241,15 @@ Namespace Ms1.PrecursorType
         ''' zero will be returns if this parameter value is set to TRUE, otherwise this
         ''' parser function will throw an exception
         ''' </param>
+        ''' <param name="allowAdductParser">
+        ''' allow parse the ion polarity mode value from the adducts model string
+        ''' </param>
         ''' <returns>
         ''' function returns 1(positive) or -1(negative)
         ''' </returns>
         Public Function ParseIonMode(mode$,
                                      Optional allowsUnknown As Boolean = False,
+                                     Optional allowAdductParser As Boolean = False,
                                      Optional verbose As Boolean = True) As IonModes
             Select Case LCase(mode)
                 Case "+", "1", "p", "pos", "positive"
@@ -256,7 +260,11 @@ Namespace Ms1.PrecursorType
                     Static unknown As New Dictionary(Of String, IonModes)
 
                     If Not unknown.ContainsKey(mode) Then
-                        Dim pol As IonModes = TryAdductPolarityParserInternal(mode, allowsUnknown, verbose)
+                        Dim pol As IonModes = mode.TryAdductPolarityParserInternal(
+                            allowsUnknown,
+                            allowAdductParser,
+                            verbose
+                        )
 
                         SyncLock unknown
                             unknown(mode) = pol
@@ -267,12 +275,16 @@ Namespace Ms1.PrecursorType
             End Select
         End Function
 
-        Private Function TryAdductPolarityParserInternal(mode As String, allowsUnknown As Boolean, verbose As Boolean) As IonModes
+        <Extension>
+        Private Function TryAdductPolarityParserInternal(mode As String,
+                                                         allowsUnknown As Boolean,
+                                                         allow_adduct_parser As Boolean,
+                                                         verbose As Boolean) As IonModes
             Dim msg As String
 
             If mode.StringEmpty Then
                 msg = "the given ion mode string is empty!"
-            ElseIf mode.IsPattern("\[.+\].*[+-]") Then
+            ElseIf allow_adduct_parser AndAlso mode.IsPattern("\[.+\].*[+-]") Then
                 msg = $"parse the ion polarity mode from the precursor adducts: {mode}!"
 
                 If verbose Then
@@ -299,20 +311,6 @@ Namespace Ms1.PrecursorType
             End If
         End Function
 
-        ''' <summary>
-        ''' 采用Friend访问控制是为了避免被不必要的意外修改出现
-        ''' </summary>
-        ''' <param name="ion_mode"></param>
-        ''' <returns></returns>
-        Friend Function Calculator(ion_mode As String) As Dictionary(Of String, MzCalculator)
-            ' using cache for internal modules
-            If ParseIonMode(ion_mode) = 1 Then
-                Return pos
-            Else
-                Return neg
-            End If
-        End Function
-
         Public Function GetCalculator(ion_mode As IonModes) As Dictionary(Of String, MzCalculator)
             If ion_mode = IonModes.Positive Then
                 Return pos
@@ -326,11 +324,11 @@ Namespace Ms1.PrecursorType
         ''' </summary>
         ''' <param name="ion_mode">any character string that could 
         ''' be parse a <see cref="IonModes"/> value via the 
-        ''' <see cref="ParseIonMode(String, Boolean)"/> function.
+        ''' <see cref="ParseIonMode"/> function.
         ''' </param>
         ''' <returns></returns>
-        Public Function GetCalculator(ion_mode As String) As Dictionary(Of String, MzCalculator)
-            If ParseIonMode(ion_mode) = 1 Then
+        Public Function GetCalculator(ion_mode As String, Optional verbose As Boolean = False) As Dictionary(Of String, MzCalculator)
+            If ParseIonMode(ion_mode, verbose:=verbose) = 1 Then
                 Return pos
             Else
                 Return neg

@@ -1119,13 +1119,16 @@ Module MzMath
                                    Optional unsafe As Boolean = True,
                                    Optional env As Environment = Nothing) As Object
 
-        Const empty_string = "the given string is empty which is not valid for parse the precursor adducts object!"
-
         Dim adducts = CLRVector.asCharacter(types)
+
+        Const empty_string = "the given string is empty which is not valid for parse the precursor adducts object!"
 
         If adducts.TryCount = 1 Then
             Dim adduct_str = adducts(0)
-            Dim adduct_type = Provider.ParseIonMode(adduct_str, allowsUnknown:=True, verbose:=False)
+            Dim adduct_type = Provider.ParseIonMode(adduct_str,
+                                                    allowsUnknown:=True,
+                                                    allowAdductParser:=False,
+                                                    verbose:=False)
 
             If adduct_type <> IonModes.Unknown Then
                 ' returns all
