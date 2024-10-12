@@ -84,7 +84,7 @@ Imports SMRUCC.Rsharp.Runtime.Internal.Invokes
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
-Imports RgraphicsDev = SMRUCC.Rsharp.Runtime.Internal.Invokes.graphicsDevice
+Imports RgraphicsDev = R_graphics.Common.Runtime.graphicsDevice
 Imports std = System.Math
 
 #If NET48 Then

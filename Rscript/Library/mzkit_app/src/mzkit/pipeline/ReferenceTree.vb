@@ -80,6 +80,7 @@ Imports SMRUCC.Rsharp.Runtime.Internal.Invokes
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
+Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
 
 ''' <summary>
 ''' the spectrum tree reference library tools
@@ -119,7 +120,7 @@ Module ReferenceTreePkg
             Case ClusterTypes.Tree, ClusterTypes.Default : Return New ReferenceTree(stream)
             Case ClusterTypes.Pack : Return New SpectrumPack(stream)
             Case Else
-                Return Internal.debug.stop(New NotImplementedException(type.Description), env)
+                Return RInternal.debug.stop(New NotImplementedException(type.Description), env)
         End Select
     End Function
 
@@ -361,7 +362,7 @@ Module ReferenceTreePkg
             Call env.AddMessage("The given spectrum input data is nothing!", MSG_TYPES.WRN)
             Return Nothing
         ElseIf tree Is Nothing Then
-            Return Internal.debug.stop("the required spectrum reference library could not be nothing!", env)
+            Return RInternal.debug.stop("the required spectrum reference library could not be nothing!", env)
         End If
 
         If TypeOf x Is LibraryMatrix Then
@@ -386,7 +387,7 @@ Module ReferenceTreePkg
         Dim result As ClusterHit()
 
         If (Not treeSearch) AndAlso x.parentMz <= 0.0 Then
-            Return Internal.debug.stop($"mz query required a positive m/z value!", env)
+            Return RInternal.debug.stop($"mz query required a positive m/z value!", env)
         ElseIf x.Length = 0 Then
             Return Nothing
         End If
@@ -439,7 +440,7 @@ Module ReferenceTreePkg
         Dim result As ClusterHit()
 
         If (Not treeSearch) AndAlso x.mz <= 0.0 Then
-            Return Internal.debug.stop($"mz query required a positive m/z value!", env)
+            Return RInternal.debug.stop($"mz query required a positive m/z value!", env)
         ElseIf x.mzInto.Length = 0 Then
             Return Nothing
         End If
@@ -554,7 +555,7 @@ Module ReferenceTreePkg
         If list.isError Then
             Return list.getError
         ElseIf tree Is Nothing Then
-            Return Internal.debug.stop("The required reference library object can not be nothing!", env)
+            Return RInternal.debug.stop("The required reference library object can not be nothing!", env)
         End If
 
         If TypeOf tree Is ReferenceTree Then
@@ -571,7 +572,7 @@ Module ReferenceTreePkg
                     Call env.AddMessage(no_biodeep_id)
                     Return tree
                 Else
-                    Return Internal.debug.stop(no_biodeep_id, env)
+                    Return RInternal.debug.stop(no_biodeep_id, env)
                 End If
             End If
             If formula.StringEmpty Then
@@ -579,7 +580,7 @@ Module ReferenceTreePkg
                     Call env.AddMessage(no_formula)
                     Return tree
                 Else
-                    Return Internal.debug.stop(no_formula, env)
+                    Return RInternal.debug.stop(no_formula, env)
                 End If
             End If
 
