@@ -3,6 +3,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.BioDeep.MSEngine
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.DataStorage.HDSPack
@@ -104,6 +105,23 @@ Public Class AnnotationWorkspace : Implements IDisposable, IWorkspaceReader
             Next
         Next
     End Sub
+
+    Public Iterator Function LoadXicGroup(ion As String) As IEnumerable(Of NamedCollection(Of ms1_scan))
+        Dim dir As StreamGroup = pack.GetObject("/xic_table/")
+
+        For Each file As StreamGroup In dir.ListFiles(recursive:=False).OfType(Of StreamGroup)
+            Dim ionfile = file.ListFiles(recursive:=False).OfType(Of StreamBlock).Where(Function(f) f.fileName.BaseName = ion).FirstOrDefault
+
+            If ionfile Is Nothing Then
+                Continue For
+            End If
+
+            Dim cache As Stream = pack.OpenBlock(ionfile)
+            Dim scatter As ms1_scan() = Ms1ScatterCache.LoadDataFrame(cache).ToArray
+
+            Yield New NamedCollection(Of ms1_scan)(file.fileName, scatter)
+        Next
+    End Function
 
     ''' <summary>
     ''' save xcms peaktable to pack file
