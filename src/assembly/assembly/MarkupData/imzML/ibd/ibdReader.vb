@@ -163,6 +163,12 @@ Namespace MarkupData.imzML
             Next
         End Function
 
+        ''' <summary>
+        ''' read mz and intensity vector from the ibd file stream
+        ''' </summary>
+        ''' <param name="scan"></param>
+        ''' <param name="mz"></param>
+        ''' <param name="intensity"></param>
         Public Sub GetMSVector(scan As ScanData, <Out> ByRef mz As Double(), <Out> ByRef intensity As Double())
             mz = ReadArray(scan.MzPtr)
             intensity = ReadArray(scan.IntPtr)

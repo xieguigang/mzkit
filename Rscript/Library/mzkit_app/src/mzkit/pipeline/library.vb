@@ -70,6 +70,7 @@ Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports BioNovoGene.BioDeep.MSEngine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Vectorization
 Imports Microsoft.VisualBasic.Linq
@@ -823,6 +824,63 @@ Module library
         Else
             Return Message.InCompatibleType(GetType(AnnotationWorkspace), workspace.GetType, env)
         End If
+    End Function
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="workspace"></param>
+    ''' <param name="raw_set">should be a set of the mzpack raw data objects, or a character 
+    ''' vector of the file path to the mzpack rawdata files.
+    ''' </param>
+    ''' <param name="da"></param>
+    ''' <param name="rt_win"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("set_xicCache")>
+    Public Function set_xicCache(workspace As AnnotationWorkspace, <RRawVectorArgument> raw_set As Object,
+                                 Optional da As Double = 0.25,
+                                 Optional rt_win As Double = 7.5,
+                                 Optional env As Environment = Nothing) As Object
+
+        Dim pull As pipeline = pipeline.TryCreatePipeline(Of mzPack)(raw_set, env)
+
+        If raw_set Is Nothing Then
+            Return Internal.debug.stop("no rawdata was provided for extract the ion XIC data!", env)
+        End If
+
+        If pull.isError Then
+            If TypeOf raw_set Is list Then
+                raw_set = DirectCast(raw_set, list).data.ToArray
+            End If
+            If TypeOf raw_set Is vector Then
+                raw_set = DirectCast(raw_set, vector).data
+            End If
+
+            If TypeOf raw_set Is String Then
+                raw_set = {CStr(raw_set)}
+            End If
+
+            raw_set = TryCastGenericArray(raw_set, env)
+
+            If DataFramework.IsCollection(Of String)(raw_set.GetType) Then
+                ' read ms1 from files
+                Dim reader As Func(Of IEnumerable(Of mzPack)) =
+                    Iterator Function() As IEnumerable(Of mzPack)
+                        For Each path As String In CLRVector.asCharacter(raw_set)
+                            Yield mzPack.Read(path, ignoreThumbnail:=True, skipMsn:=True, verbose:=False)
+                        Next
+                    End Function
+
+                pull = pipeline.CreateFromPopulator(reader())
+            Else
+                Return pull.getError
+            End If
+        End If
+
+        Call workspace.CacheXicTable(pull.populates(Of mzPack)(env), da, rt_win)
+
+        Return True
     End Function
 
     ''' <summary>

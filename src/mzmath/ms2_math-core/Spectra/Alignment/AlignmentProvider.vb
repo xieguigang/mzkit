@@ -145,7 +145,7 @@ Namespace Spectra
                 .ToArray
             Dim scores As (forward#, reverse#) = GetScore(align)
             Dim jIdx As Double = GlobalAlignment.JaccardIndex(a, b, mzwidth)
-            Dim entropy As Double = SpectralEntropy.calculate_entropy_similarity(align)
+            Dim entropy As Double = SpectralEntropy.calculate_entropy_similarity(align.StandardizeAlignment.ToArray)
 
             Return New AlignmentOutput With {
                 .alignments = align,

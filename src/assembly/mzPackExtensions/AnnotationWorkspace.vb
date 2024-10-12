@@ -1,6 +1,9 @@
 ﻿Imports System.IO
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.BioDeep.MSEngine
+Imports Microsoft.VisualBasic.ApplicationServices
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.DataStorage.HDSPack
@@ -87,6 +90,39 @@ Public Class AnnotationWorkspace : Implements IDisposable, IWorkspaceReader
 
     Const peaktablefile As String = "/peaktable.dat"
 
+    Public Sub CacheXicTable(files As IEnumerable(Of mzPack), Optional mass_da As Double = 0.5, Optional rt_win As Double = 15)
+        Dim pool As mzPack() = files.ToArray
+
+        ' commit current data pool
+        Call Flush()
+        ' and then load the peaktable back from the filesystem
+        For Each peak As xcms2 In TqdmWrapper.Wrap(LoadPeakTable.ToArray)
+            For Each file As mzPack In pool
+                Using s As Stream = pack.OpenFile($"/xic_table/{file.source}/{peak.ID}.xic",, FileAccess.Write)
+                    Call file.PickIonScatter(peak.mz, peak.rt, mass_da, rt_win).SaveDataFrame(s)
+                    Call s.Flush()
+                End Using
+            Next
+        Next
+    End Sub
+
+    Public Iterator Function LoadXicGroup(ion As String) As IEnumerable(Of NamedCollection(Of ms1_scan))
+        Dim dir As StreamGroup = pack.GetObject("/xic_table/")
+
+        For Each file As StreamGroup In dir.ListFiles(recursive:=False).OfType(Of StreamGroup)
+            Dim ionfile = file.ListFiles(recursive:=False).OfType(Of StreamBlock).Where(Function(f) f.fileName.BaseName = ion).FirstOrDefault
+
+            If ionfile Is Nothing Then
+                Continue For
+            End If
+
+            Dim cache As Stream = pack.OpenBlock(ionfile)
+            Dim scatter As ms1_scan() = Ms1ScatterCache.LoadDataFrame(cache).ToArray
+
+            Yield New NamedCollection(Of ms1_scan)(file.fileName, scatter)
+        Next
+    End Function
+
     ''' <summary>
     ''' save xcms peaktable to pack file
     ''' </summary>
@@ -121,11 +157,20 @@ Public Class AnnotationWorkspace : Implements IDisposable, IWorkspaceReader
         Call libraries.Add(library, i)
     End Sub
 
+    ''' <summary>
+    ''' Commit the memory cache data into filesystem
+    ''' </summary>
+    Public Sub Flush()
+        Call pack.WriteText(libraries.GetJson, "/libraries.json")
+        Call pack.WriteText(samplefiles.ToArray.GetJson, "/samplefiles.json")
+
+        Call DirectCast(pack, IFileSystemEnvironment).Flush()
+    End Sub
+
     Protected Overridable Sub Dispose(disposing As Boolean)
         If Not disposedValue Then
             If disposing Then
-                Call pack.WriteText(libraries.GetJson, "/libraries.json")
-                Call pack.WriteText(samplefiles.ToArray.GetJson, "/samplefiles.json")
+                Call Flush()
 
                 ' TODO: 释放托管状态(托管对象)
                 Call pack.Dispose()

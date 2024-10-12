@@ -72,8 +72,17 @@ Namespace Embedding
         Public Property graph_id As Integer
         Public Property aromatic As Boolean
 
+        ''' <summary>
+        ''' get the group label string, this function will tagged the ``(aromatic)`` automatically
+        ''' if current atom is on a ring of <see cref="aromatic"/>.
+        ''' </summary>
+        ''' <returns></returns>
         Public Overrides Function ToString() As String
-            Return group
+            If aromatic Then
+                Return group & "(aromatic)"
+            Else
+                Return group
+            End If
         End Function
 
     End Class
