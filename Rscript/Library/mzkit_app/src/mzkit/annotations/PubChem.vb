@@ -91,6 +91,7 @@ Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports Rdataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
+Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
 
 #If NET48 Then
 Imports Pen = System.Drawing.Pen
@@ -153,7 +154,7 @@ Imports FontStyle = Microsoft.VisualBasic.Imaging.FontStyle
 Module PubChemToolKit
 
     Sub Main()
-        Call Internal.Object.Converts.makeDataframe.addHandler(GetType(SIDMap()), AddressOf SIDMapTable)
+        Call RInternal.Object.Converts.makeDataframe.addHandler(GetType(SIDMap()), AddressOf SIDMapTable)
     End Sub
 
     Private Function SIDMapTable(maps As SIDMap(), args As list, env As Environment) As Rdataframe

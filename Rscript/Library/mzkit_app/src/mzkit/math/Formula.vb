@@ -89,6 +89,7 @@ Imports any = Microsoft.VisualBasic.Scripting
 Imports RDataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
 Imports REnv = SMRUCC.Rsharp.Runtime.Internal.ConsolePrinter
 Imports std = System.Math
+Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
 
 ''' <summary>
 ''' The chemical formulae toolkit
@@ -142,7 +143,7 @@ Module FormulaTools
         Call REnv.AttachConsoleFormatter(Of Formula)(AddressOf FormulaString)
         Call REnv.AttachConsoleFormatter(Of FormulaComposition())(AddressOf printFormulas)
 
-        Call Internal.Object.Converts.makeDataframe.addHandler(GetType(FormulaComposition()), AddressOf getFormulaResult)
+        Call RInternal.Object.Converts.makeDataframe.addHandler(GetType(FormulaComposition()), AddressOf getFormulaResult)
     End Sub
 
     Private Function getFormulaResult(formulas As FormulaComposition(), args As list, env As Environment) As RDataframe
@@ -414,7 +415,7 @@ Module FormulaTools
         Dim precursors = Math.GetPrecursorTypes(adducts, env)
 
         If precursors.IsNullOrEmpty Then
-            Return Internal.debug.stop("no adducts value was given!", env)
+            Return RInternal.debug.stop("no adducts value was given!", env)
         End If
 
         If precursors.Length = 1 Then
@@ -629,7 +630,7 @@ Module FormulaTools
     <RApiReturn(GetType(DataSet()))>
     Public Function LoadChemicalDescriptorsMatrix(repo As PubChemDescriptorRepo, cid As Long(), Optional env As Environment = Nothing) As Object
         If repo Is Nothing Then
-            Return Internal.debug.stop("no chemical descriptor database was provided!", env)
+            Return RInternal.debug.stop("no chemical descriptor database was provided!", env)
         ElseIf cid.IsNullOrEmpty Then
             Return Nothing
         End If

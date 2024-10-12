@@ -63,6 +63,7 @@ Imports ProteoWizard.Interop
 Imports ProteoWizard.Interop.filters
 Imports SMRUCC.Rsharp.Development.Configuration
 Imports SMRUCC.Rsharp.Runtime
+Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
 
 ''' <summary>
 ''' ProteoWizard helper
@@ -116,7 +117,7 @@ Module ProteoWizard
         Dim bin As ProteoWizardCLI = GetServices(env)
 
         If Not bin.IsAvailable Then
-            Return Internal.debug.stop(ErrMsg, env)
+            Return RInternal.debug.stop(ErrMsg, env)
         Else
             If output.StringEmpty Then
                 output = wiff.TrimSuffix
@@ -170,7 +171,7 @@ Module ProteoWizard
         }
 
         If Not bin.IsAvailable Then
-            Return Internal.debug.stop(ErrMsg, env)
+            Return RInternal.debug.stop(ErrMsg, env)
         ElseIf parallel > App.CPUCoreNumbers Then
             Call env.AddMessage($"the given parallelism degree is greater than the processor counts!", MSG_TYPES.WRN)
         End If

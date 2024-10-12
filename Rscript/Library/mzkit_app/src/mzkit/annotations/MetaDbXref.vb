@@ -88,6 +88,7 @@ Imports SMRUCC.Rsharp.Runtime.Internal.Object.Converts
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports REnv = SMRUCC.Rsharp.Runtime
+Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
 
 ''' <summary>
 ''' Metabolite annotation database search engine
@@ -138,13 +139,13 @@ Module MetaDbXref
         Dim mzdiff = Math.getTolerance(tolerance, env, [default]:="da:0.01")
 
         If type Is Nothing Then
-            Return Internal.debug.stop("the required type information could not be nothing!", env)
+            Return RInternal.debug.stop("the required type information could not be nothing!", env)
         End If
         If indexVal Is Nothing Then
-            Return Internal.debug.stop({$"the given type information({type}) could not be resolve in current runtime session!"}, env)
+            Return RInternal.debug.stop({$"the given type information({type}) could not be resolve in current runtime session!"}, env)
         End If
         If Not indexVal.raw.ImplementInterface(Of IExactMassProvider) Then
-            Return Internal.debug.stop($"the given type information({type}) should implements the interface of '{GetType(IExactMassProvider).GetType.FullName}'!", env)
+            Return RInternal.debug.stop($"the given type information({type}) should implements the interface of '{GetType(IExactMassProvider).GetType.FullName}'!", env)
         End If
         If mzdiff Like GetType(Message) Then
             Return mzdiff.TryCast(Of Message)
@@ -303,7 +304,7 @@ Module MetaDbXref
                                      Optional env As Environment = Nothing) As Object
 
         If id.Length <> name.Length OrElse name.Length <> formula.Length Then
-            Return Internal.debug.stop("vector size of the annotation data should be equals to each other!", env)
+            Return RInternal.debug.stop("vector size of the annotation data should be equals to each other!", env)
         Else
             Return id _
                 .Select(Function(ref, i)
@@ -443,7 +444,7 @@ Module MetaDbXref
         ElseIf engine.GetType.ImplementInterface(Of IMzQuery) Then
             queryEngine = engine
         Else
-            Return Internal.debug.stop("invalid handler type!", env)
+            Return RInternal.debug.stop("invalid handler type!", env)
         End If
 
         If mz Is Nothing Then
@@ -561,7 +562,7 @@ Module MetaDbXref
         If engine.GetType.ImplementInterface(Of IMzQuery) Then
             queryEngine = engine
         Else
-            Return Internal.debug.stop("invalid handler type!", env)
+            Return RInternal.debug.stop("invalid handler type!", env)
         End If
 
         Return New list With {
@@ -996,7 +997,7 @@ Module MetaDbXref
     <ExportAPI("cbind.metainfo")>
     Public Function cbindMeta(anno As dataframe, engine As Object, Optional env As Environment = Nothing) As Object
         If Not anno.hasName("unique_id") Then
-            Return Internal.debug.stop("missing unique id of the metabolite annotation result!", env)
+            Return RInternal.debug.stop("missing unique id of the metabolite annotation result!", env)
         End If
 
         If engine Is Nothing Then
