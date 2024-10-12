@@ -2,7 +2,7 @@
 
 	<PropertyGroup>
 		<RootNamespace>mzkit</RootNamespace>
-    <TargetFrameworks>net6.0</TargetFrameworks>
+    <TargetFrameworks>net8.0</TargetFrameworks>
 		<AssemblyName>mzkit</AssemblyName>
 		<Platforms>AnyCPU;x64</Platforms>
 		<Configurations>Debug;Release;LipidSearch;PlantMAT;mzkit;Rsharp_app_release</Configurations>
