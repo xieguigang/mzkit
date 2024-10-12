@@ -158,10 +158,10 @@ Public Class DualRegionUnionPlot : Inherits Plot
         Dim css As CSSEnvirnment = g.LoadEnvironment
 
         MSI1 = engine.RenderPixels(region1.MSILayer, MSIsize, colorSet:=colorSet1).AsGDIImage
-        MSI1 = Drawer.ScaleLayer(MSI1, rect.Width, rect.Height, InterpolationMode.Bilinear)
+        MSI1 = Drawer.ScaleLayer(MSI1, rect.Width, rect.Height)
 
         MSI2 = engine.RenderPixels(region2.MSILayer, MSIsize, colorSet:=colorSet2).AsGDIImage
-        MSI2 = Drawer.ScaleLayer(MSI2, rect.Width, rect.Height, InterpolationMode.Bilinear)
+        MSI2 = Drawer.ScaleLayer(MSI2, rect.Width, rect.Height)
 
         Call g.DrawAxis(canvas, scale,
                         showGrid:=True,

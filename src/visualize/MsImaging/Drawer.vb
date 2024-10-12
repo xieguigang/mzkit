@@ -1,63 +1,63 @@
 ﻿#Region "Microsoft.VisualBasic::fc735c717e3d2b15806f4aff2aab170a, visualize\MsImaging\Drawer.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 315
-    '    Code Lines: 199 (63.17%)
-    ' Comment Lines: 68 (21.59%)
-    '    - Xml Docs: 82.35%
-    ' 
-    '   Blank Lines: 48 (15.24%)
-    '     File Size: 12.82 KB
+' Summaries:
 
 
-    ' Class Drawer
-    ' 
-    '     Properties: dimension, pixelReader
-    ' 
-    '     Constructor: (+4 Overloads) Sub New
-    ' 
-    '     Function: (+2 Overloads) DrawLayer, GetPixelsMatrix, (+2 Overloads) LoadPixels, ReadXY, RenderSummaryLayer
-    '               (+2 Overloads) ScaleLayer, ScalePixels, ShowSummaryRendering
-    ' 
-    '     Sub: (+2 Overloads) Dispose
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 315
+'    Code Lines: 199 (63.17%)
+' Comment Lines: 68 (21.59%)
+'    - Xml Docs: 82.35%
+' 
+'   Blank Lines: 48 (15.24%)
+'     File Size: 12.82 KB
+
+
+' Class Drawer
+' 
+'     Properties: dimension, pixelReader
+' 
+'     Constructor: (+4 Overloads) Sub New
+' 
+'     Function: (+2 Overloads) DrawLayer, GetPixelsMatrix, (+2 Overloads) LoadPixels, ReadXY, RenderSummaryLayer
+'               (+2 Overloads) ScaleLayer, ScalePixels, ShowSummaryRendering
+' 
+'     Sub: (+2 Overloads) Dispose
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -76,8 +76,12 @@ Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Drawing.Imaging.BitmapImage
+
 
 #If NET48 Then
+Imports Microsoft.VisualBasic.Drawing
+
 Imports Pen = System.Drawing.Pen
 Imports Pens = System.Drawing.Pens
 Imports Brush = System.Drawing.Brush
@@ -273,7 +277,11 @@ Public Class Drawer : Implements IDisposable
     ''' <param name="scale"></param>
     ''' <returns></returns>
     Public Shared Function ScaleLayer(raw As Bitmap, newWidth As Integer, newHeight As Integer) As Bitmap
+#If NET48 Then
         Return raw.Resize(newWidth, onlyResizeIfWider:=True)
+#Else
+        Return raw.Resize(newWidth, newHeight)
+#End If
     End Function
 
     ''' <summary>

@@ -273,6 +273,7 @@
 	  <ProjectReference Include="..\..\..\..\..\..\GCModeller\src\GCModeller\core\Bio.Assembly\biocore-netcore5.vbproj" />
 	  <ProjectReference Include="..\..\..\..\..\..\GCModeller\src\GCModeller\core\Bio.InteractionModel\InteractionModel.NET5.vbproj" />
 	  <ProjectReference Include="..\..\..\..\..\..\GCModeller\src\GCModeller\models\Networks\KEGG\KEGGNetwork.NET5.vbproj" />
+	  <ProjectReference Include="..\..\..\..\..\..\GCModeller\src\R-sharp\Library\shares\graphics.common_runtime\R_graphics.common_runtime.vbproj" />
 	  <ProjectReference Include="..\..\..\..\..\..\GCModeller\src\R-sharp\R#\Rsharp-netcore5.vbproj" />
 	  <ProjectReference Include="..\..\..\..\..\..\GCModeller\src\repository\Bio.Repository\repository.NET5.vbproj" />
 	  <ProjectReference Include="..\..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\HDSPack\HDSPack.vbproj" />
