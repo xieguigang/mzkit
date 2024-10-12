@@ -77,6 +77,32 @@ Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 
+#If NET48 Then
+Imports Pen = System.Drawing.Pen
+Imports Pens = System.Drawing.Pens
+Imports Brush = System.Drawing.Brush
+Imports Font = System.Drawing.Font
+Imports Brushes = System.Drawing.Brushes
+Imports SolidBrush = System.Drawing.SolidBrush
+Imports DashStyle = System.Drawing.Drawing2D.DashStyle
+Imports Image = System.Drawing.Image
+Imports Bitmap = System.Drawing.Bitmap
+Imports GraphicsPath = System.Drawing.Drawing2D.GraphicsPath
+Imports FontStyle = System.Drawing.FontStyle
+#Else
+Imports Pen = Microsoft.VisualBasic.Imaging.Pen
+Imports Pens = Microsoft.VisualBasic.Imaging.Pens
+Imports Brush = Microsoft.VisualBasic.Imaging.Brush
+Imports Font = Microsoft.VisualBasic.Imaging.Font
+Imports Brushes = Microsoft.VisualBasic.Imaging.Brushes
+Imports SolidBrush = Microsoft.VisualBasic.Imaging.SolidBrush
+Imports DashStyle = Microsoft.VisualBasic.Imaging.DashStyle
+Imports Image = Microsoft.VisualBasic.Imaging.Image
+Imports Bitmap = Microsoft.VisualBasic.Imaging.Bitmap
+Imports GraphicsPath = Microsoft.VisualBasic.Imaging.GraphicsPath
+Imports FontStyle = Microsoft.VisualBasic.Imaging.FontStyle
+#End If
+
 ''' <summary>
 ''' MS-imaging render canvas
 ''' </summary>
@@ -231,11 +257,11 @@ Public Class Drawer : Implements IDisposable
         )
     End Function
 
-    Public Shared Function ScaleLayer(raw As Bitmap, dimension As Size, dimSize As Size, scale As InterpolationMode) As Bitmap
+    Public Shared Function ScaleLayer(raw As Bitmap, dimension As Size, dimSize As Size) As Bitmap
         Dim newWidth As Integer = dimension.Width * dimSize.Width
         Dim newHeight As Integer = dimension.Height * dimSize.Height
 
-        Return ScaleLayer(raw, newWidth, newHeight, scale)
+        Return ScaleLayer(raw, newWidth, newHeight)
     End Function
 
     ''' <summary>
@@ -246,12 +272,8 @@ Public Class Drawer : Implements IDisposable
     ''' <param name="newHeight"></param>
     ''' <param name="scale"></param>
     ''' <returns></returns>
-    Public Shared Function ScaleLayer(raw As Bitmap, newWidth As Integer, newHeight As Integer, scale As InterpolationMode) As Bitmap
-        If scale = InterpolationMode.Invalid Then
-            scale = InterpolationMode.Default
-        End If
-
-        Return raw.Resize(newWidth, onlyResizeIfWider:=True, scale:=scale)
+    Public Shared Function ScaleLayer(raw As Bitmap, newWidth As Integer, newHeight As Integer) As Bitmap
+        Return raw.Resize(newWidth, onlyResizeIfWider:=True)
     End Function
 
     ''' <summary>
@@ -266,7 +288,6 @@ Public Class Drawer : Implements IDisposable
                               Optional toleranceErr As String = "da:0.1",
                               Optional colorSet As String = "YlGnBu:c8",
                               Optional mapLevels% = 25,
-                              Optional scale As InterpolationMode = InterpolationMode.Bilinear,
                               Optional filter As RasterPipeline = Nothing,
                               Optional background As String = NameOf(Color.Transparent),
                               Optional driver As Drivers = Drivers.Default) As GraphicsData
@@ -289,7 +310,6 @@ Public Class Drawer : Implements IDisposable
             dimension:=dimension,
             colorSet:=colorSet,
             mapLevels:=mapLevels,
-            scale:=scale,
             defaultFill:=background
         )
     End Function
@@ -343,7 +363,6 @@ Public Class Drawer : Implements IDisposable
                               Optional toleranceErr As String = "da:0.1",
                               Optional colorSet As String = "YlGnBu:c8",
                               Optional mapLevels% = 25,
-                              Optional scale As InterpolationMode = InterpolationMode.Bilinear,
                               Optional filter As RasterPipeline = Nothing,
                               Optional background As String = NameOf(Color.Transparent),
                               Optional driver As Drivers = Drivers.Default) As GraphicsData
@@ -373,7 +392,6 @@ Public Class Drawer : Implements IDisposable
             dimension:=dimension,
             colorSet:=colorSet,
             mapLevels:=mapLevels,
-            scale:=scale,
             defaultFill:=background
         )
     End Function
