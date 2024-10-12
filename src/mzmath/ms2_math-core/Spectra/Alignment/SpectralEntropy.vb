@@ -138,12 +138,34 @@ Namespace Spectra
         End Function
 
         <Extension>
+        Public Iterator Function StandardizeAlignment(align As SSM2MatrixFragment()) As IEnumerable(Of SSM2MatrixFragment)
+            Dim qsum As Double = align.Sum(Function(a) a.query)
+            Dim rsum As Double = align.Sum(Function(a) a.ref)
+
+            For Each fragment As SSM2MatrixFragment In align
+                Yield New SSM2MatrixFragment With {
+                    .da = fragment.da,
+                    .mz = fragment.mz,
+                    .query = fragment.query / qsum,
+                    .ref = fragment.ref / rsum
+                }
+            Next
+        End Function
+
+        <Extension>
         Public Function Entropy(ms As PeakMs2) As Double
             Dim msms As New LibraryMatrix With {.ms2 = ms.mzInto}
             Dim ent As Double = StandardizeSpectrum(msms).intensity.ShannonEntropy
             Return ent
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="alignment">
+        ''' the intensity value must be standardized
+        ''' </param>
+        ''' <returns></returns>
         <Extension>
         Public Function calculate_entropy_similarity(alignment As SSM2MatrixFragment()) As Double
             Dim p As New Vector(From mzi In alignment Select mzi.query)
