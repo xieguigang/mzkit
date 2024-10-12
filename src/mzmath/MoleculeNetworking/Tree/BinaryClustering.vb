@@ -1,4 +1,6 @@
 ﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports Microsoft.VisualBasic.DataMining.BinaryTree
+Imports Microsoft.VisualBasic.Linq
 
 ''' <summary>
 ''' Spectrum binary tree clustering helper
@@ -40,6 +42,14 @@ Public Class BinaryClustering
     ''' <param name="ions"></param>
     ''' <returns></returns>
     Public Function Tree(ions As IEnumerable(Of PeakMs2)) As BinaryClustering
+        Dim uniqueIds As New List(Of String)
+
+        For Each spectrum As PeakMs2 In ions.SafeQuery
+            Call align.Add(spectrum)
+            Call uniqueIds.Add(spectrum.lib_guid)
+        Next
+
+        Dim bin As BTreeCluster = BuildTree.BTreeCluster(uniqueIds, align)
 
     End Function
 End Class
