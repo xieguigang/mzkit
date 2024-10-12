@@ -249,7 +249,14 @@ imzML:      Return LoadimzML(xml, intocutoff, IonModes.Positive, Sub(p, msg) pro
             Dim scan_mass As DoubleRange = scan.mass
 
             If scan_mass Is Nothing Then
-                scan_mass = New DoubleRange(0, 1000)
+                If mz.IsNullOrEmpty Then
+                    scan_mass = New DoubleRange(0, 1000)
+                Else
+                    scan_mass = New DoubleRange(mz.Min, mz.Max)
+                End If
+            End If
+            If scan.totalIon <= 0.0 Then
+                scan.totalIon = intensity.Sum
             End If
 
             ptag = If(scan.polarity = IonModes.Positive, "+", If(scan.polarity = IonModes.Negative, "-", "?"))
