@@ -271,6 +271,7 @@
     <ProjectReference Include="..\..\assembly\assembly\assembly-netcore5.vbproj" />
     <ProjectReference Include="..\..\assembly\SpectrumTree\spectrumTree.NETCore5.vbproj" />
     <ProjectReference Include="..\ms2_math-core\mzmath-netcore5.vbproj" />
+    <ProjectReference Include="..\mz_deco\deconv.NET5.vbproj" />
   </ItemGroup>
 
 </Project>
