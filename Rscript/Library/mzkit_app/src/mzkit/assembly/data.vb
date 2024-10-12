@@ -85,6 +85,7 @@ Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports rDataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
 Imports REnv = SMRUCC.Rsharp.Runtime
+Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
 
 ''' <summary>
 ''' m/z data operator module
@@ -94,11 +95,11 @@ Module data
 
     <RInitialize>
     Sub Main()
-        Call Internal.Object.Converts.makeDataframe.addHandler(GetType(ms1_scan()), AddressOf XICTable)
-        Call Internal.Object.Converts.makeDataframe.addHandler(GetType(PeakMs2()), AddressOf getIonsSummaryTable)
-        Call Internal.Object.Converts.makeDataframe.addHandler(GetType(LibraryMatrix), AddressOf LibraryTable)
-        Call Internal.Object.Converts.makeDataframe.addHandler(GetType(ChromatogramTick()), AddressOf TICTable)
-        Call Internal.Object.Converts.makeDataframe.addHandler(GetType(ms2()), AddressOf getMSMSTable)
+        Call RInternal.Object.Converts.makeDataframe.addHandler(GetType(ms1_scan()), AddressOf XICTable)
+        Call RInternal.Object.Converts.makeDataframe.addHandler(GetType(PeakMs2()), AddressOf getIonsSummaryTable)
+        Call RInternal.Object.Converts.makeDataframe.addHandler(GetType(LibraryMatrix), AddressOf LibraryTable)
+        Call RInternal.Object.Converts.makeDataframe.addHandler(GetType(ChromatogramTick()), AddressOf TICTable)
+        Call RInternal.Object.Converts.makeDataframe.addHandler(GetType(ms2()), AddressOf getMSMSTable)
     End Sub
 
     Private Function TICTable(TIC As ChromatogramTick(), args As list, env As Environment) As rDataframe
@@ -362,7 +363,7 @@ Module data
         ElseIf spectra Like GetType(Message) Then
             Return spectra.TryCast(Of Message)
         ElseIf refer Is Nothing OrElse refer.MS Is Nothing Then
-            Return Internal.debug.stop("the required reference data should not be nothing!", env)
+            Return RInternal.debug.stop("the required reference data should not be nothing!", env)
         End If
 
         Dim mzdiff As Tolerance = mzErr.TryCast(Of Tolerance)
@@ -465,9 +466,9 @@ Module data
             Dim into As Double() = CLRVector.asNumeric(args.getBySynonyms("into", "intensity"))
 
             If mz.IsNullOrEmpty OrElse into.IsNullOrEmpty Then
-                Return Internal.debug.stop("No mass spectrum peaks data was assigned!", env)
+                Return RInternal.debug.stop("No mass spectrum peaks data was assigned!", env)
             ElseIf mz.Length <> into.Length Then
-                Return Internal.debug.stop($"The vector data size of mz({mz.Length}) is mis-matched with the intensity vector({into.Length})!", env)
+                Return RInternal.debug.stop($"The vector data size of mz({mz.Length}) is mis-matched with the intensity vector({into.Length})!", env)
             End If
 
             MS = mz _

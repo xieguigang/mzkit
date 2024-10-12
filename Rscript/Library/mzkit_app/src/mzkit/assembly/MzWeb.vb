@@ -97,6 +97,7 @@ Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports ChromatogramTick = BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram.ChromatogramTick
 Imports SIMDAdd = Microsoft.VisualBasic.Math.SIMD.Add
+Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
 
 #If NET48 Then
 Imports Pen = System.Drawing.Pen
@@ -136,7 +137,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader
 Module MzWeb
 
     Sub Main()
-        Call Internal.Object.Converts.makeDataframe.addHandler(GetType(ms1_scan()), AddressOf getMs1PointTable)
+        Call RInternal.Object.Converts.makeDataframe.addHandler(GetType(ms1_scan()), AddressOf getMs1PointTable)
     End Sub
 
     <RGenericOverloads("as.data.frame")>
@@ -505,7 +506,7 @@ Module MzWeb
     <RApiReturn(GetType(mzPack))>
     Public Function Open(file As Object, Optional verbose As Boolean = True, Optional env As Environment = Nothing) As Object
         If file Is Nothing Then
-            Return Internal.debug.stop("the required file object can not be nothing!", env)
+            Return RInternal.debug.stop("the required file object can not be nothing!", env)
         End If
         If TypeOf file Is String Then
             Dim mzpack As mzPack = openFromFile(file, verbose:=verbose, env:=env)
@@ -519,7 +520,7 @@ Module MzWeb
             Dim stream As Stream = file
             Return mzPack.ReadAll(file:=stream, verbose:=verbose)
         Else
-            Return Internal.debug.stop(New NotImplementedException($"unsure for how to handling '{file.GetType.FullName}' as a file stream for read mzpack data!"), env)
+            Return RInternal.debug.stop(New NotImplementedException($"unsure for how to handling '{file.GetType.FullName}' as a file stream for read mzpack data!"), env)
         End If
     End Function
 
@@ -613,7 +614,7 @@ Module MzWeb
     <RApiReturn(GetType(mzPack))>
     Public Function setMzpackThumbnail(mzpack As mzPack, thumb As Object, Optional env As Environment = Nothing) As Object
         If mzpack Is Nothing Then
-            Return Internal.debug.stop("the required mzpack data object can not be nothing!", env)
+            Return RInternal.debug.stop("the required mzpack data object can not be nothing!", env)
         End If
         If thumb Is Nothing Then
             mzpack.Thumbnail = Nothing
