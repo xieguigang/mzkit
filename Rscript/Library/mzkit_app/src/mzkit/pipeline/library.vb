@@ -829,7 +829,9 @@ Module library
     ''' 
     ''' </summary>
     ''' <param name="workspace"></param>
-    ''' <param name="raw_set">should be a set of the mzpack raw data objects, or a character vector of the file path to the mzpack rawdata files.</param>
+    ''' <param name="raw_set">should be a set of the mzpack raw data objects, or a character 
+    ''' vector of the file path to the mzpack rawdata files.
+    ''' </param>
     ''' <param name="da"></param>
     ''' <param name="rt_win"></param>
     ''' <param name="env"></param>
