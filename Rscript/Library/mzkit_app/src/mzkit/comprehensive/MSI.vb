@@ -1224,7 +1224,7 @@ Module MSI
                     .Select(Function(m) m.ToString) _
                     .UniqueNames
 
-                ions = keys.Zip(mz) _
+                ions = keys.Zip(second:=mz) _
                     .ToDictionary(Function(m) m.First,
                                   Function(m)
                                       Return m.Second
@@ -1242,7 +1242,7 @@ Module MSI
                         .Select(Function(m) m.ToString) _
                         .UniqueNames
 
-                    ions = keys.Zip(mz) _
+                    ions = keys.Zip(second:=mz) _
                         .ToDictionary(Function(m) m.First,
                                       Function(m)
                                           Return m.Second
