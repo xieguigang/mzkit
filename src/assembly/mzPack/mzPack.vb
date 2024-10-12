@@ -404,6 +404,12 @@ Public Class mzPack : Implements IMZPack
         Return pack
     End Function
 
+    Public Function WriteV2(filepath As String, Optional progress As Action(Of String) = Nothing) As Boolean
+        Using s As Stream = filepath.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False)
+            Return Write(s, version:=2, progress:=progress)
+        End Using
+    End Function
+
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function Write(file As Stream,
                           Optional version As Integer = 2,
