@@ -88,6 +88,7 @@ Imports Image = System.Drawing.Image
 Imports Bitmap = System.Drawing.Bitmap
 Imports GraphicsPath = System.Drawing.Drawing2D.GraphicsPath
 Imports FontStyle = System.Drawing.FontStyle
+Imports LineCap = System.Drawing.Drawing2D.LineCap
 #Else
 Imports Pen = Microsoft.VisualBasic.Imaging.Pen
 Imports Pens = Microsoft.VisualBasic.Imaging.Pens
@@ -100,6 +101,7 @@ Imports Image = Microsoft.VisualBasic.Imaging.Image
 Imports Bitmap = Microsoft.VisualBasic.Imaging.Bitmap
 Imports GraphicsPath = Microsoft.VisualBasic.Imaging.GraphicsPath
 Imports FontStyle = Microsoft.VisualBasic.Imaging.FontStyle
+Imports LineCap = Microsoft.VisualBasic.Imaging.LineCap
 #End If
 
 ''' <summary>

@@ -265,7 +265,6 @@ Public Class ChromatogramPeakPlot : Inherits Plot
         For Each roi As ROI In MRM_ROIs
             curvePen = New Pen(colors(++i), ROIpen.Width) With {
                 .Alignment = ROIpen.Alignment,
-                .Transform = ROIpen.Transform,
                 .StartCap = ROIpen.StartCap,
                 .MiterLimit = ROIpen.MiterLimit,
                 .LineJoin = ROIpen.LineJoin,

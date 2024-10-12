@@ -99,6 +99,7 @@ Imports deco_math = BioNovoGene.Analytical.MassSpectrometry.Math.Extensions
 Imports Matrix = SMRUCC.genomics.Analysis.HTS.DataFrame.Matrix
 Imports std = System.Math
 Imports vec = SMRUCC.Rsharp.Runtime.Internal.Object.vector
+Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
 
 ''' <summary>
 ''' Extract peak and signal data from rawdata
@@ -122,9 +123,9 @@ Imports vec = SMRUCC.Rsharp.Runtime.Internal.Object.vector
 Module mzDeco
 
     Sub Main()
-        Call Internal.Object.Converts.addHandler(GetType(PeakFeature()), AddressOf peaktable)
-        Call Internal.Object.Converts.addHandler(GetType(xcms2()), AddressOf peaksetMatrix)
-        Call Internal.Object.Converts.addHandler(GetType(PeakSet), AddressOf peaksSetMatrix)
+        Call RInternal.Object.Converts.addHandler(GetType(PeakFeature()), AddressOf peaktable)
+        Call RInternal.Object.Converts.addHandler(GetType(xcms2()), AddressOf peaksetMatrix)
+        Call RInternal.Object.Converts.addHandler(GetType(PeakSet), AddressOf peaksSetMatrix)
 
         Call generic.add("readBin.mz_group", GetType(Stream), AddressOf readXIC)
         Call generic.add("readBin.peak_feature", GetType(Stream), AddressOf readSamples)
@@ -301,7 +302,7 @@ Module mzDeco
                                   Optional env As Environment = Nothing) As Object
 
         If file Is Nothing Then
-            Return Internal.debug.stop("the required file connection for read the xcms peaktable file should not be nothing!", env)
+            Return RInternal.debug.stop("the required file connection for read the xcms peaktable file should not be nothing!", env)
         End If
 
         If TypeOf file Is String Then
@@ -396,7 +397,7 @@ Module mzDeco
     <RApiReturn(TypeCodes.boolean)>
     Public Function writeXcmsPeaktable(x As PeakSet, file As Object, Optional env As Environment = Nothing) As Object
         If file Is Nothing Then
-            Return Internal.debug.stop("the required file connection for save the xcms peaktable data should not be nothing!", env)
+            Return RInternal.debug.stop("the required file connection for save the xcms peaktable data should not be nothing!", env)
         End If
 
         If TypeOf file Is String Then
@@ -762,7 +763,7 @@ Module mzDeco
                         .FirstOrDefault
 
                     If target Is Nothing Then
-                        Return Internal.debug.stop({
+                        Return RInternal.debug.stop({
                             $"the required retention index reference point({refer.ToString}) could not be found! please check the rt window parameter(dt) is too small?",
                             $"retention_index_reference: {ri_refers.GetJson}",
                             $"rawfile tag: {rawfile}",
@@ -913,7 +914,7 @@ Module mzDeco
             Dim features_mz As Double() = CLRVector.asNumeric(feature)
 
             If features_mz.IsNullOrEmpty Then
-                Return Internal.debug.stop("no ion m/z feature was provided!", env)
+                Return RInternal.debug.stop("no ion m/z feature was provided!", env)
             Else
                 Return pool.xic_deco(features_mz,
                                      errors.TryCast(Of Tolerance),

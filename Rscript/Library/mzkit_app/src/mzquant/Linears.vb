@@ -80,6 +80,7 @@ Imports SMRUCC.Rsharp.Runtime.Interop
 Imports REnv = SMRUCC.Rsharp.Runtime
 Imports Rlist = SMRUCC.Rsharp.Runtime.Internal.Object.list
 Imports std = System.Math
+Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
 
 ''' <summary>
 ''' targeted linears
@@ -172,7 +173,7 @@ Module Linears
         Dim name As String
 
         If nameRef Is Nothing Then
-            Return Internal.debug.stop({
+            Return RInternal.debug.stop({
                 $"the required feature name reference can not be nothing!",
                 $"parameter: {nameRef}"
             }, env)
