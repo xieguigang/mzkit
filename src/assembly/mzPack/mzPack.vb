@@ -73,6 +73,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
+Imports std = System.Math
 
 ''' <summary>
 ''' the unify in-memory data model of the mzkit MS data model.
@@ -222,6 +223,18 @@ Public Class mzPack : Implements IMZPack
                 .Select(AddressOf get_ms1) _
                 .IteratesALL
         End If
+    End Function
+
+    Public Function PickIonScatter(mz As Double, rt As Double, Optional mass_da As Double = 0.25, Optional dt As Double = 7.5) As IEnumerable(Of ms1_scan)
+        Dim range = MS.AsParallel.Where(Function(s) s.rt >= rt - dt AndAlso s.rt <= rt + dt).ToArray
+        Dim ms1 As IEnumerable(Of ms1_scan) = range _
+            .Select(Function(s) s.GetMs1Scans) _
+            .IteratesALL _
+            .AsParallel _
+            .Where(Function(mzi) mzi.intensity > 0 AndAlso std.abs(mzi.mz - mz) < mass_da) _
+            .OrderBy(Function(a) a.scan_time)
+
+        Return ms1
     End Function
 
     Private Shared Iterator Function get_ms1(scan As ScanMS1) As IEnumerable(Of ms1_scan)
