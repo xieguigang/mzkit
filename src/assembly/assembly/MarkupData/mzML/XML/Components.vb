@@ -101,6 +101,14 @@ Namespace MarkupData.mzML
             Return fileContent.cvParams.Select(Function(a) a.name).JoinBy("; ")
         End Function
 
+        Public Function GetSourceFiles() As IEnumerable(Of String)
+            If sourceFileList Is Nothing Then
+                Return {}
+            Else
+                Return sourceFileList.GetFileList
+            End If
+        End Function
+
     End Class
 
     Public Class SourceFileList : Inherits List

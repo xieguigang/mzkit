@@ -146,7 +146,7 @@ Namespace MarkupData.imzML
 
             Return New imzMLMetadata With {
                 .cv = cv,
-                .sourcefiles = desc.sourceFileList.GetFileList.ToArray,
+                .sourcefiles = desc.GetSourceFiles.ToArray,
                 .guid = guid,
                 .format = format,
                 .ibd_checksum = checksum,
