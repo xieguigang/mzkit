@@ -175,7 +175,7 @@ mzXML:      Return New mzPack With {
         ElseIf xml.ExtensionSuffix("mzML") Then
 mzML:       Return LoadMzML(xml, tolerance, intocutoff, progress)
         ElseIf xml.ExtensionSuffix("imzML") Then
-imzML:      Return LoadimzML(xml, intocutoff, Sub(p, msg) progress($"{msg}...{p}%"))
+imzML:      Return LoadimzML(xml, intocutoff, IonModes.Positive, Sub(p, msg) progress($"{msg}...{p}%"))
         Else
             If Not prefer.StringEmpty Then
                 Select Case prefer.ToLower
@@ -201,6 +201,7 @@ imzML:      Return LoadimzML(xml, intocutoff, Sub(p, msg) progress($"{msg}...{p}
     ''' <returns></returns>
     Public Function LoadimzML(xml As String,
                               Optional noiseCutoff As Double = 0,
+                              Optional defaultIon As IonModes = IonModes.Positive,
                               Optional progress As RunSlavePipeline.SetProgressEventHandler = Nothing) As mzPack
 
         Dim scans As New List(Of ScanMS1)
@@ -226,6 +227,10 @@ imzML:      Return LoadimzML(xml, intocutoff, Sub(p, msg) progress($"{msg}...{p}
 
         For Each scan As ScanData In allscans
             Call ibd.GetMSVector(scan, mz, intensity)
+
+            If scan.polarity = IonModes.Unknown Then
+                scan.polarity = defaultIon
+            End If
 
             If noiseCutoff > 0 AndAlso intensity.Length > 0 Then
                 maxinto = intensity.Max
