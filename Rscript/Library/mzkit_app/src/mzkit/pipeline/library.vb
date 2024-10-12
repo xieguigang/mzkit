@@ -824,6 +824,23 @@ Module library
         End If
     End Function
 
+    <ExportAPI("set_xicCache")>
+    Public Function set_xicCache(workspace As AnnotationWorkspace, <RRawVectorArgument> raw_set As Object,
+                                 Optional da As Double = 0.25,
+                                 Optional rt_win As Double = 7.5,
+                                 Optional env As Environment = Nothing) As Object
+
+        Dim pull As pipeline = pipeline.TryCreatePipeline(Of mzPack)(raw_set, env)
+
+        If pull.isError Then
+            Return pull.getError
+        End If
+
+        Call workspace.CacheXicTable(pull.populates(Of mzPack)(env), da, rt_win)
+
+        Return True
+    End Function
+
     ''' <summary>
     ''' Save the reference library annotation result.
     ''' </summary>
