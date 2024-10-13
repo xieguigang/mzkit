@@ -846,7 +846,7 @@ Module library
         Dim pull As pipeline = pipeline.TryCreatePipeline(Of mzPack)(raw_set, env)
 
         If raw_set Is Nothing Then
-            Return Internal.debug.stop("no rawdata was provided for extract the ion XIC data!", env)
+            Return RInternal.debug.stop("no rawdata was provided for extract the ion XIC data!", env)
         End If
 
         If pull.isError Then
