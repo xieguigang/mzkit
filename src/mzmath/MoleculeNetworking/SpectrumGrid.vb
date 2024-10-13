@@ -69,7 +69,7 @@ Public Class SpectrumGrid
         Next
     End Function
 
-    Public Iterator Function AssignPeaks(peaks As IEnumerable(Of xcms2)) As IEnumerable(Of (peak As xcms2, ms2 As PeakMs2(), cor As Double, score As Double, pval As Double))
+    Public Iterator Function AssignPeaks(peaks As IEnumerable(Of xcms2)) As IEnumerable(Of RawPeakAssign)
         Dim q As New SpectrumLine
 
         For Each peak As xcms2 In peaks
@@ -86,7 +86,13 @@ Public Class SpectrumGrid
                 .ToArray
 
             For Each candidate In candidates
-                Yield (peak, candidate.c.cluster, candidate.cor, candidate.score, candidate.pval)
+                Yield New RawPeakAssign With {
+                    .peak = peak,
+                    .ms2 = candidate.c.cluster,
+                    .cor = candidate.cor,
+                    .score = candidate.score,
+                    .pval = candidate.pval
+                }
             Next
         Next
     End Function
@@ -103,5 +109,15 @@ Public Class SpectrumLine
         _rt = rt
         Return Me
     End Function
+
+End Class
+
+Public Class RawPeakAssign
+
+    Public Property peak As xcms2
+    Public Property ms2 As PeakMs2()
+    Public Property cor As Double
+    Public Property score As Double
+    Public Property pval As Double
 
 End Class
