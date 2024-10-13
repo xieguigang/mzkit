@@ -1,4 +1,5 @@
 ﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.DataMining.BinaryTree
 Imports Microsoft.VisualBasic.Linq
 
@@ -50,6 +51,10 @@ Public Class BinaryClustering
         Next
 
         Dim bin As BTreeCluster = BuildTree.BTreeCluster(uniqueIds, align)
+
+    End Function
+
+    Public Iterator Function GetClusters() As IEnumerable(Of NamedCollection(Of PeakMs2))
 
     End Function
 End Class
