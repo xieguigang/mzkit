@@ -18,7 +18,6 @@ Public Class SpectrumGrid
     Dim filenames As String()
 
     Sub New()
-
     End Sub
 
     Public Function SetRawDataFiles(files As IEnumerable(Of NamedCollection(Of PeakMs2))) As SpectrumGrid
