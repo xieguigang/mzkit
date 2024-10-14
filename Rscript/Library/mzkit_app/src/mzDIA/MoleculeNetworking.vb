@@ -428,7 +428,7 @@ Module MoleculeNetworking
             Return rawPool.getError
         Else
             For Each raw As mzPack In TqdmWrapper.Wrap(rawPool.populates(Of mzPack)(env).ToArray)
-                filename = raw.source
+                filename = raw.source.BaseName
                 specSet = raw.GetMs2Peaks _
                     .AsParallel _
                     .Select(Function(si)
