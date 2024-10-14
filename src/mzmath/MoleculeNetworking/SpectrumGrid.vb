@@ -58,16 +58,21 @@ Public Class SpectrumGrid
                     .ToArray
 
                 For Each group In rt_groups
-                    Dim fileIndex = group.ToDictionary(Function(a) a.file)
+                    Dim fileIndex = group.GroupBy(Function(si) si.file) _
+                        .ToDictionary(Function(a) a.Key,
+                                      Function(a)
+                                          Return a.ToArray
+                                      End Function)
                     Dim i2 = filenames _
                         .Select(Function(name)
-                                    Return If(fileIndex.ContainsKey(name), fileIndex(name).intensity, 0)
+                                    Return If(fileIndex.ContainsKey(name),
+                                        fileIndex(name).Average(Function(i) i.intensity), 0)
                                 End Function) _
                         .ToArray
 
                     Yield New SpectrumLine With {
                         .intensity = i2,
-                        .cluster = group.ToArray,
+                        .cluster = group.value,
                         .rt = Val(group.name)
                     }
                 Next
