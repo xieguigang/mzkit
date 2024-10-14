@@ -8,6 +8,8 @@ let rawfiles = list.files(source_dir, pattern = "*.mzPack");
 
 print(basename(rawfiles ));
 
+let peaks = read.xcms_peaks("\\192.168.1.254\backup3\项目以外内容\human_reference_metabolome\benchmark\MTBLS6039\FILES\RAW_FILES\POS\mzXML\peak_tablenew.txt", 
+    tsv = TRUE);
 let rawdata = rawfiles 
 |> as.list(names = basename(rawfiles)) 
 |> tqdm() 
@@ -15,7 +17,6 @@ let rawdata = rawfiles
     open.mzpack(filepath, verbose = FALSE);
 })
 ;
-let peaks = read.xcms_peaks("\\192.168.1.254\backup3\项目以外内容\human_reference_metabolome\benchmark\MTBLS6039\FILES\RAW_FILES\POS\mzXML\peak_tablenew.txt");
 let assigned = rawdata |> spectrum_grid() |> grid_assigned(peaks);
 
 

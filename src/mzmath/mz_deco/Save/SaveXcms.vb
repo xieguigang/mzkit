@@ -86,6 +86,10 @@ Public Module SaveXcms
             .Select(Function(si) si.Trim(""""c, " "c)) _
             .Indexing
 
+        If headers.Count = 1 Then
+            Throw New InvalidDataException("Invalid table file header parse result, please check of the table file format or check of the csv and tsv parameter?")
+        End If
+
         Static required_id As String() = {"xcms_id", "id", "ID", ""}
         Static required_mz As String() = {"mz", "m/z", "MZ", "M/Z", "mass to charge"}
         Static required_rt As String() = {"rt", "RT", "retention_time"}
