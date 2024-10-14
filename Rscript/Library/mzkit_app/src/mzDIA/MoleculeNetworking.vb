@@ -434,6 +434,7 @@ Module MoleculeNetworking
                     .AsParallel _
                     .Select(Function(si)
                                 si.mzInto = si.mzInto.Centroid(massWin, cutoff).ToArray
+                                si.file = filename
                                 Return si
                             End Function) _
                     .ToArray
