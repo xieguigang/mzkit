@@ -81,6 +81,9 @@ declare namespace MoleculeNetworking {
    */
    function clustering(ions: any, mzdiff1?: any, mzdiff2?: any, intocutoff?: number, tree_identical?: number, tree_right?: number, env?: object): object;
    /**
+   */
+   function grid_assigned(grid: object, peakset: object): object;
+   /**
     * populate a list of peak ms2 cluster data
     * 
     * 
@@ -102,6 +105,12 @@ declare namespace MoleculeNetworking {
      * + default value Is ``null``.
    */
    function representative(tree: object, mzdiff?: any, env?: object): object;
+   /**
+     * @param centroid default value Is ``'da:0.3'``.
+     * @param intocutoff default value Is ``0.05``.
+     * @param env default value Is ``null``.
+   */
+   function spectrum_grid(rawdata: any, centroid?: any, intocutoff?: number, env?: object): any;
    /**
     * Split each cluster data into multiple parts by a givne rt window
     * 

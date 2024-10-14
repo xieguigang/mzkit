@@ -164,7 +164,8 @@ declare namespace annotation {
     * 
     * 
      * @param workspace -
-     * @param raw_set should be a set of the mzpack raw data objects, or a character vector of the file path to the mzpack rawdata files.
+     * @param raw_set should be a set of the mzpack raw data objects, or a character 
+     *  vector of the file path to the mzpack rawdata files.
      * @param da -
      * 
      * + default value Is ``0.25``.
