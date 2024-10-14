@@ -135,7 +135,6 @@ Namespace Blender
         ''' <param name="dimension">
         ''' the dimension size of the ms-imaging rawdata
         ''' </param>
-        ''' <param name="scale"></param>
         ''' <param name="background"></param>
         ''' <returns>
         ''' the size of the generated raster image is specificed by the <paramref name="dimension"/> parameter.
@@ -202,7 +201,6 @@ Namespace Blender
         ''' </param>
         ''' <param name="colorSet"></param>
         ''' <param name="mapLevels"></param>
-        ''' <param name="scale"></param>
         ''' <param name="defaultFill">
         ''' the background of the MS-imaging chartting.
         ''' </param>

@@ -120,7 +120,6 @@ Namespace Blender
         ''' <param name="colorSet">
         ''' [mz(F4) => color]
         ''' </param>
-        ''' <param name="scale"></param>
         ''' <returns></returns>
         Public MustOverride Function LayerOverlaps(pixels As PixelData()(), dimension As Size, colorSet As MzLayerColorSet,
                                                    Optional defaultFill As String = "Transparent",
@@ -133,7 +132,6 @@ Namespace Blender
         ''' <param name="G"></param>
         ''' <param name="B"></param>
         ''' <param name="dimension"></param>
-        ''' <param name="scale"></param>
         ''' <returns></returns>
         Public MustOverride Function ChannelCompositions(R As PixelData(), G As PixelData(), B As PixelData(),
                                                          dimension As Size,
