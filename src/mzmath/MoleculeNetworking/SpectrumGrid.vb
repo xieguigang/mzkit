@@ -5,6 +5,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Algorithm
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Correlations
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports std = System.Math
 
 ''' <summary>
@@ -42,6 +43,7 @@ Public Class SpectrumGrid
             Call ions.AddRange(file)
         Next
 
+        ' group the spectrum ions via the precursor ion m/z
         Dim parent_groups = ions.GroupBy(Function(i) i.mz, offsets:=1).ToArray
 
         filenames = files.ToArray
@@ -49,6 +51,9 @@ Public Class SpectrumGrid
         For Each ion_group In TqdmWrapper.Wrap(parent_groups)
             Dim tree As New BinaryClustering()
 
+            ' ion groups has the same precursor ion m/z
+            ' due to the reason of precursor mz has already been
+            ' grouped before
             tree = tree.Tree(ion_group)
 
             For Each cluster As NamedCollection(Of PeakMs2) In tree.GetClusters
@@ -73,7 +78,8 @@ Public Class SpectrumGrid
                     Yield New SpectrumLine With {
                         .intensity = i2,
                         .cluster = group.value,
-                        .rt = Val(group.name)
+                        .rt = Val(group.name),
+                        .mz = group.Average(Function(si) si.mz)
                     }
                 Next
             Next
@@ -86,7 +92,9 @@ Public Class SpectrumGrid
         For Each peak As xcms2 In peaks
             Dim i1 As Double() = peak(filenames)
             Dim candidates = clusters _
-                .Search(q.SetRT(peak.rt)) _
+                .Search(q.SetRT(peak.rt)).Where(Function(c)
+
+                                                End Function) _
                 .Select(Function(c)
                             Dim cor As Double, pval As Double
                             cor = Correlations.GetPearson(i1, c.intensity, prob2:=pval)
@@ -115,10 +123,15 @@ Public Class SpectrumLine
     Public Property cluster As PeakMs2()
     Public Property intensity As Double()
     Public Property rt As Double
+    Public Property mz As Double
 
     Friend Function SetRT(rt As Double) As SpectrumLine
         _rt = rt
         Return Me
+    End Function
+
+    Public Overrides Function ToString() As String
+        Return $"{mz.ToString("F3")}@{(rt / 60).ToString("F2")}min, {cluster.Length} files: {cluster.Select(Function(s) s.file).GetJson}"
     End Function
 
 End Class
@@ -130,5 +143,9 @@ Public Class RawPeakAssign
     Public Property cor As Double
     Public Property score As Double
     Public Property pval As Double
+
+    Public Overrides Function ToString() As String
+        Return peak.ToString & $" correlated with {ms2.Length} spectrum, pearson={cor}"
+    End Function
 
 End Class
