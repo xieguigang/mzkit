@@ -1,5 +1,6 @@
 ﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Math
@@ -45,7 +46,7 @@ Public Class SpectrumGrid
 
         filenames = files.ToArray
 
-        For Each ion_group In parent_groups
+        For Each ion_group In TqdmWrapper.Wrap(parent_groups)
             Dim tree As New BinaryClustering()
 
             tree = tree.Tree(ion_group)
