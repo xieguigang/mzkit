@@ -83,6 +83,7 @@ Imports SMRUCC.Rsharp.Runtime.Internal.[Object]
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports MetaData = BioNovoGene.BioDeep.Chemistry.MetaLib.Models.MetaInfo
+Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
 
 ''' <summary>
 ''' the metabolite annotation toolkit
@@ -93,11 +94,11 @@ Imports MetaData = BioNovoGene.BioDeep.Chemistry.MetaLib.Models.MetaInfo
 Module library
 
     Sub Main()
-        Call Internal.generic.add("writeBin", GetType(LibraryWorkspace), AddressOf writeWorkspace)
-        Call Internal.generic.add("writeBin", GetType(AnnotationPack), AddressOf writeResultPack)
-        Call Internal.generic.add("readBin.library_workspace", GetType(Stream), AddressOf loadWorkspace)
+        Call RInternal.generic.add("writeBin", GetType(LibraryWorkspace), AddressOf writeWorkspace)
+        Call RInternal.generic.add("writeBin", GetType(AnnotationPack), AddressOf writeResultPack)
+        Call RInternal.generic.add("readBin.library_workspace", GetType(Stream), AddressOf loadWorkspace)
 
-        Call Internal.Object.Converts.makeDataframe.addHandler(GetType(Peaktable()), AddressOf create_table)
+        Call RInternal.Object.Converts.makeDataframe.addHandler(GetType(Peaktable()), AddressOf create_table)
 
         Call htmlPrinter.AttachHtmlFormatter(Of AnnotationPack)(AddressOf tohtmlString)
     End Sub
@@ -626,7 +627,7 @@ Module library
         ElseIf df.hasName("ID") Then
             id = CLRVector.asCharacter(df("ID"))
         Else
-            Return Internal.debug.stop({
+            Return RInternal.debug.stop({
                 "missing the unique id of the ms1 ions in your dataframe!",
                 "required_one_of_field: xcms_id, ID"
             }, env)
@@ -678,9 +679,9 @@ Module library
         Dim println = env.WriteLineHandler
 
         If ms1 Is Nothing Then
-            Return Internal.debug.stop("the ms1 peakdata should not be nothing!", env)
+            Return RInternal.debug.stop("the ms1 peakdata should not be nothing!", env)
         ElseIf ms2 Is Nothing Then
-            Return Internal.debug.stop("the ms2 spectrum data should not be nothing!", env)
+            Return RInternal.debug.stop("the ms2 spectrum data should not be nothing!", env)
         End If
 
         If TypeOf ms1 Is dataframe Then
@@ -845,7 +846,7 @@ Module library
         Dim pull As pipeline = pipeline.TryCreatePipeline(Of mzPack)(raw_set, env)
 
         If raw_set Is Nothing Then
-            Return Internal.debug.stop("no rawdata was provided for extract the ion XIC data!", env)
+            Return RInternal.debug.stop("no rawdata was provided for extract the ion XIC data!", env)
         End If
 
         If pull.isError Then

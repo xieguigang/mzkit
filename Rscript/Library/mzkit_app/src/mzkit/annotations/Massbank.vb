@@ -104,6 +104,7 @@ Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports ChEBIRepo = SMRUCC.genomics.Assembly.ELIXIR.EBI.ChEBI.DATA
 Imports Rdataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
 Imports REnv = SMRUCC.Rsharp.Runtime.Internal.Invokes.base
+Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
 
 ''' <summary>
 ''' Metabolite annotation database toolkit
@@ -115,8 +116,8 @@ Imports REnv = SMRUCC.Rsharp.Runtime.Internal.Invokes.base
 Module Massbank
 
     Sub Main()
-        Call Internal.Object.Converts.makeDataframe.addHandler(GetType(LipidMaps.MetaData()), AddressOf createLipidMapTable)
-        Call Internal.Object.Converts.makeDataframe.addHandler(GetType(RefMet()), AddressOf refMetTable)
+        Call RInternal.Object.Converts.makeDataframe.addHandler(GetType(LipidMaps.MetaData()), AddressOf createLipidMapTable)
+        Call RInternal.Object.Converts.makeDataframe.addHandler(GetType(RefMet()), AddressOf refMetTable)
 
         Call generic.add("readBin.metalib", GetType(Stream), AddressOf readMetalibMsgPack)
     End Sub
@@ -248,7 +249,7 @@ Module Massbank
 
         For Each file As String In rawfile
             If Not file.ExtensionSuffix("sdf", "msp") Then
-                Return Internal.debug.stop($"the given file data type(*.{file.ExtensionSuffix}) is not supported yet! " & file, env)
+                Return RInternal.debug.stop($"the given file data type(*.{file.ExtensionSuffix}) is not supported yet! " & file, env)
             End If
         Next
 
@@ -298,7 +299,7 @@ Module Massbank
                             Optional env As Environment = Nothing) As Object
 
         If Not file.FileExists Then
-            Return Internal.debug.stop({$"the required file is not exists on your file system!", $"file: {file}"}, env)
+            Return RInternal.debug.stop({$"the required file is not exists on your file system!", $"file: {file}"}, env)
         Else
             Dim readStream = SDF.IterateParser(file, parseStruct)
 

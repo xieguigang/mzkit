@@ -104,6 +104,7 @@ Imports ReactionClass = SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject.ReactionC
 Imports ReactionClassTbl = BioNovoGene.BioDeep.MetaDNA.Visual.ReactionClass
 Imports REnv = SMRUCC.Rsharp.Runtime
 Imports std = System.Math
+Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
 
 ''' <summary>
 ''' Metabolic Reaction Network-based Recursive Metabolite Annotation for Untargeted Metabolomics
@@ -120,7 +121,7 @@ Imports std = System.Math
 Module metaDNAInfer
 
     Sub Main()
-        Call Internal.Object.Converts.makeDataframe.addHandler(GetType(MetaDNAResult()), AddressOf getResultTable)
+        Call RInternal.Object.Converts.makeDataframe.addHandler(GetType(MetaDNAResult()), AddressOf getResultTable)
     End Sub
 
     Private Function getResultTable(list As MetaDNAResult(), args As list, env As Environment) As dataframe
@@ -214,7 +215,7 @@ Module metaDNAInfer
                 .IteratesALL _
                 .ToArray
         Else
-            Return Internal.debug.stop($"unable to determin the data source type of the given file '{file}'", env)
+            Return RInternal.debug.stop($"unable to determin the data source type of the given file '{file}'", env)
         End If
     End Function
 
@@ -326,7 +327,7 @@ Module metaDNAInfer
     <ExportAPI("setLibrary")>
     Public Function setLibrary(metadna As Algorithm, [library] As Object, Optional env As Environment = Nothing) As Object
         If library Is Nothing Then
-            Return Internal.debug.stop("the required compound library should not be nothing!", env)
+            Return RInternal.debug.stop("the required compound library should not be nothing!", env)
         End If
         If TypeOf library Is CompoundSolver Then
             Return metadna.SetLibrary(DirectCast(library, CompoundSolver))
@@ -468,7 +469,7 @@ Module metaDNAInfer
         Dim pool As PeakMs2() = raw.populates(Of PeakMs2)(env).ToArray
 
         If pool.Length = 0 Then
-            Return Internal.debug.stop("the required sample data collection should not be empty!", env)
+            Return RInternal.debug.stop("the required sample data collection should not be empty!", env)
         End If
 
         If Not peakSet Is Nothing Then

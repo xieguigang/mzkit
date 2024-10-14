@@ -68,6 +68,7 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Interop
+Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
 
 ''' <summary>
 ''' Comprehensive two-dimensional gas chromatography
@@ -154,7 +155,7 @@ Module GCxGC
         ElseIf TypeOf rawdata Is mzPack Then
             Return DirectCast(rawdata, mzPack).Demodulate2D(modtime)
         Else
-            Return Internal.debug.stop("invalid rawdata type!", env)
+            Return RInternal.debug.stop("invalid rawdata type!", env)
         End If
     End Function
 

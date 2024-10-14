@@ -62,6 +62,32 @@ Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Scripting.Runtime
 
+#If NET48 Then
+Imports Pen = System.Drawing.Pen
+Imports Pens = System.Drawing.Pens
+Imports Brush = System.Drawing.Brush
+Imports Font = System.Drawing.Font
+Imports Brushes = System.Drawing.Brushes
+Imports SolidBrush = System.Drawing.SolidBrush
+Imports DashStyle = System.Drawing.Drawing2D.DashStyle
+Imports Image = System.Drawing.Image
+Imports Bitmap = System.Drawing.Bitmap
+Imports GraphicsPath = System.Drawing.Drawing2D.GraphicsPath
+Imports FontStyle = System.Drawing.FontStyle
+#Else
+Imports Pen = Microsoft.VisualBasic.Imaging.Pen
+Imports Pens = Microsoft.VisualBasic.Imaging.Pens
+Imports Brush = Microsoft.VisualBasic.Imaging.Brush
+Imports Font = Microsoft.VisualBasic.Imaging.Font
+Imports Brushes = Microsoft.VisualBasic.Imaging.Brushes
+Imports SolidBrush = Microsoft.VisualBasic.Imaging.SolidBrush
+Imports DashStyle = Microsoft.VisualBasic.Imaging.DashStyle
+Imports Image = Microsoft.VisualBasic.Imaging.Image
+Imports Bitmap = Microsoft.VisualBasic.Imaging.Bitmap
+Imports GraphicsPath = Microsoft.VisualBasic.Imaging.GraphicsPath
+Imports FontStyle = Microsoft.VisualBasic.Imaging.FontStyle
+#End If
+
 Namespace NCBI.PubChem
 
     Public Module ImageFly
@@ -90,7 +116,11 @@ Namespace NCBI.PubChem
         ''' 是否将得到的图片的背景设置为透明
         ''' </param>
         ''' <returns></returns>
-        Public Function GetImage(cid$, Optional width% = 300, Optional height% = 300, Optional doBgTransparent As Boolean = True) As Bitmap
+        Public Function GetImage(cid$,
+                                 Optional width% = 300,
+                                 Optional height% = 300,
+                                 Optional doBgTransparent As Boolean = True) As Bitmap
+
             Dim url$ = $"https://pubchem.ncbi.nlm.nih.gov/image/imagefly.cgi?cid={cid}&width={width}&height={height}"
             Dim tmp$ = TempFileSystem.GetAppSysTempFile(".png", sessionID:="cid__", prefix:="imageFly___")
             Dim webget As Double = False
@@ -108,9 +138,7 @@ Namespace NCBI.PubChem
             End If
 
             Dim white As Color = Color.FromArgb(245, 245, 245)
-            Dim bitmap As Bitmap = New Bitmap(tmp) _
-                .CorpBlank(margin:=20, blankColor:=white) _
-                .ColorReplace(white, Color.Transparent)
+            Dim bitmap As Bitmap = New Bitmap(tmp).ColorReplace(white, Color.Transparent)
 
             Return bitmap
         End Function

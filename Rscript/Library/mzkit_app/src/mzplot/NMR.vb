@@ -65,6 +65,7 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Internal.[Object]
 Imports SMRUCC.Rsharp.Runtime.Interop
+Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
 
 ''' <summary>
 ''' plot NMR spectrum data
@@ -73,8 +74,8 @@ Imports SMRUCC.Rsharp.Runtime.Interop
 Public Module plotNMR
 
     Friend Sub Main()
-        Call Internal.generic.add("plot", GetType(Fid), AddressOf plotFidData)
-        Call Internal.generic.add("plot", GetType(Spectrum), AddressOf plotFrequencyData)
+        Call RInternal.generic.add("plot", GetType(Fid), AddressOf plotFidData)
+        Call RInternal.generic.add("plot", GetType(Spectrum), AddressOf plotFrequencyData)
     End Sub
 
     Public Function plotFrequencyData(freq As Spectrum, args As list, env As Environment) As Object

@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <RootNamespace>mzkit</RootNamespace>
-    <TargetFrameworks>net6.0</TargetFrameworks>
+    <TargetFrameworks>net8.0</TargetFrameworks>
     <AssemblyName>mzDIA</AssemblyName>
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;LipidSearch;PlantMAT;mzkit;Rsharp_app_release</Configurations>
@@ -16,7 +16,7 @@
     <PackageIcon>Flask.png</PackageIcon>
     <PackageIconUrl />
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-	  <RuntimeIdentifiers>win7-x64;win7-x86;win-x64;linux-x64;linux-arm64;osx-x64</RuntimeIdentifiers>
+	  <RuntimeIdentifiers>win-x64;linux-x64;linux-arm64;osx-x64</RuntimeIdentifiers>
 	  <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
 	  <ApplicationIcon>favicon.ico</ApplicationIcon>
 	  <PackageReadmeFile>README.md</PackageReadmeFile>
@@ -157,6 +157,7 @@
     <ProjectReference Include="../../..\..\..\src\visualize\KCF\KCF.Graph\KCF_graph.NET5.vbproj" />
     <ProjectReference Include="../../..\..\..\src\visualize\KCF\KCF.IO\KCF_IO.NET5.vbproj" />
     <ProjectReference Include="../../..\..\..\src\visualize\MsImaging\MsImaging.NET5.vbproj" />
+    <ProjectReference Include="..\..\..\..\..\..\GCModeller\src\R-sharp\Library\shares\graphics.common_runtime\R_graphics.common_runtime.vbproj" />
     <ProjectReference Include="..\..\..\..\..\src\metadb\FormulaSearch.Extensions\FormulaSearch.Extensions.NET5.vbproj" />
     <ProjectReference Include="..\..\..\..\..\src\metadb\Massbank\massbank.NET5.vbproj" />
     <ProjectReference Include="..\..\..\..\..\src\metadb\SMILES\SMILES.NET5.vbproj" />

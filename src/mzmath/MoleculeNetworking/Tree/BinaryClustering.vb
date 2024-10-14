@@ -1,4 +1,5 @@
 ﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.DataMining.BinaryTree
 Imports Microsoft.VisualBasic.Linq
 
@@ -9,6 +10,8 @@ Public Class BinaryClustering
 
     Friend ReadOnly align As MSScoreGenerator
     Friend ReadOnly equals_cutoff As Double = 0.85
+
+    Dim bin As BTreeCluster
 
     Sub New(Optional mzdiff As Double = 0.3,
             Optional intocutoff As Double = 0.05,
@@ -49,7 +52,23 @@ Public Class BinaryClustering
             Call uniqueIds.Add(spectrum.lib_guid)
         Next
 
-        Dim bin As BTreeCluster = BuildTree.BTreeCluster(uniqueIds, align)
+        bin = BuildTree.BTreeCluster(uniqueIds, align)
 
+        Return Me
+    End Function
+
+    Public Iterator Function GetClusters() As IEnumerable(Of NamedCollection(Of PeakMs2))
+        Dim pull As New List(Of BTreeCluster)
+        Dim spectrum As PeakMs2()
+
+        BTreeCluster.PullAllClusterNodes(bin, pull)
+
+        For Each cluster As BTreeCluster In pull
+            spectrum = cluster.data.Values _
+                .OfType(Of PeakMs2) _
+                .ToArray
+
+            Yield New NamedCollection(Of PeakMs2)(cluster.uuid, spectrum)
+        Next
     End Function
 End Class

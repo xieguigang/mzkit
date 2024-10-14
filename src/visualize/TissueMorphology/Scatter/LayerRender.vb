@@ -64,6 +64,7 @@ Imports System.Drawing.Imaging
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Unit
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Linq
 
 Public Class LayerRender
@@ -77,7 +78,7 @@ Public Class LayerRender
     ''' <returns></returns>
     Public Property highlights As String()
 
-    Public Sub Rendering(g As Graphics, regions As IEnumerable(Of TissueRegion))
+    Public Sub Rendering(g As IGraphics, regions As IEnumerable(Of TissueRegion))
         Dim highlights As Index(Of String) = Me.highlights.SafeQuery.Distinct.Indexing
         Dim pt As PointF
 
@@ -124,15 +125,15 @@ Public Class LayerRender
             height:=layerSize.Height * dotSize,
             format:=PixelFormat.Format32bppArgb
         )
-        Dim g As Graphics = Graphics.FromImage(layer)
+        Dim g As IGraphics = DriverLoad.CreateGraphicsDevice(layer)
         Dim blender As New LayerRender With {
             .alphaLevel = alphaLevel,
             .dotSize = New SizeF(dotSize, dotSize),
             .highlights = highlights
         }
 
-        g.CompositingQuality = CompositingQuality.HighQuality
-        g.InterpolationMode = InterpolationMode.HighQualityBilinear
+        'g.CompositingQuality = CompositingQuality.HighQuality
+        'g.InterpolationMode = InterpolationMode.HighQualityBilinear
         g.Clear(Color.Transparent)
         blender.Rendering(g, regions)
         g.Flush()

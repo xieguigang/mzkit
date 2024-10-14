@@ -114,7 +114,7 @@ Public Class RGBMSIPlot : Inherits Plot
         Dim css As CSSEnvirnment = g.LoadEnvironment
 
         MSI = engine.ChannelCompositions(Me.R.MSILayer, Me.G?.MSILayer, Me.B?.MSILayer, dimensionSize, background:=theme.background).AsGDIImage
-        MSI = Drawer.ScaleLayer(MSI, rect.Width, rect.Height, InterpolationMode.Bilinear)
+        MSI = Drawer.ScaleLayer(MSI, rect.Width, rect.Height)
 
         Call g.DrawAxis(canvas, scale, showGrid:=False, xlabel:=xlabel, ylabel:=ylabel, XtickFormat:="F0", YtickFormat:="F0", htmlLabel:=False)
         Call g.DrawImageUnscaled(MSI, rect)

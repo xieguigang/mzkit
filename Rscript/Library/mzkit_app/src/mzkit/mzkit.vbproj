@@ -2,7 +2,7 @@
 
 	<PropertyGroup>
 		<RootNamespace>mzkit</RootNamespace>
-    <TargetFrameworks>net6.0</TargetFrameworks>
+    <TargetFrameworks>net8.0</TargetFrameworks>
 		<AssemblyName>mzkit</AssemblyName>
 		<Platforms>AnyCPU;x64</Platforms>
 		<Configurations>Debug;Release;LipidSearch;PlantMAT;mzkit;Rsharp_app_release</Configurations>
@@ -16,7 +16,7 @@
 		<PackageIcon>Flask.png</PackageIcon>
     <OutputPath>../..\assembly\</OutputPath>
 		<PackageIconUrl />
-		<RuntimeIdentifiers>win7-x64;win7-x86;win-x64;linux-x64;linux-arm64;osx-x64</RuntimeIdentifiers>
+		<RuntimeIdentifiers>win-x64;linux-x64;linux-arm64;osx-x64</RuntimeIdentifiers>
 		<UseApplicationFramework>True</UseApplicationFramework>
 		<ApplicationIcon>favicon.ico</ApplicationIcon>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
@@ -273,6 +273,7 @@
 	  <ProjectReference Include="..\..\..\..\..\..\GCModeller\src\GCModeller\core\Bio.Assembly\biocore-netcore5.vbproj" />
 	  <ProjectReference Include="..\..\..\..\..\..\GCModeller\src\GCModeller\core\Bio.InteractionModel\InteractionModel.NET5.vbproj" />
 	  <ProjectReference Include="..\..\..\..\..\..\GCModeller\src\GCModeller\models\Networks\KEGG\KEGGNetwork.NET5.vbproj" />
+	  <ProjectReference Include="..\..\..\..\..\..\GCModeller\src\R-sharp\Library\shares\graphics.common_runtime\R_graphics.common_runtime.vbproj" />
 	  <ProjectReference Include="..\..\..\..\..\..\GCModeller\src\R-sharp\R#\Rsharp-netcore5.vbproj" />
 	  <ProjectReference Include="..\..\..\..\..\..\GCModeller\src\repository\Bio.Repository\repository.NET5.vbproj" />
 	  <ProjectReference Include="..\..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\HDSPack\HDSPack.vbproj" />

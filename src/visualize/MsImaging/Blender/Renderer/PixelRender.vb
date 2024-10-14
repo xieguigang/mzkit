@@ -96,11 +96,9 @@ Namespace Blender
         ''' <param name="dimension">
         ''' the raw dimension size of the ms-imaging raw data file
         ''' </param>
-        ''' <param name="scale"></param>
         ''' <returns></returns>
         Public Overrides Function ChannelCompositions(R As PixelData(), G As PixelData(), B As PixelData(),
                                                       dimension As Size,
-                                                      Optional scale As InterpolationMode = InterpolationMode.Bilinear,
                                                       Optional background As String = "black") As GraphicsData
 
             Dim defaultBackground As Color = background.TranslateColor
@@ -111,7 +109,7 @@ Namespace Blender
             Dim Bchannel = GetPixelChannelReader(B)
             Dim skipTransparent As Boolean = Not overlaps Is Nothing
 
-            Using buffer As BitmapBuffer = BitmapBuffer.FromBitmap(raw, ImageLockMode.WriteOnly)
+            Using buffer As BitmapBuffer = BitmapBuffer.FromBitmap(raw)
                 For x As Integer = 1 To dimension.Width
                     For y As Integer = 1 To dimension.Height
                         Dim bR As Byte = Rchannel(x, y)
@@ -150,7 +148,7 @@ Namespace Blender
         Private Function DrawBackground(dimension As Size, defaultBackground As Color) As Bitmap
             Dim raw As New Bitmap(dimension.Width, dimension.Height, PixelFormat.Format32bppArgb)
 
-            Using g As Graphics = Graphics.FromImage(raw)
+            Using g As IGraphics = DriverLoad.CreateGraphicsDevice(raw)
                 Call g.Clear(defaultBackground)
 
                 If Not overlaps Is Nothing Then
@@ -172,7 +170,6 @@ Namespace Blender
         Public Overrides Function RenderPixels(pixels As PixelData(), dimension As Size,
                                                Optional colorSet As String = "YlGnBu:c8",
                                                Optional mapLevels% = 25,
-                                               Optional scale As InterpolationMode = InterpolationMode.Bilinear,
                                                Optional defaultFill As String = "Transparent") As GraphicsData
 
             Dim brushColors As SolidBrush() = Designer _
@@ -182,7 +179,7 @@ Namespace Blender
                         End Function) _
                 .ToArray
 
-            Return RenderPixels(pixels, dimension, brushColors, scale, defaultFill)
+            Return RenderPixels(pixels, dimension, brushColors, defaultFill)
         End Function
 
         ''' <summary>
@@ -194,7 +191,6 @@ Namespace Blender
         ''' <returns>a gdi+ image obejct with size which is specified by
         ''' <paramref name="dimension"/> parameter.</returns>
         Public Overrides Function RenderPixels(pixels As PixelData(), dimension As Size, colorSet As SolidBrush(),
-                                               Optional scale As InterpolationMode = InterpolationMode.Bilinear,
                                                Optional defaultFill As String = "Transparent") As GraphicsData
             Dim color As Color
             Dim colors As Color() = colorSet.Select(Function(br) br.Color).ToArray
@@ -207,7 +203,7 @@ Namespace Blender
             Dim defaultColor As Color = defaultFill.TranslateColor
             Dim skipTransparent As Boolean = Not overlaps Is Nothing
 
-            Using buffer As BitmapBuffer = BitmapBuffer.FromBitmap(raw, ImageLockMode.WriteOnly)
+            Using buffer As BitmapBuffer = BitmapBuffer.FromBitmap(raw)
                 For Each point As PixelData In PixelData.ScalePixels(pixels)
                     level = point.level
 
@@ -244,7 +240,6 @@ Namespace Blender
         Public Overrides Function LayerOverlaps(pixels As PixelData()(),
                                                 dimension As Size,
                                                 colorSet As MzLayerColorSet,
-                                                Optional scale As InterpolationMode = InterpolationMode.Bilinear,
                                                 Optional defaultFill As String = "Transparent",
                                                 Optional mapLevels As Integer = 25) As GraphicsData
 

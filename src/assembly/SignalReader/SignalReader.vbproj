@@ -3,7 +3,7 @@
   <PropertyGroup>
     <RootNamespace>BioNovoGene.Analytical.MassSpectrometry.SignalReader</RootNamespace>
 	  <AssemblyName>BioNovoGene.Analytical.MassSpectrometry.SignalReader</AssemblyName>
-	  <TargetFrameworks>net6.0-windows;net6.0;net48</TargetFrameworks>
+    <TargetFrameworks>net8.0-windows;net8.0;net48</TargetFrameworks>
 	  <Platforms>AnyCPU;x64</Platforms>
 	  <Configurations>Debug;Release;LipidSearch;PlantMAT;mzkit;NPSearch;Rsharp_app_release;mzkit_win32</Configurations>
 	  <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>

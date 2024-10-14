@@ -62,6 +62,7 @@
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MSP
 Imports Microsoft.VisualBasic.Language
+Imports ASCII = Microsoft.VisualBasic.Text.ASCII
 
 Public Class UnionReader
 
@@ -210,7 +211,7 @@ Public Class UnionReader
     End Sub
 
     Private Function numericIdInternal(idStr As String, <CallerMemberName> Optional name$ = Nothing) As Long
-        Static delimiter As Char() = {":"c, " "c, Text.ASCII.TAB, "="c}
+        Static delimiter As Char() = {":"c, " "c, ASCII.TAB, "="c}
 
         idStr = Strings.Trim(idStr)
 

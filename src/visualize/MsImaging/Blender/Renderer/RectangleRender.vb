@@ -72,6 +72,32 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 
+#If NET48 Then
+Imports Pen = System.Drawing.Pen
+Imports Pens = System.Drawing.Pens
+Imports Brush = System.Drawing.Brush
+Imports Font = System.Drawing.Font
+Imports Brushes = System.Drawing.Brushes
+Imports SolidBrush = System.Drawing.SolidBrush
+Imports DashStyle = System.Drawing.Drawing2D.DashStyle
+Imports Image = System.Drawing.Image
+Imports Bitmap = System.Drawing.Bitmap
+Imports GraphicsPath = System.Drawing.Drawing2D.GraphicsPath
+Imports FontStyle = System.Drawing.FontStyle
+#Else
+Imports Pen = Microsoft.VisualBasic.Imaging.Pen
+Imports Pens = Microsoft.VisualBasic.Imaging.Pens
+Imports Brush = Microsoft.VisualBasic.Imaging.Brush
+Imports Font = Microsoft.VisualBasic.Imaging.Font
+Imports Brushes = Microsoft.VisualBasic.Imaging.Brushes
+Imports SolidBrush = Microsoft.VisualBasic.Imaging.SolidBrush
+Imports DashStyle = Microsoft.VisualBasic.Imaging.DashStyle
+Imports Image = Microsoft.VisualBasic.Imaging.Image
+Imports Bitmap = Microsoft.VisualBasic.Imaging.Bitmap
+Imports GraphicsPath = Microsoft.VisualBasic.Imaging.GraphicsPath
+Imports FontStyle = Microsoft.VisualBasic.Imaging.FontStyle
+#End If
+
 Namespace Blender
 
     Public Class RectangleRender : Inherits Renderer
@@ -116,7 +142,6 @@ Namespace Blender
         ''' </returns>
         Public Overrides Function ChannelCompositions(R() As PixelData, G() As PixelData, B() As PixelData,
                                                       dimension As Size,
-                                                      Optional scale As InterpolationMode = InterpolationMode.Bilinear,
                                                       Optional background As String = "black") As GraphicsData
 
             Dim defaultBackground As Color = background.TranslateColor
@@ -146,7 +171,6 @@ Namespace Blender
         End Sub
 
         Public Overrides Function RenderPixels(pixels() As PixelData, dimension As Size, colorSet() As SolidBrush,
-                                               Optional scale As InterpolationMode = InterpolationMode.Bilinear,
                                                Optional defaultFill As String = "Transparent") As GraphicsData
 
             Dim defaultColor As Brush = defaultFill.GetBrush
@@ -186,14 +210,13 @@ Namespace Blender
         Public Overrides Function RenderPixels(pixels() As PixelData, dimension As Size,
                                                Optional colorSet As String = "YlGnBu:c8",
                                                Optional mapLevels As Integer = 25,
-                                               Optional scale As InterpolationMode = InterpolationMode.Bilinear,
                                                Optional defaultFill As String = "Transparent") As GraphicsData
 
             Dim colors As SolidBrush() = Designer.GetColors(colorSet, mapLevels) _
                 .Select(Function(c) New SolidBrush(c)) _
                 .ToArray
 
-            Return RenderPixels(pixels, dimension, colors, scale, defaultFill)
+            Return RenderPixels(pixels, dimension, colors, defaultFill)
         End Function
 
         Private Sub FillLayerInternal(gr As IGraphics,
@@ -234,7 +257,6 @@ Namespace Blender
         End Sub
 
         Public Overrides Function LayerOverlaps(layers()() As PixelData, dimension As Size, colorSet As MzLayerColorSet,
-                                                Optional scale As InterpolationMode = InterpolationMode.Bilinear,
                                                 Optional defaultFill As String = "Transparent",
                                                 Optional mapLevels As Integer = 25) As GraphicsData
 
@@ -261,7 +283,6 @@ Namespace Blender
         End Function
 
         Public Overloads Function LayerOverlaps(pixels() As PixelData, dimension As Size, colorSet As MzLayerColorSet,
-                                                Optional scale As InterpolationMode = InterpolationMode.Bilinear,
                                                 Optional cut As DoubleRange = Nothing,
                                                 Optional defaultFill As String = "Transparent",
                                                 Optional mapLevels As Integer = 25) As GraphicsData

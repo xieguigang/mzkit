@@ -118,6 +118,7 @@ Imports any = Microsoft.VisualBasic.Scripting
 Imports imzML = BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML.XML
 Imports rDataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
 Imports REnv = SMRUCC.Rsharp.Runtime
+Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
 Imports SingleCellMath = BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute.Math
 Imports SingleCellMatrix = BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute.PeakMatrix
 Imports SpotVector = BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute.PixelData
@@ -136,7 +137,7 @@ Imports std = System.Math
 Module MSI
 
     Friend Sub Main()
-        Call Internal.Object.Converts.makeDataframe.addHandler(GetType(IonStat()), AddressOf getStatTable)
+        Call RInternal.Object.Converts.makeDataframe.addHandler(GetType(IonStat()), AddressOf getStatTable)
 
         Call generic.add("readBin.msi_layer", GetType(Stream), AddressOf readPeaklayer)
         Call generic.add("readBin.msi_summary", GetType(Stream), AddressOf readSummarylayer)
@@ -248,7 +249,7 @@ Module MSI
         Dim name As String
 
         If f.Length <> cols.Length Then
-            Return Internal.debug.stop($"the dimension of the factor vector({f.Length}) is not matched with the dataframe columns({cols.Length})!", env)
+            Return RInternal.debug.stop($"the dimension of the factor vector({f.Length}) is not matched with the dataframe columns({cols.Length})!", env)
         End If
 
         m = New rDataframe(m)
@@ -316,7 +317,7 @@ Module MSI
 
             If ver = 1 Then
                 ' version 1 format not supports metadata
-                Return Internal.debug.stop(New NotSupportedException("version 1 mzPack file can not supports the metadata!"), env)
+                Return RInternal.debug.stop(New NotSupportedException("version 1 mzPack file can not supports the metadata!"), env)
             ElseIf ver < 0 Then
                 ' is mzImage?
                 Return New BioNovoGene.Analytical.MassSpectrometry.SingleCells.File.MatrixReader(file.TryCast(Of Stream)).GetMSIMetadata
@@ -392,7 +393,7 @@ Module MSI
             Dim mz As Double() = CLRVector.asNumeric(context)
 
             If mz.IsNullOrEmpty OrElse mz.All(Function(mzi) mzi <= 0.0) Then
-                Return Internal.debug.stop($"invalid given m/z context value: {context}, it should be a positive real number!", env)
+                Return RInternal.debug.stop($"invalid given m/z context value: {context}, it should be a positive real number!", env)
             End If
 
             pixels = mz _
@@ -551,7 +552,7 @@ Module MSI
                 Return region.GetRectangle.Size.size_toList
             End If
         Else
-            Return Internal.debug.stop("unsupported file!", env)
+            Return RInternal.debug.stop("unsupported file!", env)
         End If
     End Function
 
@@ -578,7 +579,7 @@ Module MSI
             ElseIf ver = 2 Then
                 reader = New mzStream(buf)
             Else
-                Return Internal.debug.stop(New NotImplementedException, env)
+                Return RInternal.debug.stop(New NotImplementedException, env)
             End If
 
             Dim allMeta = reader.EnumerateIndex _
@@ -648,7 +649,7 @@ Module MSI
             Dim sizeVal As String = InteropArgumentHelper.getSize(dims, env, "0,0")
 
             If sizeVal = "0,0" Then
-                Return Internal.debug.stop($"invalid dimension size value input: {any.ToString(dims)}", env)
+                Return RInternal.debug.stop($"invalid dimension size value input: {any.ToString(dims)}", env)
             End If
 
             Dim dimsVal As Size = sizeVal.SizeParser
@@ -689,7 +690,7 @@ Module MSI
         Dim ibdfile As String = file.ChangeSuffix("ibd")
 
         If Not ibdfile.FileExists Then
-            Return Internal.debug.stop({
+            Return RInternal.debug.stop({
                 $"The intensity binary data file({ibdfile}) is missing!",
                 $"ibd file: {ibdfile}"
             }, env)
@@ -775,14 +776,14 @@ Module MSI
                              Optional env As Environment = Nothing) As Object
 
         If raw.IsNullOrEmpty Then
-            Return Internal.debug.stop("the required raw data file list is empty!", env)
+            Return RInternal.debug.stop("the required raw data file list is empty!", env)
         ElseIf raw.Length = 1 Then
             If y > 0 Then
                 Using file As FileStream = raw(Scan0).Open(FileMode.Open, doClear:=False, [readOnly]:=True)
                     Return file.loadRowSummary(y, correction)
                 End Using
             Else
-                Return Internal.debug.stop("the pixels of column must be specific!", env)
+                Return RInternal.debug.stop("the pixels of column must be specific!", env)
             End If
         Else
             Dim loader = Iterator Function() As IEnumerable(Of mzPack)
@@ -1223,7 +1224,7 @@ Module MSI
                     .Select(Function(m) m.ToString) _
                     .UniqueNames
 
-                ions = keys.Zip(mz) _
+                ions = keys.Zip(second:=mz) _
                     .ToDictionary(Function(m) m.First,
                                   Function(m)
                                       Return m.Second
@@ -1241,7 +1242,7 @@ Module MSI
                         .Select(Function(m) m.ToString) _
                         .UniqueNames
 
-                    ions = keys.Zip(mz) _
+                    ions = keys.Zip(second:=mz) _
                         .ToDictionary(Function(m) m.First,
                                       Function(m)
                                           Return m.Second
