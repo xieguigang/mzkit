@@ -33,7 +33,6 @@ Public Class SpectrumGrid
     ''' a collection of the ion groups
     ''' </returns>
     Private Iterator Function Clustering(rawdata As IEnumerable(Of NamedCollection(Of PeakMs2))) As IEnumerable(Of SpectrumLine)
-        Dim tree As New BinaryClustering()
         Dim ions As New List(Of PeakMs2)
         Dim files As New List(Of String)
 
@@ -42,28 +41,35 @@ Public Class SpectrumGrid
             Call ions.AddRange(file)
         Next
 
-        tree = tree.Tree(ions)
+        Dim parent_groups = ions.GroupBy(Function(i) i.mz, offsets:=1).ToArray
+
         filenames = files.ToArray
 
-        For Each cluster As NamedCollection(Of PeakMs2) In tree.GetClusters
-            ' split by rt
-            Dim rt_groups = cluster _
-                .GroupBy(Function(a) a.rt, offsets:=7.5) _
-                .ToArray
+        For Each ion_group In parent_groups
+            Dim tree As New BinaryClustering()
 
-            For Each group In rt_groups
-                Dim fileIndex = group.ToDictionary(Function(a) a.file)
-                Dim i2 = filenames _
-                    .Select(Function(name)
-                                Return If(fileIndex.ContainsKey(name), fileIndex(name).intensity, 0)
-                            End Function) _
+            tree = tree.Tree(ion_group)
+
+            For Each cluster As NamedCollection(Of PeakMs2) In tree.GetClusters
+                ' split by rt
+                Dim rt_groups = cluster _
+                    .GroupBy(Function(a) a.rt, offsets:=7.5) _
                     .ToArray
 
-                Yield New SpectrumLine With {
-                    .intensity = i2,
-                    .cluster = group.ToArray,
-                    .rt = Val(group.name)
-                }
+                For Each group In rt_groups
+                    Dim fileIndex = group.ToDictionary(Function(a) a.file)
+                    Dim i2 = filenames _
+                        .Select(Function(name)
+                                    Return If(fileIndex.ContainsKey(name), fileIndex(name).intensity, 0)
+                                End Function) _
+                        .ToArray
+
+                    Yield New SpectrumLine With {
+                        .intensity = i2,
+                        .cluster = group.ToArray,
+                        .rt = Val(group.name)
+                    }
+                Next
             Next
         Next
     End Function
