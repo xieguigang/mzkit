@@ -1,65 +1,68 @@
 ﻿#Region "Microsoft.VisualBasic::b96983ed84e963ff53c2661181702829, Rscript\Library\mzkit_app\src\mzDIA\MoleculeNetworking.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 347
-    '    Code Lines: 192 (55.33%)
-    ' Comment Lines: 123 (35.45%)
-    '    - Xml Docs: 96.75%
-    ' 
-    '   Blank Lines: 32 (9.22%)
-    '     File Size: 15.40 KB
+' Summaries:
 
 
-    ' Module MoleculeNetworking
-    ' 
-    '     Function: clustering, createGraph, MsBin, RepresentativeSpectrum, splitClusterRT
-    '               Tree, unqiueNames
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 347
+'    Code Lines: 192 (55.33%)
+' Comment Lines: 123 (35.45%)
+'    - Xml Docs: 96.75%
+' 
+'   Blank Lines: 32 (9.22%)
+'     File Size: 15.40 KB
+
+
+' Module MoleculeNetworking
+' 
+'     Function: clustering, createGraph, MsBin, RepresentativeSpectrum, splitClusterRT
+'               Tree, unqiueNames
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
+Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.MoleculeNetworking
 Imports BioNovoGene.BioDeep.MassSpectrometry.MoleculeNetworking
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
@@ -400,5 +403,53 @@ Module MoleculeNetworking
         Next
 
         Return output.ToArray
+    End Function
+
+    <ExportAPI("spectrum_grid")>
+    Public Function create_spectrum_grid(<RRawVectorArgument> rawdata As Object,
+                                         Optional centroid As Object = "da:0.3",
+                                         Optional intocutoff As Double = 0.05,
+                                         Optional env As Environment = Nothing) As Object
+
+        Dim rawPool As pipeline = pipeline.TryCreatePipeline(Of mzPack)(rawdata, env)
+        Dim specData As New List(Of NamedCollection(Of PeakMs2))
+        Dim specSet As PeakMs2()
+        Dim massError = Math.getTolerance(centroid, env, [default]:="da:0.3")
+
+        If massError Like GetType(Message) Then
+            Return massError.TryCast(Of Message)
+        End If
+
+        Dim massWin As Tolerance = massError.TryCast(Of Tolerance)
+        Dim cutoff As New RelativeIntensityCutoff(intocutoff)
+        Dim filename As String
+
+        If rawPool.isError Then
+            Return rawPool.getError
+        Else
+            For Each raw As mzPack In TqdmWrapper.Wrap(rawPool.populates(Of mzPack)(env).ToArray)
+                filename = raw.source
+                specSet = raw.GetMs2Peaks _
+                    .AsParallel _
+                    .Select(Function(si)
+                                si.mzInto = si.mzInto.Centroid(massWin, cutoff).ToArray
+                                Return si
+                            End Function) _
+                    .ToArray
+
+                specData.Add(New NamedCollection(Of PeakMs2)(filename, specSet))
+            Next
+        End If
+
+        Dim grid As New SpectrumGrid
+        grid = grid.SetRawDataFiles(specData)
+
+        Return grid
+    End Function
+
+    <ExportAPI("grid_assigned")>
+    <RApiReturn(GetType(RawPeakAssign))>
+    Public Function grid_assigned(grid As SpectrumGrid, peakset As PeakSet) As Object
+        Return grid.AssignPeaks(peakset.peaks).ToArray
     End Function
 End Module
