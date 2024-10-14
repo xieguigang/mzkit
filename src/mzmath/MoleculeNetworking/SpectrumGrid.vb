@@ -92,9 +92,10 @@ Public Class SpectrumGrid
         For Each peak As xcms2 In peaks
             Dim i1 As Double() = peak(filenames)
             Dim candidates = clusters _
-                .Search(q.SetRT(peak.rt)).Where(Function(c)
-
-                                                End Function) _
+                .Search(q.SetRT(peak.rt)) _
+                .Where(Function(c)
+                           Return std.Abs(c.mz - peak.mz) < 0.3
+                       End Function) _
                 .Select(Function(c)
                             Dim cor As Double, pval As Double
                             cor = Correlations.GetPearson(i1, c.intensity, prob2:=pval)
