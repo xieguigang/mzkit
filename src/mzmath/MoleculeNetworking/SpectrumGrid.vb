@@ -76,7 +76,7 @@ Public Class SpectrumGrid
                         .ToArray
 
                     Yield New SpectrumLine With {
-                        .intensity = i2,
+                        .intensity = SumNorm(i2),
                         .cluster = group.value,
                         .rt = Val(group.name),
                         .mz = group.Average(Function(si) si.mz)
@@ -86,13 +86,32 @@ Public Class SpectrumGrid
         Next
     End Function
 
-    Public Iterator Function AssignPeaks(peaks As IEnumerable(Of xcms2)) As IEnumerable(Of RawPeakAssign)
+    Private Function SumNorm(ByRef v As Double()) As Double()
+        Dim pos = v.Where(Function(vi) vi > 0).ToArray
+
+        ' all element is zero!
+        If pos.Length = 0 Then
+            Return v
+        End If
+
+        Dim minPos As Double = pos.Min / 2
+
+        For i As Integer = 0 To v.Length - 1
+            If v(i) <= 0.0 Then
+                v(i) = minpos
+            End If
+        Next
+
+        Return SIMD.Multiply.f64_scalar_op_multiply_f64(10000, SIMD.Divide.f64_op_divide_f64_scalar(v, v.Sum))
+    End Function
+
+    Public Iterator Function AssignPeaks(peaks As IEnumerable(Of xcms2), Optional rt_win As Double = 5) As IEnumerable(Of RawPeakAssign)
         Dim q As New SpectrumLine
 
         For Each peak As xcms2 In TqdmWrapper.Wrap(peaks.ToArray)
-            Dim i1 As Double() = peak(filenames)
+            Dim i1 As Double() = SumNorm(peak(filenames))
             Dim candidates = clusters _
-                .Search(q.SetRT(peak.rt)) _
+                .Search(q.SetRT(peak.rt), tolerance:=rt_win) _
                 .Where(Function(c)
                            Return std.Abs(c.mz - peak.mz) < 0.3
                        End Function) _
@@ -100,7 +119,7 @@ Public Class SpectrumGrid
                 .Select(Function(c)
                             Dim cor As Double, pval As Double
                             cor = Correlations.GetPearson(i1, c.intensity, prob2:=pval)
-                            Return (c, cor, pval, score:=cor / (pval + 0.00001) / (std.Abs(peak.rt - c.rt) + 1))
+                            Return (c, cor, pval, score:=cor / (pval + 1.0E-100) / (std.Abs(peak.rt - c.rt) + 1))
                         End Function) _
                 .OrderByDescending(Function(c) c.cor) _
                 .Take(3) _

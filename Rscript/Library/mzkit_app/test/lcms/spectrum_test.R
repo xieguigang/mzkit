@@ -20,3 +20,7 @@ let rawdata = rawfiles
 let assigned = rawdata |> spectrum_grid() |> grid_assigned(peaks);
 
 
+assigned
+|> JSON::json_encode()
+|> writeLines(con = "\\192.168.1.254\backup3\项目以外内容\human_reference_metabolome\benchmark\MTBLS6039\FILES\RAW_FILES\POS\mzPack\test.json")
+;
