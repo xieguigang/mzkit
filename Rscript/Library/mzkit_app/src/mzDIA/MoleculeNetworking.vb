@@ -423,6 +423,7 @@ Module MoleculeNetworking
         Dim massWin As Tolerance = massError.TryCast(Of Tolerance)
         Dim cutoff As New RelativeIntensityCutoff(intocutoff)
         Dim filename As String
+        Dim id As String()
 
         If rawPool.isError Then
             Return rawPool.getError
@@ -436,6 +437,14 @@ Module MoleculeNetworking
                                 Return si
                             End Function) _
                     .ToArray
+                id = specSet _
+                    .Select(Function(si) $"M{CInt(si.mz)}T{CInt(si.rt)}") _
+                    .UniqueNames _
+                    .ToArray
+
+                For i As Integer = 0 To specSet.Length - 1
+                    specSet(i).lib_guid = $"{filename}#{id(i)}"
+                Next
 
                 specData.Add(New NamedCollection(Of PeakMs2)(filename, specSet))
             Next
