@@ -89,13 +89,14 @@ Public Class SpectrumGrid
     Public Iterator Function AssignPeaks(peaks As IEnumerable(Of xcms2)) As IEnumerable(Of RawPeakAssign)
         Dim q As New SpectrumLine
 
-        For Each peak As xcms2 In peaks
+        For Each peak As xcms2 In TqdmWrapper.Wrap(peaks.ToArray)
             Dim i1 As Double() = peak(filenames)
             Dim candidates = clusters _
                 .Search(q.SetRT(peak.rt)) _
                 .Where(Function(c)
                            Return std.Abs(c.mz - peak.mz) < 0.3
                        End Function) _
+                .AsParallel _
                 .Select(Function(c)
                             Dim cor As Double, pval As Double
                             cor = Correlations.GetPearson(i1, c.intensity, prob2:=pval)
