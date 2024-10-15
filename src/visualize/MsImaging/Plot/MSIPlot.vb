@@ -116,7 +116,8 @@ Public Class MSIPlot : Inherits Plot
     Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
         Dim Xtick As Double() = New DoubleRange({0, ion.DimensionSize.Width}).CreateAxisTicks()
         Dim Ytick As Double() = New DoubleRange({0, ion.DimensionSize.Height}).CreateAxisTicks
-        Dim rect As Rectangle = canvas.PlotRegion
+        Dim css As CSSEnvirnment = g.LoadEnvironment
+        Dim rect As Rectangle = canvas.PlotRegion(css)
         Dim scaleX = d3js.scale.linear.domain(values:=Xtick).range(values:=New Double() {rect.Left, rect.Right})
         Dim scaleY = d3js.scale.linear.domain(values:=Ytick).range(values:=New Double() {rect.Top, rect.Bottom})
         Dim scale As New DataScaler With {
@@ -125,7 +126,6 @@ Public Class MSIPlot : Inherits Plot
             .X = scaleX,
             .Y = scaleY
         }
-        Dim css As CSSEnvirnment = g.LoadEnvironment
         Dim engine As New RectangleRender(Drivers.Default, heatmapRender:=False)
         Dim colorScale = Designer.GetColors(theme.colorSet, 25).Select(Function(c) New SolidBrush(c)).ToArray
         Dim scaleSize As New Size With {

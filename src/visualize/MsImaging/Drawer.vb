@@ -274,7 +274,6 @@ Public Class Drawer : Implements IDisposable
     ''' <param name="raw"></param>
     ''' <param name="newWidth"></param>
     ''' <param name="newHeight"></param>
-    ''' <param name="scale"></param>
     ''' <returns></returns>
     Public Shared Function ScaleLayer(raw As Bitmap, newWidth As Integer, newHeight As Integer) As Bitmap
 #If NET48 Then

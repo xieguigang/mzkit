@@ -97,7 +97,8 @@ Public Class RGBMSIPlot : Inherits Plot
     Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
         Dim Xtick As Double() = New DoubleRange({0, dimensionSize.Width}).CreateAxisTicks()
         Dim Ytick As Double() = New DoubleRange({0, dimensionSize.Height}).CreateAxisTicks
-        Dim rect As Rectangle = canvas.PlotRegion
+        Dim css As CSSEnvirnment = g.LoadEnvironment
+        Dim rect As Rectangle = canvas.PlotRegion(css)
         Dim scaleX = d3js.scale.linear.domain(values:=Xtick).range(values:=New Double() {rect.Left, rect.Right})
         Dim scaleY = d3js.scale.linear.domain(values:=Ytick).range(values:=New Double() {rect.Top, rect.Bottom})
         Dim scale As New DataScaler With {
@@ -111,7 +112,6 @@ Public Class RGBMSIPlot : Inherits Plot
         Dim iR = Me.R.MSILayer
         Dim iG = Me.G?.MSILayer
         Dim iB = Me.B?.MSILayer
-        Dim css As CSSEnvirnment = g.LoadEnvironment
 
         MSI = engine.ChannelCompositions(Me.R.MSILayer, Me.G?.MSILayer, Me.B?.MSILayer, dimensionSize, background:=theme.background).AsGDIImage
         MSI = Drawer.ScaleLayer(MSI, rect.Width, rect.Height)
