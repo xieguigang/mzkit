@@ -158,7 +158,7 @@ Public Class ChromatogramPeakPlot : Inherits Plot
         Dim baselinePen As Pen = css.GetPen(Stroke.TryParse(baseLine_styleCSS))
         Dim accumulateLine As Pen = css.GetPen(Stroke.TryParse(accumulateLineStyleCss))
         Dim legends As New List(Of NamedValue(Of Pen))
-        Dim rect As Rectangle = canvas.PlotRegion
+        Dim rect As Rectangle = canvas.PlotRegion(css)
         Dim X = d3js.scale.linear.domain(values:=timeTicks).range(integers:={rect.Left, rect.Right})
         Dim Y = d3js.scale.linear.domain(values:=intoTicks).range(integers:={rect.Top, rect.Bottom})
         Dim scaler As New DataScaler With {

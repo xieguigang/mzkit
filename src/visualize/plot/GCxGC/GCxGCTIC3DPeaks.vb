@@ -122,9 +122,10 @@ Public Class GCxGCTIC3DPeaks : Inherits Plot
         Dim mesh3D As Polygon() = MeshGrid(gcxgc:=raw, sampling:=sampling, xsize:=10, ysize:=6, zsize:=10).ToArray
         Dim colors As SolidBrush() = Designer.GetColors(theme.colorSet, mapLevels).Select(Function(c) New SolidBrush(c)).ToArray
         Dim z As Double() = mesh3D.Select(Function(s) s.Path.Select(Function(p) p.Z).Average).ToArray
+        Dim css As CSSEnvirnment = g.LoadEnvironment
         Dim range As New DoubleRange(z)
         Dim indexRange As New DoubleRange(0, mapLevels - 1)
-        Dim plotSize = canvas.PlotRegion.Size
+        Dim plotSize = canvas.PlotRegion(css).Size
 
         ' render color
         For i As Integer = 0 To mesh3D.Length - 1
@@ -145,7 +146,6 @@ Public Class GCxGCTIC3DPeaks : Inherits Plot
         Dim zTicks = mesh3D.Select(Function(s) s.Path.Select(Function(p) p.Z)).IteratesALL.Range.CreateAxisTicks
         Dim tickCss As String = CSSFont.TryParse(theme.axisTickCSS).SetFontColor(theme.mainTextColor).ToString
         Dim models As New List(Of Element3D)
-        Dim css As CSSEnvirnment = g.LoadEnvironment
 
         ' 然后生成底部的网格
         Call Grids.Grid1(css, xTicks, yTicks, (xTicks(1) - xTicks(0), yTicks(1) - yTicks(0)), zTicks.Min, showTicks:=Not theme.axisTickCSS.StringEmpty, strokeCSS:=theme.gridStrokeX, tickCSS:=tickCss).DoCall(AddressOf models.AddRange)

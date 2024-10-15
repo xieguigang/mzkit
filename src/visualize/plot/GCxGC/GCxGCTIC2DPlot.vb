@@ -165,7 +165,8 @@ Public Class GCxGCTIC2DPlot : Inherits Plot
             .TimeArray _
             .CreateAxisTicks _
             .AsVector
-        Dim rect As Rectangle = canvas.PlotRegion
+        Dim css As CSSEnvirnment = g.LoadEnvironment
+        Dim rect As Rectangle = canvas.PlotRegion(css)
         Dim scaleX = d3js.scale.linear.domain(values:=xTicks).range(integers:={rect.Left, rect.Right})
         Dim scaleY = d3js.scale.linear.domain(values:=yTicks).range(integers:={rect.Top, rect.Bottom})
         Dim scale As New DataScaler() With {
@@ -211,9 +212,8 @@ Public Class GCxGCTIC2DPlot : Inherits Plot
             width:=width,
             height:=canvas.Height * 0.3
         )
-        Dim css As CSSEnvirnment = g.LoadEnvironment
 
-        Call DrawMainTitle(g, canvas.PlotRegion)
+        Call DrawMainTitle(g, canvas.PlotRegion(css))
         Call g.ColorMapLegend(
             layout:=legendLayout,
             designer:=colors _
