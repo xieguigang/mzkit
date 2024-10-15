@@ -24,7 +24,7 @@
 
         <p>Encapsulates a GDI+(bitmap, wmf)/SVG etc drawing surface. This class must be inherited.</p>
 
-<p>@<code>!:Graphics</code></p>
+<p>an default interface wrapper of the .NET gdi+ Graphics object</p>
 
         <h3>Declare</h3>        
 
@@ -36,6 +36,7 @@ export class IGraphics {
    Background: <a href="/vignettes/clr/System/Drawing/Color.html">Color</a>;
    # max value of the [DpiX, DpiY]
    Dpi: double;
+   Driver: <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/Driver/Drivers.html">Drivers</a>;
    # Default font value for text drawing
    Font: <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/Font.html">Font</a>;
    Height: integer;
@@ -55,6 +56,7 @@ export class IGraphics {
 
         <ol>
 <li>use by <i>property</i> member <code>Background</code>: <a href="/vignettes/clr/System/Drawing/Color.html">Color</a></li>
+<li>use by <i>property</i> member <code>Driver</code>: <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/Driver/Drivers.html">Drivers</a></li>
 <li>use by <i>property</i> member <code>Font</code>: <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/Font.html">Font</a></li>
 <li>use by <i>property</i> member <code>RenderingOrigin</code>: <a href="/vignettes/clr/System/Drawing/Point.html">Point</a></li>
 <li>use by <i>property</i> member <code>Size</code>: <a href="/vignettes/clr/System/Drawing/Size.html">Size</a></li>
