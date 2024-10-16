@@ -1,20 +1,18 @@
-﻿Imports System.Collections.Generic
-
-''' JNA-InChI - Library for calling InChI from Java
-''' Copyright © 2018 Daniel Lowe
-''' 
-''' This library is free software; you can redistribute it and/or
-''' modify it under the terms of the GNU Lesser General Public
-''' License as published by the Free Software Foundation; either
-''' version 2.1 of the License, or (at your option) any later version.
-''' 
-''' This program is distributed in the hope that it will be useful,
-''' but WITHOUT ANY WARRANTY; without even the implied warranty of
-''' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-''' GNU Lesser General Public License for more details.
-''' 
-''' You should have received a copy of the GNU Lesser General Public License
-''' along with this program.  If not, see </>.
+﻿' JNA-InChI - Library for calling InChI from Java
+' Copyright © 2018 Daniel Lowe
+' 
+' This library is free software; you can redistribute it and/or
+' modify it under the terms of the GNU Lesser General Public
+' License as published by the Free Software Foundation; either
+' version 2.1 of the License, or (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU Lesser General Public License for more details.
+' 
+' You should have received a copy of the GNU Lesser General Public License
+' along with this program.  If not, see </>.
 
 Namespace IUPAC.InChI
 
@@ -34,27 +32,27 @@ Namespace IUPAC.InChI
         Public Shared ReadOnly NONE As InchiBondStereo = New InchiBondStereo("NONE", InnerEnum.NONE, INCHI_BOND_STEREO_NONE)
 
         ''' <summary>
-        ''' sharp end points to this atom i.e. reference atom is <seealsocref="InchiBond.getStart()"/> </summary>
+        ''' sharp end points to this atom i.e. reference atom is <seealso cref="InchiBond.Start"/> </summary>
         Public Shared ReadOnly SINGLE_1UP As InchiBondStereo = New InchiBondStereo("SINGLE_1UP", InnerEnum.SINGLE_1UP, INCHI_BOND_STEREO_SINGLE_1UP)
 
         ''' <summary>
-        ''' sharp end points to this atom i.e. reference atom is <seealsocref="InchiBond.getStart()"/> </summary>
+        ''' sharp end points to this atom i.e. reference atom is <seealso cref="InchiBond.Start"/> </summary>
         Public Shared ReadOnly SINGLE_1EITHER As InchiBondStereo = New InchiBondStereo("SINGLE_1EITHER", InnerEnum.SINGLE_1EITHER, INCHI_BOND_STEREO_SINGLE_1EITHER)
 
         ''' <summary>
-        ''' sharp end points to this atom i.e. reference atom is <seealsocref="InchiBond.getStart()"/> </summary>
+        ''' sharp end points to this atom i.e. reference atom is <seealso cref="InchiBond.Start"/> </summary>
         Public Shared ReadOnly SINGLE_1DOWN As InchiBondStereo = New InchiBondStereo("SINGLE_1DOWN", InnerEnum.SINGLE_1DOWN, INCHI_BOND_STEREO_SINGLE_1DOWN)
 
         ''' <summary>
-        ''' sharp end points to the opposite atom i.e. reference atom is <seealsocref="InchiBond.getEnd()"/> </summary>
+        ''' sharp end points to the opposite atom i.e. reference atom is <seealso cref="InchiBond.End"/> </summary>
         Public Shared ReadOnly SINGLE_2UP As InchiBondStereo = New InchiBondStereo("SINGLE_2UP", InnerEnum.SINGLE_2UP, INCHI_BOND_STEREO_SINGLE_2UP)
 
         ''' <summary>
-        ''' sharp end points to the opposite atom i.e. reference atom is <seealsocref="InchiBond.getEnd()"/> </summary>
+        ''' sharp end points to the opposite atom i.e. reference atom is <seealso cref="InchiBond.End"/> </summary>
         Public Shared ReadOnly SINGLE_2EITHER As InchiBondStereo = New InchiBondStereo("SINGLE_2EITHER", InnerEnum.SINGLE_2EITHER, INCHI_BOND_STEREO_SINGLE_2EITHER)
 
         ''' <summary>
-        ''' sharp end points to the opposite atom i.e. reference atom is <seealsocref="InchiBond.getEnd()"/> </summary>
+        ''' sharp end points to the opposite atom i.e. reference atom is <seealso cref="InchiBond.End"/> </summary>
         Public Shared ReadOnly SINGLE_2DOWN As InchiBondStereo = New InchiBondStereo("SINGLE_2DOWN", InnerEnum.SINGLE_2DOWN, INCHI_BOND_STEREO_SINGLE_2DOWN)
 
         ''' <summary>

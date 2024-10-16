@@ -217,13 +217,14 @@ Public Class ScanVisual3D : Inherits Plot
             .GetColors(theme.colorSet, scans.Length) _
             .Select(AddressOf ToHtmlColor) _
             .ToArray
+        Dim padding As PaddingLayout = PaddingLayout.EvaluateFromCSS(css, canvas.Padding)
         Dim parallelCanvas As New GraphicsRegion With {
             .Size = canvas.Size,
             .Padding = New Padding With {
-                .Top = css.GetValue(canvas.Padding.Top),
-                .Left = css.GetValue(canvas.Padding.Left) + dx * scans.Length,
-                .Right = css.GetValue(canvas.Padding.Right),
-                .Bottom = css.GetValue(canvas.Padding.Bottom) + Me.height * plotRect.Height
+                .Top = padding.Top,
+                .Left = padding.Left + dx * scans.Length,
+                .Right = padding.Right,
+                .Bottom = padding.Bottom + Me.height * plotRect.Height
             }
         }
         Dim labelList As New List(Of Label)
@@ -284,10 +285,10 @@ Public Class ScanVisual3D : Inherits Plot
             End If
 
             If drawParallelAxis Then
-                Dim x0 = css.GetValue(parallelCanvas.Padding.Left)
-                Dim y0 = canvas.Height - css.GetValue(parallelCanvas.Padding.Bottom)
-                Dim x1 = canvas.Width - css.GetValue(parallelCanvas.Padding.Right)
-                Dim y1 = canvas.Height - css.GetValue(parallelCanvas.Padding.Bottom)
+                Dim x0 = css.GetWidth(parallelCanvas.Padding.Left)
+                Dim y0 = canvas.Height - css.GetHeight(parallelCanvas.Padding.Bottom)
+                Dim x1 = canvas.Width - css.GetWidth(parallelCanvas.Padding.Right)
+                Dim y1 = canvas.Height - css.GetHeight(parallelCanvas.Padding.Bottom)
 
                 Call g.DrawLine(parallelXAxisPen, x0, y0, x1, y1)
             End If
@@ -321,12 +322,12 @@ Public Class ScanVisual3D : Inherits Plot
         '   c ----------/
         '               f
 
-        Dim a As New PointF(css.GetValue(firstFrame.Padding.Left), css.GetValue(firstFrame.Padding.Top))
-        Dim b As New PointF(css.GetValue(firstFrame.Padding.Left), canvas.Height - css.GetValue(firstFrame.Padding.Bottom))
-        Dim c As New PointF(css.GetValue(lastFrame.Padding.Left), canvas.Height - css.GetValue(lastFrame.Padding.Bottom))
-        Dim d As New PointF(css.GetValue(lastFrame.Padding.Left), css.GetValue(lastFrame.Padding.Top))
-        Dim e As New PointF(canvas.Width - css.GetValue(firstFrame.Padding.Right), canvas.Height - css.GetValue(firstFrame.Padding.Bottom))
-        Dim f As New PointF(canvas.Width - css.GetValue(lastFrame.Padding.Right), canvas.Height - css.GetValue(lastFrame.Padding.Bottom))
+        Dim a As New PointF(css.GetWidth(firstFrame.Padding.Left), css.GetHeight(firstFrame.Padding.Top))
+        Dim b As New PointF(css.GetWidth(firstFrame.Padding.Left), canvas.Height - css.GetHeight(firstFrame.Padding.Bottom))
+        Dim c As New PointF(css.GetWidth(lastFrame.Padding.Left), canvas.Height - css.GetHeight(lastFrame.Padding.Bottom))
+        Dim d As New PointF(css.GetWidth(lastFrame.Padding.Left), css.GetHeight(lastFrame.Padding.Top))
+        Dim e As New PointF(canvas.Width - css.GetWidth(firstFrame.Padding.Right), canvas.Height - css.GetHeight(firstFrame.Padding.Bottom))
+        Dim f As New PointF(canvas.Width - css.GetWidth(lastFrame.Padding.Right), canvas.Height - css.GetHeight(lastFrame.Padding.Bottom))
 
         Dim axisPen As Pen = CSS.GetPen(Stroke.TryParse(theme.axisStroke))
 
