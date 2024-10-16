@@ -58,7 +58,7 @@ Namespace IUPAC.InChI
 
         ''' <summary>
         ''' Defines the stereo configuration around the give centralAtom. The four vertexes of the tetrahedral centre should be given along with the parity.
-        ''' If one of the vertexes is an implicit hydrogen use <seealsocref="STEREO_IMPLICIT_H"/>. If one is a lone pair, use the centralAtom for this vertex </summary>
+        ''' If one of the vertexes is an implicit hydrogen use <seealso cref="STEREO_IMPLICIT_H"/>. If one is a lone pair, use the centralAtom for this vertex </summary>
         ''' <param name="centralAtom"> </param>
         ''' <param name="atom1"> </param>
         ''' <param name="atom2"> </param>
@@ -83,7 +83,7 @@ Namespace IUPAC.InChI
         ''' atom2 is C
         ''' atom3 is D
         ''' atom4 is E (or F)
-        ''' and the parity is whether atom1 and atom2 are on the same side; <seealsocref="InchiStereoParity.ODD"/> if on the same side
+        ''' and the parity is whether atom1 and atom2 are on the same side; <seealso cref="InchiStereoParity.ODD"/> if on the same side
         ''' Atom1/2 should be chosen such that neither are implicit hydrogen
         ''' 
         ''' For a cumulene (NOTE stereochemistry on cumulenes with more than 3 double bonds are unsupported by InChI)
@@ -101,7 +101,7 @@ Namespace IUPAC.InChI
         ''' 
         ''' Atom1/2 should be chosen such that neither are implicit hydrogen
         ''' 
-        ''' For the 2 adjacent double-bond case use <seealsocref="InchiStereo.createAllenalStereo(InchiAtom,InchiAtom,InchiAtom,InchiAtom,InchiAtom,InchiStereoParity)"/>
+        ''' For the 2 adjacent double-bond case use <seealso cref="InchiStereo.createAllenalStereo(InchiAtom,InchiAtom,InchiAtom,InchiAtom,InchiAtom,InchiStereoParity)"/>
         ''' </pre> </summary>
         ''' <param name="atom1"> </param>
         ''' <param name="atom2"> </param>
@@ -120,7 +120,7 @@ Namespace IUPAC.InChI
         ''' <pre>
         ''' Defines the stereo configuration of an allenal stereocentre, these behave like an extended tetrahedron.
         ''' The four vertexes of the tetrahedron should be given along with the parity.
-        ''' If one of the vertexes is an implicit hydrogen use <seealsocref="STEREO_IMPLICIT_H"/>.
+        ''' If one of the vertexes is an implicit hydrogen use <seealso cref="STEREO_IMPLICIT_H"/>.
         ''' 
         ''' Given
         ''' A           F
@@ -155,7 +155,7 @@ Namespace IUPAC.InChI
         End Property
 
         ''' <summary>
-        ''' Null for <seealsocref="InchiStereoType.DoubleBond"/>
+        ''' Null for <seealso cref="InchiStereoType.DoubleBond"/>
         ''' @return
         ''' </summary>
         Public Overridable ReadOnly Property CentralAtom As InchiAtom
