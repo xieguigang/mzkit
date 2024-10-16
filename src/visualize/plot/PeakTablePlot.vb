@@ -114,13 +114,13 @@ Public Class PeakTablePlot : Inherits Plot
     End Sub
 
     Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
+        Dim css As CSSEnvirnment = g.LoadEnvironment
         Dim xTicks As Double() = peakSet.peaks.Select(Function(pk) pk.rt).Range.CreateAxisTicks
-        Dim rect As Rectangle = canvas.PlotRegion
+        Dim rect As Rectangle = canvas.PlotRegion(css)
         Dim scaleX = d3js.scale.linear.domain(values:=xTicks).range(integers:={rect.Left, rect.Right})
         Dim sampleNames As String() = peakSet.sampleNames
         Dim dy As Double = rect.Height / sampleNames.Length
-        Dim css As CSSEnvirnment = g.LoadEnvironment
-        Dim idFont As Font = css.GetFont(CSSFont.TryParse(theme.axisLabelCSS))
+        Dim idFont As Font = CSS.GetFont(CSSFont.TryParse(theme.axisLabelCSS))
         Dim lbSize As SizeF
         Dim y As Double = rect.Top
         Dim x As Double

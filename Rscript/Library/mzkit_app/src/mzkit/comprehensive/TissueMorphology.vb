@@ -88,6 +88,8 @@ Imports RgraphicsDev = R_graphics.Common.Runtime.graphicsDevice
 Imports std = System.Math
 Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
 Imports R_graphics.Common.Runtime
+Imports Microsoft.VisualBasic.MIME.Html.Render
+
 
 
 #If NET48 Then
@@ -237,9 +239,10 @@ Module TissueMorphology
                 .ToArray
         End If
 
+        Dim css As CSSEnvirnment = g.LoadEnvironment
         Dim x = tissue.Select(Function(t) t.points.Select(Function(a) CDbl(a.X))).IteratesALL.Range
         Dim y = tissue.Select(Function(t) t.points.Select(Function(a) CDbl(a.Y))).IteratesALL.Range
-        Dim rect = canvas.PlotRegion
+        Dim rect = canvas.PlotRegion(css)
         Dim lx = d3js.scale.linear.domain(range:=x).range(integers:={rect.Left, rect.Right})
         Dim ly = d3js.scale.linear.domain(range:=y).range(integers:={rect.Top, rect.Height})
         Dim scale_x As Double = std.Abs(lx(2) - lx(1))

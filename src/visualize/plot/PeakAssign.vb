@@ -168,8 +168,10 @@ Public Class PeakAssign : Inherits Plot
     Private Function ResizeImages(canvas As GraphicsRegion, ratio As Double) As Dictionary(Of String, (img As Image, size As Size))
         Dim output As New Dictionary(Of String, (Image, Size))
         Dim img As Image
-        Dim maxWidth As Integer = canvas.PlotRegion.Width * ratio
-        Dim maxHeight As Integer = canvas.PlotRegion.Height * ratio
+        Dim css As New CSSEnvirnment(canvas.Size)
+        Dim plotRect = canvas.PlotRegion(css)
+        Dim maxWidth As Integer = plotRect.Width * ratio
+        Dim maxHeight As Integer = plotRect.Height * ratio
 
         For Each item In images
             img = item.Value
@@ -196,8 +198,9 @@ Public Class PeakAssign : Inherits Plot
             g.Stroke = Nothing
         End If
 
+        Dim css As CSSEnvirnment = g.LoadEnvironment
         Dim maxinto As Double = matrix.Select(Function(p) p.intensity).Max
-        Dim rect As RectangleF = canvas.PlotRegion.ToFloat
+        Dim rect As RectangleF = canvas.PlotRegion(css).ToFloat
         Dim xticks As Double() = (matrix.Select(Function(p) p.mz).Range * 1.125).CreateAxisTicks
 
         If xticks.All(Function(ti) ti = xticks(0)) Then
@@ -211,11 +214,10 @@ Public Class PeakAssign : Inherits Plot
         Dim yscale = d3js.scale.linear().domain(values:=New Double() {0, 110}).range(values:={rect.Top, rect.Bottom})
         Dim scaler As New DataScaler() With {
             .AxisTicks = (xticks.Take(xticks.Length - 1).AsVector, New Vector(New Double() {0, 20, 40, 60, 80, 100})),
-            .region = canvas.PlotRegion,
+            .region = canvas.PlotRegion(css),
             .X = xscale,
             .Y = yscale
         }
-        Dim css As CSSEnvirnment = g.LoadEnvironment
         Dim bottomY As Double = rect.Bottom
         Dim labelFont As Font = css.GetFont(CSSFont.TryParse(theme.tagCSS))
         Dim titleFont As Font = css.GetFont(CSSFont.TryParse(theme.mainCSS))

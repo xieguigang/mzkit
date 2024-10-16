@@ -148,9 +148,10 @@ Public Class GCxGCHeatMap : Inherits Plot
     End Function
 
     Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
+        Dim css As CSSEnvirnment = g.LoadEnvironment
         Dim ncols As Integer = gcxgc.Length
         Dim nrows As Integer = points.Length
-        Dim rect As Rectangle = canvas.PlotRegion
+        Dim rect As Rectangle = canvas.PlotRegion(css)
         Dim wx As Double = (rect.Width - dx * (ncols - 1)) / ncols
         Dim wy As Double = (rect.Height - dy * (nrows - 1)) / nrows
         Dim matrix = points.Select(Function(cpd)
@@ -165,8 +166,7 @@ Public Class GCxGCHeatMap : Inherits Plot
         Dim scaleY As d3js.scale.LinearScale
         Dim scale As DataScaler
         Dim n As Double
-        Dim css As CSSEnvirnment = g.LoadEnvironment
-        Dim rowLabelFont As Font = css.GetFont(CSSFont.TryParse(theme.axisLabelCSS))
+        Dim rowLabelFont As Font = CSS.GetFont(CSSFont.TryParse(theme.axisLabelCSS))
         Dim fontHeight As Double = g.MeasureString("H", rowLabelFont).Height
 
         For i As Integer = 0 To matrix.Length - 1

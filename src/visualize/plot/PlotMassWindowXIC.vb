@@ -173,7 +173,8 @@ Public Class PlotMassWindowXIC : Inherits Plot
     End Function
 
     Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
-        Dim rect As Rectangle = canvas.PlotRegion
+        Dim css As CSSEnvirnment = g.LoadEnvironment
+        Dim rect As Rectangle = canvas.PlotRegion(css)
         Dim part1 As New Rectangle(rect.Location, New Size(rect.Width, rect.Height / 2))
         Dim part2 As New Rectangle(New Point(rect.Left, rect.Top + part1.Height + 10), New Size(rect.Width, rect.Height / 2 - 10))
         Dim heatColors As String() = Designer.GetColors(theme.colorSet, 100).Select(Function(c) c.ToHtmlColor).ToArray

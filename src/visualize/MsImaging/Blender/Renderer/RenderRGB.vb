@@ -61,6 +61,8 @@
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
+Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Microsoft.VisualBasic.MIME.Html.Render
 
 Namespace Blender
 
@@ -81,7 +83,8 @@ Namespace Blender
         End Sub
 
         Public Sub Render(ByRef gr As IGraphics, region As GraphicsRegion)
-            Dim plotOffset As Point = region.PlotRegion.Location
+            Dim css As CSSEnvirnment = gr.LoadEnvironment
+            Dim plotOffset As Point = region.PlotRegion(css).Location
             Dim pos As PointF
             Dim rect As RectangleF
             Dim pixel_size As New SizeF(1, 1)

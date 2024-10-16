@@ -142,9 +142,10 @@ Public Class DualRegionUnionPlot : Inherits Plot
 
     Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
         Dim MSIsize As Size = region1.DimensionSize
+        Dim css As CSSEnvirnment = g.LoadEnvironment
         Dim Xtick As Double() = New DoubleRange({0, MSIsize.Width}).CreateAxisTicks()
         Dim Ytick As Double() = New DoubleRange({0, MSIsize.Height}).CreateAxisTicks
-        Dim rect As Rectangle = canvas.PlotRegion
+        Dim rect As Rectangle = canvas.PlotRegion(css)
         Dim scaleX = d3js.scale.linear.domain(values:=Xtick).range(values:=New Double() {rect.Left, rect.Right})
         Dim scaleY = d3js.scale.linear.domain(values:=Ytick).range(values:=New Double() {rect.Top, rect.Bottom})
         Dim scale As New DataScaler With {
@@ -155,7 +156,6 @@ Public Class DualRegionUnionPlot : Inherits Plot
         }
         Dim MSI1 As Image, MSI2 As Image
         Dim engine As New PixelRender(heatmapRender:=False)
-        Dim css As CSSEnvirnment = g.LoadEnvironment
 
         MSI1 = engine.RenderPixels(region1.MSILayer, MSIsize, colorSet:=colorSet1).AsGDIImage
         MSI1 = Drawer.ScaleLayer(MSI1, rect.Width, rect.Height)
@@ -186,7 +186,7 @@ Public Class DualRegionUnionPlot : Inherits Plot
         Call Legend.DrawLegends(g, pos, {mz1, mz2}, $"{labelSize.Height},{labelSize.Height}")
 
         Dim layout As New Rectangle(
-            x:=canvas.PlotRegion.Right + 10,
+            x:=canvas.PlotRegion(css).Right + 10,
             y:=pos.Y + labelSize.Height * 4,
             width:=canvas.Padding.Right * 0.5,
             height:=rect.Height * 0.5
