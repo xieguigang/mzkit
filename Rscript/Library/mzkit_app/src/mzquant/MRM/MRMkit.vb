@@ -91,6 +91,7 @@ Imports Rlist = SMRUCC.Rsharp.Runtime.Internal.Object.list
 Imports RRuntime = SMRUCC.Rsharp.Runtime
 Imports std = System.Math
 Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.XLSX.File
+Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
 
 ''' <summary>
 ''' MRM Targeted Metabolomics
@@ -578,7 +579,7 @@ Module MRMkit
                                    Optional env As Environment = Nothing) As Object
 
         If args Is Nothing Then
-            Return Internal.debug.stop("the required MRM argument can not be nothing!", env)
+            Return RInternal.debug.stop("the required MRM argument can not be nothing!", env)
         End If
 
         Return WiffRaw.ScanPeakTable(
@@ -664,12 +665,12 @@ Module MRMkit
                                 Optional env As Environment = Nothing) As Object
 
         If wiffConverts Is Nothing Then
-            Return Internal.debug.stop({
+            Return RInternal.debug.stop({
                 "the given wiff raw file list is nothing or empty!",
                 "argument: " & NameOf(wiffConverts)
             }, env)
         ElseIf args Is Nothing Then
-            Return Internal.debug.stop("the required MRM argument can not be nothing!", env)
+            Return RInternal.debug.stop("the required MRM argument can not be nothing!", env)
         End If
 
         If rtshifts Is Nothing Then
@@ -835,7 +836,7 @@ Module MRMkit
     <RApiReturn(GetType(QuantifyScan))>
     Public Function SampleQuantify(model As StandardCurve(), file$, ions As IonPair(), Optional env As Environment = Nothing) As Object
         If model.Any(Function(line) line.arguments Is Nothing) Then
-            Return Internal.debug.stop("part of the reference line missing argument value!", env)
+            Return RInternal.debug.stop("part of the reference line missing argument value!", env)
         End If
 
         Dim scan As New QuantifyScan

@@ -67,6 +67,7 @@ Imports System.Drawing.Text
 Imports System.Runtime.InteropServices
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.MIME.Html.Render
 
@@ -84,17 +85,9 @@ Namespace Blender
         End Sub
 
         Public Sub DrawOnImage(MSI As Image, dimension As Size, color As Color, resolution As Double)
-            Using g As Graphics = Graphics.FromImage(MSI)
-                Dim canvas As New Graphics2D(g, MSI.Size)
-
-                g.InterpolationMode = InterpolationMode.HighQualityBicubic
-                g.PixelOffsetMode = PixelOffsetMode.HighQuality
-                g.CompositingQuality = CompositingQuality.HighQuality
-                g.SmoothingMode = SmoothingMode.HighQuality
-                g.TextRenderingHint = TextRenderingHint.AntiAliasGridFit
-
+            Using g As IGraphics = DriverLoad.CreateGraphicsDevice(MSI)
                 Call DrawOnCanvas(
-                    g:=canvas,
+                    g,
                     dimsize:=dimension,
                     rect:=New Rectangle(New Point, MSI.Size),
                     color:=color,

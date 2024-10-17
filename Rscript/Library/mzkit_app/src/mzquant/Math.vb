@@ -72,6 +72,7 @@ Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports Rdataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
 Imports REnv = SMRUCC.Rsharp.Runtime
+Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
 
 <Package("math")>
 Module QuantifyMath
@@ -209,7 +210,7 @@ Module QuantifyMath
             timeVec = DirectCast(x, DataSet()).Vector(time_str)
             intoVec = DirectCast(x, DataSet()).Vector(into_str)
         Else
-            Return Internal.debug.stop($"invalid data sequence: {x.GetType.FullName}", env)
+            Return RInternal.debug.stop($"invalid data sequence: {x.GetType.FullName}", env)
         End If
 
         Return combineVector(timeVec, intoVec)

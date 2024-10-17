@@ -79,6 +79,7 @@ Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports std = System.Math
+Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
 
 ''' <summary>
 ''' raw data accessor for the mzpack data object
@@ -263,7 +264,7 @@ Module MzPackAccess
         ElseIf ver = 2 Then
             Return New mzStream(buffer.TryCast(Of Stream))
         Else
-            Return Internal.debug.stop(New NotImplementedException("unknow version of the mzpack file format!"), env)
+            Return RInternal.debug.stop(New NotImplementedException("unknow version of the mzpack file format!"), env)
         End If
     End Function
 

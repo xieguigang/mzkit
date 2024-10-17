@@ -72,7 +72,33 @@ Imports Microsoft.VisualBasic.Text.Xml
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports REnv = SMRUCC.Rsharp.Runtime
-Imports stdNum = System.Math
+Imports std = System.Math
+
+#If NET48 Then
+Imports Pen = System.Drawing.Pen
+Imports Pens = System.Drawing.Pens
+Imports Brush = System.Drawing.Brush
+Imports Font = System.Drawing.Font
+Imports Brushes = System.Drawing.Brushes
+Imports SolidBrush = System.Drawing.SolidBrush
+Imports DashStyle = System.Drawing.Drawing2D.DashStyle
+Imports Image = System.Drawing.Image
+Imports Bitmap = System.Drawing.Bitmap
+Imports GraphicsPath = System.Drawing.Drawing2D.GraphicsPath
+Imports FontStyle = System.Drawing.FontStyle
+#Else
+Imports Pen = Microsoft.VisualBasic.Imaging.Pen
+Imports Pens = Microsoft.VisualBasic.Imaging.Pens
+Imports Brush = Microsoft.VisualBasic.Imaging.Brush
+Imports Font = Microsoft.VisualBasic.Imaging.Font
+Imports Brushes = Microsoft.VisualBasic.Imaging.Brushes
+Imports SolidBrush = Microsoft.VisualBasic.Imaging.SolidBrush
+Imports DashStyle = Microsoft.VisualBasic.Imaging.DashStyle
+Imports Image = Microsoft.VisualBasic.Imaging.Image
+Imports Bitmap = Microsoft.VisualBasic.Imaging.Bitmap
+Imports GraphicsPath = Microsoft.VisualBasic.Imaging.GraphicsPath
+Imports FontStyle = Microsoft.VisualBasic.Imaging.FontStyle
+#End If
 
 Module LinearReport
 
@@ -196,7 +222,7 @@ Module LinearReport
                                    <li>ID: <%= line.name %></li>
                                    <li>Linear: <i>f(x)</i>=%s</li>
                                    <li>Weighted: <%= isWeighted.ToString.ToUpper %></li>
-                                   <li>R<sup>2</sup>: <%= R2 %> (<%= stdNum.Sqrt(R2) %>)</li>
+                                   <li>R<sup>2</sup>: <%= R2 %> (<%= std.Sqrt(R2) %>)</li>
                                    <li>Range: <%= $"{range.Min} ~ {range.Max}" %></li>
                                </ul>
                            </div>
@@ -246,7 +272,7 @@ Module LinearReport
                                    </td>
                                    <td><%= nameTitle %></td>
                                    <td><%= line.linear.Polynomial.ToString("G5", False) %></td>
-                                   <td><%= stdNum.Sqrt(line.linear.R2) %></td>
+                                   <td><%= std.Sqrt(line.linear.R2) %></td>
                                    <td><%= range.Min %> ~ <%= range.Max %></td>
                                </tr>
                     End Function) _

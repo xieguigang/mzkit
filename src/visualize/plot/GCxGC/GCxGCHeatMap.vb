@@ -73,6 +73,32 @@ Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.MIME.Html.Render
 Imports std = System.Math
 
+#If NET48 Then
+Imports Pen = System.Drawing.Pen
+Imports Pens = System.Drawing.Pens
+Imports Brush = System.Drawing.Brush
+Imports Font = System.Drawing.Font
+Imports Brushes = System.Drawing.Brushes
+Imports SolidBrush = System.Drawing.SolidBrush
+Imports DashStyle = System.Drawing.Drawing2D.DashStyle
+Imports Image = System.Drawing.Image
+Imports Bitmap = System.Drawing.Bitmap
+Imports GraphicsPath = System.Drawing.Drawing2D.GraphicsPath
+Imports FontStyle = System.Drawing.FontStyle
+#Else
+Imports Pen = Microsoft.VisualBasic.Imaging.Pen
+Imports Pens = Microsoft.VisualBasic.Imaging.Pens
+Imports Brush = Microsoft.VisualBasic.Imaging.Brush
+Imports Font = Microsoft.VisualBasic.Imaging.Font
+Imports Brushes = Microsoft.VisualBasic.Imaging.Brushes
+Imports SolidBrush = Microsoft.VisualBasic.Imaging.SolidBrush
+Imports DashStyle = Microsoft.VisualBasic.Imaging.DashStyle
+Imports Image = Microsoft.VisualBasic.Imaging.Image
+Imports Bitmap = Microsoft.VisualBasic.Imaging.Bitmap
+Imports GraphicsPath = Microsoft.VisualBasic.Imaging.GraphicsPath
+Imports FontStyle = Microsoft.VisualBasic.Imaging.FontStyle
+#End If
+
 Public Class GCxGCHeatMap : Inherits Plot
 
     ReadOnly gcxgc As NamedCollection(Of D2Chromatogram)()
@@ -122,9 +148,10 @@ Public Class GCxGCHeatMap : Inherits Plot
     End Function
 
     Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
+        Dim css As CSSEnvirnment = g.LoadEnvironment
         Dim ncols As Integer = gcxgc.Length
         Dim nrows As Integer = points.Length
-        Dim rect As Rectangle = canvas.PlotRegion
+        Dim rect As Rectangle = canvas.PlotRegion(css)
         Dim wx As Double = (rect.Width - dx * (ncols - 1)) / ncols
         Dim wy As Double = (rect.Height - dy * (nrows - 1)) / nrows
         Dim matrix = points.Select(Function(cpd)
@@ -139,8 +166,7 @@ Public Class GCxGCHeatMap : Inherits Plot
         Dim scaleY As d3js.scale.LinearScale
         Dim scale As DataScaler
         Dim n As Double
-        Dim css As CSSEnvirnment = g.LoadEnvironment
-        Dim rowLabelFont As Font = css.GetFont(CSSFont.TryParse(theme.axisLabelCSS))
+        Dim rowLabelFont As Font = CSS.GetFont(CSSFont.TryParse(theme.axisLabelCSS))
         Dim fontHeight As Double = g.MeasureString("H", rowLabelFont).Height
 
         For i As Integer = 0 To matrix.Length - 1
@@ -190,10 +216,13 @@ Public Class GCxGCHeatMap : Inherits Plot
             x += wx + dx
             ' g.DrawString(sample.name, rowLabelFont, Brushes.Black, pos)
 
-            Dim text As New GraphicsText(g)
+            ' Dim text As New GraphicsText(g)
             Dim xRotate As Double = 45
 
-            Call text.DrawString(labelText, tickFont, tickColor, New Point(pos.X, pos.Y + fontSize.Height * std.Sin(xRotate * 180 / std.PI)), angle:=xRotate)
+            Call g.DrawString(labelText, tickFont, tickColor,
+                              pos.X,
+                              pos.Y + fontSize.Height * std.Sin(xRotate * 180 / std.PI),
+                              angle:=xRotate)
         Next
     End Sub
 End Class

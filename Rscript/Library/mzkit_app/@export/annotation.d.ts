@@ -161,6 +161,23 @@ declare namespace annotation {
    */
    function save_annotations(workspace: object, library: string, annotations: object): ;
    /**
+    * 
+    * 
+     * @param workspace -
+     * @param raw_set should be a set of the mzpack raw data objects, or a character 
+     *  vector of the file path to the mzpack rawdata files.
+     * @param da -
+     * 
+     * + default value Is ``0.25``.
+     * @param rt_win -
+     * 
+     * + default value Is ``7.5``.
+     * @param env -
+     * 
+     * + default value Is ``null``.
+   */
+   function set_xicCache(workspace: object, raw_set: any, da?: number, rt_win?: number, env?: object): any;
+   /**
     * create an empty workspace object
     * 
     * 

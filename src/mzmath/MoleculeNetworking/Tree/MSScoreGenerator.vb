@@ -136,6 +136,10 @@ Public Class MSScoreGenerator : Inherits ComparisonProvider
         Call cache.Clear()
     End Sub
 
+    ''' <summary>
+    ''' add spectrum data to cache
+    ''' </summary>
+    ''' <param name="spectral"></param>
     Public Sub Add(spectral As PeakMs2)
         If Not cache.ContainsKey(spectral.lib_guid) Then
             Call cache.Add(spectral.lib_guid, spectral)

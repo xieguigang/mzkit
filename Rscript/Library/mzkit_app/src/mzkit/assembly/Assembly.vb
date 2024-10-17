@@ -87,6 +87,7 @@ Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports mzXMLAssembly = BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
 Imports Rlist = SMRUCC.Rsharp.Runtime.Internal.Object.list
+Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
 
 ''' <summary>
 ''' The mass spectrum assembly file read/write library module.
@@ -111,10 +112,10 @@ Module Assembly
 
     <RInitialize>
     Sub Main()
-        Call Internal.Object.Converts.makeDataframe.addHandler(GetType(Ions()), AddressOf summaryIons)
-        Call Internal.Object.Converts.makeDataframe.addHandler(GetType(PeakMs2), AddressOf MatrixDataFrame)
+        Call RInternal.Object.Converts.makeDataframe.addHandler(GetType(Ions()), AddressOf summaryIons)
+        Call RInternal.Object.Converts.makeDataframe.addHandler(GetType(PeakMs2), AddressOf MatrixDataFrame)
 
-        Call Internal.ConsolePrinter.AttachConsoleFormatter(Of PeakMs2)(AddressOf printPeak)
+        Call RInternal.ConsolePrinter.AttachConsoleFormatter(Of PeakMs2)(AddressOf printPeak)
     End Sub
 
     Private Function MatrixDataFrame(peak As PeakMs2, args As Rlist, env As Environment) As dataframe
@@ -291,7 +292,7 @@ Module Assembly
     <RApiReturn(GetType(XmlSeek))>
     Public Function openXmlSeeks(file As String, Optional env As Environment = Nothing) As Object
         If Not file.FileExists Then
-            Return Internal.debug.stop({
+            Return RInternal.debug.stop({
                 $"the given file '{file}' is not found on your file system!",
                 $"file: {file}"
             }, env)
@@ -340,7 +341,7 @@ Module Assembly
                                  Optional relativeInto As Boolean = False,
                                  Optional env As Environment = Nothing) As Object
         If ions Is Nothing Then
-            Return Internal.debug.stop("the required ions data can not be nothing!", env)
+            Return RInternal.debug.stop("the required ions data can not be nothing!", env)
         ElseIf ions.GetType.IsArray AndAlso DirectCast(ions, Array).Length = 0 Then
             env.AddMessage($"write empty mgf data to file '{file}', as the given ions collection is empty...", MSG_TYPES.WRN)
             Return True
@@ -404,7 +405,7 @@ Module Assembly
                     .WriteAsciiMgf(mgfWriter, relativeInto)
             End Using
         Else
-            Return Internal.debug.stop(Message.InCompatibleType(GetType(PeakMs2), ions.GetType, env), env)
+            Return RInternal.debug.stop(Message.InCompatibleType(GetType(PeakMs2), ions.GetType, env), env)
         End If
 
         Return True
@@ -459,7 +460,7 @@ Module Assembly
         Dim type As Type = GetFileType(file)
 
         If type Is Nothing Then
-            Return Internal.debug.stop({"the given file is not exists or file format not supported!", "file: " & file}, env)
+            Return RInternal.debug.stop({"the given file is not exists or file format not supported!", "file: " & file}, env)
         ElseIf type Is GetType(indexedmzML) Then
             raw = file.mzMLScanLoader(relativeInto, onlyMs2)
         Else
@@ -485,7 +486,7 @@ Module Assembly
         Dim type As Type = GetFileType(file)
 
         If type Is Nothing Then
-            Return Internal.debug.stop({"the given file is not exists or file format not supported!", "file: " & file}, env)
+            Return RInternal.debug.stop({"the given file is not exists or file format not supported!", "file: " & file}, env)
         ElseIf type Is GetType(indexedmzML) Then
             Return indexedmzML.LoadScans(file).DoCall(AddressOf pipeline.CreateFromPopulator)
         Else

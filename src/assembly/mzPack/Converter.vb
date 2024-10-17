@@ -1,57 +1,57 @@
 ﻿#Region "Microsoft.VisualBasic::d15156cd81835e26a3dac943d8267200, assembly\mzPack\Converter.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 294
-    '    Code Lines: 240 (81.63%)
-    ' Comment Lines: 20 (6.80%)
-    '    - Xml Docs: 100.00%
-    ' 
-    '   Blank Lines: 34 (11.56%)
-    '     File Size: 12.58 KB
+' Summaries:
 
 
-    ' Module Converter
-    ' 
-    '     Function: GetUVScans, LoadAsciiFileAuto, LoadimzML, LoadMgf, LoadMsp
-    '               LoadMzML, LoadRawFileAuto
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 294
+'    Code Lines: 240 (81.63%)
+' Comment Lines: 20 (6.80%)
+'    - Xml Docs: 100.00%
+' 
+'   Blank Lines: 34 (11.56%)
+'     File Size: 12.58 KB
+
+
+' Module Converter
+' 
+'     Function: GetUVScans, LoadAsciiFileAuto, LoadimzML, LoadMgf, LoadMsp
+'               LoadMzML, LoadRawFileAuto
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -68,6 +68,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.SignalReader
 Imports Microsoft.VisualBasic.CommandLine.InteropService.Pipeline
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
@@ -175,7 +176,7 @@ mzXML:      Return New mzPack With {
         ElseIf xml.ExtensionSuffix("mzML") Then
 mzML:       Return LoadMzML(xml, tolerance, intocutoff, progress)
         ElseIf xml.ExtensionSuffix("imzML") Then
-imzML:      Return LoadimzML(xml, intocutoff, Sub(p, msg) progress($"{msg}...{p}%"))
+imzML:      Return LoadimzML(xml, intocutoff, IonModes.Positive, Sub(p, msg) progress($"{msg}...{p}%"))
         Else
             If Not prefer.StringEmpty Then
                 Select Case prefer.ToLower
@@ -201,6 +202,7 @@ imzML:      Return LoadimzML(xml, intocutoff, Sub(p, msg) progress($"{msg}...{p}
     ''' <returns></returns>
     Public Function LoadimzML(xml As String,
                               Optional noiseCutoff As Double = 0,
+                              Optional defaultIon As IonModes = IonModes.Positive,
                               Optional progress As RunSlavePipeline.SetProgressEventHandler = Nothing) As mzPack
 
         Dim scans As New List(Of ScanMS1)
@@ -227,6 +229,10 @@ imzML:      Return LoadimzML(xml, intocutoff, Sub(p, msg) progress($"{msg}...{p}
         For Each scan As ScanData In allscans
             Call ibd.GetMSVector(scan, mz, intensity)
 
+            If scan.polarity = IonModes.Unknown Then
+                scan.polarity = defaultIon
+            End If
+
             If noiseCutoff > 0 AndAlso intensity.Length > 0 Then
                 maxinto = intensity.Max
                 ms = mz _
@@ -240,6 +246,19 @@ imzML:      Return LoadimzML(xml, intocutoff, Sub(p, msg) progress($"{msg}...{p}
                     .ToArray
             End If
 
+            Dim scan_mass As DoubleRange = scan.mass
+
+            If scan_mass Is Nothing Then
+                If mz.IsNullOrEmpty Then
+                    scan_mass = New DoubleRange(0, 1000)
+                Else
+                    scan_mass = New DoubleRange(mz.Min, mz.Max)
+                End If
+            End If
+            If scan.totalIon <= 0.0 Then
+                scan.totalIon = intensity.Sum
+            End If
+
             ptag = If(scan.polarity = IonModes.Positive, "+", If(scan.polarity = IonModes.Negative, "-", "?"))
             pixel = New ScanMS1 With {
                 .meta = New Dictionary(Of String, String) From {
@@ -247,7 +266,7 @@ imzML:      Return LoadimzML(xml, intocutoff, Sub(p, msg) progress($"{msg}...{p}
                     {"y", scan.y}
                 },
                 .TIC = scan.totalIon,
-                .scan_id = $"[MS1][{scan.x},{scan.y}] [{filename}] {ptag} {scan.spotID} npeaks: {ms.Length} totalIon: {scan.totalIon.ToString("G2")} [{scan.mass.Min} - {scan.mass.Max}]",
+                .scan_id = $"[MS1][{scan.x},{scan.y}] [{filename}] {ptag} {scan.spotID} npeaks: {ms.Length} totalIon: {scan.totalIon.ToString("G2")} [{scan_mass.Min} - {scan_mass.Max}]",
                 .mz = ms.Select(Function(m) m.mz).ToArray,
                 .into = ms.Select(Function(m) m.intensity).ToArray
             }

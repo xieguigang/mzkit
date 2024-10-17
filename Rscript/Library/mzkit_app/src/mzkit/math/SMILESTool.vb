@@ -74,6 +74,7 @@ Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports list = SMRUCC.Rsharp.Runtime.Internal.Object.list
 Imports RDataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
+Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
 
 ''' <summary>
 ''' ### Simplified molecular-input line-entry system
@@ -91,7 +92,7 @@ Imports RDataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
 Module SMILESTool
 
     Sub Main()
-        Call Internal.Object.Converts.makeDataframe.addHandler(GetType(ChemicalFormula), AddressOf atoms_table)
+        Call RInternal.Object.Converts.makeDataframe.addHandler(GetType(ChemicalFormula), AddressOf atoms_table)
     End Sub
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>

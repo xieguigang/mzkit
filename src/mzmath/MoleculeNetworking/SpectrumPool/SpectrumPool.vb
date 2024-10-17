@@ -73,6 +73,9 @@ Namespace PoolData
     ''' <summary>
     ''' A pool storage object for the spectrum tree data
     ''' </summary>
+    ''' <remarks>
+    ''' A multiple tree branch clustering of the ms spectrum object 
+    ''' </remarks>
     Public Class SpectrumPool : Implements IDisposable
 
         Dim classTree As New Dictionary(Of String, SpectrumPool)

@@ -75,6 +75,32 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.MIME.Html.Render
 
+#If NET48 Then
+Imports Pen = System.Drawing.Pen
+Imports Pens = System.Drawing.Pens
+Imports Brush = System.Drawing.Brush
+Imports Font = System.Drawing.Font
+Imports Brushes = System.Drawing.Brushes
+Imports SolidBrush = System.Drawing.SolidBrush
+Imports DashStyle = System.Drawing.Drawing2D.DashStyle
+Imports Image = System.Drawing.Image
+Imports Bitmap = System.Drawing.Bitmap
+Imports GraphicsPath = System.Drawing.Drawing2D.GraphicsPath
+Imports FontStyle = System.Drawing.FontStyle
+#Else
+Imports Pen = Microsoft.VisualBasic.Imaging.Pen
+Imports Pens = Microsoft.VisualBasic.Imaging.Pens
+Imports Brush = Microsoft.VisualBasic.Imaging.Brush
+Imports Font = Microsoft.VisualBasic.Imaging.Font
+Imports Brushes = Microsoft.VisualBasic.Imaging.Brushes
+Imports SolidBrush = Microsoft.VisualBasic.Imaging.SolidBrush
+Imports DashStyle = Microsoft.VisualBasic.Imaging.DashStyle
+Imports Image = Microsoft.VisualBasic.Imaging.Image
+Imports Bitmap = Microsoft.VisualBasic.Imaging.Bitmap
+Imports GraphicsPath = Microsoft.VisualBasic.Imaging.GraphicsPath
+Imports FontStyle = Microsoft.VisualBasic.Imaging.FontStyle
+#End If
+
 ''' <summary>
 ''' plot GCxGC TIC in 3D peaks style
 ''' </summary>
@@ -96,9 +122,10 @@ Public Class GCxGCTIC3DPeaks : Inherits Plot
         Dim mesh3D As Polygon() = MeshGrid(gcxgc:=raw, sampling:=sampling, xsize:=10, ysize:=6, zsize:=10).ToArray
         Dim colors As SolidBrush() = Designer.GetColors(theme.colorSet, mapLevels).Select(Function(c) New SolidBrush(c)).ToArray
         Dim z As Double() = mesh3D.Select(Function(s) s.Path.Select(Function(p) p.Z).Average).ToArray
+        Dim css As CSSEnvirnment = g.LoadEnvironment
         Dim range As New DoubleRange(z)
         Dim indexRange As New DoubleRange(0, mapLevels - 1)
-        Dim plotSize = canvas.PlotRegion.Size
+        Dim plotSize = canvas.PlotRegion(css).Size
 
         ' render color
         For i As Integer = 0 To mesh3D.Length - 1
@@ -119,7 +146,6 @@ Public Class GCxGCTIC3DPeaks : Inherits Plot
         Dim zTicks = mesh3D.Select(Function(s) s.Path.Select(Function(p) p.Z)).IteratesALL.Range.CreateAxisTicks
         Dim tickCss As String = CSSFont.TryParse(theme.axisTickCSS).SetFontColor(theme.mainTextColor).ToString
         Dim models As New List(Of Element3D)
-        Dim css As CSSEnvirnment = g.LoadEnvironment
 
         ' 然后生成底部的网格
         Call Grids.Grid1(css, xTicks, yTicks, (xTicks(1) - xTicks(0), yTicks(1) - yTicks(0)), zTicks.Min, showTicks:=Not theme.axisTickCSS.StringEmpty, strokeCSS:=theme.gridStrokeX, tickCSS:=tickCss).DoCall(AddressOf models.AddRange)

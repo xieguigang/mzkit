@@ -103,6 +103,33 @@ Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports PixelData = BioNovoGene.Analytical.MassSpectrometry.MsImaging.PixelData
 Imports Point2D = System.Drawing.Point
 Imports std = System.Math
+Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
+
+#If NET48 Then
+Imports Pen = System.Drawing.Pen
+Imports Pens = System.Drawing.Pens
+Imports Brush = System.Drawing.Brush
+Imports Font = System.Drawing.Font
+Imports Brushes = System.Drawing.Brushes
+Imports SolidBrush = System.Drawing.SolidBrush
+Imports DashStyle = System.Drawing.Drawing2D.DashStyle
+Imports Image = System.Drawing.Image
+Imports Bitmap = System.Drawing.Bitmap
+Imports GraphicsPath = System.Drawing.Drawing2D.GraphicsPath
+Imports FontStyle = System.Drawing.FontStyle
+#Else
+Imports Pen = Microsoft.VisualBasic.Imaging.Pen
+Imports Pens = Microsoft.VisualBasic.Imaging.Pens
+Imports Brush = Microsoft.VisualBasic.Imaging.Brush
+Imports Font = Microsoft.VisualBasic.Imaging.Font
+Imports Brushes = Microsoft.VisualBasic.Imaging.Brushes
+Imports SolidBrush = Microsoft.VisualBasic.Imaging.SolidBrush
+Imports DashStyle = Microsoft.VisualBasic.Imaging.DashStyle
+Imports Image = Microsoft.VisualBasic.Imaging.Image
+Imports Bitmap = Microsoft.VisualBasic.Imaging.Bitmap
+Imports GraphicsPath = Microsoft.VisualBasic.Imaging.GraphicsPath
+Imports FontStyle = Microsoft.VisualBasic.Imaging.FontStyle
+#End If
 
 ''' <summary>
 ''' ### Visual MS imaging data(*.imzML)
@@ -119,11 +146,11 @@ Imports std = System.Math
 Module MsImaging
 
     Sub New()
-        Call Internal.generic.add("plot", GetType(SingleIonLayer), AddressOf plotMSI)
-        Call Internal.generic.add("split", GetType(SingleIonLayer), AddressOf splitLayer)
+        Call RInternal.generic.add("plot", GetType(SingleIonLayer), AddressOf plotMSI)
+        Call RInternal.generic.add("split", GetType(SingleIonLayer), AddressOf splitLayer)
 
-        Call Internal.ConsolePrinter.AttachConsoleFormatter(Of SingleIonLayer)(AddressOf printLayer)
-        Call Internal.Object.Converts.makeDataframe.addHandler(GetType(SingleIonLayer), AddressOf layerTable)
+        Call RInternal.ConsolePrinter.AttachConsoleFormatter(Of SingleIonLayer)(AddressOf printLayer)
+        Call RInternal.Object.Converts.makeDataframe.addHandler(GetType(SingleIonLayer), AddressOf layerTable)
     End Sub
 
     <RGenericOverloads("as.data.frame")>
@@ -175,7 +202,7 @@ Module MsImaging
 
             Return New list With {.slots = splits}
         Else
-            Return Internal.debug.stop(New NotImplementedException, envir:=env)
+            Return RInternal.debug.stop(New NotImplementedException, envir:=env)
         End If
     End Function
 
@@ -458,7 +485,7 @@ Module MsImaging
         If errors Like GetType(Message) Then
             Return errors.TryCast(Of Message)
         ElseIf x.Length <> y.Length Then
-            Return Internal.debug.stop("the vector size of x should be equals to vector y!", env)
+            Return RInternal.debug.stop("the vector size of x should be equals to vector y!", env)
         End If
 
         If composed Then
@@ -509,7 +536,7 @@ Module MsImaging
     <RApiReturn(GetType(Drawer))>
     Public Function viewer(file As Object, Optional env As Environment = Nothing) As Object
         If file Is Nothing Then
-            Return Internal.debug.stop("the required file data can not be nothing!", env)
+            Return RInternal.debug.stop("the required file data can not be nothing!", env)
         ElseIf TypeOf file Is String Then
             Return New Drawer(file:=DirectCast(file, String))
         ElseIf TypeOf file Is mzPack Then
@@ -584,7 +611,7 @@ Module MsImaging
         End If
 
         If imzML Is Nothing Then
-            Return Internal.debug.stop("the required imzML data can not be nothing!", env)
+            Return RInternal.debug.stop("the required imzML data can not be nothing!", env)
         ElseIf TypeOf imzML Is Drawer Then
             Return DirectCast(imzML, Drawer) _
                 .LoadPixels(mz, errors, skip_zero) _

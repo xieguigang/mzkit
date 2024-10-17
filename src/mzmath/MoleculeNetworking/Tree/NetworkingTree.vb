@@ -67,8 +67,14 @@ Imports Microsoft.VisualBasic.Linq
 ''' <summary>
 ''' a helper module for create the spectrum tree alignment
 ''' </summary>
+''' <remarks>
+''' multiple tree branch model
+''' </remarks>
 Public Class NetworkingTree
 
+    ''' <summary>
+    ''' Provides the alignment algorithm and data in-memory cache
+    ''' </summary>
     Friend ReadOnly align As MSScoreGenerator
     Friend ReadOnly equals_cutoff As Double = 0.85
     Friend ReadOnly diff As Double = 0.1
@@ -104,6 +110,10 @@ Public Class NetworkingTree
         Return Me
     End Function
 
+    ''' <summary>
+    ''' Just add the spectrum data to memory cache
+    ''' </summary>
+    ''' <param name="spec"></param>
     Public Sub Add(spec As PeakMs2)
         Call align.Add(spec)
     End Sub

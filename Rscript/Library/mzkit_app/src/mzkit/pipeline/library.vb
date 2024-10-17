@@ -70,6 +70,7 @@ Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports BioNovoGene.BioDeep.MSEngine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Vectorization
 Imports Microsoft.VisualBasic.Linq
@@ -82,6 +83,7 @@ Imports SMRUCC.Rsharp.Runtime.Internal.[Object]
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports MetaData = BioNovoGene.BioDeep.Chemistry.MetaLib.Models.MetaInfo
+Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
 
 ''' <summary>
 ''' the metabolite annotation toolkit
@@ -92,11 +94,11 @@ Imports MetaData = BioNovoGene.BioDeep.Chemistry.MetaLib.Models.MetaInfo
 Module library
 
     Sub Main()
-        Call Internal.generic.add("writeBin", GetType(LibraryWorkspace), AddressOf writeWorkspace)
-        Call Internal.generic.add("writeBin", GetType(AnnotationPack), AddressOf writeResultPack)
-        Call Internal.generic.add("readBin.library_workspace", GetType(Stream), AddressOf loadWorkspace)
+        Call RInternal.generic.add("writeBin", GetType(LibraryWorkspace), AddressOf writeWorkspace)
+        Call RInternal.generic.add("writeBin", GetType(AnnotationPack), AddressOf writeResultPack)
+        Call RInternal.generic.add("readBin.library_workspace", GetType(Stream), AddressOf loadWorkspace)
 
-        Call Internal.Object.Converts.makeDataframe.addHandler(GetType(Peaktable()), AddressOf create_table)
+        Call RInternal.Object.Converts.makeDataframe.addHandler(GetType(Peaktable()), AddressOf create_table)
 
         Call htmlPrinter.AttachHtmlFormatter(Of AnnotationPack)(AddressOf tohtmlString)
     End Sub
@@ -625,7 +627,7 @@ Module library
         ElseIf df.hasName("ID") Then
             id = CLRVector.asCharacter(df("ID"))
         Else
-            Return Internal.debug.stop({
+            Return RInternal.debug.stop({
                 "missing the unique id of the ms1 ions in your dataframe!",
                 "required_one_of_field: xcms_id, ID"
             }, env)
@@ -677,9 +679,9 @@ Module library
         Dim println = env.WriteLineHandler
 
         If ms1 Is Nothing Then
-            Return Internal.debug.stop("the ms1 peakdata should not be nothing!", env)
+            Return RInternal.debug.stop("the ms1 peakdata should not be nothing!", env)
         ElseIf ms2 Is Nothing Then
-            Return Internal.debug.stop("the ms2 spectrum data should not be nothing!", env)
+            Return RInternal.debug.stop("the ms2 spectrum data should not be nothing!", env)
         End If
 
         If TypeOf ms1 Is dataframe Then
@@ -822,6 +824,63 @@ Module library
         Else
             Return Message.InCompatibleType(GetType(AnnotationWorkspace), workspace.GetType, env)
         End If
+    End Function
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="workspace"></param>
+    ''' <param name="raw_set">should be a set of the mzpack raw data objects, or a character 
+    ''' vector of the file path to the mzpack rawdata files.
+    ''' </param>
+    ''' <param name="da"></param>
+    ''' <param name="rt_win"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("set_xicCache")>
+    Public Function set_xicCache(workspace As AnnotationWorkspace, <RRawVectorArgument> raw_set As Object,
+                                 Optional da As Double = 0.25,
+                                 Optional rt_win As Double = 7.5,
+                                 Optional env As Environment = Nothing) As Object
+
+        Dim pull As pipeline = pipeline.TryCreatePipeline(Of mzPack)(raw_set, env)
+
+        If raw_set Is Nothing Then
+            Return RInternal.debug.stop("no rawdata was provided for extract the ion XIC data!", env)
+        End If
+
+        If pull.isError Then
+            If TypeOf raw_set Is list Then
+                raw_set = DirectCast(raw_set, list).data.ToArray
+            End If
+            If TypeOf raw_set Is vector Then
+                raw_set = DirectCast(raw_set, vector).data
+            End If
+
+            If TypeOf raw_set Is String Then
+                raw_set = {CStr(raw_set)}
+            End If
+
+            raw_set = TryCastGenericArray(raw_set, env)
+
+            If DataFramework.IsCollection(Of String)(raw_set.GetType) Then
+                ' read ms1 from files
+                Dim reader As Func(Of IEnumerable(Of mzPack)) =
+                    Iterator Function() As IEnumerable(Of mzPack)
+                        For Each path As String In CLRVector.asCharacter(raw_set)
+                            Yield mzPack.Read(path, ignoreThumbnail:=True, skipMsn:=True, verbose:=False)
+                        Next
+                    End Function
+
+                pull = pipeline.CreateFromPopulator(reader())
+            Else
+                Return pull.getError
+            End If
+        End If
+
+        Call workspace.CacheXicTable(pull.populates(Of mzPack)(env), da, rt_win)
+
+        Return True
     End Function
 
     ''' <summary>

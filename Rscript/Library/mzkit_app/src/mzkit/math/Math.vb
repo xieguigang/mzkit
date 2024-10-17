@@ -96,6 +96,7 @@ Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports REnv = SMRUCC.Rsharp.Runtime
 Imports std = System.Math
 Imports stdVector = Microsoft.VisualBasic.Math.LinearAlgebra.Vector
+Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
 
 ''' <summary>
 ''' mass spectrometry data math toolkit
@@ -106,17 +107,17 @@ Imports stdVector = Microsoft.VisualBasic.Math.LinearAlgebra.Vector
 Module MzMath
 
     Friend Sub Main()
-        Call REnv.Internal.ConsolePrinter.AttachConsoleFormatter(Of PrecursorInfo())(AddressOf printMzTable)
-        Call REnv.Internal.ConsolePrinter.AttachConsoleFormatter(Of MzCalculator)(AddressOf printCalculator)
+        Call RInternal.ConsolePrinter.AttachConsoleFormatter(Of PrecursorInfo())(AddressOf printMzTable)
+        Call RInternal.ConsolePrinter.AttachConsoleFormatter(Of MzCalculator)(AddressOf printCalculator)
 
-        Call REnv.Internal.Object.Converts.addHandler(GetType(MzGroup), AddressOf XICTable)
-        Call REnv.Internal.Object.Converts.addHandler(GetType(AlignmentOutput), AddressOf getAlignmentTable)
-        Call REnv.Internal.Object.Converts.addHandler(GetType(PrecursorInfo()), AddressOf getPrecursorTable)
-        Call REnv.Internal.Object.Converts.addHandler(GetType(MassWindow()), AddressOf mass_tabular)
+        Call RInternal.Object.Converts.addHandler(GetType(MzGroup), AddressOf XICTable)
+        Call RInternal.Object.Converts.addHandler(GetType(AlignmentOutput), AddressOf getAlignmentTable)
+        Call RInternal.Object.Converts.addHandler(GetType(PrecursorInfo()), AddressOf getPrecursorTable)
+        Call RInternal.Object.Converts.addHandler(GetType(MassWindow()), AddressOf mass_tabular)
 
-        Call REnv.Internal.add("as.list", GetType(Tolerance), AddressOf summaryTolerance)
-        Call REnv.Internal.add("as.list", GetType(PPMmethod), AddressOf summaryTolerance)
-        Call REnv.Internal.add("as.list", GetType(DAmethod), AddressOf summaryTolerance)
+        Call RInternal.add("as.list", GetType(Tolerance), AddressOf summaryTolerance)
+        Call RInternal.add("as.list", GetType(PPMmethod), AddressOf summaryTolerance)
+        Call RInternal.add("as.list", GetType(DAmethod), AddressOf summaryTolerance)
 
         Call ExactMass.SetExactMassParser(Function(f) FormulaScanner.EvaluateExactMass(f))
     End Sub
@@ -286,7 +287,7 @@ Module MzMath
         Dim match As TypeMatch
 
         If adducts_source.IsNullOrEmpty Then
-            Return Internal.debug.stop("the required of the adducts source(libtype) should not be empty!", env)
+            Return RInternal.debug.stop("the required of the adducts source(libtype) should not be empty!", env)
         End If
 
         Dim ionMode As IonModes = IonModes.Unknown
@@ -329,7 +330,7 @@ Module MzMath
                     slot("error") = std.Abs(mass - mz)
                 )
             Else
-                Return Internal.debug.stop(msgs, env)
+                Return RInternal.debug.stop(msgs, env)
             End If
         End If
 
@@ -370,7 +371,7 @@ Module MzMath
             Call env.AddMessage(null_value)
 
             If unsafe Then
-                Return Internal.debug.stop(null_value, env)
+                Return RInternal.debug.stop(null_value, env)
             Else
                 Return 0
             End If
@@ -441,7 +442,7 @@ Module MzMath
         Dim sym = CLRVector.asCharacter(mode)
 
         If sym.IsNullOrEmpty Then
-            Return Internal.debug.stop("the required ion mode value should not be nothing!", env)
+            Return RInternal.debug.stop("the required ion mode value should not be nothing!", env)
         ElseIf sym.Length = 1 AndAlso ParseIonMode(sym(0),
                                                    allowsUnknown:=True,
                                                    verbose:=env.verboseOption) <> IonModes.Unknown Then
@@ -1008,7 +1009,7 @@ Module MzMath
                 .TIC = scan1.TIC
             }
         Else
-            Return Internal.debug.stop(New InvalidCastException(inputType.FullName), env)
+            Return RInternal.debug.stop(New InvalidCastException(inputType.FullName), env)
         End If
     End Function
 
@@ -1024,9 +1025,9 @@ Module MzMath
         Dim annos As String() = CLRVector.asCharacter(msdata.getBySynonym("annotation", "text", "metadata", "info"))
 
         If mz.IsNullOrEmpty Then
-            Return Internal.debug.stop("mz column in dataframe should be 'mz' or 'm/z'!", env)
+            Return RInternal.debug.stop("mz column in dataframe should be 'mz' or 'm/z'!", env)
         ElseIf into.IsNullOrEmpty Then
-            Return Internal.debug.stop("intensity column in dataframe should be 'into' or 'intensity'!", env)
+            Return RInternal.debug.stop("intensity column in dataframe should be 'into' or 'intensity'!", env)
         End If
 
         Dim ms2 As New LibraryMatrix With {
@@ -1066,7 +1067,7 @@ Module MzMath
             Case "da" : Return Tolerance.DeltaMass(threshold)
             Case "ppm" : Return Tolerance.PPM(threshold)
             Case Else
-                Return Internal.debug.stop({
+                Return RInternal.debug.stop({
                     $"invalid method name: '{methodVec(Scan0)}'!",
                     $"given: {methodVec(Scan0)}"
                 }, env)
@@ -1201,7 +1202,7 @@ Module MzMath
     <RApiReturn(TypeCodes.string)>
     Public Function xcms_id(mz As Double(), rt As Double(), Optional env As Environment = Nothing) As Object
         If mz.TryCount <> rt.TryCount Then
-            Return Internal.debug.stop("the dimension size of the ion m/z and its scan time rt should be equals!", env)
+            Return RInternal.debug.stop("the dimension size of the ion m/z and its scan time rt should be equals!", env)
         End If
         ' size of mz is equals to rt
         ' and also the size is zero
@@ -1297,7 +1298,7 @@ Optional env As Environment = Nothing) As Object
 
             Return df
         Else
-            Return Internal.debug.stop("not implemented", env)
+            Return RInternal.debug.stop("not implemented", env)
         End If
     End Function
 

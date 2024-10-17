@@ -144,9 +144,15 @@ Namespace MarkupData.imzML
             Dim res1 As Double = settings.FindVocabulary("IMS:1000046")?.value
             Dim res2 As Double = settings.FindVocabulary("IMS:1000047")?.value
 
+            Dim files = desc.GetSourceFiles.ToArray
+
+            If files.IsNullOrEmpty Then
+                files = {imzml}
+            End If
+
             Return New imzMLMetadata With {
                 .cv = cv,
-                .sourcefiles = desc.sourceFileList.GetFileList.ToArray,
+                .sourcefiles = files,
                 .guid = guid,
                 .format = format,
                 .ibd_checksum = checksum,

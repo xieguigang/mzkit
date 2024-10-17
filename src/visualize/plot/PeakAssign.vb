@@ -76,6 +76,34 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.MIME.Html.Render
 
+#If NET48 Then
+Imports Pen = System.Drawing.Pen
+Imports Pens = System.Drawing.Pens
+Imports Brush = System.Drawing.Brush
+Imports Font = System.Drawing.Font
+Imports Brushes = System.Drawing.Brushes
+Imports SolidBrush = System.Drawing.SolidBrush
+Imports DashStyle = System.Drawing.Drawing2D.DashStyle
+Imports Image = System.Drawing.Image
+Imports Bitmap = System.Drawing.Bitmap
+Imports GraphicsPath = System.Drawing.Drawing2D.GraphicsPath
+Imports FontStyle = System.Drawing.FontStyle
+Imports LineCap = System.Drawing.Drawing2D.LineCap
+#Else
+Imports Pen = Microsoft.VisualBasic.Imaging.Pen
+Imports Pens = Microsoft.VisualBasic.Imaging.Pens
+Imports Brush = Microsoft.VisualBasic.Imaging.Brush
+Imports Font = Microsoft.VisualBasic.Imaging.Font
+Imports Brushes = Microsoft.VisualBasic.Imaging.Brushes
+Imports SolidBrush = Microsoft.VisualBasic.Imaging.SolidBrush
+Imports DashStyle = Microsoft.VisualBasic.Imaging.DashStyle
+Imports Image = Microsoft.VisualBasic.Imaging.Image
+Imports Bitmap = Microsoft.VisualBasic.Imaging.Bitmap
+Imports GraphicsPath = Microsoft.VisualBasic.Imaging.GraphicsPath
+Imports FontStyle = Microsoft.VisualBasic.Imaging.FontStyle
+Imports LineCap = Microsoft.VisualBasic.Imaging.LineCap
+#End If
+
 ''' <summary>
 ''' the spectrum plot
 ''' </summary>
@@ -140,8 +168,10 @@ Public Class PeakAssign : Inherits Plot
     Private Function ResizeImages(canvas As GraphicsRegion, ratio As Double) As Dictionary(Of String, (img As Image, size As Size))
         Dim output As New Dictionary(Of String, (Image, Size))
         Dim img As Image
-        Dim maxWidth As Integer = canvas.PlotRegion.Width * ratio
-        Dim maxHeight As Integer = canvas.PlotRegion.Height * ratio
+        Dim css As New CSSEnvirnment(canvas.Size)
+        Dim plotRect = canvas.PlotRegion(css)
+        Dim maxWidth As Integer = plotRect.Width * ratio
+        Dim maxHeight As Integer = plotRect.Height * ratio
 
         For Each item In images
             img = item.Value
@@ -168,8 +198,9 @@ Public Class PeakAssign : Inherits Plot
             g.Stroke = Nothing
         End If
 
+        Dim css As CSSEnvirnment = g.LoadEnvironment
         Dim maxinto As Double = matrix.Select(Function(p) p.intensity).Max
-        Dim rect As RectangleF = canvas.PlotRegion.ToFloat
+        Dim rect As RectangleF = canvas.PlotRegion(css).ToFloat
         Dim xticks As Double() = (matrix.Select(Function(p) p.mz).Range * 1.125).CreateAxisTicks
 
         If xticks.All(Function(ti) ti = xticks(0)) Then
@@ -183,11 +214,10 @@ Public Class PeakAssign : Inherits Plot
         Dim yscale = d3js.scale.linear().domain(values:=New Double() {0, 110}).range(values:={rect.Top, rect.Bottom})
         Dim scaler As New DataScaler() With {
             .AxisTicks = (xticks.Take(xticks.Length - 1).AsVector, New Vector(New Double() {0, 20, 40, 60, 80, 100})),
-            .region = canvas.PlotRegion,
+            .region = canvas.PlotRegion(css),
             .X = xscale,
             .Y = yscale
         }
-        Dim css As CSSEnvirnment = g.LoadEnvironment
         Dim bottomY As Double = rect.Bottom
         Dim labelFont As Font = css.GetFont(CSSFont.TryParse(theme.tagCSS))
         Dim titleFont As Font = css.GetFont(CSSFont.TryParse(theme.mainCSS))

@@ -75,6 +75,32 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.MIME.Html.Render
 
+#If NET48 Then
+Imports Pen = System.Drawing.Pen
+Imports Pens = System.Drawing.Pens
+Imports Brush = System.Drawing.Brush
+Imports Font = System.Drawing.Font
+Imports Brushes = System.Drawing.Brushes
+Imports SolidBrush = System.Drawing.SolidBrush
+Imports DashStyle = System.Drawing.Drawing2D.DashStyle
+Imports Image = System.Drawing.Image
+Imports Bitmap = System.Drawing.Bitmap
+Imports GraphicsPath = System.Drawing.Drawing2D.GraphicsPath
+Imports FontStyle = System.Drawing.FontStyle
+#Else
+Imports Pen = Microsoft.VisualBasic.Imaging.Pen
+Imports Pens = Microsoft.VisualBasic.Imaging.Pens
+Imports Brush = Microsoft.VisualBasic.Imaging.Brush
+Imports Font = Microsoft.VisualBasic.Imaging.Font
+Imports Brushes = Microsoft.VisualBasic.Imaging.Brushes
+Imports SolidBrush = Microsoft.VisualBasic.Imaging.SolidBrush
+Imports DashStyle = Microsoft.VisualBasic.Imaging.DashStyle
+Imports Image = Microsoft.VisualBasic.Imaging.Image
+Imports Bitmap = Microsoft.VisualBasic.Imaging.Bitmap
+Imports GraphicsPath = Microsoft.VisualBasic.Imaging.GraphicsPath
+Imports FontStyle = Microsoft.VisualBasic.Imaging.FontStyle
+#End If
+
 ''' <summary>
 ''' GCxGC Imaging
 ''' </summary>
@@ -139,7 +165,8 @@ Public Class GCxGCTIC2DPlot : Inherits Plot
             .TimeArray _
             .CreateAxisTicks _
             .AsVector
-        Dim rect As Rectangle = canvas.PlotRegion
+        Dim css As CSSEnvirnment = g.LoadEnvironment
+        Dim rect As Rectangle = canvas.PlotRegion(css)
         Dim scaleX = d3js.scale.linear.domain(values:=xTicks).range(integers:={rect.Left, rect.Right})
         Dim scaleY = d3js.scale.linear.domain(values:=yTicks).range(integers:={rect.Top, rect.Bottom})
         Dim scale As New DataScaler() With {
@@ -185,9 +212,8 @@ Public Class GCxGCTIC2DPlot : Inherits Plot
             width:=width,
             height:=canvas.Height * 0.3
         )
-        Dim css As CSSEnvirnment = g.LoadEnvironment
 
-        Call DrawMainTitle(g, canvas.PlotRegion)
+        Call DrawMainTitle(g, canvas.PlotRegion(css))
         Call g.ColorMapLegend(
             layout:=legendLayout,
             designer:=colors _

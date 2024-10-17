@@ -87,6 +87,7 @@ Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports std = System.Math
+Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
 
 ''' <summary>
 ''' Mummichog searches for enrichment patterns on metabolic network, 
@@ -97,7 +98,7 @@ Imports std = System.Math
 Module Mummichog
 
     Sub Main()
-        Call Internal.Object.Converts.makeDataframe.addHandler(GetType(ActivityEnrichment()), AddressOf getResultTable)
+        Call RInternal.Object.Converts.makeDataframe.addHandler(GetType(ActivityEnrichment()), AddressOf getResultTable)
     End Sub
 
     Private Function getResultTable(result As ActivityEnrichment(), args As list, env As Environment) As dataframe
@@ -272,7 +273,7 @@ Module Mummichog
     <RApiReturn(GetType(MzSet))>
     Public Function queryCandidateSet(mz As Double(), msData As Object, Optional env As Environment = Nothing) As Object
         If msData Is Nothing Then
-            Return Internal.debug.stop("the given ms compound annotation repository can not be nothing!", env)
+            Return RInternal.debug.stop("the given ms compound annotation repository can not be nothing!", env)
         ElseIf msData.GetType.ImplementInterface(Of IMzQuery) Then
             Return DirectCast(msData, IMzQuery).GetCandidateSet(peaks:=mz).ToArray
         Else

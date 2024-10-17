@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <RootNamespace>BioNovoGene.BioDeep.MassSpectrometry.MoleculeNetworking</RootNamespace>
-    <TargetFrameworks>net6.0-windows;net6.0;net48</TargetFrameworks>
+    <TargetFrameworks>net8.0-windows;net8.0;net48</TargetFrameworks>
 	  <AssemblyName>BioNovoGene.BioDeep.MassSpectrometry.MoleculeNetworking</AssemblyName>
 	  <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
 	  <Platforms>AnyCPU;ARM32;x64</Platforms>
@@ -271,6 +271,7 @@
     <ProjectReference Include="..\..\assembly\assembly\assembly-netcore5.vbproj" />
     <ProjectReference Include="..\..\assembly\SpectrumTree\spectrumTree.NETCore5.vbproj" />
     <ProjectReference Include="..\ms2_math-core\mzmath-netcore5.vbproj" />
+    <ProjectReference Include="..\mz_deco\deconv.NET5.vbproj" />
   </ItemGroup>
 
 </Project>

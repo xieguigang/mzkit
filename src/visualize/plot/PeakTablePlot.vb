@@ -71,6 +71,32 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.MIME.Html.Render
 
+#If NET48 Then
+Imports Pen = System.Drawing.Pen
+Imports Pens = System.Drawing.Pens
+Imports Brush = System.Drawing.Brush
+Imports Font = System.Drawing.Font
+Imports Brushes = System.Drawing.Brushes
+Imports SolidBrush = System.Drawing.SolidBrush
+Imports DashStyle = System.Drawing.Drawing2D.DashStyle
+Imports Image = System.Drawing.Image
+Imports Bitmap = System.Drawing.Bitmap
+Imports GraphicsPath = System.Drawing.Drawing2D.GraphicsPath
+Imports FontStyle = System.Drawing.FontStyle
+#Else
+Imports Pen = Microsoft.VisualBasic.Imaging.Pen
+Imports Pens = Microsoft.VisualBasic.Imaging.Pens
+Imports Brush = Microsoft.VisualBasic.Imaging.Brush
+Imports Font = Microsoft.VisualBasic.Imaging.Font
+Imports Brushes = Microsoft.VisualBasic.Imaging.Brushes
+Imports SolidBrush = Microsoft.VisualBasic.Imaging.SolidBrush
+Imports DashStyle = Microsoft.VisualBasic.Imaging.DashStyle
+Imports Image = Microsoft.VisualBasic.Imaging.Image
+Imports Bitmap = Microsoft.VisualBasic.Imaging.Bitmap
+Imports GraphicsPath = Microsoft.VisualBasic.Imaging.GraphicsPath
+Imports FontStyle = Microsoft.VisualBasic.Imaging.FontStyle
+#End If
+
 ''' <summary>
 ''' draw heatmap based on the given peaktable data
 ''' </summary>
@@ -88,13 +114,13 @@ Public Class PeakTablePlot : Inherits Plot
     End Sub
 
     Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
+        Dim css As CSSEnvirnment = g.LoadEnvironment
         Dim xTicks As Double() = peakSet.peaks.Select(Function(pk) pk.rt).Range.CreateAxisTicks
-        Dim rect As Rectangle = canvas.PlotRegion
+        Dim rect As Rectangle = canvas.PlotRegion(css)
         Dim scaleX = d3js.scale.linear.domain(values:=xTicks).range(integers:={rect.Left, rect.Right})
         Dim sampleNames As String() = peakSet.sampleNames
         Dim dy As Double = rect.Height / sampleNames.Length
-        Dim css As CSSEnvirnment = g.LoadEnvironment
-        Dim idFont As Font = css.GetFont(CSSFont.TryParse(theme.axisLabelCSS))
+        Dim idFont As Font = CSS.GetFont(CSSFont.TryParse(theme.axisLabelCSS))
         Dim lbSize As SizeF
         Dim y As Double = rect.Top
         Dim x As Double

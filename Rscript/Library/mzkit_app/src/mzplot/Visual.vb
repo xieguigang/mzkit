@@ -102,6 +102,33 @@ Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports Chromatogram = BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram.Chromatogram
+Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
+
+#If NET48 Then
+Imports Pen = System.Drawing.Pen
+Imports Pens = System.Drawing.Pens
+Imports Brush = System.Drawing.Brush
+Imports Font = System.Drawing.Font
+Imports Brushes = System.Drawing.Brushes
+Imports SolidBrush = System.Drawing.SolidBrush
+Imports DashStyle = System.Drawing.Drawing2D.DashStyle
+Imports Image = System.Drawing.Image
+Imports Bitmap = System.Drawing.Bitmap
+Imports GraphicsPath = System.Drawing.Drawing2D.GraphicsPath
+Imports FontStyle = System.Drawing.FontStyle
+#Else
+Imports Pen = Microsoft.VisualBasic.Imaging.Pen
+Imports Pens = Microsoft.VisualBasic.Imaging.Pens
+Imports Brush = Microsoft.VisualBasic.Imaging.Brush
+Imports Font = Microsoft.VisualBasic.Imaging.Font
+Imports Brushes = Microsoft.VisualBasic.Imaging.Brushes
+Imports SolidBrush = Microsoft.VisualBasic.Imaging.SolidBrush
+Imports DashStyle = Microsoft.VisualBasic.Imaging.DashStyle
+Imports Image = Microsoft.VisualBasic.Imaging.Image
+Imports Bitmap = Microsoft.VisualBasic.Imaging.Bitmap
+Imports GraphicsPath = Microsoft.VisualBasic.Imaging.GraphicsPath
+Imports FontStyle = Microsoft.VisualBasic.Imaging.FontStyle
+#End If
 
 ''' <summary>
 ''' Mass spectrum data visualization
@@ -110,22 +137,22 @@ Imports Chromatogram = BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Module Visual
 
     Sub Main()
-        Call Internal.generic.add("plot", GetType(GeneralSignal), AddressOf plotSignal)
-        Call Internal.generic.add("plot", GetType(GeneralSignal()), AddressOf plotSignal2)
-        Call Internal.generic.add("plot", GetType(MGF.Ions), AddressOf plotMS)
-        Call Internal.generic.add("plot", GetType(PeakMs2), AddressOf plotMS)
-        Call Internal.generic.add("plot", GetType(LibraryMatrix), AddressOf plotMS)
-        Call Internal.generic.add("plot", GetType(Chromatogram), AddressOf plotChromatogram)
-        Call Internal.generic.add("plot", GetType(mzPack), AddressOf plotRawChromatogram)
-        Call Internal.generic.add("plot", GetType(ChromatogramOverlap), AddressOf plotOverlaps)
-        Call Internal.generic.add("plot", GetType(D2Chromatogram()), AddressOf plotGCxGCTic2D)
-        Call Internal.generic.add("plot", GetType(D2Chromatogram), AddressOf plotTIC2)
-        Call Internal.generic.add("plot", GetType(ChromatogramTick()), AddressOf plotTIC)
-        Call Internal.generic.add("plot", GetType(PeakSet), AddressOf plotPeaktable)
-        Call Internal.generic.add("plot", GetType(AlignmentOutput), AddressOf plotAlignments)
-        Call Internal.generic.add("plot", GetType(ScanMS1), AddressOf plotMS)
-        Call Internal.generic.add("plot", GetType(ScanMS2), AddressOf plotMS)
-        Call Internal.generic.add("plot", GetType(RtShift()), AddressOf plotRtShifts)
+        Call RInternal.generic.add("plot", GetType(GeneralSignal), AddressOf plotSignal)
+        Call RInternal.generic.add("plot", GetType(GeneralSignal()), AddressOf plotSignal2)
+        Call RInternal.generic.add("plot", GetType(MGF.Ions), AddressOf plotMS)
+        Call RInternal.generic.add("plot", GetType(PeakMs2), AddressOf plotMS)
+        Call RInternal.generic.add("plot", GetType(LibraryMatrix), AddressOf plotMS)
+        Call RInternal.generic.add("plot", GetType(Chromatogram), AddressOf plotChromatogram)
+        Call RInternal.generic.add("plot", GetType(mzPack), AddressOf plotRawChromatogram)
+        Call RInternal.generic.add("plot", GetType(ChromatogramOverlap), AddressOf plotOverlaps)
+        Call RInternal.generic.add("plot", GetType(D2Chromatogram()), AddressOf plotGCxGCTic2D)
+        Call RInternal.generic.add("plot", GetType(D2Chromatogram), AddressOf plotTIC2)
+        Call RInternal.generic.add("plot", GetType(ChromatogramTick()), AddressOf plotTIC)
+        Call RInternal.generic.add("plot", GetType(PeakSet), AddressOf plotPeaktable)
+        Call RInternal.generic.add("plot", GetType(AlignmentOutput), AddressOf plotAlignments)
+        Call RInternal.generic.add("plot", GetType(ScanMS1), AddressOf plotMS)
+        Call RInternal.generic.add("plot", GetType(ScanMS2), AddressOf plotMS)
+        Call RInternal.generic.add("plot", GetType(RtShift()), AddressOf plotRtShifts)
     End Sub
 
     <RGenericOverloads("plot")>
@@ -246,7 +273,7 @@ Module Visual
             Dim scatter_data As ms1_scan() = peakSet.Ms1Scatter(dimension).ToArray
 
             If scatter_data.All(Function(i) i.intensity = 0.0) Then
-                Return Internal.debug.stop({
+                Return RInternal.debug.stop({
                     $"missing of the data for plot the scatter on specific data dimension: {dimension}",
                     $"dimension: {dimension}"
                 }, env)

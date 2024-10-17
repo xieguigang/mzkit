@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <RootNamespace>mzkit</RootNamespace>
-    <TargetFrameworks>net6.0</TargetFrameworks>
+    <TargetFrameworks>net8.0</TargetFrameworks>
     <AssemblyName>mz_quantify</AssemblyName>
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;LipidSearch;PlantMAT;mzkit;Rsharp_app_release</Configurations>
@@ -15,7 +15,7 @@
     <PackageProjectUrl>http://mzkit.org</PackageProjectUrl>
     <PackageIcon>Flask.png</PackageIcon>
     <PackageIconUrl />
-	  <RuntimeIdentifiers>win7-x64;win7-x86;win-x64;linux-x64;linux-arm64;osx-x64</RuntimeIdentifiers>
+	  <RuntimeIdentifiers>win-x64;linux-x64;linux-arm64;osx-x64</RuntimeIdentifiers>
 	  <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
 	  <ApplicationIcon>favicon.ico</ApplicationIcon>
 	  <UseApplicationFramework>True</UseApplicationFramework>
@@ -233,6 +233,7 @@
     <ProjectReference Include="../../..\..\..\..\GCModeller\src\runtime\sciBASIC#\mime\text%html\html_netcore5.vbproj" />
     <ProjectReference Include="../../..\..\..\src\visualize\plot\MsPlot.NET5.vbproj" />
     <ProjectReference Include="..\..\..\..\..\..\GCModeller\src\GCModeller\analysis\HTS_matrix\HTS_matrix-netcore5.vbproj" />
+    <ProjectReference Include="..\..\..\..\..\..\GCModeller\src\R-sharp\Library\shares\graphics.common_runtime\R_graphics.common_runtime.vbproj" />
     <ProjectReference Include="..\..\..\..\..\..\GCModeller\src\workbench\modules\ExperimentDesigner\designer-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\..\..\src\assembly\mzPackExtensions\mzPackExtensions.NET5.vbproj" />
     <ProjectReference Include="..\..\..\..\..\src\mzmath\MSEngine\MSEngine.vbproj" />

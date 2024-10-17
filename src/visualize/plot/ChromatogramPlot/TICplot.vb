@@ -81,6 +81,32 @@ Imports Microsoft.VisualBasic.Math.Interpolation
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.MIME.Html.Render
 
+#If NET48 Then
+Imports Pen = System.Drawing.Pen
+Imports Pens = System.Drawing.Pens
+Imports Brush = System.Drawing.Brush
+Imports Font = System.Drawing.Font
+Imports Brushes = System.Drawing.Brushes
+Imports SolidBrush = System.Drawing.SolidBrush
+Imports DashStyle = System.Drawing.Drawing2D.DashStyle
+Imports Image = System.Drawing.Image
+Imports Bitmap = System.Drawing.Bitmap
+Imports GraphicsPath = System.Drawing.Drawing2D.GraphicsPath
+Imports FontStyle = System.Drawing.FontStyle
+#Else
+Imports Pen = Microsoft.VisualBasic.Imaging.Pen
+Imports Pens = Microsoft.VisualBasic.Imaging.Pens
+Imports Brush = Microsoft.VisualBasic.Imaging.Brush
+Imports Font = Microsoft.VisualBasic.Imaging.Font
+Imports Brushes = Microsoft.VisualBasic.Imaging.Brushes
+Imports SolidBrush = Microsoft.VisualBasic.Imaging.SolidBrush
+Imports DashStyle = Microsoft.VisualBasic.Imaging.DashStyle
+Imports Image = Microsoft.VisualBasic.Imaging.Image
+Imports Bitmap = Microsoft.VisualBasic.Imaging.Bitmap
+Imports GraphicsPath = Microsoft.VisualBasic.Imaging.GraphicsPath
+Imports FontStyle = Microsoft.VisualBasic.Imaging.FontStyle
+#End If
+
 ''' <summary>
 ''' Chromatogram overlaps plot
 ''' </summary>
@@ -221,7 +247,8 @@ Public Class TICplot : Inherits Plot
             YTicks = {0, 100}
         End If
 
-        Dim rect As Rectangle = canvas.PlotRegion
+        Dim css As CSSEnvirnment = g.LoadEnvironment
+        Dim rect As Rectangle = canvas.PlotRegion(css)
         Dim X = d3js.scale.linear.domain(values:=XTicks).range(integers:={rect.Left, rect.Right})
         Dim Y = d3js.scale.linear.domain(values:=YTicks).range(integers:={rect.Top, rect.Bottom})
         Dim scaler As New DataScaler With {
@@ -304,7 +331,7 @@ Public Class TICplot : Inherits Plot
                              }
             End If
 
-            Dim bottom% = canvas.Bottom - 6
+            Dim bottom% = canvas.Bottom(css) - 6
             Dim viz = g
             Dim polygon As New List(Of PointF)
             Dim draw = Sub(t1 As ChromatogramTick, t2 As ChromatogramTick)
@@ -421,6 +448,7 @@ Public Class TICplot : Inherits Plot
         ' 这时候每20个换一列
         Dim deln As Integer = If(split_size <= 0, 16, split_size)
         Dim cols = legends.Length / deln
+        Dim css As CSSEnvirnment = g.LoadEnvironment
 
         If cols > Fix(cols) Then
             ' 有余数,说明还有剩下的,增加一列
@@ -428,17 +456,17 @@ Public Class TICplot : Inherits Plot
         End If
 
         ' 计算在右上角的位置
+        Dim plotRect = canvas.PlotRegion(css)
         Dim maxSize As SizeF = legends.MaxLegendSize(g)
-        Dim top = canvas.PlotRegion.Top + maxSize.Height + 5
+        Dim top = plotRect.Top + maxSize.Height + 5
         Dim maxLen = maxSize.Width
         Dim legendShapeWidth% = 70
         Dim left As Double
-        Dim css As CSSEnvirnment = g.LoadEnvironment
 
         If outside Then
-            left = canvas.PlotRegion.Right + g.MeasureString("A", legends(Scan0).GetFont(css)).Width
+            left = plotRect.Right + g.MeasureString("A", legends(Scan0).GetFont(css)).Width
         Else
-            left = canvas.PlotRegion.Right - (maxLen + legendShapeWidth) * cols
+            left = plotRect.Right - (maxLen + legendShapeWidth) * cols
         End If
 
         Dim position As New Point With {

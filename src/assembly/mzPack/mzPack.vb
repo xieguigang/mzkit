@@ -73,6 +73,33 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
+Imports std = System.Math
+
+#If NET48 Then
+Imports Pen = System.Drawing.Pen
+Imports Pens = System.Drawing.Pens
+Imports Brush = System.Drawing.Brush
+Imports Font = System.Drawing.Font
+Imports Brushes = System.Drawing.Brushes
+Imports SolidBrush = System.Drawing.SolidBrush
+Imports DashStyle = System.Drawing.Drawing2D.DashStyle
+Imports Image = System.Drawing.Image
+Imports Bitmap = System.Drawing.Bitmap
+Imports GraphicsPath = System.Drawing.Drawing2D.GraphicsPath
+Imports FontStyle = System.Drawing.FontStyle
+#Else
+Imports Pen = Microsoft.VisualBasic.Imaging.Pen
+Imports Pens = Microsoft.VisualBasic.Imaging.Pens
+Imports Brush = Microsoft.VisualBasic.Imaging.Brush
+Imports Font = Microsoft.VisualBasic.Imaging.Font
+Imports Brushes = Microsoft.VisualBasic.Imaging.Brushes
+Imports SolidBrush = Microsoft.VisualBasic.Imaging.SolidBrush
+Imports DashStyle = Microsoft.VisualBasic.Imaging.DashStyle
+Imports Image = Microsoft.VisualBasic.Imaging.Image
+Imports Bitmap = Microsoft.VisualBasic.Imaging.Bitmap
+Imports GraphicsPath = Microsoft.VisualBasic.Imaging.GraphicsPath
+Imports FontStyle = Microsoft.VisualBasic.Imaging.FontStyle
+#End If
 
 ''' <summary>
 ''' the unify in-memory data model of the mzkit MS data model.
@@ -222,6 +249,18 @@ Public Class mzPack : Implements IMZPack
                 .Select(AddressOf get_ms1) _
                 .IteratesALL
         End If
+    End Function
+
+    Public Function PickIonScatter(mz As Double, rt As Double, Optional mass_da As Double = 0.25, Optional dt As Double = 7.5) As IEnumerable(Of ms1_scan)
+        Dim range = MS.AsParallel.Where(Function(s) s.rt >= rt - dt AndAlso s.rt <= rt + dt).ToArray
+        Dim ms1 As IEnumerable(Of ms1_scan) = range _
+            .Select(Function(s) s.GetMs1Scans) _
+            .IteratesALL _
+            .AsParallel _
+            .Where(Function(mzi) mzi.intensity > 0 AndAlso std.abs(mzi.mz - mz) < mass_da) _
+            .OrderBy(Function(a) a.scan_time)
+
+        Return ms1
     End Function
 
     Private Shared Iterator Function get_ms1(scan As ScanMS1) As IEnumerable(Of ms1_scan)
@@ -389,6 +428,12 @@ Public Class mzPack : Implements IMZPack
         End If
 
         Return pack
+    End Function
+
+    Public Function WriteV2(filepath As String, Optional progress As Action(Of String) = Nothing) As Boolean
+        Using s As Stream = filepath.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False)
+            Return Write(s, version:=2, progress:=progress)
+        End Using
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>

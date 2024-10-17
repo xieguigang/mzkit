@@ -112,6 +112,10 @@ Namespace MarkupData.mzML
 
         Public ReadOnly Property polarity As IonModes
             Get
+                If cvParams Is Nothing Then
+                    Return IonModes.Unknown
+                End If
+
                 If cvParams.Any(Function(cv) cv.name = "positive scan") Then
                     Return IonModes.Positive
                 ElseIf cvParams.Any(Function(cv) cv.name = "negative scan") Then

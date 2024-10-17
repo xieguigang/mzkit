@@ -82,6 +82,7 @@ Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports Rlist = SMRUCC.Rsharp.Runtime.Internal.Object.list
+Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
 
 ''' <summary>
 ''' the targetted GCMS sim data quantification module
@@ -91,7 +92,7 @@ Imports Rlist = SMRUCC.Rsharp.Runtime.Internal.Object.list
 Module GCMSLinear
 
     Sub Main()
-        Call Internal.ConsolePrinter.AttachConsoleFormatter(Of TargetPeakPoint)(Function(pt) pt.ToString)
+        Call RInternal.ConsolePrinter.AttachConsoleFormatter(Of TargetPeakPoint)(Function(pt) pt.ToString)
 
         Call generic.add("readBin.gcms_peak", GetType(Stream), AddressOf readGCSample)
         Call generic.add("writeBin", GetType(GCMSPeak()), AddressOf writeSamples)
@@ -200,10 +201,10 @@ Module GCMSLinear
                     ISMap(ion.Name) = "IS"
                 Next
             Else
-                Return Internal.debug.stop(New NotImplementedException, env)
+                Return RInternal.debug.stop(New NotImplementedException, env)
             End If
         Else
-            Return Internal.debug.stop(New NotImplementedException, env)
+            Return RInternal.debug.stop(New NotImplementedException, env)
         End If
 
         If TypeOf contentVector Is Rlist Then
