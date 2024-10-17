@@ -36,17 +36,22 @@ export class IGraphics {
    Background: <a href="/vignettes/clr/System/Drawing/Color.html">Color</a>;
    # max value of the [DpiX, DpiY]
    Dpi: double;
+   # Get graphics driver code
    Driver: <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/Driver/Drivers.html">Drivers</a>;
    # Default font value for text drawing
    Font: <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/Font.html">Font</a>;
+   # the image graphics height
    Height: integer;
-   PageScale: double;
+   # Gets or sets the rendering origin of this System.Drawing.Graphics for dithering
+   #  and for hatch brushes.
    RenderingOrigin: <a href="/vignettes/clr/System/Drawing/Point.html">Point</a>;
    # the current canvas size in pixels: [width, height]
    Size: <a href="/vignettes/clr/System/Drawing/Size.html">Size</a>;
    # Default pen for drawing
    Stroke: <a href="/vignettes/clr/Microsoft/VisualBasic/Imaging/Pen.html">Pen</a>;
+   # Gets or sets the gamma correction value for rendering text.
    TextContrast: integer;
+   # the image graphics width
    Width: integer;
 }
 </code>
