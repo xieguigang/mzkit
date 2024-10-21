@@ -477,10 +477,18 @@ Module mzDeco
             .ToArray
         Dim ion As xcms2
         Dim no_sample As Boolean = matrix.IsNullOrEmpty AndAlso Not npeaks Is Nothing
+        Dim no_npeaks As Boolean = npeaks.IsNullOrEmpty
+        Dim no_mz_range As Boolean = mzmin.IsNullOrEmpty OrElse mzmax.IsNullOrEmpty
+        Dim no_rt_range As Boolean = rtmin.IsNullOrEmpty OrElse rtmax.IsNullOrEmpty
+        Dim no_ri As Boolean = RI.IsNullOrEmpty
 
         For i As Integer = 0 To mz.Length - 1
             If no_sample Then
-                ion = New xcms2(npeaks(i))
+                If no_npeaks Then
+                    ion = New xcms2()
+                Else
+                    ion = New xcms2(npeaks(i))
+                End If
             Else
                 offset = i
                 v = matrix.ToDictionary(Function(a) a.name, Function(a) a(offset))
@@ -490,12 +498,29 @@ Module mzDeco
             With ion
                 .ID = ID(i)
                 .mz = mz(i)
-                .mzmax = mzmax(i)
-                .mzmin = mzmin(i)
-                .RI = RI(i)
+
+                If no_mz_range Then
+                    .mzmax = .mz
+                    .mzmin = .mz
+                Else
+                    .mzmax = mzmax(i)
+                    .mzmin = mzmin(i)
+                End If
+                If no_ri Then
+                    ' do nothing
+                Else
+                    .RI = RI(i)
+                End If
+
                 .rt = rt(i)
-                .rtmax = rtmax(i)
-                .rtmin = rtmin(i)
+
+                If no_rt_range Then
+                    .rtmin = .rt
+                    .rtmax = .rt
+                Else
+                    .rtmax = rtmax(i)
+                    .rtmin = rtmin(i)
+                End If
             End With
 
             Yield ion
