@@ -477,6 +477,15 @@ Module MoleculeNetworking
         Return grid.AssignPeaks(peakset.peaks).ToArray
     End Function
 
+    ''' <summary>
+    ''' Unpack of the spectrum data into multiple file groups
+    ''' </summary>
+    ''' <param name="assign"></param>
+    ''' <param name="env"></param>
+    ''' <returns>
+    ''' A tuple list of the spectrum data in multiple file groups, 
+    ''' each slot tuple is a rawdata file content.
+    ''' </returns>
     <ExportAPI("unpack_assign")>
     Public Function unpack_assign(<RRawVectorArgument> assign As Object, Optional env As Environment = Nothing) As Object
         Dim pull As pipeline = pipeline.TryCreatePipeline(Of RawPeakAssign)(assign, env)
@@ -494,7 +503,8 @@ Module MoleculeNetworking
                 spec = New PeakMs2(spec)
                 spec.lib_guid = id
                 spec.mz = peak.peak.mz
-                data.Add(spec)
+
+                Call data.Add(spec)
             Next
         Next
 
