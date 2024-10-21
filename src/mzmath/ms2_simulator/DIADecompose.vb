@@ -1,10 +1,22 @@
-﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+﻿Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
 Imports Microsoft.VisualBasic.Math.SIMD
 
 Public Module DIADecompose
 
+    ''' <summary>
+    ''' make the spectrum set decompose into multiple spectrum groups via the NMF method
+    ''' </summary>
+    ''' <param name="spectrum"></param>
+    ''' <param name="n"></param>
+    ''' <param name="maxItrs"></param>
+    ''' <param name="tolerance"></param>
+    ''' <param name="eps"></param>
+    ''' <returns></returns>
+    ''' 
+    <Extension>
     Public Iterator Function DecomposeSpectrum(spectrum As IEnumerable(Of PeakMs2),
                                                n As Integer,
                                                Optional maxItrs As Integer = 1000,
