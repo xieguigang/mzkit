@@ -61,6 +61,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Text
 
@@ -70,6 +71,20 @@ Namespace Spectra
     ''' Spectra matrix encoder helper for mysql/csv
     ''' </summary>
     Public Module SpectraEncoder
+
+        <Extension>
+        Public Function CreateCentroidFragmentSet(fragments As IEnumerable(Of Double),
+                                                  Optional centroid As Double = 0.1,
+                                                  Optional window_size As Double = 1) As MzPool
+            Dim mzgroups = fragments _
+                .GroupBy(offset:=centroid) _
+                .Select(Function(a) Val(a.name)) _
+                .OrderBy(Function(mzi) mzi) _
+                .ToArray
+            Dim pool As New MzPool(mzgroups, win_size:=window_size)
+
+            Return pool
+        End Function
 
         <Extension>
         Public Function DeconvoluteMS(sp As LibraryMatrix, len As Integer, mzIndex As MzPool) As Double()
