@@ -501,7 +501,7 @@ Module MoleculeNetworking
 
             For Each spec As PeakMs2 In peak.ms2
                 spec = New PeakMs2(spec)
-                spec.lib_guid = id
+                spec.lib_guid = id & "@" & spec.file.Replace(".mzPack", "")
                 spec.mz = peak.peak.mz
 
                 Call data.Add(spec)
