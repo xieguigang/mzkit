@@ -4,6 +4,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Internal.[Object]
 Imports SMRUCC.Rsharp.Runtime.Interop
@@ -59,7 +60,10 @@ Public Module DIASpectrumAnnotations
 
         Dim groups As NamedCollection(Of PeakMs2)() = pull _
             .populates(Of PeakMs2)(env) _
-            .DecomposeSpectrum(n, maxItrs:=maxItrs, tolerance:=tolerance, eps:=eps) _
+            .DecomposeSpectrum(n,
+                               maxItrs:=maxItrs,
+                               tolerance:=tolerance,
+                               eps:=eps) _
             .ToArray
         Dim list As New list With {
             .slots = groups _
@@ -68,6 +72,18 @@ Public Module DIASpectrumAnnotations
                                   Return CObj(a.value)
                               End Function)
         }
+        Dim sum As New list With {
+            .slots = New Dictionary(Of String, Object)
+        }
+
+        For Each group In groups
+            sum.slots(group.name) = New LibraryMatrix(
+                name:=group.name,
+                spectrum:=group _
+                    .description _
+                    .LoadJSON(Of ms2())
+            )
+        Next
 
         Return list
     End Function
