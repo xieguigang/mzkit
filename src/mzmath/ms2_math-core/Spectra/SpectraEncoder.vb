@@ -71,6 +71,51 @@ Namespace Spectra
     ''' </summary>
     Public Module SpectraEncoder
 
+        <Extension>
+        Public Function DeconvoluteMS(sp As LibraryMatrix, len As Integer, mzIndex As MzPool) As Double()
+            Return DeconvoluteScan(sp.Select(Function(a) a.mz).ToArray, sp.Select(Function(a) a.intensity).ToArray, len, mzIndex)
+        End Function
+
+        ''' <summary>
+        ''' make alignment of the scan data to a given set of the mz index data
+        ''' </summary>
+        ''' <param name="mz"></param>
+        ''' <param name="into"></param>
+        ''' <param name="len">
+        ''' should be the length of the <paramref name="mzIndex"/>
+        ''' </param>
+        ''' <param name="mzIndex"></param>
+        ''' <returns>
+        ''' a vector of the intensity data which is aligned with the mz vector
+        ''' </returns>
+        Public Function DeconvoluteScan(mz As Double(),
+                                        into As Double(),
+                                        len As Integer,
+                                        mzIndex As MzPool) As Double()
+
+            Dim v As Double() = New Double(len - 1) {}
+            Dim mzi As Double
+            Dim hit As MzIndex
+            Dim scan_size As Integer = mz.Length
+
+            For i As Integer = 0 To scan_size - 1
+                mzi = mz(i)
+                hit = mzIndex.SearchBest(mzi)
+
+                If hit Is Nothing Then
+                    ' 20221102
+                    '
+                    ' missing data
+                    ' could be caused by the selective ion data export
+                    ' just ignores of this problem
+                Else
+                    v(hit.index) += into(i)
+                End If
+            Next
+
+            Return v
+        End Function
+
         Public Delegate Function Encoder(Of T)(mzData As T()) As String
 
         ''' <summary>

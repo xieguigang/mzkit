@@ -74,7 +74,9 @@ Namespace MatrixMath
         ''' <param name="da"></param>
         ''' <param name="parallel"></param>
         ''' <returns></returns>
-        Friend Iterator Function DoStatInternal(allIons As IEnumerable(Of (scan_id As String, ms1 As ms2)), da As Double, parallel As Boolean) As IEnumerable(Of SingleCellIonStat)
+        Friend Iterator Function DoStatInternal(allIons As IEnumerable(Of (scan_id As String, ms1 As ms2)),
+                                                da As Double,
+                                                parallel As Boolean) As IEnumerable(Of SingleCellIonStat)
             Dim ions = allIons _
                 .GroupBy(Function(d) d.ms1.mz, Tolerance.DeltaMass(da)) _
                 .ToArray
