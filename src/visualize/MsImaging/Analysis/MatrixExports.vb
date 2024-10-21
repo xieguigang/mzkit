@@ -66,7 +66,7 @@ Public Module MatrixExports
                 Dim ms = xy.GetMs
                 Dim mz As Double() = ms.Select(Function(i) i.mz).ToArray
                 Dim into As Double() = ms.Select(Function(i) i.intensity).ToArray
-                Dim v As Double() = Deconvolute.Math.DeconvoluteScan(mz, into, len, mzIndex)
+                Dim v As Double() = SpectraEncoder.DeconvoluteScan(mz, into, len, mzIndex)
 
                 spots(offset) = New Deconvolute.PixelData With {
                     .X = xy.X,

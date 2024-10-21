@@ -1,0 +1,35 @@
+.\" man page create by R# package system.
+.TH DIA 1 2000-Jan "dia_nmf" "dia_nmf"
+.SH NAME
+dia_nmf \- make the spectrum set decompose into multiple spectrum groups via the NMF method
+.SH SYNOPSIS
+\fIdia_nmf(\fBspectrum\fR as any, 
+\fBn\fR as integer, 
+\fBmaxItrs\fR as integer = 1000, 
+\fBtolerance\fR as double = 0.001, 
+\fBeps\fR as double = 0.0001, 
+[\fB<Environment>\fR]);\fR
+.SH DESCRIPTION
+.PP
+make the spectrum set decompose into multiple spectrum groups via the NMF method
+.PP
+.SH OPTIONS
+.PP
+\fBspectrum\fB \fR\- -. 
+.PP
+.PP
+\fBn\fB \fR\- 
+ the number of the target spectrum to decomposed, 
+ this number should be query from the DDA experiment 
+ database.
+. 
+.PP
+.PP
+\fBenv\fB \fR\- -. 
+.PP
+.SH SEE ALSO
+DIA
+.SH FILES
+.PP
+mzDIA.dll
+.PP

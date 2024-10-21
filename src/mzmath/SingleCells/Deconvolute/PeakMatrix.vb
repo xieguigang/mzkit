@@ -143,7 +143,7 @@ Namespace Deconvolute
 
             For Each scan As ScanMS1 In Tqdm.Wrap(raw.MS)
                 Dim cellId As String = scan.scan_id
-                Dim v As Double() = Math.DeconvoluteScan(scan.mz, scan.into, len, mzIndex)
+                Dim v As Double() = SpectraEncoder.DeconvoluteScan(scan.mz, scan.into, len, mzIndex)
                 Dim cell_scan As New T With {
                     .Data = v,
                     .Key = cellId
@@ -159,7 +159,7 @@ Namespace Deconvolute
 
             For Each scan As LibraryMatrix In raw
                 Dim cellId As String = scan.name
-                Dim v As Double() = Math.DeconvoluteScan(scan.mz, scan.intensity, len, mzIndex)
+                Dim v As Double() = SpectraEncoder.DeconvoluteScan(scan.mz, scan.intensity, len, mzIndex)
                 Dim cell_scan As New T With {
                     .Data = v,
                     .Key = cellId
@@ -183,7 +183,7 @@ Namespace Deconvolute
             ' try get the ms-imaging spatial information
             ' xy maybe nothing for single cells rawdata
             Dim xy As Point = scan.GetMSIPixel
-            Dim v As Double() = Math.DeconvoluteScan(scan.mz, scan.into, len, mzIndex)
+            Dim v As Double() = SpectraEncoder.DeconvoluteScan(scan.mz, scan.into, len, mzIndex)
 
             Return New PixelData With {
                .X = xy.X,

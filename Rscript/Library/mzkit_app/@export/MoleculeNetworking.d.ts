@@ -81,6 +81,11 @@ declare namespace MoleculeNetworking {
    */
    function clustering(ions: any, mzdiff1?: any, mzdiff2?: any, intocutoff?: number, tree_identical?: number, tree_right?: number, env?: object): object;
    /**
+    * Make precursor assigned to the cluster node
+    * 
+    * 
+     * @param grid -
+     * @param peakset -
    */
    function grid_assigned(grid: object, peakset: object): object;
    /**
@@ -106,9 +111,19 @@ declare namespace MoleculeNetworking {
    */
    function representative(tree: object, mzdiff?: any, env?: object): object;
    /**
-     * @param centroid default value Is ``'da:0.3'``.
-     * @param intocutoff default value Is ``0.05``.
-     * @param env default value Is ``null``.
+    * Create grid clustering of the ms2 spectrum data
+    * 
+    * 
+     * @param rawdata -
+     * @param centroid -
+     * 
+     * + default value Is ``'da:0.3'``.
+     * @param intocutoff -
+     * 
+     * + default value Is ``0.05``.
+     * @param env -
+     * 
+     * + default value Is ``null``.
    */
    function spectrum_grid(rawdata: any, centroid?: any, intocutoff?: number, env?: object): any;
    /**
@@ -159,4 +174,8 @@ declare namespace MoleculeNetworking {
      * @param ions A collection of the mzkit spectrum object
    */
    function uniqueNames(ions: object): object;
+   /**
+     * @param env default value Is ``null``.
+   */
+   function unpack_assign(assign: any, env?: object): any;
 }

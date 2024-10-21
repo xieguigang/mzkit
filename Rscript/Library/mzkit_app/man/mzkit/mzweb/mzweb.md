@@ -22,3 +22,4 @@ biodeep mzweb data viewer raw data file helper
 + [ms2_peaks](mzweb/ms2_peaks.1) extract ms2 peaks data from the mzpack data object
 + [as.mzpack](mzweb/as.mzpack.1) convert assembly file to mzpack format data object
 + [mass_calibration](mzweb/mass_calibration.1) do mass calibration
++ [parse_base64](mzweb/parse_base64.1) Parse the given network base64 data as spectrum
