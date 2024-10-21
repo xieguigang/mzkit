@@ -130,7 +130,7 @@ Public Class ZAssembler : Implements IDisposable
 
         For Each cell As ScanMS1 In layer.MS
             Dim xy As Point = cell.GetMSIPixel
-            Dim v As Double() = Deconvolute.DeconvoluteScan(cell.mz, cell.into, len, mzIndex)
+            Dim v As Double() = SpectraEncoder.DeconvoluteScan(cell.mz, cell.into, len, mzIndex)
             Dim spot As New Deconvolute.PixelData With {
                 .X = xy.X,
                 .Y = xy.Y,
