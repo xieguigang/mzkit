@@ -2,6 +2,7 @@
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Correlations
@@ -48,7 +49,7 @@ Public Class SpectrumGrid
 
         filenames = files.ToArray
 
-        For Each ion_group In TqdmWrapper.Wrap(parent_groups)
+        For Each ion_group As NamedCollection(Of PeakMs2) In TqdmWrapper.Wrap(parent_groups)
             Dim tree As New BinaryClustering()
 
             ' ion groups has the same precursor ion m/z
@@ -62,7 +63,7 @@ Public Class SpectrumGrid
                     .GroupBy(Function(a) a.rt, offsets:=7.5) _
                     .ToArray
 
-                For Each group In rt_groups
+                For Each group As NamedCollection(Of PeakMs2) In rt_groups
                     Dim fileIndex = group.GroupBy(Function(si) si.file) _
                         .ToDictionary(Function(a) a.Key,
                                       Function(a)
@@ -98,7 +99,7 @@ Public Class SpectrumGrid
 
         For i As Integer = 0 To v.Length - 1
             If v(i) <= 0.0 Then
-                v(i) = minpos
+                v(i) = minPos
             End If
         Next
 
@@ -157,13 +158,19 @@ Public Class SpectrumLine
 
 End Class
 
-Public Class RawPeakAssign
+Public Class RawPeakAssign : Implements IReadOnlyId
 
     Public Property peak As xcms2
     Public Property ms2 As PeakMs2()
     Public Property cor As Double
     Public Property score As Double
     Public Property pval As Double
+
+    Public ReadOnly Property Id As String Implements IReadOnlyId.Identity
+        Get
+            Return peak.ID
+        End Get
+    End Property
 
     Public Overrides Function ToString() As String
         Return peak.ToString & $" correlated with {ms2.Length} spectrum, pearson={cor}"
