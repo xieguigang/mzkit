@@ -6,6 +6,8 @@ setwd(@dir);
 
 let testdata = read.csv("./test_ms2.csv", row.names = NULL, check.names = FALSE);
 
+testdata = testdata[1:200,];
+
 print(testdata, max.print= 6);
 
 let spec = mzweb::parse_base64( mz = testdata$mz,

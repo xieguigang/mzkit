@@ -50,9 +50,40 @@ Public Module DIADecompose
             max_iterations:=maxItrs,
             tolerance:=tolerance,
             epsilon:=eps)
+        Dim W = decompose.W
+        Dim H = decompose.H
+        Dim mzSet As Double() = fragments.ionSet
 
         ' produce the decompose spectrum set
+        For i As Integer = 0 To n - 1
+            Dim factor = H(i)
+            Dim decomposer As New List(Of PeakMs2)
 
+            For j As Integer = 0 To rowPacks.Count - 1
+                Dim offset = W(j)
+                Dim weight = offset(i)
+
+                If weight < 0.0001 Then
+                    Continue For
+                End If
+
+                Dim intensity = (factor * rowPacks(j)) * weight
+                Dim ms2 As ms2() = mzSet _
+                    .Select(Function(mzi, k) New ms2(mzi, intensity(k))) _
+                    .ToArray
+                Dim spectral As New PeakMs2(specPool(j)) With {
+                    .mzInto = ms2,
+                    .lib_guid = specPool(j).lib_guid & $"_decompose_{i + 1}"
+                }
+
+                Call decomposer.Add(spectral)
+            Next
+
+            Yield New NamedCollection(Of PeakMs2) With {
+                .name = $"decompose_{i + 1}",
+                .value = decomposer.ToArray
+            }
+        Next
     End Function
 
 End Module
