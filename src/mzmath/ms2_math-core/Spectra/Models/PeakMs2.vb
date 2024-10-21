@@ -123,6 +123,10 @@ Namespace Spectra
         ''' </summary>
         Public Property mzInto As ms2()
 
+        ''' <summary>
+        ''' the associated meta/properties about this spectrum data object.
+        ''' </summary>
+        ''' <returns></returns>
         Public Property meta As Dictionary(Of String, String)
 
         ''' <summary>
@@ -161,6 +165,10 @@ Namespace Spectra
             mzInto = spec.SafeQuery.ToArray
         End Sub
 
+        ''' <summary>
+        ''' make a value copy of the spectrum data
+        ''' </summary>
+        ''' <param name="clone"></param>
         Sub New(clone As PeakMs2)
             mz = clone.mz
             rt = clone.rt

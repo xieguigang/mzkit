@@ -129,7 +129,13 @@ Public Class SpectrumGrid
             For Each candidate In candidates
                 Yield New RawPeakAssign With {
                     .peak = peak,
-                    .ms2 = candidate.c.cluster,
+                    .ms2 = candidate.c.cluster _
+                        .Select(Function(c)
+                                    c = New PeakMs2(c)
+                                    c.meta!ROI = peak.ID
+                                    Return c
+                                End Function) _
+                        .ToArray,
                     .cor = candidate.cor,
                     .score = candidate.score,
                     .pval = candidate.pval

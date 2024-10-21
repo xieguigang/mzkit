@@ -433,6 +433,37 @@ Module data
         }
     End Function
 
+    <ExportAPI("groupBy_ROI")>
+    Public Function groupBy_ROI(<RRawVectorArgument> peakms2 As Object,
+                                Optional default$ = "Not_Assigned",
+                                Optional env As Environment = Nothing) As Object
+
+        Dim pull As pipeline = pipeline.TryCreatePipeline(Of PeakMs2)(peakms2, env)
+
+        If pull.isError Then
+            Return pull.getError
+        End If
+
+        Dim ROI_groups = pull.populates(Of PeakMs2)(env) _
+            .GroupBy(Function(s)
+                         If s.meta Is Nothing Then
+                             Return [default]
+                         Else
+                             Return If(s.meta.ContainsKey("ROI"), s.meta!ROI, [default])
+                         End If
+                     End Function) _
+            .ToDictionary(Function(a) a.Key,
+                          Function(a)
+                              Return CObj(a.ToArray)
+                          End Function)
+
+        If ROI_groups.Count = 1 AndAlso ROI_groups.Keys.First = [default] Then
+            Call env.AddMessage("No peak ROI id was assigned with the given spectrum data!")
+        End If
+
+        Return New list With {.slots = ROI_groups}
+    End Function
+
     ''' <summary>
     ''' Create a library matrix object
     ''' </summary>
