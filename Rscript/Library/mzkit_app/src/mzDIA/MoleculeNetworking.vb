@@ -405,6 +405,14 @@ Module MoleculeNetworking
         Return output.ToArray
     End Function
 
+    ''' <summary>
+    ''' Create grid clustering of the ms2 spectrum data
+    ''' </summary>
+    ''' <param name="rawdata"></param>
+    ''' <param name="centroid"></param>
+    ''' <param name="intocutoff"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("spectrum_grid")>
     Public Function create_spectrum_grid(<RRawVectorArgument> rawdata As Object,
                                          Optional centroid As Object = "da:0.3",
@@ -447,7 +455,7 @@ Module MoleculeNetworking
                     specSet(i).lib_guid = $"{filename}#{id(i)}"
                 Next
 
-                specData.Add(New NamedCollection(Of PeakMs2)(filename, specSet))
+                Call specData.Add(New NamedCollection(Of PeakMs2)(filename, specSet))
             Next
         End If
 
@@ -457,9 +465,46 @@ Module MoleculeNetworking
         Return grid
     End Function
 
+    ''' <summary>
+    ''' Make precursor assigned to the cluster node
+    ''' </summary>
+    ''' <param name="grid"></param>
+    ''' <param name="peakset"></param>
+    ''' <returns></returns>
     <ExportAPI("grid_assigned")>
     <RApiReturn(GetType(RawPeakAssign))>
     Public Function grid_assigned(grid As SpectrumGrid, peakset As PeakSet) As Object
         Return grid.AssignPeaks(peakset.peaks).ToArray
+    End Function
+
+    <ExportAPI("unpack_assign")>
+    Public Function unpack_assign(<RRawVectorArgument> assign As Object, Optional env As Environment = Nothing) As Object
+        Dim pull As pipeline = pipeline.TryCreatePipeline(Of RawPeakAssign)(assign, env)
+
+        If Not pull.isError Then
+            Return pull.getError
+        End If
+
+        Dim data As New List(Of PeakMs2)
+
+        For Each peak As RawPeakAssign In pull.populates(Of RawPeakAssign)(env)
+            Dim id As String = peak.Id
+
+            For Each spec As PeakMs2 In peak.ms2
+                spec = New PeakMs2(spec)
+                spec.lib_guid = id
+                spec.mz = peak.peak.mz
+                data.Add(spec)
+            Next
+        Next
+
+        Return New list With {
+            .slots = data _
+                .GroupBy(Function(a) a.file) _
+                .ToDictionary(Function(a) a.Key,
+                              Function(a)
+                                  Return CObj(a.ToArray)
+                              End Function)
+        }
     End Function
 End Module

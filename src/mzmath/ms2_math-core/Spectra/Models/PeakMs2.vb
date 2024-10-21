@@ -161,6 +161,20 @@ Namespace Spectra
             mzInto = spec.SafeQuery.ToArray
         End Sub
 
+        Sub New(clone As PeakMs2)
+            mz = clone.mz
+            rt = clone.rt
+            intensity = clone.intensity
+            file = clone.file
+            lib_guid = clone.lib_guid
+            scan = clone.scan
+            activation = clone.activation
+            collisionEnergy = clone.collisionEnergy
+            precursor_type = clone.precursor_type
+            meta = If(meta Is Nothing, Nothing, New Dictionary(Of String, String)(meta))
+            mzInto = clone.mzInto.ToArray
+        End Sub
+
         Sub New(guid As String, mz As Double(), into As IVector)
             Call Me.New(guid, into.Data.Select(Function(intensity, i) New ms2(mz(i), intensity)))
         End Sub
