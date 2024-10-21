@@ -70,6 +70,7 @@ Public Module DIADecompose
                 Dim intensity = (factor * rowPacks(j)) * weight
                 Dim ms2 As ms2() = mzSet _
                     .Select(Function(mzi, k) New ms2(mzi, intensity(k))) _
+                    .Where(Function(a) a.intensity > 0.001) _
                     .ToArray
                 Dim spectral As New PeakMs2(specPool(j)) With {
                     .mzInto = ms2,
