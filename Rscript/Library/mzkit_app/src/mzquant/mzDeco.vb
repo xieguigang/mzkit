@@ -435,7 +435,7 @@ Module mzDeco
     <ExportAPI("as.peak_set")>
     <RApiReturn(GetType(PeakSet))>
     Public Function create_peakset(<RRawVectorArgument> x As Object, Optional env As Environment = Nothing) As Object
-        Dim pull = pipeline.TryCreatePipeline(Of xcms2)(x, env)
+        Dim pull = pipeline.TryCreatePipeline(Of xcms2)(x, env, suppress:=True)
         Dim peaks As New List(Of xcms2)
 
         If pull.isError Then
