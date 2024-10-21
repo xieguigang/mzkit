@@ -466,7 +466,7 @@ Module mzDeco
         Dim ID As String() = df.getRowNames.UniqueNames
         Dim npeaks As Integer() = CLRVector.asInteger(df!npeaks)
 
-        Call df.delete("ID", "mz", "mzmin", "mzmax", "rt", "rtmin", "rtmax", "RI", "npeaks")
+        Call df.delete("ID", "mz", "mzmin", "mzmax", "rt", "rtmin", "rtmax", "RI", "npeaks", "xcms_id", "into")
 
         Dim offset As Integer
         Dim v As Dictionary(Of String, Double)
