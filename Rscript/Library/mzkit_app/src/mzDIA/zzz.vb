@@ -62,5 +62,6 @@ Public Class zzz
 
     Public Shared Sub onLoad()
         Call metaDNAInfer.Main()
+        Call MoleculeNetworking.Main()
     End Sub
 End Class
