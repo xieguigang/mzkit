@@ -85,6 +85,8 @@ Public Module DIASpectrumAnnotations
             )
         Next
 
+        Call list.setAttribute("sum_spectrum", sum)
+
         Return list
     End Function
 

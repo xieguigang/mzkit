@@ -1,6 +1,7 @@
 require(mzkit);
 
 imports "DIA" from "mzDIA";
+imports "visual" from "mzplot";
 
 setwd(@dir);
 
@@ -17,3 +18,10 @@ let spec = mzweb::parse_base64( mz = testdata$mz,
 print(spec);
 
 let decompose = DIA::dia_nmf(spec, n = 5);
+let sum = attr(decompose, "sum_spectrum");
+
+for(name in names(sum)) {
+    svg(file = `${name}.svg`) {
+        plot(sum[[name]]);
+    }
+}
