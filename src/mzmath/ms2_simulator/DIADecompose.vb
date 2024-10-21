@@ -3,6 +3,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
 Imports Microsoft.VisualBasic.Math.SIMD
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Public Module DIADecompose
 
@@ -58,6 +59,7 @@ Public Module DIADecompose
         For i As Integer = 0 To n - 1
             Dim factor = H(i)
             Dim decomposer As New List(Of PeakMs2)
+            Dim sum As Double() = New Double(mzSet.Length - 1) {}
 
             For j As Integer = 0 To rowPacks.Count - 1
                 Dim offset = W(j)
@@ -77,12 +79,18 @@ Public Module DIADecompose
                     .lib_guid = specPool(j).lib_guid & $"_decompose_{i + 1}"
                 }
 
+                sum = Add.f64_op_add_f64(sum, (intensity / intensity.Max).Array)
+
                 Call decomposer.Add(spectral)
             Next
 
             Yield New NamedCollection(Of PeakMs2) With {
                 .name = $"decompose_{i + 1}",
-                .value = decomposer.ToArray
+                .value = decomposer.ToArray,
+                .description = mzSet _
+                    .Select(Function(mzi, k) New ms2(mzi, sum(k))) _
+                    .ToArray _
+                    .GetJson
             }
         Next
     End Function
