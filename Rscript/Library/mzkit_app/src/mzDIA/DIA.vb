@@ -41,9 +41,13 @@ Public Module DIASpectrumAnnotations
                 Return pull.getError
             End If
 
+            Dim libs = pull _
+                .populates(Of LibraryMatrix)(env) _
+                .ToArray
+
             pull = pipeline.CreateFromPopulator(
                 Iterator Function() As IEnumerable(Of PeakMs2)
-                    For Each mat As LibraryMatrix In pull.populates(Of LibraryMatrix)(env)
+                    For Each mat As LibraryMatrix In libs
                         Yield New PeakMs2 With {
                             .lib_guid = mat.name,
                             .mzInto = mat.Array,
