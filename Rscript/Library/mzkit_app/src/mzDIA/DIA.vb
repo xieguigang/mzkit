@@ -32,10 +32,25 @@ Public Module DIASpectrumAnnotations
                             Optional eps As Double = 0.0001,
                             Optional env As Environment = Nothing) As Object
 
-        Dim pull As pipeline = pipeline.TryCreatePipeline(Of PeakMs2)(spectrum, env)
+        Dim pull As pipeline = pipeline.TryCreatePipeline(Of PeakMs2)(spectrum, env, suppress:=True)
 
         If pull.isError Then
-            Return pull.getError
+            pull = pipeline.TryCreatePipeline(Of LibraryMatrix)(spectrum, env)
+
+            If pull.isError Then
+                Return pull.getError
+            End If
+
+            pull = pipeline.CreateFromPopulator(
+                Iterator Function() As IEnumerable(Of PeakMs2)
+                    For Each mat As LibraryMatrix In pull.populates(Of LibraryMatrix)(env)
+                        Yield New PeakMs2 With {
+                            .lib_guid = mat.name,
+                            .mzInto = mat.Array,
+                            .mz = mat.parentMz
+                        }
+                    Next
+                End Function)
         End If
 
         Dim groups As NamedCollection(Of PeakMs2)() = pull _
