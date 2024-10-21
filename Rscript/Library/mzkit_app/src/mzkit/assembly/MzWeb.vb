@@ -968,4 +968,53 @@ Module MzWeb
     Public Function MassCalibration(data As mzPack, Optional mzdiff As Double = 0.1, Optional env As Environment = Nothing) As Object
         Return data.MassCalibration(da:=mzdiff)
     End Function
+
+    ''' <summary>
+    ''' Parse the given network base64 data as spectrum
+    ''' </summary>
+    ''' <param name="mz"></param>
+    ''' <param name="intensity"></param>
+    ''' <param name="id"></param>
+    ''' <param name="auto_scalar"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("parse_base64")>
+    Public Function parse_base64(<RRawVectorArgument> mz As Object,
+                                 <RRawVectorArgument> intensity As Object,
+                                 <RRawVectorArgument>
+                                 Optional id As Object = Nothing,
+                                 Optional auto_scalar As Boolean = True,
+                                 Optional env As Environment = Nothing) As Object
+
+        Dim mz_str As String() = CLRVector.asCharacter(mz)
+        Dim into_str As String() = CLRVector.asCharacter(intensity)
+        Dim id_str As String() = CLRVector.asCharacter(id)
+
+        If mz_str.TryCount <> into_str.TryCount Then
+            Return RInternal.debug.stop($"the vector size of the mz data({mz_str.Length}) should be matched with the intensity vector data({into_str.Length})!", env)
+        ElseIf mz_str.TryCount = 0 Then
+            Call env.AddMessage("there is no spectrum data to run base64 decoded!")
+            Return Nothing
+        End If
+
+        Dim spectrum As New List(Of LibraryMatrix)
+
+        For i As Integer = 0 To mz_str.Length - 1
+            Dim spec As ms2() = SpectraEncoder _
+                .Decode(mz_str(i), into_str(i)) _
+                .ToArray
+            Dim mat As New LibraryMatrix(
+                name:=id_str.ElementAtOrDefault(i, [default]:=$"spectral_{i + 1}"),
+                spectrum:=spec
+            )
+
+            Call spectrum.Add(mat)
+        Next
+
+        If auto_scalar AndAlso spectrum.Count = 1 Then
+            Return spectrum(0)
+        Else
+            Return spectrum.ToArray
+        End If
+    End Function
 End Module

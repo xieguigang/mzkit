@@ -63,6 +63,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Net.Http
+Imports Microsoft.VisualBasic.Serialization.BinaryDumping
 Imports Microsoft.VisualBasic.Text
 
 Namespace Spectra
@@ -152,6 +153,26 @@ Namespace Spectra
 
                        Return base64
                    End Function
+        End Function
+
+        ReadOnly network As New NetworkByteOrderBuffer
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="mz64"></param>
+        ''' <param name="into64"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' the numeric data vector should be encoded in network byte order
+        ''' </remarks>
+        Public Iterator Function Decode(mz64 As String, into64 As String) As IEnumerable(Of ms2)
+            Dim mz As Double() = network.ParseDouble(mz64)
+            Dim into As Double() = network.ParseDouble(into64)
+
+            For i As Integer = 0 To mz.Length - 1
+                Yield New ms2(mz(i), into(i))
+            Next
         End Function
 
         ''' <summary>
