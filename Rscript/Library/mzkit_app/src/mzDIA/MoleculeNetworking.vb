@@ -79,6 +79,7 @@ Imports SMRUCC.Rsharp.Runtime.Internal.[Object].Converts
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports rDataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
 Imports REnv = SMRUCC.Rsharp.Runtime
+Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
 Imports std = System.Math
 
 ''' <summary>
@@ -114,6 +115,35 @@ Imports std = System.Math
 ''' </remarks>
 <Package("MoleculeNetworking")>
 Module MoleculeNetworking
+
+    Sub Main()
+        Call RInternal.Object.Converts.makeDataframe.addHandler(GetType(RawPeakAssign()), AddressOf makePeakAssignTable)
+    End Sub
+
+    <RGenericOverloads("as.data.frame")>
+    Public Function makePeakAssignTable(assign As RawPeakAssign(), args As list, env As Environment) As rDataframe
+        Dim unzip As (spectrum As PeakMs2, assign As RawPeakAssign)() = assign _
+            .Select(Function(a) a.ms2.Select(Function(b) (b, a))) _
+            .IteratesALL _
+            .ToArray
+        Dim df As New rDataframe With {
+            .columns = New Dictionary(Of String, Array)
+        }
+
+        Call df.add("xcms_id", unzip.Select(Function(a) a.assign.Id))
+        Call df.add("mz", unzip.Select(Function(a) a.assign.peak.mz))
+        Call df.add("rt1", unzip.Select(Function(a) a.assign.peak.rt))
+        Call df.add("rt2", unzip.Select(Function(a) a.spectrum.rt))
+        Call df.add("ms2", unzip.Select(Function(a) a.spectrum.lib_guid))
+        Call df.add("basePeak", unzip.Select(Function(a) a.spectrum.mzInto.OrderByDescending(Function(b) b.intensity).First.mz))
+        Call df.add("intensity", unzip.Select(Function(a) a.spectrum.intensity))
+        Call df.add("cor", unzip.Select(Function(a) a.assign.cor))
+        Call df.add("score", unzip.Select(Function(a) a.assign.score))
+        Call df.add("p-value", unzip.Select(Function(a) a.assign.pval))
+        Call df.add("samplefile", unzip.Select(Function(a) a.spectrum.file))
+
+        Return df
+    End Function
 
     ''' <summary>
     ''' makes the spectrum data its unique id reference uniqued!
@@ -477,6 +507,15 @@ Module MoleculeNetworking
         Return grid.AssignPeaks(peakset.peaks).ToArray
     End Function
 
+    ''' <summary>
+    ''' Unpack of the spectrum data into multiple file groups
+    ''' </summary>
+    ''' <param name="assign"></param>
+    ''' <param name="env"></param>
+    ''' <returns>
+    ''' A tuple list of the spectrum data in multiple file groups, 
+    ''' each slot tuple is a rawdata file content.
+    ''' </returns>
     <ExportAPI("unpack_assign")>
     Public Function unpack_assign(<RRawVectorArgument> assign As Object, Optional env As Environment = Nothing) As Object
         Dim pull As pipeline = pipeline.TryCreatePipeline(Of RawPeakAssign)(assign, env)
@@ -492,9 +531,10 @@ Module MoleculeNetworking
 
             For Each spec As PeakMs2 In peak.ms2
                 spec = New PeakMs2(spec)
-                spec.lib_guid = id
+                spec.lib_guid = id & "@" & spec.file.Replace(".mzPack", "")
                 spec.mz = peak.peak.mz
-                data.Add(spec)
+
+                Call data.Add(spec)
             Next
         Next
 

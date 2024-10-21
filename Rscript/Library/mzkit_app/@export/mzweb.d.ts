@@ -204,6 +204,23 @@ declare namespace mzweb {
       */
       function scanMs(bytes: any, level?: any, env?: object): any;
    }
+   /**
+    * Parse the given network base64 data as spectrum
+    * 
+    * 
+     * @param mz -
+     * @param intensity -
+     * @param id -
+     * 
+     * + default value Is ``null``.
+     * @param auto_scalar -
+     * 
+     * + default value Is ``true``.
+     * @param env -
+     * 
+     * + default value Is ``null``.
+   */
+   function parse_base64(mz: any, intensity: any, id?: any, auto_scalar?: boolean, env?: object): any;
    module read {
       /**
        * read the mzPack data file liked simple msn cached data

@@ -194,6 +194,12 @@ Public Class Algorithm
         Return Me
     End Function
 
+    ''' <summary>
+    ''' set ROI to the spectrum metadata slot
+    ''' </summary>
+    ''' <param name="peak"></param>
+    ''' <param name="id">the ROI id to set in this function</param>
+    ''' <returns></returns>
     Public Shared Function SimpleSetROI(peak As PeakMs2, id As String) As PeakMs2
         If id.StringEmpty Then
             ' one ms1 peak feature may mapping to multiple peakms2

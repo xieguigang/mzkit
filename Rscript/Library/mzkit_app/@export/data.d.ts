@@ -10,6 +10,11 @@
 */
 declare namespace data {
    /**
+     * @param default default value Is ``'Not_Assigned'``.
+     * @param env default value Is ``null``.
+   */
+   function groupBy_ROI(peakms2: any, default?: string, env?: object): any;
+   /**
     * get intensity value from the ion scan points
     * 
     * 

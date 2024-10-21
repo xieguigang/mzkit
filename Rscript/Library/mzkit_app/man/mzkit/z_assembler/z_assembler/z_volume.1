@@ -1,0 +1,34 @@
+.\" man page create by R# package system.
+.TH Z_ASSEMBLER 1 2000-Jan "z_volume" "z_volume"
+.SH NAME
+z_volume \- create a simple 3d volume model for mzkit workbench
+.SH SYNOPSIS
+\fIz_volume(\fBlayers\fR as any, 
+\fBdump\fR as string, 
+[\fB<Environment>\fR]);\fR
+.SH DESCRIPTION
+.PP
+create a simple 3d volume model for mzkit workbench
+.PP
+.SH OPTIONS
+.PP
+\fBlayers\fB \fR\- should be a collection of the @\fBT:BioNovoGene.Analytical.MassSpectrometry.MsImaging.SingleIonLayer\fR. 
+ the layer elements in this collection should be already been re-ordered by 
+ the z-axis!. 
+.PP
+.PP
+\fBdump\fB \fR\- -. 
+.PP
+.PP
+\fBenv\fB \fR\- -. 
+.PP
+.SH DETAILS
+.PP
+this function works for combine a collection of the 2D layer as the 3d volume @\fBT:BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute.MzMatrix\fR data
+.PP
+.SH SEE ALSO
+z_assembler
+.SH FILES
+.PP
+mzkit.dll
+.PP
