@@ -1,3 +1,7 @@
+
+''' <summary>
+''' Model of the GCxGC 2d peak
+''' </summary>
 Public Class Peak2D
 
     Public Property id As String
