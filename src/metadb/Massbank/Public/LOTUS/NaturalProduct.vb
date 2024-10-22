@@ -1,4 +1,7 @@
-﻿Namespace LOTUS
+﻿Imports System.IO
+Imports Metabolite = BioNovoGene.BioDeep.Chemistry.MetaLib.Models.MetaLib
+
+Namespace LOTUS
 
     ''' <summary>
     ''' Natural Products Online is an open source project for Natural Products (NPs) storage,
@@ -14,7 +17,27 @@
     ''' Pierre-Marie Allard (2022) The LOTUS initiative for open knowledge management in 
     ''' natural products research. eLife 11:e70780. https://doi.org/10.7554/eLife.70780
     ''' </summary>
+    ''' <remarks>
+    ''' https://lotus.naturalproducts.net/
+    ''' </remarks>
     Public Class NaturalProduct
+
+        ''' <summary>
+        ''' Convert the lotus natural product model as mzkit internal metabolite object.
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function CreateMetabolite() As Metabolite
+            Throw New NotImplementedException
+        End Function
+
+        ''' <summary>
+        ''' Parse the lotus NPOC2021 bson dump file as metabolite data model
+        ''' </summary>
+        ''' <param name="NPOC2021"></param>
+        ''' <returns></returns>
+        Public Shared Iterator Function Parse(NPOC2021 As Stream) As IEnumerable(Of NaturalProduct)
+
+        End Function
 
     End Class
 End Namespace
