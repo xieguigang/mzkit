@@ -220,6 +220,26 @@ Module MzWeb
         Return ticks
     End Function
 
+    <ExportAPI("BPC")>
+    Public Function BPC(mzpack As IMzPackReader) As ChromatogramTick()
+        Dim keys As String() = mzpack.EnumerateIndex.ToArray
+        Dim ticks As ChromatogramTick() = keys _
+            .Select(Function(i)
+                        Dim scan_time As Double
+                        Dim BPCpoint As Double
+
+                        Call mzpack.ReadChromatogramTick(i, scan_time, BPCpoint, 0)
+
+                        Return New ChromatogramTick With {
+                            .Time = scan_time,
+                            .Intensity = BPCpoint
+                        }
+                    End Function) _
+            .ToArray
+
+        Return ticks
+    End Function
+
     ''' <summary>
     ''' load chromatogram data from the raw file data
     ''' </summary>

@@ -621,7 +621,7 @@ Module data
     ''' <summary>
     ''' get chromatogram data for a specific metabolite with given m/z from the ms1 scans data.
     ''' </summary>
-    ''' <param name="ms1">a sequence data of ms1 scans</param>
+    ''' <param name="ms1">a sequence data of ms1 scans, or the mzkit mzpack data object.</param>
     ''' <param name="mz">target mz value</param>
     ''' <param name="tolerance">
     ''' tolerance value in unit ``ppm`` or ``da`` for 
