@@ -526,7 +526,7 @@ Module MoleculeNetworking
     Public Function unpack_assign(<RRawVectorArgument> assign As Object, Optional env As Environment = Nothing) As Object
         Dim pull As pipeline = pipeline.TryCreatePipeline(Of RawPeakAssign)(assign, env)
 
-        If Not pull.isError Then
+        If pull.isError Then
             Return pull.getError
         End If
 
@@ -543,6 +543,8 @@ Module MoleculeNetworking
                 Call data.Add(spec)
             Next
         Next
+
+        Call VBDebugger.EchoLine($"make group handling of {data.Count} spectrum data!")
 
         Return New list With {
             .slots = data _
