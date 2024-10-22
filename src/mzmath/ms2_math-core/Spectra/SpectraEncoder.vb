@@ -60,6 +60,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.SplashID
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Net.Http
@@ -83,20 +84,19 @@ Namespace Spectra
         ''' this function returns a sum spectrum of the given spectrum collection. may be returns nothing if the given spectrum collection is empty.
         ''' </returns>
         <Extension>
-        Public Function SpectrumSum(spectrum As IEnumerable(Of LibraryMatrix),
-                                    Optional centroid As Double = 0.1,
-                                    Optional average As Boolean = False) As LibraryMatrix
-
-            Dim pool As New List(Of LibraryMatrix)
+        Public Function SpectrumSum(Of T As ISpectrum)(spectrum As IEnumerable(Of T),
+                                                       Optional centroid As Double = 0.1,
+                                                       Optional average As Boolean = False) As LibraryMatrix
+            Dim pool As New List(Of T)
             Dim peaks As New List(Of Double)
 
-            For Each spec As LibraryMatrix In spectrum
+            For Each spec As T In spectrum
                 Call pool.Add(spec)
-                Call peaks.AddRange(spec.Select(Function(a) a.mz))
+                Call peaks.AddRange(spec.GetIons.Select(Function(a) a.mz))
             Next
 
             If pool.Count = 1 Then
-                Return New LibraryMatrix(pool.First.AsEnumerable)
+                Return New LibraryMatrix(pool.First.GetIons)
             ElseIf pool.Count = 0 Then
                 Return Nothing
             End If
@@ -104,9 +104,15 @@ Namespace Spectra
             Dim mzIndex As MzPool = peaks.CreateCentroidFragmentSet(centroid)
             Dim v As Double() = New Double(mzIndex.size - 1) {}
             Dim size As Integer = mzIndex.size
+            Dim fragments As ms2()
+            Dim mz As Double()
+            Dim intensity As Double()
 
-            For Each spec As LibraryMatrix In pool
-                v = SIMD.Add.f64_op_add_f64(v, spec.DeconvoluteMS(size, mzIndex))
+            For Each spec As T In pool
+                fragments = spec.GetIons.ToArray
+                mz = fragments.Select(Function(a) a.mz).ToArray
+                intensity = fragments.Select(Function(a) a.intensity).ToArray
+                v = SIMD.Add.f64_op_add_f64(v, DeconvoluteScan(mz, intensity, size, mzIndex))
             Next
 
             If average Then
