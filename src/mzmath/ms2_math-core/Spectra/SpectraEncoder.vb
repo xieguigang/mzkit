@@ -119,6 +119,8 @@ Namespace Spectra
                 v = SIMD.Divide.f64_op_divide_f64_scalar(v, pool.Count)
             End If
 
+            v = SIMD.Divide.f64_op_divide_f64_scalar(v, v.Max)
+
             Return New LibraryMatrix(mzIndex.ionSet, v)
         End Function
 

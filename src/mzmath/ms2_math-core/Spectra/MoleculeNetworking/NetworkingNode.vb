@@ -60,9 +60,7 @@
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Math
 
 Namespace Spectra.MoleculeNetworking
 
@@ -138,21 +136,8 @@ Namespace Spectra.MoleculeNetworking
         End Function
 
         Public Shared Function UnionRepresentative(ions As PeakMs2(), tolerance As Tolerance, cutoff As LowAbundanceTrimming) As LibraryMatrix
-            Dim mz As NamedCollection(Of ms2)() = ions _
-                .Select(Function(i) i.mzInto) _
-                .IteratesALL _
-                .GroupBy(Function(a) a.mz, tolerance) _
-                .ToArray
-            Dim matrix As ms2() = mz _
-                .Select(Function(a)
-                            Return New ms2 With {
-                                .mz = Val(a.name),
-                                .intensity = a.Select(Function(x) x.intensity).Sum
-                            }
-                        End Function) _
-                .ToArray _
-                .Centroid(tolerance, cutoff) _
-                .ToArray
+            Dim represent As LibraryMatrix = ions.SpectrumSum(centroid:=tolerance.GetErrorDalton)
+            Dim matrix As ms2() = cutoff.Trim(represent.Array)
 
             Return New LibraryMatrix With {
                 .centroid = True,
