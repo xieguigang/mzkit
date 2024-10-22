@@ -75,7 +75,7 @@ Namespace Spectra
     Public Module SpectraEncoder
 
         ''' <summary>
-        ''' 
+        ''' Create a representative spectrum via sum or mean aggregate method
         ''' </summary>
         ''' <param name="spectrum"></param>
         ''' <param name="centroid"></param>
