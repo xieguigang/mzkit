@@ -212,11 +212,14 @@ Module GCxGC
     ''' <summary>
     ''' make 2d peak detection and extract the related peak feature ROI set
     ''' </summary>
-    ''' <param name="raw"></param>
+    ''' <param name="raw">
+    ''' the GCxGC rawdata set, should be one encoded GCxGC <see cref="mzPack"/> rawdata object, 
+    ''' or a deconded GCxGC <see cref="DimensionalSpectrum"/> dimension 1 rawdata.
+    ''' </param>
     ''' <returns></returns>
     <ExportAPI("extract_2D_peaks")>
     <RApiReturn(GetType(EIPeak(Of Peak2D)))>
-    Public Function extract_2D_peaks(raw As mzPack,
+    Public Function extract_2D_peaks(<RRawVectorArgument> raw As Object,
                                      <RRawVectorArgument(TypeCodes.double)>
                                      Optional rt_win As Object = "3,8",
                                      Optional env As Environment = Nothing) As Object

@@ -13,7 +13,15 @@ Public Class DimensionalSpectrum
     ''' <returns></returns>
     Public Property ms2 As PeakMs2()
 
+    ''' <summary>
+    ''' total ion of current dimension 1 ms1 scan data
+    ''' </summary>
+    ''' <returns></returns>
     Public Property totalIon As Double
+    ''' <summary>
+    ''' the base peak intensity value of current dimension 1 ms1 scan data 
+    ''' </summary>
+    ''' <returns></returns>
     Public Property baseIntensity As Double
 
 End Class
