@@ -176,7 +176,7 @@ Module GCxGC
     ''' <remarks>
     ''' this function will extract the TIC data by default.
     ''' </remarks>
-    <ExportAPI("extract_2D_peaks")>
+    <ExportAPI("extract_xic_layer")>
     <RApiReturn(GetType(D2Chromatogram))>
     Public Function create2DPeaks(raw As mzPack,
                                   Optional mz As Double = Double.NaN,
@@ -204,6 +204,19 @@ Module GCxGC
                         Return extract(d)
                     End Function) _
             .ToArray
+    End Function
+
+    ''' <summary>
+    ''' make 2d peak detection and extract the related peak feature ROI set
+    ''' </summary>
+    ''' <param name="raw"></param>
+    ''' <returns></returns>
+    <ExportAPI("extract_2D_peaks")>
+    Public Function extract_2D_peaks(raw As mzPack,
+                                     <RRawVectorArgument(TypeCodes.double)>
+                                     Optional rt_win As Object = "3,8",
+                                     Optional env As Environment = Nothing) As Object
+
     End Function
 
     ''' <summary>
