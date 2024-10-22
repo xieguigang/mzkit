@@ -128,7 +128,7 @@ Public Class SpectrumGrid
                 .AsParallel _
                 .Select(Function(c)
                             Dim cor As Double, pval As Double
-                            cor = Correlations.GetPearson(i1, c.intensity, prob2:=pval)
+                            cor = Correlations.GetPearson(i1, c.intensity, prob2:=pval, throwMaxIterError:=False)
                             Return (c, cor, pval, score:=cor / (pval + 1.0E-100) / (std.Abs(peak.rt - c.rt) + 1))
                         End Function) _
                 .OrderByDescending(Function(c) c.cor) _
