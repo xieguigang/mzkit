@@ -97,6 +97,10 @@ Namespace mzData.mzWebCache
             End With
         End Sub
 
+        ''' <summary>
+        ''' view the <see cref="scan_id"/>
+        ''' </summary>
+        ''' <returns></returns>
         Public Overrides Function ToString() As String
             Return scan_id
         End Function

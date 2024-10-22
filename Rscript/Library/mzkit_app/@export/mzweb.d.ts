@@ -264,10 +264,12 @@ declare namespace mzweb {
        * 
        * 
         * @param file -
+        * @param tag_filesource 
+        * + default value Is ``true``.
         * @param env 
         * + default value Is ``null``.
       */
-      function cache(ions: any, file: any, env?: object): boolean;
+      function cache(ions: any, file: any, tag_filesource?: boolean, env?: object): boolean;
       /**
         * @param Ms2Only default value Is ``false``.
         * @param env default value Is ``null``.

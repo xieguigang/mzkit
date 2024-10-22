@@ -179,7 +179,7 @@ Namespace Spectra
             activation = clone.activation
             collisionEnergy = clone.collisionEnergy
             precursor_type = clone.precursor_type
-            meta = If(meta Is Nothing, Nothing, New Dictionary(Of String, String)(meta))
+            meta = If(clone.meta Is Nothing, Nothing, New Dictionary(Of String, String)(clone.meta))
             mzInto = clone.mzInto.ToArray
         End Sub
 
