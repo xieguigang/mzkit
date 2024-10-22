@@ -132,7 +132,15 @@ Public Class SpectrumGrid
                     .ms2 = candidate.c.cluster _
                         .Select(Function(c)
                                     c = New PeakMs2(c)
-                                    c.meta!ROI = peak.ID
+
+                                    If c.meta Is Nothing Then
+                                        c.meta = New Dictionary(Of String, String) From {
+                                            {"ROI", peak.ID}
+                                        }
+                                    Else
+                                        c.meta!ROI = peak.ID
+                                    End If
+
                                     Return c
                                 End Function) _
                         .ToArray,
