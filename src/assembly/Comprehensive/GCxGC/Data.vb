@@ -56,6 +56,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
+Imports BioNovoGene.Analytical.MassSpectrometry.GCxGC
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 
@@ -99,5 +100,25 @@ Public Module Data
                 .ToArray,
             .scan_id = d.scan_id
         }
+    End Function
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="gcxgc">The converted GCxGC rawdata object</param>
+    ''' <returns></returns>
+    <Extension>
+    Public Iterator Function Create2DData(gcxgc As mzPack) As IEnumerable(Of DimensionalSpectrum)
+        For Each d1 As ScanMS1 In gcxgc.MS
+            Yield New DimensionalSpectrum With {
+                .rt1 = d1.rt,
+                .baseIntensity = d1.BPC,
+                .totalIon = d1.TIC,
+                .ms2 = d1.products _
+                    .Select(Function(si) si.GetSpectrum2) _
+                    .OrderBy(Function(a) a.rt) _
+                    .ToArray
+            }
+        Next
     End Function
 End Module
