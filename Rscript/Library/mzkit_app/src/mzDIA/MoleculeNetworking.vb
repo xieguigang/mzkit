@@ -72,6 +72,7 @@ Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.DataMining.BinaryTree
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Serialization.BinaryDumping
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
@@ -130,6 +131,8 @@ Module MoleculeNetworking
             .columns = New Dictionary(Of String, Array)
         }
 
+        Static network As New NetworkByteOrderBuffer
+
         Call df.add("xcms_id", unzip.Select(Function(a) a.assign.Id))
         Call df.add("mz", unzip.Select(Function(a) a.assign.peak.mz))
         Call df.add("rt1", unzip.Select(Function(a) a.assign.peak.rt))
@@ -141,6 +144,9 @@ Module MoleculeNetworking
         Call df.add("score", unzip.Select(Function(a) a.assign.score))
         Call df.add("p-value", unzip.Select(Function(a) a.assign.pval))
         Call df.add("samplefile", unzip.Select(Function(a) a.spectrum.file))
+        ' add intensity vector data for run debug test
+        Call df.add("v1", unzip.Select(Function(a) network.Base64String(a.assign.v1)))
+        Call df.add("v2", unzip.Select(Function(a) network.Base64String(a.assign.v2)))
 
         Return df
     End Function
