@@ -1,4 +1,5 @@
-﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math
+﻿Imports System.Text.RegularExpressions
+Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm
@@ -38,6 +39,7 @@ Public Class SpectrumGrid
     Private Iterator Function Clustering(rawdata As IEnumerable(Of NamedCollection(Of PeakMs2))) As IEnumerable(Of SpectrumLine)
         Dim ions As New List(Of PeakMs2)
         Dim files As New List(Of String)
+        Dim qc_filter As New Regex(".+QC.+\d+", RegexOptions.Compiled Or RegexOptions.Singleline)
 
         For Each file As NamedCollection(Of PeakMs2) In rawdata
             Call files.Add(file.name)
@@ -45,9 +47,16 @@ Public Class SpectrumGrid
         Next
 
         ' group the spectrum ions via the precursor ion m/z
-        Dim parent_groups = ions.GroupBy(Function(i) i.mz, offsets:=1).ToArray
+        Dim parent_groups As NamedCollection(Of PeakMs2)() = ions _
+            .GroupBy(Function(i) i.mz, offsets:=1) _
+            .ToArray
 
-        filenames = files.ToArray
+        ' removes QC files for the cor test
+        filenames = files _
+            .Where(Function(name)
+                       Return Not name.IsPattern(qc_filter)
+                   End Function) _
+            .ToArray
 
         For Each ion_group As NamedCollection(Of PeakMs2) In TqdmWrapper.Wrap(parent_groups)
             Dim tree As New BinaryClustering()
@@ -119,7 +128,7 @@ Public Class SpectrumGrid
                 .AsParallel _
                 .Select(Function(c)
                             Dim cor As Double, pval As Double
-                            cor = Correlations.GetPearson(i1, c.intensity, prob2:=pval)
+                            cor = Correlations.GetPearson(i1, c.intensity, prob2:=pval, throwMaxIterError:=False)
                             Return (c, cor, pval, score:=cor / (pval + 1.0E-100) / (std.Abs(peak.rt - c.rt) + 1))
                         End Function) _
                 .OrderByDescending(Function(c) c.cor) _
@@ -132,13 +141,23 @@ Public Class SpectrumGrid
                     .ms2 = candidate.c.cluster _
                         .Select(Function(c)
                                     c = New PeakMs2(c)
-                                    c.meta!ROI = peak.ID
+
+                                    If c.meta Is Nothing Then
+                                        c.meta = New Dictionary(Of String, String) From {
+                                            {"ROI", peak.ID}
+                                        }
+                                    Else
+                                        c.meta!ROI = peak.ID
+                                    End If
+
                                     Return c
                                 End Function) _
                         .ToArray,
                     .cor = candidate.cor,
                     .score = candidate.score,
-                    .pval = candidate.pval
+                    .pval = candidate.pval,
+                    .v1 = i1,
+                    .v2 = candidate.c.intensity
                 }
             Next
         Next
@@ -171,6 +190,9 @@ Public Class RawPeakAssign : Implements IReadOnlyId
     Public Property cor As Double
     Public Property score As Double
     Public Property pval As Double
+
+    Public Property v1 As Double()
+    Public Property v2 As Double()
 
     Public ReadOnly Property Id As String Implements IReadOnlyId.Identity
         Get

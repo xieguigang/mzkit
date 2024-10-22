@@ -175,7 +175,15 @@ declare namespace MoleculeNetworking {
    */
    function uniqueNames(ions: object): object;
    /**
-     * @param env default value Is ``null``.
+    * Unpack of the spectrum data into multiple file groups
+    * 
+    * 
+     * @param assign -
+     * @param env -
+     * 
+     * + default value Is ``null``.
+     * @return A tuple list of the spectrum data in multiple file groups, 
+     *  each slot tuple is a rawdata file content.
    */
    function unpack_assign(assign: any, env?: object): any;
 }
