@@ -452,7 +452,11 @@ Module MzWeb
     ''' </returns>
     <ExportAPI("write.cache")>
     <RApiReturn(TypeCodes.boolean)>
-    Public Function writeCache(<RRawVectorArgument> ions As Object, file As Object, Optional env As Environment = Nothing) As Object
+    Public Function writeCache(<RRawVectorArgument>
+                               ions As Object, file As Object,
+                               Optional tag_filesource As Boolean = True,
+                               Optional env As Environment = Nothing) As Object
+
         Dim is_filepath As Boolean = False
         Dim buf = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Write, env, is_filepath:=is_filepath)
         Dim pool As pipeline = pipeline.TryCreatePipeline(Of PeakMs2)(ions, env)
@@ -462,6 +466,11 @@ Module MzWeb
         End If
         If pool.isError Then
             Return pool.getError
+        End If
+        If tag_filesource Then
+            Call VBDebugger.EchoLine("the source file name of the spectrum data will also tagged with the guid of the spectrum as unique id.")
+        Else
+            Call VBDebugger.EchoLine("the unique reference id of each spectrum data will not be changed.")
         End If
 
         Using buffer As New BinaryDataWriter(buf.TryCast(Of Stream)) With {.ByteOrder = ByteOrder.BigEndian}
@@ -476,7 +485,7 @@ Module MzWeb
 
             For Each ion As PeakMs2 In Tqdm.Wrap(all_spec, bar:=bar)
                 Call bar.SetLabel(ion.lib_guid)
-                Call Serialization.WriteBuffer(ion.Scan2, file:=buffer)
+                Call Serialization.WriteBuffer(ion.Scan2(tag_filesource), file:=buffer)
 
                 ' 20241022
                 ' scanms2 can not save the metadata into cache binary 
@@ -484,7 +493,11 @@ Module MzWeb
                 ' save the spectrum metadata
                 ' for avoid the possible data missing problem
                 If is_filepath Then
-                    Call metadata.Add(If(ion.meta Is Nothing, New Dictionary(Of String, String), ion.meta).GetJson(simpleDict:=True))
+                    Call metadata.Add(If(
+                        ion.meta Is Nothing,
+                        New Dictionary(Of String, String),
+                        ion.meta
+                    ).GetJson(simpleDict:=True))
                 End If
             Next
 

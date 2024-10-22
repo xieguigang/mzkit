@@ -69,7 +69,7 @@ Namespace mzData.mzWebCache
     Public Module ScanModel
 
         <Extension>
-        Public Function Scan2(i As PeakMs2) As ScanMS2
+        Public Function Scan2(i As PeakMs2, Optional tag_filesource As Boolean = True) As ScanMS2
             Dim ionMode As Integer = 1
 
             If Not i.precursor_type.StringEmpty Then
@@ -83,7 +83,7 @@ Namespace mzData.mzWebCache
                 .parentMz = i.mz,
                 .intensity = i.intensity,
                 .rt = i.rt,
-                .scan_id = $"{i.file}#{i.lib_guid}",
+                .scan_id = If(tag_filesource, $"{i.file}#{i.lib_guid}", i.lib_guid),
                 .collisionEnergy = i.collisionEnergy,
                 .polarity = ionMode
             }
