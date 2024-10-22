@@ -320,6 +320,42 @@ Module data
     End Function
 
     ''' <summary>
+    ''' Create a representative spectrum from a given spectrum collection via a sum or mean aggregate method.
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <param name="mean"></param>
+    ''' <returns></returns>
+    <ExportAPI("representative")>
+    <RApiReturn(GetType(LibraryMatrix))>
+    Public Function representative_spectrum(<RRawVectorArgument> x As Object,
+                                            Optional mean As Boolean = True,
+                                            Optional centroid As Double = 0.1,
+                                            Optional intocutoff As Double = 0.05,
+                                            Optional env As Environment = Nothing) As Object
+
+        Dim pull As pipeline = pipeline.TryCreatePipeline(Of PeakMs2)(x, env, suppress:=True)
+        Dim representative As LibraryMatrix
+
+        If Not pull.isError Then
+            representative = pull.populates(Of PeakMs2)(env).SpectrumSum(centroid, average:=mean)
+        Else
+            pull = pipeline.TryCreatePipeline(Of LibraryMatrix)(x, env, suppress:=True)
+
+            If Not pull.isError Then
+                representative = pull.populates(Of LibraryMatrix)(env).SpectrumSum(centroid, average:=mean)
+            Else
+                Return pull.getError
+            End If
+        End If
+
+        If intocutoff > 0 Then
+            representative.ms2 = New RelativeIntensityCutoff(intocutoff).Trim(representative.ms2)
+        End If
+
+        Return representative
+    End Function
+
+    ''' <summary>
     ''' get the size of the target ms peaks
     ''' </summary>
     ''' <param name="matrix"></param>
