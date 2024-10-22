@@ -73,6 +73,49 @@ Namespace Spectra
     ''' </summary>
     Public Module SpectraEncoder
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="spectrum"></param>
+        ''' <param name="centroid"></param>
+        ''' <param name="average">make average spectrum instead of make sum of the spectrum peaks</param>
+        ''' <returns>
+        ''' this function returns a sum spectrum of the given spectrum collection. may be returns nothing if the given spectrum collection is empty.
+        ''' </returns>
+        <Extension>
+        Public Function SpectrumSum(spectrum As IEnumerable(Of LibraryMatrix),
+                                    Optional centroid As Double = 0.1,
+                                    Optional average As Boolean = False) As LibraryMatrix
+
+            Dim pool As New List(Of LibraryMatrix)
+            Dim peaks As New List(Of Double)
+
+            For Each spec As LibraryMatrix In spectrum
+                Call pool.Add(spec)
+                Call peaks.AddRange(spec.Select(Function(a) a.mz))
+            Next
+
+            If pool.Count = 1 Then
+                Return New LibraryMatrix(pool.First.AsEnumerable)
+            ElseIf pool.Count = 0 Then
+                Return Nothing
+            End If
+
+            Dim mzIndex As MzPool = peaks.CreateCentroidFragmentSet(centroid)
+            Dim v As Double() = New Double(mzIndex.size - 1) {}
+            Dim size As Integer = mzIndex.size
+
+            For Each spec As LibraryMatrix In pool
+                v = SIMD.Add.f64_op_add_f64(v, spec.DeconvoluteMS(size, mzIndex))
+            Next
+
+            If average Then
+                v = SIMD.Divide.f64_op_divide_f64_scalar(v, pool.Count)
+            End If
+
+            Return New LibraryMatrix(mzIndex.ionSet, v)
+        End Function
+
         <Extension>
         Public Function CreateCentroidFragmentSet(fragments As IEnumerable(Of Double),
                                                   Optional centroid As Double = 0.1,
