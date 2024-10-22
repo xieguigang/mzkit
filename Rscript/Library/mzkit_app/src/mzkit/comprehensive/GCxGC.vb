@@ -69,6 +69,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
+Imports SMRUCC.Rsharp.Runtime.Internal.[Object]
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
@@ -225,7 +226,17 @@ Module GCxGC
                                      Optional env As Environment = Nothing) As Object
 
         Dim rtwin As New DoubleRange(CLRVector.asNumeric(rt_win))
-        Dim gcxgc As DimensionalSpectrum() = raw.Create2DData.ToArray
+        Dim gcxgc As DimensionalSpectrum()
+        Dim pull As pipeline = pipeline.TryCreatePipeline(Of DimensionalSpectrum)(raw, env, suppress:=True)
+
+        If TypeOf raw Is mzPack Then
+            gcxgc = DirectCast(raw, mzPack).Create2DData.ToArray
+        ElseIf Not pull.isError Then
+            gcxgc = pull.populates(Of DimensionalSpectrum)(env).ToArray
+        Else
+            Return pull.getError
+        End If
+
         Dim features As EIPeak(Of Peak2D)() = GCxGCPeakDetection.Extract2DFeatures(gcxgc, rtwin).ToArray
 
         Return features
