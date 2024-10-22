@@ -484,7 +484,7 @@ Module MzWeb
                 ' save the spectrum metadata
                 ' for avoid the possible data missing problem
                 If is_filepath Then
-                    Call metadata.Add(If(ion.meta Is Nothing, New Dictionary(Of String, String), ion.meta).GetJson)
+                    Call metadata.Add(If(ion.meta Is Nothing, New Dictionary(Of String, String), ion.meta).GetJson(simpleDict:=True))
                 End If
             Next
 
