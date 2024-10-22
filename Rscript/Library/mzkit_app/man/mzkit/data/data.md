@@ -4,6 +4,7 @@ m/z data operator module
 
 + [splash_id](data/splash_id.1) evaluate the splash id of the given spectrum data
 + [unionPeaks](data/unionPeaks.1) Union and merge the given multiple spectrum data into one single spectrum
++ [representative](data/representative.1) Create a representative spectrum from a given spectrum collection via a sum or mean aggregate method.
 + [nsize](data/nsize.1) get the size of the target ms peaks
 + [search](data/search.1) search the target query spectra against a reference mzpack data file
 + [peakMs2](data/peakMs2.1) create a new ms2 peaks data object

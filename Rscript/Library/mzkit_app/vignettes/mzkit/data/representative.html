@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>make the molecular graph embedding to vector</title>
+    <title>Create a representative spectrum from a given spectrum collection via a sum or mean aggregate method.</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
@@ -13,12 +13,12 @@
 
         <table style="width: 100%;">
             <tr>
-                <td>embedded.graph2vector {mzkit.simulator}</td>
+                <td>representative {data}</td>
                 <td style="text-align: right;">R Documentation</td>
             </tr>
         </table>
 
-        <h2>make the molecular graph embedding to vector</h2>
+        <h2>Create a representative spectrum from a given spectrum collection via a sum or mean aggregate method.</h2>
 
         <h3>Description</h3>
 
@@ -27,19 +27,22 @@
         <h3>Usage</h3>
 
         <div style="width: 100%; padding-left: 3%; color: black;">
-            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>embedded.graph2vector</strong>(<i>mol</i>);</code></pre>
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>representative</strong>(<i>x</i>,
+    <i>mean</i> = <span style='color: blue !important;'>TRUE</span>,
+    <i>centroid</i> = <span style='color: green;'>0.1</span>,
+    <i>intocutoff</i> = <span style='color: green;'>0.05</span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
 
         <table>
             
-<dt>mol</dt>
+<dt>x</dt>
 <dd><p>-</p></dd>
 
 
-<dt>env</dt>
-<dd><p>[as <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Environment.html">Environment</a>]</p></dd>
+<dt>mean</dt>
+<dd><p>[as boolean]</p></dd>
 
         </table>
 
@@ -54,15 +57,15 @@
 
         <h3>Value</h3>
 
-        this function returns data object of type <i>any</i> kind.<h4>clr value class</h4><ul><li><i>any</i> kind</li></ul>
+        this function returns data object of type <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/LibraryMatrix.html">LibraryMatrix</a>.<h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/LibraryMatrix.html">LibraryMatrix</a></li></ul>
 
         <h3 style="display: none;">Examples</h3>
 
         
 
         <hr />
-        <div style="text-align: center;">[Package <em>mzkit.simulator</em> version 1.0.0.0 <a
-                href="../mzkit.simulator.html">Index</a>]
+        <div style="text-align: center;">[Package <em>data</em> version 1.0.0.0 <a
+                href="../data.html">Index</a>]
         </div>
     </div>
 </body>
