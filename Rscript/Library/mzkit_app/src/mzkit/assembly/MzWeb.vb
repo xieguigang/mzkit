@@ -98,6 +98,10 @@ Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports ChromatogramTick = BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram.ChromatogramTick
 Imports SIMDAdd = Microsoft.VisualBasic.Math.SIMD.Add
 Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
+Imports Microsoft.VisualBasic.MIME.application.json
+Imports Microsoft.VisualBasic.Serialization.JSON
+
+
 
 #If NET48 Then
 Imports Pen = System.Drawing.Pen
@@ -390,7 +394,8 @@ Module MzWeb
     <ExportAPI("read.cache")>
     <RApiReturn(GetType(PeakMs2))>
     Public Function readCache(<RRawVectorArgument> file As Object, Optional env As Environment = Nothing) As Object
-        Dim buf = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Read, env)
+        Dim is_filepath As Boolean = False
+        Dim buf = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Read, env, is_filepath:=is_filepath)
 
         If buf Like GetType(Message) Then
             Return buf.TryCast(Of Message)
@@ -403,9 +408,32 @@ Module MzWeb
 
             Dim nsize As Integer = rd.ReadInt32
             Dim data As PeakMs2() = New PeakMs2(nsize - 1) {}
+            Dim meta As String()
+
+            If is_filepath Then
+                Dim filepath = CLRVector.asCharacter(file).First
+                Dim dir As String = filepath.ParentPath
+                Dim jsonl As String = $"{dir}/{filepath.BaseName}.jsonl"
+
+                If jsonl.FileExists Then
+                    meta = jsonl.ReadAllLines
+                Else
+                    meta = New String(nsize - 1) {}
+                End If
+            Else
+                meta = New String(nsize - 1) {}
+            End If
 
             For i As Integer = 0 To nsize - 1
                 data(i) = mzPack.CastToPeakMs2(Serialization.ReadScanMs2(file:=rd))
+
+                If is_filepath Then
+                    Dim json_str As String = meta.ElementAtOrDefault(i, "{}")
+
+                    If Not json_str.StringEmpty(, True) Then
+                        data(i).meta = json_str.LoadJSON(Of Dictionary(Of String, String))(throwEx:=False)
+                    End If
+                End If
             Next
 
             Return data
@@ -425,7 +453,8 @@ Module MzWeb
     <ExportAPI("write.cache")>
     <RApiReturn(TypeCodes.boolean)>
     Public Function writeCache(<RRawVectorArgument> ions As Object, file As Object, Optional env As Environment = Nothing) As Object
-        Dim buf = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Write, env)
+        Dim is_filepath As Boolean = False
+        Dim buf = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Write, env, is_filepath:=is_filepath)
         Dim pool As pipeline = pipeline.TryCreatePipeline(Of PeakMs2)(ions, env)
 
         If buf Like GetType(Message) Then
@@ -440,6 +469,7 @@ Module MzWeb
                 .populates(Of PeakMs2)(env) _
                 .ToArray
             Dim bar As Tqdm.ProgressBar = Nothing
+            Dim metadata As New List(Of String)
 
             Call buffer.Write(mzcacheMagic, BinaryStringFormat.ZeroTerminated)
             Call buffer.Write(all_spec.Length)
@@ -447,7 +477,24 @@ Module MzWeb
             For Each ion As PeakMs2 In Tqdm.Wrap(all_spec, bar:=bar)
                 Call bar.SetLabel(ion.lib_guid)
                 Call Serialization.WriteBuffer(ion.Scan2, file:=buffer)
+
+                ' 20241022
+                ' scanms2 can not save the metadata into cache binary 
+                ' so an external json list file was generated for
+                ' save the spectrum metadata
+                ' for avoid the possible data missing problem
+                If is_filepath Then
+                    Call metadata.Add(If(ion.meta Is Nothing, New Dictionary(Of String, String), ion.meta).GetJson)
+                End If
             Next
+
+            If is_filepath Then
+                Dim filepath = CLRVector.asCharacter(file).First
+                Dim dir = filepath.ParentPath
+                Dim filename = filepath.BaseName & ".jsonl"
+
+                Call metadata.SaveTo($"{dir}/{filename}")
+            End If
         End Using
 
         Return True
