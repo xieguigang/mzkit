@@ -60,6 +60,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.SplashID
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Net.Http
@@ -72,6 +73,56 @@ Namespace Spectra
     ''' Spectra matrix encoder helper for mysql/csv
     ''' </summary>
     Public Module SpectraEncoder
+
+        ''' <summary>
+        ''' Create a representative spectrum via sum or mean aggregate method
+        ''' </summary>
+        ''' <param name="spectrum"></param>
+        ''' <param name="centroid"></param>
+        ''' <param name="average">make average spectrum instead of make sum of the spectrum peaks</param>
+        ''' <returns>
+        ''' this function returns a sum spectrum of the given spectrum collection. may be returns nothing if the given spectrum collection is empty.
+        ''' </returns>
+        <Extension>
+        Public Function SpectrumSum(Of T As ISpectrum)(spectrum As IEnumerable(Of T),
+                                                       Optional centroid As Double = 0.1,
+                                                       Optional average As Boolean = False) As LibraryMatrix
+            Dim pool As New List(Of T)
+            Dim peaks As New List(Of Double)
+
+            For Each spec As T In spectrum
+                Call pool.Add(spec)
+                Call peaks.AddRange(spec.GetIons.Select(Function(a) a.mz))
+            Next
+
+            If pool.Count = 1 Then
+                Return New LibraryMatrix(pool.First.GetIons)
+            ElseIf pool.Count = 0 Then
+                Return Nothing
+            End If
+
+            Dim mzIndex As MzPool = peaks.CreateCentroidFragmentSet(centroid)
+            Dim v As Double() = New Double(mzIndex.size - 1) {}
+            Dim size As Integer = mzIndex.size
+            Dim fragments As ms2()
+            Dim mz As Double()
+            Dim intensity As Double()
+
+            For Each spec As T In pool
+                fragments = spec.GetIons.ToArray
+                mz = fragments.Select(Function(a) a.mz).ToArray
+                intensity = fragments.Select(Function(a) a.intensity).ToArray
+                v = SIMD.Add.f64_op_add_f64(v, DeconvoluteScan(mz, intensity, size, mzIndex))
+            Next
+
+            If average Then
+                v = SIMD.Divide.f64_op_divide_f64_scalar(v, pool.Count)
+            End If
+
+            v = SIMD.Divide.f64_op_divide_f64_scalar(v, v.Max)
+
+            Return New LibraryMatrix(mzIndex.ionSet, v)
+        End Function
 
         <Extension>
         Public Function CreateCentroidFragmentSet(fragments As IEnumerable(Of Double),

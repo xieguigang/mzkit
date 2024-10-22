@@ -196,7 +196,7 @@ Module MzWeb
     ''' <summary>
     ''' Get TIC from the mzpack layer reader
     ''' </summary>
-    ''' <param name="mzpack"></param>
+    ''' <param name="x">should be a file reader to a mzpack file or the mzpack in-memory data object.</param>
     ''' <returns></returns>
     ''' <example>
     ''' let rawdata = mzweb::open(file = "./LCMS-rawdata.mzPack");
@@ -205,21 +205,87 @@ Module MzWeb
     ''' plot(tic);
     ''' </example>
     <ExportAPI("TIC")>
-    Public Function TIC(mzpack As IMzPackReader) As ChromatogramTick()
-        Dim keys As String() = mzpack.EnumerateIndex.ToArray
-        Dim ticks As ChromatogramTick() = keys _
-            .Select(Function(i)
-                        Dim scan_time As Double
-                        Dim TICpoint As Double
+    <RApiReturn(GetType(ChromatogramTick))>
+    Public Function TIC(x As Object, Optional env As Environment = Nothing) As Object
+        Dim ticks As ChromatogramTick()
 
-                        Call mzpack.ReadChromatogramTick(i, scan_time, 0, TICpoint)
+        If x Is Nothing Then
+            Call env.AddMessage("the given rawdata file object is nothing for load TIC data!")
+            Return Nothing
+        End If
 
-                        Return New ChromatogramTick With {
-                            .Time = scan_time,
-                            .Intensity = TICpoint
-                        }
-                    End Function) _
-            .ToArray
+        If x.GetType.ImplementInterface(Of IMzPackReader) Then
+            Dim mzpack As IMzPackReader = x
+            Dim keys As String() = mzpack.EnumerateIndex.ToArray
+
+            ticks = keys _
+                .Select(Function(i)
+                            Dim scan_time As Double
+                            Dim TICpoint As Double
+
+                            Call mzpack.ReadChromatogramTick(i, scan_time, 0, TICpoint)
+
+                            Return New ChromatogramTick With {
+                                .Time = scan_time,
+                                .Intensity = TICpoint
+                            }
+                        End Function) _
+                .ToArray
+        ElseIf TypeOf x Is mzPack Then
+            ticks = DirectCast(x, mzPack).MS _
+                .Select(Function(a)
+                            Return New ChromatogramTick(a.rt, a.into.Sum)
+                        End Function) _
+                .ToArray
+        Else
+            Return Message.InCompatibleType(GetType(mzPack), x.GetType, env)
+        End If
+
+        Return ticks
+    End Function
+
+    ''' <summary>
+    ''' Get BPC from the mzpack layer reader
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("BPC")>
+    <RApiReturn(GetType(ChromatogramTick))>
+    Public Function BPC(x As Object, Optional env As Environment = Nothing) As Object
+        Dim ticks As ChromatogramTick()
+
+        If x Is Nothing Then
+            Call env.AddMessage("the given rawdata file object is nothing for load TIC data!")
+            Return Nothing
+        End If
+
+        If x.GetType.ImplementInterface(Of IMzPackReader) Then
+            Dim mzpack As IMzPackReader = x
+            Dim keys As String() = mzpack.EnumerateIndex.ToArray
+
+            ticks = keys _
+                .Select(Function(i)
+                            Dim scan_time As Double
+                            Dim BPCpoint As Double
+
+                            Call mzpack.ReadChromatogramTick(i, scan_time, BPCpoint, 0)
+
+                            Return New ChromatogramTick With {
+                                .Time = scan_time,
+                                .Intensity = BPCpoint
+                            }
+                        End Function) _
+                .ToArray
+        ElseIf TypeOf x Is mzPack Then
+            ticks = DirectCast(x, mzPack).MS _
+                .Select(Function(a)
+                            Return New ChromatogramTick(a.rt, If(a.into.IsNullOrEmpty, 0, a.into.Max))
+                        End Function) _
+                .ToArray
+        Else
+            Return Message.InCompatibleType(GetType(mzPack), x.GetType, env)
+        End If
 
         Return ticks
     End Function

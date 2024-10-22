@@ -79,9 +79,9 @@ Public Module Deconvolution
 
     <Extension>
     Public Iterator Function DeconvPeakGroups(TIC As IEnumerable(Of ChromatogramTick), peakwidth As DoubleRange,
-                                             Optional quantile# = 0.65,
-                                             Optional sn_threshold As Double = 3,
-                                             Optional joint As Boolean = True) As IEnumerable(Of PeakFeature)
+                                              Optional quantile# = 0.65,
+                                              Optional sn_threshold As Double = 3,
+                                              Optional joint As Boolean = True) As IEnumerable(Of PeakFeature)
 
         Dim data As ChromatogramTick() = TIC.SafeQuery.ToArray
         Dim peakdata As PeakFeature
