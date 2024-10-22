@@ -16,6 +16,7 @@ Public Class GCMSPeak1D
     Public Property rtmax As Double
     Public Property area As Double
     Public Property maxIntensity As Double
+    Public Property sn As Double
 
     ''' <summary>
     ''' Extract the gcms peaks from the sample data
@@ -44,7 +45,8 @@ Public Class GCMSPeak1D
                 .rtmax = peak.rtmax,
                 .maxIntensity = peak.maxInto,
                 .area = peak.area,
-                .id = peak.xcms_id
+                .id = peak.xcms_id,
+                .sn = peak.snRatio
             }
 
             Yield New EIPeak(Of GCMSPeak1D) With {

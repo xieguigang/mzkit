@@ -26,6 +26,7 @@ Public Module GCxGCPeakDetection
                 Dim rt2 As Double = Val(d2_rt.name)
                 Dim max As Double = d2_rt.Select(Function(a) a.peak.maxIntensity).Max
                 Dim vol As Double = d2_rt.Select(Function(a) a.peak.area).Sum
+                Dim sn As Double = d2_rt.Select(Function(a) a.peak.sn).Average
                 Dim peak2d As New Peak2D With {
                     .rt1 = rt1,
                     .rt2 = rt2,
@@ -34,7 +35,8 @@ Public Module GCxGCPeakDetection
                     .rtmin2 = d2_rt.Select(Function(a) a.peak.rt).Min,
                     .rtmax2 = d2_rt.Select(Function(a) a.peak.rt).Max,
                     .maxIntensity = max,
-                    .volumn = vol
+                    .volumn = vol,
+                    .sn = sn
                 }
 
                 Yield New EIPeak(Of Peak2D) With {
