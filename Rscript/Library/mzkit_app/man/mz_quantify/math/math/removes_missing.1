@@ -1,11 +1,27 @@
 .\" man page create by R# package system.
 .TH MATH 1 2000-Jan "removes_missing" "removes_missing"
 .SH NAME
-removes_missing \- 
+removes_missing \- removes the missing peaks
 .SH SYNOPSIS
 \fIremoves_missing(\fBx\fR as <generic> PeakSet, 
 \fBsampleinfo\fR as <generic> SampleInfo[] = \fB<NULL>\fR, 
 \fBpercent\fR as double = 0.5);\fR
+.SH DESCRIPTION
+.PP
+removes the missing peaks
+.PP
+.SH OPTIONS
+.PP
+\fBx\fB \fR\- -. 
+.PP
+.PP
+\fBsampleinfo\fB \fR\- a sample info data vector for provides the sample group information about each sample. 
+ if this parameter value is omit missing then the missing feature will be checked across all sample files, 
+ otherwise the missing will be check across the multiple sample groups. 
+.PP
+.PP
+\fBpercent\fB \fR\- the missing percentage threshold. 
+.PP
 .SH SEE ALSO
 math
 .SH FILES
