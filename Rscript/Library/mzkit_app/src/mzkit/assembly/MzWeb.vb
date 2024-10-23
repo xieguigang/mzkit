@@ -711,7 +711,7 @@ Module MzWeb
                 End If
             End Using
         Else
-            Using stream As Stream = file.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
+            Using stream As Stream = file.Open(FileMode.Open, doClear:=False, [readOnly]:=True, verbose:=verbose)
                 Return mzPack.ReadAll(file:=stream, verbose:=verbose)
             End Using
         End If

@@ -119,15 +119,27 @@ Module QuantifyMath
     ''' <returns></returns>
     <ExportAPI("preprocessing")>
     Public Function impute(x As PeakSet, Optional scale As Double = 10 ^ 8) As PeakSet
-        Dim imputes As xcms2() = x.peaks.Select(Function(k) k.Impute).ToArray
+        Dim imputes As xcms2() = x.peaks.AsParallel.Select(Function(k) k.Impute).ToArray
         Dim norm As xcms2() = xcms2.TotalPeakSum(imputes, scale).ToArray
         Dim peaktable As New PeakSet With {.peaks = norm}
 
         Return peaktable
     End Function
 
+    ''' <summary>
+    ''' removes the missing peaks
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <param name="sampleinfo">a sample info data vector for provides the sample group information about each sample. 
+    ''' if this parameter value is omit missing then the missing feature will be checked across all sample files, 
+    ''' otherwise the missing will be check across the multiple sample groups</param>
+    ''' <param name="percent">the missing percentage threshold</param>
+    ''' <returns></returns>
     <ExportAPI("removes_missing")>
-    Public Function removes_missing(x As PeakSet, Optional sampleinfo As SampleInfo() = Nothing, Optional percent As Double = 0.5) As PeakSet
+    Public Function removes_missing(x As PeakSet,
+                                    Optional sampleinfo As SampleInfo() = Nothing,
+                                    Optional percent As Double = 0.5) As PeakSet
+
         If sampleinfo.IsNullOrEmpty Then
             ' check missing based on all samples
             Dim peaks As New List(Of xcms2)

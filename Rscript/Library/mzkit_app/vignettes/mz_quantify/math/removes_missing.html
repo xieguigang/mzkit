@@ -2,10 +2,10 @@
 <html>
 
 <head>
-    <title>removes_missing</title>
+    <title>removes the missing peaks</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-    <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
+    <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
 </head>
 
 <body>
@@ -18,11 +18,11 @@
             </tr>
         </table>
 
-        <h2>removes_missing</h2>
+        <h2>removes the missing peaks</h2>
 
         <h3>Description</h3>
 
-        removes_missing
+        
 
         <h3>Usage</h3>
 
@@ -36,6 +36,19 @@
 
         <table>
             
+<dt>x</dt>
+<dd><p>[as <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/PeakSet.html">PeakSet</a>]</p></dd>
+
+
+<dt>sampleinfo</dt>
+<dd><p>a sample info data vector for provides the sample group information about each sample. 
+ if this parameter value is omit missing then the missing feature will be checked across all sample files, 
+ otherwise the missing will be check across the multiple sample groups. [as <a href="/vignettes/clr/SMRUCC/genomics/GCModeller/Workbench/ExperimentDesigner/SampleInfo.html">SampleInfo</a>]</p></dd>
+
+
+<dt>percent</dt>
+<dd><p>the missing percentage threshold. [as double]</p></dd>
+
         </table>
 
 
@@ -62,8 +75,8 @@
     </div>
 </body>
 
-<script type="text/javascript" src="https://mzkit.org/assets/js/R_syntax.js"></script>
-<script type="text/javascript" src="https://mzkit.org/assets/js/highlights.js"></script>
+<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
+<script type="text/javascript" src="../../_assets/highlights.js"></script>
 <script type="text/javascript">r_highlights("example_r");</script>
 
 </html>

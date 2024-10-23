@@ -61,6 +61,7 @@
 Imports System.ComponentModel
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
@@ -224,8 +225,18 @@ Public Class xcms2 : Inherits DynamicPropertyBase(Of Double)
             .Distinct _
             .ToArray
 
-        For Each name As String In sampleNames
-            Dim v As Double() = pool.Select(Function(k) k(name)).ToArray
+        For Each name As String In TqdmWrapper.Wrap(sampleNames)
+            Dim v As Double() = pool _
+                .Select(Function(k)
+                            Dim vi As Double = k(name)
+
+                            If vi.IsNaNImaginary Then
+                                Return 0
+                            Else
+                                Return vi
+                            End If
+                        End Function) _
+                .ToArray
             Dim sum As Double = v.Sum
 
             ' (v / sum) * scale
@@ -249,7 +260,7 @@ Public Class xcms2 : Inherits DynamicPropertyBase(Of Double)
         Dim fill_missing = Properties _
             .ToDictionary(Function(k) k.Key,
                           Function(k)
-                              Return If(k.Value <= 0, pos_min, k.Value)
+                              Return If(k.Value.IsNaNImaginary OrElse k.Value <= 0, pos_min, k.Value)
                           End Function)
 
         Return New xcms2 With {

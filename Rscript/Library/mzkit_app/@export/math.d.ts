@@ -322,8 +322,18 @@ declare namespace math {
    */
    function preprocessing(x: object, scale?: number): object;
    /**
-     * @param sampleinfo default value Is ``null``.
-     * @param percent default value Is ``0.5``.
+    * removes the missing peaks
+    * 
+    * 
+     * @param x -
+     * @param sampleinfo a sample info data vector for provides the sample group information about each sample. 
+     *  if this parameter value is omit missing then the missing feature will be checked across all sample files, 
+     *  otherwise the missing will be check across the multiple sample groups
+     * 
+     * + default value Is ``null``.
+     * @param percent the missing percentage threshold
+     * 
+     * + default value Is ``0.5``.
    */
    function removes_missing(x: object, sampleinfo?: object, percent?: number): object;
    /**
