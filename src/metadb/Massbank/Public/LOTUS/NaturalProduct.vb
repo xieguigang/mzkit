@@ -1,4 +1,6 @@
 ﻿Imports System.IO
+Imports BioNovoGene.BioDeep.Chemistry.MetaLib.CrossReference
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports Microsoft.VisualBasic.MIME.application.json.BSON
 Imports Microsoft.VisualBasic.MIME.application.json.Javascript
 Imports Metabolite = BioNovoGene.BioDeep.Chemistry.MetaLib.Models.MetaLib
@@ -33,14 +35,39 @@ Namespace LOTUS
         Public Property synonyms As String()
         Public Property iupac_name As String
         Public Property molecular_formula As String
+        Public Property xrefs As String()
+        Public Property chemicalTaxonomyNPclassifierPathway As String
+        Public Property chemicalTaxonomyNPclassifierSuperclass As String
+        Public Property chemicalTaxonomyNPclassifierClass As String
 
+        Public Property allTaxa As String()
+        Public Property taxonomyReferenceObjects As Dictionary(Of String, TaxonomyReference)
 
         ''' <summary>
         ''' Convert the lotus natural product model as mzkit internal metabolite object.
         ''' </summary>
         ''' <returns></returns>
         Public Function CreateMetabolite() As Metabolite
-            Throw New NotImplementedException
+            Return New Metabolite With {
+                .ID = lotus_id,
+                .formula = molecular_formula,
+                .exact_mass = FormulaScanner.EvaluateExactMass(.formula),
+                .IUPACName = iupac_name,
+                .name = traditional_name,
+                .organism = allTaxa,
+                .synonym = synonyms,
+                .pathways = {chemicalTaxonomyNPclassifierPathway},
+                .super_class = chemicalTaxonomyNPclassifierSuperclass,
+                .class = chemicalTaxonomyNPclassifierClass,
+                .xref = New xref With {
+                    .SMILES = smiles,
+                    .InChI = inchi,
+                    .InChIkey = inchikey,
+                    .extras = New Dictionary(Of String, String()) From {
+                        {"LOTUS", {lotus_id}}
+                    }
+                }
+            }
         End Function
 
         ''' <summary>
@@ -53,5 +80,25 @@ Namespace LOTUS
                 Yield np.CreateObject(Of NaturalProduct)(decodeMetachar:=False)
             Next
         End Function
+    End Class
+
+    Public Class Taxonomy
+
+        Public Property cleaned_organism_id As Integer
+        Public Property organism_value As String
+        Public Property superkingdom As String
+        Public Property kingdom As String
+        Public Property phylum As String
+        Public Property classx As String
+        Public Property family As String
+        Public Property genus As String
+        Public Property species As String
+
+    End Class
+
+    Public Class TaxonomyReference
+
+        Public Property NCBI As Taxonomy()
+
     End Class
 End Namespace
