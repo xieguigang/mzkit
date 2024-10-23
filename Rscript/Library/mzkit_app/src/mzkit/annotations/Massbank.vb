@@ -68,6 +68,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MSP
 Imports BioNovoGene.BioDeep.Chemistry
 Imports BioNovoGene.BioDeep.Chemistry.ChEBI
 Imports BioNovoGene.BioDeep.Chemistry.LipidMaps
+Imports BioNovoGene.BioDeep.Chemistry.LOTUS
 Imports BioNovoGene.BioDeep.Chemistry.MetaLib
 Imports BioNovoGene.BioDeep.Chemistry.MetaLib.CommonNames
 Imports BioNovoGene.BioDeep.Chemistry.MetaLib.CrossReference
@@ -219,6 +220,33 @@ Module Massbank
     <RApiReturn(GetType(RefMet))>
     Public Function readRefMet(file As String) As Object
         Return file.LoadCsv(Of RefMet)(mute:=True).ToArray
+    End Function
+
+    ''' <summary>
+    ''' load the lotus natural products metabolite library from a given file
+    ''' </summary>
+    ''' <param name="file"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("read.lotus")>
+    <RApiReturn(GetType(NaturalProduct))>
+    Public Function loadLotus(<RRawVectorArgument> file As Object,
+                              Optional lazy As Boolean = True,
+                              Optional env As Environment = Nothing) As Object
+
+        Dim s = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Read, env)
+
+        If s Like GetType(Message) Then
+            Return s.TryCast(Of Message)
+        End If
+
+        Dim loading As IEnumerable(Of NaturalProduct) = NaturalProduct.Parse(NPOC2021:=s.TryCast(Of Stream))
+
+        If lazy Then
+            Return pipeline.CreateFromPopulator(loading)
+        Else
+            Return loading.ToArray
+        End If
     End Function
 
     ''' <summary>

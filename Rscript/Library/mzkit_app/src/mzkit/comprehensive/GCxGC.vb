@@ -1,57 +1,57 @@
 ﻿#Region "Microsoft.VisualBasic::249478e4bc9bd2e341d598c82496a0e1, Rscript\Library\mzkit_app\src\mzkit\comprehensive\GCxGC.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 191
-    '    Code Lines: 88 (46.07%)
-    ' Comment Lines: 86 (45.03%)
-    '    - Xml Docs: 91.86%
-    ' 
-    '   Blank Lines: 17 (8.90%)
-    '     File Size: 8.12 KB
+' Summaries:
 
 
-    ' Module GCxGC
-    ' 
-    '     Function: create2DPeaks, Demodulate2D, readCDF, saveCDF, TIC1D
-    '               TIC2D
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 191
+'    Code Lines: 88 (46.07%)
+' Comment Lines: 86 (45.03%)
+'    - Xml Docs: 91.86%
+' 
+'   Blank Lines: 17 (8.90%)
+'     File Size: 8.12 KB
+
+
+' Module GCxGC
+' 
+'     Function: create2DPeaks, Demodulate2D, readCDF, saveCDF, TIC1D
+'               TIC2D
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -59,15 +59,19 @@ Imports System.IO
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.Comprehensive
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
+Imports BioNovoGene.Analytical.MassSpectrometry.GCxGC
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.DataStorage.netCDF
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
+Imports SMRUCC.Rsharp.Runtime.Internal.[Object]
 Imports SMRUCC.Rsharp.Runtime.Interop
+Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
 
 ''' <summary>
@@ -176,7 +180,7 @@ Module GCxGC
     ''' <remarks>
     ''' this function will extract the TIC data by default.
     ''' </remarks>
-    <ExportAPI("extract_2D_peaks")>
+    <ExportAPI("extract_xic_layer")>
     <RApiReturn(GetType(D2Chromatogram))>
     Public Function create2DPeaks(raw As mzPack,
                                   Optional mz As Double = Double.NaN,
@@ -204,6 +208,38 @@ Module GCxGC
                         Return extract(d)
                     End Function) _
             .ToArray
+    End Function
+
+    ''' <summary>
+    ''' make 2d peak detection and extract the related peak feature ROI set
+    ''' </summary>
+    ''' <param name="raw">
+    ''' the GCxGC rawdata set, should be one encoded GCxGC <see cref="mzPack"/> rawdata object, 
+    ''' or a deconded GCxGC <see cref="DimensionalSpectrum"/> dimension 1 rawdata.
+    ''' </param>
+    ''' <returns></returns>
+    <ExportAPI("extract_2D_peaks")>
+    <RApiReturn(GetType(EIPeak(Of Peak2D)))>
+    Public Function extract_2D_peaks(<RRawVectorArgument> raw As Object,
+                                     <RRawVectorArgument(TypeCodes.double)>
+                                     Optional rt_win As Object = "3,8",
+                                     Optional env As Environment = Nothing) As Object
+
+        Dim rtwin As New DoubleRange(CLRVector.asNumeric(rt_win))
+        Dim gcxgc As DimensionalSpectrum()
+        Dim pull As pipeline = pipeline.TryCreatePipeline(Of DimensionalSpectrum)(raw, env, suppress:=True)
+
+        If TypeOf raw Is mzPack Then
+            gcxgc = DirectCast(raw, mzPack).Create2DData.ToArray
+        ElseIf Not pull.isError Then
+            gcxgc = pull.populates(Of DimensionalSpectrum)(env).ToArray
+        Else
+            Return pull.getError
+        End If
+
+        Dim features As EIPeak(Of Peak2D)() = GCxGCPeakDetection.Extract2DFeatures(gcxgc, rtwin).ToArray
+
+        Return features
     End Function
 
     ''' <summary>

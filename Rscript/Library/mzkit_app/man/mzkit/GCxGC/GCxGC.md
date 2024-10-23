@@ -27,6 +27,7 @@ Comprehensive two-dimensional gas chromatography
 + [TIC2D](GCxGC/TIC2D.1) Demodulate the 1D TIC to 2D data
 + [TIC1D](GCxGC/TIC1D.1) 
 + [demodulate_2D](GCxGC/demodulate_2D.1) Demodulate the 1D rawdata input as 2D data
-+ [extract_2D_peaks](GCxGC/extract_2D_peaks.1) extract GCxGC 2d peaks from the mzpack raw data file
++ [extract_xic_layer](GCxGC/extract_xic_layer.1) extract GCxGC 2d peaks from the mzpack raw data file
++ [extract_2D_peaks](GCxGC/extract_2D_peaks.1) make 2d peak detection and extract the related peak feature ROI set
 + [save.cdf](GCxGC/save.cdf.1) save GCxGC 2D Chromatogram data as a new netcdf file.
 + [read.cdf](GCxGC/read.cdf.1) read GCxGC 2D Chromatogram data from a given netcdf file.

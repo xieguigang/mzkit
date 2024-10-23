@@ -126,8 +126,20 @@ Module QuantifyMath
         Return peaktable
     End Function
 
+    ''' <summary>
+    ''' removes the missing peaks
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <param name="sampleinfo">a sample info data vector for provides the sample group information about each sample. 
+    ''' if this parameter value is omit missing then the missing feature will be checked across all sample files, 
+    ''' otherwise the missing will be check across the multiple sample groups</param>
+    ''' <param name="percent">the missing percentage threshold</param>
+    ''' <returns></returns>
     <ExportAPI("removes_missing")>
-    Public Function removes_missing(x As PeakSet, Optional sampleinfo As SampleInfo() = Nothing, Optional percent As Double = 0.5) As PeakSet
+    Public Function removes_missing(x As PeakSet,
+                                    Optional sampleinfo As SampleInfo() = Nothing,
+                                    Optional percent As Double = 0.5) As PeakSet
+
         If sampleinfo.IsNullOrEmpty Then
             ' check missing based on all samples
             Dim peaks As New List(Of xcms2)

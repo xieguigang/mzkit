@@ -170,6 +170,18 @@ declare namespace massbank {
       */
       function lipidmaps(file: any, gsea_background?: boolean, category_model?: boolean, env?: object): object|object|object;
       /**
+       * load the lotus natural products metabolite library from a given file
+       * 
+       * 
+        * @param file -
+        * @param lazy 
+        * + default value Is ``true``.
+        * @param env -
+        * 
+        * + default value Is ``null``.
+      */
+      function lotus(file: any, lazy?: boolean, env?: object): object;
+      /**
        * read MoNA database file.
        * 
        * 
