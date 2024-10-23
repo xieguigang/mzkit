@@ -1,4 +1,6 @@
 ﻿Imports System.IO
+Imports Microsoft.VisualBasic.MIME.application.json.BSON
+Imports Microsoft.VisualBasic.MIME.application.json.Javascript
 Imports Metabolite = BioNovoGene.BioDeep.Chemistry.MetaLib.Models.MetaLib
 
 Namespace LOTUS
@@ -22,6 +24,17 @@ Namespace LOTUS
     ''' </remarks>
     Public Class NaturalProduct
 
+        Public Property lotus_id As String
+        Public Property wikidata_id As String
+        Public Property smiles As String
+        Public Property inchi As String
+        Public Property inchikey As String
+        Public Property traditional_name As String
+        Public Property synonyms As String()
+        Public Property iupac_name As String
+        Public Property molecular_formula As String
+
+
         ''' <summary>
         ''' Convert the lotus natural product model as mzkit internal metabolite object.
         ''' </summary>
@@ -36,8 +49,9 @@ Namespace LOTUS
         ''' <param name="NPOC2021"></param>
         ''' <returns></returns>
         Public Shared Iterator Function Parse(NPOC2021 As Stream) As IEnumerable(Of NaturalProduct)
-
+            For Each np As JsonObject In BSONFormat.LoadList(NPOC2021)
+                Yield np.CreateObject(Of NaturalProduct)(decodeMetachar:=False)
+            Next
         End Function
-
     End Class
 End Namespace

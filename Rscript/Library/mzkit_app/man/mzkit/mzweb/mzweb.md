@@ -5,6 +5,7 @@ biodeep mzweb data viewer raw data file helper
 + [loadXcmsRData](mzweb/loadXcmsRData.1) load the xcms cache dataset
 + [open](mzweb/open.1) open a mzpack data file lazy reader
 + [TIC](mzweb/TIC.1) Get TIC from the mzpack layer reader
++ [BPC](mzweb/BPC.1) Get BPC from the mzpack layer reader
 + [load.chromatogram](mzweb/load.chromatogram.1) load chromatogram data from the raw file data
 + [load.stream](mzweb/load.stream.1) load the unify mzweb scan stream data from the mzml/mzxml raw scan data stream.
 + [parse.scanMs](mzweb/parse.scanMs.1) Parse the ms scan data from a given raw byte stream data

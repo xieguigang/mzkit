@@ -32,6 +32,16 @@ declare namespace mzweb {
       */
       function mzpack(assembly: any, args?: object, env?: object): object;
    }
+   /**
+    * Get BPC from the mzpack layer reader
+    * 
+    * 
+     * @param x -
+     * @param env -
+     * 
+     * + default value Is ``null``.
+   */
+   function BPC(x: any, env?: object): object;
    module load {
       /**
        * load chromatogram data from the raw file data
@@ -255,9 +265,11 @@ declare namespace mzweb {
     * Get TIC from the mzpack layer reader
     * 
     * 
-     * @param mzpack -
+     * @param x should be a file reader to a mzpack file or the mzpack in-memory data object.
+     * @param env 
+     * + default value Is ``null``.
    */
-   function TIC(mzpack: object): object;
+   function TIC(x: any, env?: object): object;
    module write {
       /**
        * write binary format of mzweb stream data

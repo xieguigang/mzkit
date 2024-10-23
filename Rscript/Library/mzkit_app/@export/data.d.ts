@@ -111,6 +111,22 @@ declare namespace data {
       function MsMatrix(file: string): object;
    }
    /**
+    * Create a representative spectrum from a given spectrum collection via a sum or mean aggregate method.
+    * 
+    * 
+     * @param x -
+     * @param mean -
+     * 
+     * + default value Is ``true``.
+     * @param centroid 
+     * + default value Is ``0.1``.
+     * @param intocutoff 
+     * + default value Is ``0.05``.
+     * @param env 
+     * + default value Is ``null``.
+   */
+   function representative(x: any, mean?: boolean, centroid?: number, intocutoff?: number, env?: object): object;
+   /**
     * slice a region of ms1 scan data by a given rt window.
     * 
     * 
@@ -198,7 +214,7 @@ declare namespace data {
     * get chromatogram data for a specific metabolite with given m/z from the ms1 scans data.
     * 
     * 
-     * @param ms1 a sequence data of ms1 scans
+     * @param ms1 a sequence data of ms1 scans, or the mzkit mzpack data object.
      * @param mz target mz value
      * @param tolerance tolerance value in unit ``ppm`` or ``da`` for 
      *  extract ``m/z`` data from the given ms1 ion 

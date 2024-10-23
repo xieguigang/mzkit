@@ -5,6 +5,7 @@ Metabolite annotation database toolkit
 + [write.metalib](massbank/write.metalib.1) write the metabolite annotation data collection as messagepack
 + [mona.msp_metadata](massbank/mona.msp_metadata.1) Extract the annotation metadata from the MONA comment data
 + [read.RefMet](massbank/read.RefMet.1) read the csv table of refmet
++ [read.lotus](massbank/read.lotus.1) load the lotus natural products metabolite library from a given file
 + [read.MoNA](massbank/read.MoNA.1) read MoNA database file.
 + [read.SDF](massbank/read.SDF.1) read metabolite data in a given sdf data file.
 + [write.lipidmaps](massbank/write.lipidmaps.1) save lipidmaps data repository.
