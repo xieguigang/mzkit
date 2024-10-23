@@ -114,7 +114,7 @@ Namespace LOTUS
         ''' <param name="NPOC2021"></param>
         ''' <returns></returns>
         Public Shared Iterator Function Parse(NPOC2021 As Stream) As IEnumerable(Of NaturalProduct)
-            For Each np As JsonObject In BSONFormat.LoadList(NPOC2021)
+            For Each np As JsonObject In BSONFormat.LoadList(NPOC2021, tqdm:=True)
                 Yield np.CreateObject(Of NaturalProduct)(decodeMetachar:=False)
             Next
         End Function
