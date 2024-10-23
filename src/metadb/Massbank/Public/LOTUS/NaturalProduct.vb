@@ -1,6 +1,8 @@
 ﻿Imports System.IO
 Imports BioNovoGene.BioDeep.Chemistry.MetaLib.CrossReference
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.application.json.BSON
 Imports Microsoft.VisualBasic.MIME.application.json.Javascript
 Imports Metabolite = BioNovoGene.BioDeep.Chemistry.MetaLib.Models.MetaLib
@@ -42,6 +44,22 @@ Namespace LOTUS
 
         Public Property allTaxa As String()
         Public Property taxonomyReferenceObjects As Dictionary(Of String, TaxonomyReference)
+
+        Public Iterator Function GetNCBITaxonomyReference() As IEnumerable(Of NamedValue(Of Taxonomy))
+            For Each ref In taxonomyReferenceObjects.SafeQuery
+                If ref.Value.NCBI.IsNullOrEmpty Then
+                    Continue For
+                End If
+
+                Dim doi As String = ref.Key.Replace("$x$x$", ".")
+
+                For Each tax As Taxonomy In ref.Value.NCBI
+                    Yield New NamedValue(Of Taxonomy)(doi, tax) With {
+                        .Description = ref.Key
+                    }
+                Next
+            Next
+        End Function
 
         ''' <summary>
         ''' Convert the lotus natural product model as mzkit internal metabolite object.
