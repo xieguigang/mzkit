@@ -1,6 +1,9 @@
 ﻿Imports System.IO
+Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.Annotations
 Imports BioNovoGene.BioDeep.Chemistry.MetaLib.CrossReference
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.application.json.BSON
@@ -26,17 +29,17 @@ Namespace LOTUS
     ''' <remarks>
     ''' https://lotus.naturalproducts.net/
     ''' </remarks>
-    Public Class NaturalProduct
+    Public Class NaturalProduct : Implements IReadOnlyId, IExactMassProvider, ICompoundNameProvider, IFormulaProvider
 
-        Public Property lotus_id As String
+        Public Property lotus_id As String Implements IReadOnlyId.Identity
         Public Property wikidata_id As String
         Public Property smiles As String
         Public Property inchi As String
         Public Property inchikey As String
-        Public Property traditional_name As String
+        Public Property traditional_name As String Implements ICompoundNameProvider.CommonName
         Public Property synonyms As String()
         Public Property iupac_name As String
-        Public Property molecular_formula As String
+        Public Property molecular_formula As String Implements IFormulaProvider.Formula
         Public Property xrefs As String()
         Public Property chemicalTaxonomyNPclassifierPathway As String
         Public Property chemicalTaxonomyNPclassifierSuperclass As String
@@ -44,6 +47,13 @@ Namespace LOTUS
 
         Public Property allTaxa As String()
         Public Property taxonomyReferenceObjects As Dictionary(Of String, TaxonomyReference)
+
+        Public ReadOnly Property ExactMass As Double Implements IExactMassProvider.ExactMass
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return FormulaScanner.EvaluateExactMass(molecular_formula)
+            End Get
+        End Property
 
         Public Iterator Function GetNCBITaxonomyReference() As IEnumerable(Of NamedValue(Of Taxonomy))
             For Each ref In taxonomyReferenceObjects.SafeQuery
@@ -59,6 +69,23 @@ Namespace LOTUS
                     }
                 Next
             Next
+        End Function
+
+        Public Function CreateReference() As xref
+            Dim extras As New Dictionary(Of String, String()) From {
+                {"LOTUS", {lotus_id}}
+            }
+
+            If Not wikidata_id.StringEmpty(, True) Then
+                extras.Add("wikidata", {wikidata_id.Split("/"c).Last})
+            End If
+
+            Return New xref With {
+                .SMILES = smiles,
+                .InChI = inchi,
+                .InChIkey = inchikey,
+                .extras = extras
+            }
         End Function
 
         ''' <summary>
@@ -77,14 +104,7 @@ Namespace LOTUS
                 .pathways = {chemicalTaxonomyNPclassifierPathway},
                 .super_class = chemicalTaxonomyNPclassifierSuperclass,
                 .class = chemicalTaxonomyNPclassifierClass,
-                .xref = New xref With {
-                    .SMILES = smiles,
-                    .InChI = inchi,
-                    .InChIkey = inchikey,
-                    .extras = New Dictionary(Of String, String()) From {
-                        {"LOTUS", {lotus_id}}
-                    }
-                }
+                .xref = CreateReference()
             }
         End Function
 
@@ -111,6 +131,20 @@ Namespace LOTUS
         Public Property family As String
         Public Property genus As String
         Public Property species As String
+
+        Public Function GetTaxonomyName() As String
+            For Each rank_name As String In {organism_value, species, genus, family, classx, phylum, kingdom, superkingdom}
+                If Not rank_name.StringEmpty(, True) Then
+                    Return rank_name
+                End If
+            Next
+
+            Return "unknown"
+        End Function
+
+        Public Overrides Function ToString() As String
+            Return $"({cleaned_organism_id}) {GetTaxonomyName()}"
+        End Function
 
     End Class
 
