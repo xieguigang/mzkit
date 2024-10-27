@@ -414,6 +414,12 @@ Module Visual
     ''' 
     <RGenericOverloads("plot")>
     Private Function plotRawChromatogram(x As mzPack, args As list, env As Environment) As Object
+        Dim scatter As Boolean = args.getValue("scatter", env, [default]:=False)
+
+        If scatter Then
+            Return PlotRawScatter(x, env:=env)
+        End If
+
         Dim chr As Chromatogram = x.Chromatogram
 
         If chr Is Nothing Then
