@@ -607,6 +607,7 @@ Module Visual
                                    Optional contour As Boolean = False,
                                    <RRawVectorArgument(GetType(String))>
                                    Optional dimension As Object = "default|sum|mean|max|npeaks|<sample_name>",
+                                   Optional dpi As Integer = 300,
                                    Optional env As Environment = Nothing) As Object
 
         Dim schema As String = RColorPalette.getColorSet(colorSet)
@@ -639,13 +640,19 @@ Module Visual
             ' scatter
             Return RawScatterPlot.Plot(
                 samples:=matrix,
-                sampleColors:=schema
+                sampleColors:=schema,
+                ppi:=dpi,
+                driver:=env.getDriver
             )
         End If
     End Function
 
     <Extension>
-    Private Function assembleOverlaps(points As pipeline, mzErr As [Variant](Of Tolerance, Message), noise_cutoff As Double, env As Environment) As ChromatogramOverlap
+    Private Function assembleOverlaps(points As pipeline,
+                                      mzErr As [Variant](Of Tolerance, Message),
+                                      noise_cutoff As Double,
+                                      env As Environment) As ChromatogramOverlap
+
         Dim XIC As New ChromatogramOverlap
         Dim scan As ms1_scan()
         Dim chr As Chromatogram
