@@ -77,6 +77,7 @@ Public Class zzz
         Call PubChemToolKit.Main()
         Call MzWeb.Main()
         Call SMILESTool.Main()
+        Call FormulaTools.Main()
 
         Call library.Main()
         Call data.Main()

@@ -138,7 +138,7 @@ Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
 <Package("formula", Category:=APICategories.UtilityTools)>
 Module FormulaTools
 
-    Sub New()
+    Sub Main()
         Call REnv.AttachConsoleFormatter(Of FormulaComposition)(AddressOf FormulaCompositionString)
         Call REnv.AttachConsoleFormatter(Of Formula)(AddressOf FormulaString)
         Call REnv.AttachConsoleFormatter(Of FormulaComposition())(AddressOf printFormulas)
