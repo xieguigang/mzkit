@@ -617,6 +617,16 @@ Module Visual
             matrix = DirectCast(ms1_scans, mzPack) _
                 .GetAllScanMs1 _
                 .ToArray
+
+            Dim max As Double = Double.MaxValue
+
+            If matrix.Any Then
+                ' 20241027 try to reduce the dataset
+                max = matrix.Select(Function(a) a.intensity).Max
+                matrix = matrix _
+                    .Where(Function(a) a.intensity / max >= 0.0001) _
+                    .ToArray
+            End If
         ElseIf TypeOf ms1_scans Is PeakSet Then
             matrix = DirectCast(ms1_scans, PeakSet) _
                 .Ms1Scatter(CLRVector.asCharacter(dimension).DefaultFirst) _
@@ -641,6 +651,7 @@ Module Visual
             Return RawScatterPlot.Plot(
                 samples:=matrix,
                 sampleColors:=schema,
+                mapLevels:=100,
                 ppi:=dpi,
                 driver:=env.getDriver
             )
