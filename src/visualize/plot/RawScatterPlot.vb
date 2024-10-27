@@ -168,7 +168,7 @@ Public Class RawScatterPlot : Inherits Plot
 
         ' 绘制标尺
         Dim canvas = region.PlotRegion(css)
-        Dim width = region.Padding.Right * (4 / 5)
+        Dim width = css.GetWidth(region.Padding.Right) * (4 / 5)
         Dim legendLayout As New Rectangle(canvas.Right, canvas.Top, width, canvas.Height * (5 / 6))
 
         Call scatter.Plot(g, region)
