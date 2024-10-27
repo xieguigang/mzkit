@@ -217,11 +217,11 @@ Namespace Spectra
         End Function
 
         Private Function _get_entropy_and_weighted_intensity(intensity As Vector) As (spectral_entropy As Double, intensity As Vector)
-            Dim spectral_entropy = intensity.ShannonEntropy
+            Dim spectral_entropy As Double = intensity.ShannonEntropy
 
             If spectral_entropy < 3 Then
                 Dim weight = 0.25 + 0.25 * spectral_entropy
-                Dim weighted_intensity = intensity ^ weight
+                Dim weighted_intensity As Vector = intensity ^ weight
                 Dim intensity_sum = weighted_intensity.Sum
 
                 weighted_intensity /= intensity_sum
