@@ -204,6 +204,7 @@ Public Class RawScatterPlot : Inherits Plot
                                           Optional tickCSS$ = CSSFont.Win7LittleLarge,
                                           Optional axisStroke$ = Stroke.AxisStroke,
                                           Optional axisLabelFont$ = CSSFont.Win7VeryLarge,
+                                          Optional legendtitle As String = "Intensity",
                                           Optional driver As Drivers = Drivers.Default,
                                           Optional ppi As Integer = 300) As GraphicsData
 
@@ -218,7 +219,9 @@ Public Class RawScatterPlot : Inherits Plot
             .padding = margin,
             .drawLegend = False
         }
-        Dim app As New RawScatterPlot(samples, mapLevels, rawfile, theme)
+        Dim app As New RawScatterPlot(samples, mapLevels, rawfile, theme) With {
+            .legendTitle = legendtitle
+        }
 
         Return app.Plot(size, ppi:=ppi, driver:=driver)
     End Function
