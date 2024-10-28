@@ -85,6 +85,14 @@ Public Class ChemicalFormula : Inherits NetworkGraph(Of ChemicalElement, Chemica
         End Get
     End Property
 
+    Public ReadOnly Property EmpiricalFormula As String
+        Get
+            Dim formula As String = Nothing
+            Call New FormulaBuilder(Me).GetComposition(formula)
+            Return formula
+        End Get
+    End Property
+
     Public Iterator Function FindKeys(elementkey As String) As IEnumerable(Of ChemicalKey)
         For Each key As ChemicalKey In AllBonds
             If key.U.label = elementkey OrElse key.V.label = elementkey Then

@@ -414,6 +414,12 @@ Module Visual
     ''' 
     <RGenericOverloads("plot")>
     Private Function plotRawChromatogram(x As mzPack, args As list, env As Environment) As Object
+        Dim scatter As Boolean = args.getValue("scatter", env, [default]:=False)
+
+        If scatter Then
+            Return PlotRawScatter(x, env:=env)
+        End If
+
         Dim chr As Chromatogram = x.Chromatogram
 
         If chr Is Nothing Then
@@ -601,6 +607,7 @@ Module Visual
                                    Optional contour As Boolean = False,
                                    <RRawVectorArgument(GetType(String))>
                                    Optional dimension As Object = "default|sum|mean|max|npeaks|<sample_name>",
+                                   Optional dpi As Integer = 300,
                                    Optional env As Environment = Nothing) As Object
 
         Dim schema As String = RColorPalette.getColorSet(colorSet)
@@ -610,6 +617,16 @@ Module Visual
             matrix = DirectCast(ms1_scans, mzPack) _
                 .GetAllScanMs1 _
                 .ToArray
+
+            Dim max As Double = Double.MaxValue
+
+            If matrix.Any Then
+                ' 20241027 try to reduce the dataset
+                max = matrix.Select(Function(a) a.intensity).Max
+                matrix = matrix _
+                    .Where(Function(a) a.intensity / max >= 0.0001) _
+                    .ToArray
+            End If
         ElseIf TypeOf ms1_scans Is PeakSet Then
             matrix = DirectCast(ms1_scans, PeakSet) _
                 .Ms1Scatter(CLRVector.asCharacter(dimension).DefaultFirst) _
@@ -633,13 +650,20 @@ Module Visual
             ' scatter
             Return RawScatterPlot.Plot(
                 samples:=matrix,
-                sampleColors:=schema
+                sampleColors:=schema,
+                mapLevels:=100,
+                ppi:=dpi,
+                driver:=env.getDriver
             )
         End If
     End Function
 
     <Extension>
-    Private Function assembleOverlaps(points As pipeline, mzErr As [Variant](Of Tolerance, Message), noise_cutoff As Double, env As Environment) As ChromatogramOverlap
+    Private Function assembleOverlaps(points As pipeline,
+                                      mzErr As [Variant](Of Tolerance, Message),
+                                      noise_cutoff As Double,
+                                      env As Environment) As ChromatogramOverlap
+
         Dim XIC As New ChromatogramOverlap
         Dim scan As ms1_scan()
         Dim chr As Chromatogram

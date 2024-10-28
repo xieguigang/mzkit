@@ -143,11 +143,13 @@ declare namespace visual {
      * + default value Is ``false``.
      * @param dimension 
      * + default value Is ``["default","sum","mean","max","npeaks","<sample_name>"]``.
+     * @param dpi 
+     * + default value Is ``300``.
      * @param env -
      * 
      * + default value Is ``null``.
    */
-   function raw_scatter(ms1_scans: any, colorSet?: any, contour?: boolean, dimension?: any, env?: object): any;
+   function raw_scatter(ms1_scans: any, colorSet?: any, contour?: boolean, dimension?: any, dpi?: object, env?: object): any;
    /**
     * plot raw XIC matrix based on a given sequence of ms1 scans data
     * 
