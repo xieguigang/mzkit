@@ -22,9 +22,15 @@ Public Class SpectrumGrid
     Dim filenames As String()
 
     ReadOnly rt_win As Double = 7.5
+
+    ''' <summary>
+    ''' less than 2 means no decompose of the spectrum;
+    ''' this parameter value usually be 2 as we usually needs for processing of the DL, SR strucutres.
+    ''' </summary>
     ReadOnly dia_n As Integer = 1
 
-    Sub New(Optional rt_win As Double = 7.5)
+    Sub New(Optional rt_win As Double = 7.5, Optional dia_n As Integer = 1)
+        Me.dia_n = dia_n
         Me.rt_win = rt_win
     End Sub
 
@@ -78,27 +84,66 @@ Public Class SpectrumGrid
                     .GroupBy(Function(a) a.rt, offsets:=rt_win) _
                     .ToArray
 
-                For Each group As NamedCollection(Of PeakMs2) In rt_groups
-                    Dim fileIndex = group.GroupBy(Function(si) si.file) _
-                        .ToDictionary(Function(a) a.Key,
-                                      Function(a)
-                                          Return a.ToArray
-                                      End Function)
-                    Dim i2 As Double() = filenames _
-                        .Select(Function(name)
-                                    Return If(fileIndex.ContainsKey(name),
-                                        fileIndex(name).Average(Function(i) i.intensity), 0)
-                                End Function) _
-                        .ToArray
-
-                    Yield New SpectrumLine With {
-                        .intensity = SumNorm(i2),
-                        .cluster = group.value,
-                        .rt = Val(group.name),
-                        .mz = group.Average(Function(si) si.mz)
-                    }
-                Next
+                If dia_n < 2 Then
+                    For Each line As SpectrumLine In GridLineNoDecompose(rt_groups)
+                        Yield line
+                    Next
+                Else
+                    For Each line As SpectrumLine In GridLineDecompose(rt_groups)
+                        Yield line
+                    Next
+                End If
             Next
+        Next
+    End Function
+
+    Private Iterator Function GridLineDecompose(rt_groups As NamedCollection(Of PeakMs2)()) As IEnumerable(Of SpectrumLine)
+        For Each group As NamedCollection(Of PeakMs2) In rt_groups
+            Dim dia_nmf = group.DecomposeSpectrum(dia_n).ToArray
+
+            For Each decompose_group As NamedCollection(Of PeakMs2) In dia_nmf
+                Dim fileIndex = decompose_group.GroupBy(Function(si) si.file) _
+                    .ToDictionary(Function(a) a.Key,
+                                  Function(a)
+                                      Return a.ToArray
+                                  End Function)
+                Dim i2 As Double() = filenames _
+                    .Select(Function(name)
+                                Return If(fileIndex.ContainsKey(name),
+                                    fileIndex(name).Average(Function(i) i.intensity), 0)
+                            End Function) _
+                    .ToArray
+
+                Yield New SpectrumLine With {
+                    .intensity = SumNorm(i2),
+                    .cluster = decompose_group.value,
+                    .rt = Val(decompose_group.name),
+                    .mz = decompose_group.Average(Function(si) si.mz)
+                }
+            Next
+        Next
+    End Function
+
+    Private Iterator Function GridLineNoDecompose(rt_groups As NamedCollection(Of PeakMs2)()) As IEnumerable(Of SpectrumLine)
+        For Each group As NamedCollection(Of PeakMs2) In rt_groups
+            Dim fileIndex = group.GroupBy(Function(si) si.file) _
+                .ToDictionary(Function(a) a.Key,
+                              Function(a)
+                                  Return a.ToArray
+                              End Function)
+            Dim i2 As Double() = filenames _
+                .Select(Function(name)
+                            Return If(fileIndex.ContainsKey(name),
+                                fileIndex(name).Average(Function(i) i.intensity), 0)
+                        End Function) _
+                .ToArray
+
+            Yield New SpectrumLine With {
+                .intensity = SumNorm(i2),
+                .cluster = group.value,
+                .rt = Val(group.name),
+                .mz = group.Average(Function(si) si.mz)
+            }
         Next
     End Function
 
