@@ -126,7 +126,6 @@ Namespace MarkupData.imzML
         End Function
 
         Private Function MeasureIbdSha1() As String
-            Dim hash As New SHA1CryptoServiceProvider()
             Dim checksum As String
 
             Call ibd.Flush()
