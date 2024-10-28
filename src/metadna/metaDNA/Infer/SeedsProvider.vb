@@ -146,7 +146,7 @@ Namespace Infer
             Dim vec As Double()
             Dim tx = infer.query.scan_time / unknowns.rtmax
             Dim ty = infer.reference.scan_time / unknowns.rtmax
-            Dim t1 = 1 - (ppmVal / 20)
+            Dim t1 = 1 / (ppmVal + 1)
             Dim t2 = infer.parentTrace / 100
             ' 结构相似，保留时间应该是相近的？
             Dim t3 = 1 - std.Abs(tx - ty)
