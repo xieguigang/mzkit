@@ -1202,7 +1202,10 @@ Module MzMath
     ''' </remarks>
     <ExportAPI("xcms_id")>
     <RApiReturn(TypeCodes.string)>
-    Public Function xcms_id(mz As Double(), rt As Double(), Optional env As Environment = Nothing) As Object
+    Public Function xcms_id(mz As Double(), rt As Double(),
+                            Optional prefix As String = "",
+                            Optional env As Environment = Nothing) As Object
+
         If mz.TryCount <> rt.TryCount Then
             Return RInternal.debug.stop("the dimension size of the ion m/z and its scan time rt should be equals!", env)
         End If
@@ -1215,9 +1218,9 @@ Module MzMath
         Dim allId As String() = mz _
             .Select(Function(mzi, i)
                         If CInt(rt(i)) = 0 Then
-                            Return $"M{CInt(mzi)}"
+                            Return $"{prefix}M{CInt(mzi)}"
                         Else
-                            Return $"M{CInt(mzi)}T{CInt(rt(i))}"
+                            Return $"{prefix}M{CInt(mzi)}T{CInt(rt(i))}"
                         End If
                     End Function) _
             .ToArray

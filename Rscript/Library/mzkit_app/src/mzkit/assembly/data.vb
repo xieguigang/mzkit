@@ -902,13 +902,14 @@ Module data
     <RApiReturn(GetType(PeakMs2))>
     Public Function makeROInames(<RRawVectorArgument> ROIlist As Object,
                                  Optional name_chrs As Boolean = False,
+                                 Optional prefix As String = "",
                                  Optional env As Environment = Nothing) As Object
 
         If TypeOf ROIlist Is list AndAlso {"mz", "rt"}.All(AddressOf DirectCast(ROIlist, list).hasName) Then
             Dim mz As Double() = DirectCast(ROIlist, list).getValue(Of Double())("mz", env)
             Dim rt As Double() = DirectCast(ROIlist, list).getValue(Of Double())("rt", env)
 
-            Return xcms_id(mz, rt)
+            Return xcms_id(mz, rt, prefix:=prefix)
         End If
 
         Dim dataList As pipeline = pipeline.TryCreatePipeline(Of PeakMs2)(ROIlist, env)
@@ -920,7 +921,8 @@ Module data
         Dim allData As PeakMs2() = dataList.populates(Of PeakMs2)(env).ToArray
         Dim uniques As String() = xcms_id(
             mz:=allData.Select(Function(p) p.mz).ToArray,
-            rt:=allData.Select(Function(p) p.rt).ToArray
+            rt:=allData.Select(Function(p) p.rt).ToArray,
+            prefix:=prefix
         )
 
         If name_chrs Then
