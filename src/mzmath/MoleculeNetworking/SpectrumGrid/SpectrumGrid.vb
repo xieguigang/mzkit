@@ -133,7 +133,7 @@ Public Class SpectrumGrid
 
         ' group the spectrum ions via the precursor ion m/z
         Dim parent_groups As NamedCollection(Of PeakMs2)() = ions _
-            .GroupBy(Function(i) i.mz, offsets:=1) _
+            .GroupBy(Function(i) i.mz, offsets:=1.5) _
             .ToArray
 
         ' removes QC files for the cor test
@@ -261,7 +261,7 @@ Public Class SpectrumGrid
             Dim candidates = clusters _
                 .Search(q.SetRT(peak.rt), tolerance:=rt_win) _
                 .Where(Function(c)
-                           Return std.Abs(c.mz - peak.mz) < 0.3
+                           Return std.Abs(c.mz - peak.mz) < 0.5
                        End Function) _
                 .AsParallel _
                 .Select(Function(c)
