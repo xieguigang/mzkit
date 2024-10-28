@@ -35,6 +35,12 @@ Public Class SpectrumGrid
     End Sub
 
     Public Function SetRawDataFiles(files As IEnumerable(Of NamedCollection(Of PeakMs2))) As SpectrumGrid
+        If dia_n < 2 Then
+            Call VBDebugger.EchoLine($"spectrum data will not be processed via DIA decompose.")
+        Else
+            Call VBDebugger.EchoLine($"each cluster of the spectrum data will be decomposed into {dia_n} sub-clusters.")
+        End If
+
         clusters = New BlockSearchFunction(Of SpectrumLine)(Clustering(files), Function(a) a.rt, 5, fuzzy:=True)
         Return Me
     End Function
