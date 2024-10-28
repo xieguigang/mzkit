@@ -523,6 +523,26 @@ Module MoleculeNetworking
         Return grid.AssignPeaks(peakset.peaks, assign_top:=assign_top).ToArray
     End Function
 
+    <ExportAPI("unpack_unmapped")>
+    Public Function unpack_unmapped(grid As SpectrumGrid) As Object
+        Dim unmapped As SpectrumLine() = grid.GetUnmapped.ToArray
+        Dim spec = unmapped.Select(Function(c) c.cluster).IteratesALL.ToArray
+        Dim groups = spec _
+            .GroupBy(Function(a) a.file) _
+            .ToDictionary(Function(a) a.Key,
+                          Function(a)
+                              Return CObj(a.ToArray)
+                          End Function)
+        Dim list As New list With {.slots = groups}
+
+        Call list.setAttribute("total_clusters", grid.GetTotal.Count)
+        Call list.setAttribute("total_spectrum", grid.GetTotal.Select(Function(a) a.cluster).IteratesALL.Count)
+        Call list.setAttribute("unmapped_clusters", unmapped.Length)
+        Call list.setAttribute("unmapped_spectrum", spec.Length)
+
+        Return list
+    End Function
+
     ''' <summary>
     ''' Unpack of the spectrum data into multiple file groups
     ''' </summary>

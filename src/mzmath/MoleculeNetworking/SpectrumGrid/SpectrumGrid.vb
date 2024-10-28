@@ -94,6 +94,11 @@ Public Class SpectrumGrid
     End Sub
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function GetTotal() As IEnumerable(Of SpectrumLine)
+        Return clusters.raw.AsEnumerable
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function GetUnmapped() As IEnumerable(Of SpectrumLine)
         Return unmapped.AsEnumerable
     End Function
