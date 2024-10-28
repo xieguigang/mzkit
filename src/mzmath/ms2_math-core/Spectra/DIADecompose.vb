@@ -32,7 +32,7 @@ Public Module DIADecompose
             Call fragmentSet.AddRange(spec.mzInto.Select(Function(a) a.mz))
         Next
 
-        Dim fragments As MzPool = fragmentSet.CreateCentroidFragmentSet(window_size:=0.75)
+        Dim fragments As MzPool = fragmentSet.CreateCentroidFragmentSet(window_size:=0.75, verbose:=tqdm)
         Dim rowPacks As New List(Of Double())
         Dim fragment_size As Integer = fragments.size
 

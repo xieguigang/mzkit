@@ -66,7 +66,9 @@ Imports std = System.Math
 <HideModuleName> Public Module Extensions
 
     <Extension>
-    Public Function CreateMzIndex(mzSet As Double(), Optional win_size As Double = 1, Optional verbose As Boolean = False) As BlockSearchFunction(Of MzIndex)
+    Public Function CreateMzIndex(mzSet As Double(),
+                                  Optional win_size As Double = 1,
+                                  Optional verbose As Boolean = True) As BlockSearchFunction(Of MzIndex)
         If verbose Then
             Call VBDebugger.EchoLine($"tolerance window size: {win_size}")
         End If

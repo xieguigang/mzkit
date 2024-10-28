@@ -127,14 +127,16 @@ Namespace Spectra
         <Extension>
         Public Function CreateCentroidFragmentSet(fragments As IEnumerable(Of Double),
                                                   Optional centroid As Double = 0.1,
-                                                  Optional window_size As Double = 1) As MzPool
+                                                  Optional window_size As Double = 1,
+                                                  Optional verbose As Boolean = True) As MzPool
             Dim mzgroups = fragments _
                 .GroupBy(offset:=centroid) _
                 .Select(Function(a) Val(a.name)) _
                 .OrderBy(Function(mzi) mzi) _
                 .ToArray
-            Dim pool As New MzPool(mzgroups, win_size:=window_size)
-
+            Dim pool As New MzPool(mzgroups,
+                                   win_size:=window_size,
+                                   verbose:=verbose)
             Return pool
         End Function
 
