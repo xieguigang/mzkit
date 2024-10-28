@@ -73,11 +73,13 @@ declare namespace data {
         * @param name_chrs just returns the ROI names character?
         * 
         * + default value Is ``false``.
+        * @param prefix 
+        * + default value Is ``''``.
         * @param env -
         * 
         * + default value Is ``null``.
       */
-      function ROI_names(ROIlist: any, name_chrs?: boolean, env?: object): object;
+      function ROI_names(ROIlist: any, name_chrs?: boolean, prefix?: string, env?: object): object;
    }
    /**
     * get the size of the target ms peaks
