@@ -1,11 +1,27 @@
 .\" man page create by R# package system.
 .TH DATA 1 2000-Jan "groupBy_ROI" "groupBy_ROI"
 .SH NAME
-groupBy_ROI \- 
+groupBy_ROI \- make a tuple list via grouping of the spectrum data via the ROI id inside the metadata list
 .SH SYNOPSIS
 \fIgroupBy_ROI(\fBpeakms2\fR as any, 
 \fBdefault\fR as string = "Not_Assigned", 
 [\fB<Environment>\fR]);\fR
+.SH DESCRIPTION
+.PP
+make a tuple list via grouping of the spectrum data via the ROI id inside the metadata list
+.PP
+.SH OPTIONS
+.PP
+\fBpeakms2\fB \fR\- a collection of the spectrum data to make spectrum data grouping.. 
+.PP
+.PP
+\fBdefault\fB \fR\- the default ROI id for make the data groups if the metadata 
+ is null or the \fBROI\fR id tag is missing from the spectrum object metadata.
+. 
+.PP
+.PP
+\fBenv\fB \fR\- -. 
+.PP
 .SH SEE ALSO
 data
 .SH FILES

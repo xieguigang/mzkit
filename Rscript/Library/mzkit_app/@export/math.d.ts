@@ -468,6 +468,7 @@ declare namespace math {
      * @param rt the corresponding scan time rt vector.
      * @param env 
      * + default value Is ``null``.
+     * @return a character vector of the generated unique id based on the given m/z and rt ROI features.
    */
    function xcms_id(mz: number, rt: number, env?: object): string;
 }

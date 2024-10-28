@@ -123,11 +123,18 @@ declare namespace MoleculeNetworking {
      * @param intocutoff -
      * 
      * + default value Is ``0.05``.
+     * @param rt_win 
+     * + default value Is ``20``.
+     * @param dia_n set this decompose parameter to any positive integer value greater 
+     *  than 1 may produce too many data for analysis, make the workflow 
+     *  too slow.
+     * 
+     * + default value Is ``-1``.
      * @param env -
      * 
      * + default value Is ``null``.
    */
-   function spectrum_grid(rawdata: any, centroid?: any, intocutoff?: number, env?: object): any;
+   function spectrum_grid(rawdata: any, centroid?: any, intocutoff?: number, rt_win?: number, dia_n?: object, env?: object): any;
    /**
     * Split each cluster data into multiple parts by a givne rt window
     * 
@@ -188,4 +195,7 @@ declare namespace MoleculeNetworking {
      *  each slot tuple is a rawdata file content.
    */
    function unpack_assign(assign: any, env?: object): any;
+   /**
+   */
+   function unpack_unmapped(grid: object): any;
 }
