@@ -447,6 +447,11 @@ Module MoleculeNetworking
     ''' <param name="rawdata"></param>
     ''' <param name="centroid"></param>
     ''' <param name="intocutoff"></param>
+    ''' <param name="dia_n">
+    ''' set this decompose parameter to any positive integer value greater 
+    ''' than 1 may produce too many data for analysis, make the workflow 
+    ''' too slow.
+    ''' </param>
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("spectrum_grid")>
@@ -454,7 +459,7 @@ Module MoleculeNetworking
                                          Optional centroid As Object = "da:0.3",
                                          Optional intocutoff As Double = 0.05,
                                          Optional rt_win As Double = 7.5,
-                                         Optional dia_n As Integer = 2,
+                                         Optional dia_n As Integer = -1,
                                          Optional env As Environment = Nothing) As Object
 
         Dim rawPool As pipeline = pipeline.TryCreatePipeline(Of mzPack)(rawdata, env)
