@@ -1,62 +1,63 @@
 ﻿#Region "Microsoft.VisualBasic::13c9ad6506032796077047bb02edb7f1, mzmath\MoleculeNetworking\SpectrumGrid\SpectrumGrid.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 232
-    '    Code Lines: 172 (74.14%)
-    ' Comment Lines: 24 (10.34%)
-    '    - Xml Docs: 70.83%
-    ' 
-    '   Blank Lines: 36 (15.52%)
-    '     File Size: 9.51 KB
+' Summaries:
 
 
-    ' Class SpectrumGrid
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: AssignPeaks, Clustering, GridLineDecompose, GridLineNoDecompose, SetRawDataFiles
-    '               SumNorm
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 232
+'    Code Lines: 172 (74.14%)
+' Comment Lines: 24 (10.34%)
+'    - Xml Docs: 70.83%
+' 
+'   Blank Lines: 36 (15.52%)
+'     File Size: 9.51 KB
+
+
+' Class SpectrumGrid
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Function: AssignPeaks, Clustering, GridLineDecompose, GridLineNoDecompose, SetRawDataFiles
+'               SumNorm
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports System.Text.RegularExpressions
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
@@ -77,6 +78,7 @@ Public Class SpectrumGrid
     ''' </summary>
     Dim clusters As BlockSearchFunction(Of SpectrumLine)
     Dim filenames As String()
+    Dim unmapped As New List(Of SpectrumLine)
 
     ReadOnly rt_win As Double = 7.5
 
@@ -90,6 +92,11 @@ Public Class SpectrumGrid
         Me.dia_n = dia_n
         Me.rt_win = rt_win
     End Sub
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function GetUnmapped() As IEnumerable(Of SpectrumLine)
+        Return unmapped.AsEnumerable
+    End Function
 
     Public Function SetRawDataFiles(files As IEnumerable(Of NamedCollection(Of PeakMs2))) As SpectrumGrid
         If dia_n < 2 Then
@@ -235,6 +242,7 @@ Public Class SpectrumGrid
 
     Public Iterator Function AssignPeaks(peaks As IEnumerable(Of xcms2), Optional assign_top As Integer = 3) As IEnumerable(Of RawPeakAssign)
         Dim q As New SpectrumLine
+        Dim mapped As New Dictionary(Of String, SpectrumLine)
 
         For Each peak As xcms2 In TqdmWrapper.Wrap(peaks.ToArray)
             Dim i1 As Double() = SumNorm(peak(filenames))
@@ -254,6 +262,8 @@ Public Class SpectrumGrid
                 .ToArray
 
             For Each candidate In candidates
+                mapped(candidate.c.hashKey) = candidate.c
+
                 Yield New RawPeakAssign With {
                     .peak = peak,
                     .ms2 = candidate.c.cluster _
@@ -283,6 +293,14 @@ Public Class SpectrumGrid
                     .v2 = candidate.c.intensity
                 }
             Next
+        Next
+
+        Call unmapped.Clear()
+
+        For Each line As SpectrumLine In clusters.raw
+            If Not mapped.ContainsKey(line.hashKey) Then
+                Call unmapped.Add(line)
+            End If
         Next
     End Function
 

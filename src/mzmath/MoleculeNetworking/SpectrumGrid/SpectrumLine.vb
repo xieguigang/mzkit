@@ -74,6 +74,10 @@ Public Class SpectrumLine
         Return Me
     End Function
 
+    Friend Function hashKey() As String
+        Return $"{mz.ToString("F3")}@{rt.ToString("F0")}s"
+    End Function
+
     Public Overrides Function ToString() As String
         Return $"{mz.ToString("F3")}@{(rt / 60).ToString("F2")}min, {cluster.Length} files: {cluster.Select(Function(s) s.file).GetJson}"
     End Function
