@@ -1194,7 +1194,9 @@ Module MzMath
     ''' </summary>
     ''' <param name="mz">a numeric vector of the ion m/z value</param>
     ''' <param name="rt">the corresponding scan time rt vector.</param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' a character vector of the generated unique id based on the given m/z and rt ROI features.
+    ''' </returns>
     ''' <remarks>
     ''' the dimension size of the ion m/z vector and the corresponding scan time vector should be equals.
     ''' </remarks>
@@ -1221,6 +1223,7 @@ Module MzMath
             .ToArray
         Dim uniques As String() = base.makeNames(allId, unique:=True, allow_:=True)
 
+        ' generated id is uniqued
         Return uniques
     End Function
 

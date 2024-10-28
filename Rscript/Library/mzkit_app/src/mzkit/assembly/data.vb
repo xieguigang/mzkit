@@ -70,6 +70,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.SplashID
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
+Imports BioNovoGene.BioDeep.MetaDNA
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv
@@ -470,6 +471,15 @@ Module data
         }
     End Function
 
+    ''' <summary>
+    ''' make a tuple list via grouping of the spectrum data via the ROI id inside the metadata list
+    ''' </summary>
+    ''' <param name="peakms2">a collection of the spectrum data to make spectrum data grouping.</param>
+    ''' <param name="default">the default ROI id for make the data groups if the metadata 
+    ''' is null or the ``ROI`` id tag is missing from the spectrum object metadata.
+    ''' </param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("groupBy_ROI")>
     Public Function groupBy_ROI(<RRawVectorArgument> peakms2 As Object,
                                 Optional default$ = "Not_Assigned",
@@ -918,6 +928,7 @@ Module data
         Else
             For i As Integer = 0 To allData.Length - 1
                 allData(i).lib_guid = uniques(i)
+                Call Algorithm.SimpleSetROI(allData(i), uniques(i))
             Next
 
             Return allData
