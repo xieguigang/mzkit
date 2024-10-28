@@ -6,6 +6,8 @@ spectrum_grid \- Create grid clustering of the ms2 spectrum data
 \fIspectrum_grid(\fBrawdata\fR as any, 
 \fBcentroid\fR as any = "da:0.3", 
 \fBintocutoff\fR as double = 0.05, 
+\fBrt_win\fR as double = 20, 
+\fBdia_n\fR as integer = -1, 
 [\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
@@ -20,6 +22,13 @@ Create grid clustering of the ms2 spectrum data
 .PP
 .PP
 \fBintocutoff\fB \fR\- -. 
+.PP
+.PP
+\fBdia_n\fB \fR\- 
+ set this decompose parameter to any positive integer value greater 
+ than 1 may produce too many data for analysis, make the workflow 
+ too slow.
+. 
 .PP
 .PP
 \fBenv\fB \fR\- -. 
