@@ -1,5 +1,5 @@
 ﻿
-Imports BioNovoGene.Analytical.MassSpectrometry.Math.Insilicon
+Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
