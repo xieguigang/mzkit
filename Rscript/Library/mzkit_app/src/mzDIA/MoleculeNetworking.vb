@@ -473,29 +473,29 @@ Module MoleculeNetworking
 
         If rawPool.isError Then
             Return rawPool.getError
-        Else
-            For Each raw As mzPack In TqdmWrapper.Wrap(rawPool.populates(Of mzPack)(env).ToArray)
-                filename = raw.source.BaseName
-                specSet = raw.GetMs2Peaks _
-                    .AsParallel _
-                    .Select(Function(si)
-                                si.mzInto = si.mzInto.Centroid(massWin, cutoff).ToArray
-                                si.file = filename
-                                Return si
-                            End Function) _
-                    .ToArray
-                id = specSet _
-                    .Select(Function(si) $"M{CInt(si.mz)}T{CInt(si.rt)}") _
-                    .UniqueNames _
-                    .ToArray
-
-                For i As Integer = 0 To specSet.Length - 1
-                    specSet(i).lib_guid = $"{filename}#{id(i)}"
-                Next
-
-                Call specData.Add(New NamedCollection(Of PeakMs2)(filename, specSet))
-            Next
         End If
+
+        For Each raw As mzPack In TqdmWrapper.Wrap(rawPool.populates(Of mzPack)(env).ToArray)
+            filename = raw.source.BaseName
+            specSet = raw.GetMs2Peaks _
+                .AsParallel _
+                .Select(Function(si)
+                            si.mzInto = si.mzInto.Centroid(massWin, cutoff).ToArray
+                            si.file = filename
+                            Return si
+                        End Function) _
+                .ToArray
+            id = specSet _
+                .Select(Function(si) $"M{CInt(si.mz)}T{CInt(si.rt)}") _
+                .UniqueNames _
+                .ToArray
+
+            For i As Integer = 0 To specSet.Length - 1
+                specSet(i).lib_guid = $"{filename}#{id(i)}"
+            Next
+
+            Call specData.Add(New NamedCollection(Of PeakMs2)(filename, specSet))
+        Next
 
         Dim grid As New SpectrumGrid(rt_win, dia_n)
         grid = grid.SetRawDataFiles(specData)
