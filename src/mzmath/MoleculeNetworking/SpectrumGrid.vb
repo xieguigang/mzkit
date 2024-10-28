@@ -156,6 +156,7 @@ Public Class SpectrumGrid
                                         c.meta!ROI = peak.ID
                                     End If
 
+                                    c.mz = peak.mz
                                     c.meta!cor = candidate.cor
                                     c.meta!pval = candidate.pval
                                     c.meta!rt_offset = std.Abs(c.rt - peak.rt)
