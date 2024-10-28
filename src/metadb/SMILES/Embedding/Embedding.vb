@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c9f3dc6994777ad96a71116fab6473a7, metadb\SMILES\Embedding\Embedding.vb"
+﻿#Region "Microsoft.VisualBasic::a6bd640ed257883bb0f678c3a6810ac0, metadb\SMILES\Embedding\Embedding.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 134
-    '    Code Lines: 112 (83.58%)
+    '   Total Lines: 136
+    '    Code Lines: 114 (83.82%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 22 (16.42%)
-    '     File Size: 5.31 KB
+    '   Blank Lines: 22 (16.18%)
+    '     File Size: 5.40 KB
 
 
     '     Class VectorEmbedding

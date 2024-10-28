@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e148efa275809dcaf9f33945f2f9a94b, visualize\plot\RawScatterPlot.vb"
+﻿#Region "Microsoft.VisualBasic::a9eeecba0b390ac003b62d00bcc53312, visualize\plot\RawScatterPlot.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 129
-    '    Code Lines: 102 (79.07%)
-    ' Comment Lines: 14 (10.85%)
+    '   Total Lines: 168
+    '    Code Lines: 132 (78.57%)
+    ' Comment Lines: 21 (12.50%)
     '    - Xml Docs: 85.71%
     ' 
-    '   Blank Lines: 13 (10.08%)
-    '     File Size: 5.68 KB
+    '   Blank Lines: 15 (8.93%)
+    '     File Size: 7.33 KB
 
 
     ' Class RawScatterPlot
@@ -168,7 +168,7 @@ Public Class RawScatterPlot : Inherits Plot
 
         ' 绘制标尺
         Dim canvas = region.PlotRegion(css)
-        Dim width = region.Padding.Right * (4 / 5)
+        Dim width = css.GetWidth(region.Padding.Right) * (4 / 5)
         Dim legendLayout As New Rectangle(canvas.Right, canvas.Top, width, canvas.Height * (5 / 6))
 
         Call scatter.Plot(g, region)
@@ -204,6 +204,8 @@ Public Class RawScatterPlot : Inherits Plot
                                           Optional tickCSS$ = CSSFont.Win7LittleLarge,
                                           Optional axisStroke$ = Stroke.AxisStroke,
                                           Optional axisLabelFont$ = CSSFont.Win7VeryLarge,
+                                          Optional legendtitle As String = "Intensity",
+                                          Optional driver As Drivers = Drivers.Default,
                                           Optional ppi As Integer = 300) As GraphicsData
 
         Dim theme As New Theme With {
@@ -217,8 +219,10 @@ Public Class RawScatterPlot : Inherits Plot
             .padding = margin,
             .drawLegend = False
         }
-        Dim app As New RawScatterPlot(samples, mapLevels, rawfile, theme)
+        Dim app As New RawScatterPlot(samples, mapLevels, rawfile, theme) With {
+            .legendTitle = legendtitle
+        }
 
-        Return app.Plot(size, ppi:=ppi)
+        Return app.Plot(size, ppi:=ppi, driver:=driver)
     End Function
 End Class

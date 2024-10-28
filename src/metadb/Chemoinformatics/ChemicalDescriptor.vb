@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6fc8d4f241a4da1c2e3c343a0201fad7, metadb\Chemoinformatics\ChemicalDescriptor.vb"
+﻿#Region "Microsoft.VisualBasic::546a41f4cbc2935f690cd88fcc37ecaf, metadb\Chemoinformatics\ChemicalDescriptor.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 205
-    '    Code Lines: 146 (71.22%)
-    ' Comment Lines: 22 (10.73%)
+    '   Total Lines: 207
+    '    Code Lines: 148 (71.50%)
+    ' Comment Lines: 22 (10.63%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 37 (18.05%)
-    '     File Size: 7.03 KB
+    '   Blank Lines: 37 (17.87%)
+    '     File Size: 7.12 KB
 
 
     ' Class Value
@@ -66,11 +66,11 @@
     ' Class ChemicalDescriptor
     ' 
     '     Properties: AtomDefStereoCount, AtomUdefStereoCount, BoilingPoint, BondDefStereoCount, BondUdefStereoCount
-    '                 CCS, Complexity, ComponentCount, CovalentlyBonded, Density
-    '                 ExactMass, FlashPoint, FormalCharge, HeavyAtoms, HydrogenAcceptor
-    '                 HydrogenDonors, IsotopicAtomCount, LogP, MeltingPoint, Odor
-    '                 RotatableBonds, schema, Solubility, TautoCount, TopologicalPolarSurfaceArea
-    '                 VaporPressure, XLogP3, XLogP3_AA
+    '                 CCS, Color, Complexity, ComponentCount, CovalentlyBonded
+    '                 Density, ExactMass, FlashPoint, FormalCharge, HeavyAtoms
+    '                 HydrogenAcceptor, HydrogenDonors, IsotopicAtomCount, LogP, MeltingPoint
+    '                 Odor, RotatableBonds, schema, Solubility, Taste
+    '                 TautoCount, TopologicalPolarSurfaceArea, VaporPressure, XLogP3, XLogP3_AA
     ' 
     '     Constructor: (+2 Overloads) Sub New
     '     Function: FromBytes, GetBytesBuffer, GetEnumerator, getOne, TryParseDouble

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3afb4ebeff873cdf79a2947226d00186, Rscript\Library\mzkit_app\src\mzDIA\metaDNA.vb"
+﻿#Region "Microsoft.VisualBasic::e537a0cbb2ffb01ae6c721266f0082c5, Rscript\Library\mzkit_app\src\mzDIA\metaDNA.vb"
 
     ' Author:
     ' 
@@ -37,22 +37,22 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 731
-    '    Code Lines: 497 (67.99%)
-    ' Comment Lines: 139 (19.02%)
-    '    - Xml Docs: 100.00%
+    '   Total Lines: 780
+    '    Code Lines: 511 (65.51%)
+    ' Comment Lines: 172 (22.05%)
+    '    - Xml Docs: 98.84%
     ' 
-    '   Blank Lines: 95 (13.00%)
-    '     File Size: 32.26 KB
+    '   Blank Lines: 97 (12.44%)
+    '     File Size: 34.22 KB
 
 
     ' Module metaDNAInfer
     ' 
     '     Function: CreateKEGGSearch, DIAInfer, ExportNetwork, getResultTable, handleSample
     '               InferTable, loadCompoundLibrary, loadKeggNetwork, loadMetaDNAInferNetwork, loadOntologyTree
-    '               MetaDNAAlgorithm, MgfSeeds, readReactionClassTable, ResultAlignments, ResultTable
-    '               SaveAlgorithmPerfermance, SetInferNetwork, SetKeggLibrary, setLibrary, setNetworking
-    '               SetSearchRange
+    '               MetaDNAAlgorithm, MgfSeeds, readInferDetails, readReactionClassTable, ResultAlignments
+    '               ResultTable, SaveAlgorithmPerfermance, SetInferNetwork, SetKeggLibrary, setLibrary
+    '               setNetworking, SetSearchRange
     ' 
     '     Sub: Main
     ' 

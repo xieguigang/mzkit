@@ -1,4 +1,77 @@
-﻿Imports System.IO
+﻿#Region "Microsoft.VisualBasic::c2808442e9b4d14e5161ded5d6d24859, metadb\Massbank\Public\LOTUS\NaturalProduct.vb"
+
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 156
+    '    Code Lines: 108 (69.23%)
+    ' Comment Lines: 26 (16.67%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 22 (14.10%)
+    '     File Size: 6.86 KB
+
+
+    '     Class NaturalProduct
+    ' 
+    '         Properties: allTaxa, chemicalTaxonomyNPclassifierClass, chemicalTaxonomyNPclassifierPathway, chemicalTaxonomyNPclassifierSuperclass, ExactMass
+    '                     inchi, inchikey, iupac_name, lotus_id, molecular_formula
+    '                     smiles, synonyms, taxonomyReferenceObjects, traditional_name, wikidata_id
+    '                     xrefs
+    ' 
+    '         Function: CreateMetabolite, CreateReference, GetNCBITaxonomyReference, Parse
+    ' 
+    '     Class Taxonomy
+    ' 
+    '         Properties: classx, cleaned_organism_id, family, genus, kingdom
+    '                     organism_value, phylum, species, superkingdom
+    ' 
+    '         Function: GetTaxonomyName, ToString
+    ' 
+    '     Class TaxonomyReference
+    ' 
+    '         Properties: NCBI
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.Annotations
 Imports BioNovoGene.BioDeep.Chemistry.MetaLib.CrossReference

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d0409893fcfe5e0107a90c7573ecf48a, Rscript\Library\mzkit_app\src\mzkit\annotations\PubChem.vb"
+﻿#Region "Microsoft.VisualBasic::3e4301087c88e7aec06995d9bd16d6a9, Rscript\Library\mzkit_app\src\mzkit\annotations\PubChem.vb"
 
     ' Author:
     ' 
@@ -37,21 +37,21 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 504
-    '    Code Lines: 286 (56.75%)
-    ' Comment Lines: 170 (33.73%)
-    '    - Xml Docs: 95.29%
+    '   Total Lines: 583
+    '    Code Lines: 348 (59.69%)
+    ' Comment Lines: 181 (31.05%)
+    '    - Xml Docs: 96.13%
     ' 
-    '   Blank Lines: 48 (9.52%)
-    '     File Size: 22.16 KB
+    '   Blank Lines: 54 (9.26%)
+    '     File Size: 25.57 KB
 
 
     ' Module PubChemToolKit
     ' 
     '     Function: CID, GetMetaInfo, ImageFlyGetImages, level1Terms, MeshBackground
     '               ParseMeshTree, pubchemUrl, pugView, queryExternalMetadata, QueryKnowledgeGraph
-    '               queryPubChem, readPubmed, readPugViewXml, ReadSIDMap, readWebQuerySummary
-    '               SIDMapTable
+    '               queryPubChem, readPubmed, readPugViewRepository, readPugViewXml, ReadSIDMap
+    '               readWebQuerySummary, SIDMapTable
     ' 
     '     Sub: Main
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7d6b802c96c03ffeb484b8e96dcc0d2f, Rscript\Library\mzkit_app\src\mzkit\math\Formula.vb"
+﻿#Region "Microsoft.VisualBasic::cd21a1dbffc1d228fef62d019255d7b3, Rscript\Library\mzkit_app\src\mzkit\math\Formula.vb"
 
     ' Author:
     ' 
@@ -37,23 +37,24 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 614
-    '    Code Lines: 383 (62.38%)
-    ' Comment Lines: 146 (23.78%)
-    '    - Xml Docs: 85.62%
+    '   Total Lines: 637
+    '    Code Lines: 399 (62.64%)
+    ' Comment Lines: 149 (23.39%)
+    '    - Xml Docs: 85.91%
     ' 
-    '   Blank Lines: 85 (13.84%)
-    '     File Size: 26.09 KB
+    '   Blank Lines: 89 (13.97%)
+    '     File Size: 27.23 KB
 
 
     ' Module FormulaTools
     ' 
-    '     Constructor: (+1 Overloads) Sub New
     '     Function: (+5 Overloads) add, canonicalFormula, CreateGraph, divide, EvalFormula
     '               FormulaCompositionString, FormulaFinder, FormulaString, getElementCount, getFormulaResult
     '               IonFormulaCalibration, IsotopeDistributionSearch, LoadChemicalDescriptorsMatrix, (+6 Overloads) minus, openChemicalDescriptorDatabase
     '               peakAnnotation_f, printFormulas, readKCF, readSDF, registerAnnotations
     '               removeElement, (+2 Overloads) repeats, ScanFormula, SDF2KCF
+    ' 
+    '     Sub: Main
     ' 
     ' /********************************************************************************/
 
@@ -138,7 +139,7 @@ Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
 <Package("formula", Category:=APICategories.UtilityTools)>
 Module FormulaTools
 
-    Sub New()
+    Sub Main()
         Call REnv.AttachConsoleFormatter(Of FormulaComposition)(AddressOf FormulaCompositionString)
         Call REnv.AttachConsoleFormatter(Of Formula)(AddressOf FormulaString)
         Call REnv.AttachConsoleFormatter(Of FormulaComposition())(AddressOf printFormulas)

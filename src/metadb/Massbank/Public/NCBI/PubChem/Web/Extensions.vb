@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8cfdf72a4bba582dc0c942a3e9938e70, metadb\Massbank\Public\NCBI\PubChem\Web\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::76ba49b285059ca5d9794903eb947a76, metadb\Massbank\Public\NCBI\PubChem\Web\Extensions.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 207
-    '    Code Lines: 155 (74.88%)
-    ' Comment Lines: 28 (13.53%)
-    '    - Xml Docs: 25.00%
+    '   Total Lines: 225
+    '    Code Lines: 166 (73.78%)
+    ' Comment Lines: 33 (14.67%)
+    '    - Xml Docs: 36.36%
     ' 
-    '   Blank Lines: 24 (11.59%)
-    '     File Size: 8.78 KB
+    '   Blank Lines: 26 (11.56%)
+    '     File Size: 9.38 KB
 
 
     '     Module Extensions

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9c06001ba4625fcc6d4a835f71c00a69, mzmath\MoleculeNetworking\Tree\TreeCluster.vb"
+﻿#Region "Microsoft.VisualBasic::f35a256a4982269bef28321e9c6ba37b, mzmath\MoleculeNetworking\Tree\TreeCluster.vb"
 
     ' Author:
     ' 
@@ -37,22 +37,27 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 126
-    '    Code Lines: 88 (69.84%)
-    ' Comment Lines: 16 (12.70%)
-    '    - Xml Docs: 81.25%
+    '   Total Lines: 155
+    '    Code Lines: 106 (68.39%)
+    ' Comment Lines: 22 (14.19%)
+    '    - Xml Docs: 81.82%
     ' 
-    '   Blank Lines: 22 (17.46%)
-    '     File Size: 4.27 KB
+    '   Blank Lines: 27 (17.42%)
+    '     File Size: 5.12 KB
 
 
+    ' Delegate Function
+    ' 
+    ' 
     ' Class TreeCluster
     ' 
     '     Properties: clusters, spectrum, tree
     ' 
-    '     Function: GetTopCluster, GetTree, ToString, Union
+    '     Function: (+2 Overloads) GetTopCluster, GetTree, ToString, Union
     ' 
     '     Sub: GetTree
+    ' 
+    ' 
     ' 
     ' /********************************************************************************/
 

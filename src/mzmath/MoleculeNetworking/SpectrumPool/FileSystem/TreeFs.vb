@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f8e05fd5d47d847fd2f36f2f47c9db6b, mzmath\MoleculeNetworking\SpectrumPool\FileSystem\TreeFs.vb"
+﻿#Region "Microsoft.VisualBasic::6f035ea8bb561284fa68f9e209000c84, mzmath\MoleculeNetworking\SpectrumPool\FileSystem\TreeFs.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     '    - Xml Docs: 93.10%
     ' 
     '   Blank Lines: 30 (15.87%)
-    '     File Size: 7.30 KB
+    '     File Size: 7.31 KB
 
 
     '     Class TreeFs

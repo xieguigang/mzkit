@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1cc4eeeefff98e53e6d751f71c5cb4a8, mzmath\ms2_math-core\Ms1\PrecursorType\Formula\Positive.vb"
+﻿#Region "Microsoft.VisualBasic::d5c93b873846f1afe7e79e62d3651c6c, mzmath\ms2_math-core\Ms1\PrecursorType\Formula\Positive.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 90
-    '    Code Lines: 83 (92.22%)
+    '   Total Lines: 91
+    '    Code Lines: 84 (92.31%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 7 (7.78%)
-    '     File Size: 10.94 KB
+    '   Blank Lines: 7 (7.69%)
+    '     File Size: 11.06 KB
 
 
     '     Module PositiveFormula

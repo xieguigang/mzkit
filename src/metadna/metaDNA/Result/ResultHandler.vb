@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2d1bd038240ebbdda378001684bcb6c0, metadna\metaDNA\Result\ResultHandler.vb"
+﻿#Region "Microsoft.VisualBasic::64d52a69f8588c9388cd3dee1e7d3c48, metadna\metaDNA\Result\ResultHandler.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 103
-    '    Code Lines: 84 (81.55%)
-    ' Comment Lines: 7 (6.80%)
-    '    - Xml Docs: 100.00%
+    '   Total Lines: 147
+    '    Code Lines: 89 (60.54%)
+    ' Comment Lines: 43 (29.25%)
+    '    - Xml Docs: 16.28%
     ' 
-    '   Blank Lines: 12 (11.65%)
-    '     File Size: 5.27 KB
+    '   Blank Lines: 15 (10.20%)
+    '     File Size: 10.08 KB
 
 
     ' Module ResultHandler

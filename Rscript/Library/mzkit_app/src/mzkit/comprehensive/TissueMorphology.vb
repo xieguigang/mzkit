@@ -1,60 +1,60 @@
-﻿#Region "Microsoft.VisualBasic::625fab0572f190babdf1508200a34fdb, Rscript\Library\mzkit_app\src\mzkit\comprehensive\TissueMorphology.vb"
+﻿#Region "Microsoft.VisualBasic::3d378d248d2314352cf77a8f05de51f9, Rscript\Library\mzkit_app\src\mzkit\comprehensive\TissueMorphology.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 706
-'    Code Lines: 515 (72.95%)
-' Comment Lines: 104 (14.73%)
-'    - Xml Docs: 97.12%
-' 
-'   Blank Lines: 87 (12.32%)
-'     File Size: 27.79 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module TissueMorphology
-' 
-'     Constructor: (+1 Overloads) Sub New
-'     Function: createCDF, createTissueData, createTissueTable, createUMAPsample, createUMAPTable
-'               FillLabels, GetPointLabels, gridding, intersect, loadSpatialMapping
-'               loadTissue, loadUMAP, (+2 Overloads) PlotTissueMap, SplitMapping, tag_samples
-'               TagSampleLabels
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 738
+    '    Code Lines: 544 (73.71%)
+    ' Comment Lines: 104 (14.09%)
+    '    - Xml Docs: 97.12%
+    ' 
+    '   Blank Lines: 90 (12.20%)
+    '     File Size: 29.11 KB
+
+
+    ' Module TissueMorphology
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: createCDF, createTissueData, createTissueTable, createUMAPsample, createUMAPTable
+    '               FillLabels, GetPointLabels, gridding, intersect, loadSpatialMapping
+    '               loadTissue, loadUMAP, (+2 Overloads) PlotTissueMap, SplitMapping, tag_samples
+    '               TagSampleLabels
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

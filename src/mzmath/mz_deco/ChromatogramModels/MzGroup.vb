@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4e2ad78d1d8030447fc601b8adee0ef5, mzmath\mz_deco\ChromatogramModels\MzGroup.vb"
+﻿#Region "Microsoft.VisualBasic::605c0672eca6c051ccef2b78ce0359e8, mzmath\mz_deco\ChromatogramModels\MzGroup.vb"
 
     ' Author:
     ' 
@@ -37,19 +37,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 101
-    '    Code Lines: 70 (69.31%)
-    ' Comment Lines: 19 (18.81%)
+    '   Total Lines: 106
+    '    Code Lines: 71 (66.98%)
+    ' Comment Lines: 23 (21.70%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 12 (11.88%)
-    '     File Size: 3.17 KB
+    '   Blank Lines: 12 (11.32%)
+    '     File Size: 3.32 KB
 
 
     ' Class MzGroup
     ' 
-    '     Properties: MaxInto, mz, rt, size, TIC
-    '                 XIC
+    '     Properties: MaxInto, mz, rt, size, tag
+    '                 TIC, XIC
     ' 
     '     Constructor: (+2 Overloads) Sub New
     '     Function: CreateChromatogram, CreateSignal, ToString

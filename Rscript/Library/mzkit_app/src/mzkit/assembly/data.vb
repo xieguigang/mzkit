@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1788a65c5d68dc1f25bd253dd7589eea, Rscript\Library\mzkit_app\src\mzkit\assembly\data.vb"
+﻿#Region "Microsoft.VisualBasic::363f9fefefa520a380ba7253ec3e1781, Rscript\Library\mzkit_app\src\mzkit\assembly\data.vb"
 
     ' Author:
     ' 
@@ -37,22 +37,23 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 810
-    '    Code Lines: 562 (69.38%)
-    ' Comment Lines: 140 (17.28%)
-    '    - Xml Docs: 97.86%
+    '   Total Lines: 887
+    '    Code Lines: 613 (69.11%)
+    ' Comment Lines: 154 (17.36%)
+    '    - Xml Docs: 97.40%
     ' 
-    '   Blank Lines: 108 (13.33%)
-    '     File Size: 33.46 KB
+    '   Blank Lines: 120 (13.53%)
+    '     File Size: 36.66 KB
 
 
     ' Module data
     ' 
     '     Function: createPeakMs2, getIntensity, getIonsSummaryTable, getMSMSTable, getRawXICSet
-    '               getScantime, getXICPoints, libraryMatrix, LibraryTable, linearMatrix
-    '               makeROInames, MsdataFromDf, nfragments, rawXIC, readMatrix
-    '               RtSlice, simpleSearch, (+2 Overloads) splashId, TICTable, toString
-    '               unionPeaks, XIC, XICGroups, XICTable
+    '               getScantime, getXICPoints, groupBy_ROI, libraryMatrix, LibraryTable
+    '               linearMatrix, makeROInames, MsdataFromDf, nfragments, rawXIC
+    '               readMatrix, representative_spectrum, RtSlice, simpleSearch, (+2 Overloads) splashId
+    '               TICTable, toString, unionPeaks, XIC, XICGroups
+    '               XICTable
     ' 
     '     Sub: Main
     ' 
@@ -69,6 +70,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.SplashID
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
+Imports BioNovoGene.BioDeep.MetaDNA
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv
@@ -469,6 +471,15 @@ Module data
         }
     End Function
 
+    ''' <summary>
+    ''' make a tuple list via grouping of the spectrum data via the ROI id inside the metadata list
+    ''' </summary>
+    ''' <param name="peakms2">a collection of the spectrum data to make spectrum data grouping.</param>
+    ''' <param name="default">the default ROI id for make the data groups if the metadata 
+    ''' is null or the ``ROI`` id tag is missing from the spectrum object metadata.
+    ''' </param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("groupBy_ROI")>
     Public Function groupBy_ROI(<RRawVectorArgument> peakms2 As Object,
                                 Optional default$ = "Not_Assigned",
@@ -917,6 +928,7 @@ Module data
         Else
             For i As Integer = 0 To allData.Length - 1
                 allData(i).lib_guid = uniques(i)
+                Call Algorithm.SimpleSetROI(allData(i), uniques(i))
             Next
 
             Return allData

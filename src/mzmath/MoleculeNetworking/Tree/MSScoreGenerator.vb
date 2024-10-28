@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::42881ea20d0f404e90bd3417e28d0108, mzmath\MoleculeNetworking\Tree\MSScoreGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::e98d02051a95fbaed35b030ba70c6da8, mzmath\MoleculeNetworking\Tree\MSScoreGenerator.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 128
-    '    Code Lines: 64 (50.00%)
-    ' Comment Lines: 46 (35.94%)
-    '    - Xml Docs: 93.48%
+    '   Total Lines: 132
+    '    Code Lines: 64 (48.48%)
+    ' Comment Lines: 50 (37.88%)
+    '    - Xml Docs: 94.00%
     ' 
-    '   Blank Lines: 18 (14.06%)
-    '     File Size: 4.43 KB
+    '   Blank Lines: 18 (13.64%)
+    '     File Size: 4.55 KB
 
 
     ' Class MSScoreGenerator
@@ -73,11 +73,22 @@ Imports Microsoft.VisualBasic.DataMining.BinaryTree
 ''' </remarks>
 Public Class MSScoreGenerator : Inherits ComparisonProvider
 
+    ''' <summary>
+    ''' A proxy for load spectrum data from external data source if the
+    ''' cache is not hit inside current in-memory data pool
+    ''' </summary>
     ReadOnly getSpectrum As Func(Of String, PeakMs2)
+    ''' <summary>
+    ''' current in-memory cache data pool
+    ''' </summary>
     ReadOnly cache As New Dictionary(Of String, PeakMs2)
 
     Protected ReadOnly align As AlignmentProvider
 
+    ''' <summary>
+    ''' get all spectrum ions inside current in-memory cache data pool
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property Ions As IEnumerable(Of PeakMs2)
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get

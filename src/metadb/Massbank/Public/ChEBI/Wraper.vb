@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c100b18fd1ac70356a8f2e2b2086c9cb, metadb\Massbank\Public\ChEBI\Wraper.vb"
+﻿#Region "Microsoft.VisualBasic::e1b8ba608c3dce78699e0bc6a86680d5, metadb\Massbank\Public\ChEBI\Wraper.vb"
 
     ' Author:
     ' 
@@ -37,18 +37,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 42
-    '    Code Lines: 33 (78.57%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 49
+    '    Code Lines: 33 (67.35%)
+    ' Comment Lines: 7 (14.29%)
+    '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 9 (21.43%)
-    '     File Size: 1.39 KB
+    '   Blank Lines: 9 (18.37%)
+    '     File Size: 1.62 KB
 
 
     '     Class Wraper
     ' 
-    '         Properties: chebi, CommonName, ExactMass, Formula, Identity
+    '         Properties: chebi, CommonName, ExactMass, Formula, Id
     ' 
     '         Function: ToString
     ' 

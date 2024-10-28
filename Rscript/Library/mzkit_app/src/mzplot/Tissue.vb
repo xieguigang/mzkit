@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a1519aedde0bbed7b500fe9dff08d9ee, Rscript\Library\mzkit_app\src\mzplot\Tissue.vb"
+﻿#Region "Microsoft.VisualBasic::ccdb2d61d71f3b60d080e126804ba1b1, Rscript\Library\mzkit_app\src\mzplot\Tissue.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 190
-    '    Code Lines: 111 (58.42%)
-    ' Comment Lines: 60 (31.58%)
+    '   Total Lines: 217
+    '    Code Lines: 137 (63.13%)
+    ' Comment Lines: 60 (27.65%)
     '    - Xml Docs: 95.00%
     ' 
-    '   Blank Lines: 19 (10.00%)
-    '     File Size: 8.70 KB
+    '   Blank Lines: 20 (9.22%)
+    '     File Size: 9.89 KB
 
 
     ' Module Tissue

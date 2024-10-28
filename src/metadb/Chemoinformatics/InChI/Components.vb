@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b75bf3da09e4d4b7f2e7d3cac2e29bc0, metadb\Chemoinformatics\InChI\Components.vb"
+﻿#Region "Microsoft.VisualBasic::15fc4cb6230e22e9d8b77e4a8c7bbb4f, metadb\Chemoinformatics\InChI\Components.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     '    - Xml Docs: 95.97%
     ' 
     '   Blank Lines: 23 (10.04%)
-    '     File Size: 9.62 KB
+    '     File Size: 9.61 KB
 
 
     '     Class MainLayer

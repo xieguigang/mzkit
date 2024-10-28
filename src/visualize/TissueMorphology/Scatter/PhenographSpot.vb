@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9cca0aae0863ae4a2da45188bdbed56b, visualize\TissueMorphology\Scatter\PhenographSpot.vb"
+﻿#Region "Microsoft.VisualBasic::9a6d46509f0fced60dd56bf31e3059b6, visualize\TissueMorphology\Scatter\PhenographSpot.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 44
-    '    Code Lines: 31 (70.45%)
-    ' Comment Lines: 4 (9.09%)
+    '   Total Lines: 47
+    '    Code Lines: 31 (65.96%)
+    ' Comment Lines: 7 (14.89%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 9 (20.45%)
-    '     File Size: 1.68 KB
+    '   Blank Lines: 9 (19.15%)
+    '     File Size: 1.76 KB
 
 
     ' Class PhenographSpot

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2b6be0fd7cf8ea1475beba2d56b2a111, visualize\plot\StandardCurvesPlot.vb"
+﻿#Region "Microsoft.VisualBasic::c7b803d9260281bda3b38f3b327398f9, visualize\plot\StandardCurvesPlot.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 68
-    '    Code Lines: 63 (92.65%)
-    ' Comment Lines: 2 (2.94%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 69
+    '    Code Lines: 61 (88.41%)
+    ' Comment Lines: 5 (7.25%)
+    '    - Xml Docs: 60.00%
     ' 
-    '   Blank Lines: 3 (4.41%)
-    '     File Size: 3.32 KB
+    '   Blank Lines: 3 (4.35%)
+    '     File Size: 3.41 KB
 
 
     ' Module StandardCurvesPlot

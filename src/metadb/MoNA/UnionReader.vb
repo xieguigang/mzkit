@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9f86148100a1a8a387312f942de73c52, metadb\MoNA\UnionReader.vb"
+﻿#Region "Microsoft.VisualBasic::fb90b996e7175208bba0e413e2f52785, metadb\MoNA\UnionReader.vb"
 
     ' Author:
     ' 
@@ -37,20 +37,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 176
-    '    Code Lines: 140 (79.55%)
-    ' Comment Lines: 8 (4.55%)
+    '   Total Lines: 183
+    '    Code Lines: 146 (79.78%)
+    ' Comment Lines: 8 (4.37%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 28 (15.91%)
-    '     File Size: 4.95 KB
+    '   Blank Lines: 29 (15.85%)
+    '     File Size: 5.12 KB
 
 
     ' Class UnionReader
     ' 
     '     Properties: CAS, chebi, collision_energy, compound_source, exact_mass
-    '                 formula, hmdb, instrument_type, ionMode, precursor_type
-    '                 pubchem, retention_time, sourcefile
+    '                 formula, hmdb, instrument_type, ionMode, name
+    '                 precursor_type, pubchem, retention_time, sourcefile
     ' 
     '     Constructor: (+2 Overloads) Sub New
     '     Function: numericIdInternal, ToString

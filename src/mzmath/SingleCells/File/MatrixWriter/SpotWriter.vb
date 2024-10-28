@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ce308f21dd4d22b5596c9f85e0e95046, mzmath\SingleCells\File\MatrixWriter\SpotWriter.vb"
+﻿#Region "Microsoft.VisualBasic::988d4e2618eb3f2d914fb0ae179b4147, mzmath\SingleCells\File\MatrixWriter\SpotWriter.vb"
 
     ' Author:
     ' 
@@ -37,24 +37,25 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 69
-    '    Code Lines: 38 (55.07%)
-    ' Comment Lines: 19 (27.54%)
+    '   Total Lines: 72
+    '    Code Lines: 40 (55.56%)
+    ' Comment Lines: 19 (26.39%)
     '    - Xml Docs: 84.21%
     ' 
-    '   Blank Lines: 12 (17.39%)
-    '     File Size: 2.03 KB
+    '   Blank Lines: 13 (18.06%)
+    '     File Size: 2.28 KB
 
 
-    ' Class SpotWriter
+    '     Class SpotWriter
     ' 
-    '     Properties: sPos
+    '         Properties: sPos
     ' 
-    '     Constructor: (+1 Overloads) Sub New
+    '         Constructor: (+1 Overloads) Sub New
     ' 
-    '     Function: GetLabelOffsetIndex, GetSpotOffSets
+    '         Function: GetLabelOffsetIndex, GetSpotOffSets
     ' 
-    '     Sub: AddSpot
+    '         Sub: AddSpot
+    ' 
     ' 
     ' /********************************************************************************/
 

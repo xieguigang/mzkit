@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d1de7bd7b0a488c93dc614968a1e9300, mzmath\SingleCells\Deconvolute\Math.vb"
+﻿#Region "Microsoft.VisualBasic::e577b462a9257235ec7f1000a098c77b, mzmath\SingleCells\Deconvolute\Math.vb"
 
     ' Author:
     ' 
@@ -37,18 +37,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 212
-    '    Code Lines: 128 (60.38%)
-    ' Comment Lines: 51 (24.06%)
-    '    - Xml Docs: 80.39%
+    '   Total Lines: 167
+    '    Code Lines: 106 (63.47%)
+    ' Comment Lines: 34 (20.36%)
+    '    - Xml Docs: 85.29%
     ' 
-    '   Blank Lines: 33 (15.57%)
-    '     File Size: 8.48 KB
+    '   Blank Lines: 27 (16.17%)
+    '     File Size: 6.74 KB
 
 
     '     Module Math
     ' 
-    '         Function: DeconvoluteMS, DeconvoluteScan, (+5 Overloads) GetMzIndex, GetMzIndexFastBin
+    '         Function: (+5 Overloads) GetMzIndex, GetMzIndexFastBin
     '         Class IndexTask
     ' 
     '             Constructor: (+1 Overloads) Sub New

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7fdb84938ab8a074a70b5ed38e12a74e, Rscript\Library\mzkit_app\src\mzkit\annotations\Mummichog.vb"
+﻿#Region "Microsoft.VisualBasic::dd16f5c77a154c14a87c9a24c8ad807c, Rscript\Library\mzkit_app\src\mzkit\annotations\Mummichog.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 414
-    '    Code Lines: 297 (71.74%)
-    ' Comment Lines: 65 (15.70%)
+    '   Total Lines: 415
+    '    Code Lines: 298 (71.81%)
+    ' Comment Lines: 65 (15.66%)
     '    - Xml Docs: 96.92%
     ' 
-    '   Blank Lines: 52 (12.56%)
-    '     File Size: 17.41 KB
+    '   Blank Lines: 52 (12.53%)
+    '     File Size: 17.46 KB
 
 
     ' Module Mummichog

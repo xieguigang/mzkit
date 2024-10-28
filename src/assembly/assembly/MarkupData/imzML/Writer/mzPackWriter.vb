@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dbd9ed206bee3df53b0b6a04e956c262, assembly\assembly\MarkupData\imzML\Writer\mzPackWriter.vb"
+﻿#Region "Microsoft.VisualBasic::9294d8bcf7959f8e11470306e04a2021, assembly\assembly\MarkupData\imzML\Writer\mzPackWriter.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 340
-    '    Code Lines: 286 (84.12%)
-    ' Comment Lines: 21 (6.18%)
+    '   Total Lines: 339
+    '    Code Lines: 285 (84.07%)
+    ' Comment Lines: 21 (6.19%)
     '    - Xml Docs: 42.86%
     ' 
-    '   Blank Lines: 33 (9.71%)
-    '     File Size: 19.64 KB
+    '   Blank Lines: 33 (9.73%)
+    '     File Size: 19.58 KB
 
 
     '     Class mzPackWriter
@@ -126,7 +126,6 @@ Namespace MarkupData.imzML
         End Function
 
         Private Function MeasureIbdSha1() As String
-            Dim hash As New SHA1CryptoServiceProvider()
             Dim checksum As String
 
             Call ibd.Flush()

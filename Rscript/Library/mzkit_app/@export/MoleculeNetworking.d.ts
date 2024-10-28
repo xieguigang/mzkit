@@ -86,8 +86,10 @@ declare namespace MoleculeNetworking {
     * 
      * @param grid -
      * @param peakset -
+     * @param assign_top 
+     * + default value Is ``3``.
    */
-   function grid_assigned(grid: object, peakset: object): object;
+   function grid_assigned(grid: object, peakset: object, assign_top?: object): object;
    /**
     * populate a list of peak ms2 cluster data
     * 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b4da102c5645fe312072a03dda29435e, mzmath\mz_deco\PeakSet.vb"
+﻿#Region "Microsoft.VisualBasic::45f556be768a89781ead2b6cb4f22505, mzmath\mz_deco\PeakSet.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 174
-    '    Code Lines: 123 (70.69%)
-    ' Comment Lines: 28 (16.09%)
+    '   Total Lines: 197
+    '    Code Lines: 145 (73.60%)
+    ' Comment Lines: 28 (14.21%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 23 (13.22%)
-    '     File Size: 5.61 KB
+    '   Blank Lines: 24 (12.18%)
+    '     File Size: 6.65 KB
 
 
     ' Class PeakSet
@@ -52,8 +52,8 @@
     ' 
     '     Constructor: (+2 Overloads) Sub New
     ' 
-    '     Function: FilterMz, FilterRt, FindIonSet, GetById, Norm
-    '               SetPeakSet, (+2 Overloads) Subset, ToString
+    '     Function: FilterMz, FilterRt, FindIonSet, GenericEnumerator, GetById
+    '               Norm, SetPeakSet, (+2 Overloads) Subset, ToFeatures, ToString
     ' 
     '     Sub: makeIndex
     ' 

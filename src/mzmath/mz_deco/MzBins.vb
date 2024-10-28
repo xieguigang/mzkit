@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9a6738d5f226c36149f68de1af0fbbe8, mzmath\mz_deco\MzBins.vb"
+﻿#Region "Microsoft.VisualBasic::4f7db6c3b01bfd2f237fc8891eb78a05, mzmath\mz_deco\MzBins.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 63
-    '    Code Lines: 50 (79.37%)
-    ' Comment Lines: 3 (4.76%)
+    '   Total Lines: 65
+    '    Code Lines: 51 (78.46%)
+    ' Comment Lines: 3 (4.62%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 10 (15.87%)
-    '     File Size: 2.33 KB
+    '   Blank Lines: 11 (16.92%)
+    '     File Size: 2.43 KB
 
 
     ' Module MzBins

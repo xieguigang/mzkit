@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bb9ee3de37ad885a236329fad1c9d6fa, visualize\MsImaging\Reader\PixelScan\InMemoryVectorPixel.vb"
+﻿#Region "Microsoft.VisualBasic::30f95d5b94e6ff8577f1f1f0778fe294, visualize\MsImaging\Reader\PixelScan\InMemoryVectorPixel.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 219
-    '    Code Lines: 166 (75.80%)
-    ' Comment Lines: 8 (3.65%)
-    '    - Xml Docs: 87.50%
+    '   Total Lines: 224
+    '    Code Lines: 166 (74.11%)
+    ' Comment Lines: 13 (5.80%)
+    '    - Xml Docs: 92.31%
     ' 
-    '   Blank Lines: 45 (20.55%)
-    '     File Size: 8.12 KB
+    '   Blank Lines: 45 (20.09%)
+    '     File Size: 8.32 KB
 
 
     '     Class InMemoryVectorPixel

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::959d558fd9865d3ed77a99f46451378e, metadna\metaDNA\Models\Networking\CompoundSolver.vb"
+﻿#Region "Microsoft.VisualBasic::92b96ed5e712ab2266e09bcd0c5dac2e, metadna\metaDNA\Models\Networking\CompoundSolver.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 67
-    '    Code Lines: 30 (44.78%)
-    ' Comment Lines: 29 (43.28%)
+    '   Total Lines: 79
+    '    Code Lines: 39 (49.37%)
+    ' Comment Lines: 29 (36.71%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 8 (11.94%)
-    '     File Size: 3.31 KB
+    '   Blank Lines: 11 (13.92%)
+    '     File Size: 3.84 KB
 
 
     ' Class CompoundSolver

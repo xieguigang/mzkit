@@ -1,4 +1,65 @@
-﻿Imports System.Collections.Generic
+﻿#Region "Microsoft.VisualBasic::0370d03ba51ecaecb18349b817c415ad, metadb\Chemoinformatics\InChI\Models\InchiInput.vb"
+
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 67
+    '    Code Lines: 38 (56.72%)
+    ' Comment Lines: 15 (22.39%)
+    '    - Xml Docs: 80.00%
+    ' 
+    '   Blank Lines: 14 (20.90%)
+    '     File Size: 2.33 KB
+
+
+    '     Class InchiInput
+    ' 
+    '         Properties: Atoms, Bonds, Stereos
+    ' 
+    '         Function: getAtom, getBond
+    ' 
+    '         Sub: addAtom, addBond, addStereo
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Collections.Generic
 
 ''' JNA-InChI - Library for calling InChI from Java
 ''' Copyright © 2018 Daniel Lowe
@@ -65,3 +126,4 @@ Namespace IUPAC.InChI
     End Class
 
 End Namespace
+

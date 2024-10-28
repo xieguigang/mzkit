@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::45319e30a7051e0aa8f5b773d28ab3a9, assembly\assembly\mzPack\Binary\ScanModel.vb"
+﻿#Region "Microsoft.VisualBasic::c4e6adfe4994fa52912393ceefed99ca, assembly\assembly\mzPack\Binary\ScanModel.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 7 (12.07%)
-    '     File Size: 2.06 KB
+    '     File Size: 2.14 KB
 
 
     '     Module ScanModel

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4832aad295402ab161feda92cda1f281, visualize\TissueMorphology\Scatter\LayerRender.vb"
+﻿#Region "Microsoft.VisualBasic::4c88f027e87cbb96958d5211a4de19b8, visualize\TissueMorphology\Scatter\LayerRender.vb"
 
     ' Author:
     ' 
@@ -37,20 +37,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 64
-    '    Code Lines: 49 (76.56%)
-    ' Comment Lines: 4 (6.25%)
-    '    - Xml Docs: 100.00%
+    '   Total Lines: 84
+    '    Code Lines: 55 (65.48%)
+    ' Comment Lines: 15 (17.86%)
+    '    - Xml Docs: 80.00%
     ' 
-    '   Blank Lines: 11 (17.19%)
-    '     File Size: 2.31 KB
+    '   Blank Lines: 14 (16.67%)
+    '     File Size: 3.05 KB
 
 
     ' Class LayerRender
     ' 
     '     Properties: alphaLevel, dotSize, highlights
     ' 
-    '     Function: Draw
+    '     Function: CheckGdiSizeParameter, Draw
     ' 
     '     Sub: Rendering
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cf70154e320dad41c5cac778950407bd, Rscript\Library\mzkit_app\src\mzplot\Visual.vb"
+﻿#Region "Microsoft.VisualBasic::69b45a2a18279e690fc3c632240a18de, Rscript\Library\mzkit_app\src\mzplot\Visual.vb"
 
     ' Author:
     ' 
@@ -37,21 +37,22 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 740
-    '    Code Lines: 582 (78.65%)
-    ' Comment Lines: 91 (12.30%)
-    '    - Xml Docs: 91.21%
+    '   Total Lines: 891
+    '    Code Lines: 699 (78.45%)
+    ' Comment Lines: 111 (12.46%)
+    '    - Xml Docs: 91.89%
     ' 
-    '   Blank Lines: 67 (9.05%)
-    '     File Size: 33.78 KB
+    '   Blank Lines: 81 (9.09%)
+    '     File Size: 40.74 KB
 
 
     ' Module Visual
     ' 
-    '     Function: assembleOverlaps, plotAlignments, plotChromatogram, PlotGCxGCHeatMap, plotGCxGCTic2D
-    '               plotMolecularNetworkingHistogram, plotMS, plotOverlaps, plotPeaktable, plotRawChromatogram
-    '               PlotRawScatter, plotRtShifts, plotSignal, plotSignal2, plotTIC
-    '               plotTIC2, PlotUVSignals, Snapshot3D, SpectrumPlot
+    '     Function: assembleOverlaps, ParseSpectrumAlignment, plotAlignments, plotChromatogram, PlotGCxGCHeatMap
+    '               plotGCxGCTic2D, plotMolecularNetworkingHistogram, plotMS, plotOverlaps, plotPeaktable
+    '               plotRawChromatogram, PlotRawScatter, plotRtShifts, plotSignal, plotSignal2
+    '               plotTIC, plotTIC2, PlotUVSignals, Snapshot3D, SpectrumPlot
+    '               XicScatterDensity
     ' 
     '     Sub: Main
     ' 
@@ -414,6 +415,12 @@ Module Visual
     ''' 
     <RGenericOverloads("plot")>
     Private Function plotRawChromatogram(x As mzPack, args As list, env As Environment) As Object
+        Dim scatter As Boolean = args.getValue("scatter", env, [default]:=False)
+
+        If scatter Then
+            Return PlotRawScatter(x, env:=env)
+        End If
+
         Dim chr As Chromatogram = x.Chromatogram
 
         If chr Is Nothing Then
@@ -601,6 +608,7 @@ Module Visual
                                    Optional contour As Boolean = False,
                                    <RRawVectorArgument(GetType(String))>
                                    Optional dimension As Object = "default|sum|mean|max|npeaks|<sample_name>",
+                                   Optional dpi As Integer = 300,
                                    Optional env As Environment = Nothing) As Object
 
         Dim schema As String = RColorPalette.getColorSet(colorSet)
@@ -610,6 +618,16 @@ Module Visual
             matrix = DirectCast(ms1_scans, mzPack) _
                 .GetAllScanMs1 _
                 .ToArray
+
+            Dim max As Double = Double.MaxValue
+
+            If matrix.Any Then
+                ' 20241027 try to reduce the dataset
+                max = matrix.Select(Function(a) a.intensity).Max
+                matrix = matrix _
+                    .Where(Function(a) a.intensity / max >= 0.0001) _
+                    .ToArray
+            End If
         ElseIf TypeOf ms1_scans Is PeakSet Then
             matrix = DirectCast(ms1_scans, PeakSet) _
                 .Ms1Scatter(CLRVector.asCharacter(dimension).DefaultFirst) _
@@ -633,13 +651,20 @@ Module Visual
             ' scatter
             Return RawScatterPlot.Plot(
                 samples:=matrix,
-                sampleColors:=schema
+                sampleColors:=schema,
+                mapLevels:=100,
+                ppi:=dpi,
+                driver:=env.getDriver
             )
         End If
     End Function
 
     <Extension>
-    Private Function assembleOverlaps(points As pipeline, mzErr As [Variant](Of Tolerance, Message), noise_cutoff As Double, env As Environment) As ChromatogramOverlap
+    Private Function assembleOverlaps(points As pipeline,
+                                      mzErr As [Variant](Of Tolerance, Message),
+                                      noise_cutoff As Double,
+                                      env As Environment) As ChromatogramOverlap
+
         Dim XIC As New ChromatogramOverlap
         Dim scan As ms1_scan()
         Dim chr As Chromatogram

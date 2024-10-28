@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::041caeed30b9ada156d5f719308db671, mzmath\SingleCells\File\SpatialIndex.vb"
+﻿#Region "Microsoft.VisualBasic::9450dd7eea16bb8fc0fe8ddfac685424, mzmath\SingleCells\File\SpatialIndex.vb"
 
     ' Author:
     ' 
@@ -37,22 +37,23 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 50
-    '    Code Lines: 19 (38.00%)
-    ' Comment Lines: 24 (48.00%)
+    '   Total Lines: 53
+    '    Code Lines: 21 (39.62%)
+    ' Comment Lines: 24 (45.28%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 7 (14.00%)
-    '     File Size: 1.41 KB
+    '   Blank Lines: 8 (15.09%)
+    '     File Size: 1.61 KB
 
 
-    ' Structure SpatialIndex
+    '     Structure SpatialIndex
     ' 
-    '     Properties: X, Y, Z
+    '         Properties: X, Y, Z
     ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: ToString
-    '     Operators: +
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: ToString
+    '         Operators: +
+    ' 
     ' 
     ' /********************************************************************************/
 

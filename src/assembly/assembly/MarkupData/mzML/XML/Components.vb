@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5893a25b7afca092fe3b358cf6a6a244, assembly\assembly\MarkupData\mzML\XML\Components.vb"
+﻿#Region "Microsoft.VisualBasic::f9dfd3ce2eca118181d3bbf7e2203be6, assembly\assembly\MarkupData\mzML\XML\Components.vb"
 
     ' Author:
     ' 
@@ -37,20 +37,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 73
-    '    Code Lines: 44 (60.27%)
-    ' Comment Lines: 10 (13.70%)
+    '   Total Lines: 81
+    '    Code Lines: 51 (62.96%)
+    ' Comment Lines: 10 (12.35%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 19 (26.03%)
-    '     File Size: 2.25 KB
+    '   Blank Lines: 20 (24.69%)
+    '     File Size: 2.51 KB
 
 
     '     Class fileDescription
     ' 
     '         Properties: contact, fileContent, sourceFileList
     ' 
-    '         Function: ToString
+    '         Function: GetSourceFiles, ToString
     ' 
     '     Class SourceFileList
     ' 

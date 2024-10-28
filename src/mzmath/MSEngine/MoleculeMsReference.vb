@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9be5e67cdeeadb59959a209d75898ef9, mzmath\MSEngine\MoleculeMsReference.vb"
+﻿#Region "Microsoft.VisualBasic::bbcfb10e62813b11afe616672ced1442, mzmath\MSEngine\MoleculeMsReference.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 170
-    '    Code Lines: 79 (46.47%)
-    ' Comment Lines: 50 (29.41%)
-    '    - Xml Docs: 92.00%
+    '   Total Lines: 176
+    '    Code Lines: 79 (44.89%)
+    ' Comment Lines: 56 (31.82%)
+    '    - Xml Docs: 91.07%
     ' 
-    '   Blank Lines: 41 (24.12%)
-    '     File Size: 5.75 KB
+    '   Blank Lines: 41 (23.30%)
+    '     File Size: 5.83 KB
 
 
     ' Interface IIonProperty

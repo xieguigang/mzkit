@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aa86458b80a593eeb5154b613cf9e94f, visualize\plot\ChromatogramPlot\ChromatogramPeakPlot.vb"
+﻿#Region "Microsoft.VisualBasic::c5485b8118a43dee20ef4cc2099a09fe, visualize\plot\ChromatogramPlot\ChromatogramPeakPlot.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 267
-    '    Code Lines: 207 (77.53%)
-    ' Comment Lines: 31 (11.61%)
+    '   Total Lines: 292
+    '    Code Lines: 231 (79.11%)
+    ' Comment Lines: 31 (10.62%)
     '    - Xml Docs: 90.32%
     ' 
-    '   Blank Lines: 29 (10.86%)
-    '     File Size: 12.22 KB
+    '   Blank Lines: 30 (10.27%)
+    '     File Size: 13.31 KB
 
 
     ' Class ChromatogramPeakPlot

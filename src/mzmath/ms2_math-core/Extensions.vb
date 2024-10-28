@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cc3749045797f7ad305be6bf79969cb5, mzmath\ms2_math-core\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::cc3d61ce5f1cbdf04a11c282b7c4f262, mzmath\ms2_math-core\Extensions.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 146
-    '    Code Lines: 84 (57.53%)
-    ' Comment Lines: 46 (31.51%)
+    '   Total Lines: 150
+    '    Code Lines: 88 (58.67%)
+    ' Comment Lines: 46 (30.67%)
     '    - Xml Docs: 97.83%
     ' 
-    '   Blank Lines: 16 (10.96%)
-    '     File Size: 5.52 KB
+    '   Blank Lines: 16 (10.67%)
+    '     File Size: 5.67 KB
 
 
     ' Module Extensions
@@ -66,8 +66,12 @@ Imports std = System.Math
 <HideModuleName> Public Module Extensions
 
     <Extension>
-    Public Function CreateMzIndex(mzSet As Double(), Optional win_size As Double = 1) As BlockSearchFunction(Of MzIndex)
-        Call VBDebugger.EchoLine($"tolerance window size: {win_size}")
+    Public Function CreateMzIndex(mzSet As Double(),
+                                  Optional win_size As Double = 1,
+                                  Optional verbose As Boolean = True) As BlockSearchFunction(Of MzIndex)
+        If verbose Then
+            Call VBDebugger.EchoLine($"tolerance window size: {win_size}")
+        End If
 
         Return New BlockSearchFunction(Of MzIndex)(
             data:=mzSet.Select(Function(mzi, i) New MzIndex(mzi, i)),

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4187f9bf2ef21fd8d22e3dcfec652592, metadb\Lipidomics\Annotation\LipidSearchMapper.vb"
+﻿#Region "Microsoft.VisualBasic::aef5dcd0994acd988fd154e162c77d1c, metadb\Lipidomics\Annotation\LipidSearchMapper.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 129
-    '    Code Lines: 79 (61.24%)
-    ' Comment Lines: 25 (19.38%)
+    '   Total Lines: 128
+    '    Code Lines: 79 (61.72%)
+    ' Comment Lines: 25 (19.53%)
     '    - Xml Docs: 84.00%
     ' 
-    '   Blank Lines: 25 (19.38%)
-    '     File Size: 4.48 KB
+    '   Blank Lines: 24 (18.75%)
+    '     File Size: 4.47 KB
 
 
     ' Class LipidSearchMapper
@@ -54,7 +54,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.Annotations
 Imports BioNovoGene.BioDeep.Chemoinformatics.Lipidomics

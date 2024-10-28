@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::986303da82bbfd379fea4893065c43e7, visualize\plot\PlotMassWindow.vb"
+﻿#Region "Microsoft.VisualBasic::1a338bbd99314989bbf1efbfa6e708e0, visualize\plot\PlotMassWindow.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 99
-    '    Code Lines: 82 (82.83%)
-    ' Comment Lines: 4 (4.04%)
+    '   Total Lines: 101
+    '    Code Lines: 84 (83.17%)
+    ' Comment Lines: 4 (3.96%)
     '    - Xml Docs: 75.00%
     ' 
-    '   Blank Lines: 13 (13.13%)
-    '     File Size: 3.74 KB
+    '   Blank Lines: 13 (12.87%)
+    '     File Size: 3.85 KB
 
 
     ' Class PlotMassWindow

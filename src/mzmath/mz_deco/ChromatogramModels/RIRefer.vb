@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::54e81e6cfae8e4868ea42dbe0bb89b03, mzmath\mz_deco\ChromatogramModels\RIRefer.vb"
+﻿#Region "Microsoft.VisualBasic::617d9c19366d27045ea7f5e7eaa68c7c, mzmath\mz_deco\ChromatogramModels\RIRefer.vb"
 
     ' Author:
     ' 
@@ -37,18 +37,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 24
-    '    Code Lines: 10 (41.67%)
-    ' Comment Lines: 7 (29.17%)
+    '   Total Lines: 23
+    '    Code Lines: 11 (47.83%)
+    ' Comment Lines: 7 (30.43%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 7 (29.17%)
-    '     File Size: 738 B
+    '   Blank Lines: 5 (21.74%)
+    '     File Size: 776 B
 
 
     ' Class RIRefer
     ' 
-    '     Properties: mz, name, RI, rt
+    '     Properties: mz, name, RI, rt, xcms_id
     ' 
     '     Function: ToString
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::31e559be732f5fd5adb0185c49e2c512, metadna\metaDNA\Result\MetaDNAResult.vb"
+﻿#Region "Microsoft.VisualBasic::09135ac7400efa7eb9a14be40f24f851, metadna\metaDNA\Result\MetaDNAResult.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 78
-    '    Code Lines: 48 (61.54%)
-    ' Comment Lines: 23 (29.49%)
+    '   Total Lines: 122
+    '    Code Lines: 61 (50.00%)
+    ' Comment Lines: 51 (41.80%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 7 (8.97%)
-    '     File Size: 2.65 KB
+    '   Blank Lines: 10 (8.20%)
+    '     File Size: 3.98 KB
 
 
     ' Class MetaDNAResult
@@ -55,7 +55,7 @@
     '                 pvalue, query_id, reaction, reverse, ROI_id
     '                 rt, rt_adjust, score1, score2, seed
     ' 
-    '     Function: GetAlignment, ToString
+    '     Function: FilterInferenceHits, GetAlignment, ToString
     ' 
     ' /********************************************************************************/
 
