@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c5965ebb72d92a9479f818bfe0038ac3, mzmath\SingleCells\Matrix\Math\MathExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::282e6e706a27baa032e26c7be21bd978, mzmath\SingleCells\Matrix\Math\MathExtensions.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 91
-    '    Code Lines: 67 (73.63%)
-    ' Comment Lines: 5 (5.49%)
+    '   Total Lines: 92
+    '    Code Lines: 68 (73.91%)
+    ' Comment Lines: 5 (5.43%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 19 (20.88%)
-    '     File Size: 3.31 KB
+    '   Blank Lines: 19 (20.65%)
+    '     File Size: 3.39 KB
 
 
     '     Module MathExtensions

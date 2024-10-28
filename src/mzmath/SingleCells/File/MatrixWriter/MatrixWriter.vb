@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d5eecd9a6e6de8588c758f2755c5742f, mzmath\SingleCells\File\MatrixWriter\MatrixWriter.vb"
+﻿#Region "Microsoft.VisualBasic::0514afebbf2145ae23e05461d52f59ae, mzmath\SingleCells\File\MatrixWriter\MatrixWriter.vb"
 
     ' Author:
     ' 
@@ -37,22 +37,23 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 120
-    '    Code Lines: 64 (53.33%)
-    ' Comment Lines: 34 (28.33%)
+    '   Total Lines: 123
+    '    Code Lines: 66 (53.66%)
+    ' Comment Lines: 34 (27.64%)
     '    - Xml Docs: 82.35%
     ' 
-    '   Blank Lines: 22 (18.33%)
-    '     File Size: 3.70 KB
+    '   Blank Lines: 23 (18.70%)
+    '     File Size: 4.11 KB
 
 
-    ' Class MatrixWriter
+    '     Class MatrixWriter
     ' 
-    '     Constructor: (+1 Overloads) Sub New
+    '         Constructor: (+1 Overloads) Sub New
     ' 
-    '     Function: WriteHeader
+    '         Function: WriteHeader
     ' 
-    '     Sub: Write, WriteIndex
+    '         Sub: Write, WriteIndex
+    ' 
     ' 
     ' /********************************************************************************/
 

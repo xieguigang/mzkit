@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dbf022850b1f45783a1aa7abb4c15eb6, visualize\MsImaging\Analysis\StatsMath\DoStatPack.vb"
+﻿#Region "Microsoft.VisualBasic::580690bd2e7781882d97ef95258b7da0, mzmath\SpatialMath\StatsMath\DoStatPack.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     '    - Xml Docs: 68.75%
     ' 
     '   Blank Lines: 23 (14.20%)
-    '     File Size: 6.66 KB
+    '     File Size: 6.67 KB
 
 
     '     Module DoStatPack

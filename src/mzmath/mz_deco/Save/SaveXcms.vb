@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6cbde0e1120d619e3e8e85df26a02edb, mzmath\mz_deco\Save\SaveXcms.vb"
+﻿#Region "Microsoft.VisualBasic::0b22cbb168691592563013383b2c77bb, mzmath\mz_deco\Save\SaveXcms.vb"
 
     ' Author:
     ' 
@@ -37,18 +37,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 178
-    '    Code Lines: 131 (73.60%)
-    ' Comment Lines: 21 (11.80%)
-    '    - Xml Docs: 90.48%
+    '   Total Lines: 211
+    '    Code Lines: 150 (71.09%)
+    ' Comment Lines: 30 (14.22%)
+    '    - Xml Docs: 83.33%
     ' 
-    '   Blank Lines: 26 (14.61%)
-    '     File Size: 6.82 KB
+    '   Blank Lines: 31 (14.69%)
+    '     File Size: 8.13 KB
 
 
     ' Module SaveXcms
     ' 
-    '     Function: GetPeaks, ReadSample, ReadTextTable
+    '     Function: DumpSample, GetPeaks, ReadSample, ReadSamplePeaks, ReadTextTable
     ' 
     '     Sub: DumpSample
     ' 

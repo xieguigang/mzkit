@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f07fb82457a4a08542346f222405d6d0, mzmath\MSFinder\PrecursorAnnotation\ParentMatch.vb"
+﻿#Region "Microsoft.VisualBasic::90db57979199915cf2d21c6de244a05d, mzmath\MSFinder\PrecursorAnnotation\ParentMatch.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 4 (9.76%)
-    '     File Size: 1.33 KB
+    '     File Size: 1.36 KB
 
 
     ' Class ParentMatch

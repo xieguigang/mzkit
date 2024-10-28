@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cb95c7977a3d969a967283eeecdf348c, mzmath\MoleculeNetworking\Tree\NetworkingTree.vb"
+﻿#Region "Microsoft.VisualBasic::831f6a8ea17969ce40dce082e4fca6e5, mzmath\MoleculeNetworking\Tree\NetworkingTree.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 117
-    '    Code Lines: 86 (73.50%)
-    ' Comment Lines: 14 (11.97%)
-    '    - Xml Docs: 85.71%
+    '   Total Lines: 127
+    '    Code Lines: 86 (67.72%)
+    ' Comment Lines: 24 (18.90%)
+    '    - Xml Docs: 91.67%
     ' 
-    '   Blank Lines: 17 (14.53%)
-    '     File Size: 3.94 KB
+    '   Blank Lines: 17 (13.39%)
+    '     File Size: 4.23 KB
 
 
     ' Class NetworkingTree

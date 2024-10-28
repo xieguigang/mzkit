@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::30b83d3bacdd2e403e4d76bd726464dc, mzmath\MSFinder\RawData.vb"
+﻿#Region "Microsoft.VisualBasic::808e349d5b2b8b93a8210c1fab536f66, mzmath\MSFinder\RawData.vb"
 
     ' Author:
     ' 
@@ -37,19 +37,21 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 17
-    '    Code Lines: 11 (64.71%)
-    ' Comment Lines: 3 (17.65%)
+    '   Total Lines: 22
+    '    Code Lines: 15 (68.18%)
+    ' Comment Lines: 3 (13.64%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 3 (17.65%)
-    '     File Size: 777 B
+    '   Blank Lines: 4 (18.18%)
+    '     File Size: 926 B
 
 
     ' Class RawData
     ' 
     '     Properties: CarbonNitrogenNumberFromLabeledExperiment, CarbonNitrogenSulfurNumberFromLabeledExperiment, CarbonNumberFromLabeledExperiment, CarbonSulfurNumberFromLabeledExperiment, NitrogenNumberFromLabeledExperiment
     '                 NitrogenSulfurNumberFromLabeledExperiment, OxygenNumberFromLabeledExperiment, SulfurNumberFromLabeledExperiment
+    ' 
+    '     Function: ToString
     ' 
     ' /********************************************************************************/
 

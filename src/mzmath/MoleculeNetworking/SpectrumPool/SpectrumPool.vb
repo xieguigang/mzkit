@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d9fcdd90cb38639df493f189c8ab742c, mzmath\MoleculeNetworking\SpectrumPool\SpectrumPool.vb"
+﻿#Region "Microsoft.VisualBasic::9f9d91a055f5c8e70a0eee48260faff3, mzmath\MoleculeNetworking\SpectrumPool\SpectrumPool.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 394
-    '    Code Lines: 217 (55.08%)
-    ' Comment Lines: 120 (30.46%)
-    '    - Xml Docs: 67.50%
+    '   Total Lines: 397
+    '    Code Lines: 217 (54.66%)
+    ' Comment Lines: 123 (30.98%)
+    '    - Xml Docs: 68.29%
     ' 
-    '   Blank Lines: 57 (14.47%)
-    '     File Size: 14.61 KB
+    '   Blank Lines: 57 (14.36%)
+    '     File Size: 14.72 KB
 
 
     '     Class SpectrumPool
