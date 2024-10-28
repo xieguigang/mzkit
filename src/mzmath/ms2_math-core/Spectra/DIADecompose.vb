@@ -16,7 +16,10 @@ Public Module DIADecompose
     ''' <param name="tolerance"></param>
     ''' <param name="eps"></param>
     ''' <returns></returns>
-    ''' 
+    ''' <remarks>
+    ''' NOTE: this decompose method may returns empty collection due to the reason of one of 
+    ''' the collection its weight maybe all smaller than given cutoff.
+    ''' </remarks>
     <Extension>
     Public Iterator Function DecomposeSpectrum(spectrum As IEnumerable(Of PeakMs2),
                                                n As Integer,

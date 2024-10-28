@@ -102,6 +102,10 @@ Public Class SpectrumGrid
             Dim dia_nmf = group.DecomposeSpectrum(dia_n, tqdm:=False).ToArray
 
             For Each decompose_group As NamedCollection(Of PeakMs2) In dia_nmf
+                If decompose_group.Length = 0 Then
+                    Continue For
+                End If
+
                 Dim fileIndex = decompose_group.GroupBy(Function(si) si.file) _
                     .ToDictionary(Function(a) a.Key,
                                   Function(a)
