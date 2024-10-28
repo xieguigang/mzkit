@@ -35,5 +35,5 @@ assigned
 assigned = unpack_assign(assigned);
 
 for(let name in names(assigned)) {
-    write.cache(assigned[[name]], file = `\\192.168.1.254\backup3\项目以外内容\human_reference_metabolome\benchmark\MTBLS6039\FILES\RAW_FILES\POS\mzPack\test/${name}.cache`);
+    write.cache(assigned[[name]], file = `\\192.168.1.254\backup3\项目以外内容\human_reference_metabolome\benchmark\MTBLS6039\FILES\RAW_FILES\POS\mzPack\cache/${name}.cache`);
 }
