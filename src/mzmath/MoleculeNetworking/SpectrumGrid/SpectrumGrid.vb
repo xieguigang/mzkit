@@ -250,7 +250,9 @@ Public Class SpectrumGrid
         Return SIMD.Multiply.f64_scalar_op_multiply_f64(10000, SIMD.Divide.f64_op_divide_f64_scalar(v, v.Sum))
     End Function
 
-    Public Iterator Function AssignPeaks(peaks As IEnumerable(Of xcms2), Optional assign_top As Integer = 3) As IEnumerable(Of RawPeakAssign)
+    Public Iterator Function AssignPeaks(peaks As IEnumerable(Of xcms2),
+                                         Optional assign_top As Integer = 3,
+                                         Optional positive_cor As Boolean = True) As IEnumerable(Of RawPeakAssign)
         Dim q As New SpectrumLine
         Dim mapped As New Dictionary(Of String, SpectrumLine)
 
@@ -267,6 +269,7 @@ Public Class SpectrumGrid
                             cor = Correlations.GetPearson(i1, c.intensity, prob2:=pval, throwMaxIterError:=False)
                             Return (c, cor, pval, score:=cor / (std.Abs(peak.rt - c.rt) + 1))
                         End Function) _
+                .Where(Function(c) If(positive_cor, c.cor > 0, True)) _
                 .OrderByDescending(Function(c) c.score) _
                 .Take(assign_top) _
                 .ToArray

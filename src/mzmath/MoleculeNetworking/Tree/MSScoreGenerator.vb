@@ -73,11 +73,22 @@ Imports Microsoft.VisualBasic.DataMining.BinaryTree
 ''' </remarks>
 Public Class MSScoreGenerator : Inherits ComparisonProvider
 
+    ''' <summary>
+    ''' A proxy for load spectrum data from external data source if the
+    ''' cache is not hit inside current in-memory data pool
+    ''' </summary>
     ReadOnly getSpectrum As Func(Of String, PeakMs2)
+    ''' <summary>
+    ''' current in-memory cache data pool
+    ''' </summary>
     ReadOnly cache As New Dictionary(Of String, PeakMs2)
 
     Protected ReadOnly align As AlignmentProvider
 
+    ''' <summary>
+    ''' get all spectrum ions inside current in-memory cache data pool
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property Ions As IEnumerable(Of PeakMs2)
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
