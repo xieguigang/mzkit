@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0731a07e59d1c4fe5730851a389dcdc9, visualize\MsImaging\Plot\RGBMSIPlot.vb"
+﻿#Region "Microsoft.VisualBasic::0cf06ae8620b085848a62f5330370d30, visualize\MsImaging\Plot\RGBMSIPlot.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 12 (12.00%)
-    '     File Size: 4.26 KB
+    '     File Size: 4.23 KB
 
 
     ' Class RGBMSIPlot

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6c2cb4922fa75f89ed5e618197c887d7, visualize\TissueMorphology\Scatter\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::82c945a1a4bcd613ce65580bae0ec8f5, visualize\TissueMorphology\Scatter\Extensions.vb"
 
     ' Author:
     ' 
@@ -37,18 +37,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 89
-    '    Code Lines: 69 (77.53%)
-    ' Comment Lines: 9 (10.11%)
+    '   Total Lines: 94
+    '    Code Lines: 72 (76.60%)
+    ' Comment Lines: 9 (9.57%)
     '    - Xml Docs: 88.89%
     ' 
-    '   Blank Lines: 11 (12.36%)
-    '     File Size: 3.20 KB
+    '   Blank Lines: 13 (13.83%)
+    '     File Size: 3.32 KB
 
 
     ' Module Extensions
     ' 
-    '     Function: RasterGeometry2D, (+2 Overloads) ScalePixels
+    '     Function: (+2 Overloads) RasterGeometry2D, (+2 Overloads) ScalePixels
     ' 
     ' /********************************************************************************/
 
