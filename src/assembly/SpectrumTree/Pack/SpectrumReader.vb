@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aeb611be09f89393a73fb8c425902814, assembly\SpectrumTree\Pack\SpectrumReader.vb"
+﻿#Region "Microsoft.VisualBasic::30b5a6cab764bdbf8c8e0f0b77763040, assembly\SpectrumTree\Pack\SpectrumReader.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 384
-    '    Code Lines: 234 (60.94%)
-    ' Comment Lines: 101 (26.30%)
-    '    - Xml Docs: 77.23%
+    '   Total Lines: 393
+    '    Code Lines: 238 (60.56%)
+    ' Comment Lines: 105 (26.72%)
+    '    - Xml Docs: 74.29%
     ' 
-    '   Blank Lines: 49 (12.76%)
-    '     File Size: 15.71 KB
+    '   Blank Lines: 50 (12.72%)
+    '     File Size: 16.16 KB
 
 
     '     Class SpectrumReader

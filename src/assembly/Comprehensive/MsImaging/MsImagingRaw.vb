@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3f59c2efd2c64b9264a8a52a4beecf13, assembly\Comprehensive\MsImaging\MsImagingRaw.vb"
+﻿#Region "Microsoft.VisualBasic::429564ac2043fc1c86ec03dc05799e1c, assembly\Comprehensive\MsImaging\MsImagingRaw.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     '    - Xml Docs: 86.67%
     ' 
     '   Blank Lines: 28 (11.43%)
-    '     File Size: 10.39 KB
+    '     File Size: 10.40 KB
 
 
     '     Module MsImagingRaw

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::235cf5c4eb5138d4a8bae74f1fbfde12, assembly\mzPack\mzPack.vb"
+﻿#Region "Microsoft.VisualBasic::8a0d2ac57df7eb559440ec6e7f1fd135, assembly\mzPack\mzPack.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 348
-    '    Code Lines: 226 (64.94%)
-    ' Comment Lines: 85 (24.43%)
+    '   Total Lines: 402
+    '    Code Lines: 275 (68.41%)
+    ' Comment Lines: 85 (21.14%)
     '    - Xml Docs: 94.12%
     ' 
-    '   Blank Lines: 37 (10.63%)
-    '     File Size: 12.65 KB
+    '   Blank Lines: 42 (10.45%)
+    '     File Size: 14.95 KB
 
 
     ' Class mzPack
@@ -53,8 +53,8 @@
     '                 size, source, Thumbnail, totalIons
     ' 
     '     Function: CastToPeakMs2, FromStream, get_ms1, GetAllParentMz, GetAllScanMs1
-    '               GetBasePeak, GetMs2Peaks, hasMs2, Read, ReadAll
-    '               ToString, Write
+    '               GetBasePeak, GetMs2Peaks, hasMs2, PickIonScatter, Read
+    '               ReadAll, ToString, Write, WriteV2
     ' 
     '     Sub: checkVer1DuplicatedId
     ' 

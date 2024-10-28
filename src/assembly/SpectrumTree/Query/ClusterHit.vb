@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::060ac8264719eac72c5ed176fcf98d12, assembly\SpectrumTree\Query\ClusterHit.vb"
+﻿#Region "Microsoft.VisualBasic::afc5747e3b76d0485d109d53b2ba3bb1, assembly\SpectrumTree\Query\ClusterHit.vb"
 
     ' Author:
     ' 
@@ -37,21 +37,21 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 83
-    '    Code Lines: 39 (46.99%)
-    ' Comment Lines: 34 (40.96%)
+    '   Total Lines: 99
+    '    Code Lines: 44 (44.44%)
+    ' Comment Lines: 43 (43.43%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 10 (12.05%)
-    '     File Size: 2.69 KB
+    '   Blank Lines: 12 (12.12%)
+    '     File Size: 3.26 KB
 
 
     '     Class ClusterHit
     ' 
-    '         Properties: basePeak, ClusterEntropy, ClusterForward, ClusterId, ClusterJaccard
-    '                     ClusterReverse, ClusterRt, entropy, forward, Id
-    '                     jaccard, queryId, queryIntensity, queryMz, queryRt
-    '                     representive, reverse, size, totalScore
+    '         Properties: alignment_str, basePeak, ClusterEntropy, ClusterForward, ClusterId
+    '                     ClusterJaccard, ClusterReverse, ClusterRt, entropy, forward
+    '                     Id, jaccard, queryId, queryIntensity, queryMz
+    '                     queryRt, representive, reverse, size, totalScore
     ' 
     '         Function: ToString
     ' 

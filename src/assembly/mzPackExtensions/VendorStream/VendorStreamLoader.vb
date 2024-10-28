@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ae1ab4d2aab484e27432463d294beed4, assembly\mzPackExtensions\VendorStream\VendorStreamLoader.vb"
+﻿#Region "Microsoft.VisualBasic::a6c8267a55766d8a7355b15d7432867b, assembly\mzPackExtensions\VendorStream\VendorStreamLoader.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 66
-    '    Code Lines: 53 (80.30%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 70
+    '    Code Lines: 53 (75.71%)
+    ' Comment Lines: 4 (5.71%)
+    '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 13 (19.70%)
-    '     File Size: 2.56 KB
+    '   Blank Lines: 13 (18.57%)
+    '     File Size: 2.69 KB
 
 
     ' Class VendorStreamLoader

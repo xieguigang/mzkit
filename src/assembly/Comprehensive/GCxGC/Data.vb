@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9be37d3081aff51a31ab7a3c0d5f849c, assembly\Comprehensive\GCxGC\Data.vb"
+﻿#Region "Microsoft.VisualBasic::a1912506544bed95897d9bca1380ef7c, assembly\Comprehensive\GCxGC\Data.vb"
 
     ' Author:
     ' 
@@ -37,18 +37,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 47
-    '    Code Lines: 43 (91.49%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 68
+    '    Code Lines: 58 (85.29%)
+    ' Comment Lines: 5 (7.35%)
+    '    - Xml Docs: 80.00%
     ' 
-    '   Blank Lines: 4 (8.51%)
-    '     File Size: 1.89 KB
+    '   Blank Lines: 5 (7.35%)
+    '     File Size: 2.65 KB
 
 
     ' Module Data
     ' 
-    '     Function: (+2 Overloads) ExtractTIC, ExtractXIC
+    '     Function: Create2DData, (+2 Overloads) ExtractTIC, ExtractXIC
     ' 
     ' /********************************************************************************/
 

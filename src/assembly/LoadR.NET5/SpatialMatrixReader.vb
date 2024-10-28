@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::55a2fe10b0b9f7574c6b431e7e7758be, assembly\LoadR.NET5\SpatialMatrixReader.vb"
+﻿#Region "Microsoft.VisualBasic::35624588aec05638997dab1266df4f80, assembly\LoadR.NET5\SpatialMatrixReader.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 278
-    '    Code Lines: 165 (59.35%)
-    ' Comment Lines: 81 (29.14%)
-    '    - Xml Docs: 43.21%
+    '   Total Lines: 281
+    '    Code Lines: 165 (58.72%)
+    ' Comment Lines: 84 (29.89%)
+    '    - Xml Docs: 45.24%
     ' 
-    '   Blank Lines: 32 (11.51%)
-    '     File Size: 12.61 KB
+    '   Blank Lines: 32 (11.39%)
+    '     File Size: 12.76 KB
 
 
     ' Class SpatialMatrixReader

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::68c14095dd6a584f325e4c9db1c6b6c8, assembly\assembly\ASCII\MGF\MgfWriter.vb"
+﻿#Region "Microsoft.VisualBasic::6973992a51dfa8095ba097eb1e09b43a, assembly\assembly\ASCII\MGF\MgfWriter.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 184
-    '    Code Lines: 141 (76.63%)
-    ' Comment Lines: 20 (10.87%)
+    '   Total Lines: 185
+    '    Code Lines: 142 (76.76%)
+    ' Comment Lines: 20 (10.81%)
     '    - Xml Docs: 85.00%
     ' 
-    '   Blank Lines: 23 (12.50%)
-    '     File Size: 6.87 KB
+    '   Blank Lines: 23 (12.43%)
+    '     File Size: 6.91 KB
 
 
     '     Module MgfWriter
