@@ -78,11 +78,19 @@ Namespace Language
         End Sub
 
         Public Overrides Function ToString() As String
+            Dim s As String
+
             If charge Is Nothing Then
-                Return MyBase.ToString
+                s = MyBase.ToString
             Else
-                Return $"[{text}{std.Abs(charge.Value)}{If(charge > 0, "+", "-")}]"
+                s = $"[{text}{std.Abs(charge.Value)}{If(charge > 0, "+", "-")}]"
             End If
+
+            If aromatic Then
+                s = s & " (aromatic)"
+            End If
+
+            Return s
         End Function
     End Class
 
