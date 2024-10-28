@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::229b062cf2da15a4969b460930bdf06c, Rscript\Library\mzkit_app\src\mzplot\NMR.vb"
+﻿#Region "Microsoft.VisualBasic::e7dd90e1b721bd8bec7b17b621066f11, Rscript\Library\mzkit_app\src\mzplot\NMR.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 55
-    '    Code Lines: 44 (80.00%)
-    ' Comment Lines: 3 (5.45%)
+    '   Total Lines: 56
+    '    Code Lines: 45 (80.36%)
+    ' Comment Lines: 3 (5.36%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 8 (14.55%)
-    '     File Size: 2.42 KB
+    '   Blank Lines: 8 (14.29%)
+    '     File Size: 2.48 KB
 
 
     ' Module plotNMR

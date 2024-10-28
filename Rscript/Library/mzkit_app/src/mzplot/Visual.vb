@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cf70154e320dad41c5cac778950407bd, Rscript\Library\mzkit_app\src\mzplot\Visual.vb"
+﻿#Region "Microsoft.VisualBasic::69b45a2a18279e690fc3c632240a18de, Rscript\Library\mzkit_app\src\mzplot\Visual.vb"
 
     ' Author:
     ' 
@@ -37,21 +37,22 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 740
-    '    Code Lines: 582 (78.65%)
-    ' Comment Lines: 91 (12.30%)
-    '    - Xml Docs: 91.21%
+    '   Total Lines: 891
+    '    Code Lines: 699 (78.45%)
+    ' Comment Lines: 111 (12.46%)
+    '    - Xml Docs: 91.89%
     ' 
-    '   Blank Lines: 67 (9.05%)
-    '     File Size: 33.78 KB
+    '   Blank Lines: 81 (9.09%)
+    '     File Size: 40.74 KB
 
 
     ' Module Visual
     ' 
-    '     Function: assembleOverlaps, plotAlignments, plotChromatogram, PlotGCxGCHeatMap, plotGCxGCTic2D
-    '               plotMolecularNetworkingHistogram, plotMS, plotOverlaps, plotPeaktable, plotRawChromatogram
-    '               PlotRawScatter, plotRtShifts, plotSignal, plotSignal2, plotTIC
-    '               plotTIC2, PlotUVSignals, Snapshot3D, SpectrumPlot
+    '     Function: assembleOverlaps, ParseSpectrumAlignment, plotAlignments, plotChromatogram, PlotGCxGCHeatMap
+    '               plotGCxGCTic2D, plotMolecularNetworkingHistogram, plotMS, plotOverlaps, plotPeaktable
+    '               plotRawChromatogram, PlotRawScatter, plotRtShifts, plotSignal, plotSignal2
+    '               plotTIC, plotTIC2, PlotUVSignals, Snapshot3D, SpectrumPlot
+    '               XicScatterDensity
     ' 
     '     Sub: Main
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9a93906830374ed8b2eb765a7e1ebc1f, Rscript\Library\mzkit_app\src\mzquant\GCMS.vb"
+﻿#Region "Microsoft.VisualBasic::5fa2d1b107dc63c4a1eaf80dc1cd54cd, Rscript\Library\mzkit_app\src\mzquant\GCMS.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 312
-    '    Code Lines: 237 (75.96%)
-    ' Comment Lines: 32 (10.26%)
+    '   Total Lines: 313
+    '    Code Lines: 238 (76.04%)
+    ' Comment Lines: 32 (10.22%)
     '    - Xml Docs: 96.88%
     ' 
-    '   Blank Lines: 43 (13.78%)
-    '     File Size: 13.10 KB
+    '   Blank Lines: 43 (13.74%)
+    '     File Size: 13.16 KB
 
 
     ' Module GCMSLinear

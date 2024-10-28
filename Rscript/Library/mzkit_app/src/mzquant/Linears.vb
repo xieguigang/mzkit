@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::61ce7313fcc0737b88c453b4da93855e, Rscript\Library\mzkit_app\src\mzquant\Linears.vb"
+﻿#Region "Microsoft.VisualBasic::14348c4a1c725aaf1c4b1d4986c0e6bd, Rscript\Library\mzkit_app\src\mzquant\Linears.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 276
-    '    Code Lines: 174 (63.04%)
-    ' Comment Lines: 73 (26.45%)
+    '   Total Lines: 277
+    '    Code Lines: 175 (63.18%)
+    ' Comment Lines: 73 (26.35%)
     '    - Xml Docs: 97.26%
     ' 
-    '   Blank Lines: 29 (10.51%)
-    '     File Size: 10.76 KB
+    '   Blank Lines: 29 (10.47%)
+    '     File Size: 10.81 KB
 
 
     ' Module Linears
