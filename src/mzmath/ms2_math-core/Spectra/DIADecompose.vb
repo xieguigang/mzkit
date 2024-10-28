@@ -22,7 +22,8 @@ Public Module DIADecompose
                                                n As Integer,
                                                Optional maxItrs As Integer = 1000,
                                                Optional tolerance As Double = 0.001,
-                                               Optional eps As Double = 0.0001) As IEnumerable(Of NamedCollection(Of PeakMs2))
+                                               Optional eps As Double = 0.0001,
+                                               Optional tqdm As Boolean = True) As IEnumerable(Of NamedCollection(Of PeakMs2))
         Dim specPool As New List(Of PeakMs2)
         Dim fragmentSet As New List(Of Double)
 
@@ -50,7 +51,8 @@ Public Module DIADecompose
             k:=n,
             max_iterations:=maxItrs,
             tolerance:=tolerance,
-            epsilon:=eps)
+            epsilon:=eps,
+            tqdm:=tqdm)
         Dim W = decompose.W
         Dim H = decompose.H
         Dim mzSet As Double() = fragments.ionSet

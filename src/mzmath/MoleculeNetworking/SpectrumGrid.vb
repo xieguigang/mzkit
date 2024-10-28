@@ -99,7 +99,7 @@ Public Class SpectrumGrid
 
     Private Iterator Function GridLineDecompose(rt_groups As NamedCollection(Of PeakMs2)()) As IEnumerable(Of SpectrumLine)
         For Each group As NamedCollection(Of PeakMs2) In rt_groups
-            Dim dia_nmf = group.DecomposeSpectrum(dia_n).ToArray
+            Dim dia_nmf = group.DecomposeSpectrum(dia_n, tqdm:=False).ToArray
 
             For Each decompose_group As NamedCollection(Of PeakMs2) In dia_nmf
                 Dim fileIndex = decompose_group.GroupBy(Function(si) si.file) _
