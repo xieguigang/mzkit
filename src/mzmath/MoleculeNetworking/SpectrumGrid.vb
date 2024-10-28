@@ -22,6 +22,7 @@ Public Class SpectrumGrid
     Dim filenames As String()
 
     ReadOnly rt_win As Double = 7.5
+    ReadOnly dia_n As Integer = 1
 
     Sub New(Optional rt_win As Double = 7.5)
         Me.rt_win = rt_win
@@ -83,7 +84,7 @@ Public Class SpectrumGrid
                                       Function(a)
                                           Return a.ToArray
                                       End Function)
-                    Dim i2 = filenames _
+                    Dim i2 As Double() = filenames _
                         .Select(Function(name)
                                     Return If(fileIndex.ContainsKey(name),
                                         fileIndex(name).Average(Function(i) i.intensity), 0)

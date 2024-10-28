@@ -10,6 +10,12 @@ print(basename(rawfiles ));
 
 let peaks = read.xcms_peaks("\\192.168.1.254\backup3\项目以外内容\human_reference_metabolome\benchmark\MTBLS6039\FILES\RAW_FILES\POS\mzXML\peak_tablenew.txt", 
     tsv = TRUE);
+
+peaks <- mzkit::preprocessing_expression(peaks, 
+        sampleinfo = NULL, 
+        factor = 1e8, missing = 0.9
+    );
+
 let rawdata = rawfiles 
 |> as.list(names = basename(rawfiles)) 
 |> tqdm() 
