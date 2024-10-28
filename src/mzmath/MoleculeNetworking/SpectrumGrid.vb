@@ -21,7 +21,10 @@ Public Class SpectrumGrid
     Dim clusters As BlockSearchFunction(Of SpectrumLine)
     Dim filenames As String()
 
-    Sub New()
+    ReadOnly rt_win As Double = 7.5
+
+    Sub New(Optional rt_win As Double = 7.5)
+        Me.rt_win = rt_win
     End Sub
 
     Public Function SetRawDataFiles(files As IEnumerable(Of NamedCollection(Of PeakMs2))) As SpectrumGrid
@@ -30,7 +33,7 @@ Public Class SpectrumGrid
     End Function
 
     ''' <summary>
-    ''' 
+    ''' make spectrum clustering
     ''' </summary>
     ''' <param name="rawdata">the spectrum rawdata from multiple rawdata files</param>
     ''' <returns>
@@ -58,6 +61,8 @@ Public Class SpectrumGrid
                    End Function) _
             .ToArray
 
+        Call VBDebugger.EchoLine("make spectrum alignment for each precursor ion...")
+
         For Each ion_group As NamedCollection(Of PeakMs2) In TqdmWrapper.Wrap(parent_groups)
             Dim tree As New BinaryClustering()
 
@@ -68,8 +73,8 @@ Public Class SpectrumGrid
 
             For Each cluster As NamedCollection(Of PeakMs2) In tree.GetClusters
                 ' split by rt
-                Dim rt_groups = cluster _
-                    .GroupBy(Function(a) a.rt, offsets:=7.5) _
+                Dim rt_groups As NamedCollection(Of PeakMs2)() = cluster _
+                    .GroupBy(Function(a) a.rt, offsets:=rt_win) _
                     .ToArray
 
                 For Each group As NamedCollection(Of PeakMs2) In rt_groups
@@ -115,7 +120,7 @@ Public Class SpectrumGrid
         Return SIMD.Multiply.f64_scalar_op_multiply_f64(10000, SIMD.Divide.f64_op_divide_f64_scalar(v, v.Sum))
     End Function
 
-    Public Iterator Function AssignPeaks(peaks As IEnumerable(Of xcms2), Optional rt_win As Double = 5) As IEnumerable(Of RawPeakAssign)
+    Public Iterator Function AssignPeaks(peaks As IEnumerable(Of xcms2), Optional assign_top As Integer = 3) As IEnumerable(Of RawPeakAssign)
         Dim q As New SpectrumLine
 
         For Each peak As xcms2 In TqdmWrapper.Wrap(peaks.ToArray)
@@ -129,10 +134,10 @@ Public Class SpectrumGrid
                 .Select(Function(c)
                             Dim cor As Double, pval As Double
                             cor = Correlations.GetPearson(i1, c.intensity, prob2:=pval, throwMaxIterError:=False)
-                            Return (c, cor, pval, score:=cor / (pval + 1.0E-100) / (std.Abs(peak.rt - c.rt) + 1))
+                            Return (c, cor, pval, score:=cor / (std.Abs(peak.rt - c.rt) + 1))
                         End Function) _
                 .OrderByDescending(Function(c) c.cor) _
-                .Take(3) _
+                .Take(assign_top) _
                 .ToArray
 
             For Each candidate In candidates
@@ -149,6 +154,10 @@ Public Class SpectrumGrid
                                     Else
                                         c.meta!ROI = peak.ID
                                     End If
+
+                                    c.meta!cor = candidate.cor
+                                    c.meta!pval = candidate.pval
+                                    c.meta!rt_offset = std.Abs(c.rt - peak.rt)
 
                                     Return c
                                 End Function) _

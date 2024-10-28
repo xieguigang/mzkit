@@ -509,8 +509,8 @@ Module MoleculeNetworking
     ''' <returns></returns>
     <ExportAPI("grid_assigned")>
     <RApiReturn(GetType(RawPeakAssign))>
-    Public Function grid_assigned(grid As SpectrumGrid, peakset As PeakSet) As Object
-        Return grid.AssignPeaks(peakset.peaks).ToArray
+    Public Function grid_assigned(grid As SpectrumGrid, peakset As PeakSet, Optional assign_top As Integer = 3) As Object
+        Return grid.AssignPeaks(peakset.peaks, assign_top:=assign_top).ToArray
     End Function
 
     ''' <summary>
