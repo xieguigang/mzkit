@@ -23,7 +23,22 @@ let rawdata = rawfiles
     open.mzpack(filepath, verbose = FALSE);
 })
 ;
-let assigned = rawdata |> spectrum_grid() |> grid_assigned(peaks);
+let grid = rawdata |> spectrum_grid();
+let assigned = grid |> grid_assigned(peaks);
+let unassigned = unpack_unmapped(grid);
+let stats = {
+    total_clusters: attr(unassigned,"total_clusters"),
+    total_spectrum: attr(unassigned,"total_spectrum"),
+    unmapped_clusters: attr(unassigned,"unmapped_clusters"),
+    unmapped_spectrum: attr(unassigned,"unmapped_spectrum")
+}
+
+str(stats );
+
+print("cluster unmapping ratio: ");
+print(`${100*as.integer(attr(unassigned,"unmapped_clusters"))/as.integer(attr(unassigned,"total_clusters"))}% (${attr(unassigned,"unmapped_clusters")}/${attr(unassigned,"total_clusters")})`);
+print("spectrum unmapping ratio:");
+print(`${100*as.integer(attr(unassigned,"unmapped_spectrum"))/as.integer(attr(unassigned,"total_spectrum"))}% (${attr(unassigned,"unmapped_spectrum")}/${attr(unassigned,"total_spectrum")})`);
 
 write.csv(as.data.frame(assigned), file = "\\192.168.1.254\backup3\项目以外内容\human_reference_metabolome\benchmark\MTBLS6039\FILES\RAW_FILES\POS\mzPack\test.csv");
 
@@ -36,4 +51,8 @@ assigned = unpack_assign(assigned);
 
 for(let name in names(assigned)) {
     write.cache(assigned[[name]], file = `\\192.168.1.254\backup3\项目以外内容\human_reference_metabolome\benchmark\MTBLS6039\FILES\RAW_FILES\POS\mzPack\cache/${name}.cache`);
+}
+
+for(let name in names(unassigned)) {
+    write.cache(unassigned[[name]], file = `\\192.168.1.254\backup3\项目以外内容\human_reference_metabolome\benchmark\MTBLS6039\FILES\RAW_FILES\POS\mzPack\unmapped/${name}.cache`);
 }
