@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::db2748bd256e645132012f2ed5539a93, metadna\metaDNA\Algorithm.vb"
+﻿#Region "Microsoft.VisualBasic::270798ea9086b793b5d3ff9bc42379aa, metadna\metaDNA\Algorithm.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 496
-    '    Code Lines: 361 (72.78%)
-    ' Comment Lines: 57 (11.49%)
-    '    - Xml Docs: 78.95%
+    '   Total Lines: 503
+    '    Code Lines: 362 (71.97%)
+    ' Comment Lines: 63 (12.52%)
+    '    - Xml Docs: 80.95%
     ' 
-    '   Blank Lines: 78 (15.73%)
-    '     File Size: 17.98 KB
+    '   Blank Lines: 78 (15.51%)
+    '     File Size: 18.25 KB
 
 
     ' Class Algorithm

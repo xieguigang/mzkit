@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0caccca3f6ba573b8cf350085bf4d96e, metadna\metaDNA\Models\UnknownSet.vb"
+﻿#Region "Microsoft.VisualBasic::59a1339fd185065e7b052bcef968e71e, metadna\metaDNA\Models\UnknownSet.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     '    - Xml Docs: 93.94%
     ' 
     '   Blank Lines: 27 (13.78%)
-    '     File Size: 7.12 KB
+    '     File Size: 7.13 KB
 
 
     ' Class UnknownSet
