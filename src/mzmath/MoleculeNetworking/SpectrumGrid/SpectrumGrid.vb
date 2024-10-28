@@ -257,7 +257,7 @@ Public Class SpectrumGrid
                             cor = Correlations.GetPearson(i1, c.intensity, prob2:=pval, throwMaxIterError:=False)
                             Return (c, cor, pval, score:=cor / (std.Abs(peak.rt - c.rt) + 1))
                         End Function) _
-                .OrderByDescending(Function(c) c.cor) _
+                .OrderByDescending(Function(c) c.score) _
                 .Take(assign_top) _
                 .ToArray
 
