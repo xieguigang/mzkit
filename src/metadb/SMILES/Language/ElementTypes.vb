@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c7ea2bc7bb1f2a05ea0cca459d12a6e8, metadb\SMILES\Language\ElementTypes.vb"
+﻿#Region "Microsoft.VisualBasic::0a741aa922fba9bea48406511f06f035, metadb\SMILES\Language\ElementTypes.vb"
 
     ' Author:
     ' 
@@ -37,19 +37,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 48
-    '    Code Lines: 11 (22.92%)
-    ' Comment Lines: 34 (70.83%)
-    '    - Xml Docs: 88.24%
+    '   Total Lines: 52
+    '    Code Lines: 12 (23.08%)
+    ' Comment Lines: 37 (71.15%)
+    '    - Xml Docs: 89.19%
     ' 
-    '   Blank Lines: 3 (6.25%)
-    '     File Size: 1.80 KB
+    '   Blank Lines: 3 (5.77%)
+    '     File Size: 1.88 KB
 
 
     '     Enum ElementTypes
     ' 
-    '         AtomGroup, Close, Disconnected, Element, Key
-    '         None, Open
+    '         AtomGroup, Close, Disconnected, Element, Isomers
+    '         Key, None, Open
     ' 
     '  
     ' 

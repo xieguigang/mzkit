@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d04133506ca8980be7e02324aaa5bfd4, metadb\Chemoinformatics\InChI\InChI.vb"
+﻿#Region "Microsoft.VisualBasic::d89872b4ec68e7a0a2f2d549122c97fd, metadb\Chemoinformatics\InChI\InChI.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 64
-    '    Code Lines: 42 (65.62%)
-    ' Comment Lines: 12 (18.75%)
+    '   Total Lines: 63
+    '    Code Lines: 41 (65.08%)
+    ' Comment Lines: 12 (19.05%)
     '    - Xml Docs: 83.33%
     ' 
-    '   Blank Lines: 10 (15.62%)
-    '     File Size: 2.52 KB
+    '   Blank Lines: 10 (15.87%)
+    '     File Size: 2.47 KB
 
 
     '     Class InChI

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bb72acae88455f03700a6405241137ec, metadb\SMILES\Language\Token.vb"
+﻿#Region "Microsoft.VisualBasic::7bdb85d2b6e5e82d31abd80fec47f3e3, metadb\SMILES\Language\Token.vb"
 
     ' Author:
     ' 
@@ -37,18 +37,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 32
-    '    Code Lines: 24 (75.00%)
+    '   Total Lines: 33
+    '    Code Lines: 25 (75.76%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 8 (25.00%)
-    '     File Size: 903 B
+    '   Blank Lines: 8 (24.24%)
+    '     File Size: 950 B
 
 
     '     Class Token
     ' 
-    '         Properties: charge, ring
+    '         Properties: aromatic, charge, ring
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: ToString

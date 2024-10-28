@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1bdd6bff2691d86c2297e4d741eb99df, metadb\SMILES\Graph\ChemicalFormula.vb"
+﻿#Region "Microsoft.VisualBasic::4e057b728c96e5b8aa7bc64faf6f73f0, metadb\SMILES\Graph\ChemicalFormula.vb"
 
     ' Author:
     ' 
@@ -37,20 +37,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 80
-    '    Code Lines: 58 (72.50%)
-    ' Comment Lines: 11 (13.75%)
+    '   Total Lines: 135
+    '    Code Lines: 100 (74.07%)
+    ' Comment Lines: 16 (11.85%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 11 (13.75%)
-    '     File Size: 2.94 KB
+    '   Blank Lines: 19 (14.07%)
+    '     File Size: 4.70 KB
 
 
     ' Class ChemicalFormula
     ' 
-    '     Properties: AllBonds, AllElements
+    '     Properties: AllBonds, AllElements, EmpiricalFormula
     ' 
-    '     Function: Decomposition, FindKeys, GetFormula, ToString
+    '     Function: Decomposition, FindKeys, GetFormula, Join, ToString
     ' 
     ' /********************************************************************************/
 

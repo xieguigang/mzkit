@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7e0b7fd2a1d749b1be11703e486bc4a3, metadb\Chemoinformatics\InChI\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::0488bae93de78511228ee3f69967155d, metadb\Chemoinformatics\InChI\Extensions.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 150
-    '    Code Lines: 112 (74.67%)
-    ' Comment Lines: 11 (7.33%)
+    '   Total Lines: 149
+    '    Code Lines: 111 (74.50%)
+    ' Comment Lines: 11 (7.38%)
     '    - Xml Docs: 90.91%
     ' 
-    '   Blank Lines: 27 (18.00%)
-    '     File Size: 4.59 KB
+    '   Blank Lines: 27 (18.12%)
+    '     File Size: 4.54 KB
 
 
     '     Module Extensions

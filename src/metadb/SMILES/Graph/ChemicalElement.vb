@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cb8d6194800e3a3bd20213fda16a8812, metadb\SMILES\Graph\ChemicalElement.vb"
+﻿#Region "Microsoft.VisualBasic::b25bee87a609deba8d99b8a502b58345, metadb\SMILES\Graph\ChemicalElement.vb"
 
     ' Author:
     ' 
@@ -37,21 +37,21 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 172
-    '    Code Lines: 108 (62.79%)
-    ' Comment Lines: 47 (27.33%)
-    '    - Xml Docs: 89.36%
+    '   Total Lines: 201
+    '    Code Lines: 129 (64.18%)
+    ' Comment Lines: 53 (26.37%)
+    '    - Xml Docs: 86.79%
     ' 
-    '   Blank Lines: 17 (9.88%)
-    '     File Size: 5.81 KB
+    '   Blank Lines: 19 (9.45%)
+    '     File Size: 6.84 KB
 
 
     ' Class ChemicalElement
     ' 
-    '     Properties: charge, coordinate, elementName, group, hydrogen
-    '                 Keys
+    '     Properties: aromatic, charge, coordinate, elementName, graph_id
+    '                 group, hydrogen, Keys
     ' 
-    '     Constructor: (+2 Overloads) Sub New
+    '     Constructor: (+3 Overloads) Sub New
     ' 
     '     Function: GetConnection
     ' 
