@@ -453,6 +453,8 @@ Module MoleculeNetworking
     Public Function create_spectrum_grid(<RRawVectorArgument> rawdata As Object,
                                          Optional centroid As Object = "da:0.3",
                                          Optional intocutoff As Double = 0.05,
+                                         Optional rt_win As Double = 7.5,
+                                         Optional dia_n As Integer = 2,
                                          Optional env As Environment = Nothing) As Object
 
         Dim rawPool As pipeline = pipeline.TryCreatePipeline(Of mzPack)(rawdata, env)
@@ -495,7 +497,7 @@ Module MoleculeNetworking
             Next
         End If
 
-        Dim grid As New SpectrumGrid
+        Dim grid As New SpectrumGrid(rt_win, dia_n)
         grid = grid.SetRawDataFiles(specData)
 
         Return grid
