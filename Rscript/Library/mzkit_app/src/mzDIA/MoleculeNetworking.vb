@@ -461,7 +461,7 @@ Module MoleculeNetworking
     Public Function create_spectrum_grid(<RRawVectorArgument> rawdata As Object,
                                          Optional centroid As Object = "da:0.3",
                                          Optional intocutoff As Double = 0.05,
-                                         Optional rt_win As Double = 7.5,
+                                         Optional rt_win As Double = 15,
                                          Optional dia_n As Integer = -1,
                                          Optional env As Environment = Nothing) As Object
 

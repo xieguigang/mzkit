@@ -203,6 +203,11 @@ Public Class SpectrumGrid
         Next
     End Function
 
+    ''' <summary>
+    ''' just populate each cluster as <see cref="SpectrumLine"/> data model
+    ''' </summary>
+    ''' <param name="rt_groups"></param>
+    ''' <returns></returns>
     Private Iterator Function GridLineNoDecompose(rt_groups As NamedCollection(Of PeakMs2)()) As IEnumerable(Of SpectrumLine)
         For Each group As NamedCollection(Of PeakMs2) In rt_groups
             Dim fileIndex = group.GroupBy(Function(si) si.file) _
