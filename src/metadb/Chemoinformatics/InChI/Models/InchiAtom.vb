@@ -80,7 +80,7 @@ Namespace IUPAC.InChI
 
     Public Class InchiAtom
 
-        'array positions for hydrogen (i.e. isotope not specified), protium, deuterium, tritium
+        ' array positions for hydrogen (i.e. isotope not specified), protium, deuterium, tritium
         Private implicitHydrogenField As Integer() = New Integer(3) {}
         Private isotopicMassField As Integer = 0
         Private chargeField As Integer = 0

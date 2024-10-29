@@ -117,7 +117,7 @@ Namespace IUPAC.InChI
         ''' of atoms that share one or more mobile hydrogen atoms In addition to hydrogen atoms, mobile 
         ''' H groups may contain mobile negative charges. These charges are included in the charge layer.
         ''' </remarks>
-        Public Property Bounds As Bound()
+        Public Property Struct As InchiInput
         ''' <summary>
         ''' Hydrogen atoms (prefix: "h"). Describes how many hydrogen atoms are connected to each of 
         ''' the other atoms.
