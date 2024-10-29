@@ -94,7 +94,7 @@ Namespace IUPAC.InChI
         Sub New(inchi As String)
             Dim tokens$() = inchi.GetTagValue("=").Value.Split("/"c)
             Dim version = tokens(Scan0)
-            Dim populator = Layer.GetByPrefix(tokens.Skip(1).ToArray)
+            Dim populator As New InChIStringReader(tokens.Skip(1).ToArray)
 
             Me.Version = Val(version)
             Me.IsStandard = Not version.IsPattern("\d+")
