@@ -8,3 +8,8 @@ svg(file = file.path(@dir, "align.svg")) {
     plot(parse.spectrum_alignment(align),
     legend_layout = "title", bar_width = 2);
 }
+
+bitmap(file = file.path(@dir, "align.jpeg")) {
+    plot(parse.spectrum_alignment(align),
+    legend_layout = "title", bar_width = 2);
+}
