@@ -462,7 +462,10 @@ Module mzDeco
         Dim ID As String() = df.getRowNames.UniqueNames
         Dim npeaks As Integer() = CLRVector.asInteger(df!npeaks)
 
-        Call df.delete("ID", "mz", "mzmin", "mzmax", "rt", "rtmin", "rtmax", "RI", "npeaks", "xcms_id", "into")
+        ' 20241029 for avoid the unexpected data updates from the 
+        ' R# runtime symbols, we should make a data copy at here
+        df = New dataframe(df)
+        df.delete("ID", "mz", "mzmin", "mzmax", "rt", "rtmin", "rtmax", "RI", "npeaks", "xcms_id", "into")
 
         Dim offset As Integer
         Dim v As Dictionary(Of String, Double)
