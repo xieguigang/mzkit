@@ -142,7 +142,17 @@ Namespace IUPAC.InChI
                             Yield New InchiAtom("H") With {.Index = i}
                         Next
                     End With
+                ElseIf part.IsPattern("\d+H\d+") Then
+                    With part.Split("H"c)
+                        Dim index = Integer.Parse(part(0))
+                        Dim n = Integer.Parse(part(1))
 
+                        For i As Integer = 1 To n
+                            Yield New InchiAtom("H") With {.Index = i}
+                        Next
+                    End With
+                Else
+                    Throw New NotImplementedException(part)
                 End If
             Next
         End Function
