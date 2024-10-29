@@ -81,13 +81,13 @@ Namespace IUPAC.InChI
 
     Public Class InchiInput
 
-        Dim m_atoms As New List(Of InchiAtom)()
+        Dim m_atoms As New Dictionary(Of UInteger, InchiAtom)
         Dim m_bonds As New List(Of InchiBond)()
         Dim m_stereos As New List(Of InchiStereo)()
 
         Public Overridable ReadOnly Property Atoms As IList(Of InchiAtom)
             Get
-                Return New List(Of InchiAtom)(m_atoms)
+                Return New List(Of InchiAtom)(m_atoms.Values)
             End Get
         End Property
 
@@ -103,8 +103,8 @@ Namespace IUPAC.InChI
             End Get
         End Property
 
-        Public Overridable Sub addAtom(atom As InchiAtom)
-            m_atoms.Add(atom)
+        Public Overridable Sub addAtom(id As UInteger, atom As InchiAtom)
+            m_atoms(id) = atom
         End Sub
 
         Public Overridable Sub addBond(bond As InchiBond)
@@ -115,7 +115,7 @@ Namespace IUPAC.InChI
             m_stereos.Add(stereo)
         End Sub
 
-        Public Overridable Function getAtom(i As Integer) As InchiAtom
+        Public Overridable Function getAtom(i As UInteger) As InchiAtom
             Return m_atoms(i)
         End Function
 

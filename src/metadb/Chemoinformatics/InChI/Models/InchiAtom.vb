@@ -85,6 +85,7 @@ Namespace IUPAC.InChI
         Private isotopicMassField As Integer = 0
         Private chargeField As Integer = 0
 
+        Public Property Index As UInteger
         Public Overridable Property ElName As String
         Public Overridable Property X As Double
         Public Overridable Property Y As Double
