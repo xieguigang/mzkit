@@ -68,48 +68,48 @@
 
 Imports System.Collections.Generic
 
-''' JNA-InChI - Library for calling InChI from Java
-''' Copyright © 2018 Daniel Lowe
-''' 
-''' This library is free software; you can redistribute it and/or
-''' modify it under the terms of the GNU Lesser General Public
-''' License as published by the Free Software Foundation; either
-''' version 2.1 of the License, or (at your option) any later version.
-''' 
-''' This program is distributed in the hope that it will be useful,
-''' but WITHOUT ANY WARRANTY; without even the implied warranty of
-''' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-''' GNU Lesser General Public License for more details.
-''' 
-''' You should have received a copy of the GNU Lesser General Public License
-''' along with this program.  If not, see </>.
+' JNA-InChI - Library for calling InChI from Java
+' Copyright © 2018 Daniel Lowe
+' 
+' This library is free software; you can redistribute it and/or
+' modify it under the terms of the GNU Lesser General Public
+' License as published by the Free Software Foundation; either
+' version 2.1 of the License, or (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU Lesser General Public License for more details.
+' 
+' You should have received a copy of the GNU Lesser General Public License
+' along with this program.  If not, see </>.
 
 Namespace IUPAC.InChI
 
     Public NotInheritable Class InchiKeyStatus
 
-        Public Shared ReadOnly FIND_RING_SYSTEMS As Integer = 1
-        Public Shared ReadOnly FIND_RINS_SYSTEMS_DISTANCES As Integer = 0
-        Public Shared ReadOnly FIX_DOCANON_RETCODE_RESET_BUG As Integer = 1
-        Public Shared ReadOnly MAXVAL As Integer = 20
-        Public Shared ReadOnly ATOM_EL_LEN As Integer = 6
-        Public Shared ReadOnly NUM_H_ISOTOPES As Integer = 3
-        Public Shared ReadOnly ISOTOPIC_SHIFT_FLAG As Integer = 10000
-        Public Shared ReadOnly ISOTOPIC_SHIFT_MAX As Integer = 100
-        Public Shared ReadOnly NO_ATOM As Integer = -1
-        Public Shared ReadOnly INCHI_STRING_PREFIX As String = "InChI="
-        Public Shared ReadOnly LEN_INCHI_STRING_PREFIX As Integer = 6
-        Public Shared ReadOnly STR_ERR_LEN As Integer = 256
-        Public Shared ReadOnly INCHIKEY_OK As Integer = 0
-        Public Shared ReadOnly INCHIKEY_UNKNOWN_ERROR As Integer = 1
-        Public Shared ReadOnly INCHIKEY_EMPTY_INPUT As Integer = 2
-        Public Shared ReadOnly INCHIKEY_INVALID_INCHI_PREFIX As Integer = 3
-        Public Shared ReadOnly INCHIKEY_NOT_ENOUGH_MEMORY As Integer = 4
-        Public Shared ReadOnly INCHIKEY_INVALID_INCHI As Integer = 20
-        Public Shared ReadOnly INCHIKEY_INVALID_STD_INCHI As Integer = 21
-        Public Shared ReadOnly MAX_NUM_STEREO_ATOM_NEIGH As Integer = 4
-        Public Shared ReadOnly MAX_NUM_STEREO_BONDS As Integer = 3
-        Public Shared ReadOnly INCHI_NUM As Integer = 2
+        Public Const FIND_RING_SYSTEMS As Integer = 1
+        Public Const FIND_RINS_SYSTEMS_DISTANCES As Integer = 0
+        Public Const FIX_DOCANON_RETCODE_RESET_BUG As Integer = 1
+        Public Const MAXVAL As Integer = 20
+        Public Const ATOM_EL_LEN As Integer = 6
+        Public Const NUM_H_ISOTOPES As Integer = 3
+        Public Const ISOTOPIC_SHIFT_FLAG As Integer = 10000
+        Public Const ISOTOPIC_SHIFT_MAX As Integer = 100
+        Public Const NO_ATOM As Integer = -1
+        Public Const INCHI_STRING_PREFIX As String = "InChI="
+        Public Const LEN_INCHI_STRING_PREFIX As Integer = 6
+        Public Const STR_ERR_LEN As Integer = 256
+        Public Const INCHIKEY_OK As Integer = 0
+        Public Const INCHIKEY_UNKNOWN_ERROR As Integer = 1
+        Public Const INCHIKEY_EMPTY_INPUT As Integer = 2
+        Public Const INCHIKEY_INVALID_INCHI_PREFIX As Integer = 3
+        Public Const INCHIKEY_NOT_ENOUGH_MEMORY As Integer = 4
+        Public Const INCHIKEY_INVALID_INCHI As Integer = 20
+        Public Const INCHIKEY_INVALID_STD_INCHI As Integer = 21
+        Public Const MAX_NUM_STEREO_ATOM_NEIGH As Integer = 4
+        Public Const MAX_NUM_STEREO_BONDS As Integer = 3
+        Public Const INCHI_NUM As Integer = 2
 
         ''' <summary>
         ''' Success; no errors or warnings </summary>
