@@ -127,7 +127,7 @@ Namespace IUPAC.InChI
         ''' </remarks>
         Public Property Hydrogen As InchiAtom()
 
-        Friend Shared Iterator Function ParseHAtoms(token As String) As IEnumerable(Of InchiAtom)
+        Public Shared Iterator Function ParseHAtoms(token As String) As IEnumerable(Of InchiAtom)
             Dim parts = token.Split(","c)
 
             For Each part As String In parts
@@ -157,7 +157,7 @@ Namespace IUPAC.InChI
             Next
         End Function
 
-        Friend Shared Function ParseBounds(token As String) As InchiInput
+        Public Shared Function ParseBounds(token As String) As InchiInput
             Dim chars As New CharPtr(token)
             Dim i As Integer
             Dim j As Integer

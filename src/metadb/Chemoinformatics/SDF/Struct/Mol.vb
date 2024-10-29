@@ -70,6 +70,14 @@ Namespace SDF.Models
         Public Property Atoms As Atom()
         Public Property Bounds As Bound()
 
+        Sub New()
+        End Sub
+
+        Sub New(atoms As IEnumerable(Of Atom), bonds As IEnumerable(Of Bound))
+            _Atoms = atoms.ToArray
+            _Bounds = bonds.ToArray
+        End Sub
+
         Public Overrides Function ToString() As String
             Return $"{Atoms.Length} atoms with {Bounds.Length} bounds"
         End Function

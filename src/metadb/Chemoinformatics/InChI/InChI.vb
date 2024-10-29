@@ -165,9 +165,23 @@ Namespace IUPAC.InChI
         ''' </summary>
         ''' <returns></returns>
         Public Function GetStruct() As [Structure]
-            Dim atoms As New Dictionary(Of UInteger, Atom)
+            Dim atoms As New List(Of Atom)
+            Dim bonds As New List(Of Bound)
 
+            For Each atom As InchiAtom In Main.Struct.Atoms
+                Call atoms.Add(New Atom With {
+                    .Atom = atom.ElName,
+                    .Coordination = New Point3D(atom.X, atom.Y, atom.Z)
+                })
+            Next
+            For Each bond As InchiBond In Main.Struct.Bonds
+                Call bonds.Add(New Bound() With {
+                    .i = bond.Start.Index,
+                    .j = bond.End.Index
+                })
+            Next
 
+            Return New [Structure](atoms, bonds)
         End Function
 
         ''' <summary>
