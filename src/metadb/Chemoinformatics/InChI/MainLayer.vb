@@ -135,8 +135,8 @@ Namespace IUPAC.InChI
                     Yield New InchiAtom("H") With {.Index = Integer.Parse(part)}
                 ElseIf part.MatchPattern("\d+[-]\d+H") Then
                     With part.Split("-"c)
-                        Dim from As Integer = Integer.Parse(part(0))
-                        Dim [to] As Integer = CInt(Val(part(1)))
+                        Dim from As Integer = Integer.Parse(.Get(0))
+                        Dim [to] As Integer = CInt(Val(.Get(1)))
 
                         For i As Integer = from To [to]
                             Yield New InchiAtom("H") With {.Index = i}
@@ -144,11 +144,11 @@ Namespace IUPAC.InChI
                     End With
                 ElseIf part.IsPattern("\d+H\d+") Then
                     With part.Split("H"c)
-                        Dim index = Integer.Parse(part(0))
-                        Dim n = Integer.Parse(part(1))
+                        Dim index = Integer.Parse(.Get(0))
+                        Dim n = Integer.Parse(.Get(1))
 
                         For i As Integer = 1 To n
-                            Yield New InchiAtom("H") With {.Index = i}
+                            Yield New InchiAtom("H") With {.Index = index}
                         Next
                     End With
                 Else
