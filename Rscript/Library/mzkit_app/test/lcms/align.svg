@@ -65,52 +65,57 @@
   <text font-size="12.5" font-family="Microsoft YaHei, 微软雅黑" x="1107, 1119.2131, 1124.5537, 1132.3052, 1136.0039, 1140.7769, 1147.686, 1152.343, 1155.6694, " y="439, ">
 			M/Z ratio
 	</text>
-  <rect fill="#4682B4" x="207" y="398" width="8" height="27" />
-  <rect fill="#4682B4" x="323" y="407" width="8" height="18" />
-  <rect fill="#4682B4" x="334" y="352" width="8" height="73" />
-  <rect fill="#4682B4" x="461" y="396" width="8" height="29" />
-  <rect fill="#4682B4" x="484" y="369" width="8" height="56" />
-  <rect fill="#4682B4" x="494" y="391" width="8" height="34" />
-  <rect fill="#4682B4" x="609" y="408" width="8" height="17" />
-  <rect fill="#4682B4" x="651" y="337" width="8" height="88" />
-  <rect fill="#4682B4" x="750" y="399" width="8" height="26" />
-  <rect fill="#4682B4" x="759" y="226" width="8" height="199" />
-  <rect fill="#4682B4" x="770" y="100" width="8" height="325" />
-  <rect fill="#4682B4" x="850" y="400" width="8" height="25" />
-  <rect fill="#4682B4" x="906" y="390" width="8" height="35" />
-  <rect fill="#4682B4" x="961" y="285" width="8" height="140" />
-  <rect fill="#A52A2A" x="461" y="425" width="8" height="20" />
-  <rect fill="#A52A2A" x="494" y="425" width="8" height="28" />
-  <rect fill="#A52A2A" x="609" y="425" width="8" height="78" />
-  <rect fill="#A52A2A" x="759" y="425" width="8" height="152" />
-  <rect fill="#A52A2A" x="770" y="425" width="8" height="325" />
-  <rect fill="#A52A2A" x="780" y="425" width="8" height="22" />
-  <rect fill="#A52A2A" x="961" y="425" width="8" height="17" />
-  <text font-size="12.5" font-family="Segoe UI" x="317.50137, 324.23965, 330.97794, 333.6879, 340.42618, 347.16446, 353.90274, " y="350.99017, ">
+  <rect fill="#4682B4" x="210" y="398" width="2" height="27" />
+  <rect fill="#4682B4" x="326" y="407" width="2" height="18" />
+  <rect fill="#4682B4" x="337" y="352" width="2" height="73" />
+  <rect fill="#4682B4" x="464" y="396" width="2" height="29" />
+  <rect fill="#4682B4" x="487" y="369" width="2" height="56" />
+  <rect fill="#4682B4" x="497" y="391" width="2" height="34" />
+  <rect fill="#4682B4" x="612" y="408" width="2" height="17" />
+  <rect fill="#4682B4" x="654" y="337" width="2" height="88" />
+  <rect fill="#4682B4" x="753" y="399" width="2" height="26" />
+  <rect fill="#4682B4" x="762" y="226" width="2" height="199" />
+  <rect fill="#4682B4" x="773" y="100" width="2" height="325" />
+  <rect fill="#4682B4" x="853" y="400" width="2" height="25" />
+  <rect fill="#4682B4" x="909" y="390" width="2" height="35" />
+  <rect fill="#4682B4" x="964" y="285" width="2" height="140" />
+  <rect fill="#A52A2A" x="464" y="425" width="2" height="20" />
+  <rect fill="#A52A2A" x="497" y="425" width="2" height="28" />
+  <rect fill="#A52A2A" x="612" y="425" width="2" height="78" />
+  <rect fill="#A52A2A" x="762" y="425" width="2" height="152" />
+  <rect fill="#A52A2A" x="773" y="425" width="2" height="325" />
+  <rect fill="#A52A2A" x="783" y="425" width="2" height="22" />
+  <rect fill="#A52A2A" x="964" y="425" width="2" height="17" />
+  <text font-size="12.5" font-family="Segoe UI" x="314.50137, 321.23965, 327.97794, 330.6879, 337.42618, 344.16446, 350.90274, " y="350.99017, ">
 			95.2263
 	</text>
-  <text font-size="12.5" font-family="Segoe UI" x="631.50317, 638.24146, 644.97974, 651.71802, 654.42798, 661.16626, 667.90454, 674.64282, " y="335.65213, ">
+  <text font-size="12.5" font-family="Segoe UI" x="628.50317, 635.24146, 641.97974, 648.71802, 651.42798, 658.16626, 664.90454, 671.64282, " y="335.65213, ">
 			125.0227
 	</text>
-  <text font-size="12.5" font-family="Segoe UI" x="740.49292, 747.2312, 753.96948, 760.70776, 763.41772, 770.15601, 776.89429, 783.63257, " y="224.85864, ">
+  <text font-size="12.5" font-family="Segoe UI" x="737.49292, 744.2312, 750.96948, 757.70776, 760.41772, 767.15601, 773.89429, 780.63257, " y="224.85864, ">
 			135.1541
 	</text>
-  <text font-size="12.5" font-family="Segoe UI" x="749.87396, 756.61224, 763.35052, 770.08881, 772.79877, 779.53705, 786.27533, 793.01361, " y="98.875, ">
+  <text font-size="12.5" font-family="Segoe UI" x="746.87396, 753.61224, 760.35052, 767.08881, 769.79877, 776.53705, 783.27533, 790.01361, " y="98.875, ">
 			136.1409
 	</text>
-  <text font-size="12.5" font-family="Segoe UI" x="941.25677, 947.99506, 954.73334, 961.47162, 964.18158, 970.91986, 977.65814, 984.39642, " y="283.55463, ">
+  <text font-size="12.5" font-family="Segoe UI" x="938.25677, 944.99506, 951.73334, 958.47162, 961.18158, 967.91986, 974.65814, 981.39642, " y="283.55463, ">
 			154.1169
 	</text>
-  <text font-size="12.5" font-family="Segoe UI" x="590.48395, 597.22223, 603.96051, 610.69879, 613.40875, 620.14703, 626.88531, 633.6236, " y="515, ">
+  <text font-size="12.5" font-family="Segoe UI" x="587.48395, 594.22223, 600.96051, 607.69879, 610.40875, 617.14703, 623.88531, 630.6236, " y="515, ">
 			121.0951
 	</text>
-  <text font-size="12.5" font-family="Segoe UI" x="740.48395, 747.22223, 753.96051, 760.69879, 763.40875, 770.14703, 776.88531, 783.6236, " y="589, ">
+  <text font-size="12.5" font-family="Segoe UI" x="737.48395, 744.22223, 750.96051, 757.69879, 760.40875, 767.14703, 773.88531, 780.6236, " y="589, ">
 			135.1541
 	</text>
-  <text font-size="12.5" font-family="Segoe UI" x="750.35895, 757.09723, 763.83551, 770.57379, 773.28375, 780.02203, 786.76031, 793.4986, " y="762, ">
+  <text font-size="12.5" font-family="Segoe UI" x="747.35895, 754.09723, 760.83551, 767.57379, 770.28375, 777.02203, 783.76031, 790.4986, " y="762, ">
 			136.1409
 	</text>
-  <text font-size="25" font-family="Microsoft YaHei, 微软雅黑" x="628.82849, 641.95105, 653.52332, " y="90.375, ">
-			vs 
+  <rect fill="#4682B4" x="100" y="65" width="20" height="20" />
+  <text font-size="12.5" font-family="Segoe UI" x="125, 134.42383, 141.4978, 148.03467, 152.38037, " y="74, ">
+			Query
+	</text>
+  <rect fill="#A52A2A" x="100" y="95" width="20" height="20" />
+  <text font-size="12.5" font-family="Segoe UI" x="125, 132.47681, 139.01367, 142.92603, 149.46289, 153.80859, 160.34546, 167.41943, 173.19336, " y="102, ">
+			Reference
 	</text>
 </svg>
