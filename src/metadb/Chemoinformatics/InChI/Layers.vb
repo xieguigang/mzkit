@@ -125,8 +125,8 @@ Namespace IUPAC.InChI
         Friend Shared Function ParseMainLayer(tokens As InChIStringReader) As MainLayer
             Dim main As New MainLayer With {
                 .Formula = tokens.GetByPrefix(ASCII.NUL),
-                .Bounds = MainLayer.ParseBounds(tokens.GetByPrefix("c"c)).ToArray,
-                .Hydrogen = tokens.GetByPrefix("h"c)
+                .Struct = MainLayer.ParseBounds(tokens.GetByPrefix("c"c)),
+                .Hydrogen = MainLayer.ParseHAtoms(tokens.GetByPrefix("h"c)).ToArray
             }
 
             Return main

@@ -165,6 +165,8 @@ Namespace IUPAC.InChI
         ''' </summary>
         ''' <returns></returns>
         Public Function GetStruct() As [Structure]
+            Dim atoms As New Dictionary(Of UInteger, Atom)
+
 
         End Function
 

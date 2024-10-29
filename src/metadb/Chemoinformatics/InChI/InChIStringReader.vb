@@ -3,7 +3,7 @@ Imports ASCII = Microsoft.VisualBasic.Text.ASCII
 
 Namespace IUPAC.InChI
 
-    Public Class InChIStringReader
+    Friend Class InChIStringReader
 
         ReadOnly prefixData As String()
 
