@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7f4791419fc86091299cf295a716fc31, assembly\mzPackExtensions\MZWork\Raw.vb"
+﻿#Region "Microsoft.VisualBasic::a60c1e66fef27e9446787079d404a6a3, assembly\mzPackExtensions\MZWork\Raw.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 235
-    '    Code Lines: 164 (69.79%)
-    ' Comment Lines: 31 (13.19%)
+    '   Total Lines: 289
+    '    Code Lines: 205 (70.93%)
+    ' Comment Lines: 40 (13.84%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 40 (17.02%)
-    '     File Size: 8.07 KB
+    '   Blank Lines: 44 (15.22%)
+    '     File Size: 10.17 KB
 
 
     '     Class Raw
@@ -55,6 +55,7 @@
     ' 
     '         Function: FindMs1Scan, FindMs2Scan, GetCacheFileSize, GetLoadedMzpack, GetMs1Scans
     '                   GetMs2Scans, GetSnapshot, GetUVscans, LoadMzpack, UnloadMzpack
+    '                   UseMzPack
     ' 
     '         Sub: loadMemory, SaveAs
     ' 

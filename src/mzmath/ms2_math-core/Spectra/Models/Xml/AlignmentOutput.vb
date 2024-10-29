@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c1ee83641b825ca2b4b533a2d1378790, mzmath\ms2_math-core\Spectra\Models\Xml\AlignmentOutput.vb"
+﻿#Region "Microsoft.VisualBasic::e4058757dee60ba6f023bdd25e8c0f6c, mzmath\ms2_math-core\Spectra\Models\Xml\AlignmentOutput.vb"
 
     ' Author:
     ' 
@@ -37,22 +37,23 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 91
-    '    Code Lines: 67 (73.63%)
-    ' Comment Lines: 8 (8.79%)
+    '   Total Lines: 137
+    '    Code Lines: 100 (72.99%)
+    ' Comment Lines: 15 (10.95%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 16 (17.58%)
-    '     File Size: 3.20 KB
+    '   Blank Lines: 22 (16.06%)
+    '     File Size: 4.97 KB
 
 
     '     Class AlignmentOutput
     ' 
-    '         Properties: alignments, cosine, entropy, forward, jaccard
-    '                     mean, mirror, nhits, query, reference
-    '                     reverse
+    '         Properties: alignment_str, alignments, cosine, entropy, forward
+    '                     jaccard, mean, mirror, nhits, query
+    '                     reference, reverse
     ' 
-    '         Function: CreateLinearMatrix, GetAlignmentMirror, ToString
+    '         Function: CreateLinearMatrix, GetAlignmentMirror, GetHitsMzPeaks, ParseAlignment, ParseAlignmentLinearMatrix
+    '                   ToString
     ' 
     ' 
     ' /********************************************************************************/
@@ -154,6 +155,13 @@ Namespace Spectra.Xml
             With New Ms2AlignMatrix(alignments)
                 Dim q = .GetQueryMatrix.With(Sub(a) a.name = query?.id)
                 Dim r = .GetReferenceMatrix.With(Sub(a) a.name = reference?.id)
+
+                If q.name.StringEmpty(, True) Then
+                    q.name = "Query"
+                End If
+                If r.name.StringEmpty(, True) Then
+                    r.name = "Reference"
+                End If
 
                 Return (q, r)
             End With

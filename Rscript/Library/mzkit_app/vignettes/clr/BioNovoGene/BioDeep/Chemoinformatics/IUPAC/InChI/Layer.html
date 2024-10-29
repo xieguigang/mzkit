@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>BioNovoGene.BioDeep.Chemoinformatics.IUPAC.InChI.Layer</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <table style="width: 100%;">
+            <tr>
+                <td>Layer {BioNovoGene.BioDeep.Chemoinformatics.IUPAC.InChI}</td>
+                <td style="text-align: right;">.NET clr documentation</td>
+            </tr>
+        </table>
+
+        <h2>Layer</h2>
+
+        <h3>Description</h3>
+
+        <h3>Layers of the identifier</h3>
+
+<p><code>{InChI version}</code></p>
+
+<p>#### 1. Main Layer (M): 
+ + <code>/{formula}</code> 
+ + <code>/c{connections}</code>
+ + <code>/h{H_atoms}</code></p>
+
+<p>#### 2. Charge Layer 
+ + <code>/q{charge}</code> 
+ + <code>/p{protons}</code></p>
+
+<p>#### 3. Stereo Layer 
+ + <code>/b{stereo:dbond}</code> 
+ + <code>/t{stereo:sp3}</code> 
+ + <code>/m{stereo:sp3:inverted}</code> 
+ + <code>/s{stereo:type (1=abs, 2=rel, 3=rac)}</code></p>
+
+<p>#### 4. Isotopic Layer (MI): 
+ + <code>/i{isotopicatoms}*</code> 
+ + <code>/h{isotopic:exchangeable_H}</code> 
+ + <code>/b{isotopic:stereo:dbond}</code> 
+ + <code>/t{isotopic:stereo:sp3}</code> 
+ + <code>/m{isotopic:stereo:sp3:inverted}</code> 
+ + <code>/s{isotopic:stereo:type (1=abs, 2=rel, 3=rac)}</code></p>
+
+<p>#### 5. Fixed H Layer (F): 
+ + <code>/f{fixed_Hformula}*</code> 
+ + <code>/h{fixed_H:H_fixed}</code> 
+ + <code>/q{fixed_H:charge}</code> 
+ + <code>/b{fixed_H:stereo:dbond}</code> 
+ + <code>/t{fixed_H:stereo:sp3}</code> 
+ + <code>/m{fixed_H:stereo:sp3:inverted}</code> 
+ + <code>/s{fixed_H:stereo:type (1=abs, 2=rel, 3=rac)}</code></p>
+
+<p>### (6.) Fixed/Isotopic Combination (FI) 
+ + <code>/i{fixed_H:isotopic:atoms}*</code> 
+ + <code>/b{fixed_H:isotopic:stereo:dbond}</code> 
+ + <code>/t{fixed_H:isotopic:stereo:sp3}</code> 
+ + <code>/m{fixed_H:isotopic:stereo:sp3:inverted}</code> 
+ + <code>/s{fixed_H:isotopic:stereo:type (1=abs, 2=rel, 3=rac)}</code> 
+ + <code>/o{transposition}</code></p>
+
+        <h3>Declare</h3>        
+
+        <pre>
+            <code id="clr_ts">
+# namespace BioNovoGene.BioDeep.Chemoinformatics.IUPAC.InChI
+export class Layer {
+}
+</code>
+        </pre>
+
+        <h3>.NET clr type reference tree</h3>
+
+        this clr type has no other .net clr type reference.
+
+
+        <hr />
+        <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a
+                href="../{$package}.html">Index</a>]
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
+<script type="text/javascript" src="../../_assets/highlights.js"></script>
+<script type="text/javascript">r_highlights("clr_ts");</script>
+
+</html>

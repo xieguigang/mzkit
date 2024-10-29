@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::682c33fc34a1e47790a7f96d6844a7ce, metadb\MoNA\MSP\MspReader.vb"
+﻿#Region "Microsoft.VisualBasic::d9a0ed8e83f821fb97d372ea54b2e92d, metadb\MoNA\MSP\MspReader.vb"
 
     ' Author:
     ' 
@@ -37,18 +37,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 47
-    '    Code Lines: 35 (74.47%)
-    ' Comment Lines: 5 (10.64%)
+    '   Total Lines: 52
+    '    Code Lines: 39 (75.00%)
+    ' Comment Lines: 5 (9.62%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 7 (14.89%)
-    '     File Size: 1.78 KB
+    '   Blank Lines: 8 (15.38%)
+    '     File Size: 1.91 KB
 
 
     ' Module MspReader
     ' 
-    '     Function: GetMetadata, ParseFile, ParseSpectrumData
+    '     Function: GetMetadata, GetSpectra, ParseFile, ParseSpectrumData
     ' 
     ' /********************************************************************************/
 

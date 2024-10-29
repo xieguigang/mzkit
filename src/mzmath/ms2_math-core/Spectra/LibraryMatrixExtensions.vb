@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c271429d3c6d9e5d3e6a3054c5f66aa3, mzmath\ms2_math-core\Spectra\LibraryMatrixExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::64d9d1f71fe8d95e86d8c69e801fbac0, mzmath\ms2_math-core\Spectra\LibraryMatrixExtensions.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 257
-    '    Code Lines: 160 (62.26%)
-    ' Comment Lines: 68 (26.46%)
+    '   Total Lines: 259
+    '    Code Lines: 162 (62.55%)
+    ' Comment Lines: 68 (26.25%)
     '    - Xml Docs: 72.06%
     ' 
-    '   Blank Lines: 29 (11.28%)
-    '     File Size: 10.35 KB
+    '   Blank Lines: 29 (11.20%)
+    '     File Size: 10.47 KB
 
 
     '     Module LibraryMatrixExtensions

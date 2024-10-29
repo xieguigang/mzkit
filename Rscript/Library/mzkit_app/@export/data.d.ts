@@ -10,8 +10,17 @@
 */
 declare namespace data {
    /**
-     * @param default default value Is ``'Not_Assigned'``.
-     * @param env default value Is ``null``.
+    * make a tuple list via grouping of the spectrum data via the ROI id inside the metadata list
+    * 
+    * 
+     * @param peakms2 a collection of the spectrum data to make spectrum data grouping.
+     * @param default the default ROI id for make the data groups if the metadata 
+     *  is null or the ``ROI`` id tag is missing from the spectrum object metadata.
+     * 
+     * + default value Is ``'Not_Assigned'``.
+     * @param env -
+     * 
+     * + default value Is ``null``.
    */
    function groupBy_ROI(peakms2: any, default?: string, env?: object): any;
    /**
@@ -64,11 +73,13 @@ declare namespace data {
         * @param name_chrs just returns the ROI names character?
         * 
         * + default value Is ``false``.
+        * @param prefix 
+        * + default value Is ``''``.
         * @param env -
         * 
         * + default value Is ``null``.
       */
-      function ROI_names(ROIlist: any, name_chrs?: boolean, env?: object): object;
+      function ROI_names(ROIlist: any, name_chrs?: boolean, prefix?: string, env?: object): object;
    }
    /**
     * get the size of the target ms peaks

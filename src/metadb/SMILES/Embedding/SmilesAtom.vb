@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d1fd1cbc67153d8c61383c29b5c8253a, metadb\SMILES\Embedding\SmilesAtom.vb"
+﻿#Region "Microsoft.VisualBasic::5261d05035e497ce2f1fdfe0338eb22f, metadb\SMILES\Embedding\SmilesAtom.vb"
 
     ' Author:
     ' 
@@ -37,19 +37,21 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 14
-    '    Code Lines: 10 (71.43%)
-    ' Comment Lines: 3 (21.43%)
+    '   Total Lines: 31
+    '    Code Lines: 19 (61.29%)
+    ' Comment Lines: 8 (25.81%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 1 (7.14%)
-    '     File Size: 430 B
+    '   Blank Lines: 4 (12.90%)
+    '     File Size: 996 B
 
 
     '     Class SmilesAtom
     ' 
-    '         Properties: atom, connected, group, id, ion_charge
-    '                     links
+    '         Properties: aromatic, atom, connected, graph_id, group
+    '                     id, ion_charge, links
+    ' 
+    '         Function: ToString
     ' 
     ' 
     ' /********************************************************************************/

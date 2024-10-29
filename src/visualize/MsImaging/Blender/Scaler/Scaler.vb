@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9624b1af122078fa3f61d437451b4328, visualize\MsImaging\Blender\Scaler\Scaler.vb"
+﻿#Region "Microsoft.VisualBasic::58f48d22b016436b8b25f5ee94416377, visualize\MsImaging\Blender\Scaler\Scaler.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 131
-    '    Code Lines: 106 (80.92%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 134
+    '    Code Lines: 106 (79.10%)
+    ' Comment Lines: 3 (2.24%)
+    '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 25 (19.08%)
-    '     File Size: 5.43 KB
+    '   Blank Lines: 25 (18.66%)
+    '     File Size: 5.51 KB
 
 
     '     Class Scaler

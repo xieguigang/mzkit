@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4db361f916fe1dedc5b5e2fc54575382, mzmath\TargetedMetabolomics\MRM\IonPair.vb"
+﻿#Region "Microsoft.VisualBasic::239efa7709029c3cb88e14c8e16412eb, mzmath\TargetedMetabolomics\MRM\IonPair.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 106
-    '    Code Lines: 71 (66.98%)
-    ' Comment Lines: 22 (20.75%)
-    '    - Xml Docs: 95.45%
+    '   Total Lines: 117
+    '    Code Lines: 71 (60.68%)
+    ' Comment Lines: 33 (28.21%)
+    '    - Xml Docs: 96.97%
     ' 
-    '   Blank Lines: 13 (12.26%)
-    '     File Size: 4.36 KB
+    '   Blank Lines: 13 (11.11%)
+    '     File Size: 4.66 KB
 
 
     '     Class IonPair

@@ -1,32 +1,97 @@
-﻿
-''' JNA-InChI - Library for calling InChI from Java
-''' Copyright © 2018 Daniel Lowe
-''' 
-''' This library is free software; you can redistribute it and/or
-''' modify it under the terms of the GNU Lesser General Public
-''' License as published by the Free Software Foundation; either
-''' version 2.1 of the License, or (at your option) any later version.
-''' 
-''' This program is distributed in the hope that it will be useful,
-''' but WITHOUT ANY WARRANTY; without even the implied warranty of
-''' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-''' GNU Lesser General Public License for more details.
-''' 
-''' You should have received a copy of the GNU Lesser General Public License
-''' along with this program.  If not, see </>.
+﻿#Region "Microsoft.VisualBasic::480de6069689ff89fcb0dfe5e4e764f8, metadb\Chemoinformatics\InChI\Models\InchiStereo.vb"
+
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
+
+
+
+' /********************************************************************************/
+
+' Summaries:
+
+
+' Code Statistics:
+
+'   Total Lines: 181
+'    Code Lines: 67 (37.02%)
+' Comment Lines: 99 (54.70%)
+'    - Xml Docs: 88.89%
+' 
+'   Blank Lines: 15 (8.29%)
+'     File Size: 7.91 KB
+
+
+'     Class InchiStereo
+' 
+'         Properties: Atoms, CentralAtom, Parity, Type
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: createAllenalStereo, createDoubleBondStereo, createTetrahedralStereo
+' 
+' 
+' /********************************************************************************/
+
+#End Region
+
+
+' JNA-InChI - Library for calling InChI from Java
+' Copyright © 2018 Daniel Lowe
+' 
+' This library is free software; you can redistribute it and/or
+' modify it under the terms of the GNU Lesser General Public
+' License as published by the Free Software Foundation; either
+' version 2.1 of the License, or (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU Lesser General Public License for more details.
+' 
+' You should have received a copy of the GNU Lesser General Public License
+' along with this program.  If not, see </>.
 
 Namespace IUPAC.InChI
+
     Public Class InchiStereo
 
         ''' <summary>
         ''' Use when a stereocentre's configuration references an implicit hydrogen 
         ''' </summary>
-        Public Shared ReadOnly STEREO_IMPLICIT_H As InchiAtom = New InchiAtom("H")
+        Public Shared ReadOnly STEREO_IMPLICIT_H As New InchiAtom("H")
 
-        Private ReadOnly atomsField As InchiAtom()
-        Private ReadOnly centralAtomField As InchiAtom
-        Private ReadOnly typeField As InchiStereoType
-        Private ReadOnly parityField As InchiStereoParity
+        Public Overridable ReadOnly Property Atoms As InchiAtom()
+        ''' <summary>
+        ''' Null for <seealso cref="InchiStereoType.DoubleBond"/>
+        ''' @return
+        ''' </summary>
+        Public Overridable ReadOnly Property CentralAtom As InchiAtom
+        Public Overridable ReadOnly Property Type As InchiStereoType
+        Public Overridable ReadOnly Property Parity As InchiStereoParity
 
 
         Friend Sub New(atoms As InchiAtom(), centralAtom As InchiAtom, type As InchiStereoType, parity As InchiStereoParity)
@@ -50,10 +115,11 @@ Namespace IUPAC.InChI
             If type IsNot InchiStereoType.DoubleBond AndAlso centralAtom Is Nothing Then
                 Throw New ArgumentException("centralAtom was null")
             End If
-            atomsField = atoms
-            centralAtomField = centralAtom
-            typeField = type
-            parityField = parity
+
+            _atoms = atoms
+            _centralAtom = centralAtom
+            _type = type
+            _parity = parity
         End Sub
 
         ''' <summary>
@@ -66,7 +132,13 @@ Namespace IUPAC.InChI
         ''' <param name="atom4"> </param>
         ''' <param name="parity">
         ''' @return </param>
-        Public Shared Function createTetrahedralStereo(centralAtom As InchiAtom, atom1 As InchiAtom, atom2 As InchiAtom, atom3 As InchiAtom, atom4 As InchiAtom, parity As InchiStereoParity) As InchiStereo
+        Public Shared Function createTetrahedralStereo(centralAtom As InchiAtom,
+                                                       atom1 As InchiAtom,
+                                                       atom2 As InchiAtom,
+                                                       atom3 As InchiAtom,
+                                                       atom4 As InchiAtom,
+                                                       parity As InchiStereoParity) As InchiStereo
+
             Return New InchiStereo(New InchiAtom() {atom1, atom2, atom3, atom4}, centralAtom, InchiStereoType.Tetrahedral, parity)
         End Function
 
@@ -109,7 +181,12 @@ Namespace IUPAC.InChI
         ''' <param name="atom4"> </param>
         ''' <param name="parity">
         ''' @return </param>
-        Public Shared Function createDoubleBondStereo(atom1 As InchiAtom, atom2 As InchiAtom, atom3 As InchiAtom, atom4 As InchiAtom, parity As InchiStereoParity) As InchiStereo
+        Public Shared Function createDoubleBondStereo(atom1 As InchiAtom,
+                                                      atom2 As InchiAtom,
+                                                      atom3 As InchiAtom,
+                                                      atom4 As InchiAtom,
+                                                      parity As InchiStereoParity) As InchiStereo
+
             If STEREO_IMPLICIT_H Is atom1 OrElse STEREO_IMPLICIT_H Is atom2 OrElse STEREO_IMPLICIT_H Is atom3 OrElse STEREO_IMPLICIT_H Is atom4 Then
                 Throw New ArgumentException("Double bond stereo should use non-implicit hydrogn atoms")
             End If
@@ -144,38 +221,16 @@ Namespace IUPAC.InChI
         ''' <param name="atom4"> </param>
         ''' <param name="parity">
         ''' @return </param>
-        Public Shared Function createAllenalStereo(centralAtom As InchiAtom, atom1 As InchiAtom, atom2 As InchiAtom, atom3 As InchiAtom, atom4 As InchiAtom, parity As InchiStereoParity) As InchiStereo
+        Public Shared Function createAllenalStereo(centralAtom As InchiAtom,
+                                                   atom1 As InchiAtom,
+                                                   atom2 As InchiAtom,
+                                                   atom3 As InchiAtom,
+                                                   atom4 As InchiAtom,
+                                                   parity As InchiStereoParity) As InchiStereo
+
             Return New InchiStereo(New InchiAtom() {atom1, atom2, atom3, atom4}, centralAtom, InchiStereoType.Allene, parity)
         End Function
-
-        Public Overridable ReadOnly Property Atoms As InchiAtom()
-            Get
-                Return atomsField
-            End Get
-        End Property
-
-        ''' <summary>
-        ''' Null for <seealso cref="InchiStereoType.DoubleBond"/>
-        ''' @return
-        ''' </summary>
-        Public Overridable ReadOnly Property CentralAtom As InchiAtom
-            Get
-                Return centralAtomField
-            End Get
-        End Property
-
-        Public Overridable ReadOnly Property Type As InchiStereoType
-            Get
-                Return typeField
-            End Get
-        End Property
-
-        Public Overridable ReadOnly Property Parity As InchiStereoParity
-            Get
-                Return parityField
-            End Get
-        End Property
-
     End Class
 
 End Namespace
+

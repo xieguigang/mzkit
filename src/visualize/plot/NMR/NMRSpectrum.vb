@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::28f6bff2977537fa1420c083ca43183c, visualize\plot\NMR\NMRSpectrum.vb"
+﻿#Region "Microsoft.VisualBasic::e9ef4afddc44a14b419dcaa1483a16ee, visualize\plot\NMR\NMRSpectrum.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 76
-    '    Code Lines: 61 (80.26%)
-    ' Comment Lines: 9 (11.84%)
+    '   Total Lines: 102
+    '    Code Lines: 86 (84.31%)
+    ' Comment Lines: 9 (8.82%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 6 (7.89%)
-    '     File Size: 2.59 KB
+    '   Blank Lines: 7 (6.86%)
+    '     File Size: 3.72 KB
 
 
     ' Class NMRSpectrum

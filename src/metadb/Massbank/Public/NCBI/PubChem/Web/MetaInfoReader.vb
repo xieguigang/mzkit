@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d03b2c81095241b8599d76b2e50efcf9, metadb\Massbank\Public\NCBI\PubChem\Web\MetaInfoReader.vb"
+﻿#Region "Microsoft.VisualBasic::069f3faa50f24e659dddea69b3ca2741, metadb\Massbank\Public\NCBI\PubChem\Web\MetaInfoReader.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 416
-    '    Code Lines: 348 (83.65%)
-    ' Comment Lines: 19 (4.57%)
+    '   Total Lines: 418
+    '    Code Lines: 350 (83.73%)
+    ' Comment Lines: 19 (4.55%)
     '    - Xml Docs: 78.95%
     ' 
-    '   Blank Lines: 49 (11.78%)
-    '     File Size: 18.83 KB
+    '   Blank Lines: 49 (11.72%)
+    '     File Size: 19.01 KB
 
 
     '     Module MetaInfoReader

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8424885cb49620da3963836ff10e11f4, visualize\MsImaging\Analysis\IonStat.vb"
+﻿#Region "Microsoft.VisualBasic::a59e1b1bb82f88cc97b3482df23f02b7, mzmath\SpatialMath\IonStat.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 233
-    '    Code Lines: 120 (51.50%)
-    ' Comment Lines: 95 (40.77%)
-    '    - Xml Docs: 94.74%
+    '   Total Lines: 125
+    '    Code Lines: 46 (36.80%)
+    ' Comment Lines: 68 (54.40%)
+    '    - Xml Docs: 98.53%
     ' 
-    '   Blank Lines: 18 (7.73%)
-    '     File Size: 10.20 KB
+    '   Blank Lines: 11 (8.80%)
+    '     File Size: 5.37 KB
 
 
     ' Class IonStat
@@ -53,7 +53,7 @@
     '                 mzwidth, pixels, pvalue, Q1Intensity, Q2Intensity
     '                 Q3Intensity, rsd, sparsity
     ' 
-    '     Function: (+4 Overloads) DoStat
+    '     Function: DoStat
     ' 
     ' /********************************************************************************/
 

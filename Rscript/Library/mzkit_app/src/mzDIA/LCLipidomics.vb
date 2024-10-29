@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2fb3cc80c0c35b3dc53cd71e0abc80af, Rscript\Library\mzkit_app\src\mzDIA\LCLipidomics.vb"
+﻿#Region "Microsoft.VisualBasic::3654255922d0c06b97ad07d0b8c0dfb5, Rscript\Library\mzkit_app\src\mzDIA\LCLipidomics.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 11 (11.34%)
-    '     File Size: 4.01 KB
+    '     File Size: 3.99 KB
 
 
     ' Module LCLipidomics

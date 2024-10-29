@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::61d7e5c9279ec680837911dabd56c2b4, mzmath\ms2_math-core\Spectra\SpectraEncoder.vb"
+﻿#Region "Microsoft.VisualBasic::6cc64c7c4679d4754924d187b5f50290, mzmath\ms2_math-core\Spectra\SpectraEncoder.vb"
 
     ' Author:
     ' 
@@ -37,21 +37,21 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 69
-    '    Code Lines: 46 (66.67%)
-    ' Comment Lines: 15 (21.74%)
-    '    - Xml Docs: 100.00%
+    '   Total Lines: 203
+    '    Code Lines: 127 (62.56%)
+    ' Comment Lines: 50 (24.63%)
+    '    - Xml Docs: 88.00%
     ' 
-    '   Blank Lines: 8 (11.59%)
-    '     File Size: 2.66 KB
+    '   Blank Lines: 26 (12.81%)
+    '     File Size: 8.29 KB
 
 
     '     Module SpectraEncoder
     ' 
-    ' 
+    '         Function: CreateCentroidFragmentSet, DeconvoluteMS, DeconvoluteScan, SpectrumSum
     '         Delegate Function
     ' 
-    '             Function: Decode, GetEncoder, LibraryMatrix
+    '             Function: (+2 Overloads) Decode, GetEncoder, LibraryMatrix
     ' 
     ' 
     ' 
@@ -127,14 +127,16 @@ Namespace Spectra
         <Extension>
         Public Function CreateCentroidFragmentSet(fragments As IEnumerable(Of Double),
                                                   Optional centroid As Double = 0.1,
-                                                  Optional window_size As Double = 1) As MzPool
+                                                  Optional window_size As Double = 1,
+                                                  Optional verbose As Boolean = True) As MzPool
             Dim mzgroups = fragments _
                 .GroupBy(offset:=centroid) _
                 .Select(Function(a) Val(a.name)) _
                 .OrderBy(Function(mzi) mzi) _
                 .ToArray
-            Dim pool As New MzPool(mzgroups, win_size:=window_size)
-
+            Dim pool As New MzPool(mzgroups,
+                                   win_size:=window_size,
+                                   verbose:=verbose)
             Return pool
         End Function
 

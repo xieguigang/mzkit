@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f54453a94b664e6efe8a6424e4036046, visualize\plot\GCxGC\GCxGCHeatMap.vb"
+﻿#Region "Microsoft.VisualBasic::b81c88361889c0fc4305f9df04014bd8, visualize\plot\GCxGC\GCxGCHeatMap.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 139
-    '    Code Lines: 115 (82.73%)
-    ' Comment Lines: 3 (2.16%)
+    '   Total Lines: 168
+    '    Code Lines: 142 (84.52%)
+    ' Comment Lines: 4 (2.38%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 21 (15.11%)
-    '     File Size: 5.80 KB
+    '   Blank Lines: 22 (13.10%)
+    '     File Size: 7.01 KB
 
 
     ' Class GCxGCHeatMap

@@ -1,56 +1,56 @@
-﻿#Region "Microsoft.VisualBasic::6af0ae85b7b44d9708f24c4cac4cd858, metadb\Chemoinformatics\test\inchiTest.vb"
+﻿#Region "Microsoft.VisualBasic::13a512e5f8c2be77510816bf6c89ad2d, metadb\Chemoinformatics\test\inchiTest.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 28
-'    Code Lines: 11 (39.29%)
-' Comment Lines: 8 (28.57%)
-'    - Xml Docs: 0.00%
-' 
-'   Blank Lines: 9 (32.14%)
-'     File Size: 671 B
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module inchiTest
-' 
-'     Sub: Main
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 28
+    '    Code Lines: 11 (39.29%)
+    ' Comment Lines: 8 (28.57%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 9 (32.14%)
+    '     File Size: 665 B
+
+
+    ' Module inchiTest
+    ' 
+    '     Sub: Main
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -59,7 +59,7 @@ Imports BioNovoGene.BioDeep.Chemoinformatics.IUPAC.InChI
 
 Module inchiTest
 
-    Sub Main()
+    Sub Main2()
 
         '    8 9      10
         '    |  \    /
@@ -70,13 +70,17 @@ Module inchiTest
         '    H   12   11
         '
 
+        Dim bounds As InchiInput = MainLayer.ParseBounds("7-1-2(8)5-3(9)4(10)6(11)12-5")
+        Dim h = MainLayer.ParseHAtoms("2,5,7-10H,1H2").ToArray
+
+
         Dim ascorbicAcid As String = "InChI=1S/C6H8O6/c7-1-2(8)5-3(9)4(10)6(11)12-5/h2,5,7-10H,1H2/t2-,5+/m0/s1"
 
         Dim inchi As New InChI(ascorbicAcid)
 
         Dim key As String = inchi.Key
 
-        Dim bounds = MainLayer.ParseBounds("7-1-2(8)5-3(9)4(10)6(11)12-5").ToArray
+
 
 
         Pause()

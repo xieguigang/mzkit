@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::29d84d463e5aff669f423f2040986ba6, visualize\plot\NMR\fidDataPlot.vb"
+﻿#Region "Microsoft.VisualBasic::4fdad3b6a0ce4f90a6c8847661ee3c29, visualize\plot\NMR\fidDataPlot.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 53
-    '    Code Lines: 47 (88.68%)
+    '   Total Lines: 79
+    '    Code Lines: 72 (91.14%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 6 (11.32%)
-    '     File Size: 1.94 KB
+    '   Blank Lines: 7 (8.86%)
+    '     File Size: 3.07 KB
 
 
     ' Class fidDataPlot

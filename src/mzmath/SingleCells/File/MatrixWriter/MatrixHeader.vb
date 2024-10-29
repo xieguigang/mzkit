@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::402266705d2d569cf460be9cf1fa22ca, mzmath\SingleCells\File\MatrixWriter\MatrixHeader.vb"
+﻿#Region "Microsoft.VisualBasic::303977a35870ad94a118407080d1150a, mzmath\SingleCells\File\MatrixWriter\MatrixHeader.vb"
 
     ' Author:
     ' 
@@ -37,19 +37,22 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 52
-    '    Code Lines: 16 (30.77%)
-    ' Comment Lines: 29 (55.77%)
+    '   Total Lines: 59
+    '    Code Lines: 21 (35.59%)
+    ' Comment Lines: 29 (49.15%)
     '    - Xml Docs: 96.55%
     ' 
-    '   Blank Lines: 7 (13.46%)
-    '     File Size: 1.89 KB
+    '   Blank Lines: 9 (15.25%)
+    '     File Size: 2.21 KB
 
 
-    ' Class MatrixHeader
+    '     Class MatrixHeader
     ' 
-    '     Properties: featureSize, matrixType, mz, mzmax, mzmin
-    '                 numSpots, tolerance
+    '         Properties: featureSize, matrixType, mz, mzmax, mzmin
+    '                     numSpots, tolerance
+    ' 
+    '         Function: ToString
+    ' 
     ' 
     ' /********************************************************************************/
 

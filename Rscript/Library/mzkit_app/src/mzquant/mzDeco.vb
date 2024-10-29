@@ -1,69 +1,65 @@
-﻿#Region "Microsoft.VisualBasic::59a0f011b71b9720bce41f32807b7746, Rscript\Library\mzkit_app\src\mzquant\mzDeco.vb"
+﻿#Region "Microsoft.VisualBasic::ca439f828ca96a31e741f5a6f3ec9a9f, Rscript\Library\mzkit_app\src\mzquant\mzDeco.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 1021
-'    Code Lines: 680 (66.60%)
-' Comment Lines: 219 (21.45%)
-'    - Xml Docs: 84.02%
-' 
-'   Blank Lines: 122 (11.95%)
-'     File Size: 42.02 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module mzDeco
-' 
-'     Function: adjust_to_seconds, dumpPeaks, extractAlignedPeaks, get_ionPeak, ms1Scans
-'               mz_deco, mz_groups, peakAlignment, peaksetMatrix, peakSubset
-'               peaktable, pull_xic, readPeakData, readPeaktable, readSamples
-'               readXcmsFeaturePeaks, readXcmsPeaks, readXIC, RI_calc, RI_reference
-'               writePeaktable, writeSamples, writeXIC, writeXIC1, xic_deco
-'               xic_dtw_list, xic_matrix_list, XICpool_func
-' 
-'     Sub: Main
-'     Class xic_deco_task
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Sub: Solve
-' 
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 1345
+    '    Code Lines: 895 (66.54%)
+    ' Comment Lines: 304 (22.60%)
+    '    - Xml Docs: 88.49%
+    ' 
+    '   Blank Lines: 146 (10.86%)
+    '     File Size: 56.26 KB
+
+
+    ' Module mzDeco
+    ' 
+    '     Function: adjust_to_seconds, convertDataframeToXcmsPeaks, create_peakset, Deconv, dumpPeaks
+    '               expression, get_ionPeak, getIonPeak, ms1Scans, mz_deco
+    '               mz_groups, peakAlignment, peaksetMatrix, peaksSetMatrix, peakSubset
+    '               peaktable, pull_xic, read_rtshifts, readPeakData, readPeaktable
+    '               readSamples, readXcmsFeaturePeaks, readXcmsPeaks, readXcmsTableFile, readXIC
+    '               RI_batch_join, RI_calc, RI_reference, to_matrix, writePeaktable
+    '               writeSamples, writeXcmsPeaktable, writeXIC, writeXIC1, xcms_peak
+    '               xic_deco, xic_dtw_list, xic_matrix_list, XICpool_func
+    ' 
+    '     Sub: Main
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -466,7 +462,10 @@ Module mzDeco
         Dim ID As String() = df.getRowNames.UniqueNames
         Dim npeaks As Integer() = CLRVector.asInteger(df!npeaks)
 
-        Call df.delete("ID", "mz", "mzmin", "mzmax", "rt", "rtmin", "rtmax", "RI", "npeaks", "xcms_id", "into")
+        ' 20241029 for avoid the unexpected data updates from the 
+        ' R# runtime symbols, we should make a data copy at here
+        df = New dataframe(df)
+        df.delete("ID", "mz", "mzmin", "mzmax", "rt", "rtmin", "rtmax", "RI", "npeaks", "xcms_id", "into")
 
         Dim offset As Integer
         Dim v As Dictionary(Of String, Double)

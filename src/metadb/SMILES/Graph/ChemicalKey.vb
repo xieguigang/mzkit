@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::db2e6fe1c09ac85d192fc92ba2c0ece9, metadb\SMILES\Graph\ChemicalKey.vb"
+﻿#Region "Microsoft.VisualBasic::f4416b5f6a2eb9100f1b6fb99190659f, metadb\SMILES\Graph\ChemicalKey.vb"
 
     ' Author:
     ' 
@@ -37,20 +37,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 18
-    '    Code Lines: 7 (38.89%)
-    ' Comment Lines: 7 (38.89%)
+    '   Total Lines: 23
+    '    Code Lines: 11 (47.83%)
+    ' Comment Lines: 7 (30.43%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 4 (22.22%)
-    '     File Size: 510 B
+    '   Blank Lines: 5 (21.74%)
+    '     File Size: 642 B
 
 
     ' Class ChemicalKey
     ' 
     '     Properties: bond
     ' 
-    '     Function: ToString
+    '     Function: AtomGroups, ToString
     ' 
     ' /********************************************************************************/
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1b2dbac03cdea1bf14bf198be23beae0, assembly\SpectrumTree\Pack\PackAlignment.vb"
+﻿#Region "Microsoft.VisualBasic::b1d05326031f2878e63569639084581f, assembly\SpectrumTree\Pack\PackAlignment.vb"
 
     ' Author:
     ' 
@@ -37,21 +37,21 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 148
-    '    Code Lines: 82 (55.41%)
-    ' Comment Lines: 51 (34.46%)
-    '    - Xml Docs: 80.39%
+    '   Total Lines: 217
+    '    Code Lines: 126 (58.06%)
+    ' Comment Lines: 70 (32.26%)
+    '    - Xml Docs: 78.57%
     ' 
-    '   Blank Lines: 15 (10.14%)
-    '     File Size: 5.97 KB
+    '   Blank Lines: 21 (9.68%)
+    '     File Size: 9.24 KB
 
 
     '     Class PackAlignment
     ' 
-    '         Properties: dotcutoff, libnames, size, spectrum
+    '         Properties: dotcutoff, libnames, parallel, size, spectrum
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: reportClusterHit, Search
+    '         Function: GetReferenceSpectrum, reportClusterHit, Search, SearchParallel, SearchSequential
     '         Structure ___tmp
     ' 
     ' 

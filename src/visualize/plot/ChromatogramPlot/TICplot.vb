@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::31c1e60be34774a5dc9af836d34205e5, visualize\plot\ChromatogramPlot\TICplot.vb"
+﻿#Region "Microsoft.VisualBasic::ce8f8685a40e7a765276a480b92cd9de, visualize\plot\ChromatogramPlot\TICplot.vb"
 
     ' Author:
     ' 
@@ -37,18 +37,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 338
-    '    Code Lines: 276 (81.66%)
-    ' Comment Lines: 10 (2.96%)
-    '    - Xml Docs: 40.00%
+    '   Total Lines: 425
+    '    Code Lines: 340 (80.00%)
+    ' Comment Lines: 26 (6.12%)
+    '    - Xml Docs: 69.23%
     ' 
-    '   Blank Lines: 52 (15.38%)
-    '     File Size: 13.54 KB
+    '   Blank Lines: 59 (13.88%)
+    '     File Size: 17.06 KB
 
 
     ' Class TICplot
     ' 
-    '     Constructor: (+1 Overloads) Sub New
+    '     Properties: sampleColors
+    ' 
+    '     Constructor: (+2 Overloads) Sub New
     ' 
     '     Function: colorProvider, GetLabels, newPen
     ' 

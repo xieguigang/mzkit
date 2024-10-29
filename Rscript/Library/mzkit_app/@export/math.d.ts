@@ -466,8 +466,11 @@ declare namespace math {
     * 
      * @param mz a numeric vector of the ion m/z value
      * @param rt the corresponding scan time rt vector.
+     * @param prefix 
+     * + default value Is ``''``.
      * @param env 
      * + default value Is ``null``.
+     * @return a character vector of the generated unique id based on the given m/z and rt ROI features.
    */
-   function xcms_id(mz: number, rt: number, env?: object): string;
+   function xcms_id(mz: number, rt: number, prefix?: string, env?: object): string;
 }

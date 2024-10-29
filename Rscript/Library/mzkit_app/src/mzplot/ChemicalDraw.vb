@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::85fad33928e52b05991f7d16ee02bf7f, Rscript\Library\mzkit_app\src\mzplot\ChemicalDraw.vb"
+﻿#Region "Microsoft.VisualBasic::1b3878e9cbb0794f59861cdd18de39f4, Rscript\Library\mzkit_app\src\mzplot\ChemicalDraw.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 30
-    '    Code Lines: 27 (90.00%)
+    '   Total Lines: 31
+    '    Code Lines: 28 (90.32%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 3 (10.00%)
-    '     File Size: 1.17 KB
+    '   Blank Lines: 3 (9.68%)
+    '     File Size: 1.22 KB
 
 
     ' Module ChemicalDraw

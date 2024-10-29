@@ -1,60 +1,60 @@
-﻿#Region "Microsoft.VisualBasic::73edbee682fe658ce50d2adb5db65538, visualize\plot\PeakAssign.vb"
+﻿#Region "Microsoft.VisualBasic::781ad163a221cba808a6572985bfa159, visualize\plot\PeakAssign.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 364
-'    Code Lines: 297 (81.59%)
-' Comment Lines: 14 (3.85%)
-'    - Xml Docs: 71.43%
-' 
-'   Blank Lines: 53 (14.56%)
-'     File Size: 15.97 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Class PeakAssign
-' 
-'     Constructor: (+1 Overloads) Sub New
-' 
-'     Function: DrawSpectrumPeaks, ResizeImages, ResizeThisWidth
-' 
-'     Sub: PlotInternal
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 401
+    '    Code Lines: 330 (82.29%)
+    ' Comment Lines: 17 (4.24%)
+    '    - Xml Docs: 76.47%
+    ' 
+    '   Blank Lines: 54 (13.47%)
+    '     File Size: 17.59 KB
+
+
+    ' Class PeakAssign
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: DrawSpectrumPeaks, ResizeImages, ResizeThisWidth
+    ' 
+    '     Sub: PlotInternal
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -2,10 +2,10 @@
 <html>
 
 <head>
-    <title>groupBy_ROI</title>
+    <title>make a tuple list via grouping of the spectrum data via the ROI id inside the metadata list</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-    <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
+    <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
 </head>
 
 <body>
@@ -18,11 +18,11 @@
             </tr>
         </table>
 
-        <h2>groupBy_ROI</h2>
+        <h2>make a tuple list via grouping of the spectrum data via the ROI id inside the metadata list</h2>
 
         <h3>Description</h3>
 
-        groupBy_ROI
+        
 
         <h3>Usage</h3>
 
@@ -35,6 +35,18 @@
 
         <table>
             
+<dt>peakms2</dt>
+<dd><p>a collection of the spectrum data to make spectrum data grouping.</p></dd>
+
+
+<dt>default</dt>
+<dd><p>the default ROI id for make the data groups if the metadata 
+ is null or the <code>ROI</code> id tag is missing from the spectrum object metadata. [as string]</p></dd>
+
+
+<dt>env</dt>
+<dd><p>[as <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Environment.html">Environment</a>]</p></dd>
+
         </table>
 
 
@@ -61,8 +73,8 @@
     </div>
 </body>
 
-<script type="text/javascript" src="https://mzkit.org/assets/js/R_syntax.js"></script>
-<script type="text/javascript" src="https://mzkit.org/assets/js/highlights.js"></script>
+<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
+<script type="text/javascript" src="../../_assets/highlights.js"></script>
 <script type="text/javascript">r_highlights("example_r");</script>
 
 </html>

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::862ceb84a70a022417f9268727dc7301, visualize\TissueMorphology\HEMap\SpatialRegister.vb"
+﻿#Region "Microsoft.VisualBasic::4b0c70acecaab5110cdcc47f5445187f, visualize\TissueMorphology\HEMap\SpatialRegister.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 142
-    '    Code Lines: 109 (76.76%)
-    ' Comment Lines: 18 (12.68%)
+    '   Total Lines: 168
+    '    Code Lines: 134 (79.76%)
+    ' Comment Lines: 18 (10.71%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 15 (10.56%)
-    '     File Size: 6.50 KB
+    '   Blank Lines: 16 (9.52%)
+    '     File Size: 7.63 KB
 
 
     '     Class SpatialRegister

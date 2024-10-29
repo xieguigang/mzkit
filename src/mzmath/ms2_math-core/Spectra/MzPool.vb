@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::55e2740bc93ed35ca0622a0fb4745bff, mzmath\ms2_math-core\Spectra\MzPool.vb"
+﻿#Region "Microsoft.VisualBasic::669d3ef89ed652b6665d2a17ff582fa7, mzmath\ms2_math-core\Spectra\MzPool.vb"
 
     ' Author:
     ' 
@@ -37,18 +37,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 95
-    '    Code Lines: 48 (50.53%)
-    ' Comment Lines: 35 (36.84%)
+    '   Total Lines: 101
+    '    Code Lines: 53 (52.48%)
+    ' Comment Lines: 35 (34.65%)
     '    - Xml Docs: 97.14%
     ' 
-    '   Blank Lines: 12 (12.63%)
-    '     File Size: 3.57 KB
+    '   Blank Lines: 13 (12.87%)
+    '     File Size: 3.80 KB
 
 
     '     Class MzPool
     ' 
-    '         Properties: raw, size
+    '         Properties: ionSet, raw, size
     ' 
     '         Constructor: (+2 Overloads) Sub New
     '         Function: Query, Search, SearchBest
@@ -108,8 +108,8 @@ Namespace Spectra
         End Property
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Sub New(mz As IEnumerable(Of Double), Optional win_size As Double = 1)
-            index = mz.ToArray.CreateMzIndex(win_size)
+        Sub New(mz As IEnumerable(Of Double), Optional win_size As Double = 1, Optional verbose As Boolean = True)
+            index = mz.ToArray.CreateMzIndex(win_size, verbose:=verbose)
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

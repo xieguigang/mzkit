@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>BioNovoGene.BioDeep.Chemoinformatics.IUPAC.InChI.MainLayer</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <table style="width: 100%;">
+            <tr>
+                <td>MainLayer {BioNovoGene.BioDeep.Chemoinformatics.IUPAC.InChI}</td>
+                <td style="text-align: right;">.NET clr documentation</td>
+            </tr>
+        </table>
+
+        <h2>MainLayer</h2>
+
+        <h3>Description</h3>
+
+        <p>主层（main layer）：以<code>1</code>表示</p>
+
+        <h3>Declare</h3>        
+
+        <pre>
+            <code id="clr_ts">
+# namespace BioNovoGene.BioDeep.Chemoinformatics.IUPAC.InChI
+export class MainLayer extends <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemoinformatics/IUPAC/InChI/Layer.html">Layer</a> {
+   # Chemical formula (no prefix). This is the only sublayer that must occur in every InChI.
+   Formula: string;
+   # Hydrogen atoms (prefix: "h"). Describes how many hydrogen atoms are connected to each of 
+   #  the other atoms.
+   Hydrogen: string;
+   # Atom connections (prefix: "c"). The atoms in the chemical formula (except for hydrogens) 
+   #  are numbered in sequence; this sublayer describes which atoms are connected by bonds to 
+   #  which other ones.
+   Struct: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemoinformatics/IUPAC/InChI/InchiInput.html">InchiInput</a>;
+}
+</code>
+        </pre>
+
+        <h3>.NET clr type reference tree</h3>
+
+        <ol>
+<li>this class extends from <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemoinformatics/IUPAC/InChI/Layer.html">Layer</a> class: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemoinformatics/IUPAC/InChI/Layer.html">Layer</a></li>
+<li>use by <i>property</i> member <code>Struct</code>: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemoinformatics/IUPAC/InChI/InchiInput.html">InchiInput</a></li>
+</ol>
+
+
+        <hr />
+        <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a
+                href="../{$package}.html">Index</a>]
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
+<script type="text/javascript" src="../../_assets/highlights.js"></script>
+<script type="text/javascript">r_highlights("clr_ts");</script>
+
+</html>

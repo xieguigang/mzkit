@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ae989306485c729034dd5dda172fc710, assembly\Comprehensive\GCxGC\GC2Dimensional.vb"
+﻿#Region "Microsoft.VisualBasic::a81570bf398bd234d0977f08418046a6, assembly\Comprehensive\GCxGC\GC2Dimensional.vb"
 
     ' Author:
     ' 
@@ -37,19 +37,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 281
-    '    Code Lines: 166 (59.07%)
-    ' Comment Lines: 82 (29.18%)
-    '    - Xml Docs: 90.24%
+    '   Total Lines: 201
+    '    Code Lines: 124 (61.69%)
+    ' Comment Lines: 58 (28.86%)
+    '    - Xml Docs: 87.93%
     ' 
-    '   Blank Lines: 33 (11.74%)
-    '     File Size: 10.70 KB
+    '   Blank Lines: 19 (9.45%)
+    '     File Size: 7.62 KB
 
 
     ' Module GC2Dimensional
     ' 
-    '     Function: Convert2dRT, (+3 Overloads) Demodulate2D, Demodulate2DShape, IsLecoGCMS, (+2 Overloads) scan1
-    '               tickInternal, ToMzPack
+    '     Function: (+3 Overloads) Demodulate2D, IsLecoGCMS, (+2 Overloads) scan1, ToMzPack
     ' 
     ' /********************************************************************************/
 

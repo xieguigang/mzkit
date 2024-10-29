@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f23516b198b6fd68395f153494493b1b, visualize\MsImaging\Plot\DualRegionUnionPlot.vb"
+﻿#Region "Microsoft.VisualBasic::93d8590d1324f3ccad4b871c51e9f96e, visualize\MsImaging\Plot\DualRegionUnionPlot.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 19 (13.57%)
-    '     File Size: 6.10 KB
+    '     File Size: 6.05 KB
 
 
     ' Class DualRegionUnionPlot

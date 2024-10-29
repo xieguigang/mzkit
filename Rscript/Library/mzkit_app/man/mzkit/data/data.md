@@ -8,7 +8,7 @@ m/z data operator module
 + [nsize](data/nsize.1) get the size of the target ms peaks
 + [search](data/search.1) search the target query spectra against a reference mzpack data file
 + [peakMs2](data/peakMs2.1) create a new ms2 peaks data object
-+ [groupBy_ROI](data/groupBy_ROI.1) 
++ [groupBy_ROI](data/groupBy_ROI.1) make a tuple list via grouping of the spectrum data via the ROI id inside the metadata list
 + [libraryMatrix](data/libraryMatrix.1) Create a library matrix object
 + [XIC_groups](data/XIC_groups.1) grouping of the ms1 scan points by m/z data
 + [XIC](data/XIC.1) get chromatogram data for a specific metabolite with given m/z from the ms1 scans data.

@@ -1,64 +1,64 @@
-﻿#Region "Microsoft.VisualBasic::72023ff346ce70c9e37b442c4880fc94, Rscript\Library\mzkit_app\src\mzkit\math\Math.vb"
+﻿#Region "Microsoft.VisualBasic::3e07e61d4e6f34f4bfa39bcf602aa74b, Rscript\Library\mzkit_app\src\mzkit\math\Math.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 1152
-'    Code Lines: 724 (62.85%)
-' Comment Lines: 280 (24.31%)
-'    - Xml Docs: 90.71%
-' 
-'   Blank Lines: 148 (12.85%)
-'     File Size: 49.09 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module MzMath
-' 
-'     Function: alignIntensity, centroid, centroidDataframe, (+2 Overloads) cosine, cosine_pairwise
-'               CreateMSMatrix, CreateMzIndex, createTolerance, defaultPrecursors, exact_mass
-'               getAlignmentTable, GetClusters, getPrecursorTable, jaccard, jaccardSet
-'               mass_tabular, mz, MzUnique, normMs2, ppm
-'               precursorTypes, printCalculator, printMzTable, sequenceOrder, spectrumEntropy
-'               SpectrumTreeCluster, SSMCompares, summaryTolerance, union, xcms_id
-'               XICTable
-' 
-'     Sub: Main
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 1272
+    '    Code Lines: 804 (63.21%)
+    ' Comment Lines: 306 (24.06%)
+    '    - Xml Docs: 89.54%
+    ' 
+    '   Blank Lines: 162 (12.74%)
+    '     File Size: 54.25 KB
+
+
+    ' Module MzMath
+    ' 
+    '     Function: alignIntensity, centroid, centroidDataframe, (+2 Overloads) cosine, cosine_pairwise
+    '               CreateMSMatrix, CreateMzIndex, createTolerance, defaultPrecursors, exact_mass
+    '               find_precursor, getAlignmentTable, GetClusters, getPrecursorTable, jaccard
+    '               jaccardSet, mass_tabular, mz, MzUnique, normMs2
+    '               ppm, precursorTypes, printCalculator, printMzTable, sequenceOrder
+    '               spectrumEntropy, SpectrumTreeCluster, SSMCompares, summaryTolerance, union
+    '               xcms_id, XICTable
+    ' 
+    '     Sub: Main
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -1194,13 +1194,18 @@ Module MzMath
     ''' </summary>
     ''' <param name="mz">a numeric vector of the ion m/z value</param>
     ''' <param name="rt">the corresponding scan time rt vector.</param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' a character vector of the generated unique id based on the given m/z and rt ROI features.
+    ''' </returns>
     ''' <remarks>
     ''' the dimension size of the ion m/z vector and the corresponding scan time vector should be equals.
     ''' </remarks>
     <ExportAPI("xcms_id")>
     <RApiReturn(TypeCodes.string)>
-    Public Function xcms_id(mz As Double(), rt As Double(), Optional env As Environment = Nothing) As Object
+    Public Function xcms_id(mz As Double(), rt As Double(),
+                            Optional prefix As String = "",
+                            Optional env As Environment = Nothing) As Object
+
         If mz.TryCount <> rt.TryCount Then
             Return RInternal.debug.stop("the dimension size of the ion m/z and its scan time rt should be equals!", env)
         End If
@@ -1213,14 +1218,15 @@ Module MzMath
         Dim allId As String() = mz _
             .Select(Function(mzi, i)
                         If CInt(rt(i)) = 0 Then
-                            Return $"M{CInt(mzi)}"
+                            Return $"{prefix}M{CInt(mzi)}"
                         Else
-                            Return $"M{CInt(mzi)}T{CInt(rt(i))}"
+                            Return $"{prefix}M{CInt(mzi)}T{CInt(rt(i))}"
                         End If
                     End Function) _
             .ToArray
         Dim uniques As String() = base.makeNames(allId, unique:=True, allow_:=True)
 
+        ' generated id is uniqued
         Return uniques
     End Function
 

@@ -1,47 +1,115 @@
-﻿Imports System.Collections.Generic
+﻿#Region "Microsoft.VisualBasic::1189da4076e5d2abd5fcef4d856bed57, metadb\Chemoinformatics\InChI\Models\InchiKeyStatus.vb"
 
-''' JNA-InChI - Library for calling InChI from Java
-''' Copyright © 2018 Daniel Lowe
-''' 
-''' This library is free software; you can redistribute it and/or
-''' modify it under the terms of the GNU Lesser General Public
-''' License as published by the Free Software Foundation; either
-''' version 2.1 of the License, or (at your option) any later version.
-''' 
-''' This program is distributed in the hope that it will be useful,
-''' but WITHOUT ANY WARRANTY; without even the implied warranty of
-''' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-''' GNU Lesser General Public License for more details.
-''' 
-''' You should have received a copy of the GNU Lesser General Public License
-''' along with this program.  If not, see </>.
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 144
+    '    Code Lines: 88 (61.11%)
+    ' Comment Lines: 29 (20.14%)
+    '    - Xml Docs: 89.66%
+    ' 
+    '   Blank Lines: 27 (18.75%)
+    '     File Size: 6.30 KB
+
+
+    '     Class InchiKeyStatus
+    ' 
+    ' 
+    '         Enum InnerEnum
+    ' 
+    '             EMPTY_INPUT, INVALID_INCHI, INVALID_INCHI_PREFIX, INVALID_STD_INCHI, NOT_ENOUGH_MEMORY
+    '             OK, UNKNOWN_ERROR
+    ' 
+    ' 
+    ' 
+    '  
+    ' 
+    '     Constructor: (+2 Overloads) Sub New
+    '     Function: [of], ordinal, ToString, valueOf, values
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Collections.Generic
+
+' JNA-InChI - Library for calling InChI from Java
+' Copyright © 2018 Daniel Lowe
+' 
+' This library is free software; you can redistribute it and/or
+' modify it under the terms of the GNU Lesser General Public
+' License as published by the Free Software Foundation; either
+' version 2.1 of the License, or (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU Lesser General Public License for more details.
+' 
+' You should have received a copy of the GNU Lesser General Public License
+' along with this program.  If not, see </>.
 
 Namespace IUPAC.InChI
 
     Public NotInheritable Class InchiKeyStatus
 
-        Public Shared ReadOnly FIND_RING_SYSTEMS As Integer = 1
-        Public Shared ReadOnly FIND_RINS_SYSTEMS_DISTANCES As Integer = 0
-        Public Shared ReadOnly FIX_DOCANON_RETCODE_RESET_BUG As Integer = 1
-        Public Shared ReadOnly MAXVAL As Integer = 20
-        Public Shared ReadOnly ATOM_EL_LEN As Integer = 6
-        Public Shared ReadOnly NUM_H_ISOTOPES As Integer = 3
-        Public Shared ReadOnly ISOTOPIC_SHIFT_FLAG As Integer = 10000
-        Public Shared ReadOnly ISOTOPIC_SHIFT_MAX As Integer = 100
-        Public Shared ReadOnly NO_ATOM As Integer = -1
-        Public Shared ReadOnly INCHI_STRING_PREFIX As String = "InChI="
-        Public Shared ReadOnly LEN_INCHI_STRING_PREFIX As Integer = 6
-        Public Shared ReadOnly STR_ERR_LEN As Integer = 256
-        Public Shared ReadOnly INCHIKEY_OK As Integer = 0
-        Public Shared ReadOnly INCHIKEY_UNKNOWN_ERROR As Integer = 1
-        Public Shared ReadOnly INCHIKEY_EMPTY_INPUT As Integer = 2
-        Public Shared ReadOnly INCHIKEY_INVALID_INCHI_PREFIX As Integer = 3
-        Public Shared ReadOnly INCHIKEY_NOT_ENOUGH_MEMORY As Integer = 4
-        Public Shared ReadOnly INCHIKEY_INVALID_INCHI As Integer = 20
-        Public Shared ReadOnly INCHIKEY_INVALID_STD_INCHI As Integer = 21
-        Public Shared ReadOnly MAX_NUM_STEREO_ATOM_NEIGH As Integer = 4
-        Public Shared ReadOnly MAX_NUM_STEREO_BONDS As Integer = 3
-        Public Shared ReadOnly INCHI_NUM As Integer = 2
+        Public Const FIND_RING_SYSTEMS As Integer = 1
+        Public Const FIND_RINS_SYSTEMS_DISTANCES As Integer = 0
+        Public Const FIX_DOCANON_RETCODE_RESET_BUG As Integer = 1
+        Public Const MAXVAL As Integer = 20
+        Public Const ATOM_EL_LEN As Integer = 6
+        Public Const NUM_H_ISOTOPES As Integer = 3
+        Public Const ISOTOPIC_SHIFT_FLAG As Integer = 10000
+        Public Const ISOTOPIC_SHIFT_MAX As Integer = 100
+        Public Const NO_ATOM As Integer = -1
+        Public Const INCHI_STRING_PREFIX As String = "InChI="
+        Public Const LEN_INCHI_STRING_PREFIX As Integer = 6
+        Public Const STR_ERR_LEN As Integer = 256
+        Public Const INCHIKEY_OK As Integer = 0
+        Public Const INCHIKEY_UNKNOWN_ERROR As Integer = 1
+        Public Const INCHIKEY_EMPTY_INPUT As Integer = 2
+        Public Const INCHIKEY_INVALID_INCHI_PREFIX As Integer = 3
+        Public Const INCHIKEY_NOT_ENOUGH_MEMORY As Integer = 4
+        Public Const INCHIKEY_INVALID_INCHI As Integer = 20
+        Public Const INCHIKEY_INVALID_STD_INCHI As Integer = 21
+        Public Const MAX_NUM_STEREO_ATOM_NEIGH As Integer = 4
+        Public Const MAX_NUM_STEREO_BONDS As Integer = 3
+        Public Const INCHI_NUM As Integer = 2
 
         ''' <summary>
         ''' Success; no errors or warnings </summary>
@@ -142,3 +210,4 @@ Namespace IUPAC.InChI
     End Class
 
 End Namespace
+

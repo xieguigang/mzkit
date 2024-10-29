@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::15a72e37c6fadeb5767d6e91c15aa53c, assembly\mzPackExtensions\VendorStream\XRawStream.vb"
+﻿#Region "Microsoft.VisualBasic::d0e78179cc5c0e46a5b09d8df4f3efb5, assembly\mzPackExtensions\VendorStream\XRawStream.vb"
 
     ' Author:
     ' 
@@ -37,20 +37,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 98
-    '    Code Lines: 80 (81.63%)
-    ' Comment Lines: 3 (3.06%)
+    '   Total Lines: 102
+    '    Code Lines: 83 (81.37%)
+    ' Comment Lines: 3 (2.94%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 15 (15.31%)
-    '     File Size: 3.50 KB
+    '   Blank Lines: 16 (15.69%)
+    '     File Size: 3.67 KB
 
 
     ' Class XRawStream
     ' 
     '     Properties: getExperimentType, rawFileName
     ' 
-    '     Constructor: (+1 Overloads) Sub New
+    '     Constructor: (+2 Overloads) Sub New
     ' 
     '     Function: defaultScanId, pullAllScans
     ' 

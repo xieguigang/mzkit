@@ -1,83 +1,82 @@
-﻿#Region "Microsoft.VisualBasic::b75bf3da09e4d4b7f2e7d3cac2e29bc0, metadb\Chemoinformatics\InChI\Components.vb"
+﻿#Region "Microsoft.VisualBasic::15fc4cb6230e22e9d8b77e4a8c7bbb4f, metadb\Chemoinformatics\InChI\Components.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
-
-
-
-    ' /********************************************************************************/
-
-    ' Summaries:
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
-    ' Code Statistics:
 
-    '   Total Lines: 229
-    '    Code Lines: 82 (35.81%)
-    ' Comment Lines: 124 (54.15%)
-    '    - Xml Docs: 95.97%
-    ' 
-    '   Blank Lines: 23 (10.04%)
-    '     File Size: 9.62 KB
+' /********************************************************************************/
+
+' Summaries:
 
 
-    '     Class MainLayer
-    ' 
-    '         Properties: Bounds, Formula, Hydrogen
-    ' 
-    '         Function: ParseBounds
-    ' 
-    '     Class ChargeLayer
-    ' 
-    '         Properties: Charge, Proton
-    ' 
-    '     Class StereochemicalLayer
-    ' 
-    '         Properties: DoubleBounds, Tetrahedral, Type
-    ' 
-    '     Class IsotopicLayer
-    ' 
-    ' 
-    ' 
-    '     Class FixedHLayer
-    ' 
-    ' 
-    ' 
-    '     Class ReconnectedLayer
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 229
+'    Code Lines: 82 (35.81%)
+' Comment Lines: 124 (54.15%)
+'    - Xml Docs: 95.97%
+' 
+'   Blank Lines: 23 (10.04%)
+'     File Size: 9.61 KB
+
+
+'     Class MainLayer
+' 
+'         Properties: Bounds, Formula, Hydrogen
+' 
+'         Function: ParseBounds
+' 
+'     Class ChargeLayer
+' 
+'         Properties: Charge, Proton
+' 
+'     Class StereochemicalLayer
+' 
+'         Properties: DoubleBounds, Tetrahedral, Type
+' 
+'     Class IsotopicLayer
+' 
+' 
+' 
+'     Class FixedHLayer
+' 
+' 
+' 
+'     Class ReconnectedLayer
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports BioNovoGene.BioDeep.Chemoinformatics.SDF.Models
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Text.Parser
@@ -117,7 +116,7 @@ Namespace IUPAC.InChI
         ''' of atoms that share one or more mobile hydrogen atoms In addition to hydrogen atoms, mobile 
         ''' H groups may contain mobile negative charges. These charges are included in the charge layer.
         ''' </remarks>
-        Public Property Bounds As Bound()
+        Public Property Struct As InchiInput
         ''' <summary>
         ''' Hydrogen atoms (prefix: "h"). Describes how many hydrogen atoms are connected to each of 
         ''' the other atoms.
@@ -126,15 +125,50 @@ Namespace IUPAC.InChI
         ''' <remarks>
         ''' H (static H and mobile H groups)
         ''' </remarks>
-        Public Property Hydrogen As String
+        Public Property Hydrogen As InchiAtom()
 
-        Public Shared Iterator Function ParseBounds(token As String) As IEnumerable(Of Bound)
+        Public Shared Iterator Function ParseHAtoms(token As String) As IEnumerable(Of InchiAtom)
+            Dim parts = token.Split(","c)
+
+            For Each part As String In parts
+                If part.IsPattern("\d+") Then
+                    Yield New InchiAtom("H") With {.Index = Integer.Parse(part)}
+                ElseIf part.MatchPattern("\d+[-]\d+H") Then
+                    With part.Split("-"c)
+                        Dim from As Integer = Integer.Parse(.Get(0))
+                        Dim [to] As Integer = CInt(Val(.Get(1)))
+
+                        For i As Integer = from To [to]
+                            Yield New InchiAtom("H") With {.Index = i}
+                        Next
+                    End With
+                ElseIf part.IsPattern("\d+H\d+") Then
+                    With part.Split("H"c)
+                        Dim index = Integer.Parse(.Get(0))
+                        Dim n = Integer.Parse(.Get(1))
+
+                        For i As Integer = 1 To n
+                            Yield New InchiAtom("H") With {.Index = index}
+                        Next
+                    End With
+                Else
+                    Throw New NotImplementedException(part)
+                End If
+            Next
+        End Function
+
+        Public Shared Function ParseBounds(token As String) As InchiInput
             Dim chars As New CharPtr(token)
             Dim i As Integer
             Dim j As Integer
+            Dim struct As New InchiInput
             Dim buffer As New List(Of Char)
             Dim c As Value(Of Char) = ASCII.NUL
-            Dim popIndex = Function() Integer.Parse(buffer.PopAll.JoinBy(""))
+            Dim popIndex = Function() As Integer
+                               Dim index = Integer.Parse(buffer.PopAll.JoinBy(""))
+                               struct.addAtom(index, New InchiAtom("C") With {.Index = index})
+                               Return index
+                           End Function
             Dim indexStack As New Stack(Of Integer)
             Dim previous As Char = ASCII.NUL
 
@@ -152,30 +186,17 @@ Namespace IUPAC.InChI
                     buffer += c
                 ElseIf c.Equals("-"c) Then
                     j = popIndex()
-
-                    Yield New Bound With {
-                        .i = i,
-                        .j = j
-                    }
+                    struct.addBond(i, j, InchiBondType.SINGLE)
                     i = j
                 ElseIf c.Equals("("c) Then
                     j = popIndex()
-
-                    Yield New Bound With {
-                        .i = i,
-                        .j = j
-                    }
-
+                    struct.addBond(i, j, InchiBondType.SINGLE)
                     i = j
                     indexStack.Push(i)
                 ElseIf c.Equals(")"c) Then
                     If buffer > 0 Then
                         j = popIndex()
-
-                        Yield New Bound With {
-                            .i = i,
-                            .j = j
-                        }
+                        struct.addBond(i, j, InchiBondType.SINGLE)
                     End If
                 Else
                     Throw New NotImplementedException(c)
@@ -186,12 +207,10 @@ Namespace IUPAC.InChI
 
             If buffer > 0 Then
                 j = popIndex()
-
-                Yield New Bound With {
-                    .i = i,
-                    .j = j
-                }
+                struct.addBond(i, j, InchiBondType.SINGLE)
             End If
+
+            Return struct
         End Function
     End Class
 
