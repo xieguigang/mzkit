@@ -59,7 +59,7 @@ Imports BioNovoGene.BioDeep.Chemoinformatics.IUPAC.InChI
 
 Module inchiTest
 
-    Sub Main()
+    Sub Main2()
 
         '    8 9      10
         '    |  \    /

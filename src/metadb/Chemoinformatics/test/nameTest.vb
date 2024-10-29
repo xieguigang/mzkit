@@ -63,6 +63,7 @@ Module nameTest
     Dim parser As New GlycosylNameSolver
 
     Sub Main()
+        Call inchiTest.Main2()
         Call parseLipids()
 
         Call echo(" 3-o-[6-o-(malonyl)-beta-d-glucopyranoside]-7-o-[6-o-(trans-p-coumaryl)-beta-d-glucopyranoside]-3'-o-[6-o-(trans-4-o-(6-o-(trans-4-o-(beta-d-glucopyranosyl)-p-coumaryl)-beta-d-glucopyranoside]")
