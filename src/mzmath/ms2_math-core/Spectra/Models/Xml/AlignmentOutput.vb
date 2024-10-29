@@ -156,6 +156,13 @@ Namespace Spectra.Xml
                 Dim q = .GetQueryMatrix.With(Sub(a) a.name = query?.id)
                 Dim r = .GetReferenceMatrix.With(Sub(a) a.name = reference?.id)
 
+                If q.name.StringEmpty(, True) Then
+                    q.name = "Query"
+                End If
+                If r.name.StringEmpty(, True) Then
+                    r.name = "Reference"
+                End If
+
                 Return (q, r)
             End With
         End Function
