@@ -60,6 +60,7 @@
 #End Region
 
 Imports System.Collections.Generic
+Imports System.Runtime.CompilerServices
 
 ' JNA-InChI - Library for calling InChI from Java
 ' Copyright © 2018 Daniel Lowe
@@ -109,6 +110,11 @@ Namespace IUPAC.InChI
 
         Public Overridable Sub addBond(bond As InchiBond)
             m_bonds.Add(bond)
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Sub addBond(i As UInteger, j As UInteger, type As InchiBondType)
+            Call addBond(New InchiBond(getAtom(i), getAtom(j), type))
         End Sub
 
         Public Overridable Sub addStereo(stereo As InchiStereo)

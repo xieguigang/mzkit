@@ -129,10 +129,11 @@ Namespace IUPAC.InChI
         ''' </remarks>
         Public Property Hydrogen As String
 
-        Public Shared Iterator Function ParseBounds(token As String, struct As InchiInput) As IEnumerable(Of InchiBond)
+        Public Shared Function ParseBounds(token As String) As InchiInput
             Dim chars As New CharPtr(token)
             Dim i As Integer
             Dim j As Integer
+            Dim struct As New InchiInput
             Dim buffer As New List(Of Char)
             Dim c As Value(Of Char) = ASCII.NUL
             Dim popIndex = Function() As Integer
@@ -157,18 +158,17 @@ Namespace IUPAC.InChI
                     buffer += c
                 ElseIf c.Equals("-"c) Then
                     j = popIndex()
-                    Yield New InchiBond(struct.getAtom(i), struct.getAtom(j), InchiBondType.SINGLE)
+                    struct.addBond(i, j, InchiBondType.SINGLE)
                     i = j
                 ElseIf c.Equals("("c) Then
                     j = popIndex()
-                    Yield New InchiBond(struct.getAtom(i), struct.getAtom(j), InchiBondType.SINGLE)
+                    struct.addBond(i, j, InchiBondType.SINGLE)
                     i = j
                     indexStack.Push(i)
                 ElseIf c.Equals(")"c) Then
                     If buffer > 0 Then
                         j = popIndex()
-
-                        Yield New InchiBond(struct.getAtom(i), struct.getAtom(j), InchiBondType.SINGLE)
+                        struct.addBond(i, j, InchiBondType.SINGLE)
                     End If
                 Else
                     Throw New NotImplementedException(c)
@@ -179,8 +179,10 @@ Namespace IUPAC.InChI
 
             If buffer > 0 Then
                 j = popIndex()
-                Yield New InchiBond(struct.getAtom(i), struct.getAtom(j), InchiBondType.SINGLE)
+                struct.addBond(i, j, InchiBondType.SINGLE)
             End If
+
+            Return struct
         End Function
     End Class
 

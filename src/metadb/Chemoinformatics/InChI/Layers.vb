@@ -147,7 +147,7 @@ Namespace IUPAC.InChI
         Friend Shared Function ParseMainLayer(tokens As Func(Of [Variant](Of Char, Char()), String)) As MainLayer
             Dim main As New MainLayer With {
                 .Formula = tokens(ASCII.NUL),
-                .Bounds = MainLayer.ParseBounds(tokens("c"c)).ToArray,
+                .Struct = MainLayer.ParseBounds(tokens("c"c)),
                 .Hydrogen = tokens("h"c)
             }
 
