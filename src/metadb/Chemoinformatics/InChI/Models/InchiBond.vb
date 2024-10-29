@@ -105,6 +105,10 @@ Namespace IUPAC.InChI
             _Stereo = stereo
         End Sub
 
+        Public Overrides Function ToString() As String
+            Return $"{Start.ToString} {Type.ToString} {[End].ToString}"
+        End Function
+
         Public Overridable Function getOther(atom As InchiAtom) As InchiAtom
             If Start Is atom Then
                 Return [End]

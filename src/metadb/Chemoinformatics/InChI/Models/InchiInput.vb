@@ -86,21 +86,21 @@ Namespace IUPAC.InChI
         Dim m_bonds As New List(Of InchiBond)()
         Dim m_stereos As New List(Of InchiStereo)()
 
-        Public Overridable ReadOnly Property Atoms As IList(Of InchiAtom)
+        Public Overridable ReadOnly Property Atoms As InchiAtom()
             Get
-                Return New List(Of InchiAtom)(m_atoms.Values)
+                Return m_atoms.Values.ToArray
             End Get
         End Property
 
-        Public Overridable ReadOnly Property Bonds As IList(Of InchiBond)
+        Public Overridable ReadOnly Property Bonds As InchiBond()
             Get
-                Return New List(Of InchiBond)(m_bonds)
+                Return m_bonds.ToArray
             End Get
         End Property
 
-        Public Overridable ReadOnly Property Stereos As IList(Of InchiStereo)
+        Public Overridable ReadOnly Property Stereos As InchiStereo()
             Get
-                Return New List(Of InchiStereo)(m_stereos)
+                Return m_stereos.ToArray
             End Get
         End Property
 

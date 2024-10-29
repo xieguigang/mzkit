@@ -177,6 +177,10 @@ Namespace IUPAC.InChI
             _Z = z
         End Sub
 
+        Public Overrides Function ToString() As String
+            Return $"[{Index}] {ElName}"
+        End Function
+
         Public Shared Operator =(a As InchiAtom, b As InchiAtom) As Boolean
             If a Is Nothing AndAlso b Is Nothing Then
                 Return True
