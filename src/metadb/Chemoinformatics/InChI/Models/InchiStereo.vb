@@ -76,17 +76,22 @@
 ' along with this program.  If not, see </>.
 
 Namespace IUPAC.InChI
+
     Public Class InchiStereo
 
         ''' <summary>
         ''' Use when a stereocentre's configuration references an implicit hydrogen 
         ''' </summary>
-        Public Shared ReadOnly STEREO_IMPLICIT_H As InchiAtom = New InchiAtom("H")
+        Public Shared ReadOnly STEREO_IMPLICIT_H As New InchiAtom("H")
 
-        Private ReadOnly atomsField As InchiAtom()
-        Private ReadOnly centralAtomField As InchiAtom
-        Private ReadOnly typeField As InchiStereoType
-        Private ReadOnly parityField As InchiStereoParity
+        Public Overridable ReadOnly Property Atoms As InchiAtom()
+        ''' <summary>
+        ''' Null for <seealso cref="InchiStereoType.DoubleBond"/>
+        ''' @return
+        ''' </summary>
+        Public Overridable ReadOnly Property CentralAtom As InchiAtom
+        Public Overridable ReadOnly Property Type As InchiStereoType
+        Public Overridable ReadOnly Property Parity As InchiStereoParity
 
 
         Friend Sub New(atoms As InchiAtom(), centralAtom As InchiAtom, type As InchiStereoType, parity As InchiStereoParity)
@@ -110,10 +115,11 @@ Namespace IUPAC.InChI
             If type IsNot InchiStereoType.DoubleBond AndAlso centralAtom Is Nothing Then
                 Throw New ArgumentException("centralAtom was null")
             End If
-            atomsField = atoms
-            centralAtomField = centralAtom
-            typeField = type
-            parityField = parity
+
+            _atoms = atoms
+            _centralAtom = centralAtom
+            _type = type
+            _parity = parity
         End Sub
 
         ''' <summary>
@@ -126,7 +132,13 @@ Namespace IUPAC.InChI
         ''' <param name="atom4"> </param>
         ''' <param name="parity">
         ''' @return </param>
-        Public Shared Function createTetrahedralStereo(centralAtom As InchiAtom, atom1 As InchiAtom, atom2 As InchiAtom, atom3 As InchiAtom, atom4 As InchiAtom, parity As InchiStereoParity) As InchiStereo
+        Public Shared Function createTetrahedralStereo(centralAtom As InchiAtom,
+                                                       atom1 As InchiAtom,
+                                                       atom2 As InchiAtom,
+                                                       atom3 As InchiAtom,
+                                                       atom4 As InchiAtom,
+                                                       parity As InchiStereoParity) As InchiStereo
+
             Return New InchiStereo(New InchiAtom() {atom1, atom2, atom3, atom4}, centralAtom, InchiStereoType.Tetrahedral, parity)
         End Function
 
@@ -169,7 +181,12 @@ Namespace IUPAC.InChI
         ''' <param name="atom4"> </param>
         ''' <param name="parity">
         ''' @return </param>
-        Public Shared Function createDoubleBondStereo(atom1 As InchiAtom, atom2 As InchiAtom, atom3 As InchiAtom, atom4 As InchiAtom, parity As InchiStereoParity) As InchiStereo
+        Public Shared Function createDoubleBondStereo(atom1 As InchiAtom,
+                                                      atom2 As InchiAtom,
+                                                      atom3 As InchiAtom,
+                                                      atom4 As InchiAtom,
+                                                      parity As InchiStereoParity) As InchiStereo
+
             If STEREO_IMPLICIT_H Is atom1 OrElse STEREO_IMPLICIT_H Is atom2 OrElse STEREO_IMPLICIT_H Is atom3 OrElse STEREO_IMPLICIT_H Is atom4 Then
                 Throw New ArgumentException("Double bond stereo should use non-implicit hydrogn atoms")
             End If
@@ -204,38 +221,15 @@ Namespace IUPAC.InChI
         ''' <param name="atom4"> </param>
         ''' <param name="parity">
         ''' @return </param>
-        Public Shared Function createAllenalStereo(centralAtom As InchiAtom, atom1 As InchiAtom, atom2 As InchiAtom, atom3 As InchiAtom, atom4 As InchiAtom, parity As InchiStereoParity) As InchiStereo
+        Public Shared Function createAllenalStereo(centralAtom As InchiAtom,
+                                                   atom1 As InchiAtom,
+                                                   atom2 As InchiAtom,
+                                                   atom3 As InchiAtom,
+                                                   atom4 As InchiAtom,
+                                                   parity As InchiStereoParity) As InchiStereo
+
             Return New InchiStereo(New InchiAtom() {atom1, atom2, atom3, atom4}, centralAtom, InchiStereoType.Allene, parity)
         End Function
-
-        Public Overridable ReadOnly Property Atoms As InchiAtom()
-            Get
-                Return atomsField
-            End Get
-        End Property
-
-        ''' <summary>
-        ''' Null for <seealso cref="InchiStereoType.DoubleBond"/>
-        ''' @return
-        ''' </summary>
-        Public Overridable ReadOnly Property CentralAtom As InchiAtom
-            Get
-                Return centralAtomField
-            End Get
-        End Property
-
-        Public Overridable ReadOnly Property Type As InchiStereoType
-            Get
-                Return typeField
-            End Get
-        End Property
-
-        Public Overridable ReadOnly Property Parity As InchiStereoParity
-            Get
-                Return parityField
-            End Get
-        End Property
-
     End Class
 
 End Namespace
