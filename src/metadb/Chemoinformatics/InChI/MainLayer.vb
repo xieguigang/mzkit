@@ -77,8 +77,6 @@
 
 #End Region
 
-Imports System.Runtime.InteropServices
-Imports BioNovoGene.BioDeep.Chemoinformatics.SDF.Models
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Text.Parser
@@ -127,7 +125,27 @@ Namespace IUPAC.InChI
         ''' <remarks>
         ''' H (static H and mobile H groups)
         ''' </remarks>
-        Public Property Hydrogen As String
+        Public Property Hydrogen As InchiAtom()
+
+        Public Shared Iterator Function ParseHAtoms(token As String) As IEnumerable(Of InchiAtom)
+            Dim parts = token.Split(","c)
+
+            For Each part As String In parts
+                If part.IsPattern("\d+") Then
+                    Yield New InchiAtom("H") With {.Index = Integer.Parse(part)}
+                ElseIf part.MatchPattern("\d+[-]\d+H") Then
+                    With part.Split("-"c)
+                        Dim from As Integer = Integer.Parse(part(0))
+                        Dim [to] As Integer = CInt(Val(part(1)))
+
+                        For i As Integer = from To [to]
+                            Yield New InchiAtom("H") With {.Index = i}
+                        Next
+                    End With
+
+                End If
+            Next
+        End Function
 
         Public Shared Function ParseBounds(token As String) As InchiInput
             Dim chars As New CharPtr(token)

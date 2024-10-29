@@ -144,16 +144,26 @@ Namespace IUPAC.InChI
                    End Function
         End Function
 
+        ''' <summary>
+        ''' c, h
+        ''' </summary>
+        ''' <param name="tokens"></param>
+        ''' <returns></returns>
         Friend Shared Function ParseMainLayer(tokens As Func(Of [Variant](Of Char, Char()), String)) As MainLayer
             Dim main As New MainLayer With {
                 .Formula = tokens(ASCII.NUL),
                 .Struct = MainLayer.ParseBounds(tokens("c"c)),
-                .Hydrogen = tokens("h"c)
+                .Hydrogen = MainLayer.ParseHAtoms(tokens("h"c)).ToArray
             }
 
             Return main
         End Function
 
+        ''' <summary>
+        ''' p, q
+        ''' </summary>
+        ''' <param name="tokens"></param>
+        ''' <returns></returns>
         Friend Shared Function ParseChargeLayer(tokens As Func(Of [Variant](Of Char, Char()), String)) As ChargeLayer
             Dim charge As New ChargeLayer With {
                 .Proton = tokens("p"c).ParseInteger,
@@ -163,6 +173,11 @@ Namespace IUPAC.InChI
             Return charge
         End Function
 
+        ''' <summary>
+        ''' b, t, m, s
+        ''' </summary>
+        ''' <param name="tokens"></param>
+        ''' <returns></returns>
         Friend Shared Function ParseStereochemicalLayer(tokens As Func(Of [Variant](Of Char, Char()), String)) As StereochemicalLayer
             Dim stereochemical As New StereochemicalLayer With {
                 .DoubleBounds = tokens("b"c),

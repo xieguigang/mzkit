@@ -81,7 +81,7 @@ Namespace IUPAC.InChI
     Public Class InchiAtom
 
         ' array positions for hydrogen (i.e. isotope not specified), protium, deuterium, tritium
-        Private implicitHydrogenField As Integer() = New Integer(3) {}
+        Private m_implicitHydrogen As Integer() = New Integer(3) {}
         Private isotopicMassField As Integer = 0
         Private chargeField As Integer = 0
 
@@ -93,13 +93,13 @@ Namespace IUPAC.InChI
 
         Public Overridable Property ImplicitHydrogen As Integer
             Get
-                Return implicitHydrogenField(0)
+                Return m_implicitHydrogen(0)
             End Get
             Set(value As Integer)
                 If value > SByte.MaxValue OrElse value < -1 Then
                     Throw New ArgumentException("Unacceptable implicitHydrogen:" & value.ToString())
                 End If
-                implicitHydrogenField(0) = value
+                m_implicitHydrogen(0) = value
             End Set
         End Property
 
@@ -109,10 +109,10 @@ Namespace IUPAC.InChI
                 If value > SByte.MaxValue OrElse value < 0 Then
                     Throw New ArgumentException("Unacceptable implicitProtium:" & value.ToString())
                 End If
-                implicitHydrogenField(1) = value
+                m_implicitHydrogen(1) = value
             End Set
             Get
-                Return implicitHydrogenField(1)
+                Return m_implicitHydrogen(1)
             End Get
         End Property
 
@@ -121,10 +121,10 @@ Namespace IUPAC.InChI
                 If value > SByte.MaxValue OrElse value < 0 Then
                     Throw New ArgumentException("Unacceptable implicitDeuterium:" & value.ToString())
                 End If
-                implicitHydrogenField(2) = value
+                m_implicitHydrogen(2) = value
             End Set
             Get
-                Return implicitHydrogenField(2)
+                Return m_implicitHydrogen(2)
             End Get
         End Property
 
@@ -133,10 +133,10 @@ Namespace IUPAC.InChI
                 If value > SByte.MaxValue OrElse value < 0 Then
                     Throw New ArgumentException("Unacceptable implicitTritium:" & value.ToString())
                 End If
-                implicitHydrogenField(3) = value
+                m_implicitHydrogen(3) = value
             End Set
             Get
-                Return implicitHydrogenField(3)
+                Return m_implicitHydrogen(3)
             End Get
         End Property
 
