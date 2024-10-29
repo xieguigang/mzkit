@@ -77,69 +77,18 @@
 ' along with this program.  If not, see </>.
 
 Namespace IUPAC.InChI
-    Public Class InchiAtom
 
-        Private elNameField As String
-        Private xField As Double = 0
-        Private yField As Double = 0
-        Private zField As Double = 0
+    Public Class InchiAtom
 
         'array positions for hydrogen (i.e. isotope not specified), protium, deuterium, tritium
         Private implicitHydrogenField As Integer() = New Integer(3) {}
         Private isotopicMassField As Integer = 0
-        Private radicalField As InchiRadical = InchiRadical.NONE
         Private chargeField As Integer = 0
 
-        Public Sub New(elName As String)
-            elNameField = elName
-        End Sub
-
-        Public Sub New(elName As String, x As Double, y As Double, z As Double)
-            elNameField = elName
-            xField = x
-            yField = y
-            zField = z
-        End Sub
-
         Public Overridable Property ElName As String
-            Get
-                Return elNameField
-            End Get
-            Set(value As String)
-                elNameField = value
-            End Set
-        End Property
-
-
         Public Overridable Property X As Double
-            Get
-                Return xField
-            End Get
-            Set(value As Double)
-                xField = value
-            End Set
-        End Property
-
-
         Public Overridable Property Y As Double
-            Get
-                Return yField
-            End Get
-            Set(value As Double)
-                yField = value
-            End Set
-        End Property
-
-
         Public Overridable Property Z As Double
-            Get
-                Return zField
-            End Get
-            Set(value As Double)
-                zField = value
-            End Set
-        End Property
-
 
         Public Overridable Property ImplicitHydrogen As Integer
             Get
@@ -166,7 +115,6 @@ Namespace IUPAC.InChI
             End Get
         End Property
 
-
         Public Overridable Property ImplicitDeuterium As Integer
             Set(value As Integer)
                 If value > SByte.MaxValue OrElse value < 0 Then
@@ -178,7 +126,6 @@ Namespace IUPAC.InChI
                 Return implicitHydrogenField(2)
             End Get
         End Property
-
 
         Public Overridable Property ImplicitTritium As Integer
             Set(value As Integer)
@@ -192,7 +139,6 @@ Namespace IUPAC.InChI
             End Get
         End Property
 
-
         Public Overridable Property IsotopicMass As Integer
             Get
                 Return isotopicMassField
@@ -205,16 +151,7 @@ Namespace IUPAC.InChI
             End Set
         End Property
 
-
-        Public Overridable Property Radical As InchiRadical
-            Get
-                Return radicalField
-            End Get
-            Set(value As InchiRadical)
-                radicalField = value
-            End Set
-        End Property
-
+        Public Overridable Property Radical As InchiRadical = InchiRadical.NONE
 
         Public Overridable Property Charge As Integer
             Get
@@ -228,6 +165,35 @@ Namespace IUPAC.InChI
             End Set
         End Property
 
+        Public Sub New(elName As String)
+            _ElName = elName
+        End Sub
+
+        Public Sub New(elName As String, x As Double, y As Double, z As Double)
+            _ElName = elName
+            _X = x
+            _Y = y
+            _Z = z
+        End Sub
+
+        Public Shared Operator =(a As InchiAtom, b As InchiAtom) As Boolean
+            If a Is Nothing AndAlso b Is Nothing Then
+                Return True
+            ElseIf a Is Nothing OrElse b Is Nothing Then
+                Return False
+            End If
+
+            If a.ElName <> b.ElName Then Return False
+            If a.X <> b.X Then Return False
+            If a.Y <> b.Y Then Return False
+            If a.Z <> b.Z Then Return False
+
+            Return True
+        End Operator
+
+        Public Shared Operator <>(a As InchiAtom, b As InchiAtom) As Boolean
+            Return Not (a = b)
+        End Operator
     End Class
 
 End Namespace
