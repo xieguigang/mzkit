@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>BioNovoGene.BioDeep.Chemoinformatics.IUPAC.InChI.InChI</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <table style="width: 100%;">
+            <tr>
+                <td>InChI {BioNovoGene.BioDeep.Chemoinformatics.IUPAC.InChI}</td>
+                <td style="text-align: right;">.NET clr documentation</td>
+            </tr>
+        </table>
+
+        <h2>InChI</h2>
+
+        <h3>Description</h3>
+
+        <p>The InChI identifier parser
+ 
+ 国际化合物标识（英语：InChI，英语：International Chemical Identifier）是由国际纯粹与
+ 应用化学联合会和美国国家标准技术研究所（National Institute of Standards and Technology，NIST）
+ 联合制定的，用以唯一标识化合物IUPAC名称的字符串。</p>
+
+<p>Parsing an InChI (International Chemical Identifier) string can be a complex task 
+ due to the detailed and structured format of the InChI. However, the InChI format 
+ is designed to be readable by both humans and machines, and it can be broken down 
+ into several layers that represent different aspects of the chemical substance.
+ 
+ Here's a basic guide on how to manually parse an InChI string:
+ 
+ 1. <strong>InChI Version</strong>: The InChI string starts with the version number, followed by a slash. For example, `InChI=1S/`.
+ 2. <strong>Formula Layer</strong>: This is the chemical formula of the compound. It starts after the version and
+    is enclosed in parentheses. For example, `InChI=1S/C6H12O6/` indicates that the compound is composed of 6 carbon, 
+    12 hydrogen, and 6 oxygen atoms.
+ 3. <strong>Main Layer</strong>: This layer describes the connectivity of atoms in the molecule and is followed by a slash. It can 
+    include:
+    - Atom connectivity (`c`)
+    - Hydrogen atoms (`h`)
+    - Charge (`q`)
+    - Stereochemistry (`b`, `t`, `m`)
+ 4. <strong>Stereochemical Layer</strong>: This layer provides information about the stereochemistry of the compound if applicable. 
+    It is also followed by a slash.
+ 5. <strong>Isotopic Layer</strong>: If the compound contains isotopes, this layer will provide that information, followed by a slash.
+ 6. <strong>Fixed-H Layer</strong>: This layer indicates the positions of non-exchangeable hydrogen atoms and is followed by a slash.
+ 7. <strong>Reconnected Layer</strong>: In cases where the molecule can be disconnected into multiple subunits, this layer will describe 
+    the reconnected form of the molecule.
+ 8. <strong>Charge Layer</strong>: This layer indicates the net electric charge of the compound.
+ 9. <strong>Auxiliary Information</strong>: Sometimes additional information is provided in parentheses at the end of the InChI string.
+ 
+ Here's an example of an InChI string broken down into its components:
+
+<pre><code class=""> InChI=1S/C6H12O6/c7-1-2-3(8)4(9)5(10)6(11)12-1/h1-11H/t2-6+/m1/s1
+</code></pre>
+
+
+ 
+ - `InChI=1S/` indicates the InChI version.
+ - `C6H12O6/` is the formula layer.
+ - `c7-1-2-3(8)4(9)5(10)6(11)` is the main layer with atom connectivity.
+ - `h1-11H` indicates the presence of hydrogen atoms.
+ - `t2-6+` indicates the stereochemistry.
+ - `/m1/s1` provides additional stereochemical information.</p>
+
+        <h3>Declare</h3>        
+
+        <pre>
+            <code id="clr_ts">
+# namespace BioNovoGene.BioDeep.Chemoinformatics.IUPAC.InChI
+export class InChI {
+   Charge: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemoinformatics/IUPAC/InChI/ChargeLayer.html">ChargeLayer</a>;
+   FixedH: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemoinformatics/IUPAC/InChI/FixedHLayer.html">FixedHLayer</a>;
+   InChIKey: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemoinformatics/IUPAC/InChI/InChIKey.html">InChIKey</a>;
+   Isotopic: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemoinformatics/IUPAC/InChI/IsotopicLayer.html">IsotopicLayer</a>;
+   IsStandard: boolean;
+   Key: string;
+   Main: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemoinformatics/IUPAC/InChI/MainLayer.html">MainLayer</a>;
+   Reconnected: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemoinformatics/IUPAC/InChI/ReconnectedLayer.html">ReconnectedLayer</a>;
+   Stereochemical: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemoinformatics/IUPAC/InChI/StereochemicalLayer.html">StereochemicalLayer</a>;
+   Version: integer;
+}
+</code>
+        </pre>
+
+        <h3>.NET clr type reference tree</h3>
+
+        <ol>
+<li>use by <i>property</i> member <code>Charge</code>: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemoinformatics/IUPAC/InChI/ChargeLayer.html">ChargeLayer</a></li>
+<li>use by <i>property</i> member <code>FixedH</code>: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemoinformatics/IUPAC/InChI/FixedHLayer.html">FixedHLayer</a></li>
+<li>use by <i>property</i> member <code>InChIKey</code>: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemoinformatics/IUPAC/InChI/InChIKey.html">InChIKey</a></li>
+<li>use by <i>property</i> member <code>Isotopic</code>: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemoinformatics/IUPAC/InChI/IsotopicLayer.html">IsotopicLayer</a></li>
+<li>use by <i>property</i> member <code>Main</code>: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemoinformatics/IUPAC/InChI/MainLayer.html">MainLayer</a></li>
+<li>use by <i>property</i> member <code>Reconnected</code>: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemoinformatics/IUPAC/InChI/ReconnectedLayer.html">ReconnectedLayer</a></li>
+<li>use by <i>property</i> member <code>Stereochemical</code>: <a href="/vignettes/clr/BioNovoGene/BioDeep/Chemoinformatics/IUPAC/InChI/StereochemicalLayer.html">StereochemicalLayer</a></li>
+</ol>
+
+
+        <hr />
+        <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a
+                href="../{$package}.html">Index</a>]
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
+<script type="text/javascript" src="../../_assets/highlights.js"></script>
+<script type="text/javascript">r_highlights("clr_ts");</script>
+
+</html>
