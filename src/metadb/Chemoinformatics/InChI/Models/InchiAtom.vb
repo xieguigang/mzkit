@@ -188,6 +188,7 @@ Namespace IUPAC.InChI
             If a.X <> b.X Then Return False
             If a.Y <> b.Y Then Return False
             If a.Z <> b.Z Then Return False
+            If a.Index <> b.Index Then Return False
 
             Return True
         End Operator
