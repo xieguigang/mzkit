@@ -130,6 +130,12 @@ Namespace IUPAC.InChI
             End Get
         End Property
 
+        Public ReadOnly Property InChIKey As InChIKey
+            Get
+                Return New InChIKey(Me)
+            End Get
+        End Property
+
         Sub New(inchi As String)
             Dim tokens$() = inchi.GetTagValue("=").Value.Split("/"c)
             Dim version = tokens(Scan0)
