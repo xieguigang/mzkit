@@ -1,6 +1,7 @@
 ﻿
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports BioNovoGene.BioDeep.Chemoinformatics.IUPAC.InChI
+Imports BioNovoGene.BioDeep.Chemoinformatics.SDF.Models
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
@@ -59,6 +60,11 @@ Module InChITool
     <ExportAPI("get_formula")>
     Public Function get_formula(inchi As InChI) As Formula
         Return FormulaScanner.ScanFormula(inchi.Main.Formula)
+    End Function
+
+    <ExportAPI("get_struct")>
+    Public Function get_struct(inchi As InChI) As [Structure]
+        Return inchi.GetStruct
     End Function
 
     <ExportAPI("inchikey")>

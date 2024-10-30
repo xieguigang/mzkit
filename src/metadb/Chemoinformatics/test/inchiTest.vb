@@ -56,6 +56,7 @@
 
 Imports BioNovoGene.BioDeep.Chemoinformatics.IUPAC
 Imports BioNovoGene.BioDeep.Chemoinformatics.IUPAC.InChI
+Imports BioNovoGene.BioDeep.Chemoinformatics.SDF.Models
 
 Module inchiTest
 
@@ -77,6 +78,7 @@ Module inchiTest
         Dim ascorbicAcid As String = "InChI=1S/C6H8O6/c7-1-2(8)5-3(9)4(10)6(11)12-5/h2,5,7-10H,1H2/t2-,5+/m0/s1"
 
         Dim inchi As New InChI(ascorbicAcid)
+        Dim strct As [Structure] = inchi.GetStruct
 
         Dim key As String = inchi.Key
 

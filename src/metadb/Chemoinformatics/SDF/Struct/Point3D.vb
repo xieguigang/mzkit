@@ -63,5 +63,14 @@ Namespace SDF.Models
         Public Property Y As Double
         Public Property Z As Double
 
+        Sub New()
+        End Sub
+
+        Sub New(x As Double, y As Double, z As Double)
+            Me.X = x
+            Me.Y = y
+            Me.Z = z
+        End Sub
+
     End Class
 End Namespace

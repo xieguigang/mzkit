@@ -14,6 +14,9 @@ declare namespace InChI {
    function get_formula(inchi: object): object;
    /**
    */
+   function get_struct(inchi: object): object;
+   /**
+   */
    function inchikey(inchi: object): object;
    /**
     * parse the inchi string

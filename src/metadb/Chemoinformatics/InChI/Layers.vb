@@ -1,42 +1,49 @@
 ﻿#Region "Microsoft.VisualBasic::0eedffccff593e37b04e4b9274f87b3d, metadb\Chemoinformatics\InChI\Layers.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
 
-    ' Code Statistics:
+' Code Statistics:
 
+'   Total Lines: 129
+'    Code Lines: 65 (50.39%)
+' Comment Lines: 45 (34.88%)
+'    - Xml Docs: 84.44%
+' 
+'   Blank Lines: 19 (14.73%)
+'     File Size: 4.72 KB
     '   Total Lines: 129
     '    Code Lines: 65 (50.39%)
     ' Comment Lines: 45 (34.88%)
@@ -46,26 +53,24 @@
     '     File Size: 4.71 KB
 
 
-    '     Class Layer
-    ' 
-    '         Function: GetByPrefix, ParseChargeLayer, ParseFixedHLayer, ParseIsotopicLayer, ParseMainLayer
-    '                   ParseReconnectedLayer, ParseStereochemicalLayer
-    ' 
-    '     Enum StereoType
-    ' 
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class Layer
+' 
+'         Function: GetByPrefix, ParseChargeLayer, ParseFixedHLayer, ParseIsotopicLayer, ParseMainLayer
+'                   ParseReconnectedLayer, ParseStereochemicalLayer
+' 
+'     Enum StereoType
+' 
+' 
+'  
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
-Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Text
 
 Namespace IUPAC.InChI
@@ -117,86 +122,44 @@ Namespace IUPAC.InChI
     ''' </summary>
     Public MustInherit Class Layer
 
-        Shared ReadOnly prefixes As Index(Of Char) = "chpqbtmsihfr"
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Friend Shared Function GetByPrefix(tokens As String()) As Func(Of [Variant](Of Char, Char()), String)
-            Return Function(c As [Variant](Of Char, Char()))
-                       Dim str As String
-
-                       If c Like GetType(Char) Then
-                           If c = ASCII.NUL Then
-                               Return tokens.First(Function(t) Not t.First Like prefixes)
-                           Else
-                               str = tokens.FirstOrDefault(Function(t) c = t.First)
-                           End If
-                       Else
-                           With CType(c, Char())
-                               str = tokens.FirstOrDefault(Function(t) .Any(Function(cc) cc = t.First))
-                           End With
-                       End If
-
-                       If str.StringEmpty Then
-                           Return ""
-                       Else
-                           Return str.Substring(1)
-                       End If
-                   End Function
-        End Function
-
-        ''' <summary>
-        ''' c, h
-        ''' </summary>
-        ''' <param name="tokens"></param>
-        ''' <returns></returns>
-        Friend Shared Function ParseMainLayer(tokens As Func(Of [Variant](Of Char, Char()), String)) As MainLayer
+        Friend Shared Function ParseMainLayer(tokens As InChIStringReader) As MainLayer
             Dim main As New MainLayer With {
-                .Formula = tokens(ASCII.NUL),
-                .Struct = MainLayer.ParseBounds(tokens("c"c)),
-                .Hydrogen = MainLayer.ParseHAtoms(tokens("h"c)).ToArray
+                .Formula = tokens.GetByPrefix(ASCII.NUL),
+                .Struct = MainLayer.ParseBounds(tokens.GetByPrefix("c"c)),
+                .Hydrogen = MainLayer.ParseHAtoms(tokens.GetByPrefix("h"c)).ToArray
             }
 
             Return main
         End Function
 
-        ''' <summary>
-        ''' p, q
-        ''' </summary>
-        ''' <param name="tokens"></param>
-        ''' <returns></returns>
-        Friend Shared Function ParseChargeLayer(tokens As Func(Of [Variant](Of Char, Char()), String)) As ChargeLayer
+        Friend Shared Function ParseChargeLayer(tokens As InChIStringReader) As ChargeLayer
             Dim charge As New ChargeLayer With {
-                .Proton = tokens("p"c).ParseInteger,
-                .Charge = tokens("q"c)
+                .Proton = tokens.GetByPrefix("p"c).ParseInteger,
+                .Charge = tokens.GetByPrefix("q"c)
             }
 
             Return charge
         End Function
 
-        ''' <summary>
-        ''' b, t, m, s
-        ''' </summary>
-        ''' <param name="tokens"></param>
-        ''' <returns></returns>
-        Friend Shared Function ParseStereochemicalLayer(tokens As Func(Of [Variant](Of Char, Char()), String)) As StereochemicalLayer
+        Friend Shared Function ParseStereochemicalLayer(tokens As InChIStringReader) As StereochemicalLayer
             Dim stereochemical As New StereochemicalLayer With {
-                .DoubleBounds = tokens("b"c),
-                .Tetrahedral = tokens({"t"c, "m"c}),
-                .Type = tokens("s"c)
+                .DoubleBounds = tokens.GetByPrefix("b"c),
+                .Tetrahedral = tokens.GetByPrefix({"t"c, "m"c}),
+                .Type = tokens.GetByPrefix("s"c)
             }
 
             Return stereochemical
         End Function
 
-        Friend Shared Function ParseIsotopicLayer(tokens As Func(Of [Variant](Of Char, Char()), String)) As IsotopicLayer
+        Friend Shared Function ParseIsotopicLayer(tokens As InChIStringReader) As IsotopicLayer
 
         End Function
 
-        Friend Shared Function ParseFixedHLayer(tokens As Func(Of [Variant](Of Char, Char()), String)) As FixedHLayer
+        Friend Shared Function ParseFixedHLayer(tokens As InChIStringReader) As FixedHLayer
 
         End Function
 
-        Friend Shared Function ParseReconnectedLayer(tokens As Func(Of [Variant](Of Char, Char()), String)) As ReconnectedLayer
+        Friend Shared Function ParseReconnectedLayer(tokens As InChIStringReader) As ReconnectedLayer
 
         End Function
     End Class
