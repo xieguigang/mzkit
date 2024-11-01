@@ -93,6 +93,10 @@ Public Class SpectrumGrid
         Me.rt_win = rt_win
     End Sub
 
+    ''' <summary>
+    ''' get all cluster data result
+    ''' </summary>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function GetTotal() As IEnumerable(Of SpectrumLine)
         Return clusters.raw.AsEnumerable
