@@ -1,4 +1,4 @@
-﻿Public Class CAS
+﻿Public Class CASDetails
 
     Public Property uri As String
     Public Property rn As String
@@ -15,6 +15,10 @@
     Public Property synonyms As String()
     Public Property replacedRns As String()
     Public Property hasMolfile As Boolean
+
+    Public Shared Function GetDetails() As CASDetails
+
+    End Function
 
 End Class
 
