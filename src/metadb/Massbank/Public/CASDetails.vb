@@ -1,4 +1,8 @@
-﻿Public Class CASDetails
+﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.Text.Parser.HtmlParser
+
+Public Class CASDetails
 
     Public Property uri As String
     Public Property rn As String
@@ -16,8 +20,13 @@
     Public Property replacedRns As String()
     Public Property hasMolfile As Boolean
 
-    Public Shared Function GetDetails() As CASDetails
+    Public Overrides Function ToString() As String
+        Return $"{name} ({molecularFormula.StripHTMLTags})"
+    End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Shared Function GetDetails(cas_id As String) As CASDetails
+        Return $"https://commonchemistry.cas.org/api/detail?cas_rn={cas_id}".GET.LoadJSON(Of CASDetails)
     End Function
 
 End Class
