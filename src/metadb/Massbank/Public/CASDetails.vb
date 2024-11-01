@@ -1,6 +1,9 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports BioNovoGene.BioDeep.Chemistry.MetaLib.CrossReference
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text.Parser.HtmlParser
+Imports Metabolite = BioNovoGene.BioDeep.Chemistry.MetaLib.Models.MetaLib
 
 Public Class CASDetails
 
@@ -27,6 +30,23 @@ Public Class CASDetails
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Shared Function GetDetails(cas_id As String) As CASDetails
         Return $"https://commonchemistry.cas.org/api/detail?cas_rn={cas_id}".GET.LoadJSON(Of CASDetails)
+    End Function
+
+    Public Function GetModel() As Metabolite
+        Return New Metabolite With {
+            .ID = rn,
+            .formula = molecularFormula.StripHTMLTags,
+            .exact_mass = FormulaScanner.EvaluateExactMass(.formula),
+            .name = name,
+            .IUPACName = name,
+            .synonym = synonyms,
+            .xref = New xref With {
+                .CAS = {rn},
+                .InChI = inchi,
+                .InChIkey = inchikey,
+                .SMILES = smile
+            }
+        }
     End Function
 
 End Class
