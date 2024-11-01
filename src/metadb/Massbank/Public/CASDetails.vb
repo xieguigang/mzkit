@@ -5,6 +5,9 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text.Parser.HtmlParser
 Imports Metabolite = BioNovoGene.BioDeep.Chemistry.MetaLib.Models.MetaLib
 
+''' <summary>
+''' The metabolite data model from the cas registry details
+''' </summary>
 Public Class CASDetails
 
     Public Property uri As String
@@ -32,6 +35,7 @@ Public Class CASDetails
         Return $"https://commonchemistry.cas.org/api/detail?cas_rn={cas_id}".GET.LoadJSON(Of CASDetails)
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function GetModel() As Metabolite
         Return New Metabolite With {
             .ID = rn,
