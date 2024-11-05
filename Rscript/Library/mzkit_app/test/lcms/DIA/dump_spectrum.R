@@ -1,12 +1,12 @@
 require(mzkit);
 
-let mz = 794.6042;
+let mz = 794.7229;
 let rt = 7.28 * 60;
 
 rt <- [rt - 7.5, rt + 7.5];
 
 let spectrum = [];
-let rawfiles = list.files("F:\testdata", pattern = "*.mzPack");
+let rawfiles = list.files("F:/test_batch1", pattern = "*.mzPack");
 
 for(let file in tqdm(rawfiles)) {
     file <- open.mzpack(file, verbose = FALSE);
