@@ -75,14 +75,18 @@ Public Module DIASpectrumAnnotations
     ''' <summary>
     ''' make the spectrum set decompose into multiple spectrum groups via the NMF method
     ''' </summary>
-    ''' <param name="spectrum"></param>
+    ''' <param name="spectrum">
+    ''' a set of the mzkit supported spectrum object.
+    ''' </param>
     ''' <param name="n">
     ''' the number of the target spectrum to decomposed, 
     ''' this number should be query from the DDA experiment 
     ''' database.
     ''' </param>
     ''' <param name="env"></param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' 
+    ''' </returns>
     <ExportAPI("dia_nmf")>
     Public Function dia_nmf(<RRawVectorArgument> spectrum As Object, n As Integer,
                             Optional maxItrs As Integer = 1000,
@@ -133,7 +137,7 @@ Public Module DIASpectrumAnnotations
             .slots = New Dictionary(Of String, Object)
         }
 
-        For Each group In groups
+        For Each group As NamedCollection(Of PeakMs2) In groups
             sum.slots(group.name) = New LibraryMatrix(
                 name:=group.name,
                 spectrum:=group _
