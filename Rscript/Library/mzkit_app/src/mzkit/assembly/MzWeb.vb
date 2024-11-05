@@ -1126,13 +1126,19 @@ Module MzWeb
     ''' <summary>
     ''' Parse the given network base64 data as spectrum
     ''' </summary>
-    ''' <param name="mz"></param>
-    ''' <param name="intensity"></param>
-    ''' <param name="id"></param>
-    ''' <param name="auto_scalar"></param>
+    ''' <param name="mz">a character vector of the base64 string for the ms2 spectrum ion peaks</param>
+    ''' <param name="intensity">a character vector of the base64 string for the corresponding ion peaks intensity value.</param>
+    ''' <param name="id">a character vector of the spectrum reference id</param>
+    ''' <param name="auto_scalar">
+    ''' returns a scalar spectrum object if the input data just contains one spectrum data or not?
+    ''' </param>
     ''' <param name="env"></param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' this function will populate a set of the ms2 spectrum data object
+    ''' that which was parsed from the given base64 data collection.
+    ''' </returns>
     <ExportAPI("parse_base64")>
+    <RApiReturn(GetType(LibraryMatrix))>
     Public Function parse_base64(<RRawVectorArgument> mz As Object,
                                  <RRawVectorArgument> intensity As Object,
                                  <RRawVectorArgument>
