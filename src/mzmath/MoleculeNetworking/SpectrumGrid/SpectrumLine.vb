@@ -64,10 +64,32 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 ''' </summary>
 Public Class SpectrumLine
 
+    ''' <summary>
+    ''' the spectrum data objects across multiple rawdata files in current cluster
+    ''' </summary>
+    ''' <returns></returns>
     Public Property cluster As PeakMs2()
+    ''' <summary>
+    ''' the corresponding intensity vector of current cluster data
+    ''' </summary>
+    ''' <returns></returns>
     Public Property intensity As Double()
+    ''' <summary>
+    ''' precursor ion of current spectrum cluster
+    ''' </summary>
+    ''' <returns></returns>
     Public Property rt As Double
     Public Property mz As Double
+
+    ''' <summary>
+    ''' gets the cluster size
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property size As Integer
+        Get
+            Return cluster.TryCount
+        End Get
+    End Property
 
     Friend Function SetRT(rt As Double) As SpectrumLine
         _rt = rt
