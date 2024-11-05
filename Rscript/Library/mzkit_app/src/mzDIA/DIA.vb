@@ -85,9 +85,10 @@ Public Module DIASpectrumAnnotations
     ''' </param>
     ''' <param name="env"></param>
     ''' <returns>
-    ''' 
+    ''' a set of the decomposed spectrum object
     ''' </returns>
     <ExportAPI("dia_nmf")>
+    <RApiReturn(GetType(PeakMs2))>
     Public Function dia_nmf(<RRawVectorArgument> spectrum As Object, n As Integer,
                             Optional maxItrs As Integer = 1000,
                             Optional tolerance As Double = 0.001,
