@@ -7,4 +7,6 @@ imports "MoleculeNetworking" from "mzDIA";
 setwd(@dir);
 
 let spectrum = read.cache("F:\testdata.spec");
-let cluster = 
+let cluster = spectrum_grid(spectrum);
+
+

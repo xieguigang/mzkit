@@ -445,6 +445,16 @@ Module MoleculeNetworking
     End Function
 
     ''' <summary>
+    ''' get all aligned spectrum clusters across rawdata files
+    ''' </summary>
+    ''' <param name="grid"></param>
+    ''' <returns></returns>
+    <ExportAPI("spectrum_clusters")>
+    Public Function get_spectrum_clusters(grid As SpectrumGrid) As SpectrumLine()
+        Return grid.GetTotal.ToArray
+    End Function
+
+    ''' <summary>
     ''' Create grid clustering of the ms2 spectrum data
     ''' </summary>
     ''' <param name="rawdata"></param>
