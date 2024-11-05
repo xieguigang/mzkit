@@ -113,6 +113,13 @@ declare namespace MoleculeNetworking {
    */
    function representative(tree: object, mzdiff?: any, env?: object): object;
    /**
+    * get all aligned spectrum clusters across rawdata files
+    * 
+    * 
+     * @param grid -
+   */
+   function spectrum_clusters(grid: object): object;
+   /**
     * Create grid clustering of the ms2 spectrum data
     * 
     * 

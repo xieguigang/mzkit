@@ -502,7 +502,8 @@ Module MzWeb
                         data(i).meta = json_str.LoadJSON(Of Dictionary(Of String, String))(throwEx:=False)
 
                         If Not data(i).meta.IsNullOrEmpty Then
-                            ' 20241105 due to the reason of scanms2 data has no file source attribute
+                            ' 20241105
+                            ' due to the reason of scanms2 data has no file source attribute
                             ' so we needs to restore the file source information from the metadata
                             ' try get file source information via tags:
                             ' source, file, rawdata, filename, etc something
