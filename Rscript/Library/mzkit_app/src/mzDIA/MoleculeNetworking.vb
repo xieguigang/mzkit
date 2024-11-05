@@ -467,7 +467,6 @@ Module MoleculeNetworking
 
         Dim rawPool As pipeline = pipeline.TryCreatePipeline(Of mzPack)(rawdata, env)
         Dim specData As New List(Of NamedCollection(Of PeakMs2))
-        Dim specSet As PeakMs2()
         Dim massError = Math.getTolerance(centroid, env, [default]:="da:0.3")
 
         If massError Like GetType(Message) Then
@@ -476,14 +475,48 @@ Module MoleculeNetworking
 
         Dim massWin As Tolerance = massError.TryCast(Of Tolerance)
         Dim cutoff As New RelativeIntensityCutoff(intocutoff)
-        Dim filename As String
-        Dim id As String()
 
         If rawPool.isError Then
-            Return rawPool.getError
+            rawPool = pipeline.TryCreatePipeline(Of PeakMs2)(rawdata, env)
+
+            If rawPool.isError Then
+                Return rawPool.getError
+            End If
+
+            ' spectrum group by source files
+            For Each file_group In rawPool.populates(Of PeakMs2)(env).GroupBy(Function(a) If(a.file, "Unknown"))
+                Call specData.Add(New NamedCollection(Of PeakMs2) With {
+                    .name = file_group.Key,
+                    .value = file_group.ToArray
+                })
+            Next
+        Else
+            ' get spectrum source from raw data files
+            Call specData.AddRange(rawPool _
+                .populates(Of mzPack)(env) _
+                .loadRawdataFileMatrix(massWin, cutoff)
+            )
         End If
 
-        For Each raw As mzPack In TqdmWrapper.Wrap(rawPool.populates(Of mzPack)(env).ToArray)
+        If specData.Count < 3 Then
+            Return RInternal.debug.stop("too less source file data for make spectrum alignment, at least 3 and more rawdata files is required for construct the dia matrix!", env)
+        End If
+
+        Dim grid As New SpectrumGrid(rt_win, dia_n)
+        grid = grid.SetRawDataFiles(specData)
+
+        Return grid
+    End Function
+
+    <Extension>
+    Private Iterator Function loadRawdataFileMatrix(rawpool As IEnumerable(Of mzPack),
+                                                    massWin As Tolerance,
+                                                    cutoff As RelativeIntensityCutoff) As IEnumerable(Of NamedCollection(Of PeakMs2))
+        Dim filename As String
+        Dim id As String()
+        Dim specSet As PeakMs2()
+
+        For Each raw As mzPack In TqdmWrapper.Wrap(rawpool.ToArray)
             filename = raw.source.BaseName
             specSet = raw.GetMs2Peaks _
                 .AsParallel _
@@ -502,13 +535,8 @@ Module MoleculeNetworking
                 specSet(i).lib_guid = $"{filename}#{id(i)}"
             Next
 
-            Call specData.Add(New NamedCollection(Of PeakMs2)(filename, specSet))
+            Yield New NamedCollection(Of PeakMs2)(filename, specSet)
         Next
-
-        Dim grid As New SpectrumGrid(rt_win, dia_n)
-        grid = grid.SetRawDataFiles(specData)
-
-        Return grid
     End Function
 
     ''' <summary>
