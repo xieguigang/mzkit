@@ -475,7 +475,7 @@ Module MoleculeNetworking
                                          Optional dia_n As Integer = -1,
                                          Optional env As Environment = Nothing) As Object
 
-        Dim rawPool As pipeline = pipeline.TryCreatePipeline(Of mzPack)(rawdata, env)
+        Dim rawPool As pipeline = pipeline.TryCreatePipeline(Of mzPack)(rawdata, env, suppress:=True)
         Dim specData As New List(Of NamedCollection(Of PeakMs2))
         Dim massError = Math.getTolerance(centroid, env, [default]:="da:0.3")
 
@@ -487,7 +487,7 @@ Module MoleculeNetworking
         Dim cutoff As New RelativeIntensityCutoff(intocutoff)
 
         If rawPool.isError Then
-            rawPool = pipeline.TryCreatePipeline(Of PeakMs2)(rawdata, env)
+            rawPool = pipeline.TryCreatePipeline(Of PeakMs2)(rawdata, env, suppress:=True)
 
             If rawPool.isError Then
                 Return rawPool.getError
