@@ -58,6 +58,7 @@
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.BioDeep.MassSpectrometry.MoleculeNetworking
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Scripting.MetaData
@@ -71,6 +72,25 @@ Imports SMRUCC.Rsharp.Runtime.Interop
 ''' </summary>
 <Package("DIA")>
 Public Module DIASpectrumAnnotations
+
+    Private Function pullMatrix(pull As pipeline, env As Environment) As pipeline
+        Dim libs = pull _
+            .populates(Of LibraryMatrix)(env) _
+            .ToArray
+
+        pull = pipeline.CreateFromPopulator(
+            Iterator Function() As IEnumerable(Of PeakMs2)
+                For Each mat As LibraryMatrix In libs
+                    Yield New PeakMs2 With {
+                        .lib_guid = mat.name,
+                        .mzInto = mat.Array,
+                        .mz = mat.parentMz
+                    }
+                Next
+            End Function)
+
+        Return pull
+    End Function
 
     ''' <summary>
     ''' make the spectrum set decompose into multiple spectrum groups via the NMF method
@@ -101,23 +121,14 @@ Public Module DIASpectrumAnnotations
             pull = pipeline.TryCreatePipeline(Of LibraryMatrix)(spectrum, env)
 
             If pull.isError Then
-                Return pull.getError
+                If TypeOf spectrum Is SpectrumLine Then
+                    pull = pipeline.CreateFromPopulator(DirectCast(spectrum, SpectrumLine).cluster)
+                Else
+                    Return pull.getError
+                End If
+            Else
+                pull = pullMatrix(pull, env)
             End If
-
-            Dim libs = pull _
-                .populates(Of LibraryMatrix)(env) _
-                .ToArray
-
-            pull = pipeline.CreateFromPopulator(
-                Iterator Function() As IEnumerable(Of PeakMs2)
-                    For Each mat As LibraryMatrix In libs
-                        Yield New PeakMs2 With {
-                            .lib_guid = mat.name,
-                            .mzInto = mat.Array,
-                            .mz = mat.parentMz
-                        }
-                    Next
-                End Function)
         End If
 
         Dim groups As NamedCollection(Of PeakMs2)() = pull _
