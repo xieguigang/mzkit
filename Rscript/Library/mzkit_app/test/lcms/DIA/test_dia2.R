@@ -22,7 +22,9 @@ for(let line in cluster |> spectrum_clusters()) {
             plot(sum[[name]]);
         }
 
-        write.csv(as.data.frame(sum[[name]]), file = `group_${i}-LIPID_${name}.csv`);
+        write.csv(as.data.frame(sum[[name]]), 
+            file = `group_${i}-LIPID_${name}.csv`, 
+            row.names = FALSE);
     }
 
     i = i + 1;
