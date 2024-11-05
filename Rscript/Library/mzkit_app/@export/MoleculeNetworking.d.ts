@@ -137,11 +137,13 @@ declare namespace MoleculeNetworking {
      *  too slow.
      * 
      * + default value Is ``-1``.
+     * @param dotcutoff 
+     * + default value Is ``0.85``.
      * @param env -
      * 
      * + default value Is ``null``.
    */
-   function spectrum_grid(rawdata: any, centroid?: any, intocutoff?: number, rt_win?: number, dia_n?: object, env?: object): any;
+   function spectrum_grid(rawdata: any, centroid?: any, intocutoff?: number, rt_win?: number, dia_n?: object, dotcutoff?: number, env?: object): any;
    /**
     * Split each cluster data into multiple parts by a givne rt window
     * 
