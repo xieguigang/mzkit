@@ -1069,6 +1069,8 @@ Module MzWeb
                     End If
 
                     ms2peaks(i).meta("source") = ms2peaks(i).file
+                    ms2peaks(i).meta("precursor") = ms2peaks(i).mz.ToString("F4")
+                    ms2peaks(i).meta("rt") = (ms2peaks(i).rt / 60).ToString("F2") & "min"
                 End If
             End If
         Next
