@@ -7,7 +7,7 @@ imports "MoleculeNetworking" from "mzDIA";
 setwd(@dir);
 
 let spectrum = read.cache("F:\testdata.spec");
-let cluster = spectrum_grid(spectrum);
+let cluster = spectrum_grid(spectrum, dotcutoff = 0.9);
 
 for(let line in cluster |> spectrum_clusters()) {
     let decompose = line |> dia_nmf(n = 2);
