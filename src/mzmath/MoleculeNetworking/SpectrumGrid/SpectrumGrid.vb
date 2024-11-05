@@ -64,6 +64,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Correlations
 Imports std = System.Math
@@ -230,10 +231,33 @@ Public Class SpectrumGrid
                                 fileIndex(name).Average(Function(i) i.intensity), 0)
                         End Function) _
                 .ToArray
+            ' needs make sum of the spectrum in each rawdata file?
+            If fileIndex.Any(Function(a) a.Value.Length > 1) Then
+                fileIndex = fileIndex _
+                    .ToDictionary(Function(a) a.Key,
+                                  Function(a)
+                                      Dim duplicated = a.Value
+
+                                      If duplicated.Length = 1 Then
+                                          Return duplicated
+                                      End If
+
+                                      Dim sum = duplicated.SpectrumSum
+                                      Dim max = duplicated.OrderByDescending(Function(ai) ai.intensity).First
+
+                                      max = New PeakMs2(max) With {
+                                         .mzInto = sum.Array
+                                      }
+
+                                      Return {max}
+                                  End Function)
+            End If
 
             Yield New SpectrumLine With {
                 .intensity = SumNorm(i2),
-                .cluster = group.value,
+                .cluster = fileIndex.Values _
+                    .IteratesALL _
+                    .ToArray,
                 .rt = Val(group.name),
                 .mz = group.Average(Function(si) si.mz)
             }
