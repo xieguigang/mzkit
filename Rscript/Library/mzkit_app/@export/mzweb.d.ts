@@ -129,6 +129,11 @@ declare namespace mzweb {
    /**
     * extract ms2 peaks data from the mzpack data object
     * 
+    * > metadata of the spectrum source reference includes data slots:
+    * >  
+    * >  1. ``source``, the file name of the spectrum rawdata file source
+    * >  2. ``precursor``, the precursor ion mz of the spectrum data
+    * >  3. ``rt``, the retention time of the spectrum data object
     * 
      * @param mzpack -
      * @param precursorMz if the precursor m/z data is assign by this parameter
@@ -139,7 +144,8 @@ declare namespace mzweb {
      * @param tolerance ppm toleracne error for extract ms2 xic data.
      * 
      * + default value Is ``'ppm:30'``.
-     * @param tag_source 
+     * @param tag_source tag the source reference to the metadata of each spectrum data object?
+     * 
      * + default value Is ``true``.
      * @param centroid and also convert the data to centroid mode?
      * 
