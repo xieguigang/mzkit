@@ -3,7 +3,7 @@ require(mzkit);
 let mz = 794.6042;
 let rt = 7.28 * 60;
 
-rt <- [rt - 15, rt + 15];
+rt <- [rt - 10, rt + 10];
 
 let spectrum = [];
 let rawfiles = list.files("F:\testdata", pattern = "*.mzPack");

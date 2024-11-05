@@ -1049,16 +1049,26 @@ Module MzWeb
 
         For i As Integer = 0 To unique.Length - 1
             ms2peaks(i).lib_guid = unique(i)
-            ms2peaks(i).lib_guid = ms2peaks(i).lib_guid.Replace("ms2.mzPack#", "").Replace("queryMs2.mzPack#", "")
+            ms2peaks(i).lib_guid = ms2peaks(i).lib_guid _
+                .Replace("ms2.mzPack#", "") _
+                .Replace("queryMs2.mzPack#", "")
 
             Dim src As String = ms2peaks(i).lib_guid.Match(".+?\.mzPack[# ]")
 
             If Not src.StringEmpty Then
                 ms2peaks(i).file = src.Trim("#"c, " "c)
-                ms2peaks(i).lib_guid = ms2peaks(i).lib_guid.Replace(ms2peaks(i).lib_guid.Match(".+\.mzPack[# ]"), "")
+                ms2peaks(i).lib_guid = ms2peaks(i).lib_guid _
+                    .Replace(ms2peaks(i).lib_guid _
+                    .Match(".+\.mzPack[# ]"), "")
 
                 If tag_source Then
                     ms2peaks(i).lib_guid = $"{ms2peaks(i).file} {ms2peaks(i).lib_guid}".Trim
+
+                    If ms2peaks(i).meta Is Nothing Then
+                        ms2peaks(i).meta = New Dictionary(Of String, String)
+                    End If
+
+                    ms2peaks(i).meta("source") = ms2peaks(i).file
                 End If
             End If
         Next
