@@ -3,7 +3,7 @@ require(mzkit);
 let mz = 794.6042;
 let rt = 7.28 * 60;
 
-rt <- [rt - 10, rt + 10];
+rt <- [rt - 7.5, rt + 7.5];
 
 let spectrum = [];
 let rawfiles = list.files("F:\testdata", pattern = "*.mzPack");
@@ -12,7 +12,7 @@ for(let file in tqdm(rawfiles)) {
     file <- open.mzpack(file, verbose = FALSE);
     spectrum <- append(spectrum, file |> ms2_peaks(
         precursorMz = mz,
-        tolerance = "da:0.1",
+        tolerance = "da:0.01",
         tag_source = TRUE,
         centroid = FALSE,
         norm = FALSE,
