@@ -118,7 +118,7 @@ Public Module DIASpectrumAnnotations
         Dim pull As pipeline = pipeline.TryCreatePipeline(Of PeakMs2)(spectrum, env, suppress:=True)
 
         If pull.isError Then
-            pull = pipeline.TryCreatePipeline(Of LibraryMatrix)(spectrum, env)
+            pull = pipeline.TryCreatePipeline(Of LibraryMatrix)(spectrum, env, suppress:=True)
 
             If pull.isError Then
                 If TypeOf spectrum Is SpectrumLine Then
