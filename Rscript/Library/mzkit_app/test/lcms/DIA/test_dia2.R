@@ -9,7 +9,7 @@ setwd(@dir);
 let spectrum = read.cache("F:\testdata.spec");
 let cluster = spectrum_grid(spectrum);
 
-for(let line in cluster) {
+for(let line in cluster |> spectrum_clusters()) {
     let decompose = line |> dia_nmf(n = 2);
     let sum = attr(decompose, "sum_spectrum");
 

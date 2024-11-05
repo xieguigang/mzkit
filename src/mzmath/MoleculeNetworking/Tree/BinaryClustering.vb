@@ -118,10 +118,10 @@ Public Class BinaryClustering
     End Function
 
     Public Iterator Function GetClusters() As IEnumerable(Of NamedCollection(Of PeakMs2))
-        Dim pull As New List(Of BTreeCluster)
+        Dim pull As New List(Of BTreeCluster) From {bin}
         Dim spectrum As PeakMs2()
 
-        BTreeCluster.PullAllClusterNodes(bin, pull)
+        Call BTreeCluster.PullAllClusterNodes(bin, pull)
 
         For Each cluster As BTreeCluster In pull
             spectrum = cluster.data.Values _
