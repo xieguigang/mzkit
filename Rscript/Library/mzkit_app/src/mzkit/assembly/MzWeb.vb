@@ -500,6 +500,22 @@ Module MzWeb
 
                     If Not json_str.StringEmpty(, True) Then
                         data(i).meta = json_str.LoadJSON(Of Dictionary(Of String, String))(throwEx:=False)
+
+                        If Not data(i).meta.IsNullOrEmpty Then
+                            ' 20241105 due to the reason of scanms2 data has no file source attribute
+                            ' so we needs to restore the file source information from the metadata
+                            ' try get file source information via tags:
+                            ' source, file, rawdata, filename, etc something
+                            Dim m = data(i).meta
+
+                            Static tags As String() = {"source", "file", "rawdata", "filename"}
+
+                            For Each name As String In tags
+                                If m.ContainsKey(name) Then
+                                    data(i).file = m(name)
+                                End If
+                            Next
+                        End If
                     End If
                 End If
             Next
