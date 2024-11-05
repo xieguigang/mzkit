@@ -95,6 +95,23 @@ Public Class DIADecompose
 
     Dim w, h As NumericMatrix
 
+    Public Iterator Function GetSampleComposition() As IEnumerable(Of NamedCollection(Of Double))
+        Dim w As Double()() = Me.w.Array
+
+        For i As Integer = 0 To specPool.Length - 1
+            Yield New NamedCollection(Of Double)(specPool(i).file, w(i))
+        Next
+    End Function
+
+    Public Iterator Function GetIonPeaksComposition() As IEnumerable(Of NamedCollection(Of Double))
+        Dim h As Double()() = Me.h.Transpose.ArrayPack
+        Dim ions = fragments.ionSet
+
+        For i As Integer = 0 To fragments.size - 1
+            Yield New NamedCollection(Of Double)(ions(i).ToString("F4"), h(i))
+        Next
+    End Function
+
     ''' <summary>
     ''' make the spectrum set decompose into multiple spectrum groups via the NMF method
     ''' </summary>

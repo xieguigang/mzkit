@@ -158,7 +158,32 @@ Public Module DIASpectrumAnnotations
             )
         Next
 
+        Dim sample_composition As New dataframe With {
+            .columns = New Dictionary(Of String, Array)
+        }
+        Dim ionpeaks_composition As New dataframe With {
+            .columns = New Dictionary(Of String, Array)
+        }
+        Dim composition = nmf.GetSampleComposition.ToArray
+
+        sample_composition.rownames = composition.Select(Function(a) a.name).ToArray
+
+        For i As Integer = 0 To n - 1
+            Dim offset As Integer = i
+            sample_composition.add($"decomposition_{i + 1}", composition.Select(Function(v) v(offset)))
+        Next
+
+        composition = nmf.GetIonPeaksComposition.ToArray
+        ionpeaks_composition.rownames = composition.Select(Function(a) a.name).ToArray
+
+        For i As Integer = 0 To n - 1
+            Dim offset As Integer = i
+            ionpeaks_composition.add($"decomposition_{i + 1}", composition.Select(Function(v) v(offset)))
+        Next
+
         Call list.setAttribute("sum_spectrum", sum)
+        Call list.setAttribute("sample_composition", sample_composition)
+        Call list.setAttribute("ionpeaks_composition", ionpeaks_composition)
 
         Return list
     End Function
