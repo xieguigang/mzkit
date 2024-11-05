@@ -926,8 +926,18 @@ Module MzWeb
     ''' for specific the range min and range max. rt data should 
     ''' be in data unit of seconds.
     ''' </param>
+    ''' <param name="tag_source">
+    ''' tag the source reference to the metadata of each spectrum data object?
+    ''' </param>
     ''' <param name="env"></param>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' metadata of the spectrum source reference includes data slots:
+    ''' 
+    ''' 1. ``source``, the file name of the spectrum rawdata file source
+    ''' 2. ``precursor``, the precursor ion mz of the spectrum data
+    ''' 3. ``rt``, the retention time of the spectrum data object
+    ''' </remarks>
     <ExportAPI("ms2_peaks")>
     <RApiReturn(GetType(PeakMs2))>
     Public Function Ms2ScanPeaks(mzpack As mzPack,
