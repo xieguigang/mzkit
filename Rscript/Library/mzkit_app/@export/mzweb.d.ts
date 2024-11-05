@@ -150,11 +150,17 @@ declare namespace mzweb {
      * + default value Is ``true``.
      * @param into_cutoff 
      * + default value Is ``0``.
+     * @param rt_window the rt range for filter of the ms2 spectrum data exports, 
+     *  should be a numeric vector that consists with two elements
+     *  for specific the range min and range max. rt data should 
+     *  be in data unit of seconds.
+     * 
+     * + default value Is ``null``.
      * @param env -
      * 
      * + default value Is ``null``.
    */
-   function ms2_peaks(mzpack: object, precursorMz?: number, tolerance?: any, tag_source?: boolean, centroid?: boolean, norm?: boolean, filter_empty?: boolean, into_cutoff?: any, env?: object): object;
+   function ms2_peaks(mzpack: object, precursorMz?: number, tolerance?: any, tag_source?: boolean, centroid?: boolean, norm?: boolean, filter_empty?: boolean, into_cutoff?: any, rt_window?: any, env?: object): object;
    module open {
       /**
        * open a raw data files in common raw data format and then returns 
@@ -218,19 +224,21 @@ declare namespace mzweb {
     * Parse the given network base64 data as spectrum
     * 
     * 
-     * @param mz -
-     * @param intensity -
-     * @param id -
+     * @param mz a character vector of the base64 string for the ms2 spectrum ion peaks
+     * @param intensity a character vector of the base64 string for the corresponding ion peaks intensity value.
+     * @param id a character vector of the spectrum reference id
      * 
      * + default value Is ``null``.
-     * @param auto_scalar -
+     * @param auto_scalar returns a scalar spectrum object if the input data just contains one spectrum data or not?
      * 
      * + default value Is ``true``.
      * @param env -
      * 
      * + default value Is ``null``.
+     * @return this function will populate a set of the ms2 spectrum data object
+     *  that which was parsed from the given base64 data collection.
    */
-   function parse_base64(mz: any, intensity: any, id?: any, auto_scalar?: boolean, env?: object): any;
+   function parse_base64(mz: any, intensity: any, id?: any, auto_scalar?: boolean, env?: object): object;
    module read {
       /**
        * read the mzPack data file liked simple msn cached data

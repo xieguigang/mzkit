@@ -11,6 +11,7 @@ ms2_peaks \- extract ms2 peaks data from the mzpack data object
 \fBnorm\fR as boolean = FALSE, 
 \fBfilter_empty\fR as boolean = TRUE, 
 \fBinto_cutoff\fR as any = 0, 
+\fBrt_window\fR as any = \fB<NULL>\fR, 
 [\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
@@ -35,6 +36,14 @@ extract ms2 peaks data from the mzpack data object
 .PP
 \fBcentroid\fB \fR\- 
  and also convert the data to centroid mode? 
+. 
+.PP
+.PP
+\fBrt_window\fB \fR\- 
+ the rt range for filter of the ms2 spectrum data exports, 
+ should be a numeric vector that consists with two elements
+ for specific the range min and range max. rt data should 
+ be in data unit of seconds.
 . 
 .PP
 .PP
