@@ -95,11 +95,18 @@ Public Class DIADecompose
 
     Dim w, h As NumericMatrix
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' composition vector has been normalized into [0,1]
+    ''' </remarks>
     Public Iterator Function GetSampleComposition() As IEnumerable(Of NamedCollection(Of Double))
         Dim w As Double()() = Me.w.Array
 
         For i As Integer = 0 To specPool.Length - 1
-            Yield New NamedCollection(Of Double)(specPool(i).file, w(i))
+            Yield New NamedCollection(Of Double)(specPool(i).file, Divide.f64_op_divide_f64_scalar(w(i), w(i).Sum))
         Next
     End Function
 
