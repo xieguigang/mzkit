@@ -131,8 +131,8 @@ Public Module DIASpectrumAnnotations
             End If
         End If
 
-        Dim groups As NamedCollection(Of PeakMs2)() = pull _
-            .populates(Of PeakMs2)(env) _
+        Dim nmf As New DIADecompose(pull.populates(Of PeakMs2)(env), tqdm:=False)
+        Dim groups As NamedCollection(Of PeakMs2)() = nmf _
             .DecomposeSpectrum(n,
                                maxItrs:=maxItrs,
                                tolerance:=tolerance,
