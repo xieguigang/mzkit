@@ -87,8 +87,13 @@ Public Class SpectrumGrid
     ''' this parameter value usually be 2 as we usually needs for processing of the DL, SR strucutres.
     ''' </summary>
     ReadOnly dia_n As Integer = 1
+    ReadOnly dotcutoff As Double = 0.85
 
-    Sub New(Optional rt_win As Double = 7.5, Optional dia_n As Integer = 1)
+    Sub New(Optional rt_win As Double = 7.5,
+            Optional dia_n As Integer = 1,
+            Optional dotcutoff As Double = 0.85)
+
+        Me.dotcutoff = dotcutoff
         Me.dia_n = dia_n
         Me.rt_win = rt_win
     End Sub
@@ -150,7 +155,7 @@ Public Class SpectrumGrid
         Call VBDebugger.EchoLine("make spectrum alignment for each precursor ion...")
 
         For Each ion_group As NamedCollection(Of PeakMs2) In TqdmWrapper.Wrap(parent_groups)
-            Dim tree As New BinaryClustering()
+            Dim tree As New BinaryClustering(equals:=dotcutoff)
 
             ' ion groups has the same precursor ion m/z
             ' due to the reason of precursor mz has already been

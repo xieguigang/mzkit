@@ -473,6 +473,7 @@ Module MoleculeNetworking
                                          Optional intocutoff As Double = 0.05,
                                          Optional rt_win As Double = 20,
                                          Optional dia_n As Integer = -1,
+                                         Optional dotcutoff As Double = 0.85,
                                          Optional env As Environment = Nothing) As Object
 
         Dim rawPool As pipeline = pipeline.TryCreatePipeline(Of mzPack)(rawdata, env, suppress:=True)
@@ -512,7 +513,7 @@ Module MoleculeNetworking
             Return RInternal.debug.stop("too less source file data for make spectrum alignment, at least 3 and more rawdata files is required for construct the dia matrix!", env)
         End If
 
-        Dim grid As New SpectrumGrid(rt_win, dia_n)
+        Dim grid As New SpectrumGrid(rt_win, dia_n, dotcutoff:=dotcutoff)
         grid = grid.SetRawDataFiles(specData)
 
         Return grid
