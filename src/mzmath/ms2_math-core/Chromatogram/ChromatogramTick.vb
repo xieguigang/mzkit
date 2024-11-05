@@ -62,6 +62,7 @@ Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.TagData
+Imports Microsoft.VisualBasic.Math.Interpolation
 
 Namespace Chromatogram
 
@@ -113,6 +114,20 @@ Namespace Chromatogram
             For i As Integer = 0 To rt.Length - 1
                 Yield New ChromatogramTick(rt(i), If(intensity(i) < 0, 0, intensity(i)))
             Next
+        End Function
+
+        Public Shared Function Bspline(scatter As ChromatogramTick(),
+                                       Optional degree As Single = 2,
+                                       Optional resolution As Integer = 10) As ChromatogramTick()
+            Dim xy = scatter _
+                .Select(Function(a) New PointF(a.Time, a.Intensity)) _
+                .OrderBy(Function(a) a.X) _
+                .ToArray
+            Dim interpolate = B_Spline.BSpline(xy, degree, resolution).ToArray
+
+            Return interpolate _
+                .Select(Function(p) New ChromatogramTick(p.X, p.Y)) _
+                .ToArray
         End Function
     End Class
 

@@ -64,6 +64,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Correlations
 Imports std = System.Math
@@ -87,8 +88,13 @@ Public Class SpectrumGrid
     ''' this parameter value usually be 2 as we usually needs for processing of the DL, SR strucutres.
     ''' </summary>
     ReadOnly dia_n As Integer = 1
+    ReadOnly dotcutoff As Double = 0.85
 
-    Sub New(Optional rt_win As Double = 7.5, Optional dia_n As Integer = 1)
+    Sub New(Optional rt_win As Double = 7.5,
+            Optional dia_n As Integer = 1,
+            Optional dotcutoff As Double = 0.85)
+
+        Me.dotcutoff = dotcutoff
         Me.dia_n = dia_n
         Me.rt_win = rt_win
     End Sub
@@ -150,7 +156,7 @@ Public Class SpectrumGrid
         Call VBDebugger.EchoLine("make spectrum alignment for each precursor ion...")
 
         For Each ion_group As NamedCollection(Of PeakMs2) In TqdmWrapper.Wrap(parent_groups)
-            Dim tree As New BinaryClustering()
+            Dim tree As New BinaryClustering(equals:=dotcutoff)
 
             ' ion groups has the same precursor ion m/z
             ' due to the reason of precursor mz has already been
@@ -178,7 +184,8 @@ Public Class SpectrumGrid
 
     Private Iterator Function GridLineDecompose(rt_groups As NamedCollection(Of PeakMs2)()) As IEnumerable(Of SpectrumLine)
         For Each group As NamedCollection(Of PeakMs2) In rt_groups
-            Dim dia_nmf = group.DecomposeSpectrum(dia_n, tqdm:=False).ToArray
+            Dim nmf As New DIADecompose(group, tqdm:=False)
+            Dim dia_nmf = nmf.DecomposeSpectrum(dia_n).ToArray
 
             For Each decompose_group As NamedCollection(Of PeakMs2) In dia_nmf
                 If decompose_group.Length = 0 Then
@@ -225,10 +232,33 @@ Public Class SpectrumGrid
                                 fileIndex(name).Average(Function(i) i.intensity), 0)
                         End Function) _
                 .ToArray
+            ' needs make sum of the spectrum in each rawdata file?
+            If fileIndex.Any(Function(a) a.Value.Length > 1) Then
+                fileIndex = fileIndex _
+                    .ToDictionary(Function(a) a.Key,
+                                  Function(a)
+                                      Dim duplicated = a.Value
+
+                                      If duplicated.Length = 1 Then
+                                          Return duplicated
+                                      End If
+
+                                      Dim sum = duplicated.SpectrumSum
+                                      Dim max = duplicated.OrderByDescending(Function(ai) ai.intensity).First
+
+                                      max = New PeakMs2(max) With {
+                                         .mzInto = sum.Array
+                                      }
+
+                                      Return {max}
+                                  End Function)
+            End If
 
             Yield New SpectrumLine With {
                 .intensity = SumNorm(i2),
-                .cluster = group.value,
+                .cluster = fileIndex.Values _
+                    .IteratesALL _
+                    .ToArray,
                 .rt = Val(group.name),
                 .mz = group.Average(Function(si) si.mz)
             }

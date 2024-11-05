@@ -13,7 +13,7 @@ declare namespace DIA {
     * make the spectrum set decompose into multiple spectrum groups via the NMF method
     * 
     * 
-     * @param spectrum -
+     * @param spectrum a set of the mzkit supported spectrum object.
      * @param n the number of the target spectrum to decomposed, 
      *  this number should be query from the DDA experiment 
      *  database.
@@ -26,6 +26,7 @@ declare namespace DIA {
      * @param env -
      * 
      * + default value Is ``null``.
+     * @return a set of the decomposed spectrum object
    */
-   function dia_nmf(spectrum: any, n: object, maxItrs?: object, tolerance?: number, eps?: number, env?: object): any;
+   function dia_nmf(spectrum: any, n: object, maxItrs?: object, tolerance?: number, eps?: number, env?: object): object;
 }
