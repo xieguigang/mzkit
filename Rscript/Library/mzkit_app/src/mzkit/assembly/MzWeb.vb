@@ -100,6 +100,8 @@ Imports SIMDAdd = Microsoft.VisualBasic.Math.SIMD.Add
 Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
 Imports Microsoft.VisualBasic.MIME.application.json
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+
 
 
 
@@ -918,6 +920,12 @@ Module MzWeb
     ''' <param name="centroid">
     ''' and also convert the data to centroid mode? 
     ''' </param>
+    ''' <param name="rt_window">
+    ''' the rt range for filter of the ms2 spectrum data exports, 
+    ''' should be a numeric vector that consists with two elements
+    ''' for specific the range min and range max. rt data should 
+    ''' be in data unit of seconds.
+    ''' </param>
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("ms2_peaks")>
@@ -930,6 +938,8 @@ Module MzWeb
                                  Optional norm As Boolean = False,
                                  Optional filter_empty As Boolean = True,
                                  Optional into_cutoff As Object = 0,
+                                 <RRawVectorArgument()>
+                                 Optional rt_window As Object = Nothing,
                                  Optional env As Environment = Nothing) As Object
 
         Dim ms2peaks As PeakMs2()
@@ -1004,9 +1014,27 @@ Module MzWeb
                 .ToArray
         End If
 
+        Dim rtwin As Double() = CLRVector.asNumeric(rt_window)
+
+        If Not rtwin.IsNullOrEmpty Then
+            Dim window As New DoubleRange(rtwin)
+
+            If window.Length > 0 Then
+                ms2peaks = ms2peaks _
+                    .Where(Function(a) window.IsInside(a.rt)) _
+                    .ToArray
+            End If
+        End If
+
         Return ms2peaks.uniqueReference(tag_source)
     End Function
 
+    ''' <summary>
+    ''' make unique of the spectrum reference id
+    ''' </summary>
+    ''' <param name="ms2peaks"></param>
+    ''' <param name="tag_source"></param>
+    ''' <returns></returns>
     <Extension>
     Private Function uniqueReference(ms2peaks As PeakMs2(), tag_source As Boolean) As PeakMs2()
         Dim unique As String() = ms2peaks _
