@@ -1,84 +1,79 @@
 ﻿#Region "Microsoft.VisualBasic::57b7990107997052ca389a13f2627fb1, assembly\mzPackExtensions\MSImaging\MSIRawPack.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 262
-    '    Code Lines: 191 (72.90%)
-    ' Comment Lines: 26 (9.92%)
-    '    - Xml Docs: 65.38%
-    ' 
-    '   Blank Lines: 45 (17.18%)
-    '     File Size: 9.88 KB
+' Summaries:
 
 
-    ' Module MSIRawPack
-    ' 
-    '     Function: ExactPixelTable, LoadFromXMSIRaw, (+2 Overloads) LoadMSIFromSCiLSLab, LoadMSISpotsFromSCiLSLab, PixelScaler
-    '               PixelScanId, (+2 Overloads) ScalePixels
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 262
+'    Code Lines: 191 (72.90%)
+' Comment Lines: 26 (9.92%)
+'    - Xml Docs: 65.38%
+' 
+'   Blank Lines: 45 (17.18%)
+'     File Size: 9.88 KB
+
+
+' Module MSIRawPack
+' 
+'     Function: ExactPixelTable, LoadFromXMSIRaw, (+2 Overloads) LoadMSIFromSCiLSLab, LoadMSISpotsFromSCiLSLab, PixelScaler
+'               PixelScanId, (+2 Overloads) ScalePixels
+' 
+' /********************************************************************************/
 
 #End Region
-
-#If NET48 Then
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.Comprehensive.MsImaging
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader.DataObjects
-#End If
 
 Imports System.Drawing
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.BrukerDataReader.SCiLSLab
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.Comprehensive.MsImaging
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader.DataObjects
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
-Imports stdNum = System.Math
+Imports std = System.Math
 
 ''' <summary>
 ''' read SCiLSLab table export or Xcalibur Raw data file for MS-imaging
 ''' </summary>
 Public Module MSIRawPack
-
-#If NET48 Then
 
     ''' <summary>
     ''' single raw data file as MSI data
@@ -114,8 +109,6 @@ Public Module MSIRawPack
                End Function
     End Function
 
-#End If
-
     <Extension>
     Public Function ExactPixelTable(mzpack As mzPack) As DataSet()
         Dim mz As New Dictionary(Of String, DataSet)
@@ -130,7 +123,7 @@ Public Module MSIRawPack
                     mz.Add(mzi, New DataSet With {.ID = mzi})
                 End If
 
-                mz(mzi)(pixel) = stdNum.Max(mz(mzi)(pixel), scan.into(i))
+                mz(mzi)(pixel) = std.Max(mz(mzi)(pixel), scan.into(i))
             Next
         Next
 
