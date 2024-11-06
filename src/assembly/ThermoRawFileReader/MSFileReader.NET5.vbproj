@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <RootNamespace>BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader</RootNamespace>
@@ -99,7 +99,7 @@
     <DebugType>full</DebugType>
     <DefineDebug>false</DefineDebug>
     <DefineTrace>true</DefineTrace>
-    <DefineConstants>netcore5=1</DefineConstants>
+
     
   </PropertyGroup>
 
@@ -111,7 +111,7 @@
     <DebugType>full</DebugType>
     <DefineDebug>false</DefineDebug>
     <DefineTrace>true</DefineTrace>
-    <DefineConstants>netcore5=1</DefineConstants>
+
     
   </PropertyGroup>
 
@@ -135,6 +135,52 @@
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj" />
     <ProjectReference Include="..\..\mzmath\ms2_math-core\mzmath-netcore5.vbproj" />
     <ProjectReference Include="..\assembly\assembly-netcore5.vbproj" />
+  </ItemGroup>
+
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net48' ">
+    <Reference Include="ThermoFisher.CommonCore.Data">
+      <HintPath>..\..\..\ThermoFisher\Libs\Net471\ThermoFisher.CommonCore.Data.dll</HintPath> 
+    </Reference>
+    <Reference Include="ThermoFisher.CommonCore.BackgroundSubtraction">
+      <HintPath>..\..\..\ThermoFisher\Libs\Net471\ThermoFisher.CommonCore.BackgroundSubtraction.dll</HintPath>
+    </Reference>
+    <Reference Include="ThermoFisher.CommonCore.MassPrecisionEstimator">
+      <HintPath>..\..\..\ThermoFisher\Libs\Net471\ThermoFisher.CommonCore.MassPrecisionEstimator.dll</HintPath>
+    </Reference>
+    <Reference Include="ThermoFisher.CommonCore.RawFileReader">
+      <HintPath>..\..\..\ThermoFisher\Libs\Net471\ThermoFisher.CommonCore.RawFileReader.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net8.0' ">
+    <Reference Include="ThermoFisher.CommonCore.BackgroundSubtraction">
+      <HintPath>..\..\..\ThermoFisher\Libs\Net8\Assemblies\ThermoFisher.CommonCore.BackgroundSubtraction.dll</HintPath>
+    </Reference>
+    <Reference Include="ThermoFisher.CommonCore.Data">
+      <HintPath>..\..\..\ThermoFisher\Libs\Net8\Assemblies\ThermoFisher.CommonCore.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="ThermoFisher.CommonCore.MassPrecisionEstimator">
+      <HintPath>..\..\..\ThermoFisher\Libs\Net8\Assemblies\ThermoFisher.CommonCore.MassPrecisionEstimator.dll</HintPath>
+    </Reference>
+    <Reference Include="ThermoFisher.CommonCore.RawFileReader">
+      <HintPath>..\..\..\ThermoFisher\Libs\Net8\Assemblies\ThermoFisher.CommonCore.RawFileReader.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net8.0-windows' ">
+    <Reference Include="ThermoFisher.CommonCore.BackgroundSubtraction">
+      <HintPath>..\..\..\ThermoFisher\Libs\Net8\Assemblies\ThermoFisher.CommonCore.BackgroundSubtraction.dll</HintPath>
+    </Reference>
+    <Reference Include="ThermoFisher.CommonCore.Data">
+      <HintPath>..\..\..\ThermoFisher\Libs\Net8\Assemblies\ThermoFisher.CommonCore.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="ThermoFisher.CommonCore.MassPrecisionEstimator">
+      <HintPath>..\..\..\ThermoFisher\Libs\Net8\Assemblies\ThermoFisher.CommonCore.MassPrecisionEstimator.dll</HintPath>
+    </Reference>
+    <Reference Include="ThermoFisher.CommonCore.RawFileReader">
+      <HintPath>..\..\..\ThermoFisher\Libs\Net8\Assemblies\ThermoFisher.CommonCore.RawFileReader.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>
