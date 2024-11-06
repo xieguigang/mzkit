@@ -69,7 +69,7 @@ Public Class MSFileReader : Implements IDisposable
 
     Public Const GET_SCAN_DATA_WARNING As String = "GetScanData2D returned no data for scan"
 
-    Dim mRawFileReader As XRawFileIO
+    Dim mRawFileReader As XcaliburRawFileIO
 
     Public Property ScanMin As Integer
     Public Property ScanMax As Integer
@@ -86,7 +86,7 @@ Public Class MSFileReader : Implements IDisposable
         End Get
     End Property
 
-    Public ReadOnly Property ThermoReader As XRawFileIO
+    Public ReadOnly Property ThermoReader As XcaliburRawFileIO
         Get
             Return mRawFileReader
         End Get
@@ -110,7 +110,7 @@ Public Class MSFileReader : Implements IDisposable
         End If
 
         filePath = filePath.GetFullPath
-        mRawFileReader = New XRawFileIO(readerOptions)
+        mRawFileReader = New XcaliburRawFileIO(readerOptions)
         mRawFileReader.OpenRawFile(filePath)
         ScanMin = 1
         ScanMax = mRawFileReader.GetNumScans()

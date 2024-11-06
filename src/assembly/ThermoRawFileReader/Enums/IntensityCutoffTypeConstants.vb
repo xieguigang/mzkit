@@ -60,7 +60,7 @@
 ''' <summary>
 ''' Intensity Cutoff Types
 ''' </summary>
-''' <remarks>Used with <see cref="XRawFileIO.mXRawFile"/> functions in <see cref="XRawFileIO.GetScanData2D"/> and <see cref="XRawFileIO.GetScanDataSumScans"/></remarks>
+''' <remarks>Used with <see cref="XcaliburRawFileIO.mXRawFile"/> functions in <see cref="XcaliburRawFileIO.GetScanData2D"/> and <see cref="XcaliburRawFileIO.GetScanDataSumScans"/></remarks>
 <CLSCompliant(True)>
 Public Enum IntensityCutoffTypeConstants
     ''' <summary>
