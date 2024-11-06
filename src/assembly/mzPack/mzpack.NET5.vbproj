@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <RootNamespace>BioNovoGene.Analytical.MassSpectrometry.Assembly</RootNamespace>
@@ -137,10 +137,6 @@
     <ProjectReference Include="..\..\mzmath\mz_deco\deconv.NET5.vbproj" />
     <ProjectReference Include="..\assembly\assembly-netcore5.vbproj" />
     <ProjectReference Include="..\SignalReader\SignalReader.vbproj" />
-  </ItemGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net48' ">
-    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\gr\Drawing-net4.8\Drawing-net4.8.vbproj" />
   </ItemGroup>
 
   <ItemGroup>
