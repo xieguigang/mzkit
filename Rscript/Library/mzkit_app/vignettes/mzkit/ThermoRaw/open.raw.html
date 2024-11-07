@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>load the lipidmaps raw database</title>
+    <title>open a Thermo raw file</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
@@ -13,12 +13,12 @@
 
         <table style="width: 100%;">
             <tr>
-                <td>load_LMSD {mzkit}</td>
+                <td>open.raw {ThermoRaw}</td>
                 <td style="text-align: right;">R Documentation</td>
             </tr>
         </table>
 
-        <h2>load the lipidmaps raw database</h2>
+        <h2>open a Thermo raw file</h2>
 
         <h3>Description</h3>
 
@@ -27,16 +27,15 @@
         <h3>Usage</h3>
 
         <div style="width: 100%; padding-left: 3%; color: black;">
-            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>load_LMSD</strong>(<i>filepath</i>,
-    <i>lazy</i> = <span style='color: blue !important;'>FALSE</span>);</code></pre>
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>open.raw</strong>(<i>rawfile</i>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
 
         <table>
             
-<dt>filepath</dt>
-<dd><p><p>the file path of the lipidmaps database file, <code>structures.sdf</code> file, which could be download from the lipidmaps website via the file download url: <a href='https://lipidmaps.org/files/?file=LMSD&ext=sdf.zip' title='https://lipidmaps.org/files/?file=LMSD&ext=sdf.zip'>https://lipidmaps.org/files/?file=LMSD&ext=sdf.zip</a></p></p></dd>
+<dt>rawfile</dt>
+<dd><p>the file path of the <code>*.raw</code>. [as string]</p></dd>
 
         </table>
 
@@ -47,19 +46,19 @@
 
         <h3 style="display: block">Authors</h3>
 
-        xieguigang
+        BioNovoGene
 
         <h3>Value</h3>
 
-        This function has no value returns.
+        this function returns data object of type <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/ThermoRawFileReader/MSFileReader.html">MSFileReader</a>.<h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/ThermoRawFileReader/MSFileReader.html">MSFileReader</a></li></ul>
 
         <h3 style="display: none;">Examples</h3>
 
         
 
         <hr />
-        <div style="text-align: center;">[Package <em>mzkit</em> version 3.2.56.56444 <a
-                href="../mzkit.html">Index</a>]
+        <div style="text-align: center;">[Package <em>ThermoRaw</em> version 1.0.0.0 <a
+                href="../ThermoRaw.html">Index</a>]
         </div>
     </div>
 </body>
