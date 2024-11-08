@@ -96,6 +96,14 @@ Namespace MRM.Models
         Public Property product As Double
         Public Property rt As Double?
 
+        Sub New()
+        End Sub
+
+        Sub New(q1 As Double, q3 As Double)
+            precursor = q1
+            product = q3
+        End Sub
+
         Public Overrides Function ToString() As String
             If name.StringEmpty Then
                 Return $"{precursor}/{product}"

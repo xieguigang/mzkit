@@ -1,60 +1,60 @@
 ﻿#Region "Microsoft.VisualBasic::288aa9dc88f4b503ce056cea8b9d6c1e, Rscript\Library\mzkit_app\src\mzquant\MRM\MRMkit.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 848
-    '    Code Lines: 577 (68.04%)
-    ' Comment Lines: 182 (21.46%)
-    '    - Xml Docs: 88.46%
-    ' 
-    '   Blank Lines: 89 (10.50%)
-    '     File Size: 36.91 KB
+' Summaries:
 
 
-    ' Module MRMkit
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: asIonPair, ExtractIonData, ExtractPeakROI, FindUntargetedIonPair, GetRTAlignments
-    '               ion_pairs_tbl, IsomerismIonPairs, Linears, MRMarguments, printIonPairs
-    '               R2, readCompoundReference, readIonPairs, readIS, RTShiftSummary
-    '               (+2 Overloads) SampleQuantify, ScanPeakTable, ScanPeakTable2, (+2 Overloads) ScanWiffRaw, WiffRawFile
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 848
+'    Code Lines: 577 (68.04%)
+' Comment Lines: 182 (21.46%)
+'    - Xml Docs: 88.46%
+' 
+'   Blank Lines: 89 (10.50%)
+'     File Size: 36.91 KB
+
+
+' Module MRMkit
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Function: asIonPair, ExtractIonData, ExtractPeakROI, FindUntargetedIonPair, GetRTAlignments
+'               ion_pairs_tbl, IsomerismIonPairs, Linears, MRMarguments, printIonPairs
+'               R2, readCompoundReference, readIonPairs, readIS, RTShiftSummary
+'               (+2 Overloads) SampleQuantify, ScanPeakTable, ScanPeakTable2, (+2 Overloads) ScanWiffRaw, WiffRawFile
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -87,11 +87,11 @@ Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports MRMArgumentSet = BioNovoGene.Analytical.MassSpectrometry.Math.MRM.MRMArguments
 Imports Rdataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
 Imports REnv = SMRUCC.Rsharp.Runtime
+Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
 Imports Rlist = SMRUCC.Rsharp.Runtime.Internal.Object.list
 Imports RRuntime = SMRUCC.Rsharp.Runtime
 Imports std = System.Math
 Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.XLSX.File
-Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
 
 ''' <summary>
 ''' MRM Targeted Metabolomics
@@ -100,8 +100,8 @@ Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
 Module MRMkit
 
     Sub New()
-        REnv.Internal.ConsolePrinter.AttachConsoleFormatter(Of IonPair())(AddressOf printIonPairs)
-        REnv.Internal.ConsolePrinter.AttachConsoleFormatter(Of IsomerismIonPairs)(
+        RInternal.ConsolePrinter.AttachConsoleFormatter(Of IonPair())(AddressOf printIonPairs)
+        RInternal.ConsolePrinter.AttachConsoleFormatter(Of IsomerismIonPairs)(
             Function(ion As IsomerismIonPairs)
                 If ion.hasIsomerism Then
                     Return $"[{ion.index}, rt:{ion.target.rt} (sec)] {ion.target} {{{ion.ions.Select(Function(i) i.name).JoinBy(", ")}}}"
@@ -110,9 +110,9 @@ Module MRMkit
                 End If
             End Function)
 
-        REnv.Internal.htmlPrinter.AttachHtmlFormatter(Of QCData)(AddressOf MRMQCReport.CreateHtml)
-        REnv.Internal.Object.Converts.makeDataframe.addHandler(GetType(RTAlignment()), AddressOf RTShiftSummary)
-        REnv.Internal.Object.Converts.makeDataframe.addHandler(GetType(IonPair()), AddressOf ion_pairs_tbl)
+        RInternal.htmlPrinter.AttachHtmlFormatter(Of QCData)(AddressOf MRMQCReport.CreateHtml)
+        RInternal.Object.Converts.makeDataframe.addHandler(GetType(RTAlignment()), AddressOf RTShiftSummary)
+        RInternal.Object.Converts.makeDataframe.addHandler(GetType(IonPair()), AddressOf ion_pairs_tbl)
 
         Dim toolkit As AssemblyInfo = GetType(MRMkit).Assembly.FromAssembly
 
@@ -313,7 +313,7 @@ Module MRMkit
     ''' <summary>
     ''' Extract ion peaks
     ''' </summary>
-    ''' <param name="mzML">A mzML raw file</param>
+    ''' <param name="mzML">the file path to a mzML raw data file.</param>
     ''' <param name="ionpairs">metabolite targets</param>
     ''' <returns></returns>
     <ExportAPI("extract.ions")>
@@ -333,6 +333,30 @@ Module MRMkit
         ).DoCall(Function(data)
                      Return New vector With {.data = data}
                  End Function)
+    End Function
+
+    ''' <summary>
+    ''' extract XIC data via a given MRM ion pair data
+    ''' </summary>
+    ''' <param name="mzML"></param>
+    ''' <param name="q1"></param>
+    ''' <param name="q3"></param>
+    ''' <param name="tolerance"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("extract_mrm")>
+    <RApiReturn(GetType(IonChromatogram))>
+    Public Function ExtractIonData(mzML As String, q1 As Double, q3 As Double,
+                                   Optional tolerance As Object = "da:0.1",
+                                   Optional env As Environment = Nothing) As Object
+
+        Dim mzErrors = Math.getTolerance(tolerance, env)
+
+        If mzErrors Like GetType(Message) Then
+            Return mzErrors.TryCast(Of Message)
+        End If
+
+        Return MRMSamples.ExtractIonData(mzML, New IonPair(q1, q3), mzErrors)
     End Function
 
     ''' <summary>

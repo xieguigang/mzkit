@@ -57,15 +57,12 @@
 
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
-Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
-Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative.Linear
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
-Imports Microsoft.VisualBasic.Math.Scripting
 Imports chromatogramTicks = BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML.chromatogram
 
 Namespace MRM.Data
@@ -153,9 +150,21 @@ Namespace MRM.Data
             End With
         End Function
 
+        ''' <summary>
+        ''' Filter a single XIC data object via a given MRM ion pair data 
+        ''' </summary>
+        ''' <param name="chromatograms"></param>
+        ''' <param name="ion"></param>
+        ''' <param name="tolerance"></param>
+        ''' <returns>
+        ''' this function returns nothing if the given ion pair is not found 
+        ''' from the givne <paramref name="chromatograms"/> data collection. 
+        ''' </returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function MRMSelector(chromatograms As IEnumerable(Of chromatogramTicks), ion As IonPair, tolerance As Tolerance) As chromatogramTicks
+        Public Function MRMSelector(chromatograms As IEnumerable(Of chromatogramTicks),
+                                    ion As IonPair,
+                                    tolerance As Tolerance) As chromatogramTicks
             Return chromatograms _
                 .Where(Function(c)
                            Return (Not c.id Like NotMRMSelectors) AndAlso ion.Assert(c, tolerance)

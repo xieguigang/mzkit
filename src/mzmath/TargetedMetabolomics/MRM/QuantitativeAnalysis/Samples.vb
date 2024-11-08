@@ -109,6 +109,21 @@ Namespace MRM
                 .ToArray
         End Function
 
+        Public Function ExtractIonData(mzML As String, ion As IonPair, tolerance As Tolerance) As IonChromatogram
+            Dim xicdata = LoadChromatogramList(mzML).MRMSelector(ion, tolerance)
+
+            If xicdata Is Nothing Then
+                Return Nothing
+            End If
+
+            Return New IonChromatogram With {
+                .name = ion.name,
+                .chromatogram = xicdata.Ticks,
+                .description = ion.name & $" [{ion.precursor}/{ion.product}]",
+                .ion = New IsomerismIonPairs(ion)
+            }
+        End Function
+
         ''' <summary>
         ''' 通过标准曲线对样品进行定量结果数据的获取
         ''' 
