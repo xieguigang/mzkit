@@ -375,6 +375,26 @@ Module MRMkit
     End Function
 
     ''' <summary>
+    ''' Extract all ion pairs information from the given rawdata file
+    ''' </summary>
+    ''' <param name="mzML">
+    ''' the file path to the given mzML rawdata file
+    ''' </param>
+    ''' <param name="env"></param>
+    ''' <returns>
+    ''' a collection of the MRM ion pairs data objects that extract from the precursor/product isolation window target ``m/z`` value.
+    ''' </returns>
+    <ExportAPI("extract_ionpairs")>
+    <RApiReturn(GetType(IonPair))>
+    Public Function ExtractIonPairs(mzML As String, Optional env As Environment = Nothing) As Object
+        If Not mzML.FileExists(ZERO_Nonexists:=True) Then
+            Return RInternal.debug.stop($"the given file path({mzML.GetFullPath}) to the MRM raw data file is not exists on your local file system!", env)
+        End If
+
+        Return New String() {mzML}.GetAllFeatures
+    End Function
+
+    ''' <summary>
     ''' Exact ``regions of interested`` based on the given ion pair as targets.
     ''' </summary>
     ''' <param name="mzML">A mzML raw data file</param>
