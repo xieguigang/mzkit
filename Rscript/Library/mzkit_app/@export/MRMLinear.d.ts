@@ -72,6 +72,17 @@ declare namespace MRMLinear {
       function peakROI(mzML: string, ionpairs: object, tolerance?: string, timeWindowSize?: number, baselineQuantile?: number, integratorTicks?: object, peakAreaMethod?: object, angleThreshold?: number, peakwidth?: any, rtshift?: object, bsplineDensity?: object, bsplineDegree?: object, sn_threshold?: number, TPAFactors?: object, env?: object): object;
    }
    /**
+    * Extract all ion pairs information from the given rawdata file
+    * 
+    * 
+     * @param mzML the file path to the given mzML rawdata file
+     * @param env -
+     * 
+     * + default value Is ``null``.
+     * @return a collection of the MRM ion pairs data objects that extract from the precursor/product isolation window target ``m/z`` value.
+   */
+   function extract_ionpairs(mzML: string, env?: object): object;
+   /**
     * Extract ion peaks
     * 
     * 
