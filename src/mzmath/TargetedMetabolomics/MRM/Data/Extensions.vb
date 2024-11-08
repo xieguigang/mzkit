@@ -94,7 +94,8 @@ Namespace MRM.Data
                             Return New IonPair With {
                                 .precursor = q1,
                                 .product = q3,
-                                .accession = ms.MsSplashId
+                                .accession = ms.MsSplashId,
+                                .name = $"{q1.ToString("F2")}/{q3.ToString("F2")}"
                             }
                         End Function) _
                 .GroupBy(Function(ion)
