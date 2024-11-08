@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader.XcaliburRawFileIO</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <table style="width: 100%;">
+            <tr>
+                <td>XcaliburRawFileIO {BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader}</td>
+                <td style="text-align: right;">.NET clr documentation</td>
+            </tr>
+        </table>
+
+        <h2>XcaliburRawFileIO</h2>
+
+        <h3>Description</h3>
+
+        <p>Class for reading Thermo Xcalibur <code>*.raw</code> files</p>
+
+<p><a href='https://github.com/PNNL-Comp-Mass-Spec' title='https://github.com/PNNL-Comp-Mass-Spec'>https://github.com/PNNL-Comp-Mass-Spec</a></p>
+
+        <h3>Declare</h3>        
+
+        <pre>
+            <code id="clr_ts">
+# namespace BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader
+export class XcaliburRawFileIO {
+   # File info for the currently loaded .raw file
+   FileInfo: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/ThermoRawFileReader/DataObjects/RawFileInfo.html">RawFileInfo</a>;
+   # Thermo reader options
+   Options: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/ThermoRawFileReader/ThermoReaderOptions.html">ThermoReaderOptions</a>;
+   RawFilePath: string;
+   # Last scan number in the .Raw file
+   ScanEnd: integer;
+   # Maximum number of scan metadata cached; defaults to 50000
+   ScanInfoCacheMaxSize: integer;
+   # First scan number in the .Raw file
+   ScanStart: integer;
+   # When true, additional messages are reported via Debug events
+   TraceMode: boolean;
+}
+</code>
+        </pre>
+
+        <h3>.NET clr type reference tree</h3>
+
+        <ol>
+<li>use by <i>property</i> member <code>FileInfo</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/ThermoRawFileReader/DataObjects/RawFileInfo.html">RawFileInfo</a></li>
+<li>use by <i>property</i> member <code>Options</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/ThermoRawFileReader/ThermoReaderOptions.html">ThermoReaderOptions</a></li>
+</ol>
+
+
+        <hr />
+        <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a
+                href="../{$package}.html">Index</a>]
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="https://mzkit.org/assets/js/R_syntax.js"></script>
+<script type="text/javascript" src="https://mzkit.org/assets/js/highlights.js"></script>
+<script type="text/javascript">r_highlights("clr_ts");</script>
+
+</html>

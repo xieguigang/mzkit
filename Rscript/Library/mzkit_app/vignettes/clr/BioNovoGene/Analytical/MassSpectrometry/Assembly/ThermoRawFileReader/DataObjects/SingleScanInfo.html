@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader.DataObjects.SingleScanInfo</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <table style="width: 100%;">
+            <tr>
+                <td>SingleScanInfo {BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader.DataObjects}</td>
+                <td style="text-align: right;">.NET clr documentation</td>
+            </tr>
+        </table>
+
+        <h2>SingleScanInfo</h2>
+
+        <h3>Description</h3>
+
+        <p>Container for metadata relating to a single scan</p>
+
+        <h3>Declare</h3>        
+
+        <pre>
+            <code id="clr_ts">
+# namespace BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader.DataObjects
+export class SingleScanInfo {
+   # Activation type (aka activation method) as reported by the reader
+   ActivationType: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/ActivationMethods.html">ActivationMethods</a>;
+   # Base peak intensity
+   BasePeakIntensity: double;
+   # Base peak m/z
+   BasePeakMZ: double;
+   # UTC Time that this scan info was cached
+   CacheDateUTC: <a href="/vignettes/clr/System/DateTime.html">DateTime</a>;
+   # The parent ion charge state, as determined by the Thermo software
+   ChargeState: integer;
+   # Collision mode, determined from the filter string
+   CollisionMode: string;
+   # Event Number
+   EventNumber: integer;
+   # Scan Filter string
+   FilterText: string;
+   # Sampling frequency for the current controller
+   Frequency: double;
+   # Highest m/z value
+   HighMass: double;
+   # Ion Injection Time (in milliseconds)
+   IonInjectionTime: double;
+   # Ionization polarity
+   IonMode: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Ms1/PrecursorType/IonModes.html">IonModes</a>;
+   # Centroid scan flag
+   IsCentroided: boolean;
+   # FTMS flag (or Orbitrap, Q-Exactive, Lumos, or any other high resolution instrument)
+   IsFTMS: boolean;
+   # The monoisotopic parent ion m/z, as determined by the Thermo software
+   IsolationWindowTargetMZ: double;
+   # Lowest m/z value
+   LowMass: double;
+   # MRM mode
+   MRMInfo: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/ThermoRawFileReader/DataObjects/MRMInfo.html">MRMInfo</a>;
+   # Multiple reaction monitoring mode
+   MRMScanType: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/ThermoRawFileReader/MRMScanTypeConstants.html">MRMScanTypeConstants</a>;
+   MSData: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/ThermoRawFileReader/DataObjects/RawLabelData.html">RawLabelData</a>;
+   # MS Level
+   MSLevel: integer;
+   # Number of channels
+   NumChannels: integer;
+   # Number of mass intensity value pairs
+   NumPeaks: integer;
+   # The monoisotopic parent ion m/z, as determined by the Thermo software
+   ParentIonMonoisotopicMZ: double;
+   # Parent ion m/z
+   ParentIonMZ: double;
+   # Retention time (in minutes)
+   RetentionTime: double;
+   # Scan event data
+   ScanEvents: tuple[string, string];
+   # Scan number
+   ScanNumber: integer;
+   # SIM Scan Flag
+   SIMScan: boolean;
+   # Status log data
+   StatusLog: tuple[string, string];
+   # Total ion current
+   TotalIonCurrent: double;
+   # Indicates whether the sampling time increment for the controller is constant
+   UniformTime: boolean;
+   # Zoom scan flag
+   ZoomScan: boolean;
+}
+</code>
+        </pre>
+
+        <h3>.NET clr type reference tree</h3>
+
+        <ol>
+<li>use by <i>property</i> member <code>ActivationType</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/ActivationMethods.html">ActivationMethods</a></li>
+<li>use by <i>property</i> member <code>CacheDateUTC</code>: <a href="/vignettes/clr/System/DateTime.html">DateTime</a></li>
+<li>use by <i>property</i> member <code>IonMode</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Ms1/PrecursorType/IonModes.html">IonModes</a></li>
+<li>use by <i>property</i> member <code>MRMInfo</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/ThermoRawFileReader/DataObjects/MRMInfo.html">MRMInfo</a></li>
+<li>use by <i>property</i> member <code>MRMScanType</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/ThermoRawFileReader/MRMScanTypeConstants.html">MRMScanTypeConstants</a></li>
+<li>use by <i>property</i> member <code>MSData</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/ThermoRawFileReader/DataObjects/RawLabelData.html">RawLabelData</a></li>
+<li>use by <i>property</i> member <code>ScanEvents</code>: tuple[string, string]</li>
+<li>use by <i>property</i> member <code>StatusLog</code>: tuple[string, string]</li>
+</ol>
+
+
+        <hr />
+        <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a
+                href="../{$package}.html">Index</a>]
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="https://mzkit.org/assets/js/R_syntax.js"></script>
+<script type="text/javascript" src="https://mzkit.org/assets/js/highlights.js"></script>
+<script type="text/javascript">r_highlights("clr_ts");</script>
+
+</html>
