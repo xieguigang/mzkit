@@ -192,6 +192,9 @@ Namespace NCBI.PubChem
                     .GetInformationString("#0") _
                     .stripMarkupString
             End If
+            If SMILES.StringEmpty Then
+                SMILES = descriptors("SMILES").GetInformationString("#0").stripMarkupString
+            End If
 
             Dim InChI = descriptors("InChI").GetInformationString("#0").stripMarkupString
             Dim otherNames = identifier("Other Identifiers")
