@@ -430,9 +430,16 @@ Namespace NCBI.PubChem
                 desc.FlashPoint = experiments.safeProject(key:="Flash Point", AddressOf getValues)
                 desc.Density = experiments.safeProject(key:="Density", AddressOf getValues)
                 desc.VaporPressure = experiments.safeProject(key:="Vapor Pressure", AddressOf getValues)
+
                 desc.Odor = experiments.safeProject(key:="Odor", AddressOf getValues)
                 desc.Taste = experiments.safeProject(key:="Taste", AddressOf getValues)
                 desc.Color = experiments.safeProject(key:="Color/Form", AddressOf getValues)
+
+                Dim physical = experiments.safeProject("Physical Description", AddressOf getValues)
+
+                If desc.Odor Is Nothing Then
+                    desc.Odor = physical
+                End If
             End If
 
             Return desc
