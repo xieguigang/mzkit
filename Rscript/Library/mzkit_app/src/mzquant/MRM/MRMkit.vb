@@ -144,7 +144,7 @@ Module MRMkit
         Call tbl.add("name", ions.Select(Function(i) i.name))
         Call tbl.add("precursor", ions.Select(Function(i) i.precursor))
         Call tbl.add("product", ions.Select(Function(i) i.product))
-        Call tbl.add("rt", ions.Select(Function(i) CDbl(i.rt)))
+        Call tbl.add("rt", ions.Select(Function(i) If(i.rt Is Nothing, Double.NaN, CDbl(i.rt))))
 
         Return tbl
     End Function

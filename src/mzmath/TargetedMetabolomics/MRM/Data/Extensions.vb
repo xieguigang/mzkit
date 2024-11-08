@@ -1,57 +1,57 @@
 ﻿#Region "Microsoft.VisualBasic::800ab5cbb71708c2b559c25c3fe69932, mzmath\TargetedMetabolomics\MRM\Data\Extensions.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 109
-    '    Code Lines: 80 (73.39%)
-    ' Comment Lines: 14 (12.84%)
-    '    - Xml Docs: 100.00%
-    ' 
-    '   Blank Lines: 15 (13.76%)
-    '     File Size: 5.07 KB
+' Summaries:
 
 
-    '     Module Extensions
-    ' 
-    '         Function: GetAllFeatures, (+2 Overloads) MRMSelector, PopulatePeaks
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 109
+'    Code Lines: 80 (73.39%)
+' Comment Lines: 14 (12.84%)
+'    - Xml Docs: 100.00%
+' 
+'   Blank Lines: 15 (13.76%)
+'     File Size: 5.07 KB
+
+
+'     Module Extensions
+' 
+'         Function: GetAllFeatures, (+2 Overloads) MRMSelector, PopulatePeaks
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -60,6 +60,8 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative.Linear
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.SplashID
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
@@ -82,12 +84,21 @@ Namespace MRM.Data
                 .IteratesALL _
                 .Where(Function(chr) Not chr.id Like NotMRMSelectors) _
                 .Select(Function(chr)
+                            Dim q1 = chr.precursor.MRMTargetMz
+                            Dim q3 = chr.product.MRMTargetMz
+                            Dim ms As New LibraryMatrix({
+                                New ms2(q1, 1),
+                                New ms2(q3, 1)
+                            })
+
                             Return New IonPair With {
-                                .precursor = chr.precursor.MRMTargetMz,
-                                .product = chr.product.MRMTargetMz
+                                .precursor = q1,
+                                .product = q3,
+                                .accession = ms.MsSplashId
                             }
                         End Function) _
                 .GroupBy(Function(ion)
+                             ' Isomerism
                              Return $"{ion.precursor.ToString("F1")}-{ion.product.ToString("F1")}"
                          End Function) _
                 .Select(Function(ion) ion.First) _
