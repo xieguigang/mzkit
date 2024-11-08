@@ -367,6 +367,8 @@ Module MRMkit
 
         If mzErrors Like GetType(Message) Then
             Return mzErrors.TryCast(Of Message)
+        ElseIf Not mzML.FileExists(ZERO_Nonexists:=True) Then
+            Return RInternal.debug.stop($"the given file path({mzML.GetFullPath}) to the MRM raw data file is not exists on your local file system!", env)
         End If
 
         Return MRMSamples.ExtractIonData(mzML, New IonPair(q1, q3), mzErrors)
