@@ -113,12 +113,24 @@ Module MRMkit
         RInternal.htmlPrinter.AttachHtmlFormatter(Of QCData)(AddressOf MRMQCReport.CreateHtml)
         RInternal.Object.Converts.makeDataframe.addHandler(GetType(RTAlignment()), AddressOf RTShiftSummary)
         RInternal.Object.Converts.makeDataframe.addHandler(GetType(IonPair()), AddressOf ion_pairs_tbl)
+        RInternal.Object.Converts.makeDataframe.addHandler(GetType(IonChromatogram), AddressOf castXicTable)
 
         Dim toolkit As AssemblyInfo = GetType(MRMkit).Assembly.FromAssembly
 
         Call VBDebugger.WaitOutput()
         Call toolkit.AppSummary(Nothing, Nothing, App.StdOut)
     End Sub
+
+    <RGenericOverloads("as.data.frame")>
+    Private Function castXicTable(xic As IonChromatogram, args As list, env As Environment) As Rdataframe
+        Dim df As New Rdataframe With {.columns = New Dictionary(Of String, Array)}
+        Dim tic = xic.chromatogram
+
+        Call df.add("time", TIC.Select(Function(t) t.Time))
+        Call df.add("intensity", tic.Select(Function(t) t.Intensity))
+
+        Return df
+    End Function
 
     <RGenericOverloads("as.data.frame")>
     Private Function ion_pairs_tbl(ions As IonPair(), args As list, env As Environment) As Object
@@ -137,6 +149,7 @@ Module MRMkit
         Return tbl
     End Function
 
+    <RGenericOverloads("as.data.frame")>
     Private Function RTShiftSummary(x As RTAlignment(), args As list, env As Environment) As Rdataframe
         Dim rownames = x.Select(Function(i) i.ion.target.accession).ToArray
         Dim cols As New Dictionary(Of String, Array)
