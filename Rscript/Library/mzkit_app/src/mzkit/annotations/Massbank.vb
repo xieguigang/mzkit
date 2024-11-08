@@ -120,9 +120,40 @@ Module Massbank
     Sub Main()
         Call RInternal.Object.Converts.makeDataframe.addHandler(GetType(LipidMaps.MetaData()), AddressOf createLipidMapTable)
         Call RInternal.Object.Converts.makeDataframe.addHandler(GetType(RefMet()), AddressOf refMetTable)
+        Call RInternal.Object.Converts.makeDataframe.addHandler(GetType(MetaLib()), AddressOf makeMetaboliteTable)
 
         Call generic.add("readBin.metalib", GetType(Stream), AddressOf readMetalibMsgPack)
     End Sub
+
+    <RGenericOverloads("as.data.frame")>
+    Friend Function makeMetaboliteTable(metadata As MetaLib(), args As list, env As Environment) As Rdataframe
+        Dim df As New Rdataframe With {
+            .rownames = metadata _
+                .Select(Function(a) $"PubChem:{a.ID}") _
+                .ToArray,
+            .columns = New Dictionary(Of String, Array)
+        }
+
+        Call df.add("name", From m In metadata Select m.name)
+        Call df.add("iupac_name", From m In metadata Select m.IUPACName)
+        Call df.add("formula", From m In metadata Select m.formula)
+        Call df.add("exact_mass", From m In metadata Select m.exact_mass)
+        Call df.add("pubchem", From m In metadata Select m.ID)
+        Call df.add("kegg", From m In metadata Select m.xref.KEGG)
+        Call df.add("hmdb", From m In metadata Select m.xref.HMDB)
+        Call df.add("cas", From m In metadata Select m.xref.CAS.JoinBy(", "))
+        Call df.add("lipidmaps", From m In metadata Select m.xref.lipidmaps)
+        Call df.add("wikipedia", From m In metadata Select m.xref.Wikipedia)
+        Call df.add("mesh", From m In metadata Select m.xref.MeSH)
+        Call df.add("smiles", From m In metadata Select m.xref.SMILES)
+        Call df.add("inchikey", From m In metadata Select m.xref.InChIkey)
+        Call df.add("inchi", From m In metadata Select m.xref.InChI)
+        Call df.add("order", From m In metadata Select m.chemical.Odor.Select(Function(c) c.condition))
+        Call df.add("color", From m In metadata Select m.chemical.Color.Select(Function(c) c.condition))
+        Call df.add("taste", From m In metadata Select m.chemical.Taste.Select(Function(c) c.condition))
+
+        Return df
+    End Function
 
     <RGenericOverloads("as.data.frame")>
     Private Function refMetTable(refmet As RefMet(), args As list, env As Environment) As Object
