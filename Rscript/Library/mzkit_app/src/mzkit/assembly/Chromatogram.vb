@@ -140,6 +140,12 @@ Module ChromatogramTools
     ''' </param>
     ''' <param name="env"></param>
     ''' <returns></returns>
+    ''' <example>
+    ''' let rt = 1:5;
+    ''' let intensity = [242 374 8923 74234 23];
+    ''' 
+    ''' print(as.chromatogram(rt, intensity));
+    ''' </example>
     <ExportAPI("as.chromatogram")>
     <RApiReturn(GetType(Chromatogram), GetType(ChromatogramTick))>
     Public Function asChromatogram(<RRawVectorArgument>
