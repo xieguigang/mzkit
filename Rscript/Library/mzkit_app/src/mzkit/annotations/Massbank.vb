@@ -148,9 +148,9 @@ Module Massbank
         Call df.add("smiles", From m In metadata Select m.xref.SMILES)
         Call df.add("inchikey", From m In metadata Select m.xref.InChIkey)
         Call df.add("inchi", From m In metadata Select m.xref.InChI)
-        Call df.add("order", From m In metadata Select m.chemical.Odor.Select(Function(c) c.condition))
-        Call df.add("color", From m In metadata Select m.chemical.Color.Select(Function(c) c.condition))
-        Call df.add("taste", From m In metadata Select m.chemical.Taste.Select(Function(c) c.condition))
+        Call df.add("order", From m In metadata Select m.chemical.Odor.SafeQuery.Select(Function(c) c.condition))
+        Call df.add("color", From m In metadata Select m.chemical.Color.SafeQuery.Select(Function(c) c.condition))
+        Call df.add("taste", From m In metadata Select m.chemical.Taste.SafeQuery.Select(Function(c) c.condition))
 
         Return df
     End Function
