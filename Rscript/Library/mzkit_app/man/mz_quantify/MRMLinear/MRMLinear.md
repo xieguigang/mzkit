@@ -6,6 +6,7 @@ MRM Targeted Metabolomics
 + [MRM.arguments](MRMLinear/MRM.arguments.1) Create argument object for run MRM quantification.
 + [MRM.rt_alignments](MRMLinear/MRM.rt_alignments.1) 
 + [extract.ions](MRMLinear/extract.ions.1) Extract ion peaks
++ [extract_mrm](MRMLinear/extract_mrm.1) Extract ion peaks
 + [extract.peakROI](MRMLinear/extract.peakROI.1) Exact ``regions of interested`` based on the given ion pair as targets.
 + [read.ion_pairs](MRMLinear/read.ion_pairs.1) Get ion pair definition data from a given table file.
 + [isomerism.ion_pairs](MRMLinear/isomerism.ion_pairs.1) 

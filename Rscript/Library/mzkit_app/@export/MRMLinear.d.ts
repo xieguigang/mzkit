@@ -26,7 +26,7 @@ declare namespace MRMLinear {
        * Extract ion peaks
        * 
        * 
-        * @param mzML A mzML raw file
+        * @param mzML the file path to a mzML raw data file.
         * @param ionpairs metabolite targets
         * @param tolerance 
         * + default value Is ``'ppm:20'``.
@@ -71,6 +71,17 @@ declare namespace MRMLinear {
       */
       function peakROI(mzML: string, ionpairs: object, tolerance?: string, timeWindowSize?: number, baselineQuantile?: number, integratorTicks?: object, peakAreaMethod?: object, angleThreshold?: number, peakwidth?: any, rtshift?: object, bsplineDensity?: object, bsplineDegree?: object, sn_threshold?: number, TPAFactors?: object, env?: object): object;
    }
+   /**
+    * Extract ion peaks
+    * 
+    * 
+     * @param mzML the file path to a mzML raw data file.
+     * @param tolerance 
+     * + default value Is ``'da:0.1'``.
+     * @param env 
+     * + default value Is ``null``.
+   */
+   function extract_mrm(mzML: string, q1: number, q3: number, tolerance?: any, env?: object): object;
    /**
     * MRM-Ion Pair Finder is used to automatically and systematically define MRM transitions from untargeted metabolomics data. 
     *  Our research group first introduced the concept of pseudotargeted metabolomics using the retention time locking 
