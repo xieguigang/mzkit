@@ -10,10 +10,19 @@ let names = readLines(input);
 
 names <- as.list(names, names = names);
 
-for(let term in tqdm(names)) {
+let mapping = lapply(names, function(term) {
     let cid = pubchem_kit::CID(term, cache = cache);
 
     for(let id in cid) {
         pugView(id, cache);
     }
-}
+
+    cid;
+});
+
+str(mapping);
+
+mapping 
+|> JSON::json_encode()
+|> writeLines(con = file.path(cache, "mapping.json"))
+;
