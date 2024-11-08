@@ -338,10 +338,10 @@ Module MRMkit
     ''' <summary>
     ''' extract XIC data via a given MRM ion pair data
     ''' </summary>
-    ''' <param name="mzML"></param>
-    ''' <param name="q1"></param>
-    ''' <param name="q3"></param>
-    ''' <param name="tolerance"></param>
+    ''' <param name="mzML">the file path to the mzML rawdata file.</param>
+    ''' <param name="q1">the precursor ion m/z</param>
+    ''' <param name="q3">the product ion m/z</param>
+    ''' <param name="tolerance">the mass tolerance error for matches the ion data from the rawdata file</param>
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("extract_mrm")>
