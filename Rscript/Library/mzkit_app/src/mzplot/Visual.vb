@@ -162,7 +162,7 @@ Module Visual
     <RGenericOverloads("plot")>
     Private Function plotMRM(xic As IonChromatogram, args As list, env As Environment) As Object
         If Not args.hasName("name") Then
-            Call args.add("name", xic.name)
+            Call args.add("name", If(xic.name, xic.description))
         End If
 
         Return plotTIC(xic.chromatogram, args, env)
