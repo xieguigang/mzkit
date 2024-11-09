@@ -620,6 +620,9 @@ Module MzMath
     ''' <param name="intocutoff"></param>
     ''' <param name="env"></param>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' this function andalso produce the jaccard/entropy similarity of the spectrum inside the similarity result object
+    ''' </remarks>
     <ExportAPI("cosine")>
     <RApiReturn(GetType(AlignmentOutput))>
     Public Function cosine(<RRawVectorArgument> query As Object, ref As Object,
