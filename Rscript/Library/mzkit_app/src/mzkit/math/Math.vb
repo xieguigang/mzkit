@@ -651,7 +651,43 @@ Module MzMath
     ''' this function andalso produce the jaccard/entropy similarity of the spectrum inside the similarity result object
     ''' </remarks>
     ''' <example>
-    ''' 
+    ''' # create the spectrum matrix object
+    ''' # fragment data tagged with the source name title
+    ''' let spec1 = libraryMatrix(
+    '''     matrix = data.frame(
+    '''         mz = c(169.071, 186.066, 186.0769),
+    '''         intensity = c(7.917962, 1.021589, 100.0)
+    '''     ),
+    '''     title = "Demo MS1 Spectra",
+    '''     centroid = TRUE
+    ''' );
+    ''' let spec2 = libraryMatrix(
+    '''     matrix = data.frame(
+    '''         mz = c(120.212, 169.071, 186.066),
+    '''         intensity = c(37.16, 66.83, 999.0)
+    '''     ),
+    '''     title = "Demo MS1 Spectra",
+    '''     centroid = TRUE
+    ''' );
+    ''' let compares = math::cosine(spec1, spec2);
+    ''' let scores = as.data.frame(compares, scores_df = TRUE);
+    '''
+    ''' print(scores);
+    ''' #               dimension    scores 
+    ''' # ----------------------------------
+    ''' # &lt;mode>         &lt;string>  &lt;double>
+    ''' # [1, ]  "forward cosine"  0.999925
+    ''' # [2, ]  "reverse cosine"  0.999925
+    ''' # [3, ]          "cosine"  0.999925
+    ''' # [4, ]         "jaccard"         1
+    ''' # [5, ]         "entropy"  0.999949
+    ''' # [6, ]          "mirror"         1
+    ''' # [7, ]            "mean"   0.99995
+    ''' # [8, ]   "fragment hits"         2
+    '''
+    ''' svg(file = "figures/00_Mass_spectrometry/Math/03_compares.svg") {
+    '''     plot(compares);
+    ''' }
     ''' </example>
     <ExportAPI("cosine")>
     <RApiReturn(GetType(AlignmentOutput))>

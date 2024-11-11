@@ -22,7 +22,9 @@
 
         <h3>Description</h3>
 
-        
+        <p>the spectrum similarity comparision result object</p>
+
+<p>contains the score and spectrum fragment alignment details result data.</p>
 
         <h3>Declare</h3>        
 
@@ -34,8 +36,11 @@ export class AlignmentOutput {
    alignments: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/Xml/SSM2MatrixFragment.html">SSM2MatrixFragment[]</a>;
    # the min value of <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/Xml/AlignmentOutput.html">AlignmentOutput</a>.<a href="#">forward</a> and <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/Xml/AlignmentOutput.html">AlignmentOutput</a>.<a href="#">reverse</a>
    cosine: double;
+   # the spectrum entropy similarity
    entropy: double;
+   # the forward cosine score
    forward: double;
+   # the jaccard index between the fragment set of query vs subject
    jaccard: double;
    # get score mean result
    mean: double;
@@ -43,6 +48,7 @@ export class AlignmentOutput {
    nhits: integer;
    query: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/Xml/Meta.html">Meta</a>;
    reference: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/Xml/Meta.html">Meta</a>;
+   # the reverse cosine score
    reverse: double;
 }
 </code>
