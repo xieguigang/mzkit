@@ -70,9 +70,45 @@
 
         this function returns data object of type <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/Xml/AlignmentOutput.html">AlignmentOutput</a>.<h4>clr value class</h4><ul><li><a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Spectra/Xml/AlignmentOutput.html">AlignmentOutput</a></li></ul>
 
-        <h3 style="display: none;">Examples</h3>
+        <h3 style="display: block;">Examples</h3>
 
-        
+        <pre><code id="example_r"> # create the spectrum matrix object
+ # fragment data tagged with the source name title
+ let spec1 = libraryMatrix(
+     matrix = data.frame(
+         mz = c(169.071, 186.066, 186.0769),
+         intensity = c(7.917962, 1.021589, 100.0)
+     ),
+     title = "Demo MS1 Spectra",
+     centroid = TRUE
+ );
+ let spec2 = libraryMatrix(
+     matrix = data.frame(
+         mz = c(120.212, 169.071, 186.066),
+         intensity = c(37.16, 66.83, 999.0)
+     ),
+     title = "Demo MS1 Spectra",
+     centroid = TRUE
+ );
+ let compares = math::cosine(spec1, spec2);
+ let scores = as.data.frame(compares, scores_df = TRUE);
+
+ print(scores);
+ #               dimension    scores 
+ # ----------------------------------
+ # <mode>         <string>  <double>
+ # [1, ]  "forward cosine"  0.999925
+ # [2, ]  "reverse cosine"  0.999925
+ # [3, ]          "cosine"  0.999925
+ # [4, ]         "jaccard"         1
+ # [5, ]         "entropy"  0.999949
+ # [6, ]          "mirror"         1
+ # [7, ]            "mean"   0.99995
+ # [8, ]   "fragment hits"         2
+
+ svg(file = "figures/00_Mass_spectrometry/Math/03_compares.svg") {
+     plot(compares);
+ }</code></pre>
 
         <hr />
         <div style="text-align: center;">[Package <em>math</em> version 1.0.0.0 <a
