@@ -94,9 +94,9 @@ Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports REnv = SMRUCC.Rsharp.Runtime
+Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
 Imports std = System.Math
 Imports stdVector = Microsoft.VisualBasic.Math.LinearAlgebra.Vector
-Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
 
 ''' <summary>
 ''' mass spectrometry data math toolkit
@@ -206,19 +206,46 @@ Module MzMath
     ''' <returns></returns>
     <RGenericOverloads("as.data.frame")>
     Private Function getAlignmentTable(align As AlignmentOutput, args As list, env As Environment) As dataframe
-        Dim mz As Double() = align.alignments.Select(Function(a) a.mz).ToArray
-        Dim query As Double() = align.alignments.Select(Function(a) a.query).ToArray
-        Dim reference As Double() = align.alignments.Select(Function(a) a.ref).ToArray
-        Dim da As String() = align.alignments.Select(Function(a) a.da).ToArray
+        Dim scores_df As Boolean = args.getValue("scores_df", env, [default]:=False)
 
-        Return New dataframe With {
-            .columns = New Dictionary(Of String, Array) From {
-                {"m/z", mz},
-                {"query", query},
-                {"ref", reference},
-                {"da", da}
+        If scores_df Then
+            Dim df As New dataframe With {
+                .columns = New Dictionary(Of String, Array)
             }
-        }
+
+            Call df.add("dimension", {
+                "forward cosine", "reverse cosine",
+                "cosine",
+                "jaccard",
+                "entropy",
+                "mirror",
+                "mean",
+                "fragment hits"})
+            Call df.add("scores", {
+                align.forward, align.reverse,
+                align.cosine,
+                align.jaccard,
+                align.entropy,
+                align.mirror,
+                align.mean,
+                align.nhits})
+
+            Return df
+        Else
+            Dim mz As Double() = align.alignments.Select(Function(a) a.mz).ToArray
+            Dim query As Double() = align.alignments.Select(Function(a) a.query).ToArray
+            Dim reference As Double() = align.alignments.Select(Function(a) a.ref).ToArray
+            Dim da As String() = align.alignments.Select(Function(a) a.da).ToArray
+
+            Return New dataframe With {
+                .columns = New Dictionary(Of String, Array) From {
+                    {"m/z", mz},
+                    {"query", query},
+                    {"ref", reference},
+                    {"da", da}
+                }
+            }
+        End If
     End Function
 
     Private Function printCalculator(type As MzCalculator) As String
@@ -620,6 +647,48 @@ Module MzMath
     ''' <param name="intocutoff"></param>
     ''' <param name="env"></param>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' this function andalso produce the jaccard/entropy similarity of the spectrum inside the similarity result object
+    ''' </remarks>
+    ''' <example>
+    ''' # create the spectrum matrix object
+    ''' # fragment data tagged with the source name title
+    ''' let spec1 = libraryMatrix(
+    '''     matrix = data.frame(
+    '''         mz = c(169.071, 186.066, 186.0769),
+    '''         intensity = c(7.917962, 1.021589, 100.0)
+    '''     ),
+    '''     title = "Demo MS1 Spectra",
+    '''     centroid = TRUE
+    ''' );
+    ''' let spec2 = libraryMatrix(
+    '''     matrix = data.frame(
+    '''         mz = c(120.212, 169.071, 186.066),
+    '''         intensity = c(37.16, 66.83, 999.0)
+    '''     ),
+    '''     title = "Demo MS1 Spectra",
+    '''     centroid = TRUE
+    ''' );
+    ''' let compares = math::cosine(spec1, spec2);
+    ''' let scores = as.data.frame(compares, scores_df = TRUE);
+    '''
+    ''' print(scores);
+    ''' #               dimension    scores 
+    ''' # ----------------------------------
+    ''' # &lt;mode>         &lt;string>  &lt;double>
+    ''' # [1, ]  "forward cosine"  0.999925
+    ''' # [2, ]  "reverse cosine"  0.999925
+    ''' # [3, ]          "cosine"  0.999925
+    ''' # [4, ]         "jaccard"         1
+    ''' # [5, ]         "entropy"  0.999949
+    ''' # [6, ]          "mirror"         1
+    ''' # [7, ]            "mean"   0.99995
+    ''' # [8, ]   "fragment hits"         2
+    '''
+    ''' svg(file = "figures/00_Mass_spectrometry/Math/03_compares.svg") {
+    '''     plot(compares);
+    ''' }
+    ''' </example>
     <ExportAPI("cosine")>
     <RApiReturn(GetType(AlignmentOutput))>
     Public Function cosine(<RRawVectorArgument> query As Object, ref As Object,

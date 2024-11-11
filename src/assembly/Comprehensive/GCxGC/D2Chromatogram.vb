@@ -58,12 +58,10 @@
 #End Region
 
 Imports System.IO
-Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
+Imports BioNovoGene.Analytical.MassSpectrometry.GCxGC
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports Microsoft.VisualBasic.ComponentModel.Collection
-Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
-Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.DataStorage.netCDF
 Imports Microsoft.VisualBasic.DataStorage.netCDF.Components
 Imports Microsoft.VisualBasic.DataStorage.netCDF.Data
@@ -77,54 +75,7 @@ Imports Microsoft.VisualBasic.Linq
 ''' <remarks>
 ''' is a collection of the <see cref="ChromatogramTick"/> data.
 ''' </remarks>
-Public Class D2Chromatogram : Implements IReadOnlyId, INamedValue
-
-    Public Property scan_time As Double
-    Public Property intensity As Double
-    Public Property scan_id As String Implements INamedValue.Key, IReadOnlyId.Identity
-
-    ''' <summary>
-    ''' chromatogram data 2d
-    ''' </summary>
-    ''' <returns></returns>
-    Public Property chromatogram As ChromatogramTick()
-
-    Default Public ReadOnly Property getTick(i As DoubleRange) As ChromatogramTick()
-        Get
-            Return chromatogram.Where(Function(a) i.IsInside(a.Time)).ToArray
-        End Get
-    End Property
-
-    Default Public ReadOnly Property getTick(i As Integer) As ChromatogramTick
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Get
-            Return _chromatogram(i)
-        End Get
-    End Property
-
-    Public ReadOnly Property size As Integer
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Get
-            Return chromatogram.Length
-        End Get
-    End Property
-
-    Sub New()
-    End Sub
-
-    Sub New(t1 As Double)
-        scan_time = t1
-    End Sub
-
-    Sub New(t1 As Double, id As String)
-        scan_id = id
-        scan_time = t1
-    End Sub
-
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Overrides Function ToString() As String
-        Return $"{intensity.ToString("G3")}@{scan_time.ToString("F2")}"
-    End Function
+Public Module D2Chromatogram
 
     ''' <summary>
     ''' Export GCxGC data in mzkit cdf format
@@ -132,7 +83,7 @@ Public Class D2Chromatogram : Implements IReadOnlyId, INamedValue
     ''' <param name="gcxgc"></param>
     ''' <param name="file"></param>
     ''' <returns></returns>
-    Public Shared Function EncodeCDF(gcxgc As IEnumerable(Of D2Chromatogram), file As Stream) As Boolean
+    Public Function EncodeCDF(gcxgc As IEnumerable(Of Chromatogram2DScan), file As Stream) As Boolean
         Using writer As New CDFWriter(file)
             Dim i As i32 = 1
             Dim size As New Dictionary(Of String, Dimension)
@@ -140,7 +91,7 @@ Public Class D2Chromatogram : Implements IReadOnlyId, INamedValue
             Dim dims As Dimension
             Dim attrs As attribute()
 
-            For Each scan As D2Chromatogram In gcxgc
+            For Each scan As Chromatogram2DScan In gcxgc
                 vector = scan.chromatogram _
                     .Select(Function(d) d.Time) _
                     .JoinIterates(scan.chromatogram.Select(Function(d) d.Intensity)) _
@@ -168,7 +119,7 @@ Public Class D2Chromatogram : Implements IReadOnlyId, INamedValue
     ''' </summary>
     ''' <param name="file">the cdf file in mzkit format</param>
     ''' <returns></returns>
-    Public Shared Iterator Function DecodeCDF(file As Stream) As IEnumerable(Of D2Chromatogram)
+    Public Iterator Function DecodeCDF(file As Stream) As IEnumerable(Of Chromatogram2DScan)
         Using reader As New netCDFReader(file)
             Dim nscans As Integer = reader("nscans")
             Dim names As variable() = reader.variables
@@ -181,7 +132,7 @@ Public Class D2Chromatogram : Implements IReadOnlyId, INamedValue
                 Dim scan_time As Double = names(i).FindAttribute("scan_time").getObjectValue
                 Dim intensity As Double = names(i).FindAttribute("intensity").getObjectValue
 
-                Yield New D2Chromatogram With {
+                Yield New Chromatogram2DScan With {
                     .chromatogram = ticks,
                     .intensity = intensity,
                     .scan_time = scan_time
@@ -189,9 +140,4 @@ Public Class D2Chromatogram : Implements IReadOnlyId, INamedValue
             Next
         End Using
     End Function
-
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Function times() As Double()
-        Return chromatogram.Select(Function(t) t.Time).ToArray
-    End Function
-End Class
+End Module

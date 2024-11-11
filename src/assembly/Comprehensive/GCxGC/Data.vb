@@ -63,9 +63,9 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Public Module Data
 
     <Extension>
-    Public Function ExtractXIC(mz As Double, mzdiff As Tolerance) As Func(Of ScanMS1, D2Chromatogram)
+    Public Function ExtractXIC(mz As Double, mzdiff As Tolerance) As Func(Of ScanMS1, Chromatogram2DScan)
         Return Function(d)
-                   Return New D2Chromatogram With {
+                   Return New Chromatogram2DScan With {
                        .scan_time = d.rt,
                        .intensity = d.GetIntensity(mz, mzdiff),
                        .chromatogram = d.products _
@@ -81,13 +81,13 @@ Public Module Data
     End Function
 
     <Extension>
-    Public Function ExtractTIC(rawdata As mzPack) As IEnumerable(Of D2Chromatogram)
+    Public Function ExtractTIC(rawdata As mzPack) As IEnumerable(Of Chromatogram2DScan)
         Return rawdata.MS.Select(Function(d1) d1.ExtractTIC)
     End Function
 
     <Extension>
-    Public Function ExtractTIC(d As ScanMS1) As D2Chromatogram
-        Return New D2Chromatogram With {
+    Public Function ExtractTIC(d As ScanMS1) As Chromatogram2DScan
+        Return New Chromatogram2DScan With {
             .intensity = d.TIC,
             .scan_time = d.rt,
             .chromatogram = d.products _

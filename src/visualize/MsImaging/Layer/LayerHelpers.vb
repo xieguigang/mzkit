@@ -56,7 +56,6 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
@@ -70,7 +69,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Statistics.Linq
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Public Module LayerHelpers
 
@@ -83,7 +82,7 @@ Public Module LayerHelpers
     ''' a collection of m/z tagged density value
     ''' </returns>
     <Extension>
-    Public Iterator Function GetMSIIons(raw As mzPack,
+    Public Iterator Function GetMSIIons(raw As IMZPack,
                                         Optional mzdiff As Tolerance = Nothing,
                                         Optional gridSize As Integer = 5,
                                         Optional qcut As Double = 0.05,
@@ -122,7 +121,7 @@ Public Module LayerHelpers
                 j = 0
                 info = $"({CInt(100 * i / allMz.Length)}%) {Val(allMz(i).name).ToString("F4")}"
 
-                Call RunSlavePipeline.SendProgress(stdNum.Round(i / allMz.Length, 2), info)
+                Call RunSlavePipeline.SendProgress(std.Round(i / allMz.Length, 2), info)
             End If
         Next
     End Function

@@ -1,63 +1,63 @@
 ﻿#Region "Microsoft.VisualBasic::bb499fee4f1308b5f978080e219bd854, visualize\MsImaging\Drawer.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 365
-    '    Code Lines: 221 (60.55%)
-    ' Comment Lines: 95 (26.03%)
-    '    - Xml Docs: 87.37%
-    ' 
-    '   Blank Lines: 49 (13.42%)
-    '     File Size: 14.53 KB
+' Summaries:
 
 
-    ' Class Drawer
-    ' 
-    '     Properties: dimension, pixelReader
-    ' 
-    '     Constructor: (+4 Overloads) Sub New
-    ' 
-    '     Function: (+2 Overloads) DrawLayer, GetPixelsMatrix, (+2 Overloads) LoadPixels, ReadXY, RenderSummaryLayer
-    '               (+2 Overloads) ScaleLayer, ScalePixels, ShowSummaryRendering
-    ' 
-    '     Sub: (+2 Overloads) Dispose
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 365
+'    Code Lines: 221 (60.55%)
+' Comment Lines: 95 (26.03%)
+'    - Xml Docs: 87.37%
+' 
+'   Blank Lines: 49 (13.42%)
+'     File Size: 14.53 KB
+
+
+' Class Drawer
+' 
+'     Properties: dimension, pixelReader
+' 
+'     Constructor: (+4 Overloads) Sub New
+' 
+'     Function: (+2 Overloads) DrawLayer, GetPixelsMatrix, (+2 Overloads) LoadPixels, ReadXY, RenderSummaryLayer
+'               (+2 Overloads) ScaleLayer, ScalePixels, ShowSummaryRendering
+' 
+'     Sub: (+2 Overloads) Dispose
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -74,6 +74,8 @@ Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
+
 
 #If NET48 Then
 Imports Microsoft.VisualBasic.Drawing
@@ -141,7 +143,8 @@ Public Class Drawer : Implements IDisposable
         If file.ExtensionSuffix("imzML") Then
             pixelReader = New ReadIbd(imzML:=file, memoryCache:=memoryCache)
         ElseIf file.ExtensionSuffix("mzpack") Then
-            pixelReader = New ReadRawPack(mzpack:=file, verbose:=verbose)
+            ' pixelReader = New ReadRawPack(mzpack:=file, verbose:=verbose)
+            Throw New NotSupportedException($"Create ms-imaging rendering canvas from read mzPack rawdata file is not supported.")
         Else
             Throw New InvalidProgramException($"unsupported file type: {file.FileName}")
         End If
@@ -150,9 +153,11 @@ Public Class Drawer : Implements IDisposable
     ''' <summary>
     ''' Create render from an in-memory dataset
     ''' </summary>
-    ''' <param name="mzpack"></param>
+    ''' <param name="mzpack">
+    ''' An abstract interface of the in-memory mzPack data object
+    ''' </param>
     ''' <param name="verbose"></param>
-    Sub New(mzpack As mzPack, Optional verbose As Boolean = True)
+    Sub New(mzpack As IMZPack, Optional verbose As Boolean = True)
         pixelReader = New ReadRawPack(mzpack, verbose)
     End Sub
 

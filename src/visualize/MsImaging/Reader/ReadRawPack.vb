@@ -89,7 +89,7 @@ Namespace Reader
         ''' </summary>
         Dim pixels As Dictionary(Of String, mzPackPixel())
 
-        Sub New(mzpack As Assembly.mzPack, Optional verbose As Boolean = True)
+        Sub New(mzpack As IMZPack, Optional verbose As Boolean = True)
             Call mzpack.MS _
                 .Select(Function(pixel)
                             Return New mzPackPixel(pixel)
@@ -104,18 +104,19 @@ Namespace Reader
             Call ReadDimensions(mzpack:=Nothing, verbose)
         End Sub
 
-        Sub New(mzpack As String, Optional verbose As Boolean = True)
-            Using file As Stream = mzpack.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
-                Call Assembly.mzPack _
-                    .ReadAll(file).MS _
-                    .Select(Function(pixel)
-                                Return New mzPackPixel(pixel)
-                            End Function) _
-                    .DoCall(Sub(ls) loadPixelsArray(ls, verbose))
+        ' load from mzpack rawdata file
+        'Sub New(mzpack As String, Optional verbose As Boolean = True)
+        '    Using file As Stream = mzpack.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
+        '        Call Assembly.mzPack _
+        '            .ReadAll(file).MS _
+        '            .Select(Function(pixel)
+        '                        Return New mzPackPixel(pixel)
+        '                    End Function) _
+        '            .DoCall(Sub(ls) loadPixelsArray(ls, verbose))
 
-                Call ReadDimensions(mzpack:=Nothing, verbose)
-            End Using
-        End Sub
+        '        Call ReadDimensions(mzpack:=Nothing, verbose)
+        '    End Using
+        'End Sub
 
         Sub New(pixels As IEnumerable(Of mzPackPixel), MsiDim As Size, resolution As Double, Optional verbose As Boolean = True)
             Me.dimension = MsiDim
@@ -159,7 +160,7 @@ Namespace Reader
         ''' the required mzpack object could be nothing
         ''' </summary>
         ''' <param name="mzpack"></param>
-        Private Overloads Sub ReadDimensions(mzpack As mzPack, verbose As Boolean)
+        Private Overloads Sub ReadDimensions(mzpack As IMZPack, verbose As Boolean)
             Dim metadata As Dictionary(Of String, String)
             Dim polygon As New Polygon2D(pixels.Select(Function(pr) pr.Value).IteratesALL.Select(Function(p) New Point(p.X, p.Y)))
 

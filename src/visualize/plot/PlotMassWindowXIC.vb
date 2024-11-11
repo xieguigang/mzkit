@@ -125,7 +125,7 @@ Public Class PlotMassWindowXIC : Inherits Plot
     ReadOnly xic As ChromatogramTick()
 
     ''' <summary>
-    ''' 
+    ''' Construct a plot that combined of XIC with the scatter density heatmap
     ''' </summary>
     ''' <param name="xic"></param>
     ''' <param name="theme"></param>
