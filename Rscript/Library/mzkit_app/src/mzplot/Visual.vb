@@ -448,7 +448,7 @@ Module Visual
 
     <RGenericOverloads("plot")>
     <Extension>
-    Private Function plotTIC2(x As D2Chromatogram, args As list, env As Environment) As Object
+    Private Function plotTIC2(x As Chromatogram2DScan, args As list, env As Environment) As Object
         Return x.chromatogram.plotTIC(args, env)
     End Function
 

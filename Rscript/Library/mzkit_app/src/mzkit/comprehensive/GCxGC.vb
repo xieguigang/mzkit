@@ -113,13 +113,13 @@ Module GCxGC
     ''' </param>
     ''' <returns></returns>
     <ExportAPI("TIC2D")>
-    <RApiReturn(GetType(D2Chromatogram))>
+    <RApiReturn(GetType(Chromatogram2DScan))>
     Public Function TIC2D(TIC As ChromatogramTick(), modtime As Double) As Object
         Return TIC.Demodulate2D(modtime)
     End Function
 
     <ExportAPI("TIC1D")>
-    Public Function TIC1D(matrix As D2Chromatogram()) As ChromatogramTick()
+    Public Function TIC1D(matrix As Chromatogram2DScan()) As ChromatogramTick()
         Return matrix _
             .Select(Function(i)
                         Return New ChromatogramTick With {

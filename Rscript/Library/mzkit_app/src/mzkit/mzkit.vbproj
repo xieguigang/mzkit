@@ -307,6 +307,7 @@
 	  <ProjectReference Include="..\..\..\..\..\src\metadb\SMILES\SMILES.NET5.vbproj" />
 	  <ProjectReference Include="..\..\..\..\..\src\metadb\XrefEngine\XrefEngine.NET5.vbproj" />
 	  <ProjectReference Include="..\..\..\..\..\src\metadna\metaDNA\metaDNA.NET5.vbproj" />
+	  <ProjectReference Include="..\..\..\..\..\src\mzmath\GCxGC\GCxGC.vbproj" />
 	  <ProjectReference Include="..\..\..\..\..\src\mzmath\MoleculeNetworking\MoleculeNetworking.vbproj" />
 	  <ProjectReference Include="..\..\..\..\..\src\mzmath\ms2_math-core\mzmath-netcore5.vbproj" />
 	  <ProjectReference Include="..\..\..\..\..\src\mzmath\MSEngine\MSEngine.vbproj" />
