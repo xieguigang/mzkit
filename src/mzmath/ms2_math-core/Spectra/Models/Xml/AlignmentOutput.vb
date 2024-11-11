@@ -66,11 +66,33 @@ Imports std = System.Math
 
 Namespace Spectra.Xml
 
+    ''' <summary>
+    ''' the spectrum similarity comparision result object
+    ''' </summary>
+    ''' <remarks>
+    ''' contains the score and spectrum fragment alignment details result data.
+    ''' </remarks>
     Public Class AlignmentOutput
 
+        ''' <summary>
+        ''' the forward cosine score
+        ''' </summary>
+        ''' <returns></returns>
         <XmlAttribute> Public Property forward As Double
+        ''' <summary>
+        ''' the reverse cosine score
+        ''' </summary>
+        ''' <returns></returns>
         <XmlAttribute> Public Property reverse As Double
+        ''' <summary>
+        ''' the jaccard index between the fragment set of query vs subject
+        ''' </summary>
+        ''' <returns></returns>
         <XmlAttribute> Public Property jaccard As Double
+        ''' <summary>
+        ''' the spectrum entropy similarity
+        ''' </summary>
+        ''' <returns></returns>
         <XmlAttribute> Public Property entropy As Double
 
         Public ReadOnly Property mirror As Double

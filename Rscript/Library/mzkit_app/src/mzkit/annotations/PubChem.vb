@@ -92,6 +92,8 @@ Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports Rdataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
 Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
+Imports System.Runtime.CompilerServices
+
 
 #If NET48 Then
 Imports Pen = System.Drawing.Pen
@@ -155,8 +157,16 @@ Module PubChemToolKit
 
     Sub Main()
         Call RInternal.Object.Converts.makeDataframe.addHandler(GetType(SIDMap()), AddressOf SIDMapTable)
+        Call RInternal.Object.Converts.makeDataframe.addHandler(GetType(PugViewRecord()), AddressOf makeTabular)
     End Sub
 
+    <RGenericOverloads("as.data.frame")>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Private Function makeTabular(pubchem As PugViewRecord(), args As list, env As Environment) As Rdataframe
+        Return Massbank.makeMetaboliteTable(pubchem.Select(Function(m) m.GetMetaInfo).ToArray, args, env)
+    End Function
+
+    <RGenericOverloads("as.data.frame")>
     Private Function SIDMapTable(maps As SIDMap(), args As list, env As Environment) As Rdataframe
         Dim data As New Rdataframe With {
             .columns = New Dictionary(Of String, Array)

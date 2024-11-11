@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 3000 2000">
+  <rect fill="white" width="3000" height="2000" />
+  <rect fill="white" width="3000" height="2000" />
+  <rect fill="white" x="150" y="100" width="2800" height="1750" />
+  <path fill="none" stroke="#D3D3D3" stroke-width="6.25" stroke-miterlimit="4" d="M150 1850L2950 1850" />
+  <path fill="none" stroke="#D3D3D3" stroke-width="6.25" stroke-miterlimit="4" d="M150 1532L2950 1532" />
+  <path fill="none" stroke="#D3D3D3" stroke-width="6.25" stroke-miterlimit="4" d="M150 1214L2950 1214" />
+  <path fill="none" stroke="#D3D3D3" stroke-width="6.25" stroke-miterlimit="4" d="M150 895L2950 895" />
+  <path fill="none" stroke="#D3D3D3" stroke-width="6.25" stroke-miterlimit="4" d="M150 577L2950 577" />
+  <path fill="none" stroke="#D3D3D3" stroke-width="6.25" stroke-miterlimit="4" d="M150 259L2950 259" />
+  <path fill="none" stroke="black" stroke-width="15.625" stroke-miterlimit="4" d="M150 1850L2950 1850" />
+  <path fill="none" stroke="black" stroke-width="15.625" stroke-miterlimit="4" d="M150 1850L150 1860" />
+  <text font-size="31.25" font-family="Segoe UI" x="142, " y="1884, ">
+			0
+	</text>
+  <path fill="none" stroke="black" stroke-width="15.625" stroke-miterlimit="4" d="M461.111 1850L461.111 1860" />
+  <text font-size="31.25" font-family="Segoe UI" x="435, 451.8457, 468.69141, " y="1884, ">
+			100
+	</text>
+  <path fill="none" stroke="black" stroke-width="15.625" stroke-miterlimit="4" d="M772.222 1850L772.222 1860" />
+  <text font-size="31.25" font-family="Segoe UI" x="745, 761.8457, 778.69141, " y="1884, ">
+			200
+	</text>
+  <path fill="none" stroke="black" stroke-width="15.625" stroke-miterlimit="4" d="M1083.33 1850L1083.33 1860" />
+  <text font-size="31.25" font-family="Segoe UI" x="1056, 1072.8457, 1089.6914, " y="1884, ">
+			300
+	</text>
+  <path fill="none" stroke="black" stroke-width="15.625" stroke-miterlimit="4" d="M1394.44 1850L1394.44 1860" />
+  <text font-size="31.25" font-family="Segoe UI" x="1366, 1382.8457, 1399.6914, " y="1884, ">
+			400
+	</text>
+  <path fill="none" stroke="black" stroke-width="15.625" stroke-miterlimit="4" d="M1705.56 1850L1705.56 1860" />
+  <text font-size="31.25" font-family="Segoe UI" x="1679, 1695.8457, 1712.6914, " y="1884, ">
+			500
+	</text>
+  <path fill="none" stroke="black" stroke-width="15.625" stroke-miterlimit="4" d="M2016.67 1850L2016.67 1860" />
+  <text font-size="31.25" font-family="Segoe UI" x="1989, 2005.8457, 2022.6914, " y="1884, ">
+			600
+	</text>
+  <path fill="none" stroke="black" stroke-width="15.625" stroke-miterlimit="4" d="M2327.78 1850L2327.78 1860" />
+  <text font-size="31.25" font-family="Segoe UI" x="2300, 2316.8457, 2333.6914, " y="1884, ">
+			700
+	</text>
+  <path fill="none" stroke="black" stroke-width="15.625" stroke-miterlimit="4" d="M2638.89 1850L2638.89 1860" />
+  <text font-size="31.25" font-family="Segoe UI" x="2612, 2628.8457, 2645.6914, " y="1884, ">
+			800
+	</text>
+  <text font-size="31.25" font-family="Microsoft YaHei, 微软雅黑" x="1474.8159, 1505.3488, 1518.7002, 1534.0658, 1543.3126, 1555.245, 1572.5179, 1584.1604, 1592.4764, " y="1911.625, ">
+			M/z ratio
+	</text>
+  <path fill="none" stroke="black" stroke-width="15.625" stroke-miterlimit="4" d="M150 1850L150 259" />
+  <path fill="none" stroke="black" stroke-width="15.625" stroke-miterlimit="4" d="M150 1850L140 1850" />
+  <text font-size="31.25" font-family="Segoe UI" x="123.125, " y="1859.625, ">
+			0
+	</text>
+  <path fill="none" stroke="black" stroke-width="15.625" stroke-miterlimit="4" d="M150 1531.82L140 1531.82" />
+  <text font-size="31.25" font-family="Segoe UI" x="104.17358, 121.01929, " y="1541.4432, ">
+			20
+	</text>
+  <path fill="none" stroke="black" stroke-width="15.625" stroke-miterlimit="4" d="M150 1213.64L140 1213.64" />
+  <text font-size="31.25" font-family="Segoe UI" x="103.04858, 119.89429, " y="1223.2614, ">
+			40
+	</text>
+  <path fill="none" stroke="black" stroke-width="15.625" stroke-miterlimit="4" d="M150 895.455L140 895.455" />
+  <text font-size="31.25" font-family="Segoe UI" x="104.17358, 121.01929, " y="905.07953, ">
+			60
+	</text>
+  <path fill="none" stroke="black" stroke-width="15.625" stroke-miterlimit="4" d="M150 577.273L140 577.273" />
+  <text font-size="31.25" font-family="Segoe UI" x="104.17358, 121.01929, " y="586.89771, ">
+			80
+	</text>
+  <path fill="none" stroke="black" stroke-width="15.625" stroke-miterlimit="4" d="M150 259.091L140 259.091" />
+  <text font-size="31.25" font-family="Segoe UI" x="87.472168, 104.31787, 121.16357, " y="268.71591, ">
+			100
+	</text>
+  <text transform="matrix(0 -1 1 0 34.0833 1148.01)" font-size="31.25" font-family="Segoe UI" x="-143.6261, -124.93408, -108.59192, -101.02356, -85.123901, -74.534302, -66.965942, -51.99707, -35.654907, -27.094727, -18.778687, -1.09375, 9.4958496, 25.838013, 43.522949, 56.782837, 64.351196, 74.940796, 90.062256, 98.622437, 108.05237, 133.6261, " y="8, ">
+			Relative Intensity (%)
+	</text>
+  <path fill="none" stroke="black" stroke-width="15.625" stroke-miterlimit="4" d="M150 1850L2950 1850" />
+  <text font-size="31.25" font-family="Microsoft YaHei, 微软雅黑" x="2799.6318, 2830.1646, 2843.5161, 2858.8818, 2868.1284, 2880.061, 2897.334, 2908.9763, 2917.2925, " y="1884, ">
+			M/z ratio
+	</text>
+  <rect fill="#4682B4" x="415.3555" y="1841.7765" width="5" height="8.2235107" />
+  <rect fill="#4682B4" x="443.32126" y="1849.6094" width="5" height="0.390625" />
+  <rect fill="#4682B4" x="720.17218" y="259.09091" width="5" height="1590.9091" />
+  <text font-size="25" font-family="Microsoft YaHei, 微软雅黑" x="660.55737, 675.21802, 689.87866, 704.53931, 710.55737, 725.21802, 739.87866, 754.53931, " y="256.71591, ">
+			184.0732
+	</text>
+  <rect fill="#4682B4" x="1769.8077" y="1835.5879" width="5" height="14.412109" />
+  <rect fill="#4682B4" x="1776.0782" y="1829.0115" width="5" height="20.988525" />
+  <rect fill="#4682B4" x="1813.4121" y="1848.4507" width="5" height="1.5493164" />
+  <rect fill="#4682B4" x="1857.0154" y="1839.5818" width="5" height="10.418213" />
+  <rect fill="#4682B4" x="2619.593" y="1789.1738" width="5" height="60.826172" />
+  <rect fill="#4682B4" x="2622.7163" y="1841.8188" width="5" height="8.1811523" />
+  <text font-size="50" font-family="Microsoft YaHei, 微软雅黑" x="1316.2262, 1348.2086, 1376.5778, 1401.651, 1433.4381, 1480.2887, 1512.2223, 1544.0094, 1567.1539, 1595.5231, 1617.9352, " y="73.1875, ">
+			decompose_2
+	</text>
+</svg>

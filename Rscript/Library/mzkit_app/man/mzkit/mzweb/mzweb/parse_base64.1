@@ -14,19 +14,26 @@ Parse the given network base64 data as spectrum
 .PP
 .SH OPTIONS
 .PP
-\fBmz\fB \fR\- -. 
+\fBmz\fB \fR\- a character vector of the base64 string for the ms2 spectrum ion peaks. 
 .PP
 .PP
-\fBintensity\fB \fR\- -. 
+\fBintensity\fB \fR\- a character vector of the base64 string for the corresponding ion peaks intensity value.. 
 .PP
 .PP
-\fBid\fB \fR\- -. 
+\fBid\fB \fR\- a character vector of the spectrum reference id. 
 .PP
 .PP
-\fBauto_scalar\fB \fR\- -. 
+\fBauto_scalar\fB \fR\- 
+ returns a scalar spectrum object if the input data just contains one spectrum data or not?
+. 
 .PP
 .PP
 \fBenv\fB \fR\- -. 
+.PP
+.SH VALUE
+.PP
+this function will populate a set of the ms2 spectrum data object
+ that which was parsed from the given base64 data collection.
 .PP
 .SH SEE ALSO
 mzweb

@@ -84,7 +84,7 @@ Imports ThermoFisher.CommonCore.Data.FilterEnums
 Imports ThermoFisher.CommonCore.Data.Interfaces
 Imports ThermoFisher.CommonCore.MassPrecisionEstimator
 Imports ThermoFisher.CommonCore.RawFileReader
-Imports stdNum = System.Math
+Imports std = System.Math
 
 ' The methods in this class use ThermoFisher.CommonCore.RawFileReader.dll
 ' and related DLLs to extract scan header info and mass spec data (m/z and intensity lists)
@@ -113,13 +113,13 @@ Imports stdNum = System.Math
 
 
 ''' <summary>
-''' Class for reading Thermo .raw files
+''' Class for reading Thermo Xcalibur ``*.raw`` files
 ''' </summary>
 ''' <remarks>
 ''' https://github.com/PNNL-Comp-Mass-Spec
 ''' </remarks>
 <CLSCompliant(True)>
-Public Class XRawFileIO : Implements IDisposable
+Public Class XcaliburRawFileIO : Implements IDisposable
 
     ''' <summary>
     ''' The full path to the currently loaded .raw file
@@ -504,7 +504,7 @@ Public Class XRawFileIO : Implements IDisposable
                     .EndMass = Double.Parse(massRangeMatch.Groups(CStr("EndMass")).Value)
                 }
                 Dim centralMass = mrmMassRange.StartMass + (mrmMassRange.EndMass - mrmMassRange.StartMass) / 2
-                mrmMassRange.CentralMass = stdNum.Round(centralMass, 6)
+                mrmMassRange.CentralMass = std.Round(centralMass, 6)
                 mrmInfo.MRMMassList.Add(mrmMassRange)
             Catch __unusedException1__ As Exception
                 ' Error parsing out the mass values; skip this group
@@ -561,8 +561,12 @@ Public Class XRawFileIO : Implements IDisposable
     ''' <param name="collisionMode">Collision mode (output)</param>
     ''' <returns>True if success</returns>
     ''' <remarks>If multiple parent ion m/z values are listed then parentIonMz will have the last one.  However, if the filter text contains "Full msx" then parentIonMz will have the first parent ion listed</remarks>
-    Public Shared Function ExtractParentIonMZFromFilterText(filterText As String, <Out> ByRef parentIonMz As Double, <Out> ByRef msLevel As Integer, <Out> ByRef collisionMode As String) As Boolean
-        Return XRawFileIO.ExtractParentIonMZFromFilterText(filterText, parentIonMz, msLevel, collisionMode, Nothing)
+    Public Shared Function ExtractParentIonMZFromFilterText(filterText As String,
+                                                            <Out> ByRef parentIonMz As Double,
+                                                            <Out> ByRef msLevel As Integer,
+                                                            <Out> ByRef collisionMode As String) As Boolean
+
+        Return XcaliburRawFileIO.ExtractParentIonMZFromFilterText(filterText, parentIonMz, msLevel, collisionMode, Nothing)
     End Function
 
     ''' <summary>
@@ -575,7 +579,12 @@ Public Class XRawFileIO : Implements IDisposable
     ''' <param name="parentIons">Output: parent ion list</param>
     ''' <returns>True if success</returns>
     ''' <remarks>If multiple parent ion m/z values are listed then parentIonMz will have the last one.  However, if the filter text contains "Full msx" then parentIonMz will have the first parent ion listed</remarks>
-    Public Shared Function ExtractParentIonMZFromFilterText(filterText As String, <Out> ByRef parentIonMz As Double, <Out> ByRef msLevel As Integer, <Out> ByRef collisionMode As String, <Out> ByRef parentIons As List(Of ParentIonInfoType)) As Boolean
+    Public Shared Function ExtractParentIonMZFromFilterText(filterText As String,
+                                                            <Out> ByRef parentIonMz As Double,
+                                                            <Out> ByRef msLevel As Integer,
+                                                            <Out> ByRef collisionMode As String,
+                                                            <Out> ByRef parentIons As List(Of ParentIonInfoType)) As Boolean
+
         ' filterText should be of the form "+ c d Full ms2 1312.95@45.00 [ 350.00-2000.00]"
         ' or "+ c d Full ms3 1312.95@45.00 873.85@45.00 [ 350.00-2000.00]"
         ' or "ITMS + c NSI d Full ms10 421.76@35.00"
@@ -645,18 +654,18 @@ Public Class XRawFileIO : Implements IDisposable
                 Dim collisionEnergyValue As Single = 0
                 matchFound = True
                 startIndex = parentIonMatch.Index + parentIonMatch.Length
-                collisionMode = XRawFileIO.GetCapturedValue(parentIonMatch, "CollisionMode1")
-                Dim collisionEnergy = XRawFileIO.GetCapturedValue(parentIonMatch, "CollisionEnergy1")
+                collisionMode = XcaliburRawFileIO.GetCapturedValue(parentIonMatch, "CollisionMode1")
+                Dim collisionEnergy = XcaliburRawFileIO.GetCapturedValue(parentIonMatch, "CollisionEnergy1")
 
                 If Not String.IsNullOrWhiteSpace(collisionEnergy) Then
                     Single.TryParse(collisionEnergy, collisionEnergyValue)
                 End If
 
                 Dim collisionEnergy2Value As Single = 0
-                Dim collisionMode2 = XRawFileIO.GetCapturedValue(parentIonMatch, "CollisionMode2")
+                Dim collisionMode2 = XcaliburRawFileIO.GetCapturedValue(parentIonMatch, "CollisionMode2")
 
                 If Not String.IsNullOrWhiteSpace(collisionMode2) Then
-                    Dim collisionEnergy2 = XRawFileIO.GetCapturedValue(parentIonMatch, "CollisionEnergy2")
+                    Dim collisionEnergy2 = XcaliburRawFileIO.GetCapturedValue(parentIonMatch, "CollisionEnergy2")
                     Single.TryParse(collisionEnergy2, collisionEnergy2Value)
                 End If
 
@@ -684,8 +693,8 @@ Public Class XRawFileIO : Implements IDisposable
                     .CollisionEnergy = collisionEnergyValue,
                     .CollisionEnergy2 = collisionEnergy2Value
                 }
-                If Not collisionMode Is Nothing Then parentIonInfo.CollisionMode = String.Copy(collisionMode)
-                If Not collisionMode2 Is Nothing Then parentIonInfo.CollisionMode2 = String.Copy(collisionMode2)
+                If Not collisionMode Is Nothing Then parentIonInfo.CollisionMode = New String(collisionMode)
+                If Not collisionMode2 Is Nothing Then parentIonInfo.CollisionMode2 = New String(collisionMode2)
                 parentIons.Add(parentIonInfo)
 
                 If Not multiplexedMSnEnabled OrElse parentIons.Count = 1 Then
@@ -1038,7 +1047,7 @@ Public Class XRawFileIO : Implements IDisposable
                 Call GetScanInfo(scan, scanInfo)
             End If
 
-            XRawFileIO.ExtractParentIonMZFromFilterText(scanInfo.FilterText, Nothing, Nothing, Nothing, parentIons)
+            XcaliburRawFileIO.ExtractParentIonMZFromFilterText(scanInfo.FilterText, Nothing, Nothing, Nothing, parentIons)
 
             For Each parentIon In parentIons
                 collisionEnergies.Add(parentIon.CollisionEnergy)
@@ -1271,12 +1280,12 @@ Public Class XRawFileIO : Implements IDisposable
         ' Parse out the parent ion m/z for fragmentation scans
         Dim scanFilter = mXRawFile.GetFilterForScanNumber(scan)
         Dim filterText = scanFilter.ToString()
-        scanInfo.FilterText = String.Copy(filterText)
+        scanInfo.FilterText = New String(filterText)
         scanInfo.IsFTMS = scanFilter.MassAnalyzer = MassAnalyzerType.MassAnalyzerFTMS
         If String.IsNullOrWhiteSpace(scanInfo.FilterText) Then scanInfo.FilterText = String.Empty
 
         If scanInfo.EventNumber <= 1 Then
-            If XRawFileIO.ExtractMSLevel(scanInfo.FilterText, msLevel, Nothing) Then
+            If XcaliburRawFileIO.ExtractMSLevel(scanInfo.FilterText, msLevel, Nothing) Then
                 scanInfo.EventNumber = msLevel
             End If
         End If
@@ -1505,7 +1514,7 @@ Public Class XRawFileIO : Implements IDisposable
                 Return defaultScanTypeName
             End If
 
-            If Not XRawFileIO.ExtractMSLevel(filterText, msLevel, Nothing) Then
+            If Not XcaliburRawFileIO.ExtractMSLevel(filterText, msLevel, Nothing) Then
                 ' Assume this is an MS scan
                 msLevel = 1
             End If
@@ -1513,7 +1522,7 @@ Public Class XRawFileIO : Implements IDisposable
             If msLevel > 1 Then
                 ' Parse out the parent ion and collision energy from filterText
 
-                If XRawFileIO.ExtractParentIonMZFromFilterText(filterText, Nothing, msLevel, collisionMode) Then
+                If XcaliburRawFileIO.ExtractParentIonMZFromFilterText(filterText, Nothing, msLevel, collisionMode) Then
                     ' Check whether this is an SRM MS2 scan
                     mrmScanType = DetermineMRMScanType(filterText)
                 Else
@@ -1668,15 +1677,15 @@ Public Class XRawFileIO : Implements IDisposable
                 If tuneSettingValues(settingIndex).Length = 0 AndAlso Not tuneSettingNames(settingIndex).EndsWith(":") Then
                     ' New category
                     If tuneSettingNames(settingIndex).Length > 0 Then
-                        tuneCategory = String.Copy(tuneSettingNames(settingIndex))
+                        tuneCategory = New String(tuneSettingNames(settingIndex))
                     Else
                         tuneCategory = "General"
                     End If
                 Else
                     Dim tuneMethodSetting = New TuneMethodSettingType() With {
-                        .Category = String.Copy(tuneCategory),
+                        .Category = New String(tuneCategory),
                         .Name = tuneSettingNames(settingIndex).TrimEnd(":"c),
-                        .Value = String.Copy(tuneSettingValues(settingIndex))
+                        .Value = New String(tuneSettingValues(settingIndex))
                     }
                     newTuneMethod.Settings.Add(tuneMethodSetting)
                 End If
@@ -1896,7 +1905,7 @@ Public Class XRawFileIO : Implements IDisposable
                 msLevel = 2
                 Return True
             Case Else
-                XRawFileIO.ExtractMSLevel(filterText, msLevel, Nothing)
+                XcaliburRawFileIO.ExtractMSLevel(filterText, msLevel, Nothing)
                 Return False
         End Select
     End Function
@@ -2100,7 +2109,7 @@ Public Class XRawFileIO : Implements IDisposable
 
             If maxNumberOfPeaks > 0 Then
                 ' Takes the maxNumberOfPeaks highest intensities from scan, and sorts them (and their respective mass) by mass into the first maxNumberOfPeaks positions in the arrays.
-                Dim sortCount = stdNum.Min(maxNumberOfPeaks, data.Masses.Length)
+                Dim sortCount = std.Min(maxNumberOfPeaks, data.Masses.Length)
                 Array.Sort(data.Intensities, data.Masses)
                 Array.Reverse(data.Intensities)
                 Array.Reverse(data.Masses)
@@ -2394,7 +2403,7 @@ Public Class XRawFileIO : Implements IDisposable
             data.PreferCentroids = centroidData
 
             Dim masses = data.PreferredMasses
-            Dim dataCount = If(maxNumberOfPeaks > 0, stdNum.Min(masses.Length, maxNumberOfPeaks), masses.Length)
+            Dim dataCount = If(maxNumberOfPeaks > 0, std.Min(masses.Length, maxNumberOfPeaks), masses.Length)
 
             If dataCount > 0 Then
                 Dim intensities = data.PreferredIntensities
@@ -2478,7 +2487,7 @@ Public Class XRawFileIO : Implements IDisposable
             If FileInfo.ScanStart = 0 AndAlso
                FileInfo.ScanEnd = 0 AndAlso
                FileInfo.VersionNumber = 0 AndAlso
-               stdNum.Abs(FileInfo.MassResolution) < Double.Epsilon AndAlso
+               std.Abs(FileInfo.MassResolution) < Double.Epsilon AndAlso
                String.IsNullOrWhiteSpace(FileInfo.InstModel) Then
 
                 RaiseErrorMessage("File did not load correctly; ScanStart, ScanEnd, VersionNumber, and MassResolution are all 0 for " & RawFilePath)

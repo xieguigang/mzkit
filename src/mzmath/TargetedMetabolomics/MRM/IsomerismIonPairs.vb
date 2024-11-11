@@ -98,6 +98,13 @@ Namespace MRM.Models
             End Get
         End Property
 
+        Sub New()
+        End Sub
+
+        Sub New(ion As IonPair)
+            target = ion
+        End Sub
+
         Friend Function groupKey() As String
             Return Me.Select(Function(i) i.accession).JoinBy("|->|")
         End Function

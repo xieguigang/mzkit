@@ -154,29 +154,12 @@
 		<ProjectReference Include="..\..\visualize\TissueMorphology\TissueMorphology.vbproj" />
 		<ProjectReference Include="..\assembly\assembly-netcore5.vbproj" />
 		<ProjectReference Include="..\mzPack\mzpack.NET5.vbproj" />
+    <ProjectReference Include="..\ThermoRawFileReader\MSFileReader.NET5.vbproj" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<Import Include="System.Data" />
 	</ItemGroup>
 
-	<ItemGroup Condition=" '$(TargetFramework)' == 'net48' ">
-		<ProjectReference Include="..\ThermoRawFileReader\MSFileReader.NET5.vbproj" />
-	</ItemGroup>
-
-	<ItemGroup Condition=" '$(TargetFramework)' == 'net48' ">
-		<Reference Include="ThermoFisher.CommonCore.BackgroundSubtraction">
-			<HintPath>..\..\..\ThermoFisher\ThermoFisher.CommonCore.BackgroundSubtraction.dll</HintPath>
-		</Reference>
-		<Reference Include="ThermoFisher.CommonCore.Data">
-			<HintPath>..\..\..\ThermoFisher\ThermoFisher.CommonCore.Data.dll</HintPath>
-		</Reference>
-		<Reference Include="ThermoFisher.CommonCore.MassPrecisionEstimator">
-			<HintPath>..\..\..\ThermoFisher\ThermoFisher.CommonCore.MassPrecisionEstimator.dll</HintPath>
-		</Reference>
-		<Reference Include="ThermoFisher.CommonCore.RawFileReader">
-			<HintPath>..\..\..\ThermoFisher\ThermoFisher.CommonCore.RawFileReader.dll</HintPath>
-		</Reference>
-	</ItemGroup>
 
 </Project>

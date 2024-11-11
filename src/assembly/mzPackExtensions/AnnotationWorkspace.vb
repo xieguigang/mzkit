@@ -74,6 +74,9 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
 
+''' <summary>
+''' The temp workspace file of the biodeep annotation pipeline
+''' </summary>
 Public Class AnnotationWorkspace : Implements IDisposable, IWorkspaceReader
 
     ReadOnly pack As StreamPack
@@ -108,6 +111,10 @@ Public Class AnnotationWorkspace : Implements IDisposable, IWorkspaceReader
         End If
     End Sub
 
+    ''' <summary>
+    ''' Load in-memory data pack from the pack file stream
+    ''' </summary>
+    ''' <returns></returns>
     Public Function LoadMemory() As AnnotationPack Implements IWorkspaceReader.LoadMemory
         Dim libraries As New Dictionary(Of String, AlignmentHit())
 

@@ -11,6 +11,7 @@ ms2_peaks \- extract ms2 peaks data from the mzpack data object
 \fBnorm\fR as boolean = FALSE, 
 \fBfilter_empty\fR as boolean = TRUE, 
 \fBinto_cutoff\fR as any = 0, 
+\fBrt_window\fR as any = \fB<NULL>\fR, 
 [\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
@@ -38,7 +39,28 @@ extract ms2 peaks data from the mzpack data object
 . 
 .PP
 .PP
+\fBrt_window\fB \fR\- 
+ the rt range for filter of the ms2 spectrum data exports, 
+ should be a numeric vector that consists with two elements
+ for specific the range min and range max. rt data should 
+ be in data unit of seconds.
+. 
+.PP
+.PP
+\fBtag_source\fB \fR\- 
+ tag the source reference to the metadata of each spectrum data object?
+. 
+.PP
+.PP
 \fBenv\fB \fR\- -. 
+.PP
+.SH DETAILS
+.PP
+metadata of the spectrum source reference includes data slots:
+ 
+ 1. \fBsource\fR, the file name of the spectrum rawdata file source
+ 2. \fBprecursor\fR, the precursor ion mz of the spectrum data
+ 3. \fBrt\fR, the retention time of the spectrum data object
 .PP
 .SH SEE ALSO
 mzweb

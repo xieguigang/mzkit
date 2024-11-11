@@ -100,6 +100,8 @@ Imports SIMDAdd = Microsoft.VisualBasic.Math.SIMD.Add
 Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
 Imports Microsoft.VisualBasic.MIME.application.json
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+
 
 
 
@@ -498,6 +500,23 @@ Module MzWeb
 
                     If Not json_str.StringEmpty(, True) Then
                         data(i).meta = json_str.LoadJSON(Of Dictionary(Of String, String))(throwEx:=False)
+
+                        If Not data(i).meta.IsNullOrEmpty Then
+                            ' 20241105
+                            ' due to the reason of scanms2 data has no file source attribute
+                            ' so we needs to restore the file source information from the metadata
+                            ' try get file source information via tags:
+                            ' source, file, rawdata, filename, etc something
+                            Dim m = data(i).meta
+
+                            Static tags As String() = {"source", "file", "rawdata", "filename"}
+
+                            For Each name As String In tags
+                                If m.ContainsKey(name) Then
+                                    data(i).file = m(name)
+                                End If
+                            Next
+                        End If
                     End If
                 End If
             Next
@@ -918,8 +937,24 @@ Module MzWeb
     ''' <param name="centroid">
     ''' and also convert the data to centroid mode? 
     ''' </param>
+    ''' <param name="rt_window">
+    ''' the rt range for filter of the ms2 spectrum data exports, 
+    ''' should be a numeric vector that consists with two elements
+    ''' for specific the range min and range max. rt data should 
+    ''' be in data unit of seconds.
+    ''' </param>
+    ''' <param name="tag_source">
+    ''' tag the source reference to the metadata of each spectrum data object?
+    ''' </param>
     ''' <param name="env"></param>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' metadata of the spectrum source reference includes data slots:
+    ''' 
+    ''' 1. ``source``, the file name of the spectrum rawdata file source
+    ''' 2. ``precursor``, the precursor ion mz of the spectrum data
+    ''' 3. ``rt``, the retention time of the spectrum data object
+    ''' </remarks>
     <ExportAPI("ms2_peaks")>
     <RApiReturn(GetType(PeakMs2))>
     Public Function Ms2ScanPeaks(mzpack As mzPack,
@@ -930,6 +965,8 @@ Module MzWeb
                                  Optional norm As Boolean = False,
                                  Optional filter_empty As Boolean = True,
                                  Optional into_cutoff As Object = 0,
+                                 <RRawVectorArgument()>
+                                 Optional rt_window As Object = Nothing,
                                  Optional env As Environment = Nothing) As Object
 
         Dim ms2peaks As PeakMs2()
@@ -1004,9 +1041,27 @@ Module MzWeb
                 .ToArray
         End If
 
+        Dim rtwin As Double() = CLRVector.asNumeric(rt_window)
+
+        If Not rtwin.IsNullOrEmpty Then
+            Dim window As New DoubleRange(rtwin)
+
+            If window.Length > 0 Then
+                ms2peaks = ms2peaks _
+                    .Where(Function(a) window.IsInside(a.rt)) _
+                    .ToArray
+            End If
+        End If
+
         Return ms2peaks.uniqueReference(tag_source)
     End Function
 
+    ''' <summary>
+    ''' make unique of the spectrum reference id
+    ''' </summary>
+    ''' <param name="ms2peaks"></param>
+    ''' <param name="tag_source"></param>
+    ''' <returns></returns>
     <Extension>
     Private Function uniqueReference(ms2peaks As PeakMs2(), tag_source As Boolean) As PeakMs2()
         Dim unique As String() = ms2peaks _
@@ -1021,16 +1076,28 @@ Module MzWeb
 
         For i As Integer = 0 To unique.Length - 1
             ms2peaks(i).lib_guid = unique(i)
-            ms2peaks(i).lib_guid = ms2peaks(i).lib_guid.Replace("ms2.mzPack#", "").Replace("queryMs2.mzPack#", "")
+            ms2peaks(i).lib_guid = ms2peaks(i).lib_guid _
+                .Replace("ms2.mzPack#", "") _
+                .Replace("queryMs2.mzPack#", "")
 
             Dim src As String = ms2peaks(i).lib_guid.Match(".+?\.mzPack[# ]")
 
             If Not src.StringEmpty Then
                 ms2peaks(i).file = src.Trim("#"c, " "c)
-                ms2peaks(i).lib_guid = ms2peaks(i).lib_guid.Replace(ms2peaks(i).lib_guid.Match(".+\.mzPack[# ]"), "")
+                ms2peaks(i).lib_guid = ms2peaks(i).lib_guid _
+                    .Replace(ms2peaks(i).lib_guid _
+                    .Match(".+\.mzPack[# ]"), "")
 
                 If tag_source Then
                     ms2peaks(i).lib_guid = $"{ms2peaks(i).file} {ms2peaks(i).lib_guid}".Trim
+
+                    If ms2peaks(i).meta Is Nothing Then
+                        ms2peaks(i).meta = New Dictionary(Of String, String)
+                    End If
+
+                    ms2peaks(i).meta("source") = ms2peaks(i).file
+                    ms2peaks(i).meta("precursor") = ms2peaks(i).mz.ToString("F4")
+                    ms2peaks(i).meta("rt") = (ms2peaks(i).rt / 60).ToString("F2") & "min"
                 End If
             End If
         Next
@@ -1098,13 +1165,19 @@ Module MzWeb
     ''' <summary>
     ''' Parse the given network base64 data as spectrum
     ''' </summary>
-    ''' <param name="mz"></param>
-    ''' <param name="intensity"></param>
-    ''' <param name="id"></param>
-    ''' <param name="auto_scalar"></param>
+    ''' <param name="mz">a character vector of the base64 string for the ms2 spectrum ion peaks</param>
+    ''' <param name="intensity">a character vector of the base64 string for the corresponding ion peaks intensity value.</param>
+    ''' <param name="id">a character vector of the spectrum reference id</param>
+    ''' <param name="auto_scalar">
+    ''' returns a scalar spectrum object if the input data just contains one spectrum data or not?
+    ''' </param>
     ''' <param name="env"></param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' this function will populate a set of the ms2 spectrum data object
+    ''' that which was parsed from the given base64 data collection.
+    ''' </returns>
     <ExportAPI("parse_base64")>
+    <RApiReturn(GetType(LibraryMatrix))>
     Public Function parse_base64(<RRawVectorArgument> mz As Object,
                                  <RRawVectorArgument> intensity As Object,
                                  <RRawVectorArgument>

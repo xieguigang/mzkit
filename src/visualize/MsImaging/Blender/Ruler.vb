@@ -62,8 +62,6 @@
 #End Region
 
 Imports System.Drawing
-Imports System.Drawing.Drawing2D
-Imports System.Drawing.Text
 Imports System.Runtime.InteropServices
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.Imaging

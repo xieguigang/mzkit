@@ -78,16 +78,16 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Net.Http" />
     <Reference Include="ThermoFisher.CommonCore.BackgroundSubtraction">
-      <HintPath>..\..\..\..\ThermoFisher\ThermoFisher.CommonCore.BackgroundSubtraction.dll</HintPath>
+      <HintPath>..\..\..\..\ThermoFisher\Libs\Net471\ThermoFisher.CommonCore.BackgroundSubtraction.dll</HintPath>
     </Reference>
     <Reference Include="ThermoFisher.CommonCore.Data">
-      <HintPath>..\..\..\..\ThermoFisher\ThermoFisher.CommonCore.Data.dll</HintPath>
+      <HintPath>..\..\..\..\ThermoFisher\Libs\Net471\ThermoFisher.CommonCore.Data.dll</HintPath>
     </Reference>
     <Reference Include="ThermoFisher.CommonCore.MassPrecisionEstimator">
-      <HintPath>..\..\..\..\ThermoFisher\ThermoFisher.CommonCore.MassPrecisionEstimator.dll</HintPath>
+      <HintPath>..\..\..\..\ThermoFisher\Libs\Net471\ThermoFisher.CommonCore.MassPrecisionEstimator.dll</HintPath>
     </Reference>
     <Reference Include="ThermoFisher.CommonCore.RawFileReader">
-      <HintPath>..\..\..\..\ThermoFisher\ThermoFisher.CommonCore.RawFileReader.dll</HintPath>
+      <HintPath>..\..\..\..\ThermoFisher\Libs\Net471\ThermoFisher.CommonCore.RawFileReader.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

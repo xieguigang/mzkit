@@ -2769,9 +2769,10 @@
                 Any analyzer.
             </summary>
         </member>
-        <member name="F:ThermoFisher.CommonCore.RawFileReader.Facade.Constants.ScanFilterEnums.MassAnalyzerTypes.MRTOF">
+        <member name="F:ThermoFisher.CommonCore.RawFileReader.Facade.Constants.ScanFilterEnums.MassAnalyzerTypes.ASTMS">
             <summary>
-            MultiReflection Time of Flight
+            Asymmetric Track Lossless (ASTRAL)
+            AS         T
             </summary>
         </member>
         <member name="T:ThermoFisher.CommonCore.RawFileReader.Facade.Constants.ScanFilterEnums.MetaFilterType">

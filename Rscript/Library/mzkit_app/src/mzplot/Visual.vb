@@ -104,6 +104,8 @@ Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports Chromatogram = BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram.Chromatogram
 Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Data
+
 
 #If NET48 Then
 Imports Pen = System.Drawing.Pen
@@ -154,7 +156,17 @@ Module Visual
         Call RInternal.generic.add("plot", GetType(ScanMS1), AddressOf plotMS)
         Call RInternal.generic.add("plot", GetType(ScanMS2), AddressOf plotMS)
         Call RInternal.generic.add("plot", GetType(RtShift()), AddressOf plotRtShifts)
+        Call RInternal.generic.add("plot", GetType(IonChromatogram), AddressOf plotMRM)
     End Sub
+
+    <RGenericOverloads("plot")>
+    Private Function plotMRM(xic As IonChromatogram, args As list, env As Environment) As Object
+        If Not args.hasName("name") Then
+            Call args.add("name", If(xic.name, xic.description))
+        End If
+
+        Return plotTIC(xic.chromatogram, args, env)
+    End Function
 
     <RGenericOverloads("plot")>
     Private Function plotRtShifts(rt_shifts As RtShift(), args As list, env As Environment) As Object

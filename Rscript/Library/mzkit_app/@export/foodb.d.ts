@@ -5,10 +5,17 @@
 // ref=mzkit.foodbTools@mzkit, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 
 /**
+ * 
 */
 declare namespace foodb {
    /**
-     * @param env default value Is ``null``.
+    * Load foodb database csv dump
+    * 
+    * 
+     * @param dir -
+     * @param env -
+     * 
+     * + default value Is ``null``.
    */
    function loadFoods(dir: string, env?: object): any;
 }

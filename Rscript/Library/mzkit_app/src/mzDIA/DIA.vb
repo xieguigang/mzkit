@@ -58,6 +58,7 @@
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.BioDeep.MassSpectrometry.MoleculeNetworking
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Scripting.MetaData
@@ -72,18 +73,42 @@ Imports SMRUCC.Rsharp.Runtime.Interop
 <Package("DIA")>
 Public Module DIASpectrumAnnotations
 
+    Private Function pullMatrix(pull As pipeline, env As Environment) As pipeline
+        Dim libs = pull _
+            .populates(Of LibraryMatrix)(env) _
+            .ToArray
+
+        pull = pipeline.CreateFromPopulator(
+            Iterator Function() As IEnumerable(Of PeakMs2)
+                For Each mat As LibraryMatrix In libs
+                    Yield New PeakMs2 With {
+                        .lib_guid = mat.name,
+                        .mzInto = mat.Array,
+                        .mz = mat.parentMz
+                    }
+                Next
+            End Function)
+
+        Return pull
+    End Function
+
     ''' <summary>
     ''' make the spectrum set decompose into multiple spectrum groups via the NMF method
     ''' </summary>
-    ''' <param name="spectrum"></param>
+    ''' <param name="spectrum">
+    ''' a set of the mzkit supported spectrum object.
+    ''' </param>
     ''' <param name="n">
     ''' the number of the target spectrum to decomposed, 
     ''' this number should be query from the DDA experiment 
     ''' database.
     ''' </param>
     ''' <param name="env"></param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' a set of the decomposed spectrum object
+    ''' </returns>
     <ExportAPI("dia_nmf")>
+    <RApiReturn(GetType(PeakMs2))>
     Public Function dia_nmf(<RRawVectorArgument> spectrum As Object, n As Integer,
                             Optional maxItrs As Integer = 1000,
                             Optional tolerance As Double = 0.001,
@@ -93,30 +118,21 @@ Public Module DIASpectrumAnnotations
         Dim pull As pipeline = pipeline.TryCreatePipeline(Of PeakMs2)(spectrum, env, suppress:=True)
 
         If pull.isError Then
-            pull = pipeline.TryCreatePipeline(Of LibraryMatrix)(spectrum, env)
+            pull = pipeline.TryCreatePipeline(Of LibraryMatrix)(spectrum, env, suppress:=True)
 
             If pull.isError Then
-                Return pull.getError
+                If TypeOf spectrum Is SpectrumLine Then
+                    pull = pipeline.CreateFromPopulator(DirectCast(spectrum, SpectrumLine).cluster)
+                Else
+                    Return pull.getError
+                End If
+            Else
+                pull = pullMatrix(pull, env)
             End If
-
-            Dim libs = pull _
-                .populates(Of LibraryMatrix)(env) _
-                .ToArray
-
-            pull = pipeline.CreateFromPopulator(
-                Iterator Function() As IEnumerable(Of PeakMs2)
-                    For Each mat As LibraryMatrix In libs
-                        Yield New PeakMs2 With {
-                            .lib_guid = mat.name,
-                            .mzInto = mat.Array,
-                            .mz = mat.parentMz
-                        }
-                    Next
-                End Function)
         End If
 
-        Dim groups As NamedCollection(Of PeakMs2)() = pull _
-            .populates(Of PeakMs2)(env) _
+        Dim nmf As New DIADecompose(pull.populates(Of PeakMs2)(env), tqdm:=False)
+        Dim groups As NamedCollection(Of PeakMs2)() = nmf _
             .DecomposeSpectrum(n,
                                maxItrs:=maxItrs,
                                tolerance:=tolerance,
@@ -133,7 +149,7 @@ Public Module DIASpectrumAnnotations
             .slots = New Dictionary(Of String, Object)
         }
 
-        For Each group In groups
+        For Each group As NamedCollection(Of PeakMs2) In groups
             sum.slots(group.name) = New LibraryMatrix(
                 name:=group.name,
                 spectrum:=group _
@@ -142,7 +158,32 @@ Public Module DIASpectrumAnnotations
             )
         Next
 
+        Dim sample_composition As New dataframe With {
+            .columns = New Dictionary(Of String, Array)
+        }
+        Dim ionpeaks_composition As New dataframe With {
+            .columns = New Dictionary(Of String, Array)
+        }
+        Dim composition = nmf.GetSampleComposition.ToArray
+
+        sample_composition.rownames = composition.Select(Function(a) a.name).ToArray
+
+        For i As Integer = 0 To n - 1
+            Dim offset As Integer = i
+            sample_composition.add($"decomposition_{i + 1}", composition.Select(Function(v) v(offset)))
+        Next
+
+        composition = nmf.GetIonPeaksComposition.ToArray
+        ionpeaks_composition.rownames = composition.Select(Function(a) a.name).ToArray
+
+        For i As Integer = 0 To n - 1
+            Dim offset As Integer = i
+            ionpeaks_composition.add($"decomposition_{i + 1}", composition.Select(Function(v) v(offset)))
+        Next
+
         Call list.setAttribute("sum_spectrum", sum)
+        Call list.setAttribute("sample_composition", sample_composition)
+        Call list.setAttribute("ionpeaks_composition", ionpeaks_composition)
 
         Return list
     End Function

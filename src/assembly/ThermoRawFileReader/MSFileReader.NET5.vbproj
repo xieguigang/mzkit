@@ -1,9 +1,9 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <RootNamespace>BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader</RootNamespace>
-	  <TargetFrameworks>net48</TargetFrameworks>
-    <AssemblyName>BioNovoGene.Analytical.MassSpectrometry.Assembly.XcaliburRaw</AssemblyName>
+    <TargetFrameworks>net8.0-windows;net8.0;net48</TargetFrameworks>
+    <AssemblyName>BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader</AssemblyName>
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;LipidSearch;PlantMAT;mzkit;NPSearch;Rsharp_app_release</Configurations>
     <Authors>xieguigang</Authors>
@@ -14,16 +14,15 @@
     <PackageIcon>Flask.png</PackageIcon>
     <PackageIconUrl />
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
+    <UseApplicationFramework>True</UseApplicationFramework>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DefineConstants>netcore5=1</DefineConstants>
-    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Assembly.XcaliburRaw.xml</DocumentationFile>
-  </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <DefineConstants>netcore5=1</DefineConstants>
-    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Assembly.XcaliburRaw.xml</DocumentationFile>
+ 
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
@@ -37,7 +36,7 @@
     <DefineDebug>false</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
-    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Assembly.XcaliburRaw.xml</DocumentationFile>
+   
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|x64'">
@@ -48,7 +47,7 @@
     <DefineDebug>false</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
-    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Assembly.XcaliburRaw.xml</DocumentationFile>
+   
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit|x64'">
@@ -59,59 +58,33 @@
     <DefineDebug>false</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
-    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Assembly.XcaliburRaw.xml</DocumentationFile>
-    
+ 
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Assembly.XcaliburRaw.xml</DocumentationFile>
-  </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='LipidSearch|AnyCPU'">
-    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Assembly.XcaliburRaw.xml</DocumentationFile>
-  </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|AnyCPU'">
-    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Assembly.XcaliburRaw.xml</DocumentationFile>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit|AnyCPU'">
-    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Assembly.XcaliburRaw.xml</DocumentationFile>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='PlantMAT|AnyCPU'">
-    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Assembly.XcaliburRaw.xml</DocumentationFile>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='NPSearch|AnyCPU'">
-    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Assembly.XcaliburRaw.xml</DocumentationFile>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Assembly.XcaliburRaw.xml</DocumentationFile>
-  </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='PlantMAT|x64'">
-    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Assembly.XcaliburRaw.xml</DocumentationFile>
+  
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <Optimize>false</Optimize>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <DefineDebug>false</DefineDebug>
     <DefineTrace>true</DefineTrace>
-    <DefineConstants>netcore5=1</DefineConstants>
+
     
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='NPSearch|x64'">
-    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Assembly.XcaliburRaw.xml</DocumentationFile>
+   
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <Optimize>false</Optimize>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <DefineDebug>false</DefineDebug>
     <DefineTrace>true</DefineTrace>
-    <DefineConstants>netcore5=1</DefineConstants>
+
     
   </PropertyGroup>
 
@@ -137,18 +110,49 @@
     <ProjectReference Include="..\assembly\assembly-netcore5.vbproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Reference Include="ThermoFisher.CommonCore.BackgroundSubtraction">
-      <HintPath>..\..\..\ThermoFisher\ThermoFisher.CommonCore.BackgroundSubtraction.dll</HintPath>
-    </Reference>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net48' ">
     <Reference Include="ThermoFisher.CommonCore.Data">
-      <HintPath>..\..\..\ThermoFisher\ThermoFisher.CommonCore.Data.dll</HintPath>
+      <HintPath>..\..\..\ThermoFisher\Libs\Net471\ThermoFisher.CommonCore.Data.dll</HintPath> 
+    </Reference>
+    <Reference Include="ThermoFisher.CommonCore.BackgroundSubtraction">
+      <HintPath>..\..\..\ThermoFisher\Libs\Net471\ThermoFisher.CommonCore.BackgroundSubtraction.dll</HintPath>
     </Reference>
     <Reference Include="ThermoFisher.CommonCore.MassPrecisionEstimator">
-      <HintPath>..\..\..\ThermoFisher\ThermoFisher.CommonCore.MassPrecisionEstimator.dll</HintPath>
+      <HintPath>..\..\..\ThermoFisher\Libs\Net471\ThermoFisher.CommonCore.MassPrecisionEstimator.dll</HintPath>
     </Reference>
     <Reference Include="ThermoFisher.CommonCore.RawFileReader">
-      <HintPath>..\..\..\ThermoFisher\ThermoFisher.CommonCore.RawFileReader.dll</HintPath>
+      <HintPath>..\..\..\ThermoFisher\Libs\Net471\ThermoFisher.CommonCore.RawFileReader.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net8.0' ">
+    <Reference Include="ThermoFisher.CommonCore.BackgroundSubtraction">
+      <HintPath>..\..\..\ThermoFisher\Libs\Net8\Assemblies\ThermoFisher.CommonCore.BackgroundSubtraction.dll</HintPath>
+    </Reference>
+    <Reference Include="ThermoFisher.CommonCore.Data">
+      <HintPath>..\..\..\ThermoFisher\Libs\Net8\Assemblies\ThermoFisher.CommonCore.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="ThermoFisher.CommonCore.MassPrecisionEstimator">
+      <HintPath>..\..\..\ThermoFisher\Libs\Net8\Assemblies\ThermoFisher.CommonCore.MassPrecisionEstimator.dll</HintPath>
+    </Reference>
+    <Reference Include="ThermoFisher.CommonCore.RawFileReader">
+      <HintPath>..\..\..\ThermoFisher\Libs\Net8\Assemblies\ThermoFisher.CommonCore.RawFileReader.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net8.0-windows' ">
+    <Reference Include="ThermoFisher.CommonCore.BackgroundSubtraction">
+      <HintPath>..\..\..\ThermoFisher\Libs\Net8\Assemblies\ThermoFisher.CommonCore.BackgroundSubtraction.dll</HintPath>
+    </Reference>
+    <Reference Include="ThermoFisher.CommonCore.Data">
+      <HintPath>..\..\..\ThermoFisher\Libs\Net8\Assemblies\ThermoFisher.CommonCore.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="ThermoFisher.CommonCore.MassPrecisionEstimator">
+      <HintPath>..\..\..\ThermoFisher\Libs\Net8\Assemblies\ThermoFisher.CommonCore.MassPrecisionEstimator.dll</HintPath>
+    </Reference>
+    <Reference Include="ThermoFisher.CommonCore.RawFileReader">
+      <HintPath>..\..\..\ThermoFisher\Libs\Net8\Assemblies\ThermoFisher.CommonCore.RawFileReader.dll</HintPath>
     </Reference>
   </ItemGroup>
 
