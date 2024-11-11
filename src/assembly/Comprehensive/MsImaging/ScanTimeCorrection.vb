@@ -122,9 +122,9 @@ Namespace MsImaging
         ''' set this parameter value to nothing will mute the log message echo. 
         ''' </param>
         ''' <returns></returns>
-        Public Function ScanMeltdown(MSI As mzPack,
-                                     Optional gridSize As Integer = 2,
-                                     Optional println As Action(Of String) = Nothing) As mzPack
+        Public Shared Function ScanMeltdown(MSI As mzPack,
+                                            Optional gridSize As Integer = 2,
+                                            Optional println As Action(Of String) = Nothing) As mzPack
 
             Dim graph = Grid(Of ScanMS1).Create(MSI.MS, Function(d) d.GetMSIPixel)
             Dim scans As New List(Of ScanMS1)
