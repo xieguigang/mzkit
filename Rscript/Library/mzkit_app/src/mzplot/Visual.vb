@@ -1,62 +1,62 @@
 ﻿#Region "Microsoft.VisualBasic::69b45a2a18279e690fc3c632240a18de, Rscript\Library\mzkit_app\src\mzplot\Visual.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 891
-    '    Code Lines: 699 (78.45%)
-    ' Comment Lines: 111 (12.46%)
-    '    - Xml Docs: 91.89%
-    ' 
-    '   Blank Lines: 81 (9.09%)
-    '     File Size: 40.74 KB
+' Summaries:
 
 
-    ' Module Visual
-    ' 
-    '     Function: assembleOverlaps, ParseSpectrumAlignment, plotAlignments, plotChromatogram, PlotGCxGCHeatMap
-    '               plotGCxGCTic2D, plotMolecularNetworkingHistogram, plotMS, plotOverlaps, plotPeaktable
-    '               plotRawChromatogram, PlotRawScatter, plotRtShifts, plotSignal, plotSignal2
-    '               plotTIC, plotTIC2, PlotUVSignals, Snapshot3D, SpectrumPlot
-    '               XicScatterDensity
-    ' 
-    '     Sub: Main
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 891
+'    Code Lines: 699 (78.45%)
+' Comment Lines: 111 (12.46%)
+'    - Xml Docs: 91.89%
+' 
+'   Blank Lines: 81 (9.09%)
+'     File Size: 40.74 KB
+
+
+' Module Visual
+' 
+'     Function: assembleOverlaps, ParseSpectrumAlignment, plotAlignments, plotChromatogram, PlotGCxGCHeatMap
+'               plotGCxGCTic2D, plotMolecularNetworkingHistogram, plotMS, plotOverlaps, plotPeaktable
+'               plotRawChromatogram, PlotRawScatter, plotRtShifts, plotSignal, plotSignal2
+'               plotTIC, plotTIC2, PlotUVSignals, Snapshot3D, SpectrumPlot
+'               XicScatterDensity
+' 
+'     Sub: Main
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -105,6 +105,8 @@ Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports Chromatogram = BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram.Chromatogram
 Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Data
+Imports BioNovoGene.Analytical.MassSpectrometry.GCxGC
+
 
 
 #If NET48 Then
@@ -305,7 +307,7 @@ Module Visual
     End Function
 
     <RGenericOverloads("plot")>
-    Private Function plotGCxGCTic2D(x As D2Chromatogram(), args As list, env As Environment) As Object
+    Private Function plotGCxGCTic2D(x As Chromatogram2DScan(), args As list, env As Environment) As Object
         Dim theme As New Theme With {
             .padding = args.getValue("padding", env, "padding: 250px 500px 200px 200px;"),
             .colorSet = args.getValue("colorSet", env, "Jet")
@@ -570,9 +572,9 @@ Module Visual
         Dim rt_size = InteropArgumentHelper.getSize(rt_width, env, "5,0.5").Split(","c).Select(AddressOf Val).ToArray
         Dim samples = GCxGC.getNames _
             .Select(Function(name)
-                        Return New NamedCollection(Of D2Chromatogram) With {
+                        Return New NamedCollection(Of Chromatogram2DScan) With {
                             .name = name,
-                            .value = GCxGC.getValue(Of D2Chromatogram())(name, env, Nothing)
+                            .value = GCxGC.getValue(Of Chromatogram2DScan())(name, env, Nothing)
                         }
                     End Function) _
             .Where(Function(d) Not d.value.IsNullOrEmpty) _
@@ -955,11 +957,35 @@ Module Visual
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("xic_scatter_density")>
-    Public Function XicScatterDensity(<RRawVectorArgument> ms1 As Object, Optional env As Environment = Nothing) As Object
+    Public Function XicScatterDensity(<RRawVectorArgument> ms1 As Object,
+                                      Optional mz As Double? = Nothing,
+                                      Optional mass_err As Object = "ppm:20",
+                                      <RListObjectArgument>
+                                      Optional args As list = Nothing,
+                                      Optional env As Environment = Nothing) As Object
+
         Dim pull As pipeline = pipeline.TryCreatePipeline(Of ms1_scan)(ms1, env)
 
         If pull.isError Then
-
+            Return pull.getError
         End If
+
+        Dim scatter = pull.populates(Of ms1_scan)(env).ToArray
+        Dim mass_win = Math.getTolerance(mass_err, env)
+
+        If mass_win Like GetType(Message) Then
+            Return mass_win.TryCast(Of Message)
+        End If
+
+        If mz Is Nothing Then
+            mz = scatter.Select(Function(a) a.mz).Average
+        End If
+
+        Dim theme As New Theme
+        Dim app As New PlotMassWindowXIC(scatter, CDbl(mz), mass_win.TryCast(Of Tolerance), theme)
+        Dim dpi As Integer = graphicsPipeline.getDpi(args.slots, env, [default]:=100)
+        Dim size As SizeF = graphicsPipeline.getSize(args, env, New SizeF(3600, 2700))
+
+        Return app.Plot($"{size.Width},{size.Height}", dpi, env.getDriver)
     End Function
 End Module
