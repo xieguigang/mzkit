@@ -206,19 +206,46 @@ Module MzMath
     ''' <returns></returns>
     <RGenericOverloads("as.data.frame")>
     Private Function getAlignmentTable(align As AlignmentOutput, args As list, env As Environment) As dataframe
-        Dim mz As Double() = align.alignments.Select(Function(a) a.mz).ToArray
-        Dim query As Double() = align.alignments.Select(Function(a) a.query).ToArray
-        Dim reference As Double() = align.alignments.Select(Function(a) a.ref).ToArray
-        Dim da As String() = align.alignments.Select(Function(a) a.da).ToArray
+        Dim scores_df As Boolean = args.getValue("scores_df", env, [default]:=False)
 
-        Return New dataframe With {
-            .columns = New Dictionary(Of String, Array) From {
-                {"m/z", mz},
-                {"query", query},
-                {"ref", reference},
-                {"da", da}
+        If scores_df Then
+            Dim df As New dataframe With {
+                .columns = New Dictionary(Of String, Array)
             }
-        }
+
+            Call df.add("dimension", {
+                "forward cosine", "reverse cosine",
+                "cosine",
+                "jaccard",
+                "entropy",
+                "mirror",
+                "mean",
+                "fragment hits"})
+            Call df.add("scores", {
+                align.forward, align.reverse,
+                align.cosine,
+                align.jaccard,
+                align.entropy,
+                align.mirror,
+                align.mean,
+                align.nhits})
+
+            Return df
+        Else
+            Dim mz As Double() = align.alignments.Select(Function(a) a.mz).ToArray
+            Dim query As Double() = align.alignments.Select(Function(a) a.query).ToArray
+            Dim reference As Double() = align.alignments.Select(Function(a) a.ref).ToArray
+            Dim da As String() = align.alignments.Select(Function(a) a.da).ToArray
+
+            Return New dataframe With {
+                .columns = New Dictionary(Of String, Array) From {
+                    {"m/z", mz},
+                    {"query", query},
+                    {"ref", reference},
+                    {"da", da}
+                }
+            }
+        End If
     End Function
 
     Private Function printCalculator(type As MzCalculator) As String
@@ -623,6 +650,9 @@ Module MzMath
     ''' <remarks>
     ''' this function andalso produce the jaccard/entropy similarity of the spectrum inside the similarity result object
     ''' </remarks>
+    ''' <example>
+    ''' 
+    ''' </example>
     <ExportAPI("cosine")>
     <RApiReturn(GetType(AlignmentOutput))>
     Public Function cosine(<RRawVectorArgument> query As Object, ref As Object,
