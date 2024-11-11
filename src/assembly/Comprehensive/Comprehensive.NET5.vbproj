@@ -16,6 +16,8 @@
 		<PackageIconUrl />
 		<AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
 		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+		<UseApplicationFramework>True</UseApplicationFramework>
+		<Title>Comprehensive Mass Spectrum Tools</Title>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
