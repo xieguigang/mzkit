@@ -106,10 +106,12 @@ Namespace Pixel
             End Get
         End Property
 
+        Public Const SampleMetaName As String = "sample"
+
         Public Overrides ReadOnly Property sampleTag As String
             Get
-                If scan.hasMetaKeys(mzStreamWriter.SampleMetaName) Then
-                    Return scan.meta(mzStreamWriter.SampleMetaName)
+                If scan.hasMetaKeys(SampleMetaName) Then
+                    Return scan.meta(SampleMetaName)
                 Else
                     Return Nothing
                 End If

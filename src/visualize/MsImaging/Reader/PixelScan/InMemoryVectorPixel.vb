@@ -123,8 +123,8 @@ Namespace Pixel
         Sub New(scan As ScanMS1)
             Call Me.New(scan.scan_id, scan.meta!x, scan.meta!y, scan.mz, scan.into)
 
-            If scan.hasMetaKeys(mzStreamWriter.SampleMetaName) Then
-                sampleTag = scan.meta(mzStreamWriter.SampleMetaName)
+            If scan.hasMetaKeys(mzPackPixel.SampleMetaName) Then
+                sampleTag = scan.meta(mzPackPixel.SampleMetaName)
             End If
         End Sub
 

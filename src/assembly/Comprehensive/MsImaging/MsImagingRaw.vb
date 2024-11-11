@@ -1,57 +1,57 @@
 ﻿#Region "Microsoft.VisualBasic::429564ac2043fc1c86ec03dc05799e1c, assembly\Comprehensive\MsImaging\MsImagingRaw.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 245
-    '    Code Lines: 187 (76.33%)
-    ' Comment Lines: 30 (12.24%)
-    '    - Xml Docs: 86.67%
-    ' 
-    '   Blank Lines: 28 (11.43%)
-    '     File Size: 10.40 KB
+' Summaries:
 
 
-    '     Module MsImagingRaw
-    ' 
-    '         Function: (+3 Overloads) GetMSIMetadata, MeasureRow, MSICombineRowScans, ParseRowNumber, Summary
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 245
+'    Code Lines: 187 (76.33%)
+' Comment Lines: 30 (12.24%)
+'    - Xml Docs: 86.67%
+' 
+'   Blank Lines: 28 (11.43%)
+'     File Size: 10.40 KB
+
+
+'     Module MsImagingRaw
+' 
+'         Function: (+3 Overloads) GetMSIMetadata, MeasureRow, MSICombineRowScans, ParseRowNumber, Summary
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -60,14 +60,19 @@ Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
+Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging.Reader
 Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
 Imports Microsoft.VisualBasic.CommandLine.InteropService.Pipeline
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Statistics.Linq
+Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.Scripting.Expressions
 
 Namespace MsImaging
@@ -76,6 +81,102 @@ Namespace MsImaging
     ''' raw data file reader helper code
     ''' </summary>
     Public Module MsImagingRaw
+
+        ''' <summary>
+        ''' Try to save the tissue region data into mzPack rawdata file
+        ''' </summary>
+        ''' <param name="raw"></param>
+        ''' <param name="index"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function WriteRegionPoints(raw As mzPack, index As IEnumerable(Of NamedValue(Of Point))) As mzPack
+            Dim dimensionSize As Size = GetDimensionSize(raw)
+            Dim evalIndex As Func(Of Point, Integer) = Function(i) BitmapBuffer.GetIndex(i.X, i.Y, dimensionSize.Width, channels:=1)
+            Dim regions As Dictionary(Of String, Point()) = index _
+            .GroupBy(Function(i) i.Name) _
+            .ToDictionary(Function(region) region.Key,
+                          Function(region)
+                              Return region.Select(Function(i) i.Value).ToArray
+                          End Function)
+
+            Throw New NotImplementedException
+        End Function
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="slide"></param>
+        ''' <param name="padding"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function PixelScanPadding(slide As mzPack, padding As Padding) As mzPack
+            Dim dims As Size = PixelReader.ReadDimensions(slide.MS.Select(Function(scan) scan.GetMSIPixel))
+            Dim paddingData As ScanMS1() = slide.MS.PixelScanPadding(padding, dims).ToArray
+
+            Return New mzPack With {
+            .MS = paddingData,
+            .Application = FileApplicationClass.MSImaging,
+            .Chromatogram = slide.Chromatogram,
+            .Scanners = slide.Scanners,
+            .source = slide.source,
+            .Thumbnail = slide.Thumbnail,
+            .metadata = slide.metadata,
+            .Annotations = slide.Annotations
+        }
+        End Function
+
+        ''' <summary>
+        ''' reset sample position
+        ''' </summary>
+        ''' <param name="raw"></param>
+        ''' <param name="padding">
+        ''' Add padding around the slide sample data
+        ''' </param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function Reset(raw As mzPack, padding As Padding) As mzPack
+            Dim rect As RectangleF = raw.Shape
+            Dim scans As New List(Of ScanMS1)
+            Dim pos As Point
+            Dim meta As Dictionary(Of String, String)
+
+            For Each scan As ScanMS1 In raw.MS
+                pos = scan.GetMSIPixel
+                pos = New Point With {
+                    .X = pos.X - rect.Left + padding.Left,
+                    .Y = pos.Y - rect.Top + padding.Top
+                }
+                meta = New Dictionary(Of String, String)(scan.meta)
+                meta("x") = pos.X.ToString
+                meta("y") = pos.Y.ToString
+
+                scans += New ScanMS1 With {
+                .BPC = scan.BPC,
+                .into = scan.into,
+                .mz = scan.mz,
+                .products = scan.products,
+                .rt = scan.rt,
+                .TIC = scan.TIC,
+                .scan_id = scan.scan_id,
+                .meta = meta
+            }
+            Next
+
+            meta = raw.metadata
+            meta("width") = rect.Width + padding.Left + padding.Right
+            meta("height") = rect.Height + padding.Top + padding.Bottom
+
+            Return New mzPack With {
+                .Application = FileApplicationClass.MSImaging,
+                .Chromatogram = raw.Chromatogram,
+                .MS = scans.ToArray,
+                .Scanners = raw.Scanners,
+                .source = $"reset({raw.source})",
+                .Thumbnail = Nothing,
+                .Annotations = raw.Annotations,
+                .metadata = meta
+            }
+        End Function
 
         <Extension>
         Public Function Summary(msidata As mzPack, Optional filter As Func(Of Integer, Integer, Boolean) = Nothing) As IEnumerable(Of iPixelIntensity)

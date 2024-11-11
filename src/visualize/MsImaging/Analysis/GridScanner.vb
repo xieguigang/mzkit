@@ -191,7 +191,7 @@ Public Module GridScanner
     ''' <param name="equals"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function IonColocalization(raw As mzPack,
+    Public Function IonColocalization(raw As IMZPack,
                                       Optional grid_width As Integer = 5,
                                       Optional grid_height As Integer = 5,
                                       Optional repeats As Integer = 3,
