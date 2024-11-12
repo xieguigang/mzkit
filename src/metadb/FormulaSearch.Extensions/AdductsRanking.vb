@@ -25,6 +25,33 @@ Public Class AdductsRanking
         End If
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="formula_str"></param>
+    ''' <param name="adducts"></param>
+    ''' <returns>
+    ''' the function only populates the valid adducts object and
+    ''' sort these adducts object in desc ranking order.
+    ''' </returns>
+    Public Function RankAdducts(formula_str As String, adducts As IEnumerable(Of MzCalculator)) As IEnumerable(Of MzCalculator)
+        Dim formula As Formula = FormulaScanner.ScanFormula(formula_str)
+        Dim ranks As IEnumerable(Of (rank As Double, adduct As MzCalculator))
+
+        If ion = IonModes.Positive Then
+            ranks = adducts.Select(Function(adduct) (RankPositive(formula, adduct), adduct))
+        Else
+            ranks = adducts.Select(Function(adduct) (RankNegative(formula, adduct), adduct))
+        End If
+
+        Return ranks _
+            .Where(Function(a) a.Item1 > 0) _
+            .OrderByDescending(Function(a) a.Item1) _
+            .Select(Function(a)
+                        Return a.adduct
+                    End Function)
+    End Function
+
     Private Function GetAdductsFormula(adduct As MzCalculator) As (sign%, formula As Formula)()
         Dim adduct_str As String = adduct.ToString
 
