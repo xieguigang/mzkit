@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Set the XIC cache data into the report viewer workspace</title>
+    <title>evaluate of the adduct annotation ranking score</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
@@ -13,12 +13,12 @@
 
         <table style="width: 100%;">
             <tr>
-                <td>set_xicCache {annotation}</td>
+                <td>rank_adducts {math}</td>
                 <td style="text-align: right;">R Documentation</td>
             </tr>
         </table>
 
-        <h2>Set the XIC cache data into the report viewer workspace</h2>
+        <h2>evaluate of the adduct annotation ranking score</h2>
 
         <h3>Description</h3>
 
@@ -27,30 +27,24 @@
         <h3>Usage</h3>
 
         <div style="width: 100%; padding-left: 3%; color: black;">
-            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>set_xicCache</strong>(<i>workspace</i>, <i>raw.set</i>,
-    <i>da</i> = <span style='color: green;'>0.25</span>,
-    <i>rt.win</i> = <span style='color: green;'>7.5</span>);</code></pre>
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>rank_adducts</strong>(<i>formula</i>, <i>adducts</i>,
+    <i>ion</i> = Positive);</code></pre>
         </div>
 
         <h3>Arguments</h3>
 
         <table>
             
-<dt>workspace</dt>
-<dd><p>[as <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Assembly/AnnotationWorkspace.html">AnnotationWorkspace</a>]</p></dd>
+<dt>formula</dt>
+<dd><p>[as string]</p></dd>
 
 
-<dt>raw.set</dt>
-<dd><p>should be a set of the mzpack raw data objects, or a character 
- vector of the file path to the mzpack rawdata files.</p></dd>
+<dt>adducts</dt>
+<dd><p>-</p></dd>
 
 
-<dt>da</dt>
-<dd><p>[as double]</p></dd>
-
-
-<dt>rt.win</dt>
-<dd><p>[as double]</p></dd>
+<dt>ion</dt>
+<dd><p>[as <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/Ms1/PrecursorType/IonModes.html">IonModes</a>]</p></dd>
 
 
 <dt>env</dt>
@@ -69,15 +63,15 @@
 
         <h3>Value</h3>
 
-        this function returns data object of type <i>any</i> kind.<h4>clr value class</h4><ul><li><i>any</i> kind</li></ul>
+        <p>A ranking score numeric vector</p><h4>clr value class</h4><ul><li>double</li></ul>
 
         <h3 style="display: none;">Examples</h3>
 
         
 
         <hr />
-        <div style="text-align: center;">[Package <em>annotation</em> version 1.0.0.0 <a
-                href="../annotation.html">Index</a>]
+        <div style="text-align: center;">[Package <em>math</em> version 1.0.0.0 <a
+                href="../math.html">Index</a>]
         </div>
     </div>
 </body>

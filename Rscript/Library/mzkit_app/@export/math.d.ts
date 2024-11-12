@@ -322,6 +322,21 @@ declare namespace math {
    */
    function preprocessing(x: object, scale?: number): object;
    /**
+    * evaluate of the adduct annotation ranking score
+    * 
+    * 
+     * @param formula -
+     * @param adducts -
+     * @param ion -
+     * 
+     * + default value Is ``null``.
+     * @param env -
+     * 
+     * + default value Is ``null``.
+     * @return A ranking score numeric vector
+   */
+   function rank_adducts(formula: string, adducts: any, ion?: object, env?: object): number;
+   /**
     * removes the missing peaks
     * 
     * 

@@ -522,6 +522,14 @@ Module library
         }
     End Function
 
+    ''' <summary>
+    ''' Check of the valid adducts
+    ''' </summary>
+    ''' <param name="formula"></param>
+    ''' <param name="adducts"></param>
+    ''' <param name="ion_mode"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("assert.adducts")>
     <RApiReturn(GetType(MzCalculator))>
     Public Function assertAdducts(formula As String,
@@ -530,16 +538,16 @@ Module library
                                   Optional ion_mode As Object = "+",
                                   Optional env As Environment = Nothing) As Object
 
-        Static asserts As New Dictionary(Of IonModes, PrecursorAdductsAssignRuler) From {
-            {IonModes.Positive, New PrecursorAdductsAssignRuler(IonModes.Positive)},
-            {IonModes.Negative, New PrecursorAdductsAssignRuler(IonModes.Negative)}
+        Static asserts As New Dictionary(Of IonModes, AdductsRanking) From {
+            {IonModes.Positive, New AdductsRanking(IonModes.Positive)},
+            {IonModes.Negative, New AdductsRanking(IonModes.Negative)}
         }
 
         Dim ionVal = Math.GetIonMode(ion_mode, env)
-        Dim ruler = asserts(ionVal)
+        Dim ruler As AdductsRanking = asserts(ionVal)
         Dim precursors As MzCalculator() = Math.GetPrecursorTypes(adducts, env)
 
-        Return ruler.AssertAdducts(formula, precursors).ToArray
+        Return ruler.RankAdducts(formula, precursors).ToArray
     End Function
 
     ''' <summary>
@@ -831,7 +839,7 @@ Module library
     End Function
 
     ''' <summary>
-    ''' 
+    ''' Set the XIC cache data into the report viewer workspace
     ''' </summary>
     ''' <param name="workspace"></param>
     ''' <param name="raw_set">should be a set of the mzpack raw data objects, or a character 

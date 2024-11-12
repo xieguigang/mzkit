@@ -75,7 +75,11 @@ Public Module SaveXcms
     ''' <param name="file"></param>
     ''' <param name="tsv"></param>
     ''' <returns></returns>
-    Public Function ReadTextTable(file As String, Optional tsv As Boolean = False, Optional make_unique As Boolean = False) As PeakSet
+    Public Function ReadTextTable(file As String,
+                                  Optional tsv As Boolean = False,
+                                  Optional make_unique As Boolean = False,
+                                  Optional delete_fields As String() = Nothing) As PeakSet
+
         Dim deli As Char = If(tsv, vbTab, ","c)
         Dim buf As Stream = file.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
         Dim s As New StreamReader(buf)
@@ -88,6 +92,10 @@ Public Module SaveXcms
 
         If headers.Count = 1 Then
             Throw New InvalidDataException("Invalid table file header parse result, please check of the table file format or check of the csv and tsv parameter?")
+        Else
+            For Each col As String In delete_fields.SafeQuery
+                Call headers.Delete(col)
+            Next
         End If
 
         Static required_id As String() = {"xcms_id", "id", "ID", ""}
