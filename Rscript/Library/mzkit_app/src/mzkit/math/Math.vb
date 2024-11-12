@@ -114,6 +114,7 @@ Module MzMath
         Call RInternal.Object.Converts.addHandler(GetType(AlignmentOutput), AddressOf getAlignmentTable)
         Call RInternal.Object.Converts.addHandler(GetType(PrecursorInfo()), AddressOf getPrecursorTable)
         Call RInternal.Object.Converts.addHandler(GetType(MassWindow()), AddressOf mass_tabular)
+        Call RInternal.Object.Converts.addHandler(GetType(MzCalculator()), AddressOf adducts_table)
 
         Call RInternal.add("as.list", GetType(Tolerance), AddressOf summaryTolerance)
         Call RInternal.add("as.list", GetType(PPMmethod), AddressOf summaryTolerance)
@@ -121,6 +122,24 @@ Module MzMath
 
         Call ExactMass.SetExactMassParser(Function(f) FormulaScanner.EvaluateExactMass(f))
     End Sub
+
+    <RGenericOverloads("as.data.frame")>
+    Private Function adducts_table(adducts As MzCalculator(), args As list, env As Environment) As dataframe
+        Dim df As New dataframe With {
+            .columns = New Dictionary(Of String, Array),
+            .rownames = adducts _
+                .Select(Function(a) a.ToString) _
+                .ToArray
+        }
+
+        Call df.add("name", From a As MzCalculator In adducts Select a.name)
+        Call df.add("charge", From a As MzCalculator In adducts Select a.charge)
+        Call df.add("M", From a As MzCalculator In adducts Select a.M)
+        Call df.add("adducts", From a As MzCalculator In adducts Let mass = a.adducts Select mass)
+        Call df.add("mode", From a As MzCalculator In adducts Select a.mode)
+
+        Return df
+    End Function
 
     <RGenericOverloads("as.data.frame")>
     Private Function mass_tabular(masslist As MassWindow(), args As list, env As Environment) As Object
@@ -175,6 +194,7 @@ Module MzMath
         Return ms
     End Function
 
+    <RGenericOverloads("as.data.frame")>
     Private Function getPrecursorTable(list As PrecursorInfo(), args As list, env As Environment) As dataframe
         Dim precursor_type As String() = list.Select(Function(i) i.precursor_type).ToArray
         Dim charge As Double() = list.Select(Function(i) i.charge).ToArray
@@ -260,6 +280,7 @@ Module MzMath
         Return summary.ToString
     End Function
 
+    <RGenericOverloads("as.data.frame")>
     Private Function XICTable(x As MzGroup, args As list, env As Environment) As dataframe
         Dim mz As Array = {x.mz}
         Dim into As Array = x.XIC.Select(Function(t) t.Intensity).ToArray
