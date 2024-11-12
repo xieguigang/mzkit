@@ -24,7 +24,7 @@ Public Class AdductsRanking
     End Function
 
     Private Function RankPositive(formula As Formula, adduct As MzCalculator) As Double
-
+        Throw New NotImplementedException
     End Function
 
     Private Function RankNegative(formula As Formula, adduct As MzCalculator) As Double
