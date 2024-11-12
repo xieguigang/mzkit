@@ -831,7 +831,7 @@ Module library
     End Function
 
     ''' <summary>
-    ''' 
+    ''' Set the XIC cache data into the report viewer workspace
     ''' </summary>
     ''' <param name="workspace"></param>
     ''' <param name="raw_set">should be a set of the mzpack raw data objects, or a character 
