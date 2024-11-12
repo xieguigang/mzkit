@@ -1263,6 +1263,23 @@ Module MzMath
         Return Provider.GetCalculator(ionMode).Values.ToArray
     End Function
 
+    <ExportAPI("rank_adducts")>
+    Public Function rank_adducts(formula As String,
+                                 <RRawVectorArgument>
+                                 adducts As Object,
+                                 Optional ion As IonModes = IonModes.Positive,
+                                 Optional env As Environment = Nothing) As Object
+
+        Dim adducts_str As String() = CLRVector.asCharacter(adducts)
+        Dim rank As New AdductsRanking(ion)
+
+        Return adducts_str _
+            .Select(Function(precursor_type)
+                        Return rank.Rank(formula, precursor_type)
+                    End Function) _
+            .ToArray
+    End Function
+
     <ExportAPI("toMS")>
     Public Function CreateMSMatrix(isotope As IsotopeDistribution) As LibraryMatrix
         Return New LibraryMatrix With {
