@@ -41,7 +41,7 @@ Public Class AdductsRanking
         End If
 
         Dim formulaParts = tokens _
-            .TryCast(Of (sign%, expression As String)()) _
+            .TryCast(Of IEnumerable(Of (sign%, expression As String))) _
             .Select(Function(part)
                         Dim multiply = ExactMass.Mul(part.expression)
                         Dim f = FormulaScanner.ScanFormula(multiply.Name)
@@ -66,7 +66,15 @@ Public Class AdductsRanking
 
         Dim adduct_parts = GetAdductsFormula(adduct)
 
-        Throw New NotImplementedException
+        For Each part In adduct_parts
+            formula += part.sign * part.formula
+        Next
+
+        If formula.CountsByElement.Any(Function(a) a.Value < 0) Then
+            Return 0
+        End If
+
+        Return 1
     End Function
 
     Private Function RankNegative(formula As Formula, adduct As MzCalculator) As Double
@@ -78,6 +86,14 @@ Public Class AdductsRanking
 
         Dim adduct_parts = GetAdductsFormula(adduct)
 
+        For Each part In adduct_parts
+            formula += part.sign * part.formula
+        Next
 
+        If formula.CountsByElement.Any(Function(a) a.Value < 0) Then
+            Return 0
+        End If
+
+        Return 1
     End Function
 End Class
