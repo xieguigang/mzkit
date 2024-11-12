@@ -332,6 +332,7 @@ Module mzDeco
     ''' </summary>
     ''' <param name="x"></param>
     ''' <returns></returns>
+    ''' <keywords>ctype data</keywords>
     <ExportAPI("to_expression")>
     Public Function expression(x As PeakSet) As Matrix
         Dim sampleNames As String() = x.sampleNames
@@ -356,6 +357,7 @@ Module mzDeco
     ''' </summary>
     ''' <param name="x"></param>
     ''' <returns></returns>
+    ''' <keywords>ctype data</keywords>
     <ExportAPI("to_matrix")>
     Public Function to_matrix(x As PeakSet) As MzMatrix
         Dim mz As Double() = x.peaks.Select(Function(a) a.mz).ToArray
@@ -428,6 +430,7 @@ Module mzDeco
     ''' 3. RI: the ion retention index value that evaluated based on the RT value
     ''' 4. all of the other data fields in the dataframe will be treated as the sample peak area data.
     ''' </remarks>
+    ''' <keywords>ctype data</keywords>
     <ExportAPI("as.peak_set")>
     <RApiReturn(GetType(PeakSet))>
     Public Function create_peakset(<RRawVectorArgument> x As Object, Optional env As Environment = Nothing) As Object
@@ -451,6 +454,14 @@ Module mzDeco
         Return New PeakSet(peaks)
     End Function
 
+    ''' <summary>
+    ''' extract the peak data from the given dataframe
+    ''' </summary>
+    ''' <param name="df"></param>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' the unique id of each peak object extract from the dataframe row names
+    ''' </remarks>
     Private Iterator Function convertDataframeToXcmsPeaks(df As dataframe) As IEnumerable(Of xcms2)
         Dim mz As Double() = CLRVector.asNumeric(df!mz)
         Dim mzmin As Double() = CLRVector.asNumeric(df!mzmin)
