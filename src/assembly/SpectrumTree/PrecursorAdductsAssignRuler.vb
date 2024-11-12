@@ -58,7 +58,7 @@
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports Microsoft.VisualBasic.ComponentModel.Collection
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Public Class PrecursorAdductsAssignRuler
 
@@ -127,7 +127,7 @@ Public Class PrecursorAdductsAssignRuler
             If part.op > 0 Then
                 composition += part.f * part.op
             Else
-                composition -= part.f * stdNum.Abs(part.op)
+                composition -= part.f * std.Abs(part.op)
             End If
         Next
 

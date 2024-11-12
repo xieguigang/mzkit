@@ -23,11 +23,61 @@ Public Class AdductsRanking
         End If
     End Function
 
+    Private Function GetAdductsFormula(adduct As MzCalculator) As (sign%, formula As Formula)()
+        Dim adduct_str As String = adduct.ToString
+
+        Static formulaCache As New Dictionary(Of String, (sign%, formula As Formula)())
+
+        SyncLock formulaCache
+            If formulaCache.ContainsKey(adduct_str) Then
+                Return formulaCache(adduct_str)
+            End If
+        End SyncLock
+
+        Dim tokens = Parser.Formula(adduct_str, raw:=True)
+
+        If tokens Like GetType(String) Then
+            Throw New InvalidProgramException(tokens.TryCast(Of String))
+        End If
+
+        Dim formulaParts = tokens _
+            .TryCast(Of (sign%, expression As String)()) _
+            .Select(Function(part)
+                        Dim multiply = ExactMass.Mul(part.expression)
+                        Dim f = FormulaScanner.ScanFormula(multiply.Name)
+
+                        Return (part.sign, f * multiply.Value)
+                    End Function) _
+            .ToArray
+
+        SyncLock formulaCache
+            formulaCache(adduct_str) = formulaParts
+        End SyncLock
+
+        Return formulaParts
+    End Function
+
     Private Function RankPositive(formula As Formula, adduct As MzCalculator) As Double
+        Dim mz As Double = adduct.CalcMZ(formula.ExactMass)
+
+        If mz <= 0 Then
+            Return 0
+        End If
+
+        Dim adduct_parts = GetAdductsFormula(adduct)
+
         Throw New NotImplementedException
     End Function
 
     Private Function RankNegative(formula As Formula, adduct As MzCalculator) As Double
+        Dim mz As Double = adduct.CalcMZ(formula.ExactMass)
+
+        If mz <= 0 Then
+            Return 0
+        End If
+
+        Dim adduct_parts = GetAdductsFormula(adduct)
+
 
     End Function
 End Class
