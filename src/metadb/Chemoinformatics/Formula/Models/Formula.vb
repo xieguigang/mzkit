@@ -178,6 +178,15 @@ Namespace Formula
         End Sub
 
         ''' <summary>
+        ''' make value copy of the given formula
+        ''' </summary>
+        ''' <param name="copy"></param>
+        Sub New(copy As Formula)
+            m_formula = copy.m_formula
+            CountsByElement = New Dictionary(Of String, Integer)(copy.CountsByElement)
+        End Sub
+
+        ''' <summary>
         ''' construct a new empty formula object
         ''' </summary>
         ''' <remarks>
@@ -187,6 +196,16 @@ Namespace Formula
         Sub New()
             CountsByElement = New Dictionary(Of String, Integer)
         End Sub
+
+        ''' <summary>
+        ''' Check of the specific element is inside current formula object?
+        ''' </summary>
+        ''' <param name="elementName"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function CheckElement(elementName As String) As Boolean
+            Return CountsByElement.ContainsKey(elementName) AndAlso CountsByElement(elementName) > 0
+        End Function
 
         Public Function CanonicalFormula() As String
             Return Canonical.BuildCanonicalFormula(CountsByElement)

@@ -8,6 +8,8 @@ Public Class AdductsRanking
 
     ReadOnly ion As IonModes
 
+    Const maxValue As Double = 10
+
     Sub New(ion As IonModes)
         Me.ion = ion
     End Sub
@@ -58,40 +60,62 @@ Public Class AdductsRanking
     End Function
 
     Private Function RankPositive(formula As Formula, adduct As MzCalculator) As Double
-        Dim mz As Double = adduct.CalcMZ(formula.ExactMass)
-
-        If mz <= 0 Then
-            Return 0
-        End If
-
-        Dim adduct_parts = GetAdductsFormula(adduct)
-
-        For Each part In adduct_parts
-            formula += part.sign * part.formula
-        Next
-
-        If formula.CountsByElement.Any(Function(a) a.Value < 0) Then
+        If InvalidAdduct(formula, adduct) Then
             Return 0
         End If
 
         Return 1
     End Function
 
-    Private Function RankNegative(formula As Formula, adduct As MzCalculator) As Double
+    Private Function InvalidAdduct(formula As Formula, adduct As MzCalculator) As Boolean
         Dim mz As Double = adduct.CalcMZ(formula.ExactMass)
 
         If mz <= 0 Then
-            Return 0
+            Return True
         End If
 
         Dim adduct_parts = GetAdductsFormula(adduct)
+        Dim copy As New Formula(formula)
 
         For Each part In adduct_parts
-            formula += part.sign * part.formula
+            copy += part.sign * part.formula
         Next
 
-        If formula.CountsByElement.Any(Function(a) a.Value < 0) Then
+        If copy.CountsByElement.Any(Function(a) a.Value < 0) Then
+            Return True
+        End If
+
+        Return False
+    End Function
+
+    Private Function RankNegative(formula As Formula, adduct As MzCalculator) As Double
+        If InvalidAdduct(formula, adduct) Then
             Return 0
+        End If
+
+        Dim adduct_str As String = adduct.ToString
+
+        ' deal with some special adducts type situation
+        If formula.CheckElement("Na") Then
+            If adduct_str = "[M-Na]-" Then
+                If formula!Na = 1 Then
+                    Return maxValue
+                End If
+            End If
+        End If
+        If formula.CheckElement("K") Then
+            If adduct_str = "[M-K]-" Then
+                If formula!K = 1 Then
+                    Return maxValue
+                End If
+            End If
+        End If
+        If formula.CheckElement("Li") Then
+            If adduct_str = "[M-Li]-" Then
+                If formula!Li = 1 Then
+                    Return maxValue
+                End If
+            End If
         End If
 
         Return 1
