@@ -1263,7 +1263,18 @@ Module MzMath
         Return Provider.GetCalculator(ionMode).Values.ToArray
     End Function
 
+    ''' <summary>
+    ''' evaluate of the adduct annotation ranking score
+    ''' </summary>
+    ''' <param name="formula"></param>
+    ''' <param name="adducts"></param>
+    ''' <param name="ion"></param>
+    ''' <param name="env"></param>
+    ''' <returns>
+    ''' A ranking score numeric vector
+    ''' </returns>
     <ExportAPI("rank_adducts")>
+    <RApiReturn(TypeCodes.double)>
     Public Function rank_adducts(formula As String,
                                  <RRawVectorArgument>
                                  adducts As Object,

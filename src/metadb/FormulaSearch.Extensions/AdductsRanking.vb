@@ -91,6 +91,16 @@ Public Class AdductsRanking
             Return 0
         End If
 
+        Dim adduct_str As String = adduct.ToString
+
+        If adduct_str = "[M]+" Then
+            Dim charge As Double = FormalCharge.EvaluateCharge(formula)
+
+            If charge = 0 Then
+                Return 0
+            End If
+        End If
+
         Return 1
     End Function
 
@@ -121,6 +131,14 @@ Public Class AdductsRanking
         End If
 
         Dim adduct_str As String = adduct.ToString
+
+        If adduct_str = "[M]-" Then
+            Dim charge As Double = FormalCharge.EvaluateCharge(formula)
+
+            If charge = 0 Then
+                Return 0
+            End If
+        End If
 
         ' deal with some special adducts type situation
         If formula.CheckElement("Na") Then
