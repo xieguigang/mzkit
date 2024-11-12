@@ -1,7 +1,7 @@
 require(mzkit);
 
 let neg_adducts = [
-    "[M-H]-" "[M-Na]-" "[M]-"
+    "[M-H]-" "[M-K]-" "[M-Na]-" "[M]-"
 ];
 
 print(neg_adducts);
