@@ -12,7 +12,7 @@ the metabolite annotation toolkit
 + [filter](annotation/filter.1) 
 + [get_peaktable](annotation/get_peaktable.1) get annotated ms1 peak features from the result data pack
 + [get_annotations](annotation/get_annotations.1) get annotation data from the given workspace object
-+ [set_xicCache](annotation/set_xicCache.1) 
++ [set_xicCache](annotation/set_xicCache.1) Set the XIC cache data into the report viewer workspace
 + [save_annotations](annotation/save_annotations.1) Save the reference library annotation result.
 + [push_temp](annotation/push_temp.1) Save the ms2 alignment hits result into current temp workspace.
 + [commit](annotation/commit.1) Commit library annotation

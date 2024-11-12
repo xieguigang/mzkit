@@ -161,6 +161,7 @@ declare namespace annotation {
    */
    function save_annotations(workspace: object, library: string, annotations: object): ;
    /**
+    * Set the XIC cache data into the report viewer workspace
     * 
     * 
      * @param workspace -
