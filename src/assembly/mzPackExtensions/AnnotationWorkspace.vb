@@ -1,62 +1,62 @@
 ﻿#Region "Microsoft.VisualBasic::7b2f4898f3f36c6922dea0a2f61db257, assembly\mzPackExtensions\AnnotationWorkspace.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 200
-    '    Code Lines: 133 (66.50%)
-    ' Comment Lines: 29 (14.50%)
-    '    - Xml Docs: 58.62%
-    ' 
-    '   Blank Lines: 38 (19.00%)
-    '     File Size: 7.70 KB
+' Summaries:
 
 
-    ' Class AnnotationWorkspace
-    ' 
-    '     Properties: file
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: GetLibraryHits, LoadMemory, LoadPeakTable, LoadXicGroup
-    ' 
-    '     Sub: CacheXicTable, CreateLibraryResult, (+2 Overloads) Dispose, Flush, SetPeakTable
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 200
+'    Code Lines: 133 (66.50%)
+' Comment Lines: 29 (14.50%)
+'    - Xml Docs: 58.62%
+' 
+'   Blank Lines: 38 (19.00%)
+'     File Size: 7.70 KB
+
+
+' Class AnnotationWorkspace
+' 
+'     Properties: file
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: GetLibraryHits, LoadMemory, LoadPeakTable, LoadXicGroup
+' 
+'     Sub: CacheXicTable, CreateLibraryResult, (+2 Overloads) Dispose, Flush, SetPeakTable
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -99,6 +99,11 @@ Public Class AnnotationWorkspace : Implements IDisposable, IWorkspaceReader
         End Get
     End Property
 
+    ''' <summary>
+    ''' construct of the workspace file reader/writer
+    ''' </summary>
+    ''' <param name="file"></param>
+    ''' <param name="source_file"></param>
     Sub New(file As Stream, Optional source_file As String = Nothing)
         source = source_file
         pack = New StreamPack(file)
@@ -131,6 +136,10 @@ Public Class AnnotationWorkspace : Implements IDisposable, IWorkspaceReader
         }
     End Function
 
+    ''' <summary>
+    ''' load ms1 peaktable data
+    ''' </summary>
+    ''' <returns></returns>
     Public Function LoadPeakTable() As IEnumerable(Of xcms2)
         If Not pack.FileExists(peaktablefile, ZERO_Nonexists:=True) Then
             Return New xcms2() {}
@@ -160,7 +169,7 @@ Public Class AnnotationWorkspace : Implements IDisposable, IWorkspaceReader
     Const peaktablefile As String = "/peaktable.dat"
 
     ''' <summary>
-    ''' Extract the XIC cache data based on the peaktable information inside the workspace file
+    ''' Extract the XIC cache data from a given set of rawdata objects based on the peaktable information inside the workspace file
     ''' </summary>
     ''' <param name="files"></param>
     ''' <param name="mass_da">
@@ -202,11 +211,36 @@ Public Class AnnotationWorkspace : Implements IDisposable, IWorkspaceReader
         Next
     End Sub
 
+    ''' <summary>
+    ''' Check of the xic cache data is existed inside current workspace file
+    ''' </summary>
+    ''' <returns></returns>
+    Public Function CheckXicCache() As Boolean
+        Dim dir As StreamGroup = pack.GetObject("/xic_table/")
+
+        If dir Is Nothing Then
+            Return False
+        End If
+
+        Return dir.ListFiles(recursive:=True) _
+            .OfType(Of StreamBlock) _
+            .Where(Function(f) f.extensionSuffix = ("xic")) _
+            .Any
+    End Function
+
+    ''' <summary>
+    ''' load xic data from cache pool
+    ''' </summary>
+    ''' <param name="ion"></param>
+    ''' <returns></returns>
     Public Iterator Function LoadXicGroup(ion As String) As IEnumerable(Of NamedCollection(Of ms1_scan))
         Dim dir As StreamGroup = pack.GetObject("/xic_table/")
 
         For Each file As StreamGroup In dir.ListFiles(recursive:=False).OfType(Of StreamGroup)
-            Dim ionfile = file.ListFiles(recursive:=False).OfType(Of StreamBlock).Where(Function(f) f.fileName.BaseName = ion).FirstOrDefault
+            Dim ionfile = file.ListFiles(recursive:=False) _
+                .OfType(Of StreamBlock) _
+                .Where(Function(f) f.fileName.BaseName = ion) _
+                .FirstOrDefault
 
             If ionfile Is Nothing Then
                 Continue For
@@ -260,8 +294,8 @@ Public Class AnnotationWorkspace : Implements IDisposable, IWorkspaceReader
     ''' Commit the memory cache data into filesystem
     ''' </summary>
     Public Sub Flush()
-        Call pack.WriteText(libraries.GetJson, "/libraries.json")
-        Call pack.WriteText(samplefiles.ToArray.GetJson, "/samplefiles.json")
+        Call pack.WriteText(libraries.GetJson, "/libraries.json", allocate:=False)
+        Call pack.WriteText(samplefiles.ToArray.GetJson, "/samplefiles.json", allocate:=False)
 
         Call DirectCast(pack, IFileSystemEnvironment).Flush()
     End Sub
