@@ -181,13 +181,30 @@ Public Class AnnotationWorkspace : Implements IDisposable, IWorkspaceReader
     Public Sub CacheXicTable(files As IEnumerable(Of mzPack), Optional mass_da As Double = 0.5, Optional rt_win As Double = 15)
         Dim pool As mzPack() = files.ToArray
 
+        For i As Integer = 0 To pool.Length - 1
+            If pool(i).source.StringEmpty Then
+                Throw New InvalidDataException("Missing sample source file name for the mzpack rawdata object!")
+            End If
+
+            pool(i).source = pool(i).source _
+                .Replace(".mzPack", "") _
+                .Replace(".mzpack", "") _
+                .Replace(".MZPACK", "")
+        Next
+
         ' commit current data pool
         Call Flush()
         ' and then load the peaktable back from the filesystem
         For Each peak As xcms2 In TqdmWrapper.Wrap(LoadPeakTable.ToArray)
-            For Each file As mzPack In pool
-                Using s As Stream = pack.OpenFile($"/xic_table/{file.source}/{peak.ID}.xic",, FileAccess.Write)
-                    Call file.PickIonScatter(peak.mz, peak.rt, mass_da, rt_win).SaveDataFrame(s)
+            Dim scatter = pool.AsParallel _
+                .Select(Function(file)
+                            Return New NamedCollection(Of ms1_scan)(file.source, file.PickIonScatter(peak.mz, peak.rt, mass_da, rt_win))
+                        End Function) _
+                .ToArray
+
+            For Each file As NamedCollection(Of ms1_scan) In scatter
+                Using s As Stream = pack.OpenFile($"/xic_table/{file.name}/{peak.ID}.xic",, FileAccess.Write)
+                    Call file.SaveDataFrame(s)
                     Call s.Flush()
                 End Using
             Next
