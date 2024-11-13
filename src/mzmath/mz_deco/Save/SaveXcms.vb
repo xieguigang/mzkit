@@ -231,6 +231,11 @@ Public Module SaveXcms
         Call bin.Flush()
     End Sub
 
+    ''' <summary>
+    ''' read table data from rawdata file
+    ''' </summary>
+    ''' <param name="file"></param>
+    ''' <returns></returns>
     Public Function ReadSamplePeaks(file As Stream) As xcms2()
         Dim rd As New BinaryReader(file)
         Dim ROIs As Integer = rd.ReadInt32
