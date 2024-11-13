@@ -159,6 +159,16 @@ Public Class AnnotationWorkspace : Implements IDisposable, IWorkspaceReader
 
     Const peaktablefile As String = "/peaktable.dat"
 
+    ''' <summary>
+    ''' Extract the XIC cache data based on the peaktable information inside the workspace file
+    ''' </summary>
+    ''' <param name="files"></param>
+    ''' <param name="mass_da">
+    ''' the mass error window for extract the ms1 scatter data for the peak ion
+    ''' </param>
+    ''' <param name="rt_win">
+    ''' the rt window size for extract the XIC peak data for the peak ion
+    ''' </param>
     Public Sub CacheXicTable(files As IEnumerable(Of mzPack), Optional mass_da As Double = 0.5, Optional rt_win As Double = 15)
         Dim pool As mzPack() = files.ToArray
 
@@ -196,6 +206,9 @@ Public Class AnnotationWorkspace : Implements IDisposable, IWorkspaceReader
     ''' save xcms peaktable to pack file
     ''' </summary>
     ''' <param name="peaks"></param>
+    ''' <remarks>
+    ''' the peaktable data has been commit to the filesystem automatically in this method.
+    ''' </remarks>
     Public Sub SetPeakTable(peaks As IEnumerable(Of xcms2))
         Using file As Stream = pack.OpenFile(peaktablefile,, FileAccess.Write)
             Dim pool As xcms2() = peaks.ToArray

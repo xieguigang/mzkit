@@ -1,65 +1,64 @@
 ﻿#Region "Microsoft.VisualBasic::a6d9e2fccf734119d1f64dc47798afa0, visualize\plot\GCxGC\GCxGCTIC2DPlot.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 228
-    '    Code Lines: 197 (86.40%)
-    ' Comment Lines: 5 (2.19%)
-    '    - Xml Docs: 60.00%
-    ' 
-    '   Blank Lines: 26 (11.40%)
-    '     File Size: 9.97 KB
+' Summaries:
 
 
-    ' Class GCxGCTIC2DPlot
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: CutSignal, FillHeatMap
-    ' 
-    '     Sub: FillHeatMap, PlotInternal
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 228
+'    Code Lines: 197 (86.40%)
+' Comment Lines: 5 (2.19%)
+'    - Xml Docs: 60.00%
+' 
+'   Blank Lines: 26 (11.40%)
+'     File Size: 9.97 KB
+
+
+' Class GCxGCTIC2DPlot
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: CutSignal, FillHeatMap
+' 
+'     Sub: FillHeatMap, PlotInternal
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.Comprehensive
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
@@ -74,6 +73,8 @@ Imports Microsoft.VisualBasic.Math.Distributions
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.MIME.Html.Render
+Imports BioNovoGene.Analytical.MassSpectrometry.GCxGC
+
 
 #If NET48 Then
 Imports Pen = System.Drawing.Pen
@@ -106,25 +107,25 @@ Imports FontStyle = Microsoft.VisualBasic.Imaging.FontStyle
 ''' </summary>
 Public Class GCxGCTIC2DPlot : Inherits Plot
 
-    ReadOnly TIC2D As D2Chromatogram()
+    ReadOnly TIC2D As Chromatogram2DScan()
     ReadOnly mapLevels As Integer
 
-    Public Sub New(TIC2D As D2Chromatogram(), ql As Double, qh As Double, mapLevels As Integer, theme As Theme)
+    Public Sub New(TIC2D As Chromatogram2DScan(), ql As Double, qh As Double, mapLevels As Integer, theme As Theme)
         Call MyBase.New(theme)
 
         Me.TIC2D = CutSignal(TIC2D, ql, qh, mapLevels).ToArray
         Me.mapLevels = mapLevels
     End Sub
 
-    Public Shared Iterator Function CutSignal(gcxgc As D2Chromatogram(),
+    Public Shared Iterator Function CutSignal(gcxgc As Chromatogram2DScan(),
                                               Optional ql As Double = -1,
                                               Optional qh As Double = 1,
-                                              Optional levels As Integer = 100) As IEnumerable(Of D2Chromatogram)
+                                              Optional levels As Integer = 100) As IEnumerable(Of Chromatogram2DScan)
 
         If ql <= 0 AndAlso qh >= 1 Then
             Call "no intensity scale range was changed!".Warning
 
-            For Each item As D2Chromatogram In gcxgc
+            For Each item As Chromatogram2DScan In gcxgc
                 Yield item
             Next
 
@@ -139,8 +140,8 @@ Public Class GCxGCTIC2DPlot : Inherits Plot
         Dim qcut As Double = If(qh >= 1, rawData.Max, TrIQ.FindThreshold(rawData, qh, N:=levels))
         Dim cutLow As Double = If(ql <= 0, rawData.Min, TrIQ.FindThreshold(rawData, ql, N:=levels))
 
-        For Each scan As D2Chromatogram In gcxgc
-            Yield New D2Chromatogram With {
+        For Each scan As Chromatogram2DScan In gcxgc
+            Yield New Chromatogram2DScan With {
                 .intensity = scan.intensity,
                 .scan_time = scan.scan_time,
                 .chromatogram = scan _
@@ -228,7 +229,7 @@ Public Class GCxGCTIC2DPlot : Inherits Plot
         )
     End Sub
 
-    Public Shared Function FillHeatMap(TIC2D As IEnumerable(Of D2Chromatogram),
+    Public Shared Function FillHeatMap(TIC2D As IEnumerable(Of Chromatogram2DScan),
                                        size As Size,
                                        scale As DataScaler,
                                        Colors As String,
@@ -252,7 +253,7 @@ Public Class GCxGCTIC2DPlot : Inherits Plot
     End Function
 
     Public Shared Sub FillHeatMap(g As IGraphics,
-                                  TIC2D As IEnumerable(Of D2Chromatogram),
+                                  TIC2D As IEnumerable(Of Chromatogram2DScan),
                                   dw As Double,
                                   dh As Double,
                                   scale As DataScaler,
@@ -260,7 +261,7 @@ Public Class GCxGCTIC2DPlot : Inherits Plot
                                   index As DoubleRange,
                                   colors As SolidBrush())
 
-        For Each col As D2Chromatogram In TIC2D
+        For Each col As Chromatogram2DScan In TIC2D
             Dim x As Double = scale.TranslateX(col.scan_time)
             Dim i As Integer
             Dim rect As RectangleF

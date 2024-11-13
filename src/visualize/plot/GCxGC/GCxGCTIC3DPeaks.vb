@@ -1,65 +1,63 @@
 ﻿#Region "Microsoft.VisualBasic::08a64e13e93fd879fc5b3aee11a018f0, visualize\plot\GCxGC\GCxGCTIC3DPeaks.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 158
-    '    Code Lines: 134 (84.81%)
-    ' Comment Lines: 6 (3.80%)
-    '    - Xml Docs: 50.00%
-    ' 
-    '   Blank Lines: 18 (11.39%)
-    '     File Size: 7.62 KB
+' Summaries:
 
 
-    ' Class GCxGCTIC3DPeaks
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: MeshGrid
-    ' 
-    '     Sub: PlotInternal
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 158
+'    Code Lines: 134 (84.81%)
+' Comment Lines: 6 (3.80%)
+'    - Xml Docs: 50.00%
+' 
+'   Blank Lines: 18 (11.39%)
+'     File Size: 7.62 KB
+
+
+' Class GCxGCTIC3DPeaks
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: MeshGrid
+' 
+'     Sub: PlotInternal
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports System.Drawing
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.Comprehensive
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
@@ -74,6 +72,8 @@ Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.MIME.Html.Render
+Imports BioNovoGene.Analytical.MassSpectrometry.GCxGC
+
 
 #If NET48 Then
 Imports Pen = System.Drawing.Pen
@@ -106,11 +106,11 @@ Imports FontStyle = Microsoft.VisualBasic.Imaging.FontStyle
 ''' </summary>
 Public Class GCxGCTIC3DPeaks : Inherits Plot
 
-    ReadOnly raw As D2Chromatogram()
+    ReadOnly raw As Chromatogram2DScan()
     ReadOnly sampling As Integer
     ReadOnly mapLevels As Integer
 
-    Public Sub New(gcxgc As D2Chromatogram(), sampling As Integer, mapLevels As Integer, theme As Theme)
+    Public Sub New(gcxgc As Chromatogram2DScan(), sampling As Integer, mapLevels As Integer, theme As Theme)
         MyBase.New(theme)
 
         Me.raw = gcxgc
@@ -171,7 +171,7 @@ Public Class GCxGCTIC3DPeaks : Inherits Plot
         )
     End Sub
 
-    Public Shared Iterator Function MeshGrid(gcxgc As D2Chromatogram(), sampling As Integer, xsize As Integer, ysize As Integer, zsize As Integer) As IEnumerable(Of Polygon)
+    Public Shared Iterator Function MeshGrid(gcxgc As Chromatogram2DScan(), sampling As Integer, xsize As Integer, ysize As Integer, zsize As Integer) As IEnumerable(Of Polygon)
         Dim height As Integer = gcxgc _
             .Select(Function(d) d.size) _
             .GroupBy(Function(n) n) _
@@ -185,15 +185,15 @@ Public Class GCxGCTIC3DPeaks : Inherits Plot
         Dim yscale = d3js.scale.linear.domain(yTicks).range(values:=New Double() {0, ysize})
         Dim zscale = d3js.scale.linear.domain(zTicks).range(values:=New Double() {0, zsize})
 
-        gcxgc = (From scan As D2Chromatogram
+        gcxgc = (From scan As Chromatogram2DScan
                  In gcxgc
                  Where scan.size = height
                  Order By scan.scan_time).ToArray
 
-        Dim left As D2Chromatogram = gcxgc(Scan0)
+        Dim left As Chromatogram2DScan = gcxgc(Scan0)
 
         For i As Integer = sampling To gcxgc.Length - 1 Step sampling
-            Dim right As D2Chromatogram = gcxgc(i)
+            Dim right As Chromatogram2DScan = gcxgc(i)
             Dim bottom1 As ChromatogramTick = left(Scan0)
             Dim bottom2 As ChromatogramTick = right(Scan0)
 

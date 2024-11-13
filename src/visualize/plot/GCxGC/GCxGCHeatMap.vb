@@ -1,65 +1,65 @@
 ﻿#Region "Microsoft.VisualBasic::b81c88361889c0fc4305f9df04014bd8, visualize\plot\GCxGC\GCxGCHeatMap.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 168
-    '    Code Lines: 142 (84.52%)
-    ' Comment Lines: 4 (2.38%)
-    '    - Xml Docs: 0.00%
-    ' 
-    '   Blank Lines: 22 (13.10%)
-    '     File Size: 7.01 KB
+' Summaries:
 
 
-    ' Class GCxGCHeatMap
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: GetRectangle
-    ' 
-    '     Sub: PlotInternal
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 168
+'    Code Lines: 142 (84.52%)
+' Comment Lines: 4 (2.38%)
+'    - Xml Docs: 0.00%
+' 
+'   Blank Lines: 22 (13.10%)
+'     File Size: 7.01 KB
+
+
+' Class GCxGCHeatMap
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: GetRectangle
+' 
+'     Sub: PlotInternal
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.Comprehensive
+Imports BioNovoGene.Analytical.MassSpectrometry.GCxGC
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
@@ -99,9 +99,10 @@ Imports GraphicsPath = Microsoft.VisualBasic.Imaging.GraphicsPath
 Imports FontStyle = Microsoft.VisualBasic.Imaging.FontStyle
 #End If
 
+
 Public Class GCxGCHeatMap : Inherits Plot
 
-    ReadOnly gcxgc As NamedCollection(Of D2Chromatogram)()
+    ReadOnly gcxgc As NamedCollection(Of Chromatogram2DScan)()
     ReadOnly w_rt1 As Double
     ReadOnly w_rt2 As Double
     ReadOnly points As NamedValue(Of PointF)()
@@ -110,7 +111,7 @@ Public Class GCxGCHeatMap : Inherits Plot
     Dim dx As Double = 5
     Dim dy As Double = 5
 
-    Public Sub New(gcxgc As IEnumerable(Of NamedCollection(Of D2Chromatogram)),
+    Public Sub New(gcxgc As IEnumerable(Of NamedCollection(Of Chromatogram2DScan)),
                    points As IEnumerable(Of NamedValue(Of PointF)),
                    rt1 As Double,
                    rt2 As Double,
@@ -130,13 +131,13 @@ Public Class GCxGCHeatMap : Inherits Plot
         Me.dy = marginY
     End Sub
 
-    Private Function GetRectangle(gcxgc As D2Chromatogram(), point As PointF) As D2Chromatogram()
+    Private Function GetRectangle(gcxgc As Chromatogram2DScan(), point As PointF) As Chromatogram2DScan()
         Dim t1 As New DoubleRange(point.X - w_rt1 / 2, point.X + w_rt1 / 2)
         Dim t2 As New DoubleRange(point.Y - w_rt2 / 2, point.Y + w_rt2 / 2)
         Dim scans = gcxgc.Where(Function(i) t1.IsInside(i.scan_time)).OrderBy(Function(i) i.scan_time).ToArray
         Dim matrix = scans _
             .Select(Function(i)
-                        Return New D2Chromatogram With {
+                        Return New Chromatogram2DScan With {
                             .scan_time = i.scan_time,
                             .intensity = i.intensity,
                             .chromatogram = i(t2)
@@ -166,14 +167,14 @@ Public Class GCxGCHeatMap : Inherits Plot
         Dim scaleY As d3js.scale.LinearScale
         Dim scale As DataScaler
         Dim n As Double
-        Dim rowLabelFont As Font = CSS.GetFont(CSSFont.TryParse(theme.axisLabelCSS))
+        Dim rowLabelFont As Font = css.GetFont(CSSFont.TryParse(theme.axisLabelCSS))
         Dim fontHeight As Double = g.MeasureString("H", rowLabelFont).Height
 
         For i As Integer = 0 To matrix.Length - 1
             ' for each metabolite row
             x = rect.Left
 
-            For Each col As D2Chromatogram() In matrix(i)
+            For Each col As Chromatogram2DScan() In matrix(i)
                 scaleX = d3js.scale.linear.domain(values:=col.Select(Function(d) d.scan_time)).range(values:={x, x + wx})
                 scaleY = d3js.scale.linear.domain(values:=col.Select(Function(d) d.times).IteratesALL).range(values:={y, y + wy})
                 n = col.Select(Function(d) d.size).Average

@@ -75,17 +75,17 @@ Namespace Formula
         Public Formula As Formula
 
         Sub New(f As Formula)
-            H = f("H")
-            C = f("C")
-            Si = f("Si")
-            N = f("N")
-            P = f("P")
-            O = f("O")
-            S = f("S")
-            Cl = f("Cl")
-            I = f("I")
+            Me.H = f("H")
+            Me.C = f("C")
+            Me.Si = f("Si")
+            Me.N = f("N")
+            Me.P = f("P")
+            Me.O = f("O")
+            Me.S = f("S")
+            Me.Cl = f("Cl")
+            Me.I = f("I")
             Me.F = f("F")
-            Br = f("Br")
+            Me.Br = f("Br")
 
             Dim counts As New Dictionary(Of String, Integer)(f.CountsByElement)
 

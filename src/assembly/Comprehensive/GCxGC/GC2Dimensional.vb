@@ -186,7 +186,7 @@ Public Module GC2Dimensional
     <Extension>
     Public Function Demodulate2D(sig As ChromatogramTick(),
                                  modtime As Double,
-                                 Optional sampleRate As Double = Double.NaN) As D2Chromatogram()
+                                 Optional sampleRate As Double = Double.NaN) As Chromatogram2DScan()
 
         Dim size As Size = sig.Demodulate2DShape(modtime, sampleRate)
         Dim matrix = sig.Split(size.Width) _
@@ -238,10 +238,10 @@ Public Module GC2Dimensional
     End Function
 
     <Extension>
-    Private Function scan1(t As ChromatogramTick()) As D2Chromatogram
+    Private Function scan1(t As ChromatogramTick()) As Chromatogram2DScan
         Dim t0 As Double = t(0).Time
 
-        Return New D2Chromatogram With {
+        Return New Chromatogram2DScan With {
             .scan_time = t0,
             .intensity = t.Sum(Function(i) i.Intensity),
             .chromatogram = t _

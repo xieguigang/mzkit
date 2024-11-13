@@ -114,6 +114,7 @@ Module MzMath
         Call RInternal.Object.Converts.addHandler(GetType(AlignmentOutput), AddressOf getAlignmentTable)
         Call RInternal.Object.Converts.addHandler(GetType(PrecursorInfo()), AddressOf getPrecursorTable)
         Call RInternal.Object.Converts.addHandler(GetType(MassWindow()), AddressOf mass_tabular)
+        Call RInternal.Object.Converts.addHandler(GetType(MzCalculator()), AddressOf adducts_table)
 
         Call RInternal.add("as.list", GetType(Tolerance), AddressOf summaryTolerance)
         Call RInternal.add("as.list", GetType(PPMmethod), AddressOf summaryTolerance)
@@ -121,6 +122,24 @@ Module MzMath
 
         Call ExactMass.SetExactMassParser(Function(f) FormulaScanner.EvaluateExactMass(f))
     End Sub
+
+    <RGenericOverloads("as.data.frame")>
+    Private Function adducts_table(adducts As MzCalculator(), args As list, env As Environment) As dataframe
+        Dim df As New dataframe With {
+            .columns = New Dictionary(Of String, Array),
+            .rownames = adducts _
+                .Select(Function(a) a.ToString) _
+                .ToArray
+        }
+
+        Call df.add("name", From a As MzCalculator In adducts Select a.name)
+        Call df.add("charge", From a As MzCalculator In adducts Select a.charge)
+        Call df.add("M", From a As MzCalculator In adducts Select a.M)
+        Call df.add("adducts", From a As MzCalculator In adducts Let mass = a.adducts Select mass)
+        Call df.add("mode", From a As MzCalculator In adducts Select a.mode)
+
+        Return df
+    End Function
 
     <RGenericOverloads("as.data.frame")>
     Private Function mass_tabular(masslist As MassWindow(), args As list, env As Environment) As Object
@@ -175,6 +194,7 @@ Module MzMath
         Return ms
     End Function
 
+    <RGenericOverloads("as.data.frame")>
     Private Function getPrecursorTable(list As PrecursorInfo(), args As list, env As Environment) As dataframe
         Dim precursor_type As String() = list.Select(Function(i) i.precursor_type).ToArray
         Dim charge As Double() = list.Select(Function(i) i.charge).ToArray
@@ -260,6 +280,7 @@ Module MzMath
         Return summary.ToString
     End Function
 
+    <RGenericOverloads("as.data.frame")>
     Private Function XICTable(x As MzGroup, args As list, env As Environment) As dataframe
         Dim mz As Array = {x.mz}
         Dim into As Array = x.XIC.Select(Function(t) t.Intensity).ToArray
@@ -1240,6 +1261,34 @@ Module MzMath
     <ExportAPI("defaultPrecursors")>
     Public Function defaultPrecursors(ionMode As String) As MzCalculator()
         Return Provider.GetCalculator(ionMode).Values.ToArray
+    End Function
+
+    ''' <summary>
+    ''' evaluate of the adduct annotation ranking score
+    ''' </summary>
+    ''' <param name="formula"></param>
+    ''' <param name="adducts"></param>
+    ''' <param name="ion"></param>
+    ''' <param name="env"></param>
+    ''' <returns>
+    ''' A ranking score numeric vector
+    ''' </returns>
+    <ExportAPI("rank_adducts")>
+    <RApiReturn(TypeCodes.double)>
+    Public Function rank_adducts(formula As String,
+                                 <RRawVectorArgument>
+                                 adducts As Object,
+                                 Optional ion As IonModes = IonModes.Positive,
+                                 Optional env As Environment = Nothing) As Object
+
+        Dim adducts_str As String() = CLRVector.asCharacter(adducts)
+        Dim rank As New AdductsRanking(ion)
+
+        Return adducts_str _
+            .Select(Function(precursor_type)
+                        Return rank.Rank(formula, precursor_type)
+                    End Function) _
+            .ToArray
     End Function
 
     <ExportAPI("toMS")>

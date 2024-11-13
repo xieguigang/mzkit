@@ -11,8 +11,17 @@
 declare namespace annotation {
    module assert {
       /**
-        * @param ion_mode default value Is ``'+'``.
-        * @param env default value Is ``null``.
+       * Check of the valid adducts
+       * 
+       * 
+        * @param formula -
+        * @param adducts -
+        * @param ion_mode -
+        * 
+        * + default value Is ``'+'``.
+        * @param env -
+        * 
+        * + default value Is ``null``.
       */
       function adducts(formula: string, adducts: any, ion_mode?: any, env?: object): object;
    }
@@ -161,6 +170,7 @@ declare namespace annotation {
    */
    function save_annotations(workspace: object, library: string, annotations: object): ;
    /**
+    * Set the XIC cache data into the report viewer workspace
     * 
     * 
      * @param workspace -

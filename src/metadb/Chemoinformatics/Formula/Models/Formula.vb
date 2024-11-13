@@ -178,6 +178,15 @@ Namespace Formula
         End Sub
 
         ''' <summary>
+        ''' make value copy of the given formula
+        ''' </summary>
+        ''' <param name="copy"></param>
+        Sub New(copy As Formula)
+            m_formula = copy.m_formula
+            CountsByElement = New Dictionary(Of String, Integer)(copy.CountsByElement)
+        End Sub
+
+        ''' <summary>
         ''' construct a new empty formula object
         ''' </summary>
         ''' <remarks>
@@ -187,6 +196,16 @@ Namespace Formula
         Sub New()
             CountsByElement = New Dictionary(Of String, Integer)
         End Sub
+
+        ''' <summary>
+        ''' Check of the specific element is inside current formula object?
+        ''' </summary>
+        ''' <param name="elementName"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function CheckElement(elementName As String) As Boolean
+            Return CountsByElement.ContainsKey(elementName) AndAlso CountsByElement(elementName) > 0
+        End Function
 
         Public Function CanonicalFormula() As String
             Return Canonical.BuildCanonicalFormula(CountsByElement)
@@ -277,6 +296,15 @@ Namespace Formula
             Return Not (f1 = f2)
         End Operator
 
+        ''' <summary>
+        ''' Multiply of the formula composition
+        ''' </summary>
+        ''' <param name="composition"></param>
+        ''' <param name="n"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' this function will create a new formula object
+        ''' </remarks>
         Public Shared Operator *(composition As Formula, n%) As Formula
             Dim newFormula$ = $"({composition}){n}"
             Dim newComposition = composition.CountsByElement _
@@ -288,6 +316,15 @@ Namespace Formula
             Return New Formula(newComposition, newFormula)
         End Operator
 
+        ''' <summary>
+        ''' Multiply of the formula composition
+        ''' </summary>
+        ''' <param name="n"></param>
+        ''' <param name="composition"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' this function will create a new formula object
+        ''' </remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator *(n%, composition As Formula) As Formula
             Return composition * n
@@ -327,7 +364,9 @@ Namespace Formula
         ''' </summary>
         ''' <param name="a"></param>
         ''' <param name="b"></param>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' the generated formula may contains the negative count element
+        ''' </returns>
         Public Shared Operator -(a As Formula, b As Formula) As Formula
             Dim newComposition = a.CountsByElement.Keys _
                 .JoinIterates(b.CountsByElement.Keys) _

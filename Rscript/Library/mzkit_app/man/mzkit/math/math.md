@@ -20,6 +20,7 @@ mass spectrometry data math toolkit
 + [sequenceOrder](math/sequenceOrder.1) reorder scan points into a sequence for downstream data analysis
 + [precursor_types](math/precursor_types.1) create precursor type calculator
 + [defaultPrecursors](math/defaultPrecursors.1) returns all precursor types for a given libtype
++ [rank_adducts](math/rank_adducts.1) evaluate of the adduct annotation ranking score
 + [toMS](math/toMS.1) 
 + [xcms_id](math/xcms_id.1) makes xcms_id format liked ROI unique id
 + [mz_index](math/mz_index.1) Create a peak index

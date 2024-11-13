@@ -113,13 +113,13 @@ Module GCxGC
     ''' </param>
     ''' <returns></returns>
     <ExportAPI("TIC2D")>
-    <RApiReturn(GetType(D2Chromatogram))>
+    <RApiReturn(GetType(Chromatogram2DScan))>
     Public Function TIC2D(TIC As ChromatogramTick(), modtime As Double) As Object
         Return TIC.Demodulate2D(modtime)
     End Function
 
     <ExportAPI("TIC1D")>
-    Public Function TIC1D(matrix As D2Chromatogram()) As ChromatogramTick()
+    Public Function TIC1D(matrix As Chromatogram2DScan()) As ChromatogramTick()
         Return matrix _
             .Select(Function(i)
                         Return New ChromatogramTick With {
@@ -181,7 +181,7 @@ Module GCxGC
     ''' this function will extract the TIC data by default.
     ''' </remarks>
     <ExportAPI("extract_xic_layer")>
-    <RApiReturn(GetType(D2Chromatogram))>
+    <RApiReturn(GetType(Chromatogram2DScan))>
     Public Function create2DPeaks(raw As mzPack,
                                   Optional mz As Double = Double.NaN,
                                   Optional mzdiff As Object = "ppm:30",
@@ -195,7 +195,7 @@ Module GCxGC
         End If
 
         Dim test As Tolerance = mzErr.TryCast(Of Tolerance)
-        Dim extract As Func(Of ScanMS1, D2Chromatogram)
+        Dim extract As Func(Of ScanMS1, Chromatogram2DScan)
 
         If extract_XIC Then
             extract = ExtractXIC(mz, mzdiff:=test)
@@ -251,7 +251,7 @@ Module GCxGC
     ''' <returns></returns>
     <ExportAPI("save.cdf")>
     <RApiReturn(TypeCodes.boolean)>
-    Public Function saveCDF(TIC As D2Chromatogram(), <RRawVectorArgument> file As Object, Optional env As Environment = Nothing) As Object
+    Public Function saveCDF(TIC As Chromatogram2DScan(), <RRawVectorArgument> file As Object, Optional env As Environment = Nothing) As Object
         Dim filestream As [Variant](Of Stream, Message) = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Write, env)
 
         If filestream Like GetType(Message) Then

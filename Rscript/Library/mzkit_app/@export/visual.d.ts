@@ -178,9 +178,15 @@ declare namespace visual {
     * 
     * 
      * @param ms1 -
+     * @param mz 
+     * + default value Is ``null``.
+     * @param mass_err 
+     * + default value Is ``'ppm:20'``.
+     * @param args 
+     * + default value Is ``null``.
      * @param env -
      * 
      * + default value Is ``null``.
    */
-   function xic_scatter_density(ms1: any, env?: object): any;
+   function xic_scatter_density(ms1: any, mz?: object, mass_err?: any, args?: object, env?: object): any;
 }
