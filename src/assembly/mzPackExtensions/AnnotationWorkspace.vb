@@ -176,9 +176,15 @@ Public Class AnnotationWorkspace : Implements IDisposable, IWorkspaceReader
         Call Flush()
         ' and then load the peaktable back from the filesystem
         For Each peak As xcms2 In TqdmWrapper.Wrap(LoadPeakTable.ToArray)
-            For Each file As mzPack In pool
-                Using s As Stream = pack.OpenFile($"/xic_table/{file.source}/{peak.ID}.xic",, FileAccess.Write)
-                    Call file.PickIonScatter(peak.mz, peak.rt, mass_da, rt_win).SaveDataFrame(s)
+            Dim scatter = pool.AsParallel _
+                .Select(Function(file)
+                            Return New NamedCollection(Of ms1_scan)(file.source, file.PickIonScatter(peak.mz, peak.rt, mass_da, rt_win))
+                        End Function) _
+                .ToArray
+
+            For Each file As NamedCollection(Of ms1_scan) In scatter
+                Using s As Stream = pack.OpenFile($"/xic_table/{file.name}/{peak.ID}.xic",, FileAccess.Write)
+                    Call file.SaveDataFrame(s)
                     Call s.Flush()
                 End Using
             Next
