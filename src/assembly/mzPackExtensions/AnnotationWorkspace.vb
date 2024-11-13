@@ -172,6 +172,17 @@ Public Class AnnotationWorkspace : Implements IDisposable, IWorkspaceReader
     Public Sub CacheXicTable(files As IEnumerable(Of mzPack), Optional mass_da As Double = 0.5, Optional rt_win As Double = 15)
         Dim pool As mzPack() = files.ToArray
 
+        For i As Integer = 0 To pool.Length - 1
+            If pool(i).source.StringEmpty Then
+                Throw New InvalidDataException("Missing sample source file name for the mzpack rawdata object!")
+            End If
+
+            pool(i).source = pool(i).source _
+                .Replace(".mzPack", "") _
+                .Replace(".mzpack", "") _
+                .Replace(".MZPACK", "")
+        Next
+
         ' commit current data pool
         Call Flush()
         ' and then load the peaktable back from the filesystem
