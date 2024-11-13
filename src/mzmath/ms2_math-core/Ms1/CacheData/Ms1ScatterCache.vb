@@ -59,6 +59,7 @@
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.BinaryDumping
 
 ''' <summary>
@@ -67,6 +68,12 @@ Imports Microsoft.VisualBasic.Serialization.BinaryDumping
 Public Module Ms1ScatterCache
 
     ReadOnly network As New NetworkByteOrderBuffer
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Sub SaveDataFrame(scatter As Enumeration(Of ms1_scan), file As Stream)
+        Call scatter.AsEnumerable.SaveDataFrame(file)
+    End Sub
 
     <Extension>
     Public Sub SaveDataFrame(scatter As IEnumerable(Of ms1_scan), file As Stream)

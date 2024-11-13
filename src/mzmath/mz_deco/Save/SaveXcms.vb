@@ -58,6 +58,7 @@
 
 Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.Data.Trinity
@@ -196,6 +197,8 @@ Public Module SaveXcms
         Return True
     End Function
 
+    ReadOnly magic As Byte() = Encoding.ASCII.GetBytes("xcms/mzkit")
+
     ''' <summary>
     ''' 
     ''' </summary>
@@ -207,6 +210,7 @@ Public Module SaveXcms
     Public Sub DumpSample(sample As IEnumerable(Of xcms2), npeaks As Integer, sampleNames As String(), file As Stream)
         Dim bin As New BinaryWriter(file)
 
+        Call bin.Write(magic)
         Call bin.Write(npeaks)
         Call bin.Write(sampleNames.Length)
 
@@ -231,8 +235,19 @@ Public Module SaveXcms
         Call bin.Flush()
     End Sub
 
+    ''' <summary>
+    ''' read table data from rawdata file
+    ''' </summary>
+    ''' <param name="file"></param>
+    ''' <returns></returns>
     Public Function ReadSamplePeaks(file As Stream) As xcms2()
         Dim rd As New BinaryReader(file)
+        Dim header As Byte() = rd.ReadBytes(magic.Length)
+
+        If Not header.SequenceEqual(magic) Then
+            Throw New InvalidDataException($"invalid magic header: {Encoding.ASCII.GetString(header)}({header.Select(Function(b) b.ToString("x2")).JoinBy("-")})!")
+        End If
+
         Dim ROIs As Integer = rd.ReadInt32
         Dim samples As Integer = rd.ReadInt32
         Dim names As String() = New String(samples - 1) {}

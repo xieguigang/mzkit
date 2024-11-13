@@ -101,6 +101,14 @@ Public Class AdductsRanking
         '    End If
         'End If
 
+        If formula.CheckElement("Cl") Then
+            If adduct_str = "[M-Cl]+" Then
+                If formula!Cl = 1 Then
+                    Return maxValue
+                End If
+            End If
+        End If
+
         Return 1
     End Function
 
