@@ -188,6 +188,29 @@ Public Class PeakAssign : Inherits Plot
         Return output
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="matrix"></param>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' create x axis for m/z dimension, for intensity axis scale, it always scale to 0,100, and axis range created via [0,110] 
+    ''' </remarks>
+    Public Shared Function CreateXMzAxisTicks(matrix As ms2()) As Double()
+        Dim xticks As Double() = (matrix.Select(Function(p) p.mz).Range * 1.125).CreateAxisTicks
+
+        If xticks.All(Function(ti) ti = xticks(0)) Then
+            Dim xtmp As Double = matrix _
+                .Select(Function(p) p.mz) _
+                .Average
+
+            xticks = {xtmp, xtmp * 0.85, xtmp * 1.125}
+            xticks = xticks.CreateAxisTicks
+        End If
+
+        Return xticks
+    End Function
+
     Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
         Dim images = ResizeImages(canvas, ratio:=0.2)
 
@@ -201,15 +224,7 @@ Public Class PeakAssign : Inherits Plot
         Dim css As CSSEnvirnment = g.LoadEnvironment
         Dim maxinto As Double = matrix.Select(Function(p) p.intensity).Max
         Dim rect As RectangleF = canvas.PlotRegion(css).ToFloat
-        Dim xticks As Double() = (matrix.Select(Function(p) p.mz).Range * 1.125).CreateAxisTicks
-
-        If xticks.All(Function(ti) ti = xticks(0)) Then
-            Dim xtmp As Double = matrix.Select(Function(p) p.mz).Average
-
-            xticks = {xtmp, xtmp * 0.85, xtmp * 1.125}
-            xticks = xticks.CreateAxisTicks
-        End If
-
+        Dim xticks As Double() = CreateXMzAxisTicks(matrix)
         Dim xscale = d3js.scale.linear().domain(values:=xticks).range(values:={rect.Left, rect.Right})
         Dim yscale = d3js.scale.linear().domain(values:=New Double() {0, 110}).range(values:={rect.Top, rect.Bottom})
         Dim scaler As New DataScaler() With {
