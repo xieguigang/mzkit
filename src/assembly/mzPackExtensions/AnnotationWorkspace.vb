@@ -294,8 +294,8 @@ Public Class AnnotationWorkspace : Implements IDisposable, IWorkspaceReader
     ''' Commit the memory cache data into filesystem
     ''' </summary>
     Public Sub Flush()
-        Call pack.WriteText(libraries.GetJson, "/libraries.json")
-        Call pack.WriteText(samplefiles.ToArray.GetJson, "/samplefiles.json")
+        Call pack.WriteText(libraries.GetJson, "/libraries.json", allocate:=False)
+        Call pack.WriteText(samplefiles.ToArray.GetJson, "/samplefiles.json", allocate:=False)
 
         Call DirectCast(pack, IFileSystemEnvironment).Flush()
     End Sub
