@@ -118,6 +118,19 @@ Public Class AnnotationWorkspace : Implements IDisposable, IWorkspaceReader
         If pack.FileExists("/samplefiles.json", ZERO_Nonexists:=True) Then
             samplefiles.AddRange(pack.ReadText("/samplefiles.json").LoadJSON(Of String()))
         End If
+
+        If libraries.IsNullOrEmpty Then
+            ' scan from dir names
+            Dim result_dir As StreamGroup = pack.GetObject("/result/")
+
+            If Not result_dir Is Nothing Then
+                libraries = result_dir.dirs _
+                    .ToDictionary(Function(a) a.fileName,
+                                  Function(a)
+                                      Return 0
+                                  End Function)
+            End If
+        End If
     End Sub
 
     ''' <summary>
@@ -157,10 +170,6 @@ Public Class AnnotationWorkspace : Implements IDisposable, IWorkspaceReader
 
     Public Iterator Function GetLibraryHits(library As String) As IEnumerable(Of AlignmentHit)
         Dim dir As StreamGroup = pack.GetObject($"/result/{library}/")
-
-        If (Not libraries.ContainsKey(library)) OrElse libraries(library) <= 0 Then
-            Return
-        End If
 
         For Each file As StreamBlock In dir.ListFiles(recursive:=True).OfType(Of StreamBlock)
             Dim buf As Stream = pack.OpenBlock(file)
