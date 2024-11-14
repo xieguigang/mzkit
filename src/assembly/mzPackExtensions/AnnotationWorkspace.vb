@@ -280,6 +280,10 @@ Public Class AnnotationWorkspace : Implements IDisposable, IWorkspaceReader
         Dim i As Integer = 0
 
         For Each peak_result As AlignmentHit In result.SafeQuery
+            If peak_result Is Nothing Then
+                Continue For
+            End If
+
             i += 1
 
             Using file As Stream = pack.OpenFile($"/result/{library}/{peak_result.xcms_id}/{peak_result.libname}.dat",, FileAccess.Write)
