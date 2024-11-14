@@ -66,6 +66,7 @@ Imports BioNovoGene.BioDeep.MSEngine
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Unit
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.DataStorage.HDSPack
@@ -104,9 +105,12 @@ Public Class AnnotationWorkspace : Implements IDisposable, IWorkspaceReader
     ''' </summary>
     ''' <param name="file"></param>
     ''' <param name="source_file"></param>
-    Sub New(file As Stream, Optional source_file As String = Nothing)
+    Sub New(file As Stream,
+            Optional source_file As String = Nothing,
+            Optional meta_allocated As Long = 32 * ByteSize.MB)
+
         source = source_file
-        pack = New StreamPack(file)
+        pack = New StreamPack(file, meta_size:=meta_allocated)
 
         If pack.FileExists("/libraries.json", ZERO_Nonexists:=True) Then
             libraries = pack.ReadText("/libraries.json").LoadJSON(Of Dictionary(Of String, Integer))
