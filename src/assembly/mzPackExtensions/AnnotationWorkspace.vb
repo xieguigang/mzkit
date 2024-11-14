@@ -66,6 +66,7 @@ Imports BioNovoGene.BioDeep.MSEngine
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Unit
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.DataStorage.HDSPack
@@ -104,15 +105,31 @@ Public Class AnnotationWorkspace : Implements IDisposable, IWorkspaceReader
     ''' </summary>
     ''' <param name="file"></param>
     ''' <param name="source_file"></param>
-    Sub New(file As Stream, Optional source_file As String = Nothing)
+    Sub New(file As Stream,
+            Optional source_file As String = Nothing,
+            Optional meta_allocated As Long = 32 * ByteSize.MB)
+
         source = source_file
-        pack = New StreamPack(file)
+        pack = New StreamPack(file, meta_size:=meta_allocated)
 
         If pack.FileExists("/libraries.json", ZERO_Nonexists:=True) Then
             libraries = pack.ReadText("/libraries.json").LoadJSON(Of Dictionary(Of String, Integer))
         End If
         If pack.FileExists("/samplefiles.json", ZERO_Nonexists:=True) Then
             samplefiles.AddRange(pack.ReadText("/samplefiles.json").LoadJSON(Of String()))
+        End If
+
+        If libraries.IsNullOrEmpty Then
+            ' scan from dir names
+            Dim result_dir As StreamGroup = pack.GetObject("/result/")
+
+            If Not result_dir Is Nothing Then
+                libraries = result_dir.dirs _
+                    .ToDictionary(Function(a) a.fileName,
+                                  Function(a)
+                                      Return 0
+                                  End Function)
+            End If
         End If
     End Sub
 
@@ -153,10 +170,6 @@ Public Class AnnotationWorkspace : Implements IDisposable, IWorkspaceReader
 
     Public Iterator Function GetLibraryHits(library As String) As IEnumerable(Of AlignmentHit)
         Dim dir As StreamGroup = pack.GetObject($"/result/{library}/")
-
-        If (Not libraries.ContainsKey(library)) OrElse libraries(library) <= 0 Then
-            Return
-        End If
 
         For Each file As StreamBlock In dir.ListFiles(recursive:=True).OfType(Of StreamBlock)
             Dim buf As Stream = pack.OpenBlock(file)
@@ -277,6 +290,11 @@ Public Class AnnotationWorkspace : Implements IDisposable, IWorkspaceReader
 
         For Each peak_result As AlignmentHit In result.SafeQuery
             i += 1
+
+            If peak_result Is Nothing Then
+                Call $"found null alignment hit result value for '{library}' at index offset [{i}]!".Warning
+                Continue For
+            End If
 
             Using file As Stream = pack.OpenFile($"/result/{library}/{peak_result.xcms_id}/{peak_result.libname}.dat",, FileAccess.Write)
                 Dim bin As New BinaryDataWriter(file)

@@ -102,11 +102,14 @@ declare namespace annotation {
         * + default value Is ``null``.
         * @param lazy 
         * + default value Is ``false``.
+        * @param meta_allocated please increase this pre-allocation size if there are too many samples data files, default is 32MB pre-allocated size.
+        * 
+        * + default value Is ``33554432``.
         * @param env -
         * 
         * + default value Is ``null``.
       */
-      function annotation_workspace(file: any, io?: object, lazy?: boolean, env?: object): object;
+      function annotation_workspace(file: any, io?: object, lazy?: boolean, meta_allocated?: object, env?: object): object;
    }
    /**
     * Associates the ms1 peaks with the ms2 spectrum alignment result hits.
