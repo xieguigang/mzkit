@@ -171,10 +171,6 @@ Public Class AnnotationWorkspace : Implements IDisposable, IWorkspaceReader
     Public Iterator Function GetLibraryHits(library As String) As IEnumerable(Of AlignmentHit)
         Dim dir As StreamGroup = pack.GetObject($"/result/{library}/")
 
-        If (Not libraries.ContainsKey(library)) OrElse libraries(library) <= 0 Then
-            Return
-        End If
-
         For Each file As StreamBlock In dir.ListFiles(recursive:=True).OfType(Of StreamBlock)
             Dim buf As Stream = pack.OpenBlock(file)
             Dim result As AlignmentHit = ReadPack.ReadMs2Annotation(buf)
