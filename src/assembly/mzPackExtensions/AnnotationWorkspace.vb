@@ -291,6 +291,11 @@ Public Class AnnotationWorkspace : Implements IDisposable, IWorkspaceReader
         For Each peak_result As AlignmentHit In result.SafeQuery
             i += 1
 
+            If peak_result Is Nothing Then
+                Call $"found null alignment hit result value for '{library}' at index offset [{i}]!".Warning
+                Continue For
+            End If
+
             Using file As Stream = pack.OpenFile($"/result/{library}/{peak_result.xcms_id}/{peak_result.libname}.dat",, FileAccess.Write)
                 Dim bin As New BinaryDataWriter(file)
                 Dim buf As MemoryStream = peak_result.PackAlignment
