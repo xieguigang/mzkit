@@ -6,6 +6,7 @@ open.annotation_workspace \-
 \fIopen.annotation_workspace(\fBfile\fR as any, 
 \fBio\fR as <integer> FileAccess = [Read], 
 \fBlazy\fR as boolean = FALSE, 
+\fBmeta_allocated\fR as integer = 33554432, 
 [\fB<Environment>\fR]);\fR
 .SH OPTIONS
 .PP
@@ -13,6 +14,11 @@ open.annotation_workspace \-
 .PP
 .PP
 \fBio\fB \fR\- Read or Write. 
+.PP
+.PP
+\fBmeta_allocated\fB \fR\- 
+ please increase this pre-allocation size if there are too many samples data files, default is 32MB pre-allocated size.
+. 
 .PP
 .PP
 \fBenv\fB \fR\- -. 
