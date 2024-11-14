@@ -59,7 +59,6 @@
 #End Region
 
 Imports System.Drawing
-Imports System.Drawing.Drawing2D
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
@@ -123,6 +122,8 @@ Public Class PlotMassWindowXIC : Inherits Plot
     ''' </summary>
     ReadOnly mass_windows As DoubleTagged(Of ms1_scan())()
     ReadOnly xic As ChromatogramTick()
+    ReadOnly rtmin As Double
+    ReadOnly rtmax As Double
 
     ''' <summary>
     ''' Construct a plot that combined of XIC with the scatter density heatmap
@@ -145,6 +146,15 @@ Public Class PlotMassWindowXIC : Inherits Plot
         Call MyBase.New(theme)
 
         Dim pool As ms1_scan() = xic.ToArray
+        Dim rt = pool.Select(Function(a) a.scan_time).ToArray
+
+        If rt.Length > 0 Then
+            Me.rtmin = rt.Min
+            Me.rtmax = rt.Max
+        Else
+            Me.rtmin = 0
+            Me.rtmax = 1
+        End If
 
         Me.xic = loadXIC(pool, mz, mzerr).ToArray
         Me.mass_windows = pool _
@@ -178,6 +188,8 @@ Public Class PlotMassWindowXIC : Inherits Plot
             .BSpline(RESOLUTION:=2) _
             .ToArray
 
+        Yield New PointData(rtmin, 0) With {.color = heatColors(0)}
+
         For Each ti As PointF In spline
             Dim i As Integer = intensity.ScaleMapping(ti.Y, index)
 
@@ -192,6 +204,8 @@ Public Class PlotMassWindowXIC : Inherits Plot
                 .color = heatColors(i)
             }
         Next
+
+        Yield New PointData(rtmax, 0) With {.color = heatColors(0)}
     End Function
 
     Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
