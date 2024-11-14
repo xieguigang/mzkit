@@ -172,6 +172,28 @@ Public Class PlotMassWindowXIC : Inherits Plot
         Next
     End Function
 
+    Private Iterator Function SplineLine(intensity As DoubleRange, index As DoubleRange, heatColors As String()) As IEnumerable(Of PointData)
+        Dim spline As IEnumerable(Of PointF) = xic _
+            .Select(Function(ci) New PointF(ci.Time, ci.Intensity)) _
+            .BSpline(RESOLUTION:=2) _
+            .ToArray
+
+        For Each ti As PointF In spline
+            Dim i As Integer = intensity.ScaleMapping(ti.Y, index)
+
+            If i >= index.Max Then
+                i = index.Max - 1
+            End If
+            If i < 0 Then
+                i = 0
+            End If
+
+            Yield New PointData(ti.X, ti.Y) With {
+                .color = heatColors(i)
+            }
+        Next
+    End Function
+
     Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
         Dim css As CSSEnvirnment = g.LoadEnvironment
         Dim rect As Rectangle = canvas.PlotRegion(css)
@@ -185,24 +207,7 @@ Public Class PlotMassWindowXIC : Inherits Plot
             .lineType = DashStyle.Dot,
             .pointSize = theme.pointSize,
             .width = 2,
-            .pts = xic _
-                .Select(Function(ci) New PointF(ci.Time, ci.Intensity)) _
-                .BSpline(RESOLUTION:=2) _
-                .Select(Function(ti)
-                            Dim i As Integer = intensity.ScaleMapping(ti.Y, index)
-
-                            If i >= index.Max Then
-                                i = index.Max - 1
-                            End If
-                            If i < 0 Then
-                                i = 0
-                            End If
-
-                            Return New PointData(ti.X, ti.Y) With {
-                                .color = heatColors(i)
-                            }
-                        End Function) _
-                .ToArray,
+            .pts = SplineLine(intensity, index, heatColors).ToArray,
             .shape = LegendStyles.Circle
         }
         Dim mass_scatter As New List(Of SerialData)
