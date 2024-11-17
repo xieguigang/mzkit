@@ -124,6 +124,7 @@ Module metaDNAInfer
         Call RInternal.Object.Converts.makeDataframe.addHandler(GetType(MetaDNAResult()), AddressOf getResultTable)
     End Sub
 
+    <RGenericOverloads("as.data.frame")>
     Private Function getResultTable(list As MetaDNAResult(), args As list, env As Environment) As dataframe
         Dim data As New dataframe With {
             .columns = New Dictionary(Of String, Array)
