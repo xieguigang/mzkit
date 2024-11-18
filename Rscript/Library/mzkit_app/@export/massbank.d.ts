@@ -118,6 +118,9 @@ declare namespace massbank {
    */
    function load_herbs(repo: string): object;
    /**
+   */
+   function load_herbs_list(file: string): object;
+   /**
     * construct a new metabolite annotation information data
     * 
     * 
