@@ -1003,9 +1003,25 @@ Module Massbank
         Return HERB.HerbReader.LoadDatabase(repo).ToArray
     End Function
 
+    ''' <summary>
+    ''' load herbs species information
+    ''' </summary>
+    ''' <param name="file"></param>
+    ''' <returns></returns>
     <ExportAPI("load_herbs_list")>
     <RApiReturn(GetType(HERB_herb_info))>
     Public Function load_herbs_list(file As String) As Object
         Return file.LoadCsv(Of HERB_herb_info)(mute:=True, tsv:=True).ToArray
+    End Function
+
+    ''' <summary>
+    ''' load the herb compound information
+    ''' </summary>
+    ''' <param name="file"></param>
+    ''' <returns></returns>
+    <ExportAPI("load_HERB_ingredient")>
+    <RApiReturn(GetType(HERB_ingredient_info))>
+    Public Function HERB_ingredient_info(file As String) As Object
+        Return file.LoadCsv(Of HERB_ingredient_info)(mute:=True, tsv:=True).ToArray
     End Function
 End Module
