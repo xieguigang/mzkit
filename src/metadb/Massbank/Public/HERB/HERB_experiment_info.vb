@@ -1,11 +1,13 @@
-﻿Namespace HERB
+﻿Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
+
+Namespace HERB
 
     Public Class HERB_experiment_info
 
         Public Property EXP_id As String
-        Public Property Herb_ingredient_id As String
-        Public Property Herb_ingredient_name As String
-        Public Property Herb_ingredient As String
+        <Column("Herb/ingredient_id")> Public Property Herb_ingredient_id As String
+        <Column("Herb/ingredient_name")> Public Property Herb_ingredient_name As String
+        <Column("Herb/ingredient")> Public Property Herb_ingredient As String
         Public Property GSE_id As String
         Public Property Organism As String
         Public Property Strain As String
