@@ -28,3 +28,4 @@ Metabolite annotation database toolkit
 + [rankingNames](massbank/rankingNames.1) Ranking a set of the given synonym string collection for find common name.
 + [metabo_anno](massbank/metabo_anno.1) construct a new metabolite annotation information data
 + [inchikey](massbank/inchikey.1) generates the inchikey hashcode based on the given inchi data
++ [load_herbs](massbank/load_herbs.1) load compounds from herbs database

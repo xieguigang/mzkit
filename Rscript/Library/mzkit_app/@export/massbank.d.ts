@@ -112,6 +112,12 @@ declare namespace massbank {
    */
    function lipidmaps_id(lipidmaps: any, env?: object): any;
    /**
+    * load compounds from herbs database
+    * 
+    * 
+   */
+   function load_herbs(repo: string): object;
+   /**
     * construct a new metabolite annotation information data
     * 
     * 
