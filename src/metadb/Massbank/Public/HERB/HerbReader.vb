@@ -1,4 +1,6 @@
-﻿Namespace HERB
+﻿Imports Microsoft.VisualBasic.Data.csv
+
+Namespace HERB
 
     ''' <summary>
     ''' data reader helper for the herbs database tables
@@ -11,7 +13,7 @@
         ''' <param name="dir"></param>
         ''' <returns></returns>
         Public Iterator Function LoadDatabase(dir As String) As IEnumerable(Of HerbCompoundObject)
-
+            Dim disease As HERB_disease_info() = $"{dir}/HERB_disease_info.txt".LoadCsv(Of HERB_disease_info)
         End Function
     End Module
 End Namespace
