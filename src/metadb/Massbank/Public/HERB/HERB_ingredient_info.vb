@@ -20,5 +20,9 @@ Namespace HERB
         Public Property PubChem_id As String
         Public Property DrugBank_id As String
 
+        Public Overrides Function ToString() As String
+            Return $"{Ingredient_name} ({Ingredient_formula})"
+        End Function
+
     End Class
 End Namespace
