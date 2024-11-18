@@ -1002,4 +1002,10 @@ Module Massbank
     Public Function load_herbs(repo As String) As Object
         Return HERB.HerbReader.LoadDatabase(repo).ToArray
     End Function
+
+    <ExportAPI("load_herbs_list")>
+    <RApiReturn(GetType(HERB_herb_info))>
+    Public Function load_herbs_list(file As String) As Object
+        Return file.LoadCsv(Of HERB_herb_info)(mute:=True, tsv:=True).ToArray
+    End Function
 End Module
