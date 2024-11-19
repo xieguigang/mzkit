@@ -112,12 +112,23 @@ declare namespace massbank {
    */
    function lipidmaps_id(lipidmaps: any, env?: object): any;
    /**
+    * load the herb compound information
+    * 
+    * 
+     * @param file -
+   */
+   function load_HERB_ingredient(file: string): object;
+   /**
     * load compounds from herbs database
     * 
     * 
    */
    function load_herbs(repo: string): object;
    /**
+    * load herbs species information
+    * 
+    * 
+     * @param file -
    */
    function load_herbs_list(file: string): object;
    /**

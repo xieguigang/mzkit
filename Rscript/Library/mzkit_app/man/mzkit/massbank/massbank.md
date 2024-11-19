@@ -29,4 +29,5 @@ Metabolite annotation database toolkit
 + [metabo_anno](massbank/metabo_anno.1) construct a new metabolite annotation information data
 + [inchikey](massbank/inchikey.1) generates the inchikey hashcode based on the given inchi data
 + [load_herbs](massbank/load_herbs.1) load compounds from herbs database
-+ [load_herbs_list](massbank/load_herbs_list.1) 
++ [load_herbs_list](massbank/load_herbs_list.1) load herbs species information
++ [load_HERB_ingredient](massbank/load_HERB_ingredient.1) load the herb compound information
