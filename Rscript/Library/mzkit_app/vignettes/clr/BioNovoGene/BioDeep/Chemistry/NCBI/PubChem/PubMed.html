@@ -24,6 +24,8 @@
 
         <p>A publication record in pubmed database</p>
 
+<p>dump data from pubchem data that make associates from pubchem and pubmed</p>
+
         <h3>Declare</h3>        
 
         <pre>
@@ -38,10 +40,12 @@ export class PubMed {
    articlepubdate: integer;
    articletitle: string;
    articletype: string;
+   # the related compound list about this article
    cids: string;
    citation: string;
    doi: string;
    meshcodes: string;
+   # keywords about this article
    meshheadings: string;
    meshsubheadings: string;
    # the article pubmed id
