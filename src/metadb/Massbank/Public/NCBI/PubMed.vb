@@ -67,6 +67,9 @@ Namespace NCBI.PubChem
     ''' <summary>
     ''' A publication record in pubmed database
     ''' </summary>
+    ''' <remarks>
+    ''' dump data from pubchem data that make associates from pubchem and pubmed
+    ''' </remarks>
     Public Class PubMed
 
         ''' <summary>
@@ -78,11 +81,21 @@ Namespace NCBI.PubChem
         Public Property articletype As String
         <Collection("pmidsrcs", "|")>
         Public Property pmidsrcs As String()
+
+        ''' <summary>
+        ''' keywords about this article
+        ''' </summary>
+        ''' <returns></returns>
         <Collection("meshheadings", "|")>
         Public Property meshheadings As String()
         <Collection("meshsubheadings", "|")>
         Public Property meshsubheadings As String()
         Public Property meshcodes As String
+
+        ''' <summary>
+        ''' the related compound list about this article
+        ''' </summary>
+        ''' <returns></returns>
         <Collection("cids", "|")>
         Public Property cids As String()
         Public Property sids As String
