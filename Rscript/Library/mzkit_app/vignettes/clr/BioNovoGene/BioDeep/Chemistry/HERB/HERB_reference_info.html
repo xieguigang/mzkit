@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>BioNovoGene.BioDeep.Chemistry.NCBI.PubChem.PubMed</title>
+    <title>BioNovoGene.BioDeep.Chemistry.HERB.HERB_reference_info</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="https://mzkit.org/assets/js/page.css">
@@ -13,45 +13,38 @@
 
         <table style="width: 100%;">
             <tr>
-                <td>PubMed {BioNovoGene.BioDeep.Chemistry.NCBI.PubChem}</td>
+                <td>HERB_reference_info {BioNovoGene.BioDeep.Chemistry.HERB}</td>
                 <td style="text-align: right;">.NET clr documentation</td>
             </tr>
         </table>
 
-        <h2>PubMed</h2>
+        <h2>HERB_reference_info</h2>
 
         <h3>Description</h3>
 
-        <p>A publication record in pubmed database</p>
-
-<p>dump data from pubchem data that make associates from pubchem and pubmed</p>
+        
 
         <h3>Declare</h3>        
 
         <pre>
             <code id="clr_ts">
-# namespace BioNovoGene.BioDeep.Chemistry.NCBI.PubChem
-export class PubMed {
-   annotation: string;
-   articleabstract: string;
-   articleaffil: string;
-   articleauth: string;
-   articlejourname: string;
-   articlepubdate: integer;
-   articletitle: string;
-   articletype: string;
-   # the related compound list about this article
-   cids: string;
-   citation: string;
-   doi: string;
-   meshcodes: string;
-   # keywords about this article
-   meshheadings: string;
-   meshsubheadings: string;
-   # the article pubmed id
-   pmid: integer;
-   pmidsrcs: string;
-   sids: string;
+# namespace BioNovoGene.BioDeep.Chemistry.HERB
+export class HERB_reference_info {
+   Animal_Experiment: string;
+   Cell_Experiment: string;
+   Clinical_Experiment: string;
+   DOI: string;
+   Experiment_subject: string;
+   Experiment_type: string;
+   Herb_ingredient: string;
+   Herb_ingredient_id: string;
+   Herb_ingredient_name: string;
+   Journal: string;
+   Not_Mentioned: string;
+   Publish_Date: string;
+   PubMed_id: string;
+   REF_id: string;
+   Reference_title: string;
 }
 </code>
         </pre>
