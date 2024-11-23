@@ -93,6 +93,11 @@ Public Class ChemicalFormula : Inherits NetworkGraph(Of ChemicalElement, Chemica
         End Get
     End Property
 
+    ''' <summary>
+    ''' find atom element by unique reference id
+    ''' </summary>
+    ''' <param name="elementkey"></param>
+    ''' <returns></returns>
     Public Iterator Function FindKeys(elementkey As String) As IEnumerable(Of ChemicalKey)
         For Each key As ChemicalKey In AllBonds
             If key.U.label = elementkey OrElse key.V.label = elementkey Then

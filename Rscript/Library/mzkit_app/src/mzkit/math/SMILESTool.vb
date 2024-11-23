@@ -66,6 +66,7 @@ Imports BioNovoGene.BioDeep.Chemoinformatics.SMILES.Embedding
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Serialization.Bencoding
 Imports SMRUCC.Rsharp
@@ -134,6 +135,31 @@ Module SMILESTool
     <ExportAPI("as.graph")>
     Public Function asGraph(smiles As ChemicalFormula) As NetworkGraph
         Return smiles.AsGraph
+    End Function
+
+    ''' <summary>
+    ''' cast the smiles molecule graph as matrix
+    ''' </summary>
+    ''' <param name="smiles"></param>
+    ''' <param name="atoms">a set of the target atom group keys</param>
+    ''' <returns></returns>
+    ''' 
+    <ExportAPI("graph_matrix")>
+    <RApiReturn(GetType(NumericMatrix))>
+    Public Function asMatrix(smiles As ChemicalFormula, atoms As String()) As Object
+        Dim linking As New List(Of Double())
+
+        For Each key As String In atoms
+            Call linking.Add(atoms _
+                .Select(Function(grp)
+                            Return CDbl(smiles.AllBonds _
+                                .Where(Function(b) b.U.group = grp OrElse b.V.group = grp) _
+                                .Count)
+                        End Function) _
+                .ToArray)
+        Next
+
+        Return New NumericMatrix(linking)
     End Function
 
     ''' <summary>
