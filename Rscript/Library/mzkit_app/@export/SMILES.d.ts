@@ -35,6 +35,14 @@ declare namespace SMILES {
    */
    function atoms(SMILES: object): object;
    /**
+    * cast the smiles molecule graph as matrix
+    * 
+    * 
+     * @param smiles -
+     * @param atoms a set of the target atom group keys
+   */
+   function graph_matrix(smiles: object, atoms: string): object;
+   /**
     * create graph embedding result for a specific molecular strucutre data
     * 
     * 
