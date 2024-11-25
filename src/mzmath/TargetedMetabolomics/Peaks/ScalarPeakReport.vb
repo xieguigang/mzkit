@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
+﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 
 Public Class ScalarPeakReport
 
@@ -70,7 +71,11 @@ Public Class ScalarPeakReport
     <Column("Relative RT")> Public Property RelativeRT As String
     <Column("Flag Details")> Public Property FlagDetails As String
 
-    Public Shared Function ExtractSampleData() As  
+    Public Function GetPeakData() As IonPeakTableRow
+
+    End Function
+
+    Public Shared Iterator Function ExtractSampleData(table As IEnumerable(Of ScalarPeakReport)) As IEnumerable(Of DataSet)
 
     End Function
 

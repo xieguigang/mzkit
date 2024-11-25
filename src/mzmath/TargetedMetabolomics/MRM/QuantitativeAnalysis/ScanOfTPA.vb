@@ -60,7 +60,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Data
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace MRM
 
@@ -89,7 +89,7 @@ Namespace MRM
             For Each ion As IonChromatogram In ionData
                 Dim shiftVal As Double = rtshifts.TryGetValue(ion.ion.target.accession)
 
-                If stdNum.Abs(shiftVal) > args.timeWindowSize Then
+                If std.Abs(shiftVal) > args.timeWindowSize Then
                     ' required rt calibration
                     ion.chromatogram = ion.chromatogram _
                         .Select(Function(tick)

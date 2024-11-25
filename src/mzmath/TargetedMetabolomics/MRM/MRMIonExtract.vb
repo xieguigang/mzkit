@@ -72,7 +72,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports chromatogramTicks = BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML.chromatogram
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace MRM
 
@@ -114,7 +114,7 @@ Namespace MRM
                     .FirstOrDefault
             Else
                 peakWin = ROIs _
-                    .OrderBy(Function(r) stdNum.Abs(r.rt - CDbl(ion.rt))) _
+                    .OrderBy(Function(r) std.Abs(r.rt - CDbl(ion.rt))) _
                     .FirstOrDefault
             End If
 
