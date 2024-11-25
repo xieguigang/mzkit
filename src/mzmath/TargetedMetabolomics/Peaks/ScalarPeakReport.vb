@@ -70,4 +70,8 @@ Public Class ScalarPeakReport
     <Column("Relative RT")> Public Property RelativeRT As String
     <Column("Flag Details")> Public Property FlagDetails As String
 
+    Public Shared Function ExtractSampleData() As  
+
+    End Function
+
 End Class
