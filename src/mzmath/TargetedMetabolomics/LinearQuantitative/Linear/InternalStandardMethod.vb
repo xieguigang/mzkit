@@ -63,10 +63,7 @@ Imports Microsoft.VisualBasic.Data.Bootstrapping
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
-Imports Microsoft.VisualBasic.Math.SignalProcessing
-Imports Microsoft.VisualBasic.Math.SignalProcessing.PeakFinding
-Imports Microsoft.VisualBasic.Scripting.Runtime
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace LinearQuantitative.Linear
 
@@ -158,7 +155,7 @@ Namespace LinearQuantitative.Linear
             ' get points that removed from linear modelling
             For Each ptRef As ReferencePoint In points
                 For Each invalid In invalids
-                    If stdNum.Abs(invalid.X - ptRef.Cti) <= 0.0001 AndAlso stdNum.Abs(invalid.Y - ptRef.Px) <= 0.0001 Then
+                    If std.Abs(invalid.X - ptRef.Cti) <= 0.0001 AndAlso std.Abs(invalid.Y - ptRef.Px) <= 0.0001 Then
                         ptRef.valid = False
                         Exit For
                     End If
@@ -183,7 +180,7 @@ Namespace LinearQuantitative.Linear
                     ptY = pt.Ati
                 End If
 
-                pt.yfit = stdNum.Round(fy(ptY), 5)
+                pt.yfit = std.Round(fy(ptY), 5)
             Next
 
             Return out
