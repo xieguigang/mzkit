@@ -23,9 +23,9 @@ Namespace LinearQuantitative
         End Sub
 
         Public Function MeasureFileType() As SampleFiles
-            If filename.IsPattern(".+kb[-\s]?\d*") Then
+            If filename.IsPattern(".*kb[-\s]*\d*") Then
                 Return SampleFiles.KB
-            ElseIf filename.IsPattern(".+QC[-\s]?\d*") Then
+            ElseIf filename.IsPattern(".*QC[-\s]*\d*") Then
                 Return SampleFiles.QC
             Else
                 Return SampleFiles.Sample
