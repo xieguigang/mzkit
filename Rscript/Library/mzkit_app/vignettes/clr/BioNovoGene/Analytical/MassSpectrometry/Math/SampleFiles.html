@@ -22,7 +22,7 @@
 
         <h3>Description</h3>
 
-        
+        <p>the sample file types</p>
 
         <h3>Declare</h3>        
 
@@ -30,11 +30,17 @@
             <code id="clr_ts">
 # namespace BioNovoGene.Analytical.MassSpectrometry.Math
 export class SampleFiles extends <a href="/vignettes/clr/System/Enum.html">Enum</a> {
+   # the user sample file
    Sample: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/SampleFiles.html">SampleFiles</a> = 0;
 
-   QC: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/SampleFiles.html">SampleFiles</a> = 1;
+   # standard curve data file
+   Standard: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/SampleFiles.html">SampleFiles</a> = 1;
 
-   KB: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/SampleFiles.html">SampleFiles</a> = 2;
+   # quality control file
+   QC: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/SampleFiles.html">SampleFiles</a> = 2;
+
+   # the blank
+   KB: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/SampleFiles.html">SampleFiles</a> = 3;
 
 }
 </code>
@@ -45,6 +51,7 @@ export class SampleFiles extends <a href="/vignettes/clr/System/Enum.html">Enum<
         <ol>
 <li>this class extends from <a href="/vignettes/clr/System/Enum.html">Enum</a> class: <a href="/vignettes/clr/System/Enum.html">Enum</a></li>
 <li>use by <i>field</i> member <code>Sample</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/SampleFiles.html">SampleFiles</a></li>
+<li>use by <i>field</i> member <code>Standard</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/SampleFiles.html">SampleFiles</a></li>
 <li>use by <i>field</i> member <code>QC</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/SampleFiles.html">SampleFiles</a></li>
 <li>use by <i>field</i> member <code>KB</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/SampleFiles.html">SampleFiles</a></li>
 </ol>
