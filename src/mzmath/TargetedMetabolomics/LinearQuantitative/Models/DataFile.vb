@@ -27,6 +27,8 @@ Namespace LinearQuantitative
                 Return SampleFiles.KB
             ElseIf filename.IsPattern(".*QC[-\s]*\d*") Then
                 Return SampleFiles.QC
+            ElseIf filename.IsPattern(".*((Cal)|(L))[-\s]*\d+") Then
+                Return SampleFiles.Standard
             Else
                 Return SampleFiles.Sample
             End If
