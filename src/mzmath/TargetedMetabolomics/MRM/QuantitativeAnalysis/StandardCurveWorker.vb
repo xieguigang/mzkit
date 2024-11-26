@@ -71,7 +71,7 @@ Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Quantile
 Imports LinearQuantificationWorker = BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative.Linear.QuantificationWorker
 Imports regexp = System.Text.RegularExpressions.Regex
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace MRM
 
@@ -227,7 +227,7 @@ Namespace MRM
                     ' get points that removed from linear modelling
                     For Each ptRef As ReferencePoint In points
                         For Each invalid In invalids
-                            If stdNum.Abs(invalid.X - ptRef.Cti) <= 0.0001 AndAlso stdNum.Abs(invalid.Y - ptRef.Px) <= 0.0001 Then
+                            If std.Abs(invalid.X - ptRef.Cti) <= 0.0001 AndAlso std.Abs(invalid.Y - ptRef.Px) <= 0.0001 Then
                                 ptRef.valid = False
                                 Exit For
                             End If
@@ -251,7 +251,7 @@ Namespace MRM
                         ptY = pt.Ati
                     End If
 
-                    pt.yfit = stdNum.Round(fy(ptY), 5)
+                    pt.yfit = std.Round(fy(ptY), 5)
                 Next
 
                 Yield out

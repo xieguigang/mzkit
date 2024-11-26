@@ -60,7 +60,7 @@
 
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace LinearQuantitative
 
@@ -77,7 +77,7 @@ Namespace LinearQuantitative
         Public Property maxPeakHeight As Double
 
         Public Overrides Function ToString() As String
-            Return $"{name}[{peakROI.Min}, {stdNum.Round(peakROI.Max)}] = {area}"
+            Return $"{name}[{peakROI.Min}, {std.Round(peakROI.Max)}] = {area}"
         End Function
 
     End Class

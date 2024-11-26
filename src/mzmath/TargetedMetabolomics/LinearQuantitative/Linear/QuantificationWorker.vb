@@ -60,7 +60,7 @@ Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative.Linear
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace LinearQuantitative.Linear
 
@@ -102,7 +102,7 @@ Namespace LinearQuantitative.Linear
 
             For i As Integer = 0 To C.Length - 1
                 Dim Ct_i = C(i)
-                Dim At_i = stdNum.Round(A(i))
+                Dim At_i = std.Round(A(i))
 
                 If At_i <= 0 Then
                     Call $"missing peak area data of {factorName(i)} in build reference line: {name}".Warning

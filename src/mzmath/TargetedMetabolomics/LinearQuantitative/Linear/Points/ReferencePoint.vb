@@ -61,7 +61,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace LinearQuantitative.Linear
 
@@ -108,13 +108,13 @@ Namespace LinearQuantitative.Linear
         Public Property yfit As Double
         Public ReadOnly Property [error] As Double
             Get
-                Return stdNum.Abs(stdNum.Round(yfit - Cti, 4))
+                Return std.Abs(std.Round(yfit - Cti, 4))
             End Get
         End Property
 
         Public ReadOnly Property [variant] As Double
             Get
-                Return stdNum.Round([error] / Cti, 4)
+                Return std.Round([error] / Cti, 4)
             End Get
         End Property
 

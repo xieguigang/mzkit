@@ -57,16 +57,14 @@
 #End Region
 
 Imports System.Drawing
+Imports System.Runtime.InteropServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Content
 Imports Microsoft.VisualBasic.Data.Bootstrapping
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
-Imports Microsoft.VisualBasic.Math.SignalProcessing
-Imports Microsoft.VisualBasic.Math.SignalProcessing.PeakFinding
-Imports Microsoft.VisualBasic.Scripting.Runtime
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace LinearQuantitative.Linear
 
@@ -120,6 +118,69 @@ Namespace LinearQuantitative.Linear
         End Function
 
         ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="ionGroups">
+        ''' single compound reference points data
+        ''' </param>
+        ''' <param name="ionKey"></param>
+        ''' <returns></returns>
+        Public Function ToFeatureLinear(ionGroups As IEnumerable(Of IonPeakTableRow), ionKey As String) As StandardCurve
+            Dim define As Standards = contents.GetStandards(ionKey)
+            Dim compound As IonPeakTableRow() = ionGroups.ToArray
+            Dim A As Double() = compound.Select(Function(i) i.TPA).ToArray
+            Dim ISTPA As Double() = compound.Select(Function(i) i.TPA_IS).ToArray
+            Dim linearSamples As String() = compound.Select(Function(i) i.raw).ToArray
+
+            Return CreateModel(linearSamples, A, ISTPA, define)
+        End Function
+
+        Private Function CreateModel(linearSamples As String(), A#(), ISTPA#(), define As Standards) As StandardCurve
+            Dim ionKey As String = define.ID
+            Dim C As Double() = linearSamples.Select(Function(level) contents(level, ionKey)).ToArray
+            Dim CIS As Double = 1
+            Dim invalids As New List(Of PointF)
+            Dim points As New List(Of ReferencePoint)
+            Dim line As PointF() = QuantificationWorker _
+                .CreateModelPoints(C, A, ISTPA, CIS, ionKey, define.Name, linearSamples, points) _
+                .ToArray
+            Dim fit As IFitted = StandardCurve.CreateLinearRegression(line, maxDeletions, removed:=invalids)
+
+            ' get points that removed from linear modelling
+            For Each ptRef As ReferencePoint In points
+                For Each invalid In invalids
+                    If std.Abs(invalid.X - ptRef.Cti) <= 0.0001 AndAlso std.Abs(invalid.Y - ptRef.Px) <= 0.0001 Then
+                        ptRef.valid = False
+                        Exit For
+                    End If
+                Next
+            Next
+
+            Dim out As New StandardCurve With {
+                .name = ionKey,
+                .linear = fit,
+                .points = points _
+                    .OrderBy(Function(p) contents(p.level, ionKey)) _
+                    .ToArray,
+                .[IS] = contents.GetIS(define.ISTD)
+            }
+            Dim fy As Func(Of Double, Double) = out.ReverseModelFunction
+            Dim ptY#
+
+            For Each pt As ReferencePoint In out.points
+                If pt.AIS > 0 Then
+                    ptY = pt.Ati / pt.AIS
+                Else
+                    ptY = pt.Ati
+                End If
+
+                pt.yfit = std.Round(fy(ptY), 5)
+            Next
+
+            Return out
+        End Function
+
+        ''' <summary>
         ''' linear regression
         ''' </summary>
         ''' <param name="ionGroups"></param>
@@ -147,46 +208,7 @@ Namespace LinearQuantitative.Linear
                 ISTPA = Nothing
             End If
 
-            Dim C As Double() = linearSamples.Select(Function(level) contents(level, ionKey)).ToArray
-            Dim CIS As Double = 1
-            Dim invalids As New List(Of PointF)
-            Dim line As PointF() = QuantificationWorker _
-                .CreateModelPoints(C, A, ISTPA, CIS, ionKey, define.Name, linearSamples, points) _
-                .ToArray
-            Dim fit As IFitted = StandardCurve.CreateLinearRegression(line, maxDeletions, removed:=invalids)
-
-            ' get points that removed from linear modelling
-            For Each ptRef As ReferencePoint In points
-                For Each invalid In invalids
-                    If stdNum.Abs(invalid.X - ptRef.Cti) <= 0.0001 AndAlso stdNum.Abs(invalid.Y - ptRef.Px) <= 0.0001 Then
-                        ptRef.valid = False
-                        Exit For
-                    End If
-                Next
-            Next
-
-            Dim out As New StandardCurve With {
-                .name = ionKey,
-                .linear = fit,
-                .points = points _
-                    .OrderBy(Function(p) contents(p.level, ionKey)) _
-                    .ToArray,
-                .[IS] = contents.GetIS(define.ISTD)
-            }
-            Dim fy As Func(Of Double, Double) = out.ReverseModelFunction
-            Dim ptY#
-
-            For Each pt As ReferencePoint In out.points
-                If pt.AIS > 0 Then
-                    ptY = pt.Ati / pt.AIS
-                Else
-                    ptY = pt.Ati
-                End If
-
-                pt.yfit = stdNum.Round(fy(ptY), 5)
-            Next
-
-            Return out
+            Return CreateModel(linearSamples, A, ISTPA, define)
         End Function
 
         ''' <summary>

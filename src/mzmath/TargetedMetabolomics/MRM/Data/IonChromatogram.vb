@@ -64,6 +64,9 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 
 Namespace MRM.Data
 
+    ''' <summary>
+    ''' the raw data 
+    ''' </summary>
     Public Structure IonChromatogram
 
         Public Property name As String

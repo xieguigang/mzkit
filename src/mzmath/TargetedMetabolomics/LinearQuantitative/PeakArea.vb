@@ -68,8 +68,7 @@ Imports Microsoft.VisualBasic.Math.Calculus
 Imports Microsoft.VisualBasic.Math.Interpolation
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Scripting
-Imports stdNum = System.Math
-
+Imports std = System.Math
 
 Namespace LinearQuantitative
 
@@ -194,7 +193,7 @@ Namespace LinearQuantitative
                     Dim t0 = rawPoints(0)
                     Dim i% = chromatogram _
                         .Which(Function(t)
-                                   Return stdNum.Abs(t0.X - t.Time) <= 0.1
+                                   Return std.Abs(t0.X - t.Time) <= 0.1
                                End Function)(0)
 
                     With chromatogram(i - 1)
@@ -205,7 +204,7 @@ Namespace LinearQuantitative
                     Dim t1 = rawPoints(1)
                     Dim i% = chromatogram _
                         .Which(Function(t)
-                                   Return stdNum.Abs(t1.X - t.Time) <= 0.1
+                                   Return std.Abs(t1.X - t.Time) <= 0.1
                                End Function)(0)
 
                     With chromatogram(i + 1)

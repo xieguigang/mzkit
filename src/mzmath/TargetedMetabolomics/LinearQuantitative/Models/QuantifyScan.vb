@@ -61,9 +61,10 @@ Imports Microsoft.VisualBasic.Data.csv.IO
 
 Namespace LinearQuantitative
 
-    Public Class QuantifyScan
-
-        Public Property ionPeaks As IonPeakTableRow()
+    ''' <summary>
+    ''' peak data of a single sample file
+    ''' </summary>
+    Public Class QuantifyScan : Inherits DataFile
 
         ''' <summary>
         ''' 定量结果

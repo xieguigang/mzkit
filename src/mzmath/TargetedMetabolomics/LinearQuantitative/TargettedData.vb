@@ -61,6 +61,9 @@
 
 Namespace LinearQuantitative
 
+    ''' <summary>
+    ''' type of the targetted data
+    ''' </summary>
     Public Enum TargettedData
         ''' <summary>
         ''' LC-MSMS MRM

@@ -65,7 +65,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Scripting
-Imports stdNum = System.Math
+Imports std = System.Math
 
 <HideModuleName>
 Public Module TPAExtensions
@@ -154,7 +154,7 @@ Public Module TPAExtensions
                                   ' 20200309 因为噪声的积分面积可能会大于目标物质峰
                                   ' 的面积，所以在这里应该是使用峰高进行ROI的排序操
                                   ' 作
-                                  Return stdNum.Log10(r.maxInto)
+                                  Return std.Log10(r.maxInto)
                               End Function) _
            .FirstOrDefault
 
@@ -194,7 +194,7 @@ Public Module TPAExtensions
             For Each target In ionOrders.Skip(1)
                 For j As Integer = pi + 1 To peakOrders.Length - 1
                     ' dt1 - dt2 <= tolerance
-                    If stdNum.Abs((CDbl(target.rt) - peakOrders(j).rt) - dt) <= timeWindowSize Then
+                    If std.Abs((CDbl(target.rt) - peakOrders(j).rt) - dt) <= timeWindowSize Then
                         peakIndex(CInt(++index) - 1) = j
                     End If
                 Next

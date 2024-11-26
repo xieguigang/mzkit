@@ -29,6 +29,13 @@ declare namespace Linears {
       function table(lines: object): object;
    }
    /**
+    * load the experiment project
+    * 
+    * 
+     * @param file -
+   */
+   function load_experiment(file: string): object;
+   /**
     * Get reference input points
     * 
     * 

@@ -59,6 +59,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Content
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.GCMS
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.GCMS.QuantifyAnalysis
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Unit
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Language
@@ -82,7 +83,7 @@ Module testGCMS
         Dim ref = "D:\smartnucl_integrative\biodeepDB\smartnucl_integrative\16s_contents\SCFA\SCFA.csv".LoadCsv(Of ROITable)
         Dim result As New List(Of ROITable)
 
-        For Each target In ref.ScanIons(data, {5, 10})
+        For Each target In ref.ScanIons(data, New DoubleRange({5, 10}))
             result += target.Item1
 
         Next

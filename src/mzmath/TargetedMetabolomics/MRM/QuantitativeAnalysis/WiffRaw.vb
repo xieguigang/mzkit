@@ -63,7 +63,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace MRM
 
@@ -82,7 +82,7 @@ Namespace MRM
                                 .ID = ion.name,
                                 .Properties = New Dictionary(Of String, Double) From {
                                     {"rt", ion.rt},
-                                    {"rt(min)", stdNum.Round(ion.rt / 60, 2)},
+                                    {"rt(min)", std.Round(ion.rt / 60, 2)},
                                     {"rtmin", ion.peakROI.Min},
                                     {"rtmax", ion.peakROI.Max},
                                     {"area", ion.area},

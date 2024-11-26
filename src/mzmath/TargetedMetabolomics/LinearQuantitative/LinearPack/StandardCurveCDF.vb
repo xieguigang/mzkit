@@ -63,7 +63,6 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative.Linear
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.Bootstrapping
 Imports Microsoft.VisualBasic.DataStorage
-Imports Microsoft.VisualBasic.DataStorage.netCDF
 Imports Microsoft.VisualBasic.DataStorage.netCDF.Components
 Imports Microsoft.VisualBasic.DataStorage.netCDF.Data
 Imports Microsoft.VisualBasic.DataStorage.netCDF.DataVector
