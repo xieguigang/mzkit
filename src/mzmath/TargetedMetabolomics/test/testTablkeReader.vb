@@ -10,6 +10,7 @@ Module testTablkeReader
         Dim samples As DataFile() = ScalarPeakReport.ExtractSampleData(table).ToArray
 
         Call samples.GetJson.SaveTo("./aaaa.json")
+        Call New Experiment With {.DataFiles = samples}.GetXml.SaveTo("./aaaaaa.xml")
 
         Pause()
     End Sub
