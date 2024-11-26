@@ -5,7 +5,12 @@ Namespace LinearQuantitative
     Public Class DataFile
 
         <XmlAttribute> Public Property filename As String
-        <XmlElement("Compound")> Public Property compounds As IonPeakTableRow()
+
+        ''' <summary>
+        ''' the multiple ion peak area data
+        ''' </summary>
+        ''' <returns></returns>
+        <XmlElement("Compound")> Public Property ionPeaks As IonPeakTableRow()
 
         Public ReadOnly Property FileType As SampleFiles
             Get
@@ -15,7 +20,7 @@ Namespace LinearQuantitative
 
         Sub New(filename As String, compounds As IEnumerable(Of IonPeakTableRow))
             _filename = filename
-            _compounds = compounds.ToArray
+            _ionPeaks = compounds.ToArray
         End Sub
 
         Sub New()
@@ -34,7 +39,7 @@ Namespace LinearQuantitative
         End Function
 
         Public Overrides Function ToString() As String
-            Return $"[{FileType}] {compounds.Count} compounds@{filename}"
+            Return $"[{FileType}] {ionPeaks.Count} compounds@{filename}"
         End Function
 
     End Class
