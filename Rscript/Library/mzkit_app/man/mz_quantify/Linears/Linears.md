@@ -3,6 +3,7 @@
 targeted linears
 
 + [lines.table](Linears/lines.table.1) export the table data of the reference linears
++ [load_experiment](Linears/load_experiment.1) load the experiment project
 + [write.points](Linears/write.points.1) save reference point data into a given table file
 + [points](Linears/points.1) Get reference input points
 + [write.ionPeaks](Linears/write.ionPeaks.1) Write peak data which is extract from the raw file with 
