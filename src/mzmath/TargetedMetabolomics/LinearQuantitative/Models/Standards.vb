@@ -67,17 +67,31 @@ Namespace LinearQuantitative
 
     ''' <summary>
     ''' The standard curve concentration gradient data.
-    ''' (标准品的标准曲线的浓度梯度信息)
     ''' </summary>
+    ''' <remarks>
+    ''' (标准品的标准曲线的浓度梯度信息)
+    ''' </remarks>
     Public Class Standards : Implements INamedValue
 
+        ''' <summary>
+        ''' the reference id of the compound
+        ''' </summary>
+        ''' <returns></returns>
         Public Property ID As String Implements INamedValue.Key
+        ''' <summary>
+        ''' display name of the target compound
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Name As String
         ''' <summary>
         ''' 标准曲线的浓度梯度信息
         ''' </summary>
         ''' <returns></returns>
         Public Property C As Dictionary(Of String, Double)
+        ''' <summary>
+        ''' the is td name 
+        ''' </summary>
+        ''' <returns></returns>
         Public Property ISTD As String
         ''' <summary>
         ''' 内标的编号，需要使用这个编号来分别找到离子对和浓度信息
