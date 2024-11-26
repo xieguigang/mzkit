@@ -1,5 +1,4 @@
 ﻿Imports System.Xml.Serialization
-Imports Microsoft.VisualBasic.ComponentModel.Collection
 
 Namespace LinearQuantitative
 
@@ -35,7 +34,7 @@ Namespace LinearQuantitative
         End Function
 
         Public Overrides Function ToString() As String
-            Return $"[{FileType}] {compounds.Count} compounds@{filename}: {compounds.Keys.JoinBy("; ")}"
+            Return $"[{FileType}] {compounds.Count} compounds@{filename}"
         End Function
 
     End Class
