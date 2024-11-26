@@ -2,6 +2,9 @@
 
 Namespace LinearQuantitative
 
+    ''' <summary>
+    ''' model for a single rawdata file
+    ''' </summary>
     Public Class DataFile
 
         <XmlAttribute> Public Property filename As String
