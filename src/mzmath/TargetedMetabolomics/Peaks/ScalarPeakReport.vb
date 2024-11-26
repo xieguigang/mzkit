@@ -1,5 +1,7 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative
+Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 Imports Microsoft.VisualBasic.Math.SignalProcessing
 
@@ -104,7 +106,7 @@ Public Class ScalarPeakReport
     ''' make index by the sample id or the sample file name?
     ''' </param>
     ''' <returns></returns>
-    Public Shared Iterator Function ExtractSampleData(table As IEnumerable(Of ScalarPeakReport), Optional indexBySampleID As Boolean = False) As IEnumerable(Of DataSet)
+    Public Shared Iterator Function ExtractSampleData(table As IEnumerable(Of ScalarPeakReport), Optional indexBySampleID As Boolean = False) As IEnumerable(Of NamedCollection(Of IonPeakTableRow))
         Dim samples As IGrouping(Of String, ScalarPeakReport)() = table _
             .GroupBy(Function(a)
                          Return If(indexBySampleID, If(a.SampleID, ""), If(a.Filename, ""))
@@ -116,11 +118,48 @@ Public Class ScalarPeakReport
         End If
 
         For Each sample As IGrouping(Of String, ScalarPeakReport) In samples
-            Dim peaks As IonPeakTableRow() = sample _
-                .Select(Function(a) a.GetPeakData) _
-                .ToArray
+            Dim types As Dictionary(Of String, ScalarPeakReport()) = sample _
+                .Where(Function(a) a.Confirm <> "NotFound") _
+                .GroupBy(Function(a) a.Type) _
+                .ToDictionary(Function(a) a.Key,
+                              Function(a)
+                                  Return a.ToArray
+                              End Function)
+            Dim targetCompound As Dictionary(Of IonPeakTableRow) = types("Target Compound").Select(Function(a) a.GetPeakData).ToDictionary
+            Dim internalStandard As Dictionary(Of IonPeakTableRow) = types("Internal Standard").Select(Function(a) a.GetPeakData).ToDictionary
+            Dim links = MeasureInternalStandardTuple(targetCompound.Keys, internalStandard.Keys).ToArray
+            Dim compounds As New List(Of IonPeakTableRow)
 
+            For Each compound As (compound$, is$) In links
+                Dim target = targetCompound(compound.compound)
+                Dim isdata = internalStandard(compound.is)
 
+                target.IS = compound.is
+                target.maxinto_IS = isdata.maxinto
+                target.TPA_IS = isdata.TPA
+
+                Call compounds.Add(target)
+            Next
+
+            Yield New NamedCollection(Of IonPeakTableRow)(sample.Key, compounds)
+        Next
+    End Function
+
+    ''' <summary>
+    ''' This default linking function required of the compound name and IS name should start with the same token word
+    ''' </summary>
+    ''' <param name="compounds"></param>
+    ''' <param name="isList"></param>
+    ''' <returns></returns>
+    Private Shared Iterator Function MeasureInternalStandardTuple(compounds As IEnumerable(Of String), isList As IEnumerable(Of String)) As IEnumerable(Of (compound As String, [is] As String))
+        Dim isSet As String() = isList.ToArray
+
+        For Each compound_id As String In compounds
+            ' check with start with
+            Dim upperKey = compound_id.ToUpper
+            Dim check_is = isSet.AsParallel.Where(Function(is_id) is_id.ToUpper.StartsWith(upperKey)).FirstOrDefault
+
+            Yield (compound_id, check_is)
         Next
     End Function
 
