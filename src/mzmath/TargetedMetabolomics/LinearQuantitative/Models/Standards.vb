@@ -110,5 +110,11 @@ Namespace LinearQuantitative
         Public Overrides Function ToString() As String
             Return $"[{[IS]}] {ID}: {Name}, {C.GetJson}"
         End Function
+
+        Public Iterator Function PopulateLevels() As IEnumerable(Of Double)
+            For Each lv In C.OrderBy(Function(ci) Integer.Parse(ci.Key.Match("\d+")))
+                Yield lv.Value
+            Next
+        End Function
     End Class
 End Namespace
