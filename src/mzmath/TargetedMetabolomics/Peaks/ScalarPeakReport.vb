@@ -3,6 +3,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.SignalProcessing
 
 Public Class ScalarPeakReport
@@ -139,8 +140,11 @@ Public Class ScalarPeakReport
                 Dim isdata = internalStandard(compound.is)
 
                 target.IS = compound.is
-                target.maxinto_IS = isdata.maxinto
-                target.TPA_IS = isdata.TPA
+
+                If isdata IsNot Nothing Then
+                    target.maxinto_IS = isdata.maxinto
+                    target.TPA_IS = isdata.TPA
+                End If
 
                 Call compounds.Add(target)
             Next
