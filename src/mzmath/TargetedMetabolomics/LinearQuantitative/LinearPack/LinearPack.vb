@@ -59,6 +59,7 @@
 #End Region
 
 Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Content
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative.Linear
 Imports Microsoft.VisualBasic.Linq
@@ -76,7 +77,7 @@ Namespace LinearQuantitative.Data
         Public Property time As Date
 
         ''' <summary>
-        ''' 
+        ''' reference standards content levels for multiple ions
         ''' </summary>
         ''' <returns></returns>
         ''' <remarks>
@@ -94,6 +95,7 @@ Namespace LinearQuantitative.Data
         Public Property [IS] As [IS]()
         Public Property targetted As TargettedData
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetLinear(id As String) As StandardCurve
             Return linears.Where(Function(line) line.name = id).FirstOrDefault
         End Function
@@ -102,6 +104,8 @@ Namespace LinearQuantitative.Data
         ''' 直接返回所有的参考标曲的样本名称
         ''' </summary>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetLevelKeys() As String()
             Return reference.Values _
                 .Select(Function(ref) ref.levels.Keys) _
@@ -120,6 +124,11 @@ Namespace LinearQuantitative.Data
             End Using
         End Function
 
+        ''' <summary>
+        ''' read the cdf file that pack the linear reference standard information data
+        ''' </summary>
+        ''' <param name="file"></param>
+        ''' <returns></returns>
         Public Shared Function OpenFile(file As String) As LinearPack
             Using infile As Stream = file.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
                 Return CDFReader.Load(infile)
