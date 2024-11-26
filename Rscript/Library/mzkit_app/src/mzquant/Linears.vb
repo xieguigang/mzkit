@@ -78,9 +78,9 @@ Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports REnv = SMRUCC.Rsharp.Runtime
+Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
 Imports Rlist = SMRUCC.Rsharp.Runtime.Internal.Object.list
 Imports std = System.Math
-Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
 
 ''' <summary>
 ''' targeted linears
@@ -146,6 +146,17 @@ Module Linears
                         }
                     End Function) _
             .ToArray
+    End Function
+
+    ''' <summary>
+    ''' load the experiment project
+    ''' </summary>
+    ''' <param name="file"></param>
+    ''' <returns></returns>
+    <ExportAPI("load_experiment")>
+    <RApiReturn(GetType(Experiment))>
+    Public Function loadExperiment(file As String) As Experiment
+        Return file.LoadXml(Of Experiment)
     End Function
 
     ''' <summary>
