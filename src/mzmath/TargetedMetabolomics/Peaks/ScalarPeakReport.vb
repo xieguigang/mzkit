@@ -1,5 +1,7 @@
-﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative
+﻿Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
+Imports Microsoft.VisualBasic.Math.SignalProcessing
 
 Public Class ScalarPeakReport
 
@@ -71,12 +73,55 @@ Public Class ScalarPeakReport
     <Column("Relative RT")> Public Property RelativeRT As String
     <Column("Flag Details")> Public Property FlagDetails As String
 
-    Public Function GetPeakData() As IonPeakTableRow
-
+    Public Overrides Function ToString() As String
+        Return $"{Compound} ({Area})"
     End Function
 
-    Public Shared Iterator Function ExtractSampleData(table As IEnumerable(Of ScalarPeakReport)) As IEnumerable(Of DataSet)
+    ''' <summary>
+    ''' convert current ion to a simplify single ion table
+    ''' </summary>
+    ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function GetPeakData() As IonPeakTableRow
+        Return New IonPeakTableRow With {
+            .ID = Compound,
+            .raw = Filename,
+            .maxinto = Height,
+            .Name = Compound,
+            .TPA = Area,
+            .rtmin = ActualRT - RTDelta,
+            .rtmax = ActualRT + RTDelta,
+            .base = Area.GetNoise(SN)
+        }
+    End Function
 
+    ''' <summary>
+    ''' extract and populate the peak area data
+    ''' </summary>
+    ''' <param name="table"></param>
+    ''' <param name="indexBySampleID">
+    ''' make index by the sample id or the sample file name?
+    ''' </param>
+    ''' <returns></returns>
+    Public Shared Iterator Function ExtractSampleData(table As IEnumerable(Of ScalarPeakReport), Optional indexBySampleID As Boolean = False) As IEnumerable(Of DataSet)
+        Dim samples As IGrouping(Of String, ScalarPeakReport)() = table _
+            .GroupBy(Function(a)
+                         Return If(indexBySampleID, If(a.SampleID, ""), If(a.Filename, ""))
+                     End Function) _
+            .ToArray
+
+        If samples.Length = 1 AndAlso samples(Scan0).Key = "" Then
+            Call $"The sample data is required of index by {If(indexBySampleID, "sample id", "rawdata file name")}, but all these key value for make index is missing!".Warning
+        End If
+
+        For Each sample As IGrouping(Of String, ScalarPeakReport) In samples
+            Dim peaks As IonPeakTableRow() = sample _
+                .Select(Function(a) a.GetPeakData) _
+                .ToArray
+
+
+        Next
     End Function
 
 End Class

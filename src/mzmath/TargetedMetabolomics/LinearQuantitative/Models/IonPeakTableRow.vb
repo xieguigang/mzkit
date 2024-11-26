@@ -65,6 +65,9 @@ Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
 
 Namespace LinearQuantitative
 
+    ''' <summary>
+    ''' the peaktable data for a single ion
+    ''' </summary>
     Public Class IonPeakTableRow : Implements IROI, INamedValue
 
         ''' <summary>
