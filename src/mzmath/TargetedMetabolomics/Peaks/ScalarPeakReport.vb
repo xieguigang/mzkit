@@ -125,8 +125,12 @@ Public Class ScalarPeakReport
                               Function(a)
                                   Return a.ToArray
                               End Function)
-            Dim targetCompound As Dictionary(Of IonPeakTableRow) = types("Target Compound").Select(Function(a) a.GetPeakData).ToDictionary
-            Dim internalStandard As Dictionary(Of IonPeakTableRow) = types("Internal Standard").Select(Function(a) a.GetPeakData).ToDictionary
+            Dim targetCompound As Dictionary(Of IonPeakTableRow) = types("Target Compound") _
+                .Select(Function(a) a.GetPeakData) _
+                .ToDictionary
+            Dim internalStandard As Dictionary(Of IonPeakTableRow) = types("Internal Standard") _
+                .Select(Function(a) a.GetPeakData) _
+                .ToDictionary
             Dim links = MeasureInternalStandardTuple(targetCompound.Keys, internalStandard.Keys).ToArray
             Dim compounds As New List(Of IonPeakTableRow)
 
@@ -156,8 +160,13 @@ Public Class ScalarPeakReport
 
         For Each compound_id As String In compounds
             ' check with start with
-            Dim upperKey = compound_id.ToUpper
-            Dim check_is = isSet.AsParallel.Where(Function(is_id) is_id.ToUpper.StartsWith(upperKey)).FirstOrDefault
+            Dim upperKey As String = compound_id.ToUpper
+            Dim check_is As String = isSet _
+                .AsParallel _
+                .Where(Function(is_id)
+                           Return is_id.ToUpper.StartsWith(upperKey)
+                       End Function) _
+                .FirstOrDefault
 
             Yield (compound_id, check_is)
         Next
