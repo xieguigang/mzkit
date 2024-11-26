@@ -114,6 +114,8 @@ export class dataframe extends <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Com
    nrows: integer;
    # the dataframe rownames
    rownames: string;
+   # debug view of this dataframe object in rows, debug used only.
+   rowViews: <i>iterates(any)</i> kind;
 }
 </code>
         </pre>
@@ -124,6 +126,7 @@ export class dataframe extends <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Com
 <li>this class extends from <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/RsharpDataObject.html">RsharpDataObject</a> class: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Components/RsharpDataObject.html">RsharpDataObject</a></li>
 <li>use by <i>property</i> member <code>columns</code>: list</li>
 <li>use by <i>property</i> member <code>elementType</code>: <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Interop/RType.html">RType</a></li>
+<li>use by <i>property</i> member <code>rowViews</code>: <i>iterates(any)</i> kind</li>
 </ol>
 
 
