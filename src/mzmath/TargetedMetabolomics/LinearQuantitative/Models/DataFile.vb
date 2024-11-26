@@ -6,7 +6,7 @@ Namespace LinearQuantitative
     Public Class DataFile
 
         <XmlAttribute> Public Property filename As String
-        <XmlElement> Public Property compounds As IonPeakTableRow()
+        <XmlElement("Compound")> Public Property compounds As IonPeakTableRow()
 
         Public ReadOnly Property FileType As SampleFiles
             Get
