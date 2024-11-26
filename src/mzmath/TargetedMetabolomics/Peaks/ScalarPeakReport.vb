@@ -1,7 +1,6 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative
 Imports Microsoft.VisualBasic.ComponentModel.Collection
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.SignalProcessing
@@ -107,7 +106,7 @@ Public Class ScalarPeakReport
     ''' make index by the sample id or the sample file name?
     ''' </param>
     ''' <returns></returns>
-    Public Shared Iterator Function ExtractSampleData(table As IEnumerable(Of ScalarPeakReport), Optional indexBySampleID As Boolean = False) As IEnumerable(Of NamedCollection(Of IonPeakTableRow))
+    Public Shared Iterator Function ExtractSampleData(table As IEnumerable(Of ScalarPeakReport), Optional indexBySampleID As Boolean = False) As IEnumerable(Of DataFile)
         Dim samples As IGrouping(Of String, ScalarPeakReport)() = table _
             .GroupBy(Function(a)
                          Return If(indexBySampleID, If(a.SampleID, ""), If(a.Filename, ""))
@@ -149,7 +148,7 @@ Public Class ScalarPeakReport
                 Call compounds.Add(target)
             Next
 
-            Yield New NamedCollection(Of IonPeakTableRow)(sample.Key, compounds)
+            Yield New DataFile(sample.Key, compounds)
         Next
     End Function
 
