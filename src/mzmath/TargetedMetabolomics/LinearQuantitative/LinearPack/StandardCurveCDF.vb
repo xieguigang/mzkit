@@ -168,9 +168,9 @@ Namespace LinearQuantitative.Data
             Dim size As New Dimension With {.name = "polynomial_size", .size = formula.Factors.Length}
             Dim attrs As attribute() = {
                 New attribute With {.name = "adjustR_square", .type = CDFDataTypes.NC_DOUBLE, .value = fit.AdjustR_square},
-                New attribute With {.name = "factor_size", .type = CDFDataTypes.NC_DOUBLE, .value = fit.FactorSize},
+                New attribute With {.name = "factor_size", .type = CDFDataTypes.NC_INT, .value = fit.FactorSize},
                 New attribute With {.name = "intercept", .type = CDFDataTypes.NC_DOUBLE, .value = fit.Intercept},
-                New attribute With {.name = "is_poly", .type = CDFDataTypes.NC_DOUBLE, .value = fit.IsPolyFit},
+                New attribute With {.name = "is_poly", .type = CDFDataTypes.BOOLEAN, .value = fit.IsPolyFit},
                 New attribute With {.name = "RMSE", .type = CDFDataTypes.NC_DOUBLE, .value = fit.RMSE},
                 New attribute With {.name = "R2", .type = CDFDataTypes.NC_DOUBLE, .value = fit.R_square},
                 New attribute With {.name = "slope", .type = CDFDataTypes.NC_DOUBLE, .value = fit.Slope},
