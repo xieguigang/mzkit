@@ -71,8 +71,11 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Namespace LinearQuantitative
 
     ''' <summary>
-    ''' The linear model of the targeted metabolism model data.(标准曲线模型)
+    ''' The linear model of the targeted metabolism model data.
     ''' </summary>
+    ''' <remarks>
+    ''' (标准曲线模型)
+    ''' </remarks>
     Public Class StandardCurve : Implements INamedValue
 
         ''' <summary>

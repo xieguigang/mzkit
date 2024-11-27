@@ -1,4 +1,5 @@
-﻿Imports System.Xml.Serialization
+﻿Imports System.Runtime.CompilerServices
+Imports System.Xml.Serialization
 
 Namespace LinearQuantitative
 
@@ -39,6 +40,34 @@ Namespace LinearQuantitative
             Else
                 Return SampleFiles.Sample
             End If
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetPeakData() As Dictionary(Of String, Double)
+            Return ionPeaks.ToDictionary(Function(a) a.ID, Function(a) a.TPA)
+        End Function
+
+        Public Function CreateQuantifyData(linears As IEnumerable(Of StandardCurve)) As Dictionary(Of String, Double)
+            Dim ions = ionPeaks.ToDictionary(Function(a) a.ID)
+            Dim contents As New Dictionary(Of String, Double)
+
+            For Each line As StandardCurve In linears
+                If ions.ContainsKey(line.name) Then
+                    If line.IS Is Nothing Then
+                        ' use peak area
+                        Call contents.Add(line.name, line.linear.GetY(ions(line.name).TPA))
+                    ElseIf ions(line.name).TPA_IS <= 0 Then
+                        Call contents.Add(line.name, Double.NaN)
+                    Else
+                        ' use the A/IS ratio
+                        Call contents.Add(line.name, line.linear.GetY(ions(line.name).TPA / ions(line.name).TPA_IS))
+                    End If
+                Else
+                    Call contents.Add(line.name, 0)
+                End If
+            Next
+
+            Return contents
         End Function
 
         Public Overrides Function ToString() As String

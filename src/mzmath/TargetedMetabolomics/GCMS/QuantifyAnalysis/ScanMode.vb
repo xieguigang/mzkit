@@ -235,7 +235,7 @@ Namespace GCMS.QuantifyAnalysis
         End Function
 
         <Extension>
-        Public Iterator Function FitContent(Of T As ROITable)(ROIlist As IEnumerable(Of (fileName$, data As T)), standardCurves As Dictionary(Of String, LinearQuantitative.StandardCurve)) As IEnumerable(Of ChromatographyPeaktable)
+        Public Iterator Function FitContent(Of T As ROITable)(ROIlist As IEnumerable(Of (fileName$, data As T)), standardCurves As Dictionary(Of String, StandardCurve)) As IEnumerable(Of ChromatographyPeaktable)
             Dim fileTable = ROIlist.SafeQuery _
                 .GroupBy(Function(file) file.fileName) _
                 .ToDictionary(Function(file) file.Key,
@@ -250,14 +250,13 @@ Namespace GCMS.QuantifyAnalysis
                 Dim rawFile$ = targetVal.Key
                 Dim detections As Dictionary(Of String, T) = targetVal.Value
 
-                For Each target As T In detections _
-                    .Values _
+                For Each target As T In detections.Values _
                     .Where(Function(tt)
                                Return Not tt.ID.TextEquals(tt.IS) AndAlso standardCurves.ContainsKey(tt.ID)
                            End Function)
 
                     Dim TPA#
-                    Dim standardCurve As LinearQuantitative.StandardCurve = standardCurves(target.ID)
+                    Dim standardCurve As StandardCurve = standardCurves(target.ID)
 
                     If Not standardCurve.IS Is Nothing Then
                         ' 需要做内标校正
