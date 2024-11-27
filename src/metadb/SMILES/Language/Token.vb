@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7bdb85d2b6e5e82d31abd80fec47f3e3, metadb\SMILES\Language\Token.vb"
+﻿#Region "Microsoft.VisualBasic::a8e3c8576da3ca3ac0f5394a1e420e8e, metadb\SMILES\Language\Token.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 33
-    '    Code Lines: 25 (75.76%)
+    '   Total Lines: 41
+    '    Code Lines: 30 (73.17%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 8 (24.24%)
-    '     File Size: 950 B
+    '   Blank Lines: 11 (26.83%)
+    '     File Size: 1.09 KB
 
 
     '     Class Token

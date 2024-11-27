@@ -1,69 +1,69 @@
-﻿#Region "Microsoft.VisualBasic::0f57386a0509b34c7781a7a6030d2ca7, metadb\Chemoinformatics\InChI\Models\InchiRadical.vb"
+﻿#Region "Microsoft.VisualBasic::ab45babcad5b17a138f2cd748534a32e, metadb\Chemoinformatics\InChI\Models\InchiRadical.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 106
-'    Code Lines: 66 (62.26%)
-' Comment Lines: 15 (14.15%)
-'    - Xml Docs: 80.00%
-' 
-'   Blank Lines: 25 (23.58%)
-'     File Size: 3.76 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class InchiRadical
-' 
-' 
-'         Enum InnerEnum
-' 
-'             DOUBLET, NONE, SINGLET, TRIPLET
-' 
-' 
-' 
-'  
-' 
-'     Properties: Code
-' 
-'     Constructor: (+2 Overloads) Sub New
-'     Function: [of], ordinal, ToString, valueOf, values
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 104
+    '    Code Lines: 65 (62.50%)
+    ' Comment Lines: 15 (14.42%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 24 (23.08%)
+    '     File Size: 3.69 KB
+
+
+    '     Class InchiRadical
+    ' 
+    ' 
+    '         Enum InnerEnum
+    ' 
+    '             DOUBLET, NONE, SINGLET, TRIPLET
+    ' 
+    ' 
+    ' 
+    '  
+    ' 
+    '     Properties: Code
+    ' 
+    '     Constructor: (+2 Overloads) Sub New
+    '     Function: [of], ordinal, ToString, valueOf, values
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -171,4 +171,3 @@ Namespace IUPAC.InChI
         End Function
     End Class
 End Namespace
-

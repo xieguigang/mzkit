@@ -1,79 +1,79 @@
-﻿#Region "Microsoft.VisualBasic::15fc4cb6230e22e9d8b77e4a8c7bbb4f, metadb\Chemoinformatics\InChI\Components.vb"
+﻿#Region "Microsoft.VisualBasic::740047c965d863af8e3a317c12166910, metadb\Chemoinformatics\InChI\MainLayer.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 229
-'    Code Lines: 82 (35.81%)
-' Comment Lines: 124 (54.15%)
-'    - Xml Docs: 95.97%
-' 
-'   Blank Lines: 23 (10.04%)
-'     File Size: 9.61 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class MainLayer
-' 
-'         Properties: Bounds, Formula, Hydrogen
-' 
-'         Function: ParseBounds
-' 
-'     Class ChargeLayer
-' 
-'         Properties: Charge, Proton
-' 
-'     Class StereochemicalLayer
-' 
-'         Properties: DoubleBounds, Tetrahedral, Type
-' 
-'     Class IsotopicLayer
-' 
-' 
-' 
-'     Class FixedHLayer
-' 
-' 
-' 
-'     Class ReconnectedLayer
-' 
-' 
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 248
+    '    Code Lines: 101 (40.73%)
+    ' Comment Lines: 124 (50.00%)
+    '    - Xml Docs: 95.97%
+    ' 
+    '   Blank Lines: 23 (9.27%)
+    '     File Size: 10.87 KB
+
+
+    '     Class MainLayer
+    ' 
+    '         Properties: Formula, Hydrogen, Struct
+    ' 
+    '         Function: ParseBounds, ParseHAtoms
+    ' 
+    '     Class ChargeLayer
+    ' 
+    '         Properties: Charge, Proton
+    ' 
+    '     Class StereochemicalLayer
+    ' 
+    '         Properties: DoubleBounds, Tetrahedral, Type
+    ' 
+    '     Class IsotopicLayer
+    ' 
+    ' 
+    ' 
+    '     Class FixedHLayer
+    ' 
+    ' 
+    ' 
+    '     Class ReconnectedLayer
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

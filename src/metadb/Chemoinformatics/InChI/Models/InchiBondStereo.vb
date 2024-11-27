@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::18d566bdde16106b150e051936a376a0, metadb\Chemoinformatics\InChI\Models\InchiBondStereo.vb"
+﻿#Region "Microsoft.VisualBasic::4b5e971d174f2726a40af24df26eb1c3, metadb\Chemoinformatics\InChI\Models\InchiBondStereo.vb"
 
     ' Author:
     ' 
@@ -208,4 +208,3 @@ Namespace IUPAC.InChI
     End Class
 
 End Namespace
-

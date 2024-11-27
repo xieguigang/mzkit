@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::034481e0aee3dd4e9acbf9e24cf0ec76, metadb\Chemoinformatics\InChI\Models\InchiKeyCheckStatus.vb"
+﻿#Region "Microsoft.VisualBasic::7f6b56dd892f39a91ec2e5aa94422cbf, metadb\Chemoinformatics\InChI\Models\InchiKeyCheckStatus.vb"
 
     ' Author:
     ' 
@@ -40,10 +40,10 @@
     '   Total Lines: 101
     '    Code Lines: 65 (64.36%)
     ' Comment Lines: 15 (14.85%)
-    '    - Xml Docs: 80.00%
+    '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 21 (20.79%)
-    '     File Size: 4.27 KB
+    '     File Size: 4.24 KB
 
 
     '     Class InchiKeyCheckStatus
@@ -166,4 +166,3 @@ Namespace IUPAC.InChI
     End Class
 
 End Namespace
-

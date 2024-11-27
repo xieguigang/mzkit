@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7fe3b739b688ad18742ba0232b3d425a, metadb\Chemoinformatics\InChI\Models\InchiStereoType.vb"
+﻿#Region "Microsoft.VisualBasic::5b907a3b7ef509de1dec26125eeae06d, metadb\Chemoinformatics\InChI\Models\InchiStereoType.vb"
 
     ' Author:
     ' 
@@ -40,10 +40,10 @@
     '   Total Lines: 100
     '    Code Lines: 61 (61.00%)
     ' Comment Lines: 15 (15.00%)
-    '    - Xml Docs: 80.00%
+    '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 24 (24.00%)
-    '     File Size: 3.73 KB
+    '     File Size: 3.70 KB
 
 
     '     Class InchiStereoType
@@ -167,4 +167,3 @@ Namespace IUPAC.InChI
     End Class
 
 End Namespace
-

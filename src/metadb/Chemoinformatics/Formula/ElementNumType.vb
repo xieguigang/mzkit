@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::848df95b2745986c5e6c76774dbb277f, metadb\Chemoinformatics\Formula\ElementNumType.vb"
+﻿#Region "Microsoft.VisualBasic::f0905ea45deeec0943adc19c98b3bc6a, metadb\Chemoinformatics\Formula\ElementNumType.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 7 (13.73%)
-    '     File Size: 1.37 KB
+    '     File Size: 1.40 KB
 
 
     '     Structure ElementNumType

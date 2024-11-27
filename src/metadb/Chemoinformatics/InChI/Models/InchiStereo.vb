@@ -1,63 +1,62 @@
-﻿#Region "Microsoft.VisualBasic::480de6069689ff89fcb0dfe5e4e764f8, metadb\Chemoinformatics\InChI\Models\InchiStereo.vb"
+﻿#Region "Microsoft.VisualBasic::88b13f7b4e2263a330d47749d6d7a855, metadb\Chemoinformatics\InChI\Models\InchiStereo.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 181
-'    Code Lines: 67 (37.02%)
-' Comment Lines: 99 (54.70%)
-'    - Xml Docs: 88.89%
-' 
-'   Blank Lines: 15 (8.29%)
-'     File Size: 7.91 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class InchiStereo
-' 
-'         Properties: Atoms, CentralAtom, Parity, Type
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Function: createAllenalStereo, createDoubleBondStereo, createTetrahedralStereo
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 174
+    '    Code Lines: 61 (35.06%)
+    ' Comment Lines: 99 (56.90%)
+    '    - Xml Docs: 76.77%
+    ' 
+    '   Blank Lines: 14 (8.05%)
+    '     File Size: 8.00 KB
+
+
+    '     Class InchiStereo
+    ' 
+    '         Properties: Atoms, CentralAtom, Parity, Type
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: createAllenalStereo, createDoubleBondStereo, createTetrahedralStereo
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
-
 
 ' JNA-InChI - Library for calling InChI from Java
 ' Copyright © 2018 Daniel Lowe
@@ -233,4 +232,3 @@ Namespace IUPAC.InChI
     End Class
 
 End Namespace
-

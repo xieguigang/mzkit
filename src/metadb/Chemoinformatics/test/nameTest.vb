@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::098a59b6a9223e68b1de60e52972bbb2, metadb\Chemoinformatics\test\nameTest.vb"
+﻿#Region "Microsoft.VisualBasic::673f197583e4feeb7eb05c20c5b602fa, metadb\Chemoinformatics\test\nameTest.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 54
-    '    Code Lines: 37 (68.52%)
-    ' Comment Lines: 3 (5.56%)
+    '   Total Lines: 55
+    '    Code Lines: 38 (69.09%)
+    ' Comment Lines: 3 (5.45%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 14 (25.93%)
-    '     File Size: 2.33 KB
+    '   Blank Lines: 14 (25.45%)
+    '     File Size: 2.36 KB
 
 
     ' Module nameTest

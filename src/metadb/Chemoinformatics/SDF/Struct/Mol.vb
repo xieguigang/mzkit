@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c40d3574d7e6f01f23d7718f634fc544, metadb\Chemoinformatics\SDF\Struct\Mol.vb"
+﻿#Region "Microsoft.VisualBasic::dd8cfe43c98cdd6e750b178741769de2, metadb\Chemoinformatics\SDF\Struct\Mol.vb"
 
     ' Author:
     ' 
@@ -37,19 +37,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 89
-    '    Code Lines: 51 (57.30%)
-    ' Comment Lines: 27 (30.34%)
+    '   Total Lines: 97
+    '    Code Lines: 57 (58.76%)
+    ' Comment Lines: 27 (27.84%)
     '    - Xml Docs: 85.19%
     ' 
-    '   Blank Lines: 11 (12.36%)
-    '     File Size: 3.24 KB
+    '   Blank Lines: 13 (13.40%)
+    '     File Size: 3.45 KB
 
 
     '     Class [Structure]
     ' 
     '         Properties: Atoms, Bounds
     ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: Parse, parseCounter, ParseStream, ToString
     ' 
     ' 

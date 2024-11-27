@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0370d03ba51ecaecb18349b817c415ad, metadb\Chemoinformatics\InChI\Models\InchiInput.vb"
+﻿#Region "Microsoft.VisualBasic::fd236bbd4660535ad3f02a6dc0f492df, metadb\Chemoinformatics\InChI\Models\InchiInput.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 67
-    '    Code Lines: 38 (56.72%)
-    ' Comment Lines: 15 (22.39%)
-    '    - Xml Docs: 80.00%
+    '   Total Lines: 72
+    '    Code Lines: 43 (59.72%)
+    ' Comment Lines: 15 (20.83%)
+    '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 14 (20.90%)
-    '     File Size: 2.33 KB
+    '   Blank Lines: 14 (19.44%)
+    '     File Size: 2.42 KB
 
 
     '     Class InchiInput
@@ -52,7 +52,7 @@
     ' 
     '         Function: getAtom, getBond
     ' 
-    '         Sub: addAtom, addBond, addStereo
+    '         Sub: addAtom, (+2 Overloads) addBond, addStereo
     ' 
     ' 
     ' /********************************************************************************/
@@ -131,4 +131,3 @@ Namespace IUPAC.InChI
     End Class
 
 End Namespace
-

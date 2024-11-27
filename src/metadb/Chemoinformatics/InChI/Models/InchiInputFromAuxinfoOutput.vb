@@ -1,62 +1,61 @@
-﻿#Region "Microsoft.VisualBasic::8ac6e236f4fa54eb43aabac466e808b4, metadb\Chemoinformatics\InChI\Models\InchiInputFromAuxinfoOutput.vb"
+﻿#Region "Microsoft.VisualBasic::75c01c068769174429fe93209696267f, metadb\Chemoinformatics\InChI\Models\InchiInputFromAuxinfoOutput.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 68
-'    Code Lines: 34 (50.00%)
-' Comment Lines: 21 (30.88%)
-'    - Xml Docs: 85.71%
-' 
-'   Blank Lines: 13 (19.12%)
-'     File Size: 2.25 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class InchiInputFromAuxinfoOutput
-' 
-'         Properties: ChiralFlag, InchiInput, Message, Status
-' 
-'         Constructor: (+1 Overloads) Sub New
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 64
+    '    Code Lines: 29 (45.31%)
+    ' Comment Lines: 21 (32.81%)
+    '    - Xml Docs: 28.57%
+    ' 
+    '   Blank Lines: 14 (21.88%)
+    '     File Size: 2.06 KB
+
+
+    '     Class InchiInputFromAuxinfoOutput
+    ' 
+    '         Properties: ChiralFlag, InchiInput, Message, Status
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
-
 
 ' JNA-InChI - Library for calling InChI from Java
 ' Copyright © 2018 Daniel Lowe
@@ -122,4 +121,3 @@ Namespace IUPAC.InChI
     End Class
 
 End Namespace
-

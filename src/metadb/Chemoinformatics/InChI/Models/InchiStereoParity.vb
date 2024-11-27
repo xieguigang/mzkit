@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::95c76c3f115956f01dd71e01a9a6272c, metadb\Chemoinformatics\InChI\Models\InchiStereoParity.vb"
+﻿#Region "Microsoft.VisualBasic::bad615fa9bfad1dbae25fccde887c1f5, metadb\Chemoinformatics\InChI\Models\InchiStereoParity.vb"
 
     ' Author:
     ' 
@@ -40,10 +40,10 @@
     '   Total Lines: 111
     '    Code Lines: 70 (63.06%)
     ' Comment Lines: 15 (13.51%)
-    '    - Xml Docs: 80.00%
+    '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 26 (23.42%)
-    '     File Size: 4.05 KB
+    '     File Size: 4.01 KB
 
 
     '     Class InchiStereoParity
@@ -178,4 +178,3 @@ Namespace IUPAC.InChI
     End Class
 
 End Namespace
-

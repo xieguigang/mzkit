@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::555ea9a2f5f5b81daff95662d9aa44ef, metadb\Chemoinformatics\InChI\Models\InchiFlag.vb"
+﻿#Region "Microsoft.VisualBasic::43d91b8c310c5d7bd1515a6969c5e660, metadb\Chemoinformatics\InChI\Models\InchiFlag.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     '    - Xml Docs: 78.95%
     ' 
     '   Blank Lines: 41 (16.87%)
-    '     File Size: 9.98 KB
+    '     File Size: 9.97 KB
 
 
     '     Class InchiFlag
@@ -313,4 +313,3 @@ Namespace IUPAC.InChI
     End Class
 
 End Namespace
-

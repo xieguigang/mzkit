@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4a0b7efde7b00a0ffa7eb35475e957c4, metadb\Chemoinformatics\SDF\Struct\Point3D.vb"
+﻿#Region "Microsoft.VisualBasic::407840dfc0da2d6fea5318d6e1b55ded, metadb\Chemoinformatics\SDF\Struct\Point3D.vb"
 
     ' Author:
     ' 
@@ -37,18 +37,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 10
-    '    Code Lines: 7 (70.00%)
+    '   Total Lines: 19
+    '    Code Lines: 14 (73.68%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 3 (30.00%)
-    '     File Size: 193 B
+    '   Blank Lines: 5 (26.32%)
+    '     File Size: 372 B
 
 
     '     Class Point3D
     ' 
     '         Properties: X, Y, Z
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
     ' 
     ' 
     ' /********************************************************************************/

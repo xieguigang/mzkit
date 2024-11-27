@@ -1,68 +1,61 @@
-﻿#Region "Microsoft.VisualBasic::d89872b4ec68e7a0a2f2d549122c97fd, metadb\Chemoinformatics\InChI\InChI.vb"
+﻿#Region "Microsoft.VisualBasic::e816ce9d7f5bf7bc5053a69f81f1eb0a, metadb\Chemoinformatics\InChI\InChI.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
-
-
-' Code Statistics:
-
-'   Total Lines: 64
-'    Code Lines: 42 (65.62%)
-' Comment Lines: 12 (18.75%)
-'    - Xml Docs: 83.33%
-' 
-'   Blank Lines: 10 (15.62%)
-'     File Size: 2.52 KB
-    '   Total Lines: 63
-    '    Code Lines: 41 (65.08%)
-    ' Comment Lines: 12 (19.05%)
-    '    - Xml Docs: 83.33%
+    ' Author:
     ' 
-    '   Blank Lines: 10 (15.87%)
-    '     File Size: 2.47 KB
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-'     Class InChI
-' 
-'         Properties: Charge, FixedH, Isotopic, IsStandard, Key
-'                     Main, Reconnected, Stereochemical, Version
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Function: Parse, ToString
-' 
-' 
-' /********************************************************************************/
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 134
+    '    Code Lines: 64 (47.76%)
+    ' Comment Lines: 56 (41.79%)
+    '    - Xml Docs: 87.50%
+    ' 
+    '   Blank Lines: 14 (10.45%)
+    '     File Size: 6.15 KB
+
+
+    '     Class InChI
+    ' 
+    '         Properties: Charge, FixedH, InChIKey, Isotopic, IsStandard
+    '                     Key, Main, Reconnected, Stereochemical, Version
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: GetStruct, Parse, ToString
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
