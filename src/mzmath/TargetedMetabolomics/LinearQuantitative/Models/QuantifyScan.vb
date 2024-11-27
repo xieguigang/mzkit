@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8e923a8f5b43461fa59f96fe0ac35a63, mzmath\TargetedMetabolomics\LinearQuantitative\Models\QuantifyScan.vb"
+﻿#Region "Microsoft.VisualBasic::e0d2e3edbfe139bc74e97065e68989db, mzmath\TargetedMetabolomics\LinearQuantitative\Models\QuantifyScan.vb"
 
     ' Author:
     ' 
@@ -37,18 +37,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 25
-    '    Code Lines: 11 (44.00%)
-    ' Comment Lines: 8 (32.00%)
+    '   Total Lines: 26
+    '    Code Lines: 10 (38.46%)
+    ' Comment Lines: 11 (42.31%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 6 (24.00%)
-    '     File Size: 658 B
+    '   Blank Lines: 5 (19.23%)
+    '     File Size: 703 B
 
 
     '     Class QuantifyScan
     ' 
-    '         Properties: ionPeaks, quantify, rawX
+    '         Properties: quantify, rawX
     ' 
     '         Function: ToString
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e57905e266fdda1f5ba9fb011bf237c4, mzmath\MSEngine\AnnotationPack\Report\ReportRender.vb"
+﻿#Region "Microsoft.VisualBasic::14754213b4588cad27ceb15c833bf89d, mzmath\MSEngine\AnnotationPack\Report\ReportRender.vb"
 
     ' Author:
     ' 
@@ -361,4 +361,3 @@ Public Class ReportRender : Implements IReportRender
         End If
     End Function
 End Class
-

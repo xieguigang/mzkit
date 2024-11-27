@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::78b91ac6a25cadd2c93a4a263800529a, mzmath\GCxGC\GCMSPeak1D.vb"
+﻿#Region "Microsoft.VisualBasic::fab66a228dfa38c981c10a5c20c2e7fe, mzmath\GCxGC\GCMSPeak1D.vb"
 
     ' Author:
     ' 
@@ -120,4 +120,3 @@ Public Class GCMSPeak1D
     End Function
 
 End Class
-

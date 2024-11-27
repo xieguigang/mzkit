@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bdded4075d4abeb79b5bd68037fefa3a, mzmath\TargetedMetabolomics\LinearQuantitative\Models\IonTPA.vb"
+﻿#Region "Microsoft.VisualBasic::ea9e5a711da2fe6b8a9a1a199f3125b2, mzmath\TargetedMetabolomics\LinearQuantitative\Models\IonTPA.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 5 (20.83%)
-    '     File Size: 798 B
+    '     File Size: 792 B
 
 
     '     Class IonTPA

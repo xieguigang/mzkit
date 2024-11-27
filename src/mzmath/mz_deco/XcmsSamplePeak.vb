@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::909dca7660b63ad83f23c3c598d1f089, mzmath\mz_deco\XcmsSamplePeak.vb"
+﻿#Region "Microsoft.VisualBasic::e0f4c12c5c055efa3ded595b31f7c171, mzmath\mz_deco\XcmsSamplePeak.vb"
 
     ' Author:
     ' 
@@ -116,4 +116,3 @@ Public Class XcmsSamplePeak
     End Function
 
 End Class
-

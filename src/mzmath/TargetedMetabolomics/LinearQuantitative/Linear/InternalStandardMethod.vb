@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::09237b5d5a43f4a7a579d6c3af6a6355, mzmath\TargetedMetabolomics\LinearQuantitative\Linear\InternalStandardMethod.vb"
+﻿#Region "Microsoft.VisualBasic::ade7b876836eb28bc6be393846c18943, mzmath\TargetedMetabolomics\LinearQuantitative\Linear\InternalStandardMethod.vb"
 
     ' Author:
     ' 
@@ -37,19 +37,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 168
-    '    Code Lines: 125 (74.40%)
-    ' Comment Lines: 23 (13.69%)
-    '    - Xml Docs: 91.30%
+    '   Total Lines: 190
+    '    Code Lines: 136 (71.58%)
+    ' Comment Lines: 31 (16.32%)
+    '    - Xml Docs: 90.32%
     ' 
-    '   Blank Lines: 20 (11.90%)
-    '     File Size: 6.91 KB
+    '   Blank Lines: 23 (12.11%)
+    '     File Size: 7.97 KB
 
 
     '     Class InternalStandardMethod
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: ToFeatureLinear, ToLinears, TPA
+    '         Function: CreateModel, (+2 Overloads) ToFeatureLinear, ToLinears, TPA
     ' 
     ' 
     ' /********************************************************************************/

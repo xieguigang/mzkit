@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cdf1a7817887571ab83c2de4711431e2, mzmath\mz_deco\Save\SaveRtShifts.vb"
+﻿#Region "Microsoft.VisualBasic::1b69f6c1a8028c87c530f0eadc3110bf, mzmath\mz_deco\Save\SaveRtShifts.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 9 (16.36%)
-    '     File Size: 1.93 KB
+    '     File Size: 1.92 KB
 
 
     ' Module SaveRtShifts
@@ -111,4 +111,3 @@ Public Module SaveRtShifts
         Next
     End Function
 End Module
-

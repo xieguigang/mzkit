@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::148f19b010225c810ee2a7676492fdf1, mzmath\mz_deco\xic_deco_task.vb"
+﻿#Region "Microsoft.VisualBasic::daae77bc8153d7b9eb037cd048845e21, mzmath\mz_deco\xic_deco_task.vb"
 
     ' Author:
     ' 
@@ -162,4 +162,3 @@ Public Class xic_deco_task : Inherits VectorTask
         Return xcms
     End Function
 End Class
-

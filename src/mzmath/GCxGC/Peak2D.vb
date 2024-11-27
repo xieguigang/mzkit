@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::69ef59e4bf886dcba553b30344f52383, mzmath\GCxGC\Peak2D.vb"
+﻿#Region "Microsoft.VisualBasic::5cb2479121d14f5367522a9747bd7ed3, mzmath\GCxGC\Peak2D.vb"
 
     ' Author:
     ' 
@@ -37,12 +37,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 58
-    '    Code Lines: 15 (25.86%)
-    ' Comment Lines: 39 (67.24%)
+    '   Total Lines: 57
+    '    Code Lines: 15 (26.32%)
+    ' Comment Lines: 39 (68.42%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 4 (6.90%)
+    '   Blank Lines: 3 (5.26%)
     '     File Size: 1.57 KB
 
 
@@ -56,7 +56,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 ''' <summary>
 ''' Model of the GCxGC 2d peak
@@ -115,4 +114,3 @@ Public Class Peak2D
     End Function
 
 End Class
-

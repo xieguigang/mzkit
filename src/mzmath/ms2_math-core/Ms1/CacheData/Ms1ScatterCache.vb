@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::76642e3cbe303a9873908cf72a027c99, mzmath\ms2_math-core\Ms1\CacheData\Ms1ScatterCache.vb"
+﻿#Region "Microsoft.VisualBasic::c99c9e6a11dedb2fbda551877be27bda, mzmath\ms2_math-core\Ms1\CacheData\Ms1ScatterCache.vb"
 
     ' Author:
     ' 
@@ -37,20 +37,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 41
-    '    Code Lines: 32 (78.05%)
-    ' Comment Lines: 3 (7.32%)
+    '   Total Lines: 48
+    '    Code Lines: 38 (79.17%)
+    ' Comment Lines: 3 (6.25%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 6 (14.63%)
-    '     File Size: 1.59 KB
+    '   Blank Lines: 7 (14.58%)
+    '     File Size: 1.85 KB
 
 
     ' Module Ms1ScatterCache
     ' 
     '     Function: LoadDataFrame
     ' 
-    '     Sub: SaveDataFrame
+    '     Sub: (+2 Overloads) SaveDataFrame
     ' 
     ' /********************************************************************************/
 
@@ -104,4 +104,3 @@ Public Module Ms1ScatterCache
         Next
     End Function
 End Module
-

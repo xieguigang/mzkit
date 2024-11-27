@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f6d387a85bac04f1ed4136dd14c10589, mzmath\MSEngine\AnnotationPack\Report\IReportRender.vb"
+﻿#Region "Microsoft.VisualBasic::1b9047045c71f10e8d69448c1639d230, mzmath\MSEngine\AnnotationPack\Report\IReportRender.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 6 (20.69%)
-    '     File Size: 1011 B
+    '     File Size: 1009 B
 
 
     ' Interface IReportRender
@@ -85,4 +85,3 @@ Public Interface IReportRender
     Function Tabular(refSet As IEnumerable(Of String), println As Action(Of String), Optional rt_cell As Boolean = False) As IEnumerable(Of String)
 
 End Interface
-

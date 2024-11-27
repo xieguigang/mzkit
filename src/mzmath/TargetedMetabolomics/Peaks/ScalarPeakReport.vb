@@ -1,4 +1,75 @@
-﻿Imports System.Runtime.CompilerServices
+﻿#Region "Microsoft.VisualBasic::b3d67c83a5660d966e3eca4cc819d3a1, mzmath\TargetedMetabolomics\Peaks\ScalarPeakReport.vb"
+
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 178
+    '    Code Lines: 142 (79.78%)
+    ' Comment Lines: 20 (11.24%)
+    '    - Xml Docs: 90.00%
+    ' 
+    '   Blank Lines: 16 (8.99%)
+    '     File Size: 8.35 KB
+
+
+    ' Class ScalarPeakReport
+    ' 
+    '     Properties: Active, ActualRT, Adduct, Area, BatchOrder
+    '                 CalculatedAmt, Channel, ColumnHeader1, ColumnHeader2, ColumnHeader3
+    '                 ColumnHeader4, ColumnHeader5, ColumnHeader6, Comments, Compound
+    '                 Confirm, CV, Diff, Excluded, FI
+    '                 Filename, FinalUnits, FlagDetails, Formula, Group
+    '                 GroupAverage, Height, IntegrationMode, IonRatio, IonType
+    '                 IP, IR, IsotopicPatternScore, ISTDAmt, ISTDResponse
+    '                 Level, LibMatchName, LibraryMatchRank, LibraryProbabilityPercent, LibraryScore
+    '                 LS, Modification, mz_Apex, mz_Delta, mz_Expected
+    '                 NumIsotopesMatched, PeakLabel, PeptideSequence, PK, ProteinName
+    '                 RelativeRT, ResponseRatio, RSD, RSIRevDot, RT
+    '                 RTDelta, SampleAmt, SampleID, SampleName, SampleType
+    '                 SIDotProduct, SN, Status, StdAddAmount, TargetIonRatio
+    '                 TheoreticalAmt, Type
+    ' 
+    '     Function: ExtractSampleData, GetPeakData, MeasureInternalStandardTuple, ToString
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
@@ -176,3 +247,4 @@ Public Class ScalarPeakReport
     End Function
 
 End Class
+

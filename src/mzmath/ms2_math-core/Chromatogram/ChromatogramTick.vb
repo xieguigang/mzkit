@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bba29d67c4d7d6ede6733809396ba5c6, mzmath\ms2_math-core\Chromatogram\ChromatogramTick.vb"
+﻿#Region "Microsoft.VisualBasic::c64dfcf7df8493b309e5324d7df1429f, mzmath\ms2_math-core\Chromatogram\ChromatogramTick.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 59
-    '    Code Lines: 33 (55.93%)
-    ' Comment Lines: 15 (25.42%)
+    '   Total Lines: 74
+    '    Code Lines: 46 (62.16%)
+    ' Comment Lines: 15 (20.27%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 11 (18.64%)
-    '     File Size: 1.89 KB
+    '   Blank Lines: 13 (17.57%)
+    '     File Size: 2.60 KB
 
 
     '     Class ChromatogramTick
@@ -51,7 +51,7 @@
     '         Properties: Intensity, Time
     ' 
     '         Constructor: (+3 Overloads) Sub New
-    '         Function: ToString, Zip
+    '         Function: Bspline, ToString, Zip
     ' 
     ' 
     ' /********************************************************************************/

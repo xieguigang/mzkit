@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::735b2d3f20a2c6ee489fd6a360e0732b, mzmath\TargetedMetabolomics\MRM\IsomerismIonPairs.vb"
+﻿#Region "Microsoft.VisualBasic::f4dcc420d1e7b2383c75b308d7153a58, mzmath\TargetedMetabolomics\MRM\IsomerismIonPairs.vb"
 
     ' Author:
     ' 
@@ -37,19 +37,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 64
-    '    Code Lines: 45 (70.31%)
-    ' Comment Lines: 8 (12.50%)
+    '   Total Lines: 71
+    '    Code Lines: 50 (70.42%)
+    ' Comment Lines: 8 (11.27%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 11 (17.19%)
-    '     File Size: 2.10 KB
+    '   Blank Lines: 13 (18.31%)
+    '     File Size: 2.22 KB
 
 
     '     Class IsomerismIonPairs
     ' 
     '         Properties: hasIsomerism, index, ions, target
     ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: GetEnumerator, groupKey, IEnumerable_GetEnumerator, ToString
     ' 
     ' 

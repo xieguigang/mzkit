@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9f5598011eb8d7e13ef3930db8a62dea, mzmath\GCxGC\GCxGCPeakDetection.vb"
+﻿#Region "Microsoft.VisualBasic::f4c587fe4710189a8e74ee29ca93a924, mzmath\GCxGC\GCxGCPeakDetection.vb"
 
     ' Author:
     ' 
@@ -115,4 +115,3 @@ Public Module GCxGCPeakDetection
     End Function
 
 End Module
-

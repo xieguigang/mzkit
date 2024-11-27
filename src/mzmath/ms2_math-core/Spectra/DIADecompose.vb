@@ -1,56 +1,57 @@
-﻿#Region "Microsoft.VisualBasic::0f125e204e9bfccb0de3807551967bd7, mzmath\ms2_math-core\Spectra\DIADecompose.vb"
+﻿#Region "Microsoft.VisualBasic::14946557231bf0111c6223ca14649436, mzmath\ms2_math-core\Spectra\DIADecompose.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 103
-'    Code Lines: 73 (70.87%)
-' Comment Lines: 14 (13.59%)
-'    - Xml Docs: 92.86%
-' 
-'   Blank Lines: 16 (15.53%)
-'     File Size: 4.22 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module DIADecompose
-' 
-'     Function: DecomposeSpectrum
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 135
+    '    Code Lines: 91 (67.41%)
+    ' Comment Lines: 20 (14.81%)
+    '    - Xml Docs: 90.00%
+    ' 
+    '   Blank Lines: 24 (17.78%)
+    '     File Size: 5.18 KB
+
+
+    ' Class DIADecompose
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: DecomposeSpectrum, GetIonPeaksComposition, GetSampleComposition
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -189,4 +190,3 @@ Public Class DIADecompose
     End Function
 
 End Class
-

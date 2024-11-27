@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a1f53a14b05f45e255377dfe2c5f5f1a, mzmath\GCxGC\Demodulate2Dimension.vb"
+﻿#Region "Microsoft.VisualBasic::a06d5f51ae36393e5a7ccdd798d943f0, mzmath\GCxGC\Demodulate2Dimension.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     '    - Xml Docs: 95.83%
     ' 
     '   Blank Lines: 15 (17.86%)
-    '     File Size: 3.15 KB
+    '     File Size: 3.14 KB
 
 
     ' Module Demodulate2Dimension
@@ -138,4 +138,3 @@ Public Module Demodulate2Dimension
         Return diff.Average
     End Function
 End Module
-

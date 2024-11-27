@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9fb885b39f926976ede84eab0e9781bc, mzmath\TargetedMetabolomics\MRMFinder.vb"
+﻿#Region "Microsoft.VisualBasic::eaaa816d9124940a57dc2505ac30c5f5, mzmath\TargetedMetabolomics\MRMFinder.vb"
 
     ' Author:
     ' 
@@ -37,12 +37,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 120
-    '    Code Lines: 73 (60.83%)
-    ' Comment Lines: 31 (25.83%)
+    '   Total Lines: 119
+    '    Code Lines: 73 (61.34%)
+    ' Comment Lines: 31 (26.05%)
     '    - Xml Docs: 93.55%
     ' 
-    '   Blank Lines: 16 (13.33%)
+    '   Blank Lines: 15 (12.61%)
     '     File Size: 4.73 KB
 
 
@@ -53,7 +53,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
@@ -174,4 +173,3 @@ Public Module MRMFinder
     End Function
 
 End Module
-

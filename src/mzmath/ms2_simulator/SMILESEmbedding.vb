@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fd9a0ad9eaa42b2e04472dfdae28c9fb, mzmath\ms2_simulator\SMILESEmbedding.vb"
+﻿#Region "Microsoft.VisualBasic::80738f9a8663dd936c094d5e48accd13, mzmath\ms2_simulator\SMILESEmbedding.vb"
 
     ' Author:
     ' 
@@ -117,4 +117,3 @@ Public Module SMILESEmbedding
     End Function
 
 End Module
-

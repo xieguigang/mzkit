@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8964a9f6903bd8b9dbe92ffd5e958f67, mzmath\TargetedMetabolomics\Contents\ContentTable.vb"
+﻿#Region "Microsoft.VisualBasic::7d0ee9f3e028c98e0135500ea2676d32, mzmath\TargetedMetabolomics\Contents\ContentTable.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     '    - Xml Docs: 89.19%
     ' 
     '   Blank Lines: 15 (11.90%)
-    '     File Size: 4.86 KB
+    '     File Size: 4.92 KB
 
 
     '     Class ContentTable

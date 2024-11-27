@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e4058757dee60ba6f023bdd25e8c0f6c, mzmath\ms2_math-core\Spectra\Models\Xml\AlignmentOutput.vb"
+﻿#Region "Microsoft.VisualBasic::adbd8fc296e2ab7f9b52d755b942cf3a, mzmath\ms2_math-core\Spectra\Models\Xml\AlignmentOutput.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 137
-    '    Code Lines: 100 (72.99%)
-    ' Comment Lines: 15 (10.95%)
+    '   Total Lines: 166
+    '    Code Lines: 106 (63.86%)
+    ' Comment Lines: 37 (22.29%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 22 (16.06%)
-    '     File Size: 4.97 KB
+    '   Blank Lines: 23 (13.86%)
+    '     File Size: 5.94 KB
 
 
     '     Class AlignmentOutput

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7d6203ff48c6aae36a428cbcc155e305, mzmath\TargetedMetabolomics\MRM\QuantitativeAnalysis\Samples.vb"
+﻿#Region "Microsoft.VisualBasic::ccb2547d88ad87dd51078efd8d292e1d, mzmath\TargetedMetabolomics\MRM\QuantitativeAnalysis\Samples.vb"
 
     ' Author:
     ' 
@@ -37,18 +37,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 177
-    '    Code Lines: 119 (67.23%)
-    ' Comment Lines: 39 (22.03%)
+    '   Total Lines: 192
+    '    Code Lines: 131 (68.23%)
+    ' Comment Lines: 39 (20.31%)
     '    - Xml Docs: 84.62%
     ' 
-    '   Blank Lines: 19 (10.73%)
-    '     File Size: 8.53 KB
+    '   Blank Lines: 22 (11.46%)
+    '     File Size: 9.13 KB
 
 
     '     Module MRMSamples
     ' 
-    '         Function: ExtractIonData, QuantitativeAnalysis, SampleQuantify
+    '         Function: (+2 Overloads) ExtractIonData, QuantitativeAnalysis, SampleQuantify
     ' 
     ' 
     ' /********************************************************************************/

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4963e09df08590fa87b45c84c675956b, mzmath\MSEngine\AnnotationPack\AnnotationResult.vb"
+﻿#Region "Microsoft.VisualBasic::e303bae2cac2017a9e84ee1c4981055b, mzmath\MSEngine\AnnotationPack\AnnotationResult.vb"
 
     ' Author:
     ' 
@@ -37,12 +37,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 71
-    '    Code Lines: 49 (69.01%)
-    ' Comment Lines: 14 (19.72%)
+    '   Total Lines: 70
+    '    Code Lines: 49 (70.00%)
+    ' Comment Lines: 14 (20.00%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 8 (11.27%)
+    '   Blank Lines: 7 (10.00%)
     '     File Size: 2.10 KB
 
 
@@ -59,7 +59,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 ''' <summary>
 ''' the annotation result of a specific peak
@@ -131,4 +130,3 @@ Public Class AlignmentHit
     End Function
 
 End Class
-

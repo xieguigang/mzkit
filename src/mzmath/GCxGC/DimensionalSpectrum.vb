@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::573457fb2542212b32323656105222b0, mzmath\GCxGC\DimensionalSpectrum.vb"
+﻿#Region "Microsoft.VisualBasic::7b8ad210806a3f224841a613670d25ab, mzmath\GCxGC\DimensionalSpectrum.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 4 (14.81%)
-    '     File Size: 748 B
+    '     File Size: 746 B
 
 
     ' Class DimensionalSpectrum
@@ -81,4 +81,3 @@ Public Class DimensionalSpectrum
     Public Property baseIntensity As Double
 
 End Class
-

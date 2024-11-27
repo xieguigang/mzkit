@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::239efa7709029c3cb88e14c8e16412eb, mzmath\TargetedMetabolomics\MRM\IonPair.vb"
+﻿#Region "Microsoft.VisualBasic::6752693422b268d31864701dbbc7ba67, mzmath\TargetedMetabolomics\MRM\IonPair.vb"
 
     ' Author:
     ' 
@@ -37,19 +37,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 117
-    '    Code Lines: 71 (60.68%)
-    ' Comment Lines: 33 (28.21%)
+    '   Total Lines: 125
+    '    Code Lines: 77 (61.60%)
+    ' Comment Lines: 33 (26.40%)
     '    - Xml Docs: 96.97%
     ' 
-    '   Blank Lines: 13 (11.11%)
-    '     File Size: 4.66 KB
+    '   Blank Lines: 15 (12.00%)
+    '     File Size: 4.82 KB
 
 
     '     Class IonPair
     ' 
     '         Properties: accession, name, precursor, product, rt
     ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: (+2 Overloads) Assert, EqualsTo, GetIsomerism, populateGroupElement, ToString
     ' 
     ' 

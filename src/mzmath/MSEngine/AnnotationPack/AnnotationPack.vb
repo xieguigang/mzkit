@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::97e6463fd88f0b21731badf5cca438c4, mzmath\MSEngine\AnnotationPack\AnnotationPack.vb"
+﻿#Region "Microsoft.VisualBasic::9bd74d615b4b753bba781fe21e7eebf7, mzmath\MSEngine\AnnotationPack\AnnotationPack.vb"
 
     ' Author:
     ' 
@@ -37,12 +37,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 143
-    '    Code Lines: 80 (55.94%)
-    ' Comment Lines: 46 (32.17%)
+    '   Total Lines: 142
+    '    Code Lines: 80 (56.34%)
+    ' Comment Lines: 46 (32.39%)
     '    - Xml Docs: 76.09%
     ' 
-    '   Blank Lines: 17 (11.89%)
+    '   Blank Lines: 16 (11.27%)
     '     File Size: 4.79 KB
 
 
@@ -57,7 +57,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
@@ -201,4 +200,3 @@ Public Class AnnotationPack : Implements IWorkspaceReader, IDisposable
         GC.SuppressFinalize(Me)
     End Sub
 End Class
-

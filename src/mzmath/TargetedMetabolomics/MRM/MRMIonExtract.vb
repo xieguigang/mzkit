@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f73598c70a033b3832ee77ef2f3b7e79, mzmath\TargetedMetabolomics\MRM\MRMIonExtract.vb"
+﻿#Region "Microsoft.VisualBasic::7d7cafaaeb5c2ecee9df6e869296447a, mzmath\TargetedMetabolomics\MRM\MRMIonExtract.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     '    - Xml Docs: 80.95%
     ' 
     '   Blank Lines: 32 (13.68%)
-    '     File Size: 9.66 KB
+    '     File Size: 9.65 KB
 
 
     '     Class MRMIonExtract

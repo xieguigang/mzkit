@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8f5e12fc5b122f6f9a6268a1ed5af8eb, mzmath\MoleculeNetworking\Tree\BinaryClustering.vb"
+﻿#Region "Microsoft.VisualBasic::beedb15ed7b7cdc571b0d71f8091c049, mzmath\MoleculeNetworking\Tree\BinaryClustering.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 15 (20.27%)
-    '     File Size: 2.24 KB
+    '     File Size: 2.25 KB
 
 
     ' Class BinaryClustering
@@ -132,4 +132,3 @@ Public Class BinaryClustering
         Next
     End Function
 End Class
-

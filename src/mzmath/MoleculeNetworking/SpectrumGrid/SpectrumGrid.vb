@@ -1,59 +1,58 @@
-﻿#Region "Microsoft.VisualBasic::13c9ad6506032796077047bb02edb7f1, mzmath\MoleculeNetworking\SpectrumGrid\SpectrumGrid.vb"
+﻿#Region "Microsoft.VisualBasic::4f19a3264223f80614034ca7598fe0b6, mzmath\MoleculeNetworking\SpectrumGrid\SpectrumGrid.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 232
-'    Code Lines: 172 (74.14%)
-' Comment Lines: 24 (10.34%)
-'    - Xml Docs: 70.83%
-' 
-'   Blank Lines: 36 (15.52%)
-'     File Size: 9.51 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Class SpectrumGrid
-' 
-'     Constructor: (+1 Overloads) Sub New
-'     Function: AssignPeaks, Clustering, GridLineDecompose, GridLineNoDecompose, SetRawDataFiles
-'               SumNorm
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 295
+    '    Code Lines: 217 (73.56%)
+    ' Comment Lines: 34 (11.53%)
+    '    - Xml Docs: 76.47%
+    ' 
+    '   Blank Lines: 44 (14.92%)
+    '     File Size: 12.11 KB
+
+
+    ' Class SpectrumGrid
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: AssignPeaks, Clustering, GetTotal, GetUnmapped, GridLineDecompose
+    '               GridLineNoDecompose, SetRawDataFiles, SumNorm
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -352,6 +351,3 @@ Public Class SpectrumGrid
     End Function
 
 End Class
-
-
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7531cfba36cb24fa42bc6584f761f259, mzmath\MoleculeNetworking\SpectrumGrid\SpectrumLine.vb"
+﻿#Region "Microsoft.VisualBasic::6a4b019e9f0e7666106743427daf3afb, mzmath\MoleculeNetworking\SpectrumGrid\SpectrumLine.vb"
 
     ' Author:
     ' 
@@ -37,20 +37,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 23
-    '    Code Lines: 15 (65.22%)
-    ' Comment Lines: 3 (13.04%)
+    '   Total Lines: 49
+    '    Code Lines: 23 (46.94%)
+    ' Comment Lines: 19 (38.78%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 5 (21.74%)
-    '     File Size: 712 B
+    '   Blank Lines: 7 (14.29%)
+    '     File Size: 1.47 KB
 
 
     ' Class SpectrumLine
     ' 
-    '     Properties: cluster, intensity, mz, rt
+    '     Properties: cluster, intensity, mz, rt, size
     ' 
-    '     Function: SetRT, ToString
+    '     Function: hashKey, SetRT, ToString
     ' 
     ' /********************************************************************************/
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a43b9860005a029d21432c5c514aa69a, mzmath\GCxGC\EIPeak.vb"
+﻿#Region "Microsoft.VisualBasic::8963e34d3fb7b3caf5cdd328b334bc80, mzmath\GCxGC\EIPeak.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     '    - Xml Docs: 92.86%
     ' 
     '   Blank Lines: 5 (15.62%)
-    '     File Size: 980 B
+    '     File Size: 978 B
 
 
     ' Class EIPeak
@@ -88,4 +88,3 @@ Public Class EIPeak(Of T)
     End Function
 
 End Class
-
