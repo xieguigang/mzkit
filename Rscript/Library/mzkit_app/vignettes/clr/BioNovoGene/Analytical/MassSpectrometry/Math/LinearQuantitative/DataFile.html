@@ -22,7 +22,7 @@
 
         <h3>Description</h3>
 
-        
+        <p>model for a single rawdata file</p>
 
         <h3>Declare</h3>        
 
@@ -30,9 +30,10 @@
             <code id="clr_ts">
 # namespace BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative
 export class DataFile {
-   compounds: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/LinearQuantitative/IonPeakTableRow.html">IonPeakTableRow[]</a>;
    filename: string;
    FileType: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/SampleFiles.html">SampleFiles</a>;
+   # the multiple ion peak area data
+   ionPeaks: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/LinearQuantitative/IonPeakTableRow.html">IonPeakTableRow[]</a>;
 }
 </code>
         </pre>
@@ -40,8 +41,8 @@ export class DataFile {
         <h3>.NET clr type reference tree</h3>
 
         <ol>
-<li>use by <i>property</i> member <code>compounds</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/LinearQuantitative/IonPeakTableRow.html">IonPeakTableRow</a></li>
 <li>use by <i>property</i> member <code>FileType</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/SampleFiles.html">SampleFiles</a></li>
+<li>use by <i>property</i> member <code>ionPeaks</code>: <a href="/vignettes/clr/BioNovoGene/Analytical/MassSpectrometry/Math/LinearQuantitative/IonPeakTableRow.html">IonPeakTableRow</a></li>
 </ol>
 
 
