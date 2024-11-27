@@ -53,7 +53,7 @@ Namespace LinearQuantitative
 
             For Each line As StandardCurve In linears
                 If ions.ContainsKey(line.name) Then
-                    If line.IS Is Nothing Then
+                    If line.IS Is Nothing OrElse line.IS.CheckIsEmpty Then
                         ' use peak area
                         Call contents.Add(line.name, line.linear.GetY(ions(line.name).TPA))
                     ElseIf ions(line.name).TPA_IS <= 0 Then

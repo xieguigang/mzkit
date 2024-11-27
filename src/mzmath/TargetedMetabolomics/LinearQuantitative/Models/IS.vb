@@ -83,6 +83,10 @@ Namespace LinearQuantitative
             Me.CIS = 1
         End Sub
 
+        Public Function CheckIsEmpty() As Boolean
+            Return (ID.StringEmpty(, True) OrElse ID.TextEquals("None")) AndAlso CIS <= 0 AndAlso (name.StringEmpty(, True) OrElse name.TextEquals("None"))
+        End Function
+
         Public Overrides Function ToString() As String
             Return $"Dim {name} As {ID} = {CIS}"
         End Function
