@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7033f690bc95a35444da3d63ab1033d2, visualize\MsImaging\Reader\PixelScan\mzPackPixel.vb"
+﻿#Region "Microsoft.VisualBasic::5eb72360508d25fb99cf8f0b1a3a978a, visualize\MsImaging\Reader\PixelScan\mzPackPixel.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 159
-    '    Code Lines: 125 (78.62%)
-    ' Comment Lines: 9 (5.66%)
+    '   Total Lines: 161
+    '    Code Lines: 126 (78.26%)
+    ' Comment Lines: 9 (5.59%)
     '    - Xml Docs: 33.33%
     ' 
-    '   Blank Lines: 25 (15.72%)
-    '     File Size: 5.64 KB
+    '   Blank Lines: 26 (16.15%)
+    '     File Size: 5.67 KB
 
 
     '     Class mzPackPixel

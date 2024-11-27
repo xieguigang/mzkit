@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::46e73a1a197b755facc77a870c0ff295, visualize\MsImaging\Blender\Renderer\PixelRender.vb"
+﻿#Region "Microsoft.VisualBasic::f0ad2cdced0dc83cdaae53798596b74e, visualize\MsImaging\Blender\Renderer\PixelRender.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 191
-    '    Code Lines: 113 (59.16%)
-    ' Comment Lines: 48 (25.13%)
+    '   Total Lines: 190
+    '    Code Lines: 112 (58.95%)
+    ' Comment Lines: 48 (25.26%)
     '    - Xml Docs: 75.00%
     ' 
-    '   Blank Lines: 30 (15.71%)
-    '     File Size: 8.12 KB
+    '   Blank Lines: 30 (15.79%)
+    '     File Size: 8.08 KB
 
 
     '     Class PixelRender

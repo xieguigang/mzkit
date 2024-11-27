@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::80b5b84b724bc33e682f7c1b3816cd14, visualize\MsImaging\Analysis\GridScanner.vb"
+﻿#Region "Microsoft.VisualBasic::9c83888e9225267d666e226c52081482, visualize\MsImaging\Analysis\GridScanner.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     '    - Xml Docs: 46.67%
     ' 
     '   Blank Lines: 42 (15.56%)
-    '     File Size: 10.99 KB
+    '     File Size: 11.00 KB
 
 
     ' Module GridScanner

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cc2ef3d83a90c678b2e0aea385575bc5, visualize\MsImaging\Reader\ReadRawPack.vb"
+﻿#Region "Microsoft.VisualBasic::3b3bb418b7bfa47eaeb919046b0b7da1, visualize\MsImaging\Reader\ReadRawPack.vb"
 
     ' Author:
     ' 
@@ -37,20 +37,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 157
-    '    Code Lines: 118 (75.16%)
-    ' Comment Lines: 14 (8.92%)
-    '    - Xml Docs: 100.00%
+    '   Total Lines: 158
+    '    Code Lines: 107 (67.72%)
+    ' Comment Lines: 26 (16.46%)
+    '    - Xml Docs: 53.85%
     ' 
-    '   Blank Lines: 25 (15.92%)
-    '     File Size: 6.07 KB
+    '   Blank Lines: 25 (15.82%)
+    '     File Size: 6.11 KB
 
 
     '     Class ReadRawPack
     ' 
     '         Properties: dimension, resolution
     ' 
-    '         Constructor: (+4 Overloads) Sub New
+    '         Constructor: (+3 Overloads) Sub New
     ' 
     '         Function: AllPixels, GetPixel, GetScans, LoadMzArray
     ' 

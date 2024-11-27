@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9a7d7e79f3b7584f3af0e519c65d919e, visualize\MsImaging\Layer\LayerHelpers.vb"
+﻿#Region "Microsoft.VisualBasic::a5f6537fd34a856ffeef4c1117bb33df, visualize\MsImaging\Layer\LayerHelpers.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 116
-    '    Code Lines: 98 (84.48%)
-    ' Comment Lines: 8 (6.90%)
+    '   Total Lines: 115
+    '    Code Lines: 97 (84.35%)
+    ' Comment Lines: 8 (6.96%)
     '    - Xml Docs: 87.50%
     ' 
-    '   Blank Lines: 10 (8.62%)
-    '     File Size: 4.86 KB
+    '   Blank Lines: 10 (8.70%)
+    '     File Size: 4.79 KB
 
 
     ' Module LayerHelpers

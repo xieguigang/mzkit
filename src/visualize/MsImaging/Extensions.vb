@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ddfaaf622294d243d7e93bba787158c0, visualize\MsImaging\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::80c35ea831822da9a89a1be61c8dde44, visualize\MsImaging\Extensions.vb"
 
     ' Author:
     ' 
@@ -37,19 +37,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 281
-    '    Code Lines: 196 (69.75%)
-    ' Comment Lines: 53 (18.86%)
-    '    - Xml Docs: 98.11%
+    '   Total Lines: 140
+    '    Code Lines: 93 (66.43%)
+    ' Comment Lines: 31 (22.14%)
+    '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 32 (11.39%)
-    '     File Size: 10.24 KB
+    '   Blank Lines: 16 (11.43%)
+    '     File Size: 5.29 KB
 
 
     ' Module Extensions
     ' 
-    '     Function: (+2 Overloads) AsRaster, DensityCut, GetPixelKeys, (+2 Overloads) PixelScanPadding, Reset
-    '               ScanMeltdown, Shape
+    '     Function: (+2 Overloads) AsRaster, DensityCut, GetPixelKeys, PixelScanPadding, Shape
     ' 
     ' /********************************************************************************/
 

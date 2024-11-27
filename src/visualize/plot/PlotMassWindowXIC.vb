@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::600482317d0216098af090b975713fe5, visualize\plot\PlotMassWindowXIC.vb"
+﻿#Region "Microsoft.VisualBasic::630c471f09194480df9c7bb301700c17, visualize\plot\PlotMassWindowXIC.vb"
 
     ' Author:
     ' 
@@ -37,20 +37,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 202
-    '    Code Lines: 155 (76.73%)
-    ' Comment Lines: 26 (12.87%)
-    '    - Xml Docs: 92.31%
+    '   Total Lines: 221
+    '    Code Lines: 169 (76.47%)
+    ' Comment Lines: 26 (11.76%)
+    '    - Xml Docs: 96.15%
     ' 
-    '   Blank Lines: 21 (10.40%)
-    '     File Size: 8.29 KB
+    '   Blank Lines: 26 (11.76%)
+    '     File Size: 8.83 KB
 
 
     ' Class PlotMassWindowXIC
     ' 
     '     Constructor: (+1 Overloads) Sub New
     ' 
-    '     Function: loadXIC
+    '     Function: loadXIC, SplineLine
     ' 
     '     Sub: PlotInternal
     ' 

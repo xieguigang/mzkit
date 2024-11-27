@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::781ad163a221cba808a6572985bfa159, visualize\plot\PeakAssign.vb"
+﻿#Region "Microsoft.VisualBasic::e3aceaadd5fdcd0c1ba71573df658795, visualize\plot\PeakAssign.vb"
 
     ' Author:
     ' 
@@ -37,20 +37,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 401
-    '    Code Lines: 330 (82.29%)
-    ' Comment Lines: 17 (4.24%)
-    '    - Xml Docs: 76.47%
+    '   Total Lines: 416
+    '    Code Lines: 336 (80.77%)
+    ' Comment Lines: 25 (6.01%)
+    '    - Xml Docs: 80.00%
     ' 
-    '   Blank Lines: 54 (13.47%)
-    '     File Size: 17.59 KB
+    '   Blank Lines: 55 (13.22%)
+    '     File Size: 18.09 KB
 
 
     ' Class PeakAssign
     ' 
     '     Constructor: (+1 Overloads) Sub New
     ' 
-    '     Function: DrawSpectrumPeaks, ResizeImages, ResizeThisWidth
+    '     Function: CreateXMzAxisTicks, DrawSpectrumPeaks, ResizeImages, ResizeThisWidth
     ' 
     '     Sub: PlotInternal
     ' 

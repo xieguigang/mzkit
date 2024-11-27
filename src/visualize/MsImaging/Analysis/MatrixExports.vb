@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9791e7761526ac6bcc76524e6145fc18, visualize\MsImaging\Analysis\MatrixExports.vb"
+﻿#Region "Microsoft.VisualBasic::a6e811aac97d9eaf46295c406281e99d, visualize\MsImaging\Analysis\MatrixExports.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     '    - Xml Docs: 86.67%
     ' 
     '   Blank Lines: 12 (14.81%)
-    '     File Size: 2.90 KB
+    '     File Size: 2.89 KB
 
 
     ' Module MatrixExports
@@ -141,4 +141,3 @@ Public Module MatrixExports
     End Class
 
 End Module
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e0676c804e0a29a58e903f64850c6465, visualize\MsImaging\Blender\Ruler.vb"
+﻿#Region "Microsoft.VisualBasic::bf6e2f5bd469d952f0177d3d235ccd00, visualize\MsImaging\Blender\Ruler.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 89
-    '    Code Lines: 69 (77.53%)
-    ' Comment Lines: 2 (2.25%)
+    '   Total Lines: 87
+    '    Code Lines: 67 (77.01%)
+    ' Comment Lines: 2 (2.30%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 18 (20.22%)
-    '     File Size: 3.33 KB
+    '   Blank Lines: 18 (20.69%)
+    '     File Size: 3.26 KB
 
 
     '     Class Ruler
