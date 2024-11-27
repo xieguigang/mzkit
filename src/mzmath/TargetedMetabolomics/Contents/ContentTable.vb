@@ -115,7 +115,7 @@ Namespace Content
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetIS(ion As String) As [IS]
-            If [IS] Is Nothing Then
+            If [IS] Is Nothing OrElse ion.StringEmpty(, True) OrElse ion.TextEquals("None") Then
                 Return New [IS]
             Else
                 Return [IS].TryGetValue(ion, [default]:=New [IS])

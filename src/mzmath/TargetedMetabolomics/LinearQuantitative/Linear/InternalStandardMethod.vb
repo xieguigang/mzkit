@@ -197,7 +197,7 @@ Namespace LinearQuantitative.Linear
             Dim A As Double() = TPA(linearSamples, rawPoints)
             Dim ISTPA As Double()
 
-            If Not define.ISTD.StringEmpty Then
+            If (Not define.ISTD.StringEmpty(, True)) AndAlso Not define.ISTD.TextEquals("None") Then
                 If Not ionGroups.ContainsKey(define.ISTD) Then
                     Call $"target linear required IS reference '{define.ISTD}', but ion is missing in sample data!".Warning
                     ISTPA = Nothing
