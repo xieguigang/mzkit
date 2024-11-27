@@ -98,6 +98,10 @@ Namespace LinearQuantitative.Linear
 
             If ISA.IsNullOrEmpty Then
                 ISA = Nothing
+            ElseIf ISA.All(Function(d) d <= 0) Then
+                ISA = Nothing
+
+                Call $"{id}.{name} all IStd area is ZERO, IS will be ignored on linear regression modelling..".Warning
             End If
 
             For i As Integer = 0 To C.Length - 1
