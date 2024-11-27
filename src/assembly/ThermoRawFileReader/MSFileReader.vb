@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e36b84de59d8a5a803b0ba682c11d20b, assembly\ThermoRawFileReader\MSFileReader.vb"
+﻿#Region "Microsoft.VisualBasic::e773244b895c9178440490e44c51bd32, assembly\ThermoRawFileReader\MSFileReader.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     '    - Xml Docs: 80.65%
     ' 
     '   Blank Lines: 35 (16.75%)
-    '     File Size: 7.41 KB
+    '     File Size: 7.43 KB
 
 
     ' Class MSFileReader

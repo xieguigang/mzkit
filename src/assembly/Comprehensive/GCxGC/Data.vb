@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a1912506544bed95897d9bca1380ef7c, assembly\Comprehensive\GCxGC\Data.vb"
+﻿#Region "Microsoft.VisualBasic::a2bd97234c07bed9380fe0052eb00cfd, assembly\Comprehensive\GCxGC\Data.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     '    - Xml Docs: 80.00%
     ' 
     '   Blank Lines: 5 (7.35%)
-    '     File Size: 2.65 KB
+    '     File Size: 2.67 KB
 
 
     ' Module Data

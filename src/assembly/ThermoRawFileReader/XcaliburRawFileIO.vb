@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f8e005e2e39b963ea3edb1164f0ba78f, assembly\ThermoRawFileReader\XRawFileIO.vb"
+﻿#Region "Microsoft.VisualBasic::9f8a0fef525588eb16e392f8de453117, assembly\ThermoRawFileReader\XcaliburRawFileIO.vb"
 
     ' Author:
     ' 
@@ -37,16 +37,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 2531
-    '    Code Lines: 1499 (59.23%)
-    ' Comment Lines: 591 (23.35%)
+    '   Total Lines: 2540
+    '    Code Lines: 1506 (59.29%)
+    ' Comment Lines: 591 (23.27%)
     '    - Xml Docs: 55.50%
     ' 
-    '   Blank Lines: 441 (17.42%)
-    '     File Size: 109.27 KB
+    '   Blank Lines: 443 (17.44%)
+    '     File Size: 109.77 KB
 
 
-    ' Class XRawFileIO
+    ' Class XcaliburRawFileIO
     ' 
     '     Properties: FileInfo, Options, RawFilePath, ScanEnd, ScanInfoCacheMaxSize
     '                 ScanStart, TraceMode

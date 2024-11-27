@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c30baf36eac191a0f5a00d7e97f6cd87, assembly\ThermoRawFileReader\test\writerTest.vb"
+﻿#Region "Microsoft.VisualBasic::c0d1c7db42b2509d037691459cdcade5, assembly\ThermoRawFileReader\test\writerTest.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 4 (28.57%)
-    '     File Size: 334 B
+    '     File Size: 332 B
 
 
     ' Module writerTest
@@ -68,4 +68,3 @@ Module writerTest
         Pause()
     End Sub
 End Module
-
