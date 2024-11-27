@@ -28,7 +28,7 @@ var Token;
         "let", "const", "as",
         "stop", "invisible",
         "export", "namespace", "class",
-        "extends", "implements",
+        "extends", "implements", // typescript keywords
         "string", "double", "integer", "list", "boolean",
         "typeof"
     ]);
