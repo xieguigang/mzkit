@@ -72,6 +72,11 @@ Namespace LinearQuantitative.Data
     Public Class LinearPack
 
         Public Property linears As StandardCurve()
+
+        ''' <summary>
+        ''' the peak area data points of different compound feature on different raw data file
+        ''' </summary>
+        ''' <returns></returns>
         Public Property peakSamples As TargetPeakPoint()
         Public Property title As String
         Public Property time As Date
@@ -86,7 +91,7 @@ Namespace LinearQuantitative.Data
         Public Property reference As Dictionary(Of String, SampleContentLevels)
 
         ''' <summary>
-        ''' 
+        ''' a collection of the id and name of the internal standards reference
         ''' </summary>
         ''' <returns></returns>
         ''' <remarks>
