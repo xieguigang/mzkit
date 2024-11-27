@@ -92,8 +92,8 @@ Namespace LinearQuantitative.Data
         <Extension>
         Private Sub WriteCDF(linear As StandardCurve, cdf As netCDF.CDFWriter)
             Dim name As New attribute With {.name = "name", .type = CDFDataTypes.NC_CHAR, .value = linear.name}
-            Dim [IS] As New attribute With {.name = "IS", .type = CDFDataTypes.NC_CHAR, .value = linear.IS.ID}
-            Dim IS_name As New attribute With {.name = "IS_name", .type = CDFDataTypes.NC_CHAR, .value = linear.IS.name}
+            Dim [IS] As New attribute With {.name = "IS", .type = CDFDataTypes.NC_CHAR, .value = If(linear.IS.ID, "")}
+            Dim IS_name As New attribute With {.name = "IS_name", .type = CDFDataTypes.NC_CHAR, .value = If(linear.IS.name, "")}
             Dim cIS As New attribute With {.name = "cIS", .type = CDFDataTypes.NC_DOUBLE, .value = linear.IS.CIS}
             Dim R2 As New attribute With {.name = "R2", .type = CDFDataTypes.NC_DOUBLE, .value = If(linear.linear Is Nothing, 0.0, linear.linear.R2)}
             Dim outliers As New attribute With {.name = "outliers", .type = CDFDataTypes.NC_INT, .value = linear.points.SafeQuery.Where(Function(p) Not p.valid).Count}
