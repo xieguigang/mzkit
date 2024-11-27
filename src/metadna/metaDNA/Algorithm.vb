@@ -1,71 +1,71 @@
-﻿#Region "Microsoft.VisualBasic::270798ea9086b793b5d3ff9bc42379aa, metadna\metaDNA\Algorithm.vb"
+﻿#Region "Microsoft.VisualBasic::f2d02042b72240d1addd070e07c2990a, metadna\metaDNA\Algorithm.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 503
-'    Code Lines: 362 (71.97%)
-' Comment Lines: 63 (12.52%)
-'    - Xml Docs: 80.95%
-' 
-'   Blank Lines: 78 (15.51%)
-'     File Size: 18.25 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Class Algorithm
-' 
-'     Properties: ms1Err
-' 
-'     Constructor: (+1 Overloads) Sub New
-'     Function: (+2 Overloads) alignKeggCompound, (+2 Overloads) DIASearch, ExportTable, GetBestQuery, GetCandidateSeeds
-'               GetPerfermanceCounter, GetUnknownSet, inferAlignment, querySingle, RunInfer
-'               RunIteration, SetKeggLibrary, SetLibrary, (+3 Overloads) SetNetwork, SetReportHandler
-'               (+2 Overloads) SetSamples, SetSearchRange, SimpleSetROI
-'     Class NetworkInferTask
-' 
-'         Constructor: (+1 Overloads) Sub New
-' 
-'         Function: GetNetwork
-' 
-'         Sub: Solve
-' 
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 508
+    '    Code Lines: 366 (72.05%)
+    ' Comment Lines: 63 (12.40%)
+    '    - Xml Docs: 80.95%
+    ' 
+    '   Blank Lines: 79 (15.55%)
+    '     File Size: 18.42 KB
+
+
+    ' Class Algorithm
+    ' 
+    '     Properties: ms1Err
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: (+2 Overloads) alignKeggCompound, (+2 Overloads) DIASearch, ExportTable, GetBestQuery, GetCandidateSeeds
+    '               GetPerfermanceCounter, GetUnknownSet, inferAlignment, querySingle, RunInfer
+    '               RunIteration, SetKeggLibrary, SetLibrary, (+3 Overloads) SetNetwork, SetReportHandler
+    '               (+2 Overloads) SetSamples, SetSearchRange, SimpleSetROI
+    '     Class NetworkInferTask
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: GetNetwork
+    ' 
+    '         Sub: Solve
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
