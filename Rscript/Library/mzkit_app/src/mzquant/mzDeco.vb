@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ca439f828ca96a31e741f5a6f3ec9a9f, Rscript\Library\mzkit_app\src\mzquant\mzDeco.vb"
+﻿#Region "Microsoft.VisualBasic::dac12032440317c0959a8b4a01bff8de, Rscript\Library\mzkit_app\src\mzquant\mzDeco.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 1345
-    '    Code Lines: 895 (66.54%)
-    ' Comment Lines: 304 (22.60%)
-    '    - Xml Docs: 88.49%
+    '   Total Lines: 1359
+    '    Code Lines: 896 (65.93%)
+    ' Comment Lines: 317 (23.33%)
+    '    - Xml Docs: 88.33%
     ' 
-    '   Blank Lines: 146 (10.86%)
-    '     File Size: 56.26 KB
+    '   Blank Lines: 146 (10.74%)
+    '     File Size: 56.82 KB
 
 
     ' Module mzDeco

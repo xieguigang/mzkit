@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1048d1846452b561c276317783d322f0, Rscript\Library\mzkit_app\src\mzkit\assembly\MzWeb.vb"
+﻿#Region "Microsoft.VisualBasic::7934f659641510e71951dcec8210aac0, Rscript\Library\mzkit_app\src\mzkit\assembly\MzWeb.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 1084
-    '    Code Lines: 696 (64.21%)
-    ' Comment Lines: 250 (23.06%)
-    '    - Xml Docs: 93.60%
+    '   Total Lines: 1157
+    '    Code Lines: 728 (62.92%)
+    ' Comment Lines: 282 (24.37%)
+    '    - Xml Docs: 92.20%
     ' 
-    '   Blank Lines: 138 (12.73%)
-    '     File Size: 43.60 KB
+    '   Blank Lines: 147 (12.71%)
+    '     File Size: 47.01 KB
 
 
     ' Module MzWeb

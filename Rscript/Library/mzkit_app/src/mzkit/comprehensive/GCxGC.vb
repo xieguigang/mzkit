@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::de99415c6536464b86adcee48684f437, Rscript\Library\mzkit_app\src\mzkit\comprehensive\GCxGC.vb"
+﻿#Region "Microsoft.VisualBasic::b307fa714464a440c716f117859b249c, Rscript\Library\mzkit_app\src\mzkit\comprehensive\GCxGC.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     '    - Xml Docs: 92.55%
     ' 
     '   Blank Lines: 22 (9.65%)
-    '     File Size: 9.81 KB
+    '     File Size: 9.83 KB
 
 
     ' Module GCxGC

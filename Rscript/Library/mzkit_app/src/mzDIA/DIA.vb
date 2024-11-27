@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0de6b4897e401175b86b9c67d682880c, Rscript\Library\mzkit_app\src\mzDIA\DIA.vb"
+﻿#Region "Microsoft.VisualBasic::a0b87120910e3263e1f9db7e573349bc, Rscript\Library\mzkit_app\src\mzDIA\DIA.vb"
 
     ' Author:
     ' 
@@ -37,24 +37,23 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 93
-    '    Code Lines: 66 (70.97%)
-    ' Comment Lines: 14 (15.05%)
+    '   Total Lines: 133
+    '    Code Lines: 97 (72.93%)
+    ' Comment Lines: 18 (13.53%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 13 (13.98%)
-    '     File Size: 3.37 KB
+    '   Blank Lines: 18 (13.53%)
+    '     File Size: 5.12 KB
 
 
     ' Module DIASpectrumAnnotations
     ' 
-    '     Function: dia_nmf
+    '     Function: dia_nmf, pullMatrix
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
@@ -189,4 +188,3 @@ Public Module DIASpectrumAnnotations
     End Function
 
 End Module
-

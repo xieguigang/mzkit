@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4395e2ae6d5f6ff92fa144280858ef26, Rscript\Library\mzkit_app\src\mzquant\xcms.vb"
+﻿#Region "Microsoft.VisualBasic::6bfdb0f2ac1570fa8bb2040c1491d78d, Rscript\Library\mzkit_app\src\mzquant\xcms.vb"
 
     ' Author:
     ' 
@@ -37,12 +37,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 47
-    '    Code Lines: 34 (72.34%)
-    ' Comment Lines: 3 (6.38%)
+    '   Total Lines: 46
+    '    Code Lines: 34 (73.91%)
+    ' Comment Lines: 3 (6.52%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 10 (21.28%)
+    '   Blank Lines: 9 (19.57%)
     '     File Size: 1.63 KB
 
 
@@ -53,7 +53,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.IO
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
@@ -101,4 +100,3 @@ Module xcms
     End Function
 
 End Module
-

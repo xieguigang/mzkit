@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::14348c4a1c725aaf1c4b1d4986c0e6bd, Rscript\Library\mzkit_app\src\mzquant\Linears.vb"
+﻿#Region "Microsoft.VisualBasic::aced1b3a9771e64d5fe3a677a7a9ca72, Rscript\Library\mzkit_app\src\mzquant\Linears.vb"
 
     ' Author:
     ' 
@@ -37,20 +37,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 277
-    '    Code Lines: 175 (63.18%)
-    ' Comment Lines: 73 (26.35%)
-    '    - Xml Docs: 97.26%
+    '   Total Lines: 288
+    '    Code Lines: 180 (62.50%)
+    ' Comment Lines: 78 (27.08%)
+    '    - Xml Docs: 97.44%
     ' 
-    '   Blank Lines: 29 (10.47%)
-    '     File Size: 10.81 KB
+    '   Blank Lines: 30 (10.42%)
+    '     File Size: 11.16 KB
 
 
     ' Module Linears
     ' 
     '     Function: CreateMRMDataSet, getIonPeakTable, GetLinearPoints, GetQuantifyResult, GetRawX
-    '               printIS, printLineModel, printStandards, readLinearPack, SampleQuantify
-    '               StandardCurveDataSet, writeMRMpeaktable, writeStandardCurve
+    '               loadExperiment, printIS, printLineModel, printStandards, readLinearPack
+    '               SampleQuantify, StandardCurveDataSet, writeMRMpeaktable, writeStandardCurve
     ' 
     '     Sub: Main
     ' 

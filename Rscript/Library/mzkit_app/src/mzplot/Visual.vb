@@ -1,62 +1,62 @@
-﻿#Region "Microsoft.VisualBasic::69b45a2a18279e690fc3c632240a18de, Rscript\Library\mzkit_app\src\mzplot\Visual.vb"
+﻿#Region "Microsoft.VisualBasic::6450c2194c9f2dbe9befce845cfc1c88, Rscript\Library\mzkit_app\src\mzplot\Visual.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
-' Code Statistics:
 
-'   Total Lines: 891
-'    Code Lines: 699 (78.45%)
-' Comment Lines: 111 (12.46%)
-'    - Xml Docs: 91.89%
-' 
-'   Blank Lines: 81 (9.09%)
-'     File Size: 40.74 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module Visual
-' 
-'     Function: assembleOverlaps, ParseSpectrumAlignment, plotAlignments, plotChromatogram, PlotGCxGCHeatMap
-'               plotGCxGCTic2D, plotMolecularNetworkingHistogram, plotMS, plotOverlaps, plotPeaktable
-'               plotRawChromatogram, PlotRawScatter, plotRtShifts, plotSignal, plotSignal2
-'               plotTIC, plotTIC2, PlotUVSignals, Snapshot3D, SpectrumPlot
-'               XicScatterDensity
-' 
-'     Sub: Main
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 929
+    '    Code Lines: 728 (78.36%)
+    ' Comment Lines: 111 (11.95%)
+    '    - Xml Docs: 91.89%
+    ' 
+    '   Blank Lines: 90 (9.69%)
+    '     File Size: 42.39 KB
+
+
+    ' Module Visual
+    ' 
+    '     Function: assembleOverlaps, ParseSpectrumAlignment, plotAlignments, plotChromatogram, PlotGCxGCHeatMap
+    '               plotGCxGCTic2D, plotMolecularNetworkingHistogram, plotMRM, plotMS, plotOverlaps
+    '               plotPeaktable, plotRawChromatogram, PlotRawScatter, plotRtShifts, plotSignal
+    '               plotSignal2, plotTIC, plotTIC2, PlotUVSignals, Snapshot3D
+    '               SpectrumPlot, XicScatterDensity
+    ' 
+    '     Sub: Main
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::44f55866086fba17ba32fd6db4e15119, Rscript\Library\mzkit_app\src\mzkit\assembly\Chromatogram.vb"
+﻿#Region "Microsoft.VisualBasic::7714fdf5a8a411c5d26fe0a347861f5d, Rscript\Library\mzkit_app\src\mzkit\assembly\Chromatogram.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 403
-    '    Code Lines: 257 (63.77%)
-    ' Comment Lines: 92 (22.83%)
-    '    - Xml Docs: 94.57%
+    '   Total Lines: 409
+    '    Code Lines: 257 (62.84%)
+    ' Comment Lines: 98 (23.96%)
+    '    - Xml Docs: 93.88%
     ' 
-    '   Blank Lines: 54 (13.40%)
-    '     File Size: 15.77 KB
+    '   Blank Lines: 54 (13.20%)
+    '     File Size: 15.94 KB
 
 
     ' Module ChromatogramTools
