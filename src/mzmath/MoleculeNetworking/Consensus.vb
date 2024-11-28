@@ -13,7 +13,10 @@ Public Class Consensus
     Public Property ratio As Double
 
     Public Shared Iterator Function Measure(Of T As ISpectrum)(cluster As IEnumerable(Of T)) As IEnumerable(Of Consensus)
-        Dim total = cluster.SafeQuery.ToArray
+        ' upstream data maybe contains null value
+        Dim total = (From spec As T
+                     In cluster.SafeQuery
+                     Where Not spec Is Nothing).ToArray
 
         If total.Length = 0 Then
             Return
