@@ -107,6 +107,12 @@ Namespace Spectra
             End Get
         End Property
 
+        Default Public ReadOnly Property ion(i As Integer) As Double
+            Get
+                Return index.raw()(i).mz
+            End Get
+        End Property
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(mz As IEnumerable(Of Double), Optional win_size As Double = 1, Optional verbose As Boolean = True)
             index = mz.ToArray.CreateMzIndex(win_size, verbose:=verbose)
