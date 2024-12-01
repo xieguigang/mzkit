@@ -9,8 +9,20 @@ Public Module ChemicalMarkup
     ''' <param name="graph"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function AsCML(graph As ChemicalFormula) As molecule
+    Public Function AsCML(graph As ChemicalFormula) As MarkupFile
+        Dim data As New molecule With {
+            .id = graph.id
+        }
+        Dim atoms As New List(Of ChemicalMarkupLanguage.atom)
+        Dim bonds As New List(Of ChemicalMarkupLanguage.bond)
 
+        data.atomArray = New atomArray("atoms", atoms)
+        data.bondArray = New bondArray("bonds", bonds)
+
+        Return New MarkupFile With {
+            .molecule = data,
+            .title = graph.name
+        }
     End Function
 
 End Module
