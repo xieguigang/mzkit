@@ -2,6 +2,11 @@
 
 Namespace ChemicalMarkupLanguage
 
+    ''' <summary>
+    ''' Chemical Markup Language
+    ''' 
+    ''' https://www.xml-cml.org/
+    ''' </summary>
     <XmlRoot("cml", [Namespace]:=MarkupFile.xmlns)>
     <XmlType("cml", [Namespace]:=MarkupFile.xmlns)>
     Public Class MarkupFile
