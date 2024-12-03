@@ -105,4 +105,8 @@
     </None>
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="System.Composition" Version="8.0.0" />
+  </ItemGroup>
+
 </Project>
