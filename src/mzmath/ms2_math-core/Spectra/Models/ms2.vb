@@ -106,6 +106,11 @@ Namespace Spectra
         Sub New()
         End Sub
 
+        ''' <summary>
+        ''' Create a spectrum fragment data model
+        ''' </summary>
+        ''' <param name="mz"></param>
+        ''' <param name="intensity"></param>
         Sub New(mz As Double, intensity As Double)
             Me.mz = mz
             Me.intensity = intensity
