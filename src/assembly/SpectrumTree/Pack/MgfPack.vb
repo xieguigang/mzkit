@@ -1,4 +1,6 @@
 ﻿
+Imports System.IO
+
 Namespace PackLib
 
     ''' <summary>
@@ -13,12 +15,19 @@ Namespace PackLib
     ''' </summary>
     Public Class MgfPack : Implements IDisposable, IReferencePack
 
-        Private disposedValue As Boolean
+        Dim disposedValue As Boolean
+        Dim text As StreamWriter
+
+        Sub New(s As Stream)
+            text = New StreamWriter(s)
+        End Sub
 
         Protected Overridable Sub Dispose(disposing As Boolean)
             If Not disposedValue Then
                 If disposing Then
                     ' TODO: 释放托管状态(托管对象)
+                    Call text.Flush()
+                    Call text.Dispose()
                 End If
 
                 ' TODO: 释放未托管的资源(未托管的对象)并重写终结器
