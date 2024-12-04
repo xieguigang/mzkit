@@ -60,16 +60,16 @@ Imports System.Text
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports SMRUCC.Rsharp.Runtime.Interop
-Imports REnv = SMRUCC.Rsharp.Runtime
+Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
 
 <Assembly: RPackageModule>
 
 Public Class zzz
 
     Public Shared Sub onLoad()
-        Call REnv.Internal.ConsolePrinter.AttachConsoleFormatter(Of LibraryMatrix)(AddressOf printLib)
-        Call REnv.Internal.ConsolePrinter.AttachConsoleFormatter(Of ScanMS1)(AddressOf printMSScan)
-        Call REnv.Internal.ConsolePrinter.AttachConsoleFormatter(Of ScanMS2)(AddressOf printMSScan)
+        Call RInternal.ConsolePrinter.AttachConsoleFormatter(Of LibraryMatrix)(AddressOf printLib)
+        Call RInternal.ConsolePrinter.AttachConsoleFormatter(Of ScanMS1)(AddressOf printMSScan)
+        Call RInternal.ConsolePrinter.AttachConsoleFormatter(Of ScanMS2)(AddressOf printMSScan)
 
         Call MetaDbXref.Main()
         Call Massbank.Main()
