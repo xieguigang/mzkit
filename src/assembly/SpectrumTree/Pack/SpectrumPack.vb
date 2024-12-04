@@ -77,7 +77,10 @@ Namespace PackLib
     ''' A data pack of the reference spectrum data which 
     ''' is indexed via the formula data
     ''' </summary>
-    Public Class SpectrumPack : Implements IDisposable
+    ''' <remarks>
+    ''' A reference library data model in hds file pack format
+    ''' </remarks>
+    Public Class SpectrumPack : Implements IDisposable, IReferencePack
 
         ''' <summary>
         ''' Each block is a collection of the metabolite spectrum
