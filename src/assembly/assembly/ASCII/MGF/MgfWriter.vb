@@ -67,6 +67,11 @@ Namespace ASCII.MGF
 
     Public Module MgfWriter
 
+        ''' <summary>
+        ''' cast the mzkit spectrum model as the mgf ion model
+        ''' </summary>
+        ''' <param name="matrix"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function MgfIon(matrix As PeakMs2) As Ions

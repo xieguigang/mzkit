@@ -106,7 +106,7 @@ Namespace PackLib
         ''' <param name="uuid"></param>
         ''' <param name="formula"></param>
         ''' <param name="spectrum"></param>
-        Public Sub Push(uuid As String, formula As String, spectrum As PeakMs2)
+        Public Sub Push(uuid As String, formula As String, spectrum As PeakMs2) Implements IReferencePack.Push
             Dim index As MassIndex
 
             If Not massSet.ContainsKey(uuid) Then

@@ -1,5 +1,6 @@
 ﻿
 Imports System.IO
+Imports System.Runtime.CompilerServices
 
 Namespace PackLib
 
@@ -10,15 +11,24 @@ Namespace PackLib
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <param name="file"></param>
+        ''' <param name="truncated">
+        ''' clear all file content data after open the target file stream?
+        ''' </param>
         ''' <returns></returns>
-        Public Function Open(Of T As IReferencePack)(file As String) As IReferencePack
-            Dim w As Stream = file.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False)
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function Open(Of T As IReferencePack)(file As String, Optional truncated As Boolean = True) As IReferencePack
+            Return Open(file, format:=GetType(T), truncated)
+        End Function
 
-            Select Case GetType(T)
+        Public Function Open(file As String, ByRef format As Type, Optional truncated As Boolean = True) As IReferencePack
+            Dim w As Stream = file.Open(FileMode.OpenOrCreate, doClear:=truncated, [readOnly]:=False)
+
+            Select Case format
                 Case GetType(MgfPack) : Return New MgfPack(w)
                 Case GetType(SpectrumPack) : Return New SpectrumPack(w)
                 Case Else
-                    Throw New NotImplementedException(GetType(T).FullName)
+                    Throw New NotImplementedException(format.FullName)
             End Select
         End Function
 

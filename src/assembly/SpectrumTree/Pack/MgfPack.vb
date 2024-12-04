@@ -1,5 +1,8 @@
 ﻿
 Imports System.IO
+Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MGF
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 
 Namespace PackLib
 
@@ -7,6 +10,14 @@ Namespace PackLib
     ''' an abstract model of the reference spectrum database.
     ''' </summary>
     Public Interface IReferencePack : Inherits IDisposable
+
+        ''' <summary>
+        ''' Write a reference spectrum to file
+        ''' </summary>
+        ''' <param name="uid"></param>
+        ''' <param name="formula"></param>
+        ''' <param name="spectrum"></param>
+        Sub Push(uid As String, formula As String, spectrum As PeakMs2)
 
     End Interface
 
@@ -20,6 +31,11 @@ Namespace PackLib
 
         Sub New(s As Stream)
             text = New StreamWriter(s)
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Sub Push(uid As String, formula As String, spectrum As PeakMs2) Implements IReferencePack.Push
+            Call MgfWriter.WriteAsciiMgf(spectrum.MgfIon, text)
         End Sub
 
         Protected Overridable Sub Dispose(disposing As Boolean)
