@@ -99,16 +99,21 @@ Namespace MetaLib
     ''' Some notes pertaining To different metabolite classes are outlined below.
     ''' </remarks>
     Public Class RefMet : Implements IReadOnlyId, IExactMassProvider, ICompoundNameProvider, IFormulaProvider, INamedValue
-
+        Public Property refmet_id As String
         Public Property refmet_name As String Implements IReadOnlyId.Identity, ICompoundNameProvider.CommonName, INamedValue.Key
         Public Property super_class As String
         Public Property main_class As String
         Public Property sub_class As String
         Public Property formula As String Implements IFormulaProvider.Formula
         Public Property exactmass As Double Implements IExactMassProvider.ExactMass
+        Public Property pubchem_cid As String
+        Public Property chebi_id As String
+        Public Property hmdb_id As String
+        Public Property lipidmaps_id As String
+        Public Property kegg_id As String
+
         Public Property inchi_key As String
         Public Property smiles As String
-        Public Property pubchem_cid As String
 
         Public Overrides Function ToString() As String
             Return refmet_name
@@ -117,7 +122,11 @@ Namespace MetaLib
         Public Function CreateReference() As xref
             Return New xref With {
                 .pubchem = pubchem_cid,
-                .SMILES = smiles
+                .SMILES = smiles,
+                .chebi = "ChEBI:" & chebi_id,
+                .HMDB = hmdb_id,
+                .lipidmaps = lipidmaps_id,
+                .KEGG = kegg_id
             }
         End Function
 
