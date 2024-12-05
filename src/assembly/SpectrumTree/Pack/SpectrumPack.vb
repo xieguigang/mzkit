@@ -77,7 +77,10 @@ Namespace PackLib
     ''' A data pack of the reference spectrum data which 
     ''' is indexed via the formula data
     ''' </summary>
-    Public Class SpectrumPack : Implements IDisposable
+    ''' <remarks>
+    ''' A reference library data model in hds file pack format
+    ''' </remarks>
+    Public Class SpectrumPack : Implements IDisposable, IReferencePack
 
         ''' <summary>
         ''' Each block is a collection of the metabolite spectrum
@@ -103,7 +106,7 @@ Namespace PackLib
         ''' <param name="uuid"></param>
         ''' <param name="formula"></param>
         ''' <param name="spectrum"></param>
-        Public Sub Push(uuid As String, formula As String, spectrum As PeakMs2)
+        Public Sub Push(uuid As String, formula As String, spectrum As PeakMs2) Implements IReferencePack.Push
             Dim index As MassIndex
 
             If Not massSet.ContainsKey(uuid) Then

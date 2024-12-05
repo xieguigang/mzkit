@@ -78,8 +78,10 @@ Namespace MetaLib.CrossReference
 
     ''' <summary>
     ''' The database cross reference set of a specific metabolite object.
-    ''' (对某一个物质在数据库之间的相互引用编号)
     ''' </summary>
+    ''' <remarks>
+    ''' (对某一个物质在数据库之间的相互引用编号)
+    ''' </remarks>
     Public Class xref
 
         ''' <summary>

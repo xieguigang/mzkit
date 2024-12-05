@@ -93,8 +93,32 @@ Namespace MetaLib.Models
         <MessagePackMember(2)> <XmlAttribute> Public Property exact_mass As Double Implements IExactMassProvider.ExactMass
 
         <MessagePackMember(3)> Public Property name As String Implements ICompoundNameProvider.CommonName
+
+        ''' <summary>
+        ''' IUPAC name refers to the systematic name given to a chemical compound according to the rules and 
+        ''' guidelines established by the International Union of Pure and Applied Chemistry (IUPAC). IUPAC is 
+        ''' an international organization that aims to advance the field of chemistry by developing standards
+        ''' and nomenclature for chemicals.
+        ''' 
+        ''' The IUPAC name of a compound provides a unique and unambiguous identifier for that compound, which
+        ''' is essential for clear communication among chemists and other scientists. These names are based 
+        ''' on a set of systematic rules that take into account the structure and composition of the compound.
+        ''' 
+        ''' For example, the IUPAC name for the common sugar glucose is (2R,3S,4R,5R)-2,3,4,5,6-pentahydroxyhexanal.
+        ''' This name describes the specific arrangement of atoms and functional groups in the glucose molecule.
+        ''' 
+        ''' IUPAC names are particularly important for complex organic compounds, where common names can be 
+        ''' confusing or non-existent. They are widely used in scientific literature, patents, and other 
+        ''' technical documents related to chemistry.
+        ''' </summary>
+        ''' <returns></returns>
         <MessagePackMember(4)> Public Property IUPACName As String
         <MessagePackMember(5)> Public Property description As String
+
+        ''' <summary>
+        ''' the synonym of current metabolite, multiple names in different languages maybe contains inside this data names pool
+        ''' </summary>
+        ''' <returns></returns>
         <XmlElement>
         <MessagePackMember(6)> Public Property synonym As String()
 
@@ -104,6 +128,15 @@ Namespace MetaLib.Models
         ''' <returns></returns>
         <MessagePackMember(7)> Public Property xref As xref
 
+        ''' <summary>
+        ''' get database cross reference id by database name
+        ''' </summary>
+        ''' <param name="field">
+        ''' the database name
+        ''' </param>
+        ''' <returns>
+        ''' db_xref
+        ''' </returns>
         Default Public ReadOnly Property GetXrefId(field As String) As String
             Get
                 Dim arg As xref = xref
@@ -128,6 +161,10 @@ Namespace MetaLib.Models
             End Get
         End Property
 
+        ''' <summary>
+        ''' display the name for debug view
+        ''' </summary>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
             Return name
