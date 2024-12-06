@@ -155,6 +155,8 @@
     <ProjectReference Include="../../..\..\..\src\visualize\TissueMorphology\TissueMorphology.vbproj" />
     <ProjectReference Include="..\..\..\..\..\..\GCModeller\src\R-sharp\Library\shares\graphics.common_runtime\R_graphics.common_runtime.vbproj" />
     <ProjectReference Include="..\..\..\..\..\src\assembly\LoadR.NET5\LoadR.NET5.vbproj" />
+    <ProjectReference Include="..\..\..\..\..\src\mzmath\GCxGC\GCxGC.vbproj" />
+    <ProjectReference Include="..\..\..\..\..\src\visualize\ComprehensiveMsPlot\ComprehensiveMsPlot.vbproj" />
   </ItemGroup>
 
   <ItemGroup>
