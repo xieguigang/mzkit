@@ -60,6 +60,7 @@
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.BioDeep.Chemoinformatics
+Imports BioNovoGene.BioDeep.Chemoinformatics.ChemicalMarkupLanguage
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports BioNovoGene.BioDeep.Chemoinformatics.SMILES
 Imports BioNovoGene.BioDeep.Chemoinformatics.SMILES.Embedding
@@ -100,6 +101,16 @@ Module SMILESTool
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Private Function atoms_table(smiles As ChemicalFormula, args As list, env As Environment) As RDataframe
         Return atomGroups(smiles)
+    End Function
+
+    ''' <summary>
+    ''' cast the smiles graph as chemical markup language data
+    ''' </summary>
+    ''' <param name="graph"></param>
+    ''' <returns></returns>
+    <ExportAPI("as.markup")>
+    Public Function createMarkup(graph As ChemicalFormula) As MarkupFile
+        Return graph.AsCML
     End Function
 
     ''' <summary>
