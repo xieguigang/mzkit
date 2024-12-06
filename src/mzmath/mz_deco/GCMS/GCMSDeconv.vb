@@ -104,8 +104,15 @@ Public Module GCMSDeconv
     End Function
 End Module
 
+''' <summary>
+''' A gcms peak feature
+''' </summary>
 Public Class GCMSPeak : Inherits PeakFeature
 
+    ''' <summary>
+    ''' the average spectrum of current GCMS peak ROI
+    ''' </summary>
+    ''' <returns></returns>
     Public Property Spectrum As ms2()
 
     Sub New()
@@ -114,5 +121,9 @@ Public Class GCMSPeak : Inherits PeakFeature
     Sub New(peakdata As PeakFeature)
         Call MyBase.New(peakdata)
     End Sub
+
+    Public Shared Function CreateFeature(raw As IEnumerable(Of PeakMs2), peak As xcms2) As GCMSPeak
+
+    End Function
 
 End Class
