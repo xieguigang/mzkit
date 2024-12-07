@@ -127,6 +127,10 @@ Public Module XcmsTable
                     pool.Add(peak)
                 Next
             Next
+        Else
+            For Each sample As NamedCollection(Of PeakFeature) In samples
+                Call pool.AddRange(sample.AsEnumerable)
+            Next
         End If
 
         ' group by rt
