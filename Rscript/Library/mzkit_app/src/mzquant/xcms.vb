@@ -62,6 +62,7 @@ Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
+Imports SMRUCC.Rsharp.Runtime.Vectorization
 
 ''' <summary>
 ''' the xcms interop and data handler
@@ -97,6 +98,39 @@ Module xcms
         Else
             Return peaks.ToArray
         End If
+    End Function
+
+    ''' <summary>
+    ''' cast the xcms find peaks result raw dataframe to mzkit peak feature data
+    ''' </summary>
+    ''' <param name="x">
+    ''' A dataframe result of the xcms ``findPeaks``. data could be generated via ``as.data.frame(findPeaks(data));``.
+    ''' this raw data frame output contains data fields:
+    ''' 
+    ''' 1. mz, mzmin, mzmax
+    ''' 2. rt, rtmin, rtmax
+    ''' 3. into, intf
+    ''' 4. maxo, maxf
+    ''' 5. i
+    ''' 6. sn
+    ''' </param>
+    ''' <returns></returns>
+    <ExportAPI("cast_findpeaks_raw")>
+    Public Function cast_raw_dataframe(x As dataframe, Optional sample_name As String = Nothing) As Object
+        Dim mz As Double() = CLRVector.asNumeric(x!mz)
+        Dim mzmin As Double() = CLRVector.asNumeric(x!mzmin)
+        Dim mzmax As Double() = CLRVector.asNumeric(x!mzmax)
+        Dim rt As Double() = CLRVector.asNumeric(x!rt)
+        Dim rtmin As Double() = CLRVector.asNumeric(x!rtmin)
+        Dim rtmax As Double() = CLRVector.asNumeric(x!rtmax)
+        Dim into As Double() = CLRVector.asNumeric(x!into)
+        Dim intf As Double() = CLRVector.asNumeric(x!intf)
+        Dim maxo As Double() = CLRVector.asNumeric(x!maxo)
+        Dim maxf As Double() = CLRVector.asNumeric(x!maxf)
+        Dim i As String() = CLRVector.asCharacter(x!i)
+        Dim sn As Double() = CLRVector.asNumeric(x!sn)
+
+
     End Function
 
 End Module
