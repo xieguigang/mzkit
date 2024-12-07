@@ -31,7 +31,8 @@ Namespace Tasks
             For i As Integer = start To ends
                 Dim peaksSet As NamedCollection(Of PeakFeature)() = {ion_features(i)}
                 Dim xcms = peaksSet _
-                    .XicTable(rtwin:=max_rtwin, rt_shifts:=rt_shifts) _
+                    .XicTable(rtwin:=max_rtwin, rt_shifts:=rt_shifts,
+                              assign_samples:=False) _
                     .ToArray
 
                 SyncLock out

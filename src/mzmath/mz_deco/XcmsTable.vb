@@ -115,16 +115,19 @@ Public Module XcmsTable
     <Extension>
     Public Iterator Function XicTable(samples As IEnumerable(Of NamedCollection(Of PeakFeature)),
                                       Optional rtwin As Double = 20,
-                                      Optional rt_shifts As List(Of RtShift) = Nothing) As IEnumerable(Of xcms2)
+                                      Optional rt_shifts As List(Of RtShift) = Nothing,
+                                      Optional assign_samples As Boolean = True) As IEnumerable(Of xcms2)
 
         Dim pool As New List(Of PeakFeature)
 
-        For Each sample As NamedCollection(Of PeakFeature) In samples
-            For Each peak As PeakFeature In sample
-                peak.rawfile = sample.name
-                pool.Add(peak)
+        If assign_samples Then
+            For Each sample As NamedCollection(Of PeakFeature) In samples
+                For Each peak As PeakFeature In sample
+                    peak.rawfile = sample.name
+                    pool.Add(peak)
+                Next
             Next
-        Next
+        End If
 
         ' group by rt
         Dim rt_groups = pool.GroupBy(Function(a) a.rt, offsets:=rtwin).ToArray
