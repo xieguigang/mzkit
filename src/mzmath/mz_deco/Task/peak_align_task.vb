@@ -1,7 +1,9 @@
 ﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math
 
 Namespace Tasks
 
@@ -42,9 +44,13 @@ Namespace Tasks
             End SyncLock
         End Sub
 
-        Public Shared Iterator Function MakeIonGroups(samples As IEnumerable(Of NamedCollection(Of PeakFeature)),
-                                                      Optional mzdiff As Double = 0.01) As IEnumerable(Of NamedCollection(Of PeakFeature))
+        Public Shared Function MakeIonGroups(samples As IEnumerable(Of NamedCollection(Of PeakFeature)),
+                                             Optional mzdiff As Double = 0.01) As IEnumerable(Of NamedCollection(Of PeakFeature))
 
+            Dim pool As PeakFeature() = samples.IteratesAll.ToArray
+            Dim ions = pool.GroupBy(Function(a) a.mz, offsets:=mzdiff).ToArray
+
+            Return ions
         End Function
     End Class
 End Namespace
