@@ -9,7 +9,7 @@ Namespace Tasks
 
     Public Class peak_align_task : Inherits peaktable_task
 
-        Dim ion_features As NamedCollection(Of PeakFeature)()
+        Dim peaks As NamedCollection(Of PeakFeature)()
         Dim max_rtwin As Double
 
         ''' <summary>
@@ -21,15 +21,15 @@ Namespace Tasks
         Sub New(peaks As NamedCollection(Of PeakFeature)(), max_rtwin As Double)
             Call MyBase.New(peaks.Length, verbose:=True)
 
-            ion_features = peaks
-            max_rtwin = max_rtwin
+            Me.peaks = peaks
+            Me.max_rtwin = max_rtwin
         End Sub
 
         Protected Overrides Sub Solve(start As Integer, ends As Integer, cpu_id As Integer)
             Dim rt_shifts As New List(Of RtShift)
 
             For i As Integer = start To ends
-                Dim peaksSet As NamedCollection(Of PeakFeature)() = {ion_features(i)}
+                Dim peaksSet As NamedCollection(Of PeakFeature)() = {peaks(i)}
                 Dim xcms = peaksSet _
                     .XicTable(rtwin:=max_rtwin, rt_shifts:=rt_shifts,
                               assign_samples:=False) _
