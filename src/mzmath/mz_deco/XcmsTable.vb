@@ -164,8 +164,16 @@ Public Module XcmsTable
         Next
     End Function
 
+    ''' <summary>
+    ''' Extract of the scatter data
+    ''' </summary>
+    ''' <param name="peakset"></param>
+    ''' <param name="dimension"></param>
+    ''' <returns></returns>
     <Extension>
-    Public Iterator Function Ms1Scatter(peakset As PeakSet, Optional dimension As String = "default|sum|mean|max|npeaks|<sample_name>") As IEnumerable(Of ms1_scan)
+    Public Iterator Function Ms1Scatter(peakset As PeakSet,
+                                        Optional dimension As String = "default|sum|mean|max|npeaks|<sample_name>") As IEnumerable(Of ms1_scan)
+
         Dim getter As Func(Of xcms2, Double) = Nothing
         Dim dimName As String = Strings.Trim(dimension).Split("|"c).FirstOrDefault
 
