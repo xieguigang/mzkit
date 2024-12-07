@@ -1,0 +1,31 @@
+.\" man page create by R# package system.
+.TH XCMS 1 2000-Jan "cast_findpeaks_raw" "cast_findpeaks_raw"
+.SH NAME
+cast_findpeaks_raw \- cast the xcms find peaks result raw dataframe to mzkit peak feature data
+.SH SYNOPSIS
+\fIcast_findpeaks_raw(\fBx\fR as <generic> dataframe, 
+\fBsample_name\fR as string = \fB<NULL>\fR);\fR
+.SH DESCRIPTION
+.PP
+cast the xcms find peaks result raw dataframe to mzkit peak feature data
+.PP
+.SH OPTIONS
+.PP
+\fBx\fB \fR\- 
+ A dataframe result of the xcms \fBfindPeaks\fR. data could be generated via \fBas.data.frame(findPeaks(data));\fR.
+ this raw data frame output contains data fields:
+ 
+ 1. mz, mzmin, mzmax
+ 2. rt, rtmin, rtmax
+ 3. into, intf
+ 4. maxo, maxf
+ 5. i
+ 6. sn
+. 
+.PP
+.SH SEE ALSO
+xcms
+.SH FILES
+.PP
+mz_quantify.dll
+.PP

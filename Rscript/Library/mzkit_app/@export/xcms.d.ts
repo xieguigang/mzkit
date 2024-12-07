@@ -10,6 +10,23 @@
 */
 declare namespace xcms {
    /**
+    * cast the xcms find peaks result raw dataframe to mzkit peak feature data
+    * 
+    * 
+     * @param x A dataframe result of the xcms ``findPeaks``. data could be generated via ``as.data.frame(findPeaks(data));``.
+     *  this raw data frame output contains data fields:
+     *  
+     *  1. mz, mzmin, mzmax
+     *  2. rt, rtmin, rtmax
+     *  3. into, intf
+     *  4. maxo, maxf
+     *  5. i
+     *  6. sn
+     * @param sample_name 
+     * + default value Is ``null``.
+   */
+   function cast_findpeaks_raw(x: object, sample_name?: string): object;
+   /**
      * @param group_features default value Is ``false``.
      * @param env default value Is ``null``.
    */
