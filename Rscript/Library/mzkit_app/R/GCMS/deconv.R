@@ -35,7 +35,7 @@ let deconv_gcms = function(rawdata, export_dir = "./", peak.width = [3, 90], n_t
     write.csv(rt_shifts, file = `${export_dir}/rt_shifts.csv`, 
         row.names = TRUE);
 
-    svg(file = file.path(export_dir, "rt_shifts.svg")) {
+    pdf(file = file.path(export_dir, "rt_shifts.pdf")) {
         plot(rt_shifts, res = 1000);
     }
 

@@ -41,5 +41,10 @@ Namespace Tasks
                 Me.rt_shifts.AddRange(rt_shifts)
             End SyncLock
         End Sub
+
+        Public Shared Iterator Function MakeIonGroups(samples As IEnumerable(Of NamedCollection(Of PeakFeature)),
+                                                      Optional mzdiff As Double = 0.01) As IEnumerable(Of NamedCollection(Of PeakFeature))
+
+        End Function
     End Class
 End Namespace

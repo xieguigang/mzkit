@@ -1145,6 +1145,7 @@ extract_ms1:
                                   Optional norm As Boolean = False,
                                   Optional ri_alignment As Boolean = False,
                                   Optional max_intensity_ion As Boolean = False,
+                                  Optional cow_alignment As Boolean = False,
                                   Optional env As Environment = Nothing) As Object
 
         Dim sampleData As NamedCollection(Of PeakFeature)() = Nothing
@@ -1186,10 +1187,16 @@ extract_ms1:
                              ri_offset:=ri_win,
                              top_ion:=max_intensity_ion) _
                 .ToArray
-        Else
+        ElseIf cow_alignment Then
             peaktable = sampleData _
                 .CowAlignment() _
                 .ToArray
+        Else
+            Dim ions = peak_align_task.MakeIonGroups(sampleData, mzdiff).ToArray
+            Dim task As peak_align_task = New peak_align_task(ions, ri_win).Solve()
+
+            peaktable = task.out.ToArray
+            rt_shifts.AddRange(task.rt_shifts)
         End If
 
         Dim id As String() = peaktable.Select(Function(i) i.ID).UniqueNames
