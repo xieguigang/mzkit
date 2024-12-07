@@ -256,7 +256,7 @@ Module mzDeco
 
         If features_mz.Length = 1 Then
             ' extract the aligned data
-            Return xic_deco_task.extractAlignedPeaks(
+            Return xic_deco_task.ExtractAlignedPeaks(
                 pool.DtwXIC(features_mz(0), errors).ToArray,
                 rtRange:=rtRange,
                 baseline:=baseline,
@@ -968,7 +968,7 @@ Module mzDeco
                     ls_xic = XICPool.DtwXIC(rawdata:=ls_xic).ToArray
                 End If
 
-                Return xic_deco_task.extractAlignedPeaks(
+                Return xic_deco_task.ExtractAlignedPeaks(
                     ls_xic,
                     rtRange:=rtRange.TryCast(Of DoubleRange),
                     baseline:=baseline,

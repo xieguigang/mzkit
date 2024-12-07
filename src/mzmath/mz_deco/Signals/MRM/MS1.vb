@@ -65,6 +65,9 @@ Imports Microsoft.VisualBasic.Math.Quantile
 
 Namespace MarkupData
 
+    ''' <summary>
+    ''' Helper for processing of the MRM ms1 chromatogram data
+    ''' </summary>
     <HideModuleName>
     Public Module MS1Extensions
 
