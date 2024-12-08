@@ -61,6 +61,7 @@ Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
 Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree
 Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.PackLib
 Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.Query
@@ -333,6 +334,17 @@ Module ReferenceTreePkg
         End If
 
         Return libs.SearchCandidates(x).Take(top)
+    End Function
+
+    <ExportAPI("candidate_ids")>
+    Public Function candidateIds(<RRawVectorArgument> result As Object, Optional env As Environment = Nothing) As Object
+        Dim pull As pipeline = pipeline.TryCreatePipeline(Of AlignmentOutput)(result, env)
+
+        If pull.isError Then
+            Return pull.getError
+        End If
+
+        Return pull.populates(Of AlignmentOutput)(env).Select(Function(a) a.reference.id).ToArray
     End Function
 
     ''' <summary>
