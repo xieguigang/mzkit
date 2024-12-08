@@ -550,6 +550,14 @@ Module library
         Return libs
     End Function
 
+    <ExportAPI("load_metadata")>
+    Public Function GetAnnotations(libs As Library(Of MetaLib), <RRawVectorArgument> id As Object) As Object
+        Return CLRVector.asCharacter(id) _
+            .SafeQuery _
+            .Select(Function(refId) libs.GetMetadataByID(refId)) _
+            .ToArray
+    End Function
+
     ''' <summary>
     ''' Check of the valid adducts
     ''' </summary>
