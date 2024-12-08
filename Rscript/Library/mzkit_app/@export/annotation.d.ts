@@ -79,10 +79,12 @@ declare namespace annotation {
     * Create spectrum reference library from mona msp file
     * 
     * 
+     * @param libtype 
+     * + default value Is ``null``.
      * @param env 
      * + default value Is ``null``.
    */
-   function library_from_mona(mona: any, env?: object): object;
+   function library_from_mona(mona: any, libtype?: object, env?: object): object;
    /**
    */
    function load_metadata(libs: object, id: any): object;
