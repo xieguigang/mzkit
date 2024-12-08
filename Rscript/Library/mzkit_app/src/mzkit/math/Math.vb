@@ -226,6 +226,9 @@ Module MzMath
         Call df.add("forward", From i As AlignmentOutput In alignments Select i.forward)
         Call df.add("reverse", From i As AlignmentOutput In alignments Select i.reverse)
         Call df.add("jaccard", From i As AlignmentOutput In alignments Select i.jaccard)
+        Call df.add("entropy", From i As AlignmentOutput In alignments Select i.entropy)
+        Call df.add("nhits", From i As AlignmentOutput In alignments Select i.nhits)
+        Call df.add("alignment_str", From i As AlignmentOutput In alignments Select i.alignment_str)
 
         Return df
     End Function
