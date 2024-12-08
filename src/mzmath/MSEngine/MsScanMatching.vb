@@ -81,6 +81,7 @@ Public Class MatchedPeak
     Public Property Intensity As Double
     Public Property MatchedIntensity As Double
 End Class
+
 Public NotInheritable Class MsScanMatching
     Private Sub New()
     End Sub
@@ -125,8 +126,13 @@ Public NotInheritable Class MsScanMatching
     '    return result;
     '}
 
-    Public Shared Function CompareMS2ScanProperties(scanProp As IMSScanProperty, refSpec As MoleculeMsReference, param As MsRefSearchParameterBase, Optional targetOmics As TargetOmics = TargetOmics.Metabolomics, Optional scanCCS As Double = -1.0, Optional scanIsotopes As IReadOnlyList(Of IsotopicPeak) = Nothing, Optional refIsotopes As IReadOnlyList(Of IsotopicPeak) = Nothing, Optional andromedaDelta As Double = 100, Optional andromedaMaxPeaks As Integer = 12) As MsScanMatchResult
-
+    Public Shared Function CompareMS2ScanProperties(scanProp As IMSScanProperty, refSpec As MoleculeMsReference, param As MsRefSearchParameterBase,
+                                                    Optional targetOmics As TargetOmics = TargetOmics.Metabolomics,
+                                                    Optional scanCCS As Double = -1.0,
+                                                    Optional scanIsotopes As IReadOnlyList(Of IsotopicPeak) = Nothing,
+                                                    Optional refIsotopes As IReadOnlyList(Of IsotopicPeak) = Nothing,
+                                                    Optional andromedaDelta As Double = 100,
+                                                    Optional andromedaMaxPeaks As Integer = 12) As MsScanMatchResult
         Dim result As MsScanMatchResult = Nothing
         If targetOmics = TargetOmics.Metabolomics Then
             result = CompareMSScanProperties(scanProp, refSpec, param, param.Ms2Tolerance, param.MassRangeBegin, param.MassRangeEnd)
@@ -146,8 +152,13 @@ Public NotInheritable Class MsScanMatching
         Return result
     End Function
 
-    Public Shared Function CompareMS2ScanProperties(scanProp As IMSScanProperty, chargestate As Integer, refSpec As PeptideMsReference, param As MsRefSearchParameterBase, Optional targetOmics As TargetOmics = TargetOmics.Metabolomics, Optional scanCCS As Double = -1.0, Optional scanIsotopes As IReadOnlyList(Of IsotopicPeak) = Nothing, Optional refIsotopes As IReadOnlyList(Of IsotopicPeak) = Nothing, Optional andromedaDelta As Double = 100, Optional andromedaMaxPeaks As Integer = 12) As MsScanMatchResult
-
+    Public Shared Function CompareMS2ScanProperties(scanProp As IMSScanProperty, chargestate As Integer, refSpec As PeptideMsReference, param As MsRefSearchParameterBase,
+                                                    Optional targetOmics As TargetOmics = TargetOmics.Metabolomics,
+                                                    Optional scanCCS As Double = -1.0,
+                                                    Optional scanIsotopes As IReadOnlyList(Of IsotopicPeak) = Nothing,
+                                                    Optional refIsotopes As IReadOnlyList(Of IsotopicPeak) = Nothing,
+                                                    Optional andromedaDelta As Double = 100,
+                                                    Optional andromedaMaxPeaks As Integer = 12) As MsScanMatchResult
         Dim result As MsScanMatchResult = Nothing
         If targetOmics = TargetOmics.Proteomics Then
             result = CompareMS2ProteomicsScanProperties(scanProp, chargestate, refSpec, param, andromedaDelta, andromedaMaxPeaks)
@@ -297,10 +308,6 @@ Public NotInheritable Class MsScanMatching
 
         Return result
     End Function
-
-
-
-
 
     ''' <summary>
     ''' This method returns the similarity score between theoretical isotopic ratios and experimental isotopic patterns in MS1 axis.
@@ -540,7 +547,21 @@ Public NotInheritable Class MsScanMatching
         Next
     End Sub
 
-    Public Shared Function GetProcessedSpectrum(peaks As List(Of SpectrumPeak), peakPrecursorMz As Double, Optional minMz As Double = 0.0, Optional maxMz As Double = 10000, Optional relativeAbundanceCutOff As Double = 0.1, Optional absoluteAbundanceCutOff As Double = 50.0, Optional massTolerance As Double = 0.05, Optional massBinningValue As Double = 1.0, Optional intensityScaleFactor As Double = 0.5, Optional scaledMaxValue As Double = 100, Optional massDelta As Double = 1, Optional maxPeakNumInDelta As Integer = 12, Optional massToleranceType As MassToleranceType = MassToleranceType.Da, Optional isBrClConsideredForIsotopes As Boolean = False, Optional isRemoveIsotopes As Boolean = False, Optional removeAfterPrecursor As Boolean = True) As List(Of SpectrumPeak) ' 0.1%
+    Public Shared Function GetProcessedSpectrum(peaks As List(Of SpectrumPeak), peakPrecursorMz As Double,
+                                                Optional minMz As Double = 0.0,
+                                                Optional maxMz As Double = 10000,
+                                                Optional relativeAbundanceCutOff As Double = 0.1,
+                                                Optional absoluteAbundanceCutOff As Double = 50.0,
+                                                Optional massTolerance As Double = 0.05,
+                                                Optional massBinningValue As Double = 1.0,
+                                                Optional intensityScaleFactor As Double = 0.5,
+                                                Optional scaledMaxValue As Double = 100,
+                                                Optional massDelta As Double = 1,
+                                                Optional maxPeakNumInDelta As Integer = 12,
+                                                Optional massToleranceType As MassToleranceType = MassToleranceType.Da,
+                                                Optional isBrClConsideredForIsotopes As Boolean = False,
+                                                Optional isRemoveIsotopes As Boolean = False,
+                                                Optional removeAfterPrecursor As Boolean = True) As List(Of SpectrumPeak) ' 0.1%
 
         'Console.WriteLine("Original peaks");
         'foreach (var peak in peaks) {
@@ -628,7 +649,11 @@ Public NotInheritable Class MsScanMatching
             For Each peak In group
                 If peak.SpectrumComment.HasFlag(SpectrumComment.precursor) Then Continue For ' exclude
                 If chargeState <= 2 AndAlso (peak.SpectrumComment.HasFlag(SpectrumComment.b2) OrElse peak.SpectrumComment.HasFlag(SpectrumComment.y2)) Then Continue For ' exclude
-                If Not isParentExist AndAlso (peak.SpectrumComment.HasFlag(SpectrumComment.b_h2o) OrElse peak.SpectrumComment.HasFlag(SpectrumComment.b_nh3) OrElse peak.SpectrumComment.HasFlag(SpectrumComment.y_h2o) OrElse peak.SpectrumComment.HasFlag(SpectrumComment.y_nh3)) Then
+                If Not isParentExist AndAlso (peak.SpectrumComment.HasFlag(SpectrumComment.b_h2o) OrElse
+                    peak.SpectrumComment.HasFlag(SpectrumComment.b_nh3) OrElse
+                    peak.SpectrumComment.HasFlag(SpectrumComment.y_h2o) OrElse
+                    peak.SpectrumComment.HasFlag(SpectrumComment.y_nh3)) Then
+
                     Continue For
                 End If
                 finalPeaks.Add(peak)
