@@ -135,6 +135,14 @@ Public Class GCMSPeak : Inherits PeakFeature
             .Where(Function(p) p.rt >= rtmin AndAlso p.rt <= rtmax) _
             .ToArray
         Dim mean = SpectraEncoder.SpectrumSum(rt_filter, average:=True)
+        Dim spectrum As ms2()
+
+        ' 20241208 mean may be nothing if there is no spectrum matched in current sample
+        If mean Is Nothing Then
+            spectrum = {}
+        Else
+            spectrum = mean.Array
+        End If
 
         Return New GCMSPeak With {
             .rt = peak.rt,
@@ -149,7 +157,7 @@ Public Class GCMSPeak : Inherits PeakFeature
             .RI = peak.RI,
             .rtmax = rtmax,
             .rtmin = rtmin,
-            .Spectrum = mean.Array,
+            .Spectrum = spectrum,
             .xcms_id = peak.ID
         }
     End Function
