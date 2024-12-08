@@ -65,6 +65,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree
 Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.PackLib
 Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.Query
 Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree.Tree
+Imports BioNovoGene.BioDeep.Chemistry.MetaLib.Models
 Imports BioNovoGene.BioDeep.MassSpectrometry.MoleculeNetworking
 Imports BioNovoGene.BioDeep.MSEngine
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
@@ -323,6 +324,11 @@ Module ReferenceTreePkg
         Call println($"Do jaccard match with cutoff value: {cutoff}!")
 
         Return New JaccardSearch(dataset, cutoff, filter_complex_adducts)
+    End Function
+
+    <ExportAPI("top_candidates")>
+    Public Function top_candidates(libs As Library(Of MetaLib), x As PeakMs2, Optional top As Integer = 9) As Object
+        Return libs.SearchCandidates(x).Take(top)
     End Function
 
     ''' <summary>
