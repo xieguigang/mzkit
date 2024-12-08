@@ -16,6 +16,8 @@
     <RepositoryType>git</RepositoryType>
     <PackageTags>mzkit</PackageTags>
 	  <OutputPath>../../../Rscript\Library\mzkit_app\assembly\</OutputPath>
+	  <UseApplicationFramework>True</UseApplicationFramework>
+	  <Title>Reference spectrum search</Title>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
