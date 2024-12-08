@@ -111,7 +111,7 @@ Module MzMath
         Call RInternal.ConsolePrinter.AttachConsoleFormatter(Of MzCalculator)(AddressOf printCalculator)
 
         Call RInternal.Object.Converts.addHandler(GetType(MzGroup), AddressOf XICTable)
-        Call RInternal.Object.Converts.addHandler(GetType(AlignmentOutput), AddressOf getAlignmentTable)
+        Call RInternal.Object.Converts.addHandler(GetType(AlignmentOutput()), AddressOf CreateAlignmentTable)
         Call RInternal.Object.Converts.addHandler(GetType(PrecursorInfo()), AddressOf getPrecursorTable)
         Call RInternal.Object.Converts.addHandler(GetType(MassWindow()), AddressOf mass_tabular)
         Call RInternal.Object.Converts.addHandler(GetType(MzCalculator()), AddressOf adducts_table)
@@ -217,15 +217,28 @@ Module MzMath
         }
     End Function
 
+    <RGenericOverloads("as.data.frame")>
+    Public Function CreateAlignmentTable(alignments As AlignmentOutput(), args As list, env As Environment) As dataframe
+        Dim df As New dataframe With {.columns = New Dictionary(Of String, Array)}
+
+        Call df.add("query_id", From i As AlignmentOutput In alignments Select i.query.id)
+        Call df.add("subject_id", From i As AlignmentOutput In alignments Select i.reference.id)
+        Call df.add("forward", From i As AlignmentOutput In alignments Select i.forward)
+        Call df.add("reverse", From i As AlignmentOutput In alignments Select i.reverse)
+        Call df.add("jaccard", From i As AlignmentOutput In alignments Select i.jaccard)
+
+        Return df
+    End Function
+
     ''' <summary>
-    ''' convert the spectrum alignment details as dataframe
+    ''' convert a single spectrum alignment details as dataframe
     ''' </summary>
     ''' <param name="align"></param>
     ''' <param name="args"></param>
     ''' <param name="env"></param>
     ''' <returns></returns>
-    <RGenericOverloads("as.data.frame")>
-    Private Function getAlignmentTable(align As AlignmentOutput, args As list, env As Environment) As dataframe
+    <ExportAPI("summary_result")>
+    Public Function getAlignmentTable(align As AlignmentOutput, args As list, env As Environment) As Object
         Dim scores_df As Boolean = args.getValue("scores_df", env, [default]:=False)
 
         If scores_df Then
@@ -240,7 +253,7 @@ Module MzMath
                 "entropy",
                 "mirror",
                 "mean",
-                "fragment hits"})
+                "fragments"})
             Call df.add("scores", {
                 align.forward, align.reverse,
                 align.cosine,
