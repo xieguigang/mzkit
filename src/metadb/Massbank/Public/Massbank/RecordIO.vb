@@ -102,7 +102,7 @@ Namespace Massbank
             out.CH = DirectCast(GetType(CH).__createObject(nodes(NameOf(DATA.Record.CH))), CH)
             out.MS = DirectCast(GetType(DATA.MS).__createObject(nodes(NameOf(DATA.Record.MS))), DATA.MS)
             out.SP = DirectCast(GetType(SP).__createObject(nodes.TryGetValue(NameOf(DATA.Record.SP))), SP)
-            out.PK = nodes(NameOf(Record.PK)).__createPeaksData(annotationHeaders)
+            out.PK = nodes(NameOf(DATA.Record.PK)).__createPeaksData(annotationHeaders)
 
             Return out
         End Function
