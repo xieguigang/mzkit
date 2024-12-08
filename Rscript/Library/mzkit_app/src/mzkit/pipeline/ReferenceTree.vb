@@ -329,6 +329,9 @@ Module ReferenceTreePkg
 
     <ExportAPI("top_candidates")>
     Public Function top_candidates(libs As Library(Of MetaLib), x As Object, Optional top As Integer = 9) As Object
+        If x Is Nothing Then
+            Return Nothing
+        End If
         If TypeOf x Is GCMSPeak Then
             x = New PeakMs2(DirectCast(x, GCMSPeak).xcms_id, DirectCast(x, GCMSPeak).Spectrum)
         End If
