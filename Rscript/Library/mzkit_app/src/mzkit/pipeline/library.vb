@@ -551,6 +551,7 @@ Module library
     End Function
 
     <ExportAPI("load_metadata")>
+    <RApiReturn(GetType(MetaLib))>
     Public Function GetAnnotations(libs As Library(Of MetaLib), <RRawVectorArgument> id As Object) As Object
         Return CLRVector.asCharacter(id) _
             .SafeQuery _

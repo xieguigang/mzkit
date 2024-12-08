@@ -75,6 +75,17 @@ declare namespace annotation {
      * + default value Is ``null``.
    */
    function get_peaktable(workspace: any, env?: object): object;
+   /**
+    * Create spectrum reference library from mona msp file
+    * 
+    * 
+     * @param env 
+     * + default value Is ``null``.
+   */
+   function library_from_mona(mona: any, env?: object): object;
+   /**
+   */
+   function load_metadata(libs: object, id: any): object;
    module make {
       /**
        * create a new metabolite annotation information

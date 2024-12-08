@@ -35,6 +35,10 @@ declare namespace spectrumTree {
    */
    function addBucket(tree: any, x: any, ignore_error?: boolean, args?: object, env?: object): any;
    /**
+     * @param env default value Is ``null``.
+   */
+   function candidate_ids(result: any, env?: object): any;
+   /**
     * Compress and make cleanup of the spectrum library
     * 
     * 
@@ -198,4 +202,8 @@ declare namespace spectrumTree {
      * + default value Is ``null``.
    */
    function readpack(file: any, env?: object): object;
+   /**
+     * @param top default value Is ``9``.
+   */
+   function top_candidates(libs: object, x: any, top?: object): any;
 }

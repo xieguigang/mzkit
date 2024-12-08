@@ -344,7 +344,9 @@ Module ReferenceTreePkg
             Return pull.getError
         End If
 
-        Return pull.populates(Of AlignmentOutput)(env).Select(Function(a) a.reference.id).ToArray
+        Return pull.populates(Of AlignmentOutput)(env) _
+            .Select(Function(a) a.reference.id) _
+            .ToArray
     End Function
 
     ''' <summary>
