@@ -131,7 +131,7 @@ Public Class GCMSPeak : Inherits PeakFeature
             rtmax = peak.rt + rtwin
         End If
 
-        Dim rt_filter = raw.AsParallel _
+        Dim rt_filter = raw _
             .Where(Function(p) p.rt >= rtmin AndAlso p.rt <= rtmax) _
             .ToArray
         Dim mean = SpectraEncoder.SpectrumSum(rt_filter, average:=True)
