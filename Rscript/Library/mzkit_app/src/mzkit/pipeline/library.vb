@@ -69,9 +69,12 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
 Imports BioNovoGene.Analytical.MassSpectrometry.SpectrumTree
+Imports BioNovoGene.BioDeep.Chemistry
 Imports BioNovoGene.BioDeep.Chemistry.MetaLib.CrossReference
+Imports BioNovoGene.BioDeep.Chemistry.MetaLib.Models
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports BioNovoGene.BioDeep.MSEngine
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
@@ -521,6 +524,30 @@ Module library
             .KEGGdrug = kegg_drug,
             .extras = additionals
         }
+    End Function
+
+    ''' <summary>
+    ''' Create spectrum reference library from mona msp file
+    ''' </summary>
+    ''' <returns></returns>
+    <ExportAPI("library_from_mona")>
+    <RApiReturn(GetType(Library(Of MetaLib)))>
+    Public Function MakeMoNALibrary(<RRawVectorArgument> mona As Object, Optional env As Environment = Nothing) As Object
+        Dim pull As pipeline = pipeline.TryCreatePipeline(Of SpectraSection)(mona, env)
+
+        If Not pull.isError Then
+            Return pull.getError
+        End If
+
+        Dim fetch As Func(Of IEnumerable(Of (MetaLib, PeakMs2))) =
+            Iterator Function() As IEnumerable(Of (MetaLib, PeakMs2))
+                For Each ref As SpectraSection In TqdmWrapper.Wrap(pull.populates(Of SpectraSection)(env).ToArray)
+                    Yield (ref.GetMetabolite, ref.GetSpectrumPeaks)
+                Next
+            End Function
+        Dim libs As New Library(Of MetaLib)(fetch)
+
+        Return libs
     End Function
 
     ''' <summary>
