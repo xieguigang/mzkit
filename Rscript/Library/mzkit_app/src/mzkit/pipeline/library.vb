@@ -532,20 +532,29 @@ Module library
     ''' <returns></returns>
     <ExportAPI("library_from_mona")>
     <RApiReturn(GetType(Library(Of MetaLib)))>
-    Public Function MakeMoNALibrary(<RRawVectorArgument> mona As Object, Optional env As Environment = Nothing) As Object
-        Dim pull As pipeline = pipeline.TryCreatePipeline(Of SpectraSection)(mona, env)
+    Public Function MakeMoNALibrary(<RRawVectorArgument>
+                                    mona As Object,
+                                    Optional libtype As IonModes = IonModes.Positive,
+                                    Optional env As Environment = Nothing) As Object
 
-        If Not pull.isError Then
+        Dim pull As pipeline = pipeline.TryCreatePipeline(Of SpectraSection)(mona, env)
+        Dim pullSpec As SpectraSection()
+
+        If pull.isError Then
             Return pull.getError
+        Else
+            pullSpec = pull.populates(Of SpectraSection)(env) _
+                .Where(Function(a) a.libtype = libtype) _
+                .ToArray
         End If
 
         Dim fetch As Func(Of IEnumerable(Of (MetaLib, PeakMs2))) =
             Iterator Function() As IEnumerable(Of (MetaLib, PeakMs2))
-                For Each ref As SpectraSection In TqdmWrapper.Wrap(pull.populates(Of SpectraSection)(env).ToArray)
+                For Each ref As SpectraSection In TqdmWrapper.Wrap(pullSpec)
                     Yield (ref.GetMetabolite, ref.GetSpectrumPeaks)
                 Next
             End Function
-        Dim libs As New Library(Of MetaLib)(fetch)
+        Dim libs As New Library(Of MetaLib)(fetch())
 
         Return libs
     End Function

@@ -1,4 +1,5 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
 Imports BioNovoGene.BioDeep.Chemoinformatics
@@ -17,6 +18,9 @@ Public Class Library(Of T As {INamedValue, GenericCompound})
             Call pool.Add(ref.spec)
             Call metadata.Add(ref.meta.Identity, ref.meta)
         Next
+
+        Me.cos = New CosAlignment(DAmethod.DeltaMass(0.3), New RelativeIntensityCutoff(0.05))
+        Me.pool = pool.ToArray
     End Sub
 
     ''' <summary>
