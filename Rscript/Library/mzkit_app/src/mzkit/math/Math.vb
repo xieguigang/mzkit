@@ -222,7 +222,13 @@ Module MzMath
         Dim df As New dataframe With {.columns = New Dictionary(Of String, Array)}
 
         Call df.add("query_id", From i As AlignmentOutput In alignments Select i.query.id)
+        Call df.add("mz", From i As AlignmentOutput In alignments Select i.query.mz)
+        Call df.add("rt", From i As AlignmentOutput In alignments Select i.query.scan_time)
+        Call df.add("intensity", From i As AlignmentOutput In alignments Select i.query.intensity)
+
         Call df.add("subject_id", From i As AlignmentOutput In alignments Select i.reference.id)
+        Call df.add("reference_rt", From i As AlignmentOutput In alignments Select i.reference.scan_time)
+
         Call df.add("forward", From i As AlignmentOutput In alignments Select i.forward)
         Call df.add("reverse", From i As AlignmentOutput In alignments Select i.reverse)
         Call df.add("jaccard", From i As AlignmentOutput In alignments Select i.jaccard)
