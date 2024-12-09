@@ -170,8 +170,8 @@ Module TissueMorphology
         Dim x As Double() = umap.Select(Function(i) i.x).ToArray
         Dim y As Double() = umap.Select(Function(i) i.y).ToArray
         Dim z As Double() = umap.Select(Function(i) i.z).ToArray
-        Dim cluster As Integer() = umap _
-            .Select(Function(i) Integer.Parse(i.class)) _
+        Dim cluster As String() = umap _
+            .Select(Function(i) i.class) _
             .ToArray
 
         Return New dataframe With {
