@@ -10,8 +10,9 @@ Public Class Library(Of T As {INamedValue, GenericCompound})
     ReadOnly metadata As New Dictionary(Of String, T)
     ReadOnly pool As PeakMs2()
     ReadOnly cos As CosAlignment
+    ReadOnly dotcutoff As Double
 
-    Sub New(data As IEnumerable(Of (meta As T, spec As PeakMs2)))
+    Sub New(data As IEnumerable(Of (meta As T, spec As PeakMs2)), Optional dotcutoff As Double = 0.6)
         Dim pool As New List(Of PeakMs2)
 
         For Each ref As (meta As T, spec As PeakMs2) In data
