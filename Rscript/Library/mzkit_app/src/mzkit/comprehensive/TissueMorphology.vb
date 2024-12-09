@@ -76,21 +76,18 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Microsoft.VisualBasic.MIME.Html.Render
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Scripting.Runtime
+Imports R_graphics.Common.Runtime
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
-Imports SMRUCC.Rsharp.Runtime.Internal.Invokes
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports RgraphicsDev = R_graphics.Common.Runtime.graphicsDevice
-Imports std = System.Math
 Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
-Imports R_graphics.Common.Runtime
-Imports Microsoft.VisualBasic.MIME.Html.Render
-
-
+Imports std = System.Math
 
 #If NET48 Then
 Imports Pen = System.Drawing.Pen
@@ -118,6 +115,7 @@ Imports GraphicsPath = Microsoft.VisualBasic.Imaging.GraphicsPath
 Imports FontStyle = Microsoft.VisualBasic.Imaging.FontStyle
 #End If
 
+
 ''' <summary>
 ''' spatial tissue region handler
 ''' 
@@ -135,6 +133,7 @@ Module TissueMorphology
         Call RInternal.generic.add("plot", GetType(TissueRegion()), AddressOf PlotTissueMap)
     End Sub
 
+    <RGenericOverloads("as.data.frame")>
     Private Function createTissueTable(tissues As TissueRegion(), args As list, env As Environment) As dataframe
         Dim labels As String() = tissues _
             .Select(Function(i) i.label.Replicate(n:=i.nsize)) _
@@ -164,6 +163,7 @@ Module TissueMorphology
         }
     End Function
 
+    <RGenericOverloads("as.data.frame")>
     Private Function createUMAPTable(umap As UMAPPoint(), args As list, env As Environment) As dataframe
         Dim px As Integer() = umap.Select(Function(i) i.Pixel.X).ToArray
         Dim py As Integer() = umap.Select(Function(i) i.Pixel.Y).ToArray
@@ -189,6 +189,7 @@ Module TissueMorphology
         }
     End Function
 
+    <RGenericOverloads("plot")>
     Public Function PlotTissueMap(tissue As TissueRegion(), args As list, env As Environment) As Object
         If args.CheckGraphicsDeviceExists Then
             ' draw on current graphics context
