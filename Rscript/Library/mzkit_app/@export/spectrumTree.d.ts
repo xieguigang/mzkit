@@ -205,5 +205,5 @@ declare namespace spectrumTree {
    /**
      * @param top default value Is ``9``.
    */
-   function top_candidates(libs: object, x: any, top?: object): any;
+   function top_candidates(libs: object, x: any, top?: object): object;
 }
