@@ -3,26 +3,43 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
 Imports BioNovoGene.BioDeep.Chemoinformatics
+Imports Microsoft.VisualBasic.ComponentModel.Algorithm.BinaryTree
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 
 Public Class Library(Of T As {INamedValue, GenericCompound})
 
     ReadOnly metadata As New Dictionary(Of String, T)
-    ReadOnly pool As PeakMs2()
+    ReadOnly search As AVLClusterTree(Of PeakMs2)
     ReadOnly cos As CosAlignment
     ReadOnly dotcutoff As Double
+    ReadOnly right As Double
 
-    Sub New(data As IEnumerable(Of (meta As T, spec As PeakMs2)), Optional dotcutoff As Double = 0.6)
-        Dim pool As New List(Of PeakMs2)
+    Sub New(data As IEnumerable(Of (meta As T, spec As PeakMs2)),
+            Optional dotcutoff As Double = 0.6,
+            Optional right As Double = 0.5)
+
+        Me.dotcutoff = dotcutoff
+        Me.right = right
+        Me.search = New AVLClusterTree(Of PeakMs2)(AddressOf Compares, Function(a) a.lib_guid)
+        Me.cos = New CosAlignment(DAmethod.DeltaMass(0.3), New RelativeIntensityCutoff(0.05))
 
         For Each ref As (meta As T, spec As PeakMs2) In data
-            Call pool.Add(ref.spec)
+            Call search.Add(ref.spec)
             Call metadata.Add(ref.meta.Identity, ref.meta)
         Next
-
-        Me.cos = New CosAlignment(DAmethod.DeltaMass(0.3), New RelativeIntensityCutoff(0.05))
-        Me.pool = pool.ToArray
     End Sub
+
+    Private Function Compares(a As PeakMs2, b As PeakMs2) As Integer
+        Dim cosine As Double = cos.GetScore(a.mzInto, b.mzInto)
+
+        If cosine > dotcutoff Then
+            Return 0
+        ElseIf cosine > right Then
+            Return 1
+        Else
+            Return -1
+        End If
+    End Function
 
     ''' <summary>
     ''' get metabolite annotation data by id reference
@@ -36,8 +53,10 @@ Public Class Library(Of T As {INamedValue, GenericCompound})
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function SearchCandidates(sample As PeakMs2) As IEnumerable(Of AlignmentOutput)
+        Dim cluster = search.Search(sample).ToArray
+
         Return From ref As PeakMs2
-               In pool.AsParallel
+               In cluster.AsParallel
                Let alignment As AlignmentOutput = cos.CreateAlignment(sample, ref)
                Select alignment
                Order By alignment.cosine Descending
