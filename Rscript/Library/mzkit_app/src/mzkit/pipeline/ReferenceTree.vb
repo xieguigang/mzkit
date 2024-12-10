@@ -328,12 +328,21 @@ Module ReferenceTreePkg
     End Function
 
     <ExportAPI("top_candidates")>
+    <RApiReturn(GetType(AlignmentOutput))>
     Public Function top_candidates(libs As Library(Of MetaLib), x As Object, Optional top As Integer = 9) As Object
         If x Is Nothing Then
             Return Nothing
         End If
         If TypeOf x Is GCMSPeak Then
-            x = New PeakMs2(DirectCast(x, GCMSPeak).xcms_id, DirectCast(x, GCMSPeak).Spectrum)
+            Dim peak As GCMSPeak = DirectCast(x, GCMSPeak)
+
+            x = New PeakMs2(peak.xcms_id, peak.Spectrum) With {
+                .mz = peak.mz,
+                .rt = peak.rt,
+                .intensity = peak.maxInto,
+                .file = peak.rawfile,
+                .scan = peak.xcms_id
+            }
         End If
 
         Return libs.SearchCandidates(x).Take(top)
