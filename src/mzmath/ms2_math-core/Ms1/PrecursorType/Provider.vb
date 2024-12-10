@@ -204,6 +204,12 @@ Namespace Ms1.PrecursorType
                            End Function)
         End Function
 
+        Public Iterator Function ParseAdducts(ParamArray adducts As String()) As IEnumerable(Of MzCalculator)
+            For Each type As String In adducts
+                Yield ParseAdductModel(type)
+            Next
+        End Function
+
         ''' <summary>
         ''' get internal m/z calculator
         ''' </summary>
