@@ -327,10 +327,12 @@ declare namespace mzweb {
         * @param file -
         * 
         * + default value Is ``null``.
+        * @param tabular 
+        * + default value Is ``false``.
         * @param env -
         * 
         * + default value Is ``null``.
       */
-      function text_cache(scans: object, file?: any, env?: object): any;
+      function text_cache(scans: object, file?: any, tabular?: boolean, env?: object): any;
    }
 }
