@@ -81,6 +81,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.SingleCells.Deconvolute
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.DataStorage.netCDF
 Imports Microsoft.VisualBasic.Emit.Delegates
@@ -88,7 +89,9 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.MIME.application.json
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Components.Interface
@@ -96,14 +99,8 @@ Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports ChromatogramTick = BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram.ChromatogramTick
-Imports SIMDAdd = Microsoft.VisualBasic.Math.SIMD.Add
 Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
-Imports Microsoft.VisualBasic.MIME.application.json
-Imports Microsoft.VisualBasic.Serialization.JSON
-Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
-
-
-
+Imports SIMDAdd = Microsoft.VisualBasic.Math.SIMD.Add
 
 #If NET48 Then
 Imports Pen = System.Drawing.Pen
@@ -129,10 +126,6 @@ Imports Image = Microsoft.VisualBasic.Imaging.Image
 Imports Bitmap = Microsoft.VisualBasic.Imaging.Bitmap
 Imports GraphicsPath = Microsoft.VisualBasic.Imaging.GraphicsPath
 Imports FontStyle = Microsoft.VisualBasic.Imaging.FontStyle
-#End If
-
-#If NET48 Then
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader
 #End If
 
 ''' <summary>
