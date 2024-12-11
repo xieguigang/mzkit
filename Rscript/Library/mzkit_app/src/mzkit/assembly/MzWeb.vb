@@ -416,16 +416,14 @@ Module MzWeb
 
         If scans.isError Then
             Return scans.getError
-        End If
-
-        If file Is Nothing Then
-            stream = Console.OpenStandardOutput
-        ElseIf TypeOf file Is String Then
-            stream = DirectCast(file, String).Open(doClear:=True)
-        ElseIf TypeOf file Is Stream Then
-            stream = DirectCast(file, Stream)
         Else
-            Return Message.InCompatibleType(GetType(Stream), file.GetType, env)
+            Dim buf = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Write, env)
+
+            If buf Like GetType(Message) Then
+                Return buf.TryCast(Of Message)
+            Else
+                stream = buf.TryCast(Of Stream)
+            End If
         End If
 
         If tabular Then

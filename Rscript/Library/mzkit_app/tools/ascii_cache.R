@@ -16,9 +16,9 @@ let dump_ascii = function(rawfile, cachefile) {
 }
 
 if (is_dir) {
-    outfile <- outfile || rawdata;
+    outfile <- ifelse(nchar(outfile) > 0, outfile, rawdata);
 } else {
-    outfile <- outfile || `${dirname(rawdata)}/${basename(rawdata)}.txt`;
+    outfile <- ifelse(nchar(outfile) > 0, outfile, `${dirname(rawdata)}/${basename(rawdata)}.txt`);
 }
 
 if (is_dir) {
