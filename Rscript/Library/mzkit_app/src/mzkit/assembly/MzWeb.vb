@@ -1,62 +1,62 @@
 ﻿#Region "Microsoft.VisualBasic::7934f659641510e71951dcec8210aac0, Rscript\Library\mzkit_app\src\mzkit\assembly\MzWeb.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 1157
-    '    Code Lines: 728 (62.92%)
-    ' Comment Lines: 282 (24.37%)
-    '    - Xml Docs: 92.20%
-    ' 
-    '   Blank Lines: 147 (12.71%)
-    '     File Size: 47.01 KB
+' Summaries:
 
 
-    ' Module MzWeb
-    ' 
-    '     Function: BPC, GetChromatogram, getMs1PointTable, loadStream, loadXcmsRData
-    '               MassCalibration, Ms1Peaks, Ms1ScanPoints, Ms2ScanPeaks, Open
-    '               openFile, openFromFile, parse_base64, parseScanMsBuffer, readCache
-    '               setMzpackThumbnail, TIC, ToMzPack, uniqueReference, writeCache
-    '               writeMzpack, writeStream, writeToCDF
-    ' 
-    '     Sub: Main, WriteCache
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 1157
+'    Code Lines: 728 (62.92%)
+' Comment Lines: 282 (24.37%)
+'    - Xml Docs: 92.20%
+' 
+'   Blank Lines: 147 (12.71%)
+'     File Size: 47.01 KB
+
+
+' Module MzWeb
+' 
+'     Function: BPC, GetChromatogram, getMs1PointTable, loadStream, loadXcmsRData
+'               MassCalibration, Ms1Peaks, Ms1ScanPoints, Ms2ScanPeaks, Open
+'               openFile, openFromFile, parse_base64, parseScanMsBuffer, readCache
+'               setMzpackThumbnail, TIC, ToMzPack, uniqueReference, writeCache
+'               writeMzpack, writeStream, writeToCDF
+' 
+'     Sub: Main, WriteCache
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -101,6 +101,8 @@ Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports ChromatogramTick = BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram.ChromatogramTick
 Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
 Imports SIMDAdd = Microsoft.VisualBasic.Math.SIMD.Add
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ThermoRawFileReader
+
 
 #If NET48 Then
 Imports Pen = System.Drawing.Pen
@@ -702,12 +704,12 @@ Module MzWeb
             )
         ElseIf file.ExtensionSuffix("mgf", "msp") Then
             Return Converter.LoadAsciiFileAuto(file)
-#If NET48 Then
+
         ElseIf file.ExtensionSuffix("raw") Then
             Using msRaw As New MSFileReader(file)
                 Return msRaw.LoadFromXRaw
             End Using
-#End If
+
         ElseIf file.ExtensionSuffix("cdf") Then
             Using cdf As New netCDFReader(file)
                 If cdf.IsLecoGCMS Then
