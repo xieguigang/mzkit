@@ -392,7 +392,7 @@ Module MzWeb
     ''' <summary>
     ''' write ASCII text format of mzweb stream
     ''' </summary>
-    ''' <param name="scans"></param>
+    ''' <param name="x"></param>
     ''' <param name="file"></param>
     ''' <param name="env"></param>
     ''' <remarks>
@@ -407,11 +407,16 @@ Module MzWeb
     ''' write.text_cache(ms1, file = "./msdata.txt");
     ''' </example>
     <ExportAPI("write.text_cache")>
-    Public Function writeStream(scans As pipeline,
+    Public Function writeStream(<RRawVectorArgument> x As Object,
                                 Optional file As Object = Nothing,
                                 Optional tabular As Boolean = False,
                                 Optional env As Environment = Nothing) As Object
         Dim stream As Stream
+        Dim scans As pipeline = pipeline.TryCreatePipeline(Of ScanMS1)(x, env)
+
+        If scans.isError Then
+            Return scans.getError
+        End If
 
         If file Is Nothing Then
             stream = Console.OpenStandardOutput

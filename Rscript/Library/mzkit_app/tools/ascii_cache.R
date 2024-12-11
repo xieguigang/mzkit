@@ -4,13 +4,7 @@ require(mzkit);
 let rawdata = ?"--raw" || stop("no rawdata file was provided!");
 let is_dir  = dir.exists(rawdata);
 [@info "the file path of the dump text file for a single file input, or a directory path for output multiple rawdata file."]
-let outfile = ?"--out" || {
-    if (is_dir) {
-        rawdata;
-    } else {
-        `${dirname(rawdata)}/${basename(rawdata)}.txt`;
-    }
-};
+let outfile = ?"--out";
 
 let dump_ascii = function(rawfile, cachefile) {
     let rawdata = open.mzpack(rawfile,verbose =TRUE);
@@ -19,6 +13,12 @@ let dump_ascii = function(rawfile, cachefile) {
     write.text_cache(ms1, 
         file = cachefile, 
         tabular = TRUE);
+}
+
+if (is_dir) {
+    outfile <- outfile || rawdata;
+} else {
+    outfile <- outfile || `${dirname(rawdata)}/${basename(rawdata)}.txt`;
 }
 
 if (is_dir) {

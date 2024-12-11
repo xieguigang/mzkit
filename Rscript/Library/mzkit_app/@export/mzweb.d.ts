@@ -323,7 +323,7 @@ declare namespace mzweb {
        * > this method used for create ascii text package data for the biodeep
        * >  web application js code to read the ms rawdata.
        * 
-        * @param scans -
+        * @param x -
         * @param file -
         * 
         * + default value Is ``null``.
@@ -333,6 +333,6 @@ declare namespace mzweb {
         * 
         * + default value Is ``null``.
       */
-      function text_cache(scans: object, file?: any, tabular?: boolean, env?: object): any;
+      function text_cache(x: any, file?: any, tabular?: boolean, env?: object): any;
    }
 }
