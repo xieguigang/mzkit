@@ -407,6 +407,7 @@ Module MzWeb
     <ExportAPI("write.text_cache")>
     Public Function writeStream(scans As pipeline,
                                 Optional file As Object = Nothing,
+                                Optional tabular As Boolean = False,
                                 Optional env As Environment = Nothing) As Object
         Dim stream As Stream
 
@@ -420,7 +421,11 @@ Module MzWeb
             Return Message.InCompatibleType(GetType(Stream), file.GetType, env)
         End If
 
-        Call scans.populates(Of ScanMS1)(env).Write(stream)
+        If tabular Then
+            Call scans.populates(Of ScanMS1)(env).WriteTabularCache(stream)
+        Else
+            Call scans.populates(Of ScanMS1)(env).Write(stream)
+        End If
 
         Return True
     End Function

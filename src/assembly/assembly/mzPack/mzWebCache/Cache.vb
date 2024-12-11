@@ -61,7 +61,6 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
-Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Serialization.BinaryDumping
 
 Namespace mzData.mzWebCache
@@ -116,6 +115,26 @@ Namespace mzData.mzWebCache
                     Next
 
                     Call writer.WriteLine("-----")
+                Next
+
+                Call writer.Flush()
+            End Using
+        End Sub
+
+        <Extension>
+        Public Sub WriteTabularCache(scans As IEnumerable(Of ScanMS1), file As Stream)
+            Dim mz, intensity As String
+            Dim row As String()
+
+            Static network As New NetworkByteOrderBuffer
+
+            Using writer As New StreamWriter(file)
+                For Each scan As ScanMS1 In scans
+                    mz = network.Base64String(scan.mz)
+                    intensity = network.Base64String(scan.into)
+                    row = {scan.rt, scan.BPC, scan.TIC, mz, intensity}
+
+                    Call writer.WriteLine(row.JoinBy(vbTab))
                 Next
 
                 Call writer.Flush()
