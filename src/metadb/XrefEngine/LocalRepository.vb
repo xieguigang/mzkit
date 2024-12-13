@@ -1,6 +1,13 @@
 ﻿Imports System.IO
+Imports System.Runtime.CompilerServices
+Imports BioNovoGene.BioDeep.Chemistry.MetaLib.CrossReference
 Imports BioNovoGene.BioDeep.MSEngine
+Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.Data.IO
+Imports Microsoft.VisualBasic.Data.IO.MessagePack
+Imports Microsoft.VisualBasic.DataStorage.HDSPack
 Imports Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
+Imports metadata = BioNovoGene.BioDeep.Chemistry.MetaLib.Models.MetaLib
 
 ''' <summary>
 ''' read only metabolite annotation information data repository
@@ -11,29 +18,106 @@ Public Class LocalRepository : Implements IDisposable, IMetaDb
     ''' the repository file stream data
     ''' </summary>
     ReadOnly s As StreamPack
+    ReadOnly offset As New Dictionary(Of String, (id$, BufferRegion))
+    ReadOnly cache As New Dictionary(Of String, metadata)
+    ReadOnly cacheXrefs As New Dictionary(Of String, Dictionary(Of String, String))
+    ReadOnly blocks As New Dictionary(Of String, Stream)
 
     Dim disposedValue As Boolean
 
     Sub New(file As Stream)
         s = New StreamPack(file, [readonly]:=True)
+
+        Call LoadOffset()
+    End Sub
+
+    Private Sub LoadOffset()
+        Dim offsetFiles = DirectCast(s.GetObject("/offset/"), StreamGroup) _
+            .ListFiles _
+            .OfType(Of StreamBlock)() _
+            .Where(Function(file)
+                       Return file.fileName.ExtensionSuffix("msgpack")
+                   End Function) _
+            .ToArray
+
+        For Each indexfile As StreamBlock In offsetFiles
+            Dim file As MemoryStream = s.OpenBlock(indexfile, loadMemory:=True)
+            Dim index As Dictionary(Of String, BufferRegion) = MsgPackSerializer.Deserialize(GetType(Dictionary(Of String, BufferRegion)), file)
+            Dim id As String = indexfile.fileName.BaseName
+
+            For Each offset As KeyValuePair(Of String, BufferRegion) In index
+                Call Me.offset.Add(offset.Key, (id, offset.Value))
+            Next
+        Next
     End Sub
 
     Public Function GetAnnotation(uniqueId As String) As (name As String, formula As String) Implements IMetaDb.GetAnnotation
-        Throw New NotImplementedException()
+        Dim metadata As metadata = GetMetadata(uniqueId)
+        Dim ref = (metadata.name, metadata.formula)
+
+        Return ref
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function GetMetadata(uniqueId As String) As Object Implements IMetaDb.GetMetadata
-        Throw New NotImplementedException()
+        Return cache.ComputeIfAbsent(uniqueId,
+             lazyValue:=Function(id)
+                            Return ReadMetadata(id)
+                        End Function)
+    End Function
+
+    Private Function ReadMetadata(id As String) As metadata
+
     End Function
 
     Public Function GetDbXref(uniqueId As String) As Dictionary(Of String, String) Implements IMetaDb.GetDbXref
-        Throw New NotImplementedException()
+        Return cacheXrefs.ComputeIfAbsent(uniqueId,
+            lazyValue:=Function(id)
+                           Return CreateDb_Xrefs(id)
+                       End Function)
+    End Function
+
+    Private Function CreateDb_Xrefs(id As String) As Dictionary(Of String, String)
+        Dim metadata As metadata = GetMetadata(id)
+        Dim db_xrefs As New Dictionary(Of String, String)()
+        Dim xrefs As xref = metadata.xref
+
+        If Not xrefs.extras.IsNullOrEmpty Then
+            For Each item As KeyValuePair(Of String, String()) In xrefs.extras
+                Call db_xrefs.Add(item.Key, item.Value.FirstOrDefault)
+            Next
+        End If
+
+        Call db_xrefs.Add(NameOf(xrefs.CAS), xrefs.CAS.FirstOrDefault)
+        Call db_xrefs.Add(NameOf(xrefs.chebi), xrefs.chebi)
+        Call db_xrefs.Add(NameOf(xrefs.ChEMBL), xrefs.ChEMBL)
+        Call db_xrefs.Add(NameOf(xrefs.chemspider), xrefs.chemspider)
+        Call db_xrefs.Add(NameOf(xrefs.ChemIDplus), xrefs.ChemIDplus)
+        Call db_xrefs.Add(NameOf(xrefs.DrugBank), xrefs.DrugBank)
+        Call db_xrefs.Add(NameOf(xrefs.foodb), xrefs.foodb)
+        Call db_xrefs.Add(NameOf(xrefs.HMDB), xrefs.HMDB)
+        Call db_xrefs.Add(NameOf(xrefs.KEGG), xrefs.KEGG)
+        Call db_xrefs.Add(NameOf(xrefs.KEGGdrug), xrefs.KEGGdrug)
+        Call db_xrefs.Add(NameOf(xrefs.KNApSAcK), xrefs.KNApSAcK)
+        Call db_xrefs.Add(NameOf(xrefs.lipidmaps), xrefs.lipidmaps)
+        Call db_xrefs.Add(NameOf(xrefs.MeSH), xrefs.MeSH)
+        Call db_xrefs.Add(NameOf(xrefs.MetaCyc), xrefs.MetaCyc)
+        Call db_xrefs.Add(NameOf(xrefs.metlin), xrefs.metlin)
+        Call db_xrefs.Add(NameOf(xrefs.pubchem), xrefs.pubchem)
+        Call db_xrefs.Add(NameOf(xrefs.Wikipedia), xrefs.Wikipedia)
+
+        Call db_xrefs.Add(NameOf(xrefs.InChIkey), xrefs.InChIkey)
+        Call db_xrefs.Add(NameOf(xrefs.InChI), xrefs.InChI)
+        Call db_xrefs.Add(NameOf(xrefs.SMILES), xrefs.SMILES)
+
+        Return db_xrefs
     End Function
 
     Protected Overridable Sub Dispose(disposing As Boolean)
         If Not disposedValue Then
             If disposing Then
                 ' TODO: dispose managed state (managed objects)
+                Call s.Dispose()
             End If
 
             ' TODO: free unmanaged resources (unmanaged objects) and override finalizer
