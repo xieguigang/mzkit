@@ -1,4 +1,5 @@
 ﻿Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Unit
 Imports Microsoft.VisualBasic.Data.IO
@@ -49,8 +50,13 @@ Public Class RepositoryWriter : Implements IDisposable
         Call blockIndex.Add(meta.ID, size)
     End Sub
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Friend Shared Function BlockFile(blockOffset As Integer) As String
+        Return $"/block/{CInt(blockOffset).ToString.Last}/{blockOffset}.jsonl"
+    End Function
+
     Private Sub CommitBlock()
-        Dim path As String = $"/block/{CInt(blockOffset).ToString.Last}/{blockOffset}.jsonl"
+        Dim path As String = BlockFile(blockOffset)
         Dim offset As String = $"/offset/{CInt(blockOffset).ToString.Last}/{blockOffset}.msgpack"
         Dim s As Stream = Me.s.OpenFile(path, FileMode.OpenOrCreate, FileAccess.Write)
 

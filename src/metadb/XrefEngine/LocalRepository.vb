@@ -44,10 +44,13 @@ Public Class LocalRepository : Implements IDisposable, IMetaDb
             Dim file As MemoryStream = s.OpenBlock(indexfile, loadMemory:=True)
             Dim index As Dictionary(Of String, BufferRegion) = MsgPackSerializer.Deserialize(GetType(Dictionary(Of String, BufferRegion)), file)
             Dim id As String = indexfile.fileName.BaseName
+            Dim path As String = RepositoryWriter.BlockFile(Integer.Parse(id))
 
             For Each offset As KeyValuePair(Of String, BufferRegion) In index
                 Call Me.offset.Add(offset.Key, (id, offset.Value))
             Next
+
+            Call blocks.Add(id, s.OpenFile(path, FileMode.Open, FileAccess.Read))
         Next
     End Sub
 
