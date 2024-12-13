@@ -1,5 +1,6 @@
 ﻿Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports System.Text
 Imports BioNovoGene.BioDeep.Chemistry.MetaLib.CrossReference
 Imports BioNovoGene.BioDeep.MSEngine
 Imports Microsoft.VisualBasic.ComponentModel.Collection
@@ -7,6 +8,7 @@ Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Data.IO.MessagePack
 Imports Microsoft.VisualBasic.DataStorage.HDSPack
 Imports Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports metadata = BioNovoGene.BioDeep.Chemistry.MetaLib.Models.MetaLib
 
 ''' <summary>
@@ -70,7 +72,17 @@ Public Class LocalRepository : Implements IDisposable, IMetaDb
     End Function
 
     Private Function ReadMetadata(id As String) As metadata
+        Dim ref = offset(id)
+        Dim s As Stream = blocks(ref.id)
+        Dim buf As Byte() = New Byte(ref.Item2.size - 1) {}
 
+        Call s.Seek(ref.Item2.position, SeekOrigin.Begin)
+        Call s.Read(buf, Scan0, buf.Length)
+
+        Dim json_str As String = Encoding.UTF8.GetString(buf)
+        Dim metadata As metadata = json_str.LoadJSON(Of metadata)
+
+        Return metadata
     End Function
 
     Public Function GetDbXref(uniqueId As String) As Dictionary(Of String, String) Implements IMetaDb.GetDbXref
