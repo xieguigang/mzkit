@@ -3,6 +3,7 @@ Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Unit
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Data.IO.MessagePack
+Imports Microsoft.VisualBasic.DataStorage.HDSPack
 Imports Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Metadata = BioNovoGene.BioDeep.Chemistry.MetaLib.Models.MetaLib
@@ -18,6 +19,13 @@ Public Class RepositoryWriter : Implements IDisposable
 
     Sub New(file As Stream)
         s = New StreamPack(file, meta_size:=128 * ByteSize.MB)
+        blockOffset = DirectCast(s.GetObject("/block/"), StreamGroup) _
+            .ListFiles() _
+            .OfType(Of StreamBlock) _
+            .Where(Function(obj)
+                       Return obj.fileName.ExtensionSuffix("jsonl")
+                   End Function) _
+            .Count
     End Sub
 
     Public Sub Add(meta As Metadata)
