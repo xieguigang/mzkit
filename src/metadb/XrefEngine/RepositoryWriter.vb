@@ -1,7 +1,10 @@
 ﻿Imports System.IO
+Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Unit
 Imports Microsoft.VisualBasic.Data.IO
+Imports Microsoft.VisualBasic.Data.IO.MessagePack
 Imports Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Metadata = BioNovoGene.BioDeep.Chemistry.MetaLib.Models.MetaLib
 
 Public Class RepositoryWriter : Implements IDisposable
@@ -10,6 +13,7 @@ Public Class RepositoryWriter : Implements IDisposable
 
     Dim block As New MemoryStream
     Dim blockIndex As New Dictionary(Of String, BufferRegion)
+    Dim blockOffset As Integer = 1
     Dim disposedValue As Boolean
 
     Sub New(file As Stream)
@@ -17,6 +21,49 @@ Public Class RepositoryWriter : Implements IDisposable
     End Sub
 
     Public Sub Add(meta As Metadata)
+        Dim json As String = meta.GetJson & vbLf
+        Dim buf As Byte() = Encoding.UTF8.GetBytes(json)
+
+        Const threshold As Long = 2 * ByteSize.GB - 4 * 1024
+
+        If block.Length + buf.Length >= threshold Then
+            ' create new block
+            Call CommitBlock()
+
+            blockOffset += 1
+            block = New MemoryStream
+            blockIndex = New Dictionary(Of String, BufferRegion)
+        End If
+
+        Dim size As New BufferRegion(block.Length, buf.Length)
+
+        Call block.Write(buf, Scan0, buf.Length)
+        Call blockIndex.Add(meta.ID, size)
+    End Sub
+
+    Private Sub CommitBlock()
+        Dim path As String = $"/block/{CInt(blockOffset).ToString.Last}/{blockOffset}.jsonl"
+        Dim offset As String = $"/offset/{CInt(blockOffset).ToString.Last}/{blockOffset}.msgpack"
+        Dim s As Stream = Me.s.OpenFile(path, FileMode.OpenOrCreate, FileAccess.Write)
+
+        Call s.Write(block.ToArray, Scan0, block.Length)
+        Call s.Flush()
+        Call s.Dispose()
+        Call block.Dispose()
+
+        Dim offsetdata As Stream = Me.s.OpenFile(offset, FileMode.OpenOrCreate, FileAccess.Write)
+
+        Call MsgPackSerializer.SerializeObject(blockIndex, offsetdata)
+        Call offsetdata.Flush()
+        Call offsetdata.Dispose()
+    End Sub
+
+    Public Sub MakeIndex()
+        If blockIndex.Any Then
+            Call CommitBlock()
+        End If
+
+        Call VBDebugger.EchoLine("make index for the metabolite repository...")
 
     End Sub
 
@@ -24,6 +71,7 @@ Public Class RepositoryWriter : Implements IDisposable
         If Not disposedValue Then
             If disposing Then
                 ' TODO: dispose managed state (managed objects)
+                Call MakeIndex()
                 Call s.Dispose()
             End If
 
