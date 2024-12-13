@@ -1,39 +1,30 @@
 ﻿Imports System.IO
-Imports BioNovoGene.BioDeep.MSEngine
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Unit
+Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
+Imports Metadata = BioNovoGene.BioDeep.Chemistry.MetaLib.Models.MetaLib
 
-''' <summary>
-''' read only metabolite annotation information data repository
-''' </summary>
-Public Class LocalRepository : Implements IDisposable, IMetaDb
+Public Class RepositoryWriter : Implements IDisposable
 
-    ''' <summary>
-    ''' the repository file stream data
-    ''' </summary>
     ReadOnly s As StreamPack
 
+    Dim block As New MemoryStream
+    Dim blockIndex As New Dictionary(Of String, BufferRegion)
     Dim disposedValue As Boolean
 
     Sub New(file As Stream)
-        s = New StreamPack(file, [readonly]:=True)
+        s = New StreamPack(file, meta_size:=128 * ByteSize.MB)
     End Sub
 
-    Public Function GetAnnotation(uniqueId As String) As (name As String, formula As String) Implements IMetaDb.GetAnnotation
-        Throw New NotImplementedException()
-    End Function
+    Public Sub Add(meta As Metadata)
 
-    Public Function GetMetadata(uniqueId As String) As Object Implements IMetaDb.GetMetadata
-        Throw New NotImplementedException()
-    End Function
-
-    Public Function GetDbXref(uniqueId As String) As Dictionary(Of String, String) Implements IMetaDb.GetDbXref
-        Throw New NotImplementedException()
-    End Function
+    End Sub
 
     Protected Overridable Sub Dispose(disposing As Boolean)
         If Not disposedValue Then
             If disposing Then
                 ' TODO: dispose managed state (managed objects)
+                Call s.Dispose()
             End If
 
             ' TODO: free unmanaged resources (unmanaged objects) and override finalizer
