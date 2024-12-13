@@ -159,6 +159,11 @@ declare namespace mzkit {
    /**
    */
    function pubchem_meta(term: any): object;
+   module read {
+      /**
+      */
+      function cfmid_3_EI(file: any): object;
+   }
    module run {
       /**
         * @param outputdir default value Is ``./``.
