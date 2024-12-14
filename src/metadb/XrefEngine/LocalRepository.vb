@@ -85,6 +85,7 @@ Public Class LocalRepository : Implements IDisposable, IMetaDb
         Return metadata
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function GetDbXref(uniqueId As String) As Dictionary(Of String, String) Implements IMetaDb.GetDbXref
         Return cacheXrefs.ComputeIfAbsent(uniqueId,
             lazyValue:=Function(id)
