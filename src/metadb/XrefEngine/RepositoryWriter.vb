@@ -24,7 +24,7 @@ Public Class RepositoryWriter : Implements IDisposable
 
     Sub New(file As Stream)
         s = New StreamPack(file, meta_size:=128 * ByteSize.MB)
-        blockOffset = DirectCast(s.GetObject("/block/"), StreamGroup) _
+        blockOffset = 1 + DirectCast(s.GetObject("/block/"), StreamGroup) _
             .ListFiles() _
             .OfType(Of StreamBlock) _
             .Where(Function(obj)
