@@ -38,10 +38,6 @@ Public Class RepositoryWriter : Implements IDisposable
         If block.Length + buf.Length >= threshold Then
             ' create new block
             Call CommitBlock()
-
-            blockOffset += 1
-            block = New MemoryStream
-            blockIndex = New Dictionary(Of String, BufferRegion)
         End If
 
         Dim size As New BufferRegion(block.Length, buf.Length)
@@ -70,6 +66,10 @@ Public Class RepositoryWriter : Implements IDisposable
         Call MsgPackSerializer.SerializeObject(blockIndex, offsetdata)
         Call offsetdata.Flush()
         Call offsetdata.Dispose()
+
+        blockOffset += 1
+        block = New MemoryStream
+        blockIndex = New Dictionary(Of String, BufferRegion)
     End Sub
 
     Public Sub MakeIndex()
