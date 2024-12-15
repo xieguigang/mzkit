@@ -55,7 +55,7 @@ Public Class RepositoryWriter : Implements IDisposable
         Return $"/block/{CInt(blockOffset).ToString.Last}/{blockOffset}.jsonl"
     End Function
 
-    Private Sub CommitBlock()
+    Public Sub CommitBlock()
         Dim path As String = BlockFile(blockOffset)
         Dim offset As String = $"/offset/{CInt(blockOffset).ToString.Last}/{blockOffset}.msgpack"
         Dim s As Stream = Me.s.OpenFile(path, FileMode.OpenOrCreate, FileAccess.Write)
