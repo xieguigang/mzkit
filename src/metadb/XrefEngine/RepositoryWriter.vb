@@ -55,6 +55,17 @@ Public Class RepositoryWriter : Implements IDisposable
         Return $"/block/{CInt(blockOffset).ToString.Last}/{blockOffset}.jsonl"
     End Function
 
+    Friend Shared Iterator Function OffsetFiles(s As StreamPack) As IEnumerable(Of StreamBlock)
+        For Each file As StreamBlock In DirectCast(s.GetObject("/offset/"), StreamGroup) _
+            .ListFiles _
+            .OfType(Of StreamBlock)()
+
+            If file.fileName.ExtensionSuffix("msgpack") Then
+                Yield file
+            End If
+        Next
+    End Function
+
     Public Sub CommitBlock()
         Dim path As String = BlockFile(blockOffset)
         Dim offset As String = $"/offset/{CInt(blockOffset).ToString.Last}/{blockOffset}.msgpack"

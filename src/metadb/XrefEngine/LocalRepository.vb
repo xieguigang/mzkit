@@ -34,13 +34,7 @@ Public Class LocalRepository : Implements IDisposable, IMetaDb
     End Sub
 
     Private Sub LoadOffset()
-        Dim offsetFiles = DirectCast(s.GetObject("/offset/"), StreamGroup) _
-            .ListFiles _
-            .OfType(Of StreamBlock)() _
-            .Where(Function(file)
-                       Return file.fileName.ExtensionSuffix("msgpack")
-                   End Function) _
-            .ToArray
+        Dim offsetFiles = RepositoryWriter.OffsetFiles(s).ToArray
 
         For Each indexfile As StreamBlock In offsetFiles
             Dim file As MemoryStream = s.OpenBlock(indexfile, loadMemory:=True)
