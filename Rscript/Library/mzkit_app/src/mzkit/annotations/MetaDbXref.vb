@@ -74,6 +74,7 @@ Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.Emit.Delegates
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -551,34 +552,50 @@ Module MetaDbXref
     ''' <summary>
     ''' get metabolite annotation metadata by a set of given unique reference id
     ''' </summary>
-    ''' <param name="engine"></param>
-    ''' <param name="uniqueId"></param>
+    ''' <param name="engine">A local annotation repository object that should implements of the <see cref="IMetaDb"/> interface.</param>
+    ''' <param name="uniqueId">
+    ''' a set of the unique reference id
+    ''' </param>
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("getMetadata")>
-    Public Function getMetadata(engine As Object, uniqueId As list, Optional env As Environment = Nothing) As Object
-        Dim queryEngine As IMzQuery
+    Public Function getMetadata(engine As Object, <RRawVectorArgument> uniqueId As Object, Optional env As Environment = Nothing) As Object
+        Dim queryEngine As IMetaDb
 
-        If engine.GetType.ImplementInterface(Of IMzQuery) Then
+        If engine.GetType.ImplementInterface(Of IMetaDb) Then
             queryEngine = engine
         Else
             Return RInternal.debug.stop("invalid handler type!", env)
         End If
 
-        Return New list With {
-            .slots = uniqueId _
-                .getNames _
-                .ToDictionary(Function(name) name,
-                              Function(name)
-                                  Dim id As String = uniqueId.getValue(Of String)(name, env, [default]:="")
+        If TypeOf uniqueId Is list Then
+            Dim list As list = DirectCast(uniqueId, list)
 
-                                  If id.StringEmpty Then
-                                      Return Nothing
-                                  Else
+            Return New list With {
+                .slots = list.slots _
+                    .ToDictionary(Function(name) name.Key,
+                                  Function(name)
+                                      Dim id As String = CLRVector.asCharacter(name.Value).DefaultFirst
+
+                                      If id.StringEmpty Then
+                                          Return Nothing
+                                      Else
+                                          Return queryEngine.GetMetadata(id)
+                                      End If
+                                  End Function)
+            }
+        Else
+            Dim list As String() = CLRVector.asCharacter(uniqueId)
+
+            Return New list With {
+                .slots = list _
+                    .UniqueNames _
+                    .ToDictionary(Function(id) id,
+                                  Function(id)
                                       Return queryEngine.GetMetadata(id)
-                                  End If
-                              End Function)
-        }
+                                  End Function)
+            }
+        End If
     End Function
 
     <Extension>
