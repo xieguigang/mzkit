@@ -4,7 +4,7 @@
 getMetadata \- get metabolite annotation metadata by a set of given unique reference id
 .SH SYNOPSIS
 \fIgetMetadata(\fBengine\fR as any, 
-\fBuniqueId\fR as list, 
+\fBuniqueId\fR as any, 
 [\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
@@ -12,10 +12,12 @@ get metabolite annotation metadata by a set of given unique reference id
 .PP
 .SH OPTIONS
 .PP
-\fBengine\fB \fR\- -. 
+\fBengine\fB \fR\- A local annotation repository object that should implements of the @\fBT:BioNovoGene.BioDeep.MSEngine.IMetaDb\fR interface.. 
 .PP
 .PP
-\fBuniqueId\fB \fR\- -. 
+\fBuniqueId\fB \fR\- 
+ a set of the unique reference id
+. 
 .PP
 .PP
 \fBenv\fB \fR\- -. 

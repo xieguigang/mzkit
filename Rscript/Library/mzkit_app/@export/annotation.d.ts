@@ -125,6 +125,16 @@ declare namespace annotation {
       function annotation_workspace(file: any, io?: object, lazy?: boolean, meta_allocated?: object, env?: object): object;
    }
    /**
+    * open the annotation database file
+    * 
+    * 
+     * @param file -
+     * @param env -
+     * 
+     * + default value Is ``null``.
+   */
+   function open_repository(file: any, env?: object): object;
+   /**
     * Associates the ms1 peaks with the ms2 spectrum alignment result hits.
     * 
     * > a ms2 spectrum alignment result should be existed inside the workspace before assign the ms1 peaks to the result.
