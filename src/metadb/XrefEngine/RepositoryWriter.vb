@@ -18,6 +18,10 @@ Public Class RepositoryWriter : Implements IDisposable
     Dim blockOffset As Integer = 1
     Dim disposedValue As Boolean
 
+    Shared Sub New()
+        Call MsgPackSerializer.DefaultContext.RegisterSerializer(Of BufferRegion)(NameOf(BufferRegion.position), NameOf(BufferRegion.size))
+    End Sub
+
     Sub New(file As Stream)
         s = New StreamPack(file, meta_size:=128 * ByteSize.MB)
         blockOffset = DirectCast(s.GetObject("/block/"), StreamGroup) _
