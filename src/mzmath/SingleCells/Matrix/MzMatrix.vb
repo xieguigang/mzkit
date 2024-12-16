@@ -60,6 +60,7 @@
 #End Region
 
 Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
@@ -158,6 +159,11 @@ Namespace Deconvolute
                 .mzmax = mzmax.ToArray,
                 .mzmin = mzmin.ToArray
             }
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function CreateIndex(Optional win_size As Double = 1) As MzPool
+            Return New MzPool(mz, win_size)
         End Function
 
         ''' <summary>
